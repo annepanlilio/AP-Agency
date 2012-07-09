@@ -1,0 +1,649 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RB Agency\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-28 02:40-1000\n"
+"PO-Revision-Date: 2011-12-28 02:41-1000\n"
+"Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
+"Language-Team: Rob Bertholf <rob@bertholf.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2\n"
+"X-Poedit-Basepath: C:\\Dropbox\\Users\\Rob\\Scripts\\RB Plugin\\rb-agency\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: C:\\Dropbox\\Users\\Rob\\Scripts\\RB Plugin\\rb-agency\n"
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/functions.php:99
+msgid "RB Agency Updates"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/functions.php:366
+msgid "Male"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/functions.php:368
+msgid "Female"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/functions.php:397
+msgid "No Profiles Found"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:364
+#: Plugin\rb-agency/rb-agency.php:477
+msgid "Settings"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:373
+msgid "RB Agency"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:386
+#: Plugin\rb-agency/rb-agency.php:388
+msgid "Generate Client List"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:434
+msgid "Any Profile Type"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:439
+msgid "Only"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:442
+msgid "Starting Age"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:443
+msgid "Ending Age"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:444
+msgid "Gender"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:444
+msgid "Both Male &amp; Female"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:444
+msgid "Female Only"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:444
+msgid "Male Only"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:446
+msgid "Insert Profile List"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:447
+msgid "Insert Search Form"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:456
+msgid "My Post Section Title"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:471
+msgid "Agency"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:472
+msgid "Overview"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:473
+msgid "Manage Profiles"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:473
+msgid "Manage Profile"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:474
+msgid "Search Profiles"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:475
+msgid "Saved Searches"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:476
+msgid "Tools &amp; Reports"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:476
+msgid "Run Reports"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:477
+msgid "Edit Settings"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:565
+msgid "Almost done..."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:565
+msgid "One More Step"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/rb-agency.php:565
+msgid "Please click here to complete the uninstallation process"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/casting.php:49
+msgid "New Casting added successfully!"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/casting.php:49
+#: Plugin\rb-agency/admin/client.php:107
+msgid "Update and add media"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/casting.php:51
+#: Plugin\rb-agency/admin/client.php:109
+msgid "Error creating record, please ensure you have filled out all required fields."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/casting.php:467
+#: Plugin\rb-agency/admin/client.php:1427
+#: Plugin\rb-agency/admin/searchsaved.php:394
+#: Plugin\rb-agency/admin/taxonomy.php:220
+#: Plugin\rb-agency/admin/taxonomy.php:263
+msgid "Delete"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:107
+msgid "New Client added successfully!"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:405
+msgid "Client updated successfully!"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:407
+msgid "Error updating record, please ensure you have filled out all required fields."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:419
+#: Plugin\rb-agency/admin/client.php:460
+msgid "Client deleted successfully!"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:457
+msgid "No valid record found."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:468
+msgid "Back to Client List"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:518
+msgid "Edit Client"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:519
+msgid "Make changes in the form below to edit a Client."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:519
+#: Plugin\rb-agency/admin/client.php:530
+msgid "Required fields are marked"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:529
+msgid "Add New Client"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:530
+msgid "Fill in the form below to add a new Client."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:535
+msgid "Contact Information"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:548
+msgid "Gallery Folder"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:552
+msgid "Folder"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:552
+msgid "Exists"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/client.php:555
+msgid "No Folder Exists"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/search.php:456
+msgid "Add to Casting Cart"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:56
+msgid "Database Version"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:60
+msgid "Stylesheet"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:64
+msgid "Agency Name"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:68
+msgid "Agency Email"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:72
+msgid "Path to Logo"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:76
+msgid "Email Header"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:82
+msgid "Profile Layout Style"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:93
+msgid "Image Gallery Type"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:104
+msgid "Image Gallery Sort Order"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:114
+msgid "Unit Type"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:124
+msgid "Privacy Settings"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:135
+msgid "Show Fields"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/settings.php:148
+msgid "Save Changes"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:14
+#: Plugin\rb-agency/admin/taxonomy.php:35
+#: Plugin\rb-agency/admin/taxonomy.php:55
+#: Plugin\rb-agency/admin/taxonomy.php:122
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:75
+#: Plugin\rb-agency/admin/taxonomy.php:85
+msgid "Edit Tag"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:94
+#: Plugin\rb-agency/admin/taxonomy.php:300
+msgid "Tag name"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:98
+#: Plugin\rb-agency/admin/taxonomy.php:306
+msgid "Tag slug"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:100
+#: Plugin\rb-agency/admin/taxonomy.php:308
+msgid "The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:103
+#: Plugin\rb-agency/admin/taxonomy.php:312
+msgid "Description"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:105
+msgid "The description is not prominent by default, however some themes may show it."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:156
+msgid "Tag added."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:157
+msgid "Tag deleted."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:158
+msgid "Tag updated."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:159
+msgid "Tag not added."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:160
+msgid "Tag not updated."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:161
+msgid "Tags deleted."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:167
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:179
+msgid "Search Tags"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:207
+msgid "&laquo;"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:208
+msgid "&raquo;"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:219
+#: Plugin\rb-agency/admin/taxonomy.php:262
+msgid "Bulk Actions"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:280
+msgid "Popular Tags"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:293
+msgid "Add a New Tag"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:302
+msgid "The name is how the tag appears on your site."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/admin/taxonomy.php:314
+msgid "The description is not prominent by default; however, some themes may show it."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:24
+#: Plugin\rb-agency/theme/include-client-layout1.php:24
+#: Plugin\rb-agency/theme/include-client-layout2.php:43
+msgid "Share"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:99
+#: Plugin\rb-agency/theme/include-client-layout1.php:99
+#: Plugin\rb-agency/theme/include-client-layout2.php:118
+msgid "Contact"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:112
+#: Plugin\rb-agency/theme/include-client-layout1.php:112
+#: Plugin\rb-agency/theme/include-client-layout2.php:131
+msgid "Access Dashboard"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:129
+#: Plugin\rb-agency/theme/include-client-layout1.php:129
+#: Plugin\rb-agency/theme/include-client-layout2.php:149
+msgid "Ethnicity"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:132
+#: Plugin\rb-agency/theme/include-client-layout1.php:132
+#: Plugin\rb-agency/theme/include-client-layout2.php:152
+msgid "Skin Tone"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:135
+#: Plugin\rb-agency/theme/include-client-layout1.php:135
+#: Plugin\rb-agency/theme/include-client-layout2.php:155
+msgid "Hair Color"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:138
+#: Plugin\rb-agency/theme/include-client-layout1.php:138
+#: Plugin\rb-agency/theme/include-client-layout2.php:158
+msgid "Eye Color"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:142
+#: Plugin\rb-agency/theme/include-client-layout0.php:147
+#: Plugin\rb-agency/theme/include-client-layout1.php:142
+#: Plugin\rb-agency/theme/include-client-layout1.php:147
+#: Plugin\rb-agency/theme/include-client-layout2.php:162
+#: Plugin\rb-agency/theme/include-client-layout2.php:167
+msgid "Height"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:142
+#: Plugin\rb-agency/theme/include-client-layout1.php:142
+#: Plugin\rb-agency/theme/include-client-layout2.php:162
+msgid "cm"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:147
+#: Plugin\rb-agency/theme/include-client-layout1.php:147
+#: Plugin\rb-agency/theme/include-client-layout2.php:167
+msgid "ft"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:147
+#: Plugin\rb-agency/theme/include-client-layout1.php:147
+#: Plugin\rb-agency/theme/include-client-layout2.php:167
+msgid "in"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:152
+#: Plugin\rb-agency/theme/include-client-layout0.php:154
+#: Plugin\rb-agency/theme/include-client-layout1.php:152
+#: Plugin\rb-agency/theme/include-client-layout1.php:154
+#: Plugin\rb-agency/theme/include-client-layout2.php:172
+#: Plugin\rb-agency/theme/include-client-layout2.php:174
+msgid "Weight"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:152
+#: Plugin\rb-agency/theme/include-client-layout1.php:152
+#: Plugin\rb-agency/theme/include-client-layout2.php:172
+msgid "kg"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:154
+#: Plugin\rb-agency/theme/include-client-layout1.php:154
+#: Plugin\rb-agency/theme/include-client-layout2.php:174
+msgid "lb"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:158
+#: Plugin\rb-agency/theme/include-client-layout1.php:158
+#: Plugin\rb-agency/theme/include-client-layout2.php:178
+msgid "Chest"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:158
+#: Plugin\rb-agency/theme/include-client-layout1.php:158
+#: Plugin\rb-agency/theme/include-client-layout2.php:178
+msgid "Bust"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:158
+#: Plugin\rb-agency/theme/include-client-layout1.php:158
+#: Plugin\rb-agency/theme/include-client-layout2.php:178
+msgid "Chest/Bust"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:162
+#: Plugin\rb-agency/theme/include-client-layout1.php:162
+#: Plugin\rb-agency/theme/include-client-layout2.php:182
+msgid "Waist"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:165
+#: Plugin\rb-agency/theme/include-client-layout1.php:165
+#: Plugin\rb-agency/theme/include-client-layout2.php:185
+msgid "Inseam"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:165
+#: Plugin\rb-agency/theme/include-client-layout1.php:165
+#: Plugin\rb-agency/theme/include-client-layout2.php:185
+msgid "Hips"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:165
+#: Plugin\rb-agency/theme/include-client-layout1.php:165
+#: Plugin\rb-agency/theme/include-client-layout2.php:185
+msgid "Hips/Inseam"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:169
+#: Plugin\rb-agency/theme/include-client-layout1.php:169
+#: Plugin\rb-agency/theme/include-client-layout2.php:189
+msgid "Suit Size"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:169
+#: Plugin\rb-agency/theme/include-client-layout1.php:169
+#: Plugin\rb-agency/theme/include-client-layout2.php:189
+msgid "Dress Size"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:169
+#: Plugin\rb-agency/theme/include-client-layout1.php:169
+#: Plugin\rb-agency/theme/include-client-layout2.php:189
+msgid "Suit/Dress Size"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:173
+#: Plugin\rb-agency/theme/include-client-layout1.php:173
+#: Plugin\rb-agency/theme/include-client-layout2.php:193
+msgid "Shoe Size"
+msgstr ""
+

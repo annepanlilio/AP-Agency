@@ -1,0 +1,1063 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RB Agency\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-01-16 16:46-1000\n"
+"PO-Revision-Date: 2012-01-16 16:46-1000\n"
+"Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
+"Language-Team: Rob Bertholf <rob@bertholf.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
+
+# @ rb-agency
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/functions.php:87
+msgid "RB Agency Updates"
+msgstr "RB Agency Updates"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/functions.php:424
+msgid "No Profiles Found"
+msgstr "ไม่พบข้อมูล"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:358
+#: Plugin/rb-agency/rb-agency.php:471
+#: Plugin/rb-agency/admin/settings.php:9
+#: Plugin/rb-agency/admin/settings.php:54
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:367
+msgid "RB Agency"
+msgstr "RB Agency"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:380
+#: Plugin/rb-agency/rb-agency.php:382
+#, fuzzy
+msgid "Insert Profiles"
+msgstr "ใส่รายชื่อข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:428
+#: Plugin/rb-agency/admin/overview.php:29
+#: Plugin/rb-agency/admin/search.php:605
+msgid "Any Profile Type"
+msgstr "ข้อมูลประเภทอื่น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:433
+msgid "Only"
+msgstr "เท่านั้น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:436
+msgid "Starting Age"
+msgstr "อายุเริ่มต้น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:437
+msgid "Ending Age"
+msgstr "อายุไม่เกิน"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:438
+#: Plugin/rb-agency/admin/overview.php:40
+#: Plugin/rb-agency/admin/search.php:369
+#: Plugin/rb-agency/admin/search.php:617
+#: Plugin/rb-agency/theme/include-profile-layout0.php:123
+msgid "Gender"
+msgstr "เพศ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:438
+msgid "Both Male &amp; Female"
+msgstr "ผู้ชาย และ ผู้หญิง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:438
+msgid "Female Only"
+msgstr "ผู้หญิงเท่านั้น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:438
+msgid "Male Only"
+msgstr "ผู้ชายเท่านั้น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:440
+msgid "Insert Profile List"
+msgstr "ใส่รายชื่อข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:441
+msgid "Insert Search Form"
+msgstr "ใส่แบบฟอร์มค้นหา"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:450
+#, fuzzy
+msgid "Profile"
+msgstr "จัดการข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:465
+msgid "Agency"
+msgstr "เอเจนซี่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:466
+#: Plugin/rb-agency/admin/settings.php:11
+#: Plugin/rb-agency/admin/settings.php:37
+msgid "Overview"
+msgstr "ภาพรวม"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:467
+#: Plugin/rb-agency/admin/overview.php:144
+msgid "Manage Profiles"
+msgstr "จัดการข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:468
+#, fuzzy
+msgid "Search &amp; Send Profiles"
+msgstr "ค้นหาข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:468
+#: Plugin/rb-agency/admin/overview.php:146
+#: Plugin/rb-agency/admin/search.php:871
+msgid "Search Profiles"
+msgstr "ค้นหาข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:469
+msgid "Saved Searches"
+msgstr "บันทึกการค้นหา"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:470
+msgid "Tools &amp; Reports"
+msgstr "เครื่องมือ และ รายงาน"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:470
+msgid "Run Reports"
+msgstr "เปิดดูรายงาน"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:471
+msgid "Edit Settings"
+msgstr "แก้ไขการตั้งค่า"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:562
+msgid "Almost done..."
+msgstr "ใกล้เสร็จสมบูรณ์"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:562
+msgid "One More Step"
+msgstr "ขั้นตอนสุดท้าย"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/rb-agency.php:562
+msgid "Please click here to complete the uninstallation process"
+msgstr "คลิกที่นี่เพื่อยืนยันการถอนการติดตั้ง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/casting.php:49
+msgid "New Casting added successfully!"
+msgstr "บันทึกข้อมูลใหม่เรียบร้อยแล้ว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/casting.php:49
+#: Plugin/rb-agency/admin/profile.php:147
+msgid "Update and add media"
+msgstr "อัพเดทและเพิ่มสื่อ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/casting.php:51
+#: Plugin/rb-agency/admin/profile.php:149
+msgid "Error creating record, please ensure you have filled out all required fields."
+msgstr "เกิดข้อผิดพลาดระหว่างการบันทึก กรุณาใส่ข้อมูลให้ครบ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/casting.php:128
+#: Plugin/rb-agency/admin/overview.php:161
+#: Plugin/rb-agency/admin/overview.php:181
+#: Plugin/rb-agency/admin/profile.php:423
+#: Plugin/rb-agency/admin/search.php:484
+#: Plugin/rb-agency/admin/searchsaved.php:163
+#: Plugin/rb-agency/admin/settings.php:254
+#: Plugin/rb-agency/admin/settings.php:340
+#: Plugin/rb-agency/admin/settings.php:428
+#: Plugin/rb-agency/admin/settings.php:514
+#: Plugin/rb-agency/admin/settings.php:602
+#: Plugin/rb-agency/admin/settings.php:688
+#: Plugin/rb-agency/admin/settings.php:776
+#: Plugin/rb-agency/admin/settings.php:862
+#: Plugin/rb-agency/admin/settings.php:950
+#: Plugin/rb-agency/admin/settings.php:1039
+#: Plugin/rb-agency/admin/settings.php:1131
+#: Plugin/rb-agency/admin/settings.php:1245
+msgid "Error, query failed"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/casting.php:467
+#: Plugin/rb-agency/admin/profile.php:1365
+#: Plugin/rb-agency/admin/searchsaved.php:394
+msgid "Delete"
+msgstr "ลบ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:8
+#, fuzzy
+msgid "Dashboard"
+msgstr "แผงควบคุมการเข้าถึง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:9
+msgid "You are using version"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:16
+#: Plugin/rb-agency/admin/overview.php:126
+msgid "Quick Search"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:27
+#: Plugin/rb-agency/admin/search.php:603
+msgid "Classification"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:42
+#: Plugin/rb-agency/admin/search.php:619
+#, fuzzy
+msgid "Both Male and Female"
+msgstr "ผู้ชาย และ ผู้หญิง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:43
+#: Plugin/rb-agency/admin/search.php:620
+msgid "Male"
+msgstr "ชาย"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:44
+#: Plugin/rb-agency/admin/search.php:621
+msgid "Female"
+msgstr "หญิง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:49
+#: Plugin/rb-agency/admin/search.php:372
+#: Plugin/rb-agency/admin/search.php:626
+#, fuzzy
+msgid "Age"
+msgstr "เอเจนซี่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:51
+#: Plugin/rb-agency/admin/overview.php:61
+#: Plugin/rb-agency/admin/overview.php:106
+#: Plugin/rb-agency/admin/overview.php:117
+#: Plugin/rb-agency/admin/search.php:628
+#: Plugin/rb-agency/admin/search.php:638
+#: Plugin/rb-agency/admin/search.php:683
+#: Plugin/rb-agency/admin/search.php:694
+#: Plugin/rb-agency/admin/search.php:769
+#: Plugin/rb-agency/admin/search.php:779
+#: Plugin/rb-agency/admin/search.php:788
+#: Plugin/rb-agency/admin/search.php:797
+msgid "Minimum"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:53
+#: Plugin/rb-agency/admin/overview.php:77
+#: Plugin/rb-agency/admin/overview.php:108
+#: Plugin/rb-agency/admin/overview.php:119
+#: Plugin/rb-agency/admin/search.php:630
+#: Plugin/rb-agency/admin/search.php:654
+#: Plugin/rb-agency/admin/search.php:685
+#: Plugin/rb-agency/admin/search.php:696
+#: Plugin/rb-agency/admin/search.php:771
+#: Plugin/rb-agency/admin/search.php:781
+#: Plugin/rb-agency/admin/search.php:790
+#: Plugin/rb-agency/admin/search.php:799
+msgid "Maximum"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:58
+#: Plugin/rb-agency/admin/search.php:398
+#: Plugin/rb-agency/admin/search.php:400
+#: Plugin/rb-agency/admin/search.php:635
+#: Plugin/rb-agency/theme/include-profile-layout0.php:139
+#: Plugin/rb-agency/theme/include-profile-layout0.php:144
+msgid "Height"
+msgstr "ความสูง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:64
+#: Plugin/rb-agency/admin/search.php:641
+msgid "No Minimum"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:81
+#: Plugin/rb-agency/admin/search.php:658
+msgid "No Maximum"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:106
+#: Plugin/rb-agency/admin/overview.php:108
+#: Plugin/rb-agency/admin/search.php:683
+#: Plugin/rb-agency/admin/search.php:685
+#: Plugin/rb-agency/theme/include-profile-layout0.php:139
+msgid "cm"
+msgstr "เซนติเมตร"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:115
+#: Plugin/rb-agency/admin/search.php:405
+#: Plugin/rb-agency/admin/search.php:407
+#: Plugin/rb-agency/admin/search.php:692
+#: Plugin/rb-agency/theme/include-profile-layout0.php:149
+#: Plugin/rb-agency/theme/include-profile-layout0.php:151
+msgid "Weight"
+msgstr "น้ำหนัก"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:127
+#, fuzzy
+msgid "Advanced Search"
+msgstr "บันทึกการค้นหา"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:140
+msgid "Actions"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:144
+msgid "Browse and edit existing profiles"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:145
+#, fuzzy
+msgid "Create New Profile"
+msgstr "จัดการข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:145
+#, fuzzy
+msgid "Create new profile"
+msgstr "จัดการข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:146
+msgid "Find and send profiles by filtering by chriteria"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:153
+msgid "Recent Activity"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:158
+msgid "Recently Created/Modified Profiles"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:173
+#: Plugin/rb-agency/admin/overview.php:193
+msgid "There are currently no profiles added"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:178
+msgid "Recently Viewed Profiles"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/overview.php:210
+msgid "WordPress Plugins by "
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:147
+#, fuzzy
+msgid "New Profile added successfully!"
+msgstr "นางแบบใหม่ถูกเพิ่มเรียบร้อย"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:296
+#, fuzzy
+msgid "Profile updated successfully!"
+msgstr "อัพเดทข้อมูลนางแบบเสร็จสิ้น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:298
+msgid "Error updating record, please ensure you have filled out all required fields."
+msgstr "เกิดข้อผิดพลาดระหว่างการบันทึก กรุณาใส่ข้อมูลให้ครบ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:338
+#: Plugin/rb-agency/admin/profile.php:382
+msgid "No valid record found."
+msgstr "ไม่พบข้อมูล"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:341
+#: Plugin/rb-agency/admin/profile.php:385
+#, fuzzy
+msgid "Profile deleted successfully!"
+msgstr "นางแบบถูกลบเรียบร้อย"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:417
+#, fuzzy
+msgid "Back to Profile List"
+msgstr "กลับไปที่รายชื่อนางแบบ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:467
+#, fuzzy
+msgid "Edit Profile"
+msgstr "จัดการข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:468
+#, fuzzy
+msgid "Make changes in the form below to edit a profile."
+msgstr "แก้ไขในแบบฟอร์มด้านล่างเพื่อแก้ไขนางแบบ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:468
+#: Plugin/rb-agency/admin/profile.php:480
+msgid "Required fields are marked"
+msgstr "กรุณากรอกข้อมูลให้ครบถ้วน"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:479
+#, fuzzy
+msgid "Add New Profile"
+msgstr "เพิ่มนางแบบใหม่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:480
+#, fuzzy
+msgid "Fill in the form below to add a new profile."
+msgstr "เติมข้อมูลในแบบฟอร์มด้านล่างเพื่อเพิ่มนางแบบใหม่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:485
+#: Plugin/rb-agency/admin/search.php:298
+#: Plugin/rb-agency/admin/search.php:308
+msgid "Contact Information"
+msgstr "ข้อมูลติดต่อ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:490
+msgid "Display Name"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:498
+msgid "Gallery Folder"
+msgstr "แฟ้มรูปภาพ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:502
+msgid "Folder"
+msgstr "แฟ้ม"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:502
+msgid "Exists"
+msgstr "ออก"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:505
+msgid "No Folder Exists"
+msgstr "ไม่มีแฟ้มนี้"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:512
+#: Plugin/rb-agency/admin/search.php:592
+msgid "First Name"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:518
+#: Plugin/rb-agency/admin/search.php:597
+msgid "Last Name"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:524
+msgid "Parent (if minor)"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:530
+#, fuzzy
+msgid "Email Address"
+msgstr "หัวข้ออีเมล์"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/profile.php:536
+#, fuzzy
+msgid "Website"
+msgstr "น้ำหนัก"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:9
+#: Plugin/rb-agency/admin/search.php:584
+#, fuzzy
+msgid "Profile Search"
+msgstr "ข้อมูลประเภทอื่น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:297
+#: Plugin/rb-agency/admin/search.php:307
+msgid "ID"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:299
+#: Plugin/rb-agency/admin/search.php:309
+msgid "Details"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:300
+#: Plugin/rb-agency/admin/search.php:310
+#, fuzzy
+msgid "Stats"
+msgstr "การตั้งค่า"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:301
+#: Plugin/rb-agency/admin/search.php:311
+msgid "Headshot"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:375
+msgid "Birthdate"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:378
+#: Plugin/rb-agency/admin/search.php:702
+#: Plugin/rb-agency/admin/settings.php:16
+#: Plugin/rb-agency/admin/settings.php:42
+#: Plugin/rb-agency/theme/include-profile-layout0.php:126
+msgid "Ethnicity"
+msgstr "เชื้อชาติ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:385
+#: Plugin/rb-agency/theme/include-profile-layout0.php:129
+msgid "Skin Tone"
+msgstr "สีผิว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:388
+#: Plugin/rb-agency/admin/search.php:751
+#: Plugin/rb-agency/admin/settings.php:15
+#: Plugin/rb-agency/admin/settings.php:41
+#: Plugin/rb-agency/theme/include-profile-layout0.php:132
+msgid "Hair Color"
+msgstr "สีผม"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:391
+#: Plugin/rb-agency/admin/search.php:735
+#: Plugin/rb-agency/admin/settings.php:14
+#: Plugin/rb-agency/admin/settings.php:40
+#: Plugin/rb-agency/theme/include-profile-layout0.php:135
+msgid "Eye Color"
+msgstr "สีตา"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:415
+#: Plugin/rb-agency/admin/search.php:777
+#: Plugin/rb-agency/theme/include-profile-layout0.php:159
+msgid "Waist"
+msgstr "เอว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:426
+#: Plugin/rb-agency/theme/include-profile-layout0.php:170
+msgid "Shoe Size"
+msgstr "ไซส์รองเท้า"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:441
+msgid "No profiles found with this criteria!"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:448
+msgid "There aren't any Profiles loaded yet!"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:458
+msgid "Add to Casting Cart"
+msgstr "เพิ่มลงในตะกร้า"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:459
+#: Plugin/rb-agency/admin/search.php:460
+#: Plugin/rb-agency/admin/search.php:572
+#: Plugin/rb-agency/admin/search.php:573
+msgid "Quick Print"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:460
+#: Plugin/rb-agency/admin/search.php:573
+msgid "Without Details"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:473
+#, fuzzy
+msgid "Casting Cart"
+msgstr "เพิ่มลงในตะกร้า"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:487
+msgid "Empty Cart"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:488
+msgid "Currently"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:488
+msgid "in Cart"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:494
+msgid "There are currently no profiles in the casting cart"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:551
+msgid "Remove from Cart"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:569
+msgid "Cart Actions"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:571
+#, fuzzy
+msgid "Save Search & Email"
+msgstr "บันทึกการค้นหา"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:705
+#, fuzzy
+msgid "Any Ethnicity"
+msgstr "เชื้อชาติ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:719
+#, fuzzy
+msgid "Skin Color"
+msgstr "สีผม"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:722
+#, fuzzy
+msgid "Any Skin Color"
+msgstr "สีตา"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:738
+#, fuzzy
+msgid "Any Eye Color"
+msgstr "สีตา"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:754
+#, fuzzy
+msgid "Any Hair Color"
+msgstr "สีผม"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:767
+#: Plugin/rb-agency/theme/include-profile-layout0.php:155
+msgid "Chest"
+msgstr "หน้าอก"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:767
+#: Plugin/rb-agency/theme/include-profile-layout0.php:155
+msgid "Bust"
+msgstr "หน้าอก"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:786
+#: Plugin/rb-agency/theme/include-profile-layout0.php:162
+msgid "Hips"
+msgstr "สะโพก"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:786
+#: Plugin/rb-agency/theme/include-profile-layout0.php:162
+msgid "Inseam"
+msgstr "………"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:795
+#, fuzzy
+msgid "Shoe"
+msgstr "แบ่งปัน"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:805
+msgid "Location"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:807
+msgid "Any Location"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:858
+msgid "Status"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:860
+#: Plugin/rb-agency/admin/search.php:861
+msgid "Show only Active"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:862
+msgid "Show only Inactive"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:863
+msgid "Show only Declassified"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:872
+msgid "Reset Form"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/search.php:873
+msgid "Empty Form"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:12
+#: Plugin/rb-agency/admin/settings.php:38
+msgid "Features"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:13
+#: Plugin/rb-agency/admin/settings.php:39
+#, fuzzy
+msgid "Skin Types"
+msgstr "สีผิว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:17
+#: Plugin/rb-agency/admin/settings.php:43
+msgid "Profile Categories"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:18
+#: Plugin/rb-agency/admin/settings.php:44
+#, fuzzy
+msgid "Custom Fields"
+msgstr "แสดงข้อมูล"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:19
+#: Plugin/rb-agency/admin/settings.php:45
+msgid "Uninstall"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:77
+msgid "Database Version"
+msgstr "เว่อร์ชั่นของฐานข้อมูล"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:82
+msgid "Agency Name"
+msgstr "ชื่อเอเจนซี่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:87
+msgid "Agency Email"
+msgstr "อีเมล์เอเจนซี่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:92
+#, fuzzy
+msgid "Path to Contact Page"
+msgstr "ตำแหน่งโลโก้"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:97
+msgid "Path to Logo"
+msgstr "ตำแหน่งโลโก้"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:102
+msgid "Email Header"
+msgstr "หัวข้ออีเมล์"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:107
+msgid "Default Country"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:112
+msgid "Resize Images"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:114
+msgid "Maximum Width"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:115
+#, fuzzy
+msgid "Maximum Height"
+msgstr "ความสูง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:120
+msgid "Profile Name Format"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:132
+msgid "Profile Layout Style"
+msgstr "รูปแบบข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:144
+msgid "Image Gallery Type"
+msgstr "ประเภทของแกลเลอรี่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:155
+msgid "Image Gallery Sort Order"
+msgstr "เรียงแกลเลอรี่"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:165
+msgid "Unit Type"
+msgstr "ประเภทยูนิท"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:175
+msgid "Privacy Settings"
+msgstr "ตั้งค่าข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:186
+msgid "Show Fields"
+msgstr "แสดงข้อมูล"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:194
+msgid "Stylesheet"
+msgstr "รูปแบบการแสดงผลหน้าเว็บเพจ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:199
+msgid "Save Changes"
+msgstr "บันทึกการเปลี่ยนแปลง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:209
+msgid "Manage Record"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:220
+#, fuzzy
+msgid "New record added successfully"
+msgstr "นางแบบใหม่ถูกเพิ่มเรียบร้อย"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:222
+#, fuzzy
+msgid "Error creating record, please ensure you have filled out all required fields"
+msgstr "เกิดข้อผิดพลาดระหว่างการบันทึก กรุณาใส่ข้อมูลให้ครบ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:235
+#, fuzzy
+msgid "Record updated successfully"
+msgstr "อัพเดทข้อมูลนางแบบเสร็จสิ้น"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:237
+#, fuzzy
+msgid "Error updating record, please ensure you have filled out all required fields"
+msgstr "เกิดข้อผิดพลาดระหว่างการบันทึก กรุณาใส่ข้อมูลให้ครบ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/admin/settings.php:245
+#, fuzzy
+msgid "Record deleted successfully"
+msgstr "นางแบบถูกลบเรียบร้อย"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:94
+msgid "Contact"
+msgstr "ติดต่อ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:108
+msgid "Access Dashboard"
+msgstr "แผงควบคุมการเข้าถึง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:144
+msgid "ft"
+msgstr "ฟุต"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:144
+msgid "in"
+msgstr "นิ้ว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:149
+msgid "kg"
+msgstr "กิโลกรัม"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:151
+msgid "lb"
+msgstr "ปอนด์"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:155
+msgid "Chest/Bust"
+msgstr "หน้าอก / หน้าอก"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:162
+msgid "Hips/Inseam"
+msgstr "สะโพก/\t.........."
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:166
+msgid "Suit Size"
+msgstr "ไซส์เสื้อ"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:166
+msgid "Dress Size"
+msgstr "ไซส์เสื้อผู้หญิง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout0.php:166
+msgid "Suit/Dress Size"
+msgstr "ไซส์เสื้อ / ไซส์เสื้อผู้หญิง"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/include-profile-layout2.php:44
+#: Plugin/rb-agency/theme/include-profile-layout3.php:750
+msgid "Share"
+msgstr "แบ่งปัน"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:195
+#, fuzzy
+msgid "Search Results"
+msgstr "ค้นหาข้อมูลส่วนตัว"
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:209
+msgid "Search exceeds 100 records first 100 displayed below"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:209
+msgid "Click here to expand to all records"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:209
+msgid "NOTE: This may take some time"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:233
+msgid "Language"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:236
+msgid "Union"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:311
+msgid "No profiles found with this criteria"
+msgstr ""
+
+#: C:/Dropbox/Users/Rob/Scripts/RB
+#: Plugin/rb-agency/theme/view-search.php:317
+msgid "There are no profiles found in the database"
+msgstr ""
+
+#~ msgid "Generate Client List"
+#~ msgstr "สร้างรายชื่อนางแบบ"
+
+#~ msgid "My Post Section Title"
+#~ msgstr "หัวข้อกระทู้"
+
+#~ msgid "Edit Client"
+#~ msgstr "แก้ไขข้อมูลนางแบบ"

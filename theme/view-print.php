@@ -1,0 +1,410 @@
+<?php 
+$rb_agency_options_arr = get_option('rb_agency_options');
+$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+$rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title><?php bloginfo('name'); ?> | Print</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="Robots" content="noindex, nofollow" />
+	<link rel="stylesheet" type="text/css" media="screen, print" href="<?php bloginfo('stylesheet_directory'); ?>/style.css" />
+	<script language="Javascript1.2">
+      <!--
+      function printpage() {
+      window.print();
+      }
+      //-->
+    </script>
+    <style>
+	.column-ProfileDetails  { padding: 10px; }
+	.column-ProfileDetails div { display: inline; margin: 10px 0; }
+	</style>
+</head>
+<body onload="printpage()" style="background: #fff;">
+<div id="print_wrapper" style="width: 887px;">
+  <?php if (isset($rb_agency_option_agencylogo)) { ?>
+  <div id="print_logo" style="float: left; width: 50%;"><img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" /></div>
+  <?php } ?>
+  <div id="print_actions" style="float: left; text-align: right; width: 50%;"><a href="#" onclick="printpage();">Print</a> | <a href="javascript:window.opener='x';window.close();">Close</a></div>
+  <div style="clear: both;"></div>
+<?php
+
+global $wpdb;
+$hasQuery = false;
+
+// Set Casting Cart Session
+if ($_GET['action'] == "quickPrint") {
+	$hasQuery = true;
+	extract($_SESSION);
+	foreach($_SESSION as $key=>$value) {
+		  $$key = $value;
+	}
+	
+	//// Filter
+	$filter = " WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
+	// Name
+	if ((isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)) || isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
+		if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
+		$filter .= " AND profile.ProfileContactNameFirst='". $ProfileContactNameFirst ."'";
+		}
+		if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
+		$filter .= " AND profile.ProfileContactNameLast='". $ProfileContactNameLast ."'";
+		}
+	}
+	// Location
+	if (isset($ProfileLocationCity) && !empty($ProfileLocationCity)){
+		$filter .= " AND profile.ProfileLocationCity='". $ProfileLocationCity ."'";
+	}
+	// Type
+	if (isset($ProfileType) && !empty($ProfileType)){
+	  if ($ProfileType == "Model") {
+		$selectedIsModel = " selected";
+		$filter .= " AND profile.ProfileIsModel='1'";
+	  } elseif ($ProfileType == "Talent") {
+		$selectedIsTalent = " selected";
+		$filter .= " AND profile.ProfileIsTalent='1'";
+	  }
+	}
+	// Active
+	if (isset($ProfileIsActive)){
+	  if ($ProfileIsActive == "1") {
+		$selectedActive = "active";
+		$filter .= " AND profile.ProfileIsActive=1";
+	  } elseif ($ProfileIsActive == "0") {
+		$selectedActive = "inactive";
+		$filter .= " AND profile.ProfileIsActive=0";
+	  }
+	} else {
+		$selectedActive = "";
+	}
+	// Gender
+	if (isset($ProfileGender) && !empty($ProfileGender)){
+	  if ($ProfileGender == "Female") {
+		$filter .= " AND profile.ProfileGender='female'";
+	  } elseif ($ProfileGender == "Male") {
+		$filter .= " AND profile.ProfileGender='male'";
+	  }
+	} else {
+		$ProfileGender = "";
+	}
+	// Race
+	if (isset($ProfileStatEthnicity) && !empty($ProfileStatEthnicity)){
+		$filter .= " AND profile.ProfileStatEthnicity='". $ProfileStatEthnicity ."'";
+	}
+	// Skin
+	if (isset($ProfileStatSkinColor) && !empty($ProfileStatSkinColor)){
+		$filter .= " AND profile.ProfileStatSkinColor='". $ProfileStatSkinColor ."'";
+	}
+	// Eye
+	if (isset($ProfileStatEyeColor) && !empty($ProfileStatEyeColor)){
+		$filter .= " AND profile.ProfileStatEyeColor='". $ProfileStatEyeColor ."'";
+	}
+	// Hair
+	if (isset($ProfileStatHairColor) && !empty($ProfileStatHairColor)){
+		$filter .= " AND profile.ProfileStatHairColor='". $ProfileStatHairColor ."'";
+	}
+	// Height
+	if (isset($ProfileStatHeight_min) && !empty($ProfileStatHeight_min)){
+		$filter .= " AND profile.ProfileStatHeight >= '". $ProfileStatHeight_min ."'";
+	}
+	if (isset($ProfileStatHeight_max) && !empty($ProfileStatHeight_max)){
+		$filter .= " AND profile.ProfileStatHeight <= '". $ProfileStatHeight_max ."'";
+	}
+	// Weight
+	if (isset($ProfileStatWeight_min) && !empty($ProfileStatWeight_min)){
+		$filter .= " AND profile.ProfileStatWeight >= '". $ProfileStatWeight_min ."'";
+	}
+	if (isset($ProfileStatWeight_max) && !empty($ProfileStatWeight_max)){
+		$filter .= " AND profile.ProfileStatWeight <= '". $ProfileStatWeight_max ."'";
+	}
+	// Bust/Chest
+	if (isset($ProfileStatBust_min) && !empty($ProfileStatBust_min)){
+		$filter .= " AND profile.ProfileStatBust >= '". $ProfileStatBust_min ."'";
+	}
+	if (isset($ProfileStatBust_max) && !empty($ProfileStatBust_max)){
+		$filter .= " AND profile.ProfileStatBust <= '". $ProfileStatBust_max ."'";
+	}
+	// Waist
+	if (isset($ProfileStatWaist_min) && !empty($ProfileStatWaist_min)){
+		$filter .= " AND profile.ProfileStatWaist >= '". $ProfileStatWaist_min ."'";
+	}
+	if (isset($ProfileStatWaist_max) && !empty($ProfileStatWaist_max)){
+		$filter .= " AND profile.ProfileStatWaist <= '". $ProfileStatWaist_max ."'";
+	}
+	// Hip
+	if (isset($ProfileStatHip_min) && !empty($ProfileStatHip_min)){
+		$filter .= " AND profile.ProfileStatHip >= '". $ProfileStatHip_min ."'";
+	}
+	if (isset($ProfileStatHip_max) && !empty($ProfileStatHip_max)){
+		$filter .= " AND profile.ProfileStatHip <= '". $ProfileStatHip_max ."'";
+	}
+	// Age
+	$timezone_offset = -10; // Hawaii Time
+	$dateInMonth = gmdate('d', time() + $timezone_offset *60 *60);
+	$format = 'Y-m-d';
+	$date = gmdate($format, time() + $timezone_offset *60 *60);
+	if (isset($ProfileDateBirth_min) && !empty($ProfileDateBirth_min)){
+		$selectedYearMin = date($format, strtotime('-'. $ProfileDateBirth_min .' year'. $date));
+		$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
+	}
+	if (isset($ProfileDateBirth_max) && !empty($ProfileDateBirth_max)){
+		$selectedYearMax = date($format, strtotime('-'. $ProfileDateBirth_max-1 .' year'. $date));
+		$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
+	}
+	
+	// Filter Models Already in Cart
+	if (isset($_SESSION['cartArray'])) {
+		$cartArray = $_SESSION['cartArray'];
+		$cartString = implode(",", $cartArray);
+		$filter .=  " AND profile.ProfileID NOT IN (". $cartString .")";
+	}
+	
+	// Show Cart
+	$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media $filter ORDER BY ProfileContactNameFirst";
+	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+	$count = mysql_num_rows($results);
+	if ($count < 1) {
+		echo "There are currently no profiles in the casting cart.";
+		$hasQuery = false;
+	}
+
+// Call Casting Cart Session
+} elseif (($_GET['action'] == "castingCart") && (isset($_SESSION['cartArray']))) {
+	$cartArray = $_SESSION['cartArray'];
+	$cartString = implode(",", $cartArray);
+	$hasQuery = true;
+
+	// Show Cart
+	$query = "SELECT * FROM ". table_agency_profile ." profile INNER JOIN ". table_agency_profile_media ." media ON profile.ProfileID =media.ProfileID WHERE media.ProfileMediaPrimary =1 AND profile.ProfileID IN (". $cartString .") ORDER BY profile.ProfileContactNameFirst";
+	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+	$count = mysql_num_rows($results);
+	
+	if ($count < 1) {
+		echo "There are currently no profiles in the casting cart.";
+		$hasQuery = false;
+	}
+} else {
+	echo "<p>Nothing to display.  <a href=\"javascript:window.opener='x';window.close();\">Close</a></div></p>";
+	$hasQuery = false;
+}
+
+if ($hasQuery) {
+  if ($_GET['cD'] <> "2") {
+	echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width: 887px; \" class=\"profile\">";
+	while ($data = mysql_fetch_array($results)) {
+		echo "<div style=\"float: left; width: 420px; height: 220px; overflow: hidden; margin: 5px; padding: 5px; border: 1px solid #e1e1e1; \">";
+		echo " <div style=\"float: left; width: 150px; height: 180px; margin-right: 5px; overflow: hidden; \"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
+		echo " <div style=\"float: left; width: 230px; padding: 15px; \">";
+
+		if ($_GET['cD'] == "1") {
+			echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
+
+			if (!empty($data['ProfileContactEmail'])) {
+				echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
+			}
+			if (!empty($data['ProfileContactWebsite'])) {
+				echo "<div><strong>Website:</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
+			}
+			if (!empty($data['ProfileLocationStreet'])) {
+				echo "<div><strong>Street:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
+			}
+			if (!empty($data['ProfileLocationCity'])) {
+				echo "<div><strong>Address:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
+			}
+			if (!empty($data['ProfileLanguage'])) {
+				echo "<div><strong>Language:</strong> ". $data['ProfileLanguage'] ."</div>\n";
+			}
+			if (!empty($data['ProfileContactParent'])) {
+				echo "<div><strong>Parent:</strong> ". $data['ProfileContactParent'] ."</div>\n";
+			}
+			if (!empty($data['ProfileContactPhoneWork'])) {
+				echo "<div><strong>Work Phone:</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
+			}
+			if (!empty($data['ProfileContactPhoneCell'])) {
+				echo "<div><strong>Cell Phone:</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
+			}
+			if (!empty($data['ProfileContactPhoneHome'])) {
+				echo "<div><strong>Home Phone:</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
+			}
+			if (!empty($data['ProfileUnion'])) {
+				echo "<div><strong>Union:</strong> ". $data['ProfileUnion'] ."</div>\n";
+			}
+			echo " </div>";
+			echo " <div style=\"clear: both; text-align: center; padding: 5px; \">\n";
+		} else {
+			echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactDisplay']) . "</h2>"; 
+		}
+		
+		
+			if (!empty($data['ProfileStatSkinColor'])) {
+				echo "	<strong>Skin:</strong> ". $data['ProfileStatSkinColor'] ." | \n";
+			}
+			if (!empty($data['ProfileStatHairColor'])) {
+				echo "	<strong>Hair:</strong> ". $data['ProfileStatHairColor'] ." | \n";
+			}
+			if (!empty($data['ProfileStatEyeColor'])) {
+				echo "	<strong>Eye:</strong> ". $data['ProfileStatEyeColor'] ." | \n";
+			}
+			if (!empty($data['ProfileStatHeight'])) {
+				  $heightraw = $data['ProfileStatHeight'];
+				  $heightfeet = floor($heightraw/12);
+				  $heightinch = $heightraw - floor($heightfeet*12);
+				echo "	<strong>Height:</strong> ". $heightfeet ." ft ". $heightinch ." in" ." | \n";
+			}
+			if (!empty($data['ProfileStatWeight'])) {
+				echo "	<strong>Weight:</strong> ". $data['ProfileStatWeight'] ." | \n";
+			}
+			if (!empty($data['ProfileStatBust'])) {
+				if($data['ProfileGender'] == "Male"){ $ProfileStatBustTitle = "Chest"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatBustTitle = "Bust"; } else { $ProfileStatBustTitle = "Chest/Bust"; }
+				echo "	<strong>". $ProfileStatBustTitle ."</strong> ". $data['ProfileStatBust'] ." | \n";
+			}
+			if (!empty($data['ProfileStatWaist'])) {
+				echo "	<strong>Waist:</strong> ". $data['ProfileStatWaist'] ." | \n";
+			}
+			if (!empty($data['ProfileStatHip'])) {
+				if($data['ProfileGender'] == "Male"){ $ProfileStatHipTitle = "Inseam"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatHipTitle = "Hips"; } else { $ProfileStatHipTitle = "Hips/Inseam"; }
+				echo "	<strong>". $ProfileStatHipTitle ."</strong> ". $data['ProfileStatHip'] ."  \n";
+			}
+		
+		echo " </div>";
+		echo "</div>";
+	}
+	mysql_free_result($results);
+	echo "<div style=\"clear: both;\"></div>";
+
+
+
+  } else {
+        echo "        <table cellspacing=\"5\" cellpadding=\"5\">\n";
+        echo "        <tbody>\n";
+	while ($data = mysql_fetch_array($results)) {
+		echo "        <tr style=\"padding: 5px; border-top: 1px solid #000; \">\n";
+		echo "            <td style=\"padding: 5px;\">". $ProfileID ."";
+		echo "                <div class=\"title\">\n";
+		echo "                	<h2>". $data['ProfileContactNameFirst'] ." ". $data['ProfileContactNameLast'] ."</h2>\n";
+		echo "                </div>\n";
+		echo "            </td>\n";
+		echo "            <td style=\"padding: 5px;\">\n";
+		echo "                <div class=\"detail\">\n";
+				if (!empty($data['ProfileContactEmail'])) {
+					echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
+				}
+				if (!empty($data['ProfileContactWebsite'])) {
+					echo "<div><strong>Website:</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
+				}
+				if (!empty($data['ProfileLocationStreet'])) {
+					echo "<div><strong>Street:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
+				}
+				if (!empty($data['ProfileLocationStreet'])) {
+					echo "<div><strong>Address:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
+				}
+				if (!empty($data['ProfileContactParent'])) {
+					echo "<div><strong>Parent:</strong> ". $data['ProfileContactParent'] ."</div>\n";
+				}
+				if (!empty($data['ProfileContactPhoneWork'])) {
+					echo "<div><strong>Work Phone:</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
+				}
+				if (!empty($data['ProfileContactPhoneCell'])) {
+					echo "<div><strong>Cell Phone:</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
+				}
+				if (!empty($data['ProfileContactPhoneHome'])) {
+					echo "<div><strong>Home Phone:</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
+				}
+
+		echo "                </div>\n";
+		echo "            </td>\n";
+		echo "            <td style=\"padding: 5px;\">\n";
+
+				if (!empty($data['ProfileUnion'])) {
+					echo "<div><strong>Union:</strong> ". $data['ProfileUnion'] ."</div>\n";
+				}
+				if (!empty($data['ProfileLanguage'])) {
+					echo "<div><strong>Language:</strong> ". $data['ProfileLanguage'] ."</div>\n";
+				}
+				if (!empty($data['ProfileGender'])) {
+					echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileGender'] ."</div>\n";
+				}
+				if (!empty($data['ProfileDateBirth'])) {
+					echo "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
+				}
+				if (!empty($data['ProfileDateBirth'])) {
+					echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
+				}
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ."");
+				foreach  ($resultsCustom as $resultCustom) {
+					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+				}
+
+		echo "            </td>\n";
+		echo "            <td style=\"padding: 5px;\">\n";
+
+				if (!empty($data['ProfileStatEthnicity'])) {
+					echo "<div><strong>". __("Ethnicity", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatEthnicity'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatSkinColor'])) {
+					echo "<div><strong>". __("Skin Tone", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatSkinColor'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatHairColor'])) {
+					echo "<div><strong>". __("Hair Color", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatHairColor'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatEyeColor'])) {
+					echo "<div><strong>". __("Eye Color", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatEyeColor'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatHeight'])) {
+				  if ($rb_agency_option_unittype == 1) {
+						$heightraw = $data['ProfileStatHeight'];
+						$heightfeet = floor($heightraw/12);
+						$heightinch = $heightraw - floor($heightfeet*12);
+						echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN) .":</strong> ". $heightfeet ." ft ". $heightinch ." in" ."</div>\n";
+				  } else {
+						echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatHeight'] ." cm" ."</div>\n";
+				  }
+				}
+				if (!empty($data['ProfileStatWeight'])) {
+				  if ($rb_agency_option_unittype == 1) {
+					echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWeight'] ." lb</div>\n";
+				  } else {
+					echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWeight'] ." kg</div>\n";
+				  }
+				}
+				if (!empty($data['ProfileStatBust'])) {
+					if($data['ProfileGender'] == "Male"){ $ProfileStatBustTitle = "Chest"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatBustTitle = "Bust"; } else { $ProfileStatBustTitle = "Chest/Bust"; }
+					echo "<div><strong>". $ProfileStatBustTitle ."</strong> ". $data['ProfileStatBust'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatWaist'])) {
+					echo "<div><strong>". __("Waist", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWaist'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatHip'])) {
+					if($data['ProfileGender'] == "Male"){ $ProfileStatHipTitle = "Inseam"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatHipTitle = "Hips"; } else { $ProfileStatHipTitle = "Hips/Inseam"; }
+					echo "<div><strong>". $ProfileStatHipTitle ."</strong> ". $data['ProfileStatHip'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatDress'])) {
+					if($data['ProfileGender'] == "Male"){ $ProfileStatDressTitle = "Suit Size"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatDressTitle = "Dress Size"; } else { $ProfileStatDressTitle = "Suit/Dress Size"; }
+					echo "<div><strong>". $ProfileStatDressTitle ."</strong> ". $data['ProfileStatDress'] ."</div>\n";
+				}
+				if (!empty($data['ProfileStatShoe'])) {
+					echo "<div><strong>". __("Shoe Size", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatShoe'] ."</div>\n";
+				}
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ."");
+				foreach  ($resultsCustom as $resultCustom) {
+					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+				}
+
+		echo "            </td>\n";
+		echo "        </tr>\n";
+	}
+	mysql_free_result($results);
+        echo "        </tbody>\n";
+        echo "    </table>\n";
+
+  // 
+  }
+}
+?>
+<p style="text-align: center;">Property of <?php echo $rb_agency_option_agencyname; ?>.  All rights reserved.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+#profile #photolist .multiple { width: 210px; float: left; margin: 0 20px 20px 0; position: relative; z-index: 8;  overflow: hidden; height: 280px; border: 1px solid #800000; padding: 3px; }
+	#profile #photolist .multiple .title a { color: #fff; text-decoration: none; width: 220px; position: absolute; left: -3px; top: 235px; height: 30px; z-index: 10; text-align: center; font-size: 16px;  }
+	#profile #photolist .multiple .style { background-color:#800000; width: 220px; position: absolute; left: -3px; top: 230px; height: 30px; z-index: 7; 
+		   -ms-filter:'progid:DXImageTransform.Microsoft.Alpha(Opacity=50)';
+		   filter: alpha(opacity=50);
+		   opacity:.5; }
+	#profile #photolist .multiple img { max-width: 210px; }
+	#profile #photo { float: left; margin-right: 10px; width: 340px; }
+	#profile #photo .multiple { width: 150px; float: left; margin: 0 10px 10px 0; overflow: hidden; max-height: 185px; border: 1px solid #800000; padding: 3px; }
+	#profile #photo .multiple img { max-width: 150px; }
+	#profile #photo .single { width: 300px; float: left; padding; 2px; margin: 0 10px 10px 0; border: 1px solid #800000; overflow: hidden; height: 450px; padding: 3px; }
+	#profile #photo .single img { max-width: 300px; }
+	#profile #info { float: left; width: 600px; }
+	#profile #info h2 { margin: 0 0 10px 0; padding: 0 10px; background: #800000; color: #fff; text-transform: uppercase; }
+	#profile #info .stats { float: left; width: 320px; }
+	#profile #info .stats div { border-bottom: 1px solid #dadada; padding: 8px; line-height: 16px; }
+	#profile #info .stats strong { width: 100px; }
+	#profile #info .stats .experience { display: none; padding: 0px; }
+	#profile #info .stats .experience h3 { padding-left: 8px; margin-top: 10px; background: #999999; color: #fff; text-transform: uppercase; }
+	#profile #info .stats .experience ul { margin: 0px; padding: 0px; }
+	#profile #info .stats .experience ul li { list-style: none; line-height: 20px; border-bottom: 1px solid #dadada; }
+	#profile #info .action { float: right; width: 250px; }
+	#profile #info .action .social { }
+	#profile #info .action .links img { float: right; }
+	#profile #info .action .links h3 { padding-left: 8px; margin-top: 10px; background: #999999; color: #fff; text-transform: uppercase; }
+	#profile #info .action .links ul { margin: 0px; padding: 0px; }
+	#profile #info .action .links ul li { padding-left: 10px; list-style: none; line-height: 25px; border-bottom: 1px solid #dadada; }
+	#profile #info .action .links ul li.cart { font-weight: bold; }
