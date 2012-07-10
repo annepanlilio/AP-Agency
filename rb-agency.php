@@ -6,9 +6,9 @@
   Description: With this plugin you can easily manage models profiles and information.
   Author: Rob Bertholf
   Author URI: http://rob.bertholf.com/
-  Version: 1.8.9
+  Version: 1.8.5
 */
-$rb_agency_VERSION = "1.8.9"; 
+$rb_agency_VERSION = "1.8.5"; 
 
 if (!session_id())
 session_start();
@@ -88,6 +88,8 @@ return;
 		define("table_agency_searchsaved", "rb_agency_searchsaved");
 	if (!defined("table_agency_searchsaved_mux"))
 		define("table_agency_searchsaved_mux", "rb_agency_searchsaved_mux");
+	if (!defined("table_agency_savedfavorite"))
+		define("table_agency_savedfavorite", "rb_agency_savedfavorite");	
 
 // Call default functions
 	include_once(dirname(__FILE__).'/functions.php');
@@ -325,7 +327,14 @@ return;
 				PRIMARY KEY (SearchMuxID)
 				);";
 			dbDelta($sql10mux);
-
+           // Setup > Save Favorite
+			$sql9 = "CREATE TABLE ". table_agency_savedfavorite." (
+				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				SavedFavoriteProfileID VARCHAR(255),
+			    SavedFavoriteTalentID VARCHAR(255),
+				PRIMARY KEY (SavedFavoriteID)
+				);";
+			dbDelta($sql11);
 		}
 		
 	}
@@ -521,6 +530,97 @@ if ( is_admin() ){
 		
 }
 
+//****************************************************************************************************//
+// Add / Handles Ajax Request
+			
+		
+		add_action('wp_ajax_rb_agency_save_favorite', 'rb_agency_save_favorite');
+
+			function rb_agency_save_favorite() {
+				global $wpdb;
+				if(is_user_logged_in()){	
+					if(isset($_POST["talentID"])){
+						 $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID=".$_POST["talentID"]."  AND SavedFavoriteProfileID = ".rb_agency_get_current_userid()."" ) or die("error");
+						 $count_favorite = mysql_num_rows($query_favorite);
+						 $datas_favorite = mysql_fetch_assoc($query_favorite);
+						 
+						 if($count_favorite<=0){ //if not exist insert favorite!
+							 
+							   mysql_query("INSERT INTO ".table_agency_savedfavorite."(SavedFavoriteID,SavedFavoriteProfileID,SavedFavoriteTalentID) VALUES('','".rb_agency_get_current_userid()."','".$_POST["talentID"]."')") or die("error");
+							 
+						 }else{ // favorite model exist, now delete!
+							 
+							  mysql_query("DELETE FROM  ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID=".$_POST["talentID"]."  AND SavedFavoriteProfileID = ".rb_agency_get_current_userid()."") or die("error");
+							 
+						 }
+						
+					}
+					
+				}
+				else{
+					echo "not_logged";
+				}
+				die();
+			}
+	  
+		
+		function rb_agency_save_favorite_javascript() {
+		?>
+		<script type="text/javascript" >
+		jQuery(document).ready(function($) {
+		   
+		   $("div[class=favorite] a").click(function(){
+			   
+					var Obj = $(this);
+					
+				    
+					// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+					jQuery.ajax({
+					type: 'POST',
+					url: '<?php echo admin_url('admin-ajax.php'); ?>',
+					data: {
+						action: 'rb_agency_save_favorite',
+				        'talentID': $(this).attr("id")
+					},
+					success: function(results) {  
+					           
+					            if(results=='error'){
+								      Obj.fadeOut().html("<div class=\"favorite-box\"></div>Error in query. Try again").fadeIn();  
+							   }
+							   else if(results==-1){
+								       Obj.fadeOut().html("<div class=\"favorite-box\"></div><span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo $rb_agency_WPURL; ?>/profile-member/\">Sign In</a>.").fadeIn();  
+							           setTimeout(function() {  
+									      if(Obj.attr("class")=="save_favorite"){
+											  Obj.fadeOut().html("<div class=\"favorite-box\"></div>Save as Favorite").fadeIn();
+											 
+										   }else{
+											  Obj.fadeOut().html("<div class=\"favorite-box\"></div>Favorited").fadeIn(); 
+											 
+										   }
+									    }, 2000);
+							   }
+							   else{
+								   if(Obj.attr("class")=="save_favorite"){
+									   Obj.empty().fadeOut().html("<div class=\"favorite-box\"></div>Favorited <a href=\"<?php echo $rb_agency_WPURL; ?>/profile-favorite/\"  style=\"font-size:12px;float:right;\" class=\"view_all_favorite\"><strong>View all favorites</strong></a>").fadeIn(); 
+									   Obj.attr("class","favorited");
+								   }else{
+									  Obj.empty().fadeOut().html("<div class=\"favorite-box\"></div>Save as Favorite").fadeIn(); 
+									 
+									  Obj.attr("class","save_favorite");
+								   }
+							   }
+					}
+					
+                    })//.error(function() { alert("error"); });
+				
+				
+			  });
+		});
+		</script>
+		<?php
+		}
+   
+        add_action('wp_head', 'rb_agency_save_favorite_javascript');
 
 // *************************************************************************************************** //
 // Add Widgets

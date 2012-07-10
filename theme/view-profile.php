@@ -86,7 +86,6 @@ while ($data = mysql_fetch_array($results)) {
 	$ProfileIsActive			=stripslashes($data['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileStatHits			=stripslashes($data['ProfileStatHits']);
 	$ProfileDateViewLast		=stripslashes($data['ProfileDateViewLast']);
-}
 	
 	// Update Stats
 	$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
@@ -178,6 +177,7 @@ while ($data = mysql_fetch_array($results)) {
 			}
 			
 		}
+}
    
 // GET HEADER  
 	get_header();

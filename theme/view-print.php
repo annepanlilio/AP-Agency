@@ -18,16 +18,10 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
       }
       //-->
     </script>
-    <style>
-	.column-ProfileDetails  { padding: 10px; }
-	.column-ProfileDetails div { display: inline; margin: 10px 0; }
-	</style>
 </head>
 <body onload="printpage()" style="background: #fff;">
 <div id="print_wrapper" style="width: 887px;">
-  <?php if (isset($rb_agency_option_agencylogo)) { ?>
   <div id="print_logo" style="float: left; width: 50%;"><img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" /></div>
-  <?php } ?>
   <div id="print_actions" style="float: left; text-align: right; width: 50%;"><a href="#" onclick="printpage();">Print</a> | <a href="javascript:window.opener='x';window.close();">Close</a></div>
   <div style="clear: both;"></div>
 <?php
@@ -178,7 +172,7 @@ if ($_GET['action'] == "quickPrint") {
 	$hasQuery = true;
 
 	// Show Cart
-	$query = "SELECT * FROM ". table_agency_profile ." profile INNER JOIN ". table_agency_profile_media ." media ON profile.ProfileID =media.ProfileID WHERE media.ProfileMediaPrimary =1 AND profile.ProfileID IN (". $cartString .") ORDER BY profile.ProfileContactNameFirst";
+	$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY ProfileContactNameFirst ASC";
 	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 	$count = mysql_num_rows($results);
 	
@@ -192,9 +186,9 @@ if ($_GET['action'] == "quickPrint") {
 }
 
 if ($hasQuery) {
-  if ($_GET['cD'] <> "2") {
 	echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width: 887px; \" class=\"profile\">";
 	while ($data = mysql_fetch_array($results)) {
+	  if (1 == 1) {
 		echo "<div style=\"float: left; width: 420px; height: 220px; overflow: hidden; margin: 5px; padding: 5px; border: 1px solid #e1e1e1; \">";
 		echo " <div style=\"float: left; width: 150px; height: 180px; margin-right: 5px; overflow: hidden; \"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
 		echo " <div style=\"float: left; width: 230px; padding: 15px; \">";
@@ -271,137 +265,13 @@ if ($hasQuery) {
 		
 		echo " </div>";
 		echo "</div>";
+	  } // elseif (layout style is another value......) {
+	  // 
+	  // }
 	}
 	mysql_free_result($results);
 	echo "<div style=\"clear: both;\"></div>";
-
-
-
-  } else {
-        echo "        <table cellspacing=\"5\" cellpadding=\"5\">\n";
-        echo "        <tbody>\n";
-	while ($data = mysql_fetch_array($results)) {
-		echo "        <tr style=\"padding: 5px; border-top: 1px solid #000; \">\n";
-		echo "            <td style=\"padding: 5px;\">". $ProfileID ."";
-		echo "                <div class=\"title\">\n";
-		echo "                	<h2>". $data['ProfileContactNameFirst'] ." ". $data['ProfileContactNameLast'] ."</h2>\n";
-		echo "                </div>\n";
-		echo "            </td>\n";
-		echo "            <td style=\"padding: 5px;\">\n";
-		echo "                <div class=\"detail\">\n";
-				if (!empty($data['ProfileContactEmail'])) {
-					echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactWebsite'])) {
-					echo "<div><strong>Website:</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
-				}
-				if (!empty($data['ProfileLocationStreet'])) {
-					echo "<div><strong>Street:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
-				}
-				if (!empty($data['ProfileLocationStreet'])) {
-					echo "<div><strong>Address:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactParent'])) {
-					echo "<div><strong>Parent:</strong> ". $data['ProfileContactParent'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactPhoneWork'])) {
-					echo "<div><strong>Work Phone:</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactPhoneCell'])) {
-					echo "<div><strong>Cell Phone:</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactPhoneHome'])) {
-					echo "<div><strong>Home Phone:</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
-				}
-
-		echo "                </div>\n";
-		echo "            </td>\n";
-		echo "            <td style=\"padding: 5px;\">\n";
-
-				if (!empty($data['ProfileUnion'])) {
-					echo "<div><strong>Union:</strong> ". $data['ProfileUnion'] ."</div>\n";
-				}
-				if (!empty($data['ProfileLanguage'])) {
-					echo "<div><strong>Language:</strong> ". $data['ProfileLanguage'] ."</div>\n";
-				}
-				if (!empty($data['ProfileGender'])) {
-					echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileGender'] ."</div>\n";
-				}
-				if (!empty($data['ProfileDateBirth'])) {
-					echo "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
-				}
-				if (!empty($data['ProfileDateBirth'])) {
-					echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
-				}
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ."");
-				foreach  ($resultsCustom as $resultCustom) {
-					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-				}
-
-		echo "            </td>\n";
-		echo "            <td style=\"padding: 5px;\">\n";
-
-				if (!empty($data['ProfileStatEthnicity'])) {
-					echo "<div><strong>". __("Ethnicity", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatEthnicity'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatSkinColor'])) {
-					echo "<div><strong>". __("Skin Tone", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatSkinColor'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatHairColor'])) {
-					echo "<div><strong>". __("Hair Color", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatHairColor'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatEyeColor'])) {
-					echo "<div><strong>". __("Eye Color", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatEyeColor'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatHeight'])) {
-				  if ($rb_agency_option_unittype == 1) {
-						$heightraw = $data['ProfileStatHeight'];
-						$heightfeet = floor($heightraw/12);
-						$heightinch = $heightraw - floor($heightfeet*12);
-						echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN) .":</strong> ". $heightfeet ." ft ". $heightinch ." in" ."</div>\n";
-				  } else {
-						echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatHeight'] ." cm" ."</div>\n";
-				  }
-				}
-				if (!empty($data['ProfileStatWeight'])) {
-				  if ($rb_agency_option_unittype == 1) {
-					echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWeight'] ." lb</div>\n";
-				  } else {
-					echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWeight'] ." kg</div>\n";
-				  }
-				}
-				if (!empty($data['ProfileStatBust'])) {
-					if($data['ProfileGender'] == "Male"){ $ProfileStatBustTitle = "Chest"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatBustTitle = "Bust"; } else { $ProfileStatBustTitle = "Chest/Bust"; }
-					echo "<div><strong>". $ProfileStatBustTitle ."</strong> ". $data['ProfileStatBust'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatWaist'])) {
-					echo "<div><strong>". __("Waist", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWaist'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatHip'])) {
-					if($data['ProfileGender'] == "Male"){ $ProfileStatHipTitle = "Inseam"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatHipTitle = "Hips"; } else { $ProfileStatHipTitle = "Hips/Inseam"; }
-					echo "<div><strong>". $ProfileStatHipTitle ."</strong> ". $data['ProfileStatHip'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatDress'])) {
-					if($data['ProfileGender'] == "Male"){ $ProfileStatDressTitle = "Suit Size"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatDressTitle = "Dress Size"; } else { $ProfileStatDressTitle = "Suit/Dress Size"; }
-					echo "<div><strong>". $ProfileStatDressTitle ."</strong> ". $data['ProfileStatDress'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatShoe'])) {
-					echo "<div><strong>". __("Shoe Size", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatShoe'] ."</div>\n";
-				}
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ."");
-				foreach  ($resultsCustom as $resultCustom) {
-					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-				}
-
-		echo "            </td>\n";
-		echo "        </tr>\n";
-	}
-	mysql_free_result($results);
-        echo "        </tbody>\n";
-        echo "    </table>\n";
-
-  // 
-  }
+	echo "</div>";
 }
 ?>
 <p style="text-align: center;">Property of <?php echo $rb_agency_option_agencyname; ?>.  All rights reserved.</p>

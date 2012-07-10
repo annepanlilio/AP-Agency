@@ -75,14 +75,10 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 			);");
 		$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Male')");
 		$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_searchsaved ." CHANGE SearchProfileID SearchProfileID TEXT");
 	
 		// Updating version number!
 		update_option('rb_agency_version', "1.9");
 	}
-
-
 
 // Ensure directory is setup
 if (!is_dir(rb_agency_UPLOADPATH)) {

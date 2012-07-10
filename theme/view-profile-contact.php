@@ -116,8 +116,8 @@ if ($_POST["contact-action"] == "contact") {
 }
 	
 	// Change Title
-	add_filter('wp_title', 'rb_agency_override_title_contact', 10, 2);
-		function rb_agency_override_title_contact(){
+	add_filter('wp_title', 'rb_agency_override_title', 10, 2);
+		function rb_agency_override_title(){
 			global $ProfileContactDisplay;
 			return bloginfo('name') ." > Contact ". $ProfileContactDisplay ."";
 		}

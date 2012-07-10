@@ -27,7 +27,7 @@ get_header();
 				$SearchProfileID = $data['SearchProfileID'];
 
 				if (function_exists('rb_agency_profilelist')) { 
-					$atts = array("override_privacy" => true, "pagingperpage" => 9999, "profileid" => $SearchProfileID);
+					$atts = array("profileid" => $SearchProfileID);
 					rb_agency_profilelist($atts); 
 				}
 			}

@@ -14,7 +14,7 @@ global $wpdb;
 	$i = 0;
 	if (mysql_num_rows($result) > 0) {
 	  while ($row = mysql_fetch_assoc($result)) {
-		$csv_output .= $row['Field']."; ";
+		$csv_output .= $row['Field'].", ";
 		$i++;
 	  }
 	}
@@ -23,7 +23,7 @@ global $wpdb;
 	$values = mysql_query("SELECT * FROM rb_agency_profile");
 	while ($rowr = mysql_fetch_row($values)) {
 		for ($j=0;$j<$i;$j++) {
-		$csv_output .= $rowr[$j]."; ";
+		$csv_output .= $rowr[$j].", ";
 		}
 	  $csv_output .= "\n";
 	}

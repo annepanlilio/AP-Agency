@@ -1,11 +1,5 @@
 <?php
-session_start();
-
 global $wpdb;
-
-global $current_user;
-get_currentuserinfo();
-$unique = $current_user->ID;
 
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
@@ -470,9 +464,8 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
     
         echo "     <p>\n";
         echo "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_menu_search') ."\" class=\"button-primary\" />\n";
-        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"". __("Quick Print", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
-        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=2','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Images", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Images", rb_agency_TEXTDOMAIN) ."</a>\n";
-        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
+        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
+        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 		echo "     </p>\n";
 		echo "  </form>\n";
       
@@ -584,9 +577,8 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
         echo "        <h3>". __("Cart Actions", rb_agency_TEXTDOMAIN) ."</h3>\n";
         echo "        <div class=\"inner\">\n";
         echo "      	<a href=\"?page=rb_agency_menu_searchsaved&action=searchSave\" title=\"". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."</a>\n";
-        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"". __("Quick Print", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
-        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=2','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Images", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Images", rb_agency_TEXTDOMAIN) ."</a>\n";
-        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
+        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
+        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 
 		echo "        </div>\n";
 		echo "     </div>\n";
@@ -653,9 +645,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									if ($rb_agency_option_unittype == 1) {
 		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
 		echo "				        	<select name=\"ProfileStatHeight_min\" id=\"ProfileStatHeight_min\">\n";               
-										//if (empty($_SESSION['ProfileStatHeight_min'])) {
+										if (empty($_SESSION['ProfileStatHeight_min'])) {
 		echo "							<option value=\"\" selected>". __("No Minimum", rb_agency_TEXTDOMAIN) . "</option>\n";
-										//}
+										}
                         				// Lets Convert It
 										$i=36;$heightraw = 0; $heightfeet = 0; $heightinch = 0;
 										while($i<=90) { 
@@ -669,9 +661,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
 		echo "				        	<select name=\"ProfileStatHeight_max\" id=\"ProfileStatHeight_max\">\n";               
-										//if (empty($_SESSION['ProfileStatHeight_max'])) {
+										if (empty($_SESSION['ProfileStatHeight_max'])) {
 		echo "							<option value=\"\" selected>". __("No Maximum", rb_agency_TEXTDOMAIN) . "</option>\n";
-										//}
+										}
 										// Lets Convert It
 										$i=36; $heightraw = 0; $heightfeet = 0; $heightinch = 0;
 										while($i <= 90) {
@@ -706,9 +698,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Ethnicity", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileStatEthnicity\" id=\"ProfileStatEthnicity\">\n";               
-										//if (empty($ProfileStatEthnicity)) {
+										if (empty($ProfileStatEthnicity)) {
 		echo "							<option value=\"\" selected>". __("Any Ethnicity", rb_agency_TEXTDOMAIN) . "</option>\n";
-										//}
+										}
 								
 										$query1 = "SELECT EthnicityTitle FROM ". table_agency_data_ethnicity ." ORDER BY EthnicityTitle";
 										$results1 = mysql_query($query1);
@@ -723,9 +715,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Skin Color", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileStatSkinColor\" id=\"ProfileStatSkinColor\">\n";               
-										//if (empty($ProfileStatSkinColor)) {
+										if (empty($ProfileStatSkinColor)) {
 		echo "							<option value=\"\" selected>". __("Any Skin Color", rb_agency_TEXTDOMAIN) . "</option>\n";
-										//}
+										}
 		
 										$query = "SELECT * FROM ". table_agency_data_colorskin ." ORDER BY ColorSkinTitle";
 										$results = mysql_query($query);
@@ -739,9 +731,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Eye Color", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileStatEyeColor\" id=\"ProfileStatEyeColor\">\n";               
-										//if (empty($ProfileStatEyeColor)) {
+										if (empty($ProfileStatEyeColor)) {
 		echo "							<option value=\"\" selected>". __("Any Eye Color", rb_agency_TEXTDOMAIN) . "</option>\n";
-										//}
+										}
 	
 										$query = "SELECT * FROM ". table_agency_data_coloreye ." ORDER BY ColorEyeTitle";
 										$results = mysql_query($query);
@@ -755,9 +747,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Hair Color", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileStatHairColor\" id=\"ProfileStatHairColor\">\n";               
-										//if (empty($ProfileStatHairColor)) {
+										if (empty($ProfileStatHairColor)) {
 		echo "							<option value=\"\" selected>". __("Any Hair Color", rb_agency_TEXTDOMAIN) . "</option>\n";
-										//}
+										}
 	
 										$query = "SELECT * FROM ". table_agency_data_colorhair ." ORDER BY ColorHairTitle";
 										$results = mysql_query($query);
