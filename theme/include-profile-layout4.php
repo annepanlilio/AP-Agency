@@ -88,8 +88,8 @@ Escort
 
 		echo "	  <h2 styl=\"margin-top: 20px;\">Prices</h2>\n";
 		echo "	  <div class=\"stats\">\n";
-			$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 2 AND cx.ProfileID = ". $ProfileID ."");
-			foreach  ($resultsCustom as $resultCustom) {
+			$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC");
+		foreach  ($resultsCustom as $resultCustom) {
 				echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 			}
 			

@@ -96,7 +96,7 @@ $(document).ready(function(){
 			
 			case "7":
 			       $("#objtype_customize").empty().html("<td>Title*:<input type='text' /></td>");
-				   $("#objtype_customize").append("<tr><td><input type='text' /><select><option>ft.</option><option>inches</option></select></td></tr>");
+				   $("#objtype_customize").append("<tr><td><input type='text' /></td></tr>");
 			break;
 			
 			

@@ -49,6 +49,8 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 
 		// Privacy in Custom Fields
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomView INT(10) NOT NULL DEFAULT '0'");
+		// Custom Order in Custom Fields
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." CHANGE ProsfileContactEmail ProfileContactEmail VARCHAR(255)");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." ADD ProfileUserLinked  BIGINT(20) NOT NULL DEFAULT '0'");
 		
@@ -59,9 +61,20 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 	
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." CHANGE ProfileCustomOptions ProfileCustomOptions TEXT");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfield_mux ." CHANGE ProfileCustomValue ProfileCustomValue TEXT");
+		// Custom Order in Custom Fields
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");
 	
 		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." ADD ProfileIsFeatured  INT(10) NOT NULL DEFAULT '0'");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." ADD ProfileIsPromoted  INT(10) NOT NULL DEFAULT '0'");
+		
+		// Setup > Save Favorited
+		 $results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
+				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				SavedFavoriteProfileID VARCHAR(255),
+			    SavedFavoriteTalentID VARCHAR(255),
+				PRIMARY KEY (SavedFavoriteID)
+				);");
+		
 		// Updating version number!
 		update_option('rb_agency_version', "1.8.5");
 	}
@@ -73,16 +86,22 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 			GenderTitle VARCHAR(255),
 			PRIMARY KEY (GenderID)
 			);");
+	    // Custom Order in Custom Fields
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");
 		$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Male')");
 		$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_searchsaved ." CHANGE SearchProfileID SearchProfileID TEXT");
+		
+		// Setup > Save Favorited
+		 $results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
+				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				SavedFavoriteProfileID VARCHAR(255),
+			    SavedFavoriteTalentID VARCHAR(255),
+				PRIMARY KEY (SavedFavoriteID)
+				);");
 	
 		// Updating version number!
 		update_option('rb_agency_version', "1.9");
 	}
-
-
 
 // Ensure directory is setup
 if (!is_dir(rb_agency_UPLOADPATH)) {

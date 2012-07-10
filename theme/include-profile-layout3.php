@@ -220,7 +220,7 @@ Expended Profile with Tabs
 
 	echo " <div class=\"row row-experience clear tab\">\n";
 
-	$query1 = "SELECT cf.ProfileCustomID, cf.ProfileCustomTitle, cfx.ProfileCustomValue FROM ". table_agency_customfields ." cf LEFT JOIN ". table_agency_customfield_mux ." cfx ON cf.ProfileCustomID = cfx.ProfileCustomID WHERE cf.ProfileCustomView = 2 AND cf.ProfileCustomType = 4 AND cfx.ProfileID = ". $ProfileID ." ORDER BY cf.ProfileCustomTitle";
+	$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
 	$results1 = mysql_query($query1);
 	$count1 = mysql_num_rows($results1);
 	while ($data1 = mysql_fetch_array($results1)) {

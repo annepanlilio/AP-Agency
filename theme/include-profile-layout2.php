@@ -188,7 +188,7 @@ Profile View with Sliding Thumbnails and Primary Image
 		}
 		if (!empty($ProfileStatBust)) {
 			if($ProfileGender == "Male"){ $ProfileStatBustTitle = __("Chest", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatBustTitle = __("Bust", rb_agency_TEXTDOMAIN); } else { $ProfileStatBustTitle = __("Chest/Bust", rb_agency_TEXTDOMAIN); }
-			echo "<div><strong>". $ProfileStatBustTitle ."<span class=\"divider\">:</span></strong> ". $ProfileStatBust ."</div>\n";
+			echo "<div><strong>". $ProfileStatBustTitle ."</strong> ". $ProfileStatBust ."</div>\n";
 		}
 		if (!empty($ProfileStatWaist)) {
 			echo "<div><strong>". __("Waist", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWaist ."</div>\n";
@@ -206,12 +206,14 @@ Profile View with Sliding Thumbnails and Primary Image
 		}
 
 
-		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ."");
+		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC");
 		foreach  ($resultsCustom as $resultCustom) {
 			echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 		}
 
+        
 	echo "	  </div>\n";
+
 
 	echo "	</div> <!-- #info -->\n";
 	echo "	</div> <!-- #profile-l -->\n";

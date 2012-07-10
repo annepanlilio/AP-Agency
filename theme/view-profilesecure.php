@@ -1,25 +1,13 @@
 <?php 
 session_start();
-// Private Search List sent to Clients 
 
 // Get Profile
 $SearchMuxHash = get_query_var('target');
 
 get_header();
 
-
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming 		= $rb_agency_options_arr['rb_agency_option_profilenaming'];
-
-
-
-
-echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper 
-	echo "<div class=\"PageTitle\"><h1>Casting Cart</h1></div>\n";	 // Profile Name
-
-
-
-
 
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
@@ -39,7 +27,7 @@ echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper
 				$SearchProfileID = $data['SearchProfileID'];
 
 				if (function_exists('rb_agency_profilelist')) { 
-					$atts = array("pagingperpage" => 9999, "profileid" => $SearchProfileID);
+					$atts = array("profileid" => $SearchProfileID);
 					rb_agency_profilelist($atts); 
 				}
 			}
@@ -53,8 +41,6 @@ echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper
 		echo " </div>\n";
 	echo "  </div>\n";
 	echo "</div>\n";
-
-echo "</div>\n"; //END .content_wrapper 
 	
 //get_sidebar(); 
 get_footer(); 

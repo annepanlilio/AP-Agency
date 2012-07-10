@@ -2,14 +2,11 @@
 // *************************************************************************************************** //
 // Get Category
 
-// This is the Portfolio-Category page 
-
-
 session_start();
 header("Cache-control: private"); //IE 6 Fix
 
 // Get Profile
-//$ProfileType = get_query_var('target'); 
+$ProfileType = get_query_var('target'); 
 
 if (isset($ProfileType) && !empty($ProfileType)){
 	$DataTypeID = 0;
@@ -26,30 +23,21 @@ if (isset($ProfileType) && !empty($ProfileType)){
 
 get_header(); 
 
-
-
-	echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper 
-	echo "<div class=\"PageTitle\"><h1>Talent Directory</h1></div>\n";	 // Profile Name
-	
-
-
-
-
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	
 		echo "<div id=\"profile-category\">\n";
 
-//		echo "	<h1 class=\"profile-category-title\">\n";
-//		echo "	". __("Directory", rb_agency_TEXTDOMAIN) ." ";
-//				if ($DataTypeTitle) { echo " > ". $DataTypeTitle; }
-//		echo "	</h1>\n";
+		echo "	<h1 class=\"profile-category-title\">\n";
+		echo "	". __("Directory", rb_agency_TEXTDOMAIN) ." ";
+				if ($DataTypeTitle) { echo " > ". $DataTypeTitle; }
+		echo "	</h1>\n";
 
-//		echo "	<div class=\"clear line\"></div>\n";
+		echo "	<div class=\"clear line\"></div>\n";
 
-//			if (function_exists('rb_agency_categorylist')) { 
-//				$atts = array('currentcategory' => $DataTypeID);
-//				rb_agency_categorylist($atts); }
+			if (function_exists('rb_agency_categorylist')) { 
+				$atts = array('currentcategory' => $DataTypeID);
+				rb_agency_categorylist($atts); }
 
 		echo "	<div class=\"clear line\"></div>\n";
 		echo "	<table class=\"standardTable\">\n";
@@ -67,7 +55,7 @@ get_header();
 		echo "	    </td>\n";
 		echo "	    <td class=\"profile-category-filter-wrapper\">\n";
 		echo "			<div class=\"profile-category-filter\">\n";
-		echo "			  <h3>". __("Filter Profiles", rb_agency_TEXTDOMAIN) .":</h3>\n";
+		echo "			  <h4>". __("Filter Profiles", rb_agency_TEXTDOMAIN) .":</h4>\n";
 	 
 						  $profilesearch_layout = "condensed";
 						  include("include-profile-search.php"); 	
@@ -81,7 +69,6 @@ get_header();
 		
 	echo "  </div>\n";
 	echo "</div>\n";
-	echo "</div>\n"; // END .content_wrapper 
        
 //get_sidebar(); 
 get_footer(); 
