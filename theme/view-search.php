@@ -135,17 +135,6 @@ if ($_REQUEST["action"] == "search") {
 			$filterArray['profiledatebirth_max'] = $_REQUEST['ProfileDateBirth_max'];
 		}
 		
-		// Custom Fields
-		foreach($_REQUEST as $key =>$val){
-		
-				if(substr($key,0,15)=="ProfileCustomID"){
-					if(isset($val) && !empty($val)){
-						$filterArray[$key] = $val;
-					}
-				}
-		}
-		
-		
 		// Pagination
 		$filterArray['paging'] = 1;
 		$filterArray['pagingperpage'] = 1000;
@@ -156,23 +145,27 @@ if ($_REQUEST["action"] == "search") {
 // *************************************************************************************************** //
 // GET HEADER  
 	get_header();
-   $sql = "SELECT * FROM ".table_agency_customfield_mux."";
-    $q = mysql_query($sql) or die(mysql_error());
-     while($f = mysql_fetch_assoc($q)){
-		// print_r($f);
-		 //echo "<br/>"; 
-	 }
-   echo $filter;
+
+
+	echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper 
+	echo "<div class=\"PageTitle\">\n";	 // Profile Name
+
+
+		if ($_REQUEST["action"] == "search") {
+			echo "  <h1 class=\"profile-search-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
+				} else {
+			echo "  <h1 class=\"profile-search-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		}
+
+
+	echo "</div>\n";  //End .PageTitle 
+
+	echo "<p style=\"text-align:center\"><a href=\"/talents/actors/\" class=\"button orange small\">Actors</a> <a href=\"/talents/models/\" class=\"button orange small\">Models</a> <a href=\"#\" class=\"button orange small\">Dancers</a> <a href=\"#\" class=\"button orange small\">Performers</a> <a href=\"#\" class=\"button orange small\">Musicians</a> <a href=\"#\" class=\"button orange small\">Bands</a> <a href=\"#\" class=\"button orange small\">Film Crews</a> <a href=\"#\" class=\"button orange small\">Writers</a></p>\n";
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 
 		echo "<div id=\"profile-search\">\n";
 	
-			if ($_REQUEST["action"] == "search") {
-		echo "  <h1 class=\"profile-search-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
-			} else {
-		echo "  <h1 class=\"profile-search-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
-			}
 	
 		echo "  <div class=\"clear line\"></div>\n";
 		
@@ -208,7 +201,12 @@ if ($_REQUEST["action"] == "search") {
 
 	echo "  </div>\n";
 	echo "</div>\n";
-	
+
+
+	echo "</div>\n";	// End .content_wrapper (Theme Wrapper )
+
+ 
+     print_r($filter);
 
 //get_sidebar(); 
 get_footer(); 

@@ -84,13 +84,25 @@
 
 get_header();
 
+
+	echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper 
+	echo "<div class=\"PageTitle\"><h1>Welcome ". $current_user->user_firstname ."</h1></div>\n";	 // Profile Name
+
+
+
 if (is_user_logged_in()) { 
 	global $current_user;
 	get_currentuserinfo();
 	$curauth = get_user_by('id', $current_user->ID);
 
+
+
+
+
+
+
 	echo "<div id=\"dashboard\">\n";
-	echo "<h1>Welcome ". $current_user->user_firstname ."</h1>\n";
+
 
   // Return them where we found them 
   if (isset($_SESSION['ProfileLastViewed']) && ($_SESSION['ProfileLastViewed'])) {
@@ -134,6 +146,12 @@ if (is_user_logged_in()) {
 	echo "  </div>\n";
   */
 if (isset($curauth->user_login)) {
+
+
+
+
+
+
 	echo "  <div id=\"userinfo\" style=\"float: right; width: 250px; margin-right: 30px;\">\n";
 	echo "		<h2>Profile</h2>\n";
 	echo "		Username: <strong>" . $curauth->user_login . "</strong><br />\n";
@@ -146,7 +164,7 @@ if (isset($curauth->user_login)) {
 	//echo "User level: " . $current_user->user_level . "<br />\n";
 	//echo "User display name: " . $current_user->display_name . "<br />\n";
 	echo "		<h4><a href=\"". get_bloginfo("url") ."/wp-admin/profile.php\">Edit Information</a></h4>\n";
-	echo "		<h4><a href=\"" . wp_logout_url(get_permalink()) . "\">Logout</a></h4>\n";
+	echo "		<h4><a href=\"". wp_logout_url(get_permalink()) ."\">Logout</a></h4>\n";
 	echo "  </div>\n";
 	
 	echo "  <div id=\"search\" style=\"float: left; width: 500px;\">\n";
@@ -158,10 +176,17 @@ if (isset($curauth->user_login)) {
 	echo rb_agency_get_userrole();
 	*/
 	echo "</div>\n";
-
+	
 } else {
 	include ("include-login.php"); 	
 }
+    
+    
+ 	echo "</div>\n"; // END #content 
+	echo "</div>\n"; //END .content_wrapper 
+   
+    
+    
     
     
 //get_sidebar(); 

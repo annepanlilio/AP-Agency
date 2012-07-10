@@ -86,6 +86,7 @@ while ($data = mysql_fetch_array($results)) {
 	$ProfileIsActive			=stripslashes($data['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileStatHits			=stripslashes($data['ProfileStatHits']);
 	$ProfileDateViewLast		=stripslashes($data['ProfileDateViewLast']);
+}
 	
 	// Update Stats
 	$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
@@ -94,7 +95,7 @@ while ($data = mysql_fetch_array($results)) {
 	add_filter('wp_title', 'rb_agency_override_title', 10, 2);
 		function rb_agency_override_title(){
 			global $ProfileContactDisplay;
-			return bloginfo('name') ." > ". $ProfileContactDisplay ."";
+			return $ProfileContactDisplay ." - ";
 		}
 	
 	// Remove All Known Scripts which effect
@@ -177,7 +178,6 @@ while ($data = mysql_fetch_array($results)) {
 			}
 			
 		}
-}
    
 // GET HEADER  
 	get_header();
@@ -190,8 +190,34 @@ while ($data = mysql_fetch_array($results)) {
 		echo "	</div>\n";
 	}
 	
-	echo "<div id=\"container\" class=\"one-column\">\n";
+	
+	
+	
+	echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper 
+	echo "<div class=\"PageTitle\"><h1>". $ProfileContactDisplay ."</h1></div>\n";	 // Profile Name
+	
+	// Breadcrumbs
+	echo "<div id=\"breadcrumbs\">\n";
+		echo "<a href=\"javascript: history.go(-1)\">&laquo; Go Back</a> | \n";
+		echo "<a href=\"/profile-category/\">Talent Directory</a> | \n";
+		echo "<a href=\"/talents/male-talents/\">Male Talents</a> | \n";
+		echo "<a href=\"/talents/female-talents/\">Female Talents</a> | \n";
+		echo "<a href=\"/profile-search/\">Advanced Search</a>\n";
+	echo "</div>\n";
+	echo "<div class=\"spacer20\"></div>\n";
+	
+	
+	
+	
+	
+	
+	
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
+	
+	
+	
+	
+	
 	if ($count > 0) {
 		if ( ( $rb_agency_option_privacy > 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
 			//if (isset($_SESSION['SearchMuxHash'])) { echo "Permission Granted"; }
@@ -212,8 +238,19 @@ while ($data = mysql_fetch_array($results)) {
 		// There is no record found.
 			echo "". __("Invalid Profile", rb_agency_TEXTDOMAIN) ."\n";
 	}
-	echo "  </div>\n";
-	echo "</div>\n";
+	
+	
+	
+	
+	
+	echo "</div>\n"; // END #content 
+	echo "</div>\n"; //END .content_wrapper 
+	
+	
+	
+	
+	
+	
 
 	get_footer(); 
 ?>

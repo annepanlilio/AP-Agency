@@ -1,14 +1,18 @@
 <?php
 /*
 Profile View with Thumbnails and Primary Image
+Custom Layout # 6
 */
 
 	echo "<div id=\"profile\">\n";
+	
+	
+	
 	echo " <div id=\"profile-layout-one\">\n";
 
-	echo "	<div id=\"name\">\n";
-	echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
-	echo "	</div>\n";
+	//echo "	<div id=\"name\">\n";
+	//echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
+	//echo "	</div>\n";
 
 	echo "	<div id=\"profile-picture\">\n";
 
@@ -17,14 +21,24 @@ Profile View with Thumbnails and Primary Image
 		$resultsImg = mysql_query($queryImg);
 		$countImg = mysql_num_rows($resultsImg);
 		while ($dataImg = mysql_fetch_array($resultsImg)) {
-			echo "		<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+			echo "		<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"prettyPhoto[profile]". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 		}
 
 	echo "	</div> <!-- #profile-picture -->\n";
 
+	//
+	//
+	// PROFILE INFORMATION SECTION
+	//
+	//
+
 
 	echo "	<div id=\"info\">\n";
+	echo "      <h3>Model Information</h3>\n";
+	echo "    <div class=\"hr\"></div>\n";
 	echo "	  <div class=\"stats\">\n";
+	echo "	  <h4>Stats</h4>\n";
+	
 
 		if (!empty($ProfileGender)) {
 			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($ProfileGender, rb_agency_TEXTDOMAIN). "</div>\n";
@@ -32,14 +46,14 @@ Profile View with Thumbnails and Primary Image
 		if (!empty($ProfileStatEthnicity)) {
 			echo "<div><strong>". __("Ethnicity", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatEthnicity ."</div>\n";
 		}
-		if (!empty($ProfileStatSkinColor)) {
-			echo "<div><strong>". __("Skin Tone", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatSkinColor ."</div>\n";
-		}
 		if (!empty($ProfileStatHairColor)) {
 			echo "<div><strong>". __("Hair Color", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHairColor ."</div>\n";
 		}
 		if (!empty($ProfileStatEyeColor)) {
 			echo "<div><strong>". __("Eye Color", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatEyeColor ."</div>\n";
+		}
+		if (!empty($ProfileStatSkinColor)) {
+			echo "<div><strong>". __("Skin Tone", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatSkinColor ."</div>\n";
 		}
 		if (!empty($ProfileStatHeight)) {
 			if ($rb_agency_option_unittype == 0) { // Metric
@@ -58,6 +72,16 @@ Profile View with Thumbnails and Primary Image
 				echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</div>\n";
 			}
 		}
+		if (!empty($ProfileStatDress) || ($ProfileStatDress == 0)) {
+			if($ProfileGender == "Male"){ $ProfileStatDressTitle = __("Suit Size", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatDressTitle = __("Dress Size", rb_agency_TEXTDOMAIN); } else { $ProfileStatDressTitle = __("Suit/Dress Size", rb_agency_TEXTDOMAIN); }
+			echo "<div><strong>". $ProfileStatDressTitle ."<span class=\"divider\">:</span></strong> ". $ProfileStatDress ."</div>\n";
+		}
+		if($ProfileGender == "Male"){
+			$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomTitle = 'Shirt Size' AND cx.ProfileID = ". $ProfileID ."");
+			foreach  ($resultsCustom as $resultCustom) {
+				echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+			}
+		}
 		if (!empty($ProfileStatBust)) {
 			if($ProfileGender == "Male"){ $ProfileStatBustTitle = __("Chest", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatBustTitle = __("Bust", rb_agency_TEXTDOMAIN); } else { $ProfileStatBustTitle = __("Chest/Bust", rb_agency_TEXTDOMAIN); }
 			echo "<div><strong>". $ProfileStatBustTitle ."</strong> ". $ProfileStatBust ."</div>\n";
@@ -69,32 +93,40 @@ Profile View with Thumbnails and Primary Image
 			if($ProfileGender == "Male"){ $ProfileStatHipTitle = __("Inseam", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatHipTitle = __("Hips", rb_agency_TEXTDOMAIN); } else { $ProfileStatHipTitle = __("Hips/Inseam", rb_agency_TEXTDOMAIN); }
 			echo "<div><strong>". $ProfileStatHipTitle ."<span class=\"divider\">:</span></strong> ". $ProfileStatHip ."</div>\n";
 		}
-		if (!empty($ProfileStatDress) || ($ProfileStatDress == 0)) {
-			if($ProfileGender == "Male"){ $ProfileStatDressTitle = __("Suit Size", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatDressTitle = __("Dress Size", rb_agency_TEXTDOMAIN); } else { $ProfileStatDressTitle = __("Suit/Dress Size", rb_agency_TEXTDOMAIN); }
-			echo "<div><strong>". $ProfileStatDressTitle ."<span class=\"divider\">:</span></strong> ". $ProfileStatDress ."</div>\n";
-		}
 		if (!empty($ProfileStatShoe)) {
 			echo "<div><strong>". __("Shoe Size", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatShoe ."</div>\n";
 		}
-
-
-		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ."");
+		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomTitle <> 'Shirt Size' AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomTitle");
 		foreach  ($resultsCustom as $resultCustom) {
 			echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 		}
 
 	echo "	  </div>\n"; // Close Stats
 
+
+
+	//
+	//
+	// Media Links and Files 
+	//
+	//
+
+
+
+
+
 	echo "	  <div class=\"links\">\n";
-	echo "			<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
-	echo "			<ul>\n";
+//	echo "	  <h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
+	echo "	  <h4>Media</h4>\n";
+
+	echo "			<ul class=\"unordered type10\">\n";
 
 				// Resume
 				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume</a></li>\n";
+				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Print Resume</a></li>\n";
 				  }
 				}
 			
@@ -120,9 +152,16 @@ Profile View with Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Listen to Voice Demo</a></li>\n";
+				echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Listen to Voice Demo</a></li>\n";
 				  }
 				}
+
+				//
+				//
+				//VIDEO LINKS
+				//
+				//
+
 
 				//Video Slate
 				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
@@ -130,7 +169,7 @@ Profile View with Thumbnails and Primary Image
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "		<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Video Slate</a></li>\n";
+				echo "		<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" rel=\"prettyPhoto\">Watch Video Slate</a></li>\n";
 				  }
 				}
 
@@ -139,7 +178,7 @@ Profile View with Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "		<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Video Monologue</a></li>\n";
+				echo "		<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" rel=\"prettyPhoto\">Watch Video Monologue</a></li>\n";
 				  }
 				}
 
@@ -148,7 +187,7 @@ Profile View with Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "		<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Demo Reel</a></li>\n";
+				echo "		<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" rel=\"prettyPhoto\">Watch Demo Reel</a></li>\n";
 				  }
 				}
 
@@ -157,34 +196,41 @@ Profile View with Thumbnails and Primary Image
 				echo "		<li class=\"item contact\"><a href=\"". $rb_agency_option_agency_urlcontact ."\">". __("Contact", rb_agency_TEXTDOMAIN). " ". $ProfileClassification ."</a></li>\n";
 				}
 
-				//<li class="item"><a href=""><img src="/wp-content/uploads/2010/07/talk.jpg" /></a><a href="">View Video Slate</a></li>
-			  //li class="item"><a href=""><img src="/wp-content/uploads/2010/07/talk.jpg" /></a><a href="">View Monolog</a></li>
-			  //<li class="item"><a href=""><img src="/wp-content/uploads/2010/07/download.jpg" /></a><a href="">Download Reel</a></li>
-				//echo "<li class=\"cart\"><a href=\"\"><img src=\"". get_bloginfo("wpurl") ."/wp-content/uploads/2010/07/cart.jpg\" /></a><a href=\"\">Add to Casting Cart</a></li>\n";
-				
-				// URL
-				//if($ProfileIsModel){ $returnURL = get_bloginfo("url") ."/models/"; } elseif ($ProfileIsTalent){ $returnURL = get_bloginfo("url") ."/talent/"; }
-				//echo "<li class=\"return\"><a href=\"\"><img src=\"". get_bloginfo("url") ."/wp-content/uploads/2010/07/return.jpg\" /></a><a href=\"". $returnURL ."\">Return to ". $ProfileClassification ."</a></li>\n";
-				
-				// Is Logged?
-				if (is_user_logged_in()) { 
-				//echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
-				}
 
 	echo "			</ul>\n";
 	echo "	  </div>\n";  // Close Links
 
-		if (isset($profileVideoEmbed)) {
-	echo "	  <div id=\"movie\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
-		}
+//		if (isset($profileVideoEmbed)) {
+//	echo "	  <div id=\"movie\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
+//		}
+       
+       
+    //
+    //
+    // DESCRIPTION BIO
+    //
+    //   
+       
        
 	echo "		<div class=\"experience\">\n";
+	echo "        <h4>Biography and Experience</h4>\n";
 	echo			$ProfileExperience;
 	echo "		</div>\n"; // Close Experience
 			
 	echo "	  </div>\n";  // Close Info
 	
+	
+	//
+	//
+	// 	PHOTO GALLERY SECTION 
+	//
+	//
+	
+	
 	echo "	<div id=\"photo\">\n";
+	echo "    <h3>Photo Gallery</h3>\n";
+	echo "    <div class=\"hr\"></div>\n";
+
 	echo "	  <div class=\"inner\">\n";
 		
 			// images
@@ -192,7 +238,7 @@ Profile View with Thumbnails and Primary Image
 			$resultsImg = mysql_query($queryImg);
 			$countImg = mysql_num_rows($resultsImg);
 			while ($dataImg = mysql_fetch_array($resultsImg)) {
-				echo "<div class=\"multiple\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
+				echo "<div class=\"multiple\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"prettyPhoto[profile]". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
 			}
 
 	echo "	  </div>\n";

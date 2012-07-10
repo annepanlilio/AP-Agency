@@ -1,0 +1,623 @@
+/* CSS Document */
+
+
+
+/* Global Styles */
+
+table.standardTable,table.standardTable td, table.standardTable tr { border: none!important; }
+
+
+
+/* Category List: /profile-category/ (view-category.php) */
+
+#profile-category { }
+
+#profile-category h1.profile-category-title { }
+
+#profile-category-list { font-size: 18px; overflow: hidden; padding: 0 0 10px; border-bottom: 2px solid #aaa; margin: 0; }
+
+#profile-category-list .profile-category { width: 310px; float: left; margin: 0 0 10px 0; }
+
+#profile-category-list .profile-category .name { }
+
+#profile-category-list .profile-category .name a { text-decoration: none; border-bottom: 1px solid #CDF; }
+
+#profile-category-list .profile-category .name span.count { color: #999; padding-left: 5px; font-size: 17px; }
+
+
+
+/* Category Results */
+
+#profile-category .profile-category-results-wrapper { vertical-align: top; width: 70%; padding: 0; }
+
+#profile-category .profile-category-results-wrapper .profile-category-results { padding: 20px 0; }
+
+
+
+/* Category Filter Profiles */
+
+#profile-category .profile-category-filter-wrapper { vertical-align: top; width: 300px; padding: 0; }
+
+#profile-category .profile-category-filter { color: #000; padding: 20px 0; overflow: hidden; margin: 0; }
+
+#profile-category .profile-category-filter h4 { margin: 0; font-weight: bold; border-bottom: 2px solid #aaa; padding: 0 0 10px 0; marrin-bottom: 10px; }
+
+#profile-category .profile-category-filter .search-field,
+
+#profile-category .profile-category-filter .search-field.double .label,
+
+#profile-category .profile-category-filter .search-field input[type="text"],
+
+#profile-category .profile-category-filter .search-field label,
+
+#profile-category .profile-category-filter .search-field { float: left; }
+
+#profile-category .profile-category-filter .search-field.single label,
+
+#profile-category .profile-category-filter .search-field.double .label { width: 85px; float: left; }
+
+#profile-category .profile-category-filter .search-field { clear: both; border-bottom: 1px solid #EEE; width: 280px; padding: 10px; }
+
+#profile-category .profile-category-filter .search-field.double label { width: 40px; }
+
+#profile-category .profile-category-filter .search-field.double input[type="text"] { width: 35px; padding: 2px 5px; }
+
+#profile-category .profile-category-filter .search-field .stubby {  }
+
+#profile-category .profile-category-filter .search-field select { width: 195px; padding: 4px; }
+
+#profile-category .profile-category-filter input.button-primary { margin: 20px 0 30px 85px; }
+
+#profile-category .profile-category-filter a { float: right; }
+
+#profile-category .profile-category-filter .search-field.double label[for="ProfileDateBirth_max"] { margin-left: 20px; }
+
+
+
+/* Search Form: Wrapper  /profile-search/ (view-search.php) */
+
+#profile-search { }
+
+
+
+/* Search Results */
+
+#profile-search .profile-search-results-wrapper { vertical-align: top; width: 70%; padding: 0; margin: 0; }
+
+#profile-search .profile-search-results { }
+
+
+
+/* Search Filter Profiles */
+
+.profile-search-filter-wrapper input.button-primary { margin: 20px 0 0 90px; }
+
+#profile-search .profile-search-filter-wrapper { vertical-align: top; width: 300px; padding: 0; }
+
+#profile-search .profile-search-filter { padding: 0; overflow: hidden; color: #111; }
+
+#profile-search .profile-search-filter h3 { margin: 0 0 10px 0; padding: 0 0 5px 0; border-bottom: 3px solid #999; }
+
+#profile-search .profile-search-filter .search-field,
+
+#profile-search .profile-search-filter .search-field label,
+
+#profile-search .profile-search-filter .search-field select,
+
+#profile-search .profile-search-filter .search-field input[type="text"],
+
+#profile-search .profile-search-filter .search-field .label { float: left; font-size: 13px; padding: 0; margin: 0; line-height: 20px; }
+
+#profile-search .profile-search-filter .search-field.single label, #profile-search .profile-search-filter .search-field .label { width: 85px; }
+
+#profile-search .profile-search-filter .search-field { clear: both; border-bottom: 1px solid #EEE; width: 280px; padding: 10px; }
+
+#profile-search .profile-search-filter .search-field input[type="text"] { padding: 2px 5px; }
+
+#profile-search .profile-search-filter .search-field.single input[type="text"] { width: 183px; }
+
+#profile-search .profile-search-filter .search-field.double input[type="text"] { width: 35px; }
+
+#profile-search .profile-search-filter .search-field.double label { width: 40px; }
+
+#profile-search .profile-search-filter .search-field.single select { width: 195px; padding: 4px; }
+
+#profile-search .profile-search-filter .search-field.double select { width: 154px; padding: 4px; }
+
+#profile-search .profile-search-filter .search-field.double select#ProfileStatHeight_max { margin-top: 10px; }
+
+#profile-search .profile-search-filter .search-field.double label[for="ProfileDateBirth_max"],
+
+#profile-search .profile-search-filter .search-field.double label[for="ProfileStatWeight_max"],
+
+#profile-search .profile-search-filter .search-field.double label[for="ProfileStatWaist_max"],
+
+#profile-search .profile-search-filter .search-field.double label[for="ProfileStatHip_max"],
+
+#profile-search .profile-search-filter .search-field.double label[for="ProfileStatShoe_max"] { margin-left: 20px; } 
+
+#profile-search .profile-search-filter .search-field.double label[for="ProfileStatHeight_max"] { margin-left: 85px; }
+
+
+
+/* Search Form: Condensed (include-profile-search.php) */
+
+#profile-search-form-condensed { font-size: 13px; }
+
+
+
+/* Search Form: Advanced (include-profile-search.php) */
+
+#profile-search-form-advanced { }
+
+#profile-search-form-advanced .single { clear: both; }
+
+
+
+
+
+#profile-search-form-advanced .double { clear: both; }
+
+#profile-search-form-advanced .double label { width: 25px; font-size: 12px; margin: 5px 0px 0px 5px; float: left; }
+
+
+
+/* Search Form: Advanced  /client-view/{code}/ (view-profilesecure.php) */
+
+#profile-private  { }
+
+
+
+/* Profile List (functions.php) */
+
+#profile-results { padding: 5px 0; }
+
+
+
+/* Profile Results */
+
+#profile-results #profile-list {  padding: 0; }
+
+#profile-results #profile-results-info { margin: 0 20px 20px 0; overflow: hidden; font-size: 16px; color: #666; padding: 0 0 10px 0; }
+
+#profile-results #profile-results-info .profile-results-info-countpage { float: left; width: 45%; }
+
+#profile-results #profile-results-info .profile-results-info-countpage span, #profile-results #profile-results-info .profile-results-info-countpage a { float: left; margin: 0 10px 0 0; }
+
+#profile-results #profile-results-info #profile-results-info-countrecord { width: 45%; padding: 0 10px 0 0; float: right; text-align: right; }
+
+#profile-results #profile-results-info #profile-results-info-countrecord strong { }
+
+
+
+/* pagination */
+
+.profile-results-info-countpage .pageno { border: 1px solid #dadada; text-align: center; vertical-align: middle; width: 25px; padding: 5px; background: #fff; }
+
+.profile-results-info-countpage .pagedir { border: 1px solid #dadada; text-align: center; vertical-align: middle; width: 25px; padding: 5px; background: #fff; }
+
+.profile-results-info-countpage .pagedir span { display: none; }
+
+.profile-results-info-countpage .disabled { display: none; }
+
+.profile-results-info-countpage .current { background: #dadada; }
+
+
+
+/* Profile Standard Layout */
+
+#profile-results #profile-list .profile-list-layout0 { width: 30%; float: left; margin: 0 3% 20px 0; position: relative; z-index: 8;  overflow: hidden; background: #ddd; }
+
+#profile-results #profile-list .profile-list-layout0 .style { position: absolute; }
+
+#profile-results #profile-list .profile-list-layout0 .image { width: 100%; height: 230px; overflow: hidden; background: #fff; }
+
+#profile-results #profile-list .profile-list-layout0 .image img { max-width: 100%; margin: 0; }
+
+#profile-results #profile-list .profile-list-layout0 .image-broken { text-align: center; position: relative; background: #dadada !important; }
+
+#profile-results #profile-list .profile-list-layout0 .image-broken a {  margin-top: 90px;  }
+
+#profile-results #profile-list .profile-list-layout0 .title { bottom: 0; left: 0; width: 100%; position: absolute; text-align: center; }
+
+#profile-results #profile-list .profile-list-layout0 .title .name { width: 100%; background: rgba(255,255,255,0.7); margin: 0; font-size: 13px; padding: 5px 0; line-height: normal; }
+
+#profile-results #profile-list .profile-list-layout0 .title .name a { color: #000; text-decoration: none; }
+
+#profile-results #profile-list .profile-list-layout0 .title .favorite { margin: 9px 0 0 0; font-size: 13px; background: #ccc; padding: 5px 0; }
+
+#profile-results #profile-list .profile-list-layout0 .details { font-size: 13px; }
+
+#profile-results #profile-list .profile-list-layout0 .title .favorite a { color: #666; }
+
+#profile-results #profile-list .profile-list-layout0 .title .favorite .favorite-box { padding: 7px; background: #fff; border: 1px solid #aaa; position: absolute; bottom: 3px; left: 32px; }
+
+#profile-results #profile-list .profile-list-layout0 .title .favorite .favorite-box:hover { border: 1px solid #666; }
+
+#profile-results #profile-list .profile-list-layout0 .image-broken { margin: 10px 10px 0 10px; text-align: center; width: 180px; height: 220px; }
+
+#profile-results #profile-list .profile-list-layout0 .image-broken a { margin-top: 90px;  float: left; margin-left: 55px; }	
+
+/* Profile Standard Layout */
+
+#profile-results #profile-list .profile-list-layout1 { border: 1px solid #bbacc7; width: 200px; float: left; margin: 0 20px 20px 0; position: relative; z-index: 8;  height: 235px; overflow: hidden; padding: 3px; background:#c8bdd2; }
+
+#profile-results #profile-list .profile-list-layout1 .image { width: 198px; height: 200px; overflow: hidden; margin: 0px auto; }
+
+#profile-results #profile-list .profile-list-layout1 .image img { max-width: 185px; }
+
+#profile-results #profile-list .profile-list-layout1 .image-broken {  }
+
+#profile-results #profile-list .profile-list-layout1 .image-broken a { display: none; }
+
+#profile-results #profile-list .profile-list-layout1 .title { }
+
+#profile-results #profile-list .profile-list-layout1 .title .name { font-size: 16px; margin: 0 0 5px 0; }
+
+#profile-results #profile-list .profile-list-layout1 .title .name a { color: #fff; text-decoration: none; width: 190px; position: absolute; left: -3px; top: 213px; height: 30px; z-index: 10; text-align: center; font-size: 14px; }
+
+#profile-results #profile-list .profile-list-layout1 .style { background-color:#4D2375; width: 200px; position: absolute; top: 208px; height: 30px; z-index: 7;  }
+
+#profile-results #profile-list .profile-list-layout1 .favorite { background: #ccc; padding: 5px; margin: 5px 0; }
+
+#profile-results #profile-list .profile-list-layout1 .favorite:hover  { background: #bbb; }
+
+#profile-results #profile-list .profile-list-layout1 .details { overflow: hidden; display: block; }
+
+#profile-results #profile-list .profile-list-layout1 .details div { float: left; }
+
+#profile-results #profile-list .profile-list-layout1 .details .details-age { width: 50%; text-align: right; }
+
+#profile-results #profile-list .profile-list-layout1 .details .details-state { width: 50%; text-align: left;  }
+
+/* Profile Standard Alternate */
+
+#profile-results #profile-list .profile-list-layout2 { width: 150px; float: left; margin: 0 20px 20px 0; }
+
+#profile-results #profile-list .profile-list-layout2 .image { width: 150px; height: 180px; overflow: hidden; }
+
+#profile-results #profile-list .profile-list-layout2 .image img { max-width: 150px; }
+
+#profile-results #profile-list .profile-list-layout2 .image-broken { margin: 10px 10px 0 10px; text-align: center; width: 150px; height: 220px; }
+
+#profile-results #profile-list .profile-list-layout2 .image-broken a { margin-top: 90px;  float: left; margin-left: 45px; }
+
+#profile-results #profile-list .profile-list-layout2 .title { color: #555; font-size: 13px; padding: 5px 0 0 0; background: #ddd; text-align: center; }
+
+#profile-results #profile-list .profile-list-layout2 .title .name { font-size: 16px; margin: 0 0 5px 0; }
+
+#profile-results #profile-list .profile-list-layout2 .title .name a { color: #555; }
+
+#profile-results #profile-list .profile-list-layout2 .favorite { background: #ccc; padding: 5px; margin: 5px 0; }
+
+#profile-results #profile-list .profile-list-layout2 .favorite:hover  { background: #bbb; }
+
+#profile-results #profile-list .profile-list-layout2 .details { overflow: hidden; display: block; }
+
+#profile-results #profile-list .profile-list-layout2 .details div { float: left; }
+
+#profile-results #profile-list .profile-list-layout2 .details .details-age { width: 50%; text-align: right; }
+
+#profile-results #profile-list .profile-list-layout2 .details .details-state { width: 50%; text-align: left;  }
+
+
+
+/* Profile Sidebar */
+
+#profile-sidebar { width: 200px; padding: 10px; float: right; }
+
+#profile-sidebar a { color: #28536C; }
+
+#profile-sidebar a:hover { color: #2F617F; }  
+
+#profile-sidebar ul { margin: 0; padding: 0; }
+
+#profile-sidebar ul li { list-style: none; }
+
+
+
+/* Profile Search Embed */
+
+#profile-search-form-embed { padding: 10px; overflow: hidden; background: #D6DEE6; margin: 20px 0 0 0; color: #22465C; }
+
+#profile-search-form-embed .search-field { padding: 10px 0; border-bottom: 1px solid #aaa; }
+
+#profile-search-form-embed .search-field.single label { width: 160px; }
+
+#profile-search-form-embed .search-field .label { margin: 0 0 5px 0; }
+
+
+
+/* Profile Layouts */
+
+#profile #info { float: left; width: 100%; }
+
+#profile #info .stats { float: left; width: 47%; }
+
+#profile #info .stats div { border-bottom: 1px solid #DADADA; padding: 5px 10px; line-height: normal; }
+
+#profile #info .action { float: right; width: 47%; }
+
+#profile #info .action .links { border-top: 1px solid #dadada; }
+
+#profile #info .action .links ul li { padding-left: 10px; list-style: none; line-height: 25px; border-bottom: 1px solid #DADADA; }
+
+#profile .action .links ul { margin: 0; padding: 0; }
+
+
+
+/* Profile Layout with Thumbnails (include-profile-layout0.php) */
+
+#profile-layout-zero { overflow: hidden; }
+
+#profile-layout-zero #photo { float: left; width: 33%;  }
+
+#profile-layout-zero #photo .multiple { float: left; margin: 0 10px 10px 0; overflow: hidden; }
+
+#profile-layout-zero #photo .multiple img { max-width: 130px; border: 1px solid #666; padding: 3px; max-height: 180px; }
+
+#profile-layout-zero #photo .single img { max-width: 260px; }
+
+#profile-layout-zero #info { float: left; width: 67%; }
+
+#profile-layout-zero #info h2 { margin: 0 0 10px 0; padding: 5px 8px; color: #000; text-transform: uppercase; border-bottom: 2px solid #ccc; background: #eee; }
+
+#profile-layout-zero #info .stats { float: left; width: 47%; font-size: 13px; }
+
+#profile-layout-zero #info .action { float: right; width: 47%; font-size: 13px; }
+
+#profile-layout-zero #info .action .links { border: none; }
+
+#profile-layout-zero #movie { float: right; }
+
+#profile-layout-zero .experience { float: left; clear: both; margin: 20px 0 0 0; line-height: 18px; font-size: 13px; text-indent: 30px; }
+
+
+
+/* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
+
+#profile-layout-one { overflow: hidden; }
+
+#profile-layout-one #name { color: #000; }
+
+#profile-layout-one #profile-picture { width: 38%; float: left; }
+
+#profile-layout-one #profile-picture img { max-width: 97%; padding: 3px; border: 1px solid #666; }
+
+#profile-layout-one #photo { float: left; width: 100%; margin: 20px 0 0 0; clear: both;}
+
+#profile-layout-one .experience { float: left; clear: both; padding: 20px 10px; line-height: 18px; font-size: 13px; text-indent: 17px; }
+
+#profile-layout-one #photo .multiple { float: left; margin: 0 10px 10px 0; overflow: hidden; }
+
+#profile-layout-one #photo .multiple img { border: 1px solid #666; padding: 3px; max-height: 150px; }
+
+#profile-layout-one #photo .single img { max-width: 260px; }
+
+#profile-layout-one #info { float: right; width: 60%; margin: 20px 0 0 0; }
+
+#profile-layout-one #info h2 { margin: 0 0 10px 0; padding: 5px 8px; background: #5C5A87; color: white; text-transform: uppercase; }
+
+#profile-layout-one #info .stats { float: left; width: 47%; }
+
+#profile-layout-one #info .action { float: right; width: 240px; }
+
+#profile-layout-one #info .links { float: right; line-height: 18px; width :47%; }
+
+#profile-layout-one #info .links ul { list-style: none; margin: 0 0 20px 0; }
+
+#profile-layout-one #info .links li { border-bottom: 1px solid #DADADA; padding: 0 8px; line-height: 25px; }
+
+#profile-layout-one #info #movie { float: right; }
+
+
+
+/* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
+
+#profile-layout-two { overflow: hidden; }
+
+#profile-layout-two #profile-l { width: 60%; overflow: hidden; float: left; }
+
+#profile-layout-two #profile-l #photos { margin-bottom: 5px; }
+
+#profile-layout-two #photos #photos-slide { height: 172px; overflow: hidden;}
+
+#profile-layout-two #photos .customScrollBox{ position:relative; width:100%; overflow:hidden; }
+
+#profile-layout-two #photos .customScrollBox .horWrapper{position:relative; left:0;}
+
+#profile-layout-two #photos .customScrollBox .container{position:relative; left:0; display:inline-block; *display:inline;}
+
+#profile-layout-two #photos .customScrollBox .content{clear:both;}
+
+#profile-layout-two #photos .customScrollBox .content p{padding:5px; margin:0 5px;}
+
+#profile-layout-two #photos .customScrollBox .content p img{margin-right:5px;}
+
+#profile-layout-two #photos .customScrollBox img { height: 170px; padding: 5px; border: 1px solid #5C5A87; float: left; display: inline; margin-right: 10px; }
+
+#profile-layout-two #photos .dragger { }
+
+#profile-layout-two #photos .dragger_container { position: relative; height: 0px; width: 48.5%; margin: 24px 10px 20px 20px; border-top: 1px solid #999;}
+
+#profile-layout-two #photos .dragger { position: absolute; width: 60px; height: 9px; background: #111 url(mcsDragger.png) no-repeat; margin-top:-5px;}
+
+#profile-layout-two #photos .dragger_pressed { position:absolute; width:30px; height:9px; background:#111 url(mcsDraggerHover.png) no-repeat; margin-top:-5px;}
+
+#profile-layout-two .scrollDownBtn, .scrollUpBtn { background: url(http://agency.rbplugin.com/wp-content/plugins/rb-agency/style/photos-nav.png) no-repeat; width: 17px; height: 25px; top: 190px; position: absolute; }
+
+#profile-layout-two .scrollUpBtn {left:0;}
+
+#profile-layout-two .scrollDownBtn { background-position: -17px 0; right:0; }
+
+#profile-layout-two #profile-l #photos .multiple { float: left; overflow: hidden; max-height: 185px; }
+
+#profile-layout-two #profile-r { float: right; width: 38%; overflow: hidden;}
+
+#profile-layout-two #profile-r #profile-picture img { border: 1px solid #666;  padding: 4px; max-width: 97%;}
+
+#profile-layout-two #profile-l .experience { font-size: 11px; line-height: 18px; text-align: justify; }
+
+
+
+/* Profile Extended Layout (include-profile-layout3.php) */
+
+#profile-layout-three { overflow: hidden; }
+
+#profile-layout-three { padding: 0 20px; overflow: hidden; color: #444; }
+
+#profile-layout-three .row-zero { font-size: 30px; margin: 0 0 20px 0; overflow: hidden; }
+
+#profile-layout-three .row-one { padding: 10px 0; overflow: hidden; }
+
+#profile-layout-three #profile-picture-wrap { width: 150px; float: left; }
+
+#profile-layout-three #profile-picture-wrap img { width: 150px; }
+
+#profile-layout-three #profile-picture { width: 150px; height: 200px; overflow: hidden; }
+
+#profile-layout-three .profile-picture-favorite { text-align: center; background: #ccc; font-size: 13px; padding: 5px; margin: 5px 0 0 0; }
+
+#profile-layout-three .profile-picture-favorite a { color: #666; }
+
+#profile-layout-three .profile-picture-favorite:hover { background: #bbb; }
+
+#profile-layout-three #profile-overview { float: left; margin: 0 0 0 20px; width: 560px; line-height: 20px; }
+
+#profile-layout-three #profile-name h2 { font-size: 33px; }
+
+#profile-layout-three #profile-liner { overflow: hidden; margin: 10px 0; }
+
+#profile-layout-three #profile-liner div { float: left; margin: 0 5px 0 0; }
+
+#profile-layout-three #profile-actions { float: right; padding: 20px; line-height: 22px; }
+
+#profile-layout-three #profile-actions-contact , #profile-layout-three #profile-actions-print  { }
+
+#profile-layout-three #profile-actions-contact { width: 161px; background: url(style/buttons.png) no-repeat; height: 30px; margin: 0 0 10px 0; }
+
+#profile-layout-three #profile-actions-contact:hover { background-position: -161px 0; } 
+
+
+
+#profile-layout-three #profile-actions-contact span { display: none; }
+
+#profile-layout-three .row-photos { float: left; clear: both; width: 940px; padding: 20px 0; background: #fff; }
+
+#profile-layout-three .row-photos .multiple { float: left; width: 267px; margin: 0 0 20px 20px; overflow: hidden; border: 10px solid #CCC; height: 367px; }
+
+#profile-layout-three .row-photos .multiple:nth-child(3n+0) {  } 
+
+#profile-layout-three .row-photos .multiple img { float: left; max-width: 267px;  }
+
+#profile-layout-three .row-two { overflow: hidden; margin: 20px 0 0 0; }
+
+#profile-layout-three .row-two #subMenuTab { overflow: hidden; }
+
+#profile-layout-three .row-two #subMenuTab a { float: left; border-left: 1px solid #fff; padding: 10px 20px; color: #555; background: url(style/bg-tab.png) repeat-x }
+
+#profile-layout-three .row-two #subMenuTab a:hover { color: #444; background: url(style/bg-tab.png) 0 -38px repeat-x  }
+
+#profile-layout-three .row-two #subMenuTab div.tab-inner, #profile-layout-three .row-two #subMenuTab .tab-left, #profile-layout-three .row-two #subMenuTab .tab-right { float: left; border: 1px solid #d1d1d1; border-bottom: 1px solid #acaca8; }
+
+#profile-layout-three .row-two #subMenuTab div.tab-inner, #profile-layout-three .row-two #subMenuTab .tab-right { border-left: none; }
+
+#profile-layout-three .row-two #subMenuTab .tab-left { -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; }
+
+#profile-layout-three .row-two #subMenuTab .tab-left a { -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; }
+
+#profile-layout-three .row-two #subMenuTab .tab-left a { border: none; }
+
+#profile-layout-three .row-two #subMenuTab .tab-right { -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; }
+
+#profile-layout-three .row-two #subMenuTab .tab-right a { -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; }
+
+#profile-layout-three .row-two #subMenuTab .tab-active, #profile-layout-three .row-two #subMenuTab .tab-active a { background: #fff; border-bottom: 1px solid #fff; }
+
+#profile-layout-three .row-physical { line-height: 22px; margin: 0 0 20px 0; padding: 10px 10px; background: #fff; }
+
+#profile-layout-three .row-physical div { padding: 5px; border-bottom: 1px solid #fff; }
+
+#profile-layout-three .row-physical div:nth-child(even){ background: #ddd; }
+
+#profile-layout-three .row-experience { margin: 20px 0; overflow: hidden; }
+
+
+
+/* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
+
+#profile-layout-four { padding: 0 20px; overflow: hidden; color: #000; }
+
+#profile-layout-four #info { float: left; width: 28%; }
+
+#profile-layout-four #info h2 { margin: 0 0 10px 0; padding: 5px 8px; color: #000; text-transform: uppercase; border-bottom: 2px solid #aaa; line-height: normal; }
+
+#profile-layout-four #info .stats { font-size: 16px; width: 100%; margin-bottom: 30px; }
+
+#profile-layout-four #info .action { display: none; }
+
+#profile-layout-four #info  .links {  display: none; border-top: 1px solid #dadada; margin-top: 10px;  }
+
+#profile-layout-four #info .links a:hover { color: #2F617F; }
+
+#profile-layout-four #info .links a { color: #28536C; }
+
+#profile-layout-four #photo { float: right; width: 68%; }
+
+#profile-layout-four #photo h2 { margin: 0 0 10px 0; padding: 5px 8px; color: #000; text-transform: uppercase; border-bottom: 2px solid #aaa; line-height: normal; }
+
+#profile-layout-four #photo .multiple { float: left; margin: 0 10px 10px 0; overflow: hidden; }
+
+#profile-layout-four #photo .multiple img { border: 1px solid #666; padding: 3px; max-height: 30%; }
+
+
+
+/* Featured Image Widget */
+
+#profile-featured { margin: 0 20px 20px 0; position: relative; z-index: 8;  overflow: hidden; height: 310px; background: #ddd; }
+
+#profile-featured a { color: #006FBD; text-decoration: none; }
+
+#profile-featured .style { position: absolute; }
+
+#profile-featured .image { width: 200px; height: 230px; overflow: hidden; background: #fff; }
+
+#profile-featured .title { top: 235px; left: 0; width: 200px; position: absolute; text-align: center;}
+
+#profile-featured .title .name { width: 200px; height: 30px; line-height: 30px; }
+
+#profile-featured .title .favorite { margin: 9px 0 0 0; font-size: 13px; background: #ccc; padding: 5px 0; }
+
+#profile-featured .image img { max-width: 200px; margin: 0; }
+
+#profile-featured .image-broken { margin: 10px 10px 0 10px; text-align: center; width: 180px; height: 220px; }
+
+#profile-featured .image-broken a { margin-top: 90px;  float: left; margin-left: 55px; }
+
+
+
+/* Profile Login */
+
+#profile-interact { overflow: hidden; }
+
+#profile-interact #member-sign-in { overflow: hidden; }
+
+#profile-interact #member-sign-in h1 { font-size: 38px; }
+
+#profile-interact #member-sign-in form#login {  }
+
+#profile-interact #member-sign-in form#login #member-sign-in form .box {  }
+
+#profile-interact #member-sign-in form#login #member-sign-in form .box label {  }
+
+#profile-interact #member-sign-in form#login #member-sign-in form .box input[type="text"],
+
+#profile-interact #member-sign-in form#login #member-sign-in form .box input[type="password"] {  }
+
+#profile-interact #member-sign-in form#login #member-sign-in form .box input[type="password"] {  }
+
+#profile-interact #member-sign-in form#login #member-sign-in form .box input[type="checkbox"] {  }
+
+#profile-interact #member-sign-in form#login #member-sign-in form .submit-box {  }
+
+#profile-interact #member-sign-in form#login #member-sign-in form .submit-box input[type="submit"] {  }

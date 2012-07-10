@@ -6,8 +6,6 @@
 #toplevel_page_rb_agency_menu.wp-has-current-submenu div.wp-menu-image,
 #toplevel_page_rb_agency_menu.current div.wp-menu-image { background: transparent url(../style/rb-icon-white.png) no-repeat scroll; } 
 
-/*Remove icon*/
-#profile-manage-media .rotateimage {background: transparent url(../style/rotate.png); width:16px; height:16px; display:block; float:left;  }
 /*overview page*/
 .boxblock-holder { }
 .boxblock-container { float: left; width: 98%; overflow: hidden; padding: 3px 10px 3px 0px; }

@@ -6,9 +6,9 @@
   Description: With this plugin you can easily manage models profiles and information.
   Author: Rob Bertholf
   Author URI: http://rob.bertholf.com/
-  Version: 1.8.5
+  Version: 1.8.9
 */
-$rb_agency_VERSION = "1.8.5"; 
+$rb_agency_VERSION = "1.8.9"; 
 
 if (!session_id())
 session_start();
@@ -89,7 +89,7 @@ return;
 	if (!defined("table_agency_searchsaved_mux"))
 		define("table_agency_searchsaved_mux", "rb_agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
-		define("table_agency_savedfavorite", "rb_agency_savedfavorite");	
+		define("table_agency_savedfavorite", "rb_agency_savedfavorite");
 
 // Call default functions
 	include_once(dirname(__FILE__).'/functions.php');
@@ -327,7 +327,8 @@ return;
 				PRIMARY KEY (SearchMuxID)
 				);";
 			dbDelta($sql10mux);
-           // Setup > Save Favorite
+		
+		// Setup > Save Favorite
 			$sql9 = "CREATE TABLE ". table_agency_savedfavorite." (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
@@ -335,6 +336,7 @@ return;
 				PRIMARY KEY (SavedFavoriteID)
 				);";
 			dbDelta($sql11);
+
 		}
 		
 	}
@@ -621,7 +623,6 @@ if ( is_admin() ){
 		}
    
         add_action('wp_head', 'rb_agency_save_favorite_javascript');
-
 // *************************************************************************************************** //
 // Add Widgets
 

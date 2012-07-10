@@ -7,8 +7,7 @@
 		function rb_agency_admin_head(){
 		  if( is_admin() ) {
 			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."style/admin.css\" type=\"text/css\" media=\"screen\" />\n";
-			echo "<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n";
-			echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/js-customfields.js\"></script>\n"; 
+			
 		  }
 		}
 	
@@ -45,7 +44,7 @@
 			}
 		
 			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."theme/style.css\" type=\"text/css\" media=\"screen\" />\n";
-          
+
 			/* OBSOLETE
 			if (isset($rb_agency_options_arr['rb_agency_option_defaultcss'])) {
 			echo "<style type=\"text/css\">\n";
@@ -54,12 +53,8 @@
 			}
 			*/
 		  }
-		
-			
-		
-		 }
-		
-        
+		}
+
 
 // *************************************************************************************************** //
 // Add to WordPress Dashboard
@@ -201,7 +196,6 @@
 			  } elseif (get_query_var( 'type' ) == "favorite") {
 				return dirname(__FILE__) . '/theme/view-favorite.php'; 
 			  }
-			  
 			}
 			return $template;
 		}
@@ -272,6 +266,12 @@
 		return $user_role;
 	};
 	
+	function rb_agency_get_current_userid(){
+		global $current_user;
+        get_currentuserinfo();
+		return $current_user->ID;
+	};
+	
 	function rb_agency_convertdatetime($datetime) {
 		// Convert
 		list($date, $time) = explode(' ', $datetime);
@@ -322,11 +322,7 @@
 		$filename = str_replace('--', '-', $filename);
 		return strtolower($filename);
 	}
-	function rb_agency_get_current_userid(){
-		global $current_user;
-        get_currentuserinfo();
-		return $current_user->ID;
-	}
+	
 	function rb_agency_filenameextension($filename) {
 		$pos = strrpos($filename, '.');
 		if($pos===false) {
@@ -456,7 +452,7 @@
 	
 			echo "<div id=\"profile-category-list\">\n";
 			while ($dataList = mysql_fetch_array($resultsList)) {
-	           
+	
 				echo "<div class=\"profile-category\">\n";
 				if ($DataTypeID == $dataList["DataTypeID"]) {
 					echo "  <div class=\"name\"><strong>". $dataList["DataTypeTitle"] ."</strong> <span class=\"count\">(". $dataList["CategoryCount"] .")</span></div>\n";
@@ -485,7 +481,7 @@
 		*/
 		
 		// Get Preferences
-		$rb_agency_options_arr = get_option('rb_agency_options');
+		    $rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_privacy					 = $rb_agency_options_arr['rb_agency_option_privacy'];
 			$rb_agency_option_profilelist_count			 = $rb_agency_options_arr['rb_agency_option_profilelist_count'];
 			$rb_agency_option_profilelist_perpage		 = $rb_agency_options_arr['rb_agency_option_profilelist_perpage'];
@@ -494,7 +490,7 @@
 			$rb_agency_option_profilelist_expanddetails	 = $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'];
 			$rb_agency_option_locationtimezone 			 = (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
 			$rb_agency_option_profilelist_favorite		 = (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
-			$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
+
 		// Set It Up	
 		global $wp_rewrite;
 		extract(shortcode_atts(array(
@@ -560,10 +556,11 @@
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
 		if (isset($age_start) && !empty($age_start)){ $profiledatebirth_min = $age_start; }
 		if (isset($age_stop) && !empty($age_stop)){ $profiledatebirth_max = $age_stop; }
+		
 
 		$ProfileID 					= $profileid;
 		$ProfileContactNameFirst	= $profilecontactnamefirst;
-		$ProfileContactNameLast    	= $profilecontactnamelast;
+		$ProfileContactNameLast	= $profilecontactnamelast;
 		$ProfileLocationCity		= $profilelocationcity;
 		$ProfileType				= $profiletype;
 		$ProfileIsActive			= $profileisactive;
@@ -574,8 +571,8 @@
 		$ProfileStatHairColor		= $profilestathaircolor;
 		$ProfileStatHeight_min		= $profilestatheight_min;
 		$ProfileStatHeight_max		= $profilestatheight_max;
-		$ProfileStatWeight_min		= $profilestatheight_min;
-		$ProfileStatWeight_max		= $profilestatheight_max;
+		$ProfileStatWeight_min		= $profilestatweight_min;
+		$ProfileStatWeight_max		= $profilestatweight_max;
 		$ProfileStatBust_min		= $profilestatbust_min;
 		$ProfileStatBust_max		= $profilestatbust_max;
 		$ProfileStatWaist_min		= $profilestatwaist_min;
@@ -590,19 +587,6 @@
 		$ProfileIsPromoted			= $stars;
 		$OverridePrivacy			= $override_privacy;
 
-        // Set CustomFields
-		foreach($atts as $key => $val){
-			
-				if(substr($key,0,15)=="ProfileCustomID"){
-					if(isset($val) && !empty($val)){
-					   $filter .= " AND customfield_mux.ProfileCustomID=".strtok($key,"ProfileCustomID")." ";
-					   $filter .= " AND customfield_mux.ProfileCustomValue='".$val."' ";
-					    $_SESSION[$key] = $val;
-					}
-				}
-			
-		}
-
 
 		// Is this a profile ID search?
 		if (isset($ProfileID) && !empty($ProfileID)){
@@ -611,13 +595,13 @@
 		}
 
 		// Name
-			if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
+	     	if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
 			$ProfileContactNameFirst = $ProfileContactNameFirst;
-			$filter .= " AND profile.ProfileContactNameFirst LIKE '%". ucfirst($ProfileContactNameFirst) ."'";
+			$filter .= " AND profile.ProfileContactNameFirst='". ucfirst($ProfileContactNameFirst) ."'";
 			}
 			if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
 			$ProfileContactNameLast = $ProfileContactNameLast;
-			$filter .= " AND profile.ProfileContactNameLast LIKE '%". ucfirst($ProfileContactNameLast) ."'";
+			$filter .= " AND profile.ProfileContactNameLast LIKE '". ucfirst($ProfileContactNameLast) ."'";
 			}
 		
 		// Type
@@ -646,10 +630,10 @@
 		}
 		*/
 		  if ($ProfileIsFeatured == "1") {
-			$filter .= " AND  ".table_agency_profile.".ProfileIsFeatured=1";
+			$filter .= " AND profile.ProfileIsFeatured=1";
 		  }
 		  if ($ProfileIsPromoted == "1") {
-			$filter .= " AND  ".table_agency_profile.".ProfileIsPromoted=1";
+			$filter .= " AND profile.ProfileIsPromoted=1";
 		  }
 		
 		// Gender
@@ -689,22 +673,25 @@
 			$filter .= " AND profile.ProfileStatHairColor='". $ProfileStatHairColor ."'";
 		}
 		// Height
-		if (isset($ProfileStatHeight_min) && !empty($ProfileStatHeight_min)){
-			$ProfileStatHeight_min = $ProfileStatHeight_min;
-			$filter .= " AND profile.ProfileStatHeight >= '". $ProfileStatHeight_min ."'";
-		}
-		if (isset($ProfileStatHeight_max) && !empty($ProfileStatHeight_max)){
-			$ProfileStatHeight_max = $ProfileStatHeight_max;
-			$filter .= " AND profile.ProfileStatHeight <= '". $ProfileStatHeight_max ."'";
+		if(!isset($ProfileStatHeight_min) == isset($ProfileStatHeight_max) ){
+				if (isset($ProfileStatHeight_min) && !empty($ProfileStatHeight_min)){
+					$ProfileStatHeight_min = $ProfileStatHeight_min;
+					$filter .= " AND profile.ProfileStatHeight >= '". $ProfileStatHeight_min ."'";
+				}
+				if (isset($ProfileStatHeight_max) && !empty($ProfileStatHeight_max)){
+					$ProfileStatHeight_max = $ProfileStatHeight_max;
+					$filter .= " AND profile.ProfileStatHeight <= '". $ProfileStatHeight_max ."'";
+				}
 		}
 		// Weight
 		if (isset($ProfileStatWeight_min) && !empty($ProfileStatWeight_min)){
+			
 			$ProfileStatWeight_min = $ProfileStatWeight_min;
-			$filter .= " AND profile.ProfileStatWeight >= ". $ProfileStatWeight_min ."";
+			$filter .= " AND profile.ProfileStatWeight >= '". $ProfileStatWeight_min ."'";
 		}
 		if (isset($ProfileStatWeight_max) && !empty($ProfileStatWeight_max)){
 			$ProfileStatWeight_max = $ProfileStatWeight_max;
-			$filter .= " AND profile.ProfileStatWeight <= ". $ProfileStatWeight_max ."";
+			$filter .= " AND profile.ProfileStatWeight <= '". $ProfileStatWeight_max ."'";
 		}
 		// Bust/Chest
 		if (isset($ProfileStatBust_min) && !empty($ProfileStatBust_min)){
@@ -753,21 +740,13 @@
 			$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
 		}
 
+      
 		// Can we show the profiles?
 		if ( (isset($OverridePrivacy)) || ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 			echo "<div id=\"profile-results\">\n";
 
-			
-			
-			
-			
 			/*********** Paginate **************/
-			$items = mysql_num_rows(mysql_query(
-			"SELECT profile.ProfileID, customfield_mux.* 
-					FROM ". table_agency_profile ." profile 
-					INNER JOIN  ".table_agency_customfield_mux." customfield_mux 
-					ON 
-					profile.ProfileID=customfield_mux.ProfileID $filter")); // number of total rows in the database
+			$items = mysql_num_rows(mysql_query("SELECT profile.ProfileID FROM ". table_agency_profile ." profile $filter")); // number of total rows in the database
 			if($items > 0) {
 				$p = new rb_agency_pagination;
 				$p->items($items);
@@ -790,7 +769,6 @@
 				$limit = "";
 			}
 
-	
 			/*********** Execute Query **************/
 			// Execute Query
 			$queryList = "SELECT profile.* ,  (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile $filter ORDER BY $sort $dir $limit";
@@ -840,13 +818,7 @@
 				
 				if (isset($profilefavorite) && !empty($profilefavorite)){  
 				
-				    			if ($rb_agency_option_profilenaming == 0) {
-									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
-								} elseif ($rb_agency_option_profilenaming == 1) {
-									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". substr($dataList["ProfileContactNameLast"], 0, 1);
-								} elseif ($rb_agency_option_profilenaming == 3) {
-									$ProfileContactDisplay = "ID ". $ProfileID;
-								}
+				    	
 				        
 				    if($countFavorite >=1){
 						 $countFav++;
@@ -857,9 +829,8 @@
 								} else {
 								echo "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
 								}
-								
 								echo "  <div class=\"title\">\n";
-								echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
+								echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 								if ($rb_agency_option_profilelist_expanddetails) {
 								echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 								}
@@ -888,7 +859,7 @@
 							echo "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
 							}
 							echo "  <div class=\"title\">\n";
-							echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
+							echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 							if ($rb_agency_option_profilelist_expanddetails) {
 							echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 							}
@@ -917,10 +888,12 @@
 						echo "  <div style=\"clear: both; \"></div>\n";
 						echo "  </div><!-- #profile-list -->\n";
 						echo "</div><!-- #profile-results -->\n";
-			
-		} else {
+			}
+		else {
 			include("theme/include-login.php"); 	
 		}
+	
+	
 	}
 
 	// Profile List
@@ -1005,6 +978,7 @@
 		extract(shortcode_atts(array(
 				"profilesearch_layout" => "advanced"
 			), $atts));
+		
 		
 		if ( ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 			echo "<div id=\"profile-search-form-embed\">\n";
@@ -1177,7 +1151,12 @@ class rb_agency_pagination {
 						return false;
 					}
 				$this->urlF=$value;
-			}
+		}
+		
+					
+		
+		
+			 
 		
 		var $pagination;
 
