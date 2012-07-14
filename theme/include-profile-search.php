@@ -63,99 +63,43 @@ $_SESSION['ProfileType'] = $_REQUEST['ProfileType'];
 		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" />\n";
 		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
 		
-								$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder DESC";
-								$results1 = mysql_query($query1);
-								$count1 = mysql_num_rows($results1);
-								while ($data1 = mysql_fetch_array($results1)) {
+							
 						        
-	     if($rb_agency_option_customfields_searchpage == 1  ){
-			 if(($rb_agency_option_customfields_loggedin_all ==1 && is_user_logged_in()) || ($rb_agency_option_customfields_loggedin_admin == 1 && current_user_can("level_10"))){
+	     if($rb_agency_option_customfields_searchpage == 1 || $rb_agency_option_customfield_profilepage == 1 ){ // Show on Search Page
+		    
+			 if(($rb_agency_option_customfields_loggedin_all ==1 && is_user_logged_in()))
+			 {
+				 // Show custom fields for admins only.
+				if($rb_agency_option_customfields_loggedin_admin == 1 && current_user_can("level_10") && is_user_logged_in()){ 
+			        include("include-custom-fields.php");
+					//echo "1";
+				}
+				// Show custom fields for logged in users.
+				if($rb_agency_option_customfields_loggedin_admin == 0 && !current_user_can("level_10")){
+					 include("include-custom-fields.php");
+				 // echo "2";
+				}
+				
+			 }
 			 
-	  	 echo "				    <div class=\"search-field single\">\n";
-		 echo "				        <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label>\n";
-	
-									$ProfileCustomType = $data1['ProfileCustomType'];
-									$ProfileCustomValue = $data1['ProfileCustomValue'];
-									if ($ProfileCustomType == 1) { //TEXT
-										
-										if(!empty($ProfileCustomValue)){
-										
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
-									
-											
-										}else{
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /><br />\n";
-									
-										   
-										}
-										
-									} elseif ($ProfileCustomType == 2) { // Min Max
-									
-									   
-										$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($data1['ProfileCustomOptions'],"}"),"{"));
-										list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
-									   
-									 
-										if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
-											    echo "<br /><br /> <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
-												echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /><br />\n";
-									
-											
-										}else{
-											    echo "<br /><br />  <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />\n";
-											    echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /><br />\n";
-									
-										   
-										}
-									 
-									} elseif ($ProfileCustomType == 3) {
-										
-										$ProfileCustomOptions_Array = explode( ":",$data1['ProfileCustomOptions']);
-									
-										echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
-										if(end($ProfileCustomOptions_Array)=="no"){
-											echo "<option value=\"\"> </option>";
-										}else{
-											echo "<option value=\"\">".$ProfileCustomOptions_Array[2]."</option>";	
-										}
-										foreach ($ProfileCustomOptions_Array as &$value) {
-											    if($value != end($ProfileCustomOptions_Array) && $ProfileCustomOptions_Array[2] != $value && $ProfileCustomOptions_Array[1] != $value && $ProfileCustomOptions_Array[0] != $value && !empty($value)){
-														if($_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ==  "ProfileCustomID". $data1['ProfileCustomID']){
-															echo "	<option value=\"". $value ."\" ". selected($ProfileCustomValue, $value) ." selected='selected'> ". $value ." </option>\n";
-														}else{
-																echo "	<option value=\"". $value ."\" ". selected($ProfileCustomValue, $value) ."> ". $value ." </option>\n";
-														
-														}
-												}
-											
-										
-										} 
-										echo "</select>\n";
-									} else {
-										
-									
-										if(!empty($ProfileCustomValue)){
-											
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
-									
-											
-										}else{
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /><br />\n";
-									
-										   
-										}
-									}
-									
-		echo "				    </div>\n";
-	              	 } // Endif page is logged in or logged in as admin
+			 // Show custom fields to all user level.
+			 if(($rb_agency_option_customfields_loggedin_all == 0 && !is_user_logged_in())){
+				
+			 	 include("include-custom-fields.php");
+				// echo "3";
+			}
+			if((!current_user_can("level_10") && $rb_agency_option_customfields_loggedin_admin ==0  && $rb_agency_option_customfields_loggedin_all == 0)){
+		      	 	 include("include-custom-fields.php");
+				// echo "4";
+				
+			}
+			
+		 }
+			
 					 
-	           } // Endif show custom fields in search page
 		
-		}
+		
+		
 	 
 		echo "				<input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" />\n";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";

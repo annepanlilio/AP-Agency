@@ -1939,8 +1939,10 @@ elseif ($ConfigID == 7) {
 		$ProfileCustomOptions 	= $_POST['ProfileCustomOptions'];
 		$ProfileCustomView 		= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
-	 
-	 
+	    $ProfileCustomShowProfile  = (int)$_POST['ProfileCustomShowProfile'];
+		$ProfileCustomShowSearch  = (int)$_POST['ProfileCustomShowSearch'];
+		$ProfileCustomShowLogged  = (int)$_POST['ProfileCustomShowLogged'];
+		$ProfileCustomShowAdmin   = (int)$_POST['ProfileCustomShowAdmin'];
 	    $error = "";	
 		
 		 if($ProfileCustomType == 1){ //Text
@@ -2174,22 +2176,38 @@ elseif ($ConfigID == 7) {
 				
 				  <tr>
 					
-					<td> 
-					<tr>
-					<td>Visibility*:</td>
-					<td style=\"font-size:13px;\">
-					<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" />Public(<i>default</i>:Show everywhere)&nbsp;
-					<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" />Private(Only show in Admin CRM)&nbsp;
-					<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" />Custom(Used in Custom Views)&nbsp;
-					</td>
-					<td style=\"font-size:13px;\">
-				   
-					</td>
-					<td style=\"font-size:13px;\">
-				   
-					</td>
-					</tr>
-					</td>
+						<td> 
+								<tr>
+									<td>Visibility*:</td>
+									<td style=\"font-size:13px;\">
+									<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" />Public(<i>default</i>:Show everywhere)&nbsp;
+									<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" />Private(Only show in Admin CRM)&nbsp;
+									<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" />Custom(Used in Custom Views)&nbsp;
+									</td>
+									<td style=\"font-size:13px;\">
+								   
+									</td>
+									<td style=\"font-size:13px;\">
+								   
+									</td>
+								</tr>
+								<tr>
+									<td valign=\"top\">Show on*:</td>
+									<td style=\"font-size:13px;\">
+									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" /> Profile Page &nbsp;
+									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"2\" /> Search Results Page &nbsp;  
+									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"3\" /> User must be Logged In to see It &nbsp;
+									<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"4\" /> User must be an Admin to see It
+									</td>
+									<td style=\"font-size:13px;\">
+								   
+									</td>
+									<td style=\"font-size:13px;\">
+								   
+									</td>
+								</tr>
+
+						</td>
 				 </tr>
 				</td>
 			
@@ -2197,7 +2215,7 @@ elseif ($ConfigID == 7) {
 		
 		}else{ //Update Field
 			
-			  					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
+			  					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder,ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 								$results1 = mysql_query($query1);
 								$count1 = mysql_num_rows($results1);
 					while ($data1 = mysql_fetch_array($results1)) {
@@ -2245,6 +2263,24 @@ elseif ($ConfigID == 7) {
 											   
 												</td>
 												</tr>
+												
+												<tr>
+													<td valign=\"top\">Show on*:</td>
+													<td style=\"font-size:13px;\">
+													<input type=\"checkbox\" name=\"showpage\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile Page &nbsp;
+													<input type=\"checkbox\" name=\"showsearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Results Page &nbsp;  
+													<input type=\"checkbox\" name=\"showlogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be Logged In to see It &nbsp;
+													<input type=\"checkbox\" name=\"showadmin\" value=\"1\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an Admin to see It
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+												</tr>
+												
+												
 												</td>
 											 </tr>";
 								 
