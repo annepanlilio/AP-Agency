@@ -280,7 +280,8 @@ return;
 				);";
 			dbDelta($sql8);
 	
-			// Setup > Custom Field Types
+			
+	      // Setup > Custom Field Types
 			$sql9 = "CREATE TABLE ". table_agency_customfields." (
 				ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileCustomTitle VARCHAR(255),
@@ -288,6 +289,10 @@ return;
 				ProfileCustomOptions TEXT,
 				ProfileCustomView INT(10) NOT NULL DEFAULT '0',
 				ProfileCustomOrder INT(10) NOT NULL DEFAULT '0',
+				ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1',
+				ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1',
+				ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
+				ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1',
 				PRIMARY KEY (ProfileCustomID)
 				);";
 			dbDelta($sql9);

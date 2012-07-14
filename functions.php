@@ -844,6 +844,8 @@
 									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
 								} elseif ($rb_agency_option_profilenaming == 1) {
 									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". substr($dataList["ProfileContactNameLast"], 0, 1);
+								} elseif ($rb_agency_option_profilenaming == 2) {
+									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"];
 								} elseif ($rb_agency_option_profilenaming == 3) {
 									$ProfileContactDisplay = "ID ". $ProfileID;
 								}
@@ -958,7 +960,16 @@
 			echo "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
 			}
 			echo "  <div class=\"title\">\n";
-			echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". $ActiveLanguage. $dataList["ProfileContactDisplay"] ."</a></h3>\n";
+				if ($rb_agency_option_profilenaming == 0) {
+									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
+								} elseif ($rb_agency_option_profilenaming == 1) {
+									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". substr($dataList["ProfileContactNameLast"], 0, 1);
+								} elseif ($rb_agency_option_profilenaming == 2) {
+									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"];
+								} elseif ($rb_agency_option_profilenaming == 3) {
+									$ProfileContactDisplay = "ID ". $ProfileID;
+								}
+			echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". $ActiveLanguage. $ProfileContactDisplay ."</a></h3>\n";
 			if ($rb_agency_option_profilelist_expanddetails) {
 			echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 			}

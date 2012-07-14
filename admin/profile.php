@@ -166,7 +166,7 @@ if (isset($_POST['action'])) {
 		exit;
 	break;
 	
-	// *************************************************************************************************** //
+		// *************************************************************************************************** //
 	// Edit Record
 	case 'editRecord':
 		if (!empty($ProfileContactNameFirst) && !empty($ProfileID)){
@@ -245,78 +245,82 @@ if (isset($_POST['action'])) {
 				chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
 			}
 
-				// Upload Image & Add to Database
+			// Upload Image & Add to Database
 			$i = 1;
-			while ($i <= 10) {
+		while ($i <= 10) {
 				if($_FILES['profileMedia'. $i]['tmp_name'] != ""){
 					$uploadMediaType = $_POST['profileMedia'. $i .'Type'];
-					if($uploadMediaType == "Image") {
-						// Check Files
-						if($_FILES['profileMedia'. $i]['tmp_name'] != ""){
-							// Might as well grab the file type while we are at it
-							if ($_FILES['profileMedia'. $i]['type'] == "image/jpeg") { $file_extension = ".jpg"; } 
-							elseif ($_FILES['profileMedia'. $i]['type'] == "image/gif") { $file_extension = ".gif"; } 
-							elseif ($_FILES['profileMedia'. $i]['type'] == "image/png"){ $file_extension = ".png"; }
-							else {
-								$error .= "<b><i>". __("Please upload an image file only", rb_agency_TEXTDOMAIN) . "</i></b><br />";
-								$have_error = true;
+					
+					if ($have_error != true) {
+					// Upload if it doesnt exist already
+					 $safeProfileMediaFilename = rb_agency_safenames($_FILES['profileMedia'. $i]['name']);
+					 $results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='". $ProfileID ."' AND ProfileMediaURL = '". $safeProfileMediaFilename ."'");
+					 $count = mysql_num_rows($results);
+
+					 if ($count < 1) {
+						if($uploadMediaType == "Image") { 
+						    if($_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/gif" || $_FILES['profileMedia'. $i]['type'] == "image/png"){
+						
+									$image = new rb_agency_image();
+									$image->load($_FILES['profileMedia'. $i]['tmp_name']);
+			
+									if ($image->getHeight() > $rb_agency_option_agencyimagemaxheight) {
+										$image->resizeToHeight($rb_agency_option_agencyimagemaxheight);
+									}
+									$image->save(rb_agency_UPLOADPATH . $ProfileGallery ."/". $safeProfileMediaFilename);
+									// Add to database
+								$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
+						    }else{
+								$error .= "<b><i>Please upload an image file only</i></b><br />";
+						        $have_error = true;
 							}
 						}
-						
-						if ($have_error != true) {
-						// Upload if it doesnt exist already
-						 $safeProfileMediaFilename = rb_agency_safenames($_FILES['profileMedia'. $i]['name']);
-						 $results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='". $ProfileID ."' AND ProfileMediaURL = '". $safeProfileMediaFilename ."'");
-						 $count = mysql_num_rows($results);
-						 if ($count < 1) {
-							$image = new rb_agency_image();
-							$image->load($_FILES['profileMedia'. $i]['tmp_name']);
-	
-							if ($image->getHeight() > $rb_agency_option_agencyimagemaxheight) {
-								$image->resizeToHeight($rb_agency_option_agencyimagemaxheight);
-							}
-							$image->save(rb_agency_UPLOADPATH . $ProfileGallery ."/". $safeProfileMediaFilename);
+						else if($uploadMediaType =="VoiceDemo"){
 							// Add to database
-							$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
-				
-						 }
+							 if($_FILES['profileMedia'. $i]['type'] == "audio/mp3"){
+								 $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
+			                 	 move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery ."/".$safeProfileMediaFilename);
+							 }else{
+								 $error .= "<b><i>Please upload a mp3 file only</i></b><br />";
+								 $have_error = true;
+							 }
+						}
+						else if($uploadMediaType =="Resume"){
+							// Add to database
+							 if ($_FILES['profileMedia'. $i]['type'] == "application/msword" || $_FILES['profileMedia'. $i]['type'] == "application/pdf" || $_FILES['profileMedia'. $i]['type'] == "application/rtf")
+							{
+							  $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
+			                  move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery ."/".$safeProfileMediaFilename);
+							}else{
+							   	$error .= "<b><i>Please upload PDF/MSword/RTF files only</i></b><br />";
+						        $have_error = true;	
+							}
+						}
+						else if($uploadMediaType =="Headshot"){
+							// Add to database
+							 if ($_FILES['profileMedia'. $i]['type'] == "application/msword"|| $_FILES['profileMedia'. $i]['type'] == "application/pdf" || $_FILES['profileMedia'. $i]['type'] == "application/rtf" || $_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/gif" || $_FILES['profileMedia'. $i]['type'] == "image/png")
+							{
+							  $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
+			                  move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery ."/".$safeProfileMediaFilename);
+							}else{
+							   	$error .= "<b><i>Please upload PDF/MSWord/RTF/Image files only</i></b><br />";
+						        $have_error = true;	
+							}
+						}
+						else if($uploadMediaType =="Compcard"){
+							// Add to database
+							 if ($_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/png")
+							{
+							  $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
+			                  move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery ."/".$safeProfileMediaFilename);
+							}else{
+							   	$error .= "<b><i>Please upload jpeg or png files only</i></b><br />";
+								$have_error = true;	
+							}
 						}
 						
-					} else {
-
-						// Check Files
-						if($_FILES['profileMedia'. $i]['tmp_name'] != ""){
-							// Might as well grab the file type while we are at it
-							if ($_FILES['profileMedia'. $i]['type'] == "application/pdf") { $file_extension = ".pdf"; } 
-							elseif ($_FILES['profileMedia'. $i]['type'] == "image/jpeg") { $file_extension = ".jpg"; } 
-							elseif ($_FILES['profileMedia'. $i]['type'] == "image/gif") { $file_extension = ".gif"; } 
-							elseif ($_FILES['profileMedia'. $i]['type'] == "image/png"){ $file_extension = ".png"; }
-							else {
-								$error .= "<b><i>". __("Please upload a PDF or image file only", rb_agency_TEXTDOMAIN) . "</i></b><br />";
-								$have_error = true;
-							}
-						}
-
-						// Is there an MenuItemImage to Upload 
-						if ($_FILES['profileMedia'. $i]['tmp_name'] != "") {
-							$ProfileMedia_FileName = rb_agency_safenames($_FILES['profileMedia'. $i]['tmp_name']) ."-". rb_agency_random() . $file_extension;
-							$ProfileMedia_FilePath = rb_agency_UPLOADPATH . $ProfileGallery ."/". $ProfileMedia_FileName;
-							if(move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], $ProfileMedia_FilePath)){
-								// Did it upload?
-								if (file_exists($ProfileMedia_FilePath)) {
-	
-									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $ProfileMedia_FileName ."','". $ProfileMedia_FileName ."')");
-								
-								} else {
-									$error .= "<b><i>". __("File did not upload!", rb_agency_TEXTDOMAIN) . "</i></b><br />";
-									$have_error = true;
-									echo $error;
-								}
-							}
-						} // Upload
-
-
-					} // Image or Document
+					 }
+					}
 				}
 				$i++;
 			}			
@@ -954,9 +958,9 @@ function rb_display_manage($ProfileID) {
 		if ( !empty($ProfileID) && ($ProfileID > 0) ) { // Editing Record
 	echo "		<h3>". __("Gallery", rb_agency_TEXTDOMAIN) ."</h3>\n";
 			
-				echo "<script>\n";
-			echo "function confirmDelete(delPhoto) {\n";
-			echo "  if (confirm(\"Are you sure you want to delete this photo?\")) {\n";
+			echo "<script>\n";
+			echo "function confirmDelete(delPhoto,mediaTitle) {\n";
+			echo "  if (confirm(\"Are you sure you want to delete this \"+mediaTitle+\"?\")) {\n";
 			echo "	document.location = \"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileID=". $ProfileID ."&actionsub=photodelete&targetid=\"+delPhoto;\n";
 			echo "  }\n";
 			echo "}\n";
@@ -996,7 +1000,7 @@ function rb_display_manage($ProfileID) {
 					}
 				} // is there record?
 			}
-			// Go about our biz-nazz
+				// Go about our biz-nazz
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC";
 				$resultsImg = mysql_query($queryImg);
 				$countImg = mysql_num_rows($resultsImg);
@@ -1028,29 +1032,53 @@ function rb_display_manage($ProfileID) {
 					echo "<div>". __("There are no images loaded for this profile yet.", rb_agency_TEXTDOMAIN) ."</div>\n";
 				}
 				
+				
 	echo "		<div style=\"clear: both;\"></div>\n";
-	echo "		<h3>". __("Media", rb_agency_TEXTDOMAIN) ."</h3>\n";
-	echo "		<p>". __("The following downloadable files (pdf, audio file, etc.) are associated with this record", rb_agency_TEXTDOMAIN) .".</p>\n";
-
-				$queryMedia = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType <> \"Image\"";
-				$resultsMedia = mysql_query($queryMedia);
-				$countMedia = mysql_num_rows($resultsMedia);
-				while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-					if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-						echo "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">". $dataMedia['ProfileMediaType'] ."<br />". rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) ."<br /><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."')\">DELETE</a>]</div>\n";
-					} else { //if ($dataMedia['ProfileMediaType'] == "") 
-						echo "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."')\">DELETE</a>]</div>\n";
+		echo "		<br><br><h3>". __("Media", rb_agencyinteract_TEXTDOMAIN) ."</h3>\n";
+		echo "		<p>". __("The following files (pdf, audio file, etc.) are associated with this record", rb_agencyinteract_TEXTDOMAIN) .".</p>\n";
+	
+					$queryMedia = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType <> \"Image\"";
+					$resultsMedia = mysql_query($queryMedia);
+					$countMedia = mysql_num_rows($resultsMedia);
+					while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
+							$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">". $dataMedia['ProfileMediaType'] ."<br />". rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) ."<br /><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+						} 
+						 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+							$outLinkVoiceDemo .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+						}
+						 elseif ($dataMedia['ProfileMediaType'] == "Resume") {
+							$outLinkResume .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+						}
+						 elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
+							$outLinkHeadShot .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+						}
+						 elseif ($dataMedia['ProfileMediaType'] == "Compcard") {
+							$outLinkCompCard .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+						}
 					}
-				}
-				if ($countMedia < 1) {
-					echo "<div><em>". __("There is not any additional media linked", rb_agency_TEXTDOMAIN) ."</em></div>\n";
-				}
+					echo '<div style=\"width:500px;\">';
+					echo $outLinkVoiceDemo;
+					echo '</div>';
+					echo '<div style=\"width:500px;\">';
+					echo $outLinkResume;
+					echo '</div>';
+					echo '<div style=\"width:500px;\">';
+					echo $outLinkHeadShot;
+					echo '</div>';
+					echo '<div style=\"width:500px;\">';
+					echo $outLinkCompCard;
+					echo '</div>';
+					echo $outVideoMedia;
+					if ($countMedia < 1) {
+						echo "<div><em>". __("There are no additional media linked", rb_agencyinteract_TEXTDOMAIN) ."</em></div>\n";
+					}
 	echo "		<div style=\"clear: both;\"></div>\n";
 	echo "		<h3>". __("Upload", rb_agency_TEXTDOMAIN) ."</h3>\n";
 	echo "		<p>". __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) .".</p>\n";
 
 			for( $i=1; $i<10; $i++ ) {
-			echo "<div>Type: <select name=\"profileMedia". $i ."Type\"><option>Image</option><option>Headshot</option><option>Comp Card</option><option>Resume</option><option>Voice Demo</option></select><input type='file' id='profileMedia". $i ."' name='profileMedia". $i ."' /></div>\n";
+			echo "<div>Type: <select name=\"profileMedia". $i ."Type\"><option value='Image'>Image</option><option value='Headshot'>Headshot</option><option value='Compcard'>Comp Card</option><option value='Resume'>Resume</option><option value=\"VoiceDemo\">Voice Demo</option></select><input type='file' id='profileMedia". $i ."' name='profileMedia". $i ."' /></div>\n";
 			}
 	echo "		<p>". __("Paste the YouTube video URL below", rb_agency_TEXTDOMAIN) .".</p>\n";
 
@@ -1065,6 +1093,7 @@ function rb_display_manage($ProfileID) {
 
 		echo "<table class=\"form-table\">\n";
 		echo " <tbody>\n";
+
 	
 		$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions FROM ". table_agency_customfields ." WHERE ProfileCustomView IN (0,2) AND ProfileCustomType < 4 ORDER BY ProfileCustomView, ProfileCustomTitle";
 		$results1 = mysql_query($query1);

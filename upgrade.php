@@ -54,6 +54,26 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." CHANGE ProsfileContactEmail ProfileContactEmail VARCHAR(255)");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." ADD ProfileUserLinked  BIGINT(20) NOT NULL DEFAULT '0'");
 		
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1'");
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1'");
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1'");
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1'");
+		
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Language', 0, 0, ,'', 0, 1, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Ethnicity', 3, 0, 'African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other', 0, 2, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Skin Tone', 3, 0, 'Fair|Medium|Dark', 0, 3, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Hair Color', 3, 0, 'Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn', 0, 4, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Eye Color', 3, 0, 'Blue|Brown|Hazel|Green|Black', 0, 5, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Height', 0, 0, '', 0, 6, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Weight', 0, 0, '', 0, 7, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Bust', 0, 0, '', 0, 8, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Waist', 0, 0, '', 0, 9, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Hip', 0, 0, '', 0, 10, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Shoe', 0, 0, '', 0, 11, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Dress', 0, 0, '', 0, 12, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Union', 0, 0, '', 0, 13, 1, 1, 1, 1)");
+		$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType) VALUES ('Experience', 4, 0, '', 0, 14, 1, 1, 1, 1)");
+		
 		// Updating version number!
 		update_option('rb_agency_version', "1.8.2");
 	}

@@ -349,7 +349,21 @@ elseif ($ConfigID == 1) {
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_advertise'], 1); echo "/> Show Updates on Dashboard<br />\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
-
+		 
+          // Profile Custom Fields Options
+		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
+		 echo " </tr>\n";
+		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Show Custom Fields on', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_profilepage]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_customfield_profilepage'], 1); echo "/> ". __("Profile Page", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_searchpage]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_customfield_searchpage'], 1); echo "/> ". __("Search Results Page", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_all]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_all'], 1); echo "/> ". __("User must be Logged In to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1); echo "/> ". __("User must be an Admin to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+	
 		 echo "</table>\n";
 		 echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
 		 

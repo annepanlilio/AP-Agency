@@ -3,6 +3,11 @@ global $wpdb;
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+	//Custom fields display options
+	$rb_agency_option_customfields_profilepage = $rb_agency_options_arr['rb_agency_option_customfield_profilepage'];
+	$rb_agency_option_customfields_searchpage = $rb_agency_options_arr['rb_agency_option_customfield_searchpage'];
+	$rb_agency_option_customfields_loggedin_all = $rb_agency_options_arr['rb_agency_option_customfield_loggedin_all'];
+	$rb_agency_option_customfields_loggedin_admin = $rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'];
 	
 $_SESSION['ProfileType'] = $_REQUEST['ProfileType'];
 	if (isset($DataTypeID) && !empty($DataTypeID)) { $_SESSION['ProfileType'] = $DataTypeID; }
@@ -63,8 +68,10 @@ $_SESSION['ProfileType'] = $_REQUEST['ProfileType'];
 								$count1 = mysql_num_rows($results1);
 								while ($data1 = mysql_fetch_array($results1)) {
 						        
-	
-		echo "				    <div class=\"search-field single\">\n";
+	     if($rb_agency_option_customfields_searchpage == 1  ){
+			 if(($rb_agency_option_customfields_loggedin_all ==1 && is_user_logged_in()) || ($rb_agency_option_customfields_loggedin_admin == 1 && current_user_can("level_10"))){
+			 
+	  	 echo "				    <div class=\"search-field single\">\n";
 		 echo "				        <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label>\n";
 	
 									$ProfileCustomType = $data1['ProfileCustomType'];
@@ -144,8 +151,12 @@ $_SESSION['ProfileType'] = $_REQUEST['ProfileType'];
 									}
 									
 		echo "				    </div>\n";
-				}
+	              	 } // Endif page is logged in or logged in as admin
+					 
+	           } // Endif show custom fields in search page
 		
+		}
+	 
 		echo "				<input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" />\n";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		//echo "				<input type=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
