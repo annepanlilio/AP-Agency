@@ -124,7 +124,7 @@ return;
 		// Does the database already exist?
 		if ($wpdb->get_var("show tables like '". table_agency_profile ."'") != table_agency_profile) { // No, it doesn't
 			// Creating the tables!
-			$sql1 = "CREATE TABLE " . table_agency_profile . " (
+			$sql = "CREATE TABLE " . table_agency_profile . " (
 				ProfileID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileUserLinked BIGINT(20) NOT NULL DEFAULT '0',
 				ProfileGallery VARCHAR(255),
@@ -148,7 +148,6 @@ return;
 				ProfileLocationState VARCHAR(255),
 				ProfileLocationZip VARCHAR(255),
 				ProfileLocationCountry VARCHAR(255),
-			
 				ProfileDateCreated TIMESTAMP DEFAULT NOW(),
 				ProfileDateUpdated TIMESTAMP,
 				ProfileDateViewLast TIMESTAMP,
@@ -159,10 +158,10 @@ return;
 				ProfileStatHits INT(10) NOT NULL DEFAULT '0',
 				PRIMARY KEY (ProfileID)
 				);";
-			dbDelta($sql1);
+			dbDelta($sql);
 	
 			// Setup > Profile Media
-			$sql2 = "CREATE TABLE ".table_agency_profile_media." (
+			$sql = "CREATE TABLE ".table_agency_profile_media." (
 				ProfileID INT(10) NOT NULL DEFAULT '0',
 				ProfileMediaID INT(10) NOT NULL AUTO_INCREMENT,
 				ProfileMediaType VARCHAR(255),
@@ -174,80 +173,18 @@ return;
 				ProfileMediaOrder VARCHAR(55),
 				PRIMARY KEY (ProfileMediaID)
 				);";
-			dbDelta($sql2);
+			dbDelta($sql);
 	
 			// Setup > Classification
-			$sql3 = "CREATE TABLE ".table_agency_data_type." (
+			$sql = "CREATE TABLE ".table_agency_data_type." (
 				DataTypeID INT(10) NOT NULL AUTO_INCREMENT,
 				DataTypeTitle VARCHAR(255),
 				DataTypeTag VARCHAR(50),
 				PRIMARY KEY (DataTypeID)
 				);";
-			dbDelta($sql3);
+			dbDelta($sql);
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Model')");
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Talent')");
-			
-			// Setup > Taxonomy: Ethnicity
-			$sql4 = "CREATE TABLE ".table_agency_data_ethnicity." (
-				EthnicityID INT(10) NOT NULL AUTO_INCREMENT,
-				EthnicityTitle VARCHAR(255),
-				PRIMARY KEY (EthnicityID)
-				);";
-			dbDelta($sql4);
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','African American')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','American Indian')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Asian')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Caucasian')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Chinese')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','East Indian')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Eurasian')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Filipino')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Hispanic/Latino')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Japanese')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Korean')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Polynesian')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_ethnicity . " (EthnicityID, EthnicityTitle) VALUES ('','Other')");
-	
-			// Setup > Taxonomy: Eye Color
-			$sql5 = "CREATE TABLE ".table_agency_data_coloreye." (
-				ColorEyeID INT(10) NOT NULL AUTO_INCREMENT,
-				ColorEyeTitle VARCHAR(255),
-				PRIMARY KEY (ColorEyeID)
-				);";
-			dbDelta($sql5);
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_coloreye . " (ColorEyeID, ColorEyeTitle) VALUES ('','Hazel')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_coloreye . " (ColorEyeID, ColorEyeTitle) VALUES ('','Green')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_coloreye . " (ColorEyeID, ColorEyeTitle) VALUES ('','Brown')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_coloreye . " (ColorEyeID, ColorEyeTitle) VALUES ('','Blue')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_coloreye . " (ColorEyeID, ColorEyeTitle) VALUES ('','Blue-Green')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_coloreye . " (ColorEyeID, ColorEyeTitle) VALUES ('','Black')");
-	
-			// Setup > Taxonomy: Hair Color
-			$sql6 = "CREATE TABLE ".table_agency_data_colorhair." (
-				ColorHairID INT(10) NOT NULL AUTO_INCREMENT,
-				ColorHairTitle VARCHAR(255),
-				PRIMARY KEY (ColorHairID)
-				);";
-			dbDelta($sql6);
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Blonde')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Black')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Brown')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Red')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Auburn')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Dark Brown')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Light Brown')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorhair . " (ColorHairID, ColorHairTitle) VALUES ('','Strawberry')");
-	
-			// Setup > Taxonomy: Skin Color
-			$sql7 = "CREATE TABLE ".table_agency_data_colorskin." (
-				ColorSkinID INT(10) NOT NULL AUTO_INCREMENT,
-				ColorSkinTitle VARCHAR(255),
-				PRIMARY KEY (ColorSkinID)
-				);";
-			dbDelta($sql7);
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorskin . " (ColorSkinID, ColorSkinTitle) VALUES ('','Fair')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorskin . " (ColorSkinID, ColorSkinTitle) VALUES ('','Medium')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_colorskin . " (ColorSkinID, ColorSkinTitle) VALUES ('','Dark')");
 
 			// Setup > Taxonomy: Gender
 			$sql = "CREATE TABLE ". table_agency_data_gender ." (
@@ -260,16 +197,16 @@ return;
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
 	
 			// Setup > Taxonomy: Actual Taxonomy
-			$sql8 = "CREATE TABLE ".table_agency_rel_taxonomy." (
+			$sql = "CREATE TABLE ".table_agency_rel_taxonomy." (
 				ProfileID BIGINT(20) NOT NULL DEFAULT 0,
 				term_taxonomy_id BIGINT(20) NOT NULL DEFAULT 0,
 				PRIMARY KEY (ProfileID,term_taxonomy_id)
 				);";
-			dbDelta($sql8);
+			dbDelta($sql);
 	
 			
 	      // Setup > Custom Field Types
-			$sql9 = "CREATE TABLE ". table_agency_customfields." (
+			$sql = "CREATE TABLE ". table_agency_customfields." (
 				ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileCustomTitle VARCHAR(255),
 				ProfileCustomType INT(10) NOT NULL DEFAULT '0',
@@ -282,7 +219,22 @@ return;
 				ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1',
 				PRIMARY KEY (ProfileCustomID)
 				);";
-			dbDelta($sql9);
+			dbDelta($sql);
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Language', 0, 0, ,'', 0, 1, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Ethnicity', 3, 0, 'African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other', 0, 2, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Skin Tone', 3, 0, 'Fair|Medium|Dark', 0, 3, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Hair Color', 3, 0, 'Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn', 0, 4, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Eye Color', 3, 0, 'Blue|Brown|Hazel|Green|Black', 0, 5, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Height', 0, 0, '', 0, 6, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Weight', 0, 0, '', 0, 7, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Bust', 0, 0, '', 0, 8, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Waist', 0, 0, '', 0, 9, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Hip', 0, 0, '', 0, 10, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Shoe', 0, 0, '', 0, 11, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Dress', 0, 0, '', 0, 12, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Union', 0, 0, '', 0, 13, 1, 1, 1, 1)");
+			$results = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Experience', 4, 0, '', 0, 14, 1, 1, 1, 1)");
+
 	
 			// Setup > Custom Field Types > Mux Values
 			$sql9mux = "CREATE TABLE ". table_agency_customfield_mux ." (
