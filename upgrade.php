@@ -101,6 +101,8 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 				
 	   	// Custom Order in Custom Fields
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");
+	   	// Custom Visibility in Custom Fields
+		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0'");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1'");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1'");
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1'");

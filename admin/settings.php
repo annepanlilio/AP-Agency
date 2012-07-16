@@ -14,7 +14,7 @@ global $wpdb;
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\">". __("Skin Types", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\">". __("Eye Color", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\">". __("Hair Color", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Ethnicity", rb_agency_TEXTDOMAIN) . "</a> | \n";
+    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\">". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  </div><p></p>\n";
@@ -109,9 +109,9 @@ if ($ConfigID == 0) {
     echo "    </div>\n";
 
     echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Ethnicity", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Ethnicity", rb_agency_TEXTDOMAIN) . "\">". __("Ethnicity", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Manage preset ethnicity choices", rb_agency_TEXTDOMAIN) . "</p>\n";
+    echo "      <h3>". __("Gender", rb_agency_TEXTDOMAIN) . "</h3>\n";
+    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Gender", rb_agency_TEXTDOMAIN) . "\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <p>". __("Manage preset Gender choices", rb_agency_TEXTDOMAIN) . "</p>\n";
     echo "    </div>\n";
   
     echo "</div>\n";
@@ -782,699 +782,23 @@ elseif ($ConfigID == 10) {
 
 }	 // End	
 // *************************************************************************************************** //
-// Setup Profile Categories
-elseif ($ConfigID == 2) {
-	
-	/** Identify Labels **/
-	define("LabelPlural", __("Skin Types", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Skin Type", rb_agency_TEXTDOMAIN));
-
-  /* Initial Registration [RESPOND TO POST] ***********/ 
-  if ( isset($_POST['action']) ) {
-	
-		$ColorSkinID 	= $_POST['ColorSkinID'];
-		$ColorSkinTitle 	= $_POST['ColorSkinTitle'];
-
-		// Error checking
-		$error = "";
-		$have_error = false;
-		if(trim($ColorSkinTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
-			$have_error = true;
-		}
-
-		$action = $_POST['action'];
-		switch($action) {
-	
-		// Add
-		case 'addRecord':
-			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-			} else {
-		
-				// Create Record
-				$insert = "INSERT INTO " . rb_agency_data_colorskin . " (ColorSkinTitle) VALUES ('" . $wpdb->escape($ColorSkinTitle) . "')";
-				$results = $wpdb->query($insert);
-				$lastid = $wpdb->insert_id;
-				
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>added</strong> successfully! You may now %1$s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
-			}
-
-		break;
-	
-		// Manage
-		case 'editRecord':
-			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-			} else {
-				$update = "UPDATE " . rb_agency_data_colorskin . " 
-							SET 
-								ColorSkinTitle='" . $wpdb->escape($ColorSkinTitle) . "'
-							WHERE ColorSkinID='$ColorSkinID'";
-				$updated = $wpdb->query($update);
-
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
-			}
-		break;
-
-		// Delete bulk
-		case 'deleteRecord':
-			foreach($_POST as $ColorSkinID) {
-			  if (is_numeric($ColorSkinID)) {
-				// Verify Record
-				$queryDelete = "SELECT ColorSkinID, ColorSkinTitle FROM ". rb_agency_data_colorskin ." WHERE ColorSkinID =  \"". $ColorSkinID ."\"";
-				$resultsDelete = mysql_query($queryDelete);
-				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-			
-					// Remove Record
-					$delete = "DELETE FROM " . rb_agency_data_colorskin . " WHERE ColorSkinID = \"". $ColorSkinID ."\"";
-					$results = $wpdb->query($delete);
-					
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ColorSkinTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-						
-				} // while
-			  } // it was numeric
-			} // for each
-		break;
-		
-		} // Switch
-		
-  } // Action Post
-  elseif ($_GET['action'] == "deleteRecord") {
-	
-	$ColorSkinID = $_GET['ColorSkinID'];
-
-	  if (is_numeric($ColorSkinID)) {
-		// Verify Record
-		$queryDelete = "SELECT ColorSkinID, ColorSkinTitle FROM ". rb_agency_data_colorskin ." WHERE ColorSkinID =  \"". $ColorSkinID ."\"";
-		$resultsDelete = mysql_query($queryDelete);
-		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-	
-			// Remove Record
-			$delete = "DELETE FROM " . rb_agency_data_colorskin . " WHERE ColorSkinID = \"". $ColorSkinID ."\"";
-			$results = $wpdb->query($delete);
-			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ColorSkinTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-				
-		} // is there record?
-	  } // it was numeric
-  }
-  elseif ($_GET['action'] == "editRecord") {
-
-		$action = $_GET['action'];
-		$ColorSkinID = $_GET['ColorSkinID'];
-		
-		if ( $ColorSkinID > 0) {
-
-			$query = "SELECT * FROM " . rb_agency_data_colorskin . " WHERE ColorSkinID='$ColorSkinID'";
-			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
-			$count = mysql_num_rows($results);
-			while ($data = mysql_fetch_array($results)) {
-				$ColorSkinID	=$data['ColorSkinID'];
-				$ColorSkinTitle	=stripslashes($data['ColorSkinTitle']);
-			} 
-		
-			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
-		}
-  } else {
-		
-			$ColorSkinID		= 0;
-			$ColorSkinTitle	="";
-			$ColorSkinTag	="";
-			
-			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
-  }
-	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
-	echo "<table class=\"form-table\">\n";
-	echo "<tbody>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
-	echo "        <td><input type=\"text\" id=\"ColorSkinTitle\" name=\"ColorSkinTitle\" value=\"". $ColorSkinTitle ."\" /></td>\n";
-	echo "    </tr>\n";
-	echo "  </tbody>\n";
-	echo "</table>\n";
-
-	if ( $ColorSkinID > 0) {
-	echo "<p class=\"submit\">\n";
-	echo "     <input type=\"hidden\" name=\"ColorSkinID\" value=\"". $ColorSkinID ."\" />\n";
-	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
-	echo "</p>\n";
-	} else {
-	echo "<p class=\"submit\">\n";
-	echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
-	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
-	echo "</p>\n";
-	} 
-	echo "</form>\n";
-	
-
-	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
-	
-		/******** Sort Order ************/
-		$sort = "";
-		if (isset($_GET['sort']) && !empty($_GET['sort'])){
-			$sort = $_GET['sort'];
-		}
-		else {
-			$sort = "ColorSkinTitle";
-		}
-		
-		/******** Direction ************/
-		$dir = "";
-		if (isset($_GET['dir']) && !empty($_GET['dir'])){
-			$dir = $_GET['dir'];
-			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
-			} 
-		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
-		}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
-		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
-		echo "<thead>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ColorSkinTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "    </tr>\n";
-		echo "</thead>\n";
-		echo "<tfoot>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "    </tr>\n";
-		echo "</tfoot>\n";
-		echo "<tbody>\n";
-	
-		$query = "SELECT * FROM ". rb_agency_data_colorskin ." ORDER BY $sort $dir";
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
-			$ColorSkinID	=$data['ColorSkinID'];
-		echo "    <tr>\n";
-		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $ColorSkinID ."\" name=\"". $ColorSkinID ."\" value=\"". $ColorSkinID ."\" /></th>\n";
-		echo "        <td class=\"column\">". stripslashes($data['ColorSkinTitle']) ."\n";
-		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ColorSkinID=". $ColorSkinID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;ColorSkinID=". $ColorSkinID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
-		echo "          </div>\n";
-		echo "        </td>\n";
-		echo "    </tr>\n";
-		}
-		mysql_free_result($results);
-		if ($count < 1) {
-		echo "    <tr>\n";
-		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
-		echo "    </tr>\n";
-		}
-		echo "</tbody>\n";
-		echo "</table>\n";
-		echo "<p class=\"submit\">\n";
-		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "</p>\n";
-		
-   		echo "</form>\n";
-
-}	 // End	
-
-// *************************************************************************************************** //
-// Setup Eye Color
-elseif ($ConfigID == 3) {
-	
-	/** Identify Labels **/
-	define("LabelPlural", __("Eye Colors", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Eye Color", rb_agency_TEXTDOMAIN));
-
-  /* Initial Registration [RESPOND TO POST] ***********/ 
-  if ( isset($_POST['action']) ) {
-	
-		$ColorEyeID 	= $_POST['ColorEyeID'];
-		$ColorEyeTitle 	= $_POST['ColorEyeTitle'];
-
-		// Error checking
-		$error = "";
-		$have_error = false;
-		if(trim($ColorEyeTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
-			$have_error = true;
-		}
-
-		$action = $_POST['action'];
-		switch($action) {
-	
-		// Add
-		case 'addRecord':
-			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-			} else {
-		
-				// Create Record
-				$insert = "INSERT INTO " . rb_agency_data_coloreye . " (ColorEyeTitle) VALUES ('" . $wpdb->escape($ColorEyeTitle) . "')";
-				$results = $wpdb->query($insert);
-				$lastid = $wpdb->insert_id;
-				
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>added</strong> successfully! You may now %1$s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
-			}
-
-		break;
-	
-		// Manage
-		case 'editRecord':
-			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-			} else {
-				$update = "UPDATE " . rb_agency_data_coloreye . " 
-							SET 
-								ColorEyeTitle='" . $wpdb->escape($ColorEyeTitle) . "'
-							WHERE ColorEyeID='$ColorEyeID'";
-				$updated = $wpdb->query($update);
-
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
-			}
-		break;
-
-		// Delete bulk
-		case 'deleteRecord':
-			foreach($_POST as $ColorEyeID) {
-			  if (is_numeric($ColorEyeID)) {
-				// Verify Record
-				$queryDelete = "SELECT ColorEyeID, ColorEyeTitle FROM ". rb_agency_data_coloreye ." WHERE ColorEyeID =  \"". $ColorEyeID ."\"";
-				$resultsDelete = mysql_query($queryDelete);
-				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-			
-					// Remove Record
-					$delete = "DELETE FROM " . rb_agency_data_coloreye . " WHERE ColorEyeID = \"". $ColorEyeID ."\"";
-					$results = $wpdb->query($delete);
-					
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ColorEyeTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-						
-				} // while
-			  } // it was numeric
-			} // for each
-		break;
-		
-		} // Switch
-		
-  } // Action Post
-  elseif ($_GET['action'] == "deleteRecord") {
-	
-	$ColorEyeID = $_GET['ColorEyeID'];
-
-	  if (is_numeric($ColorEyeID)) {
-		// Verify Record
-		$queryDelete = "SELECT ColorEyeID, ColorEyeTitle FROM ". rb_agency_data_coloreye ." WHERE ColorEyeID =  \"". $ColorEyeID ."\"";
-		$resultsDelete = mysql_query($queryDelete);
-		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-	
-			// Remove Record
-			$delete = "DELETE FROM " . rb_agency_data_coloreye . " WHERE ColorEyeID = \"". $ColorEyeID ."\"";
-			$results = $wpdb->query($delete);
-			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ColorEyeTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-				
-		} // is there record?
-	  } // it was numeric
-  }
-  elseif ($_GET['action'] == "editRecord") {
-
-		$action = $_GET['action'];
-		$ColorEyeID = $_GET['ColorEyeID'];
-		
-		if ( $ColorEyeID > 0) {
-
-			$query = "SELECT * FROM " . rb_agency_data_coloreye . " WHERE ColorEyeID='$ColorEyeID'";
-			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
-			$count = mysql_num_rows($results);
-			while ($data = mysql_fetch_array($results)) {
-				$ColorEyeID	=$data['ColorEyeID'];
-				$ColorEyeTitle	=stripslashes($data['ColorEyeTitle']);
-			} 
-		
-			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
-		}
-  } else {
-		
-			$ColorEyeID		= 0;
-			$ColorEyeTitle	="";
-			$ColorEyeTag	="";
-			
-			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
-  }
-	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
-	echo "<table class=\"form-table\">\n";
-	echo "<tbody>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
-	echo "        <td><input type=\"text\" id=\"ColorEyeTitle\" name=\"ColorEyeTitle\" value=\"". $ColorEyeTitle ."\" /></td>\n";
-	echo "    </tr>\n";
-	echo "  </tbody>\n";
-	echo "</table>\n";
-
-	if ( $ColorEyeID > 0) {
-	echo "<p class=\"submit\">\n";
-	echo "     <input type=\"hidden\" name=\"ColorEyeID\" value=\"". $ColorEyeID ."\" />\n";
-	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
-	echo "</p>\n";
-	} else {
-	echo "<p class=\"submit\">\n";
-	echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
-	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
-	echo "</p>\n";
-	} 
-	echo "</form>\n";
-	
-
-	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
-	
-		/******** Sort Order ************/
-		$sort = "";
-		if (isset($_GET['sort']) && !empty($_GET['sort'])){
-			$sort = $_GET['sort'];
-		}
-		else {
-			$sort = "ColorEyeTitle";
-		}
-		
-		/******** Direction ************/
-		$dir = "";
-		if (isset($_GET['dir']) && !empty($_GET['dir'])){
-			$dir = $_GET['dir'];
-			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
-			} 
-		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
-		}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
-		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
-		echo "<thead>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ColorEyeTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "    </tr>\n";
-		echo "</thead>\n";
-		echo "<tfoot>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "    </tr>\n";
-		echo "</tfoot>\n";
-		echo "<tbody>\n";
-	
-		$query = "SELECT * FROM ". rb_agency_data_coloreye ." ORDER BY $sort $dir";
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
-			$ColorEyeID	=$data['ColorEyeID'];
-		echo "    <tr>\n";
-		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $ColorEyeID ."\" name=\"". $ColorEyeID ."\" value=\"". $ColorEyeID ."\" /></th>\n";
-		echo "        <td class=\"column\">". stripslashes($data['ColorEyeTitle']) ."\n";
-		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ColorEyeID=". $ColorEyeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;ColorEyeID=". $ColorEyeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
-		echo "          </div>\n";
-		echo "        </td>\n";
-		echo "    </tr>\n";
-		}
-		mysql_free_result($results);
-		if ($count < 1) {
-		echo "    <tr>\n";
-		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
-		echo "    </tr>\n";
-		}
-		echo "</tbody>\n";
-		echo "</table>\n";
-		echo "<p class=\"submit\">\n";
-		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "</p>\n";
-		
-   		echo "</form>\n";
-
-}	 // End	
-// *************************************************************************************************** //
-// Setup Hair Color
-elseif ($ConfigID == 4) {
-	
-	/** Identify Labels **/
-	define("LabelPlural", __("Hair Colors", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Hair Color", rb_agency_TEXTDOMAIN));
-
-  /* Initial Registration [RESPOND TO POST] ***********/ 
-  if ( isset($_POST['action']) ) {
-	
-		$ColorHairID 	= $_POST['ColorHairID'];
-		$ColorHairTitle 	= $_POST['ColorHairTitle'];
-
-		// Error checking
-		$error = "";
-		$have_error = false;
-		if(trim($ColorHairTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
-			$have_error = true;
-		}
-
-		$action = $_POST['action'];
-		switch($action) {
-	
-		// Add
-		case 'addRecord':
-			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-			} else {
-		
-				// Create Record
-				$insert = "INSERT INTO " . table_agency_data_colorhair . " (ColorHairTitle) VALUES ('" . $wpdb->escape($ColorHairTitle) . "')";
-				$results = $wpdb->query($insert);
-				$lastid = $wpdb->insert_id;
-				
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>added</strong> successfully! You may now %1$s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
-			}
-
-		break;
-	
-		// Manage
-		case 'editRecord':
-			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-			} else {
-				$update = "UPDATE " . table_agency_data_colorhair . " 
-							SET 
-								ColorHairTitle='" . $wpdb->escape($ColorHairTitle) . "'
-							WHERE ColorHairID='$ColorHairID'";
-				$updated = $wpdb->query($update);
-
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
-			}
-		break;
-
-		// Delete bulk
-		case 'deleteRecord':
-			foreach($_POST as $ColorHairID) {
-			  if (is_numeric($ColorHairID)) {
-				// Verify Record
-				$queryDelete = "SELECT ColorHairID, ColorHairTitle FROM ". table_agency_data_colorhair ." WHERE ColorHairID =  \"". $ColorHairID ."\"";
-				$resultsDelete = mysql_query($queryDelete);
-				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-			
-					// Remove Record
-					$delete = "DELETE FROM " . table_agency_data_colorhair . " WHERE ColorHairID = \"". $ColorHairID ."\"";
-					$results = $wpdb->query($delete);
-					
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ColorHairTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-						
-				} // while
-			  } // it was numeric
-			} // for each
-		break;
-		
-		} // Switch
-		
-  } // Action Post
-  elseif ($_GET['action'] == "deleteRecord") {
-	
-	$ColorHairID = $_GET['ColorHairID'];
-
-	  if (is_numeric($ColorHairID)) {
-		// Verify Record
-		$queryDelete = "SELECT ColorHairID, ColorHairTitle FROM ". table_agency_data_colorhair ." WHERE ColorHairID =  \"". $ColorHairID ."\"";
-		$resultsDelete = mysql_query($queryDelete);
-		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-	
-			// Remove Record
-			$delete = "DELETE FROM " . table_agency_data_colorhair . " WHERE ColorHairID = \"". $ColorHairID ."\"";
-			$results = $wpdb->query($delete);
-			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ColorHairTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-				
-		} // is there record?
-	  } // it was numeric
-  }
-  elseif ($_GET['action'] == "editRecord") {
-
-		$action = $_GET['action'];
-		$ColorHairID = $_GET['ColorHairID'];
-		
-		if ( $ColorHairID > 0) {
-
-			$query = "SELECT * FROM " . table_agency_data_colorhair . " WHERE ColorHairID='$ColorHairID'";
-			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
-			$count = mysql_num_rows($results);
-			while ($data = mysql_fetch_array($results)) {
-				$ColorHairID	=$data['ColorHairID'];
-				$ColorHairTitle	=stripslashes($data['ColorHairTitle']);
-			} 
-		
-			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
-		}
-  } else {
-		
-			$ColorHairID		= 0;
-			$ColorHairTitle	="";
-			$ColorHairTag	="";
-			
-			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
-  }
-	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
-	echo "<table class=\"form-table\">\n";
-	echo "<tbody>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
-	echo "        <td><input type=\"text\" id=\"ColorHairTitle\" name=\"ColorHairTitle\" value=\"". $ColorHairTitle ."\" /></td>\n";
-	echo "    </tr>\n";
-	echo "  </tbody>\n";
-	echo "</table>\n";
-
-	if ( $ColorHairID > 0) {
-	echo "<p class=\"submit\">\n";
-	echo "     <input type=\"hidden\" name=\"ColorHairID\" value=\"". $ColorHairID ."\" />\n";
-	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
-	echo "</p>\n";
-	} else {
-	echo "<p class=\"submit\">\n";
-	echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
-	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
-	echo "</p>\n";
-	} 
-	echo "</form>\n";
-	
-
-	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
-	
-		/******** Sort Order ************/
-		$sort = "";
-		if (isset($_GET['sort']) && !empty($_GET['sort'])){
-			$sort = $_GET['sort'];
-		}
-		else {
-			$sort = "ColorHairTitle";
-		}
-		
-		/******** Direction ************/
-		$dir = "";
-		if (isset($_GET['dir']) && !empty($_GET['dir'])){
-			$dir = $_GET['dir'];
-			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
-			} 
-		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
-		}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
-		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
-		echo "<thead>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ColorHairTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "    </tr>\n";
-		echo "</thead>\n";
-		echo "<tfoot>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "    </tr>\n";
-		echo "</tfoot>\n";
-		echo "<tbody>\n";
-	
-		$query = "SELECT * FROM ". table_agency_data_colorhair ." ORDER BY $sort $dir";
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
-			$ColorHairID	=$data['ColorHairID'];
-		echo "    <tr>\n";
-		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $ColorHairID ."\" name=\"". $ColorHairID ."\" value=\"". $ColorHairID ."\" /></th>\n";
-		echo "        <td class=\"column\">". stripslashes($data['ColorHairTitle']) ."\n";
-		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ColorHairID=". $ColorHairID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;ColorHairID=". $ColorHairID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
-		echo "          </div>\n";
-		echo "        </td>\n";
-		echo "    </tr>\n";
-		}
-		mysql_free_result($results);
-		if ($count < 1) {
-		echo "    <tr>\n";
-		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"2\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
-		echo "    </tr>\n";
-		}
-		echo "</tbody>\n";
-		echo "</table>\n";
-		echo "<p class=\"submit\">\n";
-		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "</p>\n";
-		
-   		echo "</form>\n";
-
-}	 // End	
-// *************************************************************************************************** //
-// Setup Ethnicity
+// Setup Gender
 elseif ($ConfigID == 5) {
 	
 	/** Identify Labels **/
-	define("LabelPlural", __("Ethnicity Types", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Ethnicity Type", rb_agency_TEXTDOMAIN));
+	define("LabelPlural", __("Gender Types", rb_agency_TEXTDOMAIN));
+	define("LabelSingular", __("Gender Type", rb_agency_TEXTDOMAIN));
 
   /* Initial Registration [RESPOND TO POST] ***********/ 
   if ( isset($_POST['action']) ) {
 	
-		$EthnicityID 	= $_POST['EthnicityID'];
-		$EthnicityTitle 	= $_POST['EthnicityTitle'];
+		$GenderID 	= $_POST['GenderID'];
+		$GenderTitle 	= $_POST['GenderTitle'];
 
 		// Error checking
 		$error = "";
 		$have_error = false;
-		if(trim($EthnicityTitle) == ""){
+		if(trim($GenderTitle) == ""){
 			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
@@ -1489,7 +813,7 @@ elseif ($ConfigID == 5) {
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_data_ethnicity . " (EthnicityTitle) VALUES ('" . $wpdb->escape($EthnicityTitle) . "')";
+				$insert = "INSERT INTO " . table_agency_data_gender . " (GenderTitle) VALUES ('" . $wpdb->escape($GenderTitle) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 				
@@ -1503,10 +827,10 @@ elseif ($ConfigID == 5) {
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
-				$update = "UPDATE " . table_agency_data_ethnicity . " 
+				$update = "UPDATE " . table_agency_data_gender . " 
 							SET 
-								EthnicityTitle='" . $wpdb->escape($EthnicityTitle) . "'
-							WHERE EthnicityID='$EthnicityID'";
+								GenderTitle='" . $wpdb->escape($GenderTitle) . "'
+							WHERE GenderID='$GenderID'";
 				$updated = $wpdb->query($update);
 
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
@@ -1515,18 +839,18 @@ elseif ($ConfigID == 5) {
 
 		// Delete bulk
 		case 'deleteRecord':
-			foreach($_POST as $EthnicityID) {
-			  if (is_numeric($EthnicityID)) {
+			foreach($_POST as $GenderID) {
+			  if (is_numeric($GenderID)) {
 				// Verify Record
-				$queryDelete = "SELECT EthnicityID, EthnicityTitle FROM ". table_agency_data_ethnicity ." WHERE EthnicityID =  \"". $EthnicityID ."\"";
+				$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
 				$resultsDelete = mysql_query($queryDelete);
 				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
 			
 					// Remove Record
-					$delete = "DELETE FROM " . table_agency_data_ethnicity . " WHERE EthnicityID = \"". $EthnicityID ."\"";
+					$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
 					$results = $wpdb->query($delete);
 					
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['EthnicityTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 						
 				} // while
 			  } // it was numeric
@@ -1538,19 +862,19 @@ elseif ($ConfigID == 5) {
   } // Action Post
   elseif ($_GET['action'] == "deleteRecord") {
 	
-	$EthnicityID = $_GET['EthnicityID'];
+	$GenderID = $_GET['GenderID'];
 
-	  if (is_numeric($EthnicityID)) {
+	  if (is_numeric($GenderID)) {
 		// Verify Record
-		$queryDelete = "SELECT EthnicityID, EthnicityTitle FROM ". table_agency_data_ethnicity ." WHERE EthnicityID =  \"". $EthnicityID ."\"";
+		$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
 		$resultsDelete = mysql_query($queryDelete);
 		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
 	
 			// Remove Record
-			$delete = "DELETE FROM " . table_agency_data_ethnicity . " WHERE EthnicityID = \"". $EthnicityID ."\"";
+			$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
 			$results = $wpdb->query($delete);
 			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['EthnicityTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 				
 		} // is there record?
 	  } // it was numeric
@@ -1558,16 +882,16 @@ elseif ($ConfigID == 5) {
   elseif ($_GET['action'] == "editRecord") {
 
 		$action = $_GET['action'];
-		$EthnicityID = $_GET['EthnicityID'];
+		$GenderID = $_GET['GenderID'];
 		
-		if ( $EthnicityID > 0) {
+		if ( $GenderID > 0) {
 
-			$query = "SELECT * FROM " . table_agency_data_ethnicity . " WHERE EthnicityID='$EthnicityID'";
+			$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID='$GenderID'";
 			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
 			$count = mysql_num_rows($results);
 			while ($data = mysql_fetch_array($results)) {
-				$EthnicityID	=$data['EthnicityID'];
-				$EthnicityTitle	=stripslashes($data['EthnicityTitle']);
+				$GenderID	=$data['GenderID'];
+				$GenderTitle	=stripslashes($data['GenderTitle']);
 			} 
 		
 			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
@@ -1575,9 +899,9 @@ elseif ($ConfigID == 5) {
 		}
   } else {
 		
-			$EthnicityID		= 0;
-			$EthnicityTitle	="";
-			$EthnicityTag	="";
+			$GenderID		= 0;
+			$GenderTitle	="";
+			$GenderTag	="";
 			
 			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
@@ -1587,14 +911,14 @@ elseif ($ConfigID == 5) {
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
-	echo "        <td><input type=\"text\" id=\"EthnicityTitle\" name=\"EthnicityTitle\" value=\"". $EthnicityTitle ."\" /></td>\n";
+	echo "        <td><input type=\"text\" id=\"GenderTitle\" name=\"GenderTitle\" value=\"". $GenderTitle ."\" /></td>\n";
 	echo "    </tr>\n";
 	echo "  </tbody>\n";
 	echo "</table>\n";
 
-	if ( $EthnicityID > 0) {
+	if ( $GenderID > 0) {
 	echo "<p class=\"submit\">\n";
-	echo "     <input type=\"hidden\" name=\"EthnicityID\" value=\"". $EthnicityID ."\" />\n";
+	echo "     <input type=\"hidden\" name=\"GenderID\" value=\"". $GenderID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
 	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
@@ -1617,7 +941,7 @@ elseif ($ConfigID == 5) {
 			$sort = $_GET['sort'];
 		}
 		else {
-			$sort = "EthnicityTitle";
+			$sort = "GenderTitle";
 		}
 		
 		/******** Direction ************/
@@ -1639,7 +963,7 @@ elseif ($ConfigID == 5) {
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=EthnicityTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=GenderTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		echo "<tfoot>\n";
@@ -1650,17 +974,17 @@ elseif ($ConfigID == 5) {
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
 	
-		$query = "SELECT * FROM ". table_agency_data_ethnicity ." ORDER BY $sort $dir";
+		$query = "SELECT * FROM ". table_agency_data_gender ." ORDER BY $sort $dir";
 		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 		$count = mysql_num_rows($results);
 		while ($data = mysql_fetch_array($results)) {
-			$EthnicityID	=$data['EthnicityID'];
+			$GenderID	=$data['GenderID'];
 		echo "    <tr>\n";
-		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $EthnicityID ."\" name=\"". $EthnicityID ."\" value=\"". $EthnicityID ."\" /></th>\n";
-		echo "        <td class=\"column\">". stripslashes($data['EthnicityTitle']) ."\n";
+		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $GenderID ."\" name=\"". $GenderID ."\" value=\"". $GenderID ."\" /></th>\n";
+		echo "        <td class=\"column\">". stripslashes($data['GenderTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;EthnicityID=". $EthnicityID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;EthnicityID=". $EthnicityID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
 		echo "    </tr>\n";
@@ -1939,34 +1263,30 @@ elseif ($ConfigID == 7) {
 		$ProfileCustomOptions 	= $_POST['ProfileCustomOptions'];
 		$ProfileCustomView 		= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
-	    $ProfileCustomShowProfile  = (int)$_POST['ProfileCustomShowProfile'];
-		$ProfileCustomShowSearch  = (int)$_POST['ProfileCustomShowSearch'];
-		$ProfileCustomShowLogged  = (int)$_POST['ProfileCustomShowLogged'];
-		$ProfileCustomShowAdmin   = (int)$_POST['ProfileCustomShowAdmin'];
+		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
+	    $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
+		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
+		$ProfileCustomShowLogged  	= (int)$_POST['ProfileCustomShowLogged'];
+		$ProfileCustomShowAdmin   	= (int)$_POST['ProfileCustomShowAdmin'];
 	    $error = "";	
 		
 		 if($ProfileCustomType == 1){ //Text
 			 //...
-		}else if($ProfileCustomType == 2){ //MinMaxText
-		
+		} elseif ($ProfileCustomType == 2){ //MinMaxText
 		
 		            $ProfileCustomOptions = "{min:".$_POST['textmin'].",max:".$_POST['textmin']."}";
 				
-				
-				
-		}else if($ProfileCustomType == 3){ //Dropdown
+		} elseif ($ProfileCustomType == 3){ //Dropdown
 		
 		        // Error checking
 				$have_error = false;
-				if(isset($_POST['option_label']) && empty($_POST['option_label']) ){
+				if (isset($_POST['option_label']) && empty($_POST['option_label']) ){
 					$error .= "<b><i>". __(LabelPlural." Label required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 					$have_error = true;
-				}
-				else if(isset($_POST['option_label2']) && empty($_POST['option_label2'])){
+				} elseif (isset($_POST['option_label2']) && empty($_POST['option_label2'])) {
 					$error .= "<b><i>". __(LabelPlural." Label required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 					$have_error = true;
-				}
-				else{
+				} else {
 					 
 					 $label_option ="";
 					 $option = "";
@@ -2006,8 +1326,6 @@ elseif ($ConfigID == 7) {
 						   $label_option2 = ";option2_label:".$_POST["option_label2"].":".$option2."".$default2;  //
 						
 					 }
-					 
-					 
 					 
 					 $ProfileCustomOptions = $label_option.$label_option2; 
 		         
@@ -2062,6 +1380,12 @@ elseif ($ConfigID == 7) {
 								ProfileCustomType='" . $wpdb->escape($ProfileCustomType) . "',
 								ProfileCustomOptions='" . $wpdb->escape($ProfileCustomOptions) . "',
 								ProfileCustomView='" . $wpdb->escape($ProfileCustomView) . "' 
+								ProfileCustomOrder='" . $wpdb->escape($ProfileCustomOrder) . "' 
+								ProfileCustomShowGender='" . $wpdb->escape($ProfileCustomShowGender) . "' 
+								ProfileCustomShowProfile='" . $wpdb->escape($ProfileCustomShowProfile) . "' 
+								ProfileCustomShowSearch='" . $wpdb->escape($ProfileCustomShowSearch) . "' 
+								ProfileCustomShowLogged='" . $wpdb->escape($ProfileCustomShowLogged) . "' 
+								ProfileCustomShowAdmin='" . $wpdb->escape($ProfileCustomShowAdmin) . "' 
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = $wpdb->query($update);
 
@@ -2215,13 +1539,13 @@ elseif ($ConfigID == 7) {
 		
 		}else{ //Update Field
 			
-			  					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder,ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
-								$results1 = mysql_query($query1);
-								$count1 = mysql_num_rows($results1);
+					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder,ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
+					$results1 = mysql_query($query1);
+					$count1 = mysql_num_rows($results1);
 					while ($data1 = mysql_fetch_array($results1)) {
 									
-									    $query2 = "SELECT * FROM ". table_agency_customfields_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".$ProfileID."";
-										$results2 = mysql_query($query2);
+							$query2 = "SELECT * FROM ". table_agency_customfields_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".$ProfileID."";
+							$results2 = mysql_query($query2);
 									  echo "<tr>
 											<td style=\"width:50px;\">Title:</td>
 											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>

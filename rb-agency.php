@@ -213,6 +213,7 @@ return;
 				ProfileCustomOptions TEXT,
 				ProfileCustomView INT(10) NOT NULL DEFAULT '0',
 				ProfileCustomOrder INT(10) NOT NULL DEFAULT '0',
+				ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0',
 				ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1',
 				ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1',
 				ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
