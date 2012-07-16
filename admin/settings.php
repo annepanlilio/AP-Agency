@@ -6,14 +6,23 @@ global $wpdb;
 
     echo "<div class=\"wrap\">\n";
     echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
-    echo "  <h2>". __("Settings", rb_agency_TEXTDOMAIN) . "</h2>\n";
+    echo "  <h2>". __("Settings", rb_agency_TEXTDOMAIN);
+	  if($_GET["ConfigID"]==1){
+		    echo " &raquo; Features";
+	  }elseif($_GET["ConfigID"]==10){
+		    echo " &raquo; Style";
+	  }elseif($_GET["ConfigID"]==5){
+		    echo " &raquo; Gender";
+	  }elseif($_GET["ConfigID"]==6){
+		    echo " &raquo; Profile Categories";
+	  }elseif($_GET["ConfigID"]==7){
+		     echo " &raquo; Custom Fields";
+	  }
+	echo "</h2>\n";
     echo "  <div>\n";
     echo "  	<a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=0\">". __("Overview", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\">". __("Features", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=10\">". __("Style", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\">". __("Skin Types", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\">". __("Eye Color", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\">". __("Hair Color", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\">". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a> | \n";
@@ -60,6 +69,7 @@ if ($ConfigID == 0) {
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "\">". __("Settings", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+
     echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN) . "</p>\n";
     echo "    </div>\n";
  
@@ -1257,11 +1267,11 @@ elseif ($ConfigID == 7) {
   if ( isset($_POST['action']) ) {
 	
    
-		$ProfileCustomID 		= $_POST['ProfileCustomID'];
-		$ProfileCustomTitle 	= $_POST['ProfileCustomTitle'];
-		$ProfileCustomType 		= $_POST['ProfileCustomType'];
-		$ProfileCustomOptions 	= $_POST['ProfileCustomOptions'];
-		$ProfileCustomView 		= (int)$_POST['ProfileCustomView'];
+		$ProfileCustomID 			= $_POST['ProfileCustomID'];
+		$ProfileCustomTitle 		= $_POST['ProfileCustomTitle'];
+		$ProfileCustomType 			= $_POST['ProfileCustomType'];
+		$ProfileCustomOptions 		= $_POST['ProfileCustomOptions'];
+		$ProfileCustomView 			= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
 	    $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
@@ -1272,22 +1282,9 @@ elseif ($ConfigID == 7) {
 		
 		 if($ProfileCustomType == 1){ //Text
 			 //...
-		} elseif ($ProfileCustomType == 2){ //MinMaxText
-		
-		            $ProfileCustomOptions = "{min:".$_POST['textmin'].",max:".$_POST['textmin']."}";
-				
 		} elseif ($ProfileCustomType == 3){ //Dropdown
 		
-		        // Error checking
-				$have_error = false;
-				if (isset($_POST['option_label']) && empty($_POST['option_label']) ){
-					$error .= "<b><i>". __(LabelPlural." Label required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
-					$have_error = true;
-				} elseif (isset($_POST['option_label2']) && empty($_POST['option_label2'])) {
-					$error .= "<b><i>". __(LabelPlural." Label required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
-					$have_error = true;
-				} else {
-					 
+		      
 					 $label_option ="";
 					 $option = "";
 					 
@@ -1299,7 +1296,7 @@ elseif ($ConfigID == 7) {
 						 
 						  foreach($_POST["option"] as $key => $val){
 							  if(!empty($val)){
-						       $option .= $val.":";
+						       $option .= $val."|";
 							  }
 					      }
 						  $default = "no";
@@ -1307,14 +1304,14 @@ elseif ($ConfigID == 7) {
 							     $default ="yes";
 						  }
 						 
-						    $label_option = "option_label:".$_POST["option_label"].":".$option."".$default;  //
+						    $label_option = "".$_POST["option_label"]."|".$option."".$default;  //
 					 }
 					 
 					 if(!empty($_POST["option2"]) && isset($_POST["option2"])){
 						  
 						  foreach($_POST["option2"] as $key2 => $val2){
 							    if(!empty($val2)){
-						          $option2 .= $val2.":";
+						          $option2 .= $val2."|";
 								}
 							 
 					      }
@@ -1322,23 +1319,59 @@ elseif ($ConfigID == 7) {
 						  if(isset($_POST["option_default_2"])){
 							  $default2 ="yes";
 						  }
+						  
 						 
-						   $label_option2 = ";option2_label:".$_POST["option_label2"].":".$option2."".$default2;  //
+						 
+						   $label_option2 = ":".$_POST["option_label2"]."|".$option2."".$default2;  //
 						
 					 }
 					 
 					 $ProfileCustomOptions = $label_option.$label_option2; 
 		         
-				}
+				
 				
 		
-		}else if($ProfileCustomType == 4){ //TextArea
+		}elseif($ProfileCustomType == 4){ //TextArea
 		
-		}else if($ProfileCustomType == 5){ //Checkbox
+		  		 $ProfileCustomOptions = $_POST["ProfileCustomOptions"];
 		
-		}else if($ProfileCustomType == 6){ //RadioButton
+		}elseif($ProfileCustomType == 5){ //Checkbox
+		         $pos = 0;
+		         foreach($_POST["label"] as $key => $val){
+					    
+					
+					if(!empty($_POST["label"]) && $_POST["label"] !=""){
+						$pos++;		
+					   if($pos!= count($_POST["label"])){ 
+					    $ProfileCustomOptions .= $val."|";
+					   }else{
+					    $ProfileCustomOptions .= $val;
+					   }
+					   
+					}
+						
+				 }
+		  
 		
-		}else if($ProfileCustomType == 7){ //Metric & Imperial
+		}elseif($ProfileCustomType == 6){ //RadioButton
+		       $pos = 0;
+		         foreach($_POST["label"] as $key => $val){
+					    
+						
+					if(!empty($_POST["label"])  && $_POST["label"] !=""){
+						  $pos++;	
+					   if($pos!= count($_POST["label"])){ 
+					    $ProfileCustomOptions .= $val."|";
+					   }else{
+					    $ProfileCustomOptions .= $val;
+					   }
+					 
+					}
+					
+				 }
+		  
+		
+		}elseif($ProfileCustomType == 7){ //Metric & Imperial
 		
 		}
 
@@ -1360,7 +1393,7 @@ elseif ($ConfigID == 7) {
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "','" . $wpdb->escape($ProfileCustomOrder ) . "','" . $wpdb->escape($ProfileCustomShowGender ) . "','" . $wpdb->escape($ProfileCustomShowProfile ) . "','" . $wpdb->escape($ProfileCustomShowSearch) . "','" . $wpdb->escape($ProfileCustomShowLogged ) . "','" . $wpdb->escape($ProfileCustomShowAdmin) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 				
@@ -1379,16 +1412,16 @@ elseif ($ConfigID == 7) {
 								ProfileCustomTitle='" . $wpdb->escape($ProfileCustomTitle) . "',
 								ProfileCustomType='" . $wpdb->escape($ProfileCustomType) . "',
 								ProfileCustomOptions='" . $wpdb->escape($ProfileCustomOptions) . "',
-								ProfileCustomView='" . $wpdb->escape($ProfileCustomView) . "' 
-								ProfileCustomOrder='" . $wpdb->escape($ProfileCustomOrder) . "' 
-								ProfileCustomShowGender='" . $wpdb->escape($ProfileCustomShowGender) . "' 
-								ProfileCustomShowProfile='" . $wpdb->escape($ProfileCustomShowProfile) . "' 
-								ProfileCustomShowSearch='" . $wpdb->escape($ProfileCustomShowSearch) . "' 
-								ProfileCustomShowLogged='" . $wpdb->escape($ProfileCustomShowLogged) . "' 
-								ProfileCustomShowAdmin='" . $wpdb->escape($ProfileCustomShowAdmin) . "' 
+								ProfileCustomView=" . $wpdb->escape($ProfileCustomView) . ", 
+								ProfileCustomOrder=" . $wpdb->escape($ProfileCustomOrder) . " ,
+								ProfileCustomShowGender=" . $wpdb->escape($ProfileCustomShowGender) . ",
+								ProfileCustomShowProfile=" . $wpdb->escape($ProfileCustomShowProfile) . " ,
+								ProfileCustomShowSearch=" . $wpdb->escape($ProfileCustomShowSearch) . " ,
+								ProfileCustomShowLogged=" . $wpdb->escape($ProfileCustomShowLogged) . " ,
+								ProfileCustomShowAdmin=" . $wpdb->escape($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
-				$updated = $wpdb->query($update);
-
+				$updated = mysql_query($update) or die(mysql_error());
+                 
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
 		break;
@@ -1446,11 +1479,17 @@ elseif ($ConfigID == 7) {
 			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
 			$count = mysql_num_rows($results);
 			while ($data = mysql_fetch_array($results)) {
-				$ProfileCustomID		=$data['ProfileCustomID'];
-				$ProfileCustomTitle		=stripslashes($data['ProfileCustomTitle']);
-				$ProfileCustomType		=$data['ProfileCustomType'];
-				$ProfileCustomOptions	=$data['ProfileCustomOptions'];
-				$ProfileCustomView		=$data['ProfileCustomView'];
+				$ProfileCustomID			=	$data['ProfileCustomID'];
+				$ProfileCustomTitle			=	stripslashes($data['ProfileCustomTitle']);
+				$ProfileCustomType			=	$data['ProfileCustomType'];
+				$ProfileCustomOptions		=	$data['ProfileCustomOptions'];
+				$ProfileCustomView			=	$data['ProfileCustomView'];
+				$ProfileCustomOrder			=	$data['ProfileCustomOrder'];
+				$ProfileCustomShowGender	=	$data['ProfileCustomShowGender'];
+				$ProfileCustomShowProfile	=	$data['ProfileCustomShowProfile'];
+				$ProfileCustomShowSearch	=	$data['ProfileCustomShowSearch'];
+				$ProfileCustomShowLogged	=	$data['ProfileCustomShowLogged'];
+				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			} 
 		
 			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
@@ -1459,48 +1498,64 @@ elseif ($ConfigID == 7) {
 		}
   } else {
 		
-			$ProfileCustomID		= 0;
-			$ProfileCustomTitle		="";
-			$ProfileCustomType		="";
-			$ProfileCustomOptions	="";
-			$ProfileCustomView		= 0;
+			$ProfileCustomID			=	0;
+			$ProfileCustomTitle			=	"";
+			$ProfileCustomType			=	"";
+			$ProfileCustomOptions		=	"";
+			$ProfileCustomView			=	0;
+			$ProfileCustomOrder			=	0;
+			$ProfileCustomShowGender	=	0;
+			$ProfileCustomShowProfile	=	0;
+			$ProfileCustomShowSearch	=	0;
+			$ProfileCustomShowLogged	=	0;
+			$ProfileCustomShowAdmin		=	0;
 			
 			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
   }
   
 			//print_r($_POST);
-
+        if(isset($_GET["action"]) == "editRecord"){
+			echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileCustomID=".$_GET["ProfileCustomID"]."&ConfigID=".$_GET["ConfigID"]."\">\n";
+		}else{
 			echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
+		}
+			
 			echo "<table class=\"form-table\">\n";
 		if(!isset($_GET["action"])){  // Create new Field		
 				
 					echo "
 				 <tr>
-					<td>Type*:</td>
-					<td>
-					<select class=\"objtype\" name=\"ProfileCustomType\">
-					<option value=\"\">---</option>
-					<option value=\"1\">Text</option>
-					<option value=\"2\">Min/Max textfield</option>
-					<option value=\"3\">Dropdown</option>
-					<option value=\"4\">Textbox</option>
-					<option value=\"5\">Checkbox</option>
-					<option value=\"6\">Radiobutton</option>";
-					if($rb_agency_options_arr['rb_agency_option_unittype']==1){
-						echo"     <option value=\"7\">Imperial (in/lb)</option>";
-					}else{
-						echo"     <option value=\"7\">Metric (cm/kg)</option>";
-					}
-				  echo"  </select>
-				   
-					 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;display:none;\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
-					</td>
-				 </tr>
+                      <td> 
+								<tr>
+										<td>Type*:</td>
+										<td>
+											<select class=\"objtype\" name=\"ProfileCustomType\">
+											<option value=\"\">---</option>
+											<option value=\"1\">Text</option>
+											<!--<option value=\"2\">Min/Max textfield</option>-->
+											<option value=\"3\">Dropdown</option>
+											<option value=\"4\">Textbox</option>
+											<option value=\"5\">Checkbox</option>
+											<option value=\"6\">Radiobutton</option>";
+											if($rb_agency_options_arr['rb_agency_option_unittype']==1){
+												echo"     <option value=\"7\">Imperial (in/lb)</option>";
+											}else{
+												echo"     <option value=\"7\">Metric (cm/kg)</option>";
+											}
+											 echo"  </select>
+									   
+										 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;display:none;\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
+										</td>
+										<td style=\"font-size:13px;\">
+									   
+										</td>
+										<td style=\"font-size:13px;\">
+									   
+										</td>
+								</tr>
+								
 				
-				  <tr>
-					
-						<td> 
 								<tr>
 									<td>Visibility*:</td>
 									<td style=\"font-size:13px;\">
@@ -1518,10 +1573,10 @@ elseif ($ConfigID == 7) {
 								<tr>
 									<td valign=\"top\">Show on*:</td>
 									<td style=\"font-size:13px;\">
-									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" /> Profile Page &nbsp;
-									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"2\" /> Search Results Page &nbsp;  
-									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"3\" /> User must be Logged In to see It &nbsp;
-									<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"4\" /> User must be an Admin to see It
+									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Profile Page &nbsp;
+									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Results Page &nbsp;  
+									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\"  checked=\"checked\" /> User must be Logged In to see It &nbsp;
+									<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" /> User must be an Admin to see It
 									</td>
 									<td style=\"font-size:13px;\">
 								   
@@ -1530,6 +1585,45 @@ elseif ($ConfigID == 7) {
 								   
 									</td>
 								</tr>
+								<tr>
+													<td valign=\"top\">Gender*:</td>
+													<td style=\"font-size:13px;\">";
+													
+													$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+													echo "<select name=\"ProfileCustomShowGender\">";
+													echo "<option value=\"\">--</option>";
+															
+													$queryShowGender = mysql_query($query);
+													
+														 while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+															 if(isset($data1["ProfileCustomShowGender"])){
+																echo "<option value=\"".$dataShowGender["GenderID"]."\" selected=\"selected\">".$dataShowGender["GenderTitle"]."</option>";
+															 }else{
+																echo "<option value=\"".$dataShowGender["GenderID"]."\">".$dataShowGender["GenderTitle"]."</option>";
+															 }
+														 }
+													echo "</select>";
+													
+										echo "		</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+									</tr>
+									<tr>
+											<td valign=\"top\">Custom Order:</td>
+											<td style=\"font-size:13px;\">
+											<input type=\"text\" name=\"ProfileCustomOrder\" value=\"0\" />
+											</td>
+											<td style=\"font-size:13px;\">
+										   
+											</td>
+											<td style=\"font-size:13px;\">
+										   
+											</td>
+								   </tr>
 
 						</td>
 				 </tr>
@@ -1539,7 +1633,7 @@ elseif ($ConfigID == 7) {
 		
 		}else{ //Update Field
 			
-					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder,ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
+					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions,  ProfileCustomOrder, ProfileCustomView,  ProfileCustomShowGender	, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = mysql_query($query1);
 					$count1 = mysql_num_rows($results1);
 					while ($data1 = mysql_fetch_array($results1)) {
@@ -1556,7 +1650,7 @@ elseif ($ConfigID == 7) {
 											<select class=\"objtype\" name=\"ProfileCustomType\">
 											<option value=\"\">---</option>
 											<option value=\"1\" ". ($data1["ProfileCustomType"] == 1 ? 'selected=\"selected\"':'').">Text</option>
-											<option value=\"2\" ". ($data1["ProfileCustomType"] == 2 ? 'selected=\"selected\"':'').">Min/Max textfield</option>
+											
 											<option value=\"3\" ". ($data1["ProfileCustomType"] == 3 ? 'selected=\"selected\"':'').">Dropdown</option>
 											<option value=\"4\" ". ($data1["ProfileCustomType"] == 4 ? 'selected=\"selected\"':'').">Textbox</option>
 											<option value=\"5\" ". ($data1["ProfileCustomType"] == 5 ? 'selected=\"selected\"':'').">Checkbox</option>
@@ -1568,7 +1662,7 @@ elseif ($ConfigID == 7) {
 											}
 										  echo"  </select>
 										   
-											 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;display:none;\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
+											 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
 											</td>
 										 </tr>";
 										echo "  <tr>
@@ -1580,6 +1674,7 @@ elseif ($ConfigID == 7) {
 												<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')."/>Private(Only show in Admin CRM)&nbsp;
 												<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')."/>Custom(Used in Custom Views)&nbsp;
 												</td>
+											
 												<td style=\"font-size:13px;\">
 											   
 												</td>
@@ -1591,10 +1686,46 @@ elseif ($ConfigID == 7) {
 												<tr>
 													<td valign=\"top\">Show on*:</td>
 													<td style=\"font-size:13px;\">
-													<input type=\"checkbox\" name=\"showpage\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile Page &nbsp;
-													<input type=\"checkbox\" name=\"showsearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Results Page &nbsp;  
-													<input type=\"checkbox\" name=\"showlogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be Logged In to see It &nbsp;
-													<input type=\"checkbox\" name=\"showadmin\" value=\"1\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an Admin to see It
+													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile Page &nbsp;
+													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Results Page &nbsp;  
+													<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be Logged In to see It &nbsp;
+													<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an Admin to see It
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+												</tr>
+												<tr>
+													<td valign=\"top\">Gender*:</td>
+													<td style=\"font-size:13px;\">";
+													
+													$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+													echo "<select name=\"ProfileCustomShowGender\">";
+													echo "<option value=\"\">--</option>";
+													$queryShowGender = mysql_query($query);
+														 while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+															
+																echo "<option value=\"".$dataShowGender["GenderID"]."\" ". ($data1["ProfileCustomShowGender"] == $dataShowGender["GenderID"] ? 'selected=\"selected\"':'').">".$dataShowGender["GenderTitle"]."</option>";
+															
+														 }
+													echo "</select>";
+													
+							echo "						
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+												</tr>
+												<tr>
+													<td valign=\"top\">Order*:</td>
+													<td style=\"font-size:13px;\" align=\"left\">
+													<input type=\"text\" name=\"ProfileCustomOrder\"  value=\"".$data1["ProfileCustomOrder"]."\"/>
 													</td>
 													<td style=\"font-size:13px;\">
 												   
@@ -1604,56 +1735,168 @@ elseif ($ConfigID == 7) {
 													</td>
 												</tr>
 												
-												
 												</td>
 											 </tr>";
 								 
-								 if($data1["ProfileCustomType"] == 1){
+								 if($data1["ProfileCustomType"] == 1){ // text
 									 	echo "
 										      <tr>
 												 <td align=\"right\" style=\"width:50px;\">Value*:</td>
-											     <td>
-												     <td align=\"right\"><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $data1["ProfileCustomValue"] ."\" /></td>
-												 </td>
+											     <td><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $data1["ProfileCustomValue"] ."\" /></td>
 											  
 											  </tr>
 										
 										";
 								 }
-								 elseif($data1["ProfileCustomType"] == 2){	
-								           $array_profilecustom_options = $data1['ProfileCustomOptions'];	
-										   $array_profilecustom_options_MAX;
-										   $array_profilecustom_options_MIN;
-										   echo "		
-												<tr>
-														<td>Min*:</td>
-														<td><input type=\"text\" name=\"textmin\"/></td>
+							
+								 elseif($data1["ProfileCustomType"] == 3){	  // Dropdown
+								 
+								            list($option1,$option2) = explode(":",$data1['ProfileCustomOptions']);	
+											
+											$data1 = explode("|",$option1);
+											$data2 = explode("|",$option2);
+											
+									echo "<tr>";
+											echo "<td>";
+											echo "&nbsp;";
+											echo "</td>";
+											echo "<td>";
+											echo "Label:<input type=\"text\" value=\"".current($data1)."\" name=\"option_label\"/><br/>";
+											    $pos = 0;
+												foreach($data1 as $val1){
 													
-												</tr>
-												<tr>
-													
-														<td>Min*:</td>
-														<td><input type=\"text\" name=\"textmin\"/></td>
-													
-												</tr>
-												";		 
-								   }
-								 elseif($data1["ProfileCustomType"] == 3){	
+													if($val1 != end($data1) && $val1 != $data1[0]){
+													 $pos++;
+													 echo "Option:<input type=\"text\"  value=\"".$val1."\" name=\"option[]\"/>";
+														if($pos==1){
+														 echo "<input type=\"checkbox\" ".(end($data1)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_1\"/><span style=\"font-size:11px;\">(set as selected)</span>";	
+														 }
+													  echo "<br/>";
+													}
+												}
+											echo "<br/>";	
+											echo "<br/>";	
+											if(!empty($data2) && !empty($option2)){
+												echo "Labe:<input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/>";
+											}
+											 	$pos2 = 0;
+											foreach($data2 as $val2){
+												  
+													if($val2 != end($data2) && $val2 !=  $data2[0]){
+														 $pos2++;
+													 echo "Option:<input type=\"text\" value=\"".$val2."\"  name=\"option2[]\"/>";
+													  if($pos2==1){
+														 echo "<input type=\"checkbox\" ".(end($data2)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_2\"/><span style=\"font-size:11px;\">(set as selected)</span>";	
+													   }	
+													   echo "<br/>";
+													}
+												}
+											echo "</td>";
+									echo "</tr>";		
+									
+								 }
+								  elseif($data1["ProfileCustomType"] == 4){	 //textbox
+								   
+								      $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
+								      
+								     echo "
+										      <tr>
+												 <td align=\"right\"  valign=\"top\" style=\"width:50px;\">Value*:</td>
+											     <td><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" style=\"width:400px;\"> ". $data1["ProfileCustomValue"] ."</textarea></td>
+											  
+											  </tr>
+										
+										";
 								
 								 }
-								  elseif($data1["ProfileCustomType"] == 4){	
+								  elseif($data1["ProfileCustomType"] == 5){	 //checkbox
+								  
+								  $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
+									   $pos =0;
+								     
+											  
+											  echo "
+													  <tr>
+													      <td>&nbsp;</td>
+														   <td valign=\"top\">
+														 ";
+										 foreach($array_customOptions_values as  $val){
+											
+											  echo"		 
+														
+														  &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+														 if($pos ==1){
+																	echo"			 
+																				 <a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>
+																  ";	
+														 }
+											  echo "<br/>";	
+											   $pos++;		 
+											
+										 }
+										   echo "<div id=\"addcheckbox_field_1\"></div>";
+										   echo "	  </td>";
+											echo"
+													  </tr>
+												
+												";
+											    	
+													  
+											  echo "
+													 </td>
+												 </tr>
+											   ";
+											 
+									 
 								
 								 }
-								  elseif($data1["ProfileCustomType"] == 5){	
+								  elseif($data1["ProfileCustomType"] == 6){	 //radio button
+								    $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
+									   $pos =0;
+								     
+											  
+											  echo "
+													  <tr>
+													      <td>&nbsp;</td>
+														   <td valign=\"top\">
+														 ";
+										 foreach($array_customOptions_values as  $val){
+											
+											  echo"		 
+														
+														  &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+														 if($pos ==1){
+																	echo"			 
+																				 <a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>
+																  ";	
+														 }
+											  echo "<br/>";	
+											   $pos++;		 
+											
+										 }
+										   echo "<div id=\"addcheckbox_field_1\"></div>";
+										   echo "	  </td>";
+											echo"
+													  </tr>
+												
+												";
+											    	
+													  
+											  echo "
+													 </td>
+												 </tr>
+											   ";
+											 
+								
 								
 								 }
-								  elseif($data1["ProfileCustomType"] == 6){	
+								  elseif($data1["ProfileCustomType"] == 7){	 ///metric/imperials
 								
 								 }
 									
 					}  //endwhile
-							
-							
+	     	
+	           
 		}
 		echo "</table>\n";
 		echo "<table style=\"margin:10px;\">\n";
@@ -1740,7 +1983,7 @@ elseif ($ConfigID == 7) {
 		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
-		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 0) { echo "Text"; } elseif ($data['ProfileCustomType'] == 1) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 2) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; } echo "</td>\n";
+		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1 ){ echo "Text"; } elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; } echo "</td>\n";
 		echo "        <td class=\"column\">". $data['ProfileCustomOptions'] ."</td>\n";
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) { echo "Public"; } elseif ($data['ProfileCustomView'] == 1) { echo "Private"; } elseif ($data['ProfileCustomView'] == 2) { echo "Custom"; } echo "</td>\n";
 		 echo "        <th class=\"column\">".$data['ProfileCustomOrder']."</th>\n";

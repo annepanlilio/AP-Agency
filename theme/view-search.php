@@ -136,12 +136,12 @@ if ($_REQUEST["action"] == "search") {
 		}
 		
 		// Custom Fields
-		foreach($_REQUEST as $key =>$val){
+		foreach($_POST as $key =>$val){
 		
 				if(substr($key,0,15)=="ProfileCustomID"){
-					if(isset($val) && !empty($val)){
+					
 						$filterArray[$key] = $val;
-					}
+					
 				}
 		}
 		

@@ -76,7 +76,7 @@ $(document).ready(function(){
 						  +'</td>'
 						   +'<td>'
 						    + '<tr>'
-						     +'<td align="right" valign="top">TextArea:</td> <td><textarea name="" cols="120" rows="10" name="ProfileCustomOptions"></textarea></td>'
+						     +'<td align="right" valign="top">TextArea:</td> <td><textarea cols="120" rows="10" name="ProfileCustomOptions"></textarea></td>'
 							+'</tr>' 
 						  +'</td>'
 						+'</tr>';
@@ -84,15 +84,15 @@ $(document).ready(function(){
 			
 			case "5":
 			     $("#objtype_customize").empty().html('<tr><td align="right">Title*:</td><td><input type="value" name="ProfileCustomTitle"/></td><td/>');
-				 $("#objtype_customize").append('<tr><td align="right">Label*:</td><td><input type="text" name="label[]"/></td>-<td>Value*:<input type="text" name="value[]"/>');
+				 $("#objtype_customize").append('<tr><td align="right">Values:</td><td><input type="text" name="label[]"/>');
 				 $("#objtype_customize").append('</td></td><div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			break;  
 			
 			case "6":
-			     $("#objtype_customize").empty().html('<tr><td align="right">Title*:</td><td><input type="text" name="ProfileCustomTitle"/></td><td/>');
-				 $("#objtype_customize").append('<tr><td align="right">Label*:</td><td><input type="text" name="label[]"/></td>-<td>Value*:<input type="text" name="value[]"/>');
+			     $("#objtype_customize").empty().html('<tr><td align="right">Title*:</td><td><input type="value" name="ProfileCustomTitle"/></td><td/>');
+				 $("#objtype_customize").append('<tr><td align="right">Values:</td><td><input type="text" name="label[]"/>');
 				 $("#objtype_customize").append('</td></td><div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
-			break;  
+		    break;  
 			
 			case "7":
 			       $("#objtype_customize").empty().html("<td>Title*:<input type='text' /></td>");
@@ -158,9 +158,7 @@ function add_more_checkbox_field(objNum){
 	 var b = a.innerHTML;
 	 a.innerHTML = b +  '<tr><td>'
 							 + '<tr>'
-							 + '<td align="right">&nbsp;&nbsp;&nbsp;Label:&nbsp;</td>'
-							 + '<td><input type="text" name="label[]"/></td>'
-							 + '&nbsp;<td>Value:<input type="text" name="value[]"/></td>'
+							 + '<td align="right">Value:</td><td><input type="text" name="label[]"/></td>'
 							 + '</tr>'
 						 + '</td></tr><br/>';
 }
