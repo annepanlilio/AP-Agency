@@ -127,6 +127,9 @@ Custom Layout: Shake it like a polaroid picture
 		if (!empty($ProfileStatShoe)) {
 			echo "<div class=\"rel\"><strong>". __("Shoe Size", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatShoe ."</div>\n";
 		}
+	
+		    echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"/profile/".$_GET["target"]."/contact/\">Click Here</a></div>\n";
+	
 	echo "					</div>\n";
 	echo "				</div>\n";	
 	echo "		</div>	\n";	

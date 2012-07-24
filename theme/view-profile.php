@@ -16,6 +16,7 @@ $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyna
 $rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
 $rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
 $rb_agency_option_galleryorder = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
 	if ($rb_agency_option_galleryorder == 1) { $orderBy = "ProfileMediaID DESC, ProfileMediaPrimary DESC"; } else { $orderBy = "ProfileMediaID ASC, ProfileMediaPrimary DESC"; }
 $rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
 $rb_agency_option_gallerytype = (int)$rb_agency_options_arr['rb_agency_option_gallerytype'];
@@ -205,6 +206,7 @@ while ($data = mysql_fetch_array($results)) {
 		} else {
 			// hold last model requested as session so we can return them where we found them 
 			$ProfileLastViewed = get_query_var('profile');
+			
 			$_SESSION['ProfileLastViewed'] = $ProfileLastViewed;
 			include("include-login.php"); 	
 		}

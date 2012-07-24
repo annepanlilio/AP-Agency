@@ -603,9 +603,8 @@
 						if($ProfileTypeKey != "ProfileCustomID" && $ProfileTypeKey !=""){
 							$q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ". $ProfileTypeKey  ." ");
 							$ProfileCustomType = mysql_fetch_assoc($q);
-									//	echo "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ". $ProfileTypeKey  ."  <br/>";
 									
-										/******************
+									/******************
 									1 - Text
 									2 - Min-Max > Removed
 									3 - Dropdown
@@ -621,17 +620,20 @@
 											$_SESSION[$key] = $val;
 										}
 									}
-									/* elseif ($ProfileCustomType["ProfileCustomType"] == 2) { // Min Max
-										
-										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".implode(explode("|",$val))."') ";
-											$_SESSION[$key] = $val;
-									
-										
-									}  */
+								
 									elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
+									
 										if(!empty($val)){
-										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".implode(explode("|",$val))."') ";
-											$_SESSION[$key] = $val;
+											list($val1, $val2) = explode("|",implode("|",$val));
+											
+											if(!empty($val1) && !empty($val2)){
+										    	$filter .= " AND customfield_mux.ProfileCustomValue BETWEEN '".$val1."' AND '".$val2."' ";
+												$_SESSION[$key] = $val;
+											}elseif(!empty($val1)){
+												$data = implode(",",explode("|",implode("|",$val)));
+										    	$filter .= " AND customfield_mux.ProfileCustomValue IN('".$data ."') ";
+												$_SESSION[$key] = $val;
+											}
 										}
 										
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
@@ -642,13 +644,15 @@
 										
 									}elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
 									     if(!empty($val)){
-										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".implode(explode("|",$val))."') ";
+										 $data = implode("','",$val);
+										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".$data."') ";
 											$_SESSION[$key] = $val;
 										}
 									}
-									elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Checkbox
+									elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
 									     if(!empty($val)){
-										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".implode(explode("|",$val))."') ";
+											 $data = implode(",",$val);
+										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".$data."') ";
 											$_SESSION[$key] = $val;
 										}
 									}
@@ -825,7 +829,7 @@
 					FROM ". table_agency_profile ." profile 
 					INNER JOIN  ".table_agency_customfield_mux." customfield_mux 
 					ON 
-					profile.ProfileID=customfield_mux.ProfileID $filter")); // number of total rows in the database
+					profile.ProfileID=customfield_mux.ProfileID ")); // number of total rows in the database
 				
 		
 				
@@ -854,7 +858,7 @@
 	
 			/*********** Execute Query **************/
 			// Execute Query
-			$queryList = "SELECT profile.* , customfield_mux.* , (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_customfield_mux." customfield_mux ON profile.ProfileID=customfield_mux.ProfileID  $filter ORDER BY $sort $dir $limit"; // 
+			 $queryList = "SELECT profile.* , customfield_mux.* , (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_customfield_mux." customfield_mux ON profile.ProfileID=customfield_mux.ProfileID GROUP BY profile.ProfileID   ORDER BY $sort $dir $limit"; // 
 			//, (SELECT fav.* FROM ".table_agency_savedfavorite." fav WHERE profile.ProfileID = fav.SavedFavoriteProfileID) as  SavedFavoriteProfileID
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);

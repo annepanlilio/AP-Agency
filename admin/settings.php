@@ -165,6 +165,8 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_profilelist_perpage)) { $rb_agency_option_profilelist_perpage = "20"; }
 		$rb_agency_option_persearch = $rb_agency_options_arr['rb_agency_option_persearch'];
 			if (empty($rb_agency_option_persearch)) { $rb_agency_option_persearch = "100"; }
+		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
+			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "0"; }
 		
 
 		 echo "<table class=\"form-table\">\n";
@@ -360,6 +362,15 @@ elseif ($ConfigID == 1) {
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 
+		 // Member Contact form link
+		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Contact Page Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_showcontactpage'], 1); echo "/>Email to both the model and the site owner<br />\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" "; checked($rb_agency_options_arr['rb_agency_option_showcontactpage'], 0); echo "/>Only email to the site owner, not to the model<br/>\n";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		 
           // Profile Custom Fields Options
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
@@ -373,6 +384,7 @@ elseif ($ConfigID == 1) {
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1); echo "/> ". __("User must be an Admin to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
+	
 	
 		 echo "</table>\n";
 		 echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";

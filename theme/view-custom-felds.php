@@ -46,26 +46,27 @@
 										
 									  list($option1,$option2) = explode(":",$data1['ProfileCustomOptions']);	
 											
-											$data1 = explode("|",$option1);
+											$data = explode("|",$option1);
 											$data2 = explode("|",$option2);
 											
 											
 								            echo "<br/>";
 											echo "<br/>";
-											echo "<label>".current($data1)."</label>";
+											echo "<label>".$data[0]."</label>";
 											echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 											    $pos = 0;
-												foreach($data1 as $val1){
+												foreach($data as $val1){
 													
-													if($val1 != end($data1) && $val1 != $data1[0]){
+													if($val1 != end($data) && $val1 != $data[0]){
 													 $pos++;
 													     $isSelected = "";
 														if($pos==1){
-															 if(end($data1)=="yes"){
+															 if(end($data)=="yes"){
 																	$isSelected = "selected=\"selected\"";
-															 }
+																	echo "<option value=\"\" ".$isSelected .">".$val1."</option>";
+															 }else{
 																	echo "<option value=\"".$val1."\" ".$isSelected .">".$val1."</option>";
-																
+															 }
 														 }else{
 															echo "<option value=\"".$val1."\">".$val1."</option>";
 														 }
@@ -78,7 +79,7 @@
 											if(!empty($data2) && !empty($option2)){
 												    echo "<br/>";
 													echo "<br/>";
-													echo "<label>".current($data2)."</label>";
+													echo "<label>".$data2[0]."</label>";
 											
 											 		$pos2 = 0;
 													echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
@@ -87,10 +88,12 @@
 															if($val2 != end($data2) && $val2 !=  $data2[0]){
 																 $pos2++;
 																 if($pos2==1){
-																	  if(end($data2)=="yes"){
+																	 if(end($data2)=="yes"){
 																		$isSelected = "selected=\"selected\"";
-																	 }
+																		echo "<option value=\"\" ".$isSelected .">".$val2."</option>";
+																	 }else{
 																		echo "<option value=\"".$val2."\" ".$isSelected .">".$val2."</option>";
+															 		}
 																
 																 }else{
 																	echo "<option value=\"".$val2."\">".$val2."</option>";
@@ -110,7 +113,7 @@
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										          echo "<div style=\"width:300px;float:left;\">";
 												  foreach($array_customOptions_values as $val){
-														 echo "<label><input type=\"checkbox\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
 														 echo "". $val."</label>";
 												  }
 												  echo "</div>";
@@ -120,7 +123,7 @@
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										   
 												  foreach($array_customOptions_values as $val){
-														 echo "<input type=\"radio\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" />";
+														 echo "<input type=\"radio\" value=\"". $val."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
 														 echo "<span style=\"color:white;\">". $val."</span><br/>";
 												  }
 									       

@@ -16,6 +16,7 @@ $rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_
 $rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 $rb_agency_option_profilelist_sidebar = $rb_agency_options_arr['rb_agency_option_profilelist_sidebar'];
 $rb_agency_option_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
+$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
 
 // Get Profile
 $profileURL = get_query_var('target'); //$_REQUEST["profile"];
@@ -107,9 +108,13 @@ if ($_POST["contact-action"] == "contact") {
 		// Mail it
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$headers = 'From: '. $ContactToName .' <'. $ContactToEmail .'>' . "\r\n";
+		if($rb_agency_option_showcontactpage == 1){
+			$headers .= 'BCC: '.$ProfileContactEmail.''. "\r\n";
+		}
+		$headers .= 'From: '. $ContactToName .' <'. $ContactToEmail .'>' . "\r\n";
+		
 		wp_mail($rb_agency_option_agencyemail, $ContactSubject, $ContactMessage, $headers);
-
+		
 		$alert = "<div id=\"message\" class=\"updated\"><p>Email sent successfully!</p></div>";
 	}
 
@@ -179,7 +184,9 @@ if ($_POST["contact-action"] == "contact") {
 			  if ($_POST) {
 				echo $alert;
 			  } else {
+				
 				include ("include-profile-contact.php");
+				 
 			  }
 			 	
 		  } else {

@@ -6,6 +6,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_agencyname		= $rb_agency_options_arr['rb_agency_option_agencyname'];
 	$rb_agency_option_agencyemail	= $rb_agency_options_arr['rb_agency_option_agencyemail'];
 	$rb_agency_option_agencyheader	= $rb_agency_options_arr['rb_agency_option_agencyheader'];
+	$SearchMuxHash			= $_GET["SearchMuxHash"]; // Set Hash
 if (isset($_POST['action'])) {
 
 	$SearchID			=$_POST['SearchID'];
@@ -46,7 +47,7 @@ if (isset($_POST['action'])) {
 		if (!empty($SearchID)) {
 		
 			$SearchID				=$_POST['SearchID'];
-			$SearchMuxHash			= rb_agency_random(8);
+			$SearchMuxHash			=@$_GET["SearchMuxHash"];
 			$SearchMuxToName		=$_POST['SearchMuxToName'];
 			$SearchMuxToEmail		=$_POST['SearchMuxToEmail'];
 			$SearchMuxSubject		=$_POST['SearchMuxSubject'];
@@ -90,7 +91,7 @@ if (isset($_POST['action'])) {
 		echo "Email successfully sent from ". $rb_agency_option_agencyemail ." to ". $SearchMuxToEmail ."<br />";
 		echo "Message sent: <div id=\"message\" class=\"updated\"><p>". $SearchMuxMessage ."</p></div>";
 			
-		echo ('<div id="message" class="updated"><p>Email sent successfully!</p></div>');
+		//echo ('<div id="message" class="updated"><p>Email sent successfully!</p></div>');
 		}
 	break;
 	}
@@ -112,14 +113,21 @@ if (isset($_POST['action'])) {
 			
 } elseif (($_GET['action'] == "emailCompose") && isset($_GET['SearchID'])) {
 	$SearchID = $_GET['SearchID'];
+	
+       $querySearch = mysql_query("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ");
+	 $dataSearchSavedMux = mysql_fetch_assoc($querySearch);
+	
 	?>
-
+  
       <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
         <input type="hidden" name="action" value="cartEmail" />
         <div><label for="SearchMuxToName">Send to Name:</label><input type="text" id="SearchMuxToName" name="SearchMuxToName" /></div>
         <div><label for="SearchMuxToEmail">Send to Email:</label><input type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" /></div>
         <div><label for="SearchMuxSubject">Subject:</label><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart" /></div>
-        <div><label for="SearchMuxMessage">Message:</label><textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "></textarea></div>
+        <div><label for="SearchMuxMessage">Message:</label><br/>
+        <textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "> <?php  if(!isset($_GET["SearchMuxHash"])){echo @$dataSearchSavedMux["SearchMuxMessage"]." \n Click the following link (or copy and paste it into your browser): ". get_bloginfo("url") ."/client-view/". @$dataSearchSavedMux["SearchMuxHash"] ."/";}else{echo @"Click the following link (or copy and paste it into your browser): ". get_bloginfo("url") ."/client-view/". @$_GET["SearchMuxHash"] ."/";}
+	  ?>
+         </textarea></div>
         <p class="submit">
             <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
             <input type="hidden" name="action" value="emailSend" />
@@ -317,6 +325,10 @@ if (isset($_POST['action'])) {
 			$SearchTitle = stripslashes($data2['SearchTitle']);
 			$SearchProfileID = stripslashes($data2['SearchProfileID']);
 			$SearchDate = stripslashes($data2['SearchDate']);
+			
+			$query3 = "SELECT SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = ". $SearchID;
+			$results3 = mysql_query($query3);
+			$count3 = mysql_num_rows($results3);
 		?>
 		<tr<?php echo $rowColor; ?>>
 			<th class="check-column" scope="row">
@@ -328,8 +340,17 @@ if (isset($_POST['action'])) {
 			<td>
 				<?php echo $SearchTitle; ?>
 				<div class="row-actions">
-					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Send</a> | </span>
-					<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
+                        <?php
+				  if($count3<=0){
+				?>
+					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".rb_agency_random(8); ?>">Create Email</a> | </span>
+				<?php
+				  }else{
+				?>
+                        	<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Create Email</a> | </span>
+				
+                        <?php } ?>
+                        	<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 				</div>
 			</td>
 			<td>
@@ -337,9 +358,7 @@ if (isset($_POST['action'])) {
 			</td>
 			<td>
 				<?php
-				$query3 = "SELECT SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = ". $SearchID;
-				$results3 = mysql_query($query3);
-				$count3 = mysql_num_rows($results3);
+				
 				while ($data3 = mysql_fetch_array($results3)) {
 				
 					echo "(". rb_agency_makeago(rb_agency_convertdatetime( $data3["SearchMuxSent"]), $rb_agency_option_locationtimezone) .") ";

@@ -8,6 +8,7 @@ Profile View with Thumbnails and Primary Image
 
 	echo "	<div id=\"name\">\n";
 	echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
+		
 	echo "	</div>\n";
 
 	echo "	<div id=\"profile-picture\">\n";
@@ -82,6 +83,8 @@ Profile View with Thumbnails and Primary Image
 		foreach  ($resultsCustom as $resultCustom) {
 			echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 		}
+		    echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
+		
 
 	echo "	  </div>\n"; // Close Stats
 

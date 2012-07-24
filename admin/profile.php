@@ -166,7 +166,7 @@ if (isset($_POST['action'])) {
 		exit;
 	break;
 	
-		// *************************************************************************************************** //
+	// *************************************************************************************************** //
 	// Edit Record
 	case 'editRecord':
 		if (!empty($ProfileContactNameFirst) && !empty($ProfileID)){
@@ -253,8 +253,9 @@ if (isset($_POST['action'])) {
 					
 					if ($have_error != true) {
 					// Upload if it doesnt exist already
-					 $safeProfileMediaFilename = rb_agency_safenames($_FILES['profileMedia'. $i]['name']);
-					 $results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='". $ProfileID ."' AND ProfileMediaURL = '". $safeProfileMediaFilename ."'");
+					 $path_parts = pathinfo($_FILES['profileMedia'. $i]['name']);
+					 $safeProfileMediaFilename =  rb_agency_safenames($path_parts['filename']."-".time(U).rand(10,90).".".$path_parts['extension']);
+					 $results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='". $ProfileID ."' AND ProfileMediaURL = '".$safeProfileMediaFilename ."'");
 					 $count = mysql_num_rows($results);
 
 					 if ($count < 1) {
@@ -307,7 +308,7 @@ if (isset($_POST['action'])) {
 						        $have_error = true;	
 							}
 						}
-						else if($uploadMediaType =="Compcard"){
+						else if($uploadMediaType =="CompCard"){
 							// Add to database
 							 if ($_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/png")
 							{
@@ -319,11 +320,11 @@ if (isset($_POST['action'])) {
 							}
 						}
 						
-					 }
-					}
-				}
+					 } // End count
+					} // End have error = false
+				} //End:: if profile media is not empty.
 				$i++;
-			}			
+			} // endwhile			
 
 
 			// Upload Videos to Database
@@ -414,42 +415,6 @@ if (isset($_POST['action'])) {
 		rb_display_list();
 		exit;
 	break;
-	// *************************************************************************************************** //
-	// UPDATE bulk
-	case 'updateRecord':
-				// ********Bulk Action
-  			/*/
-		    0 = Inactive
-			1 = Active
-			2 = Archived
-			3 = Pending
-			4 = Active - Not visible on website
-		   */
-		$isActive = '';
-		
-		if(isset($_POST['BulkAction_ProfileApproval1']) || isset($_POST['BulkAction_ProfileApproval2'])){
-		       
-			 if(isset($_POST['profileID']) && $_POST['BulkAction_ProfileApproval1'] !='' || $_POST['BulkAction_ProfileApproval2'] !=''){
-				
-				 $totalSelectedProfile = 0;
-				
-				 foreach($_POST['profileID'] as $key_profileID){
-					 
-					$totalSelectedProfile++;
-					 
-					$update = "UPDATE ".table_agency_profile. " SET ProfileIsActive='".$_POST['BulkAction_ProfileApproval1'].$_POST['BulkAction_ProfileApproval2']."' WHERE ProfileID=$key_profileID";
-					$results = $wpdb->query($update);
-				 }
-				  $LabelProfile = '';
-				  $totalSelectedProfile > 1 ? $LabelProfile = "$totalSelectedProfile Profiles updated successfully!" : $LabelProfile = "Profile updated successfully! <a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileID=". $key_profileID ."\">". __("Continue editing the record", rb_agency_TEXTDOMAIN) ."?</a>";
-				 
-				echo ("<div id=\"message\" class=\"updated\"><p>". __("$LabelProfile ", rb_agency_TEXTDOMAIN) ." </p></div>");
-		
-			 }
-		 
-		
-		}
-	
 	
 	}
 }
@@ -958,17 +923,13 @@ function rb_display_manage($ProfileID) {
 		if ( !empty($ProfileID) && ($ProfileID > 0) ) { // Editing Record
 	echo "		<h3>". __("Gallery", rb_agency_TEXTDOMAIN) ."</h3>\n";
 			
-			echo "<script>\n";
-			echo "function confirmDelete(delPhoto,mediaTitle) {\n";
-			echo "  if (confirm(\"Are you sure you want to delete this \"+mediaTitle+\"?\")) {\n";
-			echo "	document.location = \"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileID=". $ProfileID ."&actionsub=photodelete&targetid=\"+delPhoto;\n";
+			echo "<script type='text/javascript'>\n";
+			echo "function confirmDelete(delMedia,mediaType) {\n";
+		    echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
+			echo "	document.location= '". admin_url("admin.php?page=". $_GET['page'])."&action=editRecord&ProfileID=". $ProfileID ."&actionsub=photodelete&targetid='+delMedia;";
 			echo "  }\n";
 			echo "}\n";
-			echo "function ImageRotate(id,ImgSrc,name){ \n";
-			echo "document.getElementById(\"imgloader\").src='".rb_agency_BASEDIR."tasks/imageRotate.php?&imgsrc='+ ImgSrc + '&' + Math.random()+'&name='+name;\n";
-			echo "setTimeout(function(){ document.getElementById(id).src='". rb_agency_UPLOADDIR . $ProfileGallery ."/'+ImgSrc+'?&' + Math.random(); },1000);\n";
-			echo "}\n";
-		    echo "</script>\n";
+			echo "</script>\n";
 			
 			// Are we deleting?
 			if ($_GET["actionsub"] == "photodelete") {
@@ -988,7 +949,8 @@ function rb_display_manage($ProfileID) {
 					$results = $wpdb->query($delete);
 					
 					if ($ProfileMediaType == "Demo Reel" || $ProfileMediaType == "Video Monologue" || $ProfileMediaType == "Video Slate") {
-						// Nothing to Remove
+						  echo ("<div id=\"message\" class=\"updated\"><p>File <strong>'. $ProfileMediaURL .'</strong> ". __("successfully removed", rb_agency_TEXTDOMAIN) .".</p></div>");
+						
 					} else {
 						// Remove File
 						$dirURL = rb_agency_UPLOADPATH . $ProfileGallery;
@@ -1000,20 +962,17 @@ function rb_display_manage($ProfileID) {
 					}
 				} // is there record?
 			}
-				// Go about our biz-nazz
+			// Go about our biz-nazz
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC";
 				$resultsImg = mysql_query($queryImg);
 				$countImg = mysql_num_rows($resultsImg);
-				
-				echo "<img src=\"\" id=\"imgloader\" style=\"display:none;\"/>"; //image rotate buffer
-				
 				while ($dataImg = mysql_fetch_array($resultsImg)) {
 				  if ($dataImg['ProfileMediaPrimary']) {
 					  $styleBackground = "#900000";
 					  $isChecked = " checked";
 					  $isCheckedText = " Primary";
 					if ($countImg == 1) {
-					  $toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('". $dataImg['ProfileMediaID'] ."')\"><span>Delete</span> &raquo;</a>  </div>\n";
+					  $toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('". $dataImg['ProfileMediaID'] ."','".$dataImg['ProfileMediaType']."')\"><span>Delete</span> &raquo;</a></div>\n";
 					} else {
 					  $toDelete = "";
 					}
@@ -1021,17 +980,16 @@ function rb_display_manage($ProfileID) {
 					  $styleBackground = "#000000";
 					  $isChecked = "";
 					  $isCheckedText = " Select";
-					  $toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('". $dataImg['ProfileMediaID'] ."')\"><span>Delete</span> &raquo;</a> </div>\n";
+					  $toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('". $dataImg['ProfileMediaID'] ."','".$dataImg['ProfileMediaType']."')\"><span>Delete</span> &raquo;</a></div>\n";
 				  }
 					echo "<div class=\"profileimage\" style=\"background: ". $styleBackground ."; \">\n". $toDelete ."";
-					echo "  <img  id=\"".$dataImg['ProfileMediaID']."\" src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" style=\"width: 100px; z-index: 1; \" />\n";
-					echo "  <div class=\"primary\" style=\"background: ". $styleBackground ."; \"><a href=\"javascript:ImageRotate(".$dataImg['ProfileMediaID'].",'".$dataImg['ProfileMediaURL']."','".$ProfileGallery."')\" title=\"Rotate image\" class=\"rotateimage\"></a><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"". $dataImg['ProfileMediaID'] ."\" class=\"button-primary\"". $isChecked ." /> ". $isCheckedText ." </div>\n";
+					echo "  <img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" style=\"width: 100px; z-index: 1; \" />\n";
+					echo "  <div class=\"primary\" style=\"background: ". $styleBackground ."; \"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"". $dataImg['ProfileMediaID'] ."\" class=\"button-primary\"". $isChecked ." /> ". $isCheckedText ."</div>\n";
 					echo "</div>\n";
 				}
 				if ($countImg < 1) {
 					echo "<div>". __("There are no images loaded for this profile yet.", rb_agency_TEXTDOMAIN) ."</div>\n";
 				}
-				
 				
 	echo "		<div style=\"clear: both;\"></div>\n";
 		echo "		<br><br><h3>". __("Media", rb_agencyinteract_TEXTDOMAIN) ."</h3>\n";
@@ -1043,8 +1001,7 @@ function rb_display_manage($ProfileID) {
 					while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 						if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 							$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">". $dataMedia['ProfileMediaType'] ."<br />". rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) ."<br /><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
-						} 
-						 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+						} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 							$outLinkVoiceDemo .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
 						}
 						 elseif ($dataMedia['ProfileMediaType'] == "Resume") {
@@ -1052,9 +1009,8 @@ function rb_display_manage($ProfileID) {
 						}
 						 elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 							$outLinkHeadShot .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
-						}
-						 elseif ($dataMedia['ProfileMediaType'] == "Compcard") {
-							$outLinkCompCard .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+						}elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
+							$outLinkComCard .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
 						}
 					}
 					echo '<div style=\"width:500px;\">';
@@ -1067,7 +1023,7 @@ function rb_display_manage($ProfileID) {
 					echo $outLinkHeadShot;
 					echo '</div>';
 					echo '<div style=\"width:500px;\">';
-					echo $outLinkCompCard;
+					echo $outLinkComCard;
 					echo '</div>';
 					echo $outVideoMedia;
 					if ($countMedia < 1) {
@@ -1093,7 +1049,6 @@ function rb_display_manage($ProfileID) {
 
 		echo "<table class=\"form-table\">\n";
 		echo " <tbody>\n";
-
 	
 		$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions FROM ". table_agency_customfields ." WHERE ProfileCustomView IN (0,2) AND ProfileCustomType < 4 ORDER BY ProfileCustomView, ProfileCustomTitle";
 		$results1 = mysql_query($query1);
@@ -1329,18 +1284,8 @@ function rb_display_list(){
 		}
   	
 		// Filter
-		if(isset($_GET['ProfileVisible']) && $_GET['ProfileVisible'] !=""){
-			
-			$filter = "WHERE profile.ProfileIsActive='".$_GET['ProfileVisible']."' ";
-			
-		}else{
-			
-		    $filter = "WHERE profile.ProfileIsActive IN (0,1,4) ";
-	
-		}
-		
-	
-		if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
+		$filter = "WHERE profile.ProfileIsActive IN (0,1,4) ";
+        if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
         	if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
 			$selectedNameFirst = $_GET['ProfileContactNameFirst'];
 			$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
@@ -1368,7 +1313,6 @@ function rb_display_list(){
 			$filter .= " AND profile.ProfileIsActive='". $selectedVisible ."'";
 		}
 		
-	
 		//Paginate
 		$items = mysql_num_rows(mysql_query("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."")); // number of total rows in the database
 		if($items > 0) {
@@ -1401,15 +1345,14 @@ function rb_display_list(){
 				}
         echo "  </div>\n";
         echo "</div>\n";
-      
+
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "  <thead>\n";
 		echo "    <tr>\n";
 		echo "        <td style=\"width: 50px;\">\n";               
 		echo "        		<strong>". __("Filter By", rb_agency_TEXTDOMAIN) .":</strong>\n";
 		echo "        </td>\n";               
-		echo "        <td nowrap=\"nowrap\">\n";         
-		    
+		echo "        <td nowrap=\"nowrap\">\n";               
 		echo "        	<form style=\"display: inline;\" method=\"GET\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 		echo "        		<input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"". $_GET['page_index'] ."\" />\n";
 		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";
@@ -1457,25 +1400,11 @@ function rb_display_list(){
 		echo "        		<input type=\"submit\" value=\"". __("Clear Filters", rb_agency_TEXTDOMAIN) ."\" class=\"button-secondary\" />\n";
 		echo "        	</form>\n";
 		echo "        </td>\n";
-
-		
-		
 		echo "    </tr>\n";
 		echo "  </thead>\n";
 		echo "</table>\n";
         
 		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
-			  // Bulk action form
-		echo "        		<select name=\"BulkAction_ProfileApproval1\">\n";
-		echo "              <option value=\"\"> ". __("Bulk Action", rb_agencyinteract_TEXTDOMAIN) ."<option\>\n";
-		echo "			  <option value=\"1\"". selected(1, $ProfileIsActive) .">". __("Active", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"4\"". selected(4, $ProfileIsActive) .">". __("Active - Not Visible On Website", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"0\"". selected(0, $ProfileIsActive) .">". __("Inactive", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"2\"". selected(2, $ProfileIsActive) .">". __("Archived", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"3\"". selected(3, $ProfileIsActive) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "              </select>"; 
-		echo "    <input type=\"submit\" value=\"". __("Apply", rb_agencyinteract_TEXTDOMAIN) ."\" name=\"ProfileBulkAction\" class=\"button-secondary\"  />\n";
-		    
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo " <thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -1546,7 +1475,7 @@ function rb_display_list(){
 
 		echo "    <tr". $rowColor .">\n";
 		echo "        <th class=\"check-column\" scope=\"row\">\n";
-		echo "          <input type=\"checkbox\" value=\"". $ProfileID ."\" class=\"administrator\" id=\"". $ProfileID ."\" name=\"profileID[". $ProfileID ."]\"/>\n";
+		echo "          <input type=\"checkbox\" value=\"". $ProfileID ."\" class=\"administrator\" id=\"". $ProfileID ."\" name=\"". $ProfileID ."\"/>\n";
 		echo "        </th>\n";
 		echo "        <td class=\"ProfileID column-ProfileID\">". $ProfileID ."</td>\n";
 		echo "        <td class=\"ProfileContactNameFirst column-ProfileContactNameFirst\">\n";
@@ -1591,21 +1520,6 @@ function rb_display_list(){
         } 
 		echo " </tbody>\n";
 		echo "</table>\n";
-		
-		  // Bulk action form
-		echo "        		<select name=\"BulkAction_ProfileApproval2\">\n";
-		echo "              <option value=\"\"> ". __("Bulk Action", rb_agencyinteract_TEXTDOMAIN) ."<option\>\n";
-		echo "			  <option value=\"1\"". selected(1, $ProfileIsActive) .">". __("Active", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"4\"". selected(4, $ProfileIsActive) .">". __("Active - Not Visible On Website", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"0\"". selected(0, $ProfileIsActive) .">". __("Inactive", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"2\"". selected(2, $ProfileIsActive) .">". __("Archived", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "			  <option value=\"3\"". selected(3, $ProfileIsActive) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "              </select>"; 
-		echo " <input type=\"hidden\" name=\"action\" value=\"updateRecord\" />\n";
-		echo "    <input type=\"submit\" value=\"". __("Apply", rb_agencyinteract_TEXTDOMAIN) ."\" name=\"ProfileBulkAction\" class=\"button-secondary\"  />\n";
-		  
-		
-		
 		echo "<div class=\"tablenav\">\n";
 		echo "  <div class='tablenav-pages'>\n";
 
@@ -1617,15 +1531,11 @@ function rb_display_list(){
 		echo "</div>\n";
     
 		echo "<p class=\"submit\">\n";
-		//echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
-		//echo "  <input type=\"submit\" value=\"". __('Delete') ."\" class=\"button-primary\" name=\"submit\" />	\n";	
+		echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
+		echo "  <input type=\"submit\" value=\"". __('Delete') ."\" class=\"button-primary\" name=\"submit\" />	\n";	
 		echo "</p>\n";
 		echo "</form>\n";
 }
 
 echo "</div>\n";
-
-
-
-
 ?>

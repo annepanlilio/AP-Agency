@@ -4,6 +4,7 @@ global $wpdb;
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
 	$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
+	$rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];
 		if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
 
 echo "<div class=\"wrap\" style=\"min-width: 1020px;\">\n";
@@ -31,7 +32,7 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 	// Protect and defend the cart string!
 		$cartString = "";
 	// Add to Cart
-		if ($_GET["action"] == "cartAdd") { 
+		if ($_GET["action"] == "cartAdd" ) { 
 			extract($_GET);
 			foreach($_GET as $key=>$value) {
 			  if (substr($key, 0, 9) == "ProfileID") {
@@ -280,6 +281,8 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 		if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
 			echo "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". $sessionString ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 		}
+		
+		
 
         echo "       <form method=\"get\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
         echo "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";
@@ -308,16 +311,25 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
         echo "            </tr>\n";
         echo "        </tfoot>\n";
         echo "        <tbody>\n";
-
+         
         while ($data = mysql_fetch_array($results2)) {
             $ProfileID = $data['ProfileID'];
-        echo "        <tr>\n";
-        echo "            <th class=\"check-column\" scope=\"row\">\n";
-        echo "                <input type=\"checkbox\" value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID". $ProfileID ."\" />\n";
+		 $isInactive = '';
+		 $isInactiveDisable = '';
+		 if($data['ProfileIsActive'] == 0){
+		 	$isInactive = 'style="background: #FFEBE8"';
+			$isInactiveDisable = "disabled=\"disabled\"";
+		 }
+        echo "        <tr ". $isInactive.">\n";
+        echo "            <th class=\"check-column\" scope=\"row\" >\n";
+        echo "                <input type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID". $ProfileID ."\" />\n";
         echo "            </th>\n";
         echo "            <td class=\"ProfileID column-ProfileID\">". $ProfileID ."</td>\n";
         echo "            <td class=\"ProfileContact column-ProfileContact\">\n";
         echo "                <div class=\"detail\">\n";
+	                  if(!empty($isInactiveDisable)){
+					echo "<div><strong>Profile Status:</strong> <span style=\"color:red;\">Inactive</span></div>\n";
+				}
 				if (!empty($data['ProfileContactEmail'])) {
 					echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
 				}
@@ -464,7 +476,8 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
     
         echo "     <p>\n";
         echo "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_menu_search') ."\" class=\"button-primary\" />\n";
-        echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
+		
+		 echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
         echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 		echo "     </p>\n";
 		echo "  </form>\n";
@@ -571,18 +584,75 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 	echo " </div>\n";
 	echo "</div>\n";
-
+  
 	 if (($cartAction == "cartEmpty") || ($cartAction == "cartRemove")) {
+		echo "<a name=\"compose\">&nbsp;</a>"; 
         echo "     <div class=\"boxblock\">\n";
         echo "        <h3>". __("Cart Actions", rb_agency_TEXTDOMAIN) ."</h3>\n";
         echo "        <div class=\"inner\">\n";
         echo "      	<a href=\"?page=rb_agency_menu_searchsaved&action=searchSave\" title=\"". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."</a>\n";
+        echo "      	<a href=\"?page=rb_agency_menu_search&action=massEmail#compose\" title=\"". __("Mass Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Mass Email", rb_agency_TEXTDOMAIN) ."</a>\n";
         echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
         echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 
 		echo "        </div>\n";
 		echo "     </div>\n";
 	} // Is Cart Empty 
+	if(isset($_POST["SendEmail"])){
+		
+				// Filter Models Already in Cart
+        if (isset($_SESSION['cartArray'])) {
+            $cartArray = $_SESSION['cartArray'];
+            $cartString = implode(",", $cartArray);
+			$cartQuery =  " AND profile.ProfileID NOT IN (". $cartString .")";
+		}
+		// Search Results	
+        $query = "SELECT profile.*  FROM ". table_agency_profile ." profile ";
+		$results2 = mysql_query($query);
+        $count = mysql_num_rows($results2);
+		
+		
+		   $pos = 0;
+		     add_filter('wp_mail_content_type','rb_agency_set_content_type');
+						function rb_agency_set_content_type($content_type){
+							return 'text/html';
+						}
+        while ($data = mysql_fetch_array($results2)) {
+            $ProfileID = $data['ProfileID'];
+			$pos ++;
+		// Email
+		
+			        
+					$MassEmailSubject = $_POST["MassEmailSubject"];
+					$MassEmailMessage = $_POST["MassEmailMessage"];
+					$MassEmailRecipient = $data['ProfileContactEmail'];
+			      
+					
+					// Mail it
+					$headers  = 'MIME-Version: 1.0' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					$headers .= 'From: '. $rb_agency_option_agencyemail .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+					
+					wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
+					if($pos == $count){
+						echo $alert = "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";	
+					}
+		}
+	}
+	if($_GET["action"]== "massEmail"){
+		
+		echo "<form method=\"post\">";
+		echo "     <div class=\"boxblock\">\n";
+        echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
+        echo "        <div class=\"inner\">\n";
+        echo "        <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
+		echo "<br/>";
+		echo "      <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\"></textarea>";
+		echo "				<input type=\"submit\" value=\"". __("Send Email", rb_agency_TEXTDOMAIN) . "\" name=\"SendEmail\"class=\"button-primary\" />\n";
+		echo "        </div>\n";
+		echo "     </div>\n";
+	    echo "</form>";
+	}
     
 		echo "    </div><!-- .container -->\n";
 } 
