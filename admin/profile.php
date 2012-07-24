@@ -278,7 +278,8 @@ if (isset($_POST['action'])) {
 						}
 						else if($uploadMediaType =="VoiceDemo"){
 							// Add to database
-							 if($_FILES['profileMedia'. $i]['type'] == "audio/mp3"){
+							$MIME = array('audio/mpeg', 'audio/mp3');
+							 if(in_array($_FILES['profileMedia'. $i]['type'], $MIME)){
 								 $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
 			                 	 move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery ."/".$safeProfileMediaFilename);
 							 }else{
