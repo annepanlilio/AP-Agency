@@ -98,6 +98,14 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 			SavedFavoriteTalentID VARCHAR(255),
 			PRIMARY KEY (SavedFavoriteID)
 			);");
+			
+		// Setup > Add to Casting Cart
+		$results = $wpdb->query("CREATE TABLE ". table_agency_castingcart." (
+				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				CastingCartProfileID VARCHAR(255),
+			      CastingCartTalentID VARCHAR(255),
+				PRIMARY KEY (CastingCartID)
+				);");
 				
 	   	// Custom Order in Custom Fields
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");

@@ -168,6 +168,11 @@ elseif ($ConfigID == 1) {
 		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
 			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "0"; }
 		
+		$rb_agency_option_profilelist_favorite = $rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
+			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
+		$rb_agency_option_profilelist_castingcart = $rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
+			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }
+	
 
 		 echo "<table class=\"form-table\">\n";
 
@@ -250,6 +255,8 @@ elseif ($ConfigID == 1) {
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'], 1); echo "/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_favorite'], 1); echo "/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'], 1); echo "/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'], 1); echo "/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
+	
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";

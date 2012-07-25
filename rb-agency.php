@@ -90,6 +90,8 @@ return;
 		define("table_agency_searchsaved_mux", "rb_agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "rb_agency_savedfavorite");	
+	if (!defined("table_agency_castingcart"))
+		define("table_agency_castingcart", "rb_agency_castingcart");
 
 // Call default functions
 	include_once(dirname(__FILE__).'/functions.php');
@@ -274,13 +276,22 @@ return;
 				);";
 			dbDelta($sql10mux);
            // Setup > Save Favorite
-			$sql9 = "CREATE TABLE ". table_agency_savedfavorite." (
+			$sql11 = "CREATE TABLE ". table_agency_savedfavorite." (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
-			    SavedFavoriteTalentID VARCHAR(255),
+			      SavedFavoriteTalentID VARCHAR(255),
 				PRIMARY KEY (SavedFavoriteID)
 				);";
 			dbDelta($sql11);
+			
+		// Setup > Add to Casting Cart
+			$sql12 = "CREATE TABLE ". table_agency_castingcart." (
+				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				CastingCartProfileID VARCHAR(255),
+			      CastingCartTalentID VARCHAR(255),
+				PRIMARY KEY (CastingCartID)
+				);";
+			dbDelta($sql12);		
 		}
 		
 	}
@@ -477,7 +488,7 @@ if ( is_admin() ){
 }
 
 //****************************************************************************************************//
-// Add / Handles Ajax Request
+// Add / Handles Ajax Request ====== ADD To Favorites
 			
 		
 		add_action('wp_ajax_rb_agency_save_favorite', 'rb_agency_save_favorite');
@@ -531,27 +542,28 @@ if ( is_admin() ){
 					success: function(results) {  
 					           
 					            if(results=='error'){
-								      Obj.fadeOut().html("<div class=\"favorite-box\"></div>Error in query. Try again").fadeIn();  
+								      Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();  
 							   }
 							   else if(results==-1){
-								       Obj.fadeOut().html("<div class=\"favorite-box\"></div><span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo $rb_agency_WPURL; ?>/profile-member/\">Sign In</a>.").fadeIn();  
+								       Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();  
 							           setTimeout(function() {  
 									      if(Obj.attr("class")=="save_favorite"){
-											  Obj.fadeOut().html("<div class=\"favorite-box\"></div>Save as Favorite").fadeIn();
+											  Obj.fadeOut().empty().html("Save as Favorite").fadeIn();
 											 
 										   }else{
-											  Obj.fadeOut().html("<div class=\"favorite-box\"></div>Favorited").fadeIn(); 
+											  Obj.fadeOut().empty().html("Favorited").fadeIn(); 
 											 
 										   }
 									    }, 2000);
 							   }
 							   else{
 								   if(Obj.attr("class")=="save_favorite"){
-									   Obj.empty().fadeOut().html("<div class=\"favorite-box\"></div>Favorited <a href=\"<?php echo $rb_agency_WPURL; ?>/profile-favorite/\"  style=\"font-size:12px;float:right;\" class=\"view_all_favorite\"><strong>View all favorites</strong></a>").fadeIn(); 
+									   Obj.empty().fadeOut().empty().html("Favorited <a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-favorite/\"  style=\"font-size:12px;float:right;\" class=\"view_all_favorite\"><strong>View</strong></a>").fadeIn(); 
 									   Obj.attr("class","favorited");
+									  
 								   }else{
-									  Obj.empty().fadeOut().html("<div class=\"favorite-box\"></div>Save as Favorite").fadeIn(); 
-									 
+									  Obj.empty().fadeOut().empty().html("Save as Favorite").fadeIn(); 
+									  $(this).find("a[class=view_all_favorite]").remove();
 									  Obj.attr("class","save_favorite");
 								   }
 							   }
@@ -567,7 +579,101 @@ if ( is_admin() ){
 		}
    
         add_action('wp_head', 'rb_agency_save_favorite_javascript');
+	  
 
+//****************************************************************************************************//
+// Add / Handles Ajax Request ===== Add To Casting Cart
+			
+
+		add_action('wp_ajax_rb_agency_save_castingcart', 'rb_agency_save_castingcart');
+
+			function rb_agency_save_castingcart() {
+				global $wpdb;
+			
+				if(is_user_logged_in()){	
+					if(isset($_POST["talentID"])){
+						 $query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID=".$_POST["talentID"]."  AND CastingCartProfileID = ".rb_agency_get_current_userid()."" ) or die("error");
+						 $count_castingcart = mysql_num_rows($query_castingcart);
+						 $datas_castingcart = mysql_fetch_assoc($query_castingcart);
+						 
+						 if($count_castingcart<=0){ //if not exist insert favorite!
+							 
+							   mysql_query("INSERT INTO ". table_agency_castingcart." (CastingCartID,CastingCartProfileID,CastingCartTalentID) VALUES('','".rb_agency_get_current_userid()."','".$_POST["talentID"]."')") or die("error");
+							 
+						 }else{ // favorite model exist, now delete!
+							 
+							  mysql_query("DELETE FROM  ". table_agency_castingcart."  WHERE CastingCartTalentID=".$_POST["talentID"]."  AND CastingCartProfileID = ".rb_agency_get_current_userid()."") or die("error");
+							 
+						 }
+						
+					}
+					
+				}
+				else{
+					echo "not_logged";
+				}
+				die();
+			}
+	  
+		
+		function rb_agency_save_castingcart_javascript() {
+		?>
+		<script type="text/javascript" >
+		jQuery(document).ready(function($) {
+		   
+		   $("div[class=castingcart] a").click(function(){
+			   
+					var Obj = $(this);
+					
+				    
+					// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+					jQuery.ajax({
+					type: 'POST',
+					url: '<?php echo admin_url('admin-ajax.php'); ?>',
+					data: {
+						action: 'rb_agency_save_castingcart',
+				        'talentID': $(this).attr("id")
+					},
+					success: function(results) {  
+					           
+					               if(results=='error'){
+								      Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();  
+							   }
+							   else if(results==-1){
+								       Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();  
+							           setTimeout(function() {  
+									      if(Obj.attr("class")=="save_castingcart"){
+											  Obj.fadeOut().empty().html("Add To Casting Cart").fadeIn();
+											 
+										   }else{
+											  Obj.fadeOut().empty().html("Added To Casting Cart").fadeIn(); 
+											 
+										   }
+									    }, 2000);
+							   }
+							   else{
+								   if(Obj.attr("class")=="save_castingcart"){
+									   Obj.empty().fadeOut().html("Added To Casting Cart <a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-casting-cart/\"  style=\"font-size:12px;float:right;\" class=\"view_all_castingcart\"><strong>View</strong></a>").fadeIn(); 
+									   Obj.attr("class","saved_castingcart");
+								   }else{
+									  Obj.empty().fadeOut().html("Add To Casting Cart").fadeIn(); 
+									   Obj.attr("class","save_castingcart");
+									   $(this).find("a[class=view_all_castingcart]").remove();
+									 
+								   }
+							   }
+					}
+					
+                    })//.error(function() { alert("error"); });
+				
+				
+			  });
+		});
+		</script>
+		<?php
+		}
+   
+        add_action('wp_head', 'rb_agency_save_castingcart_javascript');
 // *************************************************************************************************** //
 // Add Widgets
 

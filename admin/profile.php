@@ -260,7 +260,7 @@ if (isset($_POST['action'])) {
 
 					 if ($count < 1) {
 						if($uploadMediaType == "Image") { 
-						    if($_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/gif" || $_FILES['profileMedia'. $i]['type'] == "image/png"){
+						    if($_FILES['profileMedia'. $i]['type'] == "image/pjpeg" || $_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/gif" || $_FILES['profileMedia'. $i]['type'] == "image/png"){
 						
 									$image = new rb_agency_image();
 									$image->load($_FILES['profileMedia'. $i]['tmp_name']);
