@@ -1,4 +1,6 @@
+
 <?php
+
 // *************************************************************************************************** //
 // Gobble Up The Variables, Set em' Sessions
 foreach ($_REQUEST as $key => $value) {
@@ -6,6 +8,8 @@ foreach ($_REQUEST as $key => $value) {
 	$_SESSION[$key] = $value;  //$$key = $value;
   }
 }
+
+
 
 // *************************************************************************************************** //
 // Get Search Results
@@ -69,22 +73,7 @@ if ($_REQUEST["action"] == "search") {
 		if (isset($_REQUEST['ProfileGender']) && !empty($_REQUEST['ProfileGender'])){
 			$filterArray['profilegender'] = $_REQUEST['ProfileGender'];
 		}
-		// Race
-		if (isset($_REQUEST['ProfileStatEthnicity']) && !empty($_REQUEST['ProfileStatEthnicity'])){
-			$filterArray['profilestatethnicity'] = $_REQUEST['ProfileStatEthnicity'];
-		}
-		// Skin
-		if (isset($_REQUEST['ProfileStatSkinColor']) && !empty($_REQUEST['ProfileStatSkinColor'])){
-			$filterArray['profilestatskincolor'] = $_REQUEST['ProfileStatSkinColor'];
-		}
-		// Eye
-		if (isset($_REQUEST['ProfileStatEyeColor']) && !empty($_REQUEST['ProfileStatEyeColor'])){
-			$filterArray['profilestateyecolor'] = $_REQUEST['ProfileStatEyeColor'];
-		}
-		// Hair
-		if (isset($_REQUEST['ProfileStatHairColor']) && !empty($_REQUEST['ProfileStatHairColor'])){
-			$filterArray['profilestathaircolor'] = $_REQUEST['ProfileStatHairColor'];
-		}
+		
 		// Height
 		if (isset($_REQUEST['ProfileStatHeight_min']) && !empty($_REQUEST['ProfileStatHeight_min'])){
 			$filterArray['profilestatheight_min'] = $_REQUEST['ProfileStatHeight_min'];
@@ -99,34 +88,6 @@ if ($_REQUEST["action"] == "search") {
 		if (isset($_REQUEST['ProfileStatWeight_max']) && !empty($_REQUEST['ProfileStatWeight_max'])){
 			$filterArray['profilestatweight_max'] = $_REQUEST['ProfileStatWeight_max'];
 		}
-		// Bust/Chest
-		if (isset($_REQUEST['ProfileStatBust_min']) && !empty($_REQUEST['ProfileStatBust_min'])){
-			$filterArray['profilestatbust_min'] = $_REQUEST['ProfileStatBust_min'];
-		}
-		if (isset($_REQUEST['ProfileStatBust_max']) && !empty($_REQUEST['ProfileStatBust_max'])){
-			$filterArray['profilestatbust_max'] = $_REQUEST['ProfileStatBust_max'];
-		}
-		// Waist
-		if (isset($_REQUEST['ProfileStatWaist_min']) && !empty($_REQUEST['ProfileStatWaist_min'])){
-			$filterArray['profilestatwaist_min'] = $_REQUEST['ProfileStatWaist_min'];
-		}
-		if (isset($_REQUEST['ProfileStatWaist_max']) && !empty($_REQUEST['ProfileStatWaist_max'])){
-			$filterArray['profilestatwaist_max'] = $_REQUEST['ProfileStatWaist_max'];
-		}
-		// Hip
-		if (isset($_REQUEST['ProfileStatHip_min']) && !empty($_REQUEST['ProfileStatHip_min'])){
-			$filterArray['profilestathip_min'] = $_REQUEST['ProfileStatHip_min'];
-		}
-		if (isset($_REQUEST['ProfileStatHip_max']) && !empty($_REQUEST['ProfileStatHip_max'])){
-			$filterArray['profilestathip_max'] = $_REQUEST['ProfileStatHip_max'];
-		}
-		// Shoe
-		if (isset($_REQUEST['ProfileStatShoe_min']) && !empty($_POST['ProfileStatShoe_min'])){
-			$filterArray['profilestatshoe_min'] = $_REQUEST['ProfileStatShoe_min'];
-		}
-		if (isset($_REQUEST['ProfileStatShoe_max']) && !empty($_POST['ProfileStatShoe_max'])){
-			$filterArray['profilestatshoe_max'] = $_REQUEST['ProfileStatShoe_max'];
-		}
 		// Age
 		if (isset($_REQUEST['ProfileDateBirth_min']) && !empty($_REQUEST['ProfileDateBirth_min'])){
 			$filterArray['profiledatebirth_min'] = $_REQUEST['ProfileDateBirth_min'];
@@ -139,9 +100,11 @@ if ($_REQUEST["action"] == "search") {
 		foreach($_POST as $key =>$val){
 		
 				if(substr($key,0,15)=="ProfileCustomID"){
-					
-						$filterArray[$key] = $val;
-					
+					      if(is_array($val)){
+						 $filterArray[$key] = implode(",",$val);	
+						}else{
+						 $filterArray[$key] = $val;
+						}
 				}
 		}
 		
@@ -154,7 +117,8 @@ if ($_REQUEST["action"] == "search") {
 
 
 // *************************************************************************************************** //
-// GET HEADER  
+// GET HEADER 
+
 	get_header();
    $sql = "SELECT * FROM ".table_agency_customfield_mux."";
     $q = mysql_query($sql) or die(mysql_error());
@@ -162,12 +126,12 @@ if ($_REQUEST["action"] == "search") {
 		// print_r($f);
 		 //echo "<br/>"; 
 	 }
-   echo $filter;
+ 
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 
 		echo "<div id=\"profile-search\">\n";
-	
+	    
 			if ($_REQUEST["action"] == "search") {
 		echo "  <h1 class=\"profile-search-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 			} else {
@@ -175,14 +139,15 @@ if ($_REQUEST["action"] == "search") {
 			}
 	
 		echo "  <div class=\"clear line\"></div>\n";
-		
+#DEBUG 
+#print_r($filterArray);
 		echo "  <table class=\"standardTable\">\n";
 		echo "   <tbody>\n";
 		echo "  	<tr>\n";
 		echo "      <td class=\"profile-search-results-wrapper\">\n";
 		echo "		    <div class=\"profile-search-results\">\n";
 						if ($_REQUEST["action"] == "search") {
-	
+	                                  
 							if (function_exists('rb_agency_profilelist')) { 
 								rb_agency_profilelist($filterArray); 
 							}
@@ -195,7 +160,7 @@ if ($_REQUEST["action"] == "search") {
 		echo "      <td class=\"profile-search-filter-wrapper\">\n";
 		echo "		    <div class=\"profile-search-filter\">\n";
 		echo "			<h3 class=\"title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
-		
+		                        $isSearchPage = (get_query_var('type') == "search") ? 1 : 0;
 						$profilesearch_layout = "advanced";
 						include("include-profile-search.php"); 	
 		

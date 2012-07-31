@@ -173,80 +173,7 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 		} else {
 			$ProfileGender = "";
 		}
-		// Race
-		if (isset($_GET['ProfileStatEthnicity']) && !empty($_GET['ProfileStatEthnicity'])){
-			$ProfileStatEthnicity = $_GET['ProfileStatEthnicity'];
-			$filter .= " AND profile.ProfileStatEthnicity='". $ProfileStatEthnicity ."'";
-		}
-		// Skin
-		if (isset($_GET['ProfileStatSkinColor']) && !empty($_GET['ProfileStatSkinColor'])){
-			$ProfileStatSkinColor = $_GET['ProfileStatSkinColor'];
-			$filter .= " AND profile.ProfileStatSkinColor='". $ProfileStatSkinColor ."'";
-		}
-		// Eye
-		if (isset($_GET['ProfileStatEyeColor']) && !empty($_GET['ProfileStatEyeColor'])){
-			$ProfileStatEyeColor = $_GET['ProfileStatEyeColor'];
-			$filter .= " AND profile.ProfileStatEyeColor='". $ProfileStatEyeColor ."'";
-		}
-		// Hair
-		if (isset($_GET['ProfileStatHairColor']) && !empty($_GET['ProfileStatHairColor'])){
-			$ProfileStatHairColor = $_GET['ProfileStatHairColor'];
-			$filter .= " AND profile.ProfileStatHairColor='". $ProfileStatHairColor ."'";
-		}
-		// Height
-		if (isset($_GET['ProfileStatHeight_min']) && !empty($_GET['ProfileStatHeight_min'])){
-			$ProfileStatHeight_min = $_GET['ProfileStatHeight_min'];
-			$filter .= " AND profile.ProfileStatHeight >= '". $ProfileStatHeight_min ."'";
-		}
-		if (isset($_GET['ProfileStatHeight_max']) && !empty($_GET['ProfileStatHeight_max'])){
-			$ProfileStatHeight_max = $_GET['ProfileStatHeight_max'];
-			$filter .= " AND profile.ProfileStatHeight <= '". $ProfileStatHeight_max ."'";
-		}
-		// Weight
-		if (isset($_GET['ProfileStatWeight_min']) && !empty($_GET['ProfileStatWeight_min'])){
-			$ProfileStatWeight_min = $_GET['ProfileStatWeight_min'];
-			$filter .= " AND profile.ProfileStatWeight >= '". $ProfileStatWeight_min ."'";
-		}
-		if (isset($_GET['ProfileStatWeight_max']) && !empty($_GET['ProfileStatWeight_max'])){
-			$ProfileStatWeight_max = $_GET['ProfileStatWeight_max'];
-			$filter .= " AND profile.ProfileStatWeight <= '". $ProfileStatWeight_max ."'";
-		}
-		// Bust/Chest
-		if (isset($_GET['ProfileStatBust_min']) && !empty($_GET['ProfileStatBust_min'])){
-			$ProfileStatBust_min = $_GET['ProfileStatBust_min'];
-			$filter .= " AND profile.ProfileStatBust >= '". $ProfileStatBust_min ."'";
-		}
-		if (isset($_GET['ProfileStatBust_max']) && !empty($_GET['ProfileStatBust_max'])){
-			$ProfileStatBust_max = $_GET['ProfileStatBust_max'];
-			$filter .= " AND profile.ProfileStatBust <= '". $ProfileStatBust_max ."'";
-		}
-		// Waist
-		if (isset($_GET['ProfileStatWaist_min']) && !empty($_GET['ProfileStatWaist_min'])){
-			$ProfileStatWaist_min = $_GET['ProfileStatWaist_min'];
-			$filter .= " AND profile.ProfileStatWaist >= '". $ProfileStatWaist_min ."'";
-		}
-		if (isset($_GET['ProfileStatWaist_max']) && !empty($_GET['ProfileStatWaist_max'])){
-			$ProfileStatWaist_max = $_GET['ProfileStatWaist_max'];
-			$filter .= " AND profile.ProfileStatWaist <= '". $ProfileStatWaist_max ."'";
-		}
-		// Hip
-		if (isset($_GET['ProfileStatHip_min']) && !empty($_GET['ProfileStatHip_min'])){
-			$ProfileStatHip_min = $_GET['ProfileStatHip_min'];
-			$filter .= " AND profile.ProfileStatHip >= '". $ProfileStatHip_min ."'";
-		}
-		if (isset($_GET['ProfileStatHip_max']) && !empty($_GET['ProfileStatHip_max'])){
-			$ProfileStatHip_max = $_GET['ProfileStatHip_max'];
-			$filter .= " AND profile.ProfileStatHip <= '". $ProfileStatHip_max ."'";
-		}
-		// Shoe
-		if (isset($_POST['ProfileStatShoe_min']) && !empty($_POST['ProfileStatShoe_min'])){
-			$ProfileStatShoe_min = $_POST['ProfileStatShoe_min'];
-			$filter .= " AND profile.ProfileStatShoe >= '". $ProfileStatShoe_min ."'";
-		}
-		if (isset($_POST['ProfileStatShoe_max']) && !empty($_POST['ProfileStatShoe_max'])){
-			$ProfileStatShoe_max = $_POST['ProfileStatShoe_max'];
-			$filter .= " AND profile.ProfileStatShoe <= '". $ProfileStatShoe_max ."'";
-		}
+
 		// Age
 		$timezone_offset = -10; // Hawaii Time
 		$dateInMonth = gmdate('d', time() + $timezone_offset *60 *60);
@@ -354,6 +281,10 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 				if (!empty($data['ProfileContactPhoneHome'])) {
 					echo "<div><strong>Home Phone:</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
 				}
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 1 AND cx.ProfileID = ". $ProfileID ." GROUP BY c.ProfileCustomID");
+				foreach  ($resultsCustom as $resultCustom) {
+					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+				}
 
         echo "                </div>\n";
         echo "                <div class=\"title\">\n";
@@ -382,62 +313,15 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 				if (!empty($data['ProfileDateBirth'])) {
 					echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
 				}
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ."");
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY c.ProfileCustomID");
 				foreach  ($resultsCustom as $resultCustom) {
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 				}
 
         echo "            </td>\n";
         echo "            <td class=\"ProfileStats column-ProfileStats\">\n";
-
-				if (!empty($data['ProfileStatEthnicity'])) {
-					echo "<div><strong>". __("Ethnicity", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatEthnicity'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatSkinColor'])) {
-					echo "<div><strong>". __("Skin Tone", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatSkinColor'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatHairColor'])) {
-					echo "<div><strong>". __("Hair Color", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatHairColor'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatEyeColor'])) {
-					echo "<div><strong>". __("Eye Color", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatEyeColor'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatHeight'])) {
-				  if ($rb_agency_option_unittype == 1) {
-						$heightraw = $data['ProfileStatHeight'];
-						$heightfeet = floor($heightraw/12);
-						$heightinch = $heightraw - floor($heightfeet*12);
-						echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN) .":</strong> ". $heightfeet ." ft ". $heightinch ." in" ."</div>\n";
-				  } else {
-						echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatHeight'] ." cm" ."</div>\n";
-				  }
-				}
-				if (!empty($data['ProfileStatWeight'])) {
-				  if ($rb_agency_option_unittype == 1) {
-					echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWeight'] ." lb</div>\n";
-				  } else {
-					echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWeight'] ." kg</div>\n";
-				  }
-				}
-				if (!empty($data['ProfileStatBust'])) {
-					if($data['ProfileGender'] == "Male"){ $ProfileStatBustTitle = "Chest"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatBustTitle = "Bust"; } else { $ProfileStatBustTitle = "Chest/Bust"; }
-					echo "<div><strong>". $ProfileStatBustTitle ."</strong> ". $data['ProfileStatBust'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatWaist'])) {
-					echo "<div><strong>". __("Waist", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatWaist'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatHip'])) {
-					if($data['ProfileGender'] == "Male"){ $ProfileStatHipTitle = "Inseam"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatHipTitle = "Hips"; } else { $ProfileStatHipTitle = "Hips/Inseam"; }
-					echo "<div><strong>". $ProfileStatHipTitle ."</strong> ". $data['ProfileStatHip'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatDress'])) {
-					if($data['ProfileGender'] == "Male"){ $ProfileStatDressTitle = "Suit Size"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatDressTitle = "Dress Size"; } else { $ProfileStatDressTitle = "Suit/Dress Size"; }
-					echo "<div><strong>". $ProfileStatDressTitle ."</strong> ". $data['ProfileStatDress'] ."</div>\n";
-				}
-				if (!empty($data['ProfileStatShoe'])) {
-					echo "<div><strong>". __("Shoe Size", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileStatShoe'] ."</div>\n";
-				}
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ."");
+			
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY c.ProfileCustomID");
 				foreach  ($resultsCustom as $resultCustom) {
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 				}
@@ -529,44 +413,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
                     if (!empty($data['ProfileDateBirth'])) {
                         echo "<strong>Age:</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."<br />\n";
                     }
-                    if (!empty($data['ProfileStatSkinColor'])) {
-                        echo "<strong>Skin:</strong> ". $data['ProfileStatSkinColor'] ."<br />\n";
-                    }
-                    if (!empty($data['ProfileStatHairColor'])) {
-                        echo "<strong>Hair:</strong> ". $data['ProfileStatHairColor'] ."<br />\n";
-                    }
-                    if (!empty($data['ProfileStatEyeColor'])) {
-                        echo "<strong>Eye:</strong> ". $data['ProfileStatEyeColor'] ."<br />\n";
-                    }
-
-                    if (!empty($data['ProfileStatHeight'])) {
-					  if ($ModelAgencyDisplayUnit == 1) {
-                          $heightraw = $data['ProfileStatHeight'];
-                          $heightfeet = floor($heightraw/12);
-                          $heightinch = $heightraw - floor($heightfeet*12);
-                        echo "<strong>Height:</strong> ". $heightfeet ." ft ". $heightinch ." in" ."<br />\n";
-					  } else {
-                        echo "<strong>Height:</strong> ". $data['ProfileStatHeight'] ." cm" ."<br />\n";
-					  }
-                    }
-                    if (!empty($data['ProfileStatWeight'])) {
-					  if ($ModelAgencyDisplayUnit == 1) {
-                        echo "<strong>Weight:</strong> ". $data['ProfileStatWeight'] ." lb<br />\n";
-					  } else {
-                        echo "<strong>Weight:</strong> ". $data['ProfileStatWeight'] ." kg" ."<br />\n";
-					  }
-                    }
-                    if (!empty($data['ProfileStatBust'])) {
-                        if($data['ProfileGender'] == "Male"){ $ProfileStatBustTitle = "Chest"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatBustTitle = "Bust"; } else { $ProfileStatBustTitle = "Chest/Bust"; }
-                        echo "<strong>". $ProfileStatBustTitle ."</strong> ". $data['ProfileStatBust'] ."<br />\n";
-                    }
-                    if (!empty($data['ProfileStatWaist'])) {
-                        echo "<strong>Waist:</strong> ". $data['ProfileStatWaist'] ."<br />\n";
-                    }
-                    if (!empty($data['ProfileStatHip'])) {
-                        if($data['ProfileGender'] == "Male"){ $ProfileStatHipTitle = "Inseam"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatHipTitle = "Hips"; } else { $ProfileStatHipTitle = "Hips/Inseam"; }
-                        echo "<strong>". $ProfileStatHipTitle ."</strong> ". $data['ProfileStatHip'] ."<br />\n";
-                    }
+  
                     
                 echo " </div>";
                 echo " <div style=\"position: absolute; z-index: 20; top: 120px; left: 200px; width: 20px; height: 20px; overflow: hidden; \"><a href=\"?page=". $_GET['page'] ."&action=". $cartAction ."&RemoveID=". $data['ProfileID'] ."\" title=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\"><img src=\"". rb_agency_BASEDIR ."style/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\" /></a></div>";
@@ -709,164 +556,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_GET['ProfileDateBirth_max'] ."\" />\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Height", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
-									if ($rb_agency_option_unittype == 1) {
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<select name=\"ProfileStatHeight_min\" id=\"ProfileStatHeight_min\">\n";               
-										if (empty($_SESSION['ProfileStatHeight_min'])) {
-		echo "							<option value=\"\" selected>". __("No Minimum", rb_agency_TEXTDOMAIN) . "</option>\n";
-										}
-                        				// Lets Convert It
-										$i=36;$heightraw = 0; $heightfeet = 0; $heightinch = 0;
-										while($i<=90) { 
-											$heightraw = $i;
-											$heightfeet = floor($heightraw/12);
-											$heightinch = $heightraw - floor($heightfeet*12);
-		echo "								<option value=\"". $i ."\" ". selected($_SESSION['ProfileStatHeight_min'], $i) .">". $heightfeet ." ft ". $heightinch ." in" . "</option>\n";
-										  $i++;
-										}
-		echo "				        	</select><br />\n";
-
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<select name=\"ProfileStatHeight_max\" id=\"ProfileStatHeight_max\">\n";               
-										if (empty($_SESSION['ProfileStatHeight_max'])) {
-		echo "							<option value=\"\" selected>". __("No Maximum", rb_agency_TEXTDOMAIN) . "</option>\n";
-										}
-										// Lets Convert It
-										$i=36; $heightraw = 0; $heightfeet = 0; $heightinch = 0;
-										while($i <= 90) {
-											$heightraw = $i;
-											$heightfeet = floor($heightraw/12);
-											$heightinch = $heightraw - floor($heightfeet*12);
-	echo "									<option value=\"". $i ."\" ". selected($_SESSION['ProfileStatHeight_max'], $i) .">". $heightfeet ." ft ". $heightinch ." in" . "</option>\n";
-										  $i++;
-										}
-		echo "				        	</select>\n";
-
-									} else {
-									// Metric
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . " (". __("cm", rb_agency_TEXTDOMAIN) . "):\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatHeight_min\" name=\"ProfileStatHeight_min\" value=\"". $_SESSION['ProfileStatHeight_min'] ."\" /><br />\n";
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . " (". __("cm", rb_agency_TEXTDOMAIN) . "):\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatHeight_max\" name=\"ProfileStatHeight_max\" value=\"". $_SESSION['ProfileStatHeight_max'] ."\" />\n";
-									}
-
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Weight", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWeight_min\" name=\"ProfileStatWeight_min\" value=\"". $_SESSION['ProfileStatWeight_min'] ."\" /><br />\n";
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWeight_max\" name=\"ProfileStatWeight_max\" value=\"". $_SESSION['ProfileStatWeight_max'] ."\" />\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Ethnicity", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><select name=\"ProfileStatEthnicity\" id=\"ProfileStatEthnicity\">\n";               
-										if (empty($ProfileStatEthnicity)) {
-		echo "							<option value=\"\" selected>". __("Any Ethnicity", rb_agency_TEXTDOMAIN) . "</option>\n";
-										}
-								
-										$query1 = "SELECT EthnicityTitle FROM ". table_agency_data_ethnicity ." ORDER BY EthnicityTitle";
-										$results1 = mysql_query($query1);
-										$count1 = mysql_num_rows($results1);
-										while ($data1 = mysql_fetch_array($results1)) {
-		echo "							<option value=\"". $data1['EthnicityTitle'] ."\""; if ($_SESSION['ProfileStatEthnicity'] == $data1['EthnicityTitle']) { echo " selected"; } echo ">". $data1['EthnicityTitle'] ."</option>\n";
-										}
-										mysql_free_result($results1);
-		echo "				        	</select>\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Skin Color", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><select name=\"ProfileStatSkinColor\" id=\"ProfileStatSkinColor\">\n";               
-										if (empty($ProfileStatSkinColor)) {
-		echo "							<option value=\"\" selected>". __("Any Skin Color", rb_agency_TEXTDOMAIN) . "</option>\n";
-										}
-		
-										$query = "SELECT * FROM ". table_agency_data_colorskin ." ORDER BY ColorSkinTitle";
-										$results = mysql_query($query);
-										while ($data = mysql_fetch_array($results)) {
-		echo "							<option value=\"". $data['ColorSkinTitle'] ."\""; if ($_SESSION['ProfileStatSkinColor'] == $data['ColorSkinTitle']) { echo " selected"; } echo ">". $data['ColorSkinTitle'] ."</option>\n";
-										}
-		echo "				        	</select>\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
 	
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Eye Color", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><select name=\"ProfileStatEyeColor\" id=\"ProfileStatEyeColor\">\n";               
-										if (empty($ProfileStatEyeColor)) {
-		echo "							<option value=\"\" selected>". __("Any Eye Color", rb_agency_TEXTDOMAIN) . "</option>\n";
-										}
-	
-										$query = "SELECT * FROM ". table_agency_data_coloreye ." ORDER BY ColorEyeTitle";
-										$results = mysql_query($query);
-										while ($data = mysql_fetch_array($results)) {
-		echo "							<option value=\"". $data['ColorEyeTitle'] ."\""; if ($_SESSION['ProfileStatEyeColor'] == $data['ColorEyeTitle']) { echo "selected=\"selected\""; } echo ">". $data['ColorEyeTitle'] ."</option>\n";
-										}
-		echo "				        	</select>\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-	
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Hair Color", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><select name=\"ProfileStatHairColor\" id=\"ProfileStatHairColor\">\n";               
-										if (empty($ProfileStatHairColor)) {
-		echo "							<option value=\"\" selected>". __("Any Hair Color", rb_agency_TEXTDOMAIN) . "</option>\n";
-										}
-	
-										$query = "SELECT * FROM ". table_agency_data_colorhair ." ORDER BY ColorHairTitle";
-										$results = mysql_query($query);
-										while ($data = mysql_fetch_array($results)) {
-		echo "							<option value=\"". $data['ColorHairTitle'] ."\""; if ($_SESSION['ProfileStatHairColor'] == $data['ColorHairTitle']) { echo "selected=\"selected\""; } echo ">". $data['ColorHairTitle'] ."</option>\n";
-										}
-		echo "				        	</select>\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-	
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Chest", rb_agency_TEXTDOMAIN) . "/". __("Bust", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatBust_min\" name=\"ProfileStatBust_min\" value=\"". $_SESSION['ProfileStatBust_min'] ."\" /><br />\n";
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatBust_max\" name=\"ProfileStatBust_max\" value=\"". $_SESSION['ProfileStatBust_max'] ."\" />\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-	
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Waist", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWaist_min\" name=\"ProfileStatWaist_min\" value=\"". $_SESSION['ProfileStatWaist_min'] ."\" /><br />\n";
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWaist_max\" name=\"ProfileStatWaist_max\" value=\"". $_SESSION['ProfileStatWaist_max'] ."\" />\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Hips", rb_agency_TEXTDOMAIN) . "/". __("Inseam", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatHip_min\" name=\"ProfileStatHip_min\" value=\"". $_SESSION['ProfileStatHip_min'] ."\" /><br />\n";
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatHip_max\" name=\"ProfileStatHip_max\" value=\"". $_SESSION['ProfileStatHip_max'] ."\" />\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Shoe", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatShoe_min\" name=\"ProfileStatShoe_min\" value=\"". $_SESSION['ProfileStatShoe_min'] ."\" /><br />\n";
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatShoe_max\" name=\"ProfileStatShoe_max\" value=\"". $_SESSION['ProfileStatShoe_max'] ."\" />\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
 
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Location", rb_agency_TEXTDOMAIN) . ":</th>\n";
@@ -884,42 +574,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
 
-
-								$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions FROM ". table_agency_customfields ." ORDER BY ProfileCustomTitle";
-								$results1 = mysql_query($query1);
-								$count1 = mysql_num_rows($results1);
-								while ($data1 = mysql_fetch_array($results1)) {
-						
-		echo "				    <tr valign=\"top\">\n";
-		echo "				        <th scope=\"row\">". $data1['ProfileCustomTitle'] .":</th>\n";
-		echo "				        <td>\n";               
-						
-									$ProfileCustomType = $data1['ProfileCustomType'];
-									if ($ProfileCustomType == 1) {
-										$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-										foreach ($ProfileCustomOptions_Array as &$value) {
-										//echo "	<input type=\"checkbox\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $value ."\" ". checked($ProfileCustomValue, $value) ." /> ". $value ."\n";
-										} 
-									} elseif ($ProfileCustomType == 2) {
-										$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-										foreach ($ProfileCustomOptions_Array as &$value) {
-										//echo "	<input type=\"radio\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $value ."\" ". checked($ProfileCustomValue, $value) ." /> ". $value ."\n";
-										} 
-									} elseif ($ProfileCustomType == 3) {
-										$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-										echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
-										echo "	<option value=\"\"> -- </option>\n";
-										foreach ($ProfileCustomOptions_Array as &$value) {
-										echo "	<option value=\"". $value ."\" ". selected($ProfileCustomValue, $value) ."> ". $value ." </option>\n";
-										} 
-										echo "</select>\n";
-									} else {
-										echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
-									}
-									
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-			}
+			rb_custom_fields(0, $ProfileID, $ProfileGender,false);
    
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Status", rb_agency_TEXTDOMAIN) . ":</th>\n";

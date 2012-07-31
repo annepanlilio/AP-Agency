@@ -80,18 +80,7 @@ Custom Layout: Shake it like a polaroid picture
 		if (!empty($ProfileGender)) {
 			echo "<div class=\"rel\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileGender ."</div>\n";
 		}
-		if (!empty($ProfileStatEthnicity)) {
-			echo "<div class=\"rel\"><strong>". __("Ethnicity", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatEthnicity ."</div>\n";
-		}
-		if (!empty($ProfileStatSkinColor)) {
-			echo "<div class=\"rel\"><strong>". __("Skin Tone", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatSkinColor ."</div>\n";
-		}
-		if (!empty($ProfileStatHairColor)) {
-			echo "<div class=\"rel\"><strong>". __("Hair Color", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHairColor ."</div>\n";
-		}
-		if (!empty($ProfileStatEyeColor)) {
-			echo "<div class=\"rel\"><strong>". __("Eye Color", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatEyeColor ."</div>\n";
-		}
+
 		if (!empty($ProfileStatHeight)) {
 			if ($rb_agency_option_unittype == 0) { // Metric
 				echo "<div class=\"rel\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</div>\n";
@@ -109,27 +98,17 @@ Custom Layout: Shake it like a polaroid picture
 				echo "<div class=\"rel\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</div>\n";
 			}
 		}
-		if (!empty($ProfileStatBust)) {
-			if($ProfileGender == "Male"){ $ProfileStatBustTitle = __("Chest", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatBustTitle = __("Bust", rb_agency_TEXTDOMAIN); } else { $ProfileStatBustTitle = __("Chest/Bust", rb_agency_TEXTDOMAIN); }
-			echo "<div class=\"rel\"><strong>". $ProfileStatBustTitle ."</strong> ". $ProfileStatBust ."</div>\n";
+		
+
+		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+		foreach  ($resultsCustom as $resultCustom) {
+			if(!empty($resultCustom->ProfileCustomValue )){
+				echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+			}
 		}
-		if (!empty($ProfileStatWaist)) {
-			echo "<div class=\"rel\"><strong>". __("Waist", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWaist ."</div>\n";
-		}
-		if (!empty($ProfileStatHip)) {
-			if($ProfileGender == "Male"){ $ProfileStatHipTitle = __("Inseam", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatHipTitle = __("Hips", rb_agency_TEXTDOMAIN); } else { $ProfileStatHipTitle = __("Hips/Inseam", rb_agency_TEXTDOMAIN); }
-			echo "<div class=\"rel\"><strong>". $ProfileStatHipTitle ."<span class=\"divider\">:</span></strong> ". $ProfileStatHip ."</div>\n";
-		}
-		if (!empty($ProfileStatDress) || ($ProfileStatDress == 0)) {
-			if($ProfileGender == "Male"){ $ProfileStatDressTitle = __("Suit Size", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ $ProfileStatDressTitle = __("Dress Size", rb_agency_TEXTDOMAIN); } else { $ProfileStatDressTitle = __("Suit/Dress Size", rb_agency_TEXTDOMAIN); }
-			echo "<div class=\"rel\"><strong>". $ProfileStatDressTitle ."<span class=\"divider\">:</span></strong> ". $ProfileStatDress ."</div>\n";
-		}
-		if (!empty($ProfileStatShoe)) {
-			echo "<div class=\"rel\"><strong>". __("Shoe Size", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatShoe ."</div>\n";
-		}
-	
-		    echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"/profile/".$_GET["target"]."/contact/\">Click Here</a></div>\n";
-	
+	          	if($rb_agency_option_showcontactpage==1){
+		    		echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
+			}
 	echo "					</div>\n";
 	echo "				</div>\n";	
 	echo "		</div>	\n";	

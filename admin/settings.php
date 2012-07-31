@@ -101,24 +101,6 @@ if ($ConfigID == 0) {
     echo "    </div>\n";
 
     echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Skin Types", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\" title=\"". __("Skin Types", rb_agency_TEXTDOMAIN) . "\">". __("Skin Types", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Manage preset skin types", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Eye Color", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Eye Color", rb_agency_TEXTDOMAIN) . "\">". __("Eye Color", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Manage preset eye color choices", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Hair Color", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\" title=\"". __("Hair Color", rb_agency_TEXTDOMAIN) . "\">". __("Hair Color", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Manage preset hair color choices", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-
-    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Gender", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Gender", rb_agency_TEXTDOMAIN) . "\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Manage preset Gender choices", rb_agency_TEXTDOMAIN) . "</p>\n";
@@ -173,7 +155,8 @@ elseif ($ConfigID == 1) {
 		$rb_agency_option_profilelist_castingcart = $rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
 			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }
 	
-
+         
+	
 		 echo "<table class=\"form-table\">\n";
 
 		 echo " <tr valign=\"top\">\n";
@@ -399,6 +382,7 @@ elseif ($ConfigID == 1) {
 		 echo "</form>\n";
 
 
+
 }	 // End	
 elseif ($ConfigID == 11) {
 
@@ -410,7 +394,12 @@ elseif ($ConfigID == 11) {
 		echo "<form method=\"post\" action=\"options.php\">\n";
 		settings_fields( 'rb-agencyinteract-settings-group' ); 
 		$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
+		   // Facebook Connect integration
+		   	 $rb_agencyinteract_option_fb_registerallow = $rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_registerallow'];
+	       	if (empty($rb_agencyinteract_option_fb_registerallow)) { $rb_agencyinteract_option_fb_registerallow = "1"; }
+			
 		
+				 
 		 echo "<table class=\"form-table\">\n";
 
 		 echo " <tr valign=\"top\">\n";
@@ -448,6 +437,33 @@ elseif ($ConfigID == 11) {
 		 echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 0) ."> ". __("New profiles must be manually approved", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 1) ."> ". __("New profiles are automatically approved", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "     </select>\n";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		  echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Facebook Login/Registration Integration', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
+		 echo " </tr>\n";
+		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Login &amp Registration', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_registerallow]\" value=\"1\" "; checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_registerallow'], 1); echo "/> Users may login/register profiles using facebook (uncheck to disable feature)<br />\n";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		  echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Application ID', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+             echo "    <input  name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_app_id]\" value=\"".$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_app_id']."\" />";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		  echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Application Secret', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+             echo "    <input  name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_app_secret]\" value=\"".$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_app_secret']."\" />";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		  echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Redirect URI on success', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+             echo "    <input  name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_app_uri]\" value=\"".$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_app_uri']."\" />(default: ".network_site_url("/")."profile-member/ )";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";

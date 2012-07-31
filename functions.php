@@ -185,25 +185,26 @@
 	add_filter('template_include', 'rb_agency_template_include', 1, 1); 
 		function rb_agency_template_include( $template ) {
 			if ( get_query_var( 'type' ) ) {
-			  if (get_query_var( 'type' ) == "search") {
-				return dirname(__FILE__) . '/theme/view-search.php'; 
-			  } elseif (get_query_var( 'type' ) == "category") {
-				return dirname(__FILE__) . '/theme/view-category.php'; 
-			  } elseif (get_query_var( 'type' ) == "profile") {
-				return dirname(__FILE__) . '/theme/view-profile.php'; 
-			  } elseif (get_query_var( 'type' ) == "profilecontact") {
-				return dirname(__FILE__) . '/theme/view-profile-contact.php'; 
-			  } elseif (get_query_var( 'type' ) == "profilesecure") {
-				return dirname(__FILE__) . '/theme/view-profilesecure.php'; 
-			  } elseif (get_query_var( 'type' ) == "dashboard") {
-				return dirname(__FILE__) . '/theme/view-dashboard.php'; 
-			  } elseif (get_query_var( 'type' ) == "print") {
-				return dirname(__FILE__) . '/theme/view-print.php'; 
-			  } elseif (get_query_var( 'type' ) == "favorite") {
-				return dirname(__FILE__) . '/theme/view-favorite.php'; 
-			  }elseif (get_query_var( 'type' ) == "castingcart") {
-				return dirname(__FILE__) . '/theme/view-castingcart.php'; 
-			  }
+				
+				  if (get_query_var( 'type' ) == "search") {
+					return dirname(__FILE__) . '/theme/view-search.php'; 
+				  } elseif (get_query_var( 'type' ) == "category") {
+					return dirname(__FILE__) . '/theme/view-category.php'; 
+				  } elseif (get_query_var( 'type' ) == "profile") {
+					return dirname(__FILE__) . '/theme/view-profile.php'; 
+				  } elseif (get_query_var( 'type' ) == "profilecontact") {
+					return dirname(__FILE__) . '/theme/view-profile-contact.php'; 
+				  } elseif (get_query_var( 'type' ) == "profilesecure") {
+					return dirname(__FILE__) . '/theme/view-profilesecure.php'; 
+				  } elseif (get_query_var( 'type' ) == "dashboard") {
+					return dirname(__FILE__) . '/theme/view-dashboard.php'; 
+				  } elseif (get_query_var( 'type' ) == "print") {
+					return dirname(__FILE__) . '/theme/view-print.php'; 
+				  } elseif (get_query_var( 'type' ) == "favorite") {
+					return dirname(__FILE__) . '/theme/view-favorite.php'; 
+				  }elseif (get_query_var( 'type' ) == "castingcart") {
+					return dirname(__FILE__) . '/theme/view-castingcart.php'; 
+				  }
 			  
 			}
 			return $template;
@@ -383,7 +384,31 @@
 		}
 		return $videoObject;
 	}
-
+	
+	// Make Directory for new profile
+     function rb_agency_checkdir($ProfileGallery){
+	      	
+			if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
+				mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
+				chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
+			} else {
+				$finished = false;      
+				$pos = 0;                 // we're not finished yet (we just started)
+				while ( ! $finished ):                   // while not finished
+				 $pos++;
+				  $NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
+				  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
+					mkdir(rb_agency_UPLOADPATH . $NewProfileGallery, 0755);
+					chmod(rb_agency_UPLOADPATH . $NewProfileGallery, 0777);
+					$ProfileGallery = $NewProfileGallery;  // Set it to the new  thing
+					$finished = true;                    // ...we are finished
+				  endif;
+				endwhile;
+			}
+			return $ProfileGallery;
+			
+			
+     }
 // *************************************************************************************************** //
 // Shortcodes
 
@@ -488,7 +513,7 @@
 		*/
 		
 		// Get Preferences
-		    $rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_privacy					 = $rb_agency_options_arr['rb_agency_option_privacy'];
 			$rb_agency_option_profilelist_count			 = $rb_agency_options_arr['rb_agency_option_profilelist_count'];
 			$rb_agency_option_profilelist_perpage		 = $rb_agency_options_arr['rb_agency_option_profilelist_perpage'];
@@ -497,6 +522,7 @@
 			$rb_agency_option_profilelist_expanddetails	 = $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'];
 			$rb_agency_option_locationtimezone 			 = (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
 			$rb_agency_option_profilelist_favorite		 = (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
+			$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 			$rb_agency_option_profilelist_castingcart 	 = (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
 
 		// Set It Up	
@@ -511,22 +537,11 @@
 				"profileisactive" => NULL,
 				"profilegender" => NULL,
 					"gender" => NULL,
-				"profilestatethnicity" => NULL,
-				"profilestatskincolor" => NULL,
-				"profilestateyecolor" => NULL,
-				"profilestathaircolor" => NULL,
+				
 				"profilestatheight_min" => NULL,
 				"profilestatheight_max" => NULL,
 				"profilestatweight_min" => NULL,
 				"profilestatweight_max" => NULL,
-				"profilestatbust_min" => NULL,
-				"profilestatbust_max" => NULL,
-				"profilestatwaist_min" => NULL,
-				"profilestatwaist_max" => NULL,
-				"profilestathip_min" => NULL,
-				"profilestathip_max" => NULL,
-				"profilestatshoe_min" => NULL,
-				"profilestatshoe_max" => NULL,
 				"profiledatebirth_min" => NULL,
 					"age_start" => NULL,
 				"profiledatebirth_max" => NULL,
@@ -565,53 +580,119 @@
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
 		if (isset($age_start) && !empty($age_start)){ $profiledatebirth_min = $age_start; }
 		if (isset($age_stop) && !empty($age_stop)){ $profiledatebirth_max = $age_stop; }
-		
 
 		$ProfileID 					= $profileid;
 		$ProfileContactNameFirst	= $profilecontactnamefirst;
-		$ProfileContactNameLast	= $profilecontactnamelast;
+		$ProfileContactNameLast    	= $profilecontactnamelast;
 		$ProfileLocationCity		= $profilelocationcity;
 		$ProfileType				= $profiletype;
 		$ProfileIsActive			= $profileisactive;
 		$ProfileGender    			= $profilegender;
-		$ProfileStatEthnicity   	= $profilestatethnicity;
-		$ProfileStatSkinColor		= $profilestatskincolor;
-		$ProfileStatEyeColor		= $profilestateyecolor;
-		$ProfileStatHairColor		= $profilestathaircolor;
+		
 		$ProfileStatHeight_min		= $profilestatheight_min;
 		$ProfileStatHeight_max		= $profilestatheight_max;
-		$ProfileStatWeight_min		= $profilestatweight_min;
-		$ProfileStatWeight_max		= $profilestatweight_max;
-		$ProfileStatBust_min		= $profilestatbust_min;
-		$ProfileStatBust_max		= $profilestatbust_max;
-		$ProfileStatWaist_min		= $profilestatwaist_min;
-		$ProfileStatWaist_max		= $profilestatwaist_max;
-		$ProfileStatHip_min			= $profilestathip_min;
-		$ProfileStatHip_max			= $profilestathip_max;
-		$ProfileStatShoe_min		= $profilestatshoe_min;
-		$ProfileStatShoe_max		= $profilestatshoe_max;
+		$ProfileStatWeight_min		= $profilestatheight_min;
+		$ProfileStatWeight_max		= $profilestatheight_max;
+		
 		$ProfileDateBirth_min		= $profiledatebirth_min;
 		$ProfileDateBirth_max		= $profiledatebirth_max;
 		$ProfileIsFeatured			= $featured;
 		$ProfileIsPromoted			= $stars;
 		$OverridePrivacy			= $override_privacy;
 
+          
+        // Set CustomFields
+	  if(isset($atts) && !empty($atts)){
+		foreach($atts as $key => $val){
+			
+				if(substr($key,0,15)=="ProfileCustomID"){
+					    
+					   	$value = explode("_",$key);
+						$ProfileTypeKey = substr($value[0],15);
+						
+						
+						
+						if($ProfileTypeKey != "ProfileCustomID" && $ProfileTypeKey !=""){
+							
+							
+								
+							
+							$q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ". $ProfileTypeKey  ." ");
+							$ProfileCustomType = mysql_fetch_assoc($q);
+									
+									/******************
+									1 - Text
+									2 - Min-Max > Removed
+									3 - Dropdown
+									4 - Textbox
+									5 - Checkbox
+									6 - Radiobutton
+									7 - Metrics/Imperials
+									*********************/
+							
+									if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
+										if(!empty($val)){
+										   $filter .= " AND customfield_mux.ProfileCustomValue='".$val."' ";
+											$_SESSION[$key] = $val;
+										}
+									}
+								
+									elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
+									
+										if(!empty($val)){
+											list($val1, $val2) = explode("|",implode("|",$val));
+											
+											if(!empty($val1) && !empty($val2)){
+										    	$filter .= " AND customfield_mux.ProfileCustomValue BETWEEN '".$val1."' AND '".$val2."' ";
+												$_SESSION[$key] = $val;
+											}elseif(!empty($val1)){
+												$data = implode(",",explode("|",implode("|",$val)));
+										    	$filter .= " AND customfield_mux.ProfileCustomValue IN('".$data ."') ";
+												$_SESSION[$key] = $val;
+											}else{
+												$data = implode(",",$val);
+										    	$filter .= " AND customfield_mux.ProfileCustomValue IN('".$val."') ";
+												$_SESSION[$key] = $val;
+											}
+										}
+										
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
+										if(!empty($val)){
+										   $filter .= " AND customfield_mux.ProfileCustomValue='".$val."' ";
+											$_SESSION[$key] = $val;
+										}
+										
+									}elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
+									     if(!empty($val)){
+										 $data = implode("','",$val);
+										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".$data."') ";
+											$_SESSION[$key] = $val;
+										}
+									}
+									elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
+									     if(!empty($val)){
+											 $data = implode(",",$val);
+										   $filter .= " AND customfield_mux.ProfileCustomValue IN('".$data."') ";
+											$_SESSION[$key] = $val;
+										}
+									}
 
-		// Is this a profile ID search?
-		if (isset($ProfileID) && !empty($ProfileID)){
-			$ProfileID = $ProfileID;
-			$filter .= " AND profile.ProfileID IN (". $ProfileID .") ";
-		}
-
-		// Name
-	     	if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
+							}
+					
+				}
+			
+		}  //end for each
+	  } // end if
+	  
+	  	// Name
+		if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
 			$ProfileContactNameFirst = $ProfileContactNameFirst;
-			$filter .= " AND profile.ProfileContactNameFirst='". ucfirst($ProfileContactNameFirst) ."'";
-			}
-			if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
+			$filter .= " AND profile.ProfileContactNameFirst LIKE '%". ucfirst($ProfileContactNameFirst) ."'";
+		}
+		if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
 			$ProfileContactNameLast = $ProfileContactNameLast;
-			$filter .= " AND profile.ProfileContactNameLast LIKE '". ucfirst($ProfileContactNameLast) ."'";
-			}
+			$filter .= " AND profile.ProfileContactNameLast LIKE '%". ucfirst($ProfileContactNameLast) ."'";
+		}
 		
 		// Type
 		if (isset($ProfileType) && !empty($ProfileType)){
@@ -619,7 +700,37 @@
 			$filter .= " AND FIND_IN_SET(". $ProfileType .", profile.ProfileType) ";
 		} else {
 			$ProfileType = "";
+		}		
+		
+		// Gender
+		if (isset($ProfileGender) && !empty($ProfileGender)){
+		    if (strtolower($ProfileGender) == "female") {
+				$filter .= " AND profile.ProfileGender='female'";
+		    } elseif (strtolower($ProfileGender) == "male") {
+				$filter .= " AND profile.ProfileGender='male'";
+		    }
+		} else {
+			$ProfileGender = "";
 		}
+		// Age
+		$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
+		if (isset($ProfileDateBirth_min) && !empty($ProfileDateBirth_min)){
+			$selectedYearMin = date('Y-m-d', strtotime('-'. $ProfileDateBirth_min .' year'. $date));
+			$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
+		}
+		if (isset($ProfileDateBirth_max) && !empty($ProfileDateBirth_max)){
+			$selectedYearMax = date('Y-m-d', strtotime('-'. $ProfileDateBirth_max - 1 .' year'. $date));
+			$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
+		}
+		
+ /*
+		// Is this a profile ID search?
+		if (isset($ProfileID) && !empty($ProfileID)){
+			$ProfileID = $ProfileID;
+			$filter .= " AND profile.ProfileID IN (". $ProfileID .") ";
+		}
+
+
 		// Active
 		/*
 		if (isset($ProfileIsActive)){
@@ -638,24 +749,15 @@
 			$filter .= " AND (profile.ProfileIsActive=1 OR profile.ProfileIsActive=0)";
 		}
 		*/
+		/*
 		  if ($ProfileIsFeatured == "1") {
-			$filter .= " AND profile.ProfileIsFeatured=1";
+			$filter .= " AND  ".table_agency_profile.".ProfileIsFeatured=1";
 		  }
 		  if ($ProfileIsPromoted == "1") {
-			$filter .= " AND profile.ProfileIsPromoted=1";
+			$filter .= " AND  ".table_agency_profile.".ProfileIsPromoted=1";
 		  }
 		
-		// Gender
-		if (isset($ProfileGender) && !empty($ProfileGender)){
-		    if (strtolower($ProfileGender) == "female") {
-				$filter .= " AND profile.ProfileGender='female'";
-		    } elseif (strtolower($ProfileGender) == "male") {
-				$filter .= " AND profile.ProfileGender='male'";
-		    }
-		} else {
-			$ProfileGender = "";
-		}
-		
+
 		// Location
 		if (isset($ProfileLocationCity) && !empty($ProfileLocationCity)){
 			$ProfileLocationCity = $ProfileLocationCity;
@@ -682,25 +784,22 @@
 			$filter .= " AND profile.ProfileStatHairColor='". $ProfileStatHairColor ."'";
 		}
 		// Height
-		if(!isset($ProfileStatHeight_min) == isset($ProfileStatHeight_max) ){
-				if (isset($ProfileStatHeight_min) && !empty($ProfileStatHeight_min)){
-					$ProfileStatHeight_min = $ProfileStatHeight_min;
-					$filter .= " AND profile.ProfileStatHeight >= '". $ProfileStatHeight_min ."'";
-				}
-				if (isset($ProfileStatHeight_max) && !empty($ProfileStatHeight_max)){
-					$ProfileStatHeight_max = $ProfileStatHeight_max;
-					$filter .= " AND profile.ProfileStatHeight <= '". $ProfileStatHeight_max ."'";
-				}
+		if (isset($ProfileStatHeight_min) && !empty($ProfileStatHeight_min)){
+			$ProfileStatHeight_min = $ProfileStatHeight_min;
+			$filter .= " AND profile.ProfileStatHeight >= '". $ProfileStatHeight_min ."'";
+		}
+		if (isset($ProfileStatHeight_max) && !empty($ProfileStatHeight_max)){
+			$ProfileStatHeight_max = $ProfileStatHeight_max;
+			$filter .= " AND profile.ProfileStatHeight <= '". $ProfileStatHeight_max ."'";
 		}
 		// Weight
 		if (isset($ProfileStatWeight_min) && !empty($ProfileStatWeight_min)){
-			
 			$ProfileStatWeight_min = $ProfileStatWeight_min;
-			$filter .= " AND profile.ProfileStatWeight >= '". $ProfileStatWeight_min ."'";
+			$filter .= " AND profile.ProfileStatWeight >= ". $ProfileStatWeight_min ."";
 		}
 		if (isset($ProfileStatWeight_max) && !empty($ProfileStatWeight_max)){
 			$ProfileStatWeight_max = $ProfileStatWeight_max;
-			$filter .= " AND profile.ProfileStatWeight <= '". $ProfileStatWeight_max ."'";
+			$filter .= " AND profile.ProfileStatWeight <= ". $ProfileStatWeight_max ."";
 		}
 		// Bust/Chest
 		if (isset($ProfileStatBust_min) && !empty($ProfileStatBust_min)){
@@ -738,24 +837,26 @@
 			$ProfileStatShoe_max = $ProfileStatShoe_max;
 			$filter .= " AND profile.ProfileStatShoe <= ". $ProfileStatShoe_max ."";
 		}
-		// Age
-		$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
-		if (isset($ProfileDateBirth_min) && !empty($ProfileDateBirth_min)){
-			$selectedYearMin = date('Y-m-d', strtotime('-'. $ProfileDateBirth_min .' year'. $date));
-			$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
-		}
-		if (isset($ProfileDateBirth_max) && !empty($ProfileDateBirth_max)){
-			$selectedYearMax = date('Y-m-d', strtotime('-'. $ProfileDateBirth_max - 1 .' year'. $date));
-			$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
-		}
-
-      
+		
+      */
 		// Can we show the profiles?
 		if ( (isset($OverridePrivacy)) || ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 			echo "<div id=\"profile-results\">\n";
 
+			
+			
+			
+			
 			/*********** Paginate **************/
-			$items = mysql_num_rows(mysql_query("SELECT profile.ProfileID FROM ". table_agency_profile ." profile $filter")); // number of total rows in the database
+			$items = mysql_num_rows(mysql_query(
+			"SELECT profile.ProfileID, customfield_mux.* 
+					FROM ". table_agency_profile ." profile 
+					INNER JOIN  ".table_agency_customfield_mux." customfield_mux 
+					ON 
+					profile.ProfileID=customfield_mux.ProfileID ")); // number of total rows in the database
+				
+		
+				
 			if($items > 0) {
 				$p = new rb_agency_pagination;
 				$p->items($items);
@@ -778,39 +879,39 @@
 				$limit = "";
 			}
 
+
 			/*********** Execute Query **************/
 			if (isset($profilefavorite) && !empty($profilefavorite)){  	
 			// Execute Query
-			$queryList = "SELECT profile.* , fav.SavedFavoriteTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite."  fav  WHERE fav.SavedFavoriteTalentID = profile.ProfileID  AND ProfileIsActive = 1";
+			$queryList = "SELECT profile.*,profile.ProfileID as pID , fav.SavedFavoriteTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite."  fav  WHERE fav.SavedFavoriteTalentID = profile.ProfileID  AND ProfileIsActive = 1";
 			
 			}elseif (isset($profilecastingcart) && !empty($profilecastingcart)){  	
 				// Execute Query
-			$queryList = "SELECT profile.* , cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE cart.CastingCartTalentID = profile.ProfileID AND ProfileIsActive = 1";
+			$queryList = "SELECT profile.*,profile.ProfileID as pID , cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE cart.CastingCartTalentID = profile.ProfileID AND ProfileIsActive = 1";
 			
 			}else{
 			// Execute Query
-			$queryList = "SELECT profile.* ,  (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile $filter ORDER BY $sort $dir $limit";
+			$queryList = "SELECT profile.*,profile.ProfileID as pID , customfield_mux.*,  (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux ON profile.ProfileID = customfield_mux.ProfileID  $filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  $limit";
 			}
-			//, (SELECT fav.* FROM ".table_agency_savedfavorite." fav WHERE profile.ProfileID = fav.SavedFavoriteProfileID) as  SavedFavoriteProfileID
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
-
-		
+  #DEBUG!
+  #echo $queryList;
                 $profileDisplay = 0;
 				$countFav = 0;
 			while ($dataList = mysql_fetch_array($resultsList)) {
 				
 				 //Execute query - Favorite Model
-			     $queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = ".$dataList["ProfileID"]." ");
+			     $queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = ".$dataList["pID"]." ");
 	                 $dataFavorite = mysql_fetch_assoc($queryFavorite); 
 			     $countFavorite = mysql_num_rows($queryFavorite);
 			     
 			      //Execute query - Casting Cart
-			     $queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = ".$dataList["ProfileID"]." ");
+			     $queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = ".$dataList["pID"]." ");
 	                 $dataCastingCart = mysql_fetch_assoc($queryCastingCart); 
 			     $countCastingCart = mysql_num_rows($queryCastingCart);
 				
-				
+		
 				         $profileDisplay++;
 				
 				if($profileDisplay==1){
@@ -818,14 +919,14 @@
 									/*********** Show Count/Pages **************/
 								echo "  <div id=\"profile-results-info\">\n";
 									if($items > 0) {
-										if (!isset($profilefavorite) && empty($profilefavorite)){  
+										if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){ 
 											echo "    <div class=\"profile-results-info-countpage\">\n";
 													echo $p->show();  // Echo out the list of paging. 
 											echo "    </div>\n";
 								        }
 									}
 								if ($rb_agency_option_profilelist_count) {
-									if (!isset($profilefavorite) && empty($profilefavorite)){  
+									if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){  
 										echo "    <div id=\"profile-results-info-countrecord\">\n";
 										echo "    	". __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
 										echo "    </div>\n";
@@ -857,33 +958,36 @@
 								if ($rb_agency_option_profilelist_expanddetails) {
 								echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 								}
-							if (isset($profilefavorite) && !empty($profilefavorite)){  	
+							//if (isset($profilefavorite) && !empty($profilefavorite)){  	
 									if ($rb_agency_option_profilelist_favorite) {
 										
 										if($countFavorite <= 0){
-											echo "     <div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$dataList["ProfileID"]."\">Save as Favorite</a></div>\n";
+											echo "     <div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$dataList["pID"]."\">Save as Favorite</a></div>\n";
 										}else{
-											echo "     <div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"favorited\" id=\"".$dataList["ProfileID"]."\">Favorited </a></div>\n";
+											echo "     <div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"favorited\" id=\"".$dataList["pID"]."\">Favorited </a></div>\n";
 										}
 										
 									}
-							}
-							if (isset($profilecastingcart) && !empty($profilecastingcart)){  	
+							//}
+							//if (isset($profilecastingcart) && !empty($profilecastingcart)){  	
 								if ($rb_agency_option_profilelist_castingcart) {
 								    if($countCastingCart <=0){
-									echo "<div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$dataList["ProfileID"]."\"  class=\"save_castingcart\">Add To Casting Cart</a></div>";
+									echo "<div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$dataList["pID"]."\"  class=\"save_castingcart\">Add To Casting Cart</a></div>";
 								    }else{
-									echo "<div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$dataList["ProfileID"]."\"  class=\"saved_castingcart\">Added To Casting Cart <a href=\"".get_bloginfo("wpurl")."/profile-casting-cart/\" style=\"font-size:12px;float:right;\" class=\"view_all_castingcart\"><strong>View</strong></a></div>";
+									echo "<div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$dataList["pID"]."\"  class=\"saved_castingcart\">Added To Casting Cart <a href=\"".get_bloginfo("wpurl")."/profile-casting-cart/\" style=\"font-size:12px;float:right;\" class=\"view_all_castingcart\"><strong>View</strong></a></div>";
 							          }
 								}
-							}
+							//}
 							
 								echo "  </div>\n";
 								
 								echo "</div>\n";
 						
 						
-				
+						//$resultsList, $queryFavorite,  $queryCastingCart
+						
+						mysql_free_result($queryFavorite);
+						mysql_free_result($queryCastingCart);
 			      
 						}
 						
@@ -896,13 +1000,15 @@
 						echo "  <div style=\"clear: both; \"></div>\n";
 						echo "  </div><!-- #profile-list -->\n";
 						echo "</div><!-- #profile-results -->\n";
+						mysql_free_result($resultsList);
 			}  
 		else {
 			include("theme/include-login.php"); 	
 		}
-	
+	      
 	
 	}
+
 	// Profile List
 	function rb_agency_profilefeatured($atts, $content = NULL) {
 		/*
@@ -938,7 +1044,7 @@
 			echo "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
 			}
 			echo "  <div class=\"title\">\n";
-				if ($rb_agency_option_profilenaming == 0) {
+								if ($rb_agency_option_profilenaming == 0) {
 									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
 								} elseif ($rb_agency_option_profilenaming == 1) {
 									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". substr($dataList["ProfileContactNameLast"], 0, 1);
@@ -955,7 +1061,7 @@
 			 //Execute query - Favorite Model
 	             $queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = ".$dataList["ProfileID"]." ");
 	             $dataFavorite = mysql_fetch_assoc($queryFavorite); 
-				 $countFavorite = mysql_num_rows($queryFavorite);
+			$countFavorite = mysql_num_rows($queryFavorite);
 				 
 			if ($rb_agency_option_profilelist_favorite) {
 			   if($countFavorite <= 0){
@@ -964,7 +1070,19 @@
 						echo "     <div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"favorited\" id=\"".$dataList["ProfileID"]."\"><div class=\"favorite-box\"></div>Favorited <a href=\"".$rb_agency_WPURL."/profile-favorite/\"  style=\"font-size:12px;float:right;\" class=\"view_all_favorite\"><strong>View all favorites</strong></a></a></div>\n";
 					}
 			}
-			
+			//Execute query - Casting Cart
+			 $queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = ".$dataList["ProfileID"]." ");
+	             $dataCastingCart = mysql_fetch_assoc($queryCastingCart); 
+			 $countCastingCart = mysql_num_rows($queryCastingCart);
+				
+				
+			if ($rb_agency_option_profilelist_castingcart) {
+					if($countCastingCart <=0){
+						echo "<div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$dataList["ProfileID"]."\"  class=\"save_castingcart\">Add To Casting Cart</a></div>";
+					}else{
+						echo "<div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$dataList["ProfileID"]."\"  class=\"saved_castingcart\">Added To Casting Cart <a href=\"".get_bloginfo("wpurl")."/profile-casting-cart/\" style=\"font-size:12px;float:right;\" class=\"view_all_castingcart\"><strong>View</strong></a></div>";
+					}
+				}
 			// END Favorite
 			echo "  </div>\n";
 		
@@ -996,6 +1114,7 @@
 			), $atts));
 		
 		if ( ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
+			 $isSearchPage = 1;
 			echo "<div id=\"profile-search-form-embed\">\n";
 				include("theme/include-profile-search.php"); 	
 			echo "</div>\n";
@@ -1320,4 +1439,233 @@ class rb_agency_pagination {
 				return true;
 			}
 	}
+//**********************************************************************************************************************************//
+/** Custom Fields */
+	
+function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileGenderShow = false){
+				
+
+	$query4 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderTitle='".$ProfileGender."' ORDER BY GenderID";
+	$results4 = mysql_query($query4);
+	$dataList4 = mysql_fetch_assoc($results4); 
+								
+	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = ".$visibility."  ORDER BY ProfileCustomOrder";
+	$results3 = mysql_query($query3) or die(mysql_error());
+	$count3 = mysql_num_rows($results3);
+	
+	
+	while ($data3 = mysql_fetch_assoc($results3)) {
+	
+		 if($ProfileGenderShow ==true){
+		  
+			if($data3["ProfileCustomShowGender"] == $dataList4["GenderID"] && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
+			
+					 rb_custom_fields_template($visibility, $ProfileID, $data3);
+					 
+			}elseif(empty($data3["ProfileCustomShowGender"])){
+					 rb_custom_fields_template($visibility, $ProfileID, $data3);
+			
+			}
+			
+		 }else{
+					 rb_custom_fields_template($visibility, $ProfileID, $data3);
+			
+		 }
+	   
+	
+			// END Query2
+	echo "    </td>\n";
+	echo "  </tr>\n";
+	}// End while
+
+		if ($count3 < 1) {
+		echo "  <tr valign=\"top\">\n";
+		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
+		echo "  </tr>\n";
+		}
+}
+//**********************************************************************************************************************************//
+/** Custom Fields TEMPLATE */
+function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
+	
+		 
+
+				$subresult = mysql_query("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = ". $data3['ProfileCustomID'] ." AND ProfileID = ". $ProfileID);
+			      $row = mysql_fetch_assoc($subresult);
+				$ProfileCustomValue = $row["ProfileCustomValue"];
+			
+		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
+		$ProfileCustomType = $data3['ProfileCustomType'];
+			
+		  if(strtolower($ProfileCustomTitle) == "height"){
+			  
+			  
+			  // Metric or Imperial?
+			  if ($rb_agency_option_unittype == 1) {
+				echo "    <tr valign=\"top\">\n";
+				echo "        <th scope=\"row\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("In Inches", rb_agency_TEXTDOMAIN) .")</em></th>\n";
+				echo "        <td><select  name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\"  id=\"ProfileStatHeight\">\n";
+								if (empty($ProfileCustomValue)) {
+				echo " 				<option value=\"\" selected>--</option>\n";
+								}
+								
+								$i=36;
+								$heightraw = 0;
+								$heightfeet = 0;
+								$heightinch = 0;
+								while($i<=90)  { 
+								  $heightraw = $i;
+								  $heightfeet = floor($heightraw/12);
+								  $heightinch = $heightraw - floor($heightfeet*12);
+				echo " 				<option value=\"". $i ."\" ". selected($ProfileStatHeight, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+								  $i++;
+								}
+				echo " 			</select>\n";
+				echo "        </td>\n";
+				echo "    </tr>\n";
+			} else {
+				echo "    <tr valign=\"top\">\n";
+				echo "        <th scope=\"row\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("cm", rb_agency_TEXTDOMAIN) .")</em></th>\n";
+				echo "        <td>\n";
+				echo "			<input type=\"text\" id=\"ProfileStatHeight\"  name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\"  value=\"". $ProfileCustomValue ."\" />\n";
+				echo "        </td>\n";
+				echo "    </tr>\n";
+			}
+	}elseif(strtolower($ProfileCustomTitle) == "weight"){
+				echo "    <tr valign=\"top\">\n";
+				echo "        <th scope=\"row\">". __("Weight", rb_agency_TEXTDOMAIN) ." \n";
+							  if ($rb_agency_option_unittype == 1) { echo "<em>(". __("In Pounds", rb_agency_TEXTDOMAIN) .")</em>"; } else { echo "<em>(". __("In Kilo", rb_agency_TEXTDOMAIN) .")</em></th>\n"; }
+				echo "        </th>\n";
+				echo "        <td>\n";
+				echo "			<input type=\"text\" id=\"ProfileStatWeight\"  name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\"  value=\"". $ProfileCustomValue ."\" />\n";
+				echo "        </td>\n";
+				echo "    </tr>\n";
+	
+	 }else{
+			  
+	echo "  <tr valign=\"top\">\n";
+	echo "    <th scope=\"row\">". $data3['ProfileCustomTitle'] ."</th>\n";
+	echo "    <td>\n";		  
+		  
+									
+								   
+									if ($ProfileCustomType == 1) { //TEXT
+										
+										
+										
+												echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
+									
+										
+										
+									} elseif ($ProfileCustomType == 2) { // Min Max
+									
+									   
+										$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($data3['ProfileCustomOptions'],"}"),"{"));
+										list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
+									   
+									 
+										if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
+											    echo "<br /><br /> <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+												echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
+												echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+												echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /><br />\n";
+									
+											
+										}else{
+											    echo "<br /><br />  <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+												echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data3['ProfileCustomID']]."\" />\n";
+											    echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+												echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data3['ProfileCustomID']]."\" /><br />\n";
+									
+										   
+										}
+									 
+									} elseif ($ProfileCustomType == 3) {  // Drop Down
+										
+										
+										
+									  list($option1,$option2) = explode(":",$data3['ProfileCustomOptions']);	
+											
+											$data = explode("|",$option1);
+											$data2 = explode("|",$option2);
+											
+											
+								            echo "<label>".$data[0]."</label>";
+											echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\">\n";
+											echo "<option value=\"\">--</option>";
+											    $pos = 0;
+												foreach($data as $val1){
+													
+													if($val1 != end($data) && $val1 != $data[0]){
+													
+															 if($val1 == $ProfileCustomValue ){
+																	$isSelected = "selected=\"selected\"";
+																	echo "<option value=\"".$val1."\" ".$isSelected .">".$val1."</option>";
+															 }else{
+																	
+																		echo "<option value=\"".$val1."\" >".$val1."</option>";
+																	 
+															 }
+														
+												
+													}
+												}
+											  	echo "</select>\n";
+												
+												
+											if(!empty($data2) && !empty($option2)){
+												echo "<label>".$data2[0]."</label>";
+											
+											 		$pos2 = 0;
+													echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\">\n";
+													echo "<option value=\"\">--</option>";
+													foreach($data2 as $val2){
+														  
+															if($val2 != end($data2) && $val2 !=  $data2[0]){
+																 if($val2 == $ProfileCustomValue ){
+																	$isSelected = "selected=\"selected\"";
+																	echo "<option value=\"".$val2."\" ".$isSelected .">".$val2."</option>";
+																 }else{
+																		
+																			echo "<option value=\"".$val2."\" >".$val2."</option>";
+																		 
+																 }
+															}
+														}
+													echo "</select>\n";
+											
+											}
+									   
+										
+										
+									} 
+									elseif ($ProfileCustomType == 4) 
+									{
+										echo "<textarea style=\"width: 100%; min-height: 300px;\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">". $ProfileCustomValue ."</textarea>";
+									}
+									 elseif ($ProfileCustomType == 5)
+									  {
+										   $array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
+										          echo "<div style=\"width:300px;float:left;\">";
+												  foreach($array_customOptions_values as $val){
+														 echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label>";
+												  }
+												  echo "</div>";
+									       
+									}
+									elseif ($ProfileCustomType == 6) {
+										   $array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
+										   
+												  foreach($array_customOptions_values as $val){
+														 echo "<input type=\"radio\" value=\"". $val."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+														 echo "<span style=\"color:white;\">". $val."</span><br/>";
+												  }
+									       
+									}
+									
+	 }
+			 mysql_free_result($subresult);
+			
+}
 ?>

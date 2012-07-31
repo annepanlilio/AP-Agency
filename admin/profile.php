@@ -56,19 +56,9 @@ if (isset($_POST['action'])) {
 	$ProfileLocationZip			=$_POST['ProfileLocationZip'];
 	$ProfileLocationCountry		=$_POST['ProfileLocationCountry'];
 	$ProfileLanguage			=$_POST['ProfileLanguage'];
-	$ProfileStatEthnicity		=$_POST['ProfileStatEthnicity'];
-	$ProfileStatSkinColor		=$_POST['ProfileStatSkinColor'];
-	$ProfileStatEyeColor		=$_POST['ProfileStatEyeColor'];
-	$ProfileStatHairColor		=$_POST['ProfileStatHairColor'];
-	$ProfileStatHeight			=$_POST['ProfileStatHeight'];
+	
 	$ProfileStatWeight			=$_POST['ProfileStatWeight'];
-	$ProfileStatBust	        =$_POST['ProfileStatBust'];
-	$ProfileStatWaist	   		=$_POST['ProfileStatWaist'];
-	$ProfileStatHip	       	 	=$_POST['ProfileStatHip'];
-	$ProfileStatShoe		    =$_POST['ProfileStatShoe'];
-	$ProfileStatDress			=$_POST['ProfileStatDress'];
-	$ProfileExperience			=$_POST['ProfileExperience'];
-	//$ProfileDateUpdated		=$_POST['ProfileDateUpdated'];
+	$ProfileDateUpdated		=$_POST['ProfileDateUpdated'];
 	$ProfileDateViewLast		=$_POST['ProfileDateViewLast'];
 	$ProfileType				=$_POST['ProfileType'];
 	  if (is_array($ProfileType)) { 
@@ -99,25 +89,25 @@ if (isset($_POST['action'])) {
 	case 'addRecord':
 		if(!$have_error){
 			
+			
+		
+			$ProfileGallery = rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
+			
 			// Create Record
 			$insert = "INSERT INTO " . table_agency_profile .
 			" (ProfileGallery,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileContactParent,
 			   ProfileContactEmail,ProfileContactWebsite,ProfileGender,ProfileDateBirth,
 			   ProfileContactLinkFacebook,ProfileContactLinkTwitter,ProfileContactLinkYouTube,ProfileContactLinkFlickr,
 			   ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,
-			   ProfileStatEthnicity,ProfileStatSkinColor,ProfileStatEyeColor,ProfileStatHairColor,
-			   ProfileStatHeight,ProfileStatWeight,ProfileStatBust,ProfileStatWaist,ProfileStatHip,ProfileStatShoe,ProfileStatDress,
-			   ProfileExperience,ProfileContactPhoneHome, ProfileContactPhoneCell, ProfileContactPhoneWork,
+			   ProfileContactPhoneHome, ProfileContactPhoneCell, ProfileContactPhoneWork,
 			   ProfileDateUpdated,ProfileType,ProfileIsActive,ProfileIsFeatured,ProfileIsPromoted,ProfileStatHits,ProfileDateViewLast)" .
 			"VALUES ('" . $wpdb->escape($ProfileGallery) . "','" . $wpdb->escape($ProfileContactDisplay) . "','" . $wpdb->escape($ProfileContactNameFirst) . "','" . $wpdb->escape($ProfileContactNameLast) . "','" . $wpdb->escape($ProfileContactParent) . "',
 				'" . $wpdb->escape($ProfileContactEmail) . "','" . $wpdb->escape($ProfileContactWebsite) . "','" . $wpdb->escape($ProfileGender) . "','" . $wpdb->escape($ProfileDateBirth) . "',
-			    '" . $wpdb->escape($ProfileContactLinkFacebook) . "','" . $wpdb->escape($ProfileContactLinkTwitter) . "','" . $wpdb->escape($ProfileContactLinkYouTube) . "','" . $wpdb->escape($ProfileContactLinkFlickr) . "',
+			      '" . $wpdb->escape($ProfileContactLinkFacebook) . "','" . $wpdb->escape($ProfileContactLinkTwitter) . "','" . $wpdb->escape($ProfileContactLinkYouTube) . "','" . $wpdb->escape($ProfileContactLinkFlickr) . "',
 				'" . $wpdb->escape($ProfileLocationStreet) . "','" . $wpdb->escape($ProfileLocationCity) . "','" . $wpdb->escape($ProfileLocationState) . "','" . $wpdb->escape($ProfileLocationZip) . "','" . $wpdb->escape($ProfileLocationCountry) . "',
-				'" . $wpdb->escape($ProfileStatEthnicity) . "','" . $wpdb->escape($ProfileStatSkinColor) . "','" . $wpdb->escape($ProfileStatEyeColor) . "','" . $wpdb->escape($ProfileStatHairColor) . "',
-				'" . $wpdb->escape($ProfileStatHeight) . "','" . $wpdb->escape($ProfileStatWeight) . "','" . $wpdb->escape($ProfileStatBust) . "','" . $wpdb->escape($ProfileStatWaist) . "','" . $wpdb->escape($ProfileStatHip) . "','" . $wpdb->escape($ProfileStatShoe) . "','" . $wpdb->escape($ProfileStatDress) . "',
-				'" . $wpdb->escape($ProfileExperience) . "','" . $wpdb->escape($ProfileContactPhoneHome) . "','" . $wpdb->escape($ProfileContactPhoneCell) . "','" . $wpdb->escape($ProfileContactPhoneWork) . "',
+				'" . $wpdb->escape($ProfileContactPhoneHome) . "','" . $wpdb->escape($ProfileContactPhoneCell) . "','" . $wpdb->escape($ProfileContactPhoneWork) . "',
 				now(),'" . $wpdb->escape($ProfileType) . "','" . $wpdb->escape($ProfileIsActive) . "','" . $wpdb->escape($ProfileIsFeatured) . "','" . $wpdb->escape($ProfileIsPromoted) . "','" . $wpdb->escape($ProfileStatHits) . "','" . $wpdb->escape($ProfileDateViewLast) . "')";
-		    $results = $wpdb->query($insert);
+		    $results = $wpdb->query($insert) or die(mysql_error());
 			$ProfileID = $wpdb->insert_id;
 
 			// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
@@ -129,30 +119,19 @@ if (isset($_POST['action'])) {
 				$updated = $wpdb->query($update);
 			}
 			
-			// Make Directory for new profile
-			if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
-				mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
-				chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
-			} else {
-				$finished = false;                       // we're not finished yet (we just started)
-				while ( ! $finished ):                   // while not finished
-				  $NewProfileGallery = $ProfileGallery ."-". rand(1, 15);   // output folder name
-				  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
-					mkdir(rb_agency_UPLOADPATH . $NewProfileGallery, 0755);
-					chmod(rb_agency_UPLOADPATH . $NewProfileGallery, 0777);
-					$ProfileGallery = $NewProfileGallery;  // Set it to the new  thing
-					$finished = true;                    // ...we are finished
-				  endif;
-				endwhile;
-			}
+		
+			
 
 			// Add Custom Field Values stored in Mux
 			foreach($_POST as $key => $value) {
 				if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value))) {
 					$ProfileCustomID = substr($key, 15);
-					
+					if(is_array($value)){
+						$value =  implode(",",$value);
+					}
 					$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . $value . "')";
 					$results1 = $wpdb->query($insert1);
+					
 				}
 			}
 			
@@ -194,19 +173,6 @@ if (isset($_POST['action'])) {
 			ProfileLocationState='" . $wpdb->escape($ProfileLocationState) . "',
 			ProfileLocationZip ='" . $wpdb->escape($ProfileLocationZip) . "',
 			ProfileLocationCountry='" . $wpdb->escape($ProfileLocationCountry) . "',
-			ProfileStatEthnicity='" . $wpdb->escape($ProfileStatEthnicity) . "',
-			ProfileStatSkinColor='" . $wpdb->escape($ProfileStatSkinColor) . "',
-			ProfileStatEyeColor='" . $wpdb->escape($ProfileStatEyeColor) . "',
-			ProfileStatHairColor='" . $wpdb->escape($ProfileStatHairColor) . "',
-			ProfileStatHeight='" . $wpdb->escape($ProfileStatHeight) . "',
-			ProfileStatWeight='" . $wpdb->escape($ProfileStatWeight) . "',
-			ProfileStatBust='" . $wpdb->escape($ProfileStatBust) . "',
-			ProfileStatWaist='" . $wpdb->escape($ProfileStatWaist) . "',
-			ProfileStatHip='" . $wpdb->escape($ProfileStatHip) . "',
-			ProfileStatShoe='" . $wpdb->escape($ProfileStatShoe) . "',
-			ProfileStatDress='" . $wpdb->escape($ProfileStatDress) . "',
-			ProfileUnion='" . $wpdb->escape($ProfileUnion) . "',
-			ProfileExperience='" . $wpdb->escape($ProfileExperience) . "',
 			ProfileDateUpdated=now(),
 			ProfileType='" . $wpdb->escape($ProfileType) . "',
 			ProfileIsActive='" . $wpdb->escape($ProfileIsActive) . "',
@@ -214,7 +180,7 @@ if (isset($_POST['action'])) {
 			ProfileIsPromoted='" . $wpdb->escape($ProfileIsPromoted) . "',
 			ProfileStatHits='" . $wpdb->escape($ProfileStatHits) . "'
 			WHERE ProfileID=$ProfileID";
-		  $results = $wpdb->query($update);
+		  $results = $wpdb->query($update) or die(mysql_error());
 
 		  if ($ProfileUserLinked > 0) {
 			/* Update WordPress user information. */
@@ -233,17 +199,17 @@ if (isset($_POST['action'])) {
 			foreach($_POST as $key => $value) {
 				if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value))) {
 					$ProfileCustomID = substr($key, 15);
-					
+					if(is_array($value)){
+						$value =  implode(",",$value);
+					}
 					$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . $value . "')";
 					$results1 = $wpdb->query($insert1);
+					
 				}
 			}
-
-			// If the directory Doesnt Exist, make it.
-			if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
-				mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
-				chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
-			}
+			
+			
+                	rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
 
 			// Upload Image & Add to Database
 			$i = 1;
@@ -260,7 +226,7 @@ if (isset($_POST['action'])) {
 
 					 if ($count < 1) {
 						if($uploadMediaType == "Image") { 
-						    if($_FILES['profileMedia'. $i]['type'] == "image/pjpeg" || $_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/gif" || $_FILES['profileMedia'. $i]['type'] == "image/png"){
+						     if($_FILES['profileMedia'. $i]['type'] == "image/pjpeg" || $_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/gif" || $_FILES['profileMedia'. $i]['type'] == "image/png"){
 						
 									$image = new rb_agency_image();
 									$image->load($_FILES['profileMedia'. $i]['tmp_name']);
@@ -289,7 +255,7 @@ if (isset($_POST['action'])) {
 						}
 						else if($uploadMediaType =="Resume"){
 							// Add to database
-							 if ($_FILES['profileMedia'. $i]['type'] == "application/msword" || $_FILES['profileMedia'. $i]['type'] == "application/pdf" || $_FILES['profileMedia'. $i]['type'] == "application/rtf")
+							 if ($_FILES['profileMedia'. $i]['type'] == "application/msword" || $_FILES['profileMedia'. $i]['type'] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"  || $_FILES['profileMedia'. $i]['type'] == "application/pdf" || $_FILES['profileMedia'. $i]['type'] == "application/rtf")
 							{
 							  $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
 			                  move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery ."/".$safeProfileMediaFilename);
@@ -440,15 +406,15 @@ elseif ($_GET['action'] == "deleteRecord") {
 		if (isset($ProfileGallery)) {
 			// Remove Folder
 			$dir = rb_agency_UPLOADPATH . $ProfileGallery ."/";
-			$mydir = opendir($dir);
-			while(false !== ($file = readdir($mydir))) {
+			$mydir = @opendir($dir);
+			while(false !== ($file = @readdir($mydir))) {
 				if($file != "." && $file != "..") {
-					unlink($dir.$file) or DIE("couldn't delete $dir$file<br />");
+					@unlink($dir.$file) or DIE("couldn't delete $dir$file<br />");
 				}
 			}
 			// remove dir
 			if(is_dir($dir)) {
-				rmdir($dir) or DIE("couldn't delete $dir$file<br />");
+				rmdir($dir) or DIE("couldn't delete $dir$file folder not exist<br />");
 			}
 			closedir($mydir);
 			
@@ -495,10 +461,11 @@ function rb_display_manage($ProfileID) {
   echo "  <p><a class=\"button-primary\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."\">". __("Back to ". LabelSingular ." List", rb_agency_TEXTDOMAIN) ."</a></p>\n";
 
 	if ( !empty($ProfileID) && ($ProfileID > 0) ) {
-	
+	   
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID='$ProfileID'";
 		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 		$count = mysql_num_rows($results);
+		
 		while ($data = mysql_fetch_array($results)) {
 			$ProfileID					=$data['ProfileID'];
 			$ProfileUserLinked			=$data['ProfileUserLinked'];
@@ -523,19 +490,6 @@ function rb_display_manage($ProfileID) {
 			$ProfileLocationState		=stripslashes($data['ProfileLocationState']);
 			$ProfileLocationZip			=stripslashes($data['ProfileLocationZip']);
 			$ProfileLocationCountry		=stripslashes($data['ProfileLocationCountry']);
-			$ProfileStatEthnicity		=stripslashes($data['ProfileStatEthnicity']);
-			$ProfileStatSkinColor		=stripslashes($data['ProfileStatSkinColor']);
-			$ProfileStatEyeColor		=stripslashes($data['ProfileStatEyeColor']);
-			$ProfileStatHairColor		=stripslashes($data['ProfileStatHairColor']);
-			$ProfileStatHeight			=stripslashes($data['ProfileStatHeight']);
-			$ProfileStatWeight			=stripslashes($data['ProfileStatWeight']);
-			$ProfileStatBust	        =stripslashes($data['ProfileStatBust']);
-			$ProfileStatWaist	    	=stripslashes($data['ProfileStatWaist']);
-			$ProfileStatHip	        	=stripslashes($data['ProfileStatHip']);
-			$ProfileStatShoe		    =stripslashes($data['ProfileStatShoe']);
-			$ProfileStatDress			=stripslashes($data['ProfileStatDress']);
-			$ProfileUnion				=stripslashes($data['ProfileUnion']);
-			$ProfileExperience			=stripslashes($data['ProfileExperience']);
 			$ProfileDateUpdated			=stripslashes($data['ProfileDateUpdated']);
 			$ProfileType				=stripslashes($data['ProfileType']);
 			$ProfileIsActive			=stripslashes($data['ProfileIsActive']);
@@ -582,7 +536,7 @@ function rb_display_manage($ProfileID) {
 	echo "    <tr valign=\"top\">\n";
 	echo "		<th scope=\"row\">". __("Gallery Folder", rb_agency_TEXTDOMAIN) ."</th>\n";
 	echo "		<td>\n";
-
+     
 					if (!empty($ProfileGallery) && is_dir(rb_agency_UPLOADPATH .$ProfileGallery)) { 
 						echo "<div id=\"message\"><span class=\"updated\">". __("Folder", rb_agency_TEXTDOMAIN) ." <strong>". $ProfileGallery ."</strong> ". __("Exists", rb_agency_TEXTDOMAIN) ."</span></div>\n";
 						echo "<input type=\"hidden\" id=\"ProfileGallery\" name=\"ProfileGallery\" value=\"". $ProfileGallery ."\" />\n";
@@ -660,57 +614,8 @@ function rb_display_manage($ProfileID) {
 	echo "		</td>\n";
 	echo "	  </tr>\n";
 	// Custom Admin Fields
-
-	$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions FROM ". table_agency_customfields ." WHERE ProfileCustomView = 1 ORDER BY ProfileCustomView, ProfileCustomTitle";
-	$results1 = mysql_query($query1);
-	$count1 = mysql_num_rows($results1);
-	while ($data1 = mysql_fetch_array($results1)) {
-	
-	echo "  <tr valign=\"top\">\n";
-	echo "    <th scope=\"row\">". $data1['ProfileCustomTitle'] ."</th>\n";
-	echo "    <td>\n";
-		  if ( !empty($ProfileID) && ($ProfileID > 0) ) {
-
-			$subresult = mysql_query("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = ". $data1['ProfileCustomID'] ." AND ProfileID = ". $ProfileID);
-			$subcount = mysql_num_rows($subresult);
-			if ($subcount > 0) { 
-			  while ($row = mysql_fetch_object($subresult)) {
-				$ProfileCustomValue = $row->ProfileCustomValue;
-			  }
-			} else {
-				$ProfileCustomValue = "";
-			}
-			mysql_free_result($subresult);
-			
-		  } /// End 
-		  
-		  
-			$ProfileCustomType = $data1['ProfileCustomType'];
-			if ($ProfileCustomType == 1) {
-				$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-				foreach ($ProfileCustomOptions_Array as &$value) {
-				//echo "	<input type=\"checkbox\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $value ."\" ". checked($ProfileCustomValue, $value) ." /> ". $value ."\n";
-				} 
-			} elseif ($ProfileCustomType == 2) {
-				$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-				foreach ($ProfileCustomOptions_Array as &$value) {
-				//echo "	<input type=\"radio\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $value ."\" ". checked($ProfileCustomValue, $value) ." /> ". $value ."\n";
-				} 
-			} elseif ($ProfileCustomType == 3) {
-				$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-				echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
-				foreach ($ProfileCustomOptions_Array as &$value) {
-				echo "	<option value=\"". $value ."\" ". selected($ProfileCustomValue, $value) ."> ". $value ." </option>\n";
-				} 
-				echo "</select>\n";
-			} else {
-				echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
-			}
-			
-			// END Query2
-	echo "    </td>\n";
-	echo "  </tr>\n";
-	}
+      // ProfileCustomView = 1 , Private
+	rb_custom_fields(1, $ProfileID, $ProfileGender, true);
 	
 	// Links	
 	echo "    <tr valign=\"top\">\n";
@@ -770,150 +675,9 @@ function rb_display_manage($ProfileID) {
 	echo "		  </select>\n";
 	echo "		</td>\n";
 	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Ethnicity", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "        <td><select name=\"ProfileStatEthnicity\" id=\"ProfileStatEthnicity\">\n";
+	// Load custom fields , Public  = 0, ProfileCustomGender = true
+		rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 
-					$queryData = "SELECT EthnicityTitle FROM ". table_agency_data_ethnicity ." ORDER BY EthnicityTitle";
-					$resultsData = mysql_query($queryData);
-					$countData = mysql_num_rows($resultsData);
-					if ($countData > 0) {
-						if (empty($ProfileStatEthnicity)) {
-							echo " <option value=\"0\" selected>--</option>\n";
-						}
-						while ($dataData = mysql_fetch_array($resultsData)) {
-							echo " <option value=\"". $dataData["EthnicityTitle"] ."\" ". selected($ProfileStatEthnicity, $dataData["EthnicityTitle"]) .">". $dataData["EthnicityTitle"] ."</option>\n";
-						}
-						echo "</select>\n";
-					} else {
-						echo "". __("No items to select", rb_agency_TEXTDOMAIN) .". <a href=\"". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=5") ."\">". __("Setup Options", rb_agency_TEXTDOMAIN) ."</a>";
-					}
-	echo "        </td>\n";
-	echo "    </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Skin Color", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "        <td><select name=\"ProfileStatSkinColor\" id=\"ProfileStatSkinColor\">\n";
-
-					$queryData = "SELECT ColorSkinTitle FROM ". table_agency_data_colorskin ." ORDER BY ColorSkinTitle";
-					$resultsData = mysql_query($queryData);
-					$countData = mysql_num_rows($resultsData);
-					if ($countData > 0) {
-						if (empty($ProfileStatSkinColor)) {
-							echo " <option value=\"0\" selected>--</option>\n";
-						}
-						while ($dataData = mysql_fetch_array($resultsData)) {
-							echo " <option value=\"". $dataData["ColorSkinTitle"] ."\" ". selected($ProfileStatSkinColor, $dataData["ColorSkinTitle"]) .">". $dataData["ColorSkinTitle"] ."</option>\n";
-						}
-						echo "</select>\n";
-					} else {
-						echo "". __("No items to select", rb_agency_TEXTDOMAIN) .". <a href='". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=2") ."'>". __("Setup Options", rb_agency_TEXTDOMAIN) ."</a>";
-					}
-	echo "        </td>\n";
-	echo "    </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Eye Color", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "        <td><select name=\"ProfileStatEyeColor\" id=\"ProfileStatEyeColor\">\n";
-
-					$queryData = "SELECT ColorEyeTitle FROM ". table_agency_data_coloreye ." ORDER BY ColorEyeTitle";
-					$resultsData = mysql_query($queryData);
-					$countData = mysql_num_rows($resultsData);
-					if ($countData > 0) {
-						if (empty($ProfileStatEyeColor)) {
-							echo " <option value=\"0\" selected>--</option>\n";
-						}
-						while ($dataData = mysql_fetch_array($resultsData)) {
-							echo " <option value=\"". $dataData["ColorEyeTitle"] ."\" ". selected($ProfileStatEyeColor, $dataData["ColorEyeTitle"]) .">". $dataData["ColorEyeTitle"] ."</option>\n";
-						}
-						echo "</select>\n";
-					} else {
-						echo "". __("No items to select", rb_agency_TEXTDOMAIN) .". <a href='". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=3") ."'>". __("Setup Options", rb_agency_TEXTDOMAIN) ."</a>";
-					}
-	echo "        </td>\n";
-	echo "    </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Hair Color", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "        <td><select name=\"ProfileStatHairColor\" id=\"ProfileStatHairColor\">\n";
-
-					$queryData = "SELECT ColorHairTitle FROM ". table_agency_data_colorhair ." ORDER BY ColorHairTitle";
-					$resultsData = mysql_query($queryData);
-					$countData = mysql_num_rows($resultsData);
-					if ($countData > 0) {
-						if (empty($ProfileStatHairColor)) {
-							echo " <option value=\"0\" selected>--</option>\n";
-						}
-						while ($dataData = mysql_fetch_array($resultsData)) {
-							echo " <option value=\"". $dataData["ColorHairTitle"] ."\" ". selected($ProfileStatHairColor, $dataData["ColorHairTitle"]) .">". $dataData["ColorHairTitle"] ."</option>\n";
-						}
-						echo "</select>\n";
-					} else {
-						echo "". __("No items to select", rb_agency_TEXTDOMAIN) .". <a href='". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=4") ."'>". __("Setup Options", rb_agency_TEXTDOMAIN) ."</a>";
-					}
-	echo "        </td>\n";
-	echo "    </tr>\n";
-			  // Metric or Imperial?
-			  if ($rb_agency_option_unittype == 1) {
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("In Inches", rb_agency_TEXTDOMAIN) .")</em></th>\n";
-	echo "        <td><select name=\"ProfileStatHeight\" id=\"ProfileStatHeight\">\n";
-					if (empty($ProfileStatHeight)) {
-	echo " 				<option value=\"\" selected>--</option>\n";
-					}
-					
-					$i=36;
-					$heightraw = 0;
-					$heightfeet = 0;
-					$heightinch = 0;
-					while($i<=90)  { 
-					  $heightraw = $i;
-					  $heightfeet = floor($heightraw/12);
-					  $heightinch = $heightraw - floor($heightfeet*12);
-	echo " 				<option value=\"". $i ."\" ". selected($ProfileStatHeight, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-					  $i++;
-					}
-	echo " 			</select>\n";
-	echo "        </td>\n";
-	echo "    </tr>\n";
-			  } else {
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("cm", rb_agency_TEXTDOMAIN) .")</em></th>\n";
-	echo "        <td>\n";
-	echo "			<input type=\"text\" id=\"ProfileStatHeight\" name=\"ProfileStatHeight\" value=\"". $ProfileStatHeight ."\" />\n";
-	echo "        </td>\n";
-	echo "    </tr>\n";
-			  }
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Weight", rb_agency_TEXTDOMAIN) ." \n";
-				  if ($rb_agency_option_unittype == 1) { echo "<em>(". __("In Pounds", rb_agency_TEXTDOMAIN) .")</em>"; } else { echo "<em>(". __("In Kilo", rb_agency_TEXTDOMAIN) .")</em></th>\n"; }
-	echo "        </th>\n";
-	echo "        <td>\n";
-	echo "			<input type=\"text\" id=\"ProfileStatWeight\" name=\"ProfileStatWeight\" value=\"". $ProfileStatWeight ."\" />\n";
-	echo "        </td>\n";
-	echo "    </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Measurements", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "        <td>\n";
-					if ($ProfileGender == "Male") { _e("Chest", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ _e("Bust", rb_agency_TEXTDOMAIN); } else { echo "". __("Bust", rb_agency_TEXTDOMAIN) ."/". __("Bust", rb_agency_TEXTDOMAIN); } 
-						echo "<input type=\"text\" style=\"width: 80px;\" id=\"ProfileStatBust\" name=\"ProfileStatBust\" value=\"". $ProfileStatBust ."\" /><br />\n";
-					echo "". __("Waist", rb_agency_TEXTDOMAIN) .": \n";
-						echo "<input type=\"text\" style=\"width: 80px;\" id=\"ProfileStatWaist\" name=\"ProfileStatWaist\" value=\"". $ProfileStatWaist ."\" /><br />\n";
-					if ($ProfileGender == "Male") { _e("Inseam", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ _e("Hips", rb_agency_TEXTDOMAIN); } else { echo "". __("Hips", rb_agency_TEXTDOMAIN) ."/". __("Inseam", rb_agency_TEXTDOMAIN); } 
-						echo "<input type=\"text\" style=\"width: 80px;\" id=\"ProfileStatHip\" name=\"ProfileStatHip\" value=\"". $ProfileStatHip ."\" /><br />\n";
-	echo "        </td>\n";
-	echo "    </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Shoe Size", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileStatShoe\" name=\"ProfileStatShoe\" value=\"". $ProfileStatShoe ."\" />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">";
-					if($ProfileGender == "Male"){ echo __("Suit Size", rb_agency_TEXTDOMAIN); } elseif ($ProfileGender == "Female"){ echo __("Dress Size", rb_agency_TEXTDOMAIN); } else { echo __("Suit", rb_agency_TEXTDOMAIN) ."/". __("Dress Size", rb_agency_TEXTDOMAIN); } 
-	echo "      </th>\n";
-	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileStatDress\" name=\"ProfileStatDress\" value=\"". $ProfileStatDress ."\" />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
 	echo "	</tbody>\n";
 	echo " </table>\n";
 	echo "</div>\n";
@@ -1050,100 +814,9 @@ function rb_display_manage($ProfileID) {
 
 		echo "<table class=\"form-table\">\n";
 		echo " <tbody>\n";
+
 	
-		$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions FROM ". table_agency_customfields ." WHERE ProfileCustomView IN (0,2) AND ProfileCustomType < 4 ORDER BY ProfileCustomView, ProfileCustomTitle";
-		$results1 = mysql_query($query1);
-		$count1 = mysql_num_rows($results1);
-		while ($data1 = mysql_fetch_array($results1)) {
-		
-		echo "  <tr valign=\"top\">\n";
-		echo "    <th scope=\"row\">". $data1['ProfileCustomTitle'] ."</th>\n";
-		echo "    <td>\n";
-			  if ( !empty($ProfileID) && ($ProfileID > 0) ) {
 
-				$subresult = mysql_query("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = ". $data1['ProfileCustomID'] ." AND ProfileID = ". $ProfileID);
-				$subcount = mysql_num_rows($subresult);
-				if ($subcount > 0) { 
-				  while ($row = mysql_fetch_object($subresult)) {
-					$ProfileCustomValue = $row->ProfileCustomValue;
-				  }
-				} else {
-					$ProfileCustomValue = "";
-				}
-				mysql_free_result($subresult);
-				
-			  } /// End 
-			  
-			  
-				$ProfileCustomType = $data1['ProfileCustomType'];
-				if ($ProfileCustomType == 1) {
-					$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-					foreach ($ProfileCustomOptions_Array as &$value) {
-					//echo "	<input type=\"checkbox\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $value ."\" ". checked($ProfileCustomValue, $value) ." /> ". $value ."\n";
-					} 
-				} elseif ($ProfileCustomType == 2) {
-					$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-					foreach ($ProfileCustomOptions_Array as &$value) {
-					//echo "	<input type=\"radio\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $value ."\" ". checked($ProfileCustomValue, $value) ." /> ". $value ."\n";
-					} 
-				} elseif ($ProfileCustomType == 3) {
-					$ProfileCustomOptions_Array = explode( "|", $data1['ProfileCustomOptions']);
-					echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
-					foreach ($ProfileCustomOptions_Array as &$value) {
-					echo "	<option value=\"". $value ."\" ". selected($ProfileCustomValue, $value) ."> ". $value ." </option>\n";
-					} 
-					echo "</select>\n";
-				} else {
-					echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
-				}
-				
-				// END Query2
-		echo "    </td>\n";
-		echo "  </tr>\n";
-		}
-		if ($count1 < 1) {
-		echo "  <tr valign=\"top\">\n";
-		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
-		echo "  </tr>\n";
-		}
-	// Description
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\" colspan=\"2\"><h3>". __("Details", rb_agency_TEXTDOMAIN) ."</h3></th>\n";
-	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Description", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			<textarea style=\"width: 100%; min-height: 300px;\" id=\"ProfileExperience\" name=\"ProfileExperience\" class=\"ProfileExperience\">". $ProfileExperience ."</textarea>\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-
-	$query1 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomView IN (0,2) AND ProfileCustomType = 4 ORDER BY ProfileCustomView, ProfileCustomTitle";
-	$results1 = mysql_query($query1);
-	$count1 = mysql_num_rows($results1);
-	while ($data1 = mysql_fetch_array($results1)) {
-		
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". $data1['ProfileCustomTitle'] ."</th>\n";
-	echo "		<td>\n";
-			  if ( !empty($ProfileID) && ($ProfileID > 0) ) {
-
-				$subresult = mysql_query("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = ". $data1['ProfileCustomID'] ." AND ProfileID = ". $ProfileID);
-				$subcount = mysql_num_rows($subresult);
-				if ($subcount > 0) { 
-				  while ($row = mysql_fetch_object($subresult)) {
-					$ProfileCustomValue = $row->ProfileCustomValue;
-				  }
-				} else {
-					$ProfileCustomValue = "";
-				}
-				mysql_free_result($subresult);
-				
-			  } /// End 
-			  
-	echo "			<textarea style=\"width: 100%; min-height: 300px;\" id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" class=\"ProfileExperience\">". $ProfileCustomValue ."</textarea>\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	}
 	
 	// Account Information	
 	echo "    <tr valign=\"top\">\n";
