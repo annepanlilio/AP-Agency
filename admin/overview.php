@@ -57,12 +57,17 @@ echo "        <div class=\"inner\">\n";
 		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" />\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
+		
+		  $queryHeight = mysql_query("SELECT * FROM ".table_rb_agency_customfields." WHERE ProfileCustomTitle = 'Height' || ProfileCustomTitle = 'height'  ");
+		   $dataHeight = mysql_fetch_assoc($queryHeight);
+		  $countHeight = mysql_num_rows($queryHeight);
+		  if($countHeight > 0){
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Height", rb_agency_TEXTDOMAIN) . " :</th>\n";
 		echo "				        <td>\n";               
 									if ($rb_agency_option_unittype == 1) {
 		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<select name=\"ProfileStatHeight_min\" id=\"ProfileStatHeight_min\">\n";               
+		echo "				        	<select name=\"ProfileCustomID".$dataHeight["ProfileCustomID"]."[]\" id=\"ProfileStatHeight_min\">\n";               
 										  if (empty($_SESSION['ProfileStatHeight_min'])) {
 		echo "								<option value=\"\" selected>". __("No Minimum", rb_agency_TEXTDOMAIN) . "</option>\n";
 										  }
@@ -78,7 +83,7 @@ echo "        <div class=\"inner\">\n";
 		echo "				        	</select>\n";
 
 		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<select name=\"ProfileStatHeight_max\" id=\"ProfileStatHeight_max\">\n";               
+		echo "				        	<select name=\"ProfileCustomID".$dataHeight["ProfileCustomID"]."[]\" id=\"ProfileStatHeight_max\">\n";               
 										  if (empty($_SESSION['ProfileStatHeight_max'])) {
 		echo "								<option value=\"\" selected>". __("No Maximum", rb_agency_TEXTDOMAIN) . "</option>\n";
 										  }
@@ -102,13 +107,18 @@ echo "        <div class=\"inner\">\n";
 
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
+		  } // end if height
+		$queryWeight = mysql_query("SELECT * FROM ".table_rb_agency_customfields." WHERE ProfileCustomTitle = 'Weight' || ProfileCustomTitle = 'weight'  ");
+		 $dataWeight = mysql_fetch_assoc($queryWeight);
+		$countWeight = mysql_num_rows($queryWeight);
+		if($countWeight > 0){
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Weight", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td>\n";               
 		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWeight_min\" name=\"ProfileStatWeight_min\" value=\"". $_SESSION['ProfileStatWeight_min'] ."\" /><br />\n";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWeight_min\" name=\"".$dataHeight["ProfileCustomID"]."[]\" value=\"". $_SESSION['ProfileStatWeight_min'] ."\" /><br />\n";
 		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWeight_max\" name=\"ProfileStatWeight_max\" value=\"". $_SESSION['ProfileStatWeight_max'] ."\" />\n";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileStatWeight_max\" name=\"".$dataHeight["ProfileCustomID"]."[]\" value=\"". $_SESSION['ProfileStatWeight_max'] ."\" />\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
 		echo "				  </thead>\n";
@@ -118,6 +128,7 @@ echo "        <div class=\"inner\">\n";
 		echo "				<a href=\"?page=rb_agency_menu_search\" class=\"button-secondary\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a></p>\n";
 		echo "				</div>\n";
 		echo "        	<form>\n";
+		  }
 	   } // Editor  
 
 echo "        </div>\n"; 

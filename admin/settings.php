@@ -460,10 +460,16 @@ elseif ($ConfigID == 11) {
              echo "    <input  name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_app_secret]\" value=\"".$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_app_secret']."\" />";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
-		  echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Redirect URI on success', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Login Redirect URI', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
-             echo "    <input  name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_app_uri]\" value=\"".$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_app_uri']."\" />(default: ".network_site_url("/")."profile-member/ )";
+             echo "    <input  name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_app_login_uri]\" value=\"".$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_app_login_uri']."\" />(default: ".network_site_url("/")."profile-login/ )";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		  echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Registration Redirect URI', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+             echo "    <input  name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_app_register_uri]\" value=\"".$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_app_register_uri']."\" />(default: ".network_site_url("/")."profile-register/ )";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";
@@ -1796,6 +1802,7 @@ elseif ($ConfigID == 7) {
 											echo "&nbsp;";
 											echo "</td>";
 											echo "<td>";
+											
 											echo "Label:<input type=\"text\" value=\"".current($data1)."\" name=\"option_label\"/><br/>";
 											    $pos = 0;
 												foreach($data1 as $val1){
@@ -1809,11 +1816,14 @@ elseif ($ConfigID == 7) {
 													  echo "<br/>";
 													}
 												}
+											echo "<div  id=\"editfield_add_more_options_1\"></div>";
+											echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
 											echo "<br/>";	
 											echo "<br/>";	
+											
 											if(!empty($data2) && !empty($option2)){
 												echo "Labe:<input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/>";
-											}
+											
 											 	$pos2 = 0;
 											foreach($data2 as $val2){
 												  
@@ -1822,10 +1832,17 @@ elseif ($ConfigID == 7) {
 													 echo "Option:<input type=\"text\" value=\"".$val2."\"  name=\"option2[]\"/>";
 													  if($pos2==1){
 														 echo "<input type=\"checkbox\" ".(end($data2)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_2\"/><span style=\"font-size:11px;\">(set as selected)</span>";	
+													 	
+														
+														echo "<a href=\"javascript:;\" id=\"addmoreoption_2\">add more option[+]</a>";	
+														
 													   }	
 													   echo "<br/>";
 													}
 												}
+												
+											}
+											echo "<div  id=\"editfield_add_more_options_2\"></div><br/>";
 											echo "</td>";
 									echo "</tr>";		
 									

@@ -121,7 +121,13 @@ $(document).ready(function(){
 	
 		 
      }
-	 
+	
+		$("#addmoreoption_1").click(function(){
+			$("#editfield_add_more_options_1").append("Option:<input type=\"text\" name=\"option[]\"></br>");
+		});
+		$("#addmoreoption_2").click(function(){
+			$("#editfield_add_more_options_2").append("Option:<input type=\"text\" name=\"option2[]\"></br>");
+		}); 
 	
 	 
 });
