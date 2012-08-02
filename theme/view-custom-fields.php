@@ -146,14 +146,22 @@
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										          echo "<div style=\"width:300px;float:left;\">";
 												  foreach($array_customOptions_values as $val){
-													  if($_SESSION["ProfileCustomID". $data1['ProfileCustomID']] == $val){
+													if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']])){ 
+													   
+													  	$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
+													  if(in_array($val,$dataArr,true)){
 														 echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
 														 echo "". $val."</label>";
+													  }else{
+														 echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label>";	
+													}
 												  	}else{
 														 echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
 														 echo "". $val."</label>";	
 													}
 												  }
+												  echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/>";
 												  echo "</div>";
 									       
 									}
@@ -161,15 +169,23 @@
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										   
 												  foreach($array_customOptions_values as $val){
-													    if($_SESSION["ProfileCustomID". $data1['ProfileCustomID']] == $val){
-														 echo "<input type=\"radio\" checked=\"checked\" value=\"". $val."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "<span style=\"color:white;\">". $val."</span><br/>";
-													    }else{
-														 echo "<input type=\"radio\"  value=\"". $val."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "<span style=\"color:white;\">". $val."</span><br/>";
-													        
-													    }
+													if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] !=""){ 
+													   
+													  	$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
+														
+													  if(in_array($val,$dataArr) && $val !=""){
+														 echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label>";
+													  }else{
+														 echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label>";	
+													}
+												  	}else{
+														 echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label>";	
+													}
 												  }
+												    echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/>";
 									       
 									}
 									

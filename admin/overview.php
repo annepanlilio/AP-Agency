@@ -58,8 +58,8 @@ echo "        <div class=\"inner\">\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
 		
-		  $queryHeight = mysql_query("SELECT * FROM ".table_rb_agency_customfields." WHERE ProfileCustomTitle = 'Height' || ProfileCustomTitle = 'height'  ");
-		   $dataHeight = mysql_fetch_assoc($queryHeight);
+		  $queryHeight = mysql_query("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomTitle = 'Height' or ProfileCustomTitle = 'height'  ");
+		   $dataHeight = mysql_fetch_assoc($queryHeight) or die(mysql_error());
 		  $countHeight = mysql_num_rows($queryHeight);
 		  if($countHeight > 0){
 		echo "				    <tr>\n";
@@ -108,7 +108,7 @@ echo "        <div class=\"inner\">\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
 		  } // end if height
-		$queryWeight = mysql_query("SELECT * FROM ".table_rb_agency_customfields." WHERE ProfileCustomTitle = 'Weight' || ProfileCustomTitle = 'weight'  ");
+		$queryWeight = mysql_query("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomTitle = 'Weight' or ProfileCustomTitle = 'weight'  ");
 		 $dataWeight = mysql_fetch_assoc($queryWeight);
 		$countWeight = mysql_num_rows($queryWeight);
 		if($countWeight > 0){

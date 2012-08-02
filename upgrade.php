@@ -19,7 +19,12 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 		"rb_agency_option_privacy" => "0",
 		"rb_agency_option_agencyimagemaxwidth" => "1000",
 		"rb_agency_option_agencyimagemaxheight" => "800",
-		"rb_agency_option_profilenaming" => "0"
+		"rb_agency_option_profilenaming" => "0",
+		"rb_agency_option_showcontactpage" =>"1",
+		"rb_agency_option_customfield_profilepage" => "1",
+		"rb_agency_option_customfield_searchpage" => "1",
+		"rb_agency_option_customfield_loggedin_all" => "1",
+		"rb_agency_option_customfield_loggedin_admin" => "1"
 		);
 
 

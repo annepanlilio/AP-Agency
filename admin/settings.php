@@ -1533,26 +1533,37 @@ elseif ($ConfigID == 7) {
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			} 
 		
-			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo " 
+		<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	
+		<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">
+    		 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>
+           <div class=\"inside\"> ";
+		
 	
 		}
   } else {
 		
 			$ProfileCustomID			=	0;
-			$ProfileCustomTitle			=	"";
-			$ProfileCustomType			=	"";
+			$ProfileCustomTitle		=	"";
+			$ProfileCustomType		=	"";
 			$ProfileCustomOptions		=	"";
-			$ProfileCustomView			=	0;
-			$ProfileCustomOrder			=	0;
+			$ProfileCustomView		=	0;
+			$ProfileCustomOrder		=	0;
 			$ProfileCustomShowGender	=	0;
 			$ProfileCustomShowProfile	=	0;
 			$ProfileCustomShowSearch	=	0;
 			$ProfileCustomShowLogged	=	0;
 			$ProfileCustomShowAdmin		=	0;
 			
-			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "\n";
+			
+ 		echo " 
+		<h3 style=\"width:430px;\">". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
+		<div class=\"postbox \"  style=\"width:430px;float:left;border:0px solid black;\">
+    		 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>
+            <div class=\"inside\"> ";	
+	
+ 
   }
   
 			//print_r($_POST);
@@ -1584,9 +1595,10 @@ elseif ($ConfigID == 7) {
 											}else{
 												echo"     <option value=\"7\">Metric (cm/kg)</option>";
 											}
-											 echo"  </select>
-									   
-										 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;display:none;\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
+										 echo"  </select>
+					";					   
+						//				 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;display:none;\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
+					echo "
 										</td>
 										<td style=\"font-size:13px;\">
 									   
@@ -1598,10 +1610,10 @@ elseif ($ConfigID == 7) {
 								
 				
 								<tr>
-									<td>Visibility*:</td>
+									<td valign=\"top\">Visibility*:</td>
 									<td style=\"font-size:13px;\">
-									<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" />Public(<i>default</i>:Show everywhere)&nbsp;
-									<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" />Private(Only show in Admin CRM)&nbsp;
+									<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" />Public(<i>default</i>:Show everywhere)&nbsp;<br/>
+									<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" />Private(Only show in Admin CRM)&nbsp;<br/>
 									<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" />Custom(Used in Custom Views)&nbsp;
 									</td>
 									<td style=\"font-size:13px;\">
@@ -1614,9 +1626,9 @@ elseif ($ConfigID == 7) {
 								<tr>
 									<td valign=\"top\">Show on*:</td>
 									<td style=\"font-size:13px;\">
-									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Profile Page &nbsp;
-									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Results Page &nbsp;  
-									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\"  checked=\"checked\" /> User must be Logged In to see It &nbsp;
+									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Profile Page &nbsp; <br/>
+									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Results Page &nbsp; <br/>  
+									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\"  checked=\"checked\" /> User must be Logged In to see It &nbsp;<br/>
 									<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" /> User must be an Admin to see It
 									</td>
 									<td style=\"font-size:13px;\">
@@ -1669,22 +1681,28 @@ elseif ($ConfigID == 7) {
 						</td>
 				 </tr>
 				</td>
-			
-				";
+		    </tr>
+		</table>";
 		
-		}else{ //Update Field
-			
+		echo " <table>\n";		
+			 echo "<tr id=\"objtype_customize\">\n";
+				 echo "<td>\n";	
+				 echo "</td>\n";	
+			echo "</tr>\n";
+		echo "</table>\n";		 
+		
+		
+		}else{ //Edit/Update Field
+
 					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions,  ProfileCustomOrder, ProfileCustomView,  ProfileCustomShowGender	, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = mysql_query($query1);
 					$count1 = mysql_num_rows($results1);
+					$pos = 0;
 					while ($data1 = mysql_fetch_array($results1)) {
-									
+						$pos ++;			
 							$query2 = "SELECT * FROM ". table_agency_customfields_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".$ProfileID."";
 							$results2 = mysql_query($query2);
-									  echo "<tr>
-											<td style=\"width:50px;\">Title:</td>
-											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
-											</tr>";
+									
 									  echo "<tr>
 											<td>Type*:</td>
 											<td>
@@ -1703,16 +1721,16 @@ elseif ($ConfigID == 7) {
 											}
 										  echo"  </select>
 										   
-											 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
 											</td>
 										 </tr>";
+										 //	 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
 										echo "  <tr>
 												<td> 
 												<tr>
-												<td>Visibility*:</td>
+												<td valign=\"top\">Visibility*:</td>
 												<td style=\"font-size:13px;\">
-												<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." />Public(<i>default</i>:Show everywhere)&nbsp;
-												<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')."/>Private(Only show in Admin CRM)&nbsp;
+												<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." />Public(<i>default</i>:Show everywhere)&nbsp;<br/>
+												<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')."/>Private(Only show in Admin CRM)&nbsp;<br/>
 												<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')."/>Custom(Used in Custom Views)&nbsp;
 												</td>
 											
@@ -1727,9 +1745,9 @@ elseif ($ConfigID == 7) {
 												<tr>
 													<td valign=\"top\">Show on*:</td>
 													<td style=\"font-size:13px;\">
-													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile Page &nbsp;
-													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Results Page &nbsp;  
-													<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be Logged In to see It &nbsp;
+													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile Page &nbsp; <br/>
+													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Results Page &nbsp;  <br/>
+													<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be Logged In to see It &nbsp;<br/>
 													<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an Admin to see It
 													</td>
 													<td style=\"font-size:13px;\">
@@ -1754,7 +1772,7 @@ elseif ($ConfigID == 7) {
 														 }
 													echo "</select>";
 													
-							echo "						
+												echo "						
 													</td>
 													<td style=\"font-size:13px;\">
 												   
@@ -1764,7 +1782,7 @@ elseif ($ConfigID == 7) {
 													</td>
 												</tr>
 												<tr>
-													<td valign=\"top\">Order*:</td>
+													<td valign=\"top\">Custom Order*:</td>
 													<td style=\"font-size:13px;\" align=\"left\">
 													<input type=\"text\" name=\"ProfileCustomOrder\"  value=\"".$data1["ProfileCustomOrder"]."\"/>
 													</td>
@@ -1778,8 +1796,17 @@ elseif ($ConfigID == 7) {
 												
 												</td>
 											 </tr>";
-								 
+									echo "</table>\n";	
+					
+					echo " <table>		
+			 	 			<tr id=\"objtype_customize\">
+								 <td>";
+					
 								 if($data1["ProfileCustomType"] == 1){ // text
+								 	  echo "<tr>
+											<td style=\"width:50px;\">Title:</td>
+											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
+										</tr>";
 									 	echo "
 										      <tr>
 												 <td align=\"right\" style=\"width:50px;\">Value*:</td>
@@ -1791,7 +1818,10 @@ elseif ($ConfigID == 7) {
 								 }
 							
 								 elseif($data1["ProfileCustomType"] == 3){	  // Dropdown
-								 
+								  	 echo "<tr>
+											<td style=\"width:40px;\">Title:</td>
+											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\" style=\"width:190px;\"/></td>
+										</tr>";
 								            list($option1,$option2) = explode(":",$data1['ProfileCustomOptions']);	
 											
 											$data1 = explode("|",$option1);
@@ -1803,16 +1833,16 @@ elseif ($ConfigID == 7) {
 											echo "</td>";
 											echo "<td>";
 											
-											echo "Label:<input type=\"text\" value=\"".current($data1)."\" name=\"option_label\"/><br/>";
+											//echo "Label:<input type=\"text\" value=\"".current($data1)."\" name=\"option_label\"/><br/>";
 											    $pos = 0;
 												foreach($data1 as $val1){
 													
 													if($val1 != end($data1) && $val1 != $data1[0]){
 													 $pos++;
 													 echo "Option:<input type=\"text\"  value=\"".$val1."\" name=\"option[]\"/>";
-														if($pos==1){
-														 echo "<input type=\"checkbox\" ".(end($data1)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_1\"/><span style=\"font-size:11px;\">(set as selected)</span>";	
-														 }
+														//if($pos==1){
+														// echo "<input type=\"checkbox\" ".(end($data1)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_1\"/><span style=\"font-size:11px;\">(set as selected)</span>";	
+														// }
 													  echo "<br/>";
 													}
 												}
@@ -1850,15 +1880,14 @@ elseif ($ConfigID == 7) {
 								  elseif($data1["ProfileCustomType"] == 4){	 //textbox
 								   
 								      $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
-								      
-								     echo "
-										      <tr>
-												 <td align=\"right\"  valign=\"top\" style=\"width:50px;\">Value*:</td>
-											     <td><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" style=\"width:400px;\"> ". $data1["ProfileCustomValue"] ."</textarea></td>
-											  
-											  </tr>
-										
-										";
+								        echo "<tr>
+											<td>Title:</td>
+											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
+										</tr>";
+								        echo "<tr>
+											 <td align=\"right\"  valign=\"top\" style=\"width:50px;\">Value*:</td>
+											 <td><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" style=\"width:400px;\"> ". $data1["ProfileCustomValue"] ."</textarea></td>
+										</tr>";
 								
 								 }
 								  elseif($data1["ProfileCustomType"] == 5){	 //checkbox
@@ -1866,7 +1895,10 @@ elseif ($ConfigID == 7) {
 								  $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 									   $pos =0;
 								     
-											  
+										 echo "<tr>
+											 <td>Title:</td>
+											 <td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
+											 </tr>";  
 											  echo "
 													  <tr>
 													      <td>&nbsp;</td>
@@ -1874,70 +1906,46 @@ elseif ($ConfigID == 7) {
 														 ";
 										 foreach($array_customOptions_values as  $val){
 											
-											  echo"		 
-														
-														  &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+											  echo" &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
 														 if($pos ==1){
-																	echo"			 
-																				 <a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>
-																  ";	
+															echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
 														 }
 											  echo "<br/>";	
 											   $pos++;		 
 											
 										 }
-										   echo "<div id=\"addcheckbox_field_1\"></div>";
-										   echo "	  </td>";
-											echo"
-													  </tr>
-												
-												";
-											    	
-													  
-											  echo "
-													 </td>
-												 </tr>
-											   ";
-											 
-									 
-								
+											   echo "<div id=\"addcheckbox_field_1\"></div>";
+										  		       	 echo " </td>";
+											              echo" </tr>";
+										
 								 }
 								  elseif($data1["ProfileCustomType"] == 6){	 //radio button
 								    $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 									   $pos =0;
-								     
+								       echo "<tr>
+											<td>Title:</td>
+											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
+										</tr>";
 											  
 											  echo "
-													  <tr>
+												   <tr>
 													      <td>&nbsp;</td>
-														   <td valign=\"top\">
+														<td valign=\"top\">
 														 ";
 										 foreach($array_customOptions_values as  $val){
 											
-											  echo"		 
-														
-														  &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+											  echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
 														 if($pos ==1){
-																	echo"			 
-																				 <a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>
-																  ";	
+																	echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
 														 }
 											  echo "<br/>";	
 											   $pos++;		 
 											
 										 }
+													 echo "</td>";
+												 echo "</tr>";
 										   echo "<div id=\"addcheckbox_field_1\"></div>";
-										   echo "	  </td>";
-											echo"
-													  </tr>
-												
-												";
-											    	
-													  
-											  echo "
-													 </td>
-												 </tr>
-											   ";
+										  
 											 
 								
 								
@@ -1945,16 +1953,18 @@ elseif ($ConfigID == 7) {
 								  elseif($data1["ProfileCustomType"] == 7){	 ///metric/imperials
 								
 								 }
-									
+							 
+						    echo "</td>\n";	
+						echo "</tr>\n";
+					echo "</table>\n";				
 					}  //endwhile
 	     	
 	           
-		}
-		echo "</table>\n";
-		echo "<table style=\"margin:10px;\">\n";
-		echo "<tr id=\"objtype_customize\">\n";
-		echo "</tr>\n";
-		echo "</table>\n";
+		}	
+						
+		
+
+	
 			
 			if ( $ProfileCustomID > 0) {
 			echo "<p class=\"submit\">\n";
@@ -1971,6 +1981,14 @@ elseif ($ConfigID == 7) {
 			echo "</p>\n";
 			} 
 			echo "</form>\n";
+    ?>
+
+          
+            </div>
+</div>
+
+<div class="all-custom_fields" style="width:700px;float:left;border:0px solid black;margin-left:15px;">
+    <?php
 	
 	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
 	
@@ -2056,7 +2074,7 @@ elseif ($ConfigID == 7) {
 		echo "</p>\n";
 		
    		echo "</form>\n";
-
+echo "</div>";
 }	 // End	
 elseif ($ConfigID == 99) {
 	
@@ -2066,4 +2084,5 @@ elseif ($ConfigID == 99) {
 
 }	 // End	
 echo "</div>\n";
+
 ?>

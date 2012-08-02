@@ -71,19 +71,6 @@ while ($data = mysql_fetch_array($results)) {
 	$ProfileLocationState		=stripslashes($data['ProfileLocationState']);
 	$ProfileLocationZip			=stripslashes($data['ProfileLocationZip']);
 	$ProfileLocationCountry		=stripslashes($data['ProfileLocationCountry']);
-	$ProfileStatEthnicity		=stripslashes($data['ProfileStatEthnicity']);
-	$ProfileStatSkinColor		=stripslashes($data['ProfileStatSkinColor']);
-	$ProfileStatEyeColor		=stripslashes($data['ProfileStatEyeColor']);
-	$ProfileStatHairColor		=stripslashes($data['ProfileStatHairColor']);
-	$ProfileStatHeight			=stripslashes($data['ProfileStatHeight']);
-	$ProfileStatWeight			=stripslashes($data['ProfileStatWeight']);
-	$ProfileStatBust	        =stripslashes($data['ProfileStatBust']);
-	$ProfileStatWaist	    	=stripslashes($data['ProfileStatWaist']);
-	$ProfileStatHip	        	=stripslashes($data['ProfileStatHip']);
-	$ProfileStatShoe		    =stripslashes($data['ProfileStatShoe']);
-	$ProfileStatDress			=stripslashes($data['ProfileStatDress']);
-	$ProfileUnion				=stripslashes($data['ProfileUnion']);
-	$ProfileExperience			=stripslashes($data['ProfileExperience']);
 	$ProfileDateUpdated			=stripslashes($data['ProfileDateUpdated']);
 	$ProfileIsActive			=stripslashes($data['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileStatHits			=stripslashes($data['ProfileStatHits']);
@@ -195,7 +182,7 @@ while ($data = mysql_fetch_array($results)) {
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	if ($count > 0) {
-		if ( ( $rb_agency_option_privacy > 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
+		if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
 			//if (isset($_SESSION['SearchMuxHash'])) { echo "Permission Granted"; }
 			
 		  // Ok, but whats the status of the profile?
