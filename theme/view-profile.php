@@ -173,10 +173,12 @@ while ($data = mysql_fetch_array($results)) {
 
 	$LayoutType = "";
 	if ($rb_agency_option_profilelist_sidebar) {
-		echo "	<div id=\"profile-sidebar\">\n";
-			$LayoutType = "profile";
-			get_sidebar(); 
-		echo "	</div>\n";
+		if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
+			echo "	<div id=\"profile-sidebar\">\n";
+				$LayoutType = "profile";
+				get_sidebar(); 
+			echo "	</div>\n";
+		 }
 	}
 	
 	echo "<div id=\"container\" class=\"one-column\">\n";
@@ -195,7 +197,7 @@ while ($data = mysql_fetch_array($results)) {
 			// hold last model requested as session so we can return them where we found them 
 			$ProfileLastViewed = get_query_var('profile');
 			$profileviewed = get_query_var('target');
-			$_SESSION['ProfileLastViewed'] = $ProfileLastViewed;
+			$_SESSION['ProfileLastViewed'] = $profileviewed;
 			include("include-login.php"); 	
 		}
 	} else {

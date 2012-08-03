@@ -1463,7 +1463,7 @@ elseif ($ConfigID == 7) {
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = mysql_query($update) or die(mysql_error());
                  
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
+				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
 			}
 		break;
 
@@ -1595,8 +1595,7 @@ elseif ($ConfigID == 7) {
 											}else{
 												echo"     <option value=\"7\">Metric (cm/kg)</option>";
 											}
-										 echo"  </select>
-					";					   
+										 echo"  </select>";					   
 						//				 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;display:none;\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
 					echo "
 										</td>
@@ -1796,11 +1795,15 @@ elseif ($ConfigID == 7) {
 												
 												</td>
 											 </tr>";
+									echo "</table>\n";
+									echo " <table>\n";		
+									 echo "<tr id=\"objtype_customize\">\n";
+										 echo "<td>\n";	
+										 echo "</td>\n";	
+									echo "</tr>\n";
 									echo "</table>\n";	
-					
-					echo " <table>		
-			 	 			<tr id=\"objtype_customize\">
-								 <td>";
+					echo "<div id=\"obj_edit\" class=\"".$data1["ProfileCustomType"]."\">";
+				
 					
 								 if($data1["ProfileCustomType"] == 1){ // text
 								 	  echo "<tr>
@@ -1832,7 +1835,7 @@ elseif ($ConfigID == 7) {
 											echo "&nbsp;";
 											echo "</td>";
 											echo "<td>";
-											
+											 echo "<br/>";
 											//echo "Label:<input type=\"text\" value=\"".current($data1)."\" name=\"option_label\"/><br/>";
 											    $pos = 0;
 												foreach($data1 as $val1){
@@ -1905,18 +1908,14 @@ elseif ($ConfigID == 7) {
 														   <td valign=\"top\">
 														 ";
 										 foreach($array_customOptions_values as  $val){
-											
-											  echo" &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
-														 if($pos ==1){
-															echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
-														 }
 											  echo "<br/>";	
-											   $pos++;		 
-											
+											  echo" &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+											 
 										 }
-											   echo "<div id=\"addcheckbox_field_1\"></div>";
-										  		       	 echo " </td>";
-											              echo" </tr>";
+										echo "<div id=\"addcheckbox_field_1\"></div>";
+										echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
+										echo " </td>";
+										echo" </tr>";
 										
 								 }
 								  elseif($data1["ProfileCustomType"] == 6){	 //radio button
@@ -1954,9 +1953,8 @@ elseif ($ConfigID == 7) {
 								
 								 }
 							 
-						    echo "</td>\n";	
-						echo "</tr>\n";
-					echo "</table>\n";				
+						  
+					echo "</div>";				
 					}  //endwhile
 	     	
 	           

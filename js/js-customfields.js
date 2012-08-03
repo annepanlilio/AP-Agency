@@ -3,15 +3,21 @@ $(document).ready(function(){
 //Select object type
 	$(".objtype").change(function(){
 		
-		$("#objtype_customize").hide().html(getObj($(this).val())).fadeIn("fast");
-		
-		if($(this).val()!=3){
-		  $(".add_more_object").hide();
-					
-		}else{
-		 $(".add_more_object").fadeIn("fast");	
+		if($("#obj_edit").attr("class") == $(this).val()){
+		  $("#obj_edit").show();
+		  $("#objtype_customize").empty();	
+		}else if($("#obj_edit").attr("class") != $(this).val()){
+				$("#objtype_customize").hide().html(getObj($(this).val())).fadeIn("fast");
+				
+				if($(this).val()!=3){
+				  $(".add_more_object").hide();
+							
+				}else{
+				 $(".add_more_object").fadeIn("fast");	
+				}
+				
+				$("#obj_edit").hide();
 		}
-        
      
 	});
 	//Add  dropdown group option
@@ -57,11 +63,11 @@ $(document).ready(function(){
 			case "3":
 			   
 				 $("table tr[id=objtype_customize]").empty();
-				 $("table tr[id=objtype_customize]").html("<tr></tr><td align=\"right\" valign=\"top\" class=\"dropdown_title\" ><tr><td align='right' >&nbsp;&nbsp;<strong>Title*:</strong></td><td><input type='text' name='ProfileCustomTitle' /><br/></td></tr></td>");
-				 $("table tr[id=objtype_customize]").append("<tr></tr><td align=\"right\" valign=\"top\" class=\"dropdown_title\" ><tr><td align='right' >&nbsp;&nbsp;Label*:</td><td><input type='text' name=\"option_label\" value=\"\" id=\"min_field\" /><br/></td></tr></td>");
-				 $("table tr[id=objtype_customize]").append("<div id=\'dropdown_custom\' class=\"dropdown_1\"><td><tr><td align=\"right\">&nbsp;Option*:<\/td><td><input type=\"text\" name=\"option[]\"\/><input type=\"checkbox\" class=\"set_as_default\" name=\"option_default_1\"\/><span style=\"font-size:11px;\">(set as selected)<\/span>");
-				 $("table tr[id=objtype_customize]").append("<\/td><\/tr><tr><td align=\"right\" >Option*:<input type=\"text\" name=\"option[]\"\/><\/td><td><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
-				 $("table tr[id=objtype_customize]").append(" <\/td><\/tr> <div id=\"addoptions_field_1\"> <\/div><\/td><\/div><\/div>");
+				 $("table tr[id=objtype_customize]").html("<strong>Title*:</strong><input type='text' name='ProfileCustomTitle' /><br/>");
+				// $("table tr[id=objtype_customize]").append("Label*:<input type='text' name=\"option_label\" value=\"\" id=\"min_field\" />"); //<input type=\"checkbox\" class=\"set_as_default\" name=\"option_default_1\"\/><span style=\"font-size:11px;\">(set as selected)<\/span>
+				 $("table tr[id=objtype_customize]").append("<div id=\'dropdown_custom\' class=\"dropdown_1\">Option*:<input type=\"text\" name=\"option[]\"\/>");
+				 $("table tr[id=objtype_customize]").append("Option*:<input type=\"text\" name=\"option[]\"\/><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
+				 $("table tr[id=objtype_customize]").append("<div id=\"addoptions_field_1\"></div></div>");
 				 
 					
 					
@@ -79,24 +85,24 @@ $(document).ready(function(){
 						     +'<td align="right" valign="top">TextArea:</td> <td><textarea cols="60" rows="30" name="ProfileCustomOptions"></textarea></td>'
 							+'</tr>' 
 						  +'</td>'
-						+'</tr>';
+					+'</tr>';
 			break;  
 			
 			case "5":
-			     $("#objtype_customize").empty().html('<tr><td align="right">Title*:</td><td><input type="value" name="ProfileCustomTitle"/></td><td/>');
-				 $("#objtype_customize").append('<tr><td align="right">Values:</td><td><input type="text" name="label[]"/>');
-				 $("#objtype_customize").append('</td></td><div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+			       $("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
+				 $("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+				 $("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			break;  
 			
 			case "6":
-			     $("#objtype_customize").empty().html('<tr><td align="right">Title*:</td><td><input type="value" name="ProfileCustomTitle"/></td><td/>');
-				 $("#objtype_customize").append('<tr><td align="right">Values:</td><td><input type="text" name="label[]"/>');
-				 $("#objtype_customize").append('</td></td><div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
-		    break;  
+		   	       $("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
+				 $("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+				 $("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+			  break;  
 			
 			case "7":
 			       $("#objtype_customize").empty().html("<td>Title*:<input type='text' /></td>");
-				   $("#objtype_customize").append("<tr><td><input type='text' /></td></tr>");
+				   $("#objtype_customize").append("<tr><td>Value:<input type='text' /></td></tr>");
 			break;
 			
 			
