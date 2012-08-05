@@ -37,27 +37,26 @@ if (isset($_POST['action'])) {
 	  if (empty($ProfileGallery)) {  // Probably a new record... 
 		$ProfileGallery = rb_agency_safenames($ProfileContactDisplay); 
 	  }
-	$ProfileContactParent		=$_POST['ProfileContactParent'];
-	$ProfileSSN    				=$_POST['ProfileSSN'];
+	$ProfileGender    			=$_POST['ProfileGender'];
+	$ProfileDateBirth	    	=$_POST['ProfileDateBirth'];
+	//$ProfileContactParent		=$_POST['ProfileContactParent'];
+	//$ProfileSSN    				=$_POST['ProfileSSN'];
 	$ProfileContactEmail		=$_POST['ProfileContactEmail'];
 	$ProfileContactWebsite		=$_POST['ProfileContactWebsite'];
-	$ProfileContactLinkFacebook	=$_POST['ProfileContactLinkFacebook'];
-	$ProfileContactLinkTwitter	=$_POST['ProfileContactLinkTwitter'];
-	$ProfileContactLinkYouTube	=$_POST['ProfileContactLinkYouTube'];
-	$ProfileContactLinkFlickr	=$_POST['ProfileContactLinkFlickr'];
+	//$ProfileContactLinkFacebook	=$_POST['ProfileContactLinkFacebook'];
+	//$ProfileContactLinkTwitter	=$_POST['ProfileContactLinkTwitter'];
+	//$ProfileContactLinkYouTube	=$_POST['ProfileContactLinkYouTube'];
+	//$ProfileContactLinkFlickr	=$_POST['ProfileContactLinkFlickr'];
 	$ProfileContactPhoneHome	=$_POST['ProfileContactPhoneHome'];
 	$ProfileContactPhoneCell	=$_POST['ProfileContactPhoneCell'];
 	$ProfileContactPhoneWork	=$_POST['ProfileContactPhoneWork'];
-	$ProfileGender    			=$_POST['ProfileGender'];
-	$ProfileDateBirth	    	=$_POST['ProfileDateBirth'];
 	$ProfileLocationStreet		=$_POST['ProfileLocationStreet'];
 	$ProfileLocationCity		=rb_agency_strtoproper($_POST['ProfileLocationCity']);
 	$ProfileLocationState		=strtoupper($_POST['ProfileLocationState']);
 	$ProfileLocationZip			=$_POST['ProfileLocationZip'];
 	$ProfileLocationCountry		=$_POST['ProfileLocationCountry'];
 	$ProfileLanguage			=$_POST['ProfileLanguage'];
-	
-	$ProfileStatWeight			=$_POST['ProfileStatWeight'];
+	//$ProfileStatWeight			=$_POST['ProfileStatWeight'];
 	$ProfileDateUpdated		=$_POST['ProfileDateUpdated'];
 	$ProfileDateViewLast		=$_POST['ProfileDateViewLast'];
 	$ProfileType				=$_POST['ProfileType'];
@@ -88,22 +87,18 @@ if (isset($_POST['action'])) {
 	// Add Record
 	case 'addRecord':
 		if(!$have_error){
-			
-			
 		
 			$ProfileGallery = rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
 			
 			// Create Record
 			$insert = "INSERT INTO " . table_agency_profile .
-			" (ProfileGallery,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileContactParent,
+			" (ProfileGallery,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,
 			   ProfileContactEmail,ProfileContactWebsite,ProfileGender,ProfileDateBirth,
-			   ProfileContactLinkFacebook,ProfileContactLinkTwitter,ProfileContactLinkYouTube,ProfileContactLinkFlickr,
 			   ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,
 			   ProfileContactPhoneHome, ProfileContactPhoneCell, ProfileContactPhoneWork,
 			   ProfileDateUpdated,ProfileType,ProfileIsActive,ProfileIsFeatured,ProfileIsPromoted,ProfileStatHits,ProfileDateViewLast)" .
 			"VALUES ('" . $wpdb->escape($ProfileGallery) . "','" . $wpdb->escape($ProfileContactDisplay) . "','" . $wpdb->escape($ProfileContactNameFirst) . "','" . $wpdb->escape($ProfileContactNameLast) . "','" . $wpdb->escape($ProfileContactParent) . "',
 				'" . $wpdb->escape($ProfileContactEmail) . "','" . $wpdb->escape($ProfileContactWebsite) . "','" . $wpdb->escape($ProfileGender) . "','" . $wpdb->escape($ProfileDateBirth) . "',
-			      '" . $wpdb->escape($ProfileContactLinkFacebook) . "','" . $wpdb->escape($ProfileContactLinkTwitter) . "','" . $wpdb->escape($ProfileContactLinkYouTube) . "','" . $wpdb->escape($ProfileContactLinkFlickr) . "',
 				'" . $wpdb->escape($ProfileLocationStreet) . "','" . $wpdb->escape($ProfileLocationCity) . "','" . $wpdb->escape($ProfileLocationState) . "','" . $wpdb->escape($ProfileLocationZip) . "','" . $wpdb->escape($ProfileLocationCountry) . "',
 				'" . $wpdb->escape($ProfileContactPhoneHome) . "','" . $wpdb->escape($ProfileContactPhoneCell) . "','" . $wpdb->escape($ProfileContactPhoneWork) . "',
 				now(),'" . $wpdb->escape($ProfileType) . "','" . $wpdb->escape($ProfileIsActive) . "','" . $wpdb->escape($ProfileIsFeatured) . "','" . $wpdb->escape($ProfileIsPromoted) . "','" . $wpdb->escape($ProfileStatHits) . "','" . $wpdb->escape($ProfileDateViewLast) . "')";
@@ -119,9 +114,6 @@ if (isset($_POST['action'])) {
 				$updated = $wpdb->query($update);
 			}
 			
-		
-			
-
 			// Add Custom Field Values stored in Mux
 			foreach($_POST as $key => $value) {
 				if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value))) {
@@ -158,14 +150,9 @@ if (isset($_POST['action'])) {
 			ProfileContactNameLast='" . $wpdb->escape($ProfileContactNameLast) . "',
 			ProfileContactEmail='" . $wpdb->escape($ProfileContactEmail) . "',
 			ProfileContactWebsite='" . $wpdb->escape($ProfileContactWebsite) . "',
-			ProfileContactLinkFacebook='" . $wpdb->escape($ProfileContactLinkFacebook) . "',
-			ProfileContactLinkTwitter='" . $wpdb->escape($ProfileContactLinkTwitter) . "',
-			ProfileContactLinkYouTube='" . $wpdb->escape($ProfileContactLinkYouTube) . "',
-			ProfileContactLinkFlickr='" . $wpdb->escape($ProfileContactLinkFlickr) . "',
 			ProfileContactPhoneHome='" . $wpdb->escape($ProfileContactPhoneHome) . "',
 			ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
 			ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
-			ProfileContactParent='" . $wpdb->escape($ProfileContactParent) . "',
 			ProfileGender='" . $wpdb->escape($ProfileGender) . "',
 			ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
 			ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
@@ -565,9 +552,9 @@ function rb_display_manage($ProfileID) {
 	echo "		<th scope=\"row\" colspan=\"2\"><h3>". __("Private Information", rb_agency_TEXTDOMAIN) ."</h3>". __("The following information will NOT appear in public areas and is for administrative use only.", rb_agency_TEXTDOMAIN) ."</th>\n";
 	echo "	  </tr>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Parent (if minor)", rb_agency_TEXTDOMAIN) ."</th>\n";
+	echo "		<th scope=\"row\">". __("Birthdate", rb_agency_TEXTDOMAIN) ." <em>YYYY-MM-DD</em></th>\n";
 	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileContactParent\" name=\"ProfileContactParent\" value=\"". $ProfileContactParent ."\" />\n";
+	echo "			<input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"". $ProfileDateBirth ."\" />\n";
 	echo "		</td>\n";
 	echo "	  </tr>\n";
 	echo "    <tr valign=\"top\">\n";
@@ -577,9 +564,17 @@ function rb_display_manage($ProfileID) {
 	echo "		</td>\n";
 	echo "	  </tr>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Birthdate", rb_agency_TEXTDOMAIN) ." <em>YYYY-MM-DD</em></th>\n";
+	echo "		<th scope=\"row\">". __("Website", rb_agency_TEXTDOMAIN) ."</th>\n";
 	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"". $ProfileDateBirth ."\" />\n";
+	echo "			<input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"". $ProfileContactWebsite ."\" />\n";
+	echo "		</td>\n";
+	echo "	  </tr>\n";
+	echo "    <tr valign=\"top\">\n";
+	echo "		<th scope=\"row\">". __("Phone", rb_agency_TEXTDOMAIN) ."</th>\n";
+	echo "		<td>\n";
+	echo "			Home: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"". $ProfileContactPhoneHome ."\" /><br />\n";
+	echo "			Cell: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"". $ProfileContactPhoneCell ."\" /><br />\n";
+	echo "			Work: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"". $ProfileContactPhoneWork ."\" /><br />\n";
 	echo "		</td>\n";
 	echo "	  </tr>\n";
 	// Address
@@ -614,54 +609,9 @@ function rb_display_manage($ProfileID) {
 	echo "		</td>\n";
 	echo "	  </tr>\n";
 	// Custom Admin Fields
-      // ProfileCustomView = 1 , Private
-	rb_custom_fields(1, $ProfileID, $ProfileGender, true);
+      	// ProfileCustomView = 1 , Private
+		rb_custom_fields(1, $ProfileID, $ProfileGender, true);
 	
-	// Links	
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Phone", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			Home: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"". $ProfileContactPhoneHome ."\" /><br />\n";
-	echo "			Cell: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"". $ProfileContactPhoneCell ."\" /><br />\n";
-	echo "			Work: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"". $ProfileContactPhoneWork ."\" /><br />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Website", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"". $ProfileContactWebsite ."\" />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	// Show Social Media Links
-	if ($rb_agency_option_showsocial == "1") { 
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\" colspan=\"2\"><h3>". __("Social Media Profiles", rb_agency_TEXTDOMAIN) ."</h3></th>\n";
-	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Facebook", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileContactLinkFacebook\" name=\"ProfileContactLinkFacebook\" value=\"". $ProfileContactLinkFacebook ."\" />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Twitter", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileContactLinkTwitter\" name=\"ProfileContactLinkTwitter\" value=\"". $ProfileContactLinkTwitter ."\" />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("YouTube", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileContactLinkYouTube\" name=\"ProfileContactLinkYouTube\" value=\"". $ProfileContactLinkYouTube ."\" />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "		<th scope=\"row\">". __("Flickr", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td>\n";
-	echo "			<input type=\"text\" id=\"ProfileContactLinkFlickr\" name=\"ProfileContactLinkFlickr\" value=\"". $ProfileContactLinkFlickr ."\" />\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
-	} 
 	// Public Information
 	echo "    <tr valign=\"top\">\n";
 	echo "		<th scope=\"row\" colspan=\"2\"><h3>". __("Public Information", rb_agency_TEXTDOMAIN) ."</h3>The following information may appear in profile pages.</th>\n";
@@ -669,19 +619,29 @@ function rb_display_manage($ProfileID) {
 	echo "    <tr valign=\"top\">\n";
 	echo "		<th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
 	echo "		<td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";
-	echo "			<option value=\"\" ". selected($ProfileGender, "") .">". __("Not Specified", rb_agency_TEXTDOMAIN) ."</option>\n";
-	echo "			<option value=\"Male\" ". selected($ProfileGender, "Male") .">". __("Male", rb_agency_TEXTDOMAIN) ."</option>\n";
-	echo "			<option value=\"Female\" ". selected($ProfileGender, "Female") .">". __("Female", rb_agency_TEXTDOMAIN) ."</option>\n";
-	echo "		  </select>\n";
-	echo "		</td>\n";
-	echo "	  </tr>\n";
+
+					$query1 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ."";
+					$results1 = mysql_query($query1);
+					$count1 = mysql_num_rows($results1);
+					if ($count1 > 0) {
+						if (empty($GenderID) || ($GenderID < 1) ) {
+							echo " <option value=\"0\" selected>--</option>\n";
+						}
+						while ($data1 = mysql_fetch_array($results1)) {
+							echo " <option value=\"". $data1["GenderID"] ."\" ". selected($ProfileGender, $data1["GenderID"]) .">". $data1["GenderTitle"] ."</option>\n";
+						}
+						echo "</select>\n";
+					} else {
+						echo "". __("No items to select", rb_restaurant_TEXTDOMAIN) .".";
+					}
+	echo "        </td>\n";
+	echo "    </tr>\n";
 	// Load custom fields , Public  = 0, ProfileCustomGender = true
 		rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 
 	echo "	</tbody>\n";
 	echo " </table>\n";
 	echo "</div>\n";
-	
 	
 	echo "<div id=\"profile-manage-media\" style=\"float: left; width: 50%; \">\n";
 
@@ -814,8 +774,6 @@ function rb_display_manage($ProfileID) {
 
 		echo "<table class=\"form-table\">\n";
 		echo " <tbody>\n";
-
-	
 
 	
 	// Account Information	
