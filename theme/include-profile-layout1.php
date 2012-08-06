@@ -27,8 +27,10 @@ Profile View with Thumbnails and Primary Image
 	echo "	<div id=\"info\">\n";
 	echo "	  <div class=\"stats\">\n";
 
-		if (!empty($ProfileGender)) {
-			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($ProfileGender, rb_agency_TEXTDOMAIN). "</div>\n";
+ 		if (!empty($ProfileGender)) {
+			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$ProfileGender." ");
+			$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
 		}
 		
 		if (!empty($ProfileStatHeight)) {

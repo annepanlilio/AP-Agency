@@ -101,8 +101,16 @@ $(document).ready(function(){
 			  break;  
 			
 			case "7":
-			       $("#objtype_customize").empty().html("<td>Title*:<input type='text' /></td>");
-				   $("#objtype_customize").append("<tr><td>Value:<input type='text' /></td></tr>");
+			       $("#objtype_customize").empty().html("<tr><td>Title*:<input type='text' name='ProfileCustomTitle' /></td></tr>");
+				 $("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
+				 
+				  if($(".objtype").attr("id")==1){
+				 	$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />in</td></tr>");
+					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />lb</td></tr>");
+				 }else if($(".objtype").attr("id")==0){
+					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />cm</td></tr>");
+					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />kg</td></tr>");
+				 }
 			break;
 			
 			

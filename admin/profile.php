@@ -92,17 +92,56 @@ if (isset($_POST['action'])) {
 			
 			// Create Record
 			$insert = "INSERT INTO " . table_agency_profile .
-			" (ProfileGallery,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,
-			   ProfileContactEmail,ProfileContactWebsite,ProfileGender,ProfileDateBirth,
-			   ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,
-			   ProfileContactPhoneHome, ProfileContactPhoneCell, ProfileContactPhoneWork,
-			   ProfileDateUpdated,ProfileType,ProfileIsActive,ProfileIsFeatured,ProfileIsPromoted,ProfileStatHits,ProfileDateViewLast)" .
-			"VALUES ('" . $wpdb->escape($ProfileGallery) . "','" . $wpdb->escape($ProfileContactDisplay) . "','" . $wpdb->escape($ProfileContactNameFirst) . "','" . $wpdb->escape($ProfileContactNameLast) . "','" . $wpdb->escape($ProfileContactParent) . "',
-				'" . $wpdb->escape($ProfileContactEmail) . "','" . $wpdb->escape($ProfileContactWebsite) . "','" . $wpdb->escape($ProfileGender) . "','" . $wpdb->escape($ProfileDateBirth) . "',
-				'" . $wpdb->escape($ProfileLocationStreet) . "','" . $wpdb->escape($ProfileLocationCity) . "','" . $wpdb->escape($ProfileLocationState) . "','" . $wpdb->escape($ProfileLocationZip) . "','" . $wpdb->escape($ProfileLocationCountry) . "',
-				'" . $wpdb->escape($ProfileContactPhoneHome) . "','" . $wpdb->escape($ProfileContactPhoneCell) . "','" . $wpdb->escape($ProfileContactPhoneWork) . "',
-				now(),'" . $wpdb->escape($ProfileType) . "','" . $wpdb->escape($ProfileIsActive) . "','" . $wpdb->escape($ProfileIsFeatured) . "','" . $wpdb->escape($ProfileIsPromoted) . "','" . $wpdb->escape($ProfileStatHits) . "','" . $wpdb->escape($ProfileDateViewLast) . "')";
-		    $results = $wpdb->query($insert) or die(mysql_error());
+			" (ProfileGallery,
+			   ProfileContactDisplay,
+			   ProfileContactNameFirst,
+			   ProfileContactNameLast,
+			   ProfileContactEmail,
+			   ProfileContactWebsite,
+			   ProfileGender,
+			   ProfileDateBirth,
+			   ProfileLocationStreet,
+			   ProfileLocationCity,
+			   ProfileLocationState,
+			   ProfileLocationZip,
+			   ProfileLocationCountry,
+			   ProfileContactPhoneHome, 
+			   ProfileContactPhoneCell, 
+			   ProfileContactPhoneWork,
+			   ProfileDateUpdated,
+			   ProfileType,
+			   ProfileIsActive,
+			   ProfileIsFeatured,
+			   ProfileIsPromoted,
+			   ProfileStatHits,
+			   ProfileDateViewLast)" .
+			"VALUES (
+			'" . $wpdb->escape($ProfileGallery) . "',
+			'" . $wpdb->escape($ProfileContactDisplay) . "',
+			'" . $wpdb->escape($ProfileContactNameFirst) . "',
+			'" . $wpdb->escape($ProfileContactNameLast) . "',
+			'" . $wpdb->escape($ProfileContactEmail) . "',
+			'" . $wpdb->escape($ProfileContactWebsite) . "',
+			'" . $wpdb->escape($ProfileGender) . "',
+			'" . $wpdb->escape($ProfileDateBirth) . "',
+			'" . $wpdb->escape($ProfileLocationStreet) . "',
+			'" . $wpdb->escape($ProfileLocationCity) . "',
+			'" . $wpdb->escape($ProfileLocationState) . "',
+			'" . $wpdb->escape($ProfileLocationZip) . "',
+			'" . $wpdb->escape($ProfileLocationCountry) . "',
+			'" . $wpdb->escape($ProfileContactPhoneHome) . "',
+			'" . $wpdb->escape($ProfileContactPhoneCell) . "',
+			'" . $wpdb->escape($ProfileContactPhoneWork) . "',
+			now(),
+			'" . $wpdb->escape($ProfileType) . "',
+			'" . $wpdb->escape($ProfileIsActive) . "',
+			'" . $wpdb->escape($ProfileIsFeatured) . "',
+			'" . $wpdb->escape($ProfileIsPromoted) . "',
+			'" . $wpdb->escape($ProfileStatHits) . "',
+			'" . $wpdb->escape($ProfileDateViewLast) . "'
+			)";
+		      
+			$results = $wpdb->query($insert) or die("Add Record: ".mysql_error());
 			$ProfileID = $wpdb->insert_id;
 
 			// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
@@ -438,7 +477,7 @@ function rb_display_manage($ProfileID) {
 		$rb_agency_option_unittype  			= $rb_agency_options_arr['rb_agency_option_unittype'];
 		$rb_agency_option_showsocial 			= $rb_agency_options_arr['rb_agency_option_showsocial'];
 		$rb_agency_option_agencyimagemaxheight 	= $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
-			if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) { $rb_agency_option_agencyimagemaxheight = 800; }
+		if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) { $rb_agency_option_agencyimagemaxheight = 800; }
 		$rb_agency_option_profilenaming 		= (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
 		$rb_agency_option_locationcountry 		= $rb_agency_options_arr['rb_agency_option_locationcountry'];
 
@@ -618,8 +657,14 @@ function rb_display_manage($ProfileID) {
 	echo "	  </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "		<th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
-	echo "		<td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";
-
+	echo "		<td>";
+					if(isset($_GET["ProfileGender"])){
+						$ProfileGender = $_GET["ProfileGender"];
+						echo "<input type=\"hidden\" name=\"ProfileGender\" value=\"".$ProfileGender."\"/>";
+						echo "<select  id=\"ProfileGender\" disabled=\"disabled\">\n";
+					}else{
+						echo "<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
+					}
 					$query1 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ."";
 					$results1 = mysql_query($query1);
 					$count1 = mysql_num_rows($results1);
@@ -970,8 +1015,17 @@ function rb_display_list(){
 		}
 		
         echo "<div class=\"tablenav\">\n";
- 		echo "	<div style=\"float: left; \"><a class=\"button-primary\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=add\">". __("Create New Record", rb_agency_TEXTDOMAIN) ."</a></div>\n";
-        echo "  <div class=\"tablenav-pages\">\n";
+	  
+		  $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." ");
+		  $queryGenderCount = mysql_num_rows($queryGenderResult);
+		  while($fetchGender = mysql_fetch_assoc($queryGenderResult)){
+			 echo "	<div style=\"float: left; \"><a class=\"button-primary\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=add&ProfileGender=".$fetchGender["GenderID"]."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></div>\n";
+		  }
+		  if($queryGenderCount < 1){
+			echo "<p>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_menu_settings&ampConfigID=5")."\">Create New Gender</a>", rb_agency_TEXTDOMAIN) ."</p>\n";
+		  
+		  }
+	  echo "  <div class=\"tablenav-pages\">\n";
 				if($items > 0) {
 					echo $p->show();  // Echo out the list of paging. 
 				}

@@ -77,8 +77,10 @@ Custom Layout: Shake it like a polaroid picture
 	echo "				<h1 style=\"font-size:60px;font-family:Arial; color:#555;\">". $ProfileContactDisplay ."</h1>\n";
 	echo "				<div style=\"float:left; width:900px;min-height:200px; font-family:Arial Narrow, Helvetica, sans-serif; font-size:18px; color:#877; border:1px solid #999; margin-top:12px;\">\n";
 	echo "					<div class=\"stats\" >\n";
-		if (!empty($ProfileGender)) {
-			echo "<div class=\"rel\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileGender ."</div>\n";
+ 		if (!empty($ProfileGender)) {
+			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$ProfileGender." ");
+			$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
 		}
 
 		if (!empty($ProfileStatHeight)) {

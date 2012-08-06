@@ -1304,6 +1304,9 @@ elseif ($ConfigID == 7) {
 	define("LabelPlural", __("Custom Fields", rb_agency_TEXTDOMAIN));
 	define("LabelSingular", __("Custom Field", rb_agency_TEXTDOMAIN));
 
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
+	
   /* Initial Registration [RESPOND TO POST] ***********/ 
   if ( isset($_POST['action']) ) {
 	
@@ -1315,11 +1318,11 @@ elseif ($ConfigID == 7) {
 		$ProfileCustomView 			= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
-	    $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
+	      $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= (int)$_POST['ProfileCustomShowLogged'];
 		$ProfileCustomShowAdmin   	= (int)$_POST['ProfileCustomShowAdmin'];
-	    $error = "";	
+	      $error = "";	
 		
 		 if($ProfileCustomType == 1){ //Text
 			 //...
@@ -1413,7 +1416,7 @@ elseif ($ConfigID == 7) {
 		  
 		
 		}elseif($ProfileCustomType == 7){ //Metric & Imperial
-		
+		    $ProfileCustomOptions = $_POST["ProfileUnitType"];
 		}
 
 		// Error checking
@@ -1431,6 +1434,10 @@ elseif ($ConfigID == 7) {
 		case 'addRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo "<h3 style=\"width:430px;\">". sprintf(__("Create New  %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	";
+				echo " <div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
+				echo " <div class=\"inside\"> ";	
 			} else {
 		
 				// Create Record
@@ -1439,7 +1446,11 @@ elseif ($ConfigID == 7) {
 				$lastid = $wpdb->insert_id;
 				
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>added</strong> successfully! You may now %1$s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
-			}
+				echo "<h3 style=\"width:430px;\">". sprintf(__("Create New  %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	";
+				echo " <div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
+				echo " <div class=\"inside\"> ";		
+			}   
 
 		break;
 	
@@ -1447,6 +1458,10 @@ elseif ($ConfigID == 7) {
 		case 'editRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				 echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
+			     		<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
+				 echo" <div class=\"inside\"> ";
 			} else {
 				$update = "UPDATE " . table_agency_customfields . " 
 							SET 
@@ -1464,6 +1479,10 @@ elseif ($ConfigID == 7) {
 				$updated = mysql_query($update) or die(mysql_error());
                  
 				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
+                        echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
+			     		<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
+				 echo" <div class=\"inside\"> ";
 			}
 		break;
 
@@ -1481,16 +1500,20 @@ elseif ($ConfigID == 7) {
 					$results = $wpdb->query($delete);
 					
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-						
+	                  
 				} // while
 			  } // it was numeric
 			} // for each
+			    		echo "<h3 style=\"width:430px;\">". sprintf(__("Create New  %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	";
+					echo " <div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+					echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
+					echo " <div class=\"inside\"> ";	
 		break;
 		
 		} // Switch
-		
+			
   } // Action Post
-  elseif ($_GET['action'] == "deleteRecord") {
+  elseif (isset($_GET["deleteRecord"])) {
 	
 	$ProfileCustomID = $_GET['ProfileCustomID'];
 
@@ -1505,6 +1528,11 @@ elseif ($ConfigID == 7) {
 			$results = $wpdb->query($delete);
 			
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+			echo "<h3 style=\"width:430px;\">". sprintf(__("Create New  %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	
+			<div class=\"postbox \"  style=\"width:430px;float:left;border:0px solid black;\">
+			<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>
+			<div class=\"inside\"> ";
+		
 				
 		} // is there record?
 	  } // it was numeric
@@ -1535,11 +1563,11 @@ elseif ($ConfigID == 7) {
 		
 			echo " 
 		<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	
-		<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">
-    		 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>
-           <div class=\"inside\"> ";
+		<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+		 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
+		 echo" <div class=\"inside\"> ";
 		
-	
+	      
 		}
   } else {
 		
@@ -1581,9 +1609,13 @@ elseif ($ConfigID == 7) {
                       <td> 
 								<tr>
 										<td>Type*:</td>
-										<td>
-											<select class=\"objtype\" name=\"ProfileCustomType\">
-											<option value=\"\">---</option>
+										<td>";
+							if($rb_agency_options_arr['rb_agency_option_unittype']==1){
+									echo"	<select class=\"objtype\" name=\"ProfileCustomType\" id=\"1\">";
+							}else{
+								echo"	<select class=\"objtype\" name=\"ProfileCustomType\" id=\"0\">";
+							}
+								echo"			<option value=\"\">---</option>
 											<option value=\"1\">Text</option>
 											<!--<option value=\"2\">Min/Max textfield</option>-->
 											<option value=\"3\">Dropdown</option>
@@ -1591,9 +1623,9 @@ elseif ($ConfigID == 7) {
 											<option value=\"5\">Checkbox</option>
 											<option value=\"6\">Radiobutton</option>";
 											if($rb_agency_options_arr['rb_agency_option_unittype']==1){
-												echo"     <option value=\"7\">Imperial (in/lb)</option>";
+												echo"     <option value=\"7\" id=\"1\">Imperial(in/lb)</option>";
 											}else{
-												echo"     <option value=\"7\">Metric (cm/kg)</option>";
+												echo"     <option value=\"7\" id=\"0\">Metric(cm/kg)</option>";
 											}
 										 echo"  </select>";					   
 						//				 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;display:none;\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
@@ -1887,8 +1919,9 @@ elseif ($ConfigID == 7) {
 											<td>Title:</td>
 											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
 										</tr>";
+									  echo "<tr><td><br/></td></tr>";	
 								        echo "<tr>
-											 <td align=\"right\"  valign=\"top\" style=\"width:50px;\">Value*:</td>
+											 <td align=\"right\"  valign=\"top\">Value*:</td>
 											 <td><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" style=\"width:400px;\"> ". $data1["ProfileCustomValue"] ."</textarea></td>
 										</tr>";
 								
@@ -1950,7 +1983,27 @@ elseif ($ConfigID == 7) {
 								
 								 }
 								  elseif($data1["ProfileCustomType"] == 7){	 ///metric/imperials
-								
+										echo "<tr><td>Title*:<input type='text' name='ProfileCustomTitle' value=\"".$data1["ProfileCustomTitle"]."\"/></td></tr>";
+										echo "<tr><td>&nbsp;</td></tr>";
+										 
+										 if($rb_agency_options_arr['rb_agency_option_unittype']==1){
+											  if($data1["ProfileCustomOptions"]==1){
+												echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' checked=\"checked\" />in</td></tr>";
+										    		echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' />lb</td></tr>";
+											  }else
+											  {echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' />in</td></tr>";
+										    		echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' checked=\"checked\" />lb</td></tr>";
+											  }
+										 }else{
+											   if($data1["ProfileCustomOptions"]==1){
+												echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' />cm</td></tr>";
+										     	      echo "<tr><td><input type='radio' name='ProfileUnitType' value='2'  checked=\"checked\" />kg</td></tr>";  
+											  }else{
+												echo "<tr><td><input type='radio' name='ProfileUnitType' value='1'  checked=\"checked\"  />cm</td></tr>";
+										     	      echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' />kg</td></tr>";  
+											  }
+										 }
+										
 								 }
 							 
 						  
@@ -2013,7 +2066,7 @@ elseif ($ConfigID == 7) {
 			   $dir = "asc";
 		}
 	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7\">\n";	
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -2023,7 +2076,8 @@ elseif ($ConfigID == 7) {
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomOptions&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Options", rb_agency_TEXTDOMAIN) ."</a></th>\n";
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Visibility", rb_agency_TEXTDOMAIN) ."</a></th>\n";
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Custom Order", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+	
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		echo "<tfoot>\n";
@@ -2034,6 +2088,7 @@ elseif ($ConfigID == 7) {
 		echo "        <th class=\"column\" scope=\"col\">". __("Options", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Visibility", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Custom Order", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
@@ -2048,13 +2103,16 @@ elseif ($ConfigID == 7) {
 		echo "        <td class=\"column\">". stripslashes($data['ProfileCustomTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
-		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1 ){ echo "Text"; } elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; } echo "</td>\n";
+		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1 ){ echo "Text"; } elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; }  elseif ($data['ProfileCustomType'] == 7) { if($rb_agency_options_arr['rb_agency_option_unittype']==1){ if($data['ProfileCustomOptions']==1){echo "Imperial(in)";}else{echo "Imperial(lb)";} } else{ if($data['ProfileCustomOptions']==2){echo "Metric(cm)";}else{echo "Metric(kg)";} } } echo "</td>\n";
 		echo "        <td class=\"column\">". $data['ProfileCustomOptions'] ."</td>\n";
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) { echo "Public"; } elseif ($data['ProfileCustomView'] == 1) { echo "Private"; } elseif ($data['ProfileCustomView'] == 2) { echo "Custom"; } echo "</td>\n";
 		 echo "        <th class=\"column\">".$data['ProfileCustomOrder']."</th>\n";
+		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender'].""); 
+		 $fetchGender = mysql_fetch_assoc($queryGender);
+		 echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
 		echo "    </tr>\n";
 		}
 		mysql_free_result($results);
