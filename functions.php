@@ -897,15 +897,19 @@
 			while ($dataList = mysql_fetch_array($resultsList)) {
 				if ($rb_agency_option_profilelist_favorite) {
 				 //Execute query - Favorite Model
-			     $queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = ".$dataList["pID"]." ");
-	                 $dataFavorite = mysql_fetch_assoc($queryFavorite); 
-			     $countFavorite = mysql_num_rows($queryFavorite);
+				 if(!empty($dataList["pID"])){
+			     		$queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = '".$dataList["pID"]."' ") or die(mysql_error());
+	                 		$dataFavorite = mysql_fetch_assoc($queryFavorite); 
+			     		$countFavorite = mysql_num_rows($queryFavorite);
+				 }
 				}
 				if ($rb_agency_option_profilelist_castingcart) {
 			      //Execute query - Casting Cart
-			     $queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = ".$dataList["pID"]." ");
-	                 $dataCastingCart = mysql_fetch_assoc($queryCastingCart); 
-			     $countCastingCart = mysql_num_rows($queryCastingCart);
+				 if(!empty($dataList["pID"])){
+			    	 $queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = '".$dataList["pID"]."' ") or die(mysql_error());
+	                	 $dataCastingCart = mysql_fetch_assoc($queryCastingCart); 
+			    	 $countCastingCart = mysql_num_rows($queryCastingCart);
+				 }
 				}
 		
 				$profileDisplay++;

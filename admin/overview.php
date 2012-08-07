@@ -41,11 +41,20 @@ echo "        <div class=\"inner\">\n";
 		echo "				    </tr>\n";
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("Both Male and Female", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"Male\"". selected($_SESSION['ProfileGender'], "Male") .">". __("Male", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"Female\"". selected($_SESSION['ProfileGender'], "Female") .">". __("Female", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "				        	</select>\n";
+		echo "				        <td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";       
+					$query1 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ."";
+					$results1 = mysql_query($query1);
+					$count1 = mysql_num_rows($results1);
+					if ($count1 > 0) {
+						echo " <option value=\"\">All Gender</option>";
+						while ($data1 = mysql_fetch_array($results1)) {
+							
+							echo " <option value=\"". $data1["GenderID"] ."\" ". selected( $_SESSION['ProfileGender'], $data1["GenderID"]) .">". $data1["GenderTitle"] ."</option>\n";
+						}
+						echo "</select>\n";
+					} else {
+						echo "". __("No items to select", rb_restaurant_TEXTDOMAIN) .".";
+					}
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
 		echo "				    <tr>\n";
@@ -59,9 +68,9 @@ echo "        <div class=\"inner\">\n";
 		echo "				    </tr>\n";
 		
 		  $queryHeight = mysql_query("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomTitle = 'Height' or ProfileCustomTitle = 'height'  ");
-		   $dataHeight = mysql_fetch_assoc($queryHeight) or die(mysql_error());
 		  $countHeight = mysql_num_rows($queryHeight);
 		  if($countHeight > 0){
+			     $dataHeight = mysql_fetch_assoc($queryHeight) or die(mysql_error());
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Height", rb_agency_TEXTDOMAIN) . " :</th>\n";
 		echo "				        <td>\n";               
@@ -109,9 +118,10 @@ echo "        <div class=\"inner\">\n";
 		echo "				    </tr>\n";
 		  } // end if height
 		$queryWeight = mysql_query("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomTitle = 'Weight' or ProfileCustomTitle = 'weight'  ");
-		 $dataWeight = mysql_fetch_assoc($queryWeight);
+		
 		$countWeight = mysql_num_rows($queryWeight);
 		if($countWeight > 0){
+			 $dataWeight = mysql_fetch_assoc($queryWeight);
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Weight", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td>\n";               
@@ -144,8 +154,10 @@ echo "        <div class=\"inner\">\n";
 
 			   if ($user_level >= 7) {
             echo "<p><a href='?page=rb_agency_menu_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Browse and edit existing profiles", rb_agency_TEXTDOMAIN) . ".</p>";
-            echo "<p><a href='?page=rb_agency_menu_profiles&action=add' class=\"button-secondary\">". __("Create New Profile", rb_agency_TEXTDOMAIN) . "</a> - ". __("Create new profile", rb_agency_TEXTDOMAIN) . ".</p>";
-            echo "<p><a href='?page=rb_agency_menu_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find and send profiles by filtering by chriteria", rb_agency_TEXTDOMAIN) . ".</p>";
+            echo "<br/>";
+		echo "<p><a href='?page=rb_agency_menu_profiles&action=add' class=\"button-secondary\">". __("Create New Profile", rb_agency_TEXTDOMAIN) . "</a> - ". __("Create new profile", rb_agency_TEXTDOMAIN) . ".</p>";
+            echo "<br/>";
+		echo "<p><a href='?page=rb_agency_menu_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find and send profiles by filtering by chriteria", rb_agency_TEXTDOMAIN) . ".</p>";
 			   }
 
 echo "        </div>\n"; 
