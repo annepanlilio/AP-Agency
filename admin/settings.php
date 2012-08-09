@@ -1384,7 +1384,7 @@ elseif ($ConfigID == 7) {
 		         foreach($_POST["label"] as $key => $val){
 					    
 					
-					if(!empty($_POST["label"]) && $_POST["label"] !=""){
+					if(!empty($_POST["label"]) && $_POST["label"] !=""  && !empty($val)){
 						$pos++;		
 					   if($pos!= count($_POST["label"])){ 
 					    $ProfileCustomOptions .= $val."|";
@@ -1402,7 +1402,7 @@ elseif ($ConfigID == 7) {
 		         foreach($_POST["label"] as $key => $val){
 					    
 						
-					if(!empty($_POST["label"])  && $_POST["label"] !=""){
+					if(!empty($_POST["label"])  && $_POST["label"] !="" && !empty($val)){
 						  $pos++;	
 					   if($pos!= count($_POST["label"])){ 
 					    $ProfileCustomOptions .= $val."|";
@@ -1675,7 +1675,7 @@ elseif ($ConfigID == 7) {
 													
 													$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 													echo "<select name=\"ProfileCustomShowGender\">";
-													echo "<option value=\"\">--</option>";
+													echo "<option value=\"\">All Gender</option>";
 															
 													$queryShowGender = mysql_query($query);
 													
@@ -1794,11 +1794,11 @@ elseif ($ConfigID == 7) {
 													
 													$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 													echo "<select name=\"ProfileCustomShowGender\">";
-													echo "<option value=\"\">--</option>";
+													echo "<option value=\"\">All Gender</option>";
 													$queryShowGender = mysql_query($query);
 														 while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
 															
-																echo "<option value=\"".$dataShowGender["GenderID"]."\" ". ($data1["ProfileCustomShowGender"] == $dataShowGender["GenderID"] ? 'selected=\"selected\"':'').">".$dataShowGender["GenderTitle"]."</option>";
+																echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data1["ProfileCustomShowGender"],$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
 															
 														 }
 													echo "</select>";
@@ -1963,15 +1963,18 @@ elseif ($ConfigID == 7) {
 												   <tr>
 													      <td>&nbsp;</td>
 														<td valign=\"top\">
-														 ";
+														 <br/>";
 										 foreach($array_customOptions_values as  $val){
-											
+											 if(!empty($val)){
+											  $pos++;	
 											  echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+											
 														 if($pos ==1){
 																	echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
 														 }
 											  echo "<br/>";	
-											   $pos++;		 
+											   }
+											 	 
 											
 										 }
 													 echo "</td>";
@@ -2112,7 +2115,12 @@ elseif ($ConfigID == 7) {
 		 echo "        <th class=\"column\">".$data['ProfileCustomOrder']."</th>\n";
 		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender'].""); 
 		 $fetchGender = mysql_fetch_assoc($queryGender);
-		 echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
+		 $countGender = mysql_num_rows($queryGender);
+		 if($countGender > 0){
+		 	echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
+		 }else{
+			echo "        <th class=\"column\">All Gender</th>\n";
+		 }
 		echo "    </tr>\n";
 		}
 		mysql_free_result($results);

@@ -76,11 +76,9 @@ if ($_GET['action'] == "quickPrint") {
 	}
 	// Gender
 	if (isset($ProfileGender) && !empty($ProfileGender)){
-	  if ($ProfileGender == "Female") {
-		$filter .= " AND profile.ProfileGender='female'";
-	  } elseif ($ProfileGender == "Male") {
-		$filter .= " AND profile.ProfileGender='male'";
-	  }
+	  
+		$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+	  
 	} else {
 		$ProfileGender = "";
 	}

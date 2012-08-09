@@ -6,9 +6,9 @@
   Description: With this plugin you can easily manage models profiles and information.
   Author: Rob Bertholf
   Author URI: http://rob.bertholf.com/
-  Version: 1.9.2
+  Version: 1.9.1
 */
-$rb_agency_VERSION = "1.9.2"; 
+$rb_agency_VERSION = "1.9.1"; 
 
 if (!session_id())
 session_start();
@@ -221,7 +221,7 @@ return;
 				);";
 			dbDelta($sql);
 	 	// Populate Custom Fields
-		$query = "SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'";
+		$query = mysql_query("SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'");
 		$count = mysql_num_rows($results);
 		if ($count < 1) {
 			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Language', 1,'', 0, 0, 1, 1, 1, 1,1)");
@@ -428,7 +428,18 @@ if ( is_admin() ){
 					echo "</select></td></tr>\n";
 			echo "	<tr><td>". __("Starting Age", rb_agency_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_start\" name=\"rb_agency_age_start\" value=\"18\" /></td></tr>\n";
 			echo "	<tr><td>". __("Ending Age", rb_agency_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_stop\" name=\"rb_agency_age_stop\" value=\"99\" /></td></tr>\n";
-			echo "	<tr><td>". __("Gender", rb_agency_TEXTDOMAIN) .":</td><td><select id=\"rb_agency_gender\" name=\"rb_agency_gender\"><option value=\"\">". __("Both Male &amp; Female", rb_agency_TEXTDOMAIN) ."</option><option value=\"female\">". __("Female Only", rb_agency_TEXTDOMAIN) ."</option><option value=\"male\">". __("Male Only", rb_agency_TEXTDOMAIN) ."</option></select></td></tr>\n";
+			echo "	<tr><td>". __("Gender", rb_agency_TEXTDOMAIN) .":</td><td>";
+			echo "<select id=\"rb_agency_gender\" name=\"rb_agency_gender\">";
+			$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+				
+				echo "<option value=\"\">All Gender</option>";
+				$queryShowGender = mysql_query($query);
+				while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".$dataShowGender["GenderTitle"]."</option>";
+				 }
+			echo "</select>";
+			echo "</td></tr>\n";
+			
 			echo "</table>\n";
 			echo "<p><input type=\"button\" onclick=\"create_profile_list()\" value=\"". __("Insert Profile List", rb_agency_TEXTDOMAIN) ."\" /></p>\n";
 			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", rb_agency_TEXTDOMAIN) ."\" /></p>\n";

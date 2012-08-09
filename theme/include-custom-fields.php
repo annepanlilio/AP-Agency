@@ -9,9 +9,7 @@
 							      $dataList2 = mysql_fetch_assoc($results2); 
 								$count2 = mysql_num_rows($results2);
 								
-			$query3 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderTitle='".$dataList2["ProfileGender"]."' ORDER BY GenderID";
-								$results3 = mysql_query($query3);
-							      $dataList3 = mysql_fetch_assoc($results3); 
+		
 							
 		while ($data1 = mysql_fetch_array($results1)) { 
 		       
@@ -22,7 +20,7 @@
 						 if($isSearchPage == 1 && $data1["ProfileCustomShowSearch"] == 1 && $data1["ProfileCustomShowLogged"] == 1){ // In Search  page
 							#DEBUG! 
 							#echo "is Search Page";
-							if($data1["ProfileCustomShowGender"] == $dataList3["GenderID"]){ // Depends on Current LoggedIn User's Gender
+							if($data1["ProfileCustomShowGender"] == $dataList2["ProfileGender"]){ // Depends on Current LoggedIn User's Gender
 								 // Show custom fields for admins only.
 								 #DEBUG
 								 #echo "ShowGender";

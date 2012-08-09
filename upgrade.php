@@ -116,29 +116,29 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 
 
 	 	// Populate Custom Fields
-		$query = "SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'";
+		$query = mysql_query("SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'");
 		$count = mysql_num_rows($results);
 		if ($count < 1) {
 
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Language', 1,'', 0, 0, 1, 1, 1, 1,1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Ethnicity', 3,  '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|no',0, 0, 2, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Skin Tone', 3, '|Fair|Medium|Dark|no', 0, 0, 3, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Hair Color', 3,  '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|no',0, 0, 4, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Eye Color', 3,  '|Blue|Brown|Hazel|Green|Black|no',0, 0, 5, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Height', 1, '', 0, 0, 6, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Weight', 1, '',0, 0, 7, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Bust', 1, '',0,  0, 8, 1, 1, 1, 1");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Waist', 1,  '',0, 0, 9, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Hip', 1,  '',0, 0, 10, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Shoe', 1,  '',0, 0, 11, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Dress', 1,  '',0, 0, 12, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Union', 1,  '',0, 0, 13, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Experience', 4,  '',0, 0, 14, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Language', 1,'', 0, 0, 1, 1, 1, 1,1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Ethnicity', 3,  '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|no',0, 0, 2, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Skin Tone', 3, '|Fair|Medium|Dark|no', 0, 0, 3, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Hair Color', 3,  '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|no',0, 0, 4, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Eye Color', 3,  '|Blue|Brown|Hazel|Green|Black|no',0, 0, 5, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Height', 1, '', 0, 0, 6, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Weight', 1, '',0, 0, 7, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Bust', 1, '',0,  0, 8, 1, 1, 1, 1");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Waist', 1,  '',0, 0, 9, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Hip', 1,  '',0, 0, 10, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Shoe', 1,  '',0, 0, 11, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Dress', 1,  '',0, 0, 12, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Union', 1,  '',0, 0, 13, 1, 1, 1, 1)");
+			$insert = mysql_query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Experience', 4,  '',0, 0, 14, 1, 1, 1, 1)");
 
 		}
 
 		//Fix Custom Fields compatibility. 1.8 to 1.9.1
-		$results = $wpdb->query("SELECT * FROM ".table_agency_customfields." ");
+		$results = mysql_query("SELECT * FROM ".table_agency_customfields." ");
 		while($fetchData = mysql_fetch_assoc($results)):
 			if($fetchData["ProfileCustomType"] == 0){
 				mysql_query("UPDATE ".table_agency_customfields." SET  ProfileCustomType = 1 WHERE ProfileCustomType = 0 ");
@@ -148,6 +148,17 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 				//label|data1|data2|...|data10|no <- isLabelSetAsChecked[yes/no]
 				mysql_query("UPDATE ".table_agency_customfields." SET  ProfileCustomOptions = '"."|".$fetchData["ProfileCustomOptions"]."|no"."' WHERE ProfileCustomID = ".$fetchData["ProfileCustomID"]."");
 			}
+		endwhile;
+		
+		// Fix Gender compatibility
+		$results = $wpdb->query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ");
+		while($fetchData = mysql_fetch_assoc($results)):
+		         $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'");
+		         $fetchGender = mysql_fetch_assoc($queryGender);
+			   $count = mysql_num_rows($queryGender);
+			   if($count > 0){
+			   	$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$fetchGender["GenderID"]."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
+			   }
 		endwhile;
 		
 		// Updating version number!

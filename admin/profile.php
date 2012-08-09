@@ -542,6 +542,7 @@ function rb_display_manage($ProfileID) {
 		echo "<p>". __("Fill in the form below to add a new", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
 	} 
 	
+	
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 	
 	echo "<div style=\"float: left; width: 50%; \">\n";
@@ -649,6 +650,9 @@ function rb_display_manage($ProfileID) {
 	echo "	  </tr>\n";
 	// Custom Admin Fields
       	// ProfileCustomView = 1 , Private
+		if(isset( $_GET["ProfileGender"])){
+		  $ProfileGender  = $_GET["ProfileGender"];	
+		}
 		rb_custom_fields(1, $ProfileID, $ProfileGender, true);
 	
 	// Public Information
@@ -828,14 +832,14 @@ function rb_display_manage($ProfileID) {
 	echo "    <tr valign=\"top\">\n";
 	echo "		<th scope=\"row\">". __("Classification", rb_agency_TEXTDOMAIN) ."</th>\n";
 	echo "		<td>\n";
-		
-				$ProfileTypeArray = explode(",", $ProfileType);
-	
+		            if(isset($_GET["action"])=="editRecord"){
+					$ProfileTypeArray = explode(",", $ProfileType);
+				}
 				$query3 = "SELECT * FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 				$results3 = mysql_query($query3);
 				$count3 = mysql_num_rows($results3);
 				while ($data3 = mysql_fetch_array($results3)) {
-					echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"". $data3['DataTypeID'] ."\""; if ( in_array($data3['DataTypeID'], $ProfileTypeArray)) { echo " checked=\"checked\""; } echo "> ". $data3['DataTypeTitle'] ."<br />\n";
+					echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"". $data3['DataTypeID'] ."\"";  if ( in_array($data3['DataTypeID'], $ProfileTypeArray)  && isset($_GET["action"])=="editRecord") { echo " checked=\"checked\""; }  echo "> ". $data3['DataTypeTitle'] ."<br />\n";
 				}
 				if ($count3 < 1) {
 					echo "". __("No items to select", rb_agency_TEXTDOMAIN) .". <a href='". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=5") ."'>". __("Setup Options", rb_agency_TEXTDOMAIN) ."</a>\n";

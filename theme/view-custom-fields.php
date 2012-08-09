@@ -13,9 +13,9 @@
 				  if ($rb_agency_option_unittype == 1) {
 						
 					      echo "	 <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("In Inches", rb_agency_TEXTDOMAIN) .")</em></label>\n";
-						echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
+						echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
 								if (empty($ProfileStatHeight)) {
-						echo " 				<option value=\"\" selected>--</option>\n";
+						echo " 				<option value=\"\">--</option>\n";
 										}
 										
 										$i=36;
@@ -26,7 +26,7 @@
 										  $heightraw = $i;
 										  $heightfeet = floor($heightraw/12);
 										  $heightinch = $heightraw - floor($heightfeet*12);
-						echo " 				<option value=\"". $i ."\" ". selected($_SESSION["ProfileCustomID".$ProfileCustomID], $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+						echo " 				<option value=\"". $i ."\" ". selected($_SESSION["ProfileCustomID".$data1['ProfileCustomID']], $i,false) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
 										  $i++;
 										}
 						echo " 			</select>\n";

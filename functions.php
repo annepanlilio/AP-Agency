@@ -459,11 +459,11 @@
 			
 			// Gender
 			if (isset($ProfileGender) && !empty($ProfileGender)){
-				if (strtolower($ProfileGender) == "female") {
-					$filter .= " AND profile.ProfileGender='female'";
-				} elseif (strtolower($ProfileGender) == "male") {
-					$filter .= " AND profile.ProfileGender='male'";
-				}
+			  
+				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+			  
+			} else {
+				$ProfileGender = "";
 			}
 			
 			// Age
@@ -704,15 +704,14 @@
 		}		
 		
 		// Gender
-		if (isset($ProfileGender) && !empty($ProfileGender)){
-		    if (strtolower($ProfileGender) == "female") {
-				$filter .= " AND profile.ProfileGender='female'";
-		    } elseif (strtolower($ProfileGender) == "male") {
-				$filter .= " AND profile.ProfileGender='male'";
-		    }
-		} else {
-			$ProfileGender = "";
-		}
+			
+			if (isset($ProfileGender) && !empty($ProfileGender)){
+			  
+				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+			  
+			} else {
+				$ProfileGender = "";
+			}
 		// Age
 		$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
 		if (isset($ProfileDateBirth_min) && !empty($ProfileDateBirth_min)){
@@ -1443,9 +1442,7 @@ class rb_agency_pagination {
 
 function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileGenderShow = false){
 				
-	$query4 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderTitle='".$ProfileGender."' ORDER BY GenderID";
-	$results4 = mysql_query($query4);
-	$dataList4 = mysql_fetch_assoc($results4); 
+	
 								
 	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = ".$visibility."  ORDER BY ProfileCustomOrder";
 	$results3 = mysql_query($query3) or die(mysql_error());
@@ -1453,7 +1450,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 	
 	while ($data3 = mysql_fetch_assoc($results3)) {
 		 if($ProfileGenderShow ==true){
-			if($data3["ProfileCustomShowGender"] == $dataList4["GenderID"] && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
+			if($data3["ProfileCustomShowGender"] == $ProfileGender && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
 					 rb_custom_fields_template($visibility, $ProfileID, $data3);
 			} elseif(empty($data3["ProfileCustomShowGender"])) {
 					 rb_custom_fields_template($visibility, $ProfileID, $data3);
@@ -1595,12 +1592,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						echo "<option value=\"\">--</option>";
 						foreach($data2 as $val2){
 								if($val2 != end($data2) && $val2 !=  $data2[0]){
-									 if ($val2 == $ProfileCustomValue ) {
-										$isSelected = "selected=\"selected\"";
-										echo "<option value=\"".$val2."\" ".$isSelected .">".$val2."</option>";
-									 } else {
-										echo "<option value=\"".$val2."\" >".$val2."</option>";
-									 }
+									echo "<option value=\"".$val2."\" ". selected($val2, $ProfileCustomValue) ." >".$val2."</option>";
 								}
 							}
 						echo "</select>\n";
@@ -1610,26 +1602,67 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				echo "<textarea style=\"width: 100%; min-height: 300px;\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">". $ProfileCustomValue ."</textarea>";
 				
 			} elseif ($ProfileCustomType == 5) {
-				
+			
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 				echo "<div style=\"width:300px;float:left;\">";
 				foreach($array_customOptions_values as $val){
-					 echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+					 $xplode = explode(",",$ProfileCustomValue);
+					 echo "<label><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
 					 echo "". $val."</label>";
-				}
+				}      echo "<br/>";
 				echo "</div>";
 				   
 			} elseif ($ProfileCustomType == 6) {
 				
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
+				
 				foreach($array_customOptions_values as $val){
-					 echo "<input type=\"radio\" value=\"". $val."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
-					 echo "<span style=\"color:white;\">". $val."</span><br/>";
+					
+					 echo "<input type=\"radio\" value=\"". $val."\" "; checked($val, $ProfileCustomValue); echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+					 echo "<span>". $val."</span><br/>";
 				}
+			}elseif ($ProfileCustomType == 7) { //Imperial/Metrics
+			
+						echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
+						
 			}
 									
 	 }
 			
 	} // End if Empty ProfileCustomID
 }
+
+ /*/
+  *   ================ Get Profile Gender for each user ===================
+  *   @returns GenderTitle
+ /*/   
+  function rb_agency_getGenderTitle($ProfileGenderID){
+	 
+	 $query = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID='".$ProfileGenderID."'";
+	 $results = mysql_query($query) or die(mysql_error());
+	 $count = mysql_num_rows($results);
+	 if($count > 0){
+		 $data = mysql_fetch_assoc($results);
+	  	 return $data["GenderTitle"];
+	 }else{
+	    return 0;	 
+	 }
+ }
+
+
+ /*/
+  *   ================ Filters custom fields to show based on assigned gender ===================
+  *   @returns GenderTitle
+ /*/ 
+ 
+ function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
+	  $query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID ='".$ProfileCustomID."' AND ProfileCustomShowGender IN('".$ProfileGenderID."','') ";
+	  $results = mysql_query($query) or die(mysql_error());
+	  $count = mysql_num_rows($results);
+	  if($count > 0){
+		 return true;  
+	  }else{
+		 return false;
+	  }
+ }
 ?>

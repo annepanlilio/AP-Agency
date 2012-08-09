@@ -260,33 +260,20 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 				if (!empty($data['ProfileContactEmail'])) {
 					echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
 				}
-				if (!empty($data['ProfileContactWebsite'])) {
-					echo "<div><strong>Website:</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
-				}
-				if (!empty($data['ProfileLocationStreet'])) {
-					echo "<div><strong>Street:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
-				}
+				
 				if (!empty($data['ProfileLocationStreet'])) {
 					echo "<div><strong>Address:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
 				}
-				if (!empty($data['ProfileContactParent'])) {
-					echo "<div><strong>Parent:</strong> ". $data['ProfileContactParent'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactPhoneWork'])) {
-					echo "<div><strong>Work Phone:</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactPhoneCell'])) {
-					echo "<div><strong>Cell Phone:</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
-				}
-				if (!empty($data['ProfileContactPhoneHome'])) {
-					echo "<div><strong>Home Phone:</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
-				}
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 1 AND cx.ProfileID = ". $ProfileID ." GROUP BY c.ProfileCustomID");
-				foreach  ($resultsCustom as $resultCustom) {
+				
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+		foreach  ($resultsCustom as $resultCustom) {
+			if(!empty($resultCustom->ProfileCustomValue )){
+				if(rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 				}
-
-        echo "                </div>\n";
+			}
+		}
+	  echo "                </div>\n";
         echo "                <div class=\"title\">\n";
         echo "                	<h2>". $data['ProfileContactNameFirst'] ." ". $data['ProfileContactNameLast'] ."</h2>\n";
         echo "                </div>\n";
@@ -305,7 +292,11 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 					echo "<div><strong>Language:</strong> ". $data['ProfileLanguage'] ."</div>\n";
 				}
 				if (!empty($data['ProfileGender'])) {
-					echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileGender'] ."</div>\n";
+					if(rb_agency_getGenderTitle($data['ProfileGender'])){
+						echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
+					}else{
+						echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</div>\n";	
+					}
 				}
 				if (!empty($data['ProfileDateBirth'])) {
 					echo "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
@@ -313,18 +304,26 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 				if (!empty($data['ProfileDateBirth'])) {
 					echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
 				}
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY c.ProfileCustomID");
-				foreach  ($resultsCustom as $resultCustom) {
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+		foreach  ($resultsCustom as $resultCustom) {
+			if(!empty($resultCustom->ProfileCustomValue )){
+				if(rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 				}
+			}
+		}
 
         echo "            </td>\n";
         echo "            <td class=\"ProfileStats column-ProfileStats\">\n";
 			
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomTitle, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY c.ProfileCustomID");
-				foreach  ($resultsCustom as $resultCustom) {
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+		foreach  ($resultsCustom as $resultCustom) {
+			if(!empty($resultCustom->ProfileCustomValue )){
+				if(rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 				}
+			}
+		}
 
         echo "            </td>\n";
         echo "            <td class=\"ProfileImage column-ProfileImage\">\n";
@@ -530,10 +529,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 										$profileDataTypes = mysql_query("SELECT * FROM ". table_agency_data_type ."");
 										while ($dataType = mysql_fetch_array($profileDataTypes)) {
-											if ($_SESSION['ProfileType']) {
-												if ($dataType["DataTypeID"] ==  $_SESSION['ProfileType']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
-											} else { $selectedvalue = ""; }
-											echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
+											echo "<option value=\"". $dataType["DataTypeID"] ."\" ".selected($_SESSION['ProfileType'],$dataType["DataTypeID"],false).">". $dataType["DataTypeTitle"] ."</option>";
 										}
 		echo "				        	</select>\n";
 		echo "				        </td>\n";
@@ -541,10 +537,13 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("Both Male and Female", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"Male\"". selected($_SESSION['ProfileGender'], "Male") .">". __("Male", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"Female\"". selected($_SESSION['ProfileGender'], "Female") .">". __("Female", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "				        	</select>\n";
+		echo "						<option value=\"\">". __("--", rb_agency_TEXTDOMAIN) . "</option>\n";
+											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+											$results2 = mysql_query($query2);
+											while ($dataGender = mysql_fetch_array($results2)) {
+												echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION["ProfileGender"],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
+											}
+		echo "						</select>\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
 		echo "				    <tr>\n";

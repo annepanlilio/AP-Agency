@@ -38,10 +38,13 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				        <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("Both Male and Female", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"Male\"". selected($_SESSION['ProfileGender'], "Male") .">". __("Male", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"Female\"". selected($_SESSION['ProfileGender'], "Female") .">". __("Female", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "				        </select>\n";
+		echo "							<option value=\"\">". __("--", rb_agency_TEXTDOMAIN) . "</option>\n";
+											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+											$results2 = mysql_query($query2);
+											while ($dataGender = mysql_fetch_array($results2)) {
+												echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['ProfileGender'],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
+											}
+	      echo "				        </select>\n";
 		echo "				    </div>\n";
 		
 		echo "				    <div class=\"search-field double\">\n";
@@ -81,24 +84,21 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 											$results2 = mysql_query($query);
 											while ($dataType = mysql_fetch_array($results2)) {
-												if ($_SESSION['ProfileType']) {
-													if ($dataType["DataTypeID"] ==  $_SESSION['ProfileType']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
-												} else { $selectedvalue = ""; }
-												echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
+												echo "<option value=\"". $dataType["DataTypeID"] ."\"".selected($_SESSION['ProfileType'],$dataType["DataTypeID"] ,false).">". $dataType["DataTypeTitle"] ."</option>";
 											}
 		echo "				        	</select>\n";
 		echo "				    </div>\n";
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				        <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("Both Male and Female", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
 											while ($dataGender = mysql_fetch_array($results2)) {
 												if ($_SESSION['ProfileGender']) {
 													if ($dataGender["GenderTitle"] ==  $_SESSION['ProfileGender']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 												} else { $selectedvalue = ""; }
-												echo "<option value=\"". $dataGender["GenderTitle"] ."\"".$selectedvalue.">". $dataGender["GenderTitle"] ."</option>";
+												echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['ProfileGender'],$dataGender["GenderID"] ,false).">". $dataGender["GenderTitle"] ."</option>";
 											}
 	      echo "				        </select>\n";
 		echo "				    </div>\n";
