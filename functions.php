@@ -481,8 +481,10 @@
 			$queryList = "SELECT dt.DataTypeID, dt.DataTypeTitle, dt.DataTypeTag, (SELECT COUNT(profile.ProfileID) FROM  ". table_agency_profile ." profile WHERE profile.ProfileIsActive = 1 AND FIND_IN_SET(dt.DataTypeID, profile.ProfileType) $filter) AS CategoryCount FROM ". table_agency_data_type ." dt ORDER BY dt.DataTypeTitle ASC";
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
-	
-			echo "<div id=\"profile-category-list\">\n";
+	    
+		
+			
+		      
 			while ($dataList = mysql_fetch_array($resultsList)) {
 	           
 				echo "<div class=\"profile-category\">\n";

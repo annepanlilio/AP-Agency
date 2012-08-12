@@ -103,6 +103,13 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 			SavedFavoriteTalentID VARCHAR(255),
 			PRIMARY KEY (SavedFavoriteID)
 			);");
+			
+		$results = $wpdb->query("CREATE TABLE ". table_agency_castingcart." (
+				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				CastingCartProfileID VARCHAR(255),
+			      CastingCartTalentID VARCHAR(255),
+				PRIMARY KEY (CastingCartID)
+				);");
 				
 	   	// Custom Order in Custom Fields
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");
@@ -117,7 +124,7 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 
 	 	// Populate Custom Fields
 		$query = mysql_query("SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'");
-		$count = mysql_num_rows($results);
+		$count = mysql_num_rows($query);
 		if ($count < 1) {
 
 			$insert = mysql_query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin) VALUES ('Language', 1,'', 0, 0, 1, 1, 1, 1,1)");
@@ -151,7 +158,7 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 		endwhile;
 		
 		// Fix Gender compatibility
-		$results = $wpdb->query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ");
+		$results = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ");
 		while($fetchData = mysql_fetch_assoc($results)):
 		         $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'");
 		         $fetchGender = mysql_fetch_assoc($queryGender);

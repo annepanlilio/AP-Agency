@@ -650,6 +650,8 @@ elseif ($ConfigID == 8) {
 			$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
 			$results1 = mysql_query($query1);
 			$count1 = mysql_num_rows($results1);
+			$arrayReservedFoldername = array();
+			$pos = 0;
 			while ($data1 = mysql_fetch_array($results1)) {
 				$ProfileID				=$data1["ProfileID"];
 				$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
@@ -666,14 +668,16 @@ elseif ($ConfigID == 8) {
 						$ProfileGalleryFixed = "ID ";
 					}
 					$ProfileGalleryFixed = rb_agency_safenames($ProfileGalleryFixed); 
+				
+				  if(in_array($ProfileGallery,$arrayReservedFoldername)){
+					$ProfileGalleryFixed = rb_agency_set_directory($ProfileGalleryFixed);
+					$arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
+				 }
 					
-					if(in_array($ProfileGalleryFixed,$arrayAllFolderNames)){
-								    $randomNumber = rand(1,15);
-								   if( in_array($randomNumber,$arrayAllFolderNames)){  // if number already exist, add a new random number
-										$ProfileGalleryFixed = $ProfileGalleryFixed.$randomNumber.rand(1,5);
-								   }else{
-									    $ProfileGalleryFixed =  $ProfileGalleryFixed.$randomNumber;
-								   }
+					if ($ProfileGallery == $ProfileGalleryFixed ) {
+				     				$ProfileGalleryFixed = $ProfileGallery;
+					} else {
+						      	$ProfileGalleryFixed  = rb_agency_set_directory($ProfileGalleryFixed);
 					}
 
 				if ($ProfileGallery == $ProfileGalleryFixed) {
@@ -713,6 +717,7 @@ elseif ($ConfigID == 8) {
 					}
 
 				}
+				$pos++;
 			}
 
     } else {
@@ -743,24 +748,14 @@ elseif ($ConfigID == 8) {
 			$count1 = mysql_num_rows($results1);
 			
 			
-			// Check for duplicate
-			$query_duplicate = "SELECT ProfileGallery, count(ProfileGallery) as cnt FROM ". table_agency_profile ." GROUP BY ProfileGallery   HAVING cnt > 1";
-			$rs = mysql_query($query_duplicate);
 			
 			
-			$pos_duplicate = 0;
-			
-			  
-	         while($fs = mysql_fetch_assoc($rs)){
-				 
-				$arrayDuplicateFolders[$pos_duplicate] = $fs["ProfileGallery"];
-				$pos_duplicate ++;
-				 
-			 }
+		
 			
 			
-			    $pos = 0;
+			      $pos = 0;
 				$pos_suggested = 0;
+				$arrayReservedFoldername = array();
 			while ($data1 = mysql_fetch_array($results1)) {
 				$ProfileID				=$data1["ProfileID"];
 				$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
@@ -780,68 +775,38 @@ elseif ($ConfigID == 8) {
 						$ProfileGalleryFixed = "ID ". $ProfileID;
 					}
 					$ProfileGalleryFixed = rb_agency_safenames($ProfileGalleryFixed); 
-					
-					
-						
+				
+				  if(in_array($ProfileGallery,$arrayReservedFoldername)){
+					$ProfileGalleryFixed = rb_agency_just_checkdir($ProfileGalleryFixed);
+					$arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
+				 }
 				echo "<div>\n";
-				if ($ProfileGallery == $ProfileGalleryFixed ) {
-				
-					  if(in_array($ProfileGallery,$arrayDuplicateFolders)){
-					  		echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-							echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
-							echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
-					  }else{
-							 echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-					    
-					  }
-				} else {
-					// Add Profiles to Array to Create later
-					$throw_error = true;
-					//if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGallery)) { echo "<strong>EXISTS</strong>"; } else { echo "<strong>". $ProfileGallery ."</strong>"; }
-                       
-					   //****************************************************************************************************//
-						// Check Username existence
+				// Check for duplicate
+			$query_duplicate = "SELECT ProfileGallery, count(ProfileGallery) as cnt FROM ". table_agency_profile ." WHERE ProfileGallery='".$ProfileGallery."' GROUP BY ProfileGallery   HAVING cnt > 1";
+			$rs = mysql_query($query_duplicate);
+			$count  = mysql_num_rows($rs);
+				if($count > 0){
 						
+							// Add Profiles to Array to Create later
+							$throw_error = true;
+								       $ProfileGalleryFixed =  rb_agency_set_directory($ProfileGalleryFixed);
+									echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
+									echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
+									echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
+									
 						
-							if(in_array($ProfileGalleryFixed,$arrayAllFolderNames)){
-							   
-								$arraySuggestedFolderNames[$pos_suggested] = $ProfileGalleryFixed;
-							}
-						// Check folder duplication and smart naming.	
-							if(in_array($ProfileGalleryFixed,$arrayAllFolderNames)){
-								    $randomNumber = rand(1,15);
-								   if( in_array($randomNumber,$arrayAllFolderNames)){  // if number already exist, add a new random number
-										$ProfileGalleryFixed = $ProfileGalleryFixed.$randomNumber.rand(1,5);
-								   }else{
-									    $ProfileGalleryFixed =  $ProfileGalleryFixed.$randomNumber;
-								   }
-							}
-											
-						$pos_suggested++;
-				
-				if(!empty($arrayDuplicateFound)){
 					
-						echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-						echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
-						echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
-				}else{
-							 echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-					    
-				}
-					  
-					  rb_agency_checkFolderNameDuplication($ProfileGallery,$arrayAllFolderNames );
 					
+				}elseif ($ProfileGallery == $ProfileGalleryFixed ) {
+							
+								 echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
+							 
 				}
-			 
-				echo "</div>\n";
-			}
+				$pos++;
+			}//endwhile
 			
-			
-			
-			
-			
-			
-            if ($count1 < 1) {
+			echo "</div>\n";
+		if ($count1 < 1) {
 				
                 echo "There are currently no profile records.";
 				
@@ -852,10 +817,7 @@ elseif ($ConfigID == 8) {
                   <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Rename Profiles to match Privacy Settings</a>  Clicking this button will rename folders for the above profiles<p>
                   <?php
 			}
-			
-			
-			 
-	} // To Generate or Not to Generate
+		} // To Generate or Not to Generate
 	  
    
 		
@@ -1184,9 +1146,6 @@ if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdu
 						$ProfileGallery = rb_agency_safenames($ProfileContactDisplay); 
 					    }
 					    
-					 
-					
-					   
 					  $ProfileGallery = rb_agency_checkdir($ProfileGallery);
 					    
 					  $insert = "INSERT INTO " . table_agency_profile . "(
@@ -1205,7 +1164,7 @@ if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdu
 					  '".trim($ProfileContactNameFirst)."',
 					  '".trim($ProfileContactNameLast)."',
 					  1,
-					  '".$userGender["GenderTitle"]."',
+					  '".$userGender["GenderID"]."',
 					  '".$userCategory["DataTypeID"]."',
 					  '".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."'
 					 );"; 
@@ -1315,12 +1274,30 @@ function rb_agency_just_checkdir($ProfileGallery){
 			
 			
  }
+ function rb_agency_set_directory($ProfileGallery){
+	 
+			   $finished = false;      
+				$pos = 0;                 // we're not finished yet (we just started)
+				while ( ! $finished ):                   // while not finished
+				 $pos++;
+				  $NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
+				  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
+				      if(($pos-1) <=0){
+						$ProfileGallery = $ProfileGallery;  // Set it to the new  thing
+					}else{
+						$ProfileGallery = $ProfileGallery ."-".($pos);  // Set it to the new  thing
+					}
+					$finished = true;                    // ...we are finished
+				  endif;
+				endwhile;
+				
+				return $ProfileGallery;
+ }
 function rb_chmod_file_display($file){
     chmod($file,0755);	
     return $file;
 }
 
-8
 
 
 ?>
