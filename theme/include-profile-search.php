@@ -20,10 +20,10 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 	
 		echo "		<div id=\"profile-search-form-condensed\" class=\"search-form\">\n";
 		echo "        	<form method=\"post\" id=\"search-form-condensed\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
-		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
+		echo "        		<div><input type=\"hidden\" name=\"action\" value=\"search\" /></div>\n";
 		echo "				    <div class=\"search-field single\">\n";
-		echo "				        <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<select name=\"ProfileType\" id=\"ProfileType\">\n";               
+		echo "				       <div> <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "				        	<div><select name=\"ProfileType\" id=\"ProfileType\">\n";               
 		echo "								<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 											$results2 = mysql_query($query);
@@ -33,30 +33,30 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 												} else { $selectedvalue = ""; }
 												echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
 											}
-		echo "				        	</select>\n";
+		echo "				        	</select></div>\n";
 		echo "				    </div>\n";
 		echo "				    <div class=\"search-field single\">\n";
-		echo "				        <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
+		echo "				       <div> <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "				        <div><select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
 		echo "							<option value=\"\">". __("--", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
 											while ($dataGender = mysql_fetch_array($results2)) {
 												echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['ProfileGender'],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
 											}
-	      echo "				        </select>\n";
+	      echo "				        </select></div>\n";
 		echo "				    </div>\n";
 		
 		echo "				    <div class=\"search-field double\">\n";
 		echo "				        <div class=\"label\">". __("Age", rb_agency_TEXTDOMAIN) . "</div>\n";
-		echo "				        <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" />\n";
-		echo "				        <label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" />\n";
+		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "				        	<div><input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>\n";
+		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "				        	<div><input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
 		echo "				    </div>\n";
 
-		echo "				<input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" />\n";
-		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
+		echo "				<div><input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></div>\n";
 		echo "				<br /><a href=\"". $rb_agency_WPURL ."/profile-search/\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 		echo "        	<form>\n";
 		echo "		</div>\n";
@@ -66,31 +66,31 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 
 		echo " <div id=\"profile-search-form-advanced\" class=\"search-form\">\n";
 		echo "  <form method=\"post\" id=\"search-form-advanced\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
-		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" />\n";
-		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
+		echo "        		<div><input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" /></div>\n";
+		echo "        		<div><input type=\"hidden\" name=\"action\" value=\"search\" /></div>\n";
 		echo "	 <div class=\"search-field single\">\n";
-		echo "		 <label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-	      echo "			<input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" />\n";
+		echo "		 <div><label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label></div>\n";
+	      echo "			<div><input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" /></div>\n";
 	      echo "	 </div>\n";
 		echo "	 <div class=\"search-field single\">\n";
-		echo "		 <label for=\"ProfileLastName\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-	      echo "			<input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION["ProfileContactNameLast"] ."\" />\n";
+		echo "		 <div><label for=\"ProfileLastName\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label></div>\n";
+	      echo "			<div><input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION["ProfileContactNameLast"] ."\" /></div>\n";
 		echo "	 </div>\n";
 	
 		echo "				    <div class=\"search-field single\">\n";
-		echo "				        <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<select name=\"ProfileType\" id=\"ProfileType\">\n";               
+		echo "				       <div> <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "				        	<div><select name=\"ProfileType\" id=\"ProfileType\">\n";               
 		echo "								<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 											$results2 = mysql_query($query);
 											while ($dataType = mysql_fetch_array($results2)) {
 												echo "<option value=\"". $dataType["DataTypeID"] ."\"".selected($_SESSION['ProfileType'],$dataType["DataTypeID"] ,false).">". $dataType["DataTypeTitle"] ."</option>";
 											}
-		echo "				        	</select>\n";
+		echo "				        	</select></div>\n";
 		echo "				    </div>\n";
 		echo "				    <div class=\"search-field single\">\n";
-		echo "				        <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
+		echo "				       <div> <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
+		echo "				       <div> <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
 		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
@@ -100,15 +100,15 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 												} else { $selectedvalue = ""; }
 												echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['ProfileGender'],$dataGender["GenderID"] ,false).">". $dataGender["GenderTitle"] ."</option>";
 											}
-	      echo "				        </select>\n";
+	      echo "				        </select></div>\n";
 		echo "				    </div>\n";
 		
 		echo "				    <div class=\"search-field double\">\n";
 		echo "				        <div class=\"label\">". __("Age", rb_agency_TEXTDOMAIN) . "</div>\n";
-		echo "				        <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" />\n";
-		echo "				        <label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" />\n";
+		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "				        	<div><input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>\n";
+		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "				        	<div><input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
 		echo "				    </div>\n";
 		
 							
@@ -146,8 +146,8 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 		
 		
 	 
-		echo "				<input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" />\n";
-		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
+		echo "				<div><input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></div>\n";
 		//echo "				<input type=\"submit\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 		//echo "				<input type=\"button\" onclick=\"document.getElementById('search-form-advanced').reset();\" value=\"". __("Clear Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 		echo "        	<form>\n";

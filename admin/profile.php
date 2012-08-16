@@ -301,7 +301,7 @@ if (isset($_POST['action'])) {
 						        $have_error = true;	
 							}
 						}
-						else if($uploadMediaType =="CompCard"){
+						else if($uploadMediaType =="Compcard"){
 							// Add to database
 							 if ($_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/png")
 							{
@@ -783,7 +783,7 @@ function rb_display_manage($ProfileID) {
 						}
 						 elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 							$outLinkHeadShot .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
-						}elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
+						}elseif ($dataMedia['ProfileMediaType'] == "Compcard") {
 							$outLinkComCard .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
 						}
 					}
@@ -810,7 +810,7 @@ function rb_display_manage($ProfileID) {
 			for( $i=1; $i<10; $i++ ) {
 			echo "<div>Type: <select name=\"profileMedia". $i ."Type\"><option value='Image'>Image</option><option value='Headshot'>Headshot</option><option value='Compcard'>Comp Card</option><option value='Resume'>Resume</option><option value=\"VoiceDemo\">Voice Demo</option></select><input type='file' id='profileMedia". $i ."' name='profileMedia". $i ."' /></div>\n";
 			}
-	echo "		<p>". __("Paste the YouTube video URL below", rb_agency_TEXTDOMAIN) .".</p>\n";
+	echo "		<p>". __("Paste the video URL below", rb_agency_TEXTDOMAIN) .".</p>\n";
 
 			echo "<div>Type: <select name=\"profileMediaV1Type\"><option selected>". __("Video Slate", rb_agency_TEXTDOMAIN) ."</option><option>". __("Video Monologue", rb_agency_TEXTDOMAIN) ."</option><option>". __("Demo Reel", rb_agency_TEXTDOMAIN) ."</option></select><textarea id='profileMediaV1' name='profileMediaV1'></textarea></div>\n";
 			echo "<div>Type: <select name=\"profileMediaV2Type\"><option>". __("Video Slate", rb_agency_TEXTDOMAIN) ."</option><option selected>". __("Video Monologue", rb_agency_TEXTDOMAIN) ."</option><option>". __("Demo Reel", rb_agency_TEXTDOMAIN) ."</option></select><textarea id='profileMediaV2' name='profileMediaV2'></textarea></div>\n";

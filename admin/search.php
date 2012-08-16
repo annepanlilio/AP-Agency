@@ -33,14 +33,12 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 		$cartString = "";
 	// Add to Cart
 		if ($_GET["action"] == "cartAdd" ) { 
-			extract($_GET);
-			foreach($_GET as $key=>$value) {
-			  if (substr($key, 0, 9) == "ProfileID") {
+			
+			foreach($_GET["ProfileID"] as $value) {
 				$cartString .= $value .",";
-			  }
 			}
 			// Clean It!
-			$cartString = rb_agency_cleanString($cartString);
+			echo $cartString = rb_agency_cleanString($cartString);
 			
 			if (isset($_SESSION['cartArray'])) {
 				$cartArray = $_SESSION['cartArray'];
@@ -243,13 +241,13 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
             $ProfileID = $data['ProfileID'];
 		 $isInactive = '';
 		 $isInactiveDisable = '';
-		 if($data['ProfileIsActive'] == 0){
+		 if($data['ProfileIsActive'] == 0 || empty($data['ProfileIsActive'])){
 		 	$isInactive = 'style="background: #FFEBE8"';
 			$isInactiveDisable = "disabled=\"disabled\"";
 		 }
         echo "        <tr ". $isInactive.">\n";
         echo "            <th class=\"check-column\" scope=\"row\" >\n";
-        echo "                <input type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID". $ProfileID ."\" />\n";
+	  echo "                <input type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
         echo "            </th>\n";
         echo "            <td class=\"ProfileID column-ProfileID\">". $ProfileID ."</td>\n";
         echo "            <td class=\"ProfileContact column-ProfileContact\">\n";
@@ -384,7 +382,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 				$cartString = rb_agency_cleanString($cartString);
             
 			// Show Cart  
-            $query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY ProfileContactNameFirst ASC";
+            $query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY profile.ProfileContactNameFirst ASC";
 			$results = mysql_query($query) or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", rb_agency_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
             $count = mysql_num_rows($results);
             

@@ -12,8 +12,8 @@
 				 // Metric or Imperial?
 				  if ($rb_agency_option_unittype == 1) {
 						
-					      echo "	 <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("In Inches", rb_agency_TEXTDOMAIN) .")</em></label>\n";
-						echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
+					      echo "<div> <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("In Inches", rb_agency_TEXTDOMAIN) .")</em></label></div>\n";
+						echo "<div> <select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
 								if (empty($ProfileStatHeight)) {
 						echo " 				<option value=\"\">--</option>\n";
 										}
@@ -29,31 +29,31 @@
 						echo " 				<option value=\"". $i ."\" ". selected($_SESSION["ProfileCustomID".$data1['ProfileCustomID']], $i,false) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
 										  $i++;
 										}
-						echo " 			</select>\n";
+						echo " 			</select></div>\n";
 
 				} else {
-						echo "	 <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("cm", rb_agency_TEXTDOMAIN) .")</em></label>\n";
-						echo "	 <input type=\"text\" id=\"ProfileStatHeight\" name=\"ProfileStatHeight\" value=\"". $_SESSION["ProfileCustomID".$ProfileCustomID] ."\" />\n";
+						echo "	<div> <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". __("Height", rb_agency_TEXTDOMAIN) ." <em>(". __("cm", rb_agency_TEXTDOMAIN) .")</em></label></div>\n";
+						echo "	<div> <input type=\"text\" id=\"ProfileStatHeight\" name=\"ProfileStatHeight\" value=\"". $_SESSION["ProfileCustomID".$ProfileCustomID] ."\" /></div>\n";
 				}
 				
 			}
 			//Hardcoded Fields -> Weight
 			elseif(strtolower($ProfileCustomTitle) == "weight"){
-						  echo "	 <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". __("Weight", rb_agency_TEXTDOMAIN); 
-							 if ($rb_agency_option_unittype == 1) { echo "<em>(". __("In Pounds", rb_agency_TEXTDOMAIN) .")</em>"; } else { echo "<em>(". __("In Kilo", rb_agency_TEXTDOMAIN) .")</em></th>\n"; }	
-						  echo "</label>\n";
+						  echo "	<div> <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". __("Weight", rb_agency_TEXTDOMAIN); 
+							 if ($rb_agency_option_unittype == 1) { echo "<em>(". __("In Pounds", rb_agency_TEXTDOMAIN) .")</em>"; } else { echo "<em>(". __("In Kilo", rb_agency_TEXTDOMAIN) .")</em>\n"; }	
+						  echo "</label></div>\n";
 				
-									echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID".$ProfileCustomID]."\" /><br />\n";
+									echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID".$ProfileCustomID]."\" /></div>\n";
 						 
 			}
 			// Customfields
 			else{ 
 			 
-			 echo "				        <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label>\n";
+			 echo "				       <div> <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label>\n";
 									if ($ProfileCustomType == 1) { //TEXT
 											
 											
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /><br />\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
 									
 										   
 										
@@ -66,17 +66,17 @@
 									   
 									 
 										if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
-											    echo "<br /><br /> <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
-												echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /><br />\n";
+											      echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label></div>\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>\n";
+												echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label></div>\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
 									
 											
 										}else{
-											    echo "<br /><br />  <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />\n";
-											    echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /><br />\n";
+											      echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
+											      echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
 									
 										   
 										}
@@ -92,9 +92,9 @@
 											
 											
 								         
-											echo "<label>".$data[0]."</label>";
+											echo "<div><label>".$data[0]."</label></div>";
 											
-											echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
+											echo "<div><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 											echo "<option value=\"\">--</option>";
 											  
 												foreach($data as $val1){
@@ -111,16 +111,14 @@
 												
 													}
 												}
-											  	echo "</select>\n";
+											  	echo "</select></div>\n";
 												
 												
 											if(!empty($data2) && !empty($option2)){
-												    echo "<br/>";
-													echo "<br/>";
-													echo "<label>".$data2[0]."</label>";
+												       echo "<div><label>".$data2[0]."</label></div>";
 											
 											 		$pos2 = 0;
-													echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
+													echo "<div><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 													echo "<option value=\"\">--</option>";
 													foreach($data2 as $val2){
 														  
@@ -133,14 +131,14 @@
 																}
 															}
 														}
-													echo "</select>\n";
+													echo "</select></div>\n";
 											
 											}
 									   
 										
 										
 									} elseif ($ProfileCustomType == 4) {
-										echo "<textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea>";
+										echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea>";
 									}
 									 elseif ($ProfileCustomType == 5) {
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
@@ -150,18 +148,18 @@
 													   
 													  	$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 													  if(in_array($val,$dataArr,true)){
-														 echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "". $val."</label>";
+														 echo "<div><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label></div>";
 													  }else{
-														 echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "". $val."</label>";	
+														 echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label></div>";	
 													}
 												  	}else{
-														 echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "". $val."</label>";	
+														 echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label></div>";	
 													}
 												  }
-												  echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/>";
+												  echo "<div><input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/></div>";
 												  echo "</div>";
 									       
 									}
@@ -174,25 +172,25 @@
 													  	$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 														
 													  if(in_array($val,$dataArr) && $val !=""){
-														 echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "". $val."</label>";
+														 echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label></div>";
 													  }else{
-														 echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "". $val."</label>";	
+														 echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label></div>";	
 													}
 												  	}else{
-														 echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-														 echo "". $val."</label>";	
+														 echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+														 echo "". $val."</label></div>";	
 													}
 												  }
-												    echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/>";
+												    echo "<div><input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/></div>";
 									       
 									}
 									
 									else {
 										
 										
-												echo "<input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /><br />\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
 									
 									}
 			}

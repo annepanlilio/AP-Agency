@@ -55,8 +55,10 @@ get_header();
 									
 		echo "			</div>\n";
 		echo "	    </td>\n";
-	/*	
 		echo "	    <td class=\"profile-category-filter-wrapper\">\n";
+		get_sidebar(); 
+	/*	
+		
 		echo "			<div class=\"profile-category-filter\">\n";
 		echo "			  <h3>". __("Filter Profiles", rb_agency_TEXTDOMAIN) .":</h3>\n";
 	 
@@ -64,7 +66,9 @@ get_header();
 						  include("include-profile-search.php"); 	
 	
 		echo "			</div>\n";
-		echo "	    </td>\n"; */
+		*/
+		echo "	    </td>\n"; 
+		
 		echo 	" </tbody>\n";
 		echo "	</table>\n";
 		echo "</div>\n";
@@ -74,6 +78,6 @@ get_header();
 	echo "</div>\n";
 	echo "</div>\n"; // END .content_wrapper 
        
-//get_sidebar(); 
+
 get_footer(); 
 ?>

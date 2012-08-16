@@ -80,13 +80,15 @@ while ($data = mysql_fetch_array($results)) {
 	$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
  
 	// Change Title
+	if(!function_exists("rb_agency_override_title")){
 	add_filter('wp_title', 'rb_agency_override_title', 10, 2);
 		function rb_agency_override_title(){
 			global $ProfileContactDisplay;
 			return bloginfo('name') ." > ". $ProfileContactDisplay ."";
 		}
-	
+	}
 	// Remove All Known Scripts which effect
+	if(!function_exists("deregister_scripts")){
 	add_action( 'wp_print_scripts', 'deregister_scripts', 100 );
 		function deregister_scripts() {
 			//lightbox
@@ -102,7 +104,8 @@ while ($data = mysql_fetch_array($results)) {
 			wp_deregister_script('prettyPhoto');
 			wp_deregister_script('general');
 		}
-
+	}
+if(!function_exists("rb_agency_inserthead_profile")){
 	add_action('wp_head', 'rb_agency_inserthead_profile');
 		// Call Custom Code to put in header
 		function rb_agency_inserthead_profile() {
@@ -166,6 +169,7 @@ while ($data = mysql_fetch_array($results)) {
 			}
 			
 		}
+}
 }
    
 // GET HEADER  

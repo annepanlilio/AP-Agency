@@ -17,6 +17,8 @@ global $wpdb;
 		    echo " &raquo; Profile Categories";
 	  }elseif($_GET["ConfigID"]==7){
 		     echo " &raquo; Custom Fields";
+	  }elseif($_GET["ConfigID"]==8){
+		     echo " &raquo; Media Categories";
 	  }
 	echo "</h2>\n";
     echo "  <div>\n";
@@ -26,6 +28,7 @@ global $wpdb;
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\">". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a> | \n";
+    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\">". __("Media Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  </div><p></p>\n";
 
 if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
@@ -419,6 +422,12 @@ elseif ($ConfigID == 11) {
 		 echo "   <th scope=\"row\">". __('New Profile Registration', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" "; checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1); echo "/> Users may register profiles (uncheck to prevent self registration)<br />\n";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		  echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Enable registration of Agent/Producer', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\" value=\"1\" "; checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'], 1); echo "/> Show registration form (uncheck to hide registration form)<br />\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";
@@ -1299,7 +1308,6 @@ elseif ($ConfigID == 6) {
 // *************************************************************************************************** //
 // Setup Custom Fields
 elseif ($ConfigID == 7) {
-	
 	/** Identify Labels **/
 	define("LabelPlural", __("Custom Fields", rb_agency_TEXTDOMAIN));
 	define("LabelSingular", __("Custom Field", rb_agency_TEXTDOMAIN));
@@ -1321,6 +1329,7 @@ elseif ($ConfigID == 7) {
 	      $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= (int)$_POST['ProfileCustomShowLogged'];
+		$ProfileCustomShowRegistration= (int)$_POST['ProfileCustomShowRegistration'];
 		$ProfileCustomShowAdmin   	= (int)$_POST['ProfileCustomShowAdmin'];
 	      $error = "";	
 		
@@ -1343,12 +1352,9 @@ elseif ($ConfigID == 7) {
 						       $option .= $val."|";
 							  }
 					      }
-						  $default = "no";
-						  if(isset($_POST["option_default_1"])){
-							     $default ="yes";
-						  }
 						 
-						    $label_option = "".$_POST["option_label"]."|".$option."".$default;  //
+						 
+						    $label_option = "".$_POST["option_label"]."|".$option;  //
 					 }
 					 
 					 if(!empty($_POST["option2"]) && isset($_POST["option2"])){
@@ -1359,14 +1365,10 @@ elseif ($ConfigID == 7) {
 								}
 							 
 					      }
-						  $default2 = "no";
-						  if(isset($_POST["option_default_2"])){
-							  $default2 ="yes";
-						  }
-						  
 						 
+						
 						 
-						   $label_option2 = ":".$_POST["option_label2"]."|".$option2."".$default2;  //
+						   $label_option2 = ":".$_POST["option_label2"]."|".$option2;  //
 						
 					 }
 					 
@@ -1441,7 +1443,7 @@ elseif ($ConfigID == 7) {
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "','" . $wpdb->escape($ProfileCustomOrder ) . "','" . $wpdb->escape($ProfileCustomShowGender ) . "','" . $wpdb->escape($ProfileCustomShowProfile ) . "','" . $wpdb->escape($ProfileCustomShowSearch) . "','" . $wpdb->escape($ProfileCustomShowLogged ) . "','" . $wpdb->escape($ProfileCustomShowAdmin) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "','" . $wpdb->escape($ProfileCustomOrder ) . "','" . $wpdb->escape($ProfileCustomShowGender ) . "','" . $wpdb->escape($ProfileCustomShowProfile ) . "','" . $wpdb->escape($ProfileCustomShowSearch) . "','" . $wpdb->escape($ProfileCustomShowLogged ) . "','" . $wpdb->escape($ProfileCustomShowAdmin) . "','" . $wpdb->escape($ProfileCustomShowRegistration) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 				
@@ -1474,6 +1476,7 @@ elseif ($ConfigID == 7) {
 								ProfileCustomShowProfile=" . $wpdb->escape($ProfileCustomShowProfile) . " ,
 								ProfileCustomShowSearch=" . $wpdb->escape($ProfileCustomShowSearch) . " ,
 								ProfileCustomShowLogged=" . $wpdb->escape($ProfileCustomShowLogged) . " ,
+								ProfileCustomShowRegistration=" . $wpdb->escape($ProfileCustomShowRegistration) . " ,
 								ProfileCustomShowAdmin=" . $wpdb->escape($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = mysql_query($update) or die(mysql_error());
@@ -1549,15 +1552,16 @@ elseif ($ConfigID == 7) {
 			$count = mysql_num_rows($results);
 			while ($data = mysql_fetch_array($results)) {
 				$ProfileCustomID			=	$data['ProfileCustomID'];
-				$ProfileCustomTitle			=	stripslashes($data['ProfileCustomTitle']);
-				$ProfileCustomType			=	$data['ProfileCustomType'];
+				$ProfileCustomTitle		=	stripslashes($data['ProfileCustomTitle']);
+				$ProfileCustomType		=	$data['ProfileCustomType'];
 				$ProfileCustomOptions		=	$data['ProfileCustomOptions'];
-				$ProfileCustomView			=	$data['ProfileCustomView'];
-				$ProfileCustomOrder			=	$data['ProfileCustomOrder'];
+				$ProfileCustomView		=	$data['ProfileCustomView'];
+				$ProfileCustomOrder		=	$data['ProfileCustomOrder'];
 				$ProfileCustomShowGender	=	$data['ProfileCustomShowGender'];
 				$ProfileCustomShowProfile	=	$data['ProfileCustomShowProfile'];
 				$ProfileCustomShowSearch	=	$data['ProfileCustomShowSearch'];
 				$ProfileCustomShowLogged	=	$data['ProfileCustomShowLogged'];
+				$ProfileCustomShowRegistration=	$data['ProfileCustomShowRegistration'];
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			} 
 		
@@ -1581,6 +1585,7 @@ elseif ($ConfigID == 7) {
 			$ProfileCustomShowProfile	=	0;
 			$ProfileCustomShowSearch	=	0;
 			$ProfileCustomShowLogged	=	0;
+			$ProfileCustomShowRegistration=	0;
 			$ProfileCustomShowAdmin		=	0;
 			
 			echo "\n";
@@ -1657,10 +1662,11 @@ elseif ($ConfigID == 7) {
 								<tr>
 									<td valign=\"top\">Show on*:</td>
 									<td style=\"font-size:13px;\">
-									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Profile Page &nbsp; <br/>
-									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Results Page &nbsp; <br/>  
-									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\"  checked=\"checked\" /> User must be Logged In to see It &nbsp;<br/>
-									<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" /> User must be an Admin to see It
+									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Profile View &nbsp; <br/>
+									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Form &nbsp; <br/>  
+									<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\"  checked=\"checked\" /> Profile Registration Form &nbsp; <br/>  
+									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\"  /> User must be logged in to see It &nbsp;<br/>
+									<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" /> User must be an admin to see It
 									</td>
 									<td style=\"font-size:13px;\">
 								   
@@ -1671,7 +1677,7 @@ elseif ($ConfigID == 7) {
 								</tr>
 								<tr>
 													<td valign=\"top\">Gender*:</td>
-													<td style=\"font-size:13px;\">";
+													<td valign=\"top\" style=\"font-size:13px;\">";
 													
 													$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 													echo "<select name=\"ProfileCustomShowGender\">";
@@ -1725,7 +1731,7 @@ elseif ($ConfigID == 7) {
 		
 		}else{ //Edit/Update Field
 
-					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions,  ProfileCustomOrder, ProfileCustomView,  ProfileCustomShowGender	, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
+					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions,  ProfileCustomOrder, ProfileCustomView,  ProfileCustomShowGender	, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = mysql_query($query1);
 					$count1 = mysql_num_rows($results1);
 					$pos = 0;
@@ -1776,10 +1782,11 @@ elseif ($ConfigID == 7) {
 												<tr>
 													<td valign=\"top\">Show on*:</td>
 													<td style=\"font-size:13px;\">
-													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile Page &nbsp; <br/>
-													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Results Page &nbsp;  <br/>
-													<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be Logged In to see It &nbsp;<br/>
-													<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an Admin to see It
+													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile View &nbsp; <br/>
+													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Form &nbsp;  <br/>
+													<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')."/> Profile Registration Form &nbsp; <br/> 
+													<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be logged in to see It &nbsp;<br/>
+													<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an admin to see It
 													</td>
 													<td style=\"font-size:13px;\">
 												   
@@ -1790,7 +1797,7 @@ elseif ($ConfigID == 7) {
 												</tr>
 												<tr>
 													<td valign=\"top\">Gender*:</td>
-													<td style=\"font-size:13px;\">";
+													<td valign=\"top\" style=\"font-size:13px;\">";
 													
 													$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 													echo "<select name=\"ProfileCustomShowGender\">";
@@ -1991,11 +1998,11 @@ elseif ($ConfigID == 7) {
 										 
 										 if($rb_agency_options_arr['rb_agency_option_unittype']==1){
 											  if($data1["ProfileCustomOptions"]==1){
-												echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' checked=\"checked\" />in</td></tr>";
-										    		echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' />lb</td></tr>";
+												echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' checked=\"checked\" />Inches</td></tr>";
+										    		echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' />Pounds</td></tr>";
 											  }else
-											  {echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' />in</td></tr>";
-										    		echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' checked=\"checked\" />lb</td></tr>";
+											  {echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' />Inches</td></tr>";
+										    		echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' checked=\"checked\" />Pounds</td></tr>";
 											  }
 										 }else{
 											   if($data1["ProfileCustomOptions"]==1){
@@ -2110,7 +2117,7 @@ elseif ($ConfigID == 7) {
 		echo "          </div>\n";
 		echo "        </td>\n";
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1 ){ echo "Text"; } elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; }  elseif ($data['ProfileCustomType'] == 7) { if($rb_agency_options_arr['rb_agency_option_unittype']==1){ if($data['ProfileCustomOptions']==1){echo "Imperial(in)";}else{echo "Imperial(lb)";} } else{ if($data['ProfileCustomOptions']==2){echo "Metric(cm)";}else{echo "Metric(kg)";} } } echo "</td>\n";
-		echo "        <td class=\"column\">". $data['ProfileCustomOptions'] ."</td>\n";
+		echo "        <td class=\"column\">". str_replace("|",",",$data['ProfileCustomOptions']) ."</td>\n";
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) { echo "Public"; } elseif ($data['ProfileCustomView'] == 1) { echo "Private"; } elseif ($data['ProfileCustomView'] == 2) { echo "Custom"; } echo "</td>\n";
 		 echo "        <th class=\"column\">".$data['ProfileCustomOrder']."</th>\n";
 		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender'].""); 
@@ -2139,7 +2146,182 @@ elseif ($ConfigID == 7) {
 		
    		echo "</form>\n";
 echo "</div>";
-}	 // End	
+}	 // End
+
+
+ /*/
+  *  MEDIA CATEGORIES
+ /*/
+elseif ($ConfigID == 8){
+	
+	
+	
+	// Edit Record
+	if(isset($_POST["action"])=="editRecord"){
+		   mysql_query("UPDATE ".table_agency_mediacategory." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die(mysql_error());
+      }
+	// Add Record
+	elseif(isset($_POST["action"])=="addRecord"){
+	   mysql_query(" INSERT INTO ".table_agency_mediacategory." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die(mysql_error());
+      }
+	// Delete Record
+	elseif(isset($_POST["action"])=="deleteRecord"  || isset($_GET["deleteRecord"])){
+		
+		 if(isset($_GET["deleteRecord"])){
+				 mysql_query("DELETE FROM ". table_agency_mediacategory ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
+		 }
+		 if(isset($_POST["MediaCategoryID"])){
+			 foreach($_POST["MediaCategoryID"] as $id){
+				mysql_query("DELETE FROM ". table_agency_mediacategory ." WHERE MediaCategoryID = '".$id."'");
+			 }
+		 }
+		
+	}
+	
+ echo "<div>\n";
+            // Add new Record
+		if(isset($_GET["action"]) =="editRecord"){
+		 
+		 echo "  <h3 class=\"title\">". __("Edit Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
+		 
+		 $query = "SELECT * FROM ". table_agency_mediacategory ." WHERE MediaCategoryID='".$_GET["MediaCategoryID"]."'";
+		 $results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+		 $count = mysql_num_rows($results);
+		 $data = mysql_fetch_array($results);
+		 echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ConfigID=8&MediaCategoryID=".$_GET["MediaCategoryID"]."\">\n";
+		}else{
+             echo "  <h3 class=\"title\">". __("Add New Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
+		  echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=8\">\n";
+		}
+		
+		 echo "<table>";
+		 echo "<tr>";
+		 echo "<td>Title:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".$data["MediaCategoryTitle"]."\" style=\"width:500px;\" /></td>\n";
+		 echo "</tr>";
+		 echo "<tr>";
+		 echo "<td>Gender:</td><td>\n";
+		 $query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+					echo "<select name=\"MediaCategoryGender\">";
+					echo "<option value=\"\">All Gender</option>";
+					$queryShowGender = mysql_query($query);
+					while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+															
+						echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data["MediaCategoryGender"] ,$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
+															
+					}
+					echo "</select>";
+					echo "<br/>";
+		 echo "</td>";
+		 echo "</tr>";
+		 echo "<td>Order:</td><td><input type=\"text\" name=\"MediaCategoryOrder\" value=\"".$data["MediaCategoryOrder"]."\" /></td>\n";
+		 echo "<tr>";
+		 echo "<td>";
+		 echo "<p class=\"submit\">\n";
+		 if(isset($_GET["action"]) =="editRecord"){
+			echo "    <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
+		  
+		 }else{
+			echo "    <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
+		 	 
+		 }
+		 echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Submit", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		 echo "</p>\n";
+		 echo "</td>";
+		 echo "<tr>";
+		 echo "<table>";
+		 echo "</form>\n";
+		 // All Records
+		 echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
+			
+				/******** Sort Order ************/
+				$sort = "";
+				if (isset($_GET['sort']) && !empty($_GET['sort'])){
+					$sort = $_GET['sort'];
+				}
+				else {
+					$sort = "MediaCategoryOrder";
+				}
+				
+				/******** Direction ************/
+				$dir = "";
+				if (isset($_GET['dir']) && !empty($_GET['dir'])){
+					$dir = $_GET['dir'];
+					if ($dir == "desc" || !isset($dir) || empty($dir)){
+					   $sortDirection = "asc";
+					   } else {
+					   $sortDirection = "desc";
+					} 
+				} else {
+					   $sortDirection = "desc";
+					   $dir = "asc";
+				}
+	
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=8\">\n";	
+		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
+		echo "<thead>\n";
+		echo "    <tr class=\"thead\">\n";
+		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomOptions&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Order", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "    </tr>\n";
+		echo "</thead>\n";
+		
+		echo "<tfoot>\n";
+		echo "    <tr class=\"thead\">\n";
+		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Order", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "    </tr>\n";
+		echo "</tfoot>\n";
+		
+		echo "<tbody>\n";
+	
+		$query = "SELECT * FROM ". table_agency_mediacategory ." ORDER BY $sort $dir";
+		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+		$count = mysql_num_rows($results);
+		while ($data = mysql_fetch_array($results)) {
+			$MediaCategoryID	=$data['MediaCategoryID'];
+		echo "    <tr>\n";
+		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $MediaCategoryID ."\" name=\"MediaCategoryID[]\" value=\"". $MediaCategoryID ."\" /></th>\n";
+		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryTitle']) ."\n";
+		echo "          <div class=\"row-actions\">\n";
+		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;MediaCategoryID=". $MediaCategoryID."&amp;ConfigID=8\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=8\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "          </div>\n";
+		echo "        </th>\n";
+		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['MediaCategoryGender'].""); 
+		 $fetchGender = mysql_fetch_assoc($queryGender);
+		 $countGender = mysql_num_rows($queryGender);
+		 if($countGender > 0){
+		 	echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
+		 }else{
+			echo "        <th class=\"column\">All Gender</th>\n";
+		 }
+		echo "        <th class=\"column\">"; echo $data["MediaCategoryOrder"]; echo "</th>\n";
+		echo "    </tr>\n";
+		}
+		mysql_free_result($results);
+		if ($count < 1) {
+		echo "    <tr>\n";
+		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
+		echo "        <td class=\"column\" colspan=\"5\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
+		echo "    </tr>\n";
+		}
+		echo "</tbody>\n";
+		echo "</table>\n";
+		echo "<p class=\"submit\">\n";
+		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
+		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "</p>\n";
+		
+   		echo "</form>\n";
+ 
+ echo "</div>\n";
+	
+}
+// End Config == 8	
 elseif ($ConfigID == 99) {
 	
 	echo "    <h3>Uninstall</h3>\n";

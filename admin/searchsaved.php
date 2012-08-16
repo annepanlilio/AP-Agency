@@ -46,7 +46,7 @@ if (isset($_POST['action'])) {
 	case 'emailSend':
 		if (!empty($SearchID)) {
 		
-			$SearchID				=$_POST['SearchID'];
+			$SearchID				=$_GET['SearchID'];
 			$SearchMuxHash			=@$_GET["SearchMuxHash"];
 			$SearchMuxToName		=$_POST['SearchMuxToName'];
 			$SearchMuxToEmail		=$_POST['SearchMuxToEmail'];
@@ -58,22 +58,10 @@ if (isset($_POST['action'])) {
 			$insert = "INSERT INTO " . table_agency_searchsaved_mux .
 			" (SearchID,SearchMuxHash,SearchMuxToName,SearchMuxToEmail,SearchMuxSubject,SearchMuxMessage,SearchMuxCustomValue)" .
 			"VALUES ('" . $wpdb->escape($SearchID) . "','" . $wpdb->escape($SearchMuxHash) . "','" . $wpdb->escape($SearchMuxToName) . "','" . $wpdb->escape($SearchMuxToEmail) . "','" . $wpdb->escape($SearchMuxSubject) . "','" . $wpdb->escape($SearchMuxMessage) . "','" . $wpdb->escape($SearchMuxCustomValue) . "')";
-		    $results = $wpdb->query($insert);
+		     $results = $wpdb->query($insert);
 			$lastid = $wpdb->insert_id;
 
-			// Message
-			$SearchMuxMessage = '
-				<html>
-				<head>
-				  <title>'. $rb_agency_option_agencyname .' Casting Cart</title>
-				</head>
-				<body>
-				  <p>'. stripslashes($SearchMuxMessage) .'</p>
-				  Click the following link (or copy and paste it into your browser):
-				  <a href="'. get_bloginfo("url") .'/client-view/'. $SearchMuxHash .'/">'. get_bloginfo("url") .'/client-view/'. $SearchMuxHash .'/</a>
-				</body>
-				</html>
-				';
+		
 			// To send HTML mail, the Content-type header must be set
 			//$headers .= 'To: '. $SearchMuxToName .' <'. $SearchMuxToEmail .'>' . "\r\n";
 			
@@ -86,11 +74,33 @@ if (isset($_POST['action'])) {
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			$headers = 'From: '. $rb_agency_option_agencyname .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
-			wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
-
-		echo "Email successfully sent from ". $rb_agency_option_agencyemail ." to ". $SearchMuxToEmail ."<br />";
-		echo "Message sent: <div id=\"message\" class=\"updated\"><p>". $SearchMuxMessage ."</p></div>";
+		$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
+            if($isSent){
 			
+				// Message
+			$SearchMuxMessage = '
+				<html>
+				<head>
+				  <title>'. $rb_agency_option_agencyname .' Casting Cart</title>
+				</head>
+				<body>
+				  <p>'. stripslashes($SearchMuxMessage) .'</p>';
+			if($SearchMuxHash){ 	  
+				$SearchMuxMessage .= '  Click the following link (or copy and paste it into your browser):
+				  <a href="'. get_bloginfo("url") .'/client-view/'. $SearchMuxHash .'/">'. get_bloginfo("url") .'/client-view/'. $SearchMuxHash .'/</a>';
+			}
+			$SearchMuxMessage .= '	
+				</body>
+				</html>
+				';
+			
+		echo "<div style=\"background:white;margin:10px;\">";
+		echo "<div style=\"margin:15px;\">";
+		echo "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+		echo "Message sent: <div id=\"message\" class=\"updated\"><p>". $SearchMuxMessage ."</p></div>";
+		echo "</div>";	
+		echo "</div>";
+		}
 		//echo ('<div id="message" class="updated"><p>Email sent successfully!</p></div>');
 		}
 	break;
@@ -119,10 +129,10 @@ if (isset($_POST['action'])) {
 	
 	?>
   
-      <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
+      <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
         <input type="hidden" name="action" value="cartEmail" />
-        <div><label for="SearchMuxToName">Send to Name:</label><input type="text" id="SearchMuxToName" name="SearchMuxToName" /></div>
-        <div><label for="SearchMuxToEmail">Send to Email:</label><input type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" /></div>
+        <div><label for="SearchMuxToName">Send to Name:</label><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+        <div><label for="SearchMuxToEmail">Send to Email:</label><input type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
         <div><label for="SearchMuxSubject">Subject:</label><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart" /></div>
         <div><label for="SearchMuxMessage">Message:</label><br/>
         <textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "> <?php  if(!isset($_GET["SearchMuxHash"])){echo @$dataSearchSavedMux["SearchMuxMessage"]." \n Click the following link (or copy and paste it into your browser): ". get_bloginfo("url") ."/client-view/". @$dataSearchSavedMux["SearchMuxHash"] ."/";}else{echo @"Click the following link (or copy and paste it into your browser): ". get_bloginfo("url") ."/client-view/". @$_GET["SearchMuxHash"] ."/";}
@@ -326,12 +336,13 @@ if (isset($_POST['action'])) {
 			$SearchProfileID = stripslashes($data2['SearchProfileID']);
 			$SearchDate = stripslashes($data2['SearchDate']);
 			
-			$query3 = "SELECT SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = ". $SearchID;
+			$query3 = "SELECT SearchID,SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = ". $SearchID;
 			$results3 = mysql_query($query3);
 			$count3 = mysql_num_rows($results3);
 		?>
 		<tr<?php echo $rowColor; ?>>
 			<th class="check-column" scope="row">
+                  
 				<input type="checkbox" value="<?php echo $SearchID; ?>" class="administrator" id="<?php echo $SearchID; ?>" name="<?php echo $SearchID; ?>"/>
 			</th>
 			<td>
@@ -358,13 +369,15 @@ if (isset($_POST['action'])) {
 			</td>
 			<td>
 				<?php
-				
+				$pos = 0;
 				while ($data3 = mysql_fetch_array($results3)) {
-				
+				$pos++;
+				     if($pos == 1){
+						echo "Link: <a href=\"". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/\" target=\"_blank\">". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/</a><br />\n";
+					} 
 					echo "(". rb_agency_makeago(rb_agency_convertdatetime( $data3["SearchMuxSent"]), $rb_agency_option_locationtimezone) .") ";
-					echo "<strong>". $data3["SearchMuxToName"] ."</strong> ";
-					echo "<a href=\"". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/\" target=\"_blank\">". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/</a><br />\n";
-				
+					echo "<strong>". $data3["SearchMuxToName"]."&lt;".$data3["SearchMuxToEmail"]."&gt;"."</strong> ";
+					echo "<br/>";
 				}
 				//mysql_free_result($results2);
 				if ($count3 < 1) {

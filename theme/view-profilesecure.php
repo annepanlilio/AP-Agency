@@ -24,10 +24,10 @@ get_header();
 			$count = mysql_num_rows($results);
 
 			while ($data = mysql_fetch_array($results)) {
-				$SearchProfileID = $data['SearchProfileID'];
-
+				 $SearchProfileID = $data['SearchProfileID'];
+                         
 				if (function_exists('rb_agency_profilelist')) { 
-					$atts = array("profileid" => $SearchProfileID);
+					$atts = array("getprofile_saved" => $SearchProfileID);
 					rb_agency_profilelist($atts); 
 				}
 			}
