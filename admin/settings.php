@@ -377,7 +377,7 @@ elseif ($ConfigID == 1) {
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1); echo "/> ". __("User must be an Admin to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
-	
+	       echo "<input type=\"hidden\" name=\"rb_agency_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
 	
 		 echo "</table>\n";
 		 echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
@@ -2157,15 +2157,18 @@ elseif ($ConfigID == 8){
 	
 	
 	// Edit Record
-	if(isset($_POST["action"])=="editRecord"){
-		   mysql_query("UPDATE ".table_agency_mediacategory." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die(mysql_error());
-      }
+	switch($_POST["action"]){
+	case "editRecord":
+	    mysql_query("UPDATE ".table_agency_mediacategory." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die(mysql_error());
+      break;
 	// Add Record
-	elseif(isset($_POST["action"])=="addRecord"){
-	   mysql_query(" INSERT INTO ".table_agency_mediacategory." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die(mysql_error());
-      }
+	case "addRecord":
+	     mysql_query(" INSERT INTO ".table_agency_mediacategory." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
+      break;
+	
+	}
 	// Delete Record
-	elseif(isset($_POST["action"])=="deleteRecord"  || isset($_GET["deleteRecord"])){
+	if(isset($_POST["action"])=="deleteRecord"  || isset($_GET["deleteRecord"])){
 		
 		 if(isset($_GET["deleteRecord"])){
 				 mysql_query("DELETE FROM ". table_agency_mediacategory ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
@@ -2177,7 +2180,6 @@ elseif ($ConfigID == 8){
 		 }
 		
 	}
-	
  echo "<div>\n";
             // Add new Record
 		if(isset($_GET["action"]) =="editRecord"){
@@ -2213,7 +2215,7 @@ elseif ($ConfigID == 8){
 					echo "<br/>";
 		 echo "</td>";
 		 echo "</tr>";
-		 echo "<td>Order:</td><td><input type=\"text\" name=\"MediaCategoryOrder\" value=\"".$data["MediaCategoryOrder"]."\" /></td>\n";
+		 echo "<td>Order:</td><td><input type=\"text\" name=\"MediaCategoryOrder\" value=\"".(0+(int)$data["MediaCategoryOrder"])."\" /></td>\n";
 		 echo "<tr>";
 		 echo "<td>";
 		 echo "<p class=\"submit\">\n";
@@ -2291,7 +2293,7 @@ elseif ($ConfigID == 8){
 		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=8\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </th>\n";
-		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['MediaCategoryGender'].""); 
+		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$data['MediaCategoryGender']."'"); 
 		 $fetchGender = mysql_fetch_assoc($queryGender);
 		 $countGender = mysql_num_rows($queryGender);
 		 if($countGender > 0){

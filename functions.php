@@ -1410,7 +1410,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 				
 	
 								
-	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = ".$visibility."   AND ProfileCustomShowRegistration = 0 ORDER BY ProfileCustomOrder";
+	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = ".$visibility."  ORDER BY ProfileCustomOrder";
 	$results3 = mysql_query($query3) or die(mysql_error());
 	$count3 = mysql_num_rows($results3);
 	
@@ -1707,9 +1707,25 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	  $count = mysql_num_rows($query);
 	  while($f = mysql_fetch_assoc($query)){
 		 if($f["MediaCategoryGender"] == $GenderID || $f["MediaCategoryGender"] == 0){
-		   echo "<option value=\"Headshot\">".$f["MediaCategoryTitle"]."</option>";	 
+		   echo "<option value=\"".$f["MediaCategoryTitle"]."\">".$f["MediaCategoryTitle"]."</option>";	 
 	   	}
 	  }
   }
+  /*/
+   * ======================== Show/Hide Admin Toolbar===============
+   * 
+  /*/
+  function rb_agency_disableAdminToolbar(){
+ 		 add_filter('show_admin_bar', '__return_false');
+  }
+   /*/
+   * ======================== Edit Text/Label/Header ===============
+   * 
+  /*/
   
+ //add_filter( 'gettext', 'rb_agency_editTitleText', 10, 3 );
+
+  function rb_agency_editTitleText($string){
+        return "<span>".$string."<a href=\"javascript:;\" style=\"font-size:11px;color:blue;text-decoration:underline;\">Edit</a></span>";  
+  }
 ?>

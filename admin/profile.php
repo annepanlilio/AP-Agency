@@ -311,6 +311,15 @@ if (isset($_POST['action'])) {
 							   	$error .= "<b><i>Please upload jpeg or png files only</i></b><br />";
 								$have_error = true;	
 							}
+						}else{
+							// Add to database
+							  if($_FILES['profileMedia'. $i]['type'] == "image/pjpeg" || $_FILES['profileMedia'. $i]['type'] == "image/jpeg" || $_FILES['profileMedia'. $i]['type'] == "image/gif" || $_FILES['profileMedia'. $i]['type'] == "image/png"){
+							  $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $uploadMediaType ."','". $safeProfileMediaFilename ."','". $safeProfileMediaFilename ."')");
+			                 		 move_uploaded_file($_FILES['profileMedia'. $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery ."/".$safeProfileMediaFilename);
+							}else{
+							   	$error .= "<b><i>".__("Please upload jpeg or png files only", rb_agencyinteract_TEXTDOMAIN) ."</i></b><br />";
+								$have_error = true;	
+							}
 						}
 						
 					 } // End count
@@ -651,9 +660,15 @@ function rb_display_manage($ProfileID) {
 	// Custom Admin Fields
       	// ProfileCustomView = 1 , Private
 		if(isset( $_GET["ProfileGender"])){
-		  $ProfileGender  = $_GET["ProfileGender"];	
+		  $ProfileGender  = $_GET["ProfileGender"];
+		
+		  rb_custom_fields(1, 0, $ProfileGender, true);	
+		  
+		}else{
+		
+		  rb_custom_fields(1, $ProfileID, $ProfileGender, true);	
 		}
-		rb_custom_fields(1, $ProfileID, $ProfileGender, true);
+		
 	
 	// Public Information
 	echo "    <tr valign=\"top\">\n";
@@ -686,7 +701,16 @@ function rb_display_manage($ProfileID) {
 	echo "        </td>\n";
 	echo "    </tr>\n";
 	// Load custom fields , Public  = 0, ProfileCustomGender = true
-		rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+			// ProfileCustomView = 1 , Private
+		if(isset( $_GET["ProfileGender"])){
+		  $ProfileGender  = $_GET["ProfileGender"];
+		 
+		  rb_custom_fields(0, 0, $ProfileGender, true);	
+		  
+		}else{
+		
+		  rb_custom_fields(0, $ProfileID, $ProfileGender, true);	
+		}
 
 	echo "	</tbody>\n";
 	echo " </table>\n";
@@ -783,8 +807,10 @@ function rb_display_manage($ProfileID) {
 						}
 						 elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 							$outLinkHeadShot .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
-						}elseif ($dataMedia['ProfileMediaType'] == "Compcard") {
+						}elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
 							$outLinkComCard .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+						}else{
+							$outCustomMediaLink .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] ."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
 						}
 					}
 					echo '<div style=\"width:500px;\">';
@@ -799,7 +825,11 @@ function rb_display_manage($ProfileID) {
 					echo '<div style=\"width:500px;\">';
 					echo $outLinkComCard;
 					echo '</div>';
+					echo '<div style=\"width:500px;\">';
+					echo $outCustomMediaLink;
+					echo '</div>';
 					echo $outVideoMedia;
+					
 					if ($countMedia < 1) {
 						echo "<div><em>". __("There are no additional media linked", rb_agencyinteract_TEXTDOMAIN) ."</em></div>\n";
 					}
@@ -807,9 +837,9 @@ function rb_display_manage($ProfileID) {
 	echo "		<h3>". __("Upload", rb_agency_TEXTDOMAIN) ."</h3>\n";
 	echo "		<p>". __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) .".</p>\n";
 
-			for( $i=1; $i<10; $i++ ) {
-			echo "<div>Type: <select name=\"profileMedia". $i ."Type\"><option value='Image'>Image</option><option value='Headshot'>Headshot</option><option value='Compcard'>Comp Card</option><option value='Resume'>Resume</option><option value=\"VoiceDemo\">Voice Demo</option></select><input type='file' id='profileMedia". $i ."' name='profileMedia". $i ."' /></div>\n";
-			}
+				for( $i=1; $i<10; $i++ ) {
+				echo "<div>Type: <select name=\"profileMedia". $i ."Type\"><option>Image</option><option>Headshot</option><option>Comp Card</option><option>Resume</option><option>Voice Demo</option>"; rb_agency_getMediaCategories($ProfileGender); echo"</select><input type='file' id='profileMedia". $i ."' name='profileMedia". $i ."' /></div>\n";
+				}
 	echo "		<p>". __("Paste the video URL below", rb_agency_TEXTDOMAIN) .".</p>\n";
 
 			echo "<div>Type: <select name=\"profileMediaV1Type\"><option selected>". __("Video Slate", rb_agency_TEXTDOMAIN) ."</option><option>". __("Video Monologue", rb_agency_TEXTDOMAIN) ."</option><option>". __("Demo Reel", rb_agency_TEXTDOMAIN) ."</option></select><textarea id='profileMediaV1' name='profileMediaV1'></textarea></div>\n";
@@ -832,19 +862,26 @@ function rb_display_manage($ProfileID) {
 	echo "    <tr valign=\"top\">\n";
 	echo "		<th scope=\"row\">". __("Classification", rb_agency_TEXTDOMAIN) ."</th>\n";
 	echo "		<td>\n";
+				$ProfileTypeArray = array();
 		            if(isset($_GET["action"])=="editRecord"){
 					$ProfileTypeArray = explode(",", $ProfileType);
 				}
 				$query3 = "SELECT * FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 				$results3 = mysql_query($query3);
 				$count3 = mysql_num_rows($results3);
+				$action = @$_GET["action"];
 				while ($data3 = mysql_fetch_array($results3)) {
-					echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"". $data3['DataTypeID'] ."\"";  if ( in_array($data3['DataTypeID'], $ProfileTypeArray)  && isset($_GET["action"])=="editRecord") { echo " checked=\"checked\""; }  echo "> ". $data3['DataTypeTitle'] ."<br />\n";
+					if($action == "add"){
+						echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" /> ". $data3['DataTypeTitle'] ."<br />\n";
+					}
+					if($action=="editRecord"){
+						echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"". $data3['DataTypeID'] ."\"";  if ( in_array($data3['DataTypeID'], $ProfileTypeArray) && isset($_GET["action"])=="editRecord") { echo " checked=\"checked\""; }  echo "/> ". $data3['DataTypeTitle'] ."<br />\n";
+					}
 				}
 				if ($count3 < 1) {
 					echo "". __("No items to select", rb_agency_TEXTDOMAIN) .". <a href='". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=5") ."'>". __("Setup Options", rb_agency_TEXTDOMAIN) ."</a>\n";
 				}
-
+      
 	echo "		</td>\n";
 	echo "	  </tr>\n";
 	echo "    <tr valign=\"top\">\n";

@@ -73,7 +73,7 @@ get_header();
 		echo "	</table>\n";
 		echo "</div>\n";
 		echo "<div class=\"clear line\"></div>\n";
-		
+		echo "<input type=\"hidden\" name=\"castingcart\" value=\"1\"/>";
 	echo "  </div>\n";
 	echo "</div>\n";
 	echo "</div>\n"; // END .content_wrapper 

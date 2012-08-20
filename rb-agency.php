@@ -97,6 +97,8 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 		define("table_agency_castingcart", "rb_agency_castingcart");
 	if (!defined("table_agency_mediacategory"))
 		define("table_agency_mediacategory", "rb_agency_mediacategory");	
+     
+    
 
 // Call default functions
 	include_once(dirname(__FILE__).'/functions.php');
@@ -228,20 +230,22 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 		$query = mysql_query("SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'");
 		$count = mysql_num_rows($query);
 		if ($count < 1) {
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Language', 1,'', 0, 0, 1, 1, 1, 1,1,1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Ethnicity', 3,  '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|no',0, 0, 2, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Skin Tone', 3, '|Fair|Medium|Dark|no', 0, 0, 3, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Hair Color', 3,  '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|no',0, 0, 4, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Eye Color', 3,  '|Blue|Brown|Hazel|Green|Black|no',0, 0, 5, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Height', 1, '', 0, 0, 6, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Weight', 1, '',0, 0, 7, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Bust', 1, '',0,  0, 8, 1, 1, 1, 1, 1");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Waist', 1,  '',0, 0, 9, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Hip', 1,  '',0, 0, 10, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Shoe', 1,  '',0, 0, 11, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Dress', 1,  '',0, 0, 12, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Union', 1,  '',0, 0, 13, 1, 1, 1, 1, 1)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Experience', 4,  '',0, 0, 14, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Ethnicity',  3,	'|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other',0, 0, 1, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Skin Tone',  3,	'|Fair|Medium|Dark|no', 0, 0, 2, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Hair Color', 3,	'|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|',0, 0, 3, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Eye Color',  3,	'|Blue|Brown|Hazel|Green|Black|',0, 0, 4, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Height',     7,	'1', 0, 0, 5,  1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Weight',     7,	'2', 0, 0, 6,  1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Chest',      7,	'1', 0, 0, 6,  1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Bust',       7,	'1', 0, 0, 7,  1, 1, 1, 1, 1");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Waist',      7,	'1', 0, 0, 8,  1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES   ('Hips',       7,	'1', 0, 0, 9,  1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Shoe Size',  7,	'1', 0, 0, 10, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Cup Size',   1,	'',  0, 0, 11, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView,ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Union',      1,	'',  0, 0, 12, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender,ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES  ('Experience', 4,	'',  0, 0, 13, 1, 1, 1, 1, 1)");
+			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . "  (ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomView, ProfileCustomShowGender, ProfileCustomOrder, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration) VALUES ('Language',   1,	'',  0, 0, 14, 1, 1, 1, 1, 1)");
+		
 		}
 
 	
@@ -595,8 +599,12 @@ if ( is_admin() ){
 									  Obj.attr("class","save_favorite");
 									   <?php 
 									    if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){
+										    $rb_agency_options_arr = get_option('rb_agency_options');
+										    $rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];
 									   ?>
-									   Obj.closest("div[class=profile-list-layout0]").fadeOut();
+									    if($("input[type=hidden][name=favorite]").val() == 1){
+									  	  Obj.closest("div[class=profile-list-layout<?php echo (int)$rb_agency_option_layoutprofilelist; ?>]").fadeOut();
+									    }
 								   	   <?php
 									    }
 									   ?>
@@ -693,13 +701,18 @@ if ( is_admin() ){
 								   }else{
 									  Obj.empty().fadeOut().html("Add To Casting Cart").fadeIn(); 
 									   Obj.attr("class","save_castingcart");
-									   $(this).find("a[class=view_all_castingcart]").remove();
+									 
+										     $(this).find("a[class=view_all_castingcart]").remove();
+									   
+									 
 									  <?php 
 									    if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){
 										    $rb_agency_options_arr = get_option('rb_agency_options');
 										    $rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];
 									   ?>
-									   Obj.closest("div[class=profile-list-layout<?php echo (int)$rb_agency_option_layoutprofilelist; ?>]").fadeOut();
+									     if($("input[type=hidden][name=castingcart]").val() == 1){
+									  	 Obj.closest("div[class=profile-list-layout<?php echo (int)$rb_agency_option_layoutprofilelist; ?>]").fadeOut();
+									     }
 								   	   <?php
 									    }
 									   ?>
@@ -857,8 +870,52 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 			ob_end_clean();
 			return $output_string;
 		}
-
-
+  /*/
+   * ======================== RB Agency Tool Tip===============
+   * 
+  /*/
+  
+  
+		
+	if(is_admin()){
+		 
+		 $rb_agency_options_arr = get_option('rb_agency_options');
+   		 $rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
+		
+		if(!in_array("rb_agency_options_showtooltip",$rb_agency_options_arr) && $rb_agency_options_showtooltip == 0){	 
+			wp_enqueue_style('wp-pointer');
+			wp_enqueue_script('wp-pointer');
+			function  add_js_code(){
+				?>
+				<script type="text/javascript">
+				jQuery(document).ready( function($) {
+					
+				var options = {"content":"<h3>RB Agency Plugin</h3><p>Thanks for installing RB Plugin, we hope you find it useful.  Lets <a href=\'<?php echo admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=1"); ?>\'>check your settings</a> before we get started.</p>","position":{"edge":"left","align":"center"}};
+				if ( ! options )
+					return;
+					options = $.extend( options, {
+						close: function() {
+						//to do
+						}
+					});
+					<?php if(isset($_GET["page"])!="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_menu_settings") { ?>
+					$('#toplevel_page_rb_agency_menu').pointer( options ).pointer("open");
+					<?php } elseif(isset($_GET["page"])=="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_menu_settings") { ?>
+					$('#toplevel_page_rb_agency_menu li a').each(function(){
+						if($(this).text() == "Settings"){
+						   $(this).fadeOut().pointer( options ).pointer("open").fadeIn();	
+						   $(this).css("background","#EAF2FA");
+						}
+					});
+					<?php } ?>
+				});
+				</script>
+				';
+				<?php
+			}
+			add_action("admin_footer","add_js_code");
+		}
+	}
 /****************************************************************/
 //Uninstall
 	function rb_agency_uninstall() {
