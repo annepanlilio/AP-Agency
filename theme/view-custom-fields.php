@@ -49,7 +49,7 @@
 			// Customfields
 			else{ 
 			 
-			 echo "				       <div> <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label>\n";
+			 echo "				       <div> <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label></div> \n";
 									if ($ProfileCustomType == 1) { //TEXT
 											
 											
@@ -138,7 +138,7 @@
 										
 										
 									} elseif ($ProfileCustomType == 4) {
-										echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea>";
+										echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea></div>";
 									}
 									 elseif ($ProfileCustomType == 5) {
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);

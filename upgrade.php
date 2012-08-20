@@ -171,6 +171,27 @@ $rb_agency_storedversion = get_option('rb_agency_version');
 		update_option('rb_agency_version', "1.9.1");
 	  
   }
+  
+  
+if (get_option('rb_agency_version') == "1.9.1.1") {
+  
+		// Fix Gender compatibility
+		$results = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die("1".mysql_error());
+		while($fetchData = mysql_fetch_assoc($results)):
+
+		         $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die("2".mysql_error());
+		         $fetchGender = mysql_fetch_assoc($queryGender);
+			   $count = mysql_num_rows($queryGender);
+			   if($count > 0){
+			   	mysql_query("UPDATE ".table_agency_profile." SET ProfileGender='".(0 + $fetchGender["GenderID"])."' WHERE ProfileID='".$fetchData["ProfileID"]."'")  or die("4".mysql_error());
+			   }
+			 
+		endwhile;
+		
+   // Updating version number!
+		update_option('rb_agency_version', "1.9.1.2");
+	  
+  }		
 // Ensure directory is setup
 if (!is_dir(rb_agency_UPLOADPATH)) {
 	mkdir(rb_agency_UPLOADPATH, 0755);

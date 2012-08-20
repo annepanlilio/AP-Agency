@@ -8,7 +8,12 @@
   Author URI: http://rob.bertholf.com/
   Version: 1.9.1
 */
-$rb_agency_VERSION = "1.9.1"; 
+
+if (!get_option( 'rb_agency_version'))
+ add_option( 'rb_agency_version','1.9.1');
+ 
+ $rb_agency_VERSION = get_option( 'rb_agency_version');
+
 
 if (!session_id())
 session_start();
@@ -882,7 +887,7 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 		 $rb_agency_options_arr = get_option('rb_agency_options');
    		 $rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
 		
-		if(!in_array("rb_agency_options_showtooltip",$rb_agency_options_arr) && $rb_agency_options_showtooltip == 0){	 
+		if(!@in_array("rb_agency_options_showtooltip",$rb_agency_options_arr) && $rb_agency_options_showtooltip == 0){	 
 			wp_enqueue_style('wp-pointer');
 			wp_enqueue_script('wp-pointer');
 			function  add_js_code(){

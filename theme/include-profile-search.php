@@ -79,17 +79,19 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 	
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <div> <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label></div>\n";
-		echo "				        	<div><select name=\"ProfileType\" id=\"ProfileType\">\n";               
+		echo "				        	<div>";
+		echo "						<select name=\"ProfileType\" id=\"ProfileType\">\n";               
 		echo "								<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 											$results2 = mysql_query($query);
 											while ($dataType = mysql_fetch_array($results2)) {
 												echo "<option value=\"". $dataType["DataTypeID"] ."\"".selected($_SESSION['ProfileType'],$dataType["DataTypeID"] ,false).">". $dataType["DataTypeTitle"] ."</option>";
 											}
-		echo "				        	</select></div>\n";
+		echo "				        	</select>";
+		echo "						</div>\n";
 		echo "				    </div>\n";
 		echo "				    <div class=\"search-field single\">\n";
-		echo "				       <div> <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
+		echo "				       <div> <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label></div>\n";
 		echo "				       <div> <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
 		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";

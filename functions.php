@@ -1422,7 +1422,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 					 rb_custom_fields_template($visibility, $ProfileID, $data3);
 			}
 		 } else {
-					 rb_custom_fields_template($visibility, $ProfileID, $data3);
+					 rb_custom_fields_template($visibility, $ProfileID, $data3,$ProfileGenderShow);
 		 }
 			// END Query2
 		echo "    </td>\n";
@@ -1439,13 +1439,13 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 // *************************************************************************************************** //
 // Custom Fields TEMPLATE 
 
-function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
+function rb_custom_fields_template($visibility = 0, $ProfileID, $data3, $ProfileGenderShow = false){
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype  			= $rb_agency_options_arr['rb_agency_option_unittype'];
 		$rb_agency_option_profilenaming 		= (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
 		$rb_agency_option_locationtimezone 		= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
 	
-	if(!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !=""){ 
+	if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="")  ){ 
    
 		$subresult = mysql_query("SELECT ProfileID,ProfileCustomValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = '". $data3['ProfileCustomID'] ."' AND ProfileID = ". $ProfileID);
 		$row = @mysql_fetch_assoc($subresult);
@@ -1474,7 +1474,13 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						}
 					}
 			 }  
-		echo "  <tr valign=\"top\">\n";
+			 $isTextArea = "";
+			 if($ProfileCustomType == 4){
+				 
+				$isTextArea ="textarea-field"; 
+				 
+			 }
+		echo "  <tr valign=\"top\" class=\"".$isTextArea."\">\n";
 		echo "    <th scope=\"row\">". $data3['ProfileCustomTitle'].$measurements_label."</th>\n";
 		echo "    <td>\n";		  
 		  

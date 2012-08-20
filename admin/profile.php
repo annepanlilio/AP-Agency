@@ -39,14 +39,8 @@ if (isset($_POST['action'])) {
 	  }
 	$ProfileGender    			=$_POST['ProfileGender'];
 	$ProfileDateBirth	    	=$_POST['ProfileDateBirth'];
-	//$ProfileContactParent		=$_POST['ProfileContactParent'];
-	//$ProfileSSN    				=$_POST['ProfileSSN'];
 	$ProfileContactEmail		=$_POST['ProfileContactEmail'];
 	$ProfileContactWebsite		=$_POST['ProfileContactWebsite'];
-	//$ProfileContactLinkFacebook	=$_POST['ProfileContactLinkFacebook'];
-	//$ProfileContactLinkTwitter	=$_POST['ProfileContactLinkTwitter'];
-	//$ProfileContactLinkYouTube	=$_POST['ProfileContactLinkYouTube'];
-	//$ProfileContactLinkFlickr	=$_POST['ProfileContactLinkFlickr'];
 	$ProfileContactPhoneHome	=$_POST['ProfileContactPhoneHome'];
 	$ProfileContactPhoneCell	=$_POST['ProfileContactPhoneCell'];
 	$ProfileContactPhoneWork	=$_POST['ProfileContactPhoneWork'];
@@ -56,7 +50,6 @@ if (isset($_POST['action'])) {
 	$ProfileLocationZip			=$_POST['ProfileLocationZip'];
 	$ProfileLocationCountry		=$_POST['ProfileLocationCountry'];
 	$ProfileLanguage			=$_POST['ProfileLanguage'];
-	//$ProfileStatWeight			=$_POST['ProfileStatWeight'];
 	$ProfileDateUpdated		=$_POST['ProfileDateUpdated'];
 	$ProfileDateViewLast		=$_POST['ProfileDateViewLast'];
 	$ProfileType				=$_POST['ProfileType'];

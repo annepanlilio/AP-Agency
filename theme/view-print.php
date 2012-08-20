@@ -21,7 +21,13 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 </head>
 <body onload="printpage()" style="background: #fff;">
 <div id="print_wrapper" style="width: 887px;">
-  <div id="print_logo" style="float: left; width: 50%;"><img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" /></div>
+<div id="print_logo" style="float: left; width: 50%;">
+<?php if(!empty($rb_agency_option_agencylogo)){ ?>
+  <img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" />
+<?php }else{ ?>
+<?php echo $rb_agency_option_agencyname; ?>
+<?php } ?>
+</div>
   <div id="print_actions" style="float: left; text-align: right; width: 50%;"><a href="#" onclick="printpage();">Print</a> | <a href="javascript:window.opener='x';window.close();">Close</a></div>
   <div style="clear: both;"></div>
 <?php
@@ -187,12 +193,12 @@ if ($hasQuery) {
 	echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width: 887px; \" class=\"profile\">";
 	while ($data = mysql_fetch_array($results)) {
 	  if (1 == 1) {
-		echo "<div style=\"float: left; width: 420px; height: 220px; overflow: hidden; margin: 5px; padding: 5px; border: 1px solid #e1e1e1; \">";
+		echo "<div style=\"float: left; width: 420px; min-height: 220px; overflow: hidden; margin: 5px; padding: 5px; border: 1px solid #e1e1e1; \">";
 		echo " <div style=\"float: left; width: 150px; height: 180px; margin-right: 5px; overflow: hidden; \"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
 		echo " <div style=\"float: left; width: 230px; padding: 15px; \">";
 
 		if ($_GET['cD'] == "1") {
-			echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
+			echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 
 			if (!empty($data['ProfileContactEmail'])) {
 				echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
@@ -224,6 +230,15 @@ if ($hasQuery) {
 			if (!empty($data['ProfileUnion'])) {
 				echo "<div><strong>Union:</strong> ". $data['ProfileUnion'] ."</div>\n";
 			}
+				
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ".$data['ProfileID'] ." AND  c.ProfileCustomView = 0 GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+		foreach  ($resultsCustom as $resultCustom) {
+			if(!empty($resultCustom->ProfileCustomValue )){
+				if(rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
+					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+				}
+			}
+		}
 			echo " </div>";
 			echo " <div style=\"clear: both; text-align: center; padding: 5px; \">\n";
 		} else {
@@ -231,35 +246,7 @@ if ($hasQuery) {
 		}
 		
 		
-			if (!empty($data['ProfileStatSkinColor'])) {
-				echo "	<strong>Skin:</strong> ". $data['ProfileStatSkinColor'] ." | \n";
-			}
-			if (!empty($data['ProfileStatHairColor'])) {
-				echo "	<strong>Hair:</strong> ". $data['ProfileStatHairColor'] ." | \n";
-			}
-			if (!empty($data['ProfileStatEyeColor'])) {
-				echo "	<strong>Eye:</strong> ". $data['ProfileStatEyeColor'] ." | \n";
-			}
-			if (!empty($data['ProfileStatHeight'])) {
-				  $heightraw = $data['ProfileStatHeight'];
-				  $heightfeet = floor($heightraw/12);
-				  $heightinch = $heightraw - floor($heightfeet*12);
-				echo "	<strong>Height:</strong> ". $heightfeet ." ft ". $heightinch ." in" ." | \n";
-			}
-			if (!empty($data['ProfileStatWeight'])) {
-				echo "	<strong>Weight:</strong> ". $data['ProfileStatWeight'] ." | \n";
-			}
-			if (!empty($data['ProfileStatBust'])) {
-				if($data['ProfileGender'] == "Male"){ $ProfileStatBustTitle = "Chest"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatBustTitle = "Bust"; } else { $ProfileStatBustTitle = "Chest/Bust"; }
-				echo "	<strong>". $ProfileStatBustTitle ."</strong> ". $data['ProfileStatBust'] ." | \n";
-			}
-			if (!empty($data['ProfileStatWaist'])) {
-				echo "	<strong>Waist:</strong> ". $data['ProfileStatWaist'] ." | \n";
-			}
-			if (!empty($data['ProfileStatHip'])) {
-				if($data['ProfileGender'] == "Male"){ $ProfileStatHipTitle = "Inseam"; } elseif ($data['ProfileGender'] == "Female"){ $ProfileStatHipTitle = "Hips"; } else { $ProfileStatHipTitle = "Hips/Inseam"; }
-				echo "	<strong>". $ProfileStatHipTitle ."</strong> ". $data['ProfileStatHip'] ."  \n";
-			}
+			
 		
 		echo " </div>";
 		echo "</div>";

@@ -186,3 +186,7 @@ input.stubby { width: 80px; }
 	display: none;
 }
 
+
+.boxblock table .textarea-field{
+   display:none;	
+}
