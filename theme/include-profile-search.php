@@ -66,16 +66,18 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 
 		echo " <div id=\"profile-search-form-advanced\" class=\"search-form\">\n";
 		echo "  <form method=\"post\" id=\"search-form-advanced\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
-		echo "        		<div><input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" /></div>\n";
-		echo "        		<div><input type=\"hidden\" name=\"action\" value=\"search\" /></div>\n";
-		echo "	 <div class=\"search-field single\">\n";
-		echo "		 <div><label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label></div>\n";
-	      echo "			<div><input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" /></div>\n";
-	      echo "	 </div>\n";
-		echo "	 <div class=\"search-field single\">\n";
-		echo "		 <div><label for=\"ProfileLastName\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label></div>\n";
-	      echo "			<div><input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION["ProfileContactNameLast"] ."\" /></div>\n";
-		echo "	 </div>\n";
+		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" />\n";
+		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
+		
+		echo "	 			      <div class=\"search-field single\">\n";
+		echo "		 				<div><label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label></div>\n";
+	      echo "		 				<div><input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" /></div>\n";
+	      echo "	 				</div>\n";
+		
+		echo "	 				<div class=\"search-field single\">\n";
+		echo "		 				<div><label for=\"ProfileLastName\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label></div>\n";
+	      echo "						 <div><input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION["ProfileContactNameLast"] ."\" /></div>\n";
+		echo "					 </div>\n";
 	
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <div> <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label></div>\n";
@@ -90,6 +92,7 @@ $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender'];
 		echo "				        	</select>";
 		echo "						</div>\n";
 		echo "				    </div>\n";
+		
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <div> <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label></div>\n";
 		echo "				       <div> <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               

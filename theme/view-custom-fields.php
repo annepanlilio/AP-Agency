@@ -1,12 +1,18 @@
 <?php
- 		 echo "	    <div class=\"search-field single\">\n";
-		
-	        
+ 		
 									$ProfileCustomID = $data1['ProfileCustomID'];
 									$ProfileCustomTitle = $data1['ProfileCustomTitle'];
 									$ProfileCustomType = $data1['ProfileCustomType'];
 									$ProfileCustomValue = $data1['ProfileCustomValue'];
-			//Hardcoded Fields -> Height
+			
+  if($ProfileCustomType!=4)			
+			
+		      if($ProfileCustomType==7){
+	             echo "	    <div class=\"search-field double\">\n";
+			}else{
+			 echo "	    <div class=\"search-field single\">\n";	
+			}
+/*			//Hardcoded Fields -> Height
 			if(strtolower($ProfileCustomTitle) == "height"){
 				
 				 // Metric or Imperial?
@@ -47,9 +53,12 @@
 						 
 			}
 			// Customfields
-			else{ 
-			 
-			 echo "				       <div> <label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label></div> \n";
+			else{ */
+			                                     if($ProfileCustomType==7){
+			 echo "				       <div class=\"label\">". $data1['ProfileCustomTitle']."</div> \n";
+									 }else{
+			 echo "				       <div><label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label></div> \n";							 
+									 }
 									if ($ProfileCustomType == 1) { //TEXT
 											
 											
@@ -187,12 +196,11 @@
 									       
 									}
 									
-									else {
-										
-										
-												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
-									
+									elseif ($ProfileCustomType == 7){
+										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label></div><div> <input class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."_min\" /></div>";
+										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label></div><div> <input class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."_max\" /></div>";
+											
 									}
-			}
+			
 		echo "				    </div>\n";
 		?>

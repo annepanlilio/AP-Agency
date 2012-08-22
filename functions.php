@@ -770,88 +770,7 @@
 			$filter .= " AND  ".table_agency_profile.".ProfileIsPromoted=1";
 		  }
 		
-
-		// Location
-		if (isset($ProfileLocationCity) && !empty($ProfileLocationCity)){
-			$ProfileLocationCity = $ProfileLocationCity;
-			$filter .= " AND profile.ProfileLocationCity='". $ProfileLocationCity ."'";
-		}
-		// Race
-		if (isset($ProfileStatEthnicity) && !empty($ProfileStatEthnicity)){
-			$ProfileStatEthnicity = $ProfileStatEthnicity;
-			$filter .= " AND profile.ProfileStatEthnicity='". $ProfileStatEthnicity ."'";
-		}
-		// Skin
-		if (isset($ProfileStatSkinColor) && !empty($ProfileStatSkinColor)){
-			$ProfileStatSkinColor = $ProfileStatSkinColor;
-			$filter .= " AND profile.ProfileStatSkinColor='". $ProfileStatSkinColor ."'";
-		}
-		// Eye
-		if (isset($ProfileStatEyeColor) && !empty($ProfileStatEyeColor)){
-			$ProfileStatEyeColor = $ProfileStatEyeColor;
-			$filter .= " AND profile.ProfileStatEyeColor='". $ProfileStatEyeColor ."'";
-		}
-		// Hair
-		if (isset($ProfileStatHairColor) && !empty($ProfileStatHairColor)){
-			$ProfileStatHairColor = $ProfileStatHairColor;
-			$filter .= " AND profile.ProfileStatHairColor='". $ProfileStatHairColor ."'";
-		}
-		// Height
-		if (isset($ProfileStatHeight_min) && !empty($ProfileStatHeight_min)){
-			$ProfileStatHeight_min = $ProfileStatHeight_min;
-			$filter .= " AND profile.ProfileStatHeight >= '". $ProfileStatHeight_min ."'";
-		}
-		if (isset($ProfileStatHeight_max) && !empty($ProfileStatHeight_max)){
-			$ProfileStatHeight_max = $ProfileStatHeight_max;
-			$filter .= " AND profile.ProfileStatHeight <= '". $ProfileStatHeight_max ."'";
-		}
-		// Weight
-		if (isset($ProfileStatWeight_min) && !empty($ProfileStatWeight_min)){
-			$ProfileStatWeight_min = $ProfileStatWeight_min;
-			$filter .= " AND profile.ProfileStatWeight >= ". $ProfileStatWeight_min ."";
-		}
-		if (isset($ProfileStatWeight_max) && !empty($ProfileStatWeight_max)){
-			$ProfileStatWeight_max = $ProfileStatWeight_max;
-			$filter .= " AND profile.ProfileStatWeight <= ". $ProfileStatWeight_max ."";
-		}
-		// Bust/Chest
-		if (isset($ProfileStatBust_min) && !empty($ProfileStatBust_min)){
-			$ProfileStatBust_min = $ProfileStatBust_min;
-			$filter .= " AND profile.ProfileStatBust >= ". $ProfileStatBust_min ."";
-		}
-		if (isset($ProfileStatBust_max) && !empty($ProfileStatBust_max)){
-			$ProfileStatBust_max = $ProfileStatBust_max;
-			$filter .= " AND profile.ProfileStatBust <= ". $ProfileStatBust_max ."";
-		}
-		// Waist
-		if (isset($ProfileStatWaist_min) && !empty($ProfileStatWaist_min)){
-			$ProfileStatWaist_min = $ProfileStatWaist_min;
-			$filter .= " AND profile.ProfileStatWaist >= ". $ProfileStatWaist_min ."";
-		}
-		if (isset($ProfileStatWaist_max) && !empty($ProfileStatWaist_max)){
-			$ProfileStatWaist_max = $ProfileStatWaist_max;
-			$filter .= " AND profile.ProfileStatWaist <= ". $ProfileStatWaist_max ."";
-		}
-		// Hip
-		if (isset($ProfileStatHip_min) && !empty($ProfileStatHip_min)){
-			$ProfileStatHip_min = $ProfileStatHip_min;
-			$filter .= " AND profile.ProfileStatHip >= ". $ProfileStatHip_min ."";
-		}
-		if (isset($ProfileStatHip_max) && !empty($ProfileStatHip_max)){
-			$ProfileStatHip_max = $ProfileStatHip_max;
-			$filter .= " AND profile.ProfileStatHip <= ". $ProfileStatHip_max ."";
-		}
-		// Shoe
-		if (isset($ProfileStatShoe_min) && !empty($ProfileStatShoe_min)){
-			$ProfileStatShoe_min = $ProfileStatShoe_min;
-			$filter .= " AND profile.ProfileStatShoe >= ". $ProfileStatShoe_min ."";
-		}
-		if (isset($ProfileStatShoe_max) && !empty($ProfileStatShoe_max)){
-			$ProfileStatShoe_max = $ProfileStatShoe_max;
-			$filter .= " AND profile.ProfileStatShoe <= ". $ProfileStatShoe_max ."";
-		}
-		
-      */
+*/
 		// Can we show the profiles?
 		if ( (isset($OverridePrivacy)) || ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 			echo "<div id=\"profile-results\">\n";
@@ -965,10 +884,10 @@
 				if ($rb_agency_option_profilelist_expanddetails) {
 				echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 				}
-				
+				 if(is_user_logged_in()){
 				  //Get Favorite & Casting Cart links
 				  rb_agency_get_miscellaneousLinks($dataList["pID"]);
-			
+				 }
 				echo "  </div>\n";
 				
 				echo "</div>\n";
@@ -1043,7 +962,9 @@
 			echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 			}
 			// Add Favorite and Casting Cart links
-			 rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+			 if(is_user_logged_in()){
+			  rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+			 }
 			
 			echo "  </div>\n";
 		
@@ -1406,7 +1327,7 @@ class rb_agency_pagination {
 // *************************************************************************************************** //
 // Custom Fields
 
-function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileGenderShow = false){
+function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileGenderShow = false, $SearchMode = false){
 				
 	
 								
@@ -1422,7 +1343,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 					 rb_custom_fields_template($visibility, $ProfileID, $data3);
 			}
 		 } else {
-					 rb_custom_fields_template($visibility, $ProfileID, $data3,$ProfileGenderShow);
+					 rb_custom_fields_template($visibility, $ProfileID, $data3);
 		 }
 			// END Query2
 		echo "    </td>\n";
@@ -1439,7 +1360,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 // *************************************************************************************************** //
 // Custom Fields TEMPLATE 
 
-function rb_custom_fields_template($visibility = 0, $ProfileID, $data3, $ProfileGenderShow = false){
+function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype  			= $rb_agency_options_arr['rb_agency_option_unittype'];
 		$rb_agency_option_profilenaming 		= (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
@@ -1734,4 +1655,25 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3, $Profile
   function rb_agency_editTitleText($string){
         return "<span>".$string."<a href=\"javascript:;\" style=\"font-size:11px;color:blue;text-decoration:underline;\">Edit</a></span>";  
   }
+  
+  /*/
+   *================ Add toolbar menu ==============================
+   *
+  /*/ 
+  function rb_agency_callafter_setup(){
+	 if (current_user_can('level_10') && !is_admin()) {
+		  function rb_agency_add_toolbar($wp_toolbar) {
+			$wp_toolbar->add_node(array(
+			'id' => 'rb-agency-toolbar-settings',
+			'title' => 'RB Agency Settings',
+			'href' =>  get_admin_url().'admin.php?page=rb_agency_menu_settings',
+			'meta' => array('target' => 'rb-agency-toolbar-settings')
+		     ));
+		  }
+		  add_action('admin_bar_menu', 'rb_agency_add_toolbar', 999);
+	 }
+	   
+  }
+   add_action( 'after_setup_theme',"rb_agency_callafter_setup"); 
+
 ?>

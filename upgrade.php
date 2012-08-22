@@ -183,15 +183,55 @@ if (get_option('rb_agency_version') == "1.9.1.1") {
 		         $fetchGender = mysql_fetch_assoc($queryGender);
 			   $count = mysql_num_rows($queryGender);
 			   if($count > 0){
-			   	mysql_query("UPDATE ".table_agency_profile." SET ProfileGender='".(0 + $fetchGender["GenderID"])."' WHERE ProfileID='".$fetchData["ProfileID"]."'")  or die("4".mysql_error());
+			   	mysql_query("UPDATE ".table_agency_profile." SET ProfileGender='".(0 + (int)$fetchGender["GenderID"])."' WHERE ProfileID='".$fetchData["ProfileID"]."'")  or die("4".mysql_error());
 			   }
 			 
 		endwhile;
 		
    // Updating version number!
 		update_option('rb_agency_version', "1.9.1.2");
+		
 	  
-  }		
+  }	
+  if (get_option('rb_agency_version') == "1.9.1.2") {	
+  
+		$resultsProfile = mysql_query("SELECT * FROM ".table_agency_profile." ");
+		
+		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
+
+			$ProfileID = $f_Profile["ProfileID"];
+			$ProfileGender = $f_Profile["ProfileGender"];
+			
+			$arr_columns = array(
+			"ProfileLanguage" => "Language",
+			"ProfileStatEthnicity" => "Ethnicity",
+			"ProfileStatSkinColor" => "Skin Tone",
+			"ProfileStatHairColor" => "Hair Color",
+			"ProfileStatEyeColor" => "Eye Color",
+			"ProfileStatHeight" => "Height",
+			"ProfileStatWeight" => "Weight",
+			"ProfileStatBust" => "Chest",
+			"ProfileStatWaist" => "Bust",
+			"ProfileStatHip" => "Waist",
+			"ProfileStatShoe" => "Hips",
+			"ProfileStatDress" => "Shoe Size",
+			"ProfileUnion" => "Cup Size",
+			"ProfileExperience" => "Experience");
+			// old column   to  custom fields 
+			
+			foreach($arr_columns as $oldColumn => $migrate_data):		
+				
+				$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
+				 	   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
+				 	   FROM   " . table_agency_customfields . "  
+			       	   WHERE ProfileCustomTitle ='". $migrate_data."'";
+				 mysql_query($query) or die(mysql_error());
+				 
+		      endforeach;
+		
+		
+		}// end while data fetch
+  }
 // Ensure directory is setup
 if (!is_dir(rb_agency_UPLOADPATH)) {
 	mkdir(rb_agency_UPLOADPATH, 0755);
