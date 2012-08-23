@@ -640,20 +640,9 @@
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
 						
 							if(!empty($val)){
-								list($val1, $val2) = explode("|",implode("|",explode(",",$val)));
 								
-								if(!empty($val1) && !empty($val2)){
-									$filter .= " AND customfield_mux.ProfileCustomValue BETWEEN '".$val1."' AND '".$val2."' ";
-									$_SESSION[$key] = $val;
-								}elseif(!empty($val1)){
-									$data = implode(",",explode("|",implode("|",explode(",",$val))));
-									$filter .= " AND customfield_mux.ProfileCustomValue IN('".$data ."') ";
-									$_SESSION[$key] = $val;
-								}else{
-									$data = implode("','",explode(",",$val));
-									$filter .= " AND customfield_mux.ProfileCustomValue IN('".$val."') ";
-									$_SESSION[$key] = $val;
-								}
+									$filter .= " AND customfield_mux.ProfileCustomValue = '".$val."' ";
+								
 							}
 							
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
@@ -681,6 +670,16 @@
 								
 							} else {
 								$_SESSION[$key] = "";
+							}
+							
+						}
+						 elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
+							if(!empty($val)){
+							      list($Min_val,$Max_val) = explode(",",$val);
+								if(!empty($Min_val) && !empty($Max_val)){
+							      	$filter .= " AND customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' ";
+							      	$_SESSION[$key] = $val;
+								}
 							}
 							
 						}

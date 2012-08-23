@@ -101,7 +101,13 @@ if ($_REQUEST["action"] == "search") {
 		
 				if(substr($key,0,15)=="ProfileCustomID"){
 					      if(is_array($val)){
-						 $filterArray[$key] = implode(",",$val);	
+							 if(count($val)>1){	
+								$filterArray[$key] = implode(",",$val);	
+							 }else{
+								 if(!empty($val)){
+									$filterArray[$key] = $val;
+								 }
+							 }
 						}else{
 						 $filterArray[$key] = $val;
 						}

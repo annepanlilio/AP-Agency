@@ -5,7 +5,7 @@
 									$ProfileCustomType = $data1['ProfileCustomType'];
 									$ProfileCustomValue = $data1['ProfileCustomValue'];
 			
-  if($ProfileCustomType!=4)			
+  if($ProfileCustomType!=4)	{		
 			
 		      if($ProfileCustomType==7){
 	             echo "	    <div class=\"search-field double\">\n";
@@ -103,7 +103,7 @@
 								         
 											echo "<div><label>".$data[0]."</label></div>";
 											
-											echo "<div><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
+											echo "<div><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
 											echo "<option value=\"\">--</option>";
 											  
 												foreach($data as $val1){
@@ -122,7 +122,7 @@
 												}
 											  	echo "</select></div>\n";
 												
-												
+											/*	
 											if(!empty($data2) && !empty($option2)){
 												       echo "<div><label>".$data2[0]."</label></div>";
 											
@@ -143,7 +143,7 @@
 													echo "</select></div>\n";
 											
 											}
-									   
+									   */
 										
 										
 									} elseif ($ProfileCustomType == 4) {
@@ -197,10 +197,15 @@
 									}
 									
 									elseif ($ProfileCustomType == 7){
-										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label></div><div> <input class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."_min\" /></div>";
-										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label></div><div> <input class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."_max\" /></div>";
+										   
+										 
+										      list($min_val,$max_val) =  explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
+											
+										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label></div><div> <input value=\"".(!is_array($min_val) && $min_val != "Array" ? $min_val : "")."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
+										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label></div><div> <input value=\"".$max_val."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
 											
 									}
 			
 		echo "				    </div>\n";
+			}
 		?>
