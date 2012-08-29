@@ -22,17 +22,16 @@ $rb_agency_VERSION = "1.9"; // starter
 
 
 
-if (!session_id())
+if (!session_id()) session_start();
 
-session_start();
-
-// get options hack
+// Get Option name
 function rb_getversion($option_name){
 		
 		return get_option($option_name);
 }
-
+// Set Version
 function rb_setversion($option_name,$newvalue){
+	
 		if ( get_option( $option_name ) != $newvalue ) {
 		    update_option( $option_name, $newvalue );
 		} else {
@@ -46,6 +45,8 @@ function rb_setversion($option_name,$newvalue){
 	$rb_agency_VERSION  = rb_setversion("rb_agency_version",$rb_agency_VERSION);	
 
 
+
+// Requires 2.8 or more
 
 if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '2.8', '<') ) { // if less than 2.8 ?>
 
@@ -216,11 +217,13 @@ return;
 // Does it need a diaper change?
  if(rb_getversion("rb_agency_version")==$rb_agency_VERSION){
 	include_once(dirname(__FILE__).'/upgrade.php');
+	
   }else{
 	include_once(dirname(__FILE__).'/upgrade.php');  
+	
   }
-  $rb_agency_storedversion = get_option("rb_agency_version");
-  $rb_agency_VERSION = get_option("rb_agency_version");	
+  $rb_agency_storedversion = rb_getversion("rb_agency_version");
+  $rb_agency_VERSION = rb_getversion("rb_agency_version");	
   
   
 define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
@@ -298,6 +301,8 @@ define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 				ProfileContactNameFirst VARCHAR(255),
 
 				ProfileContactNameLast VARCHAR(255),
+				
+				ProfileContactParent VARCHAR(255),
 
 				ProfileGender VARCHAR(255),
 
@@ -322,6 +327,14 @@ define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 				ProfileLocationZip VARCHAR(255),
 
 				ProfileLocationCountry VARCHAR(255),
+				
+				ProfileContactLinkTwitter VARCHAR(255),
+				
+				ProfileContactLinkFacebook VARCHAR(255),
+				
+				ProfileContactLinkYoutube VARCHAR(255),
+				
+				ProfileContactLinkFlickr VARCHAR(255),
 
 				ProfileDateCreated TIMESTAMP DEFAULT NOW(),
 
@@ -1054,6 +1067,12 @@ if ( is_admin() ){
 }
 
 
+			$rb_agency_options_arr = get_option('rb_agency_options');
+
+			$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+
+			$rb_agency_option_profilelist_castingcart 	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+			
 
 //****************************************************************************************************//
 
@@ -1063,7 +1082,6 @@ if ( is_admin() ){
 
 		
 
-		add_action('wp_ajax_rb_agency_save_favorite', 'rb_agency_save_favorite');
 
 
 
@@ -1268,22 +1286,19 @@ if ( is_admin() ){
 		}
 
    
-
-        add_action('wp_head', 'rb_agency_save_favorite_javascript');
-
-	  
-
+       if($rb_agency_option_profilelist_favorite){
+       	 add_action('wp_footer', 'rb_agency_save_favorite_javascript');
+		 add_action('wp_ajax_rb_agency_save_favorite', 'rb_agency_save_favorite');
+	 }
 
 
 //****************************************************************************************************//
 
 // Add / Handles Ajax Request ===== Add To Casting Cart
 
-			
 
+	
 
-
-		add_action('wp_ajax_rb_agency_save_castingcart', 'rb_agency_save_castingcart');
 
 
 
@@ -1485,10 +1500,12 @@ if ( is_admin() ){
 
 		}
 
-   
+   if(isset($rb_agency_option_profilelist_catingcart)){
 
-        add_action('wp_head', 'rb_agency_save_castingcart_javascript');
+	  add_action('wp_ajax_rb_agency_save_castingcart', 'rb_agency_save_castingcart');
 
+	  add_action('wp_footer', 'rb_agency_save_castingcart_javascript');
+   }
 // *************************************************************************************************** //
 
 // Add Widgets
@@ -1499,7 +1516,7 @@ if ( is_admin() ){
 
 		   
 
-		   	$rb_agencyinteract_option_profilemanage_sidebar = $rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar'];
+		   	$rb_agencyinteract_option_profilemanage_sidebar =isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar']) ? $rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar'] : 0;
 
 			
 

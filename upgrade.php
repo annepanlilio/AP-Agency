@@ -64,7 +64,17 @@ global $wpdb;
 
 	}*/
 
-
+ // Safe Add column
+   function rb_agency_addColumn($tbl = "",$column = "", $atts = ""){
+	 global $wpdb;
+	$debug = debug_backtrace();
+      if($wpdb->get_var("SHOW COLUMNS FROM ".trim($tbl)." LIKE '%".trim($column)."%' ") != trim($column)){
+	
+		$result = mysql_query(" ALTER TABLE ".trim($tbl)." ADD ".trim($column)." ".$atts.";") or die("rb_agency_addColumn()  - Adding column ".trim($column)." in line ".$debug["line"]." <br/> ".mysql_error());	
+		 
+		return $result;
+	}
+   }
 
 // *************************************************************************************************** //
 
@@ -104,8 +114,7 @@ global $wpdb;
 
 		// Privacy in Custom Fields
 
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomView INT(10) NOT NULL DEFAULT '0'");
-
+		 rb_agency_addColumn(table_agency_customfields,"ProfileCustomView","INT(10) NOT NULL DEFAULT '0'");
 
 
 		// Updating version number!
@@ -122,29 +131,26 @@ global $wpdb;
 
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfield_mux ." CHANGE ProfileCustomValue ProfileCustomValue TEXT");
 
-	
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." ADD ProfileIsFeatured  INT(10) NOT NULL DEFAULT '0'");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_profile ." ADD ProfileIsPromoted  INT(10) NOT NULL DEFAULT '0'");
-
+	 
+		rb_agency_addColumn( table_agency_profile,"ProfileIsFeatured","INT(10) NOT NULL DEFAULT '0'");
 		
+		rb_agency_addColumn( table_agency_profile,"ProfileIsPromoted","INT(10) NOT NULL DEFAULT '0'");
 
 		// Setup > Save Favorited
+		if ($wpdb->get_var("show tables like '".  table_agency_savedfavorite ."'") !=  table_agency_savedfavorite ) { 
+			 $results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
+	
+					SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
+	
+					SavedFavoriteProfileID VARCHAR(255),
+	
+				    SavedFavoriteTalentID VARCHAR(255),
+	
+					PRIMARY KEY (SavedFavoriteID)
+	
+					);");
 
-		 $results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
-
-				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
-
-				SavedFavoriteProfileID VARCHAR(255),
-
-			    SavedFavoriteTalentID VARCHAR(255),
-
-				PRIMARY KEY (SavedFavoriteID)
-
-				);");
-
-		
+		}
 
 		// Updating version number!
 
@@ -157,25 +163,26 @@ global $wpdb;
 
 
 		// Setup > Taxonomy: Gender
-
-		$results = $wpdb->query("CREATE TABLE ". table_agency_data_gender ." (
-
-			GenderID INT(10) NOT NULL AUTO_INCREMENT,
-
-			GenderTitle VARCHAR(255),
-
-			PRIMARY KEY (GenderID)
-
-			);");
-
+          if ($wpdb->get_var("show tables like '".  table_agency_data_gender ."'") !=  table_agency_data_gender ) { 
+			$results = $wpdb->query("CREATE TABLE ". table_agency_data_gender ." (
+	
+				GenderID INT(10) NOT NULL AUTO_INCREMENT,
+	
+				GenderTitle VARCHAR(255),
+	
+				PRIMARY KEY (GenderID)
+	
+				);");
+				
+				
+			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Male')");
+	
+			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
+	    }
 	    // Custom Order in Custom Fields
 
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");
 
-		$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Male')");
-
-		$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
-
+ 		 rb_agency_addColumn(table_agency_customfields,"ProfileCustomOrder","INT(10) NOT NULL DEFAULT '0'");
 		
 
 		// Updating version number!
@@ -191,80 +198,77 @@ global $wpdb;
 	 
 
 		// Setup > Save Favorited
-
-		$results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
-
-			SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
-
-			SavedFavoriteProfileID VARCHAR(255),
-
-			SavedFavoriteTalentID VARCHAR(255),
-
-			PRIMARY KEY (SavedFavoriteID)
-
-			);");
-
+		if ($wpdb->get_var("show tables like '".  table_agency_savedfavorite ."'") !=  table_agency_savedfavorite ) { 
+				$results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
+		
+					SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
+		
+					SavedFavoriteProfileID VARCHAR(255),
+		
+					SavedFavoriteTalentID VARCHAR(255),
+		
+					PRIMARY KEY (SavedFavoriteID)
+		
+					);");
+		}
 			
-
-		$results = $wpdb->query("CREATE TABLE ". table_agency_castingcart." (
-
-				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
-
-				CastingCartProfileID VARCHAR(255),
-
-			      CastingCartTalentID VARCHAR(255),
-
-				PRIMARY KEY (CastingCartID)
-
-				);");
-
-		$sql13 = "CREATE TABLE ". table_agency_mediacategory." (
-
-				MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
-
-				MediaCategoryTitle VARCHAR(255),
-
-				MediaCategoryGender VARCHAR(255),
-
-			      MediaCategoryOrder VARCHAR(255),
-
-				PRIMARY KEY (MediaCategoryID)
-
-				);";
-
-			mysql_query($sql13);			
-
+		if ($wpdb->get_var("show tables like '".  table_agency_castingcart ."'") != table_agency_castingcart ) { 
+				$results = $wpdb->query("CREATE TABLE ". table_agency_castingcart." (
+		
+						CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
+		
+						CastingCartProfileID VARCHAR(255),
+		
+						CastingCartTalentID VARCHAR(255),
+		
+						PRIMARY KEY (CastingCartID)
+		
+						);");
+		}
+		
+		if ($wpdb->get_var("show tables like '".  table_agency_mediacategory ."'") != table_agency_mediacategory) { 
+				$sql13 = "CREATE TABLE ". table_agency_mediacategory." (
+		
+						MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
+		
+						MediaCategoryTitle VARCHAR(255),
+		
+						MediaCategoryGender VARCHAR(255),
+		
+						MediaCategoryOrder VARCHAR(255),
+		
+						PRIMARY KEY (MediaCategoryID)
+		
+						);";
+		
+					mysql_query($sql13);			
+			}
 	   	// Custom Order in Custom Fields
 
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomOrder INT(10) NOT NULL DEFAULT '0'");
+		 rb_agency_addColumn(table_agency_customfields,"ProfileCustomOrder"," INT(10) NOT NULL DEFAULT '0'");
 
 
 
 	   	// Custom Visibility in Custom Fields
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0'");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1'");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1'");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1'");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowRegistration INT(10) NOT NULL DEFAULT '1'");
-
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." ADD ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1'");
-
-
-
 		
-
+		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowProfile"," INT(10) NOT NULL DEFAULT '1'");
 		
-
+		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowGender"," INT(10) NOT NULL DEFAULT '0'");
+		
+		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowSearch"," INT(10) NOT NULL DEFAULT '1'");
+		
+		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowLogged"," INT(10) NOT NULL DEFAULT '1'");
+		
+		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowRegistration"," INT(10) NOT NULL DEFAULT '1'");
+		
+		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowAdmin"," INT(10) NOT NULL DEFAULT '1'");
+		
+		
 	 	// Populate Custom Fields
 
-		$query = mysql_query("SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'");
+		$q1 = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Language'");
 
-		$count = mysql_num_rows($query);
+		$count = mysql_num_rows($q1);
 
 		if ($count < 1) {
 
@@ -302,17 +306,13 @@ global $wpdb;
 
 		}
 
-
-
-             $wpdb->show_errors();
-
-		 
+             mysql_free_result($q1);
 
 		//Fix Custom Fields compatibility. 1.8 to 1.9.1
 
-		$results = mysql_query("SELECT * FROM ".table_agency_customfields." ");
+		$q2 = mysql_query("SELECT * FROM ".table_agency_customfields." ");
 
-		while($fetchData = mysql_fetch_assoc($results)):
+		while($fetchData = mysql_fetch_assoc($q2)):
 
 			if($fetchData["ProfileCustomType"] == 0){
 
@@ -328,13 +328,13 @@ global $wpdb;
 
 		endwhile;
 
-		
+		mysql_free_result($q2);
 
 		// Fix Gender compatibility
 
-		$results = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ")  or die(mysql_error());
+		$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ")  or die(mysql_error());
 
-		while($fetchData = mysql_fetch_assoc($results)):
+		while($fetchData = mysql_fetch_assoc($q3)):
 
 		         $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die(mysql_error());
 
@@ -349,7 +349,8 @@ global $wpdb;
 			   }
 
 		endwhile;
-
+          
+	      mysql_free_result($q3);
 		
 
 		// Updating version number!
@@ -368,9 +369,9 @@ if (rb_getversion('rb_agency_version') == "1.9.1") {
            
 		// Fix Gender compatibility
 
-		$results = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die("1".mysql_error());
+		$q4 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die("1".mysql_error());
 
-		while($fetchData = mysql_fetch_assoc($results)):
+		while($fetchData = mysql_fetch_assoc($q4)):
 
 
 
@@ -389,7 +390,7 @@ if (rb_getversion('rb_agency_version') == "1.9.1") {
 			 
 
 		endwhile;
-
+            mysql_free_result($q4);
 		
 
    // Updating version number!
@@ -487,7 +488,7 @@ if (rb_getversion('rb_agency_version') == "1.9.1") {
   }
 
 // Ensure directory is setup
-
+	
 if (!is_dir(rb_agency_UPLOADPATH)) {
 
 	mkdir(rb_agency_UPLOADPATH, 0755);

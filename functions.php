@@ -1,6 +1,7 @@
 <?php
 
-
+  #Debug Mode
+ //$RB_DEBUG_MODE = true;
 
 // *************************************************************************************************** //
 
@@ -129,8 +130,8 @@
 // Add to WordPress Dashboard
 
 	$rb_agency_options_arr = get_option('rb_agency_options');
-
-	$rb_agency_option_advertise = $rb_agency_options_arr['rb_agency_option_advertise'];
+    
+	$rb_agency_option_advertise = isset($rb_agency_options_arr['rb_agency_option_advertise']) ? $rb_agency_options_arr['rb_agency_option_advertise'] : 0;
 
 			
 
@@ -1020,46 +1021,36 @@
 
 
 
-	// Profile List
 
+	// Profile List
 	function rb_agency_profilelist($atts, $content = NULL) {
 
-		/*
-
-		if (function_exists('rb_agency_profilelist')) { 
-
-			$atts = array('count' => $count);
-
-			rb_agency_profilelist($atts); }
-
-		*/
-
-		
-
-		// Get Preferences
+	// Get Preferences
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
 
-			$rb_agency_option_privacy					 = $rb_agency_options_arr['rb_agency_option_privacy'];
+			$rb_agency_option_privacy					 = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
 
-			$rb_agency_option_profilelist_count			 = $rb_agency_options_arr['rb_agency_option_profilelist_count'];
+			$rb_agency_option_profilelist_count			 = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
 
-			$rb_agency_option_profilelist_perpage		 = $rb_agency_options_arr['rb_agency_option_profilelist_perpage'];
+			$rb_agency_option_profilelist_perpage		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
 
-			$rb_agency_option_profilelist_sortby		 = $rb_agency_options_arr['rb_agency_option_profilelist_sortby'];
+			$rb_agency_option_profilelist_sortby		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
 
-			$rb_agency_option_layoutprofilelist		 	 = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];
+			$rb_agency_option_layoutprofilelist		 	 = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
 
-			$rb_agency_option_profilelist_expanddetails	 = $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'];
+			$rb_agency_option_profilelist_expanddetails	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
 
-			$rb_agency_option_locationtimezone 			 = (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
+			$rb_agency_option_locationtimezone 			 = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 
-			$rb_agency_option_profilelist_favorite		 = (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
+			$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
 
-			$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
+			$rb_agency_option_profilenaming			 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 
-			$rb_agency_option_profilelist_castingcart 	 = (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
+			$rb_agency_option_profilelist_castingcart 	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
+	
 
+	
 
 
 		// Set It Up	
@@ -1085,8 +1076,6 @@
 				"profilegender" => NULL,
 
 					"gender" => NULL,
-
-				
 
 				"profilestatheight_min" => NULL,
 
@@ -1368,9 +1357,9 @@
 
 						}
 
+						mysql_free_result($q);
 
-
-					}
+					} // elseif
 
 					
 
@@ -1484,9 +1473,7 @@
 
 			/*********** Paginate **************/
 
-			$items = mysql_num_rows(mysql_query(
-
-			"SELECT
+			$qSqlItem = "SELECT
 
 				 profile.*,
 
@@ -1494,17 +1481,9 @@
 
 				 customfield_mux.*,  
 
-				 (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
-
-			 WHERE 
-
-				 profile.ProfileID = media.ProfileID 
-
-			 AND 
-
-			 	media.ProfileMediaType = \"Image\" 
-
-			 AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL 
+				 (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
+				 
+				 AS ProfileMediaURL 
 
 				 FROM ". table_agency_profile ." profile 
 
@@ -1512,9 +1491,9 @@
 
 				 ON profile.ProfileID = customfield_mux.ProfileID  
 
-			 $filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  $limit")); // number of total rows in the database
-
-				
+			 $filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "").""; // number of total rows in the database
+                        $qItem = mysql_query($qSqlItem);  
+				$items = mysql_num_rows($qItem);
 
 			if($items > 0) {
 
@@ -1606,6 +1585,7 @@
 
 			}
 
+			
 			$resultsList = mysql_query($queryList);
 
 			$countList = mysql_num_rows($resultsList);
@@ -1613,36 +1593,33 @@
   #DEBUG!
 
   #echo $queryList;
-
+  $displayHTML ="";
+  
                 $profileDisplay = 0;
 
 				$countFav = 0;
 
-			while ($dataList = mysql_fetch_array($resultsList)) {
+			while ($dataList = mysql_fetch_assoc($resultsList)) {
 
 				
-
 				$profileDisplay++;
-
-				
-
 				if ($profileDisplay == 1 ){
 
 					 
 
 						/*********** Show Count/Pages **************/
 
-						echo "  <div id=\"profile-results-info\">\n";
+						 $displayHTML .= "  <div id=\"profile-results-info\">\n";
 
 							if($items > 0) {
 
 								if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){ 
 
-									echo "    <div class=\"profile-results-info-countpage\">\n";
+									 $displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
 
 											echo $p->show();  // Echo out the list of paging. 
 
-									echo "    </div>\n";
+									 $displayHTML .= "    </div>\n";
 
 								}
 
@@ -1652,11 +1629,11 @@
 
 							if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){  
 
-								echo "    <div id=\"profile-results-info-countrecord\">\n";
+								 $displayHTML .= "    <div id=\"profile-results-info-countrecord\">\n";
 
-								echo "    	". __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
+								 $displayHTML .="    	". __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
 
-								echo "    </div>\n";
+								 $displayHTML .="    </div>\n";
 
 							}
 
@@ -1664,11 +1641,11 @@
 
 						}
 
-					echo "  </div><!-- #profile-results-info -->\n";
+					 $displayHTML .= "  </div><!-- #profile-results-info -->\n";
 
 		
 
-					echo "  <div id=\"profile-list\">\n";
+					 $displayHTML .="  <div id=\"profile-list\">\n";
 
 				}
 
@@ -1676,43 +1653,44 @@
 
 						
 
-				echo "<div class=\"profile-list-layout". (int)$rb_agency_option_layoutprofilelist ."\">\n";
+				 $displayHTML .= "<div class=\"profile-list-layout". (int)$rb_agency_option_layoutprofilelist ."\">\n";
 
-				echo "  <div class=\"style\"></div>\n";
+				 $displayHTML .="  <div class=\"style\"></div>\n";
 
 				if (isset($dataList["ProfileMediaURL"]) ) { // && (file_exists(rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"])) ) {
 
-				echo "  <div class=\"image\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
+				 $displayHTML .="  <div class=\"image\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
 
 				} else {
 
-				echo "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
+				 $displayHTML .= "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
 
 				}
 
-				echo "  <div class=\"title\">\n";
+				 $displayHTML .= "  <div class=\"title\">\n";
 
-				echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
+				 $displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 
 				if ($rb_agency_option_profilelist_expanddetails) {
 
-				echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
+				 $displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 
 				}
 
 				 if(is_user_logged_in()){
 
 				  //Get Favorite & Casting Cart links
-
-				  rb_agency_get_miscellaneousLinks($dataList["pID"]);
+					if ((isset($profilefavorite) && !empty($profilefavorite)) || (isset($profilecastingcart) && !empty($profilecastingcart))){ 
+								rb_agency_get_miscellaneousLinks($dataList["pID"]);
+					}
 
 				 }
-
-				echo "  </div>\n";
+                          //echo "loaded: ".microtime()." ms";
+				 $displayHTML .= "  </div>\n";
 
 				
 
-				echo "</div>\n";
+				 $displayHTML .= "</div>\n";
 
 						
 
@@ -1723,24 +1701,24 @@
 				}
 
 						
-
+                          mysql_free_result($resultsList);
 				
 
 				if ($countList < 1) {
 
-							echo __("No Profiles Found", rb_agency_TEXTDOMAIN);
+							 $displayHTML .= __("No Profiles Found", rb_agency_TEXTDOMAIN);
 
 				}
 
 			
 
-				echo "  <div style=\"clear: both; \"></div>\n";
+				 $displayHTML .= "  <div style=\"clear: both; \"></div>\n";
 
-				echo "  </div><!-- #profile-list -->\n";
+				 $displayHTML .= "  </div><!-- #profile-list -->\n";
 
-				echo "</div><!-- #profile-results -->\n";
+				 $displayHTML .= "</div><!-- #profile-results -->\n";
 
-				mysql_free_result($resultsList);
+			
 
 			}  
 
@@ -1749,10 +1727,12 @@
 			include("theme/include-login.php"); 	
 
 		}
+			
+		   echo  $displayHTML;	
 
-	      
-
-	
+	         // debug mode
+               rb_agency_checkExecution();
+	       
 
 	}
 
@@ -1802,7 +1782,7 @@
 
 		// Execute Query
 
-		$queryList = "SELECT profile.*,(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile WHERE profile.ProfileIsActive = 1 $sql  ORDER BY RAND() LIMIT 0,$count";
+		$queryList = "SELECT profile.*,(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."  ORDER BY RAND() LIMIT 0,$count";
 
 		$resultsList = mysql_query($queryList);
 
@@ -1812,7 +1792,7 @@
 
 
 
-			echo "<div class=\"profile-list-layout". (int)$rb_agency_option_layoutprofilelist ."\">\n";
+			echo "<div class=\"profile-list-layout".( isset($rb_agency_option_layoutprofilelist) ? (int)$rb_agency_option_layoutprofilelist:0 )."\">\n";
 
 			echo "  <div class=\"style\"></div>\n";
 
@@ -1827,6 +1807,7 @@
 			}
 
 			echo "  <div class=\"title\">\n";
+                         $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 
 								if ($rb_agency_option_profilenaming == 0) {
 
@@ -1845,10 +1826,10 @@
 									$ProfileContactDisplay = "ID ". $ProfileID;
 
 								}
+				 
+			echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". $ProfileContactDisplay ."</a></h3>\n";
 
-			echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". $ActiveLanguage. $ProfileContactDisplay ."</a></h3>\n";
-
-			if ($rb_agency_option_profilelist_expanddetails) {
+			if (isset($rb_agency_option_profilelist_expanddetails)) {
 
 			echo "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 
@@ -2989,7 +2970,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			
 
 	} // End if Empty ProfileCustomID
-
+    
 }
 
 
@@ -3023,7 +3004,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	    return 0;	 
 
 	 }
-
+       rb_agency_checkExecution();
  }
 
 
@@ -3059,7 +3040,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		 return false;
 
 	  }
-
+	rb_agency_checkExecution();
  }
 
  
@@ -3076,17 +3057,17 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
-			$rb_agency_option_profilelist_favorite		 = (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
+			$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
 
-			$rb_agency_option_profilelist_castingcart 	 = (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
+			$rb_agency_option_profilelist_castingcart 	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
 
 
-
-			
-
- function rb_agency_get_miscellaneousLinks($ProfileID){
 
 			
+
+ function rb_agency_get_miscellaneousLinks($ProfileID = ""){
+
+			rb_agency_checkExecution();
 
 				if ($rb_agency_option_profilelist_favorite) {
 
@@ -3171,7 +3152,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				}
 
 			
-
+                 
 			
 
 	 
@@ -3241,8 +3222,9 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
  		 add_filter('show_admin_bar', '__return_false');
 
   }
-  $rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
-       $rb_agencyinteract_option_profilemanage_toolbar =(int)$rb_agencyinteract_options_arr["rb_agencyinteract_option_profilemanage_toolbar"];
+       $rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
+       $rb_agencyinteract_option_profilemanage_toolbar =isset($rb_agencyinteract_options_arr["rb_agencyinteract_option_profilemanage_toolbar"]) ? (int)$rb_agencyinteract_options_arr["rb_agencyinteract_option_profilemanage_toolbar"] : 0;
+  
    if($rb_agencyinteract_option_profilemanage_toolbar==1){
 	  rb_agency_disableAdminToolbar(); 
    }
@@ -3306,6 +3288,49 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
    add_action( 'after_setup_theme',"rb_agency_callafter_setup"); 
 
+ /*/
+  *  PHP Profiler DEBUG MODE
+ /*/
+ 
+ function rb_agency_checkExecution(){
+ 	global $RB_DEBUG_MODE;
+	
+	if($RB_DEBUG_MODE == true){	
+		$start = microtime();
+		echo "<div style=\"float:left;border:1px solid #ccc;background:#ccc !important; color:black!important;\">";
+		echo "<pre >";
+		for($i=100;$i>0;$i--){
+		echo $i;
+		echo "\n";
+		}
+		$end = microtime();
+		$parseTime = $end-$start;
+		
+		echo "-DEBUG MODE- Time Execution";
+		echo "\n\n";
+		echo $parseTime;
+		echo "</pre>";
+		
+		$trace = debug_backtrace();
+	      $file   = $trace[$level]['file'];
+	      $line   = $trace[$level]['line'];
+	      $object = $trace[$level]['object'];
+		
+	      if (is_object($object)) { $object = get_class($object); }
+		$result = var_export( $var, true );
+            echo "\n<pre>Dump: $result</pre>";
+		
+		echo "\n<pre>";
+		 debug_print_backtrace();
+    		echo "\n\nWhere called: line $line of $object \n(in $file)";
+		echo "</pre>";
+		echo "</div>";
+	}
+	
+ }
 
-
+/*/
+ *
+/*/ 
+ 
 ?>

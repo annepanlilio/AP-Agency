@@ -382,55 +382,55 @@ elseif ($ConfigID == 1) {
 
 		 echo "     <select name=\"rb_agency_options[rb_agency_option_locationtimezone]\">\n";
 
-		 echo "       <option value=\"+12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +12) ."> UTC+12</option>\n";
+		 echo "       <option value=\"+12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+12",false) ."> UTC+12</option>\n";
 
-		 echo "       <option value=\"+11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +11) ."> UTC+11</option>\n";
+		 echo "       <option value=\"+11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+11",false) ."> UTC+11</option>\n";
 
-		 echo "       <option value=\"+10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +10) ."> UTC+10</option>\n";
+		 echo "       <option value=\"+10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+10",false) ."> UTC+10</option>\n";
 
-		 echo "       <option value=\"+9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +9) ."> UTC+9</option>\n";
+		 echo "       <option value=\"+9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+9",false) ."> UTC+9</option>\n";
 
-		 echo "       <option value=\"+8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +8) ."> UTC+8</option>\n";
+		 echo "       <option value=\"+8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+8",false) ."> UTC+8</option>\n";
 
-		 echo "       <option value=\"+7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +7) ."> UTC+7</option>\n";
+		 echo "       <option value=\"+7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+7",false) ."> UTC+7</option>\n";
 
-		 echo "       <option value=\"+6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +6) ."> UTC+6</option>\n";
+		 echo "       <option value=\"+6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+6",false) ."> UTC+6</option>\n";
 
-		 echo "       <option value=\"+5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +5) ."> UTC+5</option>\n";
+		 echo "       <option value=\"+5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+5",false) ."> UTC+5</option>\n";
 
-		 echo "       <option value=\"+4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +4) ."> UTC+4</option>\n";
+		 echo "       <option value=\"+4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+4",false) ."> UTC+4</option>\n";
 
-		 echo "       <option value=\"+3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +3) ."> UTC+3</option>\n";
+		 echo "       <option value=\"+3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+3",false) ."> UTC+3</option>\n";
 
-		 echo "       <option value=\"+2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +2) ."> UTC+2</option>\n";
+		 echo "       <option value=\"+2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+2",false) ."> UTC+2</option>\n";
 
-		 echo "       <option value=\"+1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], +1) ."> UTC+1</option>\n";
+		 echo "       <option value=\"+1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+1",false) ."> UTC+1</option>\n";
 
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], 0) ."> UTC 0</option>\n";
+		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "0",false) ."> UTC 0</option>\n";
 
-		 echo "       <option value=\"-1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -1) ."> UTC-1</option>\n";
+		 echo "       <option value=\"-1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-1",false) ."> UTC-1</option>\n";
 
-		 echo "       <option value=\"-2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -2) ."> UTC-2</option>\n";
+		 echo "       <option value=\"-2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-2",false) ."> UTC-2</option>\n";
 
-		 echo "       <option value=\"-3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -3) ."> UTC-3</option>\n";
+		 echo "       <option value=\"-3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-3",false) ."> UTC-3</option>\n";
 
-		 echo "       <option value=\"-4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -4) ."> UTC-4</option>\n";
+		 echo "       <option value=\"-4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-4",false) ."> UTC-4</option>\n";
 
-		 echo "       <option value=\"-5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -5) ."> UTC-5</option>\n";
+		 echo "       <option value=\"-5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-5",false) ."> UTC-5</option>\n";
 
-		 echo "       <option value=\"-6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -6) ."> UTC-6</option>\n";
+		 echo "       <option value=\"-6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-6",false) ."> UTC-6</option>\n";
 
-		 echo "       <option value=\"-7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -7) ."> UTC-7</option>\n";
+		 echo "       <option value=\"-7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-7",false) ."> UTC-7</option>\n";
 
-		 echo "       <option value=\"-8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -8) ."> UTC-8</option>\n";
+		 echo "       <option value=\"-8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-8",false) ."> UTC-8</option>\n";
 
-		 echo "       <option value=\"-9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -9) ."> UTC-9</option>\n";
+		 echo "       <option value=\"-9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-9",false) ."> UTC-9</option>\n";
 
-		 echo "       <option value=\"-10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -10) ."> UTC-10</option>\n";
+		 echo "       <option value=\"-10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-10",false) ."> UTC-10</option>\n";
 
-		 echo "       <option value=\"-11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -11) ."> UTC-11</option>\n";
+		 echo "       <option value=\"-11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-11",false) ."> UTC-11</option>\n";
 
-		 echo "       <option value=\"-12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], -12) ."> UTC-12</option>\n";
+		 echo "       <option value=\"-12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-12",false) ."> UTC-12</option>\n";
 
 		 echo "     </select> (<a href=\"http://www.worldtimezone.com/index24.php\" target=\"_blank\">Find</a>)\n";
 
