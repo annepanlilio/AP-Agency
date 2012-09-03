@@ -60,7 +60,7 @@ global $wpdb;
 
 	if (!isset($rb_agency_storedversion) && empty($rb_agency_storedversion)) { // Upgrade from ??
 
-		rb_setversion('rb_agency_version', "1.9");
+		update_option('rb_agency_version', "1.9");
 
 	}*/
 
@@ -70,7 +70,7 @@ global $wpdb;
 	$debug = debug_backtrace();
       if($wpdb->get_var("SHOW COLUMNS FROM ".trim($tbl)." LIKE '%".trim($column)."%' ") != trim($column)){
 	
-		$result = mysql_query(" ALTER TABLE ".trim($tbl)." ADD ".trim($column)." ".$atts.";") or die("rb_agency_addColumn()  - Adding column ".trim($column)." in line ".$debug["line"]." <br/> ".mysql_error());	
+		$result = mysql_query(" ALTER TABLE ".trim($tbl)." ADD ".trim($column)." ".$atts.";");// or die("rb_agency_addColumn()  - Adding column ".trim($column)." in line ".$debug["line"]." <br/> ".mysql_error());	
 		 
 		return $result;
 	}
@@ -80,7 +80,7 @@ global $wpdb;
 
 // Upgrade to 1.8.1
 
-	if (rb_getversion('rb_agency_version') == "1.8") { 
+	if (get_option('rb_agency_version') == "1.8") { 
 
 
 
@@ -119,11 +119,11 @@ global $wpdb;
 
 		// Updating version number!
 
-		rb_setversion('rb_agency_version', "1.8.2");
+		update_option('rb_agency_version', "1.8.2");
 
 	}
 
-	if (rb_getversion('rb_agency_version') == "1.8.2") { 
+	elseif (get_option('rb_agency_version') == "1.8.2") { 
 
 	
 
@@ -154,11 +154,11 @@ global $wpdb;
 
 		// Updating version number!
 
-		rb_setversion('rb_agency_version', "1.8.5");
+		update_option('rb_agency_version', "1.8.5");
 
 	}
 
-	if (rb_getversion('rb_agency_version') == "1.8.5") { 
+	elseif (get_option('rb_agency_version') == "1.8.5") { 
 
 
 
@@ -187,13 +187,13 @@ global $wpdb;
 
 		// Updating version number!
 
-		rb_setversion('rb_agency_version', "1.9");
+		update_option('rb_agency_version', "1.9");
 
 	}
 
 
 
-  if (rb_getversion('rb_agency_version') == "1.9") {
+  elseif (get_option('rb_agency_version') == "1.9") {
 
 	 
 
@@ -243,6 +243,40 @@ global $wpdb;
 		
 					mysql_query($sql13);			
 			}
+		if ($wpdb->get_var("show tables like '". table_agency_customfields."'") != table_agency_customfields) { 
+				$sql14 = "CREATE TABLE ". table_agency_customfields." (
+
+				ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
+
+				ProfileCustomTitle VARCHAR(255),
+
+				ProfileCustomType INT(10) NOT NULL DEFAULT '0',
+
+				ProfileCustomOptions TEXT,
+
+				ProfileCustomView INT(10) NOT NULL DEFAULT '0',
+
+				ProfileCustomOrder INT(10) NOT NULL DEFAULT '0',
+
+				ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0',
+
+				ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1',
+
+				ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1',
+
+				ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
+
+				ProfileCustomShowRegistration INT(10) NOT NULL DEFAULT '1',
+
+				ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1',
+
+				PRIMARY KEY (ProfileCustomID)
+
+				);";
+
+		
+					mysql_query($sql14);			
+			}	
 	   	// Custom Order in Custom Fields
 
 		 rb_agency_addColumn(table_agency_customfields,"ProfileCustomOrder"," INT(10) NOT NULL DEFAULT '0'");
@@ -306,7 +340,7 @@ global $wpdb;
 
 		}
 
-             mysql_free_result($q1);
+           
 
 		//Fix Custom Fields compatibility. 1.8 to 1.9.1
 
@@ -328,33 +362,33 @@ global $wpdb;
 
 		endwhile;
 
-		mysql_free_result($q2);
+		
 
 		// Fix Gender compatibility
-
-		$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ")  or die(mysql_error());
-
-		while($fetchData = mysql_fetch_assoc($q3)):
-
-		         $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die(mysql_error());
-
-		         $fetchGender = mysql_fetch_assoc($queryGender);
-
-			   $count = mysql_num_rows($queryGender);
-
-			   if($count > 0){
-
-			   	$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$fetchGender["GenderID"]."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
-
-			   }
-
-		endwhile;
-          
-	      mysql_free_result($q3);
+		if ($wpdb->get_var("show tables like '".table_agency_profile."'") != table_agency_profile) { 
+				$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die(mysql_error());
+		
+				while($fetchData = mysql_fetch_assoc($q3)):
+		
+					   $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die(mysql_error());
+		
+					   $fetchGender = mysql_fetch_assoc($queryGender);
+		
+					   $count = mysql_num_rows($queryGender);
+		
+					   if($count > 0){
+		
+						$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$fetchGender["GenderID"]."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
+		
+					   }
+		
+				endwhile;
+		}
+			     
 		
 
 		// Updating version number!
-           rb_setversion('rb_agency_version', "1.9.1");
+           update_option('rb_agency_version', "1.9.1");
 	    
 
   }
@@ -363,7 +397,7 @@ global $wpdb;
 
   
 
-if (rb_getversion('rb_agency_version') == "1.9.1") {
+elseif (get_option('rb_agency_version')== "1.9.1") {
 
   
            
@@ -390,12 +424,12 @@ if (rb_getversion('rb_agency_version') == "1.9.1") {
 			 
 
 		endwhile;
-            mysql_free_result($q4);
+         
 		
 
    // Updating version number!
 
-		rb_setversion('rb_agency_version', "1.9.1.1");
+		update_option('rb_agency_version', "1.9.1.1");
 
 		
 
@@ -403,7 +437,7 @@ if (rb_getversion('rb_agency_version') == "1.9.1") {
 
   }	
 
-  if (rb_getversion('rb_agency_version') == "1.9.1.1") {	
+  elseif (get_option('rb_agency_version') == "1.9.1.1") {	
 
   
 
@@ -483,7 +517,7 @@ if (rb_getversion('rb_agency_version') == "1.9.1") {
 
 		 // Updating version number!
 
-		rb_setversion('rb_agency_version', "1.9.1.2");
+		update_option('rb_agency_version', "1.9.1.2");
 
   }
 

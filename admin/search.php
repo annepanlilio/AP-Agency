@@ -915,36 +915,18 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "     </div>\n";
 
 	} // Is Cart Empty 
-
+     $isSent = false;
 	if(isset($_POST["SendEmail"])){
 
 		
 
-				// Filter Models Already in Cart
 
-        if (isset($_SESSION['cartArray'])) {
-
-            $cartArray = $_SESSION['cartArray'];
-
-            $cartString = implode(",", $cartArray);
-
-			$cartQuery =  " AND profile.ProfileID NOT IN (". $cartString .")";
-
-		}
-
-		// Search Results	
-
-        $query = "SELECT profile.*  FROM ". table_agency_profile ." profile ";
-
-		$results2 = mysql_query($query);
-
-        $count = mysql_num_rows($results2);
-
+		$rb_agency_options_arr = get_option('rb_agency_options');
+            $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+      	$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 		
 
-		
-
-		   $pos = 0;
+		  
 
 		     add_filter('wp_mail_content_type','rb_agency_set_content_type');
 
@@ -952,15 +934,8 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 							return 'text/html';
 
-						}
-
-        while ($data = mysql_fetch_array($results2)) {
-
-            $ProfileID = $data['ProfileID'];
-
-			$pos ++;
-
-		// Email
+		}
+  
 
 		
 
@@ -970,7 +945,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 					$MassEmailMessage = $_POST["MassEmailMessage"];
 
-					$MassEmailRecipient = $data['ProfileContactEmail'];
+					$MassEmailRecipient = $_POST["MassEmailRecipient"];
 
 			      
 
@@ -978,29 +953,67 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 					// Mail it
 
-					$headers  = 'MIME-Version: 1.0' . "\r\n";
+					$headers[]  = 'MIME-Version: 1.0';
 
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
-					$headers .= 'From: '. $rb_agency_option_agencyemail .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+					$headers[] = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>';
+					
+					if(!empty($expMail)){
+						$expMail = explode(",",$MassEmailRecipient);
+						foreach($expMail as $bccEmail){
+							$headers[] = 'Bcc: '.$bccEmail;
+						}
+					}
 
 					
 
-					wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
+					$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 
-					if($pos == $count){
+						
 
-						echo $alert = "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";	
 
-					}
-
-		}
 
 	}
 
 	if($_GET["action"]== "massEmail"){
 
 		
+				// Filter Models Already in Cart
+
+        if (isset($_SESSION['cartArray'])) {
+
+            $cartArray = $_SESSION['cartArray'];
+
+            $cartString = implode(",", $cartArray);
+
+			$cartQuery =  " AND profile.ProfileID IN (". $cartString .")";
+
+		}
+
+		// Search Results	
+
+        $query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
+
+		$results2 = mysql_query($query);
+
+        $count = mysql_num_rows($results2);
+      $pos = 0;	
+	$recipient = "";			
+        while ($data = mysql_fetch_array($results2)) {
+		$pos ++;
+            $ProfileID = $data['ProfileID'];
+           $recipient .=$data['ProfileContactEmail'];
+	     if($count != $pos){
+		  $recipient .=", ";     
+	     }
+			
+	  }
+
+		// Email
+		$rb_agency_options_arr = get_option('rb_agency_options');
+            $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+      	$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 
 		echo "<form method=\"post\">";
 
@@ -1009,12 +1022,15 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
         echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
 
         echo "        <div class=\"inner\">\n";
-
+	  if($isSent){
+	  echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";	
+	  }
+	  echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$recipient."</textarea><br/>";
         echo "        <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
 
 		echo "<br/>";
 
-		echo "      <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\"></textarea>";
+		echo "      <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\">this message was sent to you by ".$rb_agency_value_agencyname." ".network_site_url( '/' )."</textarea>";
 
 		echo "				<input type=\"submit\" value=\"". __("Send Email", rb_agency_TEXTDOMAIN) . "\" name=\"SendEmail\"class=\"button-primary\" />\n";
 

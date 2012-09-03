@@ -474,17 +474,17 @@ elseif ($ConfigID == 1) {
 
 		 echo "   <td>\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_count'], 1,false); echo "/> ". __("Show Model Count", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_count'], 1,false)."/> ". __("Show Model Count", rb_agency_TEXTDOMAIN) ."<br />\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_sortby'], 1,false); echo "/> ". __("Show Sort Options", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sortby'], 1,false)."/> ". __("Show Sort Options", rb_agency_TEXTDOMAIN) ."<br />\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'], 1,false); echo "/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'], 1,false)."/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_favorite'], 1,false); echo "/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_favorite'], 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'], 1,false); echo "/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'], 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'], 1,false); echo "/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'], 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
 
 	
 
@@ -702,9 +702,9 @@ elseif ($ConfigID == 1) {
 
 		 echo "   <td>\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false); echo "/> Extended Social Profiles<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_advertise'], 1,false); echo "/> Show Updates on Dashboard<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_advertise'], 1,false)."/> Show Updates on Dashboard<br />\n";
 
 		 echo "   </td>\n";
 
@@ -720,9 +720,9 @@ elseif ($ConfigID == 1) {
 
 		 echo "   <td>\n";
 
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" "; checked($rb_agency_options_arr['rb_agency_option_showcontactpage'], 1,false); echo "/>Email to both the model and the site owner<br />\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showcontactpage'], 1,false)."/>Email to both the model and the site owner<br />\n";
 
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" "; checked($rb_agency_options_arr['rb_agency_option_showcontactpage'], 0,false); echo "/>Only email to the site owner, not to the model<br/>\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" ".checked($rb_agency_options_arr['rb_agency_option_showcontactpage'], 0,false)."/>Only email to the site owner, not to the model<br/>\n";
 
 		 echo "   </td>\n";
 
@@ -857,7 +857,7 @@ elseif ($ConfigID == 11) {
 
 		 echo "   <td>\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" "; checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1,false); echo "/> Users may register profiles (uncheck to prevent self registration)<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1,false)."/> Users may register profiles (uncheck to prevent self registration)<br />\n";
 
 		 echo "   </td>\n";
 
@@ -869,7 +869,7 @@ elseif ($ConfigID == 11) {
 
 		 echo "   <td>\n";
 
-		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\" value=\"1\" "; checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'], 1,false); echo "/> Show registration form (uncheck to hide registration form)<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'], 1,false)."/> Show registration form (uncheck to hide registration form)<br />\n";
 
 		 echo "   </td>\n";
 

@@ -191,7 +191,7 @@ echo "        <div class=\"inner\">\n";
 
 		  while($fetchGender = mysql_fetch_assoc($queryGenderResult)){
 
-			 echo "	<a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_menu_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a>\n";
+			 echo "	<a style=\"margin-bottom:10px !important;float:left;\" class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_menu_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a>\n";
 
 		  }
 
