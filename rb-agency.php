@@ -14,13 +14,16 @@
 
   Author URI: http://rob.bertholf.com/
 
-  Version: 1.9.1.2
+  Version: 1.9.1.3
 
 */
 
-$rb_agency_VERSION = "1.9"; // starter
+$rb_agency_VERSION = "1.8.2"; // starter
 
+if(!get_option("rb_agency_version")){  add_option("rb_agency_version", $rb_agency_VERSION , '', 'no');  update_option("rb_agency_version", $rb_agency_VERSION);}
+	
 
+	
 if (!session_id()) session_start();
 
 
@@ -187,24 +190,18 @@ return;
 		define("table_agency_mediacategory", "rb_agency_mediacategory");	
 
 
-
+	
   
-	 if( get_option("rb_agency_version") != "1.9.1.2"){ // Current Version
-		    $deprecated = ' ';
-		    $autoload = 'no';    
-		 if ( get_option("rb_agency_version" ) != "1.9") { // Started version
-		    add_option("rb_agency_version", $rb_agency_VERSION , $deprecated, $autoload );
-		} else {
-		 
-		    update_option("rb_agency_version", $rb_agency_VERSION);
-		}
-	}
+     
+    // Does it need a diaper change?
+
+	include_once(dirname(__FILE__).'/upgrade.php');
+
 	
      $rb_agency_storedversion = get_option("rb_agency_version");
-     $rb_agency_VERSION = get_option("rb_agency_version");	
-     
-      // Does it need a diaper change?
-	include_once(dirname(__FILE__).'/upgrade.php');
+
+      $rb_agency_VERSION = get_option("rb_agency_version");	
+
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 
 
@@ -257,9 +254,13 @@ return;
 
             
 		// Update the options in the database
+		if(!get_option("rb_agency_options"))
+		add_option("rb_agency_options",$rb_agency_options_arr);
 		update_option("rb_agency_options",$rb_agency_options_arr);
 		
 		// Hold the version in a seprate option
+		if(!get_option("rb_agency_version"))
+		add_option("rb_agency_version", $rb_agency_VERSION);
 		update_option("rb_agency_version", $rb_agency_VERSION);
 		
 		
@@ -648,7 +649,7 @@ return;
 
 register_activation_hook(__FILE__,'rb_agency_install');
 
-
+		
 
 
 
