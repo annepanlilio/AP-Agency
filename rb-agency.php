@@ -14,7 +14,7 @@
 
   Author URI: http://rob.bertholf.com/
 
-  Version: 1.9.1.3
+  Version: 1.9.1.4
 
 */
 
@@ -192,11 +192,11 @@ return;
 
 	
   
-     
+     global $wpdb;  
     // Does it need a diaper change?
-
-	include_once(dirname(__FILE__).'/upgrade.php');
-
+	if ($wpdb->get_var("show tables like '". table_agency_profile ."'") == table_agency_profile) { // No, it doesn't
+	  include_once(dirname(__FILE__).'/upgrade.php');
+	}
 	
      $rb_agency_storedversion = get_option("rb_agency_version");
 

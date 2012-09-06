@@ -520,7 +520,7 @@ elseif (get_option('rb_agency_version')== "1.9.1") {
 		update_option('rb_agency_version', "1.9.1.2");
 
   }  elseif (get_option('rb_agency_version') == "1.9.1.2") {	
-        update_option('rb_agency_version', "1.9.1.3");
+        update_option('rb_agency_version', "1.9.1.4");
   }
 
 // Ensure directory is setup
