@@ -1289,7 +1289,7 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 
 				} else {
 
-					echo "Invalid Function";
+					echo "Invalid Function.";
 
 				}
 

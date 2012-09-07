@@ -123,7 +123,7 @@ global $wpdb;
 
 	}
 
-	elseif (get_option('rb_agency_version') == "1.8.2") { 
+   if (get_option('rb_agency_version') == "1.8.2") { 
 
 	
 
@@ -158,7 +158,7 @@ global $wpdb;
 
 	}
 
-	elseif (get_option('rb_agency_version') == "1.8.5") { 
+	if (get_option('rb_agency_version') == "1.8.5") { 
 
 
 
@@ -193,7 +193,7 @@ global $wpdb;
 
 
 
-  elseif (get_option('rb_agency_version') == "1.9") {
+  if (get_option('rb_agency_version') == "1.9") {
 
 	 
 
@@ -397,7 +397,7 @@ global $wpdb;
 
   
 
-elseif (get_option('rb_agency_version')== "1.9.1") {
+if (get_option('rb_agency_version')== "1.9.1") {
 
   
            
@@ -437,7 +437,7 @@ elseif (get_option('rb_agency_version')== "1.9.1") {
 
   }	
 
-  elseif (get_option('rb_agency_version') == "1.9.1.1") {	
+  if (get_option('rb_agency_version') == "1.9.1.1") {	
 
   
 
@@ -519,7 +519,11 @@ elseif (get_option('rb_agency_version')== "1.9.1") {
 
 		update_option('rb_agency_version', "1.9.1.2");
 
-  }  elseif (get_option('rb_agency_version') == "1.9.1.2") {	
+  } 
+  if (get_option('rb_agency_version') == "1.9.1.2") {	
+        update_option('rb_agency_version', "1.9.1.3");
+  } 
+ if (get_option('rb_agency_version') == "1.9.1.3") {	
         update_option('rb_agency_version', "1.9.1.4");
   }
 

@@ -2092,6 +2092,8 @@ elseif ($ConfigID == 5) {
 		while ($data = mysql_fetch_array($results)) {
 
 			$GenderID	=$data['GenderID'];
+			
+			
 
 		echo "    <tr>\n";
 
