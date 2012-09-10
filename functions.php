@@ -91,7 +91,7 @@
 
 		
 
-			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."theme/style.css\" type=\"text/css\" media=\"screen\" />\n";
+			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."theme/style_base.css\" type=\"text/css\" media=\"screen\" />\n";
 
           
 

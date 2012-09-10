@@ -390,7 +390,7 @@
 
 										 
 
-										      list($min_val,$max_val) =  explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
+										      list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
 											
 

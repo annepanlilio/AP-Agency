@@ -4222,7 +4222,11 @@ elseif ($ConfigID == 7) {
 		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 
 		$count = mysql_num_rows($results);
+           
+	     $rb_agency_options_arr = get_option('rb_agency_options');
 
+		$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
+		
 		while ($data = mysql_fetch_array($results)) {
 
 			$ProfileCustomID	=$data['ProfileCustomID'];
@@ -4244,8 +4248,54 @@ elseif ($ConfigID == 7) {
 		echo "        </td>\n";
 
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1 ){ echo "Text"; } elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; }  elseif ($data['ProfileCustomType'] == 7) { if($rb_agency_options_arr['rb_agency_option_unittype']==1){ if($data['ProfileCustomOptions']==1){echo "Imperial(in)";}elseif($data['ProfileCustomOptions']==2){echo "Imperial(lb)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } else{ if($data['ProfileCustomOptions']==2){echo "Metric(cm)";}elseif($data['ProfileCustomOptions']==2){echo "Metric(kg)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } } echo "</td>\n";
+                
+			
 
-		echo "        <td class=\"column\">". str_replace("|",",",$data['ProfileCustomOptions']) ."</td>\n";
+			  $measurements_label = "";
+			  
+		    if ($data['ProfileCustomType'] == 7) { //measurements field type
+
+			           if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
+
+						if($data['ProfileCustomOptions'] == 1){
+
+						    
+						       $measurements_label  ="cm";
+
+						}elseif($data['ProfileCustomOptions'] == 2){
+							
+							 $measurements_label  ="Kg";
+
+						}elseif($data['ProfileCustomOptions'] == 3){
+
+						  $measurements_label  ="Inches/Feet";
+
+						}
+
+					}elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+
+						if($data['ProfileCustomOptions'] == 1){
+ 							$measurements_label  ="Inches";
+						   
+
+						}elseif($data['ProfileCustomOptions'] == 2){
+
+						    
+						  $measurements_label  ="Pounds";
+
+
+						}elseif($data['ProfileCustomOptions'] == 3){
+
+						  $measurements_label  ="Inches/Feet)";
+
+						}
+
+					}
+
+					
+
+			 }
+		if($data['ProfileCustomType'] == 7 ) {echo " <td class=\"column\">".$measurements_label."</td>\n"; } else{ echo "        <td class=\"column\">".str_replace("|",",",$data['ProfileCustomOptions'])."</td>\n"; }
 
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) { echo "Public"; } elseif ($data['ProfileCustomView'] == 1) { echo "Private"; } elseif ($data['ProfileCustomView'] == 2) { echo "Custom"; } echo "</td>\n";
 
