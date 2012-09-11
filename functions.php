@@ -91,7 +91,7 @@
 
 		
 
-			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."theme/style_base.css\" type=\"text/css\" media=\"screen\" />\n";
+			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."theme/style.css\" type=\"text/css\" media=\"screen\" />\n";
 
           
 
@@ -341,7 +341,8 @@
 
 			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
 			
-		
+		      $newrules['rbv'] = 'index.php?type=rbv'; // ping this page for version checker
+			
 		      $rb_agency_options_arr = get_option('rb_agency_options');
 
 			$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
@@ -427,6 +428,10 @@
 				  }elseif (get_query_var( 'type' ) == "castingcart") {
 
 					return dirname(__FILE__) . '/theme/view-castingcart.php'; 
+
+				  }elseif (get_query_var( 'type' ) == "rbv") {
+
+					return dirname(__FILE__) . '/rbv.php'; 
 
 				  }
 

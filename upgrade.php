@@ -526,6 +526,12 @@ if (get_option('rb_agency_version')== "1.9.1") {
  if (get_option('rb_agency_version') == "1.9.1.3") {	
         update_option('rb_agency_version', "1.9.1.4");
   }
+  if (get_option('rb_agency_version') == "1.9.1.4") {	
+        update_option('rb_agency_version', "1.9.1.5");
+  }
+  if (get_option('rb_agency_version') == "1.9.1.5") {	
+        update_option('rb_agency_version', "1.9.1.6");
+  }
 
 // Ensure directory is setup
 	

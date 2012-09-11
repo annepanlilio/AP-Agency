@@ -14,7 +14,7 @@
 
   Author URI: http://rob.bertholf.com/
 
-  Version: 1.9.1.4
+  Version: 1.9.1.6
 
 */
 
@@ -1606,24 +1606,32 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
    *jSON URL which should be requested
 
   /*/ 
-
+  $running = true;
 function rb_agency_notify_installation(){	
 
                   include_once(ABSPATH . 'wp-includes/pluggable.php');		
-
+			$json_url = 'http://agency.rbplugin.com/rb-license-checklist/';
+			
 			$client_domain = network_site_url('/');
-
-			$json_url = 'http://agency.rbplugin.com/checklist.php';
-
+                  $client_sitename = get_bloginfo( 'name' );
+			$client_admin_email = get_bloginfo('admin_email');
+                  $client_plugin_version = get_option('rb_agency_version');
+			
 			 
 
-			$data = array("client_domain" => $client_domain);                                                                    
+			$data = array(
+			"client_domain" => $client_domain,
+			"client_admin_email"  => $client_admin_email,
+			"client_sitename" =>$client_sitename,
+			"client_plugin_version" => $client_plugin_version,
+			"client_plugin_name" =>"RB Plugin");                                                                    
 
 			$data_string = json_encode($data);
-
-			   
-
-			// Initializing curl
+				if(function_exists("rb_agencyinteract_install")){
+					$client_interact_exist = get_option('rb_agency_version');	
+					array_push($data,array("client_interact_exist" => $client_interact_exist)); 
+				}
+							// Initializing curl
 
 			$ch = curl_init( $json_url );
 
@@ -1654,7 +1662,10 @@ function rb_agency_notify_installation(){
 			$result =  curl_exec($ch); // Getting jSON result string
 
 			$isReported = get_option("rb_agency_notify");
-
+                     
+			
+			
+		         
 			if($result){
 
 			
@@ -1681,7 +1692,7 @@ function rb_agency_notify_installation(){
 
 				
 
-				wp_mail("champ.kazban25@gmail.com", sprintf('RB Plugin Installed - Unknown Server/Domain[%s]', get_option('blogname')), $message,$headers);
+			//	wp_mail("champ.kazban25@gmail.com", sprintf('RB Plugin Installed - Unknown Server/Domain[%s]', get_option('blogname')), $message,$headers);
 
 			}
 
@@ -1692,7 +1703,6 @@ function rb_agency_notify_installation(){
 			
 
 }
-
 register_activation_hook(__FILE__,"rb_agency_notify_installation");
 
 
