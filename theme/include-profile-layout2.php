@@ -394,12 +394,22 @@ Profile View with Sliding Thumbnails and Primary Image
 
 			 }
 				if(rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
-
+                           if ($resultCustom->ProfileCustomType == 7){
+					 if($resultCustom->ProfileCustomOptions == 3){
+						 $heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+					       echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ".$heightfeet."ft ".$heightinch." in</div>\n";
+                             
+					}else{
+						echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">asdf".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+                          
+					}
+					
+				   }else{
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-
+                           }
 				}elseif($resultCustom->ProfileCustomView == "2"){
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-
+                            
 				}
 
 			}

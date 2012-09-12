@@ -1219,7 +1219,7 @@
 
 
           
-
+       $filterDropdown = array();
         // Set CustomFields
 
 	  if(isset($atts) && !empty($atts)){
@@ -1284,10 +1284,9 @@
 
 							if(!empty($val)){
 
-								
-
-									$filter .= " AND customfield_mux.ProfileCustomValue = '".$val."' ";
-
+								 
+									//$filter.= " AND LOWER(customfield_mux.ProfileCustomValue) = LOWER(\"".$val."\") ";
+                                                      array_push($filterDropdown,$val);
 								
 
 							}
@@ -1385,7 +1384,7 @@
 	  } // end if
 
 	  
-
+           $filter .=" AND customfield_mux.ProfileCustomValue IN('".implode("','",$filterDropdown)."')";
 	  	// Name
 
 		if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
@@ -1473,7 +1472,7 @@
 		}
 
 		
-
+           
 
 
 		// Can we show the profiles?
@@ -1590,12 +1589,35 @@
 
 			// Execute Query
 
-			$queryList = "SELECT profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , customfield_mux.*,  (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux ON profile.ProfileID = customfield_mux.ProfileID  $filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  $limit";
+			$queryList = "
+			 SELECT 
+			 profile.ProfileID,
+			 profile.ProfileGallery,
+			 profile.ProfileContactDisplay, 
+			 profile.ProfileDateBirth, 
+			 profile.ProfileLocationState, 
+			 profile.ProfileID as pID, 
+			 customfield_mux.*,  
+			 		(
+					  SELECT media.ProfileMediaURL 
+					 	      FROM ". table_agency_profile_media ." media 
+					  WHERE profile.ProfileID = media.ProfileID 
+					  		AND 
+							media.ProfileMediaType = \"Image\" 
+							AND 
+							media.ProfileMediaPrimary = 1
+					) 
+					AS ProfileMediaURL FROM ". table_agency_profile ." profile 
+			INNER JOIN ". table_agency_customfield_mux ." 
+			            AS customfield_mux 
+					ON profile.ProfileID = customfield_mux.ProfileID  
+					$filter  
+			GROUP BY profile.ProfileID 
+			ORDER BY $sort $dir  $limit";
 			
 			
 			}
-
-			
+                 
 			$resultsList = mysql_query($queryList);
 
 			$countList = mysql_num_rows($resultsList);
@@ -2736,12 +2758,12 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 		echo "  <tr valign=\"top\" class=\"".$isTextArea."\">\n";
 
-		echo "    <th scope=\"row\">". $data3['ProfileCustomTitle'].$measurements_label."</th>\n";
+		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n";
 
 		echo "    <td>\n";		  
 
 		  
-
+           echo "<div class=\"box\">";
 			if ($ProfileCustomType == 1) { //TEXT
 
 			
@@ -2798,7 +2820,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 				
 
-				echo "<label>".$data[0]."</label>";
+				echo "<label class=\"dropdown\">".$data[0]."</label>";
 
 				echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\">\n";
 
@@ -2840,7 +2862,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 				if (!empty($data2) && !empty($option2)) {
 
-					echo "<label>".$data2[0]."</label>";
+					echo "<label class=\"dropdown\">".$data2[0]."</label>";
 
 				
 
@@ -2878,20 +2900,20 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 
-				echo "<div style=\"width:300px;float:left;\">";
+				//echo "<div style=\"width:300px;float:left;\">";
 
 				foreach($array_customOptions_values as $val){
 
 					 $xplode = explode(",",$ProfileCustomValue);
                               if(!empty($val)){
-					 echo "<label><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+					 echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
 
 					 echo "". $val."</label>";
-                                 echo "<br/>";
+                               
 					}
 				}     
 
-				echo "</div>";
+				//echo "</div>";
 
 				   
 
@@ -2917,7 +2939,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 			
 
-					 if($data3['ProfileCustomOptions']==1){
+					 if($data3['ProfileCustomOptions']==3){
 
 												    if($rb_agency_option_unittype == 1){
 
@@ -2976,7 +2998,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			}
 
 									
-
+         echo "<div class=\"box\">";
 	
 
 			

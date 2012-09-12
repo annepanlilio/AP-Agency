@@ -221,7 +221,31 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    <div class=\"search-field double\">\n";
 
 		echo "				        <div class=\"label\">". __("Age", rb_agency_TEXTDOMAIN) . "</div>\n";
+             if($profilesearch_layout == "advanced"){
+		
+		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label></div>\n";
 
+		echo "<div>\n";
+            echo "<select class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" style=\"width:50px;\">";
+		echo "<option value=\"\">-</option>";
+		for($x = 1; $x<=99; $x++){
+		echo "<option value=\"".$x."\" ".selected($_SESSION['ProfileDateBirth_min'],$x).">".$x."</option>";
+		}
+		echo "</select>";
+		echo "</div>";
+		
+		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label></div>\n";
+		echo "<div>\n";
+            echo "<select class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" style=\"width:50px;\">";
+		echo "<option value=\"\">-</option>";
+		for($x = 1; $x<=99; $x++){
+		echo "<option value=\"".$x."\" ".selected($_SESSION['ProfileDateBirth_max'],$x).">".$x."</option>";
+		}
+		echo "</select>";
+		echo "</div>";
+		           
+		 }else{
+		
 		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label></div>\n";
 
 		echo "				        	<div><input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>\n";
@@ -229,7 +253,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label></div>\n";
 
 		echo "				        	<div><input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
-
+		 }
 		echo "				    </div>\n";
 
 		

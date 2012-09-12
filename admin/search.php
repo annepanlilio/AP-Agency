@@ -1141,15 +1141,33 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
 
 		echo "				        <td>\n";               
+		echo "				        <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
 
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
+		 echo "<select class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" style=\"width:50px;\">";
+		echo "<option value=\"\">-</option>";
+		for($x = 1; $x<=99; $x++){
+		echo "<option value=\"".$x."\" ".selected($_GET['ProfileDateBirth_min'],$x).">".$x."</option>";
+		}
+		echo "</select>";
+		echo "</div>";
+		
+		echo "				        <label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
+		 echo "<select class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" style=\"width:50px;\">";
+		echo "<option value=\"\">-</option>";
+		for($x = 1; $x<=99; $x++){
+		echo "<option value=\"".$x."\" ".selected($_GET['ProfileDateBirth_min'],$x).">".$x."</option>";
+		}
+		echo "</select>";
+		echo "</div>";
+		           
+	/*	echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
 
 		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_GET['ProfileDateBirth_min'] ."\" /><br />\n";
 
 		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
 
 		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_GET['ProfileDateBirth_max'] ."\" />\n";
-
+*/
 		echo "				        </td>\n";
 
 		echo "				    </tr>\n";
@@ -1191,7 +1209,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 
 			//rb_custom_fields(0, $ProfileID, $ProfileGender,false);
-			$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder, ProfileCustomView, ProfileCustomShowGender, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder ASC";
+			$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder, ProfileCustomView, ProfileCustomShowGender, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  AND ProfileCustomID != 39 AND ProfileCustomID != 48 ORDER BY ProfileCustomOrder ASC";
 
 								$results1 = mysql_query($query1);
 
@@ -1586,7 +1604,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 											
 
 										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label></div><div> <input value=\"".(!is_array($min_val) && $min_val != "Array" ? $min_val : "")."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" />";
-
+                                                                 echo "<br/>";
 										     echo "<label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label></div><div> <input value=\"".$max_val."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
 
 											
@@ -1602,7 +1620,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 			echo  "			</tr>";
 		}
    
-
+/*
 		echo "				    <tr>\n";
 
 		echo "				        <th scope=\"row\">". __("Status", rb_agency_TEXTDOMAIN) . ":</th>\n";
@@ -1622,7 +1640,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        </td>\n";
 
 		echo "				    </tr>\n";
-
+*/
 
 
 		echo "				  </thead>\n";

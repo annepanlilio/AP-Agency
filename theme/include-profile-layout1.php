@@ -106,18 +106,85 @@ Profile View with Thumbnails and Primary Image
 
 	
 
-	$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+	$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
 
 		foreach  ($resultsCustom as $resultCustom) {
 
 			if(!empty($resultCustom->ProfileCustomValue )){
 
+				 if ($resultCustom->ProfileCustomType == 7) { //measurements field type
+
+			           if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
+
+						if($resultCustom->ProfileCustomOptions == 1){
+
+						    
+						       $measurements_label  ="(cm)";
+
+						}elseif($resultCustom->ProfileCustomOptions == 2){
+							
+							 $measurements_label  ="(kg)";
+
+						}elseif($resultCustom->ProfileCustomOptions == 3){
+
+						   $measurements_label  ="(in/ft)";
+
+						}
+
+					}elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+
+						if($resultCustom->ProfileCustomOptions == 1){
+ 							$measurements_label  ="(in)";
+						   
+
+						}elseif($resultCustom->ProfileCustomOptions == 2){
+
+						    
+						  $measurements_label  ="(lbs)";
+
+
+						}elseif($resultCustom->ProfileCustomOptions == 3){
+
+						  $measurements_label  ="(in/ft)";
+
+						}
+
+					}
+
+					
+
+			 }
 				if(rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
-
-					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-
+                           if ($resultCustom->ProfileCustomType == 7){
+					 if($resultCustom->ProfileCustomOptions == 3){
+						 $heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+					       echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ".$heightfeet."ft ".$heightinch." in</div>\n";
+                             
+					}else{
+						echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+                          
+					}
+					
+				   }else{
+					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+                           }
+				  
+				}elseif($resultCustom->ProfileCustomView == "2"){
+					
+				    if ($resultCustom->ProfileCustomType == 7){
+					 if($resultCustom->ProfileCustomOptions == 3){
+						 $heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+					       echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ".$heightfeet."ft ".$heightinch." in</div>\n";
+                             
+					}else{
+						echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">asdf".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+                          
+					}
+					
+				   }else{
+					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+                           }
 				}
-
 			}
 
 		}

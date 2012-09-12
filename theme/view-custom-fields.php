@@ -116,7 +116,7 @@
 
 											
 
-												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
 
 									
 
@@ -158,11 +158,11 @@
 
 											      echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 
-												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
 
 											      echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 
-												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
+												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
 
 									
 
@@ -214,7 +214,7 @@
 
 													     $isSelected = "";
 
-														if($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]==$val1){
+														if($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]==$val1){
 
 																		$isSelected = "selected=\"selected\"";
 
@@ -256,7 +256,7 @@
 
 															if($val2 != end($data2) && $val2 !=  $data2[0]){
 
-																if($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]==$val2){
+																if($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]==$val2){
 
 																		$isSelected = "selected=\"selected\"";
 
@@ -286,7 +286,7 @@
 
 									} elseif ($ProfileCustomType == 4) {
 
-										echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea></div>";
+										echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_REQUEST["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea></div>";
 
 									}
 
@@ -298,11 +298,11 @@
 
 												  foreach($array_customOptions_values as $val){
 
-													if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']])){ 
+													if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
 
 													   
 
-													  	$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
+													  	$dataArr = explode(",",implode(",",explode("','",$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])));
 
 													  if(in_array($val,$dataArr,true)){
 
@@ -344,11 +344,11 @@
 
 												  foreach($array_customOptions_values as $val){
 
-													if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] !=""){ 
+													if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]) && $_REQUEST["ProfileCustomID". $data1['ProfileCustomID']] !=""){ 
 
 													   
 
-													  	$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
+													  	$dataArr = explode(",",implode(",",explode("','",$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])));
 
 														
 
@@ -390,7 +390,7 @@
 
 										 
 
-										      list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
+										      list($min_val,$max_val) =  @explode(",",$_REQUEST["ProfileCustomID".$data1['ProfileCustomID']]);
 
 											
 
