@@ -424,101 +424,47 @@ if (get_option('rb_agency_version')== "1.9.1") {
 			 
 
 		endwhile;
-         
-		
 
-   // Updating version number!
-
+   		// Updating version number!
 		update_option('rb_agency_version', "1.9.1.1");
-
-		
-
-	  
-
   }	
 
   if (get_option('rb_agency_version') == "1.9.1.1") {	
 
-  
-
 		$resultsProfile = mysql_query("SELECT * FROM ".table_agency_profile." ");
 
-		
-
 		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
-
-
-
 			$ProfileID = $f_Profile["ProfileID"];
-
 			$ProfileGender = $f_Profile["ProfileGender"];
-
 			
+			$arr_profile_features = array(
+				"ProfileLanguage" => "Language",
+				"ProfileStatEthnicity" => "Ethnicity",
+				"ProfileStatSkinColor" => "Skin Tone",
+				"ProfileStatHairColor" => "Hair Color",
+				"ProfileStatEyeColor" => "Eye Color",
+				"ProfileStatHeight" => "Height",
+				"ProfileStatWeight" => "Weight",
+				"ProfileStatBust" => "Bust",
+				"ProfileStatWaist" => "Waist",
+				"ProfileStatHip" => "Hips",
+				"ProfileStatShoe" => "Shoe Size",
+				"ProfileStatDress" => "Dress",
+				"ProfileUnion" => "Union",
+				"ProfileExperience" => "Experience");
+				// old column   to  custom fields 
 
-			$arr_columns = array(
-
-			"ProfileLanguage" => "Language",
-
-			"ProfileStatEthnicity" => "Ethnicity",
-
-			"ProfileStatSkinColor" => "Skin Tone",
-
-			"ProfileStatHairColor" => "Hair Color",
-
-			"ProfileStatEyeColor" => "Eye Color",
-
-			"ProfileStatHeight" => "Height",
-
-			"ProfileStatWeight" => "Weight",
-
-			"ProfileStatBust" => "Chest",
-
-			"ProfileStatWaist" => "Bust",
-
-			"ProfileStatHip" => "Waist",
-
-			"ProfileStatShoe" => "Hips",
-
-			"ProfileStatDress" => "Shoe Size",
-
-			"ProfileUnion" => "Cup Size",
-
-			"ProfileExperience" => "Experience");
-
-			// old column   to  custom fields 
-
-			
-
-			foreach($arr_columns as $oldColumn => $migrate_data):		
-
-				
-
+			foreach($arr_profile_features as $oldColumn => $migrate_data):		
 				$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
-
 				 	   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
-
 				 	   FROM   " . table_agency_customfields . "  
-
 			       	   WHERE ProfileCustomTitle ='". $migrate_data."'";
-
 				 mysql_query($query) or die(mysql_error());
-
-				 
-
 		      endforeach;
-
-		
-
-		
-
 		}// end while data fetch
-
 		
-
-		 // Updating version number!
-
+		// Updating version number!
 		update_option('rb_agency_version', "1.9.1.2");
-
   } 
   if (get_option('rb_agency_version') == "1.9.1.2") {	
         update_option('rb_agency_version', "1.9.1.3");
@@ -536,11 +482,8 @@ if (get_option('rb_agency_version')== "1.9.1") {
 // Ensure directory is setup
 	
 if (!is_dir(rb_agency_UPLOADPATH)) {
-
 	mkdir(rb_agency_UPLOADPATH, 0755);
-
 	chmod(rb_agency_UPLOADPATH, 0777);
-
 }
 
 ?>
