@@ -1715,7 +1715,8 @@
 
 				  //Get Favorite & Casting Cart links
 					if ((isset($profilefavorite) && !empty($profilefavorite)) || (isset($profilecastingcart) && !empty($profilecastingcart))){ 
-								rb_agency_get_miscellaneousLinks($dataList["pID"]);
+					        $displayHTML .= "<ul>".rb_agency_get_miscellaneousLinks($dataList["pID"])."</ul>";
+								
 					}
 
 				}
@@ -3145,25 +3146,18 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 				}
 
-		
-
-			    
-
-			   
-
-			
-
-					if ($rb_agency_option_profilelist_favorite) {
+		$disp = "";
+			if ($rb_agency_option_profilelist_favorite) {
 
 						
 
 						if($countFavorite <= 0){
 
-							echo "     <li><div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$ProfileID."\">Save as Favorite</a></div></li>\n";
+							$disp .= "     <li><div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$ProfileID."\">Save as Favorite</a></div></li>\n";
 
 						}else{
 
-							echo "    <li> <div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"favorited\" id=\"".$ProfileID."\">Un-Favorite</a></div></li>\n";
+							$disp .= "    <li> <div class=\"favorite\"><a rel=\"nofollow\" href=\"javascript:;\" class=\"favorited\" id=\"".$ProfileID."\">Un-Favorite</a></div></li>\n";
 
 						}
 
@@ -3177,18 +3171,17 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 					if($countCastingCart <=0){
 
-					echo "<li><div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"save_castingcart\">Add To Casting Cart</a></div></li>";
+					$disp .= "<li><div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"save_castingcart\">Add To Casting Cart</a></div></li>";
 
 					}else{
 
-					echo "<li><div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"saved_castingcart\">Remove from Casting Cart <a href=\"".get_bloginfo("wpurl")."/profile-casting-cart/\" style=\"font-size:12px;float:right;\" class=\"view_all_castingcart\"><strong>View</strong></a></div></li>";
+					$disp .= "<li><div class=\"castingcart\"><a href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"saved_castingcart\">Remove from Casting Cart <a href=\"".get_bloginfo("wpurl")."/profile-casting-cart/\" style=\"font-size:12px;float:right;\" class=\"view_all_castingcart\"><strong>View</strong></a></div></li>";
 
 					  }
 
 				}
 
-			
-               
+	 return $disp;     
 			
 
 	 
@@ -3269,32 +3262,19 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
    * ======================== Edit Text/Label/Header ===============
 
    * 
-
-  /*/
-
-  
+ /*/
 
  //add_filter( 'gettext', 'rb_agency_editTitleText', 10, 3 );
 
-
-
   function rb_agency_editTitleText($string){
-
-        return "<span>".$string."<a href=\"javascript:;\" style=\"font-size:11px;color:blue;text-decoration:underline;\">Edit</a></span>";  
-
+	  return "<span>".$string."<a href=\"javascript:;\" style=\"font-size:11px;color:blue;text-decoration:underline;\">Edit</a></span>";  
   }
 
-  
-
   /*/
-
    *================ Add toolbar menu ==============================
-
    *
-
   /*/ 
-
-  function rb_agency_callafter_setup(){
+ function rb_agency_callafter_setup(){
 
 	 if (current_user_can('level_10') && !is_admin()) {
 
@@ -3311,18 +3291,11 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			'meta' => array('target' => 'rb-agency-toolbar-settings')
 
 		     ));
-
-		  }
-
+		 }
 		  add_action('admin_bar_menu', 'rb_agency_add_toolbar', 999);
-
 	 }
-
-	   
-
-  }
-
-   add_action( 'after_setup_theme',"rb_agency_callafter_setup"); 
+ }
+  add_action( 'after_setup_theme',"rb_agency_callafter_setup"); 
 
  /*/
   *  PHP Profiler DEBUG MODE
@@ -3370,24 +3343,15 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 /*/ 
  function rb_agency_getSocialLinks(){
 		$rb_agency_options_arr = get_option('rb_agency_options');
-	
 		$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
-		
 		if($rb_agency_option_showsocial){
 			echo "		<div class=\"social addthis_toolbox addthis_default_style\">\n";
-		
 			echo "			<a href=\"http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4c4d7ce67dde9ce7\" class=\"addthis_button_compact\">". __("Share", rb_agency_TEXTDOMAIN). "</a>\n";
-		
 			echo "			<span class=\"addthis_separator\">|</span>\n";
-		
 			echo "			<a class=\"addthis_button_facebook\"></a>\n";
-		
 			echo "			<a class=\"addthis_button_myspace\"></a>\n";
-		
 			echo "			<a class=\"addthis_button_google\"></a>\n";
-		
 			echo "			<a class=\"addthis_button_twitter\"></a>\n";
-		
 			echo "		</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
 		}
 }

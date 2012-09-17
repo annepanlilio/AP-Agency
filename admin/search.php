@@ -395,10 +395,164 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 			$cartQuery =  " AND profile.ProfileID NOT IN (". $cartString .")";
 
 		}
+		   $filterDropdown = array();
+            
+		foreach($_GET as $key => $val){
+			if (substr($key,0,15) == "ProfileCustomID") {
+                               
+				 
+				if (!empty($val)) {
+                            
+					$q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
+
+					$ProfileCustomType = mysql_fetch_assoc($q);
+
+						
+
+						/******************
+
+						1 - Text
+
+						2 - Min-Max > Removed
+
+						3 - Dropdown
+
+						4 - Textbox
+
+						5 - Checkbox
+
+						6 - Radiobutton
+
+						7 - Metrics/Imperials
+
+						*********************/
+
+				           
+						if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
+
+						
+
+							   $filter .= " AND customfield_mux.ProfileCustomValue='".$val."' ";
+
+								$_SESSION[$key] = $val;
+
+
+						} elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
+
+						
+
+								 
+									//$filter.= " AND LOWER(customfield_mux.ProfileCustomValue) = LOWER(\"".$val."\") ";
+                                                      array_push($filterDropdown,$val);
+							
+							   
+
+						} elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
+
+							
+
+							  $filter .= " AND customfield_mux.ProfileCustomValue='".$val."' ";
+
+								$_SESSION[$key] = $val;
+
+						
+							
+
+						} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
+
+							 if(!empty($val)){
+
+							   
+
+							 $val = implode("','",explode(",",$val));
+
+							 $filter .= " AND customfield_mux.ProfileCustomValue IN('".$val."') ";
+
+								$_SESSION[$key] = $val;
+
+								
+
+							}else{
+
+								$_SESSION[$key] = "";
+
+							}
+
+						} elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
+
+
+							 $val = implode("','",explode(",",$val));
+
+							 $filter .= " AND customfield_mux.ProfileCustomValue IN('".$val."') ";
+
+								$_SESSION[$key] = $val;
+
+								
+
+
+						}
+
+						 elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
+
+						
+							      list($Min_val,$Max_val) = explode(",",$val);
+
+								if(!empty($Min_val) && !empty($Max_val)){
+
+							      	$filter .= " AND customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' ";
+
+							      	$_SESSION[$key] = $val;
+
+								}
+
+
+						}
+
+						mysql_free_result($q);
+
+				} // if not empty
+
+			 }  // end if
+
+	       } // end for each
+
+	  if(count($filterDropdown) > 0){
+           $filter .=" AND customfield_mux.ProfileCustomValue IN('".implode("','",$filterDropdown)."')";
+
+		}
+     
+
+	// Search Results	
+		$query = "
+			 SELECT 
+			 profile.*,
+			 profile.ProfileGallery,
+			 profile.ProfileContactDisplay, 
+			 profile.ProfileDateBirth, 
+			 profile.ProfileLocationState, 
+			 profile.ProfileID as pID, 
+			 customfield_mux.*,  
+			 		(
+					  SELECT media.ProfileMediaURL 
+					 	      FROM ". table_agency_profile_media ." media 
+					  WHERE profile.ProfileID = media.ProfileID 
+					  		AND 
+							media.ProfileMediaType = \"Image\" 
+							AND 
+							media.ProfileMediaPrimary = 1
+					) 
+					AS ProfileMediaURL FROM ". table_agency_profile ." profile 
+			INNER JOIN ". table_agency_customfield_mux ." 
+			            AS customfield_mux 
+					ON profile.ProfileID = customfield_mux.ProfileID  
+					".$filter." ".$cartQuery."  
+			GROUP BY profile.ProfileID 
+			ORDER BY $sort $dir  $limit";
+			
 
 		// Search Results	
 
-        $query = "SELECT profile.*, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile $filter $cartQuery ORDER BY $sort $dir $limit";
+      //  $query = "SELECT profile.*, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile $filter $cartQuery ORDER BY $sort $dir $limit";
 
 		$results2 = mysql_query($query);
 
@@ -1267,7 +1421,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 			 if ($ProfileCustomType == 7) { //measurements field type
 
-			           if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
+			           if($rb_agency_option_unittype ==1){ // 1 = Metrics(ft/kg)
 
 						if($data1['ProfileCustomOptions'] == 1){
 
@@ -1283,7 +1437,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 						}
 
-					}elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+					}elseif($rb_agency_option_unittype ==0){ //0 = Imperial(in/lb)
 
 						if($data1['ProfileCustomOptions'] == 1){
 

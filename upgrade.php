@@ -478,6 +478,55 @@ if (get_option('rb_agency_version')== "1.9.1") {
   if (get_option('rb_agency_version') == "1.9.1.5") {	
         update_option('rb_agency_version', "1.9.1.6");
   }
+   if (get_option('rb_agency_version') == "1.9.1.6") {
+	   
+	    /*/
+	     *  Update custom fields
+	    /*/
+		$resultsProfile = mysql_query("SELECT * FROM ".table_agency_profile." "); // Get all profiles
+
+		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
+			
+			$ProfileID = $f_Profile["ProfileID"];   // set the profile id
+			
+			$arr_profile_features = array(
+				"ProfileLanguage" => "Language",
+				"ProfileStatEthnicity" => "Ethnicity",
+				"ProfileStatSkinColor" => "Skin Tone",
+				"ProfileStatHairColor" => "Hair Color",
+				"ProfileStatEyeColor" => "Eye Color",
+				"ProfileStatHeight" => "Height",
+				"ProfileStatWeight" => "Weight",
+				"ProfileStatBust" => "Bust",
+				"ProfileStatWaist" => "Waist",
+				"ProfileStatHip" => "Hips",
+				"ProfileStatShoe" => "Shoe Size",
+				"ProfileStatDress" => "Dress",
+				"ProfileUnion" => "Union",
+				"ProfileExperience" => "Experience");
+				// old column   to  custom fields 
+
+			foreach($arr_profile_features as $oldColumn => $migrate_data):
+			
+			      $qCustomFieldID = mysql_query("SELECT ProfileCustomID,ProfileCustomTitle FROM ".table_agency_customfields." WHERE ProfileCustomTitle = '".$migrate_data."'");	
+				$count = mysql_num_rows($qCustomFieldID);
+			      if($count > 0){
+					$fCustomFieldID = mysql_fetch_assoc($qCustomFieldID);
+					$query ="UPDATE " . table_agency_customfield_mux. " SET  ProfileCustomValue = '".$f_Profile[$oldColumn]."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."'";
+					 mysql_query($query) or die(mysql_error());
+				}else{
+					$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
+				 	   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
+				 	   FROM   " . table_agency_customfields . "  
+			       	   WHERE ProfileCustomTitle ='". $migrate_data."'";
+					 mysql_query($query) or die(mysql_error());
+				}
+				
+		      endforeach;
+		}// end while data fetch
+			
+        update_option('rb_agency_version', "1.9.2");
+  }
 
 // Ensure directory is setup
 	
