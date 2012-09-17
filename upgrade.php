@@ -478,10 +478,10 @@ if (get_option('rb_agency_version')== "1.9.1") {
   if (get_option('rb_agency_version') == "1.9.1.5") {	
         update_option('rb_agency_version', "1.9.1.6");
   }
-   if (get_option('rb_agency_version') == "1.9.1.6") {
+  if (get_option('rb_agency_version') == "1.9.2") {
 	   
 	    /*/
-	     *  Update custom fields
+	    // *  Update custom fields
 	    /*/
 		$resultsProfile = mysql_query("SELECT * FROM ".table_agency_profile." "); // Get all profiles
 
@@ -512,20 +512,22 @@ if (get_option('rb_agency_version')== "1.9.1") {
 				$count = mysql_num_rows($qCustomFieldID);
 			      if($count > 0){
 					$fCustomFieldID = mysql_fetch_assoc($qCustomFieldID);
-					$query ="UPDATE " . table_agency_customfield_mux. " SET  ProfileCustomValue = '".$f_Profile[$oldColumn]."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."'";
-					 mysql_query($query) or die(mysql_error());
-				}else{
+					$query ="UPDATE " . table_agency_customfield_mux. " SET  ProfileCustomValue = '".$f_Profile[$oldColumn]."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."' AND ProfileID = '".$ProfileID ."'";
+					$q1 =  mysql_query($query) or die(mysql_error());
+					 mysql_free_result($q1);
+				}/*else{
 					$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
 				 	   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
 				 	   FROM   " . table_agency_customfields . "  
 			       	   WHERE ProfileCustomTitle ='". $migrate_data."'";
-					 mysql_query($query) or die(mysql_error());
-				}
-				
+					 $q2 = mysql_query($query) or die(mysql_error());
+					 mysql_free_result($q2);
+				}*/
+				mysql_free_result($qCustomFieldID);
 		      endforeach;
 		}// end while data fetch
 			
-        update_option('rb_agency_version', "1.9.2");
+        update_option('rb_agency_version', "1.9.2.1");
   }
 
 // Ensure directory is setup
