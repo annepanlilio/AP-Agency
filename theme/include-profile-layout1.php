@@ -177,7 +177,7 @@ Profile View with Thumbnails and Primary Image
 					       echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ".$heightfeet."ft ".$heightinch." in</div>\n";
                              
 					}else{
-						echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">asdf".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+						echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">".$measurements_label.":</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
                           
 					}
 					

@@ -14,7 +14,7 @@
 
   Author URI: http://rob.bertholf.com/
 
-  Version: 1.9.1.6
+  Version: 1.9.2
 
 */
 
