@@ -478,6 +478,9 @@ if (get_option('rb_agency_version')== "1.9.1") {
   if (get_option('rb_agency_version') == "1.9.1.5") {	
         update_option('rb_agency_version', "1.9.1.6");
   }
+  if (get_option('rb_agency_version') == "1.9.1.6") {	
+        update_option('rb_agency_version', "1.9.2");
+  }
   if (get_option('rb_agency_version') == "1.9.2") {
 	   
 	    /*/
