@@ -510,7 +510,7 @@
 			$rb_agency_option_profilelist_expanddetails	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
 			$rb_agency_option_locationtimezone 			 = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 			$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-			$rb_agency_option_profilenaming			 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+			$rb_agency_option_profilenaming				 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 			$rb_agency_option_profilelist_castingcart 	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
 	
 	
@@ -568,23 +568,21 @@
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
 		if (isset($age_start) && !empty($age_start)){ $profiledatebirth_min = $age_start; }
 		if (isset($age_stop) && !empty($age_stop)){ $profiledatebirth_max = $age_stop; }
-		$ProfileID 				= $profileid;
+		$ProfileID 					= $profileid;
 		$ProfileContactNameFirst	= $profilecontactnamefirst;
 		$ProfileContactNameLast    	= $profilecontactnamelast;
 		$ProfileLocationCity		= $profilelocationcity;
-		$ProfileType			= $profiletype;
+		$ProfileType				= $profiletype;
 		$ProfileIsActive			= $profileisactive;
-		$ProfileGender    		= $profilegender;
-		
+		$ProfileGender    			= $profilegender;
 		$ProfileStatHeight_min		= $profilestatheight_min;
 		$ProfileStatHeight_max		= $profilestatheight_max;
 		$ProfileStatWeight_min		= $profilestatheight_min;
 		$ProfileStatWeight_max		= $profilestatheight_max;
-		
 		$ProfileDateBirth_min		= $profiledatebirth_min;
 		$ProfileDateBirth_max		= $profiledatebirth_max;
-		$ProfileIsFeatured		= $featured;
-		$ProfileIsPromoted		= $stars;
+		$ProfileIsFeatured			= $featured;
+		$ProfileIsPromoted			= $stars;
 		$OverridePrivacy			= $override_privacy;
 	      $GetProfileSaved			= $getprofile_saved;
           
@@ -626,13 +624,11 @@
                                                       array_push($filterDropdown,$val);
 								
 							}
-							
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
 							if(!empty($val)){
 							  $filter .= " AND customfield_mux.ProfileCustomValue='".$val."' ";
 								$_SESSION[$key] = $val;
 							}
-							
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
 							 if(!empty($val)){
 							   
@@ -653,7 +649,6 @@
 							} else {
 								$_SESSION[$key] = "";
 							}
-							
 						}
 						 elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
 							if(!empty($val)){
@@ -663,7 +658,6 @@
 							      	$_SESSION[$key] = $val;
 								}
 							}
-							
 						}
 						mysql_free_result($q);
 					} // elseif

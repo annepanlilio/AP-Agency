@@ -78,7 +78,7 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 		
 		}
 
-
+echo $cartArray;
 
 
 
@@ -291,13 +291,13 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 							media.ProfileMediaPrimary = 1
 					) 
 					AS ProfileMediaURL FROM ". table_agency_profile ." profile 
-			INNER JOIN ". table_agency_customfield_mux ." 
+			LEFT JOIN ". table_agency_customfield_mux ." 
 			            AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					".$filter." ".$cartQuery."  
 			GROUP BY profile.ProfileID 
 			ORDER BY $sort $dir  $limit";
-			
+
 		// Search Results	
       //  $query = "SELECT profile.*, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile $filter $cartQuery ORDER BY $sort $dir $limit";
 		$results2 = mysql_query($query);
@@ -305,9 +305,6 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 		if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
 			echo "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". $sessionString ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 		}
-		
-		
-
         echo "       <form method=\"get\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
         echo "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";
         echo "        <input type=\"hidden\" name=\"action\" value=\"cartAdd\" />\n";
@@ -337,7 +334,7 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
         echo "        <tbody>\n";
          
         while ($data = mysql_fetch_array($results2)) {
-            $ProfileID = $data['ProfileID'];
+            $ProfileID = $data['pID'];
 			 $isInactive = '';
 			 $isInactiveDisable = '';
 			 if ($data['ProfileIsActive'] == 0 || empty($data['ProfileIsActive'])){
@@ -461,8 +458,7 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
     
         echo "     <p>\n";
         echo "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_menu_search') ."\" class=\"button-primary\" />\n";
-		
-		 echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
+		echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
         echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 		echo "     </p>\n";
 		echo "  </form>\n";

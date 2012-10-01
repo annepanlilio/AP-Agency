@@ -45,7 +45,7 @@ global $wpdb;
    }
 // *************************************************************************************************** //
 // Upgrade to 1.8.1
-	if (get_option('rb_agency_version') == "1.8") { 
+	if (get_option('rb_agency_version') == "1.8" || get_option('rb_agency_version') == "1.8.1") { 
 
 		$results = $wpdb->query("ALTER TABLE ". table_agency_data_type ." ADD DataTypeTag VARCHAR(55)");
 		
@@ -97,18 +97,12 @@ global $wpdb;
 		// Setup > Taxonomy: Gender
           if ($wpdb->get_var("show tables like '".  table_agency_data_gender ."'") !=  table_agency_data_gender ) { 
 			$results = $wpdb->query("CREATE TABLE ". table_agency_data_gender ." (
-	
 				GenderID INT(10) NOT NULL AUTO_INCREMENT,
-	
 				GenderTitle VARCHAR(255),
-	
 				PRIMARY KEY (GenderID)
-	
 				);");
 				
-				
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Male')");
-	
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
 	    }
 	    // Custom Order in Custom Fields
@@ -124,45 +118,29 @@ global $wpdb;
 		// Setup > Save Favorited
 		if ($wpdb->get_var("show tables like '".  table_agency_savedfavorite ."'") !=  table_agency_savedfavorite ) { 
 				$results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
-		
 					SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
-		
 					SavedFavoriteProfileID VARCHAR(255),
-		
 					SavedFavoriteTalentID VARCHAR(255),
-		
 					PRIMARY KEY (SavedFavoriteID)
-		
 					);");
 		}
 			
 		if ($wpdb->get_var("show tables like '".  table_agency_castingcart ."'") != table_agency_castingcart ) { 
 				$results = $wpdb->query("CREATE TABLE ". table_agency_castingcart." (
-		
 						CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
-		
 						CastingCartProfileID VARCHAR(255),
-		
 						CastingCartTalentID VARCHAR(255),
-		
 						PRIMARY KEY (CastingCartID)
-		
 						);");
 		}
 		
 		if ($wpdb->get_var("show tables like '".  table_agency_mediacategory ."'") != table_agency_mediacategory) { 
 				$sql13 = "CREATE TABLE ". table_agency_mediacategory." (
-		
 						MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
-		
 						MediaCategoryTitle VARCHAR(255),
-		
 						MediaCategoryGender VARCHAR(255),
-		
 						MediaCategoryOrder VARCHAR(255),
-		
 						PRIMARY KEY (MediaCategoryID)
-		
 						);";
 		
 					mysql_query($sql13);			
@@ -237,32 +215,21 @@ global $wpdb;
 				$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die(mysql_error());
 		
 				while($fetchData = mysql_fetch_assoc($q3)):
-		
 					   $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die(mysql_error());
-		
 					   $fetchGender = mysql_fetch_assoc($queryGender);
-		
 					   $count = mysql_num_rows($queryGender);
-		
 					   if($count > 0){
-		
 						$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$fetchGender["GenderID"]."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
-		
 					   }
-		
 				endwhile;
 		}
 			     
-		
 		// Updating version number!
            update_option('rb_agency_version', "1.9.1");
-	    
   }
-  
   
 if (get_option('rb_agency_version')== "1.9.1") {
   
-           
 		// Fix Gender compatibility
 		$q4 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die("1".mysql_error());
 		while($fetchData = mysql_fetch_assoc($q4)):
