@@ -137,6 +137,9 @@ elseif ($ConfigID == 1) {
 		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
 			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "2"; }
 		
+		$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
+			if (empty($rb_agency_option_privacy)) { $rb_agency_option_privacy = "0"; }
+		
 		 echo "<table class=\"form-table\">\n";
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('Database Version', rb_agency_TEXTDOMAIN); echo "</th>\n";
@@ -265,11 +268,18 @@ elseif ($ConfigID == 1) {
 		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 2,false) ."> ". __("Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 3,false) ."> ". __("Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 4,false) ."> ". __("Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
-				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout5.php")) {
-		 echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Custom Layout 5", rb_agency_TEXTDOMAIN) ."</option>\n";
-				}
+		 echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
 				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout6.php")) {
 		 echo "       <option value=\"6\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 6,false) ."> ". __("Custom Layout 6", rb_agency_TEXTDOMAIN) ."</option>\n";
+				}
+				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout7.php")) {
+		 echo "       <option value=\"7\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 7,false) ."> ". __("Custom Layout 7", rb_agency_TEXTDOMAIN) ."</option>\n";
+				}
+				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout8.php")) {
+		 echo "       <option value=\"8\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 8,false) ."> ". __("Custom Layout 8", rb_agency_TEXTDOMAIN) ."</option>\n";
+				}
+				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout9.php")) {
+		 echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 9,false) ."> ". __("Custom Layout 9", rb_agency_TEXTDOMAIN) ."</option>\n";
 				}
 		 echo "     </select>\n";
 		 echo "   </td>\n";
@@ -307,9 +317,9 @@ elseif ($ConfigID == 1) {
 		 echo "   <th scope=\"row\">". __('Privacy Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <select name=\"rb_agency_options[rb_agency_option_privacy]\">\n";
-		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_privacy'], 2,false) ."> ". __("Must be logged to view model list and profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_privacy'], 1,false) ."> ". __("Model list public. Must be logged to view profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_privacy'], 0,false) ."> ". __("Model list and profile information public", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "     </select>\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
@@ -676,7 +686,7 @@ elseif ($ConfigID == 12) {
 		else {
 			$sort = "SubscriptionRatePrice, SubscriptionRateTitle";
 		}
-		
+
 		/******** Direction ************/
 		$dir = "";
 		if (isset($_GET['dir']) && !empty($_GET['dir'])){
@@ -1912,22 +1922,18 @@ elseif ($ConfigID == 7) {
 								
 								
 								 }
-								  elseif($data1["ProfileCustomType"] == 7){	 ///metric/imperials
+								 elseif ($data1["ProfileCustomType"] == 7) {	 ///metric/imperials
 										echo "<tr><td>Title*:<input type='text' name='ProfileCustomTitle' value=\"".$data1["ProfileCustomTitle"]."\"/></td></tr>";
 										echo "<tr><td>&nbsp;</td></tr>";
 										 
-										  if($rb_agency_options_arr['rb_agency_option_unittype']==0){ //  Metric (cm/kg)
-											 
+										 if ($rb_agency_options_arr['rb_agency_option_unittype']==0) { //  Metric (cm/kg)
 												echo "<tr><td><input type='radio' name='ProfileUnitType' value='1'  ".checked($data1["ProfileCustomOptions"],1,false)."/>cm</td></tr>";
-										     	      echo "<tr><td><input type='radio' name='ProfileUnitType' value='2'  ".checked($data1["ProfileCustomOptions"],2,false)." />kg</td></tr>";  
-												echo "<tr><td><input type='radio' name='ProfileUnitType' value='3' ".checked($data1["ProfileCustomOptions"],3,false)."/>Inches/Feet</td></tr>";
-												
-										 }elseif($rb_agency_options_arr['rb_agency_option_unittype']==1){ //  Imperial (in/lb)
+										     	echo "<tr><td><input type='radio' name='ProfileUnitType' value='2'  ".checked($data1["ProfileCustomOptions"],2,false)." />kg</td></tr>";  
+										 } elseif ($rb_agency_options_arr['rb_agency_option_unittype']==1) { //  Imperial (in/lb)
 											
 												echo "<tr><td><input type='radio' name='ProfileUnitType' value='1' ".checked($data1["ProfileCustomOptions"],1,false)." />Inches</td></tr>";
-										    		echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' ".checked($data1["ProfileCustomOptions"],2,false)."/>Pounds</td></tr>";
-												echo "<tr><td><input type='radio' name='ProfileUnitType' value='3' ".checked($data1["ProfileCustomOptions"],3,false)."/>Inches/Feet</td></tr>";
-												
+										    	echo "<tr><td><input type='radio' name='ProfileUnitType' value='2' ".checked($data1["ProfileCustomOptions"],2,false)."/>Pounds</td></tr>";
+												echo "<tr><td><input type='radio' name='ProfileUnitType' value='3' ".checked($data1["ProfileCustomOptions"],3,false)."/>Feet/Inches</td></tr>";
 										 } 
 										
 										
