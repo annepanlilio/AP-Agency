@@ -750,9 +750,9 @@ elseif ($ConfigID == 8) {
 		
 			
 			
-			      $pos = 0;
-				$pos_suggested = 0;
-				$arrayReservedFoldername = array();
+			$pos = 0;
+			$pos_suggested = 0;
+			$arrayReservedFoldername = array();
 			while ($data1 = mysql_fetch_array($results1)) {
 				$ProfileID				=$data1["ProfileID"];
 				$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
@@ -784,20 +784,15 @@ elseif ($ConfigID == 8) {
 			$count  = mysql_num_rows($rs);
 				if($count > 0){
 						
-							// Add Profiles to Array to Create later
-							$throw_error = true;
-								       $ProfileGalleryFixed =  rb_agency_set_directory($ProfileGalleryFixed);
-									echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-									echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
-									echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
-									
-						
-					
-					
-				}elseif ($ProfileGallery == $ProfileGalleryFixed ) {
-							
-								 echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-							 
+					// Add Profiles to Array to Create later
+					$throw_error = true;
+					$ProfileGalleryFixed =  rb_agency_set_directory($ProfileGalleryFixed);
+					echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
+					echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
+					echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
+	
+				} elseif ($ProfileGallery == $ProfileGalleryFixed ) {
+					echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
 				}
 				$pos++;
 			}//endwhile
@@ -916,6 +911,12 @@ elseif ($ConfigID == 12) {
     echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
 
 	echo "<a href=\"". rb_agency_BASEDIR ."tasks/exportDatabase.php\">Export Database</a>\n";
+	
+	
+	
+	
+	
+	
 }
 // Install Dummy Accounts/Profiles with Media Content rb-agency/task/installDummy.php
 elseif ($ConfigID == 14) {
@@ -924,22 +925,22 @@ elseif ($ConfigID == 14) {
 			$sample_url = "../".rb_agency_BASEPATH."tasks/samples"; // Samples' folder
 			
 			$userProfileNames = array(
-			"Arvay" => "Steven",
-			"Bailey"=>"Victor",
-			"Barr"=>"	Merne",
-			"Benton"=>"	Jared",
-			"Bousfield"=>"Joanne",
-			"Brading"=>"Eric",
-			"Brading"=>"Richard",
-			"Brading"=>"Monique",
-			"Bradley"=>"John",
-			"Champ"=>"Camba",
-			"Kristel" => "Cuadra",
-			"Fhil" =>"Barrion",
-			"Anne" => "Panlilio",
-			"Childs"=>"Trevor",
-			"Cowal"=>"Randy",
-			"Curtis"=>"Bradley",
+			"Arvay" 	=> "Steven",
+			"Bailey"	=>"Victor",
+			"Barr"		=>"	Merne",
+			"Benton"	=>"	Jared",
+			"Bousfield"	=>"Joanne",
+			"Brading"	=>"Eric",
+			"Brading"	=>"Richard",
+			"Brading"	=>"Monique",
+			"Bradley"	=>"John",
+			"Champ"		=>"Camba",
+			"Kristel" 	=> "Cuadra",
+			"Fhil" 		=>"Barrion",
+			"Anne" 		=> "Panlilio",
+			"Childs"	=>"Trevor",
+			"Cowal"		=>"Randy",
+			"Curtis"	=>"Bradley",
 			"Dales"=>"Otmar",
 			"Dickson"=>"Elizabeth",
 			"Downs"=>"Ricardo",
@@ -1010,18 +1011,18 @@ elseif ($ConfigID == 14) {
 			);
 			
 			$userMediaVideo = array(
-				"http://www.youtube.com/watch?v=KhKW66JLwiY",
-				"http://www.youtube.com/watch?v=reH0Nx-S9eU",
-				"http://www.youtube.com/watch?v=HbyFdoNFHMg",
-				"http://www.youtube.com/watch?v=jAnBW8q30ts",
-				"http://www.youtube.com/watch?v=rGKjhVrZjdQ",
-				"http://www.youtube.com/watch?v=XegpJrG_qdA"
+				"http://www.youtube.com/watch?v=0hMzBRM96gk",
+				"http://www.youtube.com/watch?v=xNiSREeN-rk",
+				"http://www.youtube.com/watch?v=c8YZIL8JZfg",
+				"http://www.youtube.com/watch?v=Mx3wQGU862E",
+				"http://www.youtube.com/watch?v=p8DYtnBa4a8",
+				"http://www.youtube.com/watch?v=y58mkKh_0Gw"
 			);
 
-			$userMediaPrimary = array("primary.jpg","female_model-01.jpg","female_model-02.jpg","female_model-03.jpg","female_model-04.jpg");
+			$userMediaImagesM = array("male_model-01.jpg","male_model-02.jpg","male_model-03.jpg","male_model-04.jpg","male_model-05.jpg","male_model-06.jpg","male_model-07.jpg","male_model-08.jpg","male_model-09.jpg");
+			$userMediaImagesF = array("female_model-01.jpg","female_model-02.jpg","female_model-03.jpg","female_model-04.jpg","female_model-05.jpg","female_model-06.jpg","female_model-07.jpg","female_model-08.jpg","female_model-09.jpg");
 			$userMediaVideoType = array("Demo Reel","Video Monologue","Video Slate");
 			$userMediaHeadshot = array("headshot.jpg","headshot-2.jpg");
-			$userMediaImages = array("female_model-01.jpg","female_model-02.jpg","female_model-03.jpg","female_model-04.jpg");
 			$userMediaResume = array("resume.docx","resume_PDF.pdf");
 			$userMediaCompcard = array("comp-card.jpg");
 			$userMediaVoicedemo = array("voice-demo.mp3");
@@ -1076,149 +1077,162 @@ elseif ($ConfigID == 14) {
 		echo "</form>\n";
 		#END========== Register dummies to track===
 
-if(isset($_GET["settings-updated"]) && empty($rb_agency_dummy_options_installdummy)){
-		
-	  echo "<h2>". __("Removing Dummy Profiles...", rb_agency_TEXTDOMAIN) . "</h2>\n";
-      echo "<br/>Succesfully removed...";
-	  echo "<br/>";
-	  $trackDummies = explode(",",$_SESSION["trackDummies_text"]);
-	 
-		 // Track dummies to pull out
-		 foreach($trackDummies as $gallery){
-			 echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
-		  $qID = mysql_query("SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ") or die("1".mysql_error());
-		  $fID = mysql_fetch_assoc($qID);
-		 
-		  mysql_query("DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ") or die("2".mysql_error());
-		  mysql_query("DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ") or die("3".mysql_error());
-		  
-		  uninstall_dummy_profile($gallery);
-		 }
-			
-		unset($_SESSION["trackDummies_text"]); 
-}
-			
-		
-if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdummy) && isset($_SESSION["trackDummies_text"])){	
-        echo "<h2>". __("Installing Dummies...", rb_agency_TEXTDOMAIN) . "</h2>\n";
-        echo "<br/>";  
-	  echo "Succesfully created ".count($userProfileNames)." dummy profiles..<br/>";
-	
-				 foreach($userProfileNames as $ProfileContactNameFirst => $ProfileContactNameLast){
-					  
-					  $ProfileContactDisplay = "";
-					  $ProfileGallery = "";
-					  $userCategory = "";
-					  $userGender ="";
-					
-					  $queryGender = mysql_query("SELECT * FROM ".table_agency_data_gender."  WHERE GenderID >= (SELECT FLOOR( MAX(GenderID) * RAND()) FROM ".table_agency_data_gender." ) ORDER BY RAND() LIMIT 1");
-					  $userGender = mysql_fetch_assoc($queryGender);
-					  
-					  $queryCategory = mysql_query("SELECT * FROM ".table_agency_data_type."  WHERE DataTypeID >= (SELECT FLOOR( MAX(DataTypeID) * RAND()) FROM ".table_agency_data_type." ) ORDER BY  RAND() LIMIT 1");
-					  $userCategory = mysql_fetch_assoc($queryCategory);
-					  mysql_free_result($queryGender);
-					  mysql_free_result($queryCategory);
-					   
-					   
-					  echo $ProfileContactNameFirst." ".$ProfileContactNameLast."<br/>";
-					  
-					   if (empty($ProfileContactDisplay)) {  // Probably a new record... 
-						if ($rb_agency_option_profilenaming == 0) {
-							$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
-						} elseif ($rb_agency_option_profilenaming == 1) {
-							$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
-						} elseif ($rb_agency_option_profilenaming == 2) {
-							$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
-							$have_error = true;
-						} elseif ($rb_agency_option_profilenaming == 3) {
-							$ProfileContactDisplay = "ID ". $ProfileID;
-						}
-					    }
+		if(isset($_GET["settings-updated"]) && empty($rb_agency_dummy_options_installdummy)){
 				
-					  if (empty($ProfileGallery)) {  // Probably a new record... 
-						$ProfileGallery = rb_agency_safenames($ProfileContactDisplay); 
-					    }
-					    
-					  $ProfileGallery = rb_agency_checkdir($ProfileGallery);
-					    
-					  $insert = "INSERT INTO " . table_agency_profile . "(
-					  ProfileGallery,
-					  ProfileContactDisplay,
-					  ProfileContactNameFirst,
-					  ProfileContactNameLast,
-					  ProfileIsActive,
-					  ProfileGender,
-					  ProfileType,
-					  ProfileDateBirth) 
-					  VALUES(
-					  '".$ProfileGallery."',
-					  '".trim($ProfileContactDisplay)."',
-					  '".trim($ProfileContactNameFirst)."',
-					  '".trim($ProfileContactNameLast)."',
-					  1,
-					  '".$userGender["GenderID"]."',
-					  '".$userCategory["DataTypeID"]."',
-					  '".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."'
-					 );"; 
-					  
-					$results = $wpdb->query($insert) or die(mysql_error());
-					$ProfileID = $wpdb->insert_id;
-					    
-					   
-					   
-					$rand = rand(0,1); // 2
-					$randTo6 = rand(0,5); //6
-					$randTo4 = rand(0,4); // 5
-				   
-					  for($a=0; $a<=3; $a++){
-						  
-						  // Copy images
-						  if($a<=3){
+			  echo "<h2>". __("Removing Dummy Profiles...", rb_agency_TEXTDOMAIN) . "</h2>\n";
+			  echo "<br/>Succesfully removed...";
+			  echo "<br/>";
+			  $trackDummies = explode(",",$_SESSION["trackDummies_text"]);
+			 
+				 // Track dummies to pull out
+				 foreach($trackDummies as $gallery){
+					 echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
+				  $qID = mysql_query("SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ") or die("1".mysql_error());
+				  $fID = mysql_fetch_assoc($qID);
+				 
+				  mysql_query("DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ") or die("2".mysql_error());
+				  mysql_query("DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ") or die("3".mysql_error());
+				  
+				  uninstall_dummy_profile($gallery);
+				 }
+					
+				unset($_SESSION["trackDummies_text"]); 
+		}
+					
+				
+		if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdummy) && isset($_SESSION["trackDummies_text"])){	
+				echo "<h2>". __("Installing Dummies...", rb_agency_TEXTDOMAIN) . "</h2>\n";
+				echo "<br/>";  
+			  	echo "Succesfully created ".count($userProfileNames)." dummy profiles..<br/>";
+			
+						 foreach($userProfileNames as $ProfileContactNameLast => $ProfileContactNameFirst){
+							  
+							  $ProfileContactDisplay = "";
+							  $ProfileGallery = "";
+							  $userCategory = "";
+							  $userGender ="";
 							
-							 if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImages[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImages[$a]))){
-								echo $sample_url."/".$userMediaImages[$a]."<br/>".rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImages[$a];
-								echo "<br/>";
-								die("Failed to Copy files... <br/>".phpinfo());
-								
-							 }
-							 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImages[$a] ."','". $userMediaImages[$a] ."')");
-						  }
-						  if($a<=3){
-							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
-						  }
-						  if($a==1){ 
-							
-							copy(rb_chmod_file_display($sample_url."/".$userMediaPrimary[$randTo4]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaPrimary[$randTo4]);
-							 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaPrimary[$randTo4]."','". $userMediaPrimary[$randTo4] ."',1)") or die(mysql_error());
-							
-							copy(rb_chmod_file_display($sample_url."/".$userMediaHeadshot[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
-							 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Headshot','". $userMediaHeadshot[$rand]."','". $userMediaHeadshot[$rand] ."')");
-							
-							
-							copy(rb_chmod_file_display($sample_url."/".$userMediaVoicedemo[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaVoicedemo[0]);
-							 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','VoiceDemo','". $userMediaVoicedemo[0] ."','".  $userMediaVoicedemo[0] ."')");
-									     
-							copy(rb_chmod_file_display($sample_url."/".$userMediaCompcard[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaCompcard[0]);
-							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','CompCard','".$userMediaCompcard[0] ."','". $userMediaCompcard[0]."')");
-							
-							copy(rb_chmod_file_display($sample_url."/".$userMediaResume[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaResume[$rand]);
-							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Resume','". $userMediaResume[$rand]."','".$userMediaResume[$rand]."')");
-									     
-						  }
+							  $queryGender = mysql_query("SELECT * FROM ".table_agency_data_gender."  WHERE GenderID >= (SELECT FLOOR( MAX(GenderID) * RAND()) FROM ".table_agency_data_gender." ) ORDER BY RAND() LIMIT 1");
+							  $userGender = mysql_fetch_assoc($queryGender);
+							  
+							  $queryCategory = mysql_query("SELECT * FROM ".table_agency_data_type."  WHERE DataTypeID >= (SELECT FLOOR( MAX(DataTypeID) * RAND()) FROM ".table_agency_data_type." ) ORDER BY  RAND() LIMIT 1");
+							  $userCategory = mysql_fetch_assoc($queryCategory);
+							  mysql_free_result($queryGender);
+							  mysql_free_result($queryCategory);
+							   
+							   
+							  echo $ProfileContactNameFirst." ".$ProfileContactNameLast."<br/>";
+							  
+							 if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+								if ($rb_agency_option_profilenaming == 0) {
+									$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+								} elseif ($rb_agency_option_profilenaming == 1) {
+									$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+								} elseif ($rb_agency_option_profilenaming == 2) {
+									$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+									$have_error = true;
+								} elseif ($rb_agency_option_profilenaming == 3) {
+									$ProfileContactDisplay = "ID ". $ProfileID;
+								}
+							}
 						
-					  }
-				   } // End foreach
-				   
-     unset($_SESSION["trackDummies_text"]);
-} // if option is empty
-
-
-	
-if(isset($_GET["a"])){
-		unset($_SESSION["trackDummies_text"]); 
-		uninstall_allprofile();
-}
+							if (empty($ProfileGallery)) {  // Probably a new record... 
+								$ProfileGallery = rb_agency_safenames($ProfileContactDisplay); 
+							}
+								
+							  $ProfileGallery = rb_agency_checkdir($ProfileGallery);
+								
+							  $insert = "INSERT INTO " . table_agency_profile . "(
+											  ProfileGallery,
+											  ProfileContactDisplay,
+											  ProfileContactNameFirst,
+											  ProfileContactNameLast,
+											  ProfileIsActive,
+											  ProfileGender,
+											  ProfileType,
+											  ProfileDateBirth 
+										  ) VALUES (
+											  '".$ProfileGallery."',
+											  '".trim($ProfileContactDisplay)."',
+											  '".trim($ProfileContactNameFirst)."',
+											  '".trim($ProfileContactNameLast)."',
+											  1,
+											  '".$userGender["GenderID"]."',
+											  '".$userCategory["DataTypeID"]."',
+											  '".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."'
+										 );"; 
+							  
+							$results = $wpdb->query($insert) or die(mysql_error());
+							$ProfileID = $wpdb->insert_id;
+								
+							$rand = rand(0,1); // 2
+							$randTo6 = rand(0,5); //6
+							$randTo4 = rand(0,4); // 5
+							$randTo8 = rand(0,8); // 5
+						   
+							  for($a=0; $a<=3; $a++){
+								  
+								  // Copy images
+								  if($a<=3){
+									if (is_odd($userGender["GenderID"])) {
+									 if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a]))){
+										echo $sample_url."/".$userMediaImagesM[$a]."<br/>".rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a];
+										echo "<br/>";
+										die("Failed to Copy files... <br/>".phpinfo());
+									 }
+									 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$a] ."','". $userMediaImagesM[$a] ."')");
+									} else {
+									 if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$a]))){
+										echo $sample_url."/".$userMediaImagesF[$a]."<br/>".rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$a];
+										echo "<br/>";
+										die("Failed to Copy files... <br/>".phpinfo());
+									 }
+									 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImages[$a] ."','". $userMediaImages[$a] ."')");
+									}
+								  }
+								  if($a<=3){
+									$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
+								  }
+								  if($a==1){ 
+									if (is_odd($userGender["GenderID"])) {
+									 copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
+									 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)") or die(mysql_error());
+									} else {
+									 copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$randTo8]);
+									 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)") or die(mysql_error());
+									}
+									copy(rb_chmod_file_display($sample_url."/".$userMediaHeadshot[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
+									 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Headshot','". $userMediaHeadshot[$rand]."','". $userMediaHeadshot[$rand] ."')");
+									
+									copy(rb_chmod_file_display($sample_url."/".$userMediaVoicedemo[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaVoicedemo[0]);
+									 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','VoiceDemo','". $userMediaVoicedemo[0] ."','".  $userMediaVoicedemo[0] ."')");
+												 
+									copy(rb_chmod_file_display($sample_url."/".$userMediaCompcard[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaCompcard[0]);
+									$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','CompCard','".$userMediaCompcard[0] ."','". $userMediaCompcard[0]."')");
+									
+									copy(rb_chmod_file_display($sample_url."/".$userMediaResume[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaResume[$rand]);
+									$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Resume','". $userMediaResume[$rand]."','".$userMediaResume[$rand]."')");
+												 
+								  }
+								
+							  }
+						   } // End foreach
+						   
+			 unset($_SESSION["trackDummies_text"]);
+		} // if option is empty
+		
+		
+			
+		if (isset($_GET["a"])){
+				unset($_SESSION["trackDummies_text"]); 
+				uninstall_allprofile();
+		}
 } //END $ConfigID == 14
+
+
+/******************************************************************************************/
+
+
 
 function uninstall_dummy_profile($profile){
 	
@@ -1246,27 +1260,29 @@ function uninstall_allprofile(){
 function rb_agency_just_checkdir($ProfileGallery){
 	      	
 		
-				$finished = false;      
-				$pos = 0;                 // we're not finished yet (we just started)
-				while ( ! $finished ):                   // while not finished
-				 $pos++;
-				  $NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
-				  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
-				      if(($pos-1) <=0){
-						$ProfileGallery = $ProfileGallery;  // Set it to the new  thing
-					}else{
-						$ProfileGallery = $ProfileGallery ."-".($pos-1);  // Set it to the new  thing
-					}
-					$finished = true;                    // ...we are finished
-				  endif;
-				endwhile;
-				
-				return $ProfileGallery;
-		
+	$finished = false;      
+	$pos = 0;                 // we're not finished yet (we just started)
+	while ( ! $finished ):                   // while not finished
+	 $pos++;
+	  $NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
+	  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
+		  if(($pos-1) <=0){
+			$ProfileGallery = $ProfileGallery;  // Set it to the new  thing
+		}else{
+			$ProfileGallery = $ProfileGallery ."-".($pos-1);  // Set it to the new  thing
+		}
+		$finished = true;                    // ...we are finished
+	  endif;
+	endwhile;
+	
+	return $ProfileGallery;
+
 			
 			
- }
- function rb_agency_set_directory($ProfileGallery){
+}
+ 
+ 
+function rb_agency_set_directory($ProfileGallery){
 	 
 			   $finished = false;      
 				$pos = 0;                 // we're not finished yet (we just started)
@@ -1284,7 +1300,9 @@ function rb_agency_just_checkdir($ProfileGallery){
 				endwhile;
 				
 				return $ProfileGallery;
- }
+}
+
+
 function rb_chmod_file_display($file){
     @chmod($file,0755);	
     return $file;
