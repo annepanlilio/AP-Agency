@@ -667,7 +667,9 @@
 		}  // end for each
 	  } // end if
 	  
+		if(isset($filterDropdown) && !empty($filterDropdown)){
            $filter .=" AND customfield_mux.ProfileCustomValue IN('".implode("','",$filterDropdown)."')";
+		}
 	  	// Name
 		if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
 			$ProfileContactNameFirst = $ProfileContactNameFirst;
@@ -688,16 +690,12 @@
 		
 		// Profile Search Saved 
 		if(isset($GetProfileSaved) && !empty($GetProfileSaved)){
-			
 			$filter .= " AND profile.ProfileID IN(".$GetProfileSaved.") ";
 		}
-		
 		// Gender
 			
 			if (isset($ProfileGender) && !empty($ProfileGender)){
-			  
 				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
-			  
 			} else {
 				$ProfileGender = "";
 			}
@@ -789,16 +787,13 @@
 							media.ProfileMediaPrimary = 1
 					) 
 					AS ProfileMediaURL FROM ". table_agency_profile ." profile 
-			INNER JOIN ". table_agency_customfield_mux ." 
+			LEFT JOIN ". table_agency_customfield_mux ." 
 			            AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  
 			GROUP BY profile.ProfileID 
 			ORDER BY $sort $dir  $limit";
-			
-			
 			}
-                 
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
                     

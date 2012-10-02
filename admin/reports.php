@@ -1174,7 +1174,7 @@ elseif ($ConfigID == 14) {
 								  
 								  // Copy images
 								  if($a<=3){
-									if (is_odd($userGender["GenderID"])) {
+									if ($userGender["GenderID"] % 2 != 0) {
 									 if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a]))){
 										echo $sample_url."/".$userMediaImagesM[$a]."<br/>".rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a];
 										echo "<br/>";
@@ -1194,7 +1194,7 @@ elseif ($ConfigID == 14) {
 									$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
 								  }
 								  if($a==1){ 
-									if (is_odd($userGender["GenderID"])) {
+									if ($userGender["GenderID"] % 2 != 0) {
 									 copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
 									 $results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)") or die(mysql_error());
 									} else {
