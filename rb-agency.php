@@ -157,8 +157,6 @@ return;
 				ProfileContactDisplay VARCHAR(255),
 				ProfileContactNameFirst VARCHAR(255),
 				ProfileContactNameLast VARCHAR(255),
-				
-				ProfileContactParent VARCHAR(255),
 				ProfileGender VARCHAR(255),
 				ProfileDateBirth DATE,
 				ProfileContactEmail VARCHAR(255),
@@ -171,13 +169,9 @@ return;
 				ProfileLocationState VARCHAR(255),
 				ProfileLocationZip VARCHAR(255),
 				ProfileLocationCountry VARCHAR(255),
-				
 				ProfileContactLinkTwitter VARCHAR(255),
-				
 				ProfileContactLinkFacebook VARCHAR(255),
-				
 				ProfileContactLinkYoutube VARCHAR(255),
-				
 				ProfileContactLinkFlickr VARCHAR(255),
 				ProfileDateCreated TIMESTAMP DEFAULT NOW(),
 				ProfileDateUpdated TIMESTAMP,

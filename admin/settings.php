@@ -404,6 +404,15 @@ elseif ($ConfigID == 11) {
 		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Show User Registration when creating Profiles', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+		 echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_useraccountcreation]\">\n";
+		 echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'], 0,false) ."> ". __("Yes, show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'], 1,false) ."> ". __("No, do not show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "     </select>\n";
+		 echo "   </td>\n";
+		 echo " </tr>\n";
+		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('New Profile Registration', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1,false)."/> Users may register profiles (uncheck to prevent self registration)<br />\n";
@@ -427,7 +436,7 @@ elseif ($ConfigID == 11) {
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('New Profile Approval', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerapproval]\">\n";
+		 echo "     <select name=\"rb_agencyinteract_options[rb_agency_option_useraccountcreation]\">\n";
 		 echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 0,false) ."> ". __("New profiles must be manually approved", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 1,false) ."> ". __("New profiles are automatically approved", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "     </select>\n";

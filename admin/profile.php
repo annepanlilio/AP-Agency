@@ -10,6 +10,14 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) { $rb_agency_option_agencyimagemaxheight = 800; }
 	$rb_agency_option_profilenaming 		= (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
 	$rb_agency_option_locationtimezone 		= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
+	
+	
+if (function_exists(rb_agencyinteract_menu_approvemembers)) {
+	// Load Interact Settings
+	$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
+		$rb_agency_option_useraccountcreation 		= (int)$rb_agency_options_arr['rb_agency_option_useraccountcreation'];
+}
+
 
 // *************************************************************************************************** //
 // Handle Post Actions
@@ -76,7 +84,7 @@ if (isset($_POST['action'])) {
 		$error .= "<b><i>The ". LabelSingular ." must have a name.</i></b><br>";
 		$have_error = true;
 	}
-    if(isset($_GET["action"]) == "add"){
+    if ( (isset($_GET["action"]) == "add") && function_exists(rb_agencyinteract_menu_approvemembers) ) {
       $userdata = array(
 			'user_pass' => esc_attr($ProfilePassword),
 			'user_login' => esc_attr($ProfileUsername),
@@ -653,7 +661,7 @@ function rb_display_manage($ProfileID) {
 	echo "	  </tr>\n";
 	
 	// password
-	if(isset($_GET["action"]) && $_GET["action"] == "add"){
+	if ( (isset($_GET["action"]) && $_GET["action"] == "add") && function_exists(rb_agencyinteract_menu_approvemembers)) {
 		echo "    <tr valign=\"top\">\n";
 		echo "		<th scope=\"row\">". __("Username", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "		<td>\n";

@@ -719,7 +719,6 @@
 				profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , 
 				 customfield_mux.*,  
 				 (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
-				 
 				 AS ProfileMediaURL 
 				 FROM ". table_agency_profile ." profile 
 			 	 LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
@@ -759,40 +758,38 @@
 			 }
 			/*********** Execute Query **************/
 			if (isset($profilefavorite) && !empty($profilefavorite)){  	
-			// Execute Query
-			$queryList = "SELECT profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite."  fav  WHERE   $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
-			
+				// Execute Query
+				$queryList = "SELECT profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite."  fav  WHERE   $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+				
 			}elseif (isset($profilecastingcart) && !empty($profilecastingcart)){  	
 				// Execute Query
-			$queryList = "SELECT profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";
+				$queryList = "SELECT profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";
 			
 			}else{
-			// Execute Query
-			$queryList = "
-			 SELECT 
-			 profile.ProfileID,
-			 profile.ProfileGallery,
-			 profile.ProfileContactDisplay, 
-			 profile.ProfileDateBirth, 
-			 profile.ProfileLocationState, 
-			 profile.ProfileID as pID, 
-			 customfield_mux.*,  
-			 		(
-					  SELECT media.ProfileMediaURL 
-					 	      FROM ". table_agency_profile_media ." media 
-					  WHERE profile.ProfileID = media.ProfileID 
-					  		AND 
-							media.ProfileMediaType = \"Image\" 
-							AND 
-							media.ProfileMediaPrimary = 1
-					) 
-					AS ProfileMediaURL FROM ". table_agency_profile ." profile 
-			LEFT JOIN ". table_agency_customfield_mux ." 
-			            AS customfield_mux 
-					ON profile.ProfileID = customfield_mux.ProfileID  
-					$filter  
-			GROUP BY profile.ProfileID 
-			ORDER BY $sort $dir  $limit";
+				// Execute Query
+				$queryList = "
+					SELECT 
+						 profile.ProfileID,
+						 profile.ProfileID as pID, 
+						 profile.ProfileGallery,
+						 profile.ProfileContactDisplay, 
+						 profile.ProfileDateBirth, 
+						 profile.ProfileLocationState, 
+						 customfield_mux.*,  
+						 (    SELECT media.ProfileMediaURL 
+							  FROM ". table_agency_profile_media ." media 
+							  WHERE profile.ProfileID = media.ProfileID 
+									AND media.ProfileMediaType = \"Image\" 
+									AND media.ProfileMediaPrimary = 1
+						  ) 
+						  AS ProfileMediaURL 
+					FROM ". table_agency_profile ." profile 
+					LEFT JOIN ". table_agency_customfield_mux ." 
+								AS customfield_mux 
+							ON profile.ProfileID = customfield_mux.ProfileID  
+							$filter  
+					GROUP BY profile.ProfileID 
+					ORDER BY $sort $dir $limit";
 			}
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
@@ -1320,33 +1317,30 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			  $rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 			  $measurements_label = "";
 			 if ($ProfileCustomType == 7) { //measurements field type
-			             if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
-						
-						if($data3['ProfileCustomOptions'] == 1){
-						     $measurements_label  ="<em>(cm)</em>";
-						}elseif($data3['ProfileCustomOptions'] == 2){
-						     $measurements_label  ="<em>(kg)</em>";
-						}elseif($data3['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="<em>(In Feet/Inches)</em>";
-						}
-					}elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
-						if($data3['ProfileCustomOptions'] == 1){
-						     $measurements_label  ="<em>(In Inches)</em>";
-						}elseif($data3['ProfileCustomOptions'] == 2){
-						  $measurements_label  ="<em>(In Pounds)</em>";
-						}elseif($data3['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="<em>(In Feet/Inches)</em>";
-						}
+				if ($rb_agency_option_unittype ==0) { // 0 = Metrics(ft/kg)
+					if($data3['ProfileCustomOptions'] == 1){
+						 $measurements_label  ="<em>(cm)</em>";
+					}elseif($data3['ProfileCustomOptions'] == 2){
+						 $measurements_label  ="<em>(kg)</em>";
+					}elseif($data3['ProfileCustomOptions'] == 3){
+					  $measurements_label  ="<em>(In Feet/Inches)</em>";
 					}
+				} elseif($rb_agency_option_unittype ==1) { //1 = Imperial(in/lb)
+					if($data3['ProfileCustomOptions'] == 1){
+						 $measurements_label  ="<em>(In Inches)</em>";
+					}elseif($data3['ProfileCustomOptions'] == 2){
+					  $measurements_label  ="<em>(In Pounds)</em>";
+					}elseif($data3['ProfileCustomOptions'] == 3){
+					  $measurements_label  ="<em>(In Feet/Inches)</em>";
+					}
+				}
 			 }  
 			 $isTextArea = "";
 			 if($ProfileCustomType == 4){
-				 
 				$isTextArea ="textarea-field"; 
-				 
 			 }
 		echo "  <tr valign=\"top\" class=\"".$isTextArea."\">\n";
-		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n";
+		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
 		echo "    <td>\n";		  
 		  
            echo "<div class=\"box\">";
@@ -1575,6 +1569,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
   /*/
   function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 		global $wpdb;
+		global $rb_agency_option_unittype;
 		
 		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
 		foreach ($resultsCustom as $resultCustom) {
@@ -1599,6 +1594,8 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			 } else {
 				 $measurements_label = "";
 			 }
+			 // Lets not do this...
+			 $measurements_label = "";
 			 
 				if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 					if ($resultCustom->ProfileCustomType == 7){

@@ -329,7 +329,7 @@ if (get_option('rb_agency_version')== "1.9.1") {
 					if (isset($f_Profile[$oldColumn])) {
 						$query1 ="UPDATE " . table_agency_customfield_mux. " SET  ProfileCustomValue = '". $f_Profile[$oldColumn] ."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."' AND ProfileID = '".$ProfileID ."'";
 						$q1 =  mysql_query($query1) or die(mysql_error());
-						mysql_free_result($q1);
+						//mysql_free_result($q1);
 					}
 				} /*else{
 					$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
@@ -347,6 +347,9 @@ if (get_option('rb_agency_version')== "1.9.1") {
   }
   if (get_option('rb_agency_version') == "1.9.2.1") {	
         update_option('rb_agency_version', "1.9.7");
+  }
+  if (get_option('rb_agency_version') == "1.9.7") {	
+        update_option('rb_agency_version', "1.9.7.1");
   }
 // Ensure directory is setup
 	
