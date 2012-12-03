@@ -6,9 +6,9 @@
   Description: With this plugin you can easily manage models profiles and information.
   Author: Rob Bertholf
   Author URI: http://rob.bertholf.com/
-  Version: 1.9.7
+  Version: 1.9.9
 */
-$rb_agency_VERSION = "1.8.2"; // starter
+$rb_agency_VERSION = "1.9.9"; // starter
 if(!get_option("rb_agency_version")){  add_option("rb_agency_version", $rb_agency_VERSION , '', 'no');  update_option("rb_agency_version", $rb_agency_VERSION);}
 	
 	
@@ -30,10 +30,7 @@ return;
 		exit();
 	}
 
-	
 // Plugin Definitions
-	
-	
 	define("rb_agency_BASENAME", plugin_basename(__FILE__) );  // rb-agency/rb-agency.php
 	$rb_agency_WPURL = get_bloginfo("wpurl"); // http://domain.com/wordpress
 	$rb_agency_WPUPLOADARRAY = wp_upload_dir(); // Array  $rb_agency_WPUPLOADARRAY['baseurl'] $rb_agency_WPUPLOADARRAY['basedir']
@@ -540,8 +537,8 @@ if ( is_admin() ){
 		
 }
 
-			$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
 			
 //****************************************************************************************************//
 // Add / Handles Ajax Request ====== ADD To Favorites

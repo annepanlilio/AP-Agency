@@ -113,6 +113,8 @@ if (isset($_POST['action'])) {
 			$have_error = true;
 		}
     }
+	
+	
 	// Get Post State
 	$action = $_POST['action'];
 	switch($action) {
@@ -124,8 +126,10 @@ if (isset($_POST['action'])) {
 		
 		// Bug Free!
 		if($have_error == false){	
-			$new_user = wp_insert_user( $userdata );
-			
+				if ( function_exists(rb_agencyinteract_menu_approvemembers) ) {
+					$new_user = wp_insert_user( $userdata );
+				}
+				
 				$ProfileGallery = rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
 				
 				// Create Record
@@ -186,7 +190,7 @@ if (isset($_POST['action'])) {
 	
 				
 				// Notify admin and user
-				if($ProfileNotifyUser <> "yes"){
+				if($ProfileNotifyUser <> "yes" && function_exists(rb_agencyinteract_menu_approvemembers) ){
 					wp_new_user_notification($new_user, $ProfilePassword);	
 				}
 				// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
@@ -212,9 +216,9 @@ if (isset($_POST['action'])) {
 				}
 				
 				echo ('<div id="message" class="updated"><p>'. __("New Profile added successfully!", rb_agency_TEXTDOMAIN) .' <a href="'. admin_url("admin.php?page=". $_GET['page']) .'&action=editRecord&ProfileID='. $ProfileID .'">'. __("Update and add media", rb_agency_TEXTDOMAIN) .'</a></p></div>'); 
-			      // We can edit it now
-				//rb_display_manage($ProfileID);
-				//exit;
+			    // We can edit it now
+				// rb_display_manage($ProfileID);
+				// exit;
 			}
 		}	
 		 else {
@@ -578,7 +582,6 @@ function rb_display_manage($ProfileID) {
 			$ProfileContactPhoneHome	=stripslashes($data['ProfileContactPhoneHome']);
 			$ProfileContactPhoneCell	=stripslashes($data['ProfileContactPhoneCell']);
 			$ProfileContactPhoneWork	=stripslashes($data['ProfileContactPhoneWork']);
-		/*	$ProfileContactParent		=stripslashes($data['ProfileContactParent']);*/
 			$ProfileGender    			=stripslashes($data['ProfileGender']);
 			$ProfileDateBirth	    	=stripslashes($data['ProfileDateBirth']);
 			$ProfileLocationStreet		=stripslashes($data['ProfileLocationStreet']);

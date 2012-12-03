@@ -113,6 +113,9 @@ global $wpdb;
 		update_option('rb_agency_version', "1.9");
 	}
 
+  if (get_option('rb_agency_version') == "1.8.9") {	
+        update_option('rb_agency_version', "1.9");
+  }
   if (get_option('rb_agency_version') == "1.9") {
 	 
 		// Setup > Save Favorited
@@ -348,8 +351,8 @@ if (get_option('rb_agency_version')== "1.9.1") {
   if (get_option('rb_agency_version') == "1.9.2.1") {	
         update_option('rb_agency_version', "1.9.7");
   }
-  if (get_option('rb_agency_version') == "1.9.7") {	
-        update_option('rb_agency_version', "1.9.7.1");
+  if (get_option('rb_agency_version') <> "1.9.9") {	
+	  update_option('rb_agency_version', "1.9.9");
   }
 // Ensure directory is setup
 	

@@ -1,0 +1,1920 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: RB Agency\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-27 18:14-1000\n"
+"PO-Revision-Date: 2012-11-27 18:15-1000\n"
+"Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
+"Language-Team: Rob Bertholf <rob@bertholf.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2\n"
+"X-Poedit-Basepath: C:\\Dropbox\\Users\\Rob\\Scripts\\RB Plugin\\rb-agency\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: AUSTRALIA\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: D:\\RobDropbox\\Dropbox\\ScriptRepository\\RB-Agency\n"
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:71
+msgid "RB Agency Updates"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:494
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:863
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:936
+msgid "No Profiles Found"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:822
+msgid "Displaying"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:822
+msgid "of"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:822
+msgid " records"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:1293
+msgid "There are no custom fields loaded"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:1293
+msgid "Setup Custom Fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:1357
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:1362
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:301
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:315
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:675
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:798
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:805
+msgid "Min"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:1359
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:1364
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:305
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:319
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:684
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:800
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:807
+msgid "Max"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/functions.php:1742
+msgid "Share"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:387
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:514
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:7
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:47
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:64
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:110
+msgid "Settings"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:396
+msgid "RB Agency"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:409
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:411
+msgid "Insert Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:457
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:80
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:652
+msgid "Any Profile Type"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:462
+msgid "Only"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:465
+msgid "Starting Age"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:466
+msgid "Ending Age"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:467
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:106
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:765
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:414
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:416
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:661
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:26
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:91
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:92
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2018
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2030
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2226
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2235
+msgid "Gender"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:480
+msgid "Insert Profile List"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:481
+msgid "Insert Search Form"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:490
+msgid "Profile"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:505
+msgid "Agency"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:506
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:23
+msgid "Overview"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:507
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:616
+msgid "Manage Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:509
+msgid "Approve Pending Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:509
+msgid "Approve Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:511
+msgid "Search &amp; Send Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:511
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:644
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:953
+msgid "Search Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:512
+msgid "Saved Searches"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:513
+msgid "Tools &amp; Reports"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:514
+msgid "Edit Settings"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:653
+msgid "Displays promoted profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:654
+msgid "RB Agency : Featured"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:689
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:740
+msgid "Title:"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:690
+msgid "Number Shown:"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:704
+msgid "Displays profile search fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:705
+msgid "RB Agency : Search"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:741
+msgid "Type:"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:937
+msgid "Almost done..."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:937
+msgid "One More Step"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/rb-agency.php:937
+msgid "Please click here to complete the uninstallation process"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/upgrade.php:53
+msgid "Cant load types"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/casting.php:49
+msgid "New Casting added successfully!"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/casting.php:49
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:218
+msgid "Update and add media"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/casting.php:51
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:225
+msgid "Error creating record, please ensure you have filled out all required fields."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/casting.php:128
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:676
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:716
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:566
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/searchsaved.php:352
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:608
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:736
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:913
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:999
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1131
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1226
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1492
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2036
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2149
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2243
+msgid "Error, query failed"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/casting.php:467
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1303
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1352
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/searchsaved.php:848
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:745
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:764
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1010
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1026
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1235
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1252
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2105
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2252
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2277
+msgid "Delete"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:17
+msgid "Dashboard"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:19
+msgid "You are using version"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:33
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:578
+msgid "Quick Search"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:55
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:655
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1171
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:639
+msgid "First Name"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:65
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:661
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1172
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:644
+msgid "Last Name"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:76
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:944
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:947
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:650
+msgid "Classification"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:132
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:786
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:966
+msgid "No items to select"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:142
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:384
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:673
+msgid "Age"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:146
+msgid "Minimum"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:150
+msgid "Maximum"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:580
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1186
+msgid "Advanced Search"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:608
+msgid "Actions"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:616
+msgid "Browse and edit existing profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:628
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1147
+msgid "Create New "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:636
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1150
+msgid "No Gender Found. <a href=\""
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:644
+msgid "Find and send profiles by filtering by chriteria"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:660
+msgid "Recent Activity"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:670
+msgid "Recently Created/Modified Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:700
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:740
+msgid "There are currently no profiles added"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:710
+msgid "Recently Viewed Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/overview.php:774
+msgid "WordPress Plugins by "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:38
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:1041
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:1132
+msgid " must have a display name identified"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:97
+msgid "A username is required for registration.<br />"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:101
+msgid "Sorry, that username already exists!<br />"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:105
+msgid "You must enter a valid email address.<br />"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:109
+msgid "Sorry, that email address is already used!<br />"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:112
+msgid "A password is required for registration and must have 6 characters.<br />"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:218
+msgid "New Profile added successfully!"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:376
+msgid "Please upload jpeg or png files only"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:423
+msgid "Profile updated successfully"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:423
+msgid "Continue editing the record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:425
+msgid "Error updating record, please ensure you have filled out all required fields."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:457
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:462
+msgid "Error removing:"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:467
+msgid "No Valid Record Found."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:470
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:525
+msgid "Profile deleted successfully!"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:521
+msgid "No valid record found."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:560
+msgid "Manage "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:561
+msgid "Back to "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:601
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1301
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:744
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1009
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1234
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2048
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2251
+msgid "Edit"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:602
+msgid "Make changes in the form below to edit a"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:602
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:616
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:620
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:633
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:921
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:930
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1140
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1149
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1387
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1399
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1410
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1432
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1456
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1479
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1512
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1537
+msgid "Required fields are marked"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:616
+msgid "Fill in the form below to add a new"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:628
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:318
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:328
+msgid "Contact Information"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:632
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:257
+msgid "Display Name"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:640
+msgid "Gallery Folder"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:644
+msgid "Folder"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:644
+msgid "Exists"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:648
+msgid "No Folder Exists"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:670
+msgid "Username"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:676
+msgid "Password"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:683
+msgid "Send Login details?"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:692
+msgid "Private Information"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:692
+msgid "The following information will NOT appear in public areas and is for administrative use only."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:695
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:387
+msgid "Birthdate"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:701
+msgid "Email Address"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:707
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:390
+msgid "Website"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:713
+msgid "Phone"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:722
+msgid "Street"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:728
+msgid "City"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:734
+msgid "State"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:740
+msgid "Zip"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:746
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:381
+msgid "Country"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:762
+msgid "Public Information"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:806
+msgid "Gallery"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:834
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:842
+msgid "successfully removed"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:840
+msgid "Error removing"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:840
+msgid "File did not exist."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:873
+msgid "There are no images loaded for this profile yet."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:877
+msgid "Media"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:878
+msgid "The following files (pdf, audio file, etc.) are associated with this record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:918
+msgid "There are no additional media linked"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:921
+msgid "Upload"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:922
+msgid "Upload new media using the forms below"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:927
+msgid "Paste the video URL below"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:929
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:930
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:931
+msgid "Video Slate"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:929
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:930
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:931
+msgid "Video Monologue"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:929
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:930
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:931
+msgid "Demo Reel"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:966
+msgid "Setup Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:972
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1187
+msgid "Status"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:974
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1190
+msgid "Active"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:975
+msgid "Active - Not Visible On Website"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:976
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1192
+msgid "Inactive"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:977
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1193
+msgid "Archived"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:978
+msgid "Pending Approval"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:983
+msgid "WordPress User"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:991
+msgid "Membership"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1002
+msgid "Date Updated"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1008
+msgid "Profile Views"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1014
+msgid "Profile Viewed Last"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1031
+msgid "Last updated on"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1037
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:677
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:946
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1171
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1966
+msgid "Update Record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1042
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:683
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:952
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1177
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1972
+msgid "Create Record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1061
+msgid "List"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1063
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:688
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:957
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1182
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1983
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2195
+msgid "All Records"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1164
+msgid "Filter By"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1173
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:703
+msgid "Location"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1175
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:705
+msgid "Any Location"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1189
+msgid "Any Status"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1191
+msgid "Not Visible"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1195
+msgid "Category"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1197
+msgid "Any Category"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1206
+msgid "Filter"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1211
+msgid "Clear Filters"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1301
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:744
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1009
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1234
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2048
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2251
+msgid "Edit this Record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1302
+msgid "View"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1303
+msgid "You are about to delete the profile for "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1303
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:745
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1010
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1235
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2252
+msgid "Cancel"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1303
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:745
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1010
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1235
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2252
+msgid "to stop"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1303
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:745
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1010
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1235
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2252
+msgid "OK"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1303
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:745
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1010
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1235
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2252
+msgid "to delete"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/profile.php:1303
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:745
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1010
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1235
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2252
+msgid "Delete this Record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:30
+msgid "Interactive Reporting"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:31
+msgid "Run reports on membership and other usage."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:34
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:35
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:166
+msgid "Recent Payments"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:36
+msgid "Payments and membership renewals"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:44
+msgid "Initial Setup"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:45
+msgid "If you are doing the initial instal of RB Agency you this section will help you get your data inplace"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:51
+msgid "Data Integrity"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:52
+msgid "Once your data is in place use the tools below to check your records"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:55
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:56
+msgid "Export Data"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:57
+msgid "Export databases"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:61
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:62
+msgid "Check for Abnormalities"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:63
+msgid "Search profile records for fields which seem invalid"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:67
+msgid "Rename Profile Folder Names"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:68
+msgid "Rename Folders"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:69
+msgid "If you created model profiles while under 'First Last' or 'First L' and wish to switch to Display names or IDs you will have to rename the existing folders so that they do not have the models name in it"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:73
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:74
+msgid "Resize Photos"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:75
+msgid "Ensure files are not larger than approved size"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:75
+msgid "Configure Sizes"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:79
+msgid "Orphaned Profile Images"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:80
+msgid "Remove Orphan Images From Database"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:81
+msgid "If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:85
+msgid "FTP Blank Folder Check"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:86
+msgid "Scan for Orphan Folders"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:87
+msgid "Check for any empty folders which do no have models assigned using this tool"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:94
+msgid "Profile Management"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:95
+msgid "The following reports will help you manage your profile information"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:98
+msgid "Inactive Users"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:99
+msgid "Check Inactive Users"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:100
+msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:104
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:105
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:12
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:631
+msgid "Profile Search"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:106
+msgid "You may search for profiles by using this tool"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:110
+msgid "Dummy Profiles with Sample Media"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:111
+msgid "Generate Dummy Profiles with Media Content"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:112
+msgid "You may add dummy profiles by using this tool"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:120
+msgid "Importing Records"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:121
+msgid "The following tools will help import records.  DO NOT USE THESE TOOLS IF YOU ALREADY HAVE DATA LOADED"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:125
+msgid "Step 1"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:126
+msgid "Download Excel Template"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:127
+msgid "Download this template and load your profile data into this file to import into the database."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:131
+msgid "Step 2"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:132
+msgid "Upload to Database"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:133
+msgid "Upload the model profiles into the database."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:137
+msgid "Step 3"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:138
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:302
+msgid "Generate folder names for profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:139
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:303
+msgid "Check that all profiles have folder names generated."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:144
+msgid "Step 4"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:145
+msgid "Create folders for all profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:146
+msgid "Check that all profiles have folders created on the server."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:150
+msgid "Step 5"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:151
+msgid "Scan Folders for Images"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:152
+msgid "First upload images directly to folders via FTP then use this tool to sync the images to the database."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:156
+msgid "Step 6"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:157
+msgid "Set Primary Profile Image"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:158
+msgid "Identify which image is the primary image for each profile."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:822
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:245
+msgid "Resize Images"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:911
+msgid "Export Database"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:1082
+msgid "Removing Dummy Profiles..."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/reports.php:1104
+msgid "Installing Dummies..."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:317
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:327
+msgid "ID"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:319
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:329
+msgid "Private Details"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:320
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:330
+msgid "Public Details"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:321
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:331
+msgid "Headshot"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:393
+msgid "Phone Home"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:396
+msgid "Phone Cell"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:399
+msgid "Phone Work"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:443
+msgid "No profiles found with this criteria!"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:450
+msgid "There aren't any Profiles loaded yet!"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:460
+msgid "Add to Casting Cart"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:461
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:462
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:539
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:540
+msgid "Quick Print"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:462
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:540
+msgid "Without Details"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:475
+msgid "Casting Cart"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:486
+msgid "No profile selected. Try again"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:489
+msgid "Empty Cart"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:490
+msgid "Currently"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:490
+msgid "in Cart"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:496
+msgid "There are currently no profiles in the casting cart"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:516
+msgid "Remove from Cart"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:535
+msgid "Cart Actions"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:537
+msgid "Save Search & Email"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:538
+msgid "Mass Email"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:611
+msgid "Compose Email"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:620
+msgid "Send Email"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:663
+msgid "--"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:954
+msgid "Reset Form"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/search.php:955
+msgid "Empty Form"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/searchsaved.php:219
+msgid "Search Saved"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:24
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:46
+msgid "Features"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:25
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:51
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:52
+msgid "Style"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:27
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:81
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:82
+msgid "Profile Categories"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:28
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:86
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:87
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1261
+msgid "Custom Fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:29
+msgid "Media Categories"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:43
+msgid "Configuration"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:44
+msgid "The following settings modify the core RB Agency settings."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:48
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:65
+msgid "Access this area to manage all of the core settings including layout types, privacy settings and more"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:53
+msgid "Manage the stylesheet (CSS) controlling the category and profile layouts"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:60
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:63
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:64
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:374
+msgid "Interactive Settings"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:61
+msgid "These settings modify the behavior of the RB Agency Interactive plugin."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:69
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:70
+msgid "Subscription Rates"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:71
+msgid "Manage the subscription rate tiers and descriptions"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:78
+msgid "Customize Profile Fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:79
+msgid "You have full control over all drop downs and ability to add new custom fields of your own."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:83
+msgid "Choose custom category types to classify profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:88
+msgid "Add public and private custom fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:93
+msgid "Manage preset Gender choices"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:99
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:102
+msgid "Uninstall"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:100
+msgid "Uninstall RB Agency software and completely remove all data"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:145
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:386
+msgid "Database Version"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:149
+msgid "Agency Details"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:152
+msgid "Agency Name"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:156
+msgid "Agency Email"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:161
+msgid "Location Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:164
+msgid "Default Country"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:168
+msgid "Server Timezone"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:202
+msgid "Unit Type"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:205
+msgid "Imperial"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:206
+msgid "Metric"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:211
+msgid "Profile List Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:214
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:390
+msgid "Display"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:216
+msgid "Show Model Count"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:217
+msgid "Show Sort Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:218
+msgid "Expanded Model Details"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:219
+msgid "Enable Model Favorites"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:220
+msgid "Show Sidebar"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:221
+msgid "Show Casting Cart"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:226
+msgid "Profiles Per Page"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:230
+msgid "Profiles Max Per Search"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:234
+msgid "Profile View Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:237
+msgid "Path to Logo"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:241
+msgid "Email Header"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:247
+msgid "Maximum Width"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:248
+msgid "Maximum Height"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:252
+msgid "Profile Name Format"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:255
+msgid "First Last"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:256
+msgid "First L"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:258
+msgid "Auto Generated Record ID"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:263
+msgid "Profile Layout Style"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:266
+msgid "Profile View with Thumbnails"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:267
+msgid "Profile View with Thumbnails and Primary Image"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:268
+msgid "Profile View with Scrolling Thumbnails and Primary Image"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:269
+msgid "Extended Profile View"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:270
+msgid "Direct Contact Layout (NOTE: Includes Phone Number of Model)"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:271
+msgid "Fun Animated Gallery"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:273
+msgid "Custom Layout 6"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:276
+msgid "Custom Layout 7"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:279
+msgid "Custom Layout 8"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:282
+msgid "Custom Layout 9"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:287
+msgid "Profile List Style"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:290
+msgid "Name Over Image"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:291
+msgid "Name Under Image with Color"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:292
+msgid "Name Under Image"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:297
+msgid "Image Gallery Type"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:300
+msgid "Slimbox Popup"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:301
+msgid "Pretty Photo"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:302
+msgid "No Gallery, Deregister jQuery"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:303
+msgid "No Gallery"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:308
+msgid "Image Gallery Sort Order"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:311
+msgid "Show most recently uploaded first"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:312
+msgid "Show chronological order"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:317
+msgid "Privacy Settings"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:320
+msgid "Must be logged to view model list and profile information"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:321
+msgid "Model list public. Must be logged to view profile information"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:322
+msgid "Model list and profile information public"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:327
+msgid "Show Fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:336
+msgid "Profile Contact Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:339
+msgid "Contact Page Settings"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:347
+msgid "Override Contact Page Path"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:353
+msgid "Profile Custom Fields Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:356
+msgid "Show Custom Fields on"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:358
+msgid "Profile Page"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:359
+msgid "Search Results Page"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:360
+msgid "User must be Logged In to see It"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:361
+msgid "User must be an Admin to see It"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:367
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:500
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:813
+msgid "Save Changes"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:392
+msgid "Show Sidebar on Member Management/Login Pages"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:399
+msgid "Hide Toolbar on All Pages"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:404
+msgid "Registration Process"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:407
+msgid "Show User Registration when creating Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:410
+msgid "Yes, show username and password fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:411
+msgid "No, do not show username and password fields"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:416
+msgid "New Profile Registration"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:422
+msgid "Enable registration of Agent/Producer"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:428
+msgid "Email Confirmation"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:431
+msgid "Password Sent Via Email"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:432
+msgid "No Email Verification, Password Self Generated"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:437
+msgid "New Profile Approval"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:440
+msgid "New profiles must be manually approved"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:441
+msgid "New profiles are automatically approved"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:446
+msgid "Facebook Login/Registration Integration"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:449
+msgid "Login &amp Registration"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:455
+msgid "Application ID"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:461
+msgid "Application Secret"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:467
+msgid "Login Redirect URI"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:473
+msgid "Registration Redirect URI"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:479
+msgid "Membership Subscription"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:482
+msgid "Notifications"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:488
+msgid "Embed Overview Page ID"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:492
+msgid "Embed Registration Page ID"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:496
+msgid "PayPal Email Address"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:509
+msgid "Subscription Tiers"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:510
+msgid "Subscription Tier"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:523
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:832
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1375
+msgid " name is required"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:574
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:597
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:879
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:902
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1097
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1120
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1449
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1476
+msgid " <strong>"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:633
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:930
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1149
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1410
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1432
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1512
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1537
+msgid "Make changes in the form below to edit a "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:641
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:718
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:727
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:936
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:987
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:993
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1155
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1212
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1219
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2013
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2025
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2225
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2234
+msgid "Title"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:645
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:719
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:728
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2014
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2026
+msgid "Type"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:651
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:721
+msgid "Text"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:655
+msgid "Package Rate"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:659
+msgid "Subscription Duration"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:720
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:729
+msgid "Rate/Term"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:730
+msgid "Price"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:745
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1010
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1235
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2049
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2252
+msgid "You are about to delete this "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:757
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1019
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1245
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2098
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2270
+msgid "There aren't any records loaded yet"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:807
+msgid "Stylesheet"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:821
+msgid "Gender Types"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:822
+msgid "Gender Type"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1036
+msgid "Profile Types"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1037
+msgid "Profile Type"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1160
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1213
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1220
+msgid "Slug"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:1262
+msgid "Custom Field"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2015
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2027
+msgid "Options"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2016
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2028
+msgid "Visibility"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2017
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2029
+msgid "Custom Order"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2146
+msgid "Edit Record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2154
+msgid "Add New Record"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2188
+msgid "Submit"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2227
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/admin/settings.php:2236
+msgid "Order"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:102
+msgid "Access Dashboard"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:124
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:129
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:31
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:36
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:90
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:95
+msgid "Height"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:124
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:31
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:90
+msgid "cm"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:129
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:36
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:95
+msgid "ft"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:129
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:36
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:95
+msgid "in"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:134
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:136
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:41
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:43
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:100
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:102
+msgid "Weight"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:134
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:41
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:100
+msgid "kg"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:136
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:43
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:102
+msgid "lb"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout0.php:145
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout1.php:120
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout2.php:121
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout3.php:141
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout4.php:40
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout5.php:112
+msgid "Contact: "
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout3.php:63
+msgid "Contact"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout4.php:60
+msgid "Call"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout4.php:70
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-layout4.php:72
+msgid "Call Now"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/include-profile-search.php:197
+msgid "All Gender"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-category.php:32
+msgid "Directory"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-category.php:58
+msgid "Filter Profiles"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-profile-contact.php:193
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-profile.php:198
+msgid "Inactive Profile"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-profile-contact.php:203
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-profile.php:209
+msgid "Invalid Profile"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-profilesecure.php:37
+msgid "No search results found.  Please check link again."
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-search.php:283
+msgid "Search Results"
+msgstr ""
+
+#: D:\RobDropbox\Dropbox\ScriptRepository\RB-Agency/theme/view-search.php:321
+msgid "No search chriteria selected, please initiate your search."
+msgstr ""
+

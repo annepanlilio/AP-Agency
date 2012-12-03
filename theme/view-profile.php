@@ -63,7 +63,6 @@ while ($data = mysql_fetch_array($results)) {
 	$ProfileContactPhoneHome	=stripslashes($data['ProfileContactPhoneHome']);
 	$ProfileContactPhoneCell	=stripslashes($data['ProfileContactPhoneCell']);
 	$ProfileContactPhoneWork	=stripslashes($data['ProfileContactPhoneWork']);
-	$ProfileContactParent		=stripslashes($data['ProfileContactParent']);
 	$ProfileGender    			=stripslashes($data['ProfileGender']);
 	$ProfileDateBirth	    	=stripslashes($data['ProfileDateBirth']);
 	$ProfileAge 				= rb_agency_get_age($ProfileDateBirth);
