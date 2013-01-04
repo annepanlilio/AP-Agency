@@ -879,6 +879,7 @@
 	}
 	// Profile List
 	function rb_agency_profilefeatured($atts, $content = NULL) {
+		global $rb_agency_options_arr;
 		/*
 		if (function_exists('rb_agency_profilefeatured')) { 
 			$atts = array('count' => 8, 'type' => 0);
@@ -890,9 +891,14 @@
 				"type" => 0,
 				"count" => 1
 		), $atts));
-		if ($type == 1) { // Featured
+		if ($type == 1) { // Promoted
 			$sqlWhere = " AND profile.ProfileIsPromoted=1";
 		}
+		
+		if ($type == 2) { // Featured
+			$sqlWhere = " AND profile.ProfileIsFeatured=1";
+		}
+		
 		echo "<div id=\"profile-featured\">\n";
 		/*********** Execute Query **************/
 		// Execute Query
