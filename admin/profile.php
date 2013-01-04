@@ -955,7 +955,7 @@ function rb_display_manage($ProfileID) {
 				$action = @$_GET["action"];
 				while ($data3 = mysql_fetch_array($results3)) {
 					if($action == "add"){
-						echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" /> ". $data3['DataTypeTitle'] ."<br />\n";
+						echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"".$data3['DataTypeID']."\" id=\"ProfileType[]\" /> ". $data3['DataTypeTitle'] ."<br />\n";
 					}
 					if($action=="editRecord"){
 						echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"". $data3['DataTypeID'] ."\"";  if ( in_array($data3['DataTypeID'], $ProfileTypeArray) && isset($_GET["action"])=="editRecord") { echo " checked=\"checked\""; }  echo "/> ". $data3['DataTypeTitle'] ."<br />\n";
