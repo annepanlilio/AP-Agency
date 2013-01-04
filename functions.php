@@ -709,7 +709,14 @@
 			$selectedYearMax = date('Y-m-d', strtotime('-'. $ProfileDateBirth_max - 1 .' year'. $date));
 			$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
 		}
+
+		if (isset($ProfileIsFeatured)){
+			$filter .= " AND profile.ProfileIsFeatured = '1' ";
+		}
 		
+	    if (isset($ProfileIsPromoted)){
+			$filter .= " AND profile.ProfileIsPromoted = '1' ";
+		}
            
 		// Can we show the profiles?
 		if ( (isset($OverridePrivacy)) || ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
@@ -830,7 +837,7 @@
 				}
 	           
 						
-				 $displayHTML .= "<div class=\"profile-list-layout". (int)$rb_agency_option_layoutprofilelist ."\">\n";
+				 $displayHTML .= "<div class=\"profile-list-layout0\" >\n"; // used to be  profile-list-layout". (int)$rb_agency_option_layoutprofilelist... but it needs to be fixed for design purposes
 				 $displayHTML .="  <div class=\"style\"></div>\n";
 				if (isset($dataList["ProfileMediaURL"]) ) { // && (file_exists(rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"])) ) {
 				 $displayHTML .="  <div class=\"image\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
@@ -906,7 +913,7 @@
 		$resultsList = mysql_query($queryList);
 		$countList = mysql_num_rows($resultsList);
 		while ($dataList = mysql_fetch_array($resultsList)) {
-			echo "<div class=\"profile-list-layout".( isset($rb_agency_option_layoutprofilelist) ? (int)$rb_agency_option_layoutprofilelist:0 )."\">\n";
+			echo "<div class=\"profile-list-layout0\" >\n"; // used to be  profile-list-layout". (int)$rb_agency_option_layoutprofilelist... but it needs to be fixed for design purposes
 			echo "  <div class=\"style\"></div>\n";
 			if (isset($dataList["ProfileMediaURL"]) ) { // && (file_exists(rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"])) ) {
 			echo "  <div class=\"image\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
