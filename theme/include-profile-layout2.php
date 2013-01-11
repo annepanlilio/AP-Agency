@@ -4,52 +4,55 @@ Profile View with Sliding Thumbnails and Primary Image
 */
 
 	echo "<div id=\"profile\">\n";
-	echo " <div id=\"profile-layout-two\">\n";
+	echo " <div id=\"rblayout-two\" class=\"rblayout\">\n";
 	
-	echo "  <div id=\"profile-l\">\n";
-	echo "	<div id=\"photos\">\n";
-	echo "	  <div class=\"customScrollBox\">\n";
-	echo "		<div class=\"horWrapper\"> \n";
-	echo "			<div style=\"left: 0px;\" class=\"container\">\n";
-	echo "				<div class=\"content\">\n";
-	echo "                <div class=\"inner\">\n";
-	echo "				    <div id=\"photos-slide\">\n";
-
-			// Image Slider
-			$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC";
-			$resultsImg = mysql_query($queryImg);
-			$countImg = mysql_num_rows($resultsImg);
-			while ($dataImg = mysql_fetch_array($resultsImg)) {
-			  if ($countImg > 1) { 
-				echo "<div class=\"multiple\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
-			  } else {
-				echo "<div class=\"single\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
-			  }
-			}
-
-	echo "				    </div> <!-- #photos-slide -->\n";	
-	echo "                </div><!-- .inner -->\n";
-	echo "				</div><!-- .content -->\n";
-	echo "			</div><!-- .container -->\n";
-	echo "			<div style=\"display: block;\" class=\"dragger_container\">\n";
-	echo "			  <div style=\"display: block; left: 0px;\" class=\"dragger ui-draggable\"></div>\n";
-	echo "			</div>\n";
-	echo "		</div>\n";
-
-	echo "		<a style=\"display: inline-block;\" href=\"#\" class=\"scrollUpBtn\"> </a> <a style=\"display: inline-block;\" href=\"#\" class=\"scrollDownBtn\"> </a>\n";
-
-	echo "	  </div><!-- .customScrollBox -->\n";
-	echo "	</div><!-- #photos -->\n";
+	echo "  <div class=\"seven column\">\n";
+	echo "	<div id=\"scroller\">\n";
+	echo "		<div id=\"photo-scroller\" class=\"scroller\">";
+					// Image Slider
+					$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC";
+					$resultsImg = mysql_query($queryImg);
+					$countImg = mysql_num_rows($resultsImg);
+					while ($dataImg = mysql_fetch_array($resultsImg)) {
+				    	if ($countImg > 1) { 
+							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a>\n";
+					  	} else {
+							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+					  	}
+					}
+	echo "		</div><!-- .scroller -->";
+	echo "	</div><!-- #scroller -->\n";
+	
+	echo "	<div class=\"cb\"></div>\n";
 	
 	echo "	<div id=\"info\">\n";
-	echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
-	echo "	  <div class=\"action\">\n";
+	echo "	  <div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 	
 	 // Social Link
 	 rb_agency_getSocialLinks();
+	 
+	echo "	  <div id=\"stats\" class=\"six column\">\n";
+	echo "	  <ul>\n";
+
+		if (!empty($ProfileGender)) {
+			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
+			$count = mysql_num_rows($queryGenderResult);
+			if($count > 0){
+				$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+				echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+			}
+		}
+	
+		// Insert Custom Fields
+		rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+	
+		  
+        
+	echo "	  </ul>\n";
+	echo "	  </div>\n";
 	
 	
-	echo "		<div class=\"links\">\n";
+	echo "		<div id=\"links\" class=\"six column\">\n";
 	echo "			<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
 	echo "			<ul>\n";
 
@@ -126,44 +129,63 @@ Profile View with Sliding Thumbnails and Primary Image
 				// Is Logged?
 				if (is_user_logged_in()) { 
 				//echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
+				
+		
+		if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+			 if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already
+			 ?>
+					<script>
+                    function addtoCart(pid){
+					 var qString = 'usage=addtocart&pid=' +pid;
+					
+				     $.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponseAddtoCart);
+                     // alert(qString);
+					 }
+					 
+					function processResponseAddtoCart(data) {
+						document.getElementById('resultsGoHereAddtoCart').style.display="block";
+						document.getElementById('view_casting_cart').style.display="block";
+						document.getElementById('resultsGoHereAddtoCart').textContent=data;
+						setTimeout('document.getElementById(\'resultsGoHereAddtoCart\').style.display="none";',3000); 
+						//setTimeout('document.getElementById(\'view_casting_cart\').style.display="none";',3000);
+						setTimeout('document.getElementById(\'casting_cart_li\').style.display="none";',3000);
+						
+					}
+					
+                     </script>
+                         <?php
+						 
+							echo "<li id=\"casting_cart_li\" class=\"add to cart\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\">". __("Add to Casting Cart", rb_agency_TEXTDOMAIN). "</a></li>\n";
+							}else{
+				  		  echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);
+						  
+						  echo " <a href=\"".get_bloginfo('url')."/profile-casting/\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
+							
+				          }
+			}	//end if(checkCart(rb_agency_get_current_userid()
+
 				}
 
-	echo "	</ul>\n";
-
-			if (isset($profileVideoEmbed)) {
-	echo "		<div id=\"movie\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
-			}
-
-	echo "		  <div class=\"experience\">\n";
+	echo "	</ul>\n";	
+	echo "		</div>\n";// Links
+	?>
+    <div id="resultsGoHereAddtoCart"></div>
+                <div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></div>
+    <?php
+	//Experience
+	echo "		  <div id=\"experience\" class=\"twelve column\">\n";
 	echo			$ProfileExperience;
 	echo "		  </div>\n";
-
-			
-	echo "		</div>\n";
-	echo "	  </div>\n";
-
-	echo "	  <div class=\"stats\">\n";
-
-		if (!empty($ProfileGender)) {
-			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-			$count = mysql_num_rows($queryGenderResult);
-			if($count > 0){
-				$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
-				echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
+/*	
+	//Movie
+				if (isset($profileVideoEmbed)) {
+	echo "		<div id=\"movie\" class=\"twelve column\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
 			}
-		}
-	
-		// Insert Custom Fields
-		rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-	
-		  
-        
-	echo "	  </div>\n";
 
-
-	echo "	</div> <!-- #info -->\n";
+*/
+	echo "	</div> <!-- #info -->\n";//End Info
 	echo "	</div> <!-- #profile-l -->\n";
-	echo "  <div id=\"profile-r\">\n";
+	echo "  <div class=\"five column\">\n";
 	echo "			<div id=\"profile-picture\">\n";
 
                     // images
@@ -181,4 +203,3 @@ Profile View with Sliding Thumbnails and Primary Image
 	echo "<div style=\"clear: both;\"></div>\n"; // Clear All
 ?>
 
-<script type="text/javascript" src="/wp-content/plugins/rb-agency/js/jquery_003.js"></script>

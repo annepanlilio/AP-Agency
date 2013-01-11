@@ -4,16 +4,16 @@ Expended Profile with Tabs
 */
 
 	echo "<div id=\"profile\">\n";
-	echo " <div id=\"profile-layout-three\">\n";
+	echo " <div id=\"rblayout-three\" class=\"rblayout\">\n";
 
-	echo " <div class=\"row row-zero\">\n";
+	echo " <div class=\"twelve column row-zero\">\n";
 	echo "   <a href=\"". get_bloginfo("wpurl") ."/profile-category/\">Directory</a><span class=\"divider\"> > </span>". $ProfileContactDisplay ."\n";
 	echo " </div>\n";
 	
-	echo " <div class=\"row row-one clear\">\n";
+	echo " <div class=\"twelve column row-one clear\">\n";
 
 	// Column 1
- 	echo "	  <div id=\"profile-picture-wrap\">\n";
+ 	echo "	  <div id=\"profile-picture-wrap\" class=\"three column\">\n";
 
 			// Profile Image
 			$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
@@ -27,7 +27,7 @@ Expended Profile with Tabs
 	echo "	  </div> <!-- #profile-picture -->\n";
 
 	// Column 2
- 	echo "	  <div id=\"profile-overview\">\n";
+ 	echo "	  <div id=\"profile-overview\" class=\"six column\">\n";
 
 	echo "	      <div id=\"profile-name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 	echo "	      <div id=\"profile-liner\">\n";
@@ -56,7 +56,7 @@ Expended Profile with Tabs
 
 
 	// Column 3
- 	echo "	  <div id=\"profile-actions\">\n";
+ 	echo "	  <div id=\"profile-actions\" class=\"three column\">\n";
 
 		//Contact Profile
 		if (isset($rb_agency_option_agency_urlcontact) && !empty($rb_agency_option_agency_urlcontact)) {
@@ -71,9 +71,9 @@ Expended Profile with Tabs
 
 	echo "	  </div> <!-- #profile-actions -->\n";
 
-	echo " </div>\n"; // Row 1
-	echo ' <div name="space" style="visibility:hidden">text</div>'; // Row 1
-	echo " <div class=\"row row-two clear\">\n";
+	echo " </div>\n"; // twelve column 1
+	echo ' <div name="space" style="visibility:hidden">text</div>'; // twelve column 1
+	echo " <div class=\"twelve column row-two clear\">\n";
 	echo "   <div id=\"subMenuTab\">\n";
 	echo " 		<div class=\"maintab tab-left tab-active\" id=\"row-all\">\n";
 	echo " 			<a href=\"#space\">\n";
@@ -100,15 +100,15 @@ Expended Profile with Tabs
 	echo " 			  <div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Experience</div></div></div>\n";
 	echo " 			</a>\n";
 	echo " 		</div>\n";
-	echo " 		<div class=\"maintab tab-right tab-inactive\" id=\"row-booking\">\n";
+	echo " 		<div class=\"maintab tab-right tab-inactive\" id=\"row-bookings\">\n";
 	echo " 			<a href=\"#space\">\n";
 	echo " 			  <div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Booking</div></div></div>\n";
 	echo " 			</a>\n";
 	echo " 		</div>\n";
  	echo "   </div>\n";
-	echo " </div>\n"; // Row 2
+	echo " </div>\n"; // twelve column 2
 
-	echo " <div class=\"row row-photos clear tab\">\n";
+	echo " <div class=\"twelve column row-photos clear tab\">\n";
 	
 			// images
 			$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
@@ -122,9 +122,9 @@ Expended Profile with Tabs
 			  }
 			}
 
-	echo " </div>\n"; // Row photos
+	echo " </div>\n"; // twelve column photos
 
-	echo " <div class=\"row row-physical clear tab\">\n";
+	echo " <div class=\"twelve column row-physical clear tab\">\n";
 	
 		if (!empty($ProfileGender)) {
 			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
@@ -140,9 +140,9 @@ Expended Profile with Tabs
 		if($rb_agency_option_showcontactpage==1){
 				echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
 		}
-	echo " </div>\n"; // Row physical
+	echo " </div>\n"; // twelve column physical
 
-	echo " <div class=\"row row-videos clear tab\">\n";
+	echo " <div class=\"twelve column row-videos clear tab\">\n";
 	
 				//Video Slate
 				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
@@ -150,7 +150,7 @@ Expended Profile with Tabs
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "	  <div class=\"item video slate\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div>\n";
+				echo "	  <div class=\"video slate four column\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div>\n";
 				  }
 				}
 
@@ -160,7 +160,7 @@ Expended Profile with Tabs
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "	  <div class=\"item video monologue\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div>\n";
+				echo "	  <div class=\"video monologue four column\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div>\n";
 				  }
 				}
 
@@ -170,14 +170,14 @@ Expended Profile with Tabs
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "	  <div class=\"item video demoreel\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div>\n";
+				echo "	  <div class=\"video demoreel four column\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div>\n";
 				  }
 				}
 
 
-	echo " </div>\n"; // Row videos
+	echo " </div>\n"; // twelve column videos
 
-	echo " <div class=\"row row-experience clear tab\">\n";
+	echo " <div class=\"twelve column row-experience clear tab\">\n";
 
 	$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
 	$results1 = mysql_query($query1);
@@ -189,9 +189,20 @@ Expended Profile with Tabs
 	echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" class=\"ProfileExperience\">". $data1['ProfileCustomValue'] ."</p>\n";
 	echo "	  </div>\n";
 	}
-	echo " </div>\n"; // Row experience
+	echo " </div>\n"; // twelve column experience
 
 
+echo " <div class=\"row-bookings twelve column clear tab\">\n";
+	
+	
+	$page_data = get_page('4198');
+	echo apply_filters('the_content', $page_data->post_content);
+		
+	echo " </div>\n"; // Row booking
+
+	echo "<div class=\"cb\"></div>\n"; // Clear All
+	
+	
 	echo " </div>\n";  // Close Profile Layout
 	echo "</div>\n";  // Close Profile
 	echo "<div style=\"clear: both;\"></div>\n"; // Clear All

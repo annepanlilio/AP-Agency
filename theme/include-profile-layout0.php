@@ -4,9 +4,9 @@ Profile View with Scrolling Thumbnails and Primary Image
 */
 
 	echo "<div id=\"profile\">\n";
-	echo " <div id=\"profile-layout-zero\">\n";
+	echo " <div id=\"rblayout-zero\" class=\"rblayout\">\n";
 
-	echo "	<div id=\"photo\">\n";
+	echo "	<div id=\"photos\" class=\"four column\">\n";
 	echo "	  <div class=\"inner\">\n";
 			// images
 		
@@ -15,18 +15,56 @@ Profile View with Scrolling Thumbnails and Primary Image
 			$countImg = mysql_num_rows($resultsImg);
 			while ($dataImg = mysql_fetch_array($resultsImg)) {
 			  if ($countImg > 1) { 
-				echo "<div class=\"multiple\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div>\n";
+				echo "<div class=\"six column\"><div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div></div>\n";
 			  } else {
-				echo "<div class=\"single\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div>\n";
+				echo "<div class=\"twelve column\"><div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div></div>\n";
 			  }
 			}
 
+	echo "	  <div class=\"cb\"></div>\n";
 	echo "	  </div>\n";
-	echo "	</div>\n";
-	echo "	<div id=\"info\">\n";
-	echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
-	echo "	  <div class=\"action\">\n";
-	echo "		<div class=\"links\">\n";
+	echo "	</div>\n"; // close #photos
+	echo "	<div id=\"info\" class=\"eight column\">\n";
+	echo "	  <h2 class=\"twelve column\">". $ProfileContactDisplay ."</h2>\n";
+	
+		echo "	  <div id=\"stats\" class=\"six column\">\n";
+		echo "	  <ul>\n";
+
+			if (!empty($ProfileGender)) {
+				$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
+				$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+				echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+			}
+		
+			if (!empty($ProfileStatHeight)) {
+				if ($rb_agency_option_unittype == 0) { // Metric
+					echo "<li><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+				} else { // Imperial
+					$heightraw = $ProfileStatHeight;
+					$heightfeet = floor($heightraw/12);
+					$heightinch = $heightraw - floor($heightfeet*12);
+					echo "<li><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+				}
+			}
+			if (!empty($ProfileStatWeight)) {
+				if ($rb_agency_option_unittype == 0) { // Metric
+					echo "<li><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
+				} else { // Imperial
+					echo "<li><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
+				}
+			}
+
+			// Insert Custom Fields
+			rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+			
+
+			if($rb_agency_option_showcontactpage==1){
+				echo "<li class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
+			}
+		echo "	  </ul>\n"; // Close ul
+		echo "	  </div>\n"; // Close Stats
+	
+	echo "		<div id=\"links\" class=\"six column\">\n";
 	echo "			<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
 					 // Social Link
 					 rb_agency_getSocialLinks();
@@ -100,57 +138,57 @@ Profile View with Scrolling Thumbnails and Primary Image
 				// Is Logged?
 				if (is_user_logged_in()) { 
 				echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
+				
+				
+						if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+			 if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already
+			 ?>
+					<script>
+                    function addtoCart(pid){
+					 var qString = 'usage=addtocart&pid=' +pid;
+					
+				     $.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponseAddtoCart);
+                     // alert(qString);
+					 }
+					 
+					function processResponseAddtoCart(data) {
+						document.getElementById('resultsGoHereAddtoCart').style.display="block";
+						document.getElementById('view_casting_cart').style.display="block";
+						document.getElementById('resultsGoHereAddtoCart').textContent=data;
+						setTimeout('document.getElementById(\'resultsGoHereAddtoCart\').style.display="none";',3000); 
+						//setTimeout('document.getElementById(\'view_casting_cart\').style.display="none";',3000);
+						setTimeout('document.getElementById(\'casting_cart_li\').style.display="none";',3000);
+						
+					}
+					
+                     </script>
+                         <?php
+						 
+							echo "<li id=\"casting_cart_li\" class=\"add to cart\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\">". __("Add to Casting Cart", rb_agency_TEXTDOMAIN). "</a></li>\n";
+							}else{
+				  		  echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);
+						  
+						  echo " <a href=\"".get_bloginfo('url')."/profile-casting/\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
+							
+				          }
+			}	//end if(checkCart(rb_agency_get_current_userid()
+
 				}
 
 	echo "			</ul>\n";
 	echo "		</div>\n";  // Close Links
-
-			if (isset($profileVideoEmbed)) {
-	echo "		<div id=\"movie\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
-			}
-			
-	echo "	  </div>\n"; // Close Action
-	
-	echo "	  <div class=\"stats\">\n";
-
-		if (!empty($ProfileGender)) {
-			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-			$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
-			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
-		}
-	
-		if (!empty($ProfileStatHeight)) {
-			if ($rb_agency_option_unittype == 0) { // Metric
-				echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</div>\n";
-			} else { // Imperial
-				$heightraw = $ProfileStatHeight;
-				$heightfeet = floor($heightraw/12);
-				$heightinch = $heightraw - floor($heightfeet*12);
-				echo "<div><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</div>\n";
-			}
-		}
-		if (!empty($ProfileStatWeight)) {
-			if ($rb_agency_option_unittype == 0) { // Metric
-				echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</div>\n";
-			} else { // Imperial
-				echo "<div><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</div>\n";
-			}
-		}
-
-		// Insert Custom Fields
-		rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-		
-
-		if($rb_agency_option_showcontactpage==1){
-		    echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
-		}
-	echo "	  </div>\n"; // Close Stats
-        
-	echo "	  <div class=\"experience\">\n";
+	?>
+        <div id="resultsGoHereAddtoCart"></div>
+                <div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></div>
+    <?php
+	echo "	  <div id=\"experience\" class=\"six column\">\n";
 	echo			$ProfileExperience;
 	echo "	  </div>\n"; // Close Experience
-	
-	
+/*
+			if (isset($profileVideoEmbed)) {
+	echo "		<div id=\"movie\" class=\"six column\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
+			}
+*/	
 	echo "	  </div>\n";  // Close Info
 	
 	echo "	  <div style=\"clear: both;\"></div>\n"; // Clear All
