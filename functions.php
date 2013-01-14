@@ -293,10 +293,12 @@
 	}
 	
 	function rb_agency_makeago($timestamp, $offset){
+		
 	  if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
 		// Offset
+        $offset = $offset-5; //adjustment for server time
 		$timezone_offset = (int)$offset; // Server Time
-		$time_altered = time() + $timezone_offset *60 *60;
+		$time_altered = time() - $timezone_offset *60 *60;
 	
 		// Math
 		$difference = $time_altered - $timestamp;
@@ -734,10 +736,6 @@
 				 $addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
 			}
 			
-			if(get_query_var('type')=="profilesecure"){ //to tell prrint and pdf generators its for casting cart and  add new link
-				$atts["type"]="casting";
-			}
-			
 			$links='
 			  <div id="print-links" class="twelve column">
 			      
@@ -750,6 +748,9 @@
 			';
 			
 			}
+			
+		  //remove  if its just for client view of listing via casting email
+		 	if(get_query_var('type')=="profilesecure"){ $links="";}
 			
 		 if(get_query_var('type')=="favorite"){ $links="";} // we dont need print and download pdf in favorites page
 			
