@@ -194,9 +194,11 @@ Expended Profile with Tabs
 
 echo " <div class=\"row-bookings twelve column clear tab\">\n";
 	
-	
-	$page_data = get_page('4198');
-	echo apply_filters('the_content', $page_data->post_content);
+	$bookingPageID=""; //put  booking page id here
+	if(!empty($bookingPageID)){
+	  $page_data = @get_page($bookingPageID);
+	   echo apply_filters('the_content', $page_data->post_content);
+	}else{echo "To control page content, add the page ID in line 197";} 
 		
 	echo " </div>\n"; // Row booking
 
