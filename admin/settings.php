@@ -293,7 +293,7 @@ elseif ($ConfigID == 1) {
 		 echo "     </select>\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
+		 echo " <tr valign=\"top\" style=\"display:none\">\n";
 		 echo "   <th scope=\"row\">". __('Image Gallery Type', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <select name=\"rb_agency_options[rb_agency_option_gallerytype]\">\n";
