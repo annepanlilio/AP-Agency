@@ -263,17 +263,17 @@ elseif ($ConfigID == 1) {
 		 echo "   <th scope=\"row\">". __('Profile Layout Style', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofile]\">\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 0,false) ."> ". __("Profile View with Thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 1,false) ."> ". __("Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 2,false) ."> ". __("Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 3,false) ."> ". __("Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 4,false) ."> ". __("Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 0,false) ."> ". __("Layout 00 - Profile View with Thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
 				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout6.php")) {
-		 echo "       <option value=\"6\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 6,false) ."> ". __("Custom Layout 6", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"6\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 6,false) ."> ". __("Layout 06 - Large featured image and scrolling thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
 				}
 				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout7.php")) {
-		 echo "       <option value=\"7\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 7,false) ."> ". __("Custom Layout 7", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"7\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 7,false) ."> ". __("Layout 07 - Custom Layout 7", rb_agency_TEXTDOMAIN) ."</option>\n";
 				}
 				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout8.php")) {
 		 echo "       <option value=\"8\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 8,false) ."> ". __("Custom Layout 8", rb_agency_TEXTDOMAIN) ."</option>\n";
