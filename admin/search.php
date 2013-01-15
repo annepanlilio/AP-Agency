@@ -1,6 +1,8 @@
 <?php
 global $wpdb;
 
+$cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
+
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
 	$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
@@ -181,6 +183,7 @@ echo $cartArray;
 			$selectedYearMin = date($format, strtotime('-'. $ProfileDateBirth_min .' year'. $date));
 			$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
 		}
+		
 		if (isset($_GET['ProfileDateBirth_max']) && !empty($_GET['ProfileDateBirth_max'])){
 			$ProfileDateBirth_max = $_GET['ProfileDateBirth_max'];
 			$selectedYearMax = date($format, strtotime('-'. $ProfileDateBirth_max-1 .' year'. $date));
@@ -201,12 +204,21 @@ echo $cartArray;
             
 		foreach($_GET as $key => $val){
 			if (substr($key,0,15) == "ProfileCustomID") {
-                               
-				 
+
 				if (!empty($val)) {
                             
 					$q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
 					$ProfileCustomType = mysql_fetch_assoc($q);
+					
+			               //   print_r($val);
+				 //echo "$key-".$ProfileCustomType['ProfileCustomTitle']."-<br>";					
+					
+				if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
+						$minVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min'];
+						$maxVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max'];
+						$filter .= " AND customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' ";
+						//echo "-----";
+				}else{
 						
 						/******************
 						1 - Text
@@ -263,6 +275,10 @@ echo $cartArray;
 								}
 
 						}
+				}
+					
+						
+						
 						mysql_free_result($q);
 				} // if not empty
 			 }  // end if
@@ -300,6 +316,7 @@ echo $cartArray;
 
 		// Search Results	
       //  $query = "SELECT profile.*, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile $filter $cartQuery ORDER BY $sort $dir $limit";
+	  // echo $query;
 		$results2 = mysql_query($query);
         $count = mysql_num_rows($results2);
 		if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
@@ -673,21 +690,11 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td>\n";               
 		echo "				        <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "						<select class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" style=\"width:50px;\">";
-		echo "						<option value=\"\">-</option>";
-									for($x = 1; $x<=99; $x++){
-		echo "						<option value=\"".$x."\" ".selected($_GET['ProfileDateBirth_min'],$x).">".$x."</option>";
-									}
-		echo "						</select>";
-		echo "						</div>";
+		echo "						<input type=\"text\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" />";
+		echo "						</div><br>";
 		
 		echo "				        <label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "						<select class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" style=\"width:50px;\">";
-		echo "						<option value=\"\">-</option>";
-									for($x = 1; $x<=99; $x++){
-		echo "						<option value=\"".$x."\" ".selected($_GET['ProfileDateBirth_max'],$x).">".$x."</option>";
-									}
-		echo "						</select>";
+		echo "						<input type=\"text\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" />";
 		echo "						</div>";
 		           
 	/*	echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
@@ -716,7 +723,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    </tr>\n";
 
 			//rb_custom_fields(0, $ProfileID, $ProfileGender,false);
-			$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder, ProfileCustomView, ProfileCustomShowGender, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin FROM ". table_agency_customfields ." WHERE ProfileCustomView IN('0','1') AND ProfileCustomID != 39 AND ProfileCustomID != 48 ORDER BY ProfileCustomOrder ASC";
+			$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder, ProfileCustomView, ProfileCustomShowGender, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin FROM ". table_agency_customfields ." WHERE ProfileCustomView IN('0','1')  AND ProfileCustomID != 39 AND ProfileCustomID != 48 ORDER BY ProfileCustomOrder ASC";
 								$results1 = mysql_query($query1);
 								$count1 = mysql_num_rows($results1);
 								$pos = 0;
@@ -730,7 +737,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
   echo "				    <tr>\n";
   echo " 				    \n";
   
-  if($ProfileCustomType!=4)	{		
+  		
 			
 
 			 // SET Label for Measurements
@@ -751,11 +758,11 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 			 if ($ProfileCustomType == 7) { //measurements field type
 			           if($rb_agency_option_unittype ==1){ // 1 = Metrics(ft/kg)
 						if($data1['ProfileCustomOptions'] == 1){
-						     $measurements_label  ="<em>(In Inches)</em>";
+						     $measurements_label  ="<em>(Inches)</em>";
 						}elseif($data1['ProfileCustomOptions'] == 2){
-						  $measurements_label  ="<em>(In Pounds)</em>";
+						  $measurements_label  ="<em>(Pounds)</em>";
 						}elseif($data1['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="<em>(In Inches/Feet)</em>";
+						  $measurements_label  ="<em>(Feet/Inches)</em>";
 						}
 					}elseif($rb_agency_option_unittype ==0){ //0 = Imperial(in/lb)
 						if($data1['ProfileCustomOptions'] == 1){
@@ -763,13 +770,12 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 						}elseif($data1['ProfileCustomOptions'] == 2){
 						     $measurements_label  ="<em>(kg)</em>";
 						}elseif($data1['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="<em>(In Inches/Feet)</em>";
+						  $measurements_label  ="<em>(Inches/Feet)</em>";
 						}
 					}
 					
 			 }
  	 echo " 				    <th scope=\"row\>\n";
-                   
 			                                     if($ProfileCustomType==7){
 			 echo "				       <div class=\"label\">". $data1['ProfileCustomTitle'].$measurements_label."</div> \n";
 									 }else{
@@ -779,11 +785,19 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
     
     			echo  "			</th>		";
 			echo  "			<td>";
+			
+
+					if(in_array($data1['ProfileCustomTitle'], $cusFields)) { //used alternative inputs for custom fields defined on top of this page
+						echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label></div>\n";
+						echo "<div><input class=\"stubby\" type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>\n";
+						echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label></div>\n";
+						echo "<div><input class=\"stubby\"  type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_max\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
+					}else{
+			
 									if ($ProfileCustomType == 1) { //TEXT
-											
-											
 												echo "<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>\n";
-									
+							
+									 
 										   
 										
 										
@@ -869,6 +883,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									} elseif ($ProfileCustomType == 4) {
 										echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea></div>";
 									}
+									 
 									 elseif ($ProfileCustomType == 5) {
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										          echo "<div style=\"width:300px;float:left;\">";
@@ -892,6 +907,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 												  echo "</div>";
 									       
 									}
+									
 									elseif ($ProfileCustomType == 6) {
 										   $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										   
@@ -918,21 +934,72 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									
 									elseif ($ProfileCustomType == 7){
 										   
-										 
-										      list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
-											
+							                 if($data1['ProfileCustomOptions']==3){
+														if($rb_agency_option_unittype == 1){
+														  // 
+														  echo "Min:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														  if (empty($ProfileCustomValue)) {
+															echo "  <option value=\"\">--</option>\n";
+														  }
+														  // 
+														  $i=36;
+														  $heightraw = 0;
+														  $heightfeet = 0;
+														  $heightinch = 0;
+														  while($i<=90)  { 
+															  $heightraw = $i;
+															  $heightfeet = floor($heightraw/12);
+															  $heightinch = $heightraw - floor($heightfeet*12);
+														  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+																  $i++;
+																}
+														  echo " </select>\n";
+														  
+														   echo "<br>Max:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														  if (empty($ProfileCustomValue)) {
+															echo "  <option value=\"\">--</option>\n";
+														  }
+														  // 
+														  $i=36;
+														  $heightraw = 0;
+														  $heightfeet = 0;
+														  $heightinch = 0;
+														  while($i<=90)  { 
+															  $heightraw = $i;
+															  $heightfeet = floor($heightraw/12);
+															  $heightinch = $heightraw - floor($heightfeet*12);
+														  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+																  $i++;
+																}
+														  echo " </select>\n";
+														  
+														} else {
+														  // 
+														  echo "  <input type=\"text\" id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
+														}
+										     } else {
+										      
+											  list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label></div><div> <input value=\"".(!is_array($min_val) && $min_val != "Array" ? $min_val : "")."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" />";
                                                                  echo "<br/>";
 										     echo "<label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label></div><div> <input value=\"".$max_val."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
+											 
+											} //end of else of if($data3['P
 											
 									}
 			
-	
 			
-			}
+					}//end of if(in_array("$data1['ProfileCustomTitle']", $cusFields))
+			
+			  
+			
+			
 			echo  "			</td>";
 			echo  "			</tr>";
-		}
+		
+		
+		
+		} //end of while ($data1
    
 /*
 		echo "				    <tr>\n";

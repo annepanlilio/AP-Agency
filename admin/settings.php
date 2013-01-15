@@ -202,7 +202,7 @@ elseif ($ConfigID == 1) {
 		 echo "   <th scope=\"row\">". __('Unit Type', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <select name=\"rb_agency_options[rb_agency_option_unittype]\">\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 1,false) ."> ". __("Imperial", rb_agency_TEXTDOMAIN) ." (in/lb)</option>\n";
+		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 1,false) ."> ". __("Imperial", rb_agency_TEXTDOMAIN) ." (ft/in/lb)</option>\n";
 		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 0,false) ."> ". __("Metric", rb_agency_TEXTDOMAIN) ." (cm/kg)</option>\n";
 		 echo "     </select>\n";
 		 echo "   </td>\n";
@@ -219,7 +219,7 @@ elseif ($ConfigID == 1) {
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_favorite'], 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'], 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'], 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'], 1,false)."/> ". __("Show Thumbs Slides", rb_agency_TEXTDOMAIN) ."<br />\n";		
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'], 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";
@@ -347,7 +347,8 @@ elseif ($ConfigID == 1) {
 		 echo "   <th scope=\"row\">". __('Override Contact Page Path', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_urlcontact]\" value=\"". $rb_agency_options_arr['rb_agency_option_agency_urlcontact'] ."\" /></td>\n";
 		 echo " </tr>\n";
-
+		 
+    /*############# hide Profile Custom Fields Options ######################
           // Profile Custom Fields Options
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
@@ -362,6 +363,7 @@ elseif ($ConfigID == 1) {
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 	       echo "<input type=\"hidden\" name=\"rb_agency_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
+	##### HIDE */
 	
 		 echo "</table>\n";
 		 echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
@@ -421,15 +423,20 @@ elseif ($ConfigID == 11) {
 		  echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('Enable registration of Agent/Producer', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'], 1,false)."/> Show registration form (uncheck to hide registration form)<br />\n";
+		 
+		 echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\">\n";
+		 echo "       <option value=\"1\" ". ($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'] == 1 ? 'selected="selected"':'') ."> ". __("Show", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"0\" ". ($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'] == 0 ? 'selected="selected"':'') ."> ". __("Hide", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "     </select>\n";
+
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('Email Confirmation', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerconfirm]\">\n";
-		 echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'], 0,false) ."> ". __("Password Sent Via Email", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'], 1,false) ."> ". __("No Email Verification, Password Self Generated", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'], 0,false) ."> ". __("Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'], 1,false) ."> ". __("Password Self-Generated", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "     </select>\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
@@ -437,8 +444,8 @@ elseif ($ConfigID == 11) {
 		 echo "   <th scope=\"row\">". __('New Profile Approval', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <select name=\"rb_agencyinteract_options[rb_agency_option_useraccountcreation]\">\n";
-		 echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 0,false) ."> ". __("New profiles must be manually approved", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 1,false) ."> ". __("New profiles are automatically approved", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 0,false) ."> ". __("Manually Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 1,false) ."> ". __("Automatically Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "     </select>\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
@@ -448,7 +455,7 @@ elseif ($ConfigID == 11) {
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('Login &amp Registration', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_registerallow]\" value=\"1\" "; checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_fb_registerallow'], 1,false); echo "/> Users may login/register profiles using facebook (uncheck to disable feature)<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_fb_registerallow]\" value=\"1\" ". ($rb_agencyinteract_options_arr["rb_agencyinteract_option_fb_registerallow"] == 1 ? 'checked=\"checked\"':'') ."/> Users may login/register profiles using facebook (uncheck to disable feature)<br />\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		  echo " <tr valign=\"top\">\n";
@@ -1274,11 +1281,25 @@ elseif ($ConfigID == 7) {
 		$ProfileCustomView 			= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
-	      $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
+	    $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= (int)$_POST['ProfileCustomShowLogged'];
 		$ProfileCustomShowRegistration= (int)$_POST['ProfileCustomShowRegistration'];
 		$ProfileCustomShowAdmin   	= (int)$_POST['ProfileCustomShowAdmin'];
+		$ProfileCustomPrivacy   	= (int)$_POST['ProfileCustomPrivacy'];
+		
+		//adjustment in making the visibility fields into a checkbox
+		if($ProfileCustomPrivacy==3){   
+		   	$ProfileCustomShowLogged = "0";  
+			$ProfileCustomShowAdmin  = "0";
+		}elseif($ProfileCustomPrivacy==2){
+			$ProfileCustomShowLogged = "0";
+			$ProfileCustomShowAdmin  = "1";
+		}else{
+			$ProfileCustomShowLogged = "1";
+			$ProfileCustomShowAdmin  = "0";			
+		}
+		
 	      $error = "";	
 		
 		 if($ProfileCustomType == 1){ //Text
@@ -1562,14 +1583,14 @@ elseif ($ConfigID == 7) {
 								echo"	<select class=\"objtype\" name=\"ProfileCustomType\" id=\"0\">";
 							}
 								echo"			<option value=\"\">---</option>
-											<option value=\"1\">Text</option>
+											<option value=\"1\">Single Line Text</option>
 											<!--<option value=\"2\">Min/Max textfield</option>-->
 											<option value=\"3\">Dropdown</option>
 											<option value=\"4\">Textbox</option>
 											<option value=\"5\">Checkbox</option>
 											<option value=\"6\">Radiobutton</option>";
 											if($rb_agency_options_arr['rb_agency_option_unittype']==1){
-												echo"     <option value=\"7\" id=\"1\">Imperial(in/lb)</option>";
+												echo"     <option value=\"7\" id=\"1\">Imperial(ft/in/lb)</option>";
 											}else{
 												echo"     <option value=\"7\" id=\"0\">Metric(cm/kg)</option>";
 											}
@@ -1589,7 +1610,7 @@ elseif ($ConfigID == 7) {
 								<tr>
 									<td valign=\"top\">Visibility*:</td>
 									<td style=\"font-size:13px;\">
-									<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" />Public(<i>default</i>:Show everywhere)&nbsp;<br/>
+									<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" />Show Everywhere(Front-end & Back-end)&nbsp;<br/>
 									<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" />Private(Only show in Admin CRM)&nbsp;<br/>
 									<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" />Custom(Used in Custom Views)&nbsp;
 									</td>
@@ -1601,13 +1622,19 @@ elseif ($ConfigID == 7) {
 									</td>
 								</tr>
 								<tr>
-									<td valign=\"top\">Show on*:</td>
+									<td valign=\"top\">Custom Views:</td>
 									<td style=\"font-size:13px;\">
-									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Profile View &nbsp; <br/>
-									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Form &nbsp; <br/>  
-									<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\"  checked=\"checked\" /> Profile Registration Form &nbsp; <br/>  
-									<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\"  /> User must be logged in to see It &nbsp;<br/>
-									<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" /> User must be an admin to see It
+									<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Manage Profile (Back-end)&nbsp; <br/>
+									<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Form (Back-end)&nbsp; <br/>  
+									<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\"  checked=\"checked\" /> Profile Registration Form 			                                      &nbsp; <br/>
+									</td>
+							  </tr>
+							  <tr>
+									<td valign=\"top\">Privacy:</td>
+									<td style=\"font-size:13px;\">
+									<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"1\"  /> User must be logged in to see It &nbsp;<br/>
+									<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"2\" /> User must be an admin to see It<br/>
+									<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"3\" /> Visible to Public
 									</td>
 									<td style=\"font-size:13px;\">
 								   
@@ -1684,14 +1711,14 @@ elseif ($ConfigID == 7) {
 											<td>
 											<select class=\"objtype\" name=\"ProfileCustomType\">
 											<option value=\"\">---</option>
-											<option value=\"1\" ". ($data1["ProfileCustomType"] == 1 ? 'selected=\"selected\"':'').">Text</option>
+											<option value=\"1\" ". ($data1["ProfileCustomType"] == 1 ? 'selected=\"selected\"':'').">Single Line Text</option>
 											
 											<option value=\"3\" ". ($data1["ProfileCustomType"] == 3 ? 'selected=\"selected\"':'').">Dropdown</option>
 											<option value=\"4\" ". ($data1["ProfileCustomType"] == 4 ? 'selected=\"selected\"':'').">Textbox</option>
 											<option value=\"5\" ". ($data1["ProfileCustomType"] == 5 ? 'selected=\"selected\"':'').">Checkbox</option>
 											<option value=\"6\" ". ($data1["ProfileCustomType"] == 6 ? 'selected=\"selected\"':'').">Radiobutton</option>";
 											if($rb_agency_options_arr['rb_agency_option_unittype']==1){
-												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Imperial (in/lb)</option>";
+												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Imperial (ft/in/lb)</option>";
 											}else{
 												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Metric (cm/kg)</option>";
 											}
@@ -1700,14 +1727,16 @@ elseif ($ConfigID == 7) {
 											</td>
 										 </tr>";
 										 //	 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
+									
 										echo "  <tr>
 												<td> 
 												<tr>
 												<td valign=\"top\">Visibility*:</td>
 												<td style=\"font-size:13px;\">
-												<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." />Public(<i>default</i>:Show everywhere)&nbsp;<br/>
+												<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." />Show Everywhere(Front-end & Back-end)&nbsp;<br/>
 												<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')."/>Private(Only show in Admin CRM)&nbsp;<br/>
 												<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')."/>Custom(Used in Custom Views)&nbsp;
+												
 												</td>
 											
 												<td style=\"font-size:13px;\">
@@ -1719,13 +1748,22 @@ elseif ($ConfigID == 7) {
 												</tr>
 												
 												<tr>
-													<td valign=\"top\">Show on*:</td>
+													<td valign=\"top\">Custom View*:</td>
 													<td style=\"font-size:13px;\">
-													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Profile View &nbsp; <br/>
-													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Form &nbsp;  <br/>
-													<input type=\"checkbox\" ".($ProfileCustomType==4 ? " disabled=\"disabled\"" : "")." name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')."/> Profile Registration Form &nbsp; <br/> 
-													<input type=\"checkbox\" name=\"ProfileCustomShowLogged\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')."/> User must be logged in to see It &nbsp;<br/>
-													<input type=\"checkbox\" name=\"ProfileCustomShowAdmin\" value=\"1\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an admin to see It
+													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Manage Profile (Back-end)&nbsp; <br/>
+													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Form (Back-end)&nbsp;  <br/>
+													<input type=\"checkbox\" ".($ProfileCustomType==4 ? " disabled=\"disabled\"" : "")." name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')."/> Profile Registration Form &nbsp; <br/> </td>
+												</tr>
+												
+												<tr>
+													<td valign=\"top\">Privacy*:</td>
+													<td style=\"font-size:13px;\">
+													
+													
+										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')." /> User must be logged in to see It &nbsp;<br/>
+										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"2\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an admin to see It<br/>
+										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"3\" ". ($data1["ProfileCustomShowAdmin"] == 0 && $data1["ProfileCustomShowLogged"] == 0 ? 'checked=\"checked\"':'')." /> Visible to Public
+
 													</td>
 													<td style=\"font-size:13px;\">
 												   
@@ -1791,7 +1829,7 @@ elseif ($ConfigID == 7) {
 									 	echo "
 										      <tr>
 												 <td align=\"right\" style=\"width:50px;\">Value*:</td>
-											     <td><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $data1["ProfileCustomValue"] ."\" /></td>
+											     <td><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></td>
 											  
 											  </tr>
 										
@@ -1868,8 +1906,8 @@ elseif ($ConfigID == 7) {
 									  echo "<tr><td><br/></td></tr>";	
 								        echo "<tr>
 											 <td align=\"right\"  valign=\"top\">Value*:</td>
-											 <td><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" style=\"width:400px;\"> ". $data1["ProfileCustomValue"] ."</textarea></td>
-										</tr>";
+											 <td><textarea name=\"ProfileCustomOptions\" style=\"width:400px;\"> ". $data1["ProfileCustomOptions"] ."</textarea></td>
+										</tr>";    
 								
 								 }
 								  elseif($data1["ProfileCustomType"] == 5){	 //checkbox
@@ -2063,7 +2101,7 @@ elseif ($ConfigID == 7) {
 							
 							 $measurements_label  ="Kg";
 						}elseif($data['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="Inches/Feet";
+						  $measurements_label  ="Feet/Inches";
 						}
 					}elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
 						if($data['ProfileCustomOptions'] == 1){
@@ -2073,7 +2111,7 @@ elseif ($ConfigID == 7) {
 						    
 						  $measurements_label  ="Pounds";
 						}elseif($data['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="Inches/Feet)";
+						  $measurements_label  ="(Feet/Inches)";
 						}
 					}
 					
