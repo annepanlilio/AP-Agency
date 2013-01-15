@@ -134,9 +134,7 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
 		$rb_agency_option_profilelist_castingcart = $rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
 			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }
-		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
-			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "2"; }
-		
+	
 		$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
 			if (empty($rb_agency_option_privacy)) { $rb_agency_option_privacy = "0"; }
 		
@@ -340,15 +338,17 @@ elseif ($ConfigID == 1) {
 		 echo "   <td>\n";
 		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"2\" ".checked($rb_agency_option_showcontactpage, 2,false)."/>Disable Contact<br />\n";
 		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" ".checked($rb_agency_option_showcontactpage, 1,false)."/>Email to both the model and the site owner<br />\n";
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" ".checked($rb_agency_option_showcontactpage, 0,false)."/>Only email to the site owner, not to the model<br/>\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" ".checked($rb_agency_option_showcontactpage, "0",false)."/>Only email to the site owner, not to the model<br/>\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
+		/*####### HIDE THIS OPTION FOR THE MEAN TIME #### 
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('Override Contact Page Path', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_urlcontact]\" value=\"". $rb_agency_options_arr['rb_agency_option_agency_urlcontact'] ."\" /></td>\n";
 		 echo " </tr>\n";
+		 ################/*
 		 
-    /*############# hide Profile Custom Fields Options ######################
+    /*############# hide Profile Custom Fields Options - FOR THE MEAN TIME######################
           // Profile Custom Fields Options
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
