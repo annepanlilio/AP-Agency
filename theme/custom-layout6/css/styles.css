@@ -134,10 +134,10 @@
 .portfolio-gallery .ad-thumbs li a.ad-active img { border: 1px solid #616161; }
 			
 /* Can't do display none, since Opera won't load the images then */
-.ad-preloads { position: absolute; left: -9000px; top: -9000px; }
+.ad-preloads { position: absolute; left: -9000px; top: -9000px;}
 
-#content img.allimages_thumbs{width:106px; height:130px;}
-#content a.allimages_print, a.allimages_print:visited{ color:#FFF; width:200px; background-color:#333; }
+#content img.allimages_thumbs{width:106px; height:130px; margin:3px;}
+#content a.allimages_print, a.allimages_print:visited{ color:#FFF; width:200px;  }
 #content a.allimages_print:hover { color:#000 }
 .allimages_div{margin-left:20px; float:left; width:63%;}
 .print_options{margin-left:20px; float:left; width:63%;}

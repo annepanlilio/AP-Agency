@@ -296,9 +296,9 @@
 		
 	  if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
 		// Offset
-        $offset = $offset-5; //adjustment for server time
+		$offset = $offset-5; //adjustment for server time
 		$timezone_offset = (int)$offset; // Server Time
-		$time_altered = time() - $timezone_offset *60 *60;
+		$time_altered = time() -  $timezone_offset *60 *60;
 	
 		// Math
 		$difference = $time_altered - $timestamp;
@@ -736,23 +736,33 @@
 				 $addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
 			}
 			
+			# print, downloads links to be added on top of profile list
 			$links='
-			  <div id="print-links" class="twelve column">
-			      
-				  <div style="float:left;" class="top_links"> 
-			  <a target="_blank" href="/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'</div>
-				  <div style="float:right;" class="top_links">
-				  <a href="/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>&nbsp;|&nbsp;<a href="/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>
-				  </div>
-			  </div>
-			';
+			  <div id="print-links" class="twelve column"> ';
+			  
+			  if(get_query_var('target')!="results"){// hide print and download PDF in Search result
+				  $links.='
+					<div style="float:left;" class="top_links"> 
+				  <a target="_blank" href="/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'</div>';
+			  }
+			  
+			 $links.='<div style="float:right;" class="top_links">';
+			  
+			 if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
+			      $links.='<a href="/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';}
+				  
+			  if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+				    if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
+				    $links.='<a href="/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>
+				  ';}
+			 $links.='</div></div>';
 			
 			}
-			
-		  //remove  if its just for client view of listing via casting email
+		
+			  //remove  if its just for client view of listing via casting email
 		 	if(get_query_var('type')=="profilesecure"){ $links="";}
-			
-		 if(get_query_var('type')=="favorite"){ $links="";} // we dont need print and download pdf in favorites page
+
+		if(get_query_var('type')=="favorite"){ $links="";} // we dont need print and download pdf in favorites page
 			
 			echo "<div class=\"cb\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
@@ -892,18 +902,18 @@
 				}
 	           
 						
-				 //$displayHTML .= "<div class=\"profile-list-layout". (int)$rb_agency_option_layoutprofilelist ."\">\n"; COMMENTED FOR CSS FIX IN LISTING
 				 $displayHTML .= "<div id=\"div".$dataList["ProfileID"]."\" class=\"profile-list-layout0\" >\n";
 				 $displayHTML .= "<div class=\"style\"></div>\n";
 				if (isset($dataList["ProfileMediaURL"]) ) { // && (file_exists(rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"])) ) {
 					
 					//dont need other image for hover if its for print or pdf download view and dont use timthubm
 				if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-					    ###disabled this feature for this client 
-						#$images=getAllImages($dataList["ProfileID"]);
-					    #$images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
-						//REMOVED FROM IMG TAG : id=\"roll".$dataList["ProfileID"]."\"  id=\"roll".$dataList["ProfileID"]."\" 
-						
+							 
+					if($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']==1){  //show profile sub thumbs for thumb slide on hover
+						$images=getAllImages($dataList["ProfileID"]);
+					    $images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
+					}
+					
 				$displayHTML .="<div class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\" id=\"roll".$dataList["ProfileID"]."\"  /></a>".$images."</div>\n";
 				}else{
 				$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."\"  /></a>".$images."</div>\n";
@@ -1744,11 +1754,18 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
   }
  
  
-   function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender) {
+   function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclude="",$include="") {
 		global $wpdb;
 		global $rb_agency_option_unittype;
-	
-		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
+	     
+		$query="SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ."";
+		
+		if(!empty($exclude)){$query.="AND ProfileCustomID IN($exclude)";}
+	    if(!empty($include)){$query.="AND ProfileCustomID NOT IN($include)";}
+
+		$query.="GROUP 3 BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC ";
+		
+		$resultsCustom = $wpdb->get_results($query);
 		foreach ($resultsCustom as $resultCustom) {
 			if(!empty($resultCustom->ProfileCustomValue )){
 				 if ($resultCustom->ProfileCustomType == 7) { //measurements field type

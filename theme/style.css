@@ -101,6 +101,8 @@ img { -ms-interpolation-mode: bicubic; }
     padding: 0 5px;
 }
 
+
+
 #profile-list .profile-list-layout0  .castingcart{float:right; }
 #profile-list .profile-list-layout0  .favorite{float:left;  }
 
@@ -134,6 +136,21 @@ img { -ms-interpolation-mode: bicubic; }
 /* Profile Search Embed */
 #profile-search-form-embed {  }
 #profile-search-form-embed .search-field { padding: 5px 0;  }
+
+/*advanced search button in search page*/
+#profile-search-form-embed .advanced_search_div {
+    float: left;
+    margin-left: -220px;
+    padding-top: 5px;
+}
+
+#profile-search-filter .advanced_search_div {
+    float: left;
+    margin-left: -220px; margin-top:0px;
+     padding-top: 10px;
+}
+
+
 
 /* Profile Layouts */
 .rblayout {  }
@@ -232,6 +249,8 @@ img { -ms-interpolation-mode: bicubic; }
 form .search-field { display:block; clear:both; padding:5px 0; float:left; }
 form .search-field.submit { text-align:right; min-width:400px; padding-top:10px; }
 form .search-field.single label, form .search-field.double .label { float:left; width:200px; line-height:30px; }
+form .search-field.double label.labelmin { float:left; width:30px; line-height:30px; }
+
 form .search-field.single input, form .search-field.single select { float:left; }
 form .search-field.single input, form .search-field.single select { width: 200px; }
 form .search-field.double > div.label { margin:0; }
@@ -240,7 +259,7 @@ form .search-field.double > div.doublebox div { float:left; margin-right:10px; }
 form .search-field.double > div.doublebox div label, form .search-field.double > div.doublebox div input, form .search-field.double > div.doublebox div select { float:left; margin-right:10px; }
 form .search-field.double > div.doublebox div label { line-height:30px; }
 form .search-field.double > div.doublebox div select, form .search-field.double > div.doublebox div input { width:53px; }
-
+form .search-field.double > div.doublebox input.button-primary{width:153px; }
 /* Search Filter Sidebar */
 #profile-category-filter form .search-field, #profile-category-filter form .search-field.single label, #profile-category-filter form .search-field.double .label, #profile-category-filter form .search-field.single input, #profile-category-filter form .search-field.single select { width:100%; }
 #profile-search-filter form .search-field, #profile-search-filter form .search-field.single label, #profile-search-filter form .search-field.double .label, #profile-search-filter form .search-field.single input, #profile-search-filter form .search-field.single select { width:100%; }
@@ -259,3 +278,7 @@ form .search-field.double > div.doublebox div select, form .search-field.double 
 /* Profile Results Info (rb-agency/functions.php) */
 #profile-results-info { padding:15px; }
 #profile-results-info > div { float:right; }
+
+/* profile layout 6*/
+#short_description{margin-bottom:10px; margin-top:10px; font-size:13px;}
+.ad-slideshow-start, .ad-slideshow-stop, .ad-slideshow-countdown{ visibility:hidden;}
