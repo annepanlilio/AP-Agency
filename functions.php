@@ -570,6 +570,7 @@
 		}
 			
 		if (!isset($pagingperpage) || empty($pagingperpage)) { $pagingperpage = $rb_agency_option_profilelist_perpage; }
+		if($pagingperpage=="0"){$pagingperpage="10";}//make it a default value
 		if (isset($type) && !empty($type)){ $profiletype = $type; }
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
 		if (isset($age_start) && !empty($age_start)){ $profiledatebirth_min = $age_start; }
