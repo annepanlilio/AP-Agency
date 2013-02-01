@@ -362,12 +362,12 @@ elseif ($ConfigID == 1) {
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1,false)."/> ". __("User must be an Admin to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
-	       echo "<input type=\"hidden\" name=\"rb_agency_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
+	      
 	##### HIDE */
 	
 		 echo "</table>\n";
 		 echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
-		 
+		  echo "<input type=\"hidden\" name=\"rb_agency_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
 		 echo "</form>\n";
 }	 // End	
 elseif ($ConfigID == 11) {

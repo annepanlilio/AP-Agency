@@ -26,7 +26,7 @@
 					// Slimbox
 					echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/slimbox2.js\"></script>\n";
 					echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."style/slimbox2.css\" type=\"text/css\" media=\"screen\" />\n";
-					echo "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n";	
+				    echo "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n";	
 						
 				} elseif ($rb_agency_options_arr['rb_agency_option_gallerytype'] == "2") {
 					// PrettyBox
@@ -915,7 +915,7 @@
 					    $images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 					}
 					
-				$displayHTML .="<div class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\" id=\"roll".$dataList["ProfileID"]."\"  /></a>".$images."</div>\n";
+				$displayHTML .="<div class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_BASEDIR."timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\" id=\"roll".$dataList["ProfileID"]."\"  /></a>".$images."</div>\n";
 				}else{
 				$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."\"  /></a>".$images."</div>\n";
 					}
@@ -979,7 +979,7 @@
                     function addtoCart(pid){
 					 var qString = \'usage=addtocart&pid=\' +pid;
 					 var apid = "addtocart"+pid;
-				     $.post(\''.get_bloginfo("url").'/wp-content/plugins/rb-agency/theme/sub_db_handler.php\', qString, processResponseAddtoCart);
+				     $.post(\''.rb_agency_BASEDIR.'theme/sub_db_handler.php\', qString, processResponseAddtoCart);
                      //document.getElementById(pid).style.display="none";
 					 // document.getElementById(apid).style.backgroundPosition="0 -134px;";
 					 }
@@ -995,7 +995,7 @@
 			$resultsImg = mysql_query($queryImg);
 			$countImg = mysql_num_rows($resultsImg);
 			while ($dataImg = mysql_fetch_array($resultsImg)) {//style=\"display:none\" 
-					 $images.="<img  class=\"roll\" src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+					 $images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 			}
 	return  $images;
 	}
