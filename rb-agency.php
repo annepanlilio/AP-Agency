@@ -791,8 +791,9 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 		 
 		 $rb_agency_options_arr = get_option('rb_agency_options');
    		 $rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
-		
 		if(!@in_array("rb_agency_options_showtooltip",$rb_agency_options_arr) && $rb_agency_options_showtooltip == 0){	 
+			$rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
+			update_option('rb_agency_options',$rb_agency_options_arr);
 			wp_enqueue_style('wp-pointer');
 			wp_enqueue_script('wp-pointer');
 			function  add_js_code(){
