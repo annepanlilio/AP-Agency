@@ -4,9 +4,11 @@
 
 define( 'BLOCK_LOAD', true );
 
- //get absolute path - adjustment for $_SERVER['DOCUMENT_ROOT'] error as it cannot get subdomain path
-$currentDIR= str_replace("/wp-content/plugins/rb-agency/theme","",getcwd());
+//get absolute path - adjustment for $_SERVER['DOCUMENT_ROOT'] error as it cannot get subdomain path
 
+//Commented by Gaurav
+//$currentDIR= str_replace("/wp-content/plugins/rb-agency/theme","",getcwd());
+$currentDIR= str_ireplace(DIRECTORY_SEPARATOR."wp-content".DIRECTORY_SEPARATOR."plugins".DIRECTORY_SEPARATOR."rb-agency".DIRECTORY_SEPARATOR."theme","",getcwd());
 require_once( $currentDIR . '/wp-config.php' );
 require_once( $currentDIR . '/wp-includes/wp-db.php' );
 $wpdb = new wpdb( DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
