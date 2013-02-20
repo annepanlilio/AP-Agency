@@ -1031,6 +1031,7 @@ elseif ($ConfigID == 5) {
 		echo "</tbody>\n";
 		echo "</table>\n";
 		echo "<p class=\"submit\">\n";
+		echo "    <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
 		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
@@ -1257,6 +1258,7 @@ elseif ($ConfigID == 6) {
 		echo "</tbody>\n";
 		echo "</table>\n";
 		echo "<p class=\"submit\">\n";
+		echo "    <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
 		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";

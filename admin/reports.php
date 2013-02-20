@@ -1137,6 +1137,10 @@ elseif ($ConfigID == 14) {
 									$have_error = true;
 								} elseif ($rb_agency_option_profilenaming == 3) {
 									$ProfileContactDisplay = "ID ". $ProfileID;
+								} elseif ($rb_agency_option_profilenaming == 4) {
+									$ProfileContactDisplay = $ProfileContactNameFirst;
+								} elseif ($rb_agency_option_profilenaming == 5) {
+									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
 							}
 						

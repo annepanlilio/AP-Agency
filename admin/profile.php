@@ -1117,6 +1117,11 @@ function rb_display_list(){
 			$query .= "&ProfileVisible=". $selectedVisible ."";
 			$filter .= " AND profile.ProfileIsActive='". $selectedVisible ."'";
 		}
+		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
+			$ProfileGender = (int)$_GET['ProfileGender'];
+			if($ProfileGender)
+				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+		}
 		
 		//Paginate
 		$items = mysql_num_rows(mysql_query("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."")); // number of total rows in the database
@@ -1206,6 +1211,15 @@ function rb_display_list(){
 									echo "<option value=\"". $data['DataTypeID'] ."\" ". selected($selectedCity, $data["DataTypeTitle"]) ."\">". $data['DataTypeTitle'] ."</option>\n";
 								} 
 		echo "        		</select>\n";
+		echo "        		". __("Gender", rb_agency_TEXTDOMAIN) .":\n";
+		echo "				<select name=\"ProfileGender\">\n";               
+		echo "					<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+									$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+								 	$results2 = mysql_query($query2);
+								 	while ($dataGender = mysql_fetch_array($results2)) {
+										echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION["ProfileGender"],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
+									}
+		echo "				</select>\n";
 		echo "        		<input type=\"submit\" value=\"". __("Filter", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 		echo "          </form>\n";
 		echo "        	<form style=\"display: inline;\" method=\"GET\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
