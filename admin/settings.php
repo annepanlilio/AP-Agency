@@ -252,6 +252,8 @@ elseif ($ConfigID == 1) {
 		 echo "     <select name=\"rb_agency_options[rb_agency_option_profilenaming]\">\n";
 		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 0,false) ."> ". __("First Last", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 1,false) ."> ". __("First L", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 4,false) ."> ". __("First", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 5,false) ."> ". __("Last", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 2,false) ."> ". __("Display Name", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 3,false) ."> ". __("Auto Generated Record ID", rb_agency_TEXTDOMAIN) ."</option>\n";
 		 echo "     </select>\n";

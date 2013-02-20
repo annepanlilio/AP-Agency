@@ -828,7 +828,7 @@
 				$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".get_query_var('target')."'  ";
 			}
 
- $queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
+ $queryList = "SELECT profile.*, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 			
 			}elseif ($_GET['t']=="casting"){
 						   
@@ -839,6 +839,7 @@
 				$queryList = "
 					SELECT 
 						 profile.ProfileID,
+						 profile.*,
 						 profile.ProfileID as pID, 
 						 profile.ProfileGallery,
 						 profile.ProfileContactDisplay, 
@@ -861,7 +862,8 @@
 					ORDER BY $sort $dir $limit";
 			}
 			
-			
+			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+                       
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
                     
@@ -925,7 +927,35 @@
 				}
 				
 				 $displayHTML .= "  <div class=\"title\">\n";
-				 $displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
+				  $ProfileContactDisplay = "";
+								if ($rb_agency_option_profilenaming == 0) {
+
+									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
+
+								} elseif ($rb_agency_option_profilenaming == 1) {
+
+									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". substr($dataList["ProfileContactNameLast"], 0, 1);
+
+								} elseif ($rb_agency_option_profilenaming == 2) {
+
+									$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
+
+								} elseif ($rb_agency_option_profilenaming == 3) {
+
+									$ProfileContactDisplay = "ID ". $ProfileID;
+
+								}  elseif ($rb_agency_option_profilenaming == 4) {
+
+									$ProfileContactDisplay = $dataList["ProfileContactNameFirst"];
+
+								} elseif ($rb_agency_option_profilenaming == 5) {
+
+									$ProfileContactDisplay = $dataList["ProfileContactNameLast"];
+
+								}
+
+				 $displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
+
 				if ($rb_agency_option_profilelist_expanddetails) {
 				 $displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 				}
