@@ -39,7 +39,7 @@
 input.stubby { width: 80px; }
 
 /* Profile Page */
-.profileimage { position: relative; width: 100px; float: left; padding: 5px; margin: 0px 10px 10px 0; height: 150px; overflow: hidden; }
+.profileimage { position: relative; width: 100px; float: left; padding: 5px; margin: 0px 10px 10px 0; height: 170px; overflow: hidden; }
 #profile-manage-media .primary { z-index: 5; position: absolute; top: 135px; padding: 2px; text-align: center; width: 100px; color: #fff; }
 #profile-manage-media .delete { z-index: 6; position: absolute; top: 3px; padding: 2px; background: #000; border: solid #000 3px; color: #fff; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 3px; -webkit-border-bottom-right-radius: 3px;}
 #profile-manage-media .delete a { color: #fff; text-decoration: none; }

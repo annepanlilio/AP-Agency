@@ -816,6 +816,35 @@ function rb_display_manage($ProfileID) {
 			echo "}\n";
 			echo "</script>\n";
 			
+			//mass delte
+			if ($_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
+				$massmediaids = '';
+				$massmediaids = implode(",",$_GET['targetids']);
+					//get all the images
+
+				$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM ". table_agency_profile_media ." WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+				$resultsImgConfirm = mysql_query($queryImgConfirm);
+				$countImgConfirm = mysql_num_rows($resultsImgConfirm);
+				$mass_image_data = array();
+				while ($dataImgConfirm = mysql_fetch_array($resultsImgConfirm)) {
+						$mass_image_data[$dataImgConfirm['ProfileMediaID']]	= $dataImgConfirm['ProfileMediaURL'];		
+				}
+				//delete all the images from database
+				$massmediaids = implode(",",array_keys($mass_image_data));
+				$queryMassImageDelete = "DELETE FROM ". table_agency_profile_media ." WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+				$resultsMassImageDelete = $wpdb->query($queryMassImageDelete);
+				//delete images on the disk
+				$dirURL = rb_agency_UPLOADPATH . $ProfileGallery;
+				foreach($mass_image_data as $mid => $ProfileMediaURL){
+							if (!unlink($dirURL ."/". $ProfileMediaURL)) {
+						  echo ("<div id=\"message\" class=\"error\"><p>". __("Error removing", rb_agency_TEXTDOMAIN) ." <strong>". $ProfileMediaURL ."</strong>. ". __("File did not exist.", rb_agency_TEXTDOMAIN) .".</p></div>");
+						} else {
+						  echo ("<div id=\"message\" class=\"updated\"><p>File <strong>'. $ProfileMediaURL .'</strong> ". __("successfully removed", rb_agency_TEXTDOMAIN) .".</p></div>");
+						}		
+				}	
+				
+			}
+			
 			// Are we deleting?
 			if ($_GET["actionsub"] == "photodelete") {
 				$deleteTargetID = $_GET["targetid"];
@@ -860,16 +889,20 @@ function rb_display_manage($ProfileID) {
 					  $toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('". $dataImg['ProfileMediaID'] ."','".$dataImg['ProfileMediaType']."')\"><span>Delete</span> &raquo;</a></div>\n";
 					} else {
 					  $toDelete = "";
+					  $massDelete = "";
 					}
 				  } else {
 					  $styleBackground = "#000000";
 					  $isChecked = "";
 					  $isCheckedText = " Select";
 					  $toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('". $dataImg['ProfileMediaID'] ."','".$dataImg['ProfileMediaType']."')\"><span>Delete</span> &raquo;</a></div>\n";
+					  $massDelete =  '<input type="checkbox" name="massgaldel" value="'.$dataImg['ProfileMediaID'].'"> <span style="color:#FFFFFF">Delete</span>';
 				  }
 					echo "<div class=\"profileimage\" style=\"background: ". $styleBackground ."; \">\n". $toDelete ."";
 					echo "  <img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" style=\"width: 100px; z-index: 1; \" />\n";
-					echo "  <div class=\"primary\" style=\"background: ". $styleBackground ."; \"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"". $dataImg['ProfileMediaID'] ."\" class=\"button-primary\"". $isChecked ." /> ". $isCheckedText ."</div>\n";
+					echo "  <div class=\"primary\" style=\"background: ". $styleBackground ."; \"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"". $dataImg['ProfileMediaID'] ."\" class=\"button-primary\"". $isChecked ." /> ".
+					 $isCheckedText ."<div>$massDelete</div></div>\n";
+					
 					echo "</div>\n";
 				}
 				if ($countImg < 1) {
@@ -877,6 +910,38 @@ function rb_display_manage($ProfileID) {
 				}
 				
 	echo "		<div style=\"clear: both;\"></div>\n";
+	echo '<a href="javascript:confirm_mass_gallery_delete();">Delete Selected Images</a>';
+	echo '<script language="javascript">';
+	echo 'function confirm_mass_gallery_delete(){';
+	echo 'jQuery(document).ready(function() {';
+		echo "var mas_del_ids = '&';";
+		echo 'jQuery("input:checkbox[name=massgaldel]:checked").each(function() {';
+	       echo "if(mas_del_ids != '&'){";
+		   		echo "mas_del_ids += '&';";
+	   			echo '}';
+	   	
+	 	  echo "mas_del_ids += 'targetids[]='+jQuery(this).val();";
+  echo "});";
+  
+	echo "if( mas_del_ids != '&'){ ";
+	echo 'if(confirm("Do you want to delete all the selected images?")){';
+				
+			
+			
+			echo "urlmassdelete = '". admin_url("admin.php?page=". $_GET['page'])."&action=editRecord&ProfileID=". $ProfileID ."&actionsub=massphotodelete' + mas_del_ids;";
+			echo 'document.location = urlmassdelete;';
+		echo '}
+	}
+	else{
+		alert("You have to select images to delete");
+	}
+});
+
+}
+</script>';
+
+
+	
 		echo "		<br><br><h3>". __("Media", rb_agencyinteract_TEXTDOMAIN) ."</h3>\n";
 		echo "		<p>". __("The following files (pdf, audio file, etc.) are associated with this record", rb_agencyinteract_TEXTDOMAIN) .".</p>\n";
 	
