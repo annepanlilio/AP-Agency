@@ -753,11 +753,11 @@
 			 $links.='<div style="float:right;" class="top_links">';
 			  
 			 if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
-			      $links.='<a href="/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';}
+			      $links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';}
 				  
 			  if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
 				    if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
-				    $links.='<a href="/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>
+				    $links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>
 				  ';}
 			 $links.='</div></div>';
 			

@@ -19,6 +19,17 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "		<div id=\"profile-search-form-condensed\" class=\"search-form\">\n";
 		echo "        	<form method=\"post\" id=\"search-form-condensed\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
 		echo "        		<div><input type=\"hidden\" name=\"action\" value=\"search\" /></div>\n";
+
+		echo "	 			      <div class=\"search-field single\">\n";
+		echo "		 				<label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
+	      echo "		 				<input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" />\n";
+	      echo "	 				</div>\n";
+		
+		echo "	 				<div class=\"search-field single\">\n";
+		echo "		 				<label for=\"ProfileLastName\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
+	      echo "						 <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION["ProfileContactNameLast"] ."\" />\n";
+		echo "					 </div>\n";		
+		
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        	<select name=\"ProfileType\" id=\"ProfileType\">\n";               
@@ -36,7 +47,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("--", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
 											while ($dataGender = mysql_fetch_array($results2)) {
@@ -58,7 +69,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    </div>\n";
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\"><input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></div>\n";
-		echo "				<br /><a href=\"". $rb_agency_WPURL ."/profile-search/\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
+		echo "				<br /><a href=\"". get_bloginfo('siteurl') ."/profile-search/\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 		echo "        	</form>\n";
 		echo "		</div>\n";
    } else {
@@ -109,7 +120,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		
 		echo "				    <div class=\"doublebox\">\n";
 		
-			if($profilesearch_layout == "advanced"){
+			/*if($profilesearch_layout == "advanced"){
 		
 		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
             echo "<select class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\">";
@@ -129,13 +140,13 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "</select>";
 		echo "</div>";
 		           
-		 }else{
+		 }else{*/
 		
 		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>\n";
 		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
-		 }
+		//}
 		echo "				    </div>\n";// .doublebox
 		
 		echo "				    </div>\n";

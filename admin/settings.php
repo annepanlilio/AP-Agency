@@ -331,8 +331,9 @@ elseif ($ConfigID == 1) {
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 
+		 //Commented by @Gaurav as We will be creating this as a separate plugin
 		 // Member Contact form link
-		 echo " <tr valign=\"top\">\n";
+		 /*echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Contact Options', rb_agency_TEXTDOMAIN) ."</h3></th>\n";
 		 echo " </tr>\n";
 		 echo " <tr valign=\"top\">\n";
@@ -342,7 +343,9 @@ elseif ($ConfigID == 1) {
 		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" ".checked($rb_agency_option_showcontactpage, 1,false)."/>Email to both the model and the site owner<br />\n";
 		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" ".checked($rb_agency_option_showcontactpage, "0",false)."/>Only email to the site owner, not to the model<br/>\n";
 		 echo "   </td>\n";
-		 echo " </tr>\n";
+		 echo " </tr>\n";*/
+		 // comment by @Gaurav ends
+		 
 		/*####### HIDE THIS OPTION FOR THE MEAN TIME #### 
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\">". __('Override Contact Page Path', rb_agency_TEXTDOMAIN) ."</th>\n";

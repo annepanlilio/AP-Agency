@@ -55,7 +55,7 @@ get_header();
 		echo "	    </td>\n";
 		echo "	    <td class=\"profile-category-filter-wrapper\">\n";
 		echo "			<div class=\"profile-category-filter\">\n";
-		echo "			  <h4>". __("Filter Profiles", rb_agency_TEXTDOMAIN) .":</h4>\n";
+		echo "			  <h4>". __("Search Profiles", rb_agency_TEXTDOMAIN) .":</h4>\n";
 	 
 						  $profilesearch_layout = "condensed";
 						  include("include-profile-search.php"); 	
