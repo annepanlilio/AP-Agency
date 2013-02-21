@@ -7,7 +7,10 @@
 		function rb_agency_admin_head(){
 		  if( is_admin() ) {
 			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."style/admin.css\" type=\"text/css\" media=\"screen\" />\n";
-			echo "<script type=\"text/javascript\" src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n";
+			if ( ! wp_script_is( 'jquery', 'registered' ) )
+				wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
+
+
 			echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/js-customfields.js\"></script>\n"; 
 		  }
 		}

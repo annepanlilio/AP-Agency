@@ -1,4 +1,4 @@
-<?php exit;
+<?php
 #This page that will generate HTML to feed on domPDF
 
 $rb_agency_options_arr = get_option('rb_agency_options');
