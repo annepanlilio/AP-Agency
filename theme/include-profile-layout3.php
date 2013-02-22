@@ -6,8 +6,9 @@ Expended Profile with Tabs
 	echo "<div id=\"profile\">\n";
 	echo " <div id=\"rblayout-three\" class=\"rblayout\">\n";
 
-	echo " <div class=\"twelve column row-zero\">\n";
-	echo "   <a href=\"". get_bloginfo("wpurl") ."/profile-category/\">Directory</a><span class=\"divider\"> > </span>". $ProfileContactDisplay ."\n";
+	echo " <div class=\"twelve column\">\n";
+	//echo "   <a href=\"". get_bloginfo("wpurl") ."/profile-category/\">Directory</a><span class=\"divider\"> > </span>". $ProfileContactDisplay ."\n";
+	echo "   <a href=\"". get_bloginfo("wpurl") ."/profile-category/\">Go Back</a>\n";
 	echo " </div>\n";
 	
 	echo " <div class=\"twelve column row-one clear\">\n";
@@ -23,7 +24,35 @@ Expended Profile with Tabs
 	echo "	  		<div id=\"profile-picture\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
 			}
 
-	echo "	  		<div class=\"profile-picture-favorite\"><a rel=\"nofollow\" href=\"\"><div class=\"favoriteSquare\"></div>Save to Favorites</a></div>\n";
+	echo "	  		<div class=\"profile-picture-favorite\"><a rel=\"nofollow\" href=\"\"><div class=\"favoriteSquare\"></div>Save to Favorites</a>";?>
+					<?php 
+					if (is_user_logged_in()) {?>
+						<br />
+					<?php 
+						if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already
+					?>
+						
+						<a id="addtocart" onclick="javascript:addtoCart('<?php echo $ProfileID?>');" rel="nofollow" href="javascript:void(0)"><?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN)?></a>
+						<a id="view_casting_cart" style="display:none;" href="<?php echo get_bloginfo('url')?>/profile-casting"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a>
+						<script>
+						function addtoCart(pid){
+							var qString = 'usage=addtocart&pid=' +pid;
+							jQuery.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponseAddtoCart);
+						}
+						function processResponseAddtoCart(data) {
+							document.getElementById('view_casting_cart').style.display="block";
+							document.getElementById('addtocart').style.display="none";
+						}
+						</script>
+					<?php
+						}else{
+						?>
+							<a href="<?php echo get_bloginfo('url')?>/profile-casting"><?php echo __("Already in Casting Cart", rb_agency_TEXTDOMAIN)?></a>
+						<?php 
+						}
+					}
+						echo '<div id="resultsGoHereAddtoCart"></div>';
+	echo 			"</div>\n";	
 	echo "	  </div> <!-- #profile-picture -->\n";
 
 	// Column 2
@@ -209,4 +238,4 @@ echo " <div class=\"row-bookings twelve column clear tab\">\n";
 	echo "</div>\n";  // Close Profile
 	echo "<div style=\"clear: both;\"></div>\n"; // Clear All
 
-?>
+?>        

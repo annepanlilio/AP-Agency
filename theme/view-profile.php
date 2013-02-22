@@ -146,10 +146,10 @@ if(!function_exists("rb_agency_inserthead_profile")){
 				<script>
 				var $tab = jQuery.noConflict();
 				$tab(window).load(function() {
-						$tab(".tab").hide();
+						/*$tab(".tab").hide();
 						$tab(".row-photos").show();
 						$tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-						$tab("#row-photos").removeClass("tab-inactive").addClass("tab-active");
+						$tab("#row-photos").removeClass("tab-inactive").addClass("tab-active");*/
 						$tab(".maintab").click(function(){
 							   var idx = this.id;
 							   var elem = "." + idx;

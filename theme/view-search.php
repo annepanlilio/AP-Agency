@@ -140,7 +140,8 @@ if ($_REQUEST["action"] == "search") {
 			if ($_REQUEST["action"] == "search") {
 		echo "  <h1 class=\"entry-title twelve column\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 			} else {
-		echo "  <h1 class=\"entry-title twelve column\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		//echo "  <h1 class=\"entry-title twelve column\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		echo "  <h1 class=\"entry-title twelve column\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 			}
 	
 		echo "  <div class=\"cb\"></div>\n";
@@ -158,7 +159,7 @@ if ($_REQUEST["action"] == "search") {
 									
 		echo "		    </div>\n";
 		echo "		    <div id=\"profile-search-filter\" class=\"three column\">\n";
-		echo "			<h3 class=\"title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
+		echo "			<h3 class=\"title\">". __("Search Profiles", rb_agency_TEXTDOMAIN) ."</h3>\n";
 		                        $isSearchPage = (get_query_var('type') == "search") ? 1 : 0;
 						$profilesearch_layout = "advanced";
 						include("include-profile-search.php"); 	
