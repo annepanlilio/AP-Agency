@@ -51,15 +51,13 @@
  * @package dompdf
  */
 class Frame_Factory {
-
-  static function decorate_root(Frame $root, DOMPDF $dompdf) {
+ static function decorate_root(Frame $root, DOMPDF $dompdf) {
     $frame = new Page_Frame_Decorator($root, $dompdf);
     $frame->set_reflower( new Page_Frame_Reflower($frame) );
     $root->set_decorator($frame);
     return $frame;
   }
-
-  // FIXME: this is admittedly a little smelly...
+ // FIXME: this is admittedly a little smelly...
   static function decorate_frame(Frame $frame, $dompdf) {
     if ( is_null($dompdf) )
       throw new Exception("foo");
@@ -76,8 +74,7 @@ class Frame_Factory {
       $decorator = "Block";
       $reflower = "Block";
       break;
-
-    case "inline":
+   case "inline":
       $positioner = "Inline";
       if ( $frame->get_node()->nodeName == "#text" ) {
         $decorator = "Text";
@@ -87,8 +84,7 @@ class Frame_Factory {
         $reflower = "Inline";
       }
       break;   
-
-    case "table":
+   case "table":
       $positioner = "Block";
       $decorator = "Table";
       $reflower = "Table";
@@ -99,8 +95,7 @@ class Frame_Factory {
       $decorator = "Table";
       $reflower = "Table";
       break;
-
-    case "table-row-group":
+   case "table-row-group":
     case "table-header-group":
     case "table-footer-group":
       $positioner = "Null";
@@ -113,8 +108,7 @@ class Frame_Factory {
       $decorator = "Table_Row";
       $reflower = "Table_Row";
       break;
-
-    case "table-cell":
+   case "table-cell":
       $positioner = "Table_Cell";
       $decorator = "Table_Cell";
       $reflower = "Table_Cell";
@@ -125,22 +119,19 @@ class Frame_Factory {
       $decorator  = "Block";
       $reflower   = "Block";
       break;
-
-    case "-dompdf-list-bullet":
+   case "-dompdf-list-bullet":
       if ( $frame->get_style()->list_style_position == "inside" )
         $positioner = "Inline";
       else        
         $positioner = "List_Bullet";
-
-      if ( $frame->get_style()->list_style_image != "none" )
+     if ( $frame->get_style()->list_style_image != "none" )
         $decorator = "List_Bullet_Image";
       else
         $decorator = "List_Bullet";
       
       $reflower = "List_Bullet";
       break;
-
-    case "-dompdf-image":
+   case "-dompdf-image":
       $positioner = "Inline";
       $decorator = "Image";
       $reflower = "Image";
@@ -151,22 +142,18 @@ class Frame_Factory {
       $decorator = "Inline";
       $reflower = "Inline";
       break;
-
-    default:
+   default:
       // FIXME: should throw some sort of warning or something?
     case "none":
       $positioner = "Null";
       $decorator = "Null";
       $reflower = "Null";
       break;
-
-    }
-
-    $positioner .= "_Positioner";
+   }
+   $positioner .= "_Positioner";
     $decorator .= "_Frame_Decorator";
     $reflower .= "_Frame_Reflower";
-
-    $deco = new $decorator($frame, $dompdf);
+   $deco = new $decorator($frame, $dompdf);
     $deco->set_positioner( new $positioner($deco) );
     $reflow = new $reflower($deco);
     
@@ -179,8 +166,7 @@ class Frame_Factory {
     }
     
     $deco->set_reflower( $reflow );
-
-    // Images are a special case
+   // Images are a special case
 //    if ( $frame->get_node()->nodeName == "img" ) {
 
 //       // FIXME: This is a hack

@@ -48,29 +48,22 @@
 class List_Bullet_Renderer extends Abstract_Renderer {
   
   //........................................................................
-
-  function render(Frame $frame) {
-
-    $style = $frame->get_style();
+ function render(Frame $frame) {
+   $style = $frame->get_style();
     $line_height = $style->length_in_pt($style->line_height, $frame->get_containing_block("w"));
-
-    // Handle list-style-image
+   // Handle list-style-image
     if ( $style->list_style_image != "none" ) {
-
-      list($x,$y) = $frame->get_position();
+     list($x,$y) = $frame->get_position();
       $w = $frame->get_width();
       $h = $frame->get_height();
       $x += $w / 2;
       $y += $line_height / 2 - $h / 2;
-
-      $this->_canvas->image( $frame->get_image_url(), $frame->get_image_ext(), $x, $y, $w, $h);
+     $this->_canvas->image( $frame->get_image_url(), $frame->get_image_ext(), $x, $y, $w, $h);
       
     } else {
-
-      $bullet_style = $style->list_style_type;
+     $bullet_style = $style->list_style_type;
       $bullet_size = List_Bullet_Frame_Decorator::BULLET_SIZE;
-
-      $fill = false;
+     $fill = false;
       
       switch ($bullet_style) {
       
@@ -88,16 +81,14 @@ class List_Bullet_Renderer extends Abstract_Renderer {
         $r = $bullet_size / 2;
         $this->_canvas->circle($x, $y, $r, $style->color, 0.2, null, $fill);
         break;
-
-      case "square":
+     case "square":
         list($x, $y) = $frame->get_position();
         $w = $bullet_size;
         $x += List_Bullet_Frame_Decorator::BULLET_PADDING;
         $y += $line_height - $w - List_Bullet_Frame_Decorator::BULLET_PADDING;
         $this->_canvas->filled_rectangle($x, $y, $w, $w, $style->color);
         break;
-
-      }
+     }
     }
   }
 }

@@ -55,8 +55,7 @@ if ( !file_exists(TTF2AFM) ) {
  * 
  */
 function usage() {
-
-  echo <<<EOD
+ echo <<<EOD
 
 Usage: {$_SERVER["argv"][0]} font_family n_file [b_file] [i_file] [bi_file]
 
@@ -107,8 +106,7 @@ if ( $_SERVER["argc"] < 3 ) {
  * @param string $bold_italic the filename of the bold italic face font subtype
  */
 function install_font_family($fontname, $normal, $bold = null, $italic = null, $bold_italic = null) {
-
-  // Check if the base filename is readable
+ // Check if the base filename is readable
   if ( !is_readable($normal) )
     throw new DOMPDF_Exception("Unable to read '$normal'.");
     
@@ -117,8 +115,7 @@ function install_font_family($fontname, $normal, $bold = null, $italic = null, $
     
   // Try $file_Bold.$ext etc.
   $ext = ".$ext";
-
-  if ( !isset($bold) || !is_readable($bold) ) {
+ if ( !isset($bold) || !is_readable($bold) ) {
     $bold   = $dir . "/" . $file . "_Bold" . $ext;
     if ( !is_readable($bold) ) {
  
@@ -133,15 +130,13 @@ function install_font_family($fontname, $normal, $bold = null, $italic = null, $
       }
     }
   }
-
-  if ( is_null($bold) )
+ if ( is_null($bold) )
     echo ("Unable to find bold face file.\n");
   
   if ( !isset($italic) || !is_readable($italic) ) {
     $italic = $dir . "/" . $file . "_Italic" . $ext;
     if ( !is_readable($italic) ) {
-
-      // Try $file . "i"
+     // Try $file . "i"
       $italic = $dir . "/" . $file . "i" . $ext;
       if ( !is_readable($italic) ) {
           
@@ -152,16 +147,13 @@ function install_font_family($fontname, $normal, $bold = null, $italic = null, $
       }
     }
   }
-
-  if ( is_null($italic) )
+ if ( is_null($italic) )
     echo ("Unable to find italic face file.\n");
-
-  if ( !isset($bold_italic) || !is_readable($bold_italic) ) {
+ if ( !isset($bold_italic) || !is_readable($bold_italic) ) {
     $bold_italic = $dir . "/" . $file . "_Bold_Italic" . $ext;
       
     if ( !is_readable($bold_italic) ) {
-
-      // Try $file . "bi"
+     // Try $file . "bi"
       $bold_italic = $dir . "/" . $file . "bi" . $ext;
       if ( !is_readable($bold_italic) ) {
           
@@ -190,11 +182,9 @@ function install_font_family($fontname, $normal, $bold = null, $italic = null, $
   $entry = array();
     
   if ( mb_strtolower($ext) === ".pfb" || mb_strtolower($ext) === ".ttf" ) {
-
-    // Copy the files to the font directory.
+   // Copy the files to the font directory.
     foreach ($fonts as $var => $src) {
-
-      if ( is_null($src) ) {
+     if ( is_null($src) ) {
         $entry[$var] = DOMPDF_FONT_DIR . basename($normal);
         continue;
       }
@@ -208,14 +198,11 @@ function install_font_family($fontname, $normal, $bold = null, $italic = null, $
         throw new User_DOMPDF_Exception("Unable to write to destination '$dest'.");
         
       echo "Copying $src to $dest...\n";
-
-      if ( !copy($src, $dest) )
+     if ( !copy($src, $dest) )
         throw new DOMPDF_Exception("Unable to copy '$src' to '" . DOMPDF_FONT_DIR . "$dest'.");
-
-      $entry[$var] = $dest;
+     $entry[$var] = $dest;
     }
-
-  } else 
+ } else 
     throw new DOMPDF_Exception("Unable to process fonts of type '$ext'.");
     
     
@@ -232,10 +219,8 @@ function install_font_family($fontname, $normal, $bold = null, $italic = null, $
       
       $entry[$var] = $dest;
     }
-
-  }
-
-  // FIXME: how to generate afms from pfb?
+ }
+ // FIXME: how to generate afms from pfb?
   
   // Store the fonts in the lookup table
   Font_Metrics::set_font_family(mb_strtolower($fontname), $entry);

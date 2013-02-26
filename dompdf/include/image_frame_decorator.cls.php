@@ -46,8 +46,7 @@
  * @package dompdf
  */
 class Image_Frame_Decorator extends Frame_Decorator {
-
-  /**
+ /**
    * Array of downloaded images.  Cached so that identical images are
    * not needlessly downloaded.
    *
@@ -62,15 +61,13 @@ class Image_Frame_Decorator extends Frame_Decorator {
    * @var string
    */
   protected $_image_url;
-
-  /**
+ /**
    * The image's file extension (i.e. png, jpeg, gif)
    *
    * @var string
    */
   protected $_image_ext;
-
-  /**
+ /**
    * Class constructor
    *
    * @param Frame $frame the frame to decorate
@@ -81,15 +78,13 @@ class Image_Frame_Decorator extends Frame_Decorator {
     
     parent::__construct($frame, $dompdf);
     $url = $frame->get_node()->getAttribute("src");
-
-    list($this->_image_url, $this->_image_ext) = Image_Cache::resolve_url($url,
+   list($this->_image_url, $this->_image_ext) = Image_Cache::resolve_url($url,
                                                                           $dompdf->get_protocol(),
                                                                           $dompdf->get_host(),
                                                                           $dompdf->get_base_path());
     
   }
-
-  /**
+ /**
    * Return the image's url
    *
    * @return string The url of this image
@@ -97,8 +92,7 @@ class Image_Frame_Decorator extends Frame_Decorator {
   function get_image_url() {
     return $this->_image_url;
   }
-
-  /**
+ /**
    * Return the image's file extension
    *
    * @return string The image's file extension

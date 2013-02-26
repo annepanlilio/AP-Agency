@@ -67,23 +67,20 @@ class Frame_Tree {
    * @var DomDocument
    */
   protected $_dom;
-
-  /**
+ /**
    * The root node of the FrameTree.
    *
    * @var Frame
    */
   protected $_root;
-
-  /**
+ /**
    * A mapping of {@link Frame} objects to DomNode objects
    *
    * @var array
    */
   protected $_registry;
   
-
-  /**
+ /**
    * Class constructor
    *
    * @param DomDocument $dom the main DomDocument object representing the current html document
@@ -93,30 +90,26 @@ class Frame_Tree {
     $this->_root = null;
     $this->_registry = array();
   }
-
-  /**
+ /**
    * Returns the DomDocument object representing the curent html document
    *
    * @return DomDocument
    */
   function get_dom() { return $this->_dom; }
-
-  /**
+ /**
    * Returns the root frame of the tree
    *
    * @return Frame
    */
   function get_root() { return $this->_root; }
-
-  /**
+ /**
    * Returns a specific frame given its id
    *
    * @param string $id
    * @return Frame
    */
   function get_frame($id) { return isset($this->_registry[$id]) ? $this->_registry[$id] : null; }
-
-  /**
+ /**
    * Returns a post-order iterator for all frames in the tree
    *
    * @return FrameTreeList
@@ -130,15 +123,11 @@ class Frame_Tree {
     $html = $this->_dom->getElementsByTagName("html")->item(0);
     if ( is_null($html) )
       $html = $this->_dom->firstChild;
-
-    if ( is_null($html) )
+   if ( is_null($html) )
       throw new DOMPDF_Exception("Requested HTML document contains no data.");
-
-    $this->_root = $this->_build_tree_r($html);
-
-  }
-
-  /**
+   $this->_root = $this->_build_tree_r($html);
+ }
+ /**
    * Recursively adds {@link Frame} objects to the tree
    *
    * Recursively build a tree of Frame objects based on a dom tree.
@@ -157,18 +146,15 @@ class Frame_Tree {
     
     if ( !$node->hasChildNodes() )
       return $frame;
-
-    // Fixes 'cannot access undefined property for object with
+   // Fixes 'cannot access undefined property for object with
     // overloaded access', fix by Stefan radulian
     // <stefan.radulian@symbion.at>    
     //foreach ($node->childNodes as $child) {
-
-    // Store the children in an array so that the tree can be modified
+   // Store the children in an array so that the tree can be modified
     $children = array();
     for ($i = 0; $i < $node->childNodes->length; $i++)
       $children[] = $node->childNodes->item($i);
-
-    foreach ($children as $child) {
+   foreach ($children as $child) {
       // Skip non-displaying nodes
       if ( in_array( mb_strtolower($child->nodeName), self::$_HIDDEN_TAGS) )  {
         if ( mb_strtolower($child->nodeName) != "head" &&
@@ -176,8 +162,7 @@ class Frame_Tree {
           $child->parentNode->removeChild($child);
         continue;
       }
-
-      // Skip empty text nodes
+     // Skip empty text nodes
       if ( $child->nodeName == "#text" && $child->nodeValue == "" ) {
         $child->parentNode->removeChild($child);
         continue;
@@ -195,19 +180,16 @@ class Frame_Tree {
        
           $img_node->setAttribute($attr, $attr_node->value);
         }
-
-        foreach ( $child->attributes as $attr => $node ) {
+       foreach ( $child->attributes as $attr => $node ) {
           if ( $attr == "style" )
             continue;
           $child->removeAttribute($attr);
         }
-
-        $child->appendChild($img_node);
+       $child->appendChild($img_node);
       }
    
       $frame->append_child($this->_build_tree_r($child), false);
-
-    }
+   }
     
     return $frame;
   }

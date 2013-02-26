@@ -61,8 +61,7 @@ if (isset($_POST['action'])) {
 			echo ('<div id="message" class="updated"><p>Search saved successfully! <a href="'. admin_url("admin.php?page=". $_GET['page']) .'&action=emailCompose&amp;SearchID='. $lastid .'">Send Email</a></p></div>'); 
 
 		} else {
-
-        	echo ('<div id="message" class="error"><p>Error creating record, please ensure you have filled out all required fields.</p></div>'); 
+       	echo ('<div id="message" class="error"><p>Error creating record, please ensure you have filled out all required fields.</p></div>'); 
 
 		}
 
@@ -107,8 +106,7 @@ if (isset($_POST['action'])) {
 			$SearchMuxMessage		=$_POST['SearchMuxMessage'];
 
 			$SearchMuxCustomValue	=$_POST['SearchMuxCustomValue'];
-
-                   $SearchMuxMessage	= str_ireplace("[link-place-holder]",get_bloginfo("url") ."/client-view/".$SearchMuxHash,$SearchMuxMessage);
+                  $SearchMuxMessage	= str_ireplace("[link-place-holder]",get_bloginfo("url") ."/client-view/".$SearchMuxHash,$SearchMuxMessage);
 
 			// Create Record
 
@@ -206,44 +204,31 @@ if (isset($_POST['action'])) {
 	$SearchID = $_GET['SearchID'];
 
 	
-
-       $querySearch = mysql_query("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ");
+      $querySearch = mysql_query("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ");
 
 	 $dataSearchSavedMux = mysql_fetch_assoc($querySearch);
 
 	
 
 	?>
-
-    <div style="width:500px; float:left;">
+   <div style="width:500px; float:left;">
      <h2><?php echo __("Search Saved", rb_agency_TEXTDOMAIN); ?></h2>
       <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
-
-        <input type="hidden" name="action" value="cartEmail" />
-
-        <div><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
-
-        <div><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
-
-        <div><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart" /></div>
-
-        <div><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
+       <input type="hidden" name="action" value="cartEmail" />
+       <div><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+       <div><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
+       <div><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart" /></div>
+       <div><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
 		<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){ echo @$dataSearchSavedMux["SearchMuxMessage"];}else{echo @"Click the following link (or copy and paste it into your browser): [link-place-holder]";} ?></textarea>
         </div>
-
-        <p class="submit">
-
-            <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
-
-            <input type="hidden" name="action" value="emailSend" />
-
-            <input type="submit" name="submit" value="Send Email" class="button-primary" />
-
-        </p>
+       <p class="submit">
+           <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
+           <input type="hidden" name="action" value="emailSend" />
+           <input type="submit" name="submit" value="Send Email" class="button-primary" />
+       </p>
 
 	  </form>
-
-       </div>
+      </div>
        <?php
 	 
 	              $query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
@@ -286,22 +271,17 @@ if (isset($_POST['action'])) {
 	<?php
 
 } else {
-
- ?>
+?>
 
 <div style="clear:both"></div>
 
 <div class="wrap" style="min-width: 1020px;">
-
-  <div id="rb-overview-icon" class="icon32"></div>
-
-  <h2>Profile Search</h2>
+ <div id="rb-overview-icon" class="icon32"></div>
+ <h2>Profile Search</h2>
 
 	<?php
-
-    
-
-    if ($_GET["action"] == "searchSave") { // Add to Cart
+   
+   if ($_GET["action"] == "searchSave") { // Add to Cart
 
 
 
@@ -316,34 +296,21 @@ if (isset($_POST['action'])) {
 			$cartString = implode(",", array_unique($cartArray));
 
 			?>
-
-            <h3 class="title">Save Search and Email</h3>
-
+           <h3 class="title">Save Search and Email</h3>
 
 
-            <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
-
-            <table class="form-table">
-
-            <tbody>
-
-                <tr valign="top">
-
-                    <th scope="row">Group Title:</th>
-
-                    <td>
-
-                        <input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo $CastingCompany; ?>" />
-
-                    </td>
-
-                </tr>
-
-                <tr valign="top">
-
-                    <th scope="row">Profiles:</th>
-
-                    <td>
+           <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
+           <table class="form-table">
+           <tbody>
+               <tr valign="top">
+                   <th scope="row">Group Title:</th>
+                   <td>
+                       <input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo $CastingCompany; ?>" />
+                   </td>
+               </tr>
+               <tr valign="top">
+                   <th scope="row">Profiles:</th>
+                   <td>
 
 						<?php
                                    
@@ -362,40 +329,27 @@ if (isset($_POST['action'])) {
 						}
 
 						?>
-
-                    	<input type="hidden" name="SearchProfileID" value="<?php echo $cartString; ?>" />
-
-                    </td>
-
-                </tr>
-
-                </tbody>
-
-            </table>
-
-            <p class="submit">
-
-            	Click Save to get the email code<br />
-
-                <input type="hidden" name="action" value="addRecord" />
-
-                <input type="submit" name="Submit" value="Save Search" class="button-primary" />
-
-            </p>
-
-            </form>
+                   	<input type="hidden" name="SearchProfileID" value="<?php echo $cartString; ?>" />
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+           <p class="submit">
+           	Click Save to get the email code<br />
+               <input type="hidden" name="action" value="addRecord" />
+               <input type="submit" name="Submit" value="Save Search" class="button-primary" />
+           </p>
+           </form>
 
 			<hr />
 
 			<?php
-
-        } else {
+       } else {
 
 			echo "Session expired. Please search again.";
 
 		}
-
-    } // End Serach Save
+   } // End Serach Save
 
 } // End All
 
@@ -676,8 +630,7 @@ if (isset($_POST['action'])) {
 		<tr<?php echo $rowColor; ?>>
 
 			<th class="check-column" scope="row">
-
-                  
+                 
 
 				<input type="checkbox" value="<?php echo $SearchID; ?>" class="administrator" id="<?php echo $SearchID; ?>" name="<?php echo $SearchID; ?>"/>
 
@@ -694,8 +647,7 @@ if (isset($_POST['action'])) {
 				<?php echo $SearchTitle; ?>
 
 				<div class="row-actions">
-
-                        <?php
+                       <?php
 
 				  if($count3<=0){
 
@@ -708,14 +660,11 @@ if (isset($_POST['action'])) {
 				  }else{
 
 				?>
-
-                        	<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Create Email</a> | </span>
+                       	<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Create Email</a> | </span>
 
 				
-
-                        <?php } ?>
-
-                        	<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
+                       <?php } ?>
+                       	<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 
 				</div>
 

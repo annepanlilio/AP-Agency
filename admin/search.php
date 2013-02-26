@@ -190,8 +190,7 @@ echo $cartArray;
 			$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
 		}
 
-
-        echo "  <div class=\"boxblock-holder\">\n";
+       echo "  <div class=\"boxblock-holder\">\n";
         echo "    <h3 class=\"title\">Search Results</h3>\n";
 
 		// Filter Models Already in Cart
@@ -420,8 +419,7 @@ echo $cartArray;
 						foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 		echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 						}
-
-        echo "            </td>\n";
+       echo "            </td>\n";
 	  
 	  // public info
         echo "            <td class=\"ProfileDetails column-ProfileDetails\">\n";
@@ -440,8 +438,7 @@ echo $cartArray;
 					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 					}
 				}
-
-        echo "            </td>\n";
+       echo "            </td>\n";
         echo "            <td class=\"ProfileImage column-ProfileImage\">\n";
 							if (isset($data['ProfileMediaURL']) && !empty($data['ProfileMediaURL'])) {
 		echo "				<div class=\"image\"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></div>\n";
@@ -471,8 +468,7 @@ echo $cartArray;
         } 
         echo "        </tbody>\n";
         echo "    </table>\n";
-
-    
+   
         echo "     <p>\n";
         echo "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_menu_search') ."\" class=\"button-primary\" />\n";
 		echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
@@ -491,8 +487,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 	echo " <div class=\"boxblock\">\n";
 	echo "  <h3>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h3>\n";
 	echo "    <div class=\"inner\">\n";
-
-         if (isset($_SESSION['cartArray']) && !empty($_SESSION['cartArray'])) {
+        if (isset($_SESSION['cartArray']) && !empty($_SESSION['cartArray'])) {
 			 
             $cartArray = $_SESSION['cartArray'];
             	$cartString = implode(",", array_unique($cartArray));

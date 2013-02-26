@@ -46,8 +46,7 @@
  * @package dompdf
  */
 class Generated_Frame_Reflower extends Frame_Reflower {
-
-  protected $_reflower; // Decoration target
+ protected $_reflower; // Decoration target
   
   function __construct(Frame $frame) {
     parent::__construct($frame);
@@ -56,15 +55,12 @@ class Generated_Frame_Reflower extends Frame_Reflower {
   function set_reflower(Frame_Reflower $reflow) {
     $this->_reflower = $reflow;
   }
-
-  //........................................................................
-
-  protected function _parse_string($string) {
+ //........................................................................
+ protected function _parse_string($string) {
     $string = trim($string, "'\"");
     $string = str_replace(array("\\\n",'\\"',"\\'"),
                           array("",'"',"'"), $string);
-
-    // Convert escaped hex characters into ascii characters (e.g. \A => newline)
+   // Convert escaped hex characters into ascii characters (e.g. \A => newline)
     $string = preg_replace_callback("/\\\\([0-9a-fA-F]{0,6})(\s)?(?(2)|(?=[^0-9a-fA-F]))/",
                                     create_function('$matches',
                                                     'return chr(hexdec($matches[1]));'),
@@ -92,15 +88,13 @@ class Generated_Frame_Reflower extends Frame_Reflower {
       return;
     
     $text = "";
-
-    foreach ($matches as $match) {
+   foreach ($matches as $match) {
       if ( isset($match[2]) && $match[2] !== "" )
         $match[1] = $match[1];
       
       if ( isset($match[6]) && $match[6] !== "" )
         $match[4] = $match[6];
-
-      if ( isset($match[8]) && $match[8] !== "" )
+     if ( isset($match[8]) && $match[8] !== "" )
         $match[7] = $match[8];
       
       if ( isset($match[1]) && $match[1] !== "" ) {
@@ -129,8 +123,7 @@ class Generated_Frame_Reflower extends Frame_Reflower {
           $p = $this->_frame->find_block_parent();
           
           $text .= $p->counter_value($counter_id, $type);
-
-        } else if ( $match[1]{7} == "s" ) {
+       } else if ( $match[1]{7} == "s" ) {
           // counters(name, string [,style])
           if ( isset($args[1]) )
             $string = $this->_parse_string(trim($args[1]));
@@ -149,16 +142,14 @@ class Generated_Frame_Reflower extends Frame_Reflower {
             $p = $p->find_block_parent();
           }
           $text .= $tmp;
-
-        } else 
+       } else 
           // countertops?
           continue;
         
       } else if ( isset($match[4]) && $match[4] !== "" ) {
         // String match        
         $text .= $this->_parse_string($match[4]);
-
-      } else if ( isset($match[7]) && $match[7] !== "" ) {
+     } else if ( isset($match[7]) && $match[7] !== "" ) {
         // Directive match
         
         if ( $match[7] === "open-quote" ) {
@@ -170,8 +161,7 @@ class Generated_Frame_Reflower extends Frame_Reflower {
         } else if ( $match[7] === "no-close-quote" ) {
           // FIXME:
         } else if ( mb_strpos($match[7],"attr(") === 0 ) {
-
-          $i = mb_strpos($match[7],")");
+         $i = mb_strpos($match[7],")");
           if ( $i === false )
             continue;
           
@@ -185,12 +175,10 @@ class Generated_Frame_Reflower extends Frame_Reflower {
         
       }      
     }
-
-    return $text;
+   return $text;
     
   }
-
-  function reflow() {
+ function reflow() {
     $style = $this->_frame->get_style();
     
     $text = $this->_parse_content();

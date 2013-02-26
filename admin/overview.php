@@ -17,16 +17,13 @@ echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
 echo "  <h2>". __("Dashboard", rb_agency_TEXTDOMAIN) ."</h2>\n";
 
 echo "  <p>". __("You are using version", rb_agency_TEXTDOMAIN) ." <b>". rb_agency_VERSION ."</b></p>\n";
-
-  
+ 
 
 echo "  <div class=\"boxblock-holder\">\n";
-
-  
+ 
 
 echo "    <div class=\"boxblock-container\" style=\"width: 46%;\">\n";
-
-    
+   
 
 echo "     <div class=\"boxblock\">\n";
 
@@ -195,8 +192,7 @@ echo "        <div class=\"inner\">\n";
 			  /*
 
 			    0- metric
-
-   			      1 - cm
+  			      1 - cm
 
 				2- kg
 
@@ -601,7 +597,6 @@ echo "    </div><!-- .container -->\n";
 
 echo "    <div class=\"boxblock-container\" style=\"width: 46%;\">\n"; 
 
- 
 
 echo "     <div class=\"boxblock\">\n"; 
 
@@ -612,10 +607,8 @@ echo "        <div class=\"inner\">\n";
 
 
 			   if ($user_level >= 7) {
-
-            echo "<a href='?page=rb_agency_menu_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Browse and edit existing profiles", rb_agency_TEXTDOMAIN) . ".";
-
-            echo "<br/>";
+           echo "<a href='?page=rb_agency_menu_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Browse and edit existing profiles", rb_agency_TEXTDOMAIN) . ".";
+           echo "<br/>";
 
 		  $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." ");
 
@@ -752,8 +745,7 @@ echo "        </div>\n";
 echo "     </div>\n"; 
 
 
-
-    
+   
 
 echo "    </div><!-- .container -->\n"; 
 
@@ -776,8 +768,7 @@ echo "            <p>". __("WordPress Plugins by ", rb_agency_TEXTDOMAIN) . " <a
 echo "        </div>\n"; 
 
 echo "     </div>\n"; 
-
-     
+    
 
 echo "    </div><!-- .container -->\n"; 
 

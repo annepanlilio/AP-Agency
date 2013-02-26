@@ -46,107 +46,79 @@
  * @package dompdf
  */
 class Table_Frame_Reflower extends Frame_Reflower {
-
-  /**
+ /**
    * Cache of results between call to get_min_max_width and assign_widths
    *
    * @var array
    */
   protected $_state;
-
-  function __construct(Table_Frame_Decorator $frame) {
+ function __construct(Table_Frame_Decorator $frame) {
     $this->_state = null;
     parent::__construct($frame);
   }
-
-  /**
+ /**
    * State is held here so it needs to be reset along with the decorator
    */
   function reset() {
     $this->_state = null;
   }
-
-  //........................................................................
-
-  protected function _assign_widths() {
+ //........................................................................
+ protected function _assign_widths() {
     $style = $this->_frame->get_style();
-
-    // Find the min/max width of the table and sort the columns into
+   // Find the min/max width of the table and sort the columns into
     // absolute/percent/auto arrays
     $min_width = $this->_state["min_width"];
     $max_width = $this->_state["max_width"];
     $percent_used = $this->_state["percent_used"];
     $absolute_used = $this->_state["absolute_used"];
     $auto_min = $this->_state["auto_min"];
-
-    $absolute =& $this->_state["absolute"];
+   $absolute =& $this->_state["absolute"];
     $percent =& $this->_state["percent"];
     $auto =& $this->_state["auto"];
-
-    // Determine the actual width of the table
+   // Determine the actual width of the table
     $cb = $this->_frame->get_containing_block();
     $columns =& $this->_frame->get_cellmap()->get_columns();
-
-    $width = $style->width;
-
-    // Calcluate padding & border fudge factor
+   $width = $style->width;
+   // Calcluate padding & border fudge factor
     $left = $style->margin_left;
     $right = $style->margin_right;
-
-    $left = $left == "auto" ? 0 : $style->length_in_pt($left, $cb["w"]);
+   $left = $left == "auto" ? 0 : $style->length_in_pt($left, $cb["w"]);
     $right = $right == "auto" ? 0 : $style->length_in_pt($right, $cb["w"]);
-
-    $delta = $left + $right + $style->length_in_pt(array($style->padding_left,
+   $delta = $left + $right + $style->length_in_pt(array($style->padding_left,
                                                          $style->border_left_width,
                                                          $style->border_right_width,
                                                          $style->padding_right), $cb["w"]);
-
-    $min_table_width = $style->length_in_pt( $style->min_width, $cb["w"] - $delta );
-
-    if ( $width !== "auto" ) {
-
-      $preferred_width = $style->length_in_pt($width, $cb["w"]) - $delta;
-
-      if ( $preferred_width < $min_table_width )
+   $min_table_width = $style->length_in_pt( $style->min_width, $cb["w"] - $delta );
+   if ( $width !== "auto" ) {
+     $preferred_width = $style->length_in_pt($width, $cb["w"]) - $delta;
+     if ( $preferred_width < $min_table_width )
         $preferred_width = $min_table_width;
-
-      if ( $preferred_width > $min_width )
+     if ( $preferred_width > $min_width )
         $width = $preferred_width;
       else
         $width = $min_width;
-
-    } else {
-
-      if ( $max_width + $delta < $cb["w"] )
+   } else {
+     if ( $max_width + $delta < $cb["w"] )
         $width = $max_width;
       else if ( $cb["w"] - $delta > $min_width )
         $width = $cb["w"] - $delta;
       else
         $width = $min_width;
-
-      if ( $width < $min_table_width )
+     if ( $width < $min_table_width )
         $width = $min_table_width;
-
-    }
-
-    // Store our resolved width
+   }
+   // Store our resolved width
     $style->width = $width;
-
-    $cellmap = $this->_frame->get_cellmap();
-
-    // If the whole table fits on the page, then assign each column it's max width
+   $cellmap = $this->_frame->get_cellmap();
+   // If the whole table fits on the page, then assign each column it's max width
     if ( $width == $max_width ) {
-
-      foreach (array_keys($columns) as $i)
+     foreach (array_keys($columns) as $i)
         $cellmap->set_column_width($i, $columns[$i]["max-width"]);
-
-      return;
+     return;
     }
-
-    // Determine leftover and assign it evenly to all columns
+   // Determine leftover and assign it evenly to all columns
     if ( $width > $min_width ) {
-
-      // We have four cases to deal with:
+     // We have four cases to deal with:
       //
       // 1. All columns are auto--no widths have been specified.  In this
       // case we distribute extra space across all columns weighted by max-width.
@@ -161,65 +133,49 @@ class Table_Frame_Reflower extends Frame_Reflower {
       //
       // 4. Both absolute and percentage widths have been specified.  This
       // is annoying.
-
-      // Case 1:
+     // Case 1:
       if ( $absolute_used == 0 && $percent_used == 0 ) {
         $increment = $width - $min_width;
-
-        foreach (array_keys($columns) as $i)
+       foreach (array_keys($columns) as $i)
           $cellmap->set_column_width($i, $columns[$i]["min-width"] + $increment * ($columns[$i]["max-width"] / $max_width));
         return;
       }
 
-
-      // Case 2
+     // Case 2
       if ( $absolute_used > 0 && $percent_used == 0 ) {
-
-        if ( count($auto) > 0 )
+       if ( count($auto) > 0 )
           $increment = ($width - $auto_min - $absolute_used) / count($auto);
         else
           $increment = 0;
-
-        // Use the absolutely specified width or the increment
+       // Use the absolutely specified width or the increment
         foreach (array_keys($columns) as $i) {
-
-          if ( $columns[$i]["absolute"] > 0 )
+         if ( $columns[$i]["absolute"] > 0 )
             $cellmap->set_column_width($i, $columns[$i]["min-width"]);
           else
             $cellmap->set_column_width($i,$columns[$i]["min-width"] + $increment);
-
-        }
+       }
         return;
       }
 
-
-      // Case 3:
+     // Case 3:
       if ( $absolute_used == 0 && $percent_used > 0 ) {
-
-        $scale = null;
+       $scale = null;
         $remaining = null;
-
-        // Scale percent values if the total percentage is > 100, or if all
+       // Scale percent values if the total percentage is > 100, or if all
         // values are specified as percentages.
         if ( $percent_used > 100 || count($auto) == 0)
           $scale = 100 / $percent_used;
         else
           $scale = 1;
-
-        // Account for the minimum space used by the unassigned auto columns
+       // Account for the minimum space used by the unassigned auto columns
         $used_width = $auto_min;
-
-        foreach ($percent as $i) {
+       foreach ($percent as $i) {
           $columns[$i]["percent"] *= $scale;
-
-          $slack = $width - $used_width;
-
-          $w = min($columns[$i]["percent"] * $width/100, $slack);
-
-          if ( $w < $columns[$i]["min-width"] )
+         $slack = $width - $used_width;
+         $w = min($columns[$i]["percent"] * $width/100, $slack);
+         if ( $w < $columns[$i]["min-width"] )
             $w = $columns[$i]["min-width"];
-
-          $cellmap->set_column_width($i, $w);
+         $cellmap->set_column_width($i, $w);
           $used_width += $w;
 
         }

@@ -51,16 +51,13 @@ class Table_Cell_Frame_Decorator extends Block_Frame_Decorator {
   protected $_content_height;
   
   //........................................................................
-
-  function __construct(Frame $frame, DOMPDF $dompdf) {
+ function __construct(Frame $frame, DOMPDF $dompdf) {
     parent::__construct($frame, $dompdf);
     $this->_resolved_borders = array();
     $this->_content_height = 0;    
   }
-
-  //........................................................................
-
-  function reset() {
+ //........................................................................
+ function reset() {
     parent::reset();
     $this->_resolved_borders = array();
     $this->_content_height = 0;
@@ -70,8 +67,7 @@ class Table_Cell_Frame_Decorator extends Block_Frame_Decorator {
   function get_content_height() {
     return $this->_content_height;
   }
-
-  function set_content_height($height) {
+ function set_content_height($height) {
     $this->_content_height = $height;
   }
   
@@ -84,33 +80,26 @@ class Table_Cell_Frame_Decorator extends Block_Frame_Decorator {
                                           $style->padding_bottom,
                                           $style->margin_bottom),
                                     $style->width);
-
-    $new_height = $height - $v_space;    
+   $new_height = $height - $v_space;    
     $style->height = $new_height;
-
-    if ( $new_height > $this->_content_height ) {
+   if ( $new_height > $this->_content_height ) {
       // Adjust our vertical alignment
       $valign = $style->vertical_align;
-
-      switch ($valign) {
-
-      default:
+     switch ($valign) {
+     default:
       case "baseline":
         // FIXME: this isn't right
         
       case "top":
         // Don't need to do anything
         return;
-
-      case "middle":
+     case "middle":
         $delta = ($new_height - $this->_content_height) / 2;
         break;
-
-      case "bottom":
+     case "bottom":
         $delta = $new_height - $this->_content_height;
         break;
-
-      }
+     }
    
       // Move our children
       foreach ( $this->get_lines() as $i => $line ) {
@@ -120,17 +109,13 @@ class Table_Cell_Frame_Decorator extends Block_Frame_Decorator {
    }
         
   }
-
-  function set_resolved_border($side, $border_spec) {    
+ function set_resolved_border($side, $border_spec) {    
     $this->_resolved_borders[$side] = $border_spec;
   }
-
-  //........................................................................
-
-  function get_resolved_border($side) {
+ //........................................................................
+ function get_resolved_border($side) {
     return $this->_resolved_borders[$side];
   }
-
-  function get_resolved_borders() { return $this->_resolved_borders; }
+ function get_resolved_borders() { return $this->_resolved_borders; }
 }
 ?>

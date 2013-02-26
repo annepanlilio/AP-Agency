@@ -23,11 +23,9 @@ Installation
    the webserver group the owner of this directory and give the directory
    group write permissions.  For example, on Debian systems, apache runs as
    the www-data user:
-
-   $ chgrp www-data lib/fonts
+  $ chgrp www-data lib/fonts
    $ chmod g+w lib/fonts
-
-   If your user is not a member of the www-data group or you do not have
+  If your user is not a member of the www-data group or you do not have
    root priviledges, you can make the directory world writable and set the
    sticky bit:
    

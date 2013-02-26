@@ -61,8 +61,7 @@ define('__DOMPDF_FONT_CACHE_FILE', DOMPDF_FONT_DIR . "dompdf_font_family_cache")
  * @package dompdf
  */
 class Font_Metrics {
-
-  /**
+ /**
    * @see __DOMPDF_FONT_CACHE_FILE
    */
   const CACHE_FILE = __DOMPDF_FONT_CACHE_FILE;
@@ -73,8 +72,7 @@ class Font_Metrics {
    * @var Cpdf
    */
   static protected $_pdf = null;
-
-  /**
+ /**
    * Array of font family names to font files
    *
    * Usually cached by the {@link load_font.php} script
@@ -94,8 +92,7 @@ class Font_Metrics {
       self::$_pdf = Canvas_Factory::get_instance();
     }
   }
-
-  /**
+ /**
    * Calculates text size, in points
    *
    * @param string $text the text to be sized
@@ -107,8 +104,7 @@ class Font_Metrics {
   static function get_text_width($text, $font, $size, $spacing = 0) {
     return self::$_pdf->get_text_width($text, $font, $size, $spacing);
   }
-
-  /**
+ /**
    * Calculates font height
    *
    * @param string $font
@@ -118,8 +114,7 @@ class Font_Metrics {
   static function get_font_height($font, $size) {
     return self::$_pdf->get_font_height($font, $size);
   }
-
-  /**
+ /**
    * Resolves a font family & subtype into an actual font file
    *
    * Subtype can be one of 'normal', 'bold', 'italic' or 'bold_italic'.  If
@@ -138,8 +133,7 @@ class Font_Metrics {
     
     if ( !isset(self::$_font_lookup[$family]) )
       $family = DOMPDF_DEFAULT_FONT;
-
-    if ( !in_array($subtype, array("normal", "bold", "italic", "bold_italic")) )
+   if ( !in_array($subtype, array("normal", "bold", "italic", "bold_italic")) )
       //throw new DOMPDF_Exception("Font subtype '$subtype' is unsupported.");
       return self::$_font_lookup[DOMPDF_DEFAULT_FONT]["normal"];
     
@@ -148,8 +142,7 @@ class Font_Metrics {
     
     return self::$_font_lookup[$family][$subtype];
   }
-
-  /**
+ /**
    * Saves the stored font family cache
    *
    * The name and location of the cache file are determined by {@link
@@ -159,12 +152,10 @@ class Font_Metrics {
    * @see Font_Metrics::load_font_families()
    */
   static function save_font_families() {
-
-    file_put_contents(self::CACHE_FILE, var_export(self::$_font_lookup, true));
+   file_put_contents(self::CACHE_FILE, var_export(self::$_font_lookup, true));
     
   }
-
-  /**
+ /**
    * Loads the stored font family cache
    *
    * @see save_font_families()
@@ -172,15 +163,11 @@ class Font_Metrics {
   static function load_font_families() {
     if ( !is_readable(self::CACHE_FILE) )
       return;
-
-    $data = file_get_contents(self::CACHE_FILE);
-
-    if ( $data != "" )
+   $data = file_get_contents(self::CACHE_FILE);
+   if ( $data != "" )
       eval ('self::$_font_lookup = ' . $data . ";");
-
-  }
-
-  /**
+ }
+ /**
    * Returns the current font lookup table
    *
    * @return array
@@ -188,8 +175,7 @@ class Font_Metrics {
   static function get_font_families() {
     return self::$_font_lookup;
   }
-
-  static function set_font_family($fontname, $entry) {
+ static function set_font_family($fontname, $entry) {
     self::$_font_lookup[mb_strtolower($fontname)] = $entry;
   }
 }

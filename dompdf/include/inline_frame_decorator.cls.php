@@ -48,10 +48,8 @@
 class Inline_Frame_Decorator extends Frame_Decorator {
   
   function __construct(Frame $frame, DOMPDF $dompdf) { parent::__construct($frame, $dompdf); }
-
-  function split($frame = null) {
-
-    if ( is_null($frame) ) {
+ function split($frame = null) {
+   if ( is_null($frame) ) {
       $this->get_parent()->split($this);
       return;
     }
@@ -61,8 +59,7 @@ class Inline_Frame_Decorator extends Frame_Decorator {
         
     $split = $this->copy( $this->_frame->get_node()->cloneNode() ); 
     $this->get_parent()->insert_child_after($split, $this);
-
-    // Unset the split node's left style properties since we don't want them
+   // Unset the split node's left style properties since we don't want them
     // to propagate
     $style = $split->get_style();
     $style->margin_left = "0";

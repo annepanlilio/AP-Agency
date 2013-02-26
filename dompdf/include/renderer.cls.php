@@ -49,8 +49,7 @@
  * @package dompdf
  */
 class Renderer extends Abstract_Renderer {
-
-  /**
+ /**
    * Array of renderers for specific frame types
    *
    * @var array
@@ -63,21 +62,18 @@ class Renderer extends Abstract_Renderer {
   function new_page() {
     $this->_canvas->new_page();
   }
-
-  /**
+ /**
    * Render frames recursively
    *
    * @param Frame $frame the frame to render
    */
   function render(Frame $frame) {    
     global $_dompdf_debug;
-
-    if ( $_dompdf_debug ) {
+   if ( $_dompdf_debug ) {
       echo $frame;
       flush();
     }                      
-
-    $display = $frame->get_style()->display;
+   $display = $frame->get_style()->display;
     
     switch ($display) {
       
@@ -90,23 +86,19 @@ class Renderer extends Abstract_Renderer {
     case "inline-table":
       $this->_render_frame("block", $frame);
       break;
-
-    case "inline":
+   case "inline":
       if ( $frame->get_node()->nodeName == "#text" )
         $this->_render_frame("text", $frame);
       else
         $this->_render_frame("inline", $frame);
       break;
-
-    case "table-cell":
+   case "table-cell":
       $this->_render_frame("table-cell", $frame);
       break;
-
-    case "-dompdf-list-bullet":
+   case "-dompdf-list-bullet":
       $this->_render_frame("list-bullet", $frame);
       break;
-
-    case "-dompdf-image":
+   case "-dompdf-image":
       $this->_render_frame("image", $frame);
       break;
       
@@ -119,21 +111,16 @@ class Renderer extends Abstract_Renderer {
         // Evaluate embedded php scripts
         $this->_render_frame("php", $frame);
       }
-
-      // Don't render children, so skip to next iter
+     // Don't render children, so skip to next iter
       return;
       
     default:
       break;
-
-    }
-
-    foreach ($frame->get_children() as $child)
+   }
+   foreach ($frame->get_children() as $child)
       $this->render($child);
-
-  }
-
-  /**
+ }
+ /**
    * Render a single frame
    *
    * Creates Renderer objects on demand
@@ -142,44 +129,36 @@ class Renderer extends Abstract_Renderer {
    * @param Frame $frame the frame to render
    */
   protected function _render_frame($type, $frame) {
-
-    if ( !isset($this->_renderers[$type]) ) {
+   if ( !isset($this->_renderers[$type]) ) {
       
       switch ($type) {
       case "block":
         $this->_renderers["block"] = new Block_Renderer($this->_dompdf);
         break;
-
-      case "inline":
+     case "inline":
         $this->_renderers["inline"] = new Inline_Renderer($this->_dompdf);
         break;
-
-      case "text":
+     case "text":
         $this->_renderers["text"] = new Text_Renderer($this->_dompdf);
         break;
-
-      case "image":
+     case "image":
         $this->_renderers["image"] = new Image_Renderer($this->_dompdf);
         break;
       
       case "table-cell":
         $this->_renderers["table-cell"] = new Table_Cell_Renderer($this->_dompdf);
         break;
-
-      case "list-bullet":
+     case "list-bullet":
         $this->_renderers["list-bullet"] = new List_Bullet_Renderer($this->_dompdf);
         break;
-
-      case "php":
+     case "php":
         $this->_renderers["php"] = new PHP_Evaluator($this->_canvas);
         break;
-
-      }
+     }
     }
     
     $this->_renderers[$type]->render($frame);
-
-  }
+ }
 }
 
 ?>

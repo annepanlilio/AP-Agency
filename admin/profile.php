@@ -558,8 +558,7 @@ function rb_display_manage($ProfileID) {
 		if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) { $rb_agency_option_agencyimagemaxheight = 800; }
 		$rb_agency_option_profilenaming 		= (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
 		$rb_agency_option_locationcountry 		= $rb_agency_options_arr['rb_agency_option_locationcountry'];
-
-  echo "<div class=\"wrap\">\n";
+ echo "<div class=\"wrap\">\n";
   echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
   echo "  <h2>". __("Manage ". LabelSingular, rb_agency_TEXTDOMAIN) ."</h2>\n";
   echo "  <p><a class=\"button-primary\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."\">". __("Back to ". LabelSingular ." List", rb_agency_TEXTDOMAIN) ."</a></p>\n";
@@ -1123,8 +1122,7 @@ function rb_display_list(){
   global $wpdb;
   $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_locationtimezone 		= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
-
-  echo "<div class=\"wrap\">\n";
+ echo "<div class=\"wrap\">\n";
   echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
   echo "  <h2>". __("List", rb_agency_TEXTDOMAIN) ." ". LabelPlural ."</h2>\n";
 	
@@ -1332,8 +1330,7 @@ function rb_display_list(){
 		echo "    </tr>\n";
 		echo " </tfoot>\n";
 		echo " <tbody>\n";
-
-        $query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
+       $query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
         $results2 = mysql_query($query);
         $count = mysql_num_rows($results2);
         while ($data = mysql_fetch_array($results2)) {
@@ -1397,8 +1394,7 @@ function rb_display_list(){
 		echo "           ". rb_agency_makeago(rb_agency_convertdatetime($ProfileDateViewLast), $rb_agency_option_locationtimezone);
 		echo "        </td>\n";
 		echo "    </tr>\n";
-
-        }
+       }
             mysql_free_result($results2);
             if ($count < 1) {
 				if (isset($filter)) { 

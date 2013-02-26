@@ -89,24 +89,19 @@ function dompdf_usage() {
 }
 
 function getoptions() {
-
-  $opts = array();
-
-  if ( $_SERVER["argc"] == 1 )
+ $opts = array();
+ if ( $_SERVER["argc"] == 1 )
     return $opts;
   
   $i = 1;
   while ($i < $_SERVER["argc"]) {
-
-    switch ($_SERVER["argv"][$i]) {
-
-    case "--help":
+   switch ($_SERVER["argv"][$i]) {
+   case "--help":
     case "-h":
       $opts["h"] = true;
       $i++;
       break;
-
-    case "-l":
+   case "-l":
       $opts["l"] = true;
       $i++;
       break;
@@ -117,22 +112,19 @@ function getoptions() {
       $opts["p"] = $_SERVER["argv"][$i+1];
       $i += 2;
       break;
-
-    case "-o":
+   case "-o":
       if ( !isset($_SERVER["argv"][$i+1]) )
         die("-o switch requires an orientation parameter\n");
       $opts["o"] = $_SERVER["argv"][$i+1];
       $i += 2;
       break;
-
-    case "-b":
+   case "-b":
       if ( !isset($_SERVER["argv"][$i+1]) )
         die("-b switch requires an path parameter\n");
       $opts["b"] = $_SERVER["argv"][$i+1];
       $i += 2;
       break;
-
-    case "-f":
+   case "-f":
       if ( !isset($_SERVER["argv"][$i+1]) )
         die("-f switch requires an filename parameter\n");
       $opts["f"] = $_SERVER["argv"][$i+1];
@@ -143,13 +135,11 @@ function getoptions() {
       $opts["v"] = true;
       $i++;
       break;
-
-    case "-d":
+   case "-d":
       $opts["d"] = true;
       $i++;
       break;
-
-    default:
+   default:
       $opts["filename"] = $_SERVER["argv"][$i];
       $i++;
       break;
@@ -166,8 +156,7 @@ global $_dompdf_debug;
 $sapi = php_sapi_name();
 
 switch ( $sapi ) {
-
- case "cli":
+case "cli":
    
   $opts = getoptions();
  
@@ -175,8 +164,7 @@ switch ( $sapi ) {
     dompdf_usage();
     exit;
   }
-
-  if ( isset($opts["l"]) ) {
+ if ( isset($opts["l"]) ) {
     echo "\nUnderstood paper sizes:\n";
     
     foreach (array_keys(CPDF_Adapter::$PAPER_SIZES) as $size)
@@ -191,16 +179,13 @@ switch ( $sapi ) {
 	if(!empty($_GET['pper'])){$paper = $_GET['pper'];}
 	else{$paper = DOMPDF_DEFAULT_PAPER_SIZE;}
   }
-
-  if ( isset($opts["o"]) )
+ if ( isset($opts["o"]) )
     $orientation = $opts["o"];
   else
     $orientation = "portrait";
-
-  if ( isset($opts["b"]) )
+ if ( isset($opts["b"]) )
     $base_path = $opts["b"];
-
-  if ( isset($opts["f"]) )
+ if ( isset($opts["f"]) )
     $outfile = $opts["f"];
   else {
     if ( $file == "-" ){
@@ -209,11 +194,9 @@ switch ( $sapi ) {
 	}else{
       $outfile = str_ireplace(array(".html", ".htm", ".php"), "", $file) . ".pdf";}
   }
-
-  if ( isset($opts["v"]) ) 
+ if ( isset($opts["v"]) ) 
     $_dompdf_show_warnings = true;
-
-  if ( isset($opts["d"]) ) {
+ if ( isset($opts["d"]) ) {
     $_dompdf_show_warnings = true;
     $_dompdf_debug = true;
   }
@@ -221,10 +204,8 @@ switch ( $sapi ) {
   $save_file = true;
   
   break;
-
- default:
-
-   if ( isset($_GET["input_file"]) )
+default:
+  if ( isset($_GET["input_file"]) )
      $file = rawurldecode($_GET["input_file"]);
    else
      throw new DOMPDF_Exception("An input file is required (i.e. input_file _GET variable).");
@@ -235,18 +216,15 @@ switch ( $sapi ) {
 	if(!empty($_GET['pper'])){$paper = $_GET['pper'];}
 	else{$paper = DOMPDF_DEFAULT_PAPER_SIZE;}
   }
-
-   if ( isset($_GET["orientation"]) )
+  if ( isset($_GET["orientation"]) )
      $orientation = rawurldecode($_GET["orientation"]);
    else
      $orientation = "portrait";
-
-  if ( isset($_GET["base_path"]) ) {
+ if ( isset($_GET["base_path"]) ) {
      $base_path = rawurldecode($_GET["base_path"]);
     $file = $base_path . $file; # Set the input file
   }  
-
-  if ( isset($_GET["options"]) ) {
+ if ( isset($_GET["options"]) ) {
     $options = $_GET["options"];
   }
   
@@ -258,12 +236,10 @@ switch ( $sapi ) {
       throw new DOMPDF_Exception("Permission denied on $file.");
     }
   }
-
-  $outfile = "dompdf_out.pdf"; # Don't allow them to set the output file
+ $outfile = "dompdf_out.pdf"; # Don't allow them to set the output file
   if(!empty($_GET['output_filed'])){$outfile=$_GET['output_filed'];}
   $save_file = false; # Don't save the file
-
-   break;
+  break;
 }
 
 $dompdf = new DOMPDF();
@@ -272,8 +248,7 @@ if ( $file == "-" ) {
   $str = "";
   while ( !feof(STDIN) )
     $str .= fread(STDIN, 4096);
-
-  $dompdf->load_html($str);
+ $dompdf->load_html($str);
 
 } else 
   $dompdf->load_html_file($file);
@@ -301,13 +276,10 @@ if ( $save_file ) {
   list($proto, $host, $path, $file) = explode_url($outfile);
   if ( $proto != "" ) // i.e. not file://
     $outfile = $file; // just save it locally, FIXME? could save it like wget: ./host/basepath/file
-
-  $outfile = realpath(dirname($outfile)) . DIRECTORY_SEPARATOR . basename($outfile);
-
-  if ( strpos($outfile, DOMPDF_CHROOT) !== 0 )
+ $outfile = realpath(dirname($outfile)) . DIRECTORY_SEPARATOR . basename($outfile);
+ if ( strpos($outfile, DOMPDF_CHROOT) !== 0 )
     throw new DOMPDF_Exception("Permission denied.");
-
-  file_put_contents($outfile, $dompdf->output( array("compress" => 0) ));
+ file_put_contents($outfile, $dompdf->output( array("compress" => 0) ));
   exit(0);
 }
 

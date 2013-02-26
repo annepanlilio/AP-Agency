@@ -47,15 +47,12 @@
  */
 class Block_Positioner extends Positioner {
 
-
-  function __construct(Frame_Decorator $frame) { parent::__construct($frame); }
+ function __construct(Frame_Decorator $frame) { parent::__construct($frame); }
   
   //........................................................................
-
-  function position() {
+ function position() {
     $cb = $this->_frame->get_containing_block();
-
-    $p = $this->_frame->find_block_parent();
+   $p = $this->_frame->find_block_parent();
     
     if ( $p ) {
       $p->add_line();
@@ -63,8 +60,7 @@ class Block_Positioner extends Positioner {
       
     } else
       $y = $cb["y"];
-
-    $x = $cb["x"];
+   $x = $cb["x"];
     
     $this->_frame->set_position($x, $y);
   }

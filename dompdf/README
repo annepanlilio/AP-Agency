@@ -194,26 +194,18 @@ $ ./dompdf.php [options] html_file
   
   html_file can be a filename, a url if fopen_wrappers are enabled, or the
   '-' character to read from standard input.
-
-  -h             Show a brief help message
-
-  -l             list available paper sizes
-
-  -p size        paper size; something like 'letter', 'A4', 'legal', etc.  
+ -h             Show a brief help message
+ -l             list available paper sizes
+ -p size        paper size; something like 'letter', 'A4', 'legal', etc.  
                  Thee default is 'letter'
-
-  -o orientation either 'portrait' or 'landscape'.  Default is 'portrait'.
-
-  -b path        the base path to use when resolving relative links 
+ -o orientation either 'portrait' or 'landscape'.  Default is 'portrait'.
+ -b path        the base path to use when resolving relative links 
                  (images or CSS files). Default is the directory of
                  html_file.
-
-  -f file        the output filename.  Default is the input [html_file].pdf.
-
-  -v             verbose: display html parsing warnings and file not found 
+ -f file        the output filename.  Default is the input [html_file].pdf.
+ -v             verbose: display html parsing warnings and file not found 
                  errors.
-
-  -d             very verbose: display oodles of debugging output; every 
+ -d             very verbose: display oodles of debugging output; every 
                  frame in the tree is printed to stdout.
 
 Examples:
@@ -256,8 +248,7 @@ create text and drawing objects that appear on every page of your PDF
 
 The following variables are defined for you during the second pass of PHP
 execution:
-
-  $pdf         the current instance of CPDF_Adapter
+ $pdf         the current instance of CPDF_Adapter
   $PAGE_NUM    the current page number
   $PAGE_COUNT  the total number of pages in the document
 

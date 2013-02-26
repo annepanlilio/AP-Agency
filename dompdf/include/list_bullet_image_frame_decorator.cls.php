@@ -46,15 +46,13 @@
  * @package dompdf
  */
 class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
-
-  /**
+ /**
    * The underlying image frame
    * 
    * @var Image_Frame_Decorator
    */
   protected $_img;
-
-  /**
+ /**
    * The image's width in pixels
    *
    * @var int
@@ -67,8 +65,7 @@ class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
    * @var int
    */
   protected $_height;
-
-  /**
+ /**
    * Class constructor
    *
    * @param Frame $frame the bullet frame to decorate
@@ -80,14 +77,12 @@ class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
     $this->_img = new Image_Frame_Decorator($frame, $dompdf);
     parent::__construct($this->_img, $dompdf);
     list($width, $height) = getimagesize($this->_img->get_image_url());
-
-    // Resample the bullet image to be consistent with 'auto' sized images
+   // Resample the bullet image to be consistent with 'auto' sized images
     $this->_width = ((float)rtrim($width, "px")) * 72 / DOMPDF_DPI;
     $this->_height = ((float)rtrim($height, "px")) * 72 / DOMPDF_DPI;
     
   }
-
-  /**
+ /**
    * Return the bullet's width
    *
    * @return int
@@ -95,8 +90,7 @@ class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
   function get_width() {
     return $this->_width;
   }
-
-  /**
+ /**
    * Return the bullet's height
    *
    * @return int
@@ -113,8 +107,7 @@ class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
   function get_margin_width() {
     return $this->_width + List_Bullet_Frame_Decorator::BULLET_PADDING;
   }
-
-  /**
+ /**
    * Override get_margin_height()
    *
    * @return int
@@ -122,8 +115,7 @@ class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
   function get_margin_height() {
     return $this->_height + List_Bullet_Frame_Decorator::BULLET_PADDING;
   }
-
-  /**
+ /**
    * Return image url
    *
    * @return string
@@ -131,8 +123,7 @@ class List_Bullet_Image_Frame_Decorator extends Frame_Decorator {
   function get_image_url() {
     return $this->_img->get_image_url();
   }
-
-  /**
+ /**
    * Return the image extension
    *
    * @return string

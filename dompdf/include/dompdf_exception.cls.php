@@ -46,8 +46,7 @@
  * @package dompdf
  */
 class DOMPDF_Exception extends Exception {
-
-  /**
+ /**
    * Class constructor
    *
    * @param string $message Error message

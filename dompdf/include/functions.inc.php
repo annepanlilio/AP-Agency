@@ -54,12 +54,10 @@ if ( !function_exists("pre_r") ) {
 function pre_r($mixed, $return = false) {
   if ($return)
     return "<pre>" . print_r($mixed, true) . "</pre>";
-
-  if ( php_sapi_name() != "cli")
+ if ( php_sapi_name() != "cli")
     echo ("<pre>");
   print_r($mixed);
-
-  if ( php_sapi_name() != "cli")
+ if ( php_sapi_name() != "cli")
     echo("</pre>");
   else
     echo ("\n");
@@ -98,14 +96,11 @@ function pre_var_dump($mixed) {
 function build_url($protocol, $host, $base_path, $url) {
   if ( mb_strlen($url) == 0 )
     return $protocol . $host . rtrim($base_path, "/\\") . "/";
-
-  // Is the url already fully qualified?
+ // Is the url already fully qualified?
   if ( mb_strpos($url, "://") !== false )
     return $url;
-
-  $ret = $protocol;
-
-  if ( !in_array(mb_strtolower($protocol), array("http://", "https://",
+ $ret = $protocol;
+ if ( !in_array(mb_strtolower($protocol), array("http://", "https://",
                                                  "ftp://", "ftps://")) ) {
     // We ignore the host for local file access, and run the path through
     // realpath()
@@ -118,12 +113,10 @@ function build_url($protocol, $host, $base_path, $url) {
     $ret .= $host . $url;
   else {
     // Relative path
-
-    $base_path = $base_path !== "" ? rtrim($base_path, "/\\") . "/" : "";
+   $base_path = $base_path !== "" ? rtrim($base_path, "/\\") . "/" : "";
     $ret .= $host . $base_path . $url;
   }
-
-  return $ret;
+ return $ret;
 
 }
 
@@ -139,31 +132,23 @@ function explode_url($url) {
   $host = "";
   $path = "";
   $file = "";
-
-  $arr = parse_url($url);
-
-  if ( isset($arr["scheme"]) &&
+ $arr = parse_url($url);
+ if ( isset($arr["scheme"]) &&
        $arr["scheme"] != "file" &&
        mb_strlen($arr["scheme"]) > 1 ) // Exclude windows drive letters...
     {
     $protocol = $arr["scheme"] . "://";
-
-    if ( isset($arr["user"]) ) {
+   if ( isset($arr["user"]) ) {
       $host .= $arr["user"];
-
-      if ( isset($arr["pass"]) )
+     if ( isset($arr["pass"]) )
         $host .= "@" . $arr["pass"];
-
-      $host .= ":";
+     $host .= ":";
     }
-
-    if ( isset($arr["host"]) )
+   if ( isset($arr["host"]) )
       $host .= $arr["host"];
-
-    if ( isset($arr["port"]) )
+   if ( isset($arr["port"]) )
       $host .= ":" . $arr["port"];
-
-    if ( isset($arr["path"]) && $arr["path"] !== "" ) {
+   if ( isset($arr["path"]) && $arr["path"] !== "" ) {
       // Do we have a trailing slash?
       if ( $arr["path"]{ mb_strlen($arr["path"]) - 1 } == "/" ) {
         $path = $arr["path"];
@@ -173,46 +158,34 @@ function explode_url($url) {
         $file = basename($arr["path"]);
       }
     }
-
-    if ( isset($arr["query"]) )
+   if ( isset($arr["query"]) )
       $file .= "?" . $arr["query"];
-
-    if ( isset($arr["fragment"]) )
+   if ( isset($arr["fragment"]) )
       $file .= "#" . $arr["fragment"];
-
-  } else {
-
-    $i = mb_strpos($url, "file://");
+ } else {
+   $i = mb_strpos($url, "file://");
     if ( $i !== false)
       $url = mb_substr($url, $i + 7);
-
-    $protocol = ""; // "file://"; ? why doesn't this work... It's because of
+   $protocol = ""; // "file://"; ? why doesn't this work... It's because of
                     // network filenames like //COMPU/SHARENAME
-
-    $host = ""; // localhost, really
+   $host = ""; // localhost, really
     $file = basename($url);
-
-    $path = dirname($url);
-
-    // Check that the path exists
+   $path = dirname($url);
+   // Check that the path exists
     if ( $path !== false ) {
       $path .= '/';
-
-    } else {
+   } else {
       // generate a url to access the file if no real path found.
       $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://';
-
-      $host = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : php_uname("n");
-
-      if ( substr($arr["path"], 0, 1) == '/' ) {
+     $host = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : php_uname("n");
+     if ( substr($arr["path"], 0, 1) == '/' ) {
         $path = dirname($arr["path"]);
       } else {
         $path = '/' . rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/') . '/' . $arr["path"];
       }
     }
   }
-
-  $ret = array($protocol, $host, $path, $file,
+ $ret = array($protocol, $host, $path, $file,
                "protocol" => $protocol,
                "host" => $host,
                "path" => $path,
@@ -227,39 +200,29 @@ function explode_url($url) {
  * @return string
  */
 function dec2roman($num) {
-
-  static $ones = array("", "i", "ii", "iii", "iv", "v",
+ static $ones = array("", "i", "ii", "iii", "iv", "v",
                        "vi", "vii", "viii", "ix");
   static $tens = array("", "x", "xx", "xxx", "xl", "l",
                        "lx", "lxx", "lxxx", "xc");
   static $hund = array("", "c", "cc", "ccc", "cd", "d",
                        "dc", "dcc", "dccc", "cm");
   static $thou = array("", "m", "mm", "mmm");
-
-  if ( !is_numeric($num) )
+ if ( !is_numeric($num) )
     throw new DOMPDF_Exception("dec2roman() requires a numeric argument.");
-
-  if ( $num > 4000 || $num < 0 )
+ if ( $num > 4000 || $num < 0 )
     return "(out of range)";
-
-  $num = strrev((string)$num);
-
-  $ret = "";
+ $num = strrev((string)$num);
+ $ret = "";
   switch (mb_strlen($num)) {
-
-  case 4:
+ case 4:
     $ret .= $thou[$num{3}];
-
-  case 3:
+ case 3:
     $ret .= $hund[$num{2}];
-
-  case 2:
+ case 2:
     $ret .= $tens[$num{1}];
-
-  case 1:
+ case 1:
     $ret .= $ones[$num{0}];
-
-  default:
+ default:
     break;
   }
   return $ret;
@@ -340,17 +303,13 @@ if ( !function_exists("mb_substr_count") ) {
  * @param string $errline
  */
 function record_warnings($errno, $errstr, $errfile, $errline) {
-
-  if ( !($errno & (E_WARNING | E_NOTICE | E_USER_NOTICE | E_USER_WARNING )) ) // Not a warning or notice
+ if ( !($errno & (E_WARNING | E_NOTICE | E_USER_NOTICE | E_USER_WARNING )) ) // Not a warning or notice
     throw new DOMPDF_Exception($errstr . " $errno");
-
-  global $_dompdf_warnings;
+ global $_dompdf_warnings;
   global $_dompdf_show_warnings;
-
-  if ( $_dompdf_show_warnings )
+ if ( $_dompdf_show_warnings )
     echo $errstr . "\n";
-
-  $_dompdf_warnings[] = $errstr;
+ $_dompdf_warnings[] = $errstr;
 }
 
 /**
@@ -362,15 +321,13 @@ function print_memusage() {
   $prev = 0;
   $initial = reset($memusage);
   echo (str_pad("Initial:", 40) . $initial . "\n\n");
-
-  foreach ($memusage as $key=>$mem) {
+ foreach ($memusage as $key=>$mem) {
     $mem -= $initial;
     echo (str_pad("$key:" , 40));
     echo (str_pad("$mem", 12) . "(diff: " . ($mem - $prev) . ")\n");
     $prev = $mem;
   }
-
-  echo ("\n" . str_pad("Total:", 40) . memory_get_usage()) . "\n";
+ echo ("\n" . str_pad("Total:", 40) . memory_get_usage()) . "\n";
 }
 
 /**

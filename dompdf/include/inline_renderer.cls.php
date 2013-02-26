@@ -48,11 +48,9 @@
 class Inline_Renderer extends Abstract_Renderer {
   
   //........................................................................
-
-  function render(Frame $frame) {
+ function render(Frame $frame) {
     $style = $frame->get_style();
-
-    if ( !$frame->get_first_child() )
+   if ( !$frame->get_first_child() )
       return; // No children, no service
     
     // Draw the left border if applicable
@@ -61,8 +59,7 @@ class Inline_Renderer extends Abstract_Renderer {
                     $style->length_in_pt($bp["right"]["width"]),
                     $style->length_in_pt($bp["bottom"]["width"]),
                     $style->length_in_pt($bp["left"]["width"]));
-
-    // Draw the background & border behind each child.  To do this we need
+   // Draw the background & border behind each child.  To do this we need
     // to figure out just how much space each child takes:
     list($x, $y) = $frame->get_first_child()->get_position();
     $w = null;
@@ -71,35 +68,29 @@ class Inline_Renderer extends Abstract_Renderer {
 //     $y += $widths[0];
     
     $first_row = true;
-
-    foreach ($frame->get_children() as $child) {
+   foreach ($frame->get_children() as $child) {
       list($child_x, $child_y, $child_w, $child_h) = $child->get_padding_box();
       $child_h += $widths[2];
       
       if ( !is_null($w) && $child_x < $x + $w ) {
-
-        // The next child is on another line.  Draw the background &
+       // The next child is on another line.  Draw the background &
         // borders on this line.
-
-        // Background:
+       // Background:
         if ( ($bg = $style->background_color) !== "transparent" )
           $this->_canvas->filled_rectangle( $x, $y, $w, $h, $style->background_color);
-
-        if ( ($url = $style->background_image) && $url !== "none" ) {
+       if ( ($url = $style->background_image) && $url !== "none" ) {
           $this->_background_image($url, $x, $y, $w, $h, $style);
         }
         
         // If this is the first row, draw the left border
         if ( $first_row ) {
-
-          if ( $bp["left"]["style"] != "none" && $bp["left"]["width"] > 0 ) {
+         if ( $bp["left"]["style"] != "none" && $bp["left"]["width"] > 0 ) {
             $method = "_border_" . $bp["left"]["style"];            
             $this->$method($x, $y, $h + $widths[0] + $widths[2], $bp["left"]["color"], $widths, "left");
           }
           $first_row = false;
         }
-
-        // Draw the top & bottom borders
+       // Draw the top & bottom borders
         if ( $bp["top"]["style"] != "none" && $bp["top"]["width"] > 0 ) {
           $method = "_border_" . $bp["top"]["style"];
           $this->$method($x, $y, $w + $widths[1] + $widths[3], $bp["top"]["color"], $widths, "top");
@@ -109,44 +100,36 @@ class Inline_Renderer extends Abstract_Renderer {
           $method = "_border_" . $bp["bottom"]["style"];
           $this->$method($x, $y + $h + $widths[0] + $widths[2], $w + $widths[1] + $widths[3], $bp["bottom"]["color"], $widths, "bottom");
         }
-
-        // Handle anchors & links
+       // Handle anchors & links
         if ( $frame->get_node()->nodeName == "a" ) {
                     
           if ( $href = $frame->get_node()->getAttribute("href") )
             $this->_canvas->add_link($href, $x, $y, $w, $h);
-
-        }
-
-        $x = $child_x;
+       }
+       $x = $child_x;
         $y = $child_y;
         $w = $child_w;
         $h = $child_h;
         continue;
       }
-
-      if ( is_null($w) )
+     if ( is_null($w) )
         $w = $child_w;
       else
         $w += $child_w;
       
       $h = max($h, $child_h);
     }
-
-    
+   
     // Handle the last child
     if ( ($bg = $style->background_color) !== "transparent" ) 
       $this->_canvas->filled_rectangle( $x + $widths[3], $y + $widths[0], $w, $h, $style->background_color);
-
-    if ( ($url = $style->background_image) && $url !== "none" )           
+   if ( ($url = $style->background_image) && $url !== "none" )           
       $this->_background_image($url, $x + $widths[3], $y + $widths[0], $w, $h, $style);
-
-        
+       
     // Add the border widths
     $w += $widths[1] + $widths[3];
     $h += $widths[0] + $widths[2];
-
-    // If this is the first row, draw the left border too
+   // If this is the first row, draw the left border too
     if ( $first_row && $bp["left"]["style"] != "none" && $widths[3] > 0 ) {
       $method = "_border_" . $bp["left"]["style"];
       $this->$method($x, $y, $h, $bp["left"]["color"], $widths, "left");
@@ -168,14 +151,11 @@ class Inline_Renderer extends Abstract_Renderer {
       $method = "_border_" . $bp["right"]["style"];
       $this->$method($x + $w, $y, $h, $bp["right"]["color"], $widths, "right");
     }
-
-    // Handle anchors & links
+   // Handle anchors & links
     if ( $frame->get_node()->nodeName == "a" ) {
-
-      if ( $name = $frame->get_node()->getAttribute("name") )
+     if ( $name = $frame->get_node()->getAttribute("name") )
         $this->_canvas->add_named_dest($name);
-
-      if ( $href = $frame->get_node()->getAttribute("href") )
+     if ( $href = $frame->get_node()->getAttribute("href") )
         $this->_canvas->add_link($href, $x, $y, $w, $h);
     }
   }

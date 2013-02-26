@@ -67,8 +67,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
    * @var int
    */
   protected $_in_table;
-
-  /**
+ /**
    * The pdf renderer
    *
    * @var Renderer
@@ -76,8 +75,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
   protected $_renderer;
   
   //........................................................................
-
-  /**
+ /**
    * Class constructor
    *
    * @param Frame $frame the frame to decorate
@@ -88,8 +86,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
     $this->_in_table = 0;
     $this->_bottom_page_margin = null;
   }
-
-  
+ 
   /**
    * Set the renderer used for this pdf
    *
@@ -98,8 +95,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
   function set_renderer($renderer) {
     $this->_renderer = $renderer;
   }
-
-  /**
+ /**
    * Return the renderer used for this pdf
    *
    * @return Renderer
@@ -122,8 +118,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
     if ( isset($h) )
       $this->_bottom_page_margin = $h; // - $this->_frame->get_style()->length_in_pt($this->_frame->get_style()->margin_bottom, $w);
   }
-
-  /**
+ /**
    * Returns true if the page is full and is no longer accepting frames.
    *
    * @return bool
@@ -131,23 +126,20 @@ class Page_Frame_Decorator extends Frame_Decorator {
   function is_full() {
     return $this->_page_full;
   }
-
-  /**
+ /**
    * Start a new page by resetting the full flag.
    */
   function next_page() {
     $this->_renderer->new_page();
     $this->_page_full = false;
   }
-
-  /**
+ /**
    * Indicate to the page that a table is currently being reflowed.
    */
   function table_reflow_start() {
     $this->_in_table++;
   }
-
-  /**
+ /**
    * Indicate to the page that table reflow is finished.
    */
   function table_reflow_end() {
@@ -165,8 +157,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
    * @return bool true if a page break occured
    */
   function check_forced_page_break(Frame $frame) {
-
-    // Skip check if page is already split
+   // Skip check if page is already split
     if ( $this->_page_full )
       return;
     
@@ -174,18 +165,14 @@ class Page_Frame_Decorator extends Frame_Decorator {
     $page_breaks = array("always", "left", "right");
     
     $style = $frame->get_style();
-
-    if ( !in_array($style->display, $block_types) )
+   if ( !in_array($style->display, $block_types) )
       return false;
-
-    // Find the previous block-level sibling
+   // Find the previous block-level sibling
     $prev = $frame->get_prev_sibling();
     while ( $prev && !in_array($prev->get_style()->display, $block_types) )
       $prev = $prev->get_prev_sibling();
-
-    if ( in_array($style->page_break_before, $page_breaks) ) {
-
-      // Prevent cascading splits
+   if ( in_array($style->page_break_before, $page_breaks) ) {
+     // Prevent cascading splits
       $frame->split();
       // We have to grab the style again here because split() resets
       // $frame->style to the frame's orignal style.
@@ -193,8 +180,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
       $this->_page_full = true;
       return true;
     }
-
-    if ( ($prev && in_array($prev->get_style()->page_break_after, $page_breaks)) ) {
+   if ( ($prev && in_array($prev->get_style()->page_break_after, $page_breaks)) ) {
       // Prevent cascading splits
       $frame->split();
       $prev->get_style()->page_break_after = "auto";
@@ -204,8 +190,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
     
     return false;
   }
-
-  /**
+ /**
    * Determine if a page break is allowed before $frame
    *
    * @param Frame $frame the frame to check
@@ -259,15 +244,13 @@ class Page_Frame_Decorator extends Frame_Decorator {
      * splitting a table, the table headers should carry over to the
      * next page (but they don't yet).
      */
-
-    $block_types = array("block", "list-item", "table");
+   $block_types = array("block", "list-item", "table");
 //      echo "\nbreak_allowed: " . $frame->get_node()->nodeName ."\n";
     $display = $frame->get_style()->display;
     
     // Block Frames (1):
     if ( in_array($display, $block_types) ) {
-
-      // Avoid breaks within table-cells
+     // Avoid breaks within table-cells
       if ( $this->_in_table ) {
 //          echo "In table: " . $this->_in_table ."\n";
         return false;
@@ -284,22 +267,19 @@ class Page_Frame_Decorator extends Frame_Decorator {
       $prev = $frame->get_prev_sibling();
       while ( $prev && !in_array($prev->get_style()->display, $block_types) )
         $prev = $prev->get_prev_sibling();
-
-      // Does the previous element allow a page break after?
+     // Does the previous element allow a page break after?
       if ( $prev && $prev->get_style()->page_break_after == "avoid" ) {
 //        echo "after: avoid\n";
         return false;
       }
-
-      // If both $prev & $frame have the same parent, check the parent's
+     // If both $prev & $frame have the same parent, check the parent's
       // page_break_inside property.
       $parent = $frame->get_parent();
       if ( $prev && $parent && $parent->get_style()->page_break_inside == "avoid" ) {
 //          echo "parent inside: avoid\n";
         return false;
       }
-
-      // To prevent cascading page breaks when a top-level element has
+     // To prevent cascading page breaks when a top-level element has
       // page-break-inside: avoid, ensure that at least one frame is
       // on the page before splitting.
       if ( $parent->get_node()->nodeName == "body" && !$prev ) {
@@ -317,8 +297,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
       return true;
     
     }
-
-    // Inline frames (2):    
+   // Inline frames (2):    
     else if ( in_array($display, Style::$INLINE_TYPES) ) {
       
       // Avoid breaks within table-cells
@@ -336,14 +315,12 @@ class Page_Frame_Decorator extends Frame_Decorator {
       
       // FIXME: Checking widows is tricky without having laid out the
       // remaining line boxes.  Just ignore it for now...
-
-      // Rule D
+     // Rule D
       if ( $block_parent->get_style()->page_break_inside == "avoid" ) {
 //          echo "parent->inside: avoid\n";
         return false;
       }
-
-      // To prevent cascading page breaks when a top-level element has
+     // To prevent cascading page breaks when a top-level element has
       // page-break-inside: avoid, ensure that at least one frame with
       // some content is on the page before splitting.
       $prev = $frame->get_prev_sibling();
@@ -355,8 +332,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
 //          echo "Body's first child.\n";
         return false;
       }
-
-      // Skip breaks on empty text nodes
+     // Skip breaks on empty text nodes
       if ( $frame->get_node()->nodeName == "#text" &&
            $frame->get_node()->nodeValue == "" )
         return false;
@@ -366,25 +342,21 @@ class Page_Frame_Decorator extends Frame_Decorator {
  
     // Table-rows
     } else if ( $display == "table-row" ) {
-
-      // Simply check if the parent table's page_break_inside property is
+     // Simply check if the parent table's page_break_inside property is
       // not 'avoid'
       $p = Table_Frame_Decorator::find_parent_table($frame);
-
-      if ( $p->get_style()->page_break_inside == "avoid" ) {
+     if ( $p->get_style()->page_break_inside == "avoid" ) {
 //          echo "table: page-break-inside: avoid\n";
         return false;
       }
-
-      // Check the table's parent element
+     // Check the table's parent element
       $table_parent = $p->get_parent();
       
       if ( $table_parent->get_style()->page_break_inside == "avoid" ) {
 //          echo "table->parent: page-break-inside: avoid\n";
         return false;
       }
-
-      // Avoid breaking after the first row of a table
+     // Avoid breaking after the first row of a table
       if ( $p->get_first_child() === $frame) {
 //         echo "table: first-row\n";
         return false;
@@ -392,13 +364,10 @@ class Page_Frame_Decorator extends Frame_Decorator {
 
 //       echo "table-row/row-groups: break allowed\n";
       return true;
-
-    } else if ( in_array($display, Table_Frame_Decorator::$ROW_GROUPS) ) {
-
-      // Disallow breaks at row-groups: only split at row boundaries
+   } else if ( in_array($display, Table_Frame_Decorator::$ROW_GROUPS) ) {
+     // Disallow breaks at row-groups: only split at row boundaries
       return false;
-
-    } else {
+   } else {
 
 //       echo "? " . $frame->get_style()->display . "\n";
       return false;
@@ -421,8 +390,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
     
     // Determine the frame's maximum y value
     $max_y = $frame->get_position("y") + $frame->get_margin_height();
-
-    // If a split is to occur here, then the bottom margins & paddings of all
+   // If a split is to occur here, then the bottom margins & paddings of all
     // parents of $frame must fit on the page as well:
     $p = $frame->get_parent();
     while ( $p ) {
@@ -432,8 +400,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
                                            $style->border_bottom_width));
       $p = $p->get_parent();
     }
-
-    
+   
     // Check if $frame flows off the page    
     if ( $max_y <= $this->_bottom_page_margin ) 
       // no: do nothing (?)
@@ -444,8 +411,7 @@ class Page_Frame_Decorator extends Frame_Decorator {
     // yes: determine page break location
     $iter = $frame;
     $flg = false;
-
-    $in_table = $this->_in_table;
+   $in_table = $this->_in_table;
     
 //     echo "Starting search\n";
     while ( $iter ) {
@@ -463,25 +429,20 @@ class Page_Frame_Decorator extends Frame_Decorator {
         $this->_in_table = $in_table;
         return true;
       }
-
-      if ( !$flg && $next = $iter->get_last_child() ) {
+     if ( !$flg && $next = $iter->get_last_child() ) {
 //         echo "following last child.\n";
         
         if ( in_array($next->get_style()->display, Style::$TABLE_TYPES) )
           $this->_in_table++;
-
-        $iter = $next;
+       $iter = $next;
         continue;
       }
-
-      if ( $next = $iter->get_prev_sibling() ) {
+     if ( $next = $iter->get_prev_sibling() ) {
 //         echo "following prev sibling.\n";
-
-        if ( in_array($next->get_style()->display, Style::$TABLE_TYPES) &&
+       if ( in_array($next->get_style()->display, Style::$TABLE_TYPES) &&
              !in_array($iter->get_style()->display, Style::$TABLE_TYPES) )
           $this->_in_table++;
-
-        else if ( !in_array($next->get_style()->display, Style::$TABLE_TYPES) &&
+       else if ( !in_array($next->get_style()->display, Style::$TABLE_TYPES) &&
                   in_array($iter->get_style()->display, Style::$TABLE_TYPES) )
           $this->_in_table--;
         
@@ -489,28 +450,22 @@ class Page_Frame_Decorator extends Frame_Decorator {
         $flg = false;
         continue;
       }
-
-      if ( $next = $iter->get_parent() ) {
+     if ( $next = $iter->get_parent() ) {
 //         echo "following parent.\n";
-
-        if ( in_array($iter->get_style()->display, Style::$TABLE_TYPES) )
+       if ( in_array($iter->get_style()->display, Style::$TABLE_TYPES) )
           $this->_in_table--;
         
         $iter = $next;
         $flg = true;
         continue;
       }
-
-      break;
+     break;
         
     }
-
-    $this->_in_table = $in_table;
-
-    // No valid page break found.  Just break at $frame.
+   $this->_in_table = $in_table;
+   // No valid page break found.  Just break at $frame.
 //     echo "no valid break found, just splitting.\n";
-
-    // If we are in a table, backtrack to the nearest table row
+   // If we are in a table, backtrack to the nearest table row
     if ( $this->_in_table ) {
       $tr = $frame;
       while ($tr && $tr->get_style()->display != "table-row" )
@@ -520,16 +475,14 @@ class Page_Frame_Decorator extends Frame_Decorator {
       $this->_page_full = true;
       return true;
     }        
-
-    $frame->split();
+   $frame->split();
     $this->_page_full = true;
     return true;
     
   }
   
   //........................................................................
-
-  function split($frame = null) {
+ function split($frame = null) {
     // Do nothing
   }
 

@@ -65,33 +65,24 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
     
     $this->_current_page_id = $this->_pdf->open_object();
   }
-
-  //........................................................................
-
-  function get_cpdf() { return $this->_pdf->get_cpdf(); }
-
-  function open_object() { $this->_pdf->open_object(); }
+ //........................................................................
+ function get_cpdf() { return $this->_pdf->get_cpdf(); }
+ function open_object() { $this->_pdf->open_object(); }
   function reopen_object() { return $this->_pdf->reopen_object(); }
   
   function close_object() { $this->_pdf->close_object(); }
-
-  function add_object($object, $where = 'all') { $this->_pdf->add_object($object, $where); }
-
-  function serialize_object($id) { $this->_pdf->serialize_object($id); }
-
-  function reopen_serialized_object($obj) { $this->_pdf->reopen_serialized_object($obj); }
+ function add_object($object, $where = 'all') { $this->_pdf->add_object($object, $where); }
+ function serialize_object($id) { $this->_pdf->serialize_object($id); }
+ function reopen_serialized_object($obj) { $this->_pdf->reopen_serialized_object($obj); }
     
   //........................................................................
-
-  function get_width() { return $this->_pdf->get_width(); }
+ function get_width() { return $this->_pdf->get_width(); }
   function get_height() {  return $this->_pdf->get_height(); }
   function get_page_number() { return $this->_pdf->get_page_number(); }
   function get_page_count() { return $this->_pdf->get_page_count(); }
-
-  function set_page_number($num) { $this->_pdf->set_page_number($num); }
+ function set_page_number($num) { $this->_pdf->set_page_number($num); }
   function set_page_count($count) { $this->_pdf->set_page_count($count); }
-
-  function line($x1, $y1, $x2, $y2, $color, $width, $style = array()) {
+ function line($x1, $y1, $x2, $y2, $color, $width, $style = array()) {
     $this->_pdf->line($x1, $y1, $x2, $y2, $color, $width, $style);
   }
                               
@@ -106,12 +97,10 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
   function polygon($points, $color, $width = null, $style = array(), $fill = false) {
     $this->_pdf->polygon($points, $color, $width, $style, $fill);
   }
-
-  function circle($x, $y, $r1, $color, $width = null, $style = null, $fill = false) {
+ function circle($x, $y, $r1, $color, $width = null, $style = null, $fill = false) {
     $this->_pdf->circle($x, $y, $r1, $color, $width, $style, $fill);
   }
-
-  function image($img_url, $x, $y, $w = null, $h = null) {
+ function image($img_url, $x, $y, $w = null, $h = null) {
     $this->_pdf->image($img_url, $x, $y, $w, $h);
   }
   
@@ -119,8 +108,7 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
     $this->_fonts[$font] = true;
     $this->_pdf->text($x, $y, $text, $font, $size, $color, $adjust, $angle);
   }
-
-  function page_text($x, $y, $text, $font, $size, $color = array(0,0,0), $adjust = 0, $angle = 0) {
+ function page_text($x, $y, $text, $font, $size, $color = array(0,0,0), $adjust = 0, $angle = 0) {
     
     // We want to remove this from cached pages since it may not be correct
     $this->_pdf->close_object();
@@ -130,16 +118,13 @@ class Cached_PDF_Decorator extends CPDF_Adapter implements Canvas {
   
   function new_page() {
     $this->_pdf->close_object();
-
-    // Add the object to the current page
+   // Add the object to the current page
     $this->_pdf->add_object($this->_current_page_id, "add");
     $this->_pdf->new_page();    
-
-    Page_Cache::store_page($this->_cache_id,
+   Page_Cache::store_page($this->_cache_id,
                            $this->_pdf->get_page_number() - 1,
                            $this->_pdf->serialize_object($this->_current_page_id));
-
-    $this->_current_page_id = $this->_pdf->open_object();
+   $this->_current_page_id = $this->_pdf->open_object();
     return $this->_current_page_id;
   }
   

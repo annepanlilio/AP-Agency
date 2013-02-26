@@ -106,14 +106,12 @@ global $wpdb;
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
 	    }
 	    // Custom Order in Custom Fields
-
- 		 rb_agency_addColumn(table_agency_customfields,"ProfileCustomOrder","INT(10) NOT NULL DEFAULT '0'");
+		 rb_agency_addColumn(table_agency_customfields,"ProfileCustomOrder","INT(10) NOT NULL DEFAULT '0'");
 		
 		// Updating version number!
 		update_option('rb_agency_version', "1.9");
 	}
-
-  if (get_option('rb_agency_version') == "1.8.9") {	
+ if (get_option('rb_agency_version') == "1.8.9") {	
         update_option('rb_agency_version', "1.9");
   }
   if (get_option('rb_agency_version') == "1.9") {

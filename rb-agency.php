@@ -131,8 +131,7 @@ return;
 			@mkdir(rb_agency_UPLOADPATH, 0755);
 			@chmod(rb_agency_UPLOADPATH, 0777);
 		}
-
-            
+           
 		// Update the options in the database
 		if(!get_option("rb_agency_options"))
 		add_option("rb_agency_options",$rb_agency_options_arr);
@@ -894,7 +893,6 @@ function rb_agency_notify_installation(){
 }
 register_activation_hook(__FILE__,"rb_agency_notify_installation");
 
- 
 /****************************************************************/
 //Uninstall
 	function rb_agency_uninstall() {

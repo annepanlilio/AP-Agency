@@ -230,8 +230,7 @@ class Attribute_Translator {
                   'width' => 'width: %s;',
                   ),
            );
-
-  
+ 
   static protected $_last_basefont_size = 3;
   static protected $_font_size_lookup = array(1=>"xx-small",
                                               2=>"x-small",
@@ -245,31 +244,24 @@ class Attribute_Translator {
   static function translate_attributes($frame) {
     $node = $frame->get_node();
     $tag = $node->tagName;
-
-    if ( !isset(self::$__ATTRIBUTE_LOOKUP[$tag]) )
+   if ( !isset(self::$__ATTRIBUTE_LOOKUP[$tag]) )
       return;
-
-    $valid_attrs = self::$__ATTRIBUTE_LOOKUP[$tag];
+   $valid_attrs = self::$__ATTRIBUTE_LOOKUP[$tag];
     $attrs = $node->attributes;
     $style = rtrim($node->getAttribute("style"), "; ");
     if ( $style != "" )
       $style .= ";";
-
-    foreach ($attrs as $attr => $attr_node ) {
+   foreach ($attrs as $attr => $attr_node ) {
       if ( !isset($valid_attrs[$attr]) )
         continue;
-
-      $value = $attr_node->value;
-
-      $target = $valid_attrs[$attr];
+     $value = $attr_node->value;
+     $target = $valid_attrs[$attr];
       
       // Look up $value in $target, if $target is an array:
       if ( is_array($target) ) {
-
-        if ( isset($target[$value]) ) 
+       if ( isset($target[$value]) ) 
           $style .= " " . self::_resolve_target($node, $target[$value], $value);
-
-      } else {
+     } else {
         // otherwise use target directly
         $style .= " " . self::_resolve_target($node, $target, $value);
       }
@@ -280,22 +272,18 @@ class Attribute_Translator {
     }
     
   }
-
-  static protected function _resolve_target($node, $target, $value) {
+ static protected function _resolve_target($node, $target, $value) {
     if ( $target{0} == "!" ) {
       // Function call
       $func = "_" . mb_substr($target, 1);
       return self::$func($node, $value);
     }
-
-    return $value ? sprintf($target, $value) : "";
+   return $value ? sprintf($target, $value) : "";
   }
-
-  //.....................................................................
+ //.....................................................................
   
   static protected function _set_table_cellpadding($node, $value) {
-
-    $td_list = $node->getElementsByTagName("td");
+   $td_list = $node->getElementsByTagName("td");
     foreach ($td_list as $td) {
       $style = rtrim($td->getAttribute("style"), ";");
       $style .= "; padding: $value" . "px;";
@@ -304,8 +292,7 @@ class Attribute_Translator {
     }
     return null;
   }
-
-  static protected function _set_table_border($node, $value) {
+ static protected function _set_table_border($node, $value) {
     $td_list = $node->getElementsByTagName("td");
     foreach ($td_list as $td) {
       $style = rtrim($td->getAttribute("style"), ";");
@@ -315,11 +302,9 @@ class Attribute_Translator {
     }
     return null;
   }
-
-  static protected function _set_table_cellspacing($node, $value) {
+ static protected function _set_table_cellspacing($node, $value) {
     $style = rtrim($td->getAttribute($style), ";");
-
-    if ( $value == 0 ) 
+   if ( $value == 0 ) 
       $style .= "; border-collapse: collapse;";
       
     else 
@@ -334,20 +319,16 @@ class Attribute_Translator {
     case "none":
       $new_style .= "border-style: none;";
       break;
-
-    case "groups":
+   case "groups":
       // FIXME: unsupported
       return;
-
-    case "rows":
+   case "rows":
       $new_style .= "border-style: solid none solid none; border-width: 1px; ";
       break;
-
-    case "cols":
+   case "cols":
       $new_style .= "border-style: none solid none solid; border-width: 1px; ";
       break;
-
-    case "all":
+   case "all":
       $new_style .= "border-style: solid; border-width: 1px; ";
       break;
       
@@ -355,8 +336,7 @@ class Attribute_Translator {
       // Invalid value
       return null;
     }
-
-    $td_list = $node->getElementsByTagName("td");
+   $td_list = $node->getElementsByTagName("td");
     
     foreach ($td_list as $td) {
       $style = $td->getAttribute("style");
@@ -365,93 +345,70 @@ class Attribute_Translator {
     }
     return null;
   }
-
-  static protected function _set_hr_align($node, $value) {
-
-    $style = rtrim($node->getAttribute("style"),";");
+ static protected function _set_hr_align($node, $value) {
+   $style = rtrim($node->getAttribute("style"),";");
     $width = $node->getAttribute("width");
     if ( $width == "" )
       $width = "100%";
-
-    $remainder = 100 - (double)rtrim($width, "% ");
+   $remainder = 100 - (double)rtrim($width, "% ");
     
     switch ($value) {
     case "left":
       $style .= "; margin-right: $remainder %;";
       break;
-
-    case "right":
+   case "right":
       $style .= "; margin-left: $remainder %;";
       break;
-
-    case "center":
+   case "center":
       $style .= "; margin-left: auto; margin-right: auto;";
       break;
-
-    default:
+   default:
       return null;
     }
     return ltrim($style, "; ");
     
   }
-
-  static protected function _set_table_row_align($node, $value) {
-
-    $td_list = $node->getElementsByTagName("td");
-
-    foreach ($td_list as $td) {
+ static protected function _set_table_row_align($node, $value) {
+   $td_list = $node->getElementsByTagName("td");
+   foreach ($td_list as $td) {
       $style = rtrim($td->getAttribute("style"), ";");
       $style .= "; text-align: $value;";
       $style = ltrim($style, "; ");
       $td->setAttribute("style", $style);
     }
-
-    return null;
+   return null;
   }
-
-  static protected function _set_table_row_valign($node, $value) {
-
-    $td_list = $node->getElementsByTagName("td");
-
-    foreach ($td_list as $td) {
+ static protected function _set_table_row_valign($node, $value) {
+   $td_list = $node->getElementsByTagName("td");
+   foreach ($td_list as $td) {
       $style = rtrim($td->getAttribute("style"), ";");
       $style .= "; vertical-align: $value;";
       $style = ltrim($style, "; ");
       $td->setAttribute("style", $style);
     }
-
-    return null;
+   return null;
   }
-
-  static protected function _set_table_row_bgcolor($node, $value) {
-
-    $td_list = $node->getElementsByTagName("td");
-
-    foreach ($td_list as $td) {
+ static protected function _set_table_row_bgcolor($node, $value) {
+   $td_list = $node->getElementsByTagName("td");
+   foreach ($td_list as $td) {
       $style = rtrim($td->getAttribute("style"), ";");
       $style .= "; background-color: $value;";
       $style = ltrim($style, "; ");
       $td->setAttribute("style", $style);
     }
-
-    return null;
+   return null;
   }
-
-  static protected function _set_body_link($node, $value) {
-
-    $a_list = $node->getElementsByTagName("a");
-
-    foreach ($a_list as $a) {
+ static protected function _set_body_link($node, $value) {
+   $a_list = $node->getElementsByTagName("a");
+   foreach ($a_list as $a) {
       $style = rtrim($a->getAttribute("style"), ";");
       $style .= "; color: $value;";
       $style = ltrim($style, "; ");
       $a->setAttribute("style", $style);
     }
-
-    return null;
+   return null;
   }
-
-  static protected function _set_basefont_size($node, $value) {
+ static protected function _set_basefont_size($node, $value) {
     // FIXME: ? we don't actually set the font size of anything here, just
     // the base size for later modification by <font> tags.
     self::$_last_basefont_size = $value;
@@ -460,16 +417,13 @@ class Attribute_Translator {
   
   static protected function _set_font_size($node, $value) {
     $style = $node->getAttribute("style");
-
-    if ( $value{0} == "-" || $value{0} == "+" )
+   if ( $value{0} == "-" || $value{0} == "+" )
       $value = self::$_last_basefont_size + (int)$value;
-
-    if ( isset(self::$_font_size_lookup[$value]) )
+   if ( isset(self::$_font_size_lookup[$value]) )
       $style .= "; font-size: " . self::$_font_size_lookup[$value] . ";";
     else
       $style .= "; font-size: $value;";
-
-    return ltrim($style, "; ");
+   return ltrim($style, "; ");
     
   }
 
