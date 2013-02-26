@@ -90,6 +90,7 @@ while ($data = mysql_fetch_array($results)) {
 			return bloginfo('name') ." > ". $ProfileContactDisplay ."";
 		}
 	}
+	/*
 	// Remove All Known Scripts which effect
 	if(!function_exists("deregister_scripts")){
 	add_action( 'wp_print_scripts', 'deregister_scripts', 100 );
@@ -108,71 +109,99 @@ while ($data = mysql_fetch_array($results)) {
 			wp_deregister_script('general');
 		}
 	}
-if(!function_exists("rb_agency_inserthead_profile")){
-	add_action('wp_head', 'rb_agency_inserthead_profile');
-		// Call Custom Code to put in header
-		function rb_agency_inserthead_profile() {
-			global $rb_agency_option_layoutprofile;
-			
-			if ($rb_agency_option_layoutprofile == "2") {
-				echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/jquery-ui.js\"></script>\n";
-				echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/scroller.js\"></script>\n";
-				?>
-				<script>
-				var $rb = jQuery.noConflict();
-				$rb(window).load(function() {
-					mCustomScrollbars();
-				});
-				function mCustomScrollbars(){
-					$rb("#photos").mCustomScrollbar("horizontal",1000,"easeOutCirc",1,"fixed","yes","yes",20); 
-				}
-				$rb.fx.prototype.cur = function(){
-					if ( this.elem[this.prop] != null && (!this.elem.style || this.elem.style[this.prop] == null) ) {
-					  return this.elem[ this.prop ];
-					}
-					var r = parseFloat( jQuery.css( this.elem, this.prop ) );
-					return typeof r == 'undefined' ? 0 : r;
-				}
-				function LoadNewContent(id,file){
-					$rb("#"+id+" .customScrollBox .content").load(file,function(){
-						mCustomScrollbars();
-					});
-				}
-				</script>
-				<?
-			// Slider Gallery			
-			} elseif ($rb_agency_option_layoutprofile == "3") {
-				?>
-				<script>
-				var $tab = jQuery.noConflict();
-				$tab(window).load(function() {
-						/*$tab(".tab").hide();
-						$tab(".row-photos").show();
-						$tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-						$tab("#row-photos").removeClass("tab-inactive").addClass("tab-active");*/
-						$tab(".maintab").click(function(){
-							   var idx = this.id;
-							   var elem = "." + idx;
-							   var elem_id = "#" + idx;
-							   if ((idx=="row-all") || (idx=="row-booking")){
-										$tab(".tab").hide("slow");
-										$tab(".tab").show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
-										$tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-										$tab(elem_id).removeClass("tab-inactive").addClass("tab-active");
-								} else {
-									  $tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-									  $tab(".tab").css({ opacity: 1.0 }).stop().animate({ opacity: 0.0 }, 2000).hide();
-									  $tab(elem).show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
-									  $tab(elem_id).removeClass("tab-inactive").addClass("tab-active");
-							   }
+	*/
+
+	if(!function_exists("rb_agency_inserthead_profile")){
+		add_action('wp_head', 'rb_agency_inserthead_profile');
+			// Call Custom Code to put in header
+			function rb_agency_inserthead_profile() {
+				global $rb_agency_option_layoutprofile;
+
+				$rb_agency_options_arr = get_option('rb_agency_options');
+				
+				if (isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])) {
+					$layouttype = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
+
+					if ($layouttype == 99) {
+						// Slimbox
+						wp_enqueue_script( 'slimbox2', plugins_url('/js/slimbox2.js', __FILE__) );
+						wp_register_style( 'slimbox2', plugins_url('/style/slimbox2.css', __FILE__) );
+	        			wp_enqueue_style( 'slimbox2' );
+
+						//wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
+
+					} elseif ($layouttype == 99) {
+						// Prettyphoto
+						wp_register_style( 'prettyphoto', plugins_url('/style/prettyPhoto.css', __FILE__) );
+	        			wp_enqueue_style( 'prettyphoto' );
+						wp_enqueue_script( 'prettyphoto', plugins_url('/js/prettyPhoto.js', __FILE__) );
+
+
+					} elseif ($layouttype == 2) {
+						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-ui.js', __FILE__) );
+
+						wp_enqueue_script( 'js-scroller', plugins_url('/js/scroller.js', __FILE__) );
+						?>
+						<script>
+						var $rb = jQuery.noConflict();
+						$rb(window).load(function() {
+							mCustomScrollbars();
 						});
-				});
-				</script>
-				<?php
+						function mCustomScrollbars(){
+							$rb("#photos").mCustomScrollbar("horizontal",1000,"easeOutCirc",1,"fixed","yes","yes",20); 
+						}
+						$rb.fx.prototype.cur = function(){
+							if ( this.elem[this.prop] != null && (!this.elem.style || this.elem.style[this.prop] == null) ) {
+							  return this.elem[ this.prop ];
+							}
+							var r = parseFloat( jQuery.css( this.elem, this.prop ) );
+							return typeof r == 'undefined' ? 0 : r;
+						}
+						function LoadNewContent(id,file){
+							$rb("#"+id+" .customScrollBox .content").load(file,function(){
+								mCustomScrollbars();
+							});
+						}
+						</script>
+						<?
+					// Slider Gallery			
+					} elseif ($layouttype == 3) {
+						?>
+						<script>
+						var $tab = jQuery.noConflict();
+						$tab(window).load(function() {
+								/*$tab(".tab").hide();
+								$tab(".row-photos").show();
+								$tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
+								$tab("#row-photos").removeClass("tab-inactive").addClass("tab-active");*/
+								$tab(".maintab").click(function(){
+									   var idx = this.id;
+									   var elem = "." + idx;
+									   var elem_id = "#" + idx;
+									   if ((idx=="row-all") || (idx=="row-booking")){
+												$tab(".tab").hide("slow");
+												$tab(".tab").show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
+												$tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
+												$tab(elem_id).removeClass("tab-inactive").addClass("tab-active");
+										} else {
+											  $tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
+											  $tab(".tab").css({ opacity: 1.0 }).stop().animate({ opacity: 0.0 }, 2000).hide();
+											  $tab(elem).show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
+											  $tab(elem_id).removeClass("tab-inactive").addClass("tab-active");
+									   }
+								});
+						});
+						</script>
+						<?php
+					
+					} elseif ($layouttype == 9) {
+
+					}
+				}
+
+				
 			}
-			
-		}
-}
+	}
 }
    
 // GET HEADER  

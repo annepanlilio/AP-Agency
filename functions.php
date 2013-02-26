@@ -6,12 +6,15 @@
 	add_action('admin_head', 'rb_agency_admin_head');
 		function rb_agency_admin_head(){
 		  if( is_admin() ) {
-			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."style/admin.css\" type=\"text/css\" media=\"screen\" />\n";
+
+		  	// Get Styles
+			wp_register_style( 'rbagencyadmin', plugins_url('/style/admin.css', __FILE__) );
+			wp_enqueue_style( 'rbagencyadmin' );
+
 			if ( ! wp_script_is( 'jquery', 'registered' ) )
 				wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
 
-
-			echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/js-customfields.js\"></script>\n"; 
+			wp_enqueue_script( 'customfields', plugins_url('js/js-customfields.js', __FILE__) );
 		  }
 		}
 	
@@ -21,44 +24,14 @@
 		// Call Custom Code to put in header
 		function rb_agency_inserthead() {
 		  if( !is_admin() ) {
-			
-			$rb_agency_options_arr = get_option('rb_agency_options');
-			
-			if (isset($rb_agency_options_arr['rb_agency_option_gallerytype'])) {
-				if ($rb_agency_options_arr['rb_agency_option_gallerytype'] == "1") {
-					// Slimbox
-					echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/slimbox2.js\"></script>\n";
-					echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."style/slimbox2.css\" type=\"text/css\" media=\"screen\" />\n";
-				    echo "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js\"></script>\n";	
-						
-				} elseif ($rb_agency_options_arr['rb_agency_option_gallerytype'] == "2") {
-					// PrettyBox
-					echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."style/prettyPhoto.css\" type=\"text/css\" media=\"screen\" />\n";
-					echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/jquery.prettyPhoto.js\"></script>\n";
-						
-				} elseif ($rb_agency_options_arr['rb_agency_option_gallerytype'] == "9") {
-					// Disable jQuery
-					//wp_deregister_script('jquery'); //deregister current jquery
-					//wp_deregister_script('jquery-lightbox');
-					//wp_deregister_script('jquery-lightbox-balupton-edition');
-				
-					
-				}
-			}
-		
-			echo "<link rel=\"stylesheet\" href=\"". rb_agency_BASEDIR ."theme/style.css\" type=\"text/css\" media=\"screen\" />\n";
-			/* OBSOLETE
-			if (isset($rb_agency_options_arr['rb_agency_option_defaultcss'])) {
-			echo "<style type=\"text/css\">\n";
-			echo $rb_agency_options_arr['rb_agency_option_defaultcss'];
-			echo "</style>\n";
-			}
-			*/
+		  	
+			// Get Styles
+			wp_register_style( 'rbagency-style', plugins_url('/theme/style.css', __FILE__) );
+			wp_enqueue_style( 'rbagency-style' );
 		  }
 		
 		 }
-		
-        
+
 // *************************************************************************************************** //
 // Add to WordPress Dashboard
 	$rb_agency_options_arr = get_option('rb_agency_options');
@@ -830,8 +803,7 @@
 			if($user->user_level==10 AND get_query_var('target')!="casting") {
 				$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".get_query_var('target')."'  ";
 			}
-
- $queryList = "SELECT profile.*, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
+$queryList = "SELECT profile.*, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 			
 			}elseif ($_GET['t']=="casting"){
 						   
@@ -874,7 +846,6 @@
   #DEBUG!
  // echo $queryList;
 
- 
   if($countList > 0){
   $displayHTML ="";
   
@@ -964,8 +935,7 @@
 				}
 
 			
-
-                          //echo "loaded: ".microtime()." ms";
+                         //echo "loaded: ".microtime()." ms";
 				 $displayHTML .= "  </div>\n";
 
 				$displayHTML .=" <div class=\"casting\">";
@@ -1865,7 +1835,6 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
   }
   
 
- 
   function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo="") {
 		global $wpdb;
 		global $rb_agency_option_unittype;
@@ -2071,8 +2040,7 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 	elseif($division=="/teen-boys/"){$ageStart=12;$ageLimit=17;}
 	elseif($division=="/girls/"){$ageStart=1;$ageLimit=12;}
 	elseif($division=="/boys/"){$ageStart=1;$ageLimit=12;}
-
-   $sql.="AND DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(ProfileDateBirth)), '%Y')+0 > $ageStart
+  $sql.="AND DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(ProfileDateBirth)), '%Y')+0 > $ageStart
           AND DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(ProfileDateBirth)), '%Y')+0 <=$ageLimit
 		  AND ProfileIsActive = 1
 	";
