@@ -94,22 +94,6 @@ if ($_REQUEST["action"] == "search") {
 		if (isset($_REQUEST['ProfileDateBirth_max']) && !empty($_REQUEST['ProfileDateBirth_max'])){
 			$filterArray['profiledatebirth_max'] = $_REQUEST['ProfileDateBirth_max'];
 		}
-
-		// City
-		if (isset($_REQUEST['ProfileCity']) && !empty($_REQUEST['ProfileCity'])){
-			$filterArray['profilecity'] = $_REQUEST['ProfileCity'];
-		}		
-
-		// State
-		if (isset($_REQUEST['ProfileState']) && !empty($_REQUEST['ProfileState'])){
-			$filterArray['profilestate'] = $_REQUEST['ProfileState'];
-		}		
-
-		// ZIP
-		if (isset($_REQUEST['ProfileZip']) && !empty($_REQUEST['ProfileZip'])){
-			$filterArray['profilezip'] = $_REQUEST['ProfileZip'];
-		}		
-
 		
 		// Custom Fields
 		foreach($_POST as $key =>$val){

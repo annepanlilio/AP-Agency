@@ -523,10 +523,7 @@
 				"override_privacy" => NULL,
 				"profilefavorite" => NULL,
 				"profilecastingcart" => NULL,
-				"getprofile_saved" => NULL,
-				"profilecity" => NULL,
-				"profilestate" => NULL,
-				"profilezip" => NULL
+				"getprofile_saved" => NULL
 		), $atts));
 		// Filter It
 		$sort = "profile.ProfileContactDisplay";
@@ -571,9 +568,6 @@
 		$ProfileIsPromoted			= $stars;
 		$OverridePrivacy			= $override_privacy;
 	      $GetProfileSaved			= $getprofile_saved;
-		$City						= $profilecity;
-		$State						= $profilestate;
-		$Zip						= $profilezip;  
           
        $filterDropdown = array();
         // Set CustomFields
@@ -705,22 +699,6 @@
 		
 	    if (isset($ProfileIsPromoted)){
 			$filter .= " AND profile.ProfileIsPromoted = '1' ";
-		}
-		
-		// City
-		if (isset($City) && !empty($City)){
-			$City = $City;
-			$filter .= " AND profile.ProfileLocationCity = '". ucfirst($City) ."'";
-		}
-		// State
-		if (isset($State) && !empty($State)){
-			$State = $State;
-			$filter .= " AND profile.ProfileLocationState = '". ucfirst($State) ."'";
-		}
-		// Zip
-		if (isset($Zip) && !empty($Zip)){
-			$Zip = $Zip;
-			$filter .= " AND profile.ProfileLocationZip = '". ucfirst($Zip) ."'";
 		}
 		
 		
