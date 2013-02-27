@@ -68,10 +68,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		
 		echo "				    </div>\n";
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
-		echo "				<div class=\"search-field submit\">";
-		echo "					<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />";
-        echo '					<a href="'. get_bloginfo('siteurl') .'/profile-search/?srch=1">'. __("Advanced Search", rb_agency_TEXTDOMAIN) . '</a>';
-		echo "				</div>\n";
+		echo "				<div class=\"search-field submit\"><input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></div>\n";
+		echo "				<br /><a href=\"". get_bloginfo('siteurl') ."/profile-search/\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 		echo "        	</form>\n";
 		echo "		</div>\n";
    } else {
@@ -175,11 +173,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 				include("include-custom-fields.php");
 			}
 		}
-		
-		if(isset($_GET['srch'])){
-				    	include("include-custom-fields.php");
-		}
-		
+
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\"><input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></div>\n";
 		//echo "				<input type=\"submit\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
