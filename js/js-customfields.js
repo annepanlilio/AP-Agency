@@ -1,34 +1,34 @@
-$(document).ready(function(){
+jQuery(document).ready(function(){
 	
 //Select object type
-	$(".objtype").change(function(){
+	jQuery(".objtype").change(function(){
 		
-		if($("#obj_edit").attr("class") == $(this).val()){
-		  $("#obj_edit").show();
-		  $("#objtype_customize").empty();	
-		}else if($("#obj_edit").attr("class") != $(this).val()){
-				$("#objtype_customize").hide().html(getObj($(this).val())).fadeIn("fast");
+		if(jQuery("#obj_edit").attr("class") == jQuery(this).val()){
+		  jQuery("#obj_edit").show();
+		  jQuery("#objtype_customize").empty();	
+		}else if(jQuery("#obj_edit").attr("class") != jQuery(this).val()){
+				jQuery("#objtype_customize").hide().html(getObj(jQuery(this).val())).fadeIn("fast");
 				
-				if($(this).val()!=3){
-				  $(".add_more_object").hide();
+				if(jQuery(this).val()!=3){
+				  jQuery(".add_more_object").hide();
 							
 				}else{
-				 $(".add_more_object").fadeIn("fast");	
+				 jQuery(".add_more_object").fadeIn("fast");	
 				}
 				
-				$("#obj_edit").hide();
+				jQuery("#obj_edit").hide();
 		}
      
 	});
 	//Add  dropdown group option
-	$(".add_more_object").click(function(){
+	jQuery(".add_more_object").click(function(){
 	
-		 if($("div[id=dropdown_custom]").size() <= 1){
-			 var x = $("div[id=dropdown_custom]").size();
+		 if(jQuery("div[id=dropdown_custom]").size() <= 1){
+			 var x = jQuery("div[id=dropdown_custom]").size();
 			 x++;
 			dropdown_template(x);
-			 $("#min_field").val("Min");
-	        $(this).fadeOut();
+			 jQuery("#min_field").val("Min");
+	        jQuery(this).fadeOut();
 		}
 	});
 	
@@ -53,21 +53,21 @@ $(document).ready(function(){
 			break;  
 			
 			case "2":
-			        $("#objtype_customize").empty().html('<tr><td><td align="right" style="width:50px;">Title:</td><td style="width:10px;"><input type="text" name="ProfileCustomTitle"/></td></td></tr>');
-					$("#objtype_customize").append('<tr><td><td align="right" style="width:50px;">Min*:</td><td style="width:10px;"><input type="text" name="textmin"/></td></td></tr>');
-					$("#objtype_customize").append('<tr><td><td align="right" style="width:10px;">Max*:</td><td style="width:10px;"><input type="text" name="textmax"/></td></td></tr></tr>');
+			        jQuery("#objtype_customize").empty().html('<tr><td><td align="right" style="width:50px;">Title:</td><td style="width:10px;"><input type="text" name="ProfileCustomTitle"/></td></td></tr>');
+					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:50px;">Min*:</td><td style="width:10px;"><input type="text" name="textmin"/></td></td></tr>');
+					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:10px;">Max*:</td><td style="width:10px;"><input type="text" name="textmax"/></td></td></tr></tr>');
 					
 			   
 			break;  
 			
 			case "3":
 			   
-				 $("table tr[id=objtype_customize]").empty();
-				 $("table tr[id=objtype_customize]").html("<strong>Title*:</strong><input type='text' name='ProfileCustomTitle' /><br/>");
-				// $("table tr[id=objtype_customize]").append("Label*:<input type='text' name=\"option_label\" value=\"\" id=\"min_field\" />"); //<input type=\"checkbox\" class=\"set_as_default\" name=\"option_default_1\"\/><span style=\"font-size:11px;\">(set as selected)<\/span>
-				 $("table tr[id=objtype_customize]").append("<div id=\'dropdown_custom\' class=\"dropdown_1\">Option*:<input type=\"text\" name=\"option[]\"\/>");
-				 $("table tr[id=objtype_customize]").append("Option*:<input type=\"text\" name=\"option[]\"\/><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
-				 $("table tr[id=objtype_customize]").append("<div id=\"addoptions_field_1\"></div></div>");
+				 jQuery("table tr[id=objtype_customize]").empty();
+				 jQuery("table tr[id=objtype_customize]").html("<strong>Title*:</strong><input type='text' name='ProfileCustomTitle' /><br/>");
+				// jQuery("table tr[id=objtype_customize]").append("Label*:<input type='text' name=\"option_label\" value=\"\" id=\"min_field\" />"); //<input type=\"checkbox\" class=\"set_as_default\" name=\"option_default_1\"\/><span style=\"font-size:11px;\">(set as selected)<\/span>
+				 jQuery("table tr[id=objtype_customize]").append("<div id=\'dropdown_custom\' class=\"dropdown_1\">Option*:<input type=\"text\" name=\"option[]\"\/>");
+				 jQuery("table tr[id=objtype_customize]").append("Option*:<input type=\"text\" name=\"option[]\"\/><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
+				 jQuery("table tr[id=objtype_customize]").append("<div id=\"addoptions_field_1\"></div></div>");
 				 
 					
 					
@@ -89,29 +89,29 @@ $(document).ready(function(){
 			break;  
 			
 			case "5":
-			       $("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
-				 $("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
-				 $("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+			       jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
+				 jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+				 jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			break;  
 			
 			case "6":
-		   	       $("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
-				 $("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
-				 $("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+		   	       jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
+				 jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+				 jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			  break;  
 			
 			case "7":
-			       $("#objtype_customize").empty().html("<tr><td>Title*:<input type='text' name='ProfileCustomTitle' /></td></tr>");
-				 $("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
+			       jQuery("#objtype_customize").empty().html("<tr><td>Title*:<input type='text' name='ProfileCustomTitle' /></td></tr>");
+				 jQuery("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
 				 
-				  if($(".objtype").attr("id")==1){
-				 	$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />Inches</td></tr>");
-					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />Pounds</td></tr>");
-					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</td></tr>");
-				 }else if($(".objtype").attr("id")==0){
-					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />cm</td></tr>");
-					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />kg</td></tr>");
-					$("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</td></tr>");
+				  if(jQuery(".objtype").attr("id")==1){
+				 	jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />Inches</td></tr>");
+					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />Pounds</td></tr>");
+					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</td></tr>");
+				 }else if(jQuery(".objtype").attr("id")==0){
+					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />cm</td></tr>");
+					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />kg</td></tr>");
+					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</td></tr>");
 				 }
 			break;
 			
@@ -128,21 +128,21 @@ $(document).ready(function(){
 	function dropdown_template(id){
 		
 		
-	   if($("div[id=dropdown_custom]").size()<= 1){
+	   if(jQuery("div[id=dropdown_custom]").size()<= 1){
 		
 		 
-		 $("table tr[id=objtype_customize]").append("<div id=\"dropdown_remove_"+id+"\"><br/><br/><tr><td  valign=\"top\" class=\"dropdown_title\" ><tr><td>&nbsp;&nbsp;<strong>Dropdown#:"+id+"</strong> </td><td><a href='javascript:void(0);' style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"remove_more_option_field("+id+");\">remove group[x]</a></td></tr><tr><td><tr><td align=\"right\" valign=\"top\" class=\"dropdown_title\" ><br/>&nbsp;&nbsp;Label*:<input type='text' name='option_label2' value='Max' /></td></td></tr></td><div id=\'dropdown_custom\' class=\"dropdown_"+id+"\"></td></tr><td><tr><td><tr><td align=\"right\">&nbsp;Option*:<\/td><td><input type=\"text\" name=\"option2[]\"\/><input type=\"checkbox\" name=\"option_default_2\" class=\"set_as_default\" \/><span style=\"font-size:11px;\">(set as selected)<\/span><\/td><\/tr><tr><td align=\"right\"><br/>Option*:<input type=\"text\" name=\"option2[]\"\/><\/td><td><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field2("+id+");\" >add more option[+]<\/a> <\/td><\/tr> <div id=\"addoptions_field2_"+id+"\"> <\/div><\/td><\/div><\/div>");
+		 jQuery("table tr[id=objtype_customize]").append("<div id=\"dropdown_remove_"+id+"\"><br/><br/><tr><td  valign=\"top\" class=\"dropdown_title\" ><tr><td>&nbsp;&nbsp;<strong>Dropdown#:"+id+"</strong> </td><td><a href='javascript:void(0);' style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"remove_more_option_field("+id+");\">remove group[x]</a></td></tr><tr><td><tr><td align=\"right\" valign=\"top\" class=\"dropdown_title\" ><br/>&nbsp;&nbsp;Label*:<input type='text' name='option_label2' value='Max' /></td></td></tr></td><div id=\'dropdown_custom\' class=\"dropdown_"+id+"\"></td></tr><td><tr><td><tr><td align=\"right\">&nbsp;Option*:<\/td><td><input type=\"text\" name=\"option2[]\"\/><input type=\"checkbox\" name=\"option_default_2\" class=\"set_as_default\" \/><span style=\"font-size:11px;\">(set as selected)<\/span><\/td><\/tr><tr><td align=\"right\"><br/>Option*:<input type=\"text\" name=\"option2[]\"\/><\/td><td><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field2("+id+");\" >add more option[+]<\/a> <\/td><\/tr> <div id=\"addoptions_field2_"+id+"\"> <\/div><\/td><\/div><\/div>");
 		
 	   }
 	
 		 
      }
 	
-		$("#addmoreoption_1").click(function(){
-			$("#editfield_add_more_options_1").append("Option:<input type=\"text\" name=\"option[]\"></br>");
+		jQuery("#addmoreoption_1").click(function(){
+			jQuery("#editfield_add_more_options_1").append("Option:<input type=\"text\" name=\"option[]\"></br>");
 		});
-		$("#addmoreoption_2").click(function(){
-			$("#editfield_add_more_options_2").append("Option:<input type=\"text\" name=\"option2[]\"></br>");
+		jQuery("#addmoreoption_2").click(function(){
+			jQuery("#editfield_add_more_options_2").append("Option:<input type=\"text\" name=\"option2[]\"></br>");
 		}); 
 	
 	 
