@@ -1,13 +1,13 @@
 <?php
-  #Debug Mode
- //$RB_DEBUG_MODE = true;
+#Debug Mode
+//$RB_DEBUG_MODE = true;
 // *************************************************************************************************** //
 // Admin Head Section 
 	add_action('admin_head', 'rb_agency_admin_head');
-		function rb_agency_admin_head(){
-		  if( is_admin() ) {
+	function rb_agency_admin_head() {
+		if( is_admin() ) {
 
-		  	// Get Styles
+			// Get Styles
 			wp_register_style( 'rbagencyadmin', plugins_url('/style/admin.css', __FILE__) );
 			wp_enqueue_style( 'rbagencyadmin' );
 
@@ -15,22 +15,21 @@
 				wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
 
 			wp_enqueue_script( 'customfields', plugins_url('js/js-customfields.js', __FILE__) );
-		  }
 		}
+	}
 	
 // *************************************************************************************************** //
 // Page Head Section
 	add_action('wp_head', 'rb_agency_inserthead');
-		// Call Custom Code to put in header
-		function rb_agency_inserthead() {
-		  if( !is_admin() ) {
-		  	
+	// Call Custom Code to put in header
+	function rb_agency_inserthead() {
+		if( !is_admin() ) {
+			
 			// Get Styles
 			wp_register_style( 'rbagency-style', plugins_url('/theme/style.css', __FILE__) );
 			wp_enqueue_style( 'rbagency-style' );
-		  }
-		
-		 }
+		}	
+	}
 
 // *************************************************************************************************** //
 // Add to WordPress Dashboard
@@ -38,8 +37,8 @@
     
 	$rb_agency_option_advertise = isset($rb_agency_options_arr['rb_agency_option_advertise']) ? $rb_agency_options_arr['rb_agency_option_advertise'] : 0;
 			
- if($rb_agency_option_advertise == 1){
-	add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );
+	if($rb_agency_option_advertise == 1) {
+		add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );
 		// Hoook into the 'wp_dashboard_setup' action to register our other functions
 		// Create the function use in the action hook
 		function rb_agency_add_dashboard() {
@@ -66,94 +65,95 @@
 			// Display Quicklinks
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			if (isset($rb_agency_options_arr['dashboardQuickLinks'])) {
-			  echo $rb_agency_options_arr['dashboardQuickLinks'];
+			  	echo $rb_agency_options_arr['dashboardQuickLinks'];
 			}
 			$rss = fetch_feed("http://rbplugin.com/category/wordpress/rbagency/feed/");
 			// Checks that the object is created correctly 
-				if (!is_wp_error($rss)) { 
+			if (!is_wp_error($rss)) { 
 				// Figure out how many total items there are, but limit it to 5. 
 				$maxitems = $rss->get_item_quantity($num_items); 
 				// Build an array of all the items, starting with element 0 (first element).
 				$rss_items = $rss->get_items(0, $maxitems); 
-				}
-				echo "<div class=\"feed-searchsocial\">\n";
-				if ($maxitems == 0) {
-					echo "Empty Feed\n";
-				} else {
-				  // Loop through each feed item and display each item as a hyperlink.
-				  foreach ( $rss_items as $item ) {
+			}
+			echo "<div class=\"feed-searchsocial\">\n";
+			if ($maxitems == 0) {
+				echo "Empty Feed\n";
+			} else {
+				// Loop through each feed item and display each item as a hyperlink.
+				foreach ( $rss_items as $item ) {
 					echo "  <div class=\"blogpost\">\n";
 					echo "    <h4><a href='". $item->get_permalink() ."' title='Posted ". $item->get_date('j F Y | g:i a') ."' target=\"_blank\">". $item->get_title() ."</a></h4>\n";
 					echo "    <div class=\"description\">". $item->get_description() ."</div>\n";
 					echo "    <div class=\"clear\"></div>\n";
 					echo "  </div>\n";
-				  }
 				}
-				echo "</div>\n";
-				echo "<hr />\n";
-				//echo "Need <a href=\"http://rob.bertholf.com\" target=\"_blank\" title=\"SEO Resource\">SEO Advice</a>?<br />";
-		} 
- }
+			}
+			echo "</div>\n";
+			echo "<hr />\n";
+			//echo "Need <a href=\"http://rob.bertholf.com\" target=\"_blank\" title=\"SEO Resource\">SEO Advice</a>?<br />";
+		}
+	}
+
 // *************************************************************************************************** //
 // Add Custom Classes
 	add_filter("body_class", "rb_agency_insertbodyclass");
 	add_filter("post_class", "rb_agency_insertbodyclass");
-		function rb_agency_insertbodyclass($classes) {
-			// Remove Blog
-			if (substr($_SERVER['REQUEST_URI'], 0, 9) == "/profile/") {
-				$classes[] = 'rbagency-profile';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 11) == "/dashboard/") {
-				$classes[] = 'rbagency-dashboard';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-category/") {
-				$classes[] = 'rbagency-category';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-register/") {
-				$classes[] = 'rbagency-register';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 17) == "/profile-search/") {
-				$classes[] = 'rbagency-search';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 15) == "/profile-print/") {
-				$classes[] = 'rbagency-print';
-			} else {
-				$classes[] = 'rbagency';
-			}
-			return $classes;
+	function rb_agency_insertbodyclass($classes) {
+		// Remove Blog
+		if (substr($_SERVER['REQUEST_URI'], 0, 9) == "/profile/") {
+			$classes[] = 'rbagency-profile';
+		} elseif (substr($_SERVER['REQUEST_URI'], 0, 11) == "/dashboard/") {
+			$classes[] = 'rbagency-dashboard';
+		} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-category/") {
+			$classes[] = 'rbagency-category';
+		} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-register/") {
+			$classes[] = 'rbagency-register';
+		} elseif (substr($_SERVER['REQUEST_URI'], 0, 17) == "/profile-search/") {
+			$classes[] = 'rbagency-search';
+		} elseif (substr($_SERVER['REQUEST_URI'], 0, 15) == "/profile-print/") {
+			$classes[] = 'rbagency-print';
+		} else {
+			$classes[] = 'rbagency';
 		}
+		return $classes;
+	}
 // *************************************************************************************************** //
 // Handle Folders
 			
 	// Adding a new rule
 	add_filter('rewrite_rules_array','rb_agency_rewriteRules');
-		function rb_agency_rewriteRules($rules) {
-			$newrules = array();
-			$newrules['profile-search/([0-9])$'] = 'index.php?type=search&paging=$matches[1]';
-			$newrules['profile-search'] = 'index.php?type=search&target=results';
-			$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
-			$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
-			$newrules['profile-category/(.*)$'] = 'index.php?type=category&target=$matches[1]';
-			$newrules['profile-category'] = 'index.php?type=category&target=all';
-			$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
-			$newrules['profile-casting'] = 'index.php?type=casting&target=casting'; 
-			$newrules['profile-print'] = 'index.php?type=print';
-			$newrules['profile-email'] = 'index.php?type=email';
-			$newrules['dashboard'] = 'index.php?type=dashboard';
-			$newrules['client-view/(.*)$'] = 'index.php?type=profilesecure&target=$matches[1]';
-			$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
-			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
-			
-		    $newrules['rbv'] = 'index.php?type=rbv'; // ping this page for version checker
-			
-		    $rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
-			
-			$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
-			
-            if($rb_agency_option_profilelist_favorite){
-				$newrules['profile-favorite'] = 'index.php?type=favorite';
-		  }
-            if($rb_agency_option_profilelist_castingcart){
-				$newrules['profile-casting-cart'] = 'index.php?type=castingcart';
-		   }
-			return $newrules + $rules;
-		}
+	function rb_agency_rewriteRules($rules) {
+		$newrules = array();
+		$newrules['profile-search/([0-9])$'] = 'index.php?type=search&paging=$matches[1]';
+		$newrules['profile-search'] = 'index.php?type=search&target=results';
+		$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
+		$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
+		$newrules['profile-category/(.*)$'] = 'index.php?type=category&target=$matches[1]';
+		$newrules['profile-category'] = 'index.php?type=category&target=all';
+		$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
+		$newrules['profile-casting'] = 'index.php?type=casting&target=casting'; 
+		$newrules['profile-print'] = 'index.php?type=print';
+		$newrules['profile-email'] = 'index.php?type=email';
+		$newrules['dashboard'] = 'index.php?type=dashboard';
+		$newrules['client-view/(.*)$'] = 'index.php?type=profilesecure&target=$matches[1]';
+		$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
+		$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
+		
+	    $newrules['rbv'] = 'index.php?type=rbv'; // ping this page for version checker
+		
+	    $rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+		
+		$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+		
+        if($rb_agency_option_profilelist_favorite){
+			$newrules['profile-favorite'] = 'index.php?type=favorite';
+	  	}
+        if($rb_agency_option_profilelist_castingcart){
+			$newrules['profile-casting-cart'] = 'index.php?type=castingcart';
+	   	}
+		return $newrules + $rules;
+	}
 		
 	// Get Veriables & Identify View Type
 	add_action( 'query_vars', 'rb_agency_query_vars' );
@@ -170,40 +170,39 @@
 		function rb_agency_template_include( $template ) {
 			if ( get_query_var( 'type' ) ) {				
 
-					//echo get_query_var( 'type' );
-				  if (get_query_var( 'type' ) == "search") {
+				//echo get_query_var( 'type' );
+				if (get_query_var( 'type' ) == "search") {
 					return dirname(__FILE__) . '/theme/view-search.php'; 
-				  } elseif (get_query_var( 'type' ) == "category") {
+				} elseif (get_query_var( 'type' ) == "category") {
 					return dirname(__FILE__) . '/theme/view-category.php'; 
-				  } elseif (get_query_var( 'type' ) == "profile") {
+				} elseif (get_query_var( 'type' ) == "profile") {
 					return dirname(__FILE__) . '/theme/view-profile.php'; 
-				  } elseif (get_query_var( 'type' ) == "profilecontact") {
+				} elseif (get_query_var( 'type' ) == "profilecontact") {
 					return dirname(__FILE__) . '/theme/view-profile-contact.php'; 
-				  } elseif (get_query_var( 'type' ) == "profilesecure") {
+				} elseif (get_query_var( 'type' ) == "profilesecure") {
 					return dirname(__FILE__) . '/theme/view-profilesecure.php'; 
-				  } elseif (get_query_var( 'type' ) == "dashboard") {
+				} elseif (get_query_var( 'type' ) == "dashboard") {
 					return dirname(__FILE__) . '/theme/view-dashboard.php'; 
-				  } elseif (get_query_var( 'type' ) == "print") {
+				} elseif (get_query_var( 'type' ) == "print") {
 					return dirname(__FILE__) . '/theme/view-print.php'; 
-				  } elseif (get_query_var( 'type' ) == "favorite") {
+				} elseif (get_query_var( 'type' ) == "favorite") {
 					return dirname(__FILE__) . '/theme/view-favorite.php'; 
-				  }elseif (get_query_var( 'type' ) == "casting") {
+				}elseif (get_query_var( 'type' ) == "casting") {
 					return dirname(__FILE__) . '/theme/view-castingcart.php'; 
-				  }elseif (get_query_var( 'type' ) == "rbv") {
+				}elseif (get_query_var( 'type' ) == "rbv") {
 					return dirname(__FILE__) . '/rbv.php'; 
-				  }
-			  
+				}			  
 			}
 			return $template;
 		}
 	
 	// Remember to flush_rules() when adding rules
 	add_filter('init','rb_agency_flushrules');
-		function rb_agency_flushRules() {
-			global $wp_rewrite;
-			$wp_rewrite->flush_rules();
-		}
-	
+
+	function rb_agency_flushRules() {
+		global $wp_rewrite;
+		$wp_rewrite->flush_rules();
+	}	
 	
 // *************************************************************************************************** //
 // Functions
@@ -269,29 +268,30 @@
 	}
 	
 	function rb_agency_makeago($timestamp, $offset){
-		
-	  if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
+		if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
 		// Offset
 		$offset = $offset-5; //adjustment for server time
 		$timezone_offset = (int)$offset; // Server Time
 		$time_altered = time() -  $timezone_offset *60 *60;
-	
+
 		// Math
 		$difference = $time_altered - $timestamp;
-		
+
 		//printf("\$timestamp: %d, \$difference: %d\n", $timestamp, $difference);
 		$periods = array("sec", "min", "hr", "day", "week", "month", "year", "decade");
 		$lengths = array("60","60","24","7","4.35","12","10");
+
 		for($j = 0; $difference >= $lengths[$j]; $j++)
 		$difference /= $lengths[$j];
 		$difference = round($difference);
+
 		if($difference != 1) $periods[$j].= "s";
 		$text = "$difference $periods[$j] ago";
 			if ($j > 10) { exit; }
 		return $text;
-	  } else {
-		return "--";
-	  }
+		} else {
+			return "--";
+		}
 	}
 	
 	function rb_agency_get_age($p_strDate) {
@@ -370,29 +370,28 @@
 	}
 	
 	// Make Directory for new profile
-     function rb_agency_checkdir($ProfileGallery){
+    function rb_agency_checkdir($ProfileGallery){
 	      	
-			if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
-				mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
-				chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
-			} else {
-				$finished = false;      
-				$pos = 0;                 // we're not finished yet (we just started)
-				while ( ! $finished ):                   // while not finished
-				 $pos++;
-				  $NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
-				  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
+		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
+			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
+			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
+		} else {
+			$finished = false;      
+			$pos = 0;                 // we're not finished yet (we just started)
+			while ( ! $finished ):                   // while not finished
+			 	$pos++;
+			  	$NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
+			  	if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
 					mkdir(rb_agency_UPLOADPATH . $NewProfileGallery, 0755);
 					chmod(rb_agency_UPLOADPATH . $NewProfileGallery, 0777);
 					$ProfileGallery = $NewProfileGallery;  // Set it to the new  thing
 					$finished = true;                    // ...we are finished
-				  endif;
-				endwhile;
-			}
-			return $ProfileGallery;
-			
-			
-     }
+			  	endif;
+			endwhile;
+		}
+		return $ProfileGallery;			
+    }
+
 // *************************************************************************************************** //
 // Shortcodes
 	// Search Form
@@ -410,8 +409,8 @@
 		
 		// Get Preferences
 		$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_option_locationtimezone 			 = (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
-			$rb_agency_option_privacy					 = (int)$rb_agency_options_arr['rb_agency_option_privacy'];
+			$rb_agency_option_locationtimezone	= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
+			$rb_agency_option_privacy			= (int)$rb_agency_options_arr['rb_agency_option_privacy'];
 		// Set It Up	
 		global $wp_rewrite;
 		extract(shortcode_atts(array(
@@ -422,10 +421,10 @@
 			// Set It Up	
 			global $wp_rewrite;
 			extract(shortcode_atts(array(
-					"currentcategory" => NULL,
-					"profilegender" => NULL,
-					"profiledatebirth_min" => NULL,
-					"profiledatebirth_max" => NULL,
+				"currentcategory" => NULL,
+				"profilegender" => NULL,
+				"profiledatebirth_min" => NULL,
+				"profiledatebirth_max" => NULL,
 			), $atts));
 	
 			$DataTypeID				= $currentcategory;
@@ -436,9 +435,7 @@
 			
 			// Gender
 			if (isset($ProfileGender) && !empty($ProfileGender)){
-			  
-				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
-			  
+				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";			  
 			} else {
 				$ProfileGender = "";
 			}
@@ -1864,14 +1861,14 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
 		foreach ($resultsCustom as $resultCustom) {
 			if(!empty($resultCustom->ProfileCustomValue )){
-				 if ($resultCustom->ProfileCustomType == 7) { //measurements field type
+				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 				   if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 					if($resultCustom->ProfileCustomOptions == 1){
 						$label = "(cm)";
 					} elseif($resultCustom->ProfileCustomOptions == 2){
 						$label = "(kg)";
 					}
-				 } elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+				} elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
 					if($resultCustom->ProfileCustomOptions == 1){
 						$label = "(in)";
 					} elseif($resultCustom->ProfileCustomOptions == 2){
