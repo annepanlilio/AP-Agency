@@ -163,8 +163,7 @@ Expended Profile with Tabs
 	
 
 		// Insert Custom Fields
-		$title_to_exclude = array("Experience");
-		rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude);
+		rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
 
 		if($rb_agency_option_showcontactpage==1){
@@ -213,15 +212,11 @@ Expended Profile with Tabs
 	$results1 = mysql_query($query1);
 	$count1 = mysql_num_rows($results1);
 	while ($data1 = mysql_fetch_array($results1)) {
-	
-			if ($data1['ProfileCustomTitle'] == "Experience"){
-					
-					echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." clear\">\n";
-					echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
-					echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] 
-						 ."\" class=\"ProfileExperience\">". $data1['ProfileCustomValue'] ."</p>\n";
-					echo "	  </div>\n";
-			}
+		
+	echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." clear\">\n";
+	echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
+	echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" class=\"ProfileExperience\">". $data1['ProfileCustomValue'] ."</p>\n";
+	echo "	  </div>\n";
 	}
 	echo " </div>\n"; // twelve column experience
 
