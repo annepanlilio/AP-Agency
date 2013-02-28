@@ -29,118 +29,148 @@ if ($ConfigID == 0) {
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Interactive Reporting", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("Run reports on membership and other usage.", rb_agency_TEXTDOMAIN) . "</p>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Recent Payments", rb_agency_TEXTDOMAIN) . "\">". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Payments and membership renewals", rb_agency_TEXTDOMAIN) . "</p>\n";
     echo "    </div>\n";
-   echo "</div>\n";
+
+    echo "</div>\n";
 	}
 
 	//
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Initial Setup", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("If you are doing the initial instal of RB Agency you this section will help you get your data inplace", rb_agency_TEXTDOMAIN) . "</p>\n";
-   echo "</div>\n";
+
+    echo "</div>\n";
 
 	//
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Data Integrity", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("Once your data is in place use the tools below to check your records", rb_agency_TEXTDOMAIN) . "</p>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Export Data", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=12\" title=\"". __("Export Data", rb_agency_TEXTDOMAIN) . "\">". __("Export Data", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Export databases", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+/*NK*/
+    echo "    <div class=\"boxlink\">\n";
+    echo "      <h3>". __("Import CSV / XLS", rb_agency_TEXTDOMAIN) . "</h3>\n";
+    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=80\" title=\"". __("Import Data", rb_agency_TEXTDOMAIN) . "\">". __("Import Data", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <p>". __("Import Data into CSV / XLS", rb_agency_TEXTDOMAIN) . ".</p>\n";
+    echo "    </div>\n";
+/*NK*/
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "\">". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Search profile records for fields which seem invalid", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Rename Profile Folder Names", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\" title=\"". __("Rename Folders", rb_agency_TEXTDOMAIN) . "\">". __("Rename Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("If you created model profiles while under 'First Last' or 'First L' and wish to switch to Display names or IDs you will have to rename the existing folders so that they do not have the models name in it", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Resize Photos", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=13\" title=\"". __("Resize Photos", rb_agency_TEXTDOMAIN) . "\">". __("Resize Photos", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Ensure files are not larger than approved size", rb_agency_TEXTDOMAIN) . ". (<a href=\"?page=rb_agency_menu_settings&ConfigID=1\" title=\"". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "\">". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "</a>)</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Orphaned Profile Images", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\" title=\"". __("Remove Orphan Images From Database", rb_agency_TEXTDOMAIN) . "\">". __("Remove Orphan Images From Database", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("FTP Blank Folder Check", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "\">". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Check for any empty folders which do no have models assigned using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "</div>\n";
+
+    echo "</div>\n";
 
 	//
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Profile Management", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("The following reports will help you manage your profile information", rb_agency_TEXTDOMAIN) . "</p>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Inactive Users", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\" title=\"". __("Check Inactive Users", rb_agency_TEXTDOMAIN) . "\">". __("Check Inactive Users", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Find profiles who are currently set as inactive.  Use this tool to set multiple users to active", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=rb_agency_menu_search\" title=\"". __("Profile Search", rb_agency_TEXTDOMAIN) . "\">". __("Profile Search", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("You may search for profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Dummy Profiles with Sample Media", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=14\" title=\"". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "\">". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("You may add dummy profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "</div>\n";
+
+    echo "</div>\n";
 
 
-   echo "<div class=\"boxlinkgroup\">\n";
+
+    echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Importing Records", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("The following tools will help import records.  DO NOT USE THESE TOOLS IF YOU ALREADY HAVE DATA LOADED", rb_agency_TEXTDOMAIN) . "</p>\n";
 
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 1", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=51\" title=\"". __("Download Excel Template", rb_agency_TEXTDOMAIN) . "\">". __("Download Excel Template", rb_agency_TEXTDOMAIN) . "</span><br />\n";
     echo "      <p>". __("Download this template and load your profile data into this file to import into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 2", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=52\" title=\"". __("Upload to Database", rb_agency_TEXTDOMAIN) . "\">". __("Upload to Database", rb_agency_TEXTDOMAIN) . "</span><br />\n";
     echo "      <p>". __("Upload the model profiles into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 3", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=53\" title=\"". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "\">". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Check that all profiles have folder names generated.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
 
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 4", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\" title=\"". __("Create folders for all profiles", rb_agency_TEXTDOMAIN) . "\">". __("Create folders for all profiles", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Check that all profiles have folders created on the server.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 5", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Scan Folders for Images", rb_agency_TEXTDOMAIN) . "\">". __("Scan Folders for Images", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("First upload images directly to folders via FTP then use this tool to sync the images to the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 6", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\" title=\"". __("Set Primary Profile Image", rb_agency_TEXTDOMAIN) . "\">". __("Set Primary Profile Image", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Identify which image is the primary image for each profile.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-   echo "</div>\n";
+
+    echo "</div>\n";
 
 }
 elseif ($ConfigID == 11) {
-   echo "  <h2>". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</h2>\n";
+
+    echo "  <h2>". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</h2>\n";
 
 	// What are the rates?
 	$sql = "SELECT * FROM ". table_agencyinteract_subscription ."";
@@ -370,7 +400,8 @@ elseif ($ConfigID == 3) {
 						} else {
 								$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
 						}
-           		echo "<div style=\"border-color: #E6DB55;\">File: ". $file ." has been renamed <strong>". $new_file ."</strong>". $actionText ."</div>\n";
+
+            		echo "<div style=\"border-color: #E6DB55;\">File: ". $file ." has been renamed <strong>". $new_file ."</strong>". $actionText ."</div>\n";
 					}
 				}
 				closedir($handle);
@@ -443,7 +474,8 @@ elseif ($ConfigID == 4) {
         while ($data4 = mysql_fetch_array($results4)) {
             $dirURL = rb_agency_UPLOADDIR . $data4['ProfileGallery'];
             $profileID = $data4['ProfileID'];
-           $query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
+
+            $query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
             $results4b = mysql_query($query4b);
             $count4b = mysql_num_rows($results4b);
 			//echo $query4b ."<br />". $count4b ."<hr />";
@@ -479,7 +511,8 @@ elseif ($ConfigID == 4) {
 } // End 4
 elseif ($ConfigID == 5) {
 //////////////////////////////////////////////////////////////////////////////////// ?>
-   <h3>Check for Abnormalities</h3>
+
+    <h3>Check for Abnormalities</h3>
     <p>This will determine if a model's profile exists.  Green profiles indicate that the model has a folder linked correctly where red profiles indicate that a model does not yet have a folder created for them yet.  NOTE: That spelling errors could make it seem that a folder does not exist, please check the report above to find folders with no profile assigned which may need to be renamed.</p>
     <?php
     global $wpdb;
@@ -591,7 +624,8 @@ elseif ($ConfigID == 7) {
 
 	?>
 
-   <?php
+
+    <?php
 } // End 6
 elseif ($ConfigID == 8) {
 //////////////////////////////////////////////////////////////////////////////////// ?>
@@ -689,7 +723,8 @@ elseif ($ConfigID == 8) {
 				}
 				$pos++;
 			}
-   } else {
+
+    } else {
 
 		echo "<h3>Hide Profile Identity</h3>\n";
 		echo "<p>If you created model profiles while under \"First Last\" or \"First L\" and wish to switch to Display names or IDs you will have to rename the existing folders so that they do not have the models name in it.</p>\n";
@@ -790,7 +825,8 @@ elseif ($ConfigID == 13) {
 
 // *************************************************************************************************** //
 // Manage Settings
-   echo "<h2>". __("Resize Images", rb_agency_TEXTDOMAIN) . "</h2>\n";
+
+    echo "<h2>". __("Resize Images", rb_agency_TEXTDOMAIN) . "</h2>\n";
 	
 	/*********** Max Size *************************************/
 	$rb_agency_options_arr = get_option('rb_agency_options');
@@ -836,7 +872,8 @@ elseif ($ConfigID == 13) {
             $ProfileGallery = $data['ProfileGallery'];
             $ProfileID = $data['ProfileID'];
 
-           $queryImg = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  $ProfileID AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC";
+
+            $queryImg = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  $ProfileID AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC";
             $resultsImg = mysql_query($queryImg);
             $countImg = mysql_num_rows($resultsImg);
 			echo "<div><strong>$countImg total</strong></div>\n";
@@ -877,7 +914,8 @@ elseif ($ConfigID == 12) {
 
 // *************************************************************************************************** //
 // Manage Settings
-   echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
+
+    echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
 
 	echo "<a href=\"". rb_agency_BASEDIR ."tasks/exportDatabase.php\">Export Database</a>\n";
 	
@@ -886,6 +924,88 @@ elseif ($ConfigID == 12) {
 	
 	
 	
+}
+elseif ($ConfigID == 80) {
+
+// *************************************************************************************************** //
+// Import CSV or XLS files (NK)
+
+    $obj_csv = new RBAgencyCSVXLSImpoterPlugin();
+    $error_message = ""; 
+    $form_display_flag = true;
+
+    global $wpdb;
+
+    $custom_fields_rb_agency = $wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder", ARRAY_A);
+    $fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive'));
+
+    $count = count($fields_array[0]);
+    foreach ($custom_fields_rb_agency as $key => $c_field) 
+    {
+        $fields_array[0][$count] = 'Client'.str_replace(' ', '',$c_field['ProfileCustomTitle']);
+        $count++;
+    }
+
+    $target_path = WP_CONTENT_DIR.'/FORMAT.csv';
+
+    $csv_format = fopen($target_path,'w');
+            
+    foreach ($fields_array as $key => $value) 
+    {
+        fputcsv($csv_format, $value);
+    }
+    fclose($csv_format);
+    chmod($target_path, 0777);
+    
+
+    if(isset($_POST['submit_importer']))
+    {   
+        /*Reading a file type to confirm input of CSV, XLS or XLSX file*/
+        if($_FILES['source_file']['name'] == "")
+        {
+            $error_message = "Empty file!";
+        }
+        
+        if($_FILES['source_file']['type'] == 'application/vnd.ms-excel' || $_FILES['source_file']['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') /*CSV and Excel files*/
+        {
+            $return_result = $obj_csv->match_column_and_table(); /*Display colunm head*/
+            if( $return_result == 0)
+            {
+                $error_message = "Empty header!";
+                $form_display_flag = true;
+            }
+            else
+            {
+                $form_display_flag = false;
+            }
+        }
+        else
+        {
+            $error_message = 'Incorrect file format. Only CSV, XLS and XLSX file formats are allowed!';
+            $form_display_flag = true;
+        }
+    }
+    else if($_POST['submit_importer_to_db'])
+    {
+        $obj_csv->import_to_db();   /*Store profile data*/
+        $form_display_flag = true;
+    }
+    
+    if( $form_display_flag == true )
+    {
+        echo "<h2>". __("Import CSV / XLS", rb_agency_TEXTDOMAIN) . "</h2>\n";
+        
+        /*File error message*/
+        echo "<span class=\"error-message\">$error_message</span> <br>";
+        
+        /*Form for file selection*/
+        echo "  <form action=\"\" method=\"post\" enctype=\"multipart/form-data\">";
+        echo "      <label>Select File</label>";
+        echo "      <input type=\"file\" name=\"source_file\">  <br>";
+        echo "      <input type=\"submit\" id=\"submit\" class=\"button-primary\" value=\"Read Column Head\" name=\"submit_importer\">";
+        echo "  </form>";
+    }
+    
 }
 // Install Dummy Accounts/Profiles with Media Content rb-agency/task/installDummy.php
 elseif ($ConfigID == 14) {
@@ -1011,10 +1131,6 @@ elseif ($ConfigID == 14) {
 						$have_error = true;
 					} elseif ($rb_agency_option_profilenaming == 3) {
 						$ProfileContactDisplay = "ID ". $ProfileID;
-					} elseif ($rb_agency_option_profilenaming == 4) {
-						$ProfileContactDisplay = $ProfileContactNameFirst;
-					} elseif ($rb_agency_option_profilenaming == 5) {
-						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
 				  }
 			
@@ -1106,10 +1222,6 @@ elseif ($ConfigID == 14) {
 									$have_error = true;
 								} elseif ($rb_agency_option_profilenaming == 3) {
 									$ProfileContactDisplay = "ID ". $ProfileID;
-								} elseif ($rb_agency_option_profilenaming == 4) {
-									$ProfileContactDisplay = $ProfileContactNameFirst;
-								} elseif ($rb_agency_option_profilenaming == 5) {
-									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
 							}
 						
@@ -1286,6 +1398,247 @@ function rb_chmod_file_display($file){
 }
 
 
+/*Naresh Kumar @ Matrix Infologics*/
 
+class RBAgencyCSVXLSImpoterPlugin {
+    var $log = array();
+    /**
+     * give the absolute path to the file
+     *
+     * @return file path
+     */
+
+    public function __construct()
+    {
+        define('WP_CSV_TO_DB_FOLDER', dirname(plugin_basename(__FILE__)));
+        define('WP_CSV_TO_DB_URL', plugins_url('',__FILE__));
+    }
+   
+    function csv_to_db_get_abs_path_from_src_file($src_file){
+        if(preg_match("/http/",$src_file)){
+            $path = parse_url($src_file, PHP_URL_PATH);
+            $abs_path = $_SERVER['DOCUMENT_ROOT'].$path;
+            $abs_path = realpath($abs_path);
+            if(empty($abs_path)){
+                $wpurl = get_bloginfo('wpurl');
+                $abs_path = str_replace($wpurl,ABSPATH,$src_file);
+                $abs_path = realpath($abs_path);            
+            }
+        }
+        else{
+            $relative_path = $src_file;
+            $abs_path = realpath($relative_path);
+        }
+        return $abs_path;
+    }
+    /**
+     * Match CSV Columns and Custom Field ID
+     *
+     * @return void
+     */
+
+    function match_column_and_table(){
+        global $wpdb;
+        
+        $get_ext =  explode('.', $_FILES['source_file']['name']);
+        $target_path = WP_CONTENT_DIR.'/plugins/rb-agency/file_upload/';
+        $target_path = $target_path . basename( $_FILES['source_file']['name']);
+        
+        if( strtolower($get_ext[1]) == 'csv' )  /*If uploaded file is a CSV*/
+        {
+            if(move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path))
+            {
+                $file_name = WP_CONTENT_DIR.'/plugins/rb-agency/file_upload/'.basename( $_FILES['source_file']['name']);
+                update_option('wp_csvtodb_input_file_url', $file_name);
+            }
+            else
+            {
+                echo "error uploading the file";
+            }
+        }
+        else    /*If uploaded file is excel*/
+        {
+            if( strtolower($get_ext[1]) == 'xls' )
+            {
+                $inputFileType = 'Excel5';  /*XLS File type*/
+            } 
+            else
+            {
+                $inputFileType = 'Excel2007';  /*XLS File type*/  
+            }
+            include WP_CONTENT_DIR.'/plugins/rb-agency/Classes/PHPExcel/IOFactory.php';
+            $f_name = date('d_M_Y_h_i_s');
+            
+            move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path);
+            
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+            $objReader->setReadDataOnly(true);
+            $objPHPExcel = $objReader->load($target_path);
+            $sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
+            $t_file = date('d_M_Y_h_i_s');
+            $csv_file = fopen($target_path.$t_file.'(1).csv','w');
+            
+            foreach ($sheetData as $key => $value) 
+            {
+                fputcsv($csv_file, $value);
+            }
+            fclose($csv_file);
+            $file_name = $target_path.$t_file.'(1).csv';
+            $clone = $file_name;
+        }
+        
+        $file_path = $this->csv_to_db_get_abs_path_from_src_file($file_name);   
+        $handle = fopen($file_path ,"r");       
+        $header=fgetcsv($handle, 1000, ",");
+        $total_header = count($header);
+
+        $custom_header = $total_header - 17;//17 are the number of column for the personal profile table
+        
+        if( $custom_header <= 0 ) return 0; /*If no custom field found*/
+
+        
+        /*Column head form*/
+        echo "<div class=\"wrap\">";
+        echo "<h2>Import CSV</h2>";
+        echo "<form  method=\"post\" action=\"\">";
+        
+        echo '<input type="hidden" value ="'.$custom_header.'" name="custom_header">
+              <input type="hidden" value ="'.$total_header.'" name="total_header">
+              <input type="hidden" value ="'.$file_path.'" name="file_path">
+              <input type="hidden" value ="'.$clone.'" name="clone">';
+        $default = 1;
+        while($custom_header < $total_header){ 
+            echo '<div style="width:140px; padding:10px;text-align:center;float:left;"><label>'.$header[$custom_header].'</label><br />';
+            $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from rb_agency_customfields ORDER BY ProfileCustomID ASC");
+            echo '<select name = "select'.$default.'" id="select'.$default.'">';
+            foreach ($custom_fields as $custom_fields_result) {
+                $custom_field_id = intval($custom_fields_result->ProfileCustomID);
+                $custom_field_title = $custom_fields_result->ProfileCustomTitle;
+                if($custom_field_id==$default){
+                    $is_default = ' selected="selected" ';
+                }
+                else{
+                    $is_default ='';
+                }
+                echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
+            }
+            echo '</select>';
+            echo '</div>';
+            $custom_header++;
+            $default++;
+        }
+     
+        echo "<div style=\"clear:both\"></div>";
+        echo "<p class=\"submit\"><input type=\"submit\" class=\"button\" name=\"submit_importer_to_db\" value=\" Import Data \" /></p>";
+        echo "</form>";
+        echo "</div>";
+        return 1;
+    }
+    /**
+     * Insert the data into the database
+     *
+     * @return void
+     */
+    function import_to_db(){
+        $p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
+        $c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";       
+        set_time_limit(0);
+        $path_to_file = $_REQUEST['file_path'];
+        $handle = fopen($path_to_file ,"r");
+        fgets($handle);//read and ignore the first line
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $ctrl_start = $_REQUEST['custom_header'];
+            $ctrl_end = $_REQUEST['total_header'];
+            $incre = 1;
+            global $wpdb;
+            
+            $queryGenderResult = $wpdb->get_row("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='".$data[3]."'", ARRAY_A);
+            
+            $add_to_p_table="INSERT into rb_agency_profile($p_table_fields)values('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
+            mysql_query($add_to_p_table) or die(mysql_error());
+            $last_inserted_mysql_id = mysql_insert_id();
+            while($ctrl_start < $ctrl_end){
+                $select_id =  $_REQUEST['select'.$incre];
+                $add_to_c_table="INSERT into rb_agency_customfield_mux($c_table_fields)values('$select_id','$last_inserted_mysql_id','$data[$ctrl_start]')";
+                mysql_query($add_to_c_table) or die(mysql_error());
+                $ctrl_start++;
+                $incre++;
+            }
+        }
+        echo '<div class="wrap">Successfully Imported Records</div>';
+        if($_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
+
+    }
+    /**
+     * Upload Form
+     *
+     * @return void
+     */
+    function form() {
+        if(isset($_POST['read'])){
+            $this->match_column_and_table();
+        }
+        else
+        {
+        if(isset($_POST['import_to_db'])){
+            $this->import_to_db();
+        }
+?>
+            <div style="clear:both"></div>
+            <div class="wrap">
+                <h2>Import CSV</h2>
+                <form class="add:the-list: validate" method="post" enctype="multipart/form-data" action="">
+                    <p><label for="csv_import">Only CSV Files are accepted</label><br/></p>
+                    <input name="csv_import" id="csv_import" type="file" value="" aria-required="true" /></p>
+                    <p class="submit"><input type="submit" class="button" name="read" value=" Read Column Headings " /></p>
+                </form>
+            </div>
+<?php
+        }
+    }
+    /**
+     * Plugin's interface
+     *
+     * @return void
+     */
+    function print_messages() {
+        if (!empty($this->log)) {
+    // messages HTML {{{
+?>
+            <div class="wrap">
+                <?php if (!empty($this->log['error'])): ?>
+                <div class="error">
+                    <?php foreach ($this->log['error'] as $error): ?>
+                        <p><?php echo $error; ?></p>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+                <?php if (!empty($this->log['notice'])): ?>
+                <div class="updated fade">
+                    <?php foreach ($this->log['notice'] as $notice): ?>
+                        <p><?php echo $notice; ?></p>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+<?php
+    // end messages HTML }}}
+            $this->log = array();
+        }
+    }
+    /**
+     * Format Date
+     *
+     * @return Y-m-d H:i:s
+     */
+    function parse_date($data) {
+        $timestamp = strtotime($data);
+        if (false === $timestamp) {
+            return '';
+        } else {
+            return date('Y-m-d H:i:s', $timestamp);
+        }
+    }    
+}
 ?>
 </div>
