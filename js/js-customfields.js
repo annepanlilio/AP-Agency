@@ -36,7 +36,6 @@ jQuery(document).ready(function(){
 	function getObj(type){
 	
 	      switch(type){
-			
 			case "1":
 			     return '<tr>'
 				          +'<td>'
@@ -51,28 +50,19 @@ jQuery(document).ready(function(){
 						  +'</td>'
 						+'</tr>';
 			break;  
-			
 			case "2":
 			        jQuery("#objtype_customize").empty().html('<tr><td><td align="right" style="width:50px;">Title:</td><td style="width:10px;"><input type="text" name="ProfileCustomTitle"/></td></td></tr>');
 					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:50px;">Min*:</td><td style="width:10px;"><input type="text" name="textmin"/></td></td></tr>');
 					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:10px;">Max*:</td><td style="width:10px;"><input type="text" name="textmax"/></td></td></tr></tr>');
-					
-			   
 			break;  
-			
 			case "3":
-			   
-				 jQuery("table tr[id=objtype_customize]").empty();
-				 jQuery("table tr[id=objtype_customize]").html("<strong>Title*:</strong><input type='text' name='ProfileCustomTitle' /><br/>");
+				jQuery("table tr[id=objtype_customize]").empty();
+				jQuery("table tr[id=objtype_customize]").html("<strong>Title*:</strong><input type='text' name='ProfileCustomTitle' /><br/>");
 				// jQuery("table tr[id=objtype_customize]").append("Label*:<input type='text' name=\"option_label\" value=\"\" id=\"min_field\" />"); //<input type=\"checkbox\" class=\"set_as_default\" name=\"option_default_1\"\/><span style=\"font-size:11px;\">(set as selected)<\/span>
 				 jQuery("table tr[id=objtype_customize]").append("<div id=\'dropdown_custom\' class=\"dropdown_1\">Option*:<input type=\"text\" name=\"option[]\"\/>");
 				 jQuery("table tr[id=objtype_customize]").append("Option*:<input type=\"text\" name=\"option[]\"\/><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
 				 jQuery("table tr[id=objtype_customize]").append("<div id=\"addoptions_field_1\"></div></div>");
-				 
-					
-					
 			break;  
-			
 			case "4":
 			     return '<tr>'
 				          +'<td>'
@@ -87,24 +77,20 @@ jQuery(document).ready(function(){
 						  +'</td>'
 					+'</tr>';
 			break;  
-			
 			case "5":
-			       jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
-				 jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
-				 jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+			    jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
+				jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			break;  
-			
 			case "6":
-		   	       jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
-				 jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
-				 jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+		   	    jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
+				jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			  break;  
-			
 			case "7":
-			       jQuery("#objtype_customize").empty().html("<tr><td>Title*:<input type='text' name='ProfileCustomTitle' /></td></tr>");
-				 jQuery("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
-				 
-				  if(jQuery(".objtype").attr("id")==1){
+   		        jQuery("#objtype_customize").empty().html("<tr><td>Title*:<input type='text' name='ProfileCustomTitle' /></td></tr>");
+				jQuery("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
+				if(jQuery(".objtype").attr("id")==1){
 				 	jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />Inches</td></tr>");
 					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />Pounds</td></tr>");
 					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</td></tr>");
@@ -114,7 +100,13 @@ jQuery(document).ready(function(){
 					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</td></tr>");
 				 }
 			break;
-			
+			case "8":
+				jQuery ("table tr[id=objtype_customize]").empty();
+				jQuery ("table tr[id=objtype_customize]").html("<strong>Title*:</strong><input type='text' name='ProfileCustomTitle' /><br/>");
+				jQuery ("table tr[id=objtype_customize]").append("<div id=\'dropdown_custom\' class=\"dropdown_1\">Option*:<input type=\"text\" name=\"multiple[]\"\/>");
+				jQuery ("table tr[id=objtype_customize]").append("Option*:<input type=\"text\" name=\"multiple[]\"\/><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
+				jQuery ("table tr[id=objtype_customize]").append("<div id=\"addoptions_field_1\"></div></div>");
+				break;
 			
 			default:
 			   return '';

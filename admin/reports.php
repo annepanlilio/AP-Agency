@@ -1521,8 +1521,11 @@ class RBAgencyCSVXLSImpoterPlugin {
               <input type="hidden" value ="'.$file_path.'" name="file_path">
               <input type="hidden" value ="'.$clone.'" name="clone">';
         $default = 1;
-        while($custom_header < $total_header){ 
-            echo '<div style="width:140px; padding:10px;text-align:center;float:left;"><label>'.$header[$custom_header].'</label><br />';
+        $heads = 17;
+        $t_head = $custom_header;
+        $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from rb_agency_customfields ORDER BY ProfileCustomID ASC");
+        for($i = 0; $i < $t_head; $i++){
+            echo '<div style="width:140px; padding:10px;text-align:center;float:left;"><label>'.$header[$heads].'</label><br />';
             $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from rb_agency_customfields ORDER BY ProfileCustomID ASC");
             echo '<select name = "select'.$default.'" id="select'.$default.'">';
             foreach ($custom_fields as $custom_fields_result) {
@@ -1532,13 +1535,14 @@ class RBAgencyCSVXLSImpoterPlugin {
                     $is_default = ' selected="selected" ';
                 }
                 else{
-                    $is_default ='';
+                    $is_default =''; 
                 }
                 echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
             }
             echo '</select>';
             echo '</div>';
-            $custom_header++;
+            //$custom_header++;
+            $heads++;
             $default++;
         }
      
@@ -1561,7 +1565,7 @@ class RBAgencyCSVXLSImpoterPlugin {
         $handle = fopen($path_to_file ,"r");
         fgets($handle);//read and ignore the first line
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $ctrl_start = $_REQUEST['custom_header'];
+            $ctrl_start = 17;
             $ctrl_end = $_REQUEST['total_header'];
             $incre = 1;
             global $wpdb;
