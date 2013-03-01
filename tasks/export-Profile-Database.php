@@ -1,21 +1,11 @@
 <?php
-
+ob_start();
 // Tap into WordPress Database
 include_once('../../../../wp-config.php');
 include_once('../../../../wp-load.php');
 include_once('../../../../wp-includes/wp-db.php');
-
 global $wpdb;
 
-// *************************************************************************************************** //
-// Get Going
-
-	
-	//$custom_data = $wpdb->get_results("SELECT * FROM " . table_agency_profile . " WHERE ProfileID='31614'", ARRAY_A);
-	// print_r($custom_data);
-	// echo table_agency_customfield_mux;
-	//$subresult = $wpdb->get_results("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = '31614'", ARRAY_A);
-	//echo '<pre>';
 	$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder";
 	$custom_fields_name = array();
 	$custom_fields_id = array();
@@ -24,42 +14,25 @@ global $wpdb;
 		array_push($custom_fields_name, 'Client'.str_replace(' ', '', $value['ProfileCustomTitle']));
 		array_push($custom_fields_id, $value['ProfileCustomID']);
 	}
-
-
-	// print_r($custom_fields_name);
-	//echo implode(',', $custom_fields_name);
-	// print_r($custom_fields_id);
-	/*print_r($subresult);
-	die();*/
-
-	
 	if(isset($_POST))
 	{
 		if($_POST['file_type'] == 'csv')
 		{
-			
 			$profile_data = $wpdb->get_results("SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM rb_agency_profile", ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM rb_agency_profile", ARRAY_A);
-			
 			$csv_output .= "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,";
 			$csv_output .= implode(',', $custom_fields_name);
 			$csv_output .= "\n";
-			
-			
 			foreach ($profile_data as $key => $data_value) {
 				$csv_output .= implode(',', $data_value);
-				
 				$subresult = $wpdb->get_results("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
-		
 				$c_value_array = array();
 				foreach ($subresult as $sub_value) {
 					array_push($c_value_array, $sub_value['ProfileCustomValue']);
 				}
 				$csv_output .= ','.implode(',', $c_value_array);
-
 				$csv_output .="\n";
 			}
-			
 			$filename = $file."_".date("Y-m-d_H-i",time());
 			header("Content-type: application/vnd.ms-excel");
 			header("Content-disposition: csv" . date("Y-m-d") . ".csv");
@@ -82,9 +55,6 @@ global $wpdb;
             	$head_count++;
             }
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
-			
-			
-			
 			/*Profile data*/
 			$row_data = array();
 			$row_data = $wpdb->get_results('SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM rb_agency_profile', ARRAY_A);
@@ -105,10 +75,8 @@ echo '<pre>';
 				$data = array_merge($data, $c_value_array);
 				$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
 			}
-			
 			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 			$objWriter->save(str_replace('.php', '.xls', __FILE__));
-
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 
@@ -123,8 +91,5 @@ echo '<pre>';
 		    unlink(str_replace('.php', '.xls', __FILE__));
 		}
 	}
-	
 	exit;
-
-
 ?>
