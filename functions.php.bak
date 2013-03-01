@@ -1779,6 +1779,72 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		}
  
   }
+
+  /*/
+   * ======================== Get Custom Fields ===============
+   * @Returns Custom Fields excluding a title
+   * @parm includes an array of title
+  /*/
+  function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude) {
+		global $wpdb;
+		global $rb_agency_option_unittype;
+		
+		$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
+		foreach ($resultsCustom as $resultCustom) {
+		if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){ 	
+			if(!empty($resultCustom->ProfileCustomValue )){
+				 if ($resultCustom->ProfileCustomType == 7) { //measurements field type
+				   if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
+					if($resultCustom->ProfileCustomOptions == 1){
+						$label = "(cm)";
+					} elseif($resultCustom->ProfileCustomOptions == 2){
+						$label = "(kg)";
+					}
+				 } elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+					if($resultCustom->ProfileCustomOptions == 1){
+						$label = "(in)";
+					} elseif($resultCustom->ProfileCustomOptions == 2){
+						$label = "(lbs)";
+					 }elseif($resultCustom->ProfileCustomOptions == 3){
+						$label = "(ft/in)";
+					}
+				 }
+				 $measurements_label = "<span class=\"label\">". $label ."</span>";
+			 } else {
+				 $measurements_label = "";
+			 }
+			 // Lets not do this...
+			 $measurements_label = "";
+			 
+				if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
+					if ($resultCustom->ProfileCustomType == 7){
+						if($resultCustom->ProfileCustomOptions == 3){
+						   $heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+						   echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
+						} else {
+						   echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						}
+				   } else {
+						   echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+				   }
+				  
+				} elseif ($resultCustom->ProfileCustomView == "2") {
+					if ($resultCustom->ProfileCustomType == 7){
+					  if($resultCustom->ProfileCustomOptions == 3){
+						 $heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+						   echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
+					  } else {
+						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+					  }
+				   } else {
+					echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+				   }
+				}
+			}
+		  }
+		}
+ 
+  }
  
  
    function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclude="",$include="") {
