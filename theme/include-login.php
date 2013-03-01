@@ -1,5 +1,5 @@
 <?php
-echo "	<div id=\"profile-interact\">\n";
+echo "	<div id=\"rbsignin-register\" class=\"rbinteract\">\n";
 
 			if ( $error ) {
 				echo "<p class=\"error\">". $error ."</p>\n";
@@ -7,20 +7,20 @@ echo "	<div id=\"profile-interact\">\n";
 			
 $profileviewed = "http://".$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 
-echo "        <div id=\"member-sign-in\" class=\"fl ". $widthClass ."\" >\n";
+echo "        <div id=\"rbsign-in\" class=\"inline-block\">\n";
 echo "          <h1>". __("Members Sign in", rb_agencyinteract_TEXTDOMAIN). "</h1>\n";
 echo "          <form name=\"loginform\" id=\"login\" action=\"". network_site_url("/"). "profile-login/\" method=\"post\">\n";
 echo " 			<input type=\"hidden\" name=\"redirect_to\" value=\"".network_site_url("/")."dashboard/\">";
-echo "            <div class=\"box\">\n";
+echo "            <div class=\"field-row\">\n";
 echo "              <label for=\"user-name\">". __("Username", rb_agencyinteract_TEXTDOMAIN). "</label><input type=\"text\" name=\"user-name\" value=\"". wp_specialchars( $_POST['user-name'], 1 ) ."\" id=\"user-name\" />\n";
 echo "            </div>\n";
-echo "            <div class=\"box\">\n";
+echo "            <div class=\"field-row\">\n";
 echo "              <label for=\"password\">". __("Password", rb_agencyinteract_TEXTDOMAIN). "</label><input type=\"password\" name=\"password\" value=\"\" id=\"password\" /> <a href=\"". get_bloginfo('wpurl') ."/wp-login.php?action=lostpassword\">". __("forgot password", rb_agencyinteract_TEXTDOMAIN). "?</a>\n";
 echo "            </div>\n";
-echo "            <div class=\"box\">\n";
+echo "            <div class=\"field-row\">\n";
 echo "              <input type=\"checkbox\" name=\"remember-me\" value=\"forever\" /> ". __("Keep me signed in", rb_agencyinteract_TEXTDOMAIN). "\n";
 echo "            </div>\n";
-echo "            <div class=\"submit-box\">\n";
+echo "            <div class=\"field-row submit-row\">\n";
 echo "              <input type=\"hidden\" name=\"action\" value=\"log-in\" />\n";
 echo "                <input name=\"lastviewed\" value=\"".$profileviewed."\" type=\"hidden\" />";
 echo "              <input type=\"submit\" value=\"". __("Sign In", rb_agencyinteract_TEXTDOMAIN). "\" /><br />\n";
@@ -53,14 +53,14 @@ echo "              <input type=\"submit\" value=\"". __("Sign In", rb_agencyint
 		}
 echo "            </div>\n";
 echo "          </form>\n";
-echo "        </div> <!-- member-sign-in -->\n";
+echo "        </div> <!-- rbsign-in -->\n";
 
 			//if (( current_user_can("create_users") || $rb_agencyinteract_option_registerallow == 1)) {
 
-echo "        <div id=\"not-a-member\" class=\"fr\" style=\"width:50%\">\n";
-echo "          <div id=\"talent-register\">\n";
-echo "            <h1>". __("Not a member", rb_agencyinteract_TEXTDOMAIN). "?</h1>\n";
-echo "            <h2>". __("Talent", rb_agencyinteract_TEXTDOMAIN). " - ". __("Register here", rb_agencyinteract_TEXTDOMAIN). "</h2>\n";
+echo "        <div id=\"rbsign-up\" class=\"inline-block\">\n";
+echo "          <div id=\"talent-register\" class=\"register\">\n";
+echo "            <h1>". __("Not a member", rb_agencyinteract_TEXTDOMAIN). "?</h3>\n";
+echo "            <h3>". __("Talent", rb_agencyinteract_TEXTDOMAIN). " - ". __("Register here", rb_agencyinteract_TEXTDOMAIN). "</h2>\n";
 echo "            <ul>\n";
 echo "              <li>". __("Create your free profile page", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
 echo "              <li>". __("Apply to Auditions & Jobs", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
@@ -69,13 +69,13 @@ echo "            <a href=\"". get_bloginfo("wpurl") ."/profile-register/model-t
 echo "          </div> <!-- talent-register -->\n";
 echo "          <div class=\"clear line\"></div>\n";
 //if($rb_agencyinteract_option_registerallowAgentProducer == 1){
-echo "          <div id=\"agent-register\" >\n";
-echo "            <h2>". __("Casting Agents & Producers", rb_agencyinteract_TEXTDOMAIN). "</h2>\n";
+echo "          <div id=\"agent-register\" class=\"register\">\n";
+echo "            <h3>". __("Casting Agents & Producers", rb_agencyinteract_TEXTDOMAIN). "</h3>\n";
 echo "            <ul>\n";
 echo "              <li>". __("List Auditions & Jobs free", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
 echo "              <li>". __("Contact People in the Talent Directory", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
+echo "              <li><a href=\"". get_bloginfo("wpurl") ."/profile-register/agent-partners/\" id=\"register-agent\">". __("Register as Agent / Producer", rb_agencyinteract_TEXTDOMAIN). "</a></li>\n";
 echo "            </ul>\n";
-echo "            <a href=\"". get_bloginfo("wpurl") ."/profile-register/agent-partners/\" id=\"register-agent\">". __("Register as Agent / Producer", rb_agencyinteract_TEXTDOMAIN). "</a>\n";
 echo "          </div> <!-- talent-register -->\n";
 //}
 echo "        </div> <!-- not-a-member -->\n";
