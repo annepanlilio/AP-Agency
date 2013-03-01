@@ -23,8 +23,23 @@ Expended Profile with Tabs
 			while ($dataImg = mysql_fetch_array($resultsImg)) {
 	echo "	  		<div id=\"profile-picture\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
 			}
+            
+			// get favorite update
+			// for this specific talent
+			$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID=".$ProfileID."  AND SavedFavoriteProfileID = ".rb_agency_get_current_userid()."" ) or die("error");
+			$count_favorite = mysql_num_rows($query_favorite);
+			$datas_favorite = mysql_fetch_assoc($query_favorite);
+						 
+			if($count_favorite<=0){ //if not exist insert favorite!
 
-	echo "	  		<div class=\"profile-picture-favorite\"><a rel=\"nofollow\" href=\"\"><div class=\"favoriteSquare\"></div>Save to Favorites</a>";?>
+			echo "	  		<div class=\"profile-picture-favorite favorite\"><a id=\"".$ProfileID."\" rel=\"nofollow\" href='javascript:;'><div class=\"favoriteSquare\"></div>Save to Favorites</a>";
+
+			} else {
+			echo "	  		<div class=\"profile-picture-favorite favorite\"><a id=\"".$ProfileID."\" rel=\"nofollow\" href='javascript:;'><div 
+			class=\"favoriteSquare\"></div>Remove from Favorites</a>";
+			
+			}?>
+		
 					<?php 
 					if (is_user_logged_in()) {?>
 						<br />
@@ -94,7 +109,7 @@ Expended Profile with Tabs
 		}
 	//echo "	      <div id=\"profile-actions-print\"><span>Print Friendly</span></div>\n";
 	echo "	      <div id=\"profile-actions-profileviews\"><strong>". $ProfileStatHits ."</strong> Profile Views</div>\n";
-	echo "	      <div id=\"profile-actions-favorited\"><strong>0</strong> favorited</div>\n";
+	echo "	      <div id=\"profile-actions-favorited\"><strong>".$count_favorite."</strong> favorited</div>\n";
 	//echo "	      <div id=\"profile-actions-castings\"><strong>0</strong> castings</div>\n";
 	//echo "	      <div id=\"profile-actions-recommendation\"><strong>0</strong> recommendation</div>\n";
 

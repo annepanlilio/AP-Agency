@@ -576,7 +576,45 @@ if ( is_admin() ){
 		function rb_agency_save_favorite_javascript() {
 		?>
  <!--RB Agency Favorite -->           
-<script type="text/javascript" >jQuery(document).ready(function($) { $("div[class=favorite] a").click(function(){var Obj = $(this);jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',data: {action: 'rb_agency_save_favorite',  'talentID': $(this).attr("id")},success: function(results) {  if(results=='error'){ Obj.fadeOut().empty().html("Error in query. Try again").fadeIn(); }else if(results==-1){ Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();setTimeout(function() { if(Obj.attr("class")=="save_favorite"){ Obj.fadeOut().empty().html("").fadeIn();  Obj.attr('title', 'Save to Favorites'); }else{ Obj.fadeOut().empty().html("Favorited").fadeIn();  Obj.attr('title', 'Remove from Favorites');  } }, 2000);  } else{ if(Obj.attr("class")=="save_favorite"){ Obj.empty().fadeOut().empty().html("").fadeIn(); Obj.attr("class","favorited"); Obj.attr('title', 'Remove from Favorites') }else{ Obj.empty().fadeOut().empty().html("").fadeIn();  Obj.attr('title', 'Save to Favorites'); $(this).find("a[class=view_all_favorite]").remove(); Obj.attr("class","save_favorite");<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){ $rb_agency_options_arr = get_option('rb_agency_options');$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];  ?> if($("input[type=hidden][name=favorite]").val() == 1){ Obj.closest("div[class=profile-list-layout0]").fadeOut();} <?php }?>}}}})});});</script>
+<script type="text/javascript" >jQuery(document).ready(function() { 
+	jQuery(".favorite a:first, .favorite a").click(function(){
+		var Obj = jQuery(this);
+		jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',
+		data: {action: 'rb_agency_save_favorite',  'talentID': jQuery(this).attr("id")},
+		success: function(results) {  
+		if(results=='error'){ 
+			Obj.fadeOut().empty().html("Error in query. Try again").fadeIn(); 
+		}else if(results==-1){ 
+				Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();
+				setTimeout(function() { 
+						if(Obj.attr("class")=="save_favorite"){ 
+						        
+								Obj.fadeOut().empty().html("").fadeIn();  
+								Obj.attr('title', 'Save to Favorites'); 
+						}else{ 
+								Obj.fadeOut().empty().html("Favorited").fadeIn();  
+								Obj.attr('title', 'Remove from Favorites');  
+						} 
+				}, 2000);  
+		} else { 
+				if(Obj.attr("class")=="save_favorite") { 
+					Obj.empty().fadeOut().empty().html("").fadeIn(); 
+					Obj.attr("class","favorited"); 
+					Obj.attr('title', 'Remove from Favorites') 
+				}else{ 
+					Obj.empty().fadeOut().empty().html("View Favorites").fadeIn();  
+					Obj.attr('title', 'Save to Favorites'); 
+					Obj.attr('href', '<?php echo get_bloginfo('url')?>/profile-favorite'); 
+					jQuery(this).find("a[class=view_all_favorite]").remove(); 
+					Obj.attr("class","save_favorite");
+					<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){ 
+					$rb_agency_options_arr = get_option('rb_agency_options');
+					$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];  ?> 
+					if(jQuery("input[type=hidden][name=favorite]").val() == 1){ 
+						Obj.closest("div[class=profile-list-layout0]").fadeOut();} <?php }?>
+			    }
+		}}})});});
+</script>
 <!--END RB Agency Favorite -->   <!-- [class=profile-list-layout<?php echo (int)$rb_agency_option_layoutprofilelist; ?>]-->
 		<?php
 		}
