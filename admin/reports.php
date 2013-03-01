@@ -63,6 +63,12 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=80\" title=\"". __("Import Data", rb_agency_TEXTDOMAIN) . "\">". __("Import Data", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Import Data into CSV / XLS", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
+
+    echo "    <div class=\"boxlink\">\n";
+    echo "      <h3>". __("Exort to CSV / XLS", rb_agency_TEXTDOMAIN) . "</h3>\n";
+    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=81\" title=\"". __("Export Now", rb_agency_TEXTDOMAIN) . "\">". __("Export Now", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <p>". __("Export Data to CSV / XLS", rb_agency_TEXTDOMAIN) . ".</p>\n";
+    echo "    </div>\n";
 /*NK*/
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "</h3>\n";
@@ -911,19 +917,27 @@ elseif ($ConfigID == 13) {
 
 } // End 11
 elseif ($ConfigID == 12) {
-
+//Export database
 // *************************************************************************************************** //
 // Manage Settings
 
     echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
 
 	echo "<a href=\"". rb_agency_BASEDIR ."tasks/exportDatabase.php\">Export Database</a>\n";
-	
-	
-	
-	
-	
-	
+
+}
+elseif ($ConfigID == 81) 
+{
+    echo "<h2>". __(" Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
+    
+    echo " <form action=\"".rb_agency_BASEDIR."tasks/export-Profile-Database.php\" method=\"post\">";
+    echo "      <select name=\"file_type\">";
+    echo "          <option value=\"\">Select file format</option>";
+    echo "          <option value=\"xls\">XLS</option>";
+    echo "          <option value=\"csv\">CSV</option>";
+    echo "      </select>";
+    echo "      <input type=\"submit\" value=\"Export Now\" class=\"button-primary\">";
+    echo "  </form>";    
 }
 elseif ($ConfigID == 80) {
 
