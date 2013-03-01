@@ -1689,11 +1689,6 @@ elseif ($ConfigID == 7) {
 										   
 											</td>
 								   </tr>
-
-								   <tr>
-											<td style=\"width:50px;\">Title:</td>
-											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"\"/></td>
-								   </tr>
 						</td>
 				 </tr>
 				</td>
