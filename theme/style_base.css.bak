@@ -281,3 +281,16 @@
 	#profile-layout-four #photo h2 { margin: 0 0 10px 0; padding: 5px 8px; background: #454545; color: white; text-transform: uppercase; }
 	#profile-layout-four #photo .multiple { float: left; margin: 0 10px 10px 0; overflow: hidden; }
 	#profile-layout-four #photo .multiple img { max-width: 350px; border: 1px solid #666; padding: 3px; max-height: 400px; }
+
+
+/* Featured Image Widget */
+#profile-featured { margin: 0 20px 20px 0; position: relative; z-index: 8;  overflow: hidden; height: 310px; background: #ddd; }
+#profile-featured a { color: #006FBD; text-decoration: none; }
+#profile-featured .style { position: absolute; }
+#profile-featured .image { width: 200px; height: 230px; overflow: hidden; background: #fff; }
+#profile-featured .title { top: 235px; left: 0; width: 200px; position: absolute; text-align: center;}
+#profile-featured .title .name { width: 200px; height: 30px; line-height: 30px; }
+#profile-featured .title .favorite { margin: 9px 0 0 0; font-size: 13px; background: #ccc; padding: 5px 0; }
+#profile-featured .image img { max-width: 200px; margin: 0; }
+#profile-featured .image-broken { margin: 10px 10px 0 10px; text-align: center; width: 180px; height: 220px; }
+#profile-featured .image-broken a { margin-top: 90px;  float: left; margin-left: 55px; }
