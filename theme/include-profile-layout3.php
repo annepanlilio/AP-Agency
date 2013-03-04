@@ -243,11 +243,26 @@ Expended Profile with Tabs
 
 echo " <div class=\"row-bookings twelve column clear tab\">\n";
 	
-	$bookingPageID=""; //put  booking page id here
-	if(!empty($bookingPageID)){
-	  $page_data = @get_page($bookingPageID);
-	   echo apply_filters('the_content', $page_data->post_content);
-	}else{echo "To control page content, add the page ID in line 197";} 
+//	$bookingPageID=""; //put  booking page id here
+//	if(!empty($bookingPageID)){
+//	  $page_data = @get_page($bookingPageID);
+//	   echo apply_filters('the_content', $page_data->post_content);
+//	}else{echo "To control page content, add the page ID in line 197";} 
+
+	$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
+	$results1 = mysql_query($query1);
+	$count1 = mysql_num_rows($results1);
+	while ($data1 = mysql_fetch_array($results1)) {
+	
+			if ($data1['ProfileCustomTitle'] == "Booking"){
+					
+					echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." clear\">\n";
+					echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
+					echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] 
+						 ."\" class=\"ProfileExperience\">". $data1['ProfileCustomValue'] ."</p>\n";
+					echo "	  </div>\n";
+			}
+	}
 		
 	echo " </div>\n"; // Row booking
 
