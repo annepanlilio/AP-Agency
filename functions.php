@@ -743,10 +743,10 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			$links='<div id="print-links" class="twelve column">';
 			  
 			if(get_query_var('target')!="results"){// hide print and download PDF in Search result
-			  	$links.='
-				<div style="float:left;" class="top_links"> 
-			  	<a target="_blank" href="/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'</div>';
-			}
+				  $links.='
+					<div style="float:left;" class="top_links"> 
+				  <a target="_blank" href="'.get_bloginfo('siteurl').'/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('siteurl').'/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'</div>';
+			  }
 			  
 			$links.='<div style="float:right;" class="top_links">';
 
