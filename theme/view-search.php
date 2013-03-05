@@ -36,38 +36,44 @@ if ($_REQUEST["action"] == "search") {
 		if (isset($_REQUEST['dir']) && !empty($_REQUEST['dir'])){
 			$dir = $_REQUEST['dir'];
 			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
+			   	$sortDirection = "asc";
+			   	} else {
+			   	$sortDirection = "desc";
 			} 
 		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
+			   	$sortDirection = "desc";
+			   	$dir = "asc";
 		}
 	
 		// Filter
 		$filterArray = array();
+
 		// Name
 		if ((isset($_REQUEST['ProfileContactNameFirst']) && !empty($_REQUEST['ProfileContactNameFirst'])) || isset($_REQUEST['ProfileContactNameLast']) && !empty($_REQUEST['ProfileContactNameLast'])){
-		  if (isset($_REQUEST['ProfileContactNameFirst']) && !empty($_REQUEST['ProfileContactNameFirst'])){
-			$filterArray['profilecontactnamefirst'] = $_REQUEST['ProfileContactNameFirst'];
-		  }
-		  if (isset($_REQUEST['ProfileContactNameLast']) && !empty($_REQUEST['ProfileContactNameLast'])){
-			$filterArray['profilecontactnamelast'] = $_REQUEST['ProfileContactNameLast'];
-		  }
+		  	if (isset($_REQUEST['ProfileContactNameFirst']) && !empty($_REQUEST['ProfileContactNameFirst'])){
+				$filterArray['profilecontactnamefirst'] = $_REQUEST['ProfileContactNameFirst'];
+		  	}
+		  	if (isset($_REQUEST['ProfileContactNameLast']) && !empty($_REQUEST['ProfileContactNameLast'])){
+				$filterArray['profilecontactnamelast'] = $_REQUEST['ProfileContactNameLast'];
+		  	}
 		}
+
 		// Location
+
 		if (isset($_REQUEST['ProfileLocationCity']) && !empty($_REQUEST['ProfileLocationCity'])){
 			$filterArray['profilelocationcity'] = $_REQUEST['ProfileLocationCity'];
 		}
+
 		// Type
 		if (isset($_REQUEST['ProfileType']) && !empty($_REQUEST['ProfileType'])){
 			$filterArray['profiletype'] = $_REQUEST['ProfileType'];
 		}
+
 		// Active
 		if (isset($_REQUEST['ProfileIsActive'])){
 			$filterArray['profileisactive'] = $_REQUEST['ProfileIsActive'];
 		}
+
 		// Gender
 		if (isset($_REQUEST['ProfileGender']) && !empty($_REQUEST['ProfileGender'])){
 			$filterArray['profilegender'] = $_REQUEST['ProfileGender'];
@@ -80,6 +86,7 @@ if ($_REQUEST["action"] == "search") {
 		if (isset($_REQUEST['ProfileStatHeight_max']) && !empty($_REQUEST['ProfileStatHeight_max'])){
 			$filterArray['profilestatheight_max'] = $_REQUEST['ProfileStatHeight_max'];
 		}
+
 		// Weight
 		if (isset($_REQUEST['ProfileStatWeight_min']) && !empty($_REQUEST['ProfileStatWeight_min'])){
 			$filterArray['profilestatweight_min'] = $_REQUEST['ProfileStatWeight_min'];
@@ -87,6 +94,7 @@ if ($_REQUEST["action"] == "search") {
 		if (isset($_REQUEST['ProfileStatWeight_max']) && !empty($_REQUEST['ProfileStatWeight_max'])){
 			$filterArray['profilestatweight_max'] = $_REQUEST['ProfileStatWeight_max'];
 		}
+
 		// Age
 		if (isset($_REQUEST['ProfileDateBirth_min']) && !empty($_REQUEST['ProfileDateBirth_min'])){
 			$filterArray['profiledatebirth_min'] = $_REQUEST['ProfileDateBirth_min'];
@@ -108,32 +116,29 @@ if ($_REQUEST["action"] == "search") {
 		// ZIP
 		if (isset($_REQUEST['ProfileZip']) && !empty($_REQUEST['ProfileZip'])){
 			$filterArray['profilezip'] = $_REQUEST['ProfileZip'];
-		}		
-
+		}
 		
 		// Custom Fields
 		foreach($_POST as $key =>$val){
 		
-				if(substr($key,0,15)=="ProfileCustomID"){
-					      if(is_array($val)){
-							 if(count($val)>1){	
-								$filterArray[$key] = implode(",",$val);	
-							 }else{
-								 if(!empty($val)){
-									$filterArray[$key] = $val;
-								 }
-							 }
-						}else{
-						 $filterArray[$key] = $val;
-						}
+			if(substr($key,0,15)=="ProfileCustomID"){
+		      	if(is_array($val)){
+					if(count($val)>1){	
+						$filterArray[$key] = implode(",",$val);	
+				 	} else {
+					 	if(!empty($val)){
+						$filterArray[$key] = $val;
+					}
+				 }
+				} else {
+				 $filterArray[$key] = $val;
 				}
+			}
 		}
-		
 		
 		// Pagination
 		$filterArray['paging'] = 1;
-		$filterArray['pagingperpage'] = 1000;
-  
+		$filterArray['pagingperpage'] = 1000; 
 }
 
 
@@ -148,7 +153,7 @@ if ($_REQUEST["action"] == "search") {
 		 //echo "<br/>"; 
 	 }
  */
-	echo "<div id=\"primary\">\n";
+	echo "<div id=\"primary\" class=\"eight column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 
 		echo "<div id=\"profile-search\">\n";
@@ -172,7 +177,8 @@ if ($_REQUEST["action"] == "search") {
 						} else {
 							echo "<strong>". __("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
 						}
-									
+
+/* Phel Comment: Removed Extra Search, We have already a Search widget
 		echo "		    </div>\n";
 		echo "		    <div id=\"profile-search-filter\" class=\"three column\">\n";
 		echo "			<h3 class=\"title\">". __("Search Profiles", rb_agency_TEXTDOMAIN) ."</h3>\n";
@@ -181,13 +187,14 @@ if ($_REQUEST["action"] == "search") {
 						include("include-profile-search.php"); 	
 		
 		echo "		    </div>\n";
-		
+*/
+		echo "</div>\n"; // #profile-search-results
 		echo "</div>\n"; // #profile-search
 
 	echo "  </div>\n";
 	echo "</div>\n";
 	
 
-//get_sidebar(); 
+get_sidebar(); 
 get_footer(); 
 ?>
