@@ -478,9 +478,8 @@ function rb_agency_categorylist($atts, $content = NULL) {
 		if ($countList < 1) {
 			echo __("No Profiles Found", rb_agency_TEXTDOMAIN);
 		}
-		echo "</div>\n";
 	} else {
-		include("theme/include-login.php"); 	
+		include("theme/include-login.php");	
 	}
 }
 
@@ -743,10 +742,10 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			$links='<div id="print-links" class="twelve column">';
 			  
 			if(get_query_var('target')!="results"){// hide print and download PDF in Search result
-				  $links.='
-					<div style="float:left;" class="top_links"> 
-				  <a target="_blank" href="'.get_bloginfo('siteurl').'/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('siteurl').'/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'</div>';
-			  }
+			  	$links.='
+				<div style="float:left;" class="top_links"> 
+			  	<a target="_blank" href="/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'</div>';
+			}
 			  
 			$links.='<div style="float:right;" class="top_links">';
 
@@ -1107,7 +1106,6 @@ function rb_agency_profilesearch($atts, $content = NULL){
 	} else {
 		include("theme/include-login.php"); 	
 	}
-
 }
 
 // *************************************************************************************************** //
@@ -2175,4 +2173,21 @@ function checkCart($currentUserID,$pid){
 	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 	return mysql_num_rows($results);
 }
+
+
+// Phel: Test Content
+function replace_content_on_the_fly($text){
+	$text ="sample";
+}
+apply_filter('the_content', 'replace_content_on_the_fly');
+
+// Phel: Set Themes Defult Template
+function plugin_myown_template() {
+  include(TEMPLATEPATH."/page.php");
+  exit;
+}
+add_action('template_redirect', 'plugin_myown_template');
+
+
+
 ?>
