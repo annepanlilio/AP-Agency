@@ -235,7 +235,7 @@ Expended Profile with Tabs
 					echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." clear\">\n";
 					echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
 					echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] 
-						 ."\" class=\"ProfileExperience\">". $data1['ProfileCustomValue'] ."</p>\n";
+						 ."\" class=\"ProfileExperience\">". nl2br($data1['ProfileCustomValue']) ."</p>\n";
 					echo "	  </div>\n";
 			}
 	}
