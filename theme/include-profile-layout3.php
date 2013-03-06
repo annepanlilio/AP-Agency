@@ -6,7 +6,7 @@ Expended Profile with Tabs
 	echo "<div id=\"profile\">\n";
 	echo " <div id=\"rblayout-three\" class=\"rblayout\">\n";
 
-	echo " <div class=\"twelve column\">\n";
+	echo " <div id=\"go-back\" class=\"twelve column\">\n";
 	//echo "   <a href=\"". get_bloginfo("wpurl") ."/profile-category/\">Directory</a><span class=\"divider\"> > </span>". $ProfileContactDisplay ."\n";
 	echo "   <a href=\"". get_bloginfo("wpurl") ."/profile-category/\">Go Back</a>\n";
 	echo " </div>\n";
@@ -169,11 +169,11 @@ Expended Profile with Tabs
 	echo " </div>\n"; // twelve column photos
 
 	echo " <div class=\"twelve column row-physical clear tab\">\n";
-	
+	echo "<ul>";
 		if (!empty($ProfileGender)) {
 			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
 			$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
-			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
+			echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 		}
 	
 
@@ -183,8 +183,9 @@ Expended Profile with Tabs
 
 
 		if($rb_agency_option_showcontactpage==1){
-				echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
+				echo "<li class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 		}
+	echo "</ul>";
 	echo " </div>\n"; // twelve column physical
 
 	echo " <div class=\"twelve column row-videos clear tab\">\n";
