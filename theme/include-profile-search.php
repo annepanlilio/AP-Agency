@@ -14,6 +14,12 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	if (isset($DataTypeID) && !empty($DataTypeID)) { $_SESSION['ProfileType'] = $DataTypeID; }
 	if (isset($_REQUEST['ProfileGender']) && !empty($_REQUEST['ProfileGender'])) {  $_SESSION['ProfileGender'] = $_REQUEST['ProfileGender']; }
 	
+	// fix advanced search to include
+	// custom fields from search fields
+	if(isset($_GET[srch])){
+	   $profilesearch_layout = "advanced"; 	
+	}
+	
    	if ($profilesearch_layout == "condensed" || $profilesearch_layout == "simple") {
 	
 		echo "		<div id=\"profile-search-form-condensed\" class=\"search-form\">\n";
