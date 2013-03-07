@@ -2174,7 +2174,7 @@ function checkCart($currentUserID,$pid){
 	return mysql_num_rows($results);
 }
 
-
+/*
 // Phel: Test Content
 function replace_content_on_the_fly($text){
 	$text ="sample";
@@ -2187,7 +2187,6 @@ function plugin_myown_template() {
   exit;
 }
 add_action('template_redirect', 'plugin_myown_template');
-
-
+*/
 
 ?>
