@@ -1577,6 +1577,14 @@ class RBAgencyCSVXLSImpoterPlugin {
             $last_inserted_mysql_id = mysql_insert_id();
             while($ctrl_start < $ctrl_end){
                 $select_id =  $_REQUEST['select'.$incre];
+                if(strpos(' ft ', $data[$ctrl_start]) >= 0)
+                {
+                    $cal_height = 0;
+                    $height = explode(' ', $data[$ctrl_start]);
+                    $cal_height = ($height[0] * 12) + $height[2];
+                    $data[$ctrl_start]  = $cal_height;
+                    
+                }
                 $add_to_c_table="INSERT into rb_agency_customfield_mux($c_table_fields)values('$select_id','$last_inserted_mysql_id','$data[$ctrl_start]')";
                 mysql_query($add_to_c_table) or die(mysql_error());
                 $ctrl_start++;
