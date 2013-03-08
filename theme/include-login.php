@@ -64,8 +64,8 @@ echo "            <h3>". __("Talent", rb_agencyinteract_TEXTDOMAIN). " - ". __("
 echo "            <ul>\n";
 echo "              <li>". __("Create your free profile page", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
 echo "              <li>". __("Apply to Auditions & Jobs", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
+echo "              <li><a href=\"". get_bloginfo("wpurl") ."/profile-register/model-talent/\" id=\"register-talent\">". __("Register as Talent / Model", rb_agencyinteract_TEXTDOMAIN). "</a></li>\n";
 echo "            </ul>\n";
-echo "            <a href=\"". get_bloginfo("wpurl") ."/profile-register/model-talent/\" id=\"register-talent\">". __("Register as Talent / Model", rb_agencyinteract_TEXTDOMAIN). "</a>\n";
 echo "          </div> <!-- talent-register -->\n";
 echo "          <div class=\"clear line\"></div>\n";
 //if($rb_agencyinteract_option_registerallowAgentProducer == 1){
