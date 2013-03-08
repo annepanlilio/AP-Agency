@@ -551,7 +551,7 @@ if ( is_admin() ){
 				global $wpdb;
 				if(is_user_logged_in()){	
 					if(isset($_POST["talentID"])){
-						 $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID=".$_POST["talentID"]."  AND SavedFavoriteProfileID = ".rb_agency_get_current_userid()."" ) or die("error");
+						 $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$_POST["talentID"]."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
 						 $count_favorite = mysql_num_rows($query_favorite);
 						 $datas_favorite = mysql_fetch_assoc($query_favorite);
 						 
@@ -561,7 +561,7 @@ if ( is_admin() ){
 							 
 						 }else{ // favorite model exist, now delete!
 							 
-							  mysql_query("DELETE FROM  ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID=".$_POST["talentID"]."  AND SavedFavoriteProfileID = ".rb_agency_get_current_userid()."") or die("error");
+							  mysql_query("DELETE FROM  ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$_POST["talentID"]."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'") or die("error");
 							 
 						 }
 						
@@ -639,7 +639,7 @@ if ( is_admin() ){
 			
 				if(is_user_logged_in()){	
 					if(isset($_POST["talentID"])){
-						 $query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID=".$_POST["talentID"]."  AND CastingCartProfileID = ".rb_agency_get_current_userid()."" ) or die("error");
+						 $query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$_POST["talentID"]."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
 						 $count_castingcart = mysql_num_rows($query_castingcart);
 						 $datas_castingcart = mysql_fetch_assoc($query_castingcart);
 						 
@@ -649,7 +649,7 @@ if ( is_admin() ){
 							 
 						 }else{ // favorite model exist, now delete!
 							 
-							  mysql_query("DELETE FROM  ". table_agency_castingcart."  WHERE CastingCartTalentID=".$_POST["talentID"]."  AND CastingCartProfileID = ".rb_agency_get_current_userid()."") or die("error");
+							  mysql_query("DELETE FROM  ". table_agency_castingcart."  WHERE CastingCartTalentID='".$_POST["talentID"]."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'") or die("error");
 							 
 						 }
 						
