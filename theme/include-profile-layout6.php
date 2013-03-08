@@ -94,11 +94,11 @@ Large featured image and scrolling thumbnails
 						<?php
 						echo "<ul>\n";
 
-							echo "<li class=\"item resume\"><a href=\"/profile/".$ProfileGallery."/print-images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
-							echo "<li class=\"item resume\"><a href=\"/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
-							echo "<li class=\"item resume\"><a href=\"/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
-							echo "<li class=\"item resume\"><a href=\"/profile/".$ProfileGallery."/\">". __("View Slideshow", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
-							echo "<li class=\"item resume\"><a href=\"/profile/".$ProfileGallery."/lightbox/\">". __("View in Lightbox", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/\">". __("View Slideshow", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/lightbox/\">". __("View in Lightbox", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
 
 							// Resume
 							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
