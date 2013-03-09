@@ -1577,7 +1577,7 @@ class RBAgencyCSVXLSImpoterPlugin {
             $last_inserted_mysql_id = mysql_insert_id();
             while($ctrl_start < $ctrl_end){
                 $select_id =  $_REQUEST['select'.$incre];
-                if(strpos(' ft ', $data[$ctrl_start]) >= 0)
+                if(strpos($data[$ctrl_start], ' ft ') >= 0)
                 {
                     $cal_height = 0;
                     $height = explode(' ', $data[$ctrl_start]);
