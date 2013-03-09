@@ -739,25 +739,27 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			}
 			
 			# print, downloads links to be added on top of profile list
-			$links='<div id="print-links" class="twelve column">';
+			$links='<div class="rblinks">';
 			  
-			if(get_query_var('target')!="results"){// hide print and download PDF in Search result
-			  	$links.='
-				<div style="float:left;" class="top_links"> 
-			  	<a target="_blank" href="/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'</div>';
-			}
-			  
-			$links.='<div style="float:right;" class="top_links">';
+				if(get_query_var('target')!="results"){// hide print and download PDF in Search result
+				  	$links.='
+					<div class="rbprint-download">
+				  		<a target="_blank" href="/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'
+				  	</div><!-- .rbprint-download -->';
+				}
+				  
+				$links.='<div class="rbfavorites-castings">';
 
-			if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
-			  	$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
-			}
-			  
-			if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
-			    if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
-			    $links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
-			}
-			$links.='</div></div>';			
+				if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
+				  	$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
+				}
+				  
+				if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+				    if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
+				    $links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
+				}
+				$links.='</div><!-- .rbfavorites-castings -->
+			</div><!-- .rblinks -->';			
 		}
 	
 	  	//remove  if its just for client view of listing via casting email
@@ -765,7 +767,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 		if(get_query_var('type')=="favorite"){ $links="";} // we dont need print and download pdf in favorites page
 		
-		echo "<div class=\"cb\"></div>\n";
+		echo "<div class=\"rbclear\"></div>\n";
 		echo "$links<div id=\"profile-results\">\n";
 		
 	 	if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
@@ -901,11 +903,10 @@ function rb_agency_profilelist($atts, $content = NULL) {
 				}
 
 				$displayHTML.="  </div><!-- #profile-results-info -->\n";
-				$displayHTML.="  <div class=\"cb\"></div><div id=\"profile-list\" class=\"twelve column\">\n";
+				$displayHTML.="  <div class=\"rbclear\"></div><div id=\"profile-list\" class=\"twelve column\">\n";
 			}	           
 						
 			$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
-			$displayHTML .= "<div class=\"style\"></div>\n";
 
 			if (isset($dataList["ProfileMediaURL"]) ) { // && (file_exists(rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"])) ) {
 				
@@ -928,7 +929,6 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			}
 				
 			$displayHTML .= "  <div class=\"profile-info\">\n";
-			$displayHTML .= "  <div class=\"title\">\n";
 			$ProfileContactDisplay = "";
 			if ($rb_agency_option_profilenaming == 0) {
 				$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
@@ -951,17 +951,17 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			}
 			
          	//echo "loaded: ".microtime()." ms";
-		 	$displayHTML .= "  </div>\n";
-			$displayHTML .=" <div class=\"casting\">";
 				
 			if($rb_user_isLogged ){
+
+				$displayHTML .=" <div class=\"casting\">";
 			   	//Get Favorite & Casting Cart links
 		        $displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+		        $displayHTML .=" </div> <!-- casting --> \n";
 			}
 
-			$displayHTML .=" </div> <!-- casting --> \n";			
-			$displayHTML .=" </div> <!-- .profile-list --> \n";			
-			$displayHTML .= "</div>\n";				
+			$displayHTML .=" </div> <!-- .profile-list --> \n";
+			$displayHTML .= "</div>\n";
 		}	// endwhile datalist
 	}	// endif countlist
 
@@ -969,9 +969,9 @@ function rb_agency_profilelist($atts, $content = NULL) {
 		$displayHTML .= __("No Profiles Found", rb_agency_TEXTDOMAIN);
 	}
 			
-	$displayHTML .= "  <div class=\"cb\"></div>\n";
+	$displayHTML .= "  <div class=\"rbclear\"></div>\n";
 	$displayHTML .= "  </div><!-- #profile-list -->\n";
-	$displayHTML .= "  <div class=\"cb\"></div>\n";
+	$displayHTML .= "  <div class=\"rbclear\"></div>\n";
 	$displayHTML .= "</div><!-- #profile-results -->\n";
 			
 	}
@@ -1214,7 +1214,7 @@ class rb_agency_pagination {
 		var $page = 1;
 		var $adjacents = 2;
 		var $showCounter = false;
-		var $className = "pagination six column";
+		var $className = "rbpagination";
 		var $parameterName = "page";
 		var $urlF = false;//urlFriendly
 		/*Buttons next and previous*/
@@ -1700,7 +1700,6 @@ function rb_agency_get_miscellaneousLinks($ProfileID = ""){
 			$disp .= "<div class=\"castingcart\"><a $divHide href=\"javascript:void(0)\"  id=\"".$ProfileID."\" title=\"Remove from Casting Cart\"  class=\"saved_castingcart\"></a></div>";
 	  	}
 	}
-	$disp.='<br clear="all">';
  	return $disp; 
 }
  
