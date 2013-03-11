@@ -1035,7 +1035,17 @@ function rb_agency_profilefeatured($atts, $content = NULL) {
 	echo "<div id=\"profile-featured\">\n";
 	/*********** Execute Query **************/
 	// Execute Query
-	$queryList = "SELECT profile.*,(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."  ORDER BY RAND() LIMIT 0,$count";
+		$queryList = "SELECT profile.*,
+
+		(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
+		 WHERE profile.ProfileID = media.ProfileID 
+		 AND media.ProfileMediaType = \"Image\" 
+		 AND media.ProfileMediaPrimary = 1 AND media.ProfileMediaFeatured = 1) AS ProfileMediaURL 
+		
+		 FROM ". table_agency_profile ." profile 
+ 		 WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."  
+		 ORDER BY RAND() LIMIT 0,$count";
+
 	$resultsList = mysql_query($queryList);
 	$countList = mysql_num_rows($resultsList);
 	while ($dataList = mysql_fetch_array($resultsList)) {
