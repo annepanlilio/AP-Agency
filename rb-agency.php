@@ -604,7 +604,7 @@ if ( is_admin() ){
 					Obj.attr("class","favorited"); 
 					Obj.attr('title', 'Remove from Favorites') 
 				}else{ 
-					Obj.empty().fadeOut().empty().html("View Favorites").fadeIn();  
+					Obj.empty().fadeOut().empty().html("").fadeIn();  
 					Obj.attr('title', 'Save to Favorites'); 
 					Obj.attr('href', '<?php echo get_bloginfo('url')?>/profile-favorite'); 
 					jQuery(this).find("a[class=view_all_favorite]").remove(); 
