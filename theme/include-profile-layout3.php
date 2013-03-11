@@ -5,6 +5,7 @@
 /wp-content/plugins/rb-agency/style/icon-sprite.png") no-repeat 0px -18px;}
 .fav_bg{background: url("<?php echo get_bloginfo('url')?>/wp-content/plugins/rb-agency/style/icon-sprite.png") no-repeat 0px -68px !important; }
 .cart_bg{background: url("<?php echo get_bloginfo('url')?>/wp-content/plugins/rb-agency/style/icon-sprite.png") no-repeat 0px -34px !important; }
+#rblayout-three .row-two #subMenuTab a { padding: 10px 14px !important;}
 </style>
 
 <script type="text/javascript">
@@ -215,11 +216,16 @@ Expended Profile with Tabs
 	echo " 			  <div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Experience</div></div></div>\n";
 	echo " 			</a>\n";
 	echo " 		</div>\n";
-	echo " 		<div class=\"maintab tab-right tab-inactive\" id=\"row-bookings\">\n";
-	echo " 			<a href=\"#space\">\n";
+	echo " 		<div class=\"maintab tab-inner tab-inactive\" id=\"row-bookings\">\n";
+	echo " 			<a href=\"javascript:;\">\n";
 	echo " 			  <div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Booking</div></div></div>\n";
 	echo " 			</a>\n";
 	echo " 		</div>\n";
+	echo " 		<div class=\"maintab tab-right tab-inactive\" id=\"row-downloads\">\n";
+	echo " 			<a href=\"javascript:;\">\n";
+	echo " 			  <div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Downloads</div></div></div>\n";
+	echo " 			</a>\n";
+	echo " 		</div>\n";	
  	echo "   </div>\n";
 	echo " </div>\n"; // twelve column 2
 
@@ -314,29 +320,103 @@ Expended Profile with Tabs
 
 
 echo " <div class=\"row-bookings twelve column clear tab\">\n";
-	
-//	$bookingPageID=""; //put  booking page id here
-//	if(!empty($bookingPageID)){
-//	  $page_data = @get_page($bookingPageID);
-//	   echo apply_filters('the_content', $page_data->post_content);
-//	}else{echo "To control page content, add the page ID in line 197";} 
+echo " </div>\n"; // Row booking
 
-	$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
-	$results1 = mysql_query($query1);
-	$count1 = mysql_num_rows($results1);
-	while ($data1 = mysql_fetch_array($results1)) {
+    // added this section to be able to display downloadable 
+	// files attached to a specific profile 
+	echo " <div class=\"row-downloads twelve column clear tab\">\n";
+
+		echo "		<p>". __("The following files (pdf, audio file, etc.) are associated with this profile",
+		        rb_agencyinteract_TEXTDOMAIN) .".</p>\n";
 	
-			if ($data1['ProfileCustomTitle'] == "Booking"){
-					
-					echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." clear\">\n";
-					echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
-					echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] 
-						 ."\" class=\"ProfileExperience\">". $data1['ProfileCustomValue'] ."</p>\n";
-					echo "	  </div>\n";
-			}
-	}
+		$queryMedia = "SELECT * FROM ". table_agency_profile_media ." 
+		              WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType <> \"Image\"";
 		
-	echo " </div>\n"; // Row booking
+		$resultsMedia = mysql_query($queryMedia);
+		$countMedia = mysql_num_rows($resultsMedia);
+		
+		while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+				
+				if ($dataMedia['ProfileMediaType'] == "Demo Reel" || 
+				    $dataMedia['ProfileMediaType'] == "Video Monologue" || 
+					$dataMedia['ProfileMediaType'] == "Video Slate") {
+					
+				$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">"
+				. $dataMedia['ProfileMediaType'] ."<br />". 
+				rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) 
+				."<br /><a href=\"http://www.youtube.com/watch?v="
+				. $dataMedia['ProfileMediaURL'] .
+				"\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('".
+				 $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType'].
+				 "')\">DELETE</a>]</div>\n";
+				
+				} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+				
+				$outLinkVoiceDemo .= "<div>". $dataMedia['ProfileMediaType'] .
+				": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+				"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
+				"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] 
+				."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+				
+				} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
+				
+				$outLinkResume .= "<div>". $dataMedia['ProfileMediaType'] 
+				.": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+				"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
+				"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
+				$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+				
+				} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
+				
+				$outLinkHeadShot .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". 
+				rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+				"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
+				"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
+				$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+				
+				} elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
+				
+				$outLinkComCard .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"". 
+				rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+				"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
+				"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
+				$dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+				
+				} else{
+				
+				$outCustomMediaLink .= "<div>". $dataMedia['ProfileMediaType'] .": <a href=\"".
+				 rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+				 "\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
+				 "</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
+				 $dataMedia['ProfileMediaType']."')\">DELETE</a>]</div>\n";
+				
+				}
+		  }
+
+		  echo '<div style=\"width:500px;\">';
+		  echo $outLinkVoiceDemo;
+		  echo '</div>';
+		  echo '<div style=\"width:500px;\">';
+		  echo $outLinkResume;
+		  echo '</div>';
+		  echo '<div style=\"width:500px;\">';
+		  echo $outLinkHeadShot;
+		  echo '</div>';
+		  echo '<div style=\"width:500px;\">';
+		  echo $outLinkComCard;
+		  echo '</div>';
+		  echo '<div style=\"width:500px;\">';
+		  echo $outCustomMediaLink;
+		  echo '</div>';
+		  echo $outVideoMedia;
+					
+		  if ($countMedia < 1) {
+			      echo "<div><em>". 
+				       __("There are no additional media linked", rb_agencyinteract_TEXTDOMAIN) .
+					   "</em></div>\n";
+		  }
+
+	echo " </div>\n"; // Download Tab
 
 	echo "<div class=\"cb\"></div>\n"; // Clear All
 	
