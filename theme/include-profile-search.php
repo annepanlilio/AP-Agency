@@ -225,7 +225,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "        	</form>\n";
 		
 	    if(!$_POST['advanced_search']){	//hide this advanced search button / link
-		echo "<div class=\"advanced_search_div\"" .$style."><form action=\"". get_bloginfo("wpurl") ."/search/\" method=\"post\"><input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></form>";
+		echo "<div class=\"advanced_search_div\"" .$style."><form action=\"". get_bloginfo("wpurl") ."/search/\" method=\"post\"><input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></div></form>";
 		}
 		
    }
