@@ -919,58 +919,46 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									
 									elseif ($ProfileCustomType == 7){
 										   
-							                 if($data1['ProfileCustomOptions']==3){
-														if($rb_agency_option_unittype == 1){
-														  // 
-														  echo "<div class=\"divsel\">Min:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
-														  if (empty($ProfileCustomValue)) {
-															echo "  <option value=\"\">--</option>\n";
-														  }
-														  // 
-														  $i=36;
-														  $heightraw = 0;
-														  $heightfeet = 0;
-														  $heightinch = 0;
-														  while($i<=90)  { 
+										 
+										  list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
+										
+										  if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==1){
+			   								  
+													  echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
+													  echo "<option value=\"\">--</option>\n";
+				
+														$i=36;
+														$heightraw = 0;
+														$heightfeet = 0;
+														$heightinch = 0;
+														while($i<=90)  { 
 															  $heightraw = $i;
 															  $heightfeet = floor($heightraw/12);
 															  $heightinch = $heightraw - floor($heightfeet*12);
-														  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-																  $i++;
-																}
-														  echo " </select></div>\n";
-														  
-														   echo "<div  class=\"divsel\">Max:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
-														  if (empty($ProfileCustomValue)) {
-															echo "  <option value=\"\">--</option>\n";
-														  }
-														  // 
-														  $i=36;
-														  $heightraw = 0;
-														  $heightfeet = 0;
-														  $heightinch = 0;
-														  while($i<=90)  { 
-															  $heightraw = $i;
-															  $heightfeet = floor($heightraw/12);
-															  $heightinch = $heightraw - floor($heightfeet*12);
-														  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-																  $i++;
-																}
-														  echo " </select></div>\n";
-														  
-														} else {
-														  // 
-														  echo "  <input type=\"text\" id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
+																echo " <option value=\"". $i ."\" ". selected($_SESSION["ProfileCustomID"
+																	 . $data1['ProfileCustomID']], $i) 
+																	 .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+															  $i++;
 														}
-										     } else {
-										      
-											  list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
-										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label><input value=\"".(!is_array($min_val) && $min_val != "Array" ? $min_val : "")."\" class=\"min_max\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
-                                                                 
-										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label> <input value=\"".$max_val."\" class=\"min_max\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
-											 
-											} //end of else of if($data3['P
-											
+														
+													 echo " </select>\n";
+								   
+		  								 }else{
+										
+													 // for other search
+													 echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
+														 ."_min\">Min:</label></div><div> <input value=\""
+														 .(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
+														 ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
+														 .$data1['ProfileCustomID']."[]\" />";
+													 
+													 echo "<br/>";
+													 
+													 echo "<label for=\"ProfileCustomID".$data1['ProfileCustomID']
+													 ."_max\">Max:</label></div><div> <input value=\"".$max_val
+													 ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
+			   
+			                              }
 									}
 			
 			
