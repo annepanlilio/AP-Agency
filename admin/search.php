@@ -146,25 +146,11 @@ echo $cartArray;
 		} else {
 			$ProfileType = "";
 		}
-
-		// *** this has been remove so that all types of profile
-        // *** can be searched
-        // Active
-		//if (isset($_GET['ProfileIsActive'])){
-		//  if ($_GET['ProfileIsActive'] == "1") {
-		//	$selectedActive = "active";
-		//	$filter .= " AND profile.ProfileIsActive=1";
-		//  } elseif ($_GET['ProfileIsActive'] == "0") {
-		//	$selectedActive = "inactive";
-		//	$filter .= " AND profile.ProfileIsActive=0";
-		//  } elseif ($_GET['ProfileIsActive'] == "2") {
-		//	$selectedActive = "declassified";
-	    //		$filter .= " AND profile.ProfileIsActive=2";
-		//  }
-		//} else {
-		//	$selectedActive = "";
-		//	$filter .= " AND (profile.ProfileIsActive=1 OR profile.ProfileIsActive=0)";
-		//}
+		
+        // Set Filter to exclude inactive profiles
+        // and pending for approval profiles from
+        // search 		
+        $filter .= " AND profile.ProfileIsActive!=0 AND profile.ProfileIsActive!=3";
 		
         // Gender
 		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){

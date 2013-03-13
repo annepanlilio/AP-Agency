@@ -1175,16 +1175,15 @@ function rb_display_list(){
 			$query .= "&ProfileType=". $selectedType ."";
 			$filter .= " AND profiletype.DataTypeID='". $selectedType ."'";
 		}
-		if (isset($_GET['ProfileVisible']) && !empty($_GET['ProfileVisible'])){
+		
+		// Fix this so that inactive searches "0"
+        // can be filtered
+        if($_GET['ProfileVisible']=="all"){
+		}elseif(isset($_GET['ProfileVisible'])){
 			$selectedVisible = $_GET['ProfileVisible'];
 			$query .= "&ProfileVisible=". $selectedVisible ."";
-			$filter .= " AND profile.ProfileIsActive='". $selectedVisible ."'";
-		}
-		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
-			$ProfileGender = (int)$_GET['ProfileGender'];
-			if($ProfileGender)
-				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
-		}
+			$filter .= " AND profile.ProfileIsActive=". $selectedVisible ."";
+		}else{$filter .= " AND profile.ProfileIsActive IN (0,1,4) ";}
 		
 		//Paginate
 		$items = mysql_num_rows(mysql_query("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."")); // number of total rows in the database
