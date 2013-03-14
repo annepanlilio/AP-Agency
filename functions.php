@@ -396,6 +396,20 @@
 		}
 		return $ProfileGallery;			
     }
+	
+	// just check the same directory
+	// will not create new
+    function rb_agency_createdir($ProfileGallery){
+		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
+			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
+			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
+			// defensive return
+			return $ProfileGallery;		
+		} else {
+			//defensive return
+			return $ProfileGallery;		
+		}
+    }	
 
 // *************************************************************************************************** //
 // Shortcodes
