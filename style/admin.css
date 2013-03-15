@@ -47,7 +47,8 @@ input.stubby { width: 80px; }
 #profile-manage-media .delete a:hover { border: none; }
 #profile-manage-media .delete a:hover span { background: #000; display: inline; }
 
-
+.agency_page_rb_agency_menu_search .boxblock table input { min-width: auto!important; float: left; }
+.agency_page_rb_agency_menu_search .widefat td div.multi { width: auto!important; margin: 0!important; float: none!important; margin-right: 5px; padding-bottom: 4px; }
 
 /*Select Tag CSS*/
 #cs_tag_box{

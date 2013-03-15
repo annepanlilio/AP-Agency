@@ -81,7 +81,7 @@ while ($data = mysql_fetch_array($results)) {
 	
 	// Update Stats
 	$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
- 
+} 
 	// Change Title
 	if(!function_exists("rb_agency_override_title")){
 	add_filter('wp_title', 'rb_agency_override_title', 10, 2);
