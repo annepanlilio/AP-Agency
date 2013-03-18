@@ -126,6 +126,14 @@ if ($ConfigID == 0) {
     echo "    </div>\n";
 
     echo "</div>\n";
+	
+	echo "    <div class=\"boxlink\">\n";
+    echo "      <h3>". __("Generate User Logins / Passwords", rb_agency_TEXTDOMAIN) . "</h3>\n";
+    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
+    echo "    </div>\n";
+
+    echo "</div>\n";
 
 
 
@@ -1331,6 +1339,41 @@ elseif ($ConfigID == 14) {
 				uninstall_allprofile();
 		}
 } //END $ConfigID == 14
+elseif($ConfigID == '99'){
+   if(isset ($_GET['action']) && $_GET['action'] == 'send_mail'){
+        $login = $_POST['login'];
+        $password = $_POST['password'];
+        $email = $_POST['email'];
+
+        $admin_email = get_bloginfo('admin_email');
+        
+        $headers = 'From: RB Agency <' . $admin_email . '>\r\n';
+        
+        $subject = 'Your new Login and Password';
+        
+        $message = 'Hello, we generated new login and password for you at RB Agency<br /><br />';
+        $message .= 'Login: <strong>' . $login . '</strong><br />';
+        $message .= 'Password: <strong>' . $password . '</strong><br /><br />';
+        $message .= 'Thanks.';
+        
+
+        add_filter('wp_mail_content_type',create_function('', 'return "text/html"; '));
+        wp_mail($email, $subject, $message, $headers);
+        remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+        
+        die;
+        
+    }
+    else {
+        echo "<h2>". __("Generate Login / Passwords", rb_agency_TEXTDOMAIN) . "</h2>\n";
+     
+        rb_display_profile_list();
+        
+    }
+    
+}
+
+
 
 
 /******************************************************************************************/

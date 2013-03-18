@@ -2198,6 +2198,128 @@ function checkCart($currentUserID,$pid){
 	return mysql_num_rows($results);
 }
 
+/* function that lists users for generating login/password */
+function rb_display_profile_list(){  
+    global $wpdb;
+    $rb_agency_options_arr = get_option('rb_agency_options');
+    $rb_agency_option_locationtimezone 		= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
+
+    echo "<div class=\"wrap\">\n";
+    echo "  <h3 class=\"title\">". __("Profiles List", rb_agency_TEXTDOMAIN) ."</h3>\n";
+		
+    // Sort By
+    $sort = "";
+    if (isset($_GET['sort']) && !empty($_GET['sort'])){
+        $sort = $_GET['sort'];
+    }
+    else {
+        $sort = "profile.ProfileContactNameFirst";
+    }
+		
+    // Sort Order
+    $dir = "";
+    if (isset($_GET['dir']) && !empty($_GET['dir'])){
+        $dir = $_GET['dir'];
+        if ($dir == "desc" || !isset($dir) || empty($dir)){
+            $sortDirection = "asc";
+        } else {
+            $sortDirection = "desc";
+        } 
+    } else {
+       $sortDirection = "desc";
+       $dir = "asc";
+    }
+  	
+    // Filter
+    $filter = "WHERE profile.ProfileIsActive IN (0,1,4) ";
+    if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
+        if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
+                $selectedNameFirst = $_GET['ProfileContactNameFirst'];
+                $query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
+                $filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
+        }
+        if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
+                $selectedNameLast = $_GET['ProfileContactNameLast'];
+                $query .= "&ProfileContactNameLast=". $selectedNameLast ."";
+                $filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+        }
+    }
+    if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity'])){
+            $selectedCity = $_GET['ProfileLocationCity'];
+            $query .= "&ProfileLocationCity=". $selectedCity ."";
+            $filter .= " AND profile.ProfileLocationCity='". $selectedCity ."'";
+    }
+    if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
+            $selectedType = $_GET['ProfileType'];
+            $query .= "&ProfileType=". $selectedType ."";
+            $filter .= " AND profiletype.DataTypeID='". $selectedType ."'";
+    }
+    if (isset($_GET['ProfileVisible']) && !empty($_GET['ProfileVisible'])){
+            $selectedVisible = $_GET['ProfileVisible'];
+            $query .= "&ProfileVisible=". $selectedVisible ."";
+            $filter .= " AND profile.ProfileIsActive='". $selectedVisible ."'";
+    }
+    if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
+            $ProfileGender = (int)$_GET['ProfileGender'];
+            if($ProfileGender)
+                    $filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+    }
+		
+    //Paginate
+    $items = mysql_num_rows(mysql_query("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."")); // number of total rows in the database
+    if($items > 0) {
+        $p = new rb_agency_pagination;
+        $p->items($items);
+        $p->limit(50); // Limit entries per page
+        $p->target("admin.php?page=". $_GET['page'] . '&ConfigID=99' . $query);
+        $p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+        $p->calculate(); // Calculates what to show
+        $p->parameterName('paging');
+        $p->adjacents(1); //No. of page away from the current page
+
+        if(!isset($_GET['paging'])) {
+                $p->page = 1;
+        } else {
+                $p->page = $_GET['paging'];
+        }
+
+        //Query for limit paging
+        $limit = "LIMIT " . ($p->page - 1) * $p->limit  . ", " . $p->limit;
+    } else {
+        $limit = "";
+    }
+    
+    /* Top pagination */
+    echo "<div class=\"tablenav\">\n";
+    echo "  <div class=\"tablenav-pages\">\n";
+    
+    if($items > 0) {
+        echo $p->show();  // Echo out the list of paging. 
+    }
+    echo "  </div>\n";
+    echo "</div>\n";
+    /* End Top pagination */
+     
+    /* Table Content */
+    include_once('admin/profile_list_table.php');
+    /* End Table Content */
+
+    /* Bottom pagination */
+    echo "<div class=\"tablenav\">\n";
+    echo "  <div class='tablenav-pages'>\n";
+
+    if($items > 0) {
+            echo $p->show();  // Echo out the list of paging. 
+    }
+
+    echo "  </div>\n";
+    echo "</div>\n";
+    /*End Bottom pagination */
+    
+    echo "</div>";
+
+}
+
 /*
 // Phel: Test Content
 function replace_content_on_the_fly($text){
