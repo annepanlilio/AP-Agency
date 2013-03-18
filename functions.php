@@ -1583,7 +1583,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				foreach($array_customOptions_values as $val){
 					 $xplode = explode(",",$ProfileCustomValue);
                               if(!empty($val)){
-					 echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+					 echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
 					 echo "". $val."</label>";
                                
 					}

@@ -234,3 +234,4 @@ input.stubby { width: 80px; }
 .boxblock table input.min_max{min-width:50px; width:50px;}
 .widefat td .divsel select{width:50px; min-width:50px;}
 .widefat td div{width:25%; margin-right:8px; float:left;}
+.form-table .box .checkbox { float: left; display: block; clear: both; padding-bottom: 2px; }
