@@ -1,6 +1,10 @@
 /* menu & icons */
 #rb-overview-icon { background:transparent url(../style/rb-icon-gray-32.png) no-repeat scroll; }
 
+.checked-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/checked.png) no-repeat scroll; }
+.pending-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/pending.png) no-repeat scroll; }
+.loading-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/loader.gif) no-repeat scroll; }
+
 #toplevel_page_rb_agency_menu div.wp-menu-image { background:transparent url(../style/rb-icon-gray.png) no-repeat scroll; } 
 #toplevel_page_rb_agency_menu:hover div.wp-menu-image { background:transparent url(../style/rb-icon-color.png) no-repeat scroll; } 
 #toplevel_page_rb_agency_menu.wp-has-current-submenu div.wp-menu-image,
