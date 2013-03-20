@@ -2320,6 +2320,127 @@ function rb_display_profile_list(){
 
 }
 
+
+add_action('wp_ajax_send_mail', 'register_and_send_email');
+
+function register_and_send_email(){ 
+    global $wpdb;
+    $profileid = (int)$_POST['profileid'];
+    $login = trim($_POST['login']);
+    $password = trim($_POST['password']);
+    $email = trim($_POST['email']);
+
+    // getting required fileds from rb_agency_profile
+    $profile_row = $wpdb->get_results( "SELECT ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $profileid . "'" );
+
+    // creating new user
+    $user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
+    if ( !$user_id and email_exists($user_email) == false ) {
+        $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+        $user_id = wp_create_user( $login, $random_password, $email ); 
+        if(is_numeric($user_id)){
+            wp_set_password( $password, $user_id );
+
+            // updating some information we have in wp_users
+            $wpdb->update( 
+                    'wp_users', 
+                    array( 'display_name' => $profile_row[0]->ProfileContactDisplay ), 
+                    array( 'ID' => $user_id ), 
+                    array( '%s' ), 
+                    array( '%d' ) 
+            );
+
+            // inserting some information we have in wp_usermeta
+            update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
+            update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
+
+            send_email_lp($login, $password, $email);
+
+            echo 'SUCCESS';
+        } else {
+            echo $user_id->errors['existing_user_login'][0];
+        }
+
+    } else {
+        echo 'The user is already registrated!';
+    }
+    
+    die;
+}
+
+add_action('wp_ajax_send_bulk_mail', 'bulk_register_and_send_email');
+
+function bulk_register_and_send_email(){
+    global $wpdb;
+    
+    $users_lp = $_POST['users_pl'];
+    //echo '<pre>'; print_r($users_lp);
+    
+    $success = FALSE;
+    
+    foreach($users_lp as $user_lp){ 
+        $profile_row = $wpdb->get_results( "SELECT ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $user_lp['pid'] . "'" );
+        
+        $user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
+        if ( !$user_id and email_exists($user_email) == false ) { 
+            $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+            $user_id = wp_create_user( $user_lp['login'], $random_password, $user_lp['email'] ); 
+            if(is_numeric($user_id)){ 
+                wp_set_password( $user_lp['password'], $user_id );
+
+                // updating some information we have in wp_users
+                $wpdb->update( 
+                        'wp_users', 
+                        array( 'display_name' => $profile_row[0]->ProfileContactDisplay ), 
+                        array( 'ID' => $user_id ), 
+                        array( '%s' ), 
+                        array( '%d' ) 
+                );
+
+                // inserting some information we have in wp_usermeta
+                update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
+                update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
+                
+                send_email_lp($user_lp['login'], $user_lp['password'], $user_lp['email']);
+                
+                $success = TRUE;
+                
+            } else {
+                //print_r($user_id);
+            }
+        }
+        
+    }
+    
+    if($success){
+        echo 'SUCCESS';
+    }
+    
+    die;
+    
+}
+
+function send_email_lp($login, $password, $email){
+    $admin_email = get_bloginfo('admin_email');
+
+    $headers = 'From: RB Agency <' . $admin_email . '>\r\n';
+
+    $subject = 'Your new Login and Password';
+
+    $message = 'Hello, we generated new login and password for you at RB Agency<br /><br />';
+    $message .= 'Login: <strong>' . $login . '</strong><br />';
+    $message .= 'Password: <strong>' . $password . '</strong><br /><br />';
+    $message .= 'You can login <a href="' . site_url('profile-login') . '">here</a><br /><br />';
+    $message .= 'Thanks.';
+
+
+    add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+    wp_mail($email, $subject, $message, $headers);
+    remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
+    
+}
+
+
 /*
 // Phel: Test Content
 function replace_content_on_the_fly($text){

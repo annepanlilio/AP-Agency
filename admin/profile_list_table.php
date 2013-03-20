@@ -1,5 +1,6 @@
 <a class="button-secondary" id="bulk_generate" href="javascript:void(0)" style="margin-bottom: 5px" title="Generate" disabled="disabled">Generate</a>
 <a class="button-primary"  id="bulk_send_email" href="javascript:void(0)" style="margin-left: 5px" title="Send Email" disabled="disabled">Send Email</a>
+<div id="ch_bulk" style="float: none !important;margin-left: 10px;width: 34px;display: inline-block;position: relative;top: 7px;margin-top: -15px;"></div>
 <table cellspacing="0" class="widefat fixed">
  <thead>
     <tr class="thead">
@@ -136,6 +137,7 @@ jQuery(document).ready(function($){
    
    function bulkGenerateLP(){
        if($('.administrator:checked').length > 0){ 
+           $('#ch_bulk').removeClass();
            $('.administrator:checked').each(function(){
                 var pid = $(this).attr('id');
                 var pfname = $(this).attr('data-firstname');
@@ -154,8 +156,9 @@ jQuery(document).ready(function($){
            });
            
            $('#bulk_send_email').removeAttr('disabled');
-           $('#bulk_send_email').bind('click', bulkSendEmail);
        }
+       
+       $('#bulk_send_email').unbind('click').bind('click', bulkSendEmail);
    }
    
    function sendEmail(){
@@ -168,21 +171,28 @@ jQuery(document).ready(function($){
            if(login && password && email){
                $('#ch_' + pid).removeClass('pending-profile').addClass('loading-profile');
                $.ajax({
-                   url: 'admin.php?page=rb_agency_menu_reports&ConfigID=99&action=send_mail',
+                   url: ajaxurl, // pointed to admin-ajax.php
                    type: 'post',
                    data: {
+                       action: 'send_mail',
                        profileid : pid,
                        login : login,
                        password : password,
                        email : email
                    },
-                   success: function(){
-                       //alert('Email sent successfully');
-                       $('#ch_' + pid).removeClass('loading-profile').addClass('checked-profile');
-                       $('#l_' + pid).attr('disabled', 'disabled');
-                       $('#p_' + pid).attr('disabled', 'disabled');
-                       $('#em_' + pid).attr('disabled', 'disabled');
-                       $('#em_' + pid).unbind('click');
+                   success: function(data){
+                       if(data == 'SUCCESS'){
+                           $('#ch_' + pid).removeClass('loading-profile').addClass('checked-profile');
+                           $('#l_' + pid).attr('disabled', 'disabled');
+                           $('#p_' + pid).attr('disabled', 'disabled');
+                           $('#em_' + pid).attr('disabled', 'disabled');
+                           $('#em_' + pid).unbind('click');
+                       }
+                       else {
+                           $('#ch_' + pid).removeClass('loading-profile').addClass('error-profile');
+                           alert(data);
+                           return false;
+                       }
                    }
                });
            }
@@ -192,25 +202,47 @@ jQuery(document).ready(function($){
            }
     }
     
-    function bulkSendEmail(){
-        var usersLP = [];
+    function bulkSendEmail(){ 
+        var usersLP = {};
         if($('.administrator:checked').length > 0){ 
+           $('#ch_bulk').removeClass().addClass('loading-profile');
            $('.administrator:checked').each(function(){
                var pid = $(this).attr('id');
                var login = $('#l_' + pid).val();
                var password = $('#p_' + pid).val();
                var email = $(this).attr('data-email');
-               
+
                usersLP[pid] = {
                    pid : pid,
                    login : login,
                    password : password,
                    email : email
                };
-               
+                              
            });
            
-           console.log(usersLP);
+           //console.log(usersLP);
+           
+           $.ajax({
+               url: ajaxurl, // pointed to admin-ajax.php
+               type: 'post',
+               data: {
+                   action: 'send_bulk_mail',
+                   users_pl : usersLP
+               },
+               success: function(data){
+                    if(data == 'SUCCESS'){
+                        $('#ch_bulk').removeClass().addClass('checked-profile');
+                        $('.administrator:checked').each(function(){
+                            var pid = $(this).attr('id');
+                            $('#ch_' + pid).removeClass();
+                        });
+                    }
+                    else {
+                         $('#ch_bulk').removeClass().addClass('error-profile');
+                    }
+               }
+           });
         }
     }
    

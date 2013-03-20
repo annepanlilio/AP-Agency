@@ -1340,67 +1340,11 @@ elseif ($ConfigID == 14) {
 		}
 } //END $ConfigID == 14
 elseif($ConfigID == '99'){
-   if(isset ($_GET['action']) && $_GET['action'] == 'send_mail'){
-        global $wpdb;
-       
-        $profileid = (int)$_POST['profileid'];
-        $login = trim($_POST['login']);
-        $password = trim($_POST['password']);
-        $email = trim($_POST['email']);
-        
-        // getting required fileds from rb_agency_profile
-        $profile_row = $wpdb->get_results( "SELECT ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $profileid . "'" );
 
-        // creating new user
-        $user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
-        if ( !$user_id and email_exists($user_email) == false ) {
-                $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
-                $user_id = wp_create_user( $login, $random_password, $email );
-                wp_set_password( $password, $user_id );
-                
-                // updating some information we have in wp_users
-                $wpdb->update( 
-                        'wp_users', 
-                        array( 'display_name' => $profile_row[0]->ProfileContactDisplay ), 
-                        array( 'ID' => $user_id ), 
-                        array( '%s' ), 
-                        array( '%d' ) 
-                );
-                
-                // inserting some information we have in wp_usermeta
-                update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
-                update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
-               
-                
-        }
-        
+    echo "<h2>". __("Generate Login / Passwords", rb_agency_TEXTDOMAIN) . "</h2>\n";
 
-        $admin_email = get_bloginfo('admin_email');
-        
-        $headers = 'From: RB Agency <' . $admin_email . '>\r\n';
-        
-        $subject = 'Your new Login and Password';
-        
-        $message = 'Hello, we generated new login and password for you at RB Agency<br /><br />';
-        $message .= 'Login: <strong>' . $login . '</strong><br />';
-        $message .= 'Password: <strong>' . $password . '</strong><br /><br /><br /><br />';
-        $message .= 'You can login <a href="' . site_url() . '">here</a>';
-        $message .= 'Thanks.';
-        
+    rb_display_profile_list();
 
-        add_filter('wp_mail_content_type',create_function('', 'return "text/html"; '));
-        wp_mail($email, $subject, $message, $headers);
-        remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
-        
-        die;
-        
-    }
-    else {
-        echo "<h2>". __("Generate Login / Passwords", rb_agency_TEXTDOMAIN) . "</h2>\n";
-     
-        rb_display_profile_list();
-        
-    }
     
 }
 
