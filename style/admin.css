@@ -1,3 +1,9 @@
+body{
+    height: auto;
+    min-height: 100%;
+    position: relative;
+}
+
 /* menu & icons */
 #rb-overview-icon { background:transparent url(../style/rb-icon-gray-32.png) no-repeat scroll; }
 
@@ -29,7 +35,8 @@
 .boxblock tbody tr td { font-size: 14px; font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif; color: ##21759B; padding: 3px; }
 
 .boxlinkgroup { border-top: 2px solid #454545; clear: both; }
-.boxlink { float: left; width: 300px; margin: 10px; min-height: 150px; }
+.boxlink { display: inline-block;
+vertical-align: top; width: 300px; margin: 10px; min-height: 150px; }
 
 .boxblock li{ float:left; width:46%; overflow:hidden; margin-bottom:20px; padding:1%; border:2px solid #21759B; background:#EDF9FE; -moz-border-radius:7px; -webkit-border-radius:7px; }
 .boxblock li.even{ float:right;}

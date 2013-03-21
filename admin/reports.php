@@ -57,19 +57,6 @@ if ($ConfigID == 0) {
     echo "      <p>". __("Export databases", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
 
-/*NK*/
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Import CSV / XLS", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=80\" title=\"". __("Import Data", rb_agency_TEXTDOMAIN) . "\">". __("Import Data", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Import Data into CSV / XLS", rb_agency_TEXTDOMAIN) . ".</p>\n";
-    echo "    </div>\n";
-
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Exort to CSV / XLS", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=81\" title=\"". __("Export Now", rb_agency_TEXTDOMAIN) . "\">". __("Export Now", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Export Data to CSV / XLS", rb_agency_TEXTDOMAIN) . ".</p>\n";
-    echo "    </div>\n";
-/*NK*/
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "\">". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "</a><br />\n";
@@ -141,7 +128,23 @@ if ($ConfigID == 0) {
     echo "  <h2>". __("Importing Records", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("The following tools will help import records.  DO NOT USE THESE TOOLS IF YOU ALREADY HAVE DATA LOADED", rb_agency_TEXTDOMAIN) . "</p>\n";
 
+    
+/*NK*/
+    echo "    <div class=\"boxlink\">\n";
+    echo "      <h3>". __("Step 1", rb_agency_TEXTDOMAIN) . "</h3>\n";
+    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=81\" title=\"". __("Export Now", rb_agency_TEXTDOMAIN) . "\">". __("Export Now", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <p>". __("Download this template and load your profile data into this file to import into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+    echo "    </div>\n";
+    
+    echo "    <div class=\"boxlink\">\n";
+    echo "      <h3>". __("Step 2", rb_agency_TEXTDOMAIN) . "</h3>\n";
+    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=80\" title=\"". __("Import Data", rb_agency_TEXTDOMAIN) . "\">". __("Import Data", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <p>". __("Upload the model profiles into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+    echo "    </div>\n";
 
+
+/*NK*/
+/*
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 1", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=51\" title=\"". __("Download Excel Template", rb_agency_TEXTDOMAIN) . "\">". __("Download Excel Template", rb_agency_TEXTDOMAIN) . "</span><br />\n";
@@ -153,10 +156,10 @@ if ($ConfigID == 0) {
     echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=52\" title=\"". __("Upload to Database", rb_agency_TEXTDOMAIN) . "\">". __("Upload to Database", rb_agency_TEXTDOMAIN) . "</span><br />\n";
     echo "      <p>". __("Upload the model profiles into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-
+*/
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 3", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=53\" title=\"". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "\">". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=53\" title=\"". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "\">". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Check that all profiles have folder names generated.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
 
