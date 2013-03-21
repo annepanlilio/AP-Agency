@@ -2426,13 +2426,17 @@ function send_email_lp($login, $password, $email){
     $headers = 'From: RB Agency <' . $admin_email . '>\r\n';
 
     $subject = 'Your new Login and Password';
+    
+    $message = read_email_content(true);
+    if($message == 'empty'){
+        $message = 'Hello, we generated new login and password for you at RB Agency\n\n[login]\n[password]\n\nYou can login [url]\n\nThanks.';
+    }
 
-    $message = 'Hello, we generated new login and password for you at RB Agency<br /><br />';
-    $message .= 'Login: <strong>' . $login . '</strong><br />';
-    $message .= 'Password: <strong>' . $password . '</strong><br /><br />';
-    $message .= 'You can login <a href="' . site_url('profile-login') . '">here</a><br /><br />';
-    $message .= 'Thanks.';
-
+    $message = str_replace('[login]', 'Login: <strong>' . $login . '</strong>', $message);
+    $message = str_replace('[password]', 'Password: <strong>' . password . '</strong>', $message);
+    $message = str_replace('[url]', '<a href="' . site_url('profile-login') . '">login</a>', $message);
+    
+    $message = nl2br($message);
 
     add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
     wp_mail($email, $subject, $message, $headers);
@@ -2440,6 +2444,26 @@ function send_email_lp($login, $password, $email){
     
 }
 
+add_action('wp_ajax_write_email_cnt', 'write_email_content');
+
+function write_email_content(){
+    $email_message = $_POST['email_message'];
+    update_option( 'rb_email_content', $email_message );
+    die;
+}
+
+add_action('wp_ajax_read_email_cnt', 'read_email_content');
+
+function read_email_content($ret = false){ 
+    if($ret){
+        return $email_message = get_option( 'rb_email_content', 'empty' );
+    }
+    else {
+        echo $email_message = get_option( 'rb_email_content', 'empty' );
+    }
+    
+    die;
+}
 
 /*
 // Phel: Test Content

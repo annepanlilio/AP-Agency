@@ -1,5 +1,6 @@
 <a class="button-secondary" id="bulk_generate" href="javascript:void(0)" style="margin-bottom: 5px" title="Generate" disabled="disabled">Generate</a>
 <a class="button-primary"  id="bulk_send_email" href="javascript:void(0)" style="margin-left: 5px" title="Send Email" disabled="disabled">Send Email</a>
+<a class="button-primary"  id="open_popup" href="javascript:void(0)" style="margin-left: 5px;float: right" title="Send Email">Edit Email Content</a>
 <div id="ch_bulk" style="float: none !important;margin-left: 10px;width: 34px;display: inline-block;position: relative;top: 7px;margin-top: -15px;"></div>
 <table cellspacing="0" class="widefat fixed">
  <thead>
@@ -95,9 +96,46 @@ while ($data = mysql_fetch_array($results2)) {
     </tr>
  </tfoot>
 </table>
+<div id="popup">
+    <span class="popup_close" title="Close">x</span>
+    <span class="popup_title">Use following shortcodes to put constructions in text</span><br />
+    <code>[login]</code>, <code>[password]</code>, <code>[url]</code><br />
+    <textarea id="emailContent" style="width:100%; height:200px"></textarea><br/>
+    <input id="saveEmailContent" type="button" value="Save" class="button-primary" style="float:right;"/>
+</div>
+<div id="popup_bg"></div>
 <script type="text/javascript">
 
 jQuery(document).ready(function($){
+    $('#open_popup').click(function(){
+        $('#popup_bg').fadeIn('fast',function(){
+            $('#popup').fadeIn('fast');
+            
+            // get custom email message, if defined
+            $.ajax({
+               url: ajaxurl,
+               type: 'get',
+               data: { 
+                   action: 'read_email_cnt'
+               },
+               success: function(data){
+                   if(data != 'empty'){
+                        $('#emailContent').val(data);
+                   }
+                   else {
+                       $('#emailContent').val('Hello, we generated new login and password for you at RB Agency\n\n[login]\n[password]\n\nYou can [url] here\n\nThanks.');
+                   }
+               }
+           });
+        });
+    });
+    
+    $('#popup_bg, .popup_close').click(function(){
+        $('#popup').fadeOut('fast',function(){
+            $('#popup_bg').fadeOut('fast');
+        });
+    });
+    
     $('.generate_lp').click(function(){
         var pid = $(this).attr('data-id');
         var pfname = $(this).attr('data-firstname');
@@ -127,6 +165,27 @@ jQuery(document).ready(function($){
        }
    });
    
+   
+   // saving custom email message
+   $('#saveEmailContent').click(function(){
+       var emailContent = $('#emailContent').val();
+       if(emailContent){
+           $.ajax({
+               url: ajaxurl,
+               type: 'post',
+               data: { 
+                   action: 'write_email_cnt',
+                   email_message: emailContent 
+               },
+               success: function(){
+                    $('#popup').fadeOut('fast',function(){
+                        $('#popup_bg').fadeOut('fast');
+                    });
+               }
+           });
+       }
+   });
+      
    
    function generateLP(pid, pfname, plname){
        var login = pfname.toLowerCase().substr(0, 5).replace(' ', '-') + pid + plname.toLowerCase().substr(-3, 3);
