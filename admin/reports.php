@@ -113,14 +113,12 @@ if ($ConfigID == 0) {
     echo "    </div>\n";
 
     echo "</div>\n";
-	
-	echo "    <div class=\"boxlink\">\n";
+
+    echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Generate User Logins / Passwords", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-
-    echo "</div>\n";
 
 
 

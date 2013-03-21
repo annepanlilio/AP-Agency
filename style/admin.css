@@ -1,9 +1,3 @@
-body{
-    height: auto;
-    min-height: 100%;
-    position: relative;
-}
-
 /* menu & icons */
 #rb-overview-icon { background:transparent url(../style/rb-icon-gray-32.png) no-repeat scroll; }
 
