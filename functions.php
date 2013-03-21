@@ -2433,7 +2433,7 @@ function send_email_lp($login, $password, $email){
     }
 
     $message = str_replace('[login]', 'Login: <strong>' . $login . '</strong>', $message);
-    $message = str_replace('[password]', 'Password: <strong>' . password . '</strong>', $message);
+    $message = str_replace('[password]', 'Password: <strong>' . $password . '</strong>', $message);
     $message = str_replace('[url]', '<a href="' . site_url('profile-login') . '">login</a>', $message);
     
     $message = nl2br($message);
