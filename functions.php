@@ -2331,7 +2331,7 @@ function register_and_send_email(){
     $email = trim($_POST['email']);
 
     // getting required fileds from rb_agency_profile
-    $profile_row = $wpdb->get_results( "SELECT ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $profileid . "'" );
+    $profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $profileid . "'" );
 
     // creating new user
     $user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
@@ -2353,6 +2353,15 @@ function register_and_send_email(){
             // inserting some information we have in wp_usermeta
             update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
             update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
+			
+			// linking the user ID with profile ID
+			$wpdb->update( 
+				'rb_agency_profile',
+				array( 'ProfileUserLinked' => $user_id ),
+				array( 'ProfileID' => $profile_row[0]->ProfileID ),
+				array( '%d' ),
+				array( '%d' )
+			);
 
             send_email_lp($login, $password, $email);
 
@@ -2379,7 +2388,7 @@ function bulk_register_and_send_email(){
     $success = FALSE;
     
     foreach($users_lp as $user_lp){ 
-        $profile_row = $wpdb->get_results( "SELECT ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $user_lp['pid'] . "'" );
+        $profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $user_lp['pid'] . "'" );
         
         $user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
         if ( !$user_id and email_exists($user_email) == false ) { 
@@ -2400,6 +2409,15 @@ function bulk_register_and_send_email(){
                 // inserting some information we have in wp_usermeta
                 update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
                 update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
+				
+				// linking the user ID with profile ID
+				$wpdb->update( 
+					'rb_agency_profile',
+					array( 'ProfileUserLinked' => $user_id ),
+					array( 'ProfileID' => $profile_row[0]->ProfileID ),
+					array( '%d' ),
+					array( '%d' )
+				);
                 
                 send_email_lp($user_lp['login'], $user_lp['password'], $user_lp['email']);
                 
