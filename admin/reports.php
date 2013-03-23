@@ -988,8 +988,8 @@ elseif ($ConfigID == 80) {
         {
             $error_message = "Empty file!";
         }
-        
-        if($_FILES['source_file']['type'] == 'application/vnd.ms-excel' || $_FILES['source_file']['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') /*CSV and Excel files*/
+        //echo $_FILES['source_file']['type'];die;
+        if($_FILES['source_file']['type'] == 'application/octet-stream' || $_FILES['source_file']['type'] == 'application/vnd.ms-excel' || $_FILES['source_file']['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') /*CSV and Excel files*/
         {
             $return_result = $obj_csv->match_column_and_table(); /*Display colunm head*/
             if( $return_result == 0)
