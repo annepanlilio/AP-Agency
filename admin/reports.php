@@ -972,11 +972,12 @@ elseif ($ConfigID == 80) {
     $target_path = WP_CONTENT_DIR.'/FORMAT.csv';
 
     $csv_format = fopen($target_path,'w');
+    fputcsv($csv_format, $fields_array[0]);  
             
-    foreach ($fields_array as $key => $value) 
-    {
-        fputcsv($csv_format, $value);
-    }
+//    foreach ($fields_array as $key => $value) 
+//    {
+//        fputcsv($csv_format, $value);
+//    }
     fclose($csv_format);
     chmod($target_path, 0777);
     
@@ -1522,7 +1523,7 @@ class RBAgencyCSVXLSImpoterPlugin {
         
         $file_path = $this->csv_to_db_get_abs_path_from_src_file($file_name);   
         $handle = fopen($file_path ,"r");       
-        $header=fgetcsv($handle, 1000, ",");
+        $header=fgetcsv($handle, 4096, ",");
         $total_header = count($header);
 
         $custom_header = $total_header - 17;//17 are the number of column for the personal profile table
