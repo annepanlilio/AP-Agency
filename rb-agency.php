@@ -142,11 +142,12 @@ return;
 		add_option("rb_agency_version", $rb_agency_VERSION);
 		update_option("rb_agency_version", $rb_agency_VERSION);
 		
-		
-		// Does the database already exist?
-		if ($wpdb->get_var("show tables like '". table_agency_profile ."'") != table_agency_profile) { // No, it doesn't
-			// Creating the tables!
-			$sql = "CREATE TABLE " . table_agency_profile . " (
+		/*
+		 * Fixed this so that tables will always be
+		 * checked if created.
+		 */
+		// Creating the tables!
+			$sql = "CREATE TABLE IF NOT EXISTS " . table_agency_profile . " (
 				ProfileID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileUserLinked BIGINT(20) NOT NULL DEFAULT '0',
 				ProfileGallery VARCHAR(255),
@@ -182,7 +183,7 @@ return;
 			dbDelta($sql);
 	
 			// Setup > Profile Media
-			$sql = "CREATE TABLE ".table_agency_profile_media." (
+			$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_profile_media." (
 				ProfileID INT(10) NOT NULL DEFAULT '0',
 				ProfileMediaID INT(10) NOT NULL AUTO_INCREMENT,
 				ProfileMediaType VARCHAR(255),
@@ -197,7 +198,7 @@ return;
 			dbDelta($sql);
 	
 			// Setup > Classification
-			$sql = "CREATE TABLE ".table_agency_data_type." (
+			$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_data_type." (
 				DataTypeID INT(10) NOT NULL AUTO_INCREMENT,
 				DataTypeTitle VARCHAR(255),
 				DataTypeTag VARCHAR(50),
@@ -208,7 +209,7 @@ return;
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Talent')");
 
 			// Setup > Taxonomy: Gender
-			$sql = "CREATE TABLE ". table_agency_data_gender ." (
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_gender ." (
 				GenderID INT(10) NOT NULL AUTO_INCREMENT,
 				GenderTitle VARCHAR(255),
 				PRIMARY KEY (GenderID)
@@ -218,7 +219,7 @@ return;
 			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
 	
 			// Setup > Taxonomy: Actual Taxonomy
-			$sql = "CREATE TABLE ".table_agency_rel_taxonomy." (
+			$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_rel_taxonomy." (
 				ProfileID BIGINT(20) NOT NULL DEFAULT 0,
 				term_taxonomy_id BIGINT(20) NOT NULL DEFAULT 0,
 				PRIMARY KEY (ProfileID,term_taxonomy_id)
@@ -227,7 +228,7 @@ return;
 	
 			
 	      // Setup > Custom Field Types
-			$sql = "CREATE TABLE ". table_agency_customfields." (
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfields." (
 				ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileCustomTitle VARCHAR(255),
 				ProfileCustomType INT(10) NOT NULL DEFAULT '0',
@@ -270,7 +271,7 @@ return;
 
 	
 			// Setup > Custom Field Types > Mux Values
-			$sql9mux = "CREATE TABLE ". table_agency_customfield_mux ." (
+			$sql9mux = "CREATE TABLE IF NOT EXISTS ". table_agency_customfield_mux ." (
 				ProfileCustomMuxID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileCustomID BIGINT(20) NOT NULL DEFAULT '0',
 				ProfileID BIGINT(20) NOT NULL DEFAULT '0',
@@ -280,7 +281,7 @@ return;
 			dbDelta($sql9mux);
 	
 			// Setup > Search Saved
-			$sql10 = "CREATE TABLE ". table_agency_searchsaved ." (
+			$sql10 = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved ." (
 				SearchID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SearchTitle VARCHAR(255),
 				SearchType INT(10) NOT NULL DEFAULT '0',
@@ -292,7 +293,7 @@ return;
 			dbDelta($sql10);
 
 			// Setup > Custom Field Types > Mux Values
-			$sql10mux = "CREATE TABLE ". table_agency_searchsaved_mux ." (
+			$sql10mux = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved_mux ." (
 				SearchMuxID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SearchID BIGINT(20) NOT NULL DEFAULT '0',
 				SearchMuxHash VARCHAR(255),
@@ -306,7 +307,7 @@ return;
 				);";
 			dbDelta($sql10mux);
            // Setup > Save Favorite
-			$sql11 = "CREATE TABLE ". table_agency_savedfavorite." (
+			$sql11 = "CREATE TABLE IF NOT EXISTS ". table_agency_savedfavorite." (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
 			      SavedFavoriteTalentID VARCHAR(255),
@@ -316,7 +317,7 @@ return;
 
 			
 		// Setup > Add to Casting Cart
-			$sql12 = "CREATE TABLE ". table_agency_castingcart." (
+			$sql12 = "CREATE TABLE IF NOT EXISTS ". table_agency_castingcart." (
 				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				CastingCartProfileID VARCHAR(255),
 			      CastingCartTalentID VARCHAR(255),
@@ -324,7 +325,7 @@ return;
 				);";
 			dbDelta($sql12);		
 		// Setup > Add to Casting Cart
-			$sql13 = "CREATE TABLE ". table_agency_mediacategory." (
+			$sql13 = "CREATE TABLE IF NOT EXISTS ". table_agency_mediacategory." (
 				MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				MediaCategoryTitle VARCHAR(255),
 				MediaCategoryGender VARCHAR(255),
@@ -332,7 +333,7 @@ return;
 				PRIMARY KEY (MediaCategoryID)
 				);";
 			mysql_query($sql13);			
-		}
+		
 		
 	}
 //Activate Install Hook
