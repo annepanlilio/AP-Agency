@@ -93,7 +93,9 @@ return;
 	if (!defined("table_agency_castingcart"))
 		define("table_agency_castingcart", "rb_agency_castingcart");
 	if (!defined("table_agency_mediacategory"))
-		define("table_agency_mediacategory", "rb_agency_mediacategory");	
+		define("table_agency_mediacategory", "rb_agency_mediacategory");
+	if (!defined("table_agency_customfields_types"))
+	define("table_agency_customfields_types", "rb_agency_customfields_types");				
 
 	
   
@@ -332,7 +334,17 @@ return;
 			      MediaCategoryOrder VARCHAR(255),
 				PRIMARY KEY (MediaCategoryID)
 				);";
-			mysql_query($sql13);			
+			mysql_query($sql13);	
+		  
+		   // Setup > Custom Field Types
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfields_types." (
+				ProfileCustomTypesID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				ProfileCustomID BIGINT(20) NOT NULL,
+				ProfileCustomTitle VARCHAR(255),
+				ProfileCustomTypes VARCHAR(255),
+				PRIMARY KEY (ProfileCustomTypesID)
+				);";
+			dbDelta($sql);			
 		
 		
 	}

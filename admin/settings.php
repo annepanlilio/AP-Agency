@@ -1295,7 +1295,20 @@ elseif ($ConfigID == 7) {
 		$ProfileCustomShowRegistration= (int)$_POST['ProfileCustomShowRegistration'];
 		$ProfileCustomShowAdmin   	= (int)$_POST['ProfileCustomShowAdmin'];
 		$ProfileCustomPrivacy   	= (int)$_POST['ProfileCustomPrivacy'];
-		
+
+		/*
+		 * Set profile types here
+		 */
+		 
+		$get_types = "SELECT * FROM ". table_agency_data_type;
+						
+		$result = mysql_query($get_types);
+						
+		while ( $typ = mysql_fetch_array($result)){
+                  $t = trim($typ['DataTypeTitle']);
+			      $name = 'ProfileType' . $t; 
+				  $$name = (int) $_POST['ProfileType' . $t]; 
+		} 		
 
 		//adjustment in making the visibility fields into a checkbox
 		if($ProfileCustomPrivacy==3){   
@@ -1408,6 +1421,56 @@ elseif ($ConfigID == 7) {
 				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "','" . $wpdb->escape($ProfileCustomOrder ) . "','" . $wpdb->escape($ProfileCustomShowGender ) . "','" . $wpdb->escape($ProfileCustomShowProfile ) . "','" . $wpdb->escape($ProfileCustomShowSearch) . "','" . $wpdb->escape($ProfileCustomShowLogged ) . "','" . $wpdb->escape($ProfileCustomShowAdmin) . "','" . $wpdb->escape($ProfileCustomShowRegistration) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
+
+				/*
+				 * Add to Custom Client
+				 * if the Profile Custom Client is
+				 * Selected
+				 */
+				$Types = "";
+				
+				/*
+				 * Set Types Here for each Custom fields.
+				 */ 
+				$get_types = "SELECT * FROM ". table_agency_data_type;
+						
+				$result = mysql_query($get_types);
+						
+				while ( $typ = mysql_fetch_array($result)){
+				   $profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);	
+				   if($$profiletyp) { $Types .= trim($typ['DataTypeTitle']) . "," ; }  
+		        } 
+			
+				$Types = rtrim($Types, ",");
+				
+				if($Types != "" or !empty($Types)){
+				
+							$check_sql = "SELECT ProfileCustomClientsID FROM " . table_agency_customfields_types . 
+				            " WHERE ProfileCustomID= " . $lastid; 
+				
+							$check_results = mysql_query($check_sql);
+				
+							$count_check = mysql_num_rows($check_results);
+				
+							if($count_check <= 0){
+								//create record in Custom Clients
+								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
+								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes) 
+								VALUES (" . $lastid . ",'" 
+								          . $wpdb->escape($ProfileCustomTitle) . "','" 
+								          . $Types . "')";
+								
+								$results_client = $wpdb->query($insert_client);
+				   			} else {
+								//update if already existing 
+								$update = "UPDATE " . table_agency_customfields_types . " 
+							              SET 
+								          ProfileCustomTypes='" . $Types . "' 
+							              WHERE ProfileCustomID = ".$lastid;
+				                $updated = $wpdb->query($update);
+							}
+					
+				}
 				
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>added</strong> successfully! You may now %1$s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 				echo "<h3 style=\"width:430px;\">". sprintf(__("Create New  %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	";
@@ -1441,6 +1504,76 @@ elseif ($ConfigID == 7) {
 								ProfileCustomShowAdmin=" . $wpdb->escape($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = mysql_query($update) or die(mysql_error());
+
+				/*
+				 * Check if There is Custom client
+				 * to be updated
+				 */
+
+				$Types = "";
+				
+				/*
+				 * Set Types Here for each Custom fields.
+				 */ 
+				$get_types = "SELECT * FROM ". table_agency_data_type;
+						
+				$result = mysql_query($get_types);
+						
+				while ( $typ = mysql_fetch_array($result)){
+			       $t = 'ProfileType' . trim($typ['DataTypeTitle']);
+				   $n = trim($typ['DataTypeTitle']);
+				   if($$t) { 
+				   	   
+					   $$n = true;
+					   $Types .= $n . "," ; 
+				     
+				     } else { 
+					   
+					   $$n = false;
+				   }  
+		        } 
+				
+				$Types = rtrim($Types, ",");
+				
+				echo '<input type="hidden" name="apstypes" value="'.$Types.'">';
+				
+				if($Types != "" or !empty($Types)){
+				
+							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types . 
+				            " WHERE ProfileCustomID = " . $ProfileCustomID; 
+				
+							$check_results = mysql_query($check_sql);
+				
+							$count_check = mysql_num_rows($check_results);
+				
+							if($count_check <= 0){
+								//create record in Custom Clients
+								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
+								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes) 
+								VALUES (" . $ProfileCustomID . ",'" 
+								          . $wpdb->escape($ProfileCustomTitle) . "','" 
+								          . $Types . "')";
+								
+								$results_client = $wpdb->query($insert_client);
+				   			} else {
+								//update if already existing 
+								$update = "UPDATE " . table_agency_customfields_types . " 
+							              SET 
+								          ProfileCustomTypes='" . $Types . "' 
+							              WHERE ProfileCustomID = ".$ProfileCustomID;
+				                $updated = $wpdb->query($update);
+							}
+					
+				} else {
+						
+					   /*
+						* Delete if there is no selections
+						*/
+						$delete = "DELETE FROM " . table_agency_customfields_types . " 
+					              WHERE ProfileCustomID = ".$ProfileCustomID;
+				        $deleted = $wpdb->query($delete);
+				}
+	
                  
 				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
                         echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
@@ -1644,6 +1777,34 @@ elseif ($ConfigID == 7) {
 							<td style=\"font-size:13px;\"></td>
 						</tr>
 						<tr>
+						<td valign=\"top\">Profile Type:</td>
+						<td style=\"font-size:13px;\">";
+						
+						/*
+						 * get the proper fields on
+						 * profile types here
+						 */
+						
+						$get_types = "SELECT * FROM ". table_agency_data_type;
+						
+						$result = mysql_query($get_types);
+						
+						while ( $typ = mysql_fetch_array($result)){
+						    
+						     echo '<input type="checkbox" name="ProfileType'.trim($typ['DataTypeTitle']).'" '. 
+							      'value="'.$typ['DataTypeTitle'].'"  />&nbsp;'.  
+							       $typ['DataTypeTitle'].'<br/>';
+							
+						} 
+					    echo	   "</td>
+									<td style=\"font-size:13px;\">
+								   
+									</td>
+									<td style=\"font-size:13px;\">
+								   
+									</td>
+								</tr>
+						<tr>
 							<td valign=\"top\">Custom Order:</td>
 							<td style=\"font-size:13px;\">
 							<input type=\"text\" name=\"ProfileCustomOrder\" value=\"0\" />
@@ -1769,6 +1930,33 @@ elseif ($ConfigID == 7) {
 												   
 													</td>
 												</tr>
+
+											<tr>
+													<td valign=\"top\">Profile Type:</td>
+													<td style=\"font-size:13px;\"> ";
+											
+											$get_types = "SELECT * FROM ". table_agency_data_type;
+										
+											$result = mysql_query($get_types);
+										
+											while ( $typ = mysql_fetch_array($result)){
+												$t = trim($typ['DataTypeTitle']);
+												echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
+													 ($$t == true ? 'checked="checked"':''). '  />&nbsp;'.
+													 trim($typ['DataTypeTitle'])
+													 .'&nbsp;<br/>';
+											} 
+													
+											echo "	</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+													<td style=\"font-size:13px;\">
+												   
+													</td>
+											</tr>
+	
+												
 												<tr>
 													<td valign=\"top\">Custom Order*:</td>
 													<td style=\"font-size:13px;\" align=\"left\">
