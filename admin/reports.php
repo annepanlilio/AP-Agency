@@ -1,11 +1,11 @@
 <?php
-global $wpdb;
+    global $wpdb;
 
-	$arrayProfilesRenamedFolders = array();
-	$arraySuggestedFolderNames = array();
-	$arrayAllFolderNames = array();
+    $arrayProfilesRenamedFolders = array();
+    $arraySuggestedFolderNames = array();
+    $arrayAllFolderNames = array();
     $arrayDuplicateFolders = array();
-	$arrayDuplicateFound = array();
+    $arrayDuplicateFound = array();
  
 ?>
 <div class="wrap">
@@ -1474,7 +1474,8 @@ class RBAgencyCSVXLSImpoterPlugin {
     function match_column_and_table(){
         global $wpdb;
         
-        $get_ext =  explode('.', $_FILES['source_file']['name']);
+        //$get_ext =  explode('.', $_FILES['source_file']['name']);
+        $get_ext = pathinfo($_FILES['source_file']['name'], PATHINFO_EXTENSION);
         $target_path = WP_CONTENT_DIR.'/plugins/rb-agency/file_upload/';
         $target_path = $target_path . basename( $_FILES['source_file']['name']);
         
@@ -1589,15 +1590,17 @@ class RBAgencyCSVXLSImpoterPlugin {
             $ctrl_end = $_REQUEST['total_header'];
             $incre = 1;
             global $wpdb;
-            
+
             $queryGenderResult = $wpdb->get_row("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='".$data[3]."'", ARRAY_A);
             
             $add_to_p_table="INSERT into rb_agency_profile($p_table_fields)values('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
             mysql_query($add_to_p_table) or die(mysql_error());
+            
             $last_inserted_mysql_id = mysql_insert_id();
+
             while($ctrl_start < $ctrl_end){
                 $select_id =  $_REQUEST['select'.$incre];
-                if(strpos($data[$ctrl_start], ' ft ') >= 0)
+                if(strpos($data[$ctrl_start], ' ft ') !== FALSE)
                 {
                     $cal_height = 0;
                     $height = explode(' ', $data[$ctrl_start]);
@@ -1605,11 +1608,13 @@ class RBAgencyCSVXLSImpoterPlugin {
                     $data[$ctrl_start]  = $cal_height;
                     
                 }
+
                 $add_to_c_table="INSERT into rb_agency_customfield_mux($c_table_fields)values('$select_id','$last_inserted_mysql_id','$data[$ctrl_start]')";
                 mysql_query($add_to_c_table) or die(mysql_error());
                 $ctrl_start++;
                 $incre++;
             }
+          
         }
         echo '<div class="wrap">Successfully Imported Records</div>';
         if($_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
