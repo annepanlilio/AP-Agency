@@ -292,7 +292,7 @@
 
 		if($difference != 1) $periods[$j].= "s";
 		$text = "$difference $periods[$j] ago";
-			if ($j > 10) { exit; }
+		if ($j > 10) { exit; }
 		return $text;
 		} else {
 			return "--";
@@ -521,18 +521,18 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			"profilecontactnamelast" => NULL,
 			"profilelocationcity" => NULL,
 			"profiletype" => NULL,
-				"type" => NULL,
+			"type" => NULL,
 			"profileisactive" => NULL,
 			"profilegender" => NULL,
-				"gender" => NULL,
+			"gender" => NULL,
 			"profilestatheight_min" => NULL,
 			"profilestatheight_max" => NULL,
 			"profilestatweight_min" => NULL,
 			"profilestatweight_max" => NULL,
 			"profiledatebirth_min" => NULL,
-				"age_start" => NULL,
+			"age_start" => NULL,
 			"profiledatebirth_max" => NULL,
-				"age_stop" => NULL,
+			"age_stop" => NULL,
 			"featured" => NULL,
 			"stars" => NULL,
 			"paging" => NULL,
@@ -849,7 +849,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 		
 		} elseif ($_GET['t']=="casting"){
 					   
-			 $queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
+			$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart."  cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 			 
 		} else {
 			// Execute Query
@@ -1137,94 +1137,99 @@ function rb_agency_profilesearch($atts, $content = NULL){
 // Image Resizing 
 class rb_agency_image {
  
-   var $image;
-   var $image_type;
- 
-   function load($filename) {
- 
-      $image_info = getimagesize($filename);
-      $this->image_type = $image_info[2];
-      if( $this->image_type == IMAGETYPE_JPEG ) {
- 
-         $this->image = imagecreatefromjpeg($filename);
-      } elseif( $this->image_type == IMAGETYPE_GIF ) {
- 
-         $this->image = imagecreatefromgif($filename);
-      } elseif( $this->image_type == IMAGETYPE_PNG ) {
- 
-         $this->image = imagecreatefrompng($filename);
-      }
-   }
-   function save($filename, $image_type=IMAGETYPE_JPEG, $compression=75, $permissions=NULL) {
- 
-      if( $image_type == IMAGETYPE_JPEG ) {
-         imagejpeg($this->image,$filename,$compression);
-      } elseif( $image_type == IMAGETYPE_GIF ) {
- 
-         imagegif($this->image,$filename);
-      } elseif( $image_type == IMAGETYPE_PNG ) {
- 
-         imagepng($this->image,$filename);
-      }
-      if( $permissions != NULL) {
- 
-         chmod($filename,$permissions);
-      }
-   }
-   function output($image_type=IMAGETYPE_JPEG) {
- 
-      if( $image_type == IMAGETYPE_JPEG ) {
-         imagejpeg($this->image);
-      } elseif( $image_type == IMAGETYPE_GIF ) {
- 
-         imagegif($this->image);
-      } elseif( $image_type == IMAGETYPE_PNG ) {
- 
-         imagepng($this->image);
-      }
-   }
-   function getWidth() {
- 
-      return imagesx($this->image);
-   }
-   function getHeight() {
- 
-      return imagesy($this->image);
-   }
-   function resizeToHeight($height) {
- 
-      $ratio = $height / $this->getHeight();
-      $width = $this->getWidth() * $ratio;
-      $this->resize($width,$height);
-   }
- 
-   function resizeToWidth($width) {
-      $ratio = $width / $this->getWidth();
-      $height = $this->getHeight() * $ratio;
-      $this->resize($width,$height);
-   }
- 
-   function scale($scale) {
-      $width = $this->getWidth() * $scale/100;
-      $height = $this->getHeight() * $scale/100;
-      $this->resize($width,$height);
-   }
- 
-   function resize($width,$height) {
-      $new_image = imagecreatetruecolor($width, $height);
-      imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
-      $this->image = $new_image;
-   }      
- 
-   function orientation() {
-      if ($this->getWidth() == $this->getHeight()) {
-		  return "square";
-	  } elseif ($this->getWidth() > $this->getHeight()) {
-		  return "landscape";
-	  } else {
-		  return "portrait";
-	  }
-   }
+	var $image;
+	var $image_type;
+
+	function load($filename) {
+
+		$image_info = getimagesize($filename);
+		$this->image_type = $image_info[2];
+		if( $this->image_type == IMAGETYPE_JPEG ) {
+
+			$this->image = imagecreatefromjpeg($filename);
+		} elseif( $this->image_type == IMAGETYPE_GIF ) {
+
+			$this->image = imagecreatefromgif($filename);
+		} elseif( $this->image_type == IMAGETYPE_PNG ) {
+
+			$this->image = imagecreatefrompng($filename);
+		}
+	}
+
+	function save($filename, $image_type=IMAGETYPE_JPEG, $compression=75, $permissions=NULL) {
+
+	if( $image_type == IMAGETYPE_JPEG ) {
+		imagejpeg($this->image,$filename,$compression);
+		} elseif( $image_type == IMAGETYPE_GIF ) {
+
+			imagegif($this->image,$filename);
+		} elseif( $image_type == IMAGETYPE_PNG ) {
+
+			imagepng($this->image,$filename);
+		}
+		if( $permissions != NULL) {
+
+			chmod($filename,$permissions);
+		}
+	}
+
+	function output($image_type=IMAGETYPE_JPEG) {
+
+		if( $image_type == IMAGETYPE_JPEG ) {
+			imagejpeg($this->image);
+		} elseif( $image_type == IMAGETYPE_GIF ) {
+
+			imagegif($this->image);
+		} elseif( $image_type == IMAGETYPE_PNG ) {
+
+			imagepng($this->image);
+		}
+	}
+
+	function getWidth() {
+
+		return imagesx($this->image);
+	}
+
+	function getHeight() {
+
+		return imagesy($this->image);
+	}
+
+	function resizeToHeight($height) {
+
+		$ratio = $height / $this->getHeight();
+		$width = $this->getWidth() * $ratio;
+		$this->resize($width,$height);
+	}
+
+	function resizeToWidth($width) {
+		$ratio = $width / $this->getWidth();
+		$height = $this->getHeight() * $ratio;
+		$this->resize($width,$height);
+	}
+
+	function scale($scale) {
+		$width = $this->getWidth() * $scale/100;
+		$height = $this->getHeight() * $scale/100;
+		$this->resize($width,$height);
+	}
+
+	function resize($width,$height) {
+		$new_image = imagecreatetruecolor($width, $height);
+		imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
+		$this->image = $new_image;
+	}      
+
+	function orientation() {
+		if ($this->getWidth() == $this->getHeight()) {
+			return "square";
+		} elseif ($this->getWidth() > $this->getHeight()) {
+			return "landscape";
+		} else {
+			return "portrait";
+		}
+	}
  
  
 }
@@ -1232,207 +1237,210 @@ class rb_agency_image {
 // *************************************************************************************************** //
 // Pagination
 class rb_agency_pagination {
-		/*Default values*/
-		var $total_pages = -1;//items
-		var $limit = NULL;
-		var $target = ""; 
-		var $page = 1;
-		var $adjacents = 2;
-		var $showCounter = false;
-		var $className = "rbpagination";
-		var $parameterName = "page";
-		var $urlF = false;//urlFriendly
-		/*Buttons next and previous*/
-		var $nextT = "Next";
-		var $nextI = "&#187;"; //&#9658;
-		var $prevT = "Previous";
-		var $prevI = "&#171;"; //&#9668;
-		/*****/
-		var $calculate = false;
-		
-		#Total items
-		function items($value){$this->total_pages = (int) $value;}
-		
-		#how many items to show per page
-		function limit($value){$this->limit = (int) $value;}
-		
-		#Page to sent the page value
-		function target($value){$this->target = $value;}
-		
-		#Current page
-		function currentPage($value){$this->page = (int) $value;}
-		
-		#How many adjacent pages should be shown on each side of the current page?
-		function adjacents($value){$this->adjacents = (int) $value;}
-		
-		#show counter?
-		function showCounter($value=""){$this->showCounter=($value===true)?true:false;}
-		#to change the class name of the pagination div
-		function changeClass($value=""){$this->className=$value;}
-		function nextLabel($value){$this->nextT = $value;}
-		function nextIcon($value){$this->nextI = $value;}
-		function prevLabel($value){$this->prevT = $value;}
-		function prevIcon($value){$this->prevI = $value;}
-		#to change the class name of the pagination div
-		function parameterName($value=""){$this->parameterName=$value;}
-		#to change urlFriendly
-		function urlFriendly($value="%"){
-				if(eregi('^ *$',$value)){
-						$this->urlF=false;
-						return false;
-					}
-				$this->urlF=$value;
+
+	/*Default values*/
+	var $total_pages = -1;//items
+	var $limit = NULL;
+	var $target = ""; 
+	var $page = 1;
+	var $adjacents = 2;
+	var $showCounter = false;
+	var $className = "rbpagination";
+	var $parameterName = "page";
+	var $urlF = false;//urlFriendly
+	/*Buttons next and previous*/
+	var $nextT = "Next";
+	var $nextI = "&#187;"; //&#9658;
+	var $prevT = "Previous";
+	var $prevI = "&#171;"; //&#9668;
+	/*****/
+	var $calculate = false;
+	
+	#Total items
+	function items($value){$this->total_pages = (int) $value;}
+	
+	#how many items to show per page
+	function limit($value){$this->limit = (int) $value;}
+	
+	#Page to sent the page value
+	function target($value){$this->target = $value;}
+	
+	#Current page
+	function currentPage($value){$this->page = (int) $value;}
+	
+	#How many adjacent pages should be shown on each side of the current page?
+	function adjacents($value){$this->adjacents = (int) $value;}
+	
+	#show counter?
+	function showCounter($value=""){$this->showCounter=($value===true)?true:false;}
+	#to change the class name of the pagination div
+	function changeClass($value=""){$this->className=$value;}
+	function nextLabel($value){$this->nextT = $value;}
+	function nextIcon($value){$this->nextI = $value;}
+	function prevLabel($value){$this->prevT = $value;}
+	function prevIcon($value){$this->prevI = $value;}
+	#to change the class name of the pagination div
+	function parameterName($value=""){$this->parameterName=$value;}
+	#to change urlFriendly
+	function urlFriendly($value="%"){
+		if(eregi('^ *$',$value)){
+				$this->urlF=false;
+				return false;
 			}
-		
-		var $pagination;
-		function pagination(){}
-		function show(){
-				if(!$this->calculate)
-					if($this->calculate())
-						echo "<div class=\"$this->className\">$this->pagination</div>\n";
-			}
-		function getOutput(){
-				if(!$this->calculate)
-					if($this->calculate())
-						return "<div class=\"$this->className\">$this->pagination</div>\n";
-			}
-		function get_pagenum_link($id) {
-			if (substr($this->target, 0, 9) == "admin.php") {
-				// We are in Admin
-			
-				if (strpos($this->target,'?') === false) {
-					if ($this->urlF) {
-						return str_replace($this->urlF,$id,$this->target);
-					} else {
-						return "$this->target?$this->parameterName=$id";
-					}
-				} else {
-						return "$this->target&$this->parameterName=$id";
-				}
-			
-			} else {
-				// We are in Page
-			
-				preg_match('/[0-9]/', $this->target, $matches, PREG_OFFSET_CAPTURE);
-				if ($matches[0][1] > 0) {
-					return substr($this->target, 0, $matches[0][1]) ."/$id/";
-				} else {
-					return "$this->target/$id/";
-				}
-				
-			} // End Admin/Page Toggle
-		}
-		
-		function calculate(){
-				$this->pagination = "";
-				$this->calculate == true;
-				$error = false;
-				if($this->urlF and $this->urlF != '%' and strpos($this->target,$this->urlF)===false){
-						//Es necesario especificar el comodin para sustituir
-						echo "Especificaste un wildcard para sustituir, pero no existe en el target<br />";
-						$error = true;
-					}elseif($this->urlF and $this->urlF == '%' and strpos($this->target,$this->urlF)===false){
-						echo "Es necesario especificar en el target el comodin % para sustituir el número de página<br />";
-						$error = true;
-					}
-				if($this->total_pages < 0){
-						echo "It is necessary to specify the <strong>number of pages</strong> (\$class->items(1000))<br />";
-						$error = true;
-					}
-				if($this->limit == NULL){
-						echo "It is necessary to specify the <strong>limit of items</strong> to show per page (\$class->limit(10))<br />";
-						$error = true;
-					}
-				if($error)return false;
-				
-				$n = trim('<span>'. $this->nextT.'</span> '.$this->nextI);
-				$p = trim($this->prevI.' <span>'.$this->prevT .'</span>');
-				
-				/* Setup vars for query. */
-				if($this->page) 
-					$start = ($this->page - 1) * $this->limit;      //first item to display on this page
-				else
-					$start = 0;                               		//if no page var is given, set start to 0
-			
-				/* Setup page vars for display. */
-				$prev = $this->page - 1;                            //previous page is page - 1
-				$next = $this->page + 1;                            //next page is page + 1
-				$lastpage = ceil($this->total_pages/$this->limit);  //lastpage is = total pages / items per page, rounded up.
-				$lpm1 = $lastpage - 1;                        		//last page minus 1
-				
-				/* 
-					Now we apply our rules and draw the pagination object. 
-					We're actually saving the code to a variable in case we want to draw it more than once.
-				*/
-				
-				if($lastpage > 1){
-						if($this->page){
-								//anterior button
-								if($this->page > 1)
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link($prev)."\" class=\"pagedir prev\">$p</a>";
-									else
-										$this->pagination .= "<span class=\"pagedir disabled\">$p</span>";
-							}
-						//pages	
-						if ($lastpage < 7 + ($this->adjacents * 2)){//not enough pages to bother breaking it up
-								for ($counter = 1; $counter <= $lastpage; $counter++){
-										if ($counter == $this->page)
-												$this->pagination .= "<span class=\"pageno current\">$counter</span>";
-											else
-												$this->pagination .= "<a class=\"pageno\" href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
-									}
-							}
-						elseif($lastpage > 5 + ($this->adjacents * 2)){//enough pages to hide some
-								//close to beginning; only hide later pages
-								if($this->page < 1 + ($this->adjacents * 2)){
-										for ($counter = 1; $counter < 4 + ($this->adjacents * 2); $counter++){
-												if ($counter == $this->page)
-														$this->pagination .= "<span class=\"current\">$counter</span>";
-													else
-														$this->pagination .= "<a href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
-											}
-										$this->pagination .= "...";
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link($lpm1)."\">$lpm1</a>";
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link($lastpage)."\">$lastpage</a>";
-									}
-								//in middle; hide some front and some back
-								elseif($lastpage - ($this->adjacents * 2) > $this->page && $this->page > ($this->adjacents * 2)){
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link(1)."\">1</a>";
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link(2)."\">2</a>";
-										$this->pagination .= "...";
-										for ($counter = $this->page - $this->adjacents; $counter <= $this->page + $this->adjacents; $counter++)
-											if ($counter == $this->page)
-													$this->pagination .= "<span class=\"current\">$counter</span>";
-												else
-													$this->pagination .= "<a href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
-										$this->pagination .= "...";
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link($lpm1)."\">$lpm1</a>";
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link($lastpage)."\">$lastpage</a>";
-									}
-								//close to end; only hide early pages
-								else{
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link(1)."\">1</a>";
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link(2)."\">2</a>";
-										$this->pagination .= "...";
-										for ($counter = $lastpage - (2 + ($this->adjacents * 2)); $counter <= $lastpage; $counter++)
-											if ($counter == $this->page)
-													$this->pagination .= "<span class=\"current\">$counter</span>";
-												else
-													$this->pagination .= "<a href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
-									}
-							}
-						if($this->page){
-								//siguiente button
-								if ($this->page < $counter - 1)
-										$this->pagination .= "<a href=\"".$this->get_pagenum_link($next)."\" class=\"pagedir next\">$n</a>";
-									else
-										$this->pagination .= "<span class=\"pagedir disabled\">$n</span>";
-									if($this->showCounter)$this->pagination .= "<div class=\"pagedir pagination_data\">($this->total_pages Pages)</div>";
-							}
-					}
-				return true;
-			}
+		$this->urlF=$value;
 	}
+	
+	var $pagination;
+	function pagination(){}
+	function show(){
+		if(!$this->calculate)
+			if($this->calculate())
+				echo "<div class=\"$this->className\">$this->pagination</div>\n";
+	}
+
+	function getOutput(){
+		if(!$this->calculate)
+			if($this->calculate())
+				return "<div class=\"$this->className\">$this->pagination</div>\n";
+	}
+
+	function get_pagenum_link($id) {
+		if (substr($this->target, 0, 9) == "admin.php") {
+			// We are in Admin
+		
+			if (strpos($this->target,'?') === false) {
+				if ($this->urlF) {
+					return str_replace($this->urlF,$id,$this->target);
+				} else {
+					return "$this->target?$this->parameterName=$id";
+				}
+			} else {
+					return "$this->target&$this->parameterName=$id";
+			}
+		
+		} else {
+			// We are in Page
+		
+			preg_match('/[0-9]/', $this->target, $matches, PREG_OFFSET_CAPTURE);
+			if ($matches[0][1] > 0) {
+				return substr($this->target, 0, $matches[0][1]) ."/$id/";
+			} else {
+				return "$this->target/$id/";
+			}
+			
+		} // End Admin/Page Toggle
+	}
+	
+	function calculate(){
+		$this->pagination = "";
+		$this->calculate == true;
+		$error = false;
+		if($this->urlF and $this->urlF != '%' and strpos($this->target,$this->urlF)===false){
+				//Es necesario especificar el comodin para sustituir
+				echo "Especificaste un wildcard para sustituir, pero no existe en el target<br />";
+				$error = true;
+			}elseif($this->urlF and $this->urlF == '%' and strpos($this->target,$this->urlF)===false){
+				echo "Es necesario especificar en el target el comodin % para sustituir el número de página<br />";
+				$error = true;
+			}
+		if($this->total_pages < 0){
+				echo "It is necessary to specify the <strong>number of pages</strong> (\$class->items(1000))<br />";
+				$error = true;
+			}
+		if($this->limit == NULL){
+				echo "It is necessary to specify the <strong>limit of items</strong> to show per page (\$class->limit(10))<br />";
+				$error = true;
+			}
+		if($error)return false;
+		
+		$n = trim('<span>'. $this->nextT.'</span> '.$this->nextI);
+		$p = trim($this->prevI.' <span>'.$this->prevT .'</span>');
+		
+		/* Setup vars for query. */
+		if($this->page) 
+			$start = ($this->page - 1) * $this->limit;      //first item to display on this page
+		else
+			$start = 0;                               		//if no page var is given, set start to 0
+	
+		/* Setup page vars for display. */
+		$prev = $this->page - 1;                            //previous page is page - 1
+		$next = $this->page + 1;                            //next page is page + 1
+		$lastpage = ceil($this->total_pages/$this->limit);  //lastpage is = total pages / items per page, rounded up.
+		$lpm1 = $lastpage - 1;                        		//last page minus 1
+		
+		/* 
+			Now we apply our rules and draw the pagination object. 
+			We're actually saving the code to a variable in case we want to draw it more than once.
+		*/
+		
+		if($lastpage > 1){
+			if($this->page){
+				//anterior button
+				if($this->page > 1)
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link($prev)."\" class=\"pagedir prev\">$p</a>";
+					else
+						$this->pagination .= "<span class=\"pagedir disabled\">$p</span>";
+			}
+			//pages	
+			if ($lastpage < 7 + ($this->adjacents * 2)){//not enough pages to bother breaking it up
+				for ($counter = 1; $counter <= $lastpage; $counter++){
+						if ($counter == $this->page)
+								$this->pagination .= "<span class=\"pageno current\">$counter</span>";
+							else
+								$this->pagination .= "<a class=\"pageno\" href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
+					}
+			}
+			elseif($lastpage > 5 + ($this->adjacents * 2)){//enough pages to hide some
+				//close to beginning; only hide later pages
+				if($this->page < 1 + ($this->adjacents * 2)){
+						for ($counter = 1; $counter < 4 + ($this->adjacents * 2); $counter++){
+								if ($counter == $this->page)
+										$this->pagination .= "<span class=\"current\">$counter</span>";
+									else
+										$this->pagination .= "<a href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
+							}
+						$this->pagination .= "...";
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link($lpm1)."\">$lpm1</a>";
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link($lastpage)."\">$lastpage</a>";
+					}
+				//in middle; hide some front and some back
+				elseif($lastpage - ($this->adjacents * 2) > $this->page && $this->page > ($this->adjacents * 2)){
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link(1)."\">1</a>";
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link(2)."\">2</a>";
+						$this->pagination .= "...";
+						for ($counter = $this->page - $this->adjacents; $counter <= $this->page + $this->adjacents; $counter++)
+							if ($counter == $this->page)
+									$this->pagination .= "<span class=\"current\">$counter</span>";
+								else
+									$this->pagination .= "<a href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
+						$this->pagination .= "...";
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link($lpm1)."\">$lpm1</a>";
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link($lastpage)."\">$lastpage</a>";
+					}
+				//close to end; only hide early pages
+				else {
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link(1)."\">1</a>";
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link(2)."\">2</a>";
+						$this->pagination .= "...";
+						for ($counter = $lastpage - (2 + ($this->adjacents * 2)); $counter <= $lastpage; $counter++)
+							if ($counter == $this->page)
+									$this->pagination .= "<span class=\"current\">$counter</span>";
+								else
+									$this->pagination .= "<a href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
+					}
+			}
+			if($this->page){
+				//siguiente button
+				if ($this->page < $counter - 1)
+						$this->pagination .= "<a href=\"".$this->get_pagenum_link($next)."\" class=\"pagedir next\">$n</a>";
+					else
+						$this->pagination .= "<span class=\"pagedir disabled\">$n</span>";
+					if($this->showCounter)$this->pagination .= "<div class=\"pagedir pagination_data\">($this->total_pages Pages)</div>";
+			}
+		}
+		return true;
+	}
+}
 
 // *************************************************************************************************** //
 // Custom Fields
@@ -1445,9 +1453,9 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 	while ($data3 = mysql_fetch_assoc($results3)) {
 		 if($ProfileGenderShow ==true){
 			if($data3["ProfileCustomShowGender"] == $ProfileGender && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
-					 rb_custom_fields_template($visibility, $ProfileID, $data3);
+				rb_custom_fields_template($visibility, $ProfileID, $data3);
 			} elseif(empty($data3["ProfileCustomShowGender"])) {
-					 rb_custom_fields_template($visibility, $ProfileID, $data3);
+				rb_custom_fields_template($visibility, $ProfileID, $data3);
 			}
 		 } else {
 					 rb_custom_fields_template($visibility, $ProfileID, $data3);
@@ -1490,17 +1498,17 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				if ($rb_agency_option_unittype ==0) { // 0 = Metrics(ft/kg)
 					if($data3['ProfileCustomOptions'] == 1){
 						$measurements_label  ="<em>(cm)</em>";
-					}elseif($data3['ProfileCustomOptions'] == 2){
+					} elseif($data3['ProfileCustomOptions'] == 2) {
 						$measurements_label  ="<em>(kg)</em>";
-					}elseif($data3['ProfileCustomOptions'] == 3){
+					} elseif($data3['ProfileCustomOptions'] == 3) {
 					  	$measurements_label  ="<em>(In Feet/Inches)</em>";
 					}
 				} elseif($rb_agency_option_unittype ==1) { //1 = Imperial(in/lb)
 					if($data3['ProfileCustomOptions'] == 1){
 						$measurements_label  ="<em>(In Inches)</em>";
-					}elseif($data3['ProfileCustomOptions'] == 2){
-					  $measurements_label  ="<em>(In Pounds)</em>";
-					}elseif($data3['ProfileCustomOptions'] == 3){
+					} elseif($data3['ProfileCustomOptions'] == 2) {
+					  	$measurements_label  ="<em>(In Pounds)</em>";
+					} elseif($data3['ProfileCustomOptions'] == 3) {
 					  	$measurements_label  ="<em>(In Feet/Inches)</em>";
 					}
 				}
@@ -1581,11 +1589,10 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 				//echo "<div style=\"width:300px;float:left;\">";
 				foreach($array_customOptions_values as $val){
-					 $xplode = explode(",",$ProfileCustomValue);
-                              if(!empty($val)){
-					 echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
-					 echo "". $val."</label>";
-                               
+					$xplode = explode(",",$ProfileCustomValue);
+					if(!empty($val)){
+						echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
+						echo "". $val."</label>";                               
 					}
 				}     
 
@@ -1594,49 +1601,41 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 				
 				foreach($array_customOptions_values as $val){
-					
-					 echo "<input type=\"radio\" value=\"". $val."\" "; checked($val, $ProfileCustomValue); echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
-					 echo "<span>". $val."</span><br/>";
+					echo "<input type=\"radio\" value=\"". $val."\" "; checked($val, $ProfileCustomValue); echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+					echo "<span>". $val."</span><br/>";
 				}
-			}elseif ($ProfileCustomType == 7) { //Imperial/Metrics
+			} elseif ($ProfileCustomType == 7) { //Imperial/Metrics
 			
-					 if($data3['ProfileCustomOptions']==3){
-							if($rb_agency_option_unittype == 1){
-							  // 
-							  echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">\n";
-							  if (empty($ProfileCustomValue)) {
-								echo "  <option value=\"\">--</option>\n";
-							  }
-							  // 
-							  $i=36;
-							  $heightraw = 0;
-							  $heightfeet = 0;
-							  $heightinch = 0;
-							  while($i<=90)  { 
-								  $heightraw = $i;
-								  $heightfeet = floor($heightraw/12);
-								  $heightinch = $heightraw - floor($heightfeet*12);
-							  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-									  $i++;
-									}
-							  echo " </select>\n";
-							} else {
-							  // 
-							  echo "  <input type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
-							}
-						 } else {
-										   
-								  echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
-										
+				if($data3['ProfileCustomOptions']==3){
+					if($rb_agency_option_unittype == 1){
+						// 
+						echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">\n";
+						if (empty($ProfileCustomValue)) {
+							echo "  <option value=\"\">--</option>\n";
 						}
-						
-			}
-									
-         echo "<div class=\"box\">";
-	
-			
+						// 
+						$i=36;
+						$heightraw = 0;
+						$heightfeet = 0;
+						$heightinch = 0;
+						while($i<=90)  { 
+							$heightraw = $i;
+							$heightfeet = floor($heightraw/12);
+							$heightinch = $heightraw - floor($heightfeet*12);
+							echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+							$i++;
+						}
+						echo " </select>\n";
+					} else {
+					// 
+					echo "  <input type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
+					}
+				} else {
+				echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
+				}						
+			}									
+        echo "<div class=\"box\">";
 	} // End if Empty ProfileCustomID
-    
 }
 
 /*/
@@ -1838,9 +1837,9 @@ function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $ti
 						} else {
 						  	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 						}
-				   } else {
-						   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
-				   }
+				   	} else {
+						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+				   	}
 				  
 				} elseif ($resultCustom->ProfileCustomView == "2") {
 					if ($resultCustom->ProfileCustomType == 7){
@@ -1909,7 +1908,7 @@ function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclud
 			   	} else {
 				   if($echo!="dontecho"){  // so it wont exit if PDF generator request info
 					    if($resultCustom->ProfileCustomTitle.$measurements_label=="Experience"){return "";}
-				   }
+				   	
 					echo "<li id='". $resultCustom->ProfileCustomTitle .$measurements_label."'><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
 			   	}
 			  
@@ -1921,7 +1920,7 @@ function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclud
 				  	} else {
 						echo "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
 				  	}
-			   } else {
+			   	} else {
 					echo "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
 			   }
 			}
@@ -2426,16 +2425,14 @@ function bulk_register_and_send_email(){
             } else {
                 //print_r($user_id);
             }
-        }
-        
+        }        
     }
     
     if($success){
         echo 'SUCCESS';
     }
     
-    die;
-    
+    die;    
 }
 
 function send_email_lp($login, $password, $email){
