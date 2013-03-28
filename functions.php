@@ -1906,11 +1906,10 @@ function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclud
 					   	echo  "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
 					}
 			   	} else {
-				   if($echo!="dontecho"){  // so it wont exit if PDF generator request info
-					    if($resultCustom->ProfileCustomTitle.$measurements_label=="Experience"){return "";}
-				   	
-					echo "<li id='". $resultCustom->ProfileCustomTitle .$measurements_label."'><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
-			   	}
+				   	if($echo!="dontecho"){  // so it wont exit if PDF generator request info
+					    if($resultCustom->ProfileCustomTitle.$measurements_label=="Experience"){return "";}				   	
+						echo "<li id='". $resultCustom->ProfileCustomTitle .$measurements_label."'><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
+			   		}
 			  }
 			} elseif ($resultCustom->ProfileCustomView == "2") {
 				if ($resultCustom->ProfileCustomType == 7){
@@ -1922,7 +1921,7 @@ function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclud
 				  	}
 			   	} else {
 					echo "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
-			   }
+			   	}
 			}
 		}
 	}
