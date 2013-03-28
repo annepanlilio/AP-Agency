@@ -1479,7 +1479,7 @@ class RBAgencyCSVXLSImpoterPlugin {
         $target_path = WP_CONTENT_DIR.'/plugins/rb-agency/file_upload/';
         $target_path = $target_path . basename( $_FILES['source_file']['name']);
         
-        if( strtolower($get_ext[1]) == 'csv' )  /*If uploaded file is a CSV*/
+        if( strtolower($get_ext) == 'csv' )  /*If uploaded file is a CSV*/
         {
             if(move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path))
             {
