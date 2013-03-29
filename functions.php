@@ -2481,6 +2481,110 @@ function read_email_content($ret = false){
 }
 
 /*
+ * Function to retrieve
+ * featured widget profile
+ *
+ * @parm: none
+ * @return:  		
+ * Profile Name = array[0];
+ * Gender = array[1];
+ * Custom Fields = array[2];
+ * Gallery Folder = array[3];
+ * Profile Pic URL = array[4];
+ */
+function featured_homepage(){
+	            
+				global $wpdb;
+				
+				/*
+				 * Get details for profile
+				 * featured
+				 */
+				$count = 1;
+				 
+				$q = "SELECT profile.*,
+		
+				(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
+				 WHERE profile.ProfileID = media.ProfileID 
+				 AND media.ProfileMediaType = \"Image\" 
+				 AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL 
+				
+				 FROM ". table_agency_profile ." profile 
+				 WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."
+				 AND profile.ProfileIsFeatured = 1  
+				 ORDER BY RAND() LIMIT 0,$count";						
+
+				$r = mysql_query($q);
+				
+				$countList = mysql_num_rows($r);
+				
+				$array_data = array();
+				
+				while ($dataList = mysql_fetch_assoc($r)) {
+					
+					/*
+					 * Get From Custom Fields
+					 * per profile
+					 */
+					$get_custom = 'SELECT * FROM ' . table_agency_customfield_mux .
+								  ' WHERE ProfileID = ' . $dataList["ProfileID"]; 
+								  
+					$result = mysql_query($get_custom);
+					
+					$desc_list = array('shoes', 'eyes', 'shoes', 'skin');
+					
+					$a_male = array('height','weight','waist', 'skin tone',
+									'eye color',  'shoe size', 'shirt');
+					
+					$array_male = array();
+					$array_female = array();
+
+					$a_female = array('bust', 'waist', 'hips', 'dress',
+										  'shoe size','hair', 'eye color');
+                    
+					$name = ucfirst($dataList["ProfileContactNameFirst"]) ." ". strtoupper($dataList["ProfileContactNameLast"][0]); ;
+					
+					while ($custom = mysql_fetch_assoc($result)) {
+                         
+						 $get_title = 'SELECT ProfileCustomTitle FROM ' . table_agency_customfields .
+						 ' WHERE ProfileCustomID = ' . $custom["ProfileCustomID"] ; 
+						 
+						 $result2 = mysql_query($get_title);
+						 
+						 $custom2 = mysql_fetch_assoc($result2);
+						 
+						 if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "male"){
+							 
+							 if(in_array(strtolower($custom2['ProfileCustomTitle']),$a_male)){
+								 $array_male[$custom2['ProfileCustomTitle']] = $custom['ProfileCustomValue'];
+							 }
+						 
+						 } else if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "female"){
+							 
+							 if(in_array(strtolower($custom2['ProfileCustomTitle']),$a_female)){
+								 $array_female[$custom2['ProfileCustomTitle']] = $custom['ProfileCustomValue'];
+							 }				 
+						 }
+					
+					}
+					
+					if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "male"){
+						
+						$array_data = array($name,'male',$array_male,$dataList["ProfileGallery"],$dataList["ProfileMediaURL"]);
+						
+					} else if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "female"){
+						
+						$array_data = array($name,'female',$array_female,$dataList["ProfileGallery"],$dataList["ProfileMediaURL"]);
+								 
+					}
+					
+				}
+	
+	return $array_data;
+	
+}
+
+/*
 // Phel: Test Content
 function replace_content_on_the_fly($text){
 	$text ="sample";
