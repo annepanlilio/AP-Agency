@@ -208,7 +208,7 @@ while ($data = mysql_fetch_array($results)) {
 // GET HEADER  
 	get_header();
 
-	$LayoutType = "";
+/*	$LayoutType = "";
 	if ($rb_agency_option_profilelist_sidebar) {
 		if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
 			echo "	<div id=\"profile-sidebar\">\n";
@@ -217,6 +217,7 @@ while ($data = mysql_fetch_array($results)) {
 			echo "	</div>\n";
 		 }
 	}
+*/
 	
 	echo "<div id=\"container\" "; if ($rb_agency_option_profilelist_sidebar==0) { echo "class=\"one-column\""; } echo">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";

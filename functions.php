@@ -1125,9 +1125,9 @@ function rb_agency_profilesearch($atts, $content = NULL){
 	
 	if ( ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 	 	$isSearchPage = 1;
-		echo "<div id=\"profile-search-form-embed\">\n";
+		//echo "<div id=\"profile-search-form-embed\">\n";
 			include("theme/include-profile-search.php"); 	
-		echo "</div>\n";
+		//echo "</div>\n";
 	} else {
 		include("theme/include-login.php"); 	
 	}
