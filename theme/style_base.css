@@ -64,6 +64,14 @@
 	padding: 3px;
 }
 
+/* Profile Results Casting */
+#profile-results .profile-list-layout0 .castingcart {float:right; }
+#profile-results .profile-list-layout0 .favorite {float:left;  }
+#profile-results .profile-list-layout0 .castingcart a { display: inline-block; width: 13px; height: 12px; background: url(../style/icon-sprite.png) no-repeat; background-position: 0 -16px; }
+#profile-results .profile-list-layout0 .castingcart a.saved_castingcart { background-position: 0 0; }
+#profile-results .profile-list-layout0 .favorite a { display: inline-block; width: 13px; height: 12px; background: url(../style/icon-sprite.png) no-repeat; background-position: 0 -48px; }
+#profile-results .profile-list-layout0 .favorite a.favorited { background-position: 0 -31px; }
+
 /* Category List: /profile-category/ (view-category.php) */
 #profile-category { }
 #profile-category h1.profile-category-title { }
