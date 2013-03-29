@@ -22,7 +22,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	
    	if ($profilesearch_layout == "condensed" || $profilesearch_layout == "simple") {
 	
-		echo "		<div id=\"profile-search-form-condensed\" class=\"search-form\">\n";
+		echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form\">\n";
 		echo "        	<form method=\"post\" id=\"search-form-condensed\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
 		echo "        		<div><input type=\"hidden\" name=\"action\" value=\"search\" /></div>\n";
 
@@ -82,7 +82,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "		</div>\n";
    } else {
 	   // Advanced
-		echo "  <form method=\"post\" id=\"search-form-advanced\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
+		echo "  <form method=\"post\" id=\"search-form-advanced\" action=\"". get_bloginfo("wpurl") ."/profile-search/\" class=\"rbsearch-form\">\n";
 		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" />\n";
 		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
 		

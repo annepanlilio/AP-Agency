@@ -1,13 +1,3 @@
-<style>
-.casting-bottom{ clear:both; float:left; width:100%; height:20px; background:#eeeeee; }
-.save_fav{ margin:4px 5px; float:left; width: 13px; height: 12px; background: url("<?php echo get_bloginfo('url')?>/wp-content/plugins/rb-agency/style/icon-sprite.png") no-repeat 0px -50px;}
-.save_cart{ margin:4px 5px;  float:right; width: 13px; height: 12px; background: url("<?php echo get_bloginfo('url')?>
-/wp-content/plugins/rb-agency/style/icon-sprite.png") no-repeat 0px -18px;}
-.fav_bg{background: url("<?php echo get_bloginfo('url')?>/wp-content/plugins/rb-agency/style/icon-sprite.png") no-repeat 0px -68px !important; }
-.cart_bg{background: url("<?php echo get_bloginfo('url')?>/wp-content/plugins/rb-agency/style/icon-sprite.png") no-repeat 0px -34px !important; }
-#rblayout-three .row-two #subMenuTab a { padding: 10px 14px !important;}
-</style>
-
 <script type="text/javascript">
 
 jQuery(document).ready(function(){

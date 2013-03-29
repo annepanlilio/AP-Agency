@@ -80,7 +80,7 @@ if (is_user_logged_in()) {
 	get_currentuserinfo();
 	$curauth = get_user_by('id', $current_user->ID);
 
-	echo "<div id=\"dashboard\">\n";
+	echo "<div id=\"rbdashboard\">\n";
 	echo "<h1>Welcome ". $current_user->user_firstname ."</h1>\n";
 
   // Return them where we found them 
@@ -125,22 +125,24 @@ if (is_user_logged_in()) {
 	echo "  </div>\n";
   */
 if (isset($curauth->user_login)) {
-	echo "  <div id=\"userinfo\" style=\"float: right; width: 250px; margin-right: 30px;\">\n";
-	echo "		<h2>Profile</h2>\n";
-	echo "		Username: <strong>" . $curauth->user_login . "</strong><br />\n";
-	echo "		Company: <strong>" . $curauth->user_company . "</strong><br />\n";
-	echo "		First Name: <strong>" . $curauth->user_firstname . "</strong><br />\n";
-	echo "		Last Name: <strong>" . $curauth->user_lastname . "</strong><br />\n";
-	echo "		User Email: <strong>" . $curauth->user_email . "</strong><br />\n";
-	echo "		Work Phone: <strong>" . $curauth->phone_work . "</strong><br />\n";
-	echo "		Cell Phone: <strong>" . $curauth->phone_cell . "</strong><br />\n";
+	echo "  <div id=\"profile-info\">\n";
+	echo "		<h3>Profile</h3>\n";
+	echo "		<ul>\n";
+	echo "		<li>Username: <strong>" . $curauth->user_login . "</strong></li>\n";
+	echo "		<li>Company: <strong>" . $curauth->user_company . "</strong></li>\n";
+	echo "		<li>First Name: <strong>" . $curauth->user_firstname . "</strong></li>\n";
+	echo "		<li>Last Name: <strong>" . $curauth->user_lastname . "</strong></li>\n";
+	echo "		<li>User Email: <strong>" . $curauth->user_email . "</strong></li>\n";
+	echo "		<li>Work Phone: <strong>" . $curauth->phone_work . "</strong></li>\n";
+	echo "		<li>Cell Phone: <strong>" . $curauth->phone_cell . "</strong></li>\n";
+	echo "		</ul>\n";
 	//echo "User level: " . $current_user->user_level . "<br />\n";
 	//echo "User display name: " . $current_user->display_name . "<br />\n";
 	echo "		<h4><a href=\"". get_bloginfo("url") ."/wp-admin/profile.php\">Edit Information</a></h4>\n";
 	echo "		<h4><a href=\"" . wp_logout_url(get_permalink()) . "\">Logout</a></h4>\n";
 	echo "  </div>\n";
 	
-	echo "  <div id=\"search\" style=\"float: left; width: 500px;\">\n";
+	echo "  <div id=\"search\">\n";
 	echo "    <h2>Search Database</h2>\n";
 	include ("include-profile-search.php"); 	
 	echo "  </div>\n";

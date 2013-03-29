@@ -1125,9 +1125,9 @@ function rb_agency_profilesearch($atts, $content = NULL){
 	
 	if ( ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 	 	$isSearchPage = 1;
-		echo "<div id=\"profile-search-form-embed\">\n";
+		//echo "<div id=\"profile-search-form-embed\">\n";
 			include("theme/include-profile-search.php"); 	
-		echo "</div>\n";
+		//echo "</div>\n";
 	} else {
 		include("theme/include-login.php"); 	
 	}
@@ -1906,10 +1906,11 @@ function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclud
 					   	echo  "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
 					}
 			   	} else {
-				   	if($echo!="dontecho"){  // so it wont exit if PDF generator request info
-					    if($resultCustom->ProfileCustomTitle.$measurements_label=="Experience"){return "";}				   	
-						echo "<li id='". $resultCustom->ProfileCustomTitle .$measurements_label."'><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
-			   		}
+				   if($echo!="dontecho"){  // so it wont exit if PDF generator request info
+					    if($resultCustom->ProfileCustomTitle.$measurements_label=="Experience"){return "";}
+				   	
+					echo "<li id='". $resultCustom->ProfileCustomTitle .$measurements_label."'><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
+			   	}
 			  }
 			} elseif ($resultCustom->ProfileCustomView == "2") {
 				if ($resultCustom->ProfileCustomType == 7){
@@ -1921,7 +1922,7 @@ function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclud
 				  	}
 			   	} else {
 					echo "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
-			   	}
+			   }
 			}
 		}
 	}
