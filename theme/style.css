@@ -236,10 +236,8 @@
 
 /* Profile Layout with Thumbnails (include-profile-layout0.php) */
 #rblayout-zero { overflow: hidden; }
-#rblayout-zero #photo { float: left; width: 33%;  }
-#rblayout-zero #photo .multiple { float: left; margin: 0 10px 10px 0; overflow: hidden; }
-#rblayout-zero #photo .multiple img { max-width: 130px; border: 1px solid #666; padding: 3px; max-height: 180px; }
-#rblayout-zero #photo .single img { max-width: 260px; }
+#rblayout-zero #photos .photo { width: 120px; height: 150px; overflow: hidden; float: left; margin: 0 15px 15px 0;}
+#rblayout-zero #photos .photo img { float: left; }
 
 #rblayout-zero #movie { float: right; }
 #rblayout-zero .experience { float: left; clear: both; margin: 20px 0 0 0; line-height: 18px; font-size: 13px; text-indent: 30px; }
