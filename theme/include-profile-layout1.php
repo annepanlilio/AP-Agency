@@ -3,7 +3,7 @@
 Profile View with Thumbnails and Primary Image
 */
 	echo "<div id=\"profile\">\n";
-	echo " <div id=\"profile-layout-one\">\n";
+	echo " <div id=\"rblayout-one\">\n";
 	echo "	<div id=\"name\">\n";
 	echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
 		
