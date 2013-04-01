@@ -139,6 +139,19 @@ echo $cartArray;
 			$ProfileLocationCity = $_GET['ProfileLocationCity'];
 			$filter .= " AND profile.ProfileLocationCity='". $ProfileLocationCity ."'";
 		}
+        
+		// Location state
+		if (isset($_GET['ProfileLocationState']) && !empty($_GET['ProfileLocationState'])){
+			$ProfileLocationState = $_GET['ProfileLocationState'];
+			$filter .= " AND profile.ProfileLocationState='". $ProfileLocationState ."'";
+		}
+
+		// Location Zip
+		if (isset($_GET['ProfileLocationZip']) && !empty($_GET['ProfileLocationZip'])){
+			$ProfileLocationZip = $_GET['ProfileLocationZip'];
+			$filter .= " AND profile.ProfileLocationZip='". $ProfileLocationZip ."'";
+		}
+		
 		// Type
 		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
 			$ProfileType = $_GET['ProfileType'];
@@ -191,6 +204,7 @@ echo $cartArray;
 		}
 		   $filterDropdown = array();
             
+        $filter2 = "";  
 		foreach($_GET as $key => $val){
                         
                       if (substr($key,0,15) == "ProfileCustomID") {
@@ -730,6 +744,8 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        <th scope=\"row\">". __("Classification", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileType\" id=\"ProfileType\">\n";               
 		echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
+
+										 
 										$profileDataTypes = mysql_query("SELECT * FROM ". table_agency_data_type ."");
 										while ($dataType = mysql_fetch_array($profileDataTypes)) {
 											echo "<option value=\"". $dataType["DataTypeID"] ."\" ".selected($_SESSION['ProfileType'],$dataType["DataTypeID"],false).">". $dataType["DataTypeTitle"] ."</option>";
@@ -770,20 +786,71 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 	
 
 		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Location", rb_agency_TEXTDOMAIN) . ":</th>\n";
+		echo "				        <th scope=\"row\">". __("City", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileLocationCity\" id=\"ProfileLocationCity\">\n";               
-		echo "							<option value=\"\">". __("Any Location", rb_agency_TEXTDOMAIN) . "</option>";
-										$profileLocations = mysql_query("SELECT DISTINCT ProfileLocationCity, ProfileLocationState FROM ". table_agency_profile ."");
-										while ($dataLocation = mysql_fetch_array($profileLocations)) {
-										  	if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity']) && $_SESSION['ProfileLocationCity'] == $dataLocation["ProfileLocationCity"]) {
-												echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
-										  	} else {
-												echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
-										  	}
+		echo "							<option value=\"\">". __("Any City", rb_agency_TEXTDOMAIN) . "</option>";
+										  /*
+										   * lets get the variables first for use
+										   * in city 
+										   */
+										$profilecity = mysql_query("SELECT DISTINCT ProfileLocationCity FROM ". table_agency_profile ."");
+										
+										while ($dataLocation = mysql_fetch_array($profilecity)) {
+					                          if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity']) && $_SESSION['ProfileLocationCity'] == $dataLocation["ProfileLocationCity"]) {
+										  	     echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+										      } else {
+										   	     echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+										      }
 										}
+										
 		echo "				        	</select>\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
+
+		echo "				    <tr>\n";
+		echo "				        <th scope=\"row\">". __("State", rb_agency_TEXTDOMAIN) . ":</th>\n";
+		echo "				        <td><select name=\"ProfileLocationState\" id=\"ProfileLocationState\">\n";               
+		echo "							<option value=\"\">". __("Any State", rb_agency_TEXTDOMAIN) . "</option>";
+										  /*
+										   * lets get the variables first for use
+										   * in state
+										   */
+										$profilestate = mysql_query("SELECT DISTINCT ProfileLocationState FROM ". table_agency_profile ."");
+										
+										while ($dataLocation = mysql_fetch_array($profilestate)) {
+					                          if (isset($_GET['ProfileLocationState']) && !empty($_GET['ProfileLocationState']) && $_SESSION['ProfileLocationState'] == $dataLocation["ProfileLocationState"]) {
+										  	     echo "<option value=\"". $dataLocation["ProfileLocationState"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationState"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+										      } else {
+										   	     echo "<option value=\"". $dataLocation["ProfileLocationState"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationState"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+										      }
+										}
+										
+		echo "				        	</select>\n";
+		echo "				        </td>\n";
+		echo "				    </tr>\n";
+
+		echo "				    <tr>\n";
+		echo "				        <th scope=\"row\">". __("Zip", rb_agency_TEXTDOMAIN) . ":</th>\n";
+		echo "				        <td><select name=\"ProfileLocationZip\" id=\"ProfileLocationZip\">\n";               
+		echo "							<option value=\"\">". __("Any Zip", rb_agency_TEXTDOMAIN) . "</option>";
+										  /*
+										   * lets get the variables first for use
+										   * in sip
+										   */
+										$profilestate = mysql_query("SELECT DISTINCT ProfileLocationZip FROM ". table_agency_profile ."");
+										
+										while ($dataLocation = mysql_fetch_array($profilestate)) {
+					                          if (isset($_GET['ProfileLocationZip']) && !empty($_GET['ProfileLocationZip']) && $_SESSION['ProfileLocationZip'] == $dataLocation["ProfileLocationZip"]) {
+										  	     echo "<option value=\"". $dataLocation["ProfileLocationZip"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationZip"]) .", ". strtoupper($dataLocation["ProfileLocationZip"]) ."</option>";
+										      } else {
+										   	     echo "<option value=\"". $dataLocation["ProfileLocationZip"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationZip"]) .", ". strtoupper($dataLocation["ProfileLocationZip"]) ."</option>";
+										      }
+										}
+										
+		echo "				        	</select>\n";
+		echo "				        </td>\n";
+		echo "				    </tr>\n";
+
 
 			//rb_custom_fields(0, $ProfileID, $ProfileGender,false);
 			$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder, ProfileCustomView, ProfileCustomShowGender, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin FROM ". table_agency_customfields ." WHERE ProfileCustomView IN('0','1')  AND ProfileCustomID != 39 AND ProfileCustomID != 48 ORDER BY ProfileCustomOrder ASC";
