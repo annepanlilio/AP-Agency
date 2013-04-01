@@ -1747,7 +1747,6 @@ elseif ($ConfigID == 7) {
 							<td style=\"font-size:13px;\">
 							<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"1\"  /> User must be logged in to see It &nbsp;<br/>
 							<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"2\" /> User must be an admin to see It<br/>
-							<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"3\" /> Visible to Public
 							</td>
 							<td style=\"font-size:13px;\">
 						   
@@ -1896,7 +1895,6 @@ elseif ($ConfigID == 7) {
 													
 										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')." /> User must be logged in to see It &nbsp;<br/>
 										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"2\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an admin to see It<br/>
-										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"3\" ". ($data1["ProfileCustomShowAdmin"] == 0 && $data1["ProfileCustomShowLogged"] == 0 ? 'checked=\"checked\"':'')." /> Visible to Public
 
 													</td>
 													<td style=\"font-size:13px;\">
