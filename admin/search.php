@@ -744,11 +744,19 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        <th scope=\"row\">". __("Classification", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileType\" id=\"ProfileType\">\n";               
 		echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
-
+		                                /* 
+										 * set filter from theis array
+										 * to block the following profile types 
+										 * in search
+										 */
+										
+										$filter = array( 'agents', 'agent', 'clients', 'client', 'producer', 'producers' );
 										 
 										$profileDataTypes = mysql_query("SELECT * FROM ". table_agency_data_type ."");
 										while ($dataType = mysql_fetch_array($profileDataTypes)) {
-											echo "<option value=\"". $dataType["DataTypeID"] ."\" ".selected($_SESSION['ProfileType'],$dataType["DataTypeID"],false).">". $dataType["DataTypeTitle"] ."</option>";
+											if(!in_array(strtolower($dataType["DataTypeTitle"]),$filter)){
+												echo "<option value=\"". $dataType["DataTypeID"] ."\" ".selected($_SESSION['ProfileType'],$dataType["DataTypeID"],false).">". $dataType["DataTypeTitle"] ."</option>";
+											}
 										}
 		echo "				        	</select>\n";
 		echo "				        </td>\n";
