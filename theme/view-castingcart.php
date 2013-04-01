@@ -117,7 +117,7 @@ get_header(); ?>
 	echo "<div id=\"primary\" class=\"eight column\">\n";
 	echo "    <div id=\"content\" role=\"main\" >\n";
 	
-		echo "<div id=\"profile-category\">\n";
+		echo "<div id=\"rbcasting-cart\">\n";
 		echo "	<div class=\"clear line\"></div>\n";
 		?>
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
