@@ -1790,11 +1790,11 @@ elseif ($ConfigID == 7) {
 						$result = mysql_query($get_types);
 						
 						while ( $typ = mysql_fetch_array($result)){
-						    
-						     echo '<input type="checkbox" name="ProfileType'.trim($typ['DataTypeTitle']).'" '. 
-							      'value="'.$typ['DataTypeTitle'].'"  />&nbsp;'.  
-							       $typ['DataTypeTitle'].'<br/>';
-							
+										$t = trim($typ['DataTypeTitle']);
+										echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
+											 ($$t == true ? 'checked="checked"':''). '  />&nbsp;'.
+											 trim($typ['DataTypeTitle'])
+											 .'&nbsp;<br/>';
 						} 
 					    echo	   "</td>
 									<td style=\"font-size:13px;\">
