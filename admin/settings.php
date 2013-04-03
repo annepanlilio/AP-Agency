@@ -1595,6 +1595,11 @@ elseif ($ConfigID == 7) {
 					$delete = "DELETE FROM " . table_agency_customfields . " WHERE ProfileCustomID = \"". $ProfileCustomID ."\"";
 					$results = $wpdb->query($delete);
 					
+					// Rmove from Custom Types
+					$delete_sql = "DELETE FROM " . table_agency_customfields_types . 
+					" WHERE ProfileCustomID='$ProfileCustomID'";
+					$deleted = mysql_query($delete_sql) or die(mysql_error());
+					
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 	                  
 				} // while
@@ -1621,6 +1626,11 @@ elseif ($ConfigID == 7) {
 			// Remove Record
 			$delete = "DELETE FROM " . table_agency_customfields . " WHERE ProfileCustomID = \"". $ProfileCustomID ."\"";
 			$results = $wpdb->query($delete);
+
+			// Rmove from Custom Types
+			$delete_sql = "DELETE FROM " . table_agency_customfields_types . 
+			" WHERE ProfileCustomID='$ProfileCustomID'";
+			$deleted = mysql_query($delete_sql) or die(mysql_error());
 			
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 			echo "<h3 style=\"width:430px;\">". sprintf(__("Create New  %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	
@@ -1836,6 +1846,25 @@ elseif ($ConfigID == 7) {
 					$count1 = mysql_num_rows($results1);
 					$pos = 0;
 					while ($data1 = mysql_fetch_array($results1)) {
+						
+					
+						//get record from Clients to edit
+						$select_sql = "Select  * FROM " . table_agency_customfields_types . 
+						" WHERE ProfileCustomID= " . $data1["ProfileCustomID"];
+						
+						$select_sql = mysql_query($select_sql) or die(mysql_error());
+						
+						$fetch_type = mysql_fetch_assoc($select_sql);
+						
+						$array_type = explode(",",$fetch_type['ProfileCustomTypes']);
+						
+						$a = array();
+						
+						foreach($array_type as $t_arr){
+							 $$t_arr = true;
+							
+						}
+						
 						$pos ++;			
 							$query2 = "SELECT * FROM ". table_agency_customfields_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".$ProfileID."";
 							$results2 = mysql_query($query2);
