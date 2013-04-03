@@ -1138,48 +1138,80 @@ function rb_display_list() {
         $dir = "asc";
     }
 
-    // Filter
-    $filter = "WHERE profile.ProfileIsActive IN (0,1,4) ";
-    if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])) {
-        if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) {
-            $selectedNameFirst = $_GET['ProfileContactNameFirst'];
-            $query .= "&ProfileContactNameFirst=" . $selectedNameFirst . "";
-            $filter .= " AND profile.ProfileContactNameFirst LIKE '" . $selectedNameFirst . "%'";
-        }
-        if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])) {
-            $selectedNameLast = $_GET['ProfileContactNameLast'];
-            $query .= "&ProfileContactNameLast=" . $selectedNameLast . "";
-            $filter .= " AND profile.ProfileContactNameLast LIKE '" . $selectedNameLast . "%'";
-        }
-    }
-    if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity'])) {
-        $selectedCity = $_GET['ProfileLocationCity'];
-        $query .= "&ProfileLocationCity=" . $selectedCity . "";
-        $filter .= " AND profile.ProfileLocationCity='" . $selectedCity . "'";
-    }
-    if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])) {
-        $selectedType = $_GET['ProfileType'];
-        $query .= "&ProfileType=" . $selectedType . "";
-        $filter .= " AND profiletype.DataTypeID='" . $selectedType . "'";
-    }
-    if(isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
-        $selectGender = $_GET['ProfileGender'];
-        $filter .= " AND profile.ProfileGender = '" . $selectGender . "'";
-    }
-
-    // Fix this so that inactive searches "0"
-    // can be filtered
-    if ($_GET['ProfileVisible'] == "all") {
-        
-    } elseif (isset($_GET['ProfileVisible'])) {
-        if($_GET['ProfileVisible'] != ''){
-            $selectedVisible = $_GET['ProfileVisible'];
-            $query .= "&ProfileVisible=" . $selectedVisible . "";
-            $filter .= " AND profile.ProfileIsActive='" . $selectedVisible . "'";
-        }
-    } else {
-        $filter .= " AND profile.ProfileIsActive IN (0,1,4) ";
-    }
+      // Filter
+      $filter = "WHERE ";
+        if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
+        	if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
+			$selectedNameFirst = $_GET['ProfileContactNameFirst'];
+			$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
+			
+			  if(strpos($filter,'profile') > 0){
+					$filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
+			  } else {
+					$filter .= " profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
+			  }
+			}
+        	if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
+			$selectedNameLast = $_GET['ProfileContactNameLast'];
+			$query .= "&ProfileContactNameLast=". $selectedNameLast ."";
+			    if(strpos($filter,'profile') > 0){
+			    	   $filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+				} else {
+					   $filter .= " profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+				}
+			}
+		}
+		if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity'])){
+			$selectedCity = $_GET['ProfileLocationCity'];
+			$query .= "&ProfileLocationCity=". $selectedCity ."";
+			if(strpos($filter,'profile') > 0){
+					$filter .= " AND profile.ProfileLocationCity='". $selectedCity ."'";
+			} else {
+					$filter .= " profile.ProfileLocationCity='". $selectedCity ."'";
+			}
+		}
+		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
+			$selectedType = $_GET['ProfileType'];
+			$query .= "&ProfileType=". $selectedType ."";
+			if(strpos($filter,'profile') > 0){
+			  	  $filter .= " AND profiletype.DataTypeID='". $selectedType ."'";
+			} else {
+			  	  $filter .= " profiletype.DataTypeID='". $selectedType ."'";
+			}
+		}
+		if (isset($_GET['ProfileVisible'])){
+			$selectedVisible = $_GET['ProfileVisible'];
+			$query .= "&ProfileVisible=". $selectedVisible ."";
+			if($_GET['ProfileVisible'] == ""){
+				if(strpos($filter,'profile') > 0){
+					   $filter .= " AND profile.ProfileIsActive IN (0,1,4) ";			
+				} else {
+					   $filter .= " profile.ProfileIsActive IN (0,1,4) ";			
+				}
+			} else {
+					if(strpos($filter,'profile') > 0){
+							$filter .= " AND profile.ProfileIsActive = '". $selectedVisible ."'" ;
+					} else {
+							$filter .= " profile.ProfileIsActive = '". $selectedVisible . "'" ;
+					}
+			}
+		}
+		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
+			$ProfileGender = (int)$_GET['ProfileGender'];
+			if($ProfileGender)
+			  if(strpos($filter,'profile') > 0){
+					$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+			  } else {
+				  	$filter .= " profile.ProfileGender='".$ProfileGender."'";
+			  }
+		}
+		
+		/*
+		 * Trap WHERE 
+		 */
+		if(!strpos($filter, 'profile') > 0){
+				$filter = "";
+		}
 
     //Paginate
     $items = mysql_num_rows(mysql_query("SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "")); // number of total rows in the database
