@@ -1028,7 +1028,17 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 										foreach($array_customOptions_values as $val){
 
-											if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']])){ 
+											/*
+											 * double check this if this is array and its index 0 is empty
+											 * then force set it to empty so it will not push through
+											 */
+											if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]) && is_array($_SESSION["ProfileCustomID". $data1['ProfileCustomID']])){ 
+												if($_SESSION["ProfileCustomID". $data1['ProfileCustomID']][0] == ""){
+													$_SESSION["ProfileCustomID". $data1['ProfileCustomID']] = "";
+												}
+											}
+											
+											if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] != ""){ 
 
 												$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 
@@ -1052,7 +1062,18 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									   	$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										   
 										foreach($array_customOptions_values as $val){
-											if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] !=""){ 
+											
+											/*
+											 * double check this if this is array and its index 0 is empty
+											 * then force set it to empty so it will not push through
+											 */
+											if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]) && is_array($_SESSION["ProfileCustomID". $data1['ProfileCustomID']])){ 
+												if($_SESSION["ProfileCustomID". $data1['ProfileCustomID']][0] == ""){
+													$_SESSION["ProfileCustomID". $data1['ProfileCustomID']] = "";
+												}
+											}
+											
+											if(isset($_SESSION["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] != ""){ 
 
 												$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 
