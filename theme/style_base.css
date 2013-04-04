@@ -80,18 +80,22 @@
   width: 13px;
   height: 12px;
   display: inline-block;
-  background-position: 0 -16px;
   background: url(../style/icon-sprite.png) no-repeat;
 }
 #profile-results .rbprofile-list .castingcart a.saved_castingcart {
   background-position: 0 0;
 }
+#profile-results .rbprofile-list .castingcart a.save_castingcart {
+  background-position: 0 -16px;
+}
 #profile-results .rbprofile-list .favorite a {
   width: 13px;
   height: 12px;
   display: inline-block;
-  background-position: 0 -48px;
   background: url(../style/icon-sprite.png) no-repeat;  
+}
+#profile-results .rbprofile-list .favorite a.save_favorite {
+	background-position: 0 -48px;
 }
 #profile-results .rbprofile-list .favorite a.favorited {
   background-position: 0 -31px;
@@ -244,6 +248,7 @@
 
 /* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
 #rblayout-one { overflow: hidden; }
+#rblayout-one #photos { padding: 15px; }
 #rblayout-one #photos .multiple { float: left; margin: 0 10px 0 0; }
 #rblayout-one #photos img { height: 150px; float: left; }
 #rblayout-one #photos #stats,

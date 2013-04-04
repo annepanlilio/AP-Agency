@@ -80,18 +80,22 @@
   width: 13px;
   height: 12px;
   display: inline-block;
-  background-position: 0 -16px;
   background: url(../style/icon-sprite.png) no-repeat;
 }
 #profile-results .rbprofile-list .castingcart a.saved_castingcart {
   background-position: 0 0;
 }
+#profile-results .rbprofile-list .castingcart a.save_castingcart {
+  background-position: 0 -16px;
+}
 #profile-results .rbprofile-list .favorite a {
   width: 13px;
   height: 12px;
   display: inline-block;
-  background-position: 0 -48px;
   background: url(../style/icon-sprite.png) no-repeat;  
+}
+#profile-results .rbprofile-list .favorite a.save_favorite {
+	background-position: 0 -48px;
 }
 #profile-results .rbprofile-list .favorite a.favorited {
   background-position: 0 -31px;
