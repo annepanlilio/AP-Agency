@@ -775,7 +775,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    </tr>\n";
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
+		echo "				        <td class=\"multi\">\n";               
 		echo "				       <div> <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "						<input type=\"text\" class=\"min_max\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" />";
 		echo "						</div>";
@@ -794,7 +794,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 	
 
 		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("City", rb_agency_TEXTDOMAIN) . ":</th>\n";
+		echo "				        <th scope=\"row\">". __("Location", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileLocationCity\" id=\"ProfileLocationCity\">\n";               
 		echo "							<option value=\"\">". __("Any City", rb_agency_TEXTDOMAIN) . "</option>";
 										  /*
@@ -854,11 +854,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 										   	     echo "<option value=\"". $dataLocation["ProfileLocationZip"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationZip"]) .", ". strtoupper($dataLocation["ProfileLocationZip"]) ."</option>";
 										      }
 										}
-										
 		echo "				        	</select>\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
-
 
 			//rb_custom_fields(0, $ProfileID, $ProfileGender,false);
 			$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder, ProfileCustomView, ProfileCustomShowGender, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin FROM ". table_agency_customfields ." WHERE ProfileCustomView IN('0','1')  AND ProfileCustomID != 39 AND ProfileCustomID != 48 ORDER BY ProfileCustomOrder ASC";
@@ -913,7 +911,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 					}
 					
 			 }
- 	 echo " 				    <th scope=\"row\>\n";
+ 	 echo " 				    <th scope=\"row\">\n";
 			                                     if($ProfileCustomType==7){
 			 echo "				       <div class=\"label\">". $data1['ProfileCustomTitle'].$measurements_label."</div> \n";
 									 }else{
@@ -922,13 +920,13 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 	 								 }
     
     			echo  "			</th>		";
-			echo  "			<td>";
+			echo  "			<td class=\"multi\">";
 			
 
 					if(in_array($data1['ProfileCustomTitle'], $cusFields)) { //used alternative inputs for custom fields defined on top of this page
-						echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+						echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 						echo "<input class=\"min_max\" type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>\n";
-						echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+						echo "<div><label for=\"ProfileCustomLabel_min\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 						echo "<input class=\"min_max\"  type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_max\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
 					}else{
 			
@@ -1121,15 +1119,13 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 											// for other search
 											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-											."_min\">Min:</label></div><div> <input value=\""
+											."_min\">Min</label><input value=\""
 											.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 											."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
-											.$data1['ProfileCustomID']."[]\" />";
+											.$data1['ProfileCustomID']."[]\" /></div>";
 
-											echo "<br/>";
-
-											echo "<label for=\"ProfileCustomID".$data1['ProfileCustomID']
-											."_max\">Max:</label></div><div> <input value=\"".$max_val
+											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
+											."_max\">Max</label><input value=\"".$max_val
 											."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
 										}
 									}		
