@@ -302,7 +302,7 @@ echo "        <div class=\"inner\">\n";
 		echo "				<p class=\"submit\">\n";
 		echo "				<input type=\"submit\" value=\"". __("Quick Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "				<a href=\"?page=rb_agency_menu_search\" class=\"button-secondary\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a></p>\n";
-		echo "				</div>\n";
+		echo "				</p>\n";
 		echo "        	<form>\n";
 		
 	   } // Editor  
