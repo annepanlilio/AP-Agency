@@ -1282,8 +1282,7 @@ function rb_display_list() {
         }
     }
     echo "        		</select>\n";
-    echo "        		(<a href=\"" . admin_url("admin.php?page=rb_agency_menu_search") . "\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>)<br />\n";
-    echo "        		" . __("Status", rb_agency_TEXTDOMAIN) . ":\n";
+    echo "        		<br />" . __("Status", rb_agency_TEXTDOMAIN) . ":\n";
     echo "        		<select name=\"ProfileVisible\">\n";
     echo "				  <option value=\"\">" . __("Any Status", rb_agency_TEXTDOMAIN) . "</option>";
     echo "				  <option value=\"1\"" . selected(1, $selectedVisible) . ">" . __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
@@ -1318,6 +1317,7 @@ function rb_display_list() {
     echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
     echo "        		<input type=\"submit\" value=\"" . __("Clear Filters", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
     echo "        	</form>\n";
+    echo "          <span>(<a href=\"" . admin_url("admin.php?page=rb_agency_menu_search") . "\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>)</span>\n";
     echo "        </td>\n";
     echo "    </tr>\n";
     echo "  </thead>\n";

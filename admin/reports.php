@@ -1545,10 +1545,12 @@ class RBAgencyCSVXLSImpoterPlugin {
         $heads = 17;
         $t_head = $custom_header;
         $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from rb_agency_customfields ORDER BY ProfileCustomID ASC");
+        echo "<table class=\"form-table\">";
+        echo "<tbody>";
         for($i = 0; $i < $t_head; $i++){
-            echo '<div style="width:140px; padding:10px;text-align:center;float:left;"><label>'.$header[$heads].'</label><br />';
+            echo '<tr><th><label>'.$header[$heads].'</label></th>';
             $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from rb_agency_customfields ORDER BY ProfileCustomID ASC");
-            echo '<select name = "select'.$default.'" id="select'.$default.'">';
+            echo '<td><select name = "select'.$default.'" id="select'.$default.'">';
             foreach ($custom_fields as $custom_fields_result) {
                 $custom_field_id = intval($custom_fields_result->ProfileCustomID);
                 $custom_field_title = $custom_fields_result->ProfileCustomTitle;
@@ -1561,14 +1563,15 @@ class RBAgencyCSVXLSImpoterPlugin {
                 echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
             }
             echo '</select>';
-            echo '</div>';
+            echo '</td></tr>';
             //$custom_header++;
             $heads++;
             $default++;
         }
-     
+        echo "<tbody>";
+        echo "<table>";
         echo "<div style=\"clear:both\"></div>";
-        echo "<p class=\"submit\"><input type=\"submit\" class=\"button\" name=\"submit_importer_to_db\" value=\" Import Data \" /></p>";
+        echo "<p class=\"submit\"><input type=\"submit\" class=\"button button-primary\" name=\"submit_importer_to_db\" value=\" Import Data \" /></p>";
         echo "</form>";
         echo "</div>";
         return 1;
