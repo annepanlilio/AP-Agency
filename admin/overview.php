@@ -70,11 +70,11 @@ echo "        <div class=\"inner\">\n";
 		echo "				    </tr>\n";
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";               
-		echo "				        	". __("Minimum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /><br />\n";
-		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" />\n";
+		echo "				        <td class=\"multi\">\n";               
+		echo "				        	<div><label>". __("Minimum", rb_agency_TEXTDOMAIN) . ":</label>\n";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /><br /></div>\n";
+		echo "				        	<div><label>". __("Maximum", rb_agency_TEXTDOMAIN) . ":</label>\n";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
           
@@ -141,7 +141,7 @@ echo "        <div class=\"inner\">\n";
 	 								 }
     
     			echo  "			</th>		";
-			echo  "			<td>";
+			echo  "			<td class=\"multi\">";
 									if ($ProfileCustomType == 1) { //TEXT
 											
 											
@@ -284,8 +284,8 @@ echo "        <div class=\"inner\">\n";
 										 
 										      list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 											
-										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label><input value=\"".(!is_array($min_val) && $min_val != "Array" ? $min_val : "")."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" />";
-										     echo "<label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label><input value=\"".$max_val."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
+										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_min\">Min:</label><input value=\"".(!is_array($min_val) && $min_val != "Array" ? $min_val : "")."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
+										     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']."_max\">Max:</label><input value=\"".$max_val."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
 											
 									}
 			
@@ -302,7 +302,7 @@ echo "        <div class=\"inner\">\n";
 		echo "				<p class=\"submit\">\n";
 		echo "				<input type=\"submit\" value=\"". __("Quick Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "				<a href=\"?page=rb_agency_menu_search\" class=\"button-secondary\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a></p>\n";
-		echo "				</p>\n";
+		echo "				</div>\n";
 		echo "        	<form>\n";
 		
 	   } // Editor  

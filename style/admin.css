@@ -194,7 +194,7 @@ input.stubby { width: 80px; }
 }
 
 .boxblock table .textarea-field {
-    display:none;	
+    display:none;   
 }
 
 .boxblock table input {
@@ -210,25 +210,23 @@ input.stubby { width: 80px; }
 }
 
 .boxblock table td.multi div {
-    width: 50%;
-    float: left;
+    width: 220px;
+    text-align: right;
+    display: inline-block;
 }
 
 .boxblock table td.multi * {
-    float: left;
+    display: inline-block;
 }
 .boxblock table td.multi label {
-    width: 30px;
+    width: 30%;
     line-height: 24px;
+    text-align: center;
 }
 
 .boxblock table td.multi input {
-    min-width: 67px!important;
-    width: 67px!important;
-}
-
-.boxblock table td.multi input[name="ProfileCustomID17"] {
-    min-width: 217px!important;
+    width: 60%!important;
+    min-width: 60%!important;
 }
 
 .boxblock #submitbox {
