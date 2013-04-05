@@ -1101,7 +1101,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 											echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
 											echo "<option value=\"\">--</option>\n";
 
-											$i=36;
+											$i=20;
 											$heightraw = 0;
 											$heightfeet = 0;
 											$heightinch = 0;

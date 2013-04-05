@@ -1704,7 +1704,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 							echo "  <option value=\"\">--</option>\n";
 						}
 						// 
-						$i=36;
+						$i=20;
 						$heightraw = 0;
 						$heightfeet = 0;
 						$heightinch = 0;
