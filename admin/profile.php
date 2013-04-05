@@ -1259,6 +1259,8 @@ function rb_display_list() {
     echo "    <tr>\n";
     echo "        <td style=\"width: 50px;\">\n";
     echo "        		<strong>" . __("Filter By", rb_agency_TEXTDOMAIN) . ":</strong>\n";
+	echo "        		<strong>". __("Total", rb_agency_TEXTDOMAIN) .":</strong>\n";
+	echo "        		<strong>". __($items, rb_agency_TEXTDOMAIN) ."</strong>\n";	
     echo "        </td>\n";
     echo "        <td nowrap=\"nowrap\">\n";
     echo "        	<form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
