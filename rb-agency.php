@@ -826,9 +826,17 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
   
 		
 	if(is_admin()){
-		 
+		/*
+		 * just not to get the tooltip error
+		 */
 		 $rb_agency_options_arr = get_option('rb_agency_options');
-   		 $rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
+		 if($rb_agency_options_arr == ""){
+				 $rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
+				 update_option('rb_agency_options',$rb_agency_options_arr);
+		 }
+    if( $rb_agency_options_arr != "" || is_array($rb_agency_options_arr)){    	
+		 $rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
+		 
 		if(!@in_array("rb_agency_options_showtooltip",$rb_agency_options_arr) && $rb_agency_options_showtooltip == 0){	 
 			$rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
 			update_option('rb_agency_options',$rb_agency_options_arr);
@@ -864,6 +872,7 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 			}
 			add_action("admin_footer","add_js_code");
 		}
+	 }
 	}
  /*/
    *================ Notify Admin installation report ==============================
