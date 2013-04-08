@@ -321,12 +321,18 @@ elseif ($ConfigID == 53) {
 			}
     } else {
 		
+		/*
+		 * Place sql here to get
+		 * generated total count for folders
+		 */
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
+		$results1 = mysql_query($query1);
+		$count1 = mysql_num_rows($results1);
+		
 		echo "<h3>". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</h3>\n";
 		echo "<p>". __("Check that all profiles have folder names generated.", rb_agency_TEXTDOMAIN) . "</p>\n";
-		
-			$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-			$results1 = mysql_query($query1);
-			$count1 = mysql_num_rows($results1);
+		echo "<p>". __("Total Number of Folders Created: <strong>".$count1."</strong>", rb_agency_TEXTDOMAIN) . "</p>\n";
+
 			while ($data1 = mysql_fetch_array($results1)) {
 				$ProfileGallery = $data1['ProfileGallery'];
 				$ProfileGallerySafe = rb_agency_safenames($ProfileGallery); 
