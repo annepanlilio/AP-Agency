@@ -1096,24 +1096,41 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 										if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==1){
 
-											echo "<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
-											echo "<option value=\"\">--</option>\n";
-
-											$i=20;
-											$heightraw = 0;
-											$heightfeet = 0;
-											$heightinch = 0;
-											while($i<=90)  { 
-												$heightraw = $i;
-												$heightfeet = floor($heightraw/12);
-												$heightinch = $heightraw - floor($heightfeet*12);
-												echo " <option value=\"". $i ."\" ". selected($_SESSION["ProfileCustomID"
-												. $data1['ProfileCustomID']], $i) 
-												.">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-												$i++;
-											}
-
-											echo " </select>\n";
+		  echo "<div class=\"divsel\">Min:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														  if (empty($ProfileCustomValue)) {
+															echo "  <option value=\"\">--</option>\n";
+														  }
+														  // 
+														  $i=12;
+														  $heightraw = 0;
+														  $heightfeet = 0;
+														  $heightinch = 0;
+														  while($i<=90)  { 
+															  $heightraw = $i;
+															  $heightfeet = floor($heightraw/12);
+															  $heightinch = $heightraw - floor($heightfeet*12);
+														  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+																  $i++;
+																}
+														  echo " </select></div>\n";
+														  
+														   echo "<div  class=\"divsel\">Max:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														  if (empty($ProfileCustomValue)) {
+															echo "  <option value=\"\">--</option>\n";
+														  }
+														  // 
+														  $i=12;
+														  $heightraw = 0;
+														  $heightfeet = 0;
+														  $heightinch = 0;
+														  while($i<=90)  { 
+															  $heightraw = $i;
+															  $heightfeet = floor($heightraw/12);
+															  $heightinch = $heightraw - floor($heightfeet*12);
+														  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+																  $i++;
+																}
+														  echo " </select></div>\n";
 
 										} else {
 
