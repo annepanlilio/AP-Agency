@@ -6,7 +6,12 @@ include_once('../../../../wp-load.php');
 include_once('../../../../wp-includes/wp-db.php');
 global $wpdb;
 
-	$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder";
+	//$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder";
+	/*
+	 * to include all types of views including
+	 * private
+	 */
+	$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." ORDER BY ProfileCustomOrder";
 	$custom_fields_name = array();
 	$custom_fields_id = array();
 	$custom_fields = $wpdb->get_results($query3,ARRAY_A);
