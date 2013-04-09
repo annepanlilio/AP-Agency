@@ -1446,7 +1446,7 @@ elseif ($ConfigID == 7) {
 				
 				if($Types != "" or !empty($Types)){
 				
-							$check_sql = "SELECT ProfileCustomClientsID FROM " . table_agency_customfields_types . 
+							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types . 
 				            " WHERE ProfileCustomID= " . $lastid; 
 				
 							$check_results = mysql_query($check_sql);
