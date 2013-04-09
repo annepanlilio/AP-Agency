@@ -138,32 +138,11 @@ while ($data = mysql_fetch_array($results)) {
 
 
 					} elseif ($layouttype == 2) {
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-ui.js', __FILE__) );
-
-						wp_enqueue_script( 'js-scroller', plugins_url('/js/scroller.js', __FILE__) );
-						?>
-						<script>
-						var $rb = jQuery.noConflict();
-						$rb(window).load(function() {
-							mCustomScrollbars();
-						});
-						function mCustomScrollbars(){
-							$rb("#photos").mCustomScrollbar("horizontal",1000,"easeOutCirc",1,"fixed","yes","yes",20); 
-						}
-						$rb.fx.prototype.cur = function(){
-							if ( this.elem[this.prop] != null && (!this.elem.style || this.elem.style[this.prop] == null) ) {
-							  return this.elem[ this.prop ];
-							}
-							var r = parseFloat( jQuery.css( this.elem, this.prop ) );
-							return typeof r == 'undefined' ? 0 : r;
-						}
-						function LoadNewContent(id,file){
-							$rb("#"+id+" .customScrollBox .content").load(file,function(){
-								mCustomScrollbars();
-							});
-						}
-				</script>
-						<?
+						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
+						wp_enqueue_script( 'js-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', dirname(__FILE__)) );
+						
+						wp_enqueue_script( 'jscroller', plugins_url('/js/scroller.js', dirname(__FILE__)), in_footer );
+						
 					// Slider Gallery			
 					} elseif ($rb_agency_option_layoutprofile == "3") {
 						?>
