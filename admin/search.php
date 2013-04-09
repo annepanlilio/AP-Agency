@@ -1047,16 +1047,18 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 												$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 
-												if(in_array($val,$dataArr,true)){
+												if(in_array($val,$dataArr,true) && $val != ""){
 													echo "<div class=\"multi\"><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
 													echo "<span>". $val."</span></label></div>";
-												} else {
+												} elseif($val !="") {
 													echo "<div class=\"multi\"><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
 													echo "<span>". $val."</span></label></div>";	
 												}
 											} else {
-												echo "<div class=\"multi\"><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
-												echo "<span>". $val."</span></label></div>";	
+											    if($val !=""){	
+														echo "<div class=\"multi\"><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
+														echo "<span>". $val."</span></label></div>";	
+												}
 											}
 										}
 												  echo "<div><input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/></div>";
