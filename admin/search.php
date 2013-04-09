@@ -794,7 +794,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 	
 
 		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Location", rb_agency_TEXTDOMAIN) . ":</th>\n";
+		echo "				        <th scope=\"row\">". __("City", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileLocationCity\" id=\"ProfileLocationCity\">\n";               
 		echo "							<option value=\"\">". __("Any City", rb_agency_TEXTDOMAIN) . "</option>";
 										  /*
