@@ -206,35 +206,41 @@ input.stubby { width: 80px; }
     min-width: 218px;
 }
 
-.boxblock table td.multi div {
-    width: 220px;
-    display: inline-block;
+.boxblock table td.multi .rbtext {
+    width: 220px;    
 }
-
-.boxblock table td.multi * {
-    float: none;
-    display: inline-block;
+.boxblock table td.multi .rbtext > div {
+    width: 47%;
+    float: left;
 }
-.boxblock table td.multi label {
-    width: 30%;
+.boxblock table td.multi .rbtext > div:nth-child(1) {
+    margin-right: 5%;
+}
+.boxblock table td.multi .rbtext label {
+    display: block;
     line-height: 24px;
 }
+.boxblock table td.multi .rbtext input {
+    width: 100%;
+    display: block;
+    min-width: auto;
+}
+.boxblock table td.multi .rbcheckbox > div {
+    display: block;
+    padding: 2px 0;
+}
+.boxblock table td.multi .rbcheckbox label {
 
-.boxblock table td.multi input {
-    width: 60%!important;
-    min-width: 60%!important;
+}
+.boxblock table td.multi .rbcheckbox input {
+    width: auto;
+    min-width: auto;
 }
 
 .boxblock #submitbox {
     overflow: hidden;
     margin-top: 15px;
 }
-
-
-.boxblock table input.min_max{min-width:50px; width:50px;}
-.widefat td .divsel select{width:50px; min-width:50px;}
-.widefat td div{width:25%; margin-right:8px; float:left;}
-.form-table .box .checkbox { float: left; display: block; clear: both; padding-bottom: 2px; }
 
 #popup_bg{
     position: fixed;

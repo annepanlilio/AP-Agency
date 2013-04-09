@@ -924,10 +924,12 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 			
 
 					if(in_array($data1['ProfileCustomTitle'], $cusFields)) { //used alternative inputs for custom fields defined on top of this page
+						echo  "			<div class=\"rbtext\">";
 						echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 						echo "<input class=\"min_max\" type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>\n";
 						echo "<div><label for=\"ProfileCustomLabel_min\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 						echo "<input class=\"min_max\"  type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_max\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
+						echo  "			</div>";
 					}else{
 			
 									if ($ProfileCustomType == 1) { //TEXT
@@ -938,7 +940,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 										
 										
 									} elseif ($ProfileCustomType == 2) { // Min Max
-									
+									echo  "			<div class=\"rbtext\">";
 									   
 										$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($data1['ProfileCustomOptions'],"}"),"{"));
 										list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
@@ -959,10 +961,11 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									
 										   
 										}
+										echo  "			</div>";
 									 
 									} elseif ($ProfileCustomType == 3) {
 										
-										
+									echo  "			<div class=\"rbselect\">";
 										
 									  list($option1,$option2) = explode(":",$data1['ProfileCustomOptions']);	
 											
@@ -1015,12 +1018,16 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 											}
 									   */
 										
-										
+										echo  "			</div>";
+
 									} elseif ($ProfileCustomType == 4) {
+										echo  "			<div class=\"rbtextarea\">";
 										echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_SESSION["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea></div>";
+										echo  "			</div>";
 									}
 									 
 									elseif ($ProfileCustomType == 5) {
+										echo  "			<div class=\"rbcheckbox\">";
 
 								   		$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 
@@ -1053,9 +1060,11 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 											}
 										}
 												  echo "<div><input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/></div>";
+												  echo "</div>";
 									}
 									
 									elseif ($ProfileCustomType == 6) {
+										echo  "			<div class=\"rbradio\">";
 
 									   	$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										   
@@ -1088,9 +1097,11 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 											}
 										}
 										echo "<div><input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/></div>";									       
+										echo "</div>";									       
 									}
 									
-									elseif ($ProfileCustomType == 7){										   
+									elseif ($ProfileCustomType == 7){
+										echo  "			<div class=\"rbselect\">";
 										 
 										list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
@@ -1114,7 +1125,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 																}
 														  echo " </select></div>\n";
 														  
-														   echo "<div  class=\"divsel\">Max:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														   echo "<div>Max:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
 														  if (empty($ProfileCustomValue)) {
 															echo "  <option value=\"\">--</option>\n";
 														  }
@@ -1131,9 +1142,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 																  $i++;
 																}
 														  echo " </select></div>\n";
-
+											echo  "			</div>";
 										} else {
-
+											echo  "			<div class=\"rbtext\">";
 											// for other search
 											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 											."_min\">Min</label><input value=\""
@@ -1144,6 +1155,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 											."_max\">Max</label><input value=\"".$max_val
 											."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
+											echo  "			</div>";
 										}
 									}		
 			
@@ -1174,11 +1186,11 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 		echo "				  </thead>\n";
 		echo "				</table>\n";
-		echo "				<div>\n";
+		echo "				<p clas=\"submit\">\n";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "				<input type=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 		echo "				<a href=\"?page=". $_GET['page'] ."&action=formEmpty\" class=\"button-secondary\">". __("Empty Form", rb_agency_TEXTDOMAIN) . "</a>\n";
-		echo "				</div>\n";
+		echo "				</p>\n";
 		echo "        	<form>\n";
 
 		echo "        	<div>\n";
