@@ -1125,7 +1125,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 				$ProfileContactDisplay = $dataList["ProfileContactNameLast"];
 			}
 
-			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
+			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 
 			if ($rb_agency_option_profilelist_expanddetails) {
 			 	$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
@@ -1163,6 +1163,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 	//  rb_agency_checkExecution();
     //add the thumbs slides on hover of profile listing
 	echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/thumbslide.js\"></script>\n"; 
+	echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/textscroller.js\"></script>\n"; 
 		   
 	//load javascript for add to casting cart	
 	if(get_query_var('target')!="print" AND get_query_var('target')!="pdf" AND get_query_var('type')!="profilesecure" AND !isset($profilecastingcart)){
