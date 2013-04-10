@@ -1182,13 +1182,7 @@ function rb_display_list() {
 		if (isset($_GET['ProfileVisible'])){
 			$selectedVisible = $_GET['ProfileVisible'];
 			$query .= "&ProfileVisible=". $selectedVisible ."";
-			if($_GET['ProfileVisible'] == ""){
-				if(strpos($filter,'profile') > 0){
-					   $filter .= " AND profile.ProfileIsActive IN (0,1,4) ";			
-				} else {
-					   $filter .= " profile.ProfileIsActive IN (0,1,4) ";			
-				}
-			} else {
+			if($_GET['ProfileVisible'] != ""){
 					if(strpos($filter,'profile') > 0){
 							$filter .= " AND profile.ProfileIsActive = '". $selectedVisible ."'" ;
 					} else {
