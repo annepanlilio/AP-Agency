@@ -218,7 +218,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "		 				<label for=\"ProfileZip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
 	    echo "		 				<input type=\"text\" id=\"ProfileZip\" name=\"ProfileZip\" value=\"". $_SESSION["ProfileZip"] ."\" />\n";
 	    echo "	 				</div>\n";
-		}s
+		}
 		
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\">";

@@ -168,7 +168,7 @@ if ($_REQUEST["action"] == "search") {
 		echo "  <div class=\"cb\"></div>\n";
 #DEBUG 
 #print_r($filterArray);
-		echo "		    <div id=\"profile-search-results\" class=\"nine column\">\n";
+		echo "		    <div id=\"profile-search-results\">\n";
 						if ($_REQUEST["action"] == "search") {
 	                                 
 							if (function_exists('rb_agency_profilelist')) { 

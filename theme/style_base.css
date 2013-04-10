@@ -67,8 +67,9 @@
 }
 
 /* Profile Results Casting */
-#profile-results .rbprofile-list .casting {
+#profile-results .rbprofile-list .favorite-casting {
 	padding: 5px;
+	overflow: hidden;
 }
 #profile-results .rbprofile-list .castingcart {
   float:right;
