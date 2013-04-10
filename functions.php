@@ -1084,7 +1084,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 				}
 
 				$displayHTML.="  </div><!-- #profile-results-info -->\n";
-				$displayHTML.="  <div class=\"rbclear\"></div><div id=\"profile-list\" class=\"twelve column\">\n";
+				$displayHTML.="  <div class=\"rbclear\"></div><div id=\"profile-list\">\n";
 			}	           
 						
 			$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
@@ -1134,11 +1134,8 @@ function rb_agency_profilelist($atts, $content = NULL) {
          	//echo "loaded: ".microtime()." ms";
 				
 			if($rb_user_isLogged ){
-
-				$displayHTML .=" <div class=\"casting\">";
 			   	//Get Favorite & Casting Cart links
 		        $displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-		        $displayHTML .=" </div> <!-- casting --> \n";
 			}
 
 			$displayHTML .=" </div> <!-- .profile-list --> \n";
@@ -1871,7 +1868,8 @@ function rb_agency_get_miscellaneousLinks($ProfileID = ""){
 		}
 	}
 
-	$disp = "";	
+	$disp = "";
+	$disp .= "<div class=\"favorite-casting\">";
 	if ($rb_agency_option_profilelist_favorite) {
 		
 		if($countFavorite <= 0){
@@ -1891,6 +1889,7 @@ function rb_agency_get_miscellaneousLinks($ProfileID = ""){
 			$disp .= "<div class=\"castingcart\"><a $divHide href=\"javascript:void(0)\"  id=\"".$ProfileID."\" title=\"Remove from Casting Cart\"  class=\"saved_castingcart\"></a></div>";
 	  	}
 	}
+	$disp .= "</div><!-- .favorite-casting -->";
  	return $disp; 
 }
  
