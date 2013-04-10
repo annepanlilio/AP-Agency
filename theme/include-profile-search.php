@@ -75,8 +75,11 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    </div>\n";
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\">";
+		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
+		echo "				<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/?srch=1'\" />";
+		/* Phel Comment
 		echo "					<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />";
-        echo '					<a href="'. get_bloginfo('siteurl') .'/profile-search/?srch=1">'. __("Advanced Search", rb_agency_TEXTDOMAIN) . '</a>';
+        echo '					<a href="'. get_bloginfo('siteurl') .'/profile-search/?srch=1">'. __("Advanced Search", rb_agency_TEXTDOMAIN) . '</a>';*/
 		echo "				</div>\n";
 		echo "        	</form>\n";
 		echo "		</div>\n";
@@ -215,18 +218,22 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "		 				<label for=\"ProfileZip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
 	    echo "		 				<input type=\"text\" id=\"ProfileZip\" name=\"ProfileZip\" value=\"". $_SESSION["ProfileZip"] ."\" />\n";
 	    echo "	 				</div>\n";
-		}
+		}s
 		
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
-		echo "				<div class=\"search-field submit\"><input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></div>";
+		echo "				<div class=\"search-field submit\">";
+		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
+		echo "				<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/'\" />";
+		echo "				</div>";
 		if(isset($_GET['srch'])){ echo'<div></div>'; $style="style='margin-left:0px'"; }else{$style="";}
 		//echo "				<input type=\"submit\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 		//echo "				<input type=\"button\" onclick=\"document.getElementById('search-form-advanced').reset();\" value=\"". __("Clear Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 		echo "        	</form>\n";
 		
+	    /* Phel Comment
 	    if(!$_POST['advanced_search']){	//hide this advanced search button / link
 		echo "<div class=\"advanced_search_div\"" .$style."><form action=\"". get_bloginfo("wpurl") ."/search/\" method=\"post\"><input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></form></div>";
-		}
+		}*/
 		
    }
 ?>

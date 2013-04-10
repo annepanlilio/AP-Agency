@@ -140,10 +140,6 @@
 	width: 60%;
 	float: left;
 }
-.advanced_search_div {
-	float: left;
-	clear: both;
-}
 
 /* Widget */
 .rb_agency_widget_showsearch .rbsearch-form .search-field {
