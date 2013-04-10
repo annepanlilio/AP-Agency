@@ -1114,8 +1114,6 @@ function rb_display_list() {
     echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
     echo "  <h2>" . __("List", rb_agency_TEXTDOMAIN) . " " . LabelPlural . "</h2>\n";
 
-    echo "  <h3 class=\"title\">" . __("All Records", rb_agency_TEXTDOMAIN) . "</h3>\n";
-
     // Sort By
     $sort = "";
     if (isset($_GET['sort']) && !empty($_GET['sort'])) {
@@ -1209,6 +1207,19 @@ function rb_display_list() {
 
     //Paginate
     $items = mysql_num_rows(mysql_query("SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "")); // number of total rows in the database
+
+    /*
+	 * Display Total Records
+	 */
+    echo "<div style='float:left; width:100%'> 
+		  <div style='float:left; width:50%'> 
+			<h3 class=\"title\">" . __("All Records", rb_agency_TEXTDOMAIN) . "</h3>
+		   </div>
+		  <div style='float:right; width:200px; text-align:right'> 
+			<h3 class=\"title\">" . __("Total: " . $items . " Profiles", rb_agency_TEXTDOMAIN) . "</h3>
+		   </div>
+		  </div> \n";
+
     if ($items > 0) {
         $p = new rb_agency_pagination;
         $p->items($items);
@@ -1253,8 +1264,6 @@ function rb_display_list() {
     echo "    <tr>\n";
     echo "        <td style=\"width: 50px;\">\n";
     echo "        		<strong>" . __("Filter By", rb_agency_TEXTDOMAIN) . ":</strong>\n";
-	echo "        		<strong>". __("Total", rb_agency_TEXTDOMAIN) .":</strong>\n";
-	echo "        		<strong>". __($items, rb_agency_TEXTDOMAIN) ."</strong>\n";	
     echo "        </td>\n";
     echo "        <td nowrap=\"nowrap\">\n";
     echo "        	<form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
