@@ -628,7 +628,12 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 	//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 	$dir = "asc";
-	$filter = "WHERE profile.ProfileIsActive = 1 ";
+	if (isset($OverridePrivacy)) {
+		// If sent link, show both hidden and visible
+		$filter = "WHERE profile.ProfileIsActive IN (1, 4) ";
+	} else {
+		$filter = "WHERE profile.ProfileIsActive = 1 ";
+	}
 
 	// Legacy Field Names
 	if (!isset($paging) || empty($paging)) {
