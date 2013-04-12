@@ -1691,7 +1691,6 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
 		echo "    <td>\n";		  
 		  
-           	echo "<div class=\"box\">";
 			if ($ProfileCustomType == 1) { //TEXT
 						echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";						
 			} elseif ($ProfileCustomType == 2) { // Min Max
@@ -1751,28 +1750,29 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						echo "</select>\n";
 				}
 			} elseif ($ProfileCustomType == 4) {
-				
-				echo "<textarea style=\"width: 100%; min-height: 300px;\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">". $ProfileCustomValue ."</textarea>";
-				
+					echo "<textarea style=\"width: 100%; min-height: 300px;\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">". $ProfileCustomValue ."</textarea>";
 			} elseif ($ProfileCustomType == 5) {
-			
+				echo "<fieldset>";
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 				//echo "<div style=\"width:300px;float:left;\">";
 				foreach($array_customOptions_values as $val){
 					$xplode = explode(",",$ProfileCustomValue);
 					if(!empty($val)){
 						echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
-						echo "". $val."</label>";                               
+						echo "". $val."</label><br />";                               
 					}
-				}     
+				}
+				echo "</fieldset>";
 
 			} elseif ($ProfileCustomType == 6) {
 				
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 				
 				foreach($array_customOptions_values as $val){
-					echo "<input type=\"radio\" value=\"". $val."\" "; checked($val, $ProfileCustomValue); echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
-					echo "<span>". $val."</span><br/>";
+					echo "<fieldset>";
+						echo "<label><input type=\"radio\" value=\"". $val."\" "; checked($val, $ProfileCustomValue); echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+						echo "". $val."</label><br/>";
+					echo "</fieldset>";
 				}
 			} elseif ($ProfileCustomType == 7) { //Imperial/Metrics
 			
@@ -1804,7 +1804,6 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
 				}						
 			}									
-        echo "<div class=\"box\">";
 	} // End if Empty ProfileCustomID
 }
 

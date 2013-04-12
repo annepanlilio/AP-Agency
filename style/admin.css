@@ -206,33 +206,31 @@ input.stubby { width: 80px; }
     min-width: 218px;
 }
 
-.boxblock table td.multi .rbtext {
-    width: 220px;    
+.boxblock table fieldset label {
+    line-height: 20px;
 }
-.boxblock table td.multi .rbtext > div {
-    width: 47%;
+
+.boxblock table fieldset {
+    width: 218px;
+}
+
+.boxblock table fieldset div {
     float: left;
+    width: 100px
 }
-.boxblock table td.multi .rbtext > div:nth-child(1) {
-    margin-right: 5%;
+
+.boxblock table fieldset div:first-child {
+    margin-right: 18px;
 }
-.boxblock table td.multi .rbtext label {
-    display: block;
-    line-height: 24px;
-}
-.boxblock table td.multi .rbtext input {
+
+.boxblock table fieldset input[type="text"],
+.boxblock table fieldset select {
     width: 100%;
-    display: block;
     min-width: auto;
 }
-.boxblock table td.multi .rbcheckbox > div {
-    display: block;
-    padding: 2px 0;
-}
-.boxblock table td.multi .rbcheckbox label {
 
-}
-.boxblock table td.multi .rbcheckbox input {
+.boxblock table fieldset input[type="radio"],
+.boxblock table fieldset input[type="checkbox"] {
     width: auto;
     min-width: auto;
 }
@@ -288,4 +286,10 @@ input.stubby { width: 80px; }
     cursor: pointer;
     font-family: Verdana;
     font-weight: bold;
+}
+.wp-core-ui .button-primary {
+    margin-right: 3px;
+}
+.tablenav .tablenav-pages .current {
+    margin-right: 1px;
 }

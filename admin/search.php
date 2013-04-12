@@ -775,7 +775,8 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				    </tr>\n";
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td class=\"multi\">\n";               
+		echo "				        <td>\n";
+		echo "				        <fieldset>\n";
 		echo "				       <div> <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "						<input type=\"text\" class=\"min_max\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" />";
 		echo "						</div>";
@@ -789,6 +790,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				        	". __("Maximum", rb_agency_TEXTDOMAIN) . ":\n";
 		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_GET['ProfileDateBirth_max'] ."\" />\n";
 	*/
+		echo "				        </fieldset>\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
 	
@@ -920,7 +922,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 	 								 }
     
     			echo  "			</th>		";
-			echo  "			<td class=\"multi\">";
+			echo  "			<td>";
 			
 
 					if(in_array($data1['ProfileCustomTitle'], $cusFields)) { //used alternative inputs for custom fields defined on top of this page
@@ -1027,7 +1029,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									}
 									 
 									elseif ($ProfileCustomType == 5) {
-										echo  "			<div class=\"rbcheckbox\">";
+										echo  "			<fieldset class=\"rbcheckbox\">";
 
 								   		$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 
@@ -1048,25 +1050,25 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 												$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 
 												if(in_array($val,$dataArr,true) && $val != ""){
-													echo "<div class=\"multi\"><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
-													echo "<span>". $val."</span></label></div>";
+													echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
+													echo "<span>". $val."</span></label><br />";
 												} elseif($val !="") {
-													echo "<div class=\"multi\"><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
-													echo "<span>". $val."</span></label></div>";	
+													echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
+													echo "<span>". $val."</span></label><br />";
 												}
 											} else {
 											    if($val !=""){	
-														echo "<div class=\"multi\"><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
-														echo "<span>". $val."</span></label></div>";	
+														echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
+														echo "<span>". $val."</span></label><br />";
 												}
 											}
 										}
 												  echo "<div><input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/></div>";
-												  echo "</div>";
+												  echo "</fieldset>";
 									}
 									
 									elseif ($ProfileCustomType == 6) {
-										echo  "			<div class=\"rbradio\">";
+										echo  "			<fieldset class=\"rbradio\">";
 
 									   	$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										   
@@ -1087,29 +1089,29 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 												$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 
 												if(in_array($val,$dataArr) && $val !=""){
-													echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-													echo "". $val."</label></div>";
+													echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+													echo "". $val."</label><br />";
 												} else {
-													echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-													echo "". $val."</label></div>";	
+													echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+													echo "". $val."</label><br />";	
 												}
 											} else {
-												echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-												echo "". $val."</label></div>";	
+												echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+												echo "". $val."</label><br />";	
 											}
 										}
 										echo "<div><input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/></div>";									       
-										echo "</div>";									       
+										echo "</fieldset>";									       
 									}
 									
 									elseif ($ProfileCustomType == 7){
-										echo  "			<div class=\"rbselect\">";
 										 
 										list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
 										if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==1){
+											echo  "			<fieldset class=\"rbselect\">";
 
-		  echo "<div class=\"divsel\">Min:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+		  echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
 														  if (empty($ProfileCustomValue)) {
 															echo "  <option value=\"\">--</option>\n";
 														  }
@@ -1127,7 +1129,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 																}
 														  echo " </select></div>\n";
 														  
-														   echo "<div>Max:&nbsp;<select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														   echo "<div><label>Max</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
 														  if (empty($ProfileCustomValue)) {
 															echo "  <option value=\"\">--</option>\n";
 														  }
@@ -1144,9 +1146,9 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 																  $i++;
 																}
 														  echo " </select></div>\n";
-											echo  "			</div>";
+														  echo  "			</fieldset>";
 										} else {
-											echo  "			<div class=\"rbtext\">";
+											echo  "			<fieldset class=\"rbtext\">";
 											// for other search
 											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 											."_min\">Min</label><input value=\""
@@ -1157,7 +1159,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 											."_max\">Max</label><input value=\"".$max_val
 											."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
-											echo  "			</div>";
+											echo  "			</fieldset>";
 										}
 									}		
 			

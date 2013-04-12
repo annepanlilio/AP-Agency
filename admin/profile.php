@@ -141,55 +141,55 @@ if (isset($_POST['action'])) {
                     // Create Record
                     $insert = "INSERT INTO " . table_agency_profile .
                             " (ProfileGallery,
-				   ProfileContactDisplay,
-				   ProfileUserLinked,
-				   ProfileContactNameFirst,
-				   ProfileContactNameLast,
-				   ProfileContactEmail,
-				   ProfileContactWebsite,
-				   ProfileGender,
-				   ProfileDateBirth,
-				   ProfileLocationStreet,
-				   ProfileLocationCity,
-				   ProfileLocationState,
-				   ProfileLocationZip,
-				   ProfileLocationCountry,
-				   ProfileContactPhoneHome, 
-				   ProfileContactPhoneCell, 
-				   ProfileContactPhoneWork,
-				   ProfileDateUpdated,
-				   ProfileType,
-				   ProfileIsActive,
-				   ProfileIsFeatured,
-				   ProfileIsPromoted,
-				   ProfileStatHits,
-				   ProfileDateViewLast)" .
+                   ProfileContactDisplay,
+                   ProfileUserLinked,
+                   ProfileContactNameFirst,
+                   ProfileContactNameLast,
+                   ProfileContactEmail,
+                   ProfileContactWebsite,
+                   ProfileGender,
+                   ProfileDateBirth,
+                   ProfileLocationStreet,
+                   ProfileLocationCity,
+                   ProfileLocationState,
+                   ProfileLocationZip,
+                   ProfileLocationCountry,
+                   ProfileContactPhoneHome, 
+                   ProfileContactPhoneCell, 
+                   ProfileContactPhoneWork,
+                   ProfileDateUpdated,
+                   ProfileType,
+                   ProfileIsActive,
+                   ProfileIsFeatured,
+                   ProfileIsPromoted,
+                   ProfileStatHits,
+                   ProfileDateViewLast)" .
                             "VALUES (
-				'" . $wpdb->escape($ProfileGallery) . "',
-				'" . $wpdb->escape($ProfileContactDisplay) . "',
-				'" . $wpdb->escape($new_user) . "',
-				'" . $wpdb->escape($ProfileContactNameFirst) . "',
-				'" . $wpdb->escape($ProfileContactNameLast) . "',
-				'" . $wpdb->escape($ProfileContactEmail) . "',
-				'" . $wpdb->escape($ProfileContactWebsite) . "',
-				'" . $wpdb->escape($ProfileGender) . "',
-				'" . $wpdb->escape($ProfileDateBirth) . "',
-				'" . $wpdb->escape($ProfileLocationStreet) . "',
-				'" . $wpdb->escape($ProfileLocationCity) . "',
-				'" . $wpdb->escape($ProfileLocationState) . "',
-				'" . $wpdb->escape($ProfileLocationZip) . "',
-				'" . $wpdb->escape($ProfileLocationCountry) . "',
-				'" . $wpdb->escape($ProfileContactPhoneHome) . "',
-				'" . $wpdb->escape($ProfileContactPhoneCell) . "',
-				'" . $wpdb->escape($ProfileContactPhoneWork) . "',
-				now(),
-				'" . $wpdb->escape($ProfileType) . "',
-				'" . $wpdb->escape($ProfileIsActive) . "',
-				'" . $wpdb->escape($ProfileIsFeatured) . "',
-				'" . $wpdb->escape($ProfileIsPromoted) . "',
-				'" . $wpdb->escape($ProfileStatHits) . "',
-				'" . $wpdb->escape($ProfileDateViewLast) . "'
-				)";
+                '" . $wpdb->escape($ProfileGallery) . "',
+                '" . $wpdb->escape($ProfileContactDisplay) . "',
+                '" . $wpdb->escape($new_user) . "',
+                '" . $wpdb->escape($ProfileContactNameFirst) . "',
+                '" . $wpdb->escape($ProfileContactNameLast) . "',
+                '" . $wpdb->escape($ProfileContactEmail) . "',
+                '" . $wpdb->escape($ProfileContactWebsite) . "',
+                '" . $wpdb->escape($ProfileGender) . "',
+                '" . $wpdb->escape($ProfileDateBirth) . "',
+                '" . $wpdb->escape($ProfileLocationStreet) . "',
+                '" . $wpdb->escape($ProfileLocationCity) . "',
+                '" . $wpdb->escape($ProfileLocationState) . "',
+                '" . $wpdb->escape($ProfileLocationZip) . "',
+                '" . $wpdb->escape($ProfileLocationCountry) . "',
+                '" . $wpdb->escape($ProfileContactPhoneHome) . "',
+                '" . $wpdb->escape($ProfileContactPhoneCell) . "',
+                '" . $wpdb->escape($ProfileContactPhoneWork) . "',
+                now(),
+                '" . $wpdb->escape($ProfileType) . "',
+                '" . $wpdb->escape($ProfileIsActive) . "',
+                '" . $wpdb->escape($ProfileIsFeatured) . "',
+                '" . $wpdb->escape($ProfileIsPromoted) . "',
+                '" . $wpdb->escape($ProfileStatHits) . "',
+                '" . $wpdb->escape($ProfileDateViewLast) . "'
+                )";
 
                     $results = $wpdb->query($insert) or die("Add Record: " . mysql_error());
                     $ProfileID = $wpdb->insert_id;
@@ -242,29 +242,29 @@ if (isset($_POST['action'])) {
 
                 // Update Record
                 $update = "UPDATE " . table_agency_profile . " SET 
-			ProfileGallery='" . $wpdb->escape($ProfileGallery) . "',
-			ProfileContactDisplay='" . $wpdb->escape($ProfileContactDisplay) . "',
-			ProfileContactNameFirst='" . $wpdb->escape($ProfileContactNameFirst) . "',
-			ProfileContactNameLast='" . $wpdb->escape($ProfileContactNameLast) . "',
-			ProfileContactEmail='" . $wpdb->escape($ProfileContactEmail) . "',
-			ProfileContactWebsite='" . $wpdb->escape($ProfileContactWebsite) . "',
-			ProfileContactPhoneHome='" . $wpdb->escape($ProfileContactPhoneHome) . "',
-			ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
-			ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
-			ProfileGender='" . $wpdb->escape($ProfileGender) . "',
-			ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
-			ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
-			ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
-			ProfileLocationState='" . $wpdb->escape($ProfileLocationState) . "',
-			ProfileLocationZip ='" . $wpdb->escape($ProfileLocationZip) . "',
-			ProfileLocationCountry='" . $wpdb->escape($ProfileLocationCountry) . "',
-			ProfileDateUpdated=now(),
-			ProfileType='" . $wpdb->escape($ProfileType) . "',
-			ProfileIsActive='" . $wpdb->escape($ProfileIsActive) . "',
-			ProfileIsFeatured='" . $wpdb->escape($ProfileIsFeatured) . "',
-			ProfileIsPromoted='" . $wpdb->escape($ProfileIsPromoted) . "',
-			ProfileStatHits='" . $wpdb->escape($ProfileStatHits) . "'
-			WHERE ProfileID=$ProfileID";
+            ProfileGallery='" . $wpdb->escape($ProfileGallery) . "',
+            ProfileContactDisplay='" . $wpdb->escape($ProfileContactDisplay) . "',
+            ProfileContactNameFirst='" . $wpdb->escape($ProfileContactNameFirst) . "',
+            ProfileContactNameLast='" . $wpdb->escape($ProfileContactNameLast) . "',
+            ProfileContactEmail='" . $wpdb->escape($ProfileContactEmail) . "',
+            ProfileContactWebsite='" . $wpdb->escape($ProfileContactWebsite) . "',
+            ProfileContactPhoneHome='" . $wpdb->escape($ProfileContactPhoneHome) . "',
+            ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
+            ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
+            ProfileGender='" . $wpdb->escape($ProfileGender) . "',
+            ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
+            ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
+            ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
+            ProfileLocationState='" . $wpdb->escape($ProfileLocationState) . "',
+            ProfileLocationZip ='" . $wpdb->escape($ProfileLocationZip) . "',
+            ProfileLocationCountry='" . $wpdb->escape($ProfileLocationCountry) . "',
+            ProfileDateUpdated=now(),
+            ProfileType='" . $wpdb->escape($ProfileType) . "',
+            ProfileIsActive='" . $wpdb->escape($ProfileIsActive) . "',
+            ProfileIsFeatured='" . $wpdb->escape($ProfileIsFeatured) . "',
+            ProfileIsPromoted='" . $wpdb->escape($ProfileIsPromoted) . "',
+            ProfileStatHits='" . $wpdb->escape($ProfileStatHits) . "'
+            WHERE ProfileID=$ProfileID";
                 $results = $wpdb->query($update) or die(mysql_error());
 
                 if ($ProfileUserLinked > 0) {
@@ -287,7 +287,8 @@ if (isset($_POST['action'])) {
                         if (is_array($value)) {
                             $value = implode(",", $value);
                         }
-                        $insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . $value . "')";
+                        $insert1 = "INSERT INTO " . table_agency_custom
+_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . $value . "')";
                         $results1 = $wpdb->query($insert1);
                     }
                 }
@@ -376,7 +377,7 @@ if (isset($_POST['action'])) {
                         } // End have error = false
                     } //End:: if profile media is not empty.
                     $i++;
-                } // endwhile			
+                } // endwhile           
                 // Upload Videos to Database
                 if (isset($_POST['profileMediaV1']) && !empty($_POST['profileMediaV1'])) {
                     $profileMediaType = $_POST['profileMediaV1Type'];
@@ -611,20 +612,20 @@ function rb_display_manage($ProfileID) {
     echo " <table class=\"form-table\">\n";
     echo "  <tbody>\n";
     echo "    <tr colspan=\"2\">\n";
-    echo "		<th scope=\"row\"><h3>" . __("Contact Information", rb_agency_TEXTDOMAIN) . "</h3></th>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\"><h3>" . __("Contact Information", rb_agency_TEXTDOMAIN) . "</h3></th>\n";
+    echo "    </tr>\n";
     if ((!empty($ProfileID) && ($ProfileID > 0)) || ($rb_agency_option_profilenaming == 2)) { // Editing Record
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Display Name", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . $ProfileContactDisplay . "\" />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\">" . __("Display Name", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . $ProfileContactDisplay . "\" />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
     }
     if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Gallery Folder", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
+        echo "      <th scope=\"row\">" . __("Gallery Folder", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
 
         if (!empty($ProfileGallery) && is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
             echo "<div id=\"message\"><span class=\"updated\">" . __("Folder", rb_agency_TEXTDOMAIN) . " <strong>" . $ProfileGallery . "</strong> " . __("Exists", rb_agency_TEXTDOMAIN) . "</span></div>\n";
@@ -633,107 +634,109 @@ function rb_display_manage($ProfileID) {
             echo "<input type=\"text\" id=\"ProfileGallery\" name=\"ProfileGallery\" value=\"" . $ProfileGallery . "\" />\n";
             echo "<div id=\"message\"><span class=\"error\">" . __("No Folder Exists", rb_agency_TEXTDOMAIN) . "</span>\n";
         }
-        echo "             	</div>\n";
-        echo "		</td>\n";
-        echo "	</tr>\n";
+        echo "              </div>\n";
+        echo "      </td>\n";
+        echo "  </tr>\n";
     }
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("First Name", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . $ProfileContactNameFirst . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("First Name", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . $ProfileContactNameFirst . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Last Name", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . $ProfileContactNameLast . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Last Name", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . $ProfileContactNameLast . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
 
     // password
     if ((isset($_GET["action"]) && $_GET["action"] == "add") && function_exists(rb_agencyinteract_menu_approvemembers)) {
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Username", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"text\" id=\"ProfileUsername\" name=\"ProfileUsername\" />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\">" . __("Username", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"text\" id=\"ProfileUsername\" name=\"ProfileUsername\" />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Password", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"text\" id=\"ProfilePassword\" name=\"ProfilePassword\" />\n";
-        echo "			<input type=\"button\" onclick=\"javascript:document.getElementById('ProfilePassword').value=Math.random().toString(36).substr(2,6);\" value=\"Generate Password\"  name=\"GeneratePassword\" />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\">" . __("Password", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"text\" id=\"ProfilePassword\" name=\"ProfilePassword\" />\n";
+        echo "          <input type=\"button\" onclick=\"javascript:document.getElementById('ProfilePassword').value=Math.random().toString(36).substr(2,6);\" value=\"Generate Password\"  name=\"GeneratePassword\" />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Send Login details?", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"checkbox\"  name=\"ProfileNotifyUser\" /> Send login details to the new user and admin by email.\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\">" . __("Send Login details?", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"checkbox\"  name=\"ProfileNotifyUser\" /> Send login details to the new user and admin by email.\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
     }
 
     // Private Information
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\" colspan=\"2\"><h3>" . __("Private Information", rb_agency_TEXTDOMAIN) . "</h3>" . __("The following information will NOT appear in public areas and is for administrative use only.", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\" colspan=\"2\"><h3>" . __("Private Information", rb_agency_TEXTDOMAIN) . "</h3>" . __("The following information will NOT appear in public areas and is for administrative use only.", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Birthdate", rb_agency_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . $ProfileDateBirth . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Birthdate", rb_agency_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . $ProfileDateBirth . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Email Address", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Email Address", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Website", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . $ProfileContactWebsite . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Website", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . $ProfileContactWebsite . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Phone", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			Home: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . $ProfileContactPhoneHome . "\" /><br />\n";
-    echo "			Cell: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . $ProfileContactPhoneCell . "\" /><br />\n";
-    echo "			Work: <input type=\"text\" style=\"width: 100px;\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . $ProfileContactPhoneWork . "\" /><br />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Phone", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "      <fieldset>\n";
+    echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . $ProfileContactPhoneHome . "\" /><br />\n";
+    echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . $ProfileContactPhoneCell . "\" /><br />\n";
+    echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . $ProfileContactPhoneWork . "\" /><br />\n";
+    echo "      </fieldset>\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     // Address
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Street", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . $ProfileLocationStreet . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Street", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . $ProfileLocationStreet . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("City", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . $ProfileLocationCity . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("City", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . $ProfileLocationCity . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileLocationState\" name=\"ProfileLocationState\" value=\"" . $ProfileLocationState . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileLocationState\" name=\"ProfileLocationState\" value=\"" . $ProfileLocationState . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Zip", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . $ProfileLocationZip . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Zip", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . $ProfileLocationZip . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Country", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
-    echo "			<input type=\"text\" id=\"ProfileLocationCountry\" name=\"ProfileLocationCountry\" value=\"" . $ProfileLocationCountry . "\" />\n";
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\">" . __("Country", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "          <input type=\"text\" id=\"ProfileLocationCountry\" name=\"ProfileLocationCountry\" value=\"" . $ProfileLocationCountry . "\" />\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     // Custom Admin Fields
     // ProfileCustomView = 1 , Private
     if (isset($_GET["ProfileGender"])) {
@@ -745,11 +748,11 @@ function rb_display_manage($ProfileID) {
 
     // Public Information
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\" colspan=\"2\"><h3>" . __("Public Information", rb_agency_TEXTDOMAIN) . "</h3>The following information may appear in profile pages.</th>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\" colspan=\"2\"><h3>" . __("Public Information", rb_agency_TEXTDOMAIN) . "</h3>The following information may appear in profile pages.</th>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Gender", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>";
+    echo "      <th scope=\"row\">" . __("Gender", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>";
     if (isset($_GET["ProfileGender"])) {
         $ProfileGender = $_GET["ProfileGender"];
         echo "<input type=\"hidden\" name=\"ProfileGender\" value=\"" . $ProfileGender . "\"/>";
@@ -782,19 +785,19 @@ function rb_display_manage($ProfileID) {
         rb_custom_fields(0, $ProfileID, $ProfileGender, true);
     }
 
-    echo "	</tbody>\n";
+    echo "  </tbody>\n";
     echo " </table>\n";
     echo "</div>\n";
 
     echo "<div id=\"profile-manage-media\" style=\"float: left; width: 50%; \">\n";
 
     if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record
-        echo "		<h3>" . __("Gallery", rb_agency_TEXTDOMAIN) . "</h3>\n";
+        echo "      <h3>" . __("Gallery", rb_agency_TEXTDOMAIN) . "</h3>\n";
 
         echo "<script type='text/javascript'>\n";
         echo "function confirmDelete(delMedia,mediaType) {\n";
         echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
-        echo "	document.location= '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=photodelete&targetid='+delMedia;";
+        echo "  document.location= '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=photodelete&targetid='+delMedia;";
         echo "  }\n";
         echo "}\n";
         echo "</script>\n";
@@ -890,7 +893,7 @@ function rb_display_manage($ProfileID) {
             echo "<div>" . __("There are no images loaded for this profile yet.", rb_agency_TEXTDOMAIN) . "</div>\n";
         }
 
-        echo "		<div style=\"clear: both;\"></div>\n";
+        echo "      <div style=\"clear: both;\"></div>\n";
         echo '<a href="javascript:confirm_mass_gallery_delete();">Delete Selected Images</a>';
         echo '<script language="javascript">';
         echo 'function confirm_mass_gallery_delete(){';
@@ -912,10 +915,10 @@ function rb_display_manage($ProfileID) {
         echo "urlmassdelete = '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=massphotodelete' + mas_del_ids;";
         echo 'document.location = urlmassdelete;';
         echo '}
-	}
-	else{
-		alert("You have to select images to delete");
-	}
+    }
+    else{
+        alert("You have to select images to delete");
+    }
 });
 
 }
@@ -923,8 +926,8 @@ function rb_display_manage($ProfileID) {
 
 
 
-        echo "		<br><br><h3>" . __("Media", rb_agencyinteract_TEXTDOMAIN) . "</h3>\n";
-        echo "		<p>" . __("The following files (pdf, audio file, etc.) are associated with this record", rb_agencyinteract_TEXTDOMAIN) . ".</p>\n";
+        echo "      <br><br><h3>" . __("Media", rb_agencyinteract_TEXTDOMAIN) . "</h3>\n";
+        echo "      <p>" . __("The following files (pdf, audio file, etc.) are associated with this record", rb_agencyinteract_TEXTDOMAIN) . ".</p>\n";
 
         $queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType <> \"Image\"";
         $resultsMedia = mysql_query($queryMedia);
@@ -964,16 +967,16 @@ function rb_display_manage($ProfileID) {
         if ($countMedia < 1) {
             echo "<div><em>" . __("There are no additional media linked", rb_agencyinteract_TEXTDOMAIN) . "</em></div>\n";
         }
-        echo "		<div style=\"clear: both;\"></div>\n";
-        echo "		<h3>" . __("Upload", rb_agency_TEXTDOMAIN) . "</h3>\n";
-        echo "		<p>" . __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) . ".</p>\n";
+        echo "      <div style=\"clear: both;\"></div>\n";
+        echo "      <h3>" . __("Upload", rb_agency_TEXTDOMAIN) . "</h3>\n";
+        echo "      <p>" . __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 
         for ($i = 1; $i < 10; $i++) {
             echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option>";
             rb_agency_getMediaCategories($ProfileGender);
             echo"</select><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></div>\n";
         }
-        echo "		<p>" . __("Paste the video URL below", rb_agency_TEXTDOMAIN) . ".</p>\n";
+        echo "      <p>" . __("Paste the video URL below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 
         echo "<div>Type: <select name=\"profileMediaV1Type\"><option selected>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option><option>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option><option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select><textarea id='profileMediaV1' name='profileMediaV1'></textarea></div>\n";
         echo "<div>Type: <select name=\"profileMediaV2Type\"><option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option><option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option><option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select><textarea id='profileMediaV2' name='profileMediaV2'></textarea></div>\n";
@@ -987,13 +990,14 @@ function rb_display_manage($ProfileID) {
     echo " <tbody>\n";
 
 
-    // Account Information	
+    // Account Information  
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\" colspan=\"2\"><h3>" . __("Classification", rb_agency_TEXTDOMAIN) . "</h3></th>\n";
-    echo "	  </tr>\n";
+    echo "      <th scope=\"row\" colspan=\"2\"><h3>" . __("Classification", rb_agency_TEXTDOMAIN) . "</h3></th>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
-    echo "		<th scope=\"row\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
-    echo "		<td>\n";
+    echo "      <th scope=\"row\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
+    echo "      <td>\n";
+    echo "      <fieldset>\n";
     $ProfileTypeArray = array();
     if (isset($_GET["action"]) == "editRecord") {
         $ProfileTypeArray = explode(",", $ProfileType);
@@ -1013,73 +1017,74 @@ function rb_display_manage($ProfileID) {
             } echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
         }
     }
+    echo "      </fieldset>\n";
     if ($count3 < 1) {
         echo "" . __("No items to select", rb_agency_TEXTDOMAIN) . ". <a href='" . admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=5") . "'>" . __("Setup Options", rb_agency_TEXTDOMAIN) . "</a>\n";
     }
 
-    echo "		</td>\n";
-    echo "	  </tr>\n";
+    echo "      </td>\n";
+    echo "    </tr>\n";
     echo "    <tr valign=\"top\">\n";
     echo "        <th scope=\"row\">" . __("Status", rb_agency_TEXTDOMAIN) . ":</th>\n";
     echo "        <td><select id=\"ProfileIsActive\" name=\"ProfileIsActive\">\n";
-    echo "			  <option value=\"1\"" . selected(1, $ProfileIsActive) . ">" . __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "			  <option value=\"4\"" . selected(4, $ProfileIsActive) . ">" . __("Active - Not Visible On Website", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "			  <option value=\"0\"" . selected(0, $ProfileIsActive) . ">" . __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "			  <option value=\"2\"" . selected(2, $ProfileIsActive) . ">" . __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "			  <option value=\"3\"" . selected(3, $ProfileIsActive) . ">" . __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "            <option value=\"1\"" . selected(1, $ProfileIsActive) . ">" . __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "            <option value=\"4\"" . selected(4, $ProfileIsActive) . ">" . __("Active - Not Visible On Website", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "            <option value=\"0\"" . selected(0, $ProfileIsActive) . ">" . __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "            <option value=\"2\"" . selected(2, $ProfileIsActive) . ">" . __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "            <option value=\"3\"" . selected(3, $ProfileIsActive) . ">" . __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
     echo "          </select></td>\n";
     echo "    </tr>\n";
     if (isset($ProfileUserLinked) && $ProfileUserLinked > 0) {
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("WordPress User", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
+        echo "      <th scope=\"row\">" . __("WordPress User", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
         echo $ProfileUserLinked;
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
     }
     if (function_exists(rb_agencyinteract_menu_approvemembers)) {
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"";
+        echo "      <th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"";
         checked($ProfileIsFeatured, 1);
         echo " /> Featured<br />\n";
-        echo "			<input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"";
+        echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"";
         checked($ProfileIsPromoted, 1);
         echo " /> Rising Star<br />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
     }
 
     // Hidden Settings
     if ($_GET["mode"] == "override") {
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Date Updated", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"text\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . $ProfileDateUpdated . "\" />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\">" . __("Date Updated", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"text\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . $ProfileDateUpdated . "\" />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Profile Views", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"text\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . $ProfileStatHits . "\" />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\">" . __("Profile Views", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"text\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . $ProfileStatHits . "\" />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\">" . __("Profile Viewed Last", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"text\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . $ProfileDateViewLast . "\" />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\">" . __("Profile Viewed Last", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"text\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . $ProfileDateViewLast . "\" />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
     } else {
         echo "    <tr valign=\"top\">\n";
-        echo "		<th scope=\"row\"></th>\n";
-        echo "		<td>\n";
-        echo "			<input type=\"hidden\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . $ProfileDateUpdated . "\" />\n";
-        echo "			<input type=\"hidden\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . $ProfileStatHits . "\" />\n";
-        echo "			<input type=\"hidden\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . $ProfileDateViewLast . "\" />\n";
-        echo "		</td>\n";
-        echo "	  </tr>\n";
+        echo "      <th scope=\"row\"></th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"hidden\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . $ProfileDateUpdated . "\" />\n";
+        echo "          <input type=\"hidden\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . $ProfileStatHits . "\" />\n";
+        echo "          <input type=\"hidden\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . $ProfileDateViewLast . "\" />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
     }
     echo "  </tbody>\n";
     echo "</table>\n";
@@ -1139,86 +1144,87 @@ function rb_display_list() {
       // Filter
       $filter = "WHERE ";
         if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
-        	if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
-			$selectedNameFirst = $_GET['ProfileContactNameFirst'];
-			$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
-			
-			  if(strpos($filter,'profile') > 0){
-					$filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
-			  } else {
-					$filter .= " profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
-			  }
-			}
-        	if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
-			$selectedNameLast = $_GET['ProfileContactNameLast'];
-			$query .= "&ProfileContactNameLast=". $selectedNameLast ."";
-			    if(strpos($filter,'profile') > 0){
-			    	   $filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
-				} else {
-					   $filter .= " profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
-				}
-			}
-		}
-		if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity'])){
-			$selectedCity = $_GET['ProfileLocationCity'];
-			$query .= "&ProfileLocationCity=". $selectedCity ."";
-			if(strpos($filter,'profile') > 0){
-					$filter .= " AND profile.ProfileLocationCity='". $selectedCity ."'";
-			} else {
-					$filter .= " profile.ProfileLocationCity='". $selectedCity ."'";
-			}
-		}
-		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
-			$selectedType = strtolower($_GET['ProfileType']);
-			$query .= "&ProfileType=". $selectedType ."";
-			if(strpos($filter,'profile') > 0){
-			  	 $filter .= " AND profile.ProfileType LIKE '%". $selectedType ."%'";
-			} else {
-			  	  $filter .= " profile.ProfileType LIKE '%". $selectedType ."%'";
-			}
-		}
-		if (isset($_GET['ProfileVisible'])){
-			$selectedVisible = $_GET['ProfileVisible'];
-			$query .= "&ProfileVisible=". $selectedVisible ."";
-			if($_GET['ProfileVisible'] != ""){
-					if(strpos($filter,'profile') > 0){
-							$filter .= " AND profile.ProfileIsActive = '". $selectedVisible ."'" ;
-					} else {
-							$filter .= " profile.ProfileIsActive = '". $selectedVisible . "'" ;
-					}
-			}
-		}
-		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
-			$ProfileGender = (int)$_GET['ProfileGender'];
-			if($ProfileGender)
-			  if(strpos($filter,'profile') > 0){
-					$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
-			  } else {
-				  	$filter .= " profile.ProfileGender='".$ProfileGender."'";
-			  }
-		}
-		
-		/*
-		 * Trap WHERE 
-		 */
-		if(!strpos($filter, 'profile') > 0){
-				$filter = "";
-		}
+            if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
+            $selectedNameFirst = $_GET['ProfileContactNameFirst'];
+            $query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
+            
+              if(strpos($filter,'profile') > 0){
+                    $filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
+              } else {
+                    $filter .= " profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
+              }
+            }
+            if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
+            $selectedNameLast = $_GET['ProfileContactNameLast'];
+            $query .= "&ProfileContactNameLast=". $selectedNameLast ."";
+                if(strpos($filter,'profile') > 0){
+                       $filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+                } else {
+                       $filter .= " profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+                }
+            }
+        }
+        if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity'])){
+            $selectedCity = $_GET['ProfileLocationCity'];
+            $query .= "&ProfileLocationCity=". $selectedCity ."";
+            if(strpos($filter,'profile') > 0){
+                    $filter .= " AND profile.ProfileLocationCity='". $selectedCity ."'";
+            } else {
+                    $filter .= " profile.ProfileLocationCity='". $selectedCity ."'";
+            }
+        }
+        if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
+            $selectedType = strtolower($_GET['ProfileType']);
+            $query .= "&ProfileType=". $selectedType ."";
+            if(strpos($filter,'profile') > 0){
+                 $filter .= " AND profile.ProfileType LIKE '%". $selectedType ."%'";
+            } else {
+                  $filter .= " profile.ProfileType LIKE '%". $selectedType ."%'";
+            }
+        }
+        if (isset($_GET['ProfileVisible'])){
+            $selectedVisible = $_GET['ProfileVisible'];
+            $query .= "&ProfileVisible=". $selectedVisible ."";
+            if($_GET['ProfileVisible'] != ""){
+                    if(strpos($filter,'profile') > 0){
+                            $filter .= " AND profile.ProfileIsActive = '". $selectedVisible ."'" ;
+                    } else {
+                            $filter .= " profile.ProfileIsActive = '". $selectedVisible . "'" ;
+                    }
+            }
+        }
+        if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
+            $ProfileGender = (int)$_GET['ProfileGender'];
+            if($ProfileGender)
+              if(strpos($filter,'profile') > 0){
+                    $filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+              } else {
+                    $filter .= " profile.ProfileGender='".$ProfileGender."'";
+              }
+        }
+        
+        /*
+         * Trap WHERE 
+         */
+        if(!strpos($filter, 'profile') > 0){
+                $filter = "";
+        }
 
+    
     //Paginate
     $items = mysql_num_rows(mysql_query("SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "")); // number of total rows in the database
 
     /*
-	 * Display Total Records
-	 */
+     * Display Total Records
+     */
     echo "<div style='float:left; width:100%'> 
-		  <div style='float:left; width:50%'> 
-			<h3 class=\"title\">" . __("All Records", rb_agency_TEXTDOMAIN) . "</h3>
-		   </div>
-		  <div style='float:right; width:200px; text-align:right'> 
-			<h3 class=\"title\">" . __("Total: " . $items . " Profiles", rb_agency_TEXTDOMAIN) . "</h3>
-		   </div>
-		  </div> \n";
+          <div style='float:left; width:50%'> 
+            <h3 class=\"title\">" . __("All Records", rb_agency_TEXTDOMAIN) . "</h3>
+           </div>
+          <div style='float:right; width:200px; text-align:right'> 
+            <h3 class=\"title\">" . __("Total: " . $items . " Profiles", rb_agency_TEXTDOMAIN) . "</h3>
+           </div>
+          </div> \n";
 
     if ($items > 0) {
         $p = new rb_agency_pagination;
@@ -1247,7 +1253,7 @@ function rb_display_list() {
     $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ");
     $queryGenderCount = mysql_num_rows($queryGenderResult);
     while ($fetchGender = mysql_fetch_assoc($queryGenderResult)) {
-        echo "	<div style=\"float: left; \"><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
+        echo "  <div style=\"float: left; \"><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
     }
     if ($queryGenderCount < 1) {
         echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_menu_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
@@ -1263,18 +1269,39 @@ function rb_display_list() {
     echo "  <thead>\n";
     echo "    <tr>\n";
     echo "        <td style=\"width: 50px;\">\n";
-    echo "        		<strong>" . __("Filter By", rb_agency_TEXTDOMAIN) . ":</strong>\n";
+    echo "              <strong>" . __("Filter By", rb_agency_TEXTDOMAIN) . ":</strong>\n";
     echo "        </td>\n";
+    echo "    </tr>\n";
+    echo "    <tr>\n";
     echo "        <td nowrap=\"nowrap\">\n";
-    echo "        	<form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
-    echo "        		<input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />\n";
-    echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
-    echo "        		<input type=\"hidden\" name=\"type\" value=\"name\" />\n";
-    echo "        		" . __("First Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" style=\"width: 100px;\" />\n";
-    echo "        		" . __("Last Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" style=\"width: 100px;\" />\n";
-    echo "        		" . __("Location", rb_agency_TEXTDOMAIN) . ": \n";
-    echo "        		<select name=\"ProfileLocationCity\">\n";
-    echo "				  <option value=\"\">" . __("Any Location", rb_agency_TEXTDOMAIN) . "</option>";
+    echo "          <form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
+    echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />\n";
+    echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
+    echo "              <input type=\"hidden\" name=\"type\" value=\"name\" />\n";
+    echo "              " . __("First Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" style=\"width: 100px;\" />\n";
+    echo "              " . __("Category", rb_agency_TEXTDOMAIN) . ":\n";
+    echo "              <select name=\"ProfileType\">\n";
+    echo "                <option value=\"\">" . __("Any Category", rb_agency_TEXTDOMAIN) . "</option>";
+
+    $query = "SELECT DataTypeID, DataTypeTitle FROM " . table_agency_data_type . " ORDER BY DataTypeTitle ASC";
+    $results = mysql_query($query);
+    $count = mysql_num_rows($results);
+    while ($data = mysql_fetch_array($results)) {
+        echo "<option value=\"" . $data['DataTypeID'] . "\" " . selected($_GET['ProfileType'], $data["DataTypeID"]) . "\">" . $data['DataTypeTitle'] . "</option>\n";
+    }
+    echo "              </select>\n";
+    echo "              " . __("Status", rb_agency_TEXTDOMAIN) . ":\n";
+    echo "              <select name=\"ProfileVisible\">\n";
+    echo "                <option value=\"\">" . __("Any Status", rb_agency_TEXTDOMAIN) . "</option>";
+    echo "                <option value=\"1\"" . selected(1, $selectedVisible) . ">" . __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "                <option value=\"4\"" . selected(4, $selectedVisible) . ">" . __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "                <option value=\"0\"" . selected(0, $selectedVisible) . ">" . __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "                <option value=\"2\"" . selected(2, $selectedVisible) . ">" . __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "              </select>\n";
+    echo "              <br />" . __("Last Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" style=\"width: 100px;\" />\n";
+    echo "              " . __("Location", rb_agency_TEXTDOMAIN) . ": \n";
+    echo "              <select name=\"ProfileLocationCity\">\n";
+    echo "                <option value=\"\">" . __("Any Location", rb_agency_TEXTDOMAIN) . "</option>";
 
     $query = "SELECT DISTINCT ProfileLocationCity, ProfileLocationState FROM " . table_agency_profile . " ORDER BY ProfileLocationState, ProfileLocationCity ASC";
     $results = mysql_query($query);
@@ -1284,43 +1311,24 @@ function rb_display_list() {
             echo "<option value=\"" . $data['ProfileLocationCity'] . "\" " . selected($selectedCity, $data["ProfileLocationCity"]) . "\">" . $data['ProfileLocationCity'] . ", " . strtoupper($dataLocation["ProfileLocationState"]) . "</option>\n";
         }
     }
-    echo "        		</select>\n";
-    echo "        		<br />" . __("Status", rb_agency_TEXTDOMAIN) . ":\n";
-    echo "        		<select name=\"ProfileVisible\">\n";
-    echo "				  <option value=\"\">" . __("Any Status", rb_agency_TEXTDOMAIN) . "</option>";
-    echo "				  <option value=\"1\"" . selected(1, $selectedVisible) . ">" . __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "				  <option value=\"4\"" . selected(4, $selectedVisible) . ">" . __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "				  <option value=\"0\"" . selected(0, $selectedVisible) . ">" . __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "				  <option value=\"2\"" . selected(2, $selectedVisible) . ">" . __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "        		</select>\n";
-    echo "        		" . __("Category", rb_agency_TEXTDOMAIN) . ":\n";
-    echo "        		<select name=\"ProfileType\">\n";
-    echo "				  <option value=\"\">" . __("Any Category", rb_agency_TEXTDOMAIN) . "</option>";
-
-    $query = "SELECT DataTypeID, DataTypeTitle FROM " . table_agency_data_type . " ORDER BY DataTypeTitle ASC";
-    $results = mysql_query($query);
-    $count = mysql_num_rows($results);
-    while ($data = mysql_fetch_array($results)) {
-        echo "<option value=\"" . $data['DataTypeID'] . "\" " . selected($_GET['ProfileType'], $data["DataTypeID"]) . "\">" . $data['DataTypeTitle'] . "</option>\n";
-    }
-    echo "        		</select>\n";
-    echo "        		" . __("Gender", rb_agency_TEXTDOMAIN) . ":\n";
-    echo "				<select name=\"ProfileGender\">\n";
-    echo "					<option value=\"\">" . __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+    echo "              </select>\n";
+    echo "              " . __("Gender", rb_agency_TEXTDOMAIN) . ":\n";
+    echo "              <select name=\"ProfileGender\">\n";
+    echo "                  <option value=\"\">" . __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
     $query2 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ORDER BY GenderID";
     $results2 = mysql_query($query2);
     while ($dataGender = mysql_fetch_array($results2)) {
         echo "<option value=\"" . $dataGender["GenderID"] . "\"" . selected($_GET["ProfileGender"], $dataGender["GenderID"], false) . ">" . $dataGender["GenderTitle"] . "</option>";
     }
-    echo "				</select>\n";
-    echo "        		<input type=\"submit\" value=\"" . __("Filter", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+    echo "              </select>\n";
+    echo "              <input type=\"submit\" value=\"" . __("Filter", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
     echo "          </form>\n";
-    echo "        	<form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
-    echo "        		<input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />  \n";
-    echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
-    echo "        		<input type=\"submit\" value=\"" . __("Clear Filters", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
-    echo "        	</form>\n";
-    echo "          <span>(<a href=\"" . admin_url("admin.php?page=rb_agency_menu_search") . "\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>)</span>\n";
+    echo "          <form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
+    echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />  \n";
+    echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
+    echo "              <input type=\"submit\" value=\"" . __("Clear Filters", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
+    echo "          </form>\n";
+    echo "          <a href=\"" . admin_url("admin.php?page=rb_agency_menu_search") . "\" class=\"button-secondary\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
     echo "        </td>\n";
     echo "    </tr>\n";
     echo "  </thead>\n";
@@ -1332,16 +1340,16 @@ function rb_display_list() {
     echo "    <tr class=\"thead\">\n";
     echo "        <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
     echo "        <th class=\"column-ProfileID\" id=\"ProfileID\" scope=\"col\" style=\"width:50px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileID&dir=" . $sortDirection) . "\">ID</a></th>\n";
-    echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:130px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst&dir=" . $sortDirection) . "\">First Name</a></th>\n";
-    echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\" style=\"width:130px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast&dir=" . $sortDirection) . "\">Last Name</a></th>\n";
-    echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\" style=\"width:65px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection) . "\">Gender</a></th>\n";
-    echo "        <th class=\"column-ProfilesProfileDate\" id=\"ProfilesProfileDate\" scope=\"col\" style=\"width:50px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileDateBirth&dir=" . $sortDirection) . "\">Age</a></th>\n";
-    echo "        <th class=\"column-ProfileLocationCity\" id=\"ProfileLocationCity\" scope=\"col\" style=\"width:100px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationCity&dir=" . $sortDirection) . "\">City</a></th>\n";
-    echo "        <th class=\"column-ProfileLocationState\" id=\"ProfileLocationState\" scope=\"col\" style=\"width:50px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationState&dir=" . $sortDirection) . "\">State</a></th>\n";
-    echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\" style=\"width:100px;\">Category</th>\n";
-    echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\" style=\"width:65px;\">Images</th>\n";
-    echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\" style=\"width:60px;\">Views</th>\n";
-    echo "        <th class=\"column-ProfileDateViewLast\" id=\"ProfileDateViewLast\" scope=\"col\">Last Viewed Date</th>\n";
+    echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst&dir=" . $sortDirection) . "\">First Name</a></th>\n";
+    echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast&dir=" . $sortDirection) . "\">Last Name</a></th>\n";
+    echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection) . "\">Gender</a></th>\n";
+    echo "        <th class=\"column-ProfilesProfileDate\" id=\"ProfilesProfileDate\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileDateBirth&dir=" . $sortDirection) . "\">Age</a></th>\n";
+    echo "        <th class=\"column-ProfileLocationCity\" id=\"ProfileLocationCity\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationCity&dir=" . $sortDirection) . "\">City</a></th>\n";
+    echo "        <th class=\"column-ProfileLocationState\" id=\"ProfileLocationState\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationState&dir=" . $sortDirection) . "\">State</a></th>\n";
+    echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Category</th>\n";
+    echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Images</th>\n";
+    echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\">Views</th>\n";
+    echo "        <th class=\"column-ProfileDateViewLast\" id=\"ProfileDateViewLast\" scope=\"col\" style=\"width:125px;\">Last Viewed Date</th>\n";
     echo "    </tr>\n";
     echo " </thead>\n";
     echo " <tfoot>\n";
@@ -1390,39 +1398,38 @@ function rb_display_list() {
             // Pending Approval
             $rowColor = " style=\"background: #DD4B39\"";
         }
-
+        
         /*
          * Get Data Type Title
          */
         if(strpos($data['ProfileType'], ",") > 0){
-                $title = explode(",",$data['ProfileType']);
-                $new_title = "";
-                foreach($title as $t){
-                        $id = (int)$t;
-                        $get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
-                                        " WHERE DataTypeID = " . $id;   
-                        $resource = mysql_query($get_title);			 
-                        $get = mysql_fetch_assoc($resource);
-                        if (mysql_num_rows($resource) > 0 ){
-                                $new_title .= "," . $get['DataTypeTitle']; 
-                        }
+            $title = explode(",",$data['ProfileType']);
+            $new_title = "";
+            foreach($title as $t){
+                $id = (int)$t;
+                $get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
+                             " WHERE DataTypeID = " . $id;   
+                $resource = mysql_query($get_title);             
+                $get = mysql_fetch_assoc($resource);
+                if (mysql_num_rows($resource) > 0 ){
+                    $new_title .= "," . $get['DataTypeTitle']; 
                 }
-                $new_title = substr($new_title,1);
+            }
+            $new_title = substr($new_title,1);
         } else {
-                    $new_title = "";
-                        $id = (int)$data['ProfileType'];
-                        $get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
-                                        " WHERE DataTypeID = " . $id;   
-                        $resource = mysql_query($get_title);			 
-                        $get = mysql_fetch_assoc($resource);
-                        if (mysql_num_rows($resource) > 0 ){
-                                $new_title = $get['DataTypeTitle']; 
-                        }
+                $new_title = "";
+                $id = (int)$data['ProfileType'];
+                $get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
+                             " WHERE DataTypeID = " . $id;   
+                $resource = mysql_query($get_title);             
+                $get = mysql_fetch_assoc($resource);
+                if (mysql_num_rows($resource) > 0 ){
+                    $new_title = $get['DataTypeTitle']; 
+                }
         }
-		 
-		
+         
+        
         $DataTypeTitle = stripslashes($new_title);
-
 
         $resultImageCount = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaType = 'Image'");
         $profileImageCount = mysql_num_rows($resultImageCount);
@@ -1491,7 +1498,7 @@ function rb_display_list() {
 
     echo "<p class=\"submit\">\n";
     echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
-    echo "  <input type=\"submit\" value=\"" . __('Delete') . "\" class=\"button-primary\" name=\"submit\" />	\n";
+    echo "  <input type=\"submit\" value=\"" . __('Delete') . "\" class=\"button-primary\" name=\"submit\" />   \n";
     echo "</p>\n";
     echo "</form>\n";
 }
