@@ -1169,12 +1169,12 @@ function rb_display_list() {
 			}
 		}
 		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
-			$selectedType = $_GET['ProfileType'];
+			$selectedType = strtolower($_GET['ProfileType']);
 			$query .= "&ProfileType=". $selectedType ."";
 			if(strpos($filter,'profile') > 0){
-			  	  $filter .= " AND profiletype.DataTypeID='". $selectedType ."'";
+			  	 $filter .= " AND profile.ProfileType LIKE '%". $selectedType ."%'";
 			} else {
-			  	  $filter .= " profiletype.DataTypeID='". $selectedType ."'";
+			  	  $filter .= " profile.ProfileType LIKE '%". $selectedType ."%'";
 			}
 		}
 		if (isset($_GET['ProfileVisible'])){
@@ -1390,7 +1390,39 @@ function rb_display_list() {
             // Pending Approval
             $rowColor = " style=\"background: #DD4B39\"";
         }
-        $DataTypeTitle = stripslashes($data['DataTypeTitle']);
+
+        /*
+         * Get Data Type Title
+         */
+        if(strpos($data['ProfileType'], ",") > 0){
+                $title = explode(",",$data['ProfileType']);
+                $new_title = "";
+                foreach($title as $t){
+                        $id = (int)$t;
+                        $get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
+                                        " WHERE DataTypeID = " . $id;   
+                        $resource = mysql_query($get_title);			 
+                        $get = mysql_fetch_assoc($resource);
+                        if (mysql_num_rows($resource) > 0 ){
+                                $new_title .= "," . $get['DataTypeTitle']; 
+                        }
+                }
+                $new_title = substr($new_title,1);
+        } else {
+                    $new_title = "";
+                        $id = (int)$data['ProfileType'];
+                        $get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
+                                        " WHERE DataTypeID = " . $id;   
+                        $resource = mysql_query($get_title);			 
+                        $get = mysql_fetch_assoc($resource);
+                        if (mysql_num_rows($resource) > 0 ){
+                                $new_title = $get['DataTypeTitle']; 
+                        }
+        }
+		 
+		
+        $DataTypeTitle = stripslashes($new_title);
+
 
         $resultImageCount = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaType = 'Image'");
         $profileImageCount = mysql_num_rows($resultImageCount);
