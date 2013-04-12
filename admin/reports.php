@@ -11,8 +11,9 @@
 <div class="wrap">
     <div id="rb-overview-icon" class="icon32"></div>
     <h2>Data Management</h2>
+    <br />
     <a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=0" title="Overview">Overview</a>
-    <p></p>
+    <br /><br />
 <?php
 if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 	if($_REQUEST['action'] == 'douninstall') {
