@@ -34,6 +34,9 @@
 
 // *************************************************************************************************** //
 // Add to WordPress Dashboard
+        
+        $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
+        
 	$rb_agency_options_arr = get_option('rb_agency_options');
     
 	$rb_agency_option_advertise = isset($rb_agency_options_arr['rb_agency_option_advertise']) ? $rb_agency_options_arr['rb_agency_option_advertise'] : 0;
