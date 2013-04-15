@@ -121,33 +121,69 @@
 	width: 65%;
 	float: left;
 }
-.rbsearch-form .search-field.double .label {
+.rbsearch-form .search-field.multi legend {
 	float: left;
 	width: 100%;
 	padding-bottom: 5px;
 }
-.rbsearch-form .search-field.double .doublebox {
-	width: 100%;
+.rbsearch-form .search-field.multi label {
+	float: left;
+	width: auto;
+	clear: both;
+	line-height: normal;
+}
+.rbsearch-form .search-field.multi div {
+	width: 48%;
 	float: left;
 }
-.rbsearch-form .search-field.double .doublebox div {
-	width: 50%;
-	float: left;
+.rbsearch-form .search-field.multi div:last-child {
+	margin-left: 4%;
 }
-.rbsearch-form .search-field.double .doublebox label {
+.rbsearch-form .search-field.multi div label {
 	width: 40%;
 	float: left;
 	text-align: center;
 }
-.rbsearch-form .search-field.double .doublebox input,
-.rbsearch-form .search-field.double .doublebox select {
+.rbsearch-form .search-field.multi div input[type="text"],
+.rbsearch-form .search-field.multi div select {
 	width: 60%;
 	float: left;
 }
+.rbsearch-form .search-field.multi label input[type="checkbox"],
+.rbsearch-form .search-field.multi label input[type="radio"] {
+	float: left;
+}
+.rbsearch-form .search-field.single label, .rbsearch-form .search-field.multi legend {
+	font-weight: bold;
+}
 
-/* Widget */
+/* Widget Form */
 .rb_agency_widget_showsearch .rbsearch-form .search-field {
 	width: 100%;
+}
+.rb_agency_widget_showsearch .rbsearch-form .search-field.single label {
+	width: 100%;
+	float: none;
+	display: block;
+}
+.rb_agency_widget_showsearch .rbsearch-form .search-field.single input[type="text"] {
+	width: 100%;
+	float: none;
+	display: block;
+}
+.rb_agency_widget_showsearch .rbsearch-form .search-field.multi div label {
+	width: 100%;
+	float: none;
+	display: block;
+	text-align: right;
+}
+.rb_agency_widget_showsearch .rbsearch-form .search-field.multi div input[type="text"],
+.rb_agency_widget_showsearch .rbsearch-form .search-field.multi div select {
+	width: 100%;
+	float: left;
+}
+.rb_agency_widget_showsearch .rbsearch-form .search-field.multi div input[type="text"] {
+	text-align: right;
 }
 
 /* Dashboard */
@@ -299,18 +335,14 @@
 #rblayout-three .row-experience { margin: 20px 0; overflow: hidden; }
 
 /* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
-#rblayout-four { padding: 0 20px; overflow: hidden; color: #fff; }
-#rblayout-four #info { float: left; width: 28%; }
-#rblayout-four #info h2 { margin: 0 0 10px 0; padding: 5px 8px; background: #454545; color: white; text-transform: uppercase; }
-#rblayout-four #info .stats { font-size: 16px; }
-#rblayout-four #info .action { display: none; }
-#rblayout-four #info  .links {  display: none; border-top: 1px solid #dadada; margin-top: 10px;  }
-#rblayout-four #info .links a:hover { color: #2F617F; }
-#rblayout-four #info .links a { color: #28536C; }
-#rblayout-four #photo { float: right; width: 68%; }
-#rblayout-four #photo h2 { margin: 0 0 10px 0; padding: 5px 8px; background: #454545; color: white; text-transform: uppercase; }
+#rblayout-four { padding: 0 20px; overflow: hidden; }
+#rblayout-four #name { margin-bottom: 15px; }
+#rblayout-four #info { padding-left: 0; }
+#rblayout-four h3 { margin: 0 0 10px 0; padding: 5px 8px; background: #454545; color: white; text-transform: uppercase; }
+#rblayout-four #info .stats { font-size: 13px; }
+#rblayout-four #photo { padding-right: 0; }
 #rblayout-four #photo .multiple { float: left; margin: 0 10px 10px 0; overflow: hidden; }
-#rblayout-four #photo .multiple img { max-width: 350px; border: 1px solid #666; padding: 3px; max-height: 400px; }
+#rblayout-four #photo .multiple img { max-width: 350px; max-height: 400px; }
 
 /* The foundation Grid ---------------------- */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
