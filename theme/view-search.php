@@ -159,10 +159,10 @@ if ($_REQUEST["action"] == "search") {
 		echo "<div id=\"profile-search\">\n";
 	    
 			if ($_REQUEST["action"] == "search") {
-		echo "  <h1 class=\"entry-title twelve column\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		echo "  <h1 class=\"entry-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 			} else {
-		//echo "  <h1 class=\"entry-title twelve column\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
-		echo "  <h1 class=\"entry-title twelve column\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		echo "  <h1 class=\"entry-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		//echo "  <h1 class=\"entry-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 			}
 	
 		echo "  <div class=\"cb\"></div>\n";
