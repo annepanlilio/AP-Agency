@@ -633,6 +633,21 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 	//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 	$dir = "asc";
+
+	/*
+	 * Set Override Privacy for emailed link
+         * in casting cart
+	 */
+	$pageURL = '';
+ 	if ($_SERVER["SERVER_PORT"] != "80") {
+  		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+ 	} else {
+  		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+ 	}
+	if(strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
+		$OverridePrivacy = 1;
+	}
+        
 	if (isset($OverridePrivacy)) {
 		// If sent link, show both hidden and visible
 		$filter = "WHERE profile.ProfileIsActive IN (1, 4) ";

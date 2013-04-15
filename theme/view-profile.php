@@ -208,7 +208,16 @@ while ($data = mysql_fetch_array($results)) {
 		  if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
 			include ("include-profile-layout". $rb_agency_option_layoutprofile .".php"); 	
 		  } else {
-			echo "". __("Inactive Profile", rb_agency_TEXTDOMAIN) ."\n";
+			/*
+			 * display this profile as long as it came
+			 * from the page profilesecure else inactive if
+                         * directly viewed.
+			 */
+			if(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
+				include ("include-profile-layout". $rb_agency_option_layoutprofile .".php"); 	
+			} else {
+				echo "". __("Inactive Profile", rb_agency_TEXTDOMAIN) ."\n";
+			}
 		  }
 		} else {
 			// hold last model requested as session so we can return them where we found them 
