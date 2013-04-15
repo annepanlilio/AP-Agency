@@ -595,6 +595,8 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 	// Set It Up	
 	global $wp_rewrite;
+        global $cusFields;
+        
 	extract(shortcode_atts(array(
 			"profileid" => NULL,
 			"profilecontactnamefirst" => NULL,
