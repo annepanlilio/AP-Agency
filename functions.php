@@ -1146,17 +1146,17 @@ function rb_agency_profilelist($atts, $content = NULL) {
 		        $displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 			}
 
-			$displayHTML .=" </div> <!-- .profile-list --> \n";
-			$displayHTML .= "</div>\n";
+			$displayHTML .=" </div> <!-- .profile-info --> \n";
+			$displayHTML .=" </div><!-- .rbprofile-list -->\n";
+			$displayHTML .= "  <div class=\"rbclear\"></div>\n";
+			$displayHTML .= "  </div><!-- #profile-list -->\n";
 		}	// endwhile datalist
 	}	// endif countlist
 
 	if ($countList < 1) {
 		$displayHTML .= __("No Profiles Found", rb_agency_TEXTDOMAIN);
 	}
-			
-	$displayHTML .= "  <div class=\"rbclear\"></div>\n";
-	$displayHTML .= "  </div><!-- #profile-list -->\n";
+	
 	$displayHTML .= "  <div class=\"rbclear\"></div>\n";
 	$displayHTML .= "</div><!-- #profile-results -->\n";
 			

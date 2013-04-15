@@ -188,11 +188,11 @@ if ($_REQUEST["action"] == "search") {
 		
 		echo "		    </div>\n";
 */
-		echo "</div>\n"; // #profile-search-results
-		echo "</div>\n"; // #profile-search
+		echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
+		echo "</div><!-- #profile-search -->\n"; // #profile-search
+		echo "</div><!-- #content -->\n"; // #content
 
-	echo "  </div>\n";
-	echo "</div>\n";
+	echo "  </div><!-- #primary -->\n"; // #primary
 	
 
 get_sidebar(); 
