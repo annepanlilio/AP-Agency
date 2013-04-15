@@ -857,11 +857,11 @@ function rb_agency_profilelist($atts, $content = NULL) {
   	// Name
 	if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
 		$ProfileContactNameFirst = $ProfileContactNameFirst;
-		$filter .= " AND profile.ProfileContactNameFirst LIKE '%". ucfirst($ProfileContactNameFirst) ."'";
+		$filter .= " AND profile.ProfileContactNameFirst LIKE '". $ProfileContactNameFirst ."%'";
 	}
 	if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
 		$ProfileContactNameLast = $ProfileContactNameLast;
-		$filter .= " AND profile.ProfileContactNameLast LIKE '%". ucfirst($ProfileContactNameLast) ."'";
+		$filter .= " AND profile.ProfileContactNameLast LIKE '". $ProfileContactNameLast ."%'";
 	}
 	
 	// Type
