@@ -11,7 +11,7 @@ Escort
 */
 
 	echo "<div id=\"profile\">\n";
-	echo " <div id=\"profile-layout-four\">\n";
+	echo " <div id=\"rblayout-four\" class=\"rblayout\">\n";
 
 	echo "	<div id=\"name\">\n";
 	echo "	  <h1>". $ProfileContactDisplay ." <a href=\"contact/\">Book Now!</a></h1>\n";

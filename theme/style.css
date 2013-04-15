@@ -335,7 +335,7 @@
 #rblayout-three .row-experience { margin: 20px 0; overflow: hidden; }
 
 /* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
-#rblayout-four { padding: 0 20px; overflow: hidden; color: #fff; }
+#rblayout-four { padding: 0 20px; overflow: hidden; }
 #rblayout-four #info { float: left; width: 28%; }
 #rblayout-four #info h2 { margin: 0 0 10px 0; padding: 5px 8px; background: #454545; color: white; text-transform: uppercase; }
 #rblayout-four #info .stats { font-size: 16px; }

@@ -4,7 +4,7 @@ Profile View with Sliding Thumbnails and Primary Image
 */
 
 	echo "<div id=\"profile\">\n";
-	echo " <div id=\"profile-layout-two\" class=\"rblayout\">\n";
+	echo " <div id=\"rblayout-two\" class=\"rblayout\">\n";
 	
 	echo "  <div class=\"seven column\">\n";
 	echo "	<div id=\"scroller\">\n";

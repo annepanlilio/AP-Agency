@@ -67,7 +67,7 @@ Custom Layout: Shake it like a polaroid picture
 		</style>\n";
 
 	echo "<div id=\"profile\">\n";
-	echo " <div id=\"profile-layout-four\">\n";
+	echo " <div id=\"rblayout-four\" class=\"rblayout\">\n";
 				
 		//=============================================================================================
 		//    Statistics with Name and Info
