@@ -62,17 +62,16 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	      echo "				        </select>\n";
 		echo "				    </div>\n";
 		
-		echo "				    <div class=\"search-field double\">\n";
-		echo "				        <div class=\"label\">". __("Age", rb_agency_TEXTDOMAIN) . "</div>\n";
+		echo "				    <fieldset class=\"search-field multi\">";
+		echo "				        <legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 		
-		echo "				    <div class=\"doublebox\">\n";
-		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>\n";
+		echo "				    <div>";
+		echo "				        <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>";
 		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
-		echo "				    </div>\n";// .doublebox
-		
-		echo "				    </div>\n";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>";
+		echo "				    </fieldset>";
+                
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\">";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
@@ -126,41 +125,15 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	      echo "				        </select>\n";
 		echo "				    </div>\n";
 		
-		echo "				    <div class=\"search-field double\">\n";
-		echo "				        <div class=\"label\">". __("Age", rb_agency_TEXTDOMAIN) . "</div>\n";
+		echo "				    <fieldset class=\"search-field multi\">";
+		echo "				        <legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 		
-		echo "				    <div class=\"doublebox\">\n";
-		
-			/*if($profilesearch_layout == "advanced"){
-		
-		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-            echo "<select class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\">";
-		echo "<option value=\"\">-</option>";
-		for($x = 1; $x<=99; $x++){
-		echo "<option value=\"".$x."\" ".selected($_SESSION['ProfileDateBirth_min'],$x).">".$x."</option>";
-		}
-		echo "</select>";	
-		echo "</div>";
-		
+		echo "				    <div>";
+		echo "				        <label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>";
 		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-            echo "<select class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\">";
-		echo "<option value=\"\">-</option>";
-		for($x = 1; $x<=99; $x++){
-		echo "<option value=\"".$x."\" ".selected($_SESSION['ProfileDateBirth_max'],$x).">".$x."</option>";
-		}
-		echo "</select>";
-		echo "</div>";
-		           
-		 }else{*/
-		
-		echo "				        <div><label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /></div>\n";
-		echo "				        <div><label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
-		//}
-		echo "				    </div>\n";// .doublebox
-		
-		echo "				    </div>\n";
+		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>";
+		echo "				    </fieldset>";
 							
 			
 		if($rb_agency_option_customfields_searchpage == 1 || $rb_agency_option_customfield_profilepage == 1 OR $_POST['advanced_search']){ // Show on Search Page or Profile Page
