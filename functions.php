@@ -2780,6 +2780,87 @@ function featured_homepage(){
 }
 
 /*
+ * Self Delete Process for 
+ * Users
+ */
+add_action('wp_before_admin_bar_render', 'self_delete');
+if(is_admin()){
+        add_action( 'admin_print_footer_scripts', 'delete_script' );
+} else {
+    add_action('wp_footer', 'delete_script');
+}
+
+
+function delete_script() {?>
+
+    <script type="text/javascript">
+                jQuery(document).ready(function(){
+
+                                jQuery("#self_del").click(function(){
+
+                                            var continue_delete = confirm("Are you sure you want to delete your profile?");
+
+                                            if (continue_delete)
+                                            {	
+                                                            // ajax delete
+                                                            jQuery.ajax({
+                                                                        type: "POST",
+                                                                        url: '<?php echo plugins_url( 'rb-agency/rb_delete_user.php' , dirname(__FILE__) ); ?>',
+                                                                        dataType: "html",
+                                                                        data: { ID : "<?php echo rb_agency_get_current_userid(); ?>" },
+
+                                                                        beforeSend: function() {
+                                                                        },
+
+                                                                        error: function() {
+                                                                                    setTimeout(function(){
+                                                                                    alert("Process Failed. Please try again later.");	
+                                                                                    }, 1000);
+                                                                        },	
+
+                                                                        success: function(data) {
+                                                                                if (data != "") {
+                                                                                            setTimeout(function(){
+                                                                                        alert("Deletion success! You will now be redirected to our homepage.");
+                                                                                                window.location.href = "<?php echo get_bloginfo('wpurl'); ?>";
+                                                                                            }, 1000);
+                                                                                } else {
+                                                                                            setTimeout(function(){
+                                                                                        alert("Failed. Please try again later.");
+                                                                                            }, 1000);
+
+                                                                                }
+                                                                        }
+                                                        });
+                                            }
+                                });	
+                });
+    </script>		
+
+<?php
+}
+function self_delete() {
+
+                        global $wp_admin_bar;
+
+                                    $href = get_bloginfo('wpurl');
+                                        $title = '<div>' . 
+                                                            '<div class="ab-item">Delete Me</div></div>';
+
+                                        $wp_admin_bar->add_menu( array(
+                                                'parent' => false,
+                                                        'id' => 'self_delete',
+                                                    'title' => __($title)
+                                        ));
+                                        $wp_admin_bar->add_menu(array(
+                                                'parent' => 'self_delete',
+                                                        'id' => 'actual_delete',
+                                                    'title' => __('<a id="self_del" class="ab-item" href="javascript:;">Delete My Profile</a>'),
+                                        )); 
+
+}
+
+/*
 // Phel: Test Content
 function replace_content_on_the_fly($text){
 	$text ="sample";
