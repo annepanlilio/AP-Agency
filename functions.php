@@ -592,6 +592,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 	$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
 	$rb_agency_option_profilenaming				 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 	$rb_agency_option_profilelist_castingcart 	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
+	$rb_agency_option_profilelist_printpdf 	     = isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
 
 	// Set It Up	
 	global $wp_rewrite;
@@ -947,8 +948,11 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			# print, downloads links to be added on top of profile list
 			$links='<div class="rblinks">';
 			  
-				if(get_query_var('target')!="results"){// hide print and download PDF in Search result
-				  	$links.='
+			       /*
+				* Set Print / PDF in Settings
+				*/
+				if(get_query_var('target')!="results" && $rb_agency_option_profilelist_printpdf){// hide print and download PDF in Search result
+					$links.='
 					<div class="rbprint-download">
 				  		<a target="_blank" href="/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'
 				  	</div><!-- .rbprint-download -->';
