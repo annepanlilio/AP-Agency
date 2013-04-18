@@ -24,10 +24,11 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "	  <div class=\"cb\"></div>\n";
 	echo "	  </div>\n";
 	echo "	</div>\n"; // close #photos
-	echo "	<div id=\"info\" class=\"eight column\">\n";
-	echo "	  <h2 class=\"twelve column\">". $ProfileContactDisplay ."</h2>\n";
 	
-		echo "	  <div id=\"stats\" class=\"six column\">\n";
+		echo "	  <div id=\"stats\" class=\"four column\">\n";
+
+		echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
+
 		echo "	  <ul>\n";
 
 			if (!empty($ProfileGender)) {
@@ -64,8 +65,9 @@ Profile View with Scrolling Thumbnails and Primary Image
 		echo "	  </ul>\n"; // Close ul
 		echo "	  </div>\n"; // Close Stats
 	
-	echo "		<div id=\"links\" class=\"six column\">\n";
+	echo "		<div id=\"links\" class=\"four column\">\n";
 	echo "			<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
+
 					 // Social Link
 					 rb_agency_getSocialLinks();
 	
@@ -76,7 +78,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume</a></li>\n";
+				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Print Resume</a></li>\n";
 				  }
 				}
 			
@@ -85,7 +87,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Comp Card</a></li>\n";
+				echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Download Comp Card</a></li>\n";
 				  }
 				}
 				// Headshots
@@ -93,7 +95,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Headshot</a></li>\n";
+				echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Download Headshot</a></li>\n";
 				  }
 				}
 				
@@ -102,7 +104,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Listen to Voice Demo</a></li>\n";
+				echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Listen to Voice Demo</a></li>\n";
 				  }
 				}
 
@@ -112,7 +114,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "		<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Video Slate</a></li>\n";
+				echo "		<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"btn_gray\">Watch Video Slate</a></li>\n";
 				  }
 				}
 
@@ -121,7 +123,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "		<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Video Monologue</a></li>\n";
+				echo "		<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"btn_gray\">Watch Video Monologue</a></li>\n";
 				  }
 				}
 
@@ -130,14 +132,14 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "		<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Demo Reel</a></li>\n";
+				echo "		<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"btn_gray\">Watch Demo Reel</a></li>\n";
 				  }
 				}
 
 				
 				// Is Logged?
 				if (is_user_logged_in()) { 
-				echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
+				echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\" class=\"btn_gray\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
 				
 				
 						if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
@@ -164,11 +166,11 @@ Profile View with Scrolling Thumbnails and Primary Image
                      </script>
                          <?php
 						 
-							echo "<li id=\"casting_cart_li\" class=\"add to cart\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\">". __("Add to Casting Cart", rb_agency_TEXTDOMAIN). "</a></li>\n";
+							echo "<li id=\"casting_cart_li\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\" class=\"btn_gray\">". __("Add to Casting Cart", rb_agency_TEXTDOMAIN). "</a></li>\n";
 							}else{
 				  		  echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);
 						  
-						  echo " <a href=\"".get_bloginfo('url')."/profile-casting/\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
+						  echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"btn_gray\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
 							
 				          }
 			}	//end if(checkCart(rb_agency_get_current_userid()
@@ -189,7 +191,6 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "		<div id=\"movie\" class=\"six column\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
 			}
 */	
-	echo "	  </div>\n";  // Close Info
 	
 	echo "	  <div style=\"clear: both;\"></div>\n"; // Clear All
 	echo "  </div>\n";  // Close Profile Zero
