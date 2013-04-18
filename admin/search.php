@@ -127,7 +127,7 @@ echo $cartArray;
 		if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
 			if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
 				$ProfileContactNameFirst = $_GET['ProfileContactNameFirst'];
-				$filter .= " AND profile.ProfileContactNameFirst='". $ProfileContactNameFirst ."'";
+				$filter .= " AND profile.ProfileContactNameFirst LIKE '". $ProfileContactNameFirst ."%'";
 			}
 			if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
 				$ProfileContactNameLast = $_GET['ProfileContactNameLast'];
