@@ -1116,7 +1116,9 @@ function rb_agency_profilelist($atts, $content = NULL) {
 				$displayHTML.="  <div class=\"rbclear\"></div>\n";
 			}	           
 			
-			$displayHTML.="  <div id=\"profile-list\">\n";
+			if($profileDisplay == 1){
+				$displayHTML.="  <div id=\"profile-list\">\n";
+			}
 			$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
 
 			if (isset($dataList["ProfileMediaURL"]) ) { // && (file_exists(rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"])) ) {
@@ -1170,9 +1172,10 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 			$displayHTML .=" </div> <!-- .profile-info --> \n";
 			$displayHTML .=" </div><!-- .rbprofile-list -->\n";
-			$displayHTML .= "  <div class=\"rbclear\"></div>\n";
-			$displayHTML .= "  </div><!-- #profile-list -->\n";
 		}	// endwhile datalist
+
+		$displayHTML .= "  <div class=\"rbclear\"></div>\n";
+		$displayHTML .= "  </div><!-- #profile-list -->\n";		
 	}	// endif countlist
 
 	if ($countList < 1) {
