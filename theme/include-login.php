@@ -54,32 +54,6 @@ echo "              <input type=\"submit\" value=\"". __("Sign In", rb_agencyint
 echo "            </div>\n";
 echo "          </form>\n";
 echo "        </div> <!-- rbsign-in -->\n";
-
-			//if (( current_user_can("create_users") || $rb_agencyinteract_option_registerallow == 1)) {
-
-echo "        <div id=\"rbsign-up\" class=\"inline-block\">\n";
-echo "          <div id=\"talent-register\" class=\"register\">\n";
-echo "            <h1>". __("Not a member", rb_agencyinteract_TEXTDOMAIN). "?</h3>\n";
-echo "            <h3>". __("Talent", rb_agencyinteract_TEXTDOMAIN). " - ". __("Register here", rb_agencyinteract_TEXTDOMAIN). "</h2>\n";
-echo "            <ul>\n";
-echo "              <li>". __("Create your free profile page", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
-echo "              <li>". __("Apply to Auditions & Jobs", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
-echo "              <li><a href=\"". get_bloginfo("wpurl") ."/profile-register/model-talent/\" class=\"rb_button\">". __("Register as Talent / Model", rb_agencyinteract_TEXTDOMAIN). "</a></li>\n";
-echo "            </ul>\n";
-echo "          </div> <!-- talent-register -->\n";
-echo "          <div class=\"clear line\"></div>\n";
-//if($rb_agencyinteract_option_registerallowAgentProducer == 1){
-echo "          <div id=\"agent-register\" class=\"register\">\n";
-echo "            <h3>". __("Casting Agents & Producers", rb_agencyinteract_TEXTDOMAIN). "</h3>\n";
-echo "            <ul>\n";
-echo "              <li>". __("List Auditions & Jobs free", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
-echo "              <li>". __("Contact People in the Talent Directory", rb_agencyinteract_TEXTDOMAIN). "</li>\n";
-echo "              <li><a href=\"". get_bloginfo("wpurl") ."/profile-register/agent-partners/\" class=\"rb_button\">". __("Register as Agent / Producer", rb_agencyinteract_TEXTDOMAIN). "</a></li>\n";
-echo "            </ul>\n";
-echo "          </div> <!-- talent-register -->\n";
-//}
-echo "        </div> <!-- not-a-member -->\n";
-		//	}
 			
 echo "      <div class=\"clear line\"></div>\n";
 echo "      </div>\n";
