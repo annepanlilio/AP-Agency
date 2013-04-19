@@ -35,18 +35,21 @@
 // *************************************************************************************************** //
 // Add to WordPress Dashboard
         
-        $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
+    $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
         
 	$rb_agency_options_arr = get_option('rb_agency_options');
     
 	$rb_agency_option_advertise = isset($rb_agency_options_arr['rb_agency_option_advertise']) ? $rb_agency_options_arr['rb_agency_option_advertise'] : 0;
 			
 	if($rb_agency_option_advertise == 1) {
-		add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );
+
+		add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );		
 		// Hoook into the 'wp_dashboard_setup' action to register our other functions
 		// Create the function use in the action hook
 		function rb_agency_add_dashboard() {
+
 			global $wp_meta_boxes;
+
 			// Create Dashboard Widgets
 			wp_add_dashboard_widget('rb_agency_dashboard_quicklinks', __("RB Agency Updates", rb_agency_TEXTDOMAIN), 'rb_agency_dashboard_quicklinks');
 		
@@ -66,16 +69,20 @@
 		}
 		 // Create the function to output the contents of our Dashboard Widget
 		function rb_agency_dashboard_quicklinks() {
+
 			// Display Quicklinks
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			if (isset($rb_agency_options_arr['dashboardQuickLinks'])) {
 			  	echo $rb_agency_options_arr['dashboardQuickLinks'];
 			}
 			$rss = fetch_feed("http://rbplugin.com/category/wordpress/rbagency/feed/");
+
 			// Checks that the object is created correctly 
 			if (!is_wp_error($rss)) { 
+
 				// Figure out how many total items there are, but limit it to 5. 
 				$maxitems = $rss->get_item_quantity($num_items); 
+
 				// Build an array of all the items, starting with element 0 (first element).
 				$rss_items = $rss->get_items(0, $maxitems); 
 			}
@@ -83,6 +90,7 @@
 			if ($maxitems == 0) {
 				echo "Empty Feed\n";
 			} else {
+
 				// Loop through each feed item and display each item as a hyperlink.
 				foreach ( $rss_items as $item ) {
 					echo "  <div class=\"blogpost\">\n";
@@ -650,6 +658,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 	}
         
 	if (isset($OverridePrivacy)) {
+
 		// If sent link, show both hidden and visible
 		$filter = "WHERE profile.ProfileIsActive IN (1, 4) ";
 	} else {
@@ -1163,9 +1172,9 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			 	$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 			}
 			
-         	//echo "loaded: ".microtime()." ms";
-				
+         	//echo "loaded: ".microtime()." ms";				
 			if($rb_user_isLogged ){
+
 			   	//Get Favorite & Casting Cart links
 		        $displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 			}
@@ -1327,7 +1336,7 @@ function rb_agency_profilesearch($atts, $content = NULL){
 			include("theme/include-profile-search.php"); 	
 		//echo "</div>\n";
 	} else {
-		include("theme/include-login.php"); 	
+		//include("theme/include-login.php"); 	
 	}
 }
 
@@ -1517,8 +1526,8 @@ class rb_agency_pagination {
 			}
 		
 		} else {
-			// We are in Page
-		
+			
+			// We are in Page		
 			preg_match('/[0-9]/', $this->target, $matches, PREG_OFFSET_CAPTURE);
 			if ($matches[0][1] > 0) {
 				return substr($this->target, 0, $matches[0][1]) ."/$id/";
@@ -1727,15 +1736,15 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
 			 
 				if (!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)) {
-						echo "<br /><br /> <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-						echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
-						echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-						echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /><br />\n";
+					echo "<br /><br /> <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+					echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
+					echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+					echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /><br />\n";
 				} else {
-						echo "<br /><br />  <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-						echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data3['ProfileCustomID']]."\" />\n";
-						echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-						echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data3['ProfileCustomID']]."\" /><br />\n";
+					echo "<br /><br />  <label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+					echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data3['ProfileCustomID']]."\" />\n";
+					echo "<br /><br /><br /><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+					echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data3['ProfileCustomID']]."\" /><br />\n";
 				}
 			 
 			} elseif ($ProfileCustomType == 3) {  // Drop Down
@@ -1782,7 +1791,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			} elseif ($ProfileCustomType == 5) {
 				echo "<fieldset>";
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
-				//echo "<div style=\"width:300px;float:left;\">";
+
 				foreach($array_customOptions_values as $val){
 					$xplode = explode(",",$ProfileCustomValue);
 					if(!empty($val)){
@@ -2789,7 +2798,7 @@ function featured_homepage(){
  */
 add_action('wp_before_admin_bar_render', 'self_delete');
 if(is_admin()){
-        add_action( 'admin_print_footer_scripts', 'delete_script' );
+    add_action( 'admin_print_footer_scripts', 'delete_script' );
 } else {
     add_action('wp_footer', 'delete_script');
 }
@@ -2798,85 +2807,66 @@ if(is_admin()){
 function delete_script() {?>
 
     <script type="text/javascript">
-                jQuery(document).ready(function(){
+        jQuery(document).ready(function(){
 
-                                jQuery("#self_del").click(function(){
+            jQuery("#self_del").click(function(){
 
-                                            var continue_delete = confirm("Are you sure you want to delete your profile?");
+                var continue_delete = confirm("Are you sure you want to delete your profile?");
 
-                                            if (continue_delete)
-                                            {	
-                                                            // ajax delete
-                                                            jQuery.ajax({
-                                                                        type: "POST",
-                                                                        url: '<?php echo plugins_url( 'rb-agency/rb_delete_user.php' , dirname(__FILE__) ); ?>',
-                                                                        dataType: "html",
-                                                                        data: { ID : "<?php echo rb_agency_get_current_userid(); ?>" },
+                if (continue_delete) {	
+                        // ajax delete
+                    jQuery.ajax({
+                                type: "POST",
+                                url: '<?php echo plugins_url( 'rb-agency/rb_delete_user.php' , dirname(__FILE__) ); ?>',
+                                dataType: "html",
+                                data: { ID : "<?php echo rb_agency_get_current_userid(); ?>" },
 
-                                                                        beforeSend: function() {
-                                                                        },
+                                beforeSend: function() {
+                                },
 
-                                                                        error: function() {
-                                                                                    setTimeout(function(){
-                                                                                    alert("Process Failed. Please try again later.");	
-                                                                                    }, 1000);
-                                                                        },	
+                                error: function() {
+                                    setTimeout(function(){
+                                    alert("Process Failed. Please try again later.");	
+                                    }, 1000);
+                                },	
 
-                                                                        success: function(data) {
-                                                                                if (data != "") {
-                                                                                            setTimeout(function(){
-                                                                                        alert("Deletion success! You will now be redirected to our homepage.");
-                                                                                                window.location.href = "<?php echo get_bloginfo('wpurl'); ?>";
-                                                                                            }, 1000);
-                                                                                } else {
-                                                                                            setTimeout(function(){
-                                                                                        alert("Failed. Please try again later.");
-                                                                                            }, 1000);
-
-                                                                                }
-                                                                        }
-                                                        });
-                                            }
-                                });	
-                });
+                                success: function(data) {
+                                    if (data != "") {
+                                        setTimeout(function(){
+                                        	alert("Deletion success! You will now be redirected to our homepage.");
+                                            window.location.href = "<?php echo get_bloginfo('wpurl'); ?>";
+                                        }, 1000);
+                                    } else {
+                                        setTimeout(function(){
+                                            alert("Failed. Please try again later.");
+                                        }, 1000);
+                                    }
+                                }
+                    });
+                }
+            });	
+        });
     </script>		
 
 <?php
 }
 function self_delete() {
 
-                        global $wp_admin_bar;
+    global $wp_admin_bar;
 
-                                    $href = get_bloginfo('wpurl');
-                                        $title = '<div>' . 
-                                                            '<div class="ab-item">Delete Me</div></div>';
+    $href = get_bloginfo('wpurl');
+    $title = '<div>' . '<div class="ab-item">Delete Me</div></div>';
 
-                                        $wp_admin_bar->add_menu( array(
-                                                'parent' => false,
-                                                        'id' => 'self_delete',
-                                                    'title' => __($title)
-                                        ));
-                                        $wp_admin_bar->add_menu(array(
-                                                'parent' => 'self_delete',
-                                                        'id' => 'actual_delete',
-                                                    'title' => __('<a id="self_del" class="ab-item" href="javascript:;">Delete My Profile</a>'),
-                                        )); 
+    $wp_admin_bar->add_menu( array(
+        'parent' => false,
+        'id' => 'self_delete',
+        'title' => __($title)
+    ));
+    $wp_admin_bar->add_menu(array(
+        'parent' => 'self_delete',
+        'id' => 'actual_delete',
+        'title' => __('<a id="self_del" class="ab-item" href="javascript:;">Delete My Profile</a>'),
+    )); 
 
 }
-
-/*
-// Phel: Test Content
-function replace_content_on_the_fly($text){
-	$text ="sample";
-}
-apply_filter('the_content', 'replace_content_on_the_fly');
-
-// Phel: Set Themes Defult Template
-function plugin_myown_template() {
-  include(TEMPLATEPATH."/page.php");
-  exit;
-}
-add_action('template_redirect', 'plugin_myown_template');
-*/
-
 ?>
