@@ -21,11 +21,24 @@
 	width: 100%;
 	height: 200px;
 	overflow: hidden;
+	box-shadow: 0 0 3px;
+	border: 2px solid #fff;
 }
 #profile-list .rbprofile-list .image img {
 	float: left;
 	border-radius: 0;
 	box-shadow: none;
+}
+#profile-list .rbprofile-list .image.image-broken {
+	height: 200px;
+	text-align: center;
+	line-height: 200px;
+	background: #f8ced6;
+}
+#profile-list .rbprofile-list .image.image-broken a {
+	font-weight: bold;
+	text-align: center;
+	text-decoration: none;
 }
 #profile-list .rbprofile-list .profile-info {
 	
@@ -36,7 +49,7 @@
 }
 #profile-list .rbprofile-list .profile-info h3.name {
 	margin: 0;
-	padding: 5px;
+	margin: 5px;
 	font-size: 14px;
 	text-align: center;
 	line-height: normal;
