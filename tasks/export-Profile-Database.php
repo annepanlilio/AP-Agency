@@ -31,7 +31,7 @@ global $wpdb;
 			foreach ($profile_data as $key => $data_value) { 
                                 $gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data_value['ProfileGender'], ARRAY_A);
                                 $data_value['ProfileGender'] = $gender['GenderTitle'];
-                                
+                                $data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
 				$csv_output .= implode(',', $data_value);
 				$subresult = $wpdb->get_results("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
 				$c_value_array = array();
