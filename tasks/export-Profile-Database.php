@@ -37,8 +37,13 @@ global $wpdb;
                 $temp_array = array();
 
 				foreach ($subresult as $sub_value) {
-                    $ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
-				   	$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
+					if(trim($sub_value['ProfileCustomValue']) != ""){
+                    	$ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+					} else {
+					    $ProfileCustomValue = "";
+					}
+					
+					$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
 				}
 				
 				/*
@@ -91,8 +96,13 @@ global $wpdb;
 			    $temp_array = array();
 
 				foreach ($subresult as $sub_value) {
-				    $ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
-				   	$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
+					if(trim($sub_value['ProfileCustomValue']) != ""){
+                    	$ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+					} else {
+					    $ProfileCustomValue = "";
+					}
+					
+					$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
 				}
 				
 				/*
