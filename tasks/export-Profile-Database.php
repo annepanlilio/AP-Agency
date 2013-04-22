@@ -34,18 +34,23 @@ global $wpdb;
                                 $data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
 				$csv_output .= implode(',', $data_value);
 				$subresult = $wpdb->get_results("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
-				$c_value_array = array();
-
+                $temp_array = array();
 
 				foreach ($subresult as $sub_value) {
                     $ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
-					array_push($c_value_array, $ProfileCustomValue);
+				   	$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
 				}
 				
-				$new_arr = array_reverse($c_value_array);
-				$csv_output .= ','.implode(',', $new_arr);
+				/*
+				 * arrange array to right column headings
+				 */
+				foreach($custom_fields_id as $d){
+					$c_value_array[] = $temp_array[$d];
+				}
 				
+				$csv_output .= ','.implode(',', $c_value_array);
 				$csv_output .="\n";
+				
 			}
 			$filename = $_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time());
 			header("Content-type: application/vnd.ms-excel");
@@ -77,18 +82,27 @@ global $wpdb;
 			foreach ($row_data as $key => $data) 
 			{
 				$rowNumber++;
-				$subresult = $wpdb->get_results("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
+				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
 
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
 
 				$data['ProfileGender'] =$gender['GenderTitle'];
 				$c_value_array = array();
+			    $temp_array = array();
+
 				foreach ($subresult as $sub_value) {
-					array_push($c_value_array, $sub_value['ProfileCustomValue']);
+				    $ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+				   	$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
 				}
 				
-				$new_arr = array_reverse($c_value_array);
-				$data = array_merge($data, $new_arr);
+				/*
+				 * arrange array to right column headings
+				 */
+				foreach($custom_fields_id as $d){
+					$c_value_array[] = $temp_array[$d];
+				}
+				
+				$data = array_merge($data, $c_value_array);
 				
 				$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
 			}
