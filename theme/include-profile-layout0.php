@@ -181,7 +181,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "		</div>\n";  // Close Links
 	?>
         <div id="resultsGoHereAddtoCart"></div>
-                <div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></div>
+        <div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></div>
     <?php
 	echo "	  <div id=\"experience\" class=\"six column\">\n";
 	echo			$ProfileExperience;
