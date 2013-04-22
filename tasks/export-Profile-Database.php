@@ -41,8 +41,10 @@ global $wpdb;
                     $ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
 					array_push($c_value_array, $ProfileCustomValue);
 				}
+				
 				$new_arr = array_reverse($c_value_array);
 				$csv_output .= ','.implode(',', $new_arr);
+				
 				$csv_output .="\n";
 			}
 			$filename = $_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time());
@@ -84,8 +86,10 @@ global $wpdb;
 				foreach ($subresult as $sub_value) {
 					array_push($c_value_array, $sub_value['ProfileCustomValue']);
 				}
+				
 				$new_arr = array_reverse($c_value_array);
 				$data = array_merge($data, $new_arr);
+				
 				$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
 			}
 			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
