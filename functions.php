@@ -1272,14 +1272,12 @@ function rb_agency_profilefeatured($atts, $content = NULL) {
 	$countList = mysql_num_rows($resultsList);
 	while ($dataList = mysql_fetch_array($resultsList)) {
 	    echo "<div class=\"rbprofile-list\">\n";
-		echo "  <div class=\"style\"></div>\n";
 		if (isset($dataList["ProfileMediaURL"]) ) { 
 		echo "  <div class=\"image\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
 		} else {
 		echo "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
 		}
 		echo "<div class=\"profile-info\">";
-		echo "  <div class=\"title\">\n";
                     $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 						if ($rb_agency_option_profilenaming == 0) {
 							$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
@@ -1303,7 +1301,6 @@ function rb_agency_profilefeatured($atts, $content = NULL) {
 		// Add Favorite and Casting Cart links		
 	  	rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 		
-		echo "  </div>\n";
 		echo "  </div><!-- .profile-info -->\n";
 		echo "</div><!-- .rbprofile-list -->\n";
 	}
