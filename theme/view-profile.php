@@ -179,25 +179,29 @@ while ($data = mysql_fetch_array($results)) {
 						});
 						</script>
 						<?php
-					} elseif ($rb_agency_option_layoutprofile == "0") { ?>
+					} elseif ($rb_agency_option_layoutprofile == "0") { // ?>
 						<script type="text/javascript">
-						  	$(document).ready(function () {
-						  		$('.photo a img').each(
-						    		function(){
-							        var height = $(this).height();
-							        var width = $(this).width();
-							        var parH = $(this).parent("a").height();
-							        var parW = $(this).parent("a").width();
-							        if(height<parH){
-							        	$(this).addClass('fillheight');
-							        }
-							        if(width<parW){
-							        	$(this).addClass('fillwidth');
-							        }
-							        $(this).attr({'height': height, 'width': width});
-							   	})
+						  $(document).ready(function () {
+						  	$('.photo a img').each(
+						    function(){
+						    	var div = $(this).parent("a").parent("div");
+						    	var divW = $(div).width();
+						    	$(div).height(divW);
+						    	$(div).children("a").height(divW-11);
+						        var height = $(this).height();
+						        var width = $(this).width();
+						        var parH = $(this).parent("a").height();
+						        var parW = $(this).parent("a").width();
+						        if(height<parH){
+						        	$(this).addClass('fillheight');
+						        }
+						        if(width<parW){
+						        	$(this).addClass('fillwidth');
+						        }
+						        $(this).attr({'height': height, 'width': width});
+						    })
 
-						  	});  
+						  });  
 						</script>
 					<?php }
 		        } // end if
