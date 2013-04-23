@@ -294,8 +294,7 @@
 /* Profile Layout with Thumbnails (include-profile-layout0.php) */
 #rblayout-zero #photos { text-align: center; font-size: 0px; }
 #rblayout-zero #photos .inner { margin: 0 -5px; }
-#rblayout-zero #photos .photo { width: 40%; max-width: 150px; overflow: hidden; display: inline-block; margin: 0px 7px 15px 7px;
-	border-radius: 5px;
+#rblayout-zero #photos .photo { width: 40%; max-width: 150px; overflow: hidden; display: inline-block; margin: 0px 7px 15px 7px; border-radius: 5px;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ddd) );
 	background:-moz-linear-gradient( center top, #ffffff 5%, #ddd 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ddd');
@@ -306,6 +305,8 @@
 }
 #rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; }
 #rblayout-zero #photos .photo img { float: left; }
+#rblayout-zero #photos .photo img.fillwidth { width: 100%; height: auto; }
+#rblayout-zero #photos .photo img.fillheight { height: 100%; width: auto; }
 #rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
 #rblayout-zero #stats h2 { margin-bottom: 15px; }
 #rblayout-zero #links ul li a { margin: 0px 5px 10px 5px; min-width: 200px; font-weight: normal; font-size: 14px; }
