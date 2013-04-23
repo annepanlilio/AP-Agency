@@ -176,7 +176,7 @@ echo "        <div class=\"inner\">\n";
 											echo "<div><label>".$data[0]."</label></div>";
 											
 											echo "<div><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">\n";
-											echo "<option value=\"\">--</option>";
+											echo "<option value=\"\">Any ".$data1['ProfileCustomTitle']."</option>";
 											  
 												foreach($data as $val1){
 													
