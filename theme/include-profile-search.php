@@ -154,11 +154,10 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 			} else { // All with non-logged here
 				
 				// Show custom fields to public
-			    if($_REQUEST["action"] != 'search' || $_REQUEST["action"] ==''){
-				    	include("include-custom-fields.php");
+			    	    	include("include-custom-fields.php");
 						$profilesearch_layout = "";
-					}
-				}
+			}
+				
 		echo "	 			      <div class=\"search-field single\">\n";
 		echo "		 				<label for=\"ProfileCity\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
 	    echo "		 				<input type=\"text\" id=\"ProfileCity\" name=\"ProfileCity\" value=\"". $_SESSION["ProfileCity"] ."\" />\n";
