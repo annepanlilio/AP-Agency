@@ -136,7 +136,18 @@ Profile View with Scrolling Thumbnails and Primary Image
 				  }
 				}
 
-				
+				// Other Media Type not the 
+				// default ones
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" 
+				                             AND ProfileMediaType NOT IN ('Image','Resume','CompCard','Comp Card','Headshot','VoiceDemo','Voice Demo','Video Slate','Video Monologue','Demo Reel')
+											 GROUP BY ProfileMediaType");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+                                      echo "<li class=\"item video demoreel\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">".$dataMedia['ProfileMediaType']. "</a></li>\n";
+				  }
+				}
+                                
 				// Is Logged?
 				if (is_user_logged_in()) { 
 				echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\" class=\"btn_gray\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
