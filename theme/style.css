@@ -10,12 +10,16 @@
 }
 
 /* Profile Results */
-
+#profile-list {
+	font-size: 0;
+	text-align: center;
+}
 #profile-list .rbprofile-list {
-	float: left;
+	margin: 7px;
 	width: 150px;
+	font-size: 100%;
 	position: relative;
-	margin: 0 15px 15px 0;
+	display: inline-block;
 }
 #profile-list .rbprofile-list .image {
 	width: 100%;
@@ -51,14 +55,14 @@
 	margin: 0;
 	margin: 5px;
 	font-size: 14px;
-	text-align: center;
-	line-height: normal;
 	overflow: hidden;
+	text-align: center;
+	line-height: normal;	
 }
 #profile-list .rbprofile-list .profile-info h3.name a {
+	white-space: nowrap;
 	text-decoration: none;
 	display: inline-block;
-	white-space: nowrap;
 }
 
 /* RBLinks */
