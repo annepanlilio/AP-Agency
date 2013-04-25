@@ -231,6 +231,19 @@ elseif ($ConfigID == 1) {
 		 echo "   <th scope=\"row\">". __('Profiles Max Per Search', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_persearch]\" value=\"". $rb_agency_option_persearch ."\" /></td>\n";
 		 echo " </tr>\n";
+                 
+ 		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Allow Profile Deletion', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
+		 echo " </tr>\n";
+		 echo " <tr valign=\"top\">\n";
+		 echo "   <th scope=\"row\">". __('Delete Options', rb_agency_TEXTDOMAIN) ."</th>\n";
+		 echo "   <td>\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 1,false)."/> ". __("No", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"2\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 2,false)."/> ". __("Yes (Allow USers to delete)", rb_agency_TEXTDOMAIN) ."<br />\n";
+		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"3\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 3,false)."/> ". __("Archive Only (Users can remove themselves as active but profile remains)", rb_agency_TEXTDOMAIN) ."<br />\n";
+                 echo "   </td>\n";
+		 echo " </tr>\n";		 
+		                 
 		 echo " <tr valign=\"top\">\n";
 		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile View Options', rb_agency_TEXTDOMAIN) ."</h3></th>\n";
 		 echo " </tr>\n";
