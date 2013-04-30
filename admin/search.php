@@ -722,7 +722,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 		echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
 		echo "     <div class=\"boxblock\">\n";
-		echo "      <h3>". __("Profile Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
+		echo "      <h3>". __("Advance Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
 		echo "        <div class=\"inner\">\n";
 		echo "        	<form method=\"GET\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" />\n";
@@ -1193,7 +1193,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				<p clas=\"submit\">\n";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "				<input type=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
-		echo "				<a href=\"?page=". $_GET['page'] ."&action=formEmpty\" class=\"button-secondary\">". __("Empty Form", rb_agency_TEXTDOMAIN) . "</a>\n";
+		echo "				<a href=\"?page=rb_agency_menu\" class=\"button-secondary\">". __("Quick Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 		echo "				</p>\n";
 		echo "        	<form>\n";
 
