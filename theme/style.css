@@ -313,7 +313,7 @@
 #rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; }
 #rblayout-zero #photos .photo img { float: left; }
 #rblayout-zero #photos .photo img.fillwidth { width: 100%; height: auto; }
-#rblayout-zero #photos .photo img.fillheight { height: 100%; width: auto; }
+#rblayout-zero #photos .photo img.fillheight { height: 100%; width: auto; max-width: none; }
 #rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
 #rblayout-zero #stats h2 { margin-bottom: 15px; }
 #rblayout-zero #links ul li a { margin: 0px 5px 10px 5px; min-width: 200px; font-weight: normal; font-size: 14px; }
