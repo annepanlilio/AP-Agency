@@ -759,11 +759,13 @@ function rb_agency_profilelist($atts, $content = NULL) {
                                         if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
                                                         $minVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min'];
                                                         $maxVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max'];
-                                                        if($filter2 == ""){
-                                                            $filter2 .= " AND ( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' ";
-                                                        } else {
-                                                            $filter2 .= " OR customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' ";
+                                                        if($minVal != "" && $maxVal != ""){
+                                                            if($filter2 == ""){
+                                                                $filter2 .= " AND ( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' ";
+                                                            } else {
+                                                                $filter2 .= " OR customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' ";
 
+                                                            }
                                                         }
 
                                                         //echo "-----";
