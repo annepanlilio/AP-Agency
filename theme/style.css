@@ -526,9 +526,6 @@ img { -ms-interpolation-mode: bicubic; }
   margin-bottom:30px;
   overflow:hidden;
 }
-.mCSB_horizontal .mCSB_container img {
-  height: 150px;
-}
 .mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
   margin-bottom:0;
 }
@@ -545,8 +542,6 @@ img { -ms-interpolation-mode: bicubic; }
   bottom:0;
   left:0;
   overflow:hidden;
-  background: #000;
-  border-radius: 1px;
 }
 .mCSB_horizontal .mCSB_scrollTools a+.mCSB_draggerContainer{
   margin:0 20px;

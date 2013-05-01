@@ -10,12 +10,18 @@
 }
 
 /* Profile Results */
-
+#profile-list {
+	font-size: 0;
+	margin-top: 30px;
+	text-align: center;
+}
 #profile-list .rbprofile-list {
-	float: left;
-	width: 150px;
+	width: 22%;
+	margin: 7px;
+	font-size: 100%;
+	max-width: 150px;
 	position: relative;
-	margin: 0 15px 15px 0;
+	display: inline-block;
 }
 #profile-list .rbprofile-list .image {
 	width: 100%;
@@ -49,22 +55,23 @@
 }
 #profile-list .rbprofile-list .profile-info h3.name {
 	margin: 0;
-	margin: 5px;
+	margin: 5px 0;
 	font-size: 14px;
-	text-align: center;
-	line-height: normal;
 	overflow: hidden;
+	text-align: center;
+	line-height: normal;	
 }
 #profile-list .rbprofile-list .profile-info h3.name a {
+	white-space: nowrap;
 	text-decoration: none;
 	display: inline-block;
-	white-space: nowrap;
 }
 
 /* RBLinks */
 .rblinks {
 	clear: both;
 	font-size: 13px;
+	padding: 15px 0;
 	overflow: hidden;
 }
 .rblinks .rbprint-download {
@@ -294,8 +301,7 @@
 /* Profile Layout with Thumbnails (include-profile-layout0.php) */
 #rblayout-zero #photos { text-align: center; font-size: 0px; }
 #rblayout-zero #photos .inner { margin: 0 -5px; }
-#rblayout-zero #photos .photo { width: 130px; height: 130px; overflow: hidden; display: inline-block; margin: 0px 7px 15px 7px;
-	border-radius: 5px;
+#rblayout-zero #photos .photo { width: 40%; max-width: 150px; overflow: hidden; display: inline-block; margin: 0px 7px 15px 7px; border-radius: 5px;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ddd) );
 	background:-moz-linear-gradient( center top, #ffffff 5%, #ddd 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ddd');
@@ -304,8 +310,10 @@
 	-webkit-border-radius:3px;
 	box-shadow: 0px 0px 3px rgba(0,0,0,0.5)
 }
-#rblayout-zero #photos .photo a { float: left; overflow: hidden; margin: 5px; border-radius: 2px; height: 120px; border: 1px solid #ddd; }
+#rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; }
 #rblayout-zero #photos .photo img { float: left; }
+#rblayout-zero #photos .photo img.fillwidth { width: 100%; height: auto; }
+#rblayout-zero #photos .photo img.fillheight { height: 100%; width: auto; max-width: none; }
 #rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
 #rblayout-zero #stats h2 { margin-bottom: 15px; }
 #rblayout-zero #links ul li a { margin: 0px 5px 10px 5px; min-width: 200px; font-weight: normal; font-size: 14px; }
@@ -518,9 +526,6 @@ img { -ms-interpolation-mode: bicubic; }
   margin-bottom:30px;
   overflow:hidden;
 }
-.mCSB_horizontal .mCSB_container img {
-  height: 150px;
-}
 .mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
   margin-bottom:0;
 }
@@ -537,8 +542,6 @@ img { -ms-interpolation-mode: bicubic; }
   bottom:0;
   left:0;
   overflow:hidden;
-  background: #000;
-  border-radius: 1px;
 }
 .mCSB_horizontal .mCSB_scrollTools a+.mCSB_draggerContainer{
   margin:0 20px;
