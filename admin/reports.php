@@ -26,17 +26,16 @@ if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;}
 if ($ConfigID == 0) {
 	
 	if (function_exists(rb_agencyinteract_menu_approvemembers)) {
-	// RB Agency Interact Settings
-    echo "<div class=\"boxlinkgroup\">\n";
-    echo "  <h2>". __("Interactive Reporting", rb_agency_TEXTDOMAIN) . "</h2>\n";
-    echo "  <p>". __("Run reports on membership and other usage.", rb_agency_TEXTDOMAIN) . "</p>\n";
+    	// RB Agency Interact Settings
+        echo "<div class=\"boxlinkgroup\">\n";
+        echo "  <h2>". __("Interactive Reporting", rb_agency_TEXTDOMAIN) . "</h2>\n";
+        echo "  <p>". __("Run reports on membership and other usage.", rb_agency_TEXTDOMAIN) . "</p>\n";
 
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Recent Payments", rb_agency_TEXTDOMAIN) . "\">". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Payments and membership renewals", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-
+        echo "    <div class=\"boxlink\">\n";
+        echo "      <h3>". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</h3>\n";
+        echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Recent Payments", rb_agency_TEXTDOMAIN) . "\">". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+        echo "      <p>". __("Payments and membership renewals", rb_agency_TEXTDOMAIN) . "</p>\n";
+        echo "    </div>\n";
     echo "</div>\n";
 	}
 
@@ -44,7 +43,6 @@ if ($ConfigID == 0) {
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Initial Setup", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("If you are doing the initial instal of RB Agency you this section will help you get your data inplace", rb_agency_TEXTDOMAIN) . "</p>\n";
-
     echo "</div>\n";
 
 	//
@@ -87,7 +85,6 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "\">". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Check for any empty folders which do no have models assigned using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-
     echo "</div>\n";
 
 	//
@@ -112,7 +109,6 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=14\" title=\"". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "\">". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("You may add dummy profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-
     echo "</div>\n";
 
     echo "    <div class=\"boxlink\">\n";
@@ -193,11 +189,11 @@ elseif ($ConfigID == 11) {
 	$results = mysql_query($sql);
 	$count = mysql_num_rows($results);
 	if ($count > 0) {
-	  while ($data = mysql_fetch_array($results)) {
-		echo "<div id=\"subscription-activity\">\n";
-		echo "  <span>". $data["SubscriberDateStart"] ."</span> <span>". $data["ProfileID"] ."</span>\n";
-		echo "</div>\n";
-	  } // is there record?
+        while ($data = mysql_fetch_array($results)) {
+            echo "<div id=\"subscription-activity\">\n";
+            echo "  <span>". $data["SubscriberDateStart"] ."</span> <span>". $data["ProfileID"] ."</span>\n";
+            echo "</div>\n";
+       } // is there record?
 	} else {
 		echo "Currently no subscriptions.";
 	}
@@ -246,19 +242,19 @@ elseif ($ConfigID == 2) {
 	$throw_error = false;
 
 	if($_REQUEST['action'] == 'generate') {
-			$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-			$results1 = mysql_query($query1);
-			$count1 = mysql_num_rows($results1);
-			while ($data1 = mysql_fetch_array($results1)) {
-				$dirURL = rb_agency_UPLOADPATH. $data1['ProfileGallery'];
-				if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
-				} else {
-					// Create Folders
-					mkdir($dirURL, 0755); //700
-					chmod($dirURL, 0777);
-					echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-				}
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
+		$results1 = mysql_query($query1);
+		$count1 = mysql_num_rows($results1);
+		while ($data1 = mysql_fetch_array($results1)) {
+			$dirURL = rb_agency_UPLOADPATH. $data1['ProfileGallery'];
+			if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
+			} else {
+				// Create Folders
+				mkdir($dirURL, 0755); //700
+				chmod($dirURL, 0777);
+				echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 			}
+		}
     } else {
     ?>
     <h3>Check Galleries</h3>
@@ -266,38 +262,38 @@ elseif ($ConfigID == 2) {
     <p>This will determine if a profiles profile exists.  Green profiles indicate that the model has a folder linked correctly where red profiles indicate that a model does not yet have a folder created for them yet.  NOTE: That spelling errors could make it seem that a folder does not exist, please check the report above to find folders with no profile assigned which may need to be renamed.</p>
     <?php
 
-			$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-			$results1 = mysql_query($query1);
-			$count1 = mysql_num_rows($results1);
-			while ($data1 = mysql_fetch_array($results1)) {
-				$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
-				echo "<div>\n";
-				if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
-					echo "  <span style='width: 240px; color: green;'>". $dirURL ."/</span>\n";
-				} else {
-					// Add Profiles to Array to Create later
-					$arrayProfilesMissingFolders[] = $dirURL; 
-					$throw_error = true;
-
-					echo "  <span style='width: 240px; color: red;'>". $dirURL ."/</span>\n";
-					echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is missing folder.</strong>\n";
-				}
-				echo "</div>\n";
-			}
-			
-			// Errors?
-            if ($throw_error == true) { ?>
-                  <a name="generate"></a>
-                  <h3>Generate Folders for Profiles</h3>
-                  <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
-                  <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=2&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
-                  <?php
-                    foreach ($arrayProfilesMissingFolders as $profileURL) {
-                        echo $profileURL.", ";
-                    }
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
+		$results1 = mysql_query($query1);
+		$count1 = mysql_num_rows($results1);
+		while ($data1 = mysql_fetch_array($results1)) {
+			$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
+			echo "<div>\n";
+			if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
+				echo "  <span style='width: 240px; color: green;'>". $dirURL ."/</span>\n";
 			} else {
-				echo "Good to go! No changes needed!";
+				// Add Profiles to Array to Create later
+				$arrayProfilesMissingFolders[] = $dirURL; 
+				$throw_error = true;
+
+				echo "  <span style='width: 240px; color: red;'>". $dirURL ."/</span>\n";
+				echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is missing folder.</strong>\n";
 			}
+			echo "</div>\n";
+		}
+		
+		// Errors?
+        if ($throw_error == true) { ?>
+            <a name="generate"></a>
+            <h3>Generate Folders for Profiles</h3>
+            <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
+            <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=2&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
+            <?php
+            foreach ($arrayProfilesMissingFolders as $profileURL) {
+                echo $profileURL.", ";
+            }
+		} else {
+			echo "Good to go! No changes needed!";
+		}
 			
 	} // To Generate or Not to Generate
 	  
@@ -309,17 +305,17 @@ elseif ($ConfigID == 53) {
 	$throw_error = false;
 
 	if($_REQUEST['action'] == 'generate') {
-			$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-			$results1 = mysql_query($query1);
-			$count1 = mysql_num_rows($results1);
-			while ($data1 = mysql_fetch_array($results1)) {
-				$ProfileID = $data1['ProfileID'];
-				$ProfileGallery = rb_agency_safenames($data1['ProfileContactNameFirst'] . "-" . $data1['ProfileContactNameLast']); 
-				// Create Folders
-				$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGallery ."' WHERE ProfileID = \"". $ProfileID ."\"";
-				$renamed = mysql_query($rename);
-				echo "  <div id=\"message\" class=\"updated highlight\">Folder name <strong>/" . $ProfileGallery . "/</strong> has been set for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-			}
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
+		$results1 = mysql_query($query1);
+		$count1 = mysql_num_rows($results1);
+		while ($data1 = mysql_fetch_array($results1)) {
+			$ProfileID = $data1['ProfileID'];
+			$ProfileGallery = rb_agency_safenames($data1['ProfileContactNameFirst'] . "-" . $data1['ProfileContactNameLast']); 
+			// Create Folders
+			$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGallery ."' WHERE ProfileID = \"". $ProfileID ."\"";
+			$renamed = mysql_query($rename);
+			echo "  <div id=\"message\" class=\"updated highlight\">Folder name <strong>/" . $ProfileGallery . "/</strong> has been set for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+		}
     } else {
 		
 		/*
@@ -360,14 +356,14 @@ elseif ($ConfigID == 53) {
 			
 			// Errors?
             if ($throw_error == true) { ?>
-                  <a name="generate"></a>
-                  <h3>Generate Folders for Profiles</h3>
-                  <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
-                  <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
-                  <?php
-                    foreach ($arrayProfilesMissingFolders as $profileURL) {
-                        echo $profileURL.", ";
-                    }
+                <a name="generate"></a>
+                <h3>Generate Folders for Profiles</h3>
+                <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
+                <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
+                <?php
+                foreach ($arrayProfilesMissingFolders as $profileURL) {
+                    echo $profileURL.", ";
+                }
 			} else {
 				echo "Good to go! No changes needed!";
 			}
@@ -488,45 +484,45 @@ elseif ($ConfigID == 4) {
         <h3>Select Primary Profile Photo</h3>
         <p>Select the checkbox for the model desired.</p>
         <form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
-        <?php
-		
-        $query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT $step,$stepSize"; //LIMIT $step,100
-        $results4 = mysql_query($query4);
-        $count4 = mysql_num_rows($results4);
-        while ($data4 = mysql_fetch_array($results4)) {
-            $dirURL = rb_agency_UPLOADDIR . $data4['ProfileGallery'];
-            $profileID = $data4['ProfileID'];
+            <?php
+    		
+            $query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT $step,$stepSize"; //LIMIT $step,100
+            $results4 = mysql_query($query4);
+            $count4 = mysql_num_rows($results4);
+            while ($data4 = mysql_fetch_array($results4)) {
+                $dirURL = rb_agency_UPLOADDIR . $data4['ProfileGallery'];
+                $profileID = $data4['ProfileID'];
 
-            $query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
-            $results4b = mysql_query($query4b);
-            $count4b = mysql_num_rows($results4b);
-			//echo $query4b ."<br />". $count4b ."<hr />";
-            if ($count4b < 1) {
+                $query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
+                $results4b = mysql_query($query4b);
+                $count4b = mysql_num_rows($results4b);
+    			//echo $query4b ."<br />". $count4b ."<hr />";
+                if ($count4b < 1) {
 
-				echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_menu_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
-		
-				$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image'";
-				$results4a = mysql_query($query4a);
-				$count4a = mysql_num_rows($results4a);
-				if ($count4a < 1) {
-					echo "This profile has no images loaded.";
-				} else {
-					while ($data4a = mysql_fetch_array($results4a)) {
-						echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" class=\"button-primary\" />Select Primary<br /><img src=\"". $dirURL ."/". $data4a['ProfileMediaURL'] ."\" style=\"width: 150px;\" /></div>\n";
-					}
-					echo "<div style=\"clear: both;\"></div>\n";
-				}
-				echo "</div>\n";
-			} else {
-				// Primary Image Already Set
-			}
-        }
-        if ($count4 < 1) {
-            echo "There are currently no profile records.";
-        }
-        ?>
-        <input type="hidden" value="update" name="action" />
-        <input type="submit" value="Submit" class="button-primary" name="Update" />
+    				echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_menu_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
+    		
+    				$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image'";
+    				$results4a = mysql_query($query4a);
+    				$count4a = mysql_num_rows($results4a);
+    				if ($count4a < 1) {
+    					echo "This profile has no images loaded.";
+    				} else {
+    					while ($data4a = mysql_fetch_array($results4a)) {
+    						echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" class=\"button-primary\" />Select Primary<br /><img src=\"". $dirURL ."/". $data4a['ProfileMediaURL'] ."\" style=\"width: 150px;\" /></div>\n";
+    					}
+    					echo "<div style=\"clear: both;\"></div>\n";
+    				}
+    				echo "</div>\n";
+    			} else {
+    				// Primary Image Already Set
+    			}
+            }
+            if ($count4 < 1) {
+                echo "There are currently no profile records.";
+            }
+            ?>
+            <input type="hidden" value="update" name="action" />
+            <input type="submit" value="Submit" class="button-primary" name="Update" />
         </form>
     <?php
 	}
@@ -633,7 +629,7 @@ elseif ($ConfigID == 7) {
 							
 						echo "<div style=\"color: red;\">". $fileCheck ." DELETED</div>\n";
 						} else {
-						echo "<div style=\"color: red;\">". $fileCheck ."</div>\n";
+						  echo "<div style=\"color: red;\">". $fileCheck ."</div>\n";
 						}
 					}
 				}
@@ -672,173 +668,165 @@ elseif ($ConfigID == 8) {
 
 	if($_REQUEST['action'] == 'generate') {
 
-			// LETS DO IT!
-			$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-			$results1 = mysql_query($query1);
-			$count1 = mysql_num_rows($results1);
-			$arrayReservedFoldername = array();
-			$pos = 0;
-			while ($data1 = mysql_fetch_array($results1)) {
-				$ProfileID				=$data1["ProfileID"];
-				$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
-				$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
-				$ProfileContactDisplay	=$data1["ProfileContactDisplay"];
-				$ProfileGallery			=$data1["ProfileGallery"];
-					if ($rb_agency_option_profilenaming == 0) {
-						$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
-					} elseif ($rb_agency_option_profilenaming == 1) {
-						$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
-					} elseif ($rb_agency_option_profilenaming == 2) {
-						$ProfileGalleryFixed = $ProfileContactDisplay;
-					} elseif ($rb_agency_option_profilenaming == 3) {
-						$ProfileGalleryFixed = "ID ";
-					}
-					$ProfileGalleryFixed = rb_agency_safenames($ProfileGalleryFixed); 
-				
-				  if(in_array($ProfileGallery,$arrayReservedFoldername)){
-					$ProfileGalleryFixed = rb_agency_set_directory($ProfileGalleryFixed);
-					$arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
-				 }
-					
-					if ($ProfileGallery == $ProfileGalleryFixed ) {
-				     				$ProfileGalleryFixed = $ProfileGallery;
-					} else {
-						      	$ProfileGalleryFixed  = rb_agency_set_directory($ProfileGalleryFixed);
-					}
-
-				if ($ProfileGallery == $ProfileGalleryFixed) {
-				} else {
-					// Folder Exist?
-					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
-						$finished = false;                       // we're not finished yet (we just started)
-						while ( ! $finished ):                   // while not finished
-						  $ProfileGalleryFixed = $ProfileGalleryFixed .$ProfileID;   // output folder name
-						  if ( ! is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ):        // if folder DOES NOT exist...
-							rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
-							
-							if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
-								$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
-								$renamed = mysql_query($rename);
-
-							echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-							} else {
-							echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-							}
-							
-							$finished = true; // ...we are finished
-						  endif;
-						endwhile;
-
-					} else {
-						
-						// Create Folders
-						rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
-						if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
-							$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
-							$renamed = mysql_query($rename);
-						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-						} else {
-						echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-						}
-					}
-
+		// LETS DO IT!
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
+		$results1 = mysql_query($query1);
+		$count1 = mysql_num_rows($results1);
+		$arrayReservedFoldername = array();
+		$pos = 0;
+		while ($data1 = mysql_fetch_array($results1)) {
+			$ProfileID				=$data1["ProfileID"];
+			$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
+			$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
+			$ProfileContactDisplay	=$data1["ProfileContactDisplay"];
+			$ProfileGallery			=$data1["ProfileGallery"];
+				if ($rb_agency_option_profilenaming == 0) {
+					$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+				} elseif ($rb_agency_option_profilenaming == 1) {
+					$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+				} elseif ($rb_agency_option_profilenaming == 2) {
+					$ProfileGalleryFixed = $ProfileContactDisplay;
+				} elseif ($rb_agency_option_profilenaming == 3) {
+					$ProfileGalleryFixed = "ID ";
 				}
-				$pos++;
+				$ProfileGalleryFixed = rb_agency_safenames($ProfileGalleryFixed); 
+			
+			  if(in_array($ProfileGallery,$arrayReservedFoldername)){
+				$ProfileGalleryFixed = rb_agency_set_directory($ProfileGalleryFixed);
+				$arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
+			 }
+				
+				if ($ProfileGallery == $ProfileGalleryFixed ) {
+			     				$ProfileGalleryFixed = $ProfileGallery;
+				} else {
+					      	$ProfileGalleryFixed  = rb_agency_set_directory($ProfileGalleryFixed);
+				}
+
+			if ($ProfileGallery == $ProfileGalleryFixed) {
+			} else {
+				// Folder Exist?
+				if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
+					$finished = false;                       // we're not finished yet (we just started)
+					while ( ! $finished ):                   // while not finished
+                        $ProfileGalleryFixed = $ProfileGalleryFixed .$ProfileID;   // output folder name
+                        if ( ! is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ):        // if folder DOES NOT exist...
+                            rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
+
+                            if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
+                            	$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
+                            	$renamed = mysql_query($rename);
+                                echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+                            } else {
+                                echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+                            }
+
+                            $finished = true; // ...we are finished
+                        endif;
+					endwhile;
+
+				} else {
+					
+					// Create Folders
+					rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
+					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
+						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
+						$renamed = mysql_query($rename);
+		                echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+					} else {
+                        echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+					}
+				}
 			}
+			$pos++;
+		}
 
     } else {
 
-		echo "<h3>Hide Profile Identity</h3>\n";
-		echo "<p>If you created model profiles while under \"First Last\" or \"First L\" and wish to switch to Display names or IDs you will have to rename the existing folders so that they do not have the models name in it.</p>\n";
-		
-		
-		/*
-		echo "<br />";
-		var_dump(is_dir(rb_agency_UPLOADPATH . "/john-doe/"));
-		echo "<br />";
-		echo rb_agency_UPLOADREL;
-		// Open a known directory, and proceed to read its contents
-		$dir = rb_agency_UPLOADPATH;
-		if (is_dir($dir)) {
-			if ($dh = opendir($dir)) {
-				while (($file = readdir($dh)) !== false) {
-					echo "filename: $file : filetype: " . filetype($dir . $file) . "\n";
-				}
-				closedir($dh);
-			}
-		}
-		*/
+    	echo "<h3>Hide Profile Identity</h3>\n";
+    	echo "<p>If you created model profiles while under \"First Last\" or \"First L\" and wish to switch to Display names or IDs you will have to rename the existing folders so that they do not have the models name in it.</p>\n";
+	
+	
+    	/*
+    	echo "<br />";
+    	var_dump(is_dir(rb_agency_UPLOADPATH . "/john-doe/"));
+    	echo "<br />";
+    	echo rb_agency_UPLOADREL;
+    	// Open a known directory, and proceed to read its contents
+    	$dir = rb_agency_UPLOADPATH;
+    	if (is_dir($dir)) {
+    		if ($dh = opendir($dir)) {
+    			while (($file = readdir($dh)) !== false) {
+    				echo "filename: $file : filetype: " . filetype($dir . $file) . "\n";
+    			}
+    			closedir($dh);
+    		}
+    	}
+    	*/
 
-			$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-			$results1 = mysql_query($query1);
-			$count1 = mysql_num_rows($results1);
-			
-			
-			
-			
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
+		$results1 = mysql_query($query1);
+		$count1 = mysql_num_rows($results1);
 		
+		$pos = 0;
+		$pos_suggested = 0;
+		$arrayReservedFoldername = array();
+		while ($data1 = mysql_fetch_array($results1)) {
+			$ProfileID				=$data1["ProfileID"];
+			$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
+			$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
+			$ProfileContactDisplay	=$data1["ProfileContactDisplay"];
+			$ProfileGallery			=$data1["ProfileGallery"];
+			$arrayAllFolderNames[$pos] = $ProfileGallery;
+			$pos++; // array position start = 0	
 			
-			
-			$pos = 0;
-			$pos_suggested = 0;
-			$arrayReservedFoldername = array();
-			while ($data1 = mysql_fetch_array($results1)) {
-				$ProfileID				=$data1["ProfileID"];
-				$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
-				$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
-				$ProfileContactDisplay	=$data1["ProfileContactDisplay"];
-				$ProfileGallery			=$data1["ProfileGallery"];
-				$arrayAllFolderNames[$pos] = $ProfileGallery;
-				$pos++; // array position start = 0	
-				
-					if ($rb_agency_option_profilenaming == 0) {
-						$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
-					} elseif ($rb_agency_option_profilenaming == 1) {
-						$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
-					} elseif ($rb_agency_option_profilenaming == 2) {
-						$ProfileGalleryFixed = $ProfileContactDisplay;
-					} elseif ($rb_agency_option_profilenaming == 3) {
-						$ProfileGalleryFixed = "ID ". $ProfileID;
-					}
-					$ProfileGalleryFixed = rb_agency_safenames($ProfileGalleryFixed); 
-				
-				  if(in_array($ProfileGallery,$arrayReservedFoldername)){
-					$ProfileGalleryFixed = rb_agency_just_checkdir($ProfileGalleryFixed);
-					$arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
-				 }
-				echo "<div>\n";
-				// Check for duplicate
+			if ($rb_agency_option_profilenaming == 0) {
+				$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+			} elseif ($rb_agency_option_profilenaming == 1) {
+				$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+			} elseif ($rb_agency_option_profilenaming == 2) {
+				$ProfileGalleryFixed = $ProfileContactDisplay;
+			} elseif ($rb_agency_option_profilenaming == 3) {
+				$ProfileGalleryFixed = "ID ". $ProfileID;
+			}
+			$ProfileGalleryFixed = rb_agency_safenames($ProfileGalleryFixed); 
+		
+		    if(in_array($ProfileGallery,$arrayReservedFoldername)){
+			    $ProfileGalleryFixed = rb_agency_just_checkdir($ProfileGalleryFixed);
+			    $arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
+	        }
+			echo "<div>\n";
+			// Check for duplicate
 			$query_duplicate = "SELECT ProfileGallery, count(ProfileGallery) as cnt FROM ". table_agency_profile ." WHERE ProfileGallery='".$ProfileGallery."' GROUP BY ProfileGallery   HAVING cnt > 1";
 			$rs = mysql_query($query_duplicate);
 			$count  = mysql_num_rows($rs);
-				if($count > 0){
-						
-					// Add Profiles to Array to Create later
-					$throw_error = true;
-					$ProfileGalleryFixed =  rb_agency_set_directory($ProfileGalleryFixed);
-					echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-					echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
-					echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
-	
-				} elseif ($ProfileGallery == $ProfileGalleryFixed ) {
-					echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-				}
-				$pos++;
-			}//endwhile
+			if($count > 0){
+					
+				// Add Profiles to Array to Create later
+				$throw_error = true;
+				$ProfileGalleryFixed =  rb_agency_set_directory($ProfileGalleryFixed);
+				echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
+				echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
+				echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
+
+			} elseif ($ProfileGallery == $ProfileGalleryFixed ) {
+				echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
+			}
+			$pos++;
+		}//endwhile
 			
 			echo "</div>\n";
 		if ($count1 < 1) {
 				
-                echo "There are currently no profile records.";
+            echo "There are currently no profile records.";
 				
-			} elseif ($throw_error == true) { ?>
-                  <a name="generate"></a>
-                  <h3>Generate Folders for Profiles</h3>
-                  <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
-                  <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Rename Profiles to match Privacy Settings</a>  Clicking this button will rename folders for the above profiles<p>
-                  <?php
-			}
-		} // To Generate or Not to Generate
+		} elseif ($throw_error == true) { ?>
+            <a name="generate"></a>
+            <h3>Generate Folders for Profiles</h3>
+            <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
+            <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Rename Profiles to match Privacy Settings</a>  Clicking this button will rename folders for the above profiles<p>
+            <?php
+		}
+	} // To Generate or Not to Generate
 	  
    
 		
@@ -872,13 +860,13 @@ elseif ($ConfigID == 13) {
 	}
 	
 	$totalPages = ceil($count4total/$stepSize);
-	  //echo "Total pages:" . $totalPages;
-	   if($totalPages >= 1) {
-		 for($i = 1; $i <= $totalPages; $i++) {
-		   $pageString .= " <a href=\"?page=rb_agency_menu_reports&ConfigID=13&Step={$i}$queryVars\">Page $i</a>";
-		   $pageString .= $i != $totalPages ? " | " : "";
-		 }
-	   }
+        //echo "Total pages:" . $totalPages;
+        if($totalPages >= 1) {
+            for($i = 1; $i <= $totalPages; $i++) {
+    	        $pageString .= " <a href=\"?page=rb_agency_menu_reports&ConfigID=13&Step={$i}$queryVars\">Page $i</a>";
+                $pageString .= $i != $totalPages ? " | " : "";
+    		}
+        }
 	echo "<div>". $pageString ."</div>\n";
 
 

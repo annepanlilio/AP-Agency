@@ -347,11 +347,11 @@ function rb_display_list() { ?>
 								$CastingLocations = mysql_query("SELECT DISTINCT CastingLocationCity, CastingLocationState FROM ". table_agency_casting ."");
 									echo "<option value=\"\">Any Location</option>";
 								while ($dataLocation = mysql_fetch_array($CastingLocations)) {
-								  if (isset($_GET['CastingLocationCity']) && !empty($_GET['CastingLocationCity']) && $selectedCity == $dataLocation["CastingLocationCity"]) {
-									echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\" selected>". rb_agency_strtoproper($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
-								  } else {
-									echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\">". rb_agency_strtoproper($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
-								  }
+								  	if (isset($_GET['CastingLocationCity']) && !empty($_GET['CastingLocationCity']) && $selectedCity == $dataLocation["CastingLocationCity"]) {
+										echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\" selected>". rb_agency_strtoproper($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
+								  	} else {
+										echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\">". rb_agency_strtoproper($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
+								  	}
 								}
 							?>
 							</select>
@@ -362,7 +362,7 @@ function rb_display_list() { ?>
 						<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
                         <input type='hidden' name='page_index' id='page_index' value='<?php echo $_GET['page_index']; ?>' />  
                         <input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
-						 <input type="submit" value="Clear Filters" class="button-secondary" />
+					 	<input type="submit" value="Clear Filters" class="button-secondary" />
 						</form>
 					</td>
 					<td>&nbsp;</td>
