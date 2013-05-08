@@ -1,4 +1,4 @@
-// Logo Scroller
+// Profile Seven Slider - Scroller
 $(window).load(function() {
     
   $('#profile-carousel').flexslider({
