@@ -209,6 +209,13 @@ while ($data = mysql_fetch_array($results)) {
 						  }
 						</script>
 					<?php }
+					elseif ($rb_agency_option_layoutprofile == "7") {
+						wp_register_style( 'flexslider', plugins_url('/style/flexslider.css', dirname(__FILE__)) );
+	        			wp_enqueue_style( 'flexslider' );
+						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
+						wp_enqueue_script( 'flexslider', plugins_url('/js/jquery.flexslider.js', dirname(__FILE__)) );						
+						wp_enqueue_script( 'initflexslider', plugins_url('/js/initflexslider.js', dirname(__FILE__)), in_footer );
+					}
 		        } // end if
           } // function end
     }// if function exist(rb_agency_inserthead_profile)

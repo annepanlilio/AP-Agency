@@ -382,6 +382,24 @@
 #rblayout-four #photo .multiple { float: left; margin: 0 10px 10px 0; overflow: hidden; }
 #rblayout-four #photo .multiple img { max-width: 350px; max-height: 400px; }
 
+/* Profile Layout Seven */
+#rblayout-seven { overflow: hidden; background: #000; margin: 0 15px; margin-bottom: 30px; }
+#rblayout-seven #profile-slider,
+#profile-carousel { float: left; border: none; padding: 0; border-radius: 0; box-shadow: none; }
+#rblayout-seven #profile-slider { margin-bottom: 0px; }
+#rblayout-seven #profile-carousel { clear: both; width: 100%; display: block; background: #fff; padding-top: 10px; margin: 0; }
+#rblayout-seven #profile-carousel .slides li { height: 150px; overflow: hidden; }
+#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; } 
+#rblayout-seven #profile-info { background: #000; padding: 30px 0; }
+#rblayout-seven #profile-info h1 { color: #e2e2e2; font-weight: normal; text-transform: uppercase; padding: 30px; }
+#rblayout-seven #profile-info ul { list-style: none; color: #959595; padding: 0 30px; margin: 0; }
+#rblayout-seven #profile-info ul li { list-style: none; display: block; font-size: 16px; padding: 5px 0; }
+#rblayout-seven #profile-info ul li span { font-style: italic; }
+#rblayout-seven #profile-links { padding: 15px; float: right; clear: both; }
+#rblayout-seven #profile-links li { display: inline-block; padding: 0 10px; border-right: 1px solid #e2e2e2; font-size: 14px; }
+#rblayout-seven #profile-links li:last-child { border: none; }
+#rblayout-seven #profile-links li a { color: #e2e2e2; text-decoration: none; text-transform: uppercase; }
+
 /** Sign In - Register **/
 #rbsignin-register { text-align: center; vertical-align: top; }
 #rbsignin-register .inline-block { padding: 15px; text-align: left; vertical-align: top; margin: 15px; max-width: 350px; display: inline-block; }
