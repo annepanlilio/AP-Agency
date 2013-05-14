@@ -78,7 +78,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Print Resume</a></li>\n";
+				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Print Resume</a></li>\n";
 				  }
 				}
 			
@@ -87,7 +87,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Download Comp Card</a></li>\n";
+				echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Comp Card</a></li>\n";
 				  }
 				}
 				// Headshots
@@ -95,7 +95,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Download Headshot</a></li>\n";
+				echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Headshot</a></li>\n";
 				  }
 				}
 				
@@ -104,7 +104,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">Listen to Voice Demo</a></li>\n";
+				echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Listen to Voice Demo</a></li>\n";
 				  }
 				}
 
@@ -114,7 +114,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "		<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"btn_gray\">Watch Video Slate</a></li>\n";
+				echo "		<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"rb_button\">Watch Video Slate</a></li>\n";
 				  }
 				}
 
@@ -123,7 +123,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "		<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"btn_gray\">Watch Video Monologue</a></li>\n";
+				echo "		<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"rb_button\">Watch Video Monologue</a></li>\n";
 				  }
 				}
 
@@ -132,7 +132,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "		<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"btn_gray\">Watch Demo Reel</a></li>\n";
+				echo "		<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"rb_button\">Watch Demo Reel</a></li>\n";
 				  }
 				}
 
@@ -143,51 +143,46 @@ Profile View with Scrolling Thumbnails and Primary Image
 											 GROUP BY ProfileMediaType");
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
-				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-                                      echo "<li class=\"item video demoreel\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"btn_gray\">".$dataMedia['ProfileMediaType']. "</a></li>\n";
-				  }
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+                        echo "<li class=\"item video demoreel\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".$dataMedia['ProfileMediaType']. "</a></li>\n";
+				  	}
 				}
                                 
 				// Is Logged?
 				if (is_user_logged_in()) { 
-				echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\" class=\"btn_gray\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
 				
-				
-						if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
-			 if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already
-			 ?>
-					<script>
-                    function addtoCart(pid){
-					 var qString = 'usage=addtocart&pid=' +pid;
-					
-				     $.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponseAddtoCart);
-                     // alert(qString);
-					 }
-					 
-					function processResponseAddtoCart(data) {
-						document.getElementById('resultsGoHereAddtoCart').style.display="block";
-						document.getElementById('view_casting_cart').style.display="block";
-						document.getElementById('resultsGoHereAddtoCart').textContent=data;
-						setTimeout('document.getElementById(\'resultsGoHereAddtoCart\').style.display="none";',3000); 
-						//setTimeout('document.getElementById(\'view_casting_cart\').style.display="none";',3000);
-						setTimeout('document.getElementById(\'casting_cart_li\').style.display="none";',3000);
-						
-					}
-					
-                     </script>
-                         <?php
-						 
-							echo "<li id=\"casting_cart_li\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\" class=\"btn_gray\">". __("Add to Casting Cart", rb_agency_TEXTDOMAIN). "</a></li>\n";
-							}else{
-				  		  echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);
-						  
-						  echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"btn_gray\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
+					if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+			 			if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already	?>
+							<script>
+
+		                    function addtoCart(pid){
+							 	var qString = 'usage=addtocart&pid=' +pid;
 							
-				          }
-			}	//end if(checkCart(rb_agency_get_current_userid()
+						     	$.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponseAddtoCart);
+		                     		// alert(qString);
+							 	}
+							 
+							function processResponseAddtoCart(data) {
+								document.getElementById('resultsGoHereAddtoCart').style.display="block";
+								document.getElementById('view_casting_cart').style.display="block";
+								document.getElementById('resultsGoHereAddtoCart').textContent=data;
+								setTimeout('document.getElementById(\'resultsGoHereAddtoCart\').style.display="none";',3000); 
+								//setTimeout('document.getElementById(\'view_casting_cart\').style.display="none";',3000);
+								setTimeout('document.getElementById(\'casting_cart_li\').style.display="none";',3000);
+								
+							}
+							
+		                    </script>
+		                    <?php
+							echo "<li id=\"casting_cart_li\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\" class=\"rb_button\">". __("Add to Casting Cart", rb_agency_TEXTDOMAIN). "</a></li>\n";
+						} else {
+				  			echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);						  
+							echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"rb_button\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";							
+				        }
+					}	//end if(checkCart(rb_agency_get_current_userid()
 
+					echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\" class=\"rb_button\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
 				}
-
 	echo "			</ul>\n";
 	echo "		</div>\n";  // Close Links
 	?>
