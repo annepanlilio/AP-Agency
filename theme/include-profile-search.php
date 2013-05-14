@@ -53,7 +53,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
 											while ($dataGender = mysql_fetch_array($results2)) {
@@ -113,7 +113,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				       <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
 											while ($dataGender = mysql_fetch_array($results2)) {
