@@ -302,7 +302,7 @@ if (isset($_POST['action'])) {
                         if ($have_error != true) {
                             // Upload if it doesnt exist already
                             $path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
-                            $safeProfileMediaFilename = rb_agency_safenames($path_parts['filename'] . "-" . time(U) . rand(10, 90) . "." . $path_parts['extension']);
+                            $safeProfileMediaFilename = rb_agency_safenames($path_parts['filename'] . "." . $path_parts['extension']);
                             $results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaURL = '" . $safeProfileMediaFilename . "'") or die(mysql_error());
                             $count = mysql_num_rows($results);
 
