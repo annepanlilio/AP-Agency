@@ -2791,6 +2791,32 @@ function featured_homepage(){
 	
 }
 
+// 5/15/2013 sverma@ Home page
+function featured_homepage_profile($count){
+	global $wpdb;
+	$dataList = array();
+	$query = "SELECT profile.*,
+	(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
+	 WHERE profile.ProfileID = media.ProfileID 
+	 AND media.ProfileMediaType = \"Image\" 
+	 AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL 
+
+	 FROM ". table_agency_profile ." profile 
+	 WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."
+	 AND profile.ProfileIsFeatured = 1  
+	 ORDER BY RAND() LIMIT 0,".$count;						
+
+	$result = mysql_query($query);
+	$i=0;
+	while ($row = mysql_fetch_assoc($result)) {
+		$dataList[$i] = $row ;
+		$i++;
+	}
+	return $dataList ;
+
+}
+
+
 /*
  * Self Delete Process for 
  * Users
