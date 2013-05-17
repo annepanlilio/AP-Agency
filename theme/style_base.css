@@ -324,7 +324,7 @@
 /* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
 #rblayout-one { overflow: hidden; }
 #rblayout-one #photos { padding: 15px; }
-#rblayout-one #photos .multiple { float: left; margin: 0 10px 0 0; }
+#rblayout-one #photos .multiple { float: left; margin: 0 15px 15px 0; }
 #rblayout-one #photos img { height: 150px; float: left; }
 
 /* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
