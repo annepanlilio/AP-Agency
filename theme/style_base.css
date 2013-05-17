@@ -297,8 +297,7 @@
 
 /* Profile Layouts */
 #profile #info h2 { padding: 15px 0; }
-#profile #stats ul { list-style: none; margin: 0px; padding: 0px; line-height: 20px; font-size: 13px; }
-#profile #info ul li { display: block; padding: 5px 0; }
+#profile #stats ul { list-style: none; margin: 0px; padding: 0px; line-height: 22px; font-size: 13px; }
 
 /* Profile Layout with Thumbnails (include-profile-layout0.php) */
 #rblayout-zero #photos { text-align: center; font-size: 0px; }

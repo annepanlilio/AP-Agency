@@ -18,7 +18,7 @@ Profile View with Thumbnails and Primary Image
 		}
 	echo "	</div> <!-- #profile-picture -->\n";
 	echo "	<div id=\"info\" class=\"eight column\">\n";
-	echo "	  <div class=\"stats\">\n";
+	echo "	  <div id=\"stats\">\n";
 	echo "	  <ul>\n";
  				if (!empty($ProfileGender)) {
 			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
