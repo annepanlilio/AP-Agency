@@ -199,6 +199,7 @@ while ($data = mysql_fetch_array($results)) {
 						        if(height<width){
 						          $(this).addClass('fillheight');
 						          $(this).removeClass('fillwidth');
+						          $(this).css({'margin-left':'-'+width/2+'px'});
 						        }
 						        if(width<height){
 						          $(this).addClass('fillwidth');

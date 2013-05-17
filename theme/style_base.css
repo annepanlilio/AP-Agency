@@ -231,6 +231,15 @@
 	width: 65%;
 	float: left;
 }
+img.fillwidth {
+	width: 100%;
+	height: auto;
+}
+img.fillheight {
+	height: 100%;
+	width: auto;
+	max-width: none!important;
+}
 
 /* Category List: /profile-category/ (view-category.php) */
 #profile-category { }
@@ -311,10 +320,9 @@
 	-webkit-border-radius:3px;
 	box-shadow: 0px 0px 3px rgba(0,0,0,0.5)
 }
-#rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; }
-#rblayout-zero #photos .photo img { float: left; }
-#rblayout-zero #photos .photo img.fillwidth { width: 100%; height: auto; }
-#rblayout-zero #photos .photo img.fillheight { height: 100%; width: auto; max-width: none; }
+#rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; position: relative; }
+#rblayout-zero #photos .photo a img { float: left; }
+#rblayout-zero #photos .photo a img.fillheight { position: absolute; left: 50%; }
 #rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
 #rblayout-zero #stats h2 { margin-bottom: 15px; }
 #rblayout-zero #links ul li a { margin: 0px 5px 10px 5px; min-width: 200px; font-weight: normal; font-size: 14px; }
