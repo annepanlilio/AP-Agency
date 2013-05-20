@@ -267,6 +267,9 @@ if (isset($_POST['action'])) {
             WHERE ProfileID=$ProfileID";
                 $results = $wpdb->query($update) or die(mysql_error());
 
+					update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', esc_attr($ProfileType));
+                    update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_pgender', esc_attr($ProfileGender));
+                
                 if ($ProfileUserLinked > 0) {
                     /* Update WordPress user information. */
                     update_usermeta($ProfileUserLinked, 'first_name', esc_attr($ProfileContactNameFirst));
@@ -759,6 +762,7 @@ function rb_display_manage($ProfileID) {
     } else {
         echo "<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
     }
+	$ProfileGender = get_user_meta($ProfileUserLinked, "rb_agency_interact_pgender", true);
     $query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
     $results1 = mysql_query($query1);
     $count1 = mysql_num_rows($results1);
@@ -998,10 +1002,11 @@ function rb_display_manage($ProfileID) {
     echo "      <td>\n";
     echo "      <fieldset>\n";
     $ProfileTypeArray = array();
-    if (isset($_GET["action"]) == "editRecord") {
-        $ProfileTypeArray = explode(",", $ProfileType);
-    }
-    $query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
+	
+	$ptype = get_user_meta($ProfileUserLinked, "rb_agency_interact_profiletype", true);
+	$ProfileTypeArray = explode(",", $ptype);
+	
+	$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
     $results3 = mysql_query($query3);
     $count3 = mysql_num_rows($results3);
     $action = @$_GET["action"];
@@ -1038,6 +1043,7 @@ function rb_display_manage($ProfileID) {
         echo "      <th scope=\"row\">" . __("WordPress User", rb_agency_TEXTDOMAIN) . "</th>\n";
         echo "      <td>\n";
         echo $ProfileUserLinked;
+		echo "<input type='hidden' name='wpuserid' value='".$ProfileUserLinked."' />";
         echo "      </td>\n";
         echo "    </tr>\n";
     }
