@@ -755,14 +755,13 @@ function rb_display_manage($ProfileID) {
     echo "    <tr valign=\"top\">\n";
     echo "      <th scope=\"row\">" . __("Gender", rb_agency_TEXTDOMAIN) . "</th>\n";
     echo "      <td>";
-    if (isset($_GET["ProfileGender"])) {
-        $ProfileGender = $_GET["ProfileGender"];
-        echo "<input type=\"hidden\" name=\"ProfileGender\" value=\"" . $ProfileGender . "\"/>";
-        echo "<select  id=\"ProfileGender\" disabled=\"disabled\">\n";
-    } else {
-        echo "<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
-    }
+    echo "<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
+   
 	$ProfileGender = get_user_meta($ProfileUserLinked, "rb_agency_interact_pgender", true);
+    if($ProfileGender==""){
+		$ProfileGender = $_GET["ProfileGender"];
+	}
+	
     $query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
     $results1 = mysql_query($query1);
     $count1 = mysql_num_rows($results1);
