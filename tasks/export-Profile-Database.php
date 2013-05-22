@@ -23,18 +23,35 @@ global $wpdb;
 	{
 		if($_POST['file_type'] == 'csv')
 		{ 
-			$profile_data = $wpdb->get_results("SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM rb_agency_profile", ARRAY_A);
+			require_once WP_CONTENT_DIR.'/plugins/rb-agency/Classes/PHPExcel.php';
+			require_once WP_CONTENT_DIR.'/plugins/rb-agency/Classes/PHPExcel/IOFactory.php';
+			$objPHPExcel = new PHPExcel();
+			$objPHPExcel->setActiveSheetIndex(0);
+			$rowNumber = 1;
+			/*Getting headers*/
+			$headings = array();
+            $headings = array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive');
+            $head_count = count($headings);
+            foreach ($custom_fields_name as $key => $value) {
+            	$headings[$head_count] = $value;
+            	$head_count++;
+            }
+            $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
+			/*Profile data*/
+			$row_data = array();
+			$row_data = $wpdb->get_results('SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM rb_agency_profile', ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM rb_agency_profile", ARRAY_A);
-			$csv_output .= "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,";
-			$csv_output .= implode(',', $custom_fields_name);
-			$csv_output .= "\n"; 
-			foreach ($profile_data as $key => $data_value) { 
-                                $gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data_value['ProfileGender'], ARRAY_A);
-                                $data_value['ProfileGender'] = $gender['GenderTitle'];
-                                $data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
-				$csv_output .= implode(',', $data_value);
-				$subresult = $wpdb->get_results("SELECT ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
-                $temp_array = array();
+
+			foreach ($row_data as $key => $data) 
+			{
+				$rowNumber++;
+				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
+
+				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
+
+				$data['ProfileGender'] =$gender['GenderTitle'];
+				$c_value_array = array();
+			    $temp_array = array();
 
 				foreach ($subresult as $sub_value) {
 					if(trim($sub_value['ProfileCustomValue']) != ""){
@@ -53,10 +70,23 @@ global $wpdb;
 					$c_value_array[] = $temp_array[$d];
 				}
 				
-				$csv_output .= ','.implode(',', $c_value_array);
-				$csv_output .="\n";
+				$data = array_merge($data, $c_value_array);
 				
+				$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
 			}
+			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$objWriter->save(str_replace('.php', '.csv', __FILE__));
+			header("Pragma: public");
+			header("Expires: 0");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 
+			header("Content-Type: application/force-download");
+			header("Content-Type: application/octet-stream");
+			header("Content-Type: application/download");
+			header("Content-disposition: csv" . date("Y-m-d-i") . ".csv"); 
+			header( "Content-disposition: filename=".$filename.".csv");
+			
+		    readfile(str_replace('.php', '.csv', __FILE__));
+		    unlink(str_replace('.php', '.csv', __FILE__));
 			$filename = $_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time());
 			header("Content-type: application/vnd.ms-excel");
 			header("Content-disposition: csv" . date("Y-m-d") . ".csv");
