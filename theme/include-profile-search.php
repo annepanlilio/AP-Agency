@@ -53,7 +53,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
 											while ($dataGender = mysql_fetch_array($results2)) {
@@ -75,7 +75,10 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\">";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
+		
 		echo "				<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/?srch=1'\" />";
+		
+		
 		/* Phel Comment
 		echo "					<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />";
         echo '					<a href="'. get_bloginfo('siteurl') .'/profile-search/?srch=1">'. __("Advanced Search", rb_agency_TEXTDOMAIN) . '</a>';*/
@@ -113,7 +116,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				       <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
-		echo "							<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 											$results2 = mysql_query($query2);
 											while ($dataGender = mysql_fetch_array($results2)) {
@@ -142,36 +145,24 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 
 			 // Show custom fields for admins only.
 				if($rb_agency_option_customfields_loggedin_admin == 1 && current_user_can("level_10")) { 
-				    include("include-custom-fields.php");
+				    //include("include-custom-fields.php");
 					//echo "1-";
 				}
 				// Show custom fields for loggedin members only
 				else {
-					include("include-custom-fields.php");
+					//include("include-custom-fields.php");
 					 //echo "3-";
 				}
 
 			} else { // All with non-logged here
 				
 				// Show custom fields to public
-			    	    	include("include-custom-fields.php");
+			    if($_REQUEST["action"] != 'search' || $_REQUEST["action"] ==''){
+				    	//include("include-custom-fields.php");
 						$profilesearch_layout = "";
-			}
-				
-		echo "	 			      <div class=\"search-field single\">\n";
-		echo "		 				<label for=\"ProfileCity\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
-	    echo "		 				<input type=\"text\" id=\"ProfileCity\" name=\"ProfileCity\" value=\"". $_SESSION["ProfileCity"] ."\" />\n";
-	    echo "	 				</div>\n";
-
-		echo "	 			      <div class=\"search-field single\">\n";
-		echo "		 				<label for=\"ProfileState\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
-	    echo "		 				<input type=\"text\" id=\"ProfileState\" name=\"ProfileState\" value=\"". $_SESSION["ProfileState"] ."\" />\n";
-	    echo "	 				</div>\n";
-
-		echo "	 			      <div class=\"search-field single\">\n";
-		echo "		 				<label for=\"ProfileZip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
-	    echo "		 				<input type=\"text\" id=\"ProfileZip\" name=\"ProfileZip\" value=\"". $_SESSION["ProfileZip"] ."\" />\n";
-	    echo "	 				</div>\n";		
+					}
+				}
+			
 		}
 		
 		if(isset($_GET['srch'])){
@@ -190,22 +181,27 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "		 				<label for=\"ProfileZip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
 	    echo "		 				<input type=\"text\" id=\"ProfileZip\" name=\"ProfileZip\" value=\"". $_SESSION["ProfileZip"] ."\" />\n";
 	    echo "	 				</div>\n";
+		echo "	 			      <div class=\"search-field single\">\n";
+		echo "                  <label for=\"ProfileSkills\">". __("Skills", rb_agency_TEXTDOMAIN) ."</label>\n";
+										echo "<textarea name=\"ProfileSkill\">". $_SESSION["ProfileSkill"] ."</textarea>";
+			 echo "	 				</div>\n";
 		}
 		
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\">";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
-		echo "				<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/'\" />";
+		echo '<input type="reset" class=\"button-primary\" value="Empty Form">';
+		if(!isset($_GET[srch])){
+		echo "				<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/?srch=1'\" />";}else{
+		
+		echo "				<input type=\"submit\" name=\"basic_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search'\" />";
+		}
+
 		echo "				</div>";
 		if(isset($_GET['srch'])){ echo'<div></div>'; $style="style='margin-left:0px'"; }else{$style="";}
-		//echo "				<input type=\"submit\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
-		//echo "				<input type=\"button\" onclick=\"document.getElementById('search-form-advanced').reset();\" value=\"". __("Clear Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
+		
 		echo "        	</form>\n";
 		
-	    /* Phel Comment
-	    if(!$_POST['advanced_search']){	//hide this advanced search button / link
-		echo "<div class=\"advanced_search_div\"" .$style."><form action=\"". get_bloginfo("wpurl") ."/search/\" method=\"post\"><input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></form></div>";
-		}*/
-		
+	    	
    }
 ?>
