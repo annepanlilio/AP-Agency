@@ -36,8 +36,10 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 	// Add to Cart
 		if ($_GET["action"] == "cartAdd" ) { 
 			
-			foreach($_GET["ProfileID"] as $value) {
-				$cartString .= $value .",";
+			if(count($_GET["ProfileID"])>0){
+				foreach($_GET["ProfileID"] as $value) {
+					$cartString .= $value .",";
+				}
 			}
 			// Clean It!
 			echo $cartString = rb_agency_cleanString($cartString);
