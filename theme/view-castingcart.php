@@ -25,13 +25,14 @@ if (isset($ProfileType) && !empty($ProfileType)){
 
 if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 		
+	
 	$SearchID				= time(U);
 	$SearchMuxHash			= rb_agency_random(8);
 	$SearchMuxToName		=$_POST['SearchMuxToName'];
-	$SearchMuxToEmail		=$_POST['SearchMuxToEmail'];
+	$SearchMuxToEmail		=get_option('admin_email');
 	
 	$SearchMuxEmailToBcc		=$_POST['SearchMuxEmailToBcc'];
-	$SearchMuxSubject		=$_POST['SearchMuxSubject'];
+	$SearchMuxSubject		= "The People Studio - ".$_POST['SearchMuxSubject'];
 	$SearchMuxMessage		=$_POST['SearchMuxMessage'];
 	$SearchMuxCustomValue	=$_POST['SearchMuxCustomValue'];
 
@@ -85,8 +86,8 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 	
 	// To send HTML mail, the Content-type header must be set
-	$headers .= 'To: '. $SearchMuxToName .' <'. $SearchMuxToEmail .'>' . "\r\n";
-	$headers = 'From: '. $rb_agency_option_agencyname .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+	$headers .= 'To: '. $rb_agency_option_agencyname .' <'. $SearchMuxToEmail .'>' . "\r\n";
+	$headers = 'From: '. $SearchMuxToName .' <'. $_POST['SearchMuxToEmail'] .'>' . "\r\n";
 
 	if(!empty($SearchMuxEmailToBcc)){
 		$headers = 'Bcc: '.$SearchMuxEmailToBcc.'' . "\r\n";
@@ -131,22 +132,16 @@ get_header(); ?>
 			});
 			</script>
 
-		<div id="mail-print" class="twelve column">
-            <?php
-            echo "  <a href=\"javascript:;\" id=\"sendemail\">Send Email</a>  - ";
-			echo " <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1&typePage=public','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." </a>\n";
-		?>
-		</div>
             <div id="emailbox" >
               <form method="post" enctype="multipart/form-data" action="">
 	              <input type="hidden" name="action" value="cartEmail" />
 	      
-	              <div><label for="SearchMuxToName">Send to Name:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" /></div>
-	              <div><label for="SearchMuxToEmail">Send to Email:</label><br/><input type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="" /></div>
-	              <div><label for="SearchMuxToBcc">Bcc:</label><br/><input type="text" id="SearchMuxToEmail" name="SearchMuxEmailToBcc" value="" /></div>
-	              <div><label for="SearchMuxSubject">Subject:</label><br/><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="Casting Cart" /></div>
-	              <div><label for="SearchMuxMessage">Message:</label>(copy: [casting-link-placeholder])<br/>
+	              <div><label for="SearchMuxToName">Sender Name:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" required/></div>
+	              <div><label for="SearchMuxToEmail">Sender Email:</label><br/><input type="email" id="SearchMuxToEmail" name="SearchMuxToEmail" value="" required/></div>
+	              <div><label for="SearchMuxSubject">Subject:</label><br/><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="Casting Cart" required></div>
+	               <div><label for="SearchMuxMessage">Message to Admin:</label><br/>
 	              <textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; ">[casting-link-placeholder]</textarea></div>
+				   <label>(Note: The "[casting-link-placeholder]" will be the link to your casting cart page) </label>
 	              <p class="submit">
 	                  <input type="hidden" name="action" value="sendEmailCastingCart" />
 	                  <input type="submit" name="submit" value="Send Email" class="button-primary" /> 
@@ -154,7 +149,7 @@ get_header(); ?>
               </form>
             </div>
             <?php
-		  if(isset($_GET["emailSent"])){ echo "<div id=\"emailSent\">Email Sent Succesfully! Go Back to <a href=\"". get_bloginfo("url")."/search-model/\">Search Model</a>.</div>";    }
+		  if(isset($_GET["emailSent"])){ echo "<div id=\"emailSent\">Email Sent Succesfully! Go Back to <a href=\"". get_bloginfo("url")."/search/\">Search</a>.</div>";    }
 		echo "			<div class=\"profile-category-results\" id=\"profile-category-results\">\n";
 	
 						if (function_exists('rb_agency_profilelist')) { 
