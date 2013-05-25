@@ -1270,6 +1270,7 @@ function rb_agency_profilefeatured($atts, $content = NULL) {
 		 AND profile.ProfileIsFeatured = 1  
 		 ORDER BY RAND() LIMIT 0,$count";
 
+	$rb_agency_options_arr = get_option('rb_agency_options');
 	$resultsList = mysql_query($queryList);
 	$countList = mysql_num_rows($resultsList);
 	while ($dataList = mysql_fetch_array($resultsList)) {
