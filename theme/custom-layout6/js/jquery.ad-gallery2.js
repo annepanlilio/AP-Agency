@@ -609,7 +609,7 @@
       img_container.css('left', '0px');
       if(image_width < this.image_wrapper_width) {
         var dif = this.image_wrapper_width - image_width;
-        img_container.css('left', (dif / 2) +'px');
+        img_container.css('left', (dif / 2 - 150) +'px');  // here!
       };
     },
     _getDescription: function(image) {

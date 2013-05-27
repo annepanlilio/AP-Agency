@@ -1167,7 +1167,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			} elseif ($rb_agency_option_profilenaming == 5) {
 				$ProfileContactDisplay = $dataList["ProfileContactNameLast"];
 			}
-
+	
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 
 			if ($rb_agency_option_profilelist_expanddetails) {
@@ -1937,6 +1937,66 @@ function rb_agency_get_miscellaneousLinks($ProfileID = ""){
 
 
 /*/
+* ======================== NEW Get Favorite & Casting Cart Links ===============
+* @Returns links
+/*/		
+function rb_agency_get_new_miscellaneousLinks($ProfileID = ""){
+ 
+	$rb_agency_options_arr 				= get_option('rb_agency_options');
+	$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+	$rb_agency_option_profilelist_castingcart 	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+	rb_agency_checkExecution();
+
+	if ($rb_agency_option_profilelist_favorite) {
+		//Execute query - Favorite Model
+		if(!empty($ProfileID)){
+			$queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = '".$ProfileID."' ") or die(mysql_error());
+			$dataFavorite = mysql_fetch_assoc($queryFavorite); 
+			$countFavorite = mysql_num_rows($queryFavorite);
+		}
+	}	
+	
+	if ($rb_agency_option_profilelist_castingcart) {
+      	//Execute query - Casting Cart
+		if(!empty($ProfileID)){
+			$queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = '".$ProfileID."' ") or die(mysql_error());
+			$dataCastingCart = mysql_fetch_assoc($queryCastingCart); 
+			$countCastingCart = mysql_num_rows($queryCastingCart);
+		}
+	}
+
+	$disp = "";
+	$disp .= "<div class=\"favorite-casting\">";
+        
+	if ($rb_agency_option_profilelist_castingcart) {
+		if($countCastingCart <=0){
+			$disp .= "<div class=\"newcastingcart\"><a title=\"Add to Casting Cart\" href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"save_castingcart\">ADD TO CASTING CART</a></div></li>";
+		} else {
+			if(get_query_var('type')=="casting"){ //hides profile block when icon is click
+			 	$divHide="onclick=\"javascript:document.getElementById('div$ProfileID').style.display='none';\"";
+			}
+			$disp .= "<div class=\"gotocastingcard\"><a $divHide href=\"". get_bloginfo("wpurl") ."/profile-casting/\"  title=\"Go to Casting Cart\">VIEW CASTING CART</a></div>";
+	  	}
+	}
+        
+        
+	if ($rb_agency_option_profilelist_favorite) {
+		
+		if($countFavorite <= 0){
+			$disp .= "<div class=\"newfavorite\"><a title=\"Save to Favorites\" rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$ProfileID."\">SAVE TO FAVORITES</a></div>\n";
+		}else{
+			$disp .= "<div class=\"viewfavorites\"><a rel=\"nofollow\" title=\"View Favorites\" href=\"".  get_bloginfo("wpurl") ."/profile-favorite/\"/>VIEW FAVORITES</a></div>\n";
+		}					
+	}
+			
+
+	$disp .= "</div><!-- .favorite-casting -->";
+ 	return $disp; 
+}
+
+
+
+/*/
 * ======================== Get New Custom Fields ===============
 * @Returns Custom Fields
 /*/
@@ -2468,6 +2528,8 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 function getExperience($pid){ 
 	$query = mysql_query("SELECT ProfileCustomValue FROM ".table_agency_customfield_mux." WHERE ProfileID = '".$pid."' AND ProfileCustomID ='16' ");
     $fetch = mysql_fetch_assoc($query);
+    
+    
     return  $fetch["ProfileCustomValue"];
 }
 
