@@ -139,7 +139,7 @@ if (isset($_POST['action'])) {
 
                     $ProfileGallery = rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
                     // Create Record
-                    $insert = "INSERT INTO " . table_agency_profile .
+                     $insert = "INSERT INTO " . table_agency_profile .
                             " (ProfileGallery,
                    ProfileContactDisplay,
                    ProfileUserLinked,
@@ -241,7 +241,7 @@ if (isset($_POST['action'])) {
             if (!empty($ProfileContactNameFirst) && !empty($ProfileID)) {
 
                 // Update Record
-                $update = "UPDATE " . table_agency_profile . " SET 
+                 $update = "UPDATE " . table_agency_profile . " SET 
             ProfileGallery='" . $wpdb->escape($ProfileGallery) . "',
             ProfileContactDisplay='" . $wpdb->escape($ProfileContactDisplay) . "',
             ProfileContactNameFirst='" . $wpdb->escape($ProfileContactNameFirst) . "',
@@ -252,6 +252,8 @@ if (isset($_POST['action'])) {
             ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
             ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
             ProfileGender='" . $wpdb->escape($ProfileGender) . "',
+			ProfileGender='" . $wpdb->escape($ProfileGender) . "',
+            
             ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
             ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
             ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
@@ -555,11 +557,12 @@ function rb_display_manage($ProfileID) {
 
     if (!empty($ProfileID) && ($ProfileID > 0)) {
 
-        $query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID='$ProfileID'";
+         $query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID='$ProfileID'";
         $results = mysql_query($query) or die(__("Error, query failed", rb_agency_TEXTDOMAIN));
         $count = mysql_num_rows($results);
 
         while ($data = mysql_fetch_array($results)) {
+		
             $ProfileID = $data['ProfileID'];
             $ProfileUserLinked = $data['ProfileUserLinked'];
             $ProfileGallery = stripslashes($data['ProfileGallery']);
@@ -576,7 +579,9 @@ function rb_display_manage($ProfileID) {
             $ProfileContactPhoneCell = stripslashes($data['ProfileContactPhoneCell']);
             $ProfileContactPhoneWork = stripslashes($data['ProfileContactPhoneWork']);
             $ProfileGender = stripslashes($data['ProfileGender']);
-            $ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
+            $ProfileTypeArray = stripslashes($data['ProfileType']);
+           
+			$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
             $ProfileLocationStreet = stripslashes($data['ProfileLocationStreet']);
             $ProfileLocationCity = stripslashes($data['ProfileLocationCity']);
             $ProfileLocationState = stripslashes($data['ProfileLocationState']);
@@ -758,9 +763,13 @@ function rb_display_manage($ProfileID) {
     echo "      <td>";
     echo "<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
    
-	$ProfileGender = get_user_meta($ProfileUserLinked, "rb_agency_interact_pgender", true);
-    if($ProfileGender==""){
+
+    $ProfileGender1 = get_user_meta($ProfileUserLinked, "rb_agency_interact_pgender", true);
+   
+	if($ProfileGender==""){
 		$ProfileGender = $_GET["ProfileGender"];
+	}elseif($ProfileGender1!=""){
+		$ProfileGender =$ProfileGender1 ;
 	}
 	
     $query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
@@ -1001,10 +1010,7 @@ function rb_display_manage($ProfileID) {
     echo "      <th scope=\"row\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
     echo "      <td>\n";
     echo "      <fieldset>\n";
-    $ProfileTypeArray = array();
-	
-	$ptype = get_user_meta($ProfileUserLinked, "rb_agency_interact_profiletype", true);
-	$ProfileTypeArray = explode(",", $ptype);
+    $ProfileTypeArray = explode(",", $ProfileTypeArray);
 	
 	$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
     $results3 = mysql_query($query3);
