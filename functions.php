@@ -806,7 +806,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
-                                                                if(!empty($new_val)){
+                                                                if(!empty($val)){
                                                                     if(strpos($val,",") === false){
                                                                         $val = implode("','",explode(",",$val));
                                                                         if($filter2==""){
