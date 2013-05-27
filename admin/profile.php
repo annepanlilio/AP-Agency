@@ -294,7 +294,8 @@ if (isset($_POST['action'])) {
                         $results1 = $wpdb->query($insert1);
                     }
                 }
-                rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
+               // 5/27/2013 @Satya Fixed 559 Profile Media Folder
+			   //  rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
                 // Upload Image & Add to Database
                 $i = 1;
 
