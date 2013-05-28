@@ -1,3 +1,4 @@
+(function($){
 // JavaScript Document
 var _arrayImages = new Array();
 	var _mouseOver = "";
@@ -87,3 +88,4 @@ var _arrayImages = new Array();
 			$("#divBody").css("height", _height1 + "px");
 			//$('body').height(_height1);
 		}
+})(jQuery);
