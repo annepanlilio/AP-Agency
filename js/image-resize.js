@@ -6,7 +6,7 @@
     });
   });
   function updateImages(){
-    $('.photo a img, .image a img').each(function(){
+    $('.photo a img, #profile-list .rbprofile-list .image a img').each(function(){
       var div = $(this).parent("a").parent("div");
       $divW = $(div).width();
       $divH = $(div).height();
