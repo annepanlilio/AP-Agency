@@ -29,11 +29,16 @@
 	overflow: hidden;
 	box-shadow: 0 0 3px;
 	border: 2px solid #fff;
+	position: relative;
 }
 #profile-list .rbprofile-list .image img {
 	float: left;
 	border-radius: 0;
 	box-shadow: none;
+}
+#profile-list .rbprofile-list .image img.fillheight {
+	left: 50%;
+	position: absolute;
 }
 #profile-list .rbprofile-list .image.image-broken {
 	height: 200px;

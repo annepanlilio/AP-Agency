@@ -137,6 +137,8 @@ while ($data = mysql_fetch_array($results)) {
 						wp_enqueue_script( 'prettyphoto', plugins_url('/js/prettyPhoto.js', __FILE__) );
 
 
+					} elseif ($layouttype == 0) {
+						wp_enqueue_script( 'jquery-ui', plugins_url('/js/image-resize.js', dirname(__FILE__)) );	
 					} elseif ($layouttype == 2) {
 						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
 						wp_enqueue_script( 'js-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', dirname(__FILE__)) );
@@ -179,38 +181,7 @@ while ($data = mysql_fetch_array($results)) {
 						});
 						</script>
 						<?php
-					} elseif ($rb_agency_option_layoutprofile == "0") { // ?>
-						<script type="text/javascript">
-						  $(window).load(function () {
-						    updateImages();
-						    $(window).resize(function() {
-						        updateImages();
-						    });
-						  });
-						  function updateImages(){
-						    $('.photo a img').each(
-						    function(){
-						      var div = $(this).parent("a").parent("div");
-						      var divW = $(div).width();
-						      $(div).height(divW);
-						      $(div).children("a").height(divW-11);
-						        var height = $(this).height();
-						        var width = $(this).width();
-						        if(height<width){
-						          $(this).addClass('fillheight');
-						          $(this).removeClass('fillwidth');
-						          $(this).css({'margin-left':'-'+width/2+'px'});
-						        }
-						        if(width<height){
-						          $(this).addClass('fillwidth');
-						          $(this).removeClass('fillheight');
-						        }
-						        $(this).attr({'height': height, 'width': width});
-						    });
-						  }
-						</script>
-					<?php }
-					elseif ($rb_agency_option_layoutprofile == "7") {
+					} elseif ($rb_agency_option_layoutprofile == "7") {
 						wp_register_style( 'flexslider', plugins_url('/style/flexslider.css', dirname(__FILE__)) );
 	        			wp_enqueue_style( 'flexslider' );
 						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
