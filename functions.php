@@ -806,7 +806,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
-                                                                if(!empty($new_val)){
+                                                                if(!empty($val)){
                                                                     if(strpos($val,",") === false){
                                                                         $val = implode("','",explode(",",$val));
                                                                         if($filter2==""){
@@ -953,7 +953,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			
 			if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
 				$atts["type"]="casting";
-				$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
+				$addtionalLink ='&nbsp;|&nbsp;<a href="#" id="sendemail">Email to admin</a>';
 			}
 			
 			# print, downloads links to be added on top of profile list
@@ -1167,7 +1167,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			} elseif ($rb_agency_option_profilenaming == 5) {
 				$ProfileContactDisplay = $dataList["ProfileContactNameLast"];
 			}
-
+	
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 
 			if ($rb_agency_option_profilelist_expanddetails) {
@@ -1270,6 +1270,7 @@ function rb_agency_profilefeatured($atts, $content = NULL) {
 		 AND profile.ProfileIsFeatured = 1  
 		 ORDER BY RAND() LIMIT 0,$count";
 
+	$rb_agency_options_arr = get_option('rb_agency_options');
 	$resultsList = mysql_query($queryList);
 	$countList = mysql_num_rows($resultsList);
 	while ($dataList = mysql_fetch_array($resultsList)) {
@@ -1933,7 +1934,139 @@ function rb_agency_get_miscellaneousLinks($ProfileID = ""){
 	$disp .= "</div><!-- .favorite-casting -->";
  	return $disp; 
 }
+
+
+/*/
+* ======================== NEW Get Favorite & Casting Cart Links ===============
+* @Returns links
+/*/		
+function rb_agency_get_new_miscellaneousLinks($ProfileID = ""){
  
+	$rb_agency_options_arr 				= get_option('rb_agency_options');
+	$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+	$rb_agency_option_profilelist_castingcart 	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+	rb_agency_checkExecution();
+
+	if ($rb_agency_option_profilelist_favorite) {
+		//Execute query - Favorite Model
+		if(!empty($ProfileID)){
+			$queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = '".$ProfileID."' ") or die(mysql_error());
+			$dataFavorite = mysql_fetch_assoc($queryFavorite); 
+			$countFavorite = mysql_num_rows($queryFavorite);
+		}
+	}	
+	
+	if ($rb_agency_option_profilelist_castingcart) {
+      	//Execute query - Casting Cart
+		if(!empty($ProfileID)){
+			$queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = '".$ProfileID."' ") or die(mysql_error());
+			$dataCastingCart = mysql_fetch_assoc($queryCastingCart); 
+			$countCastingCart = mysql_num_rows($queryCastingCart);
+		}
+	}
+
+	$disp = "";
+	$disp .= "<div class=\"favorite-casting\">";
+        
+	if ($rb_agency_option_profilelist_castingcart) {
+		if($countCastingCart <=0){
+			$disp .= "<div class=\"newcastingcart\"><a title=\"Add to Casting Cart\" href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"save_castingcart\">ADD TO CASTING CART</a></div></li>";
+		} else {
+			if(get_query_var('type')=="casting"){ //hides profile block when icon is click
+			 	$divHide="onclick=\"javascript:document.getElementById('div$ProfileID').style.display='none';\"";
+			}
+			$disp .= "<div class=\"gotocastingcard\"><a $divHide href=\"". get_bloginfo("wpurl") ."/profile-casting/\"  title=\"Go to Casting Cart\">VIEW CASTING CART</a></div>";
+	  	}
+	}
+        
+        
+	if ($rb_agency_option_profilelist_favorite) {
+		
+		if($countFavorite <= 0){
+			$disp .= "<div class=\"newfavorite\"><a title=\"Save to Favorites\" rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$ProfileID."\">SAVE TO FAVORITES</a></div>\n";
+		}else{
+			$disp .= "<div class=\"viewfavorites\"><a rel=\"nofollow\" title=\"View Favorites\" href=\"".  get_bloginfo("wpurl") ."/profile-favorite/\"/>VIEW FAVORITES</a></div>\n";
+		}					
+	}
+			
+
+	$disp .= "</div><!-- .favorite-casting -->";
+ 	return $disp; 
+}
+
+
+
+/*/
+* ======================== Get New Custom Fields ===============
+* @Returns Custom Fields
+/*/
+function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender) {
+
+	global $wpdb;
+	global $rb_agency_option_unittype;
+	
+	$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
+	foreach ($resultsCustom as $resultCustom) { 
+            
+            if( $resultCustom->ProfileCustomID != 16 ):
+            
+		if(!empty($resultCustom->ProfileCustomValue )){
+			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
+			   	if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
+					if($resultCustom->ProfileCustomOptions == 1){
+						$label = "(cm)";
+					} elseif($resultCustom->ProfileCustomOptions == 2){
+						$label = "(kg)";
+					}
+			 	} elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+					if($resultCustom->ProfileCustomOptions == 1){
+					$label = "(in)";
+					} elseif($resultCustom->ProfileCustomOptions == 2){
+						$label = "(lbs)";
+					} elseif($resultCustom->ProfileCustomOptions == 3){
+						$label = "(ft/in)";
+					}
+			 	} 
+				$measurements_label = "<span class=\"label\">". $label ."</span>";
+			} else {
+				$measurements_label = "";
+			}
+
+			// Lets not do this...
+			$measurements_label = "";
+		 
+			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
+				if ($resultCustom->ProfileCustomType == 7){ 
+					if($resultCustom->ProfileCustomOptions == 3){ 
+					   	$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+					   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
+					} else {
+					   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+					}
+			   	} else {
+					   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+			   	}
+			  
+			} elseif ($resultCustom->ProfileCustomView == "2") {
+				if ($resultCustom->ProfileCustomType == 7){
+				  	if($resultCustom->ProfileCustomOptions == 3){
+					 	$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+					   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
+				  	} else {
+						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+				  	}
+			   	} else {
+					echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+			   	}
+			}
+		}
+             endif;
+	}
+}
+
+
+
+
 /*/
 * ======================== Get Custom Fields ===============
 * @Returns Custom Fields
@@ -2395,6 +2528,8 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 function getExperience($pid){ 
 	$query = mysql_query("SELECT ProfileCustomValue FROM ".table_agency_customfield_mux." WHERE ProfileID = '".$pid."' AND ProfileCustomID ='16' ");
     $fetch = mysql_fetch_assoc($query);
+    
+    
     return  $fetch["ProfileCustomValue"];
 }
 

@@ -36,8 +36,10 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 	// Add to Cart
 		if ($_GET["action"] == "cartAdd" ) { 
 			
-			foreach($_GET["ProfileID"] as $value) {
-				$cartString .= $value .",";
+			if(count($_GET["ProfileID"])>0){
+				foreach($_GET["ProfileID"] as $value) {
+					$cartString .= $value .",";
+				}
 			}
 			// Clean It!
 			echo $cartString = rb_agency_cleanString($cartString);
@@ -156,14 +158,19 @@ echo $cartArray;
 		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
 			$ProfileType = $_GET['ProfileType'];
 			$filter .= " AND profile.ProfileType=". $ProfileType ."";
-		} else {
+		}
+                if (isset($_GET['ProfileIsActive'])){
+			$ProfileIsActive = $_GET['ProfileIsActive'];
+			$filter .= " AND profile.ProfileIsActive=". $ProfileIsActive ."";
+		} 
+                else {
 			$ProfileType = "";
 		}
 		
         // Set Filter to exclude inactive profiles
         // and pending for approval profiles from
         // search 		
-        $filter .= " AND profile.ProfileIsActive!=0 AND profile.ProfileIsActive!=3";
+        //$filter .= " AND profile.ProfileIsActive!=0 AND profile.ProfileIsActive!=3";
 		
         // Gender
 		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
@@ -194,7 +201,6 @@ echo $cartArray;
 		}
 
        echo "  <div class=\"boxblock-holder\">\n";
-        echo "    <h3 class=\"title\">Search Results</h3>\n";
 
 		// Filter Models Already in Cart
         if (isset($_SESSION['cartArray'])) {
@@ -296,19 +302,21 @@ echo $cartArray;
 
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
-                                                                if(!empty($new_val)){
+                                                                if(!empty($val)){
                                                                     if(strpos($val,",") === false){
                                                                         $val = implode("','",explode(",",$val));
                                                                         if($filter2==""){
-                                                                                $filter2 .= " AND ( customfield_mux.ProfileCustomValue IN('".$val."') ";
+                                                                                $filter2 .= " AND ( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."' ";
                                                                         } else {
-                                                                                $filter2 .= " OR customfield_mux.ProfileCustomValue IN('".$val."') ";
+                                                                                $filter2 .= " OR customfield_mux.ProfileCustomValue IN('".$val."')  and customfield_mux.ProfileCustomID = '".substr($key,15)."' ";
                                                                         }
                                                                     } else {
-                                                                        if($filter2==""){
-                                                                            $filter2 .= " AND ( customfield_mux.ProfileCustomValue='".$val."' ";
+																		
+																		$val = substr($val, 0, -1);
+																	    if($filter2==""){
+                                                                            $filter2 .= " AND ( customfield_mux.ProfileCustomValue IN ('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."' ";
                                                                         } else {
-                                                                            $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                                                            $filter2 .= " OR customfield_mux.ProfileCustomValue  IN ('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."' ";
                                                                         }
                                                                     }
 
@@ -400,6 +408,9 @@ echo $cartArray;
 	  // echo $query;
 		$results2 = mysql_query($query);
         $count = mysql_num_rows($results2);
+        
+        echo "<h3 class=\"title\">Search Results: " . $count . "</h3>\n";
+        
 		if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
 			echo "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". $sessionString ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 		}
@@ -1175,18 +1186,20 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		
 		} //end of while ($data1
    
-/*
+                // status filter
+
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Status", rb_agency_TEXTDOMAIN) . ":</th>\n";
 		echo "				        <td><select name=\"ProfileIsActive\" id=\"ProfileIsActive\">\n";               
-		echo "							<option value=\"\">". __("Show only Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Show only Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Show only Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-		echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Show only Declassified", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
+                echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+		echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
 		echo "				        	</select>\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
-*/
+
 
 		echo "				  </thead>\n";
 		echo "				</table>\n";

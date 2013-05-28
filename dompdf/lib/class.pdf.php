@@ -4585,7 +4585,7 @@ class  Cpdf {
 
     if  ($h ==  0) {
 
-      $h =  $w*$info['height']/$info['width'];
+      $h =  $w*$info['width']/$info['height'];
     }
 
     //print_r($info);
