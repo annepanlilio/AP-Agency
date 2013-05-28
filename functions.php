@@ -759,13 +759,10 @@ function rb_agency_profilelist($atts, $content = NULL) {
                                         if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
                                                         $minVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min'];
                                                         $maxVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max'];
-                                                        if($minVal != "" && $maxVal != ""){
-                                                            if($filter2 == ""){
-                                                                $filter2 .= " AND ( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' ";
-                                                            } else {
-                                                                $filter2 .= " OR customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' ";
-
-                                                            }
+                                                        if($filter2 == ""){
+                                                            $filter2 .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                        } else {
+                                                            $filter2 .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
                                                         }
 
                                                         //echo "-----";
@@ -783,7 +780,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
                                                         if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
                                                                 if($filter2 == ""){
-                                                                    $filter2 .= " AND ( customfield_mux.ProfileCustomValue='".$val."' ";
+																    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                 } else {
                                                                     $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
                                                                 }                                                           
@@ -798,7 +795,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
                                                                 if($filter2==""){
-                                                                    $filter2 .= " AND ( customfield_mux.ProfileCustomValue='".$val."' ";
+                                                                    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                 } else {
                                                                     $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
                                                                 } 
@@ -808,17 +805,39 @@ function rb_agency_profilelist($atts, $content = NULL) {
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
                                                                 if(!empty($val)){
                                                                     if(strpos($val,",") === false){
-                                                                        $val = implode("','",explode(",",$val));
+                                                                       // $val = implode("','",explode(",",$val));
+																	  
                                                                         if($filter2==""){
-                                                                                $filter2 .= " AND ( customfield_mux.ProfileCustomValue IN('".$val."') ";
+																		
+                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue like('%".$val."%') and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
                                                                         } else {
-                                                                                $filter2 .= " OR customfield_mux.ProfileCustomValue IN('".$val."') ";
+                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue like('%".$val."%')   and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
                                                                         }
                                                                     } else {
-                                                                        if($filter2==""){
-                                                                            $filter2 .= " AND ( customfield_mux.ProfileCustomValue='".$val."' ";
+																		
+																		$likequery = explode(",", $val);
+																		$likecounter = count($likequery);
+																		$i=1; 
+																		$likedata = "" ;
+																		foreach($likequery as $like){
+																			if($i < ($likecounter-1)){
+																				if($like!=""){
+																					$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
+																				}
+																				}else{
+																				if($like!=""){
+																						$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
+																				} 
+																			}
+																			$i++;
+																		}
+																		 
+																		
+																		$val = substr($val, 0, -1);
+																	    if($filter2==""){
+                                                                            $filter2 .= " AND  ((( ".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
                                                                         } else {
-                                                                            $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                                                            $filter2 .= " OR  ((".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
                                                                         }
                                                                     }
 
@@ -830,9 +849,9 @@ function rb_agency_profilelist($atts, $content = NULL) {
                                                                 //var_dump($ProfileCustomType["ProfileCustomType"]);
                                                                    $val = implode("','",explode(",",$val));
                                                                     if($filter2==""){
-                                                                        $filter2 .= " AND ( customfield_mux.ProfileCustomValue='".$val."' ";
+                                                                        $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                     } else {
-                                                                        $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                                                        $filter2 .= " or (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                     } 
                                                                     $_SESSION[$key] = $val;
                                                                
@@ -843,9 +862,9 @@ function rb_agency_profilelist($atts, $content = NULL) {
                                                                     list($Min_val,$Max_val) = explode(",",$val);
                                                                         if(!empty($Min_val) && !empty($Max_val)){
                                                                             if($filter2==""){
-                                                                                    $filter .= " AND ( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' ";
+                                                                                    $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
                                                                             } else {
-                                                                                    $filter .= " OR customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' ";
+                                                                                    $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
 
                                                                             }
                                                                         $_SESSION[$key] = $val;
@@ -953,7 +972,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			
 			if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
 				$atts["type"]="casting";
-				$addtionalLink ='&nbsp;|&nbsp;<a href="#" id="sendemail">Email to admin</a>';
+				$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
 			}
 			
 			# print, downloads links to be added on top of profile list
