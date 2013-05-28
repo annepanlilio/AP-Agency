@@ -242,7 +242,7 @@ img.fillheight {
 }
 
 /* Category List: /profile-category/ (view-category.php) */
-#profile-category { }
+#profile-category .standardTable { width: 100%; }
 #profile-category h1.profile-category-title { }
 #profile-category-list { font-size: 18px; overflow: hidden; }
 #profile-category-list .profile-category { width: 310px; float: left; margin: 0 0 10px 0; }
