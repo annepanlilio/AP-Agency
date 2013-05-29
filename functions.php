@@ -788,10 +788,12 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
 
-
-                                                                                //$filter.= " AND LOWER(customfield_mux.ProfileCustomValue) = LOWER(\"".$val."\") ";
-                                                            array_push($filterDropdown,$val);
-
+													   if($filter2==""){
+														 $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+													   } else {
+													   $filter2 .=" OR (customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+													   }
+                                                                              
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
                                                                 if($filter2==""){
@@ -880,15 +882,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 			 }  // end if
 	       } // end for each
 	  
-           if(count($filterDropdown) > 0){
-               if($filter2==""){
-               $filter2 .=" AND ( customfield_mux.ProfileCustomValue IN('".implode("','",$filterDropdown)."')";
-               } else {
-               $filter2 .=" OR customfield_mux.ProfileCustomValue IN('".implode("','",$filterDropdown)."')";
-               }
-               
-           }
-           
+                    
            /*
             * Refine filter and add the created 
             * holder $filter to $filter if not
