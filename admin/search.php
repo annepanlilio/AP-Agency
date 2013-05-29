@@ -289,10 +289,14 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                                                 $_SESSION[$key] = $val;
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
-
+															if($filter2==""){
+               $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+               } else {
+               $filter2 .=" OR (customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+               }
 
                                                                                 //$filter.= " AND LOWER(customfield_mux.ProfileCustomValue) = LOWER(\"".$val."\") ";
-                                                            array_push($filterDropdown,$val);
+                                                           // array_push($filterDropdown,$val);
 
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
@@ -400,7 +404,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
            }
      
 	// Search Results	
-	$query = "
+	 $query = "
 			 SELECT 
 			 profile.*,
 			 profile.ProfileGallery,
