@@ -1,4 +1,7 @@
 <?php
+if($_GET['action']==""){
+	unset($_SESSION);
+}
 global $wpdb;
 
 $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
@@ -12,7 +15,7 @@ if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
 echo "<div class=\"wrap\" style=\"min-width: 1020px;\">\n";
 echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
 echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
-
+echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=rb_agency_menu_search';}</script>"; 
 
 // *************************************************************************************************** //
 // Setup Functions 
@@ -81,8 +84,6 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 			$_SESSION['cartArray'] = $cartArray;
 		
 		}
-
-  echo $cartArray;
 
 
 
@@ -157,16 +158,17 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 		// Type
 		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
 			$ProfileType = $_GET['ProfileType'];
-			$filter .= " AND profile.ProfileType=". $ProfileType ."";
+			$filter .= " AND profile.ProfileType like'%". $ProfileType ."%'";
+			//$filter .= " AND Find_in_set (". $ProfileType .",profile.ProfileType) ";
 		}
-                if (isset($_GET['ProfileIsActive'])){
-			$ProfileIsActive = $_GET['ProfileIsActive'];
-			$filter .= " AND profile.ProfileIsActive=". $ProfileIsActive ."";
-		} 
+             
                 else {
 			$ProfileType = "";
-		}
-		
+		}   if (isset($_GET['ProfileIsActive'])&& $_GET['ProfileIsActive'] !=""){
+			$ProfileIsActive = $_GET['ProfileIsActive'];
+			$filter .= " AND profile.ProfileIsActive=". $ProfileIsActive ."";
+			
+		} 		
         // Set Filter to exclude inactive profiles
         // and pending for approval profiles from
         // search 		
@@ -398,7 +400,7 @@ echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
            }
      
 	// Search Results	
-	 $query = "
+	$query = "
 			 SELECT 
 			 profile.*,
 			 profile.ProfileGallery,
@@ -1227,7 +1229,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "				</table>\n";
 		echo "				<p clas=\"submit\">\n";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "				<input type=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
+		echo "				<input type=\"reset\" onclick=\"redirectSearch();\" name=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 		echo "				<a href=\"?page=rb_agency_menu\" class=\"button-secondary\">". __("Quick Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 		echo "				</p>\n";
 		echo "        	<form>\n";
