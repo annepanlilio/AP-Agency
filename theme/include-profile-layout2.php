@@ -183,6 +183,9 @@ Profile View with Sliding Thumbnails and Primary Image
 			}
 
 */
+	if (isset($profileVideoEmbed)) {
+		echo "<a href='http://www.youtube.com/watch?v=". $profileVideoEmbed ."'>Watch Movie Video </a>";
+	}
 	echo "	</div> <!-- #info -->\n";//End Info
 	echo "	</div> <!-- #profile-l -->\n";
 	echo "  <div class=\"five column\">\n";
