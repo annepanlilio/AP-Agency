@@ -138,7 +138,10 @@
 	float: left;
 	clear: both;
 	width: 300px;
-	padding: 5px 0;
+	padding: 7px 0;
+}
+.rbsearch-form .search-field.submit {
+	padding: 15px 0;
 }
 .rbsearch-form .search-field.single label {
 	width: 35%;
@@ -146,8 +149,17 @@
 }
 .rbsearch-form .search-field.single input,
 .rbsearch-form .search-field.single select {
+	margin: 0;
 	width: 65%;
 	float: left;
+}
+.rbsearch-form .search-field.single input,
+.rbsearch-form .search-field.multi div input[type="text"] {
+	padding: 5px;
+}
+.rbsearch-form .search-field.single select,
+.rbsearch-form .search-field.multi div select {
+	padding: 2px;
 }
 .rbsearch-form .search-field.multi legend {
 	float: left;
@@ -170,15 +182,18 @@
 .rbsearch-form .search-field.multi div label {
 	width: 40%;
 	float: left;
+	line-height: 28px;
 	text-align: center;
 }
 .rbsearch-form .search-field.multi div input[type="text"],
 .rbsearch-form .search-field.multi div select {
+	margin: 0;
 	width: 60%;
 	float: left;
 }
 .rbsearch-form .search-field.multi label input[type="checkbox"],
 .rbsearch-form .search-field.multi label input[type="radio"] {
+	margin: 0;
 	float: left;
 }
 .rbsearch-form .search-field.single label, .rbsearch-form .search-field.multi legend {
@@ -215,6 +230,16 @@
 }
 
 /* Dashboard */
+#rbdashboard {
+	overflow: hidden;
+	margin-bottom: 60px;
+}
+#rbdashboard h1 {
+	margin-bottom: 30px;
+}
+#rbdashboard h2 {
+	margin-bottom: 15px;
+}
 #rbdashboard #profile-info {
 	width: 30%;
 	float: right;
@@ -223,14 +248,15 @@
 	margin-bottom: 15px;
 }
 #rbdashboard #profile-info h4 {
-	padding: 10px 0;
+	padding: 10px 0 0 0;
 }
 #rbdashboard #profile-info ul {
-	list-style: none;
 	margin: 0;
+	list-style: none;
 }
 #rbdashboard #profile-info ul li {
 	list-style: none;
+	padding: 5px 0;
 }
 #rbdashboard #search {
 	width: 65%;

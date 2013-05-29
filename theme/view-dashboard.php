@@ -138,8 +138,8 @@ if (isset($curauth->user_login)) {
 	echo "		</ul>\n";
 	//echo "User level: " . $current_user->user_level . "<br />\n";
 	//echo "User display name: " . $current_user->display_name . "<br />\n";
-	echo "		<h4><a href=\"". get_bloginfo("url") ."/wp-admin/profile.php\">Edit Information</a></h4>\n";
-	echo "		<h4><a href=\"" . wp_logout_url(get_permalink()) . "\">Logout</a></h4>\n";
+	echo "		<h4><a href=\"". get_bloginfo("url") ."/wp-admin/profile.php\" class=\"rb_button\">Edit Information</a></h4>\n";
+	echo "		<h4><a href=\"" . wp_logout_url(get_permalink()) . "\" class=\"rb_button\">Logout</a></h4>\n";
 	echo "  </div>\n";
 	
 	echo "  <div id=\"search\">\n";
