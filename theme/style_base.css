@@ -138,6 +138,7 @@
 	float: left;
 	clear: both;
 	width: 300px;
+	border: none;
 	padding: 7px 0;
 }
 .rbsearch-form .search-field.submit {
@@ -373,18 +374,19 @@ img.fillheight {
 #rblayout-three { overflow: hidden; }
 #rblayout-three .row-zero { font-size: 30px; margin: 0 0 20px 0; overflow: hidden; }
 #rblayout-three .row-one { padding: 10px 0; overflow: hidden; }
-#rblayout-three #profile-picture-wrap { width: 150px; float: left; }
+#rblayout-three #profile-picture-wrap {  }
 #rblayout-three #profile-picture-wrap img { width: 150px; }
 #rblayout-three #profile-picture { width: 150px; height: 200px; overflow: hidden; }
 #rblayout-three .profile-picture-favorite { text-align: center; background: #ccc; font-size: 13px; padding: 5px; margin: 5px 0 0 0; }
 #rblayout-three .profile-picture-favorite a { color: #666; }
 #rblayout-three .profile-picture-favorite:hover { background: #bbb; }
-#rblayout-three #profile-overview { float: left; margin: 0 0 0 20px; width: 560px; line-height: 20px; }
+#rblayout-three #profile-overview { line-height: 20px; }
 #rblayout-three #profile-name h2 { font-size: 33px; }
 #rblayout-three #profile-liner { overflow: hidden; margin: 10px 0; }
 #rblayout-three #profile-liner div { float: left; margin: 0 5px 0 0; }
-#rblayout-three #profile-actions { float: right; padding: 20px; line-height: 22px; }
-#rblayout-three #profile-actions-contact , #rblayout-three #profile-actions-print  { }
+#rblayout-three #profile-actions { line-height: 22px; }
+#rblayout-three #profile-actions-contact,
+#rblayout-three #profile-actions-print { }
 #rblayout-three #profile-actions-contact { width: 161px; background: url(style/buttons.png) no-repeat; height: 30px; margin: 0 0 10px 0; }
 #rblayout-three #profile-actions-contact:hover { background-position: -161px 0; } 
 
