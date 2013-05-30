@@ -73,12 +73,44 @@ Profile View with Scrolling Thumbnails and Primary Image
 	
 	echo "			<ul>\n";
 
+$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
+			                              ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+			
+			$count_favorite = mysql_num_rows($query_favorite);
+			$datas_favorite = mysql_fetch_assoc($query_favorite);
+			
+			$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
+			                                 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+			
+			$count_castingcart = mysql_num_rows($query_castingcart);
+			
+			$cl1 = ""; $cl2=""; $tl1="Add to Favorites"; $tl2="Add to Casting Cart";
+						 
+			if($count_favorite>0){ $cl1 = "fav_bg"; $tl1="Remove from Favorites"; }
+			
+			if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
+			
+			echo	'<div class="profile-actions-favorited">
+			 					<li class=\"favorite\"><a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.' rb_button" id="'.$ProfileID.'">'.$tl1.'</a></li>
+					<li><a title="'.$tl2.'" href="javascript:;" id="mycart" class="save_cart '.$cl2.' rb_button">'.$tl2.'</a></li>
+			 					
+					</div>';
+
+						echo '<div id="resultsGoHereAddtoCart"></div>';
+						?>
+        
+        <div id="view_casting_cart" style="<?php if($tl2=="Add to Casting Cart"){?>display:none;<?php }else{?>display:block;<?php }?>"><li class="casting"><a class="rb_button" href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li></div>
+    
+        
+        <div id="view_favorite" style="<?php if($tl1=="Add to Favorites"){?>display:none;<?php }else{?>display:block;<?php }?>"><li class="favorite"><a class="rb_button" href="<?php echo get_bloginfo('url')?>/profile-favorite/"><?php echo __("View favorite", rb_agency_TEXTDOMAIN);?></a></li></div>
+    <?php
+
 				// Resume
 				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Print Resume</a></li>\n";
+				echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Resume</a></li>\n";
 				  }
 				}
 			
@@ -150,7 +182,7 @@ Profile View with Scrolling Thumbnails and Primary Image
                                 
 				// Is Logged?
 				if (is_user_logged_in()) { 
-				
+			
 					if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
 			 			if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already	?>
 							<script>
@@ -173,22 +205,22 @@ Profile View with Scrolling Thumbnails and Primary Image
 							}
 							
 		                    </script>
-		                    <?php
-							echo "<li id=\"casting_cart_li\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\" class=\"rb_button\">". __("Add to Casting Cart", rb_agency_TEXTDOMAIN). "</a></li>\n";
+	                        <?php
+						 
+							
 						} else {
 				  			echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);						  
-							echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"rb_button\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";							
-				        }
+						  	echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"rb_button\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
+							
+			          	}
 					}	//end if(checkCart(rb_agency_get_current_userid()
-
 					echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\" class=\"rb_button\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
 				}
+				
+
 	echo "			</ul>\n";
 	echo "		</div>\n";  // Close Links
-	?>
-        <div id="resultsGoHereAddtoCart"></div>
-        <div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></div>
-    <?php
+	
 	echo "	  <div id=\"experience\" class=\"six column\">\n";
 	echo			$ProfileExperience;
 	echo "	  </div>\n"; // Close Experience
@@ -203,3 +235,81 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "<div style=\"clear: both;\"></div>\n"; // Clear All
 	echo "</div>\n";  // Close Profile
 ?>
+<script type="text/javascript">
+
+jQuery(document).ready(function(){
+
+	jQuery(".save_fav").click(function(){
+
+		ajax_submit(jQuery(this),"favorite");
+
+	});
+
+	jQuery(".save_cart").click(function(){
+		ajax_submit(jQuery(this),"casting");
+		
+	});	
+
+    function ajax_submit(Obj,type){
+                
+				if(type == "favorite"){
+					
+					var action_function = "rb_agency_save_favorite";
+						
+				} else if(type == "casting"){
+				
+					var action_function = "rb_agency_save_castingcart";
+					
+				
+				}
+				
+				jQuery.ajax({type: 'POST',url: '<?php echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
+		
+							 data: {action: action_function,  'talentID': <?php echo $ProfileID ?>},
+		
+						  success: function(results) {  
+		
+								if(results=='error'){ 
+									alert("Error in query. Try again"); 
+								}else if(results==-1){ 
+									alert("You're not signed in");
+								} else { 
+		
+									  if(type == "favorite"){
+							             
+										 if(Obj.hasClass('fav_bg')){
+	 										 Obj.removeClass('fav_bg');
+											 Obj.attr('title','Add to Favorites'); 
+											document.getElementById('<?php echo $ProfileID; ?>').innerHTML="Add to Favorites";
+											document.getElementById('view_favorite').style.display="none";
+										 } else {
+	 										 Obj.addClass('fav_bg');
+											 Obj.attr('title','Remove from Favorites'); 
+											 document.getElementById('<?php echo $ProfileID; ?>').innerHTML="Remove from Favorites";
+											 document.getElementById('view_favorite').style.display="block";
+
+										 }
+							  
+									 } else if(type == "casting") {
+										 
+										 if(Obj.hasClass('cart_bg')){
+	 										 Obj.removeClass('cart_bg');
+											 Obj.attr('title','Add to Casting Cart'); 
+											 document.getElementById('mycart').innerHTML="Add to Casting Cart";
+											 document.getElementById('view_casting_cart').style.display="none";
+										 } else {
+										 	Obj.addClass('cart_bg');
+										 	Obj.attr('title','Remove from Casting Cart');
+											document.getElementById('mycart').innerHTML="Remove from Casting Cart";
+											document.getElementById('view_casting_cart').style.display="block";
+										 }
+									
+									 }
+		
+									
+								}
+							}
+			   }); // ajax submit
+	 } // end function
+});
+</script>
