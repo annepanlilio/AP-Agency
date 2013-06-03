@@ -849,11 +849,11 @@ function rb_agency_profilelist($atts, $content = NULL) {
                                                                 }
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
                                                                 //var_dump($ProfileCustomType["ProfileCustomType"]);
-                                                                   $val = implode("','",explode(",",$val));
+                                                                  // $val = implode("','",explode(",",$val));
                                                                     if($filter2==""){
-                                                                        $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
+                                                                        $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
                                                                     } else {
-                                                                        $filter2 .= " or (customfield_mux.ProfileCustomValue like('%".$val."%'))";
+                                                                        $filter2 .= " or (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
                                                                     } 
                                                                     $_SESSION[$key] = $val;
                                                                
@@ -1007,7 +1007,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 	 	if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 	  
 			/*********** Paginate **************/
-			$items = mysql_num_rows(($qItem = mysql_query("SELECT
+				$items = mysql_num_rows(($qItem = mysql_query("SELECT
 				profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , 
 				 customfield_mux.*,  
 				 (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
