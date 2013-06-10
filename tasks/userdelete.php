@@ -5,8 +5,8 @@
  * @parm User Id
  */
 
- require_once('../../../wp-load.php');	 
- require_once('../../../wp-admin/includes/user.php');	 
+ require_once('../../../../wp-load.php');	 
+ require_once('../../../../wp-admin/includes/user.php');	 
  
     global $wpdb;
  	

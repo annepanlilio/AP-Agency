@@ -761,29 +761,20 @@
 		//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		$dir = "asc";
 
-		/*
-		 * Set Override Privacy for emailed link
-	         * in casting cart
-		 */
-		$pageURL = '';
-	 	if ($_SERVER["SERVER_PORT"] != "80") {
-	  		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-	 	} else {
-	  		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	 	}
+		// Should we override the privacy settings?
 		if(strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
 			$OverridePrivacy = 1;
 		}
 	        
+	    // Option to show all profiles
 		if (isset($OverridePrivacy)) {
-
 			// If sent link, show both hidden and visible
 			$filter = "WHERE profile.ProfileIsActive IN (1, 4) AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
 		} else {
 			$filter = "WHERE profile.ProfileIsActive = 1 AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
 		}
 
-		// Legacy Field Names
+		// Pagination
 		if (!isset($paging) || empty($paging)) {
 			$paging = 1; 
 			if (get_query_var('paging')) {
@@ -797,9 +788,10 @@
 				}
 			}
 		}
-			
 		if (!isset($pagingperpage) || empty($pagingperpage)) { $pagingperpage = $rb_agency_option_profilelist_perpage; }
 		if($pagingperpage=="0"){$pagingperpage="10";}//make it a default value
+
+		// Legacy Field Names
 		if (isset($type) && !empty($type)){ $profiletype = $type; }
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
 		if (isset($age_start) && !empty($age_start)){ $profiledatebirth_min = $age_start; }
@@ -824,12 +816,13 @@
 		$City						= $profilecity;
 		$State						= $profilestate;
 		$Zip						= $profilezip;  
-	      
+	    
+	    // ?
 	   	$filterDropdown = array();
 
 	    // Set CustomFields
 	  	if(isset($atts) && !empty($atts)){
-			$filter2= '';
+			$filter2 = '';
 
 			foreach($atts as $key => $val){
 				
@@ -875,122 +868,122 @@
 	                             * AND should be OR
 	                             */
 	                            if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
-	                                            $minVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min'];
-	                                            $maxVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max'];
-	                                            if($filter2 == ""){
-	                                                $filter2 .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-	                                            } else {
-	                                                $filter2 .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-	                                            }
+                                    $minVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min'];
+                                    $maxVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max'];
+                                    if($filter2 == ""){
+                                        $filter2 .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                    } else {
+                                        $filter2 .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                    }
 
-	                                            //echo "-----";
+                                    //echo "-----";
 	                            }else {
 
-	                                            /******************
-	                                            1 - Text
-	                                            2 - Min-Max > Removed
-	                                            3 - Dropdown
-	                                            4 - Textbox
-	                                            5 - Checkbox
-	                                            6 - Radiobutton
-	                                            7 - Metrics/Imperials
-	                                            *********************/
+                                    /******************
+                                    1 - Text
+                                    2 - Min-Max > Removed
+                                    3 - Dropdown
+                                    4 - Textbox
+                                    5 - Checkbox
+                                    6 - Radiobutton
+                                    7 - Metrics/Imperials
+                                    *********************/
 
-	                                            if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
-	                                                    if($filter2 == ""){
-														    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
-	                                                    } else {
-	                                                        $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
-	                                                    }                                                           
-	                                                    $_SESSION[$key] = $val;
+                                    if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
+                                            if($filter2 == ""){
+											    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
+                                            } else {
+                                                $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                            }                                                           
+                                            $_SESSION[$key] = $val;
 
-	                                            } elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
+                                    } elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
 
-											   if($filter2==""){
-												 $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-											   } else {
-											   $filter2 .=" OR (customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-											   }
-	                                                                  
+								   if($filter2==""){
+									 $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+								   } else {
+								   $filter2 .=" OR (customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+								   }
+                                                          
 
-	                                            } elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
-	                                                    if($filter2==""){
-	                                                        $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
-	                                                    } else {
-	                                                        $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
-	                                                    } 
-	                                                            $_SESSION[$key] = $val;
+                                    } elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
+                                            if($filter2==""){
+                                                $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
+                                            } else {
+                                                $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                            } 
+                                                    $_SESSION[$key] = $val;
 
 
-	                                            } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
-	                                                    if(!empty($val)){
-	                                                        if(strpos($val,",") === false){
-	                                                           // $val = implode("','",explode(",",$val));
-															  
-	                                                            if($filter2==""){
-																
-	                                                                    $filter2 .= " AND  ((customfield_mux.ProfileCustomValue like('%".$val."%') and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-	                                                            } else {
-	                                                                    $filter2 .= " OR  (customfield_mux.ProfileCustomValue like('%".$val."%')   and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-	                                                            }
-	                                                        } else {
-																
-																$likequery = explode(",", $val);
-																$likecounter = count($likequery);
-																$i=1; 
-																$likedata = "" ;
-																foreach($likequery as $like){
-																	if($i < ($likecounter-1)){
-																		if($like!=""){
-																			$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
-																		}
-																		}else{
-																		if($like!=""){
-																				$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
-																		} 
-																	}
-																	$i++;
-																}
-																 
-																
-																$val = substr($val, 0, -1);
-															    if($filter2==""){
-	                                                                $filter2 .= " AND  ((( ".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
-	                                                            } else {
-	                                                                $filter2 .= " OR  ((".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-	                                                            }
-	                                                        }
+                                    } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
+                                            if(!empty($val)){
+                                                if(strpos($val,",") === false){
+                                                   // $val = implode("','",explode(",",$val));
+												  
+                                                    if($filter2==""){
+													
+                                                            $filter2 .= " AND  ((customfield_mux.ProfileCustomValue like('%".$val."%') and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                    } else {
+                                                            $filter2 .= " OR  (customfield_mux.ProfileCustomValue like('%".$val."%')   and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                    }
+                                                } else {
+													
+													$likequery = explode(",", $val);
+													$likecounter = count($likequery);
+													$i=1; 
+													$likedata = "" ;
+													foreach($likequery as $like){
+														if($i < ($likecounter-1)){
+															if($like!=""){
+																$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
+															}
+															}else{
+															if($like!=""){
+																	$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
+															} 
+														}
+														$i++;
+													}
+													 
+													
+													$val = substr($val, 0, -1);
+												    if($filter2==""){
+                                                        $filter2 .= " AND  ((( ".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
+                                                    } else {
+                                                        $filter2 .= " OR  ((".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                    }
+                                                }
 
-	                                                    $_SESSION[$key] = $val;
-	                                                    }else{
-	                                                            $_SESSION[$key] = "";
-	                                                    }
-	                                            } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
-	                                                    //var_dump($ProfileCustomType["ProfileCustomType"]);
-	                                                      // $val = implode("','",explode(",",$val));
-	                                                        if($filter2==""){
-	                                                            $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-	                                                        } else {
-	                                                            $filter2 .= " or (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-	                                                        } 
-	                                                        $_SESSION[$key] = $val;
-	                                                   
+                                            $_SESSION[$key] = $val;
+                                            }else{
+                                                    $_SESSION[$key] = "";
+                                            }
+                                    } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
+                                            //var_dump($ProfileCustomType["ProfileCustomType"]);
+                                              // $val = implode("','",explode(",",$val));
+                                                if($filter2==""){
+                                                    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                } else {
+                                                    $filter2 .= " or (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                } 
+                                                $_SESSION[$key] = $val;
+                                           
 
-	                                            }
-	                                            elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
+                                    }
+                                    elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
 
-	                                                        list($Min_val,$Max_val) = explode(",",$val);
-	                                                            if(!empty($Min_val) && !empty($Max_val)){
-	                                                                if($filter2==""){
-	                                                                        $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
-	                                                                } else {
-	                                                                        $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                list($Min_val,$Max_val) = explode(",",$val);
+                                                    if(!empty($Min_val) && !empty($Max_val)){
+                                                        if($filter2==""){
+                                                                $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
+                                                        } else {
+                                                                $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
 
-	                                                                }
-	                                                            $_SESSION[$key] = $val;
-	                                                            }
+                                                        }
+                                                    $_SESSION[$key] = $val;
+                                                    }
 
-	                                            }
+                                    }
 	                            }
 			
 							
@@ -1006,8 +999,8 @@
 	            * holder $filter to $filter if not
 	            * equals to blanks
 	            */
-	           if($filter2!=""){
-	            $filter2.= " ) ";
+	           if($filter2 != ""){
+	            $filter2 .= " ) ";
 	            $filter .= $filter2;
 	           }
 		}
@@ -1305,7 +1298,7 @@
 						    $images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 						}
 
-						$displayHTML .="<div class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_BASEDIR."timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\" id=\"roll".$dataList["ProfileID"]."\"  /></a>".$images."</div>\n";
+						$displayHTML .="<div class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_BASEDIR."tasks/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\" id=\"roll".$dataList["ProfileID"]."\"  /></a>".$images."</div>\n";
 
 					} else {
 						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."\"  /></a>".$images."</div>\n";
@@ -1398,7 +1391,7 @@
 		$resultsImg = mysql_query($queryImg);
 		$countImg = mysql_num_rows($resultsImg);
 		while ($dataImg = mysql_fetch_array($resultsImg)) {//style=\"display:none\" 
-		 	$images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+		 	$images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/tasks/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 		}
 	return  $images;
 	}
@@ -3211,33 +3204,33 @@ function delete_script() {?>
                         // ajax delete
 					alert(jQuery('#delete_opt').val());	
                     jQuery.ajax({
-                                type: "POST",
-                                url: '<?php echo plugins_url( 'rb-agency/rb_delete_user.php' , dirname(__FILE__) ); ?>',
-                                dataType: "html",
-                                data: { ID : "<?php echo rb_agency_get_current_userid(); ?>", OPT: jQuery('#delete_opt').val() },
+                        type: "POST",
+                        url: '<?php echo plugins_url( 'rb-agency/tasks/userdelete.php' , dirname(__FILE__) ); ?>',
+                        dataType: "html",
+                        data: { ID : "<?php echo rb_agency_get_current_userid(); ?>", OPT: jQuery('#delete_opt').val() },
 
-                                beforeSend: function() {
-                                },
+                        beforeSend: function() {
+                        },
 
-                                error: function() {
-                                    setTimeout(function(){
-                                    alert("Process Failed. Please try again later.");	
-                                    }, 1000);
-                                },	
+                        error: function() {
+                            setTimeout(function(){
+                            alert("Process Failed. Please try again later.");	
+                            }, 1000);
+                        },	
 
-                                success: function(data) {
-                                    if (data != "") {
-                                        setTimeout(function(){
-                                        	alert(data);
-											//alert("Deletion success! You will now be redirected to our homepage.");
-                                            window.location.href = "<?php echo get_bloginfo('wpurl'); ?>";
-                                        }, 1000);
-                                    } else {
-                                        setTimeout(function(){
-                                            alert("Failed. Please try again later.");
-                                        }, 1000);
-                                    }
-                                }
+                        success: function(data) {
+                            if (data != "") {
+                                setTimeout(function(){
+                                	alert(data);
+									//alert("Deletion success! You will now be redirected to our homepage.");
+                                    window.location.href = "<?php echo get_bloginfo('wpurl'); ?>";
+                                }, 1000);
+                            } else {
+                                setTimeout(function(){
+                                    alert("Failed. Please try again later.");
+                                }, 1000);
+                            }
+                        }
                     });
                 }
             });	
