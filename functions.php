@@ -32,7 +32,7 @@
 
 // *************************************************************************************************** //
 /*
- * Header for Site Pages
+ * Header for Public facing Pages
  */
 
 	add_action('wp_head', 'rb_agency_inserthead');
@@ -52,19 +52,16 @@
 /*
  * Customize WordPress Dashboard
  */
-        
-    $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
-       
+
     // Pull User Identified Settings/Options 
 	$rb_agency_options_arr = get_option('rb_agency_options');
-    
+	// Can we show the ads? Or keep it clean?
 	$rb_agency_option_advertise = isset($rb_agency_options_arr['rb_agency_option_advertise']) ? $rb_agency_options_arr['rb_agency_option_advertise'] : 0;
-			
-	if($rb_agency_option_advertise == 1) {
 
-		add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );		
+	if($rb_agency_option_advertise == 0) {  // Reversed it, now 1 = Hide Advertising
+
+	  add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );		
 		// Hoook into the 'wp_dashboard_setup' action to register our other functions
-		// Create the function use in the action hook
 		function rb_agency_add_dashboard() {
 
 			global $wp_meta_boxes;
@@ -86,6 +83,7 @@
 			$wp_meta_boxes['dashboard']['normal']['core'] = $left_dashboard; 
 			$wp_meta_boxes['dashboard']['side']['core'] = $right_dashboard;
 		}
+
 		 // Create the function to output the contents of our Dashboard Widget
 		function rb_agency_dashboard_quicklinks() {
 
@@ -105,9 +103,10 @@
 				// Build an array of all the items, starting with element 0 (first element).
 				$rss_items = $rss->get_items(0, $maxitems); 
 			}
+
 			echo "<div class=\"feed-searchsocial\">\n";
 			if ($maxitems == 0) {
-				echo "Empty Feed\n";
+				echo "No Connection\n";
 			} else {
 
 				// Loop through each feed item and display each item as a hyperlink.
@@ -121,71 +120,78 @@
 			}
 			echo "</div>\n";
 			echo "<hr />\n";
-			//echo "Need <a href=\"http://rob.bertholf.com\" target=\"_blank\" title=\"SEO Resource\">SEO Advice</a>?<br />";
+			echo "Need help? Check out RB Agency <a href=\"http://rbplugin.com\" target=\"_blank\" title=\"RB Agency Documentation\">Documentation</a>.<br />";
 		}
 	}
 
+
 // *************************************************************************************************** //
-// Add Custom Classes
+/*
+ * Add Custom Classes to <body>
+ */
+
 	add_filter("body_class", "rb_agency_insertbodyclass");
-	add_filter("post_class", "rb_agency_insertbodyclass");
-	function rb_agency_insertbodyclass($classes) {
-		// Remove Blog
-		if (substr($_SERVER['REQUEST_URI'], 0, 9) == "/profile/") {
-			$classes[] = 'rbagency-profile';
-		} elseif (substr($_SERVER['REQUEST_URI'], 0, 11) == "/dashboard/") {
-			$classes[] = 'rbagency-dashboard';
-		} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-category/") {
-			$classes[] = 'rbagency-category';
-		} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-register/") {
-			$classes[] = 'rbagency-register';
-		} elseif (substr($_SERVER['REQUEST_URI'], 0, 17) == "/profile-search/") {
-			$classes[] = 'rbagency-search';
-		} elseif (substr($_SERVER['REQUEST_URI'], 0, 15) == "/profile-print/") {
-			$classes[] = 'rbagency-print';
-		} else {
-			$classes[] = 'rbagency';
+		// Add CSS Class based on URL
+		function rb_agency_insertbodyclass($classes) {
+			// Remove Blog
+			if (substr($_SERVER['REQUEST_URI'], 0, 9) == "/profile/") {
+				$classes[] = 'rbagency-profile';
+			} elseif (substr($_SERVER['REQUEST_URI'], 0, 11) == "/dashboard/") {
+				$classes[] = 'rbagency-dashboard';
+			} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-category/") {
+				$classes[] = 'rbagency-category';
+			} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-register/") {
+				$classes[] = 'rbagency-register';
+			} elseif (substr($_SERVER['REQUEST_URI'], 0, 17) == "/profile-search/") {
+				$classes[] = 'rbagency-search';
+			} elseif (substr($_SERVER['REQUEST_URI'], 0, 15) == "/profile-print/") {
+				$classes[] = 'rbagency-print';
+			} else {
+				$classes[] = 'rbagency';
+			}
+			return $classes;
 		}
-		return $classes;
-	}
+
 
 // *************************************************************************************************** //
-// Handle Folders
+/*
+ * Add Rewrite Rules based on Path
+ */
 			
-	// Adding a new rule
 	add_filter('rewrite_rules_array','rb_agency_rewriteRules');
-	function rb_agency_rewriteRules($rules) {
-		$newrules = array();
-		$newrules['profile-search/([0-9])$'] = 'index.php?type=search&paging=$matches[1]';
-		$newrules['profile-search'] = 'index.php?type=search&target=results';
-		$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
-		$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
-		$newrules['profile-category/(.*)$'] = 'index.php?type=category&target=$matches[1]';
-		$newrules['profile-category'] = 'index.php?type=category&target=all';
-		$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
-		$newrules['profile-casting'] = 'index.php?type=casting&target=casting'; 
-		$newrules['profile-print'] = 'index.php?type=print';
-		$newrules['profile-email'] = 'index.php?type=email';
-		$newrules['dashboard'] = 'index.php?type=dashboard';
-		$newrules['client-view/(.*)$'] = 'index.php?type=profilesecure&target=$matches[1]';
-		$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
-		$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
-		
-	    $newrules['version-rb-agency'] = 'index.php?type=rbv'; // ping this page for version checker
-		
-	    $rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
-		
-		$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
-		
-        if($rb_agency_option_profilelist_favorite){
-			$newrules['profile-favorite'] = 'index.php?type=favorite';
-	  	}
-        if($rb_agency_option_profilelist_castingcart){
-			$newrules['profile-casting-cart'] = 'index.php?type=castingcart';
-	   	}
-		return $newrules + $rules;
-	}
+		// Adding a new rule
+		function rb_agency_rewriteRules($rules) {
+			$newrules = array();
+			$newrules['profile-search/([0-9])$'] = 'index.php?type=search&paging=$matches[1]';
+			$newrules['profile-search'] = 'index.php?type=search&target=results';
+			$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
+			$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
+			$newrules['profile-category/(.*)$'] = 'index.php?type=category&target=$matches[1]';
+			$newrules['profile-category'] = 'index.php?type=category&target=all';
+			$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
+			$newrules['profile-casting'] = 'index.php?type=casting&target=casting'; 
+			$newrules['profile-print'] = 'index.php?type=print';
+			$newrules['profile-email'] = 'index.php?type=email';
+			$newrules['dashboard'] = 'index.php?type=dashboard';
+			$newrules['client-view/(.*)$'] = 'index.php?type=profilesecure&target=$matches[1]';
+			$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
+			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
+			
+		    $newrules['version-rb-agency'] = 'index.php?type=rbv'; // ping this page for version checker
+			
+		    $rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+			
+			$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+			
+	        if ($rb_agency_option_profilelist_favorite) {
+				$newrules['profile-favorite'] = 'index.php?type=favorite';
+		  	}
+	        if ($rb_agency_option_profilelist_castingcart) {
+				$newrules['profile-casting-cart'] = 'index.php?type=castingcart';
+		   	}
+			return $newrules + $rules;
+		}
 		
 	// Get Veriables & Identify View Type
 	add_action( 'query_vars', 'rb_agency_query_vars' );
@@ -201,7 +207,6 @@
 	add_filter('template_include', 'rb_agency_template_include', 1, 1); 
 		function rb_agency_template_include( $template ) {
 			if ( get_query_var( 'type' ) ) {				
-
 				//echo get_query_var( 'type' );
 				if (get_query_var( 'type' ) == "search") {
 					return dirname(__FILE__) . '/theme/view-search.php'; 
@@ -230,14 +235,53 @@
 	
 	// Remember to flush_rules() when adding rules
 	add_filter('init','rb_agency_flushrules');
+		function rb_agency_flushRules() {
+			global $wp_rewrite;
+			$wp_rewrite->flush_rules();
+		}	
 
-	function rb_agency_flushRules() {
-		global $wp_rewrite;
-		$wp_rewrite->flush_rules();
-	}	
-	
+
+
 // *************************************************************************************************** //
-// Functions
+/*
+ *  Errors & Alerts
+ */
+
+	// Create Message Wrapper
+	function rb_agency_adminmessage_former($message, $errormsg = false) {
+		if ($errormsg) {
+			echo '<div id="message" class="error">';
+		} else {
+			echo '<div id="message" class="updated fade">';
+		}
+		echo "<p><strong>$message</strong></p></div>";
+	} 
+
+	/** 
+	  * Call rb_agency_adminmessage() when showing other admin 
+	  * messages. The message only gets shown in the admin
+	  * area, but not on the frontend of your WordPress site. 
+	  */
+	add_action('admin_notices', 'rb_agency_adminmessage'); 
+		function rb_agency_adminmessage() {
+
+		    // Are Permalinks Enabled?
+		    if ( get_option('permalink_structure') == '' ) {
+		    	rb_agency_adminmessage_former('<a href="'. admin_url("options-permalink.php") .'">'. __("Permalinks", rb_agency_TEXTDOMAIN) .'</a> '. __("are not configured.  This will cause RB Agency not to function properly.", rb_agency_TEXTDOMAIN), true);
+		    }
+
+		}
+
+
+// *************************************************************************************************** //
+/*
+ *  Functions
+ */
+
+	/** 
+	  * rb_agency_getprofilename
+	  * Returns profile name from ID
+	  */
 	function rb_agency_getprofilename($ProfileID) {
 		global $rb_agency_option_profilenaming;
 		
@@ -623,7 +667,7 @@ function rb_agency_profilelist($atts, $content = NULL) {
 
 	// Set It Up	
 	global $wp_rewrite;
-        global $cusFields;
+    $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
         
 	extract(shortcode_atts(array(
 			"profileid" => NULL,

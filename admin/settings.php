@@ -34,6 +34,7 @@ if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 		rb_agency_uninstall();
 	}
 }
+
 if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;} else { $ConfigID=$_REQUEST['ConfigID']; }
 if ($ConfigID == 0) {
 	
@@ -344,7 +345,7 @@ elseif ($ConfigID == 1) {
 		 echo "   <th scope=\"row\">". __('Show Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
 		 echo "   <td>\n";
 		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_advertise'], 1,false)."/> Show Updates on Dashboard<br />\n";
+		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_advertise'], 1,false)."/> Remove Updates on Dashboard<br />\n";
 		 echo "   </td>\n";
 		 echo " </tr>\n";
 		 
