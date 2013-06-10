@@ -42,6 +42,13 @@ return;
 	define("rb_agency_UPLOADDIR", $rb_agency_WPUPLOADARRAY['baseurl'] ."/profile-media/" );  // http://domain.com/wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_UPLOADPATH", $rb_agency_WPUPLOADARRAY['basedir'] ."/profile-media/" ); // /home/content/99/6048999/html/domain.com/wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_TEXTDOMAIN", basename(dirname( __FILE__ )) ); //   rb-agency
+	// Clean Up:
+	$pageURL = '';
+ 	if ($_SERVER["SERVER_PORT"] != "80") {
+  		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+ 	} else {
+  		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+ 	}
 
 // Call Language Options
 
@@ -98,21 +105,27 @@ return;
 	if (!defined("table_agency_customfields_types"))
 	define("table_agency_customfields_types", "rb_agency_customfields_types");				
 
-	
-  
-     global $wpdb;  
-    // Does it need a diaper change?
+
+// Declare Global WordPress Database Access
+    global $wpdb;
+
+
+// Do the tables exist?
 	if ($wpdb->get_var("show tables like '". table_agency_profile ."'") == table_agency_profile) { // No, it doesn't
-	  	include_once(dirname(__FILE__).'/upgrade.php');
+		// Time for a diaper change, call the upgrade script
+		include_once(dirname(__FILE__).'/upgrade.php');
 	}
 	
-    $rb_agency_storedversion = get_option("rb_agency_version");
-    $rb_agency_VERSION = get_option("rb_agency_version");	
+
+// Declare Version
+	$rb_agency_storedversion = get_option("rb_agency_version");
+	$rb_agency_VERSION = get_option("rb_agency_version");	
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 
 
 // Call default functions
 	include_once(dirname(__FILE__).'/functions.php');
+
 
 // Now Call the Lanuage
 	define("rb_agency_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
@@ -941,11 +954,19 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 		}
 	 }
 	}
+
+
+
+
  /*/
+
+
+
    *================ Notify Admin installation report ==============================
-   *jSON URL which should be requested
   /*/ 
-  $running = true;
+
+
+$running = true;
 function rb_agency_notify_installation(){
 
     include_once(ABSPATH . 'wp-includes/pluggable.php');		
@@ -1002,6 +1023,8 @@ function rb_agency_notify_installation(){
 }
 register_activation_hook(__FILE__,"rb_agency_notify_installation");
 
+
+
 /****************************************************************/
 //Uninstall
 	function rb_agency_uninstall() {
@@ -1010,18 +1033,6 @@ register_activation_hook(__FILE__,"rb_agency_notify_installation");
 		function rb_agency_uninstall_action() {
 			//delete_option('create_my_taxonomies');
 		}
-
-	
-		/*
-		//Remove the upload folders with uploaded images
-		$dirname="/model/";
-		if (file_exists($dirname))
-		{
-			require_once $awpcp_plugin_path.'/fileop.class.php';
-			$fileop=new fileop();
-			$fileop->delete($dirname);
-		}
-		*/
 	
 		// Drop the tables
 		global $wpdb;	// Required for all WordPress database manipulations
