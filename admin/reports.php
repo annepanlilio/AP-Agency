@@ -1028,138 +1028,139 @@ elseif ($ConfigID == 80) {
 }
 // Install Dummy Accounts/Profiles with Media Content rb-agency/task/installDummy.php
 elseif ($ConfigID == 14) {
-	
-			$trackDummies = array();
-			$sample_url = "../".rb_agency_BASEPATH."tasks/samples"; // Samples' folder
-			
-			$userProfileNames = array(
-			"Arvay" 	=> "Steven",
-			"Bailey"	=>"Victor",
-			"Barr"		=>"	Merne",
-			"Benton"	=>"	Jared",
-			"Bousfield"	=>"Joanne",
-			"Brading"	=>"Eric",
-			"Brading"	=>"Richard",
-			"Brading"	=>"Monique",
-			"Bradley"	=>"John",
-			"Champ"		=>"Camba",
-			"Kristel" 	=> "Cuadra",
-			"Fhil" 		=>"Barrion",
-			"Anne" 		=> "Panlilio",
-			"Childs"	=>"Trevor",
-			"Cowal"		=>"Randy",
-			"Curtis"	=>"Bradley",
-			"Dales"=>"Otmar",
-			"Dickson"=>"Elizabeth",
-			"Downs"=>"Ricardo",
-			"Ellis"=>"Carlita",
-			"Ezeard"=>"Theresa",
-			"Fields"=>"Grace",
-			"Fields"=>"Marvette",
-			"Goutouski"=>"Geoffrey",
-			"Gullis"=>"Nancy",
-			"Hastman"=>"Joanne",
-			"Hearns"=>"Joyce",
-			"Holmes"=>"Bernice",
-			"Holmes"=>"Myra",
-			"Holmes"=>"Kelly",
-			"Ingles"=>"Patrick",
-			"Jackson"=>"Jeffrey",
-			"Jesch"=>"Kay ",
-			"Johnson"=>"Jeanette",
-			"Johnson"=>"David",
-			"Johnson"=>"Leonard",
-			"Jones"=>"Ford",
-			"Jones"=>"Ford",
-			"Kunick"=>"Samuel",
-			"Ladell"=>"Jillian",
-			"Lazenby"=>"Andrew",
-			"Leonard"=>"Heather",
-			"Leonard"=>"Heather",
-			"Leslie"=>"Sharon",
-			"Marr"=>"Edward",
-			"McCarron"=>"Elijah",
-			"McKinnon"=>"Jeanette",
-			"McKinnon"=>"Adele",
-			"Muir"=>"Caitlin",
-			"Newell"=>"Samantha",
-			"Onstein"=>"Ethel",
-			"Onstein"=>"Lee",
-			"Page"=>"Inez",
-			"Ralph"=>"Debra",
-			"Riaz	"=>"Carl",
-			"Robertson"=>"Ethel",
-			"Rouse"=>"Wycliffe",
-			"Rouse"=>"Marco",
-			"Schmitz"=>"Joseph",
-			"Shannon"=>"Barbara",
-			"Smith"=>"Jason",
-			"Smith"=>"Carrie",
-			"Smith"=>"Margaret",
-			"Smith"=>"Margaret",
-			"Smith"=>"Bradley",
-			"Stanfield"=>"Joyce",
-			"Sutherland"=>"Louise",
-			"Sutherland"=>"Lynn",
-			"Taylor"=>"Valerie",
-			"Tallyn"=>"Glenn",
-			"Taylor"=>"Eleanor",
-			"Taylor"=>"Ann",
-			"Taylor"=>"Valerie",
-			"Timber"=>"Doris",
-			"Valdez"=>"Karen",
-			"Wickson"=>"Jean",
-			"Wilson"=>"Millicent",
-			"Wood"=>"Drucylla",
-			"Taylor"=>"Valerie",
-			"Wood"=>"Janice",
-			"Woodley"=>"Bartholomew",
-			"Wright"=>"Andre",
-			"Wright"=>"Brenda"
-			);
-			
-			$userMediaVideo = array(
-				"http://www.youtube.com/watch?v=0hMzBRM96gk",
-				"http://www.youtube.com/watch?v=xNiSREeN-rk",
-				"http://www.youtube.com/watch?v=c8YZIL8JZfg",
-				"http://www.youtube.com/watch?v=Mx3wQGU862E",
-				"http://www.youtube.com/watch?v=p8DYtnBa4a8",
-				"http://www.youtube.com/watch?v=y58mkKh_0Gw"
-			);
 
-			$userMediaImagesM = array("male_model-01.jpg","male_model-02.jpg","male_model-03.jpg","male_model-04.jpg","male_model-05.jpg","male_model-06.jpg","male_model-07.jpg","male_model-08.jpg","male_model-09.jpg");
-			$userMediaImagesF = array("female_model-01.jpg","female_model-02.jpg","female_model-03.jpg","female_model-04.jpg","female_model-05.jpg","female_model-06.jpg","female_model-07.jpg","female_model-08.jpg","female_model-09.jpg");
-			$userMediaVideoType = array("Demo Reel","Video Monologue","Video Slate");
-			$userMediaHeadshot = array("headshot.jpg","headshot-2.jpg");
-			$userMediaResume = array("resume.docx","resume_PDF.pdf");
-			$userMediaCompcard = array("comp-card.jpg");
-			$userMediaVoicedemo = array("voice-demo.mp3");
+		$trackDummies = array();
+		$sample_url = rb_agency_BASEPATH."tasks/samples"; // Samples' folder
+		
+		$userProfileNames = array(
+		"Arvay" 	=> "Steven",
+		"Bailey"	=>"Victor",
+		"Barr"		=>"Ann",
+		"Benton"	=>"Jared",
+		"Bousfield"	=>"Joanne",
+		"Brading"	=>"Eric",
+		"Brading"	=>"Richard",
+		"Brading"	=>"Monique",
+		"Bradley"	=>"John",
+		"Champ"		=>"Camba",
+		"Kristel" 	=> "Cuadra",
+		"Fhil" 		=>"Barrion",
+		"Anne" 		=> "Panlilio",
+		"Childs"	=>"Trevor",
+		"Cowal"		=>"Randy",
+		"Curtis"	=>"Bradley",
+		"Dales"     =>"Otmar",
+		"Dickson"   =>"Elizabeth",
+		"Downs"     =>"Ricardo",
+		"Ellis"     =>"Carlita",
+		"Ezeard"=>"Theresa",
+		"Fields"=>"Grace",
+		"Fields"=>"Marvette",
+		"Goutouski"=>"Geoffrey",
+		"Gullis"=>"Nancy",
+		"Hastman"=>"Joanne",
+		"Hearns"=>"Joyce",
+		"Holmes"=>"Bernice",
+		"Holmes"=>"Myra",
+		"Holmes"=>"Kelly",
+		"Ingles"=>"Patrick",
+		"Jackson"=>"Jeffrey",
+		"Jesch"=>"Kay ",
+		"Johnson"=>"Jeanette",
+		"Johnson"=>"David",
+		"Johnson"=>"Leonard",
+		"Jones"=>"Ford",
+		"Jones"=>"Ford",
+		"Kunick"=>"Samuel",
+		"Ladell"=>"Jillian",
+		"Lazenby"=>"Andrew",
+		"Leonard"=>"Heather",
+		"Leonard"=>"Heather",
+		"Leslie"=>"Sharon",
+		"Marr"=>"Edward",
+		"McCarron"=>"Elijah",
+		"McKinnon"=>"Jeanette",
+		"McKinnon"=>"Adele",
+		"Muir"=>"Caitlin",
+		"Newell"=>"Samantha",
+		"Onstein"=>"Ethel",
+		"Onstein"=>"Lee",
+		"Page"=>"Inez",
+		"Ralph"=>"Debra",
+		"Riaz	"=>"Carl",
+		"Robertson"=>"Ethel",
+		"Rouse"=>"Wycliffe",
+		"Rouse"=>"Marco",
+		"Schmitz"=>"Joseph",
+		"Shannon"=>"Barbara",
+		"Smith"=>"Jason",
+		"Smith"=>"Carrie",
+		"Smith"=>"Margaret",
+		"Smith"=>"Margaret",
+		"Smith"=>"Bradley",
+		"Stanfield"=>"Joyce",
+		"Sutherland"=>"Louise",
+		"Sutherland"=>"Lynn",
+		"Taylor"=>"Valerie",
+		"Tallyn"=>"Glenn",
+		"Taylor"=>"Eleanor",
+		"Taylor"=>"Ann",
+		"Taylor"=>"Valerie",
+		"Timber"=>"Doris",
+		"Valdez"=>"Karen",
+		"Wickson"=>"Jean",
+		"Wilson"=>"Millicent",
+		"Wood"=>"Drucylla",
+		"Taylor"=>"Valerie",
+		"Wood"=>"Janice",
+		"Woodley"=>"Bartholomew",
+		"Wright"=>"Andre",
+		"Wright"=>"Brenda"
+		);
+		
+		$userMediaVideo = array(
+			"http://www.youtube.com/watch?v=0hMzBRM96gk",
+			"http://www.youtube.com/watch?v=xNiSREeN-rk",
+			"http://www.youtube.com/watch?v=c8YZIL8JZfg",
+			"http://www.youtube.com/watch?v=Mx3wQGU862E",
+			"http://www.youtube.com/watch?v=p8DYtnBa4a8",
+			"http://www.youtube.com/watch?v=y58mkKh_0Gw"
+		);
+
+		$userMediaImagesM = array("male_model-01.jpg","male_model-02.jpg","male_model-03.jpg","male_model-04.jpg","male_model-05.jpg","male_model-06.jpg","male_model-07.jpg","male_model-08.jpg","male_model-09.jpg");
+		$userMediaImagesF = array("female_model-01.jpg","female_model-02.jpg","female_model-03.jpg","female_model-04.jpg","female_model-05.jpg","female_model-06.jpg","female_model-07.jpg","female_model-08.jpg","female_model-09.jpg");
+		$userMediaVideoType = array("Demo Reel","Video Monologue","Video Slate");
+		$userMediaHeadshot = array("headshot.jpg","headshot-2.jpg");
+		$userMediaResume = array("resume.docx","resume_PDF.pdf");
+		$userMediaCompcard = array("comp-card.jpg");
+		$userMediaVoicedemo = array("voice-demo.mp3");
+
 
 		#========== Register dummies to track===
 		foreach($userProfileNames as $ProfileContactNameFirst => $ProfileContactNameLast):	
-				$ProfileContactDisplay = "";
-				$ProfileGallery = "";
-							
-				if (empty($ProfileContactDisplay)) {  // Probably a new record... 
-					if ($rb_agency_option_profilenaming == 0) {
-						$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
-					} elseif ($rb_agency_option_profilenaming == 1) {
-						$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
-					} elseif ($rb_agency_option_profilenaming == 2) {
-						$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
-						$have_error = true;
-					} elseif ($rb_agency_option_profilenaming == 3) {
-						$ProfileContactDisplay = "ID ". $ProfileID;
-					}
-				  }
-			
-				  if (empty($ProfileGallery)) {  // Probably a new record... 
-					$ProfileGallery = rb_agency_safenames($ProfileContactDisplay); 
-					}
-					
-				$ProfileGallery = rb_agency_just_checkdir($ProfileGallery);
-				#DEBBUG echo $ProfileGallery ."<Br/>";
-				array_push($trackDummies,$ProfileGallery);
+			$ProfileContactDisplay = "";
+			$ProfileGallery = "";
+						
+			if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+				if ($rb_agency_option_profilenaming == 0) {
+					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+				} elseif ($rb_agency_option_profilenaming == 1) {
+					$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+				} elseif ($rb_agency_option_profilenaming == 2) {
+					$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+					$have_error = true;
+				} elseif ($rb_agency_option_profilenaming == 3) {
+					$ProfileContactDisplay = "ID ". $ProfileID;
+				}
+			  }
+		
+			  if (empty($ProfileGallery)) {  // Probably a new record... 
+				$ProfileGallery = rb_agency_safenames($ProfileContactDisplay); 
+				}
+				
+			$ProfileGallery = rb_agency_just_checkdir($ProfileGallery);
+			#DEBBUG echo $ProfileGallery ."<Br/>";
+			array_push($trackDummies,$ProfileGallery);
 		endforeach;
 		 
 		$trackDummies_text = implode(",",$trackDummies);
@@ -1251,24 +1252,24 @@ elseif ($ConfigID == 14) {
 							  $ProfileGallery = rb_agency_checkdir($ProfileGallery);
 								
 							  $insert = "INSERT INTO " . table_agency_profile . "(
-											  ProfileGallery,
-											  ProfileContactDisplay,
-											  ProfileContactNameFirst,
-											  ProfileContactNameLast,
-											  ProfileIsActive,
-											  ProfileGender,
-											  ProfileType,
-											  ProfileDateBirth 
-										  ) VALUES (
-											  '".$ProfileGallery."',
-											  '".trim($ProfileContactDisplay)."',
-											  '".trim($ProfileContactNameFirst)."',
-											  '".trim($ProfileContactNameLast)."',
-											  1,
-											  '".$userGender["GenderID"]."',
-											  '".$userCategory["DataTypeID"]."',
-											  '".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."'
-										 );"; 
+    								  ProfileGallery,
+    								  ProfileContactDisplay,
+    								  ProfileContactNameFirst,
+    								  ProfileContactNameLast,
+    								  ProfileIsActive,
+    								  ProfileGender,
+    								  ProfileType,
+    								  ProfileDateBirth 
+    							  ) VALUES (
+    								  '".$ProfileGallery."',
+    								  '".trim($ProfileContactDisplay)."',
+    								  '".trim($ProfileContactNameFirst)."',
+    								  '".trim($ProfileContactNameLast)."',
+    								  1,
+    								  '".$userGender["GenderID"]."',
+    								  '".$userCategory["DataTypeID"]."',
+    								  '".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."'
+    							 );"; 
 							  
 							$results = $wpdb->query($insert) or die(mysql_error());
 							$ProfileID = $wpdb->insert_id;
