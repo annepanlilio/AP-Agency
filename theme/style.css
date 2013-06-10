@@ -33,6 +33,7 @@
 }
 #profile-list .rbprofile-list .image img {
 	float: left;
+	border: none;
 	border-radius: 0;
 	box-shadow: none;
 }
@@ -369,6 +370,8 @@ img.fillheight {
 
 /* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
 #rblayout-two { overflow: hidden; }
+#rblayout-two .mCSB_container a img { max-height: 150px; float: left; border: none; }
+#rblayout-two #profile-picture a img { border: none; }
 
 /* Profile Extended Layout (include-profile-layout3.php) */
 #rblayout-three { overflow: hidden; }
@@ -599,9 +602,10 @@ img { -ms-interpolation-mode: bicubic; }
   height:16px;
   top:auto;
   right:auto;
-  bottom:0;
+  bottom:0!important;
   left:0;
   overflow:hidden;
+  background: #000;
 }
 .mCSB_horizontal .mCSB_scrollTools a+.mCSB_draggerContainer{
   margin:0 20px;
