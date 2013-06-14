@@ -15,15 +15,12 @@
         var width = $(this).width();
         if(height<$divH){
           $(this).addClass('fillheight');
-          $(this).removeClass('fillwidth');
-          var imargin = parseInt(width/2);
-          $('.fillheight').css({'margin-left':'-'+imargin+'px'});
+          $(this).removeClass('fillwidth');          
         }
         if(width<$divW){
           $(this).addClass('fillwidth');
           $(this).removeClass('fillheight');
         }
-        $(this).attr({'height': height, 'width': width});
     });
   }
 })(jQuery);
