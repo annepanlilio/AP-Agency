@@ -619,6 +619,7 @@ elseif ($ConfigID == 12) {
 		$queryDelete = "SELECT SubscriptionRateID, SubscriptionRateTitle FROM ". table_agencyinteract_subscription_rates ." WHERE SubscriptionRateID =  \"". $SubscriptionRateID ."\"";
 		$resultsDelete = mysql_query($queryDelete);
 		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
+
 	
 			// Remove Record
 			$delete = "DELETE FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID = \"". $SubscriptionRateID ."\"";
@@ -1103,7 +1104,7 @@ elseif ($ConfigID == 6) {
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
-				$update = "UPDATE " . table_agency_data_type . " 
+				echo $update = "UPDATE " . table_agency_data_type . " 
 							SET 
 								DataTypeTitle='" . $wpdb->escape($DataTypeTitle) . "',
 								DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' 
@@ -1164,6 +1165,7 @@ elseif ($ConfigID == 6) {
 			while ($data = mysql_fetch_array($results)) {
 				$DataTypeID		=$data['DataTypeID'];
 				$DataTypeTitle	=stripslashes($data['DataTypeTitle']);
+				$DataTypeTitle = str_replace(' ', '_', $DataTypeTitle);
 				$DataTypeTag	=$data['DataTypeTag'];
 			} 
 		
@@ -1323,6 +1325,7 @@ elseif ($ConfigID == 7) {
 						
 		while ( $typ = mysql_fetch_array($result)){
                   $t = trim($typ['DataTypeTitle']);
+				  $t = str_replace(' ', '_', $t);
 			      $name = 'ProfileType' . $t; 
 				  $$name = (int) $_POST['ProfileType' . $t]; 
 		} 		
@@ -1454,7 +1457,8 @@ elseif ($ConfigID == 7) {
 				$result = mysql_query($get_types);
 						
 				while ( $typ = mysql_fetch_array($result)){
-				   $profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);	
+				   $profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);
+				    $profiletyp = str_replace(' ', '_', $profiletyp);	
 				   if($$profiletyp) { $Types .= trim($typ['DataTypeTitle']) . "," ; }  
 		        } 
 			
@@ -1537,8 +1541,9 @@ elseif ($ConfigID == 7) {
 				$result = mysql_query($get_types);
 						
 				while ( $typ = mysql_fetch_array($result)){
-			       $t = 'ProfileType' . trim($typ['DataTypeTitle']);
+			       $t = 'ProfileType' . trim($typ['DataTypeTitle']);$t = str_replace(' ', '_', $t);
 				   $n = trim($typ['DataTypeTitle']);
+				   $n = str_replace(' ', '_', $n);
 				   if($$t) { 
 				   	   
 					   $$n = true;
@@ -1818,6 +1823,7 @@ elseif ($ConfigID == 7) {
 						
 						while ( $typ = mysql_fetch_array($result)){
 										$t = trim($typ['DataTypeTitle']);
+										$t = str_replace(' ', '_', $t);
 										echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
 											 ($$t == true ? 'checked="checked"':''). '  />&nbsp;'.
 											 trim($typ['DataTypeTitle'])
@@ -1986,6 +1992,7 @@ elseif ($ConfigID == 7) {
 										
 											while ( $typ = mysql_fetch_array($result)){
 												$t = trim($typ['DataTypeTitle']);
+												$t = str_replace(' ', '_', $t);
 												echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
 													 ($$t == true ? 'checked="checked"':''). '  />&nbsp;'.
 													 trim($typ['DataTypeTitle'])
