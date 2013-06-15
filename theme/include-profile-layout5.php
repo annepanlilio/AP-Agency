@@ -4,9 +4,9 @@ Custom Layout: Shake it like a polaroid picture
 */
 	echo "<link rel=\"stylesheet\" href=\"/wp-content/plugins/rb-agency/theme/custom-layout5/css/style.css\" type=\"text/css\" media=\"screen\"/>\n";
 	echo "<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"></script>\n";
-	echo "<script src=\"/wp-content/plugins/rb-agency/theme/custom-layout5/js/cufon-yui.js\" type=\"text/javascript\"></script>\n";
-	echo "<script src=\"/wp-content/plugins/rb-agency/theme/custom-layout5/js/jquery.transform-0.8.0.min.js\"></script>\n";
-	echo "<script src=\"/wp-content/plugins/rb-agency/theme/custom-layout5/js/image.js\"></script>\n";
+	echo "<script src=\"/wp-content/plugins/RB-Agency/theme/custom-layout5/js/cufon-yui.js\" type=\"text/javascript\"></script>\n";
+	echo "<script src=\"/wp-content/plugins/RB-Agency/theme/custom-layout5/js/jquery.transform-0.8.0.min.js\"></script>\n";
+	echo "<script src=\"/wp-content/plugins/RB-Agency/theme/custom-layout5/js/image.js\"></script>\n";
 	echo "<script type=\"text/javascript\">\n";
 	echo "Cufon.replace('span');
 			Cufon.replace('h1', {

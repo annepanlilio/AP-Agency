@@ -18,5 +18,24 @@ $(window).load(function() {
     smoothHeight: true,
     sync: "#profile-carousel"
   });
+
+  $('#layout6-carousel').flexslider({
+    animation: "slide",
+    controlNav: false,
+    itemWidth: 100,
+    animationLoop: false,
+    slideshow: false,
+    asNavFor: '#layout6-slider'
+  });
+
+  $('#layout6-slider').flexslider({
+    animation: "slide",
+    directionNav: false,
+    controlNav: false,
+    animationLoop: false,
+    slideshow: false,
+    smoothHeight: true,
+    sync: "#layout6-carousel"
+  });
   
 });

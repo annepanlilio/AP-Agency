@@ -5,19 +5,6 @@ Large featured image and scrolling thumbnails
 
 ?>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/custom-layout6/js/jquery.ad-gallery2.js"></script>
-<script type="text/javascript">
-	$(function() {
-		var galleries = $('.portfolio-gallery').adGallery({
-		  // or 'slide-vert', 'resize', 'fade', 'none' or false
-		  effect: 'slide-hori',  
-		  enable_keyboard_move: true,	
-		  // Move to next/previous image with keyboard arrows?
-		});
-	});
-</script>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -41,10 +28,10 @@ Large featured image and scrolling thumbnails
 	<?php if ( is_front_page() ) { ?>
 		<h2 class="entry-title"><?php echo $ProfileContactDisplay; ?></h2>
 	<?php } else { ?>
-		<h2 class="entry-title six column"><?php echo $ProfileContactDisplay; ?></h2>
+		<h2 class="entry-title col_6 column"><?php echo $ProfileContactDisplay; ?></h2>
 	<?php } ?>
 
-	<div class="portfolio-filter six column">
+	<div class="portfolio-filter col_6 column">
 		<div class="filters">
 			<div>
 				<select name="division" id="division">
@@ -67,13 +54,13 @@ Large featured image and scrolling thumbnails
 
 	<div class="cb"></div>
 
-		<span id="short_description" class="twelve column">
+		<span id="short_description" class="col_12 column">
 			<?php echo getExperience($ProfileID); ?>
 		</span>
 
 			<div class="portfolio-area" >
 
-			<div class="portfolio-info four column">
+			<div class="portfolio-info col_4 column">
 
 				<div class="panel">
 
@@ -391,16 +378,16 @@ Large featured image and scrolling thumbnails
 					<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 					<!-- display options-->
 
-					<div id="polaroids" class="eight column">
+					<div id="polaroids" class="col_8 column">
 
-						<div class="six column">
+						<div class="col_6 column">
 							<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-four-per-page.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .column -->
 
-						<div class="six column">
+						<div class="col_6 column">
 							<input type="radio" value="12" name="print_option" /><h3>One Polaroid Per Page</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-one-per-page.png" alt="" />
@@ -440,15 +427,15 @@ Large featured image and scrolling thumbnails
 						<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 					</div>       
 
-					<div id="polaroids" class="eight column">
-						<div class="six column">
+					<div id="polaroids" class="col_8 column">
+						<div class="col_6 column">
 							<input type="radio" value="1" name="print_option" checked="checked" /><h3>Print Large Photos</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .column -->
 
-						<div class="six column">
+						<div class="col_6 column">
 							<input type="radio" value="3" name="print_option" /><h3>Print Medium Size Photos</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-with-model-info.png" alt="" />
@@ -456,14 +443,14 @@ Large featured image and scrolling thumbnails
 						</div><!-- .six .column -->
 
 
-						<div class="six column">
+						<div class="col_6 column">
 							<input type="radio" value="1-1" name="print_option" /><h3>Print Large Photos Without Model Info</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .column -->
 
-						<div class="six column">
+						<div class="col_6 column">
 							<input type="radio" value="3-1" name="print_option" /><h3>Print Medium Size Photos Without Model Info</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-without-model-info.png" alt="" />
@@ -495,32 +482,33 @@ Large featured image and scrolling thumbnails
 				</form>
 
 				<?php }else{?> 
-				<div class="portfolio-slide eight column">
-				<div class="portfolio-gallery">
-					<div class="ad-image-wrapper">
+				<div id="profile-slide" class="col_8 column">
+					<div id="layout6-slider" class="flexslider">
+						<ul class="slides">
+							<?php
+							$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
+										$resultsImg = mysql_query($queryImg);
+										$countImg = mysql_num_rows($resultsImg);
+										while ($dataImg = mysql_fetch_array($resultsImg)) {
+										  	echo "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+										}
+							?>
+						</ul>
 					</div>
-					<div class="ad-controls">
-					</div>
-						<div class="ad-nav">
-							<div class="ad-thumbs">
-								<ul class="ad-thumb-list">
-									<?php  
-									// images
-									$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY  ProfileMediaPrimary DESC ";
+					<div id="layout6-carousel" class="flexslider col_12 column">
+						<ul class="slides">
+							<?php
+							$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
 									$resultsImg = mysql_query($queryImg);
 									$countImg = mysql_num_rows($resultsImg);
 									while ($dataImg = mysql_fetch_array($resultsImg)) {
-									?>
-									<li>
-									<a href="<?php echo  rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];?>" title=""> 
-									<?php echo "<img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' style='width:106px; height:130px;' />\n";?></a>
-									</li>
-									<?php } //$i++; endwhile; ?>
-								</ul>
-							</div>
-						</div>
+									  	echo "<li><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
+									}
+							?>
+						</ul>
 					</div>
-				</div><!-- .portfolio-slide -->
+				</div><!-- #portfolio-slide -->
+				
 				<?php }?>
 
 			</div><!-- .portfolio-area -->

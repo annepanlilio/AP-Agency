@@ -6,7 +6,7 @@ Profile View with Sliding Thumbnails and Primary Image
 	echo "<div id=\"profile\">\n";
 	echo " <div id=\"rblayout-two\" class=\"rblayout\">\n";
 	
-	echo "  <div class=\"seven column\">\n";
+	echo "  <div class=\"col_7 column\">\n";
 	echo "	<div id=\"scroller\">\n";
 	echo "		<div id=\"photo-scroller\" class=\"scroller\">";
 					// Image Slider
@@ -31,7 +31,7 @@ Profile View with Sliding Thumbnails and Primary Image
 	 // Social Link
 	 rb_agency_getSocialLinks();
 	 
-	echo "	  <div id=\"stats\" class=\"six column\">\n";
+	echo "	  <div id=\"stats\" class=\"col_6 column\">\n";
 	echo "	  <ul>\n";
 
 		if (!empty($ProfileGender)) {
@@ -52,7 +52,7 @@ Profile View with Sliding Thumbnails and Primary Image
 	echo "	  </div>\n";
 	
 	
-	echo "		<div id=\"links\" class=\"six column\">\n";
+	echo "		<div id=\"links\" class=\"col_6 column\">\n";
 	echo "			<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
 	echo "			<ul>\n";
 
@@ -173,7 +173,7 @@ Profile View with Sliding Thumbnails and Primary Image
                 <div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></div>
     <?php
 	//Experience
-	echo "		  <div id=\"experience\" class=\"twelve column\">\n";
+	echo "		  <div id=\"experience\" class=\"col_12 column\">\n";
 	echo			$ProfileExperience;
 	echo "		  </div>\n";
 /*	
@@ -188,7 +188,7 @@ Profile View with Sliding Thumbnails and Primary Image
 	}
 	echo "	</div> <!-- #info -->\n";//End Info
 	echo "	</div> <!-- #profile-l -->\n";
-	echo "  <div class=\"five column\">\n";
+	echo "  <div class=\"col_5 column\">\n";
 	echo "			<div id=\"profile-picture\">\n";
 
                     // images

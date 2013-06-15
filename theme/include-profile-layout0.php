@@ -6,7 +6,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "<div id=\"profile\">\n";
 	echo " <div id=\"rblayout-zero\" class=\"rblayout\">\n";
 
-	echo "	<div id=\"photos\" class=\"four column\">\n";
+	echo "	<div id=\"photos\" class=\"col_4 column\">\n";
 	echo "	  <div class=\"inner\">\n";
 			// images
 		
@@ -25,7 +25,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "	  </div>\n";
 	echo "	</div>\n"; // close #photos
 	
-		echo "	  <div id=\"stats\" class=\"four column\">\n";
+		echo "	  <div id=\"stats\" class=\"col_4 column\">\n";
 
 		echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
 
@@ -65,7 +65,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 		echo "	  </ul>\n"; // Close ul
 		echo "	  </div>\n"; // Close Stats
 	
-	echo "		<div id=\"links\" class=\"four column\">\n";
+	echo "		<div id=\"links\" class=\"col_4 column\">\n";
 	echo "			<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
 
 					 // Social Link
@@ -221,7 +221,7 @@ $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHER
 	echo "			</ul>\n";
 	echo "		</div>\n";  // Close Links
 	
-	echo "	  <div id=\"experience\" class=\"six column\">\n";
+	echo "	  <div id=\"experience\" class=\"col_12 column\">\n";
 	echo			$ProfileExperience;
 	echo "	  </div>\n"; // Close Experience
 /*

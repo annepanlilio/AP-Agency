@@ -8,7 +8,7 @@ Profile View with Thumbnails and Primary Image
 	echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
 		
 	echo "	</div>\n";
-	echo "	<div id=\"profile-picture\" class=\"four column\">\n";
+	echo "	<div id=\"profile-picture\" class=\"col_4 column\">\n";
 		// images
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
 		$resultsImg = mysql_query($queryImg);
@@ -17,7 +17,7 @@ Profile View with Thumbnails and Primary Image
 			echo "		<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 		}
 	echo "	</div> <!-- #profile-picture -->\n";
-	echo "	<div id=\"info\" class=\"eight column\">\n";
+	echo "	<div id=\"info\" class=\"col_8 column\">\n";
 	echo "	  <div id=\"stats\">\n";
 	echo "	  <ul>\n";
  				if (!empty($ProfileGender)) {
@@ -146,7 +146,7 @@ Profile View with Thumbnails and Primary Image
 			
 	echo "	  </div>\n";  // Close Info
 	
-	echo "	<div id=\"photos\" class=\"twelve column\">\n";
+	echo "	<div id=\"photos\" class=\"col_12 column\">\n";
 	echo "	  <div class=\"inner\">\n";
 		
 			// images

@@ -21,7 +21,7 @@ Escort
 
 	echo "			</div>\n";
 
-	echo "			<div id=\"info\" class=\"four column\">\n";
+	echo "			<div id=\"info\" class=\"col_4 column\">\n";
 
 	echo "	  			<div class=\"experience\">\n";
 	echo					$ProfileExperience;
@@ -58,7 +58,7 @@ Escort
 	echo "	  			</div>\n"; // Close Stats	
 	echo "			</div><!-- #info -->\n";
 
-	echo "			<div id=\"photo\" class=\"eight column\">\n";	
+	echo "			<div id=\"photo\" class=\"col_8 column\">\n";	
 	echo "	  			<h3>". __("Call", rb_agency_TEXTDOMAIN). ": <span>". $ProfileContactPhoneWork ."</span></h3>\n";
 	echo "	  			<div class=\"inner\">\n";
 		
