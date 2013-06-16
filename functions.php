@@ -1,5 +1,4 @@
 <?php
-error_reporting(0);
 /*
  * Debug Mode
    //$RB_DEBUG_MODE = true;
@@ -1310,9 +1309,22 @@ error_reporting(0);
 				}
 					
 				$displayHTML .= "  <div class=\"profile-info\">\n";
-				
+				$ProfileContactDisplay = "";
+				if ($rb_agency_option_profilenaming == 0) {
+					$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
+				} elseif ($rb_agency_option_profilenaming == 1) {
+					$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". substr($dataList["ProfileContactNameLast"], 0, 1);
+				} elseif ($rb_agency_option_profilenaming == 2) {
+					$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
+				} elseif ($rb_agency_option_profilenaming == 3) {
+					$ProfileContactDisplay = "ID ". $ProfileID;
+				}  elseif ($rb_agency_option_profilenaming == 4) {
+					$ProfileContactDisplay = $dataList["ProfileContactNameFirst"];
+				} elseif ($rb_agency_option_profilenaming == 5) {
+					$ProfileContactDisplay = $dataList["ProfileContactNameLast"];
+				}
 		
-				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
+				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 
 				if ($rb_agency_option_profilelist_expanddetails) {
 				 	$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
