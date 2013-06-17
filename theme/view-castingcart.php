@@ -112,7 +112,7 @@ get_header(); ?>
      	window.print();
 	} 
 </script>
-
+<h1 class="entry-title">Casting Cart</h1>
 <?php
 
 	echo "<div id=\"primary\" class=\"eight column\">\n";
