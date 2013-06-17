@@ -1174,7 +1174,7 @@ error_reporting(0);
 			 */
 			if (isset($profilefavorite) && !empty($profilefavorite)){
 				// Execute query showing favorites
-				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+				$queryList = "SELECT profile.*, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 				
 			} elseif (isset($profilecastingcart) && !empty($profilecastingcart)){
 				// There is a Casting Cart ID present
@@ -2350,6 +2350,26 @@ function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $ti
 		}
 	} 
 } 
+
+/*/
+* ======================== Get Custom Description ===============
+* @Returns Custom Fields excluding a title
+* @parm includes an array of title
+/*/
+function rb_agency_getProfileCustomdescription($ProfileID, $ProfileGender, $title_to_exclude) {
+
+	global $wpdb;
+	global $rb_agency_option_unittype;
+	
+	$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
+	foreach ($resultsCustom as $resultCustom) {
+		if ($resultCustom->ProfileCustomID == 16){
+			return $resultCustom->ProfileCustomValue; 
+		}
+		
+	} 
+}   
+
  
 function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclude="",$include="") {
 	global $wpdb;
