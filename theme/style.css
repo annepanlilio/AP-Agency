@@ -446,7 +446,7 @@ img.fillheight {
 #rblayout-seven #profile-slider { margin-bottom: 0px; }
 #rblayout-seven #profile-carousel { clear: both; width: 100%; display: block; background: #fff; padding-top: 10px; margin: 0; }
 #rblayout-seven #profile-carousel .slides li { height: 150px; overflow: hidden; }
-#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; } 
+#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; max-width: none!important; max-height: 100%; height: 100%; width: auto; }
 #rblayout-seven #profile-info { background: #000; padding: 30px 0; }
 #rblayout-seven #profile-info h1 { color: #e2e2e2; font-weight: normal; text-transform: uppercase; padding: 30px; }
 #rblayout-seven #profile-info ul { list-style: none; color: #959595; padding: 0 30px; margin: 0; }
@@ -456,6 +456,28 @@ img.fillheight {
 #rblayout-seven #profile-links li { display: inline-block; padding: 0 10px; border-right: 1px solid #e2e2e2; font-size: 14px; }
 #rblayout-seven #profile-links li:last-child { border: none; }
 #rblayout-seven #profile-links li a { color: #e2e2e2; text-decoration: none; text-transform: uppercase; }
+#rblayout-seven #profile-carousel .slides li { overflow: hidden; height: 200px; }
+#rblayout-seven #experience { width: 100%; background: #fff; padding: 15px; line-height: normal; }
+#rblayout-seven #videos-carousel { border: none; box-shadow: none; border-radius: 0; width: 100%; margin: 0px!important; }
+#rblayout-seven #profile-slider.slides li { height: 500px; }
+
+/* Quick Search */
+#rbquick-search { overflow: hidden; padding: 30px 0; padding-top: 0; margin-top: 30px; }
+#rbquick-search h2 { margin-bottom: 15px; text-transform: uppercase; }
+#rbquick-search .rbsearch-form .search-field { float: left; margin: 0 15px; width: auto; padding: 0; clear: none; margin-bottom: 15px; }
+#rbquick-search .rbsearch-form .search-field label,
+#rbquick-search .rbsearch-form .search-field legend,
+#rbquick-search .rbsearch-form .search-field select,
+#rbquick-search .rbsearch-form .search-field input { text-transform: uppercase; }
+#rbquick-search .rbsearch-form .search-field label,
+#rbquick-search .rbsearch-form .search-field legend { width: auto; font-weight: normal; line-height: 22px; }
+#rbquick-search .rbsearch-form .search-field input[type="text"] { padding: 2px; border-radius: 0; margin: 0 5px; width: 200px; }
+#rbquick-search .rbsearch-form .search-field select { border: 1px solid #ccc; background: #fff; padding: 1px; margin: 0 5px; width: auto; }
+#rbquick-search .rbsearch-form .search-field.multi > div { width: auto; margin: 0; }
+#rbquick-search .rbsearch-form .search-field.multi > div,
+#rbquick-search .rbsearch-form .search-field.multi legend,
+#rbquick-search .rbsearch-form .search-field.multi input { float: left; }
+#rbquick-search .rbsearch-form .search-field.multi input { width: 100px; }
 
 /** Sign In - Register **/
 #rbsignin-register { text-align: center; vertical-align: top; }

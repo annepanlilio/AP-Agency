@@ -37,5 +37,11 @@ $(window).load(function() {
     smoothHeight: true,
     sync: "#layout6-carousel"
   });
-  
+  $('#videos-carousel').flexslider({
+    animation: "slide",
+    controlNav: false,
+    animationLoop: false,
+    slideshow: false,
+    itemWidth: 210,
+  });  
 });
