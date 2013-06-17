@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 /*
 Custom Layout 7
@@ -601,5 +600,4 @@ $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHER
 			
 			});
 	</script>
->>>>>>> 6655ec9652959be7511603c7c8caf268016fa170
 	</div><!-- #profile -->
