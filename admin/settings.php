@@ -8,18 +8,19 @@ global $wpdb;
     echo "  <h2>". __("Settings", rb_agency_TEXTDOMAIN);
 	  if($_GET["ConfigID"]==1){
 		    echo " &raquo; Features";
-	  }elseif($_GET["ConfigID"]==10){
+	  } elseif($_GET["ConfigID"]==10){
 		    echo " &raquo; Style";
-	  }elseif($_GET["ConfigID"]==5){
+	  } elseif($_GET["ConfigID"]==5){
 		    echo " &raquo; Gender";
-	  }elseif($_GET["ConfigID"]==6){
+	  } elseif($_GET["ConfigID"]==6){
 		    echo " &raquo; Profile Categories";
-	  }elseif($_GET["ConfigID"]==7){
+	  } elseif($_GET["ConfigID"]==7){
 		     echo " &raquo; Custom Fields";
-	  }elseif($_GET["ConfigID"]==8){
+	  } elseif($_GET["ConfigID"]==8){
 		     echo " &raquo; Media Categories";
 	  }
 	echo "</h2>\n";
+
     echo "  <div>\n";
     echo "  	<a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=0\">". __("Overview", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\">". __("Features", rb_agency_TEXTDOMAIN) . "</a> | \n";
@@ -29,6 +30,7 @@ global $wpdb;
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\">". __("Media Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "  </div><p></p>\n";
+
 if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 	if($_REQUEST['action'] == 'douninstall') {
 		rb_agency_uninstall();
