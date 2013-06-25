@@ -12,7 +12,7 @@
     <div id="rb-overview-icon" class="icon32"></div>
     <h2>Data Management</h2>
     <br />
-    <a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=0" title="Overview">Overview</a>
+    <a class="button-primary" href="?page=rb_agency_reports&ConfigID=0" title="Overview">Overview</a>
     <br /><br />
 <?php
 if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
@@ -25,7 +25,7 @@ if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;}
 
 if ($ConfigID == 0) {
 	
-	if (function_exists(rb_agencyinteract_menu_approvemembers)) {
+	if (function_exists(rb_agencyinteract_approvemembers)) {
     	// RB Agency Interact Settings
         echo "<div class=\"boxlinkgroup\">\n";
         echo "  <h2>". __("Interactive Reporting", rb_agency_TEXTDOMAIN) . "</h2>\n";
@@ -71,7 +71,7 @@ if ($ConfigID == 0) {
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Resize Photos", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=13\" title=\"". __("Resize Photos", rb_agency_TEXTDOMAIN) . "\">". __("Resize Photos", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Ensure files are not larger than approved size", rb_agency_TEXTDOMAIN) . ". (<a href=\"?page=rb_agency_menu_settings&ConfigID=1\" title=\"". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "\">". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "</a>)</p>\n";
+    echo "      <p>". __("Ensure files are not larger than approved size", rb_agency_TEXTDOMAIN) . ". (<a href=\"?page=rb_agency_settings&ConfigID=1\" title=\"". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "\">". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "</a>)</p>\n";
     echo "    </div>\n";
 
     echo "    <div class=\"boxlink\">\n";
@@ -100,7 +100,7 @@ if ($ConfigID == 0) {
 
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=rb_agency_menu_search\" title=\"". __("Profile Search", rb_agency_TEXTDOMAIN) . "\">". __("Profile Search", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+    echo "      <a class=\"button-primary\" href=\"?page=rb_agency_search\" title=\"". __("Profile Search", rb_agency_TEXTDOMAIN) . "\">". __("Profile Search", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("You may search for profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
 
@@ -221,7 +221,7 @@ elseif ($ConfigID == 1) {
         } else {
 			$throw_error = true;
             echo "  <span style='width: 240px; color: red;'>". $dirURL ."/</span>\n";
-            echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is missing folder.</strong>\n";
+            echo "  <strong>Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is missing folder.</strong>\n";
         }
         echo "</div>\n";
     }
@@ -252,7 +252,7 @@ elseif ($ConfigID == 2) {
 				// Create Folders
 				mkdir($dirURL, 0755); //700
 				chmod($dirURL, 0777);
-				echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+				echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 			}
 		}
     } else {
@@ -276,7 +276,7 @@ elseif ($ConfigID == 2) {
 				$throw_error = true;
 
 				echo "  <span style='width: 240px; color: red;'>". $dirURL ."/</span>\n";
-				echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is missing folder.</strong>\n";
+				echo "  <strong>Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is missing folder.</strong>\n";
 			}
 			echo "</div>\n";
 		}
@@ -286,7 +286,7 @@ elseif ($ConfigID == 2) {
             <a name="generate"></a>
             <h3>Generate Folders for Profiles</h3>
             <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
-            <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=2&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
+            <p><a class="button-primary" href="?page=rb_agency_reports&ConfigID=2&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
             <?php
             foreach ($arrayProfilesMissingFolders as $profileURL) {
                 echo $profileURL.", ";
@@ -314,7 +314,7 @@ elseif ($ConfigID == 53) {
 			// Create Folders
 			$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGallery ."' WHERE ProfileID = \"". $ProfileID ."\"";
 			$renamed = mysql_query($rename);
-			echo "  <div id=\"message\" class=\"updated highlight\">Folder name <strong>/" . $ProfileGallery . "/</strong> has been set for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+			echo "  <div id=\"message\" class=\"updated highlight\">Folder name <strong>/" . $ProfileGallery . "/</strong> has been set for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 		}
     } else {
 		
@@ -349,7 +349,7 @@ elseif ($ConfigID == 53) {
 					$throw_error = true;
 
 					echo "  <span style='width: 240px; color: red;'>". $ProfileGallerySafe ." is missing</span>\n";
-					echo "  <strong>Folder name for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is blank.</strong>\n";
+					echo "  <strong>Folder name for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is blank.</strong>\n";
 				}
 				echo "</div>\n";
 			}
@@ -359,7 +359,7 @@ elseif ($ConfigID == 53) {
                 <a name="generate"></a>
                 <h3>Generate Folders for Profiles</h3>
                 <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
-                <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
+                <p><a class="button-primary" href="?page=rb_agency_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
                 <?php
                 foreach ($arrayProfilesMissingFolders as $profileURL) {
                     echo $profileURL.", ";
@@ -430,7 +430,7 @@ elseif ($ConfigID == 3) {
     if ($count3 < 1) {
         echo "There are currently no profile records.";
     }
-	echo "<a href='?page=rb_agency_menu_reports&ConfigID=3&action=add'>Add All Pending Changes</a>";
+	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=add'>Add All Pending Changes</a>";
 
 
 
@@ -458,7 +458,7 @@ elseif ($ConfigID == 4) {
 	  //echo "Total pages:" . $totalPages;
 	   if($totalPages >= 1) {
 		 for($i = 1; $i <= $totalPages; $i++) {
-		   $pageString .= " <a href=\"?page=rb_agency_menu_reports&ConfigID=4&Step={$i}$queryVars\">Page $i</a>";
+		   $pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=4&Step={$i}$queryVars\">Page $i</a>";
 		   $pageString .= $i != $totalPages ? " | " : "";
 		 }
 	   }
@@ -499,7 +499,7 @@ elseif ($ConfigID == 4) {
     			//echo $query4b ."<br />". $count4b ."<hr />";
                 if ($count4b < 1) {
 
-    				echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_menu_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
+    				echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
     		
     				$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image'";
     				$results4a = mysql_query($query4a);
@@ -542,14 +542,14 @@ elseif ($ConfigID == 5) {
         $ProfileDateBirth = $data1['ProfileDateBirth'];
         $ProfileAge = rb_agency_get_age($ProfileDateBirth);
         if ($ProfileDateBirth == "0000-00-00" || !isset($ProfileDateBirth) || empty($ProfileDateBirth)) {
-            echo "  <div id=\"message\" class=\"error\">Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> has no age!!</div>\n";
+            echo "  <div id=\"message\" class=\"error\">Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> has no age!!</div>\n";
         } elseif ($ProfileAge > 90) {
-            echo "  <div id=\"message\" class=\"updated highlight\">Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is really old! .... Like ". $ProfileAge ."</div>\n";
+            echo "  <div id=\"message\" class=\"updated highlight\">Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is really old! .... Like ". $ProfileAge ."</div>\n";
         } elseif ($ProfileAge < 2) {
             if ($ProfileAge < 0) {
-            echo "  <div id=\"message\" class=\"updated\">Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> was born in the future... amazing!</div>\n";
+            echo "  <div id=\"message\" class=\"updated\">Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> was born in the future... amazing!</div>\n";
             } else {
-            echo "  <div id=\"message\" class=\"updated highlight\">Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is really young! .... Like ". $ProfileAge ."</div>\n";
+            echo "  <div id=\"message\" class=\"updated highlight\">Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a> is really young! .... Like ". $ProfileAge ."</div>\n";
             }
         }
     }
@@ -637,7 +637,7 @@ elseif ($ConfigID == 7) {
 			echo "</div>\n";
 		}
 	}
-	echo "<a href='?page=rb_agency_menu_reports&ConfigID=". $ConfigID ."&action=delete'>Remove Orphans</a>";
+	echo "<a href='?page=rb_agency_reports&ConfigID=". $ConfigID ."&action=delete'>Remove Orphans</a>";
 
 
 	?>
@@ -715,9 +715,9 @@ elseif ($ConfigID == 8) {
                             if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
                             	$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
                             	$renamed = mysql_query($rename);
-                                echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+                                echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
                             } else {
-                                echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+                                echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
                             }
 
                             $finished = true; // ...we are finished
@@ -731,9 +731,9 @@ elseif ($ConfigID == 8) {
 					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
 						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
 						$renamed = mysql_query($rename);
-		                echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+		                echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					} else {
-                        echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+                        echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					}
 				}
 			}
@@ -805,7 +805,7 @@ elseif ($ConfigID == 8) {
 				$throw_error = true;
 				$ProfileGalleryFixed =  rb_agency_set_directory($ProfileGalleryFixed);
 				echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
-				echo "  <strong>Profile <a href='admin.php?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
+				echo "  <strong>Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
 				echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
 
 			} elseif ($ProfileGallery == $ProfileGalleryFixed ) {
@@ -823,7 +823,7 @@ elseif ($ConfigID == 8) {
             <a name="generate"></a>
             <h3>Generate Folders for Profiles</h3>
             <p>Click the button below to create folders for all profiles identified as not having a folder created:</p>
-            <p><a class="button-primary" href="?page=rb_agency_menu_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Rename Profiles to match Privacy Settings</a>  Clicking this button will rename folders for the above profiles<p>
+            <p><a class="button-primary" href="?page=rb_agency_reports&ConfigID=<?php echo $ConfigID; ?>&action=generate" title="Generate Missing Folders for Profiles">Rename Profiles to match Privacy Settings</a>  Clicking this button will rename folders for the above profiles<p>
             <?php
 		}
 	} // To Generate or Not to Generate
@@ -863,7 +863,7 @@ elseif ($ConfigID == 13) {
         //echo "Total pages:" . $totalPages;
         if($totalPages >= 1) {
             for($i = 1; $i <= $totalPages; $i++) {
-    	        $pageString .= " <a href=\"?page=rb_agency_menu_reports&ConfigID=13&Step={$i}$queryVars\">Page $i</a>";
+    	        $pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=13&Step={$i}$queryVars\">Page $i</a>";
                 $pageString .= $i != $totalPages ? " | " : "";
     		}
         }

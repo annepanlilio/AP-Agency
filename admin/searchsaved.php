@@ -794,7 +794,7 @@ if (isset($_POST['action'])) {
 
 		<input type="hidden" value="deleteRecord" name="action" />
 
-		<input type="submit" value="<?php echo __('Delete','rb_agency_menu_profiles'); ?>" class="button-primary" name="submit" />		
+		<input type="submit" value="<?php echo __('Delete','rb_agency_profiles'); ?>" class="button-primary" name="submit" />		
 
 	</p>
 

@@ -88,7 +88,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
    } else {
 	   // Advanced
 		echo "  <form method=\"post\" id=\"search-form-advanced\" action=\"". get_bloginfo("wpurl") ."/profile-search/\" class=\"rbsearch-form\">\n";
-		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" />\n";
+		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_search\" />\n";
 		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
 		
 		echo "	 			      <div class=\"search-field single\">\n";

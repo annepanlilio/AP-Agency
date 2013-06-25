@@ -1826,7 +1826,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 	} // End while
 	if ($count3 < 1) {
 		echo "  <tr valign=\"top\">\n";
-		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
+		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
 		echo "  </tr>\n";
 	}
 }
@@ -2576,7 +2576,7 @@ function rb_agency_callafter_setup() {
 			$wp_toolbar->add_node(array(
 				'id' => 'rb-agency-toolbar-settings',
 				'title' => 'RB Agency Settings',
-				'href' =>  get_admin_url().'admin.php?page=rb_agency_menu_settings',
+				'href' =>  get_admin_url().'admin.php?page=rb_agency_settings',
 				'meta' => array('target' => 'rb-agency-toolbar-settings')
 			));
 		}

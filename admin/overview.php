@@ -1,191 +1,221 @@
+<div class="wrap">        
+    <?php 
+    // Include Admin Menu
+    include ("admin-menu.php"); ?>
+
+
 <?php
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
 	get_currentuserinfo(); global $user_level;
-
-echo "<div class=\"wrap\">\n";
-echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
-echo "  <h2>". __("Dashboard", rb_agency_TEXTDOMAIN) ."</h2>\n";
-echo "  <p>". __("You are using version", rb_agency_TEXTDOMAIN) ." <b>". rb_agency_VERSION ."</b></p>\n";
- 
-echo "  <div class=\"boxblock-holder\">\n";
- 
-echo "    <div class=\"boxblock-container\" style=\"width: 46%;\">\n";
-   
-echo "     <div class=\"boxblock\">\n";
-echo "        <h3>". __("Quick Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
-echo "        <div class=\"inner\">\n";
-
-	   if ($user_level >= 7) {
-		   
-		echo "        	<form method=\"GET\" action=\"". admin_url("admin.php?page=rb_agency_menu_search") ."\">\n";
-		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_menu_search\" />\n";
-		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
-		echo "				<table cellspacing=\"0\">\n";
-		echo "				  <thead>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("First Name", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION['ProfileContactNameFirst'] ."\" />\n";               
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Last Name", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION['ProfileContactNameLast'] ."\" />\n";               
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Classification", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><select name=\"ProfileType\" id=\"ProfileType\">\n";               
-		echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
-										$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
-										$results2 = mysql_query($query);
-										while ($dataType = mysql_fetch_array($results2)) {
-											if ($_SESSION['ProfileType']) {
-												if ($dataType["DataTypeID"] ==  $_SESSION['ProfileType']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
-											} else { $selectedvalue = ""; }
-											echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
-										}
-		echo "				        	</select></td>\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";       
-					$query1 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ."";
-					$results1 = mysql_query($query1);
-					$count1 = mysql_num_rows($results1);
-					if ($count1 > 0) {
-						echo " <option value=\"\">All Gender</option>";
-						while ($data1 = mysql_fetch_array($results1)) {
-							
-							echo " <option value=\"". $data1["GenderID"] ."\" ". selected( $_SESSION['ProfileGender'], $data1["GenderID"]) .">". $data1["GenderTitle"] ."</option>\n";
-						}
-						echo "</select>\n";
-					} else {
-						echo "". __("No items to select", rb_restaurant_TEXTDOMAIN) .".";
-					}
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				    <tr>\n";
-		echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
-		echo "				        <td>\n";
-		echo "				        <fieldset>\n";
-		echo "				        	<div><label>". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /><br /></div>\n";
-		echo "				        	<div><label>". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-		echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
-		echo "				        </fieldset>\n";
-		echo "				        </td>\n";
-		echo "				    </tr>\n";
-		echo "				  </thead>\n";
-		echo "				</table>\n";
-		echo "				<p class=\"submit\">\n";
-		echo "				<input type=\"submit\" value=\"". __("Quick Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "				<a href=\"?page=rb_agency_menu_search\" class=\"button-secondary\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a></p>\n";
-		echo "				</p>\n";
-		echo "        	<form>\n";
-		
-	   } // Editor  
-
-echo "        </div>\n"; 
-echo "     </div>\n"; 
-
-echo "    </div><!-- .container -->\n"; 
-
-echo "    <div class=\"boxblock-container\" style=\"width: 46%;\">\n"; 
-
-echo "     <div class=\"boxblock\">\n"; 
-echo "        <h3>". __("Actions", rb_agency_TEXTDOMAIN) . "</h3>\n"; 
-echo "        <div class=\"inner\">\n"; 
-
-			   if ($user_level >= 7) {
-           echo "<a href='?page=rb_agency_menu_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Browse and edit existing profiles", rb_agency_TEXTDOMAIN) . ".";
-           echo "<br/>";
-		  $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." ");
-		  $queryGenderCount = mysql_num_rows($queryGenderResult);
-		  echo "<div style=\"margin-top:20px;margin-bottom:20px;\">";
-		  while($fetchGender = mysql_fetch_assoc($queryGenderResult)){
-			 echo "	<a style=\"margin-bottom:10px !important;float:left;\" class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_menu_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a>\n";
-		  }
-		  echo "</div>";
-		  if($queryGenderCount < 1){
-			echo "<br/><p>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_menu_settings&ampConfigID=5")."\">Create New Gender</a>", rb_agency_TEXTDOMAIN) ."</p>\n";
-		  
-		  } 
-		echo "<div style=\"clear:both;\">";
-		echo "<a href='?page=rb_agency_menu_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find and send profiles by filtering by chriteria", rb_agency_TEXTDOMAIN) . ".";
-		echo "</div>";
-			   }
-
-echo "        </div>\n"; 
-echo "     </div>\n"; 
-
-echo "     <div class=\"boxblock\">\n"; 
-echo "        <h3>". __("Recent Activity", rb_agency_TEXTDOMAIN) . "</h3>\n"; 
-echo "        <div class=\"inner\">\n"; 
-
-			   if ($user_level >= 7) {
-				// Recently Updated
-				echo "<p class=\"sub\">". __("Recently Created/Modified Profiles", rb_agency_TEXTDOMAIN) . "</p>";
-				echo "<div style=\"border-top: 2px solid #c0c0c0; \" class=\"profile\">";
-				$query = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileDateUpdated DESC LIMIT 0,10";
-				$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-				$count = mysql_num_rows($results);
-				while ($data = mysql_fetch_array($results)) {
-					$ProfileDateUpdated = $data['ProfileDateUpdated'];
-					echo "<div style=\"border-bottom: 1px solid #e1e1e1; line-height: 22px; \" class=\"profile\">";
-					echo " <div style=\"font-size: 8px; float: left; width: 100px; line-height: 22px; \"><em>" . $ProfileDateUpdated . "</em></div>";
-					echo " <div style=\"float: left; width: 200px; \"><a href=\"?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data['ProfileID'] ."\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</a></div>"; 
-					echo " <div style=\"clear: both; \"></div>";
-					echo "</div>";
-				}
-				mysql_free_result($results);
-				if ($count < 1) {
-					echo "". __("There are currently no profiles added", rb_agency_TEXTDOMAIN) . ".";
-				}
-				echo "</div>";
-				
-				// Recently Viewed
-				echo "<p style=\"margin-top: 15px;\" class=\"sub\">". __("Recently Viewed Profiles", rb_agency_TEXTDOMAIN) . "</p>";
-				echo "<div style=\"border-top: 2px solid #c0c0c0; \" class=\"profile\">";
-				$query = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileDateViewLast DESC LIMIT 0,10";
-				$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-				$count = mysql_num_rows($results);
-				while ($data = mysql_fetch_array($results)) {
-					echo "<div style=\"border-bottom: 1px solid #e1e1e1; line-height: 22px; \" class=\"profile\">";
-					echo " <div style=\"font-size: 8px; float: left; width: 100px; line-height: 22px; \"><em>" . $data['ProfileDateViewLast'] . "</em></div>";
-					echo " <div style=\"float: left; width: 250px; \"><a href=\"?page=rb_agency_menu_profiles&action=editRecord&ProfileID=". $data['ProfileID'] ."\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</a></div>"; 
-					echo " <div style=\"font-size: 8px; float: left; width: 50px; \">". $data['ProfileStatHits'] ." Views</div>";
-					echo " <div style=\"clear: both; \"></div>";
-					echo "</div>";
-				}
-				mysql_free_result($results);
-				if ($count < 1) {
-					echo "". __("There are currently no profiles added", rb_agency_TEXTDOMAIN) . ".";
-				}
-				echo "</div>";
-			
-		   }
-echo "        </div>\n"; 
-echo "     </div>\n"; 
-
-   
-echo "    </div><!-- .container -->\n"; 
-
-echo "    <div class=\"clear\"></div>\n"; 
-
-echo "    <div class=\"boxblock-container\" style=\"width: 93%;\">\n"; 
-
-echo "     <div class=\"boxblock\">\n"; 
-echo "        <div class=\"inner\">\n"; 
-echo "            <p>". __("WordPress Plugins by ", rb_agency_TEXTDOMAIN) . " <a href=\"http://rbplugin.com\" target=\"_blank\">Rob Bertholf</a>.</p>\n"; 
-echo "        </div>\n"; 
-echo "     </div>\n"; 
-    
-echo "    </div><!-- .container -->\n"; 
-
-echo " </div>\n"; 
-echo "</div>\n"; 
 ?>
+
+
+<div id="welcome-panel" class="welcome-panel">
+	<div class="welcome-panel-content">
+
+		<h3>Welcome to RB Agency!</h3>
+		<p class="about-description">We’ve assembled some links to get you started:</p>
+
+		<div class="welcome-panel-column-container">
+			<div class="welcome-panel-column">
+				<h4>Get Started</h4>
+				<a class="button button-primary button-hero load-customize hide-if-no-customize" href="http://localhost:8888/wp-admin/customize.php">Customize Your Site</a>
+				<a class="button button-primary button-hero hide-if-customize" href="http://localhost:8888/wp-admin/themes.php">Customize Your Site</a>
+				<p class="hide-if-no-customize">or, <a href="http://localhost:8888/wp-admin/themes.php">change your theme completely</a></p>
+			</div>
+
+			<div class="welcome-panel-column">
+				<h4>Next Steps</h4>
+				<ul>
+					<?php
+					if ($user_level >= 7) {
+						echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Browse and edit existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
+
+						$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." ");
+						$queryGenderCount = mysql_num_rows($queryGenderResult);
+
+						while($fetchGender = mysql_fetch_assoc($queryGenderResult)){
+						 echo "<li><a href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></li>\n";
+						}
+						if($queryGenderCount < 1){
+						echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", rb_agency_TEXTDOMAIN) ."</li>\n";
+						} 
+
+						echo "<li><a href='?page=rb_agency_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find and send profiles by filtering by chriteria", rb_agency_TEXTDOMAIN) . ".</li>";
+					}
+					?>
+				</ul>
+			</div>
+
+			<div class="welcome-panel-column welcome-panel-last">
+				<h4>More Actions</h4>
+				<ul>
+					<li><div class="welcome-icon welcome-widgets-menus">Manage <a href="http://localhost:8888/wp-admin/widgets.php">widgets</a> or <a href="http://localhost:8888/wp-admin/nav-menus.php">menus</a></div></li>
+					<li><a href="http://localhost:8888/wp-admin/options-discussion.php" class="welcome-icon welcome-comments">Turn comments on or off</a></li>
+					<li><a href="http://codex.wordpress.org/First_Steps_With_WordPress" class="welcome-icon welcome-learn-more">Learn more about getting started</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div id="dashboard-widgets-wrap">
+	<div id="dashboard-widgets" class="metabox-holder columns-2">
+
+		<div id="postbox-container-1" class="postbox-container">
+			<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+
+				<div id="dashboard_right_now" class="postbox">
+					<div class="handlediv" title="Click to toggle"><br></div>
+					<h3 class="hndle"><span>Quick Search</span></h3>
+					<div class="inside">
+						<?php
+						   if ($user_level >= 7) {
+						   	?>
+							<form method="GET" action="<?php echo admin_url("admin.php?page=rb_agency_search") ?>">
+							<input type="hidden" name="page" id="page" value="rb_agency_search" />
+							<input type="hidden" name="action" value="search" />
+							<table class="form-table">
+							<tbody>
+							  <tr valign="top">
+								<th scope="row"><label for="blogname"><?php echo  __("First Name", rb_agency_TEXTDOMAIN); ?></label></th>
+								<td><input type="text" name="ProfileContactNameFirst" value="<?php echo $_SESSION['ProfileContactNameFirst']; ?>" class="regular-text" /></td>
+							  </tr>
+
+							<?php
+							// @ToDo
+							echo "				    <tr>\n";
+							echo "				        <th scope=\"row\">". __("Last Name", rb_agency_TEXTDOMAIN) . ":</th>\n";
+							echo "				        <td><input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION['ProfileContactNameLast'] ."\" />\n";               
+							echo "				        </td>\n";
+							echo "				    </tr>\n";
+							
+							echo "				    <tr>\n";
+							echo "				        <th scope=\"row\">". __("Classification", rb_agency_TEXTDOMAIN) . ":</th>\n";
+							echo "				        <td><select name=\"ProfileType\" id=\"ProfileType\">\n";               
+							echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
+															$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
+															$results2 = mysql_query($query);
+															while ($dataType = mysql_fetch_array($results2)) {
+																if ($_SESSION['ProfileType']) {
+																	if ($dataType["DataTypeID"] ==  $_SESSION['ProfileType']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
+																} else { $selectedvalue = ""; }
+																echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
+															}
+							echo "				        	</select></td>\n";
+							echo "				        </td>\n";
+							echo "				    </tr>\n";
+							echo "				    <tr>\n";
+							echo "				        <th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) . ":</th>\n";
+							echo "				        <td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";       
+										$query1 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ."";
+										$results1 = mysql_query($query1);
+										$count1 = mysql_num_rows($results1);
+										if ($count1 > 0) {
+											echo " <option value=\"\">All Gender</option>";
+											while ($data1 = mysql_fetch_array($results1)) {
+												
+												echo " <option value=\"". $data1["GenderID"] ."\" ". selected( $_SESSION['ProfileGender'], $data1["GenderID"]) .">". $data1["GenderTitle"] ."</option>\n";
+											}
+											echo "</select>\n";
+										} else {
+											echo "". __("No items to select", rb_restaurant_TEXTDOMAIN) .".";
+										}
+							echo "				        </td>\n";
+							echo "				    </tr>\n";
+							echo "				    <tr>\n";
+							echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
+							echo "				        <td>\n";
+							echo "				        <fieldset>\n";
+							echo "				        	<div><label>". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
+							echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /><br /></div>\n";
+							echo "				        	<div><label>". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
+							echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
+							echo "				        </fieldset>\n";
+							echo "				        </td>\n";
+							echo "				    </tr>\n";
+							echo "				  </thead>\n";
+							echo "				</table>\n";
+							echo "				<p class=\"submit\">\n";
+							echo "				<input type=\"submit\" value=\"". __("Quick Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+							echo "				<a href=\"?page=rb_agency_search\" class=\"button-secondary\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a></p>\n";
+							echo "				</p>\n";
+							echo "        	<form>\n";
+							
+						   } // Editor  
+						?>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="postbox-container-2" class="postbox-container">
+			<div id="side-sortables" class="meta-box-sortables ui-sortable">
+
+				<div id="dashboard_recent_drafts" class="postbox" style="display: block;">
+					<div class="handlediv" title="Click to toggle"><br></div>
+					<h3 class="hndle"><span><?php echo __("Recently Updated Profiles", rb_agency_TEXTDOMAIN ) ?></span></h3>
+					<div class="inside">
+						<ul>
+						<?php
+						if ($user_level >= 7) {
+							// Recently Updated
+							$query = "SELECT ProfileID, ProfileContactNameLast, ProfileContactNameLast, ProfileDateUpdated FROM ". table_agency_profile ." ORDER BY ProfileDateUpdated DESC LIMIT 0,10";
+							$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+							$count = mysql_num_rows($results);
+							while ($data = mysql_fetch_array($results)) { ?>
+								<li>
+									<a href="?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $data['ProfileID']; ?>"><?php echo stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) ?></a>
+							    	<span class="add-new-h2">Updated <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateUpdated'])); ?></span>
+								</li><?php
+							}
+							mysql_free_result($results);
+							if ($count < 1) {
+								echo "". __("There are currently no profiles added", rb_agency_TEXTDOMAIN) . ".";
+							}
+						}
+						?>
+						</ul>
+					</div>
+				</div>
+
+				<div id="dashboard_recent_drafts" class="postbox" style="display: block;">
+					<div class="handlediv" title="Click to toggle"><br></div>
+					<h3 class="hndle"><span><?php echo __("Recently Viewed Profiles", rb_agency_TEXTDOMAIN ) ?></span></h3>
+					<div class="inside">
+						<ul>
+						<?php
+						if ($user_level >= 7) {
+							// Recently Viewed
+							$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileDateViewLast, ProfileStatHits FROM ". table_agency_profile ." ORDER BY ProfileDateViewLast DESC LIMIT 0,10";
+							$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+							$count = mysql_num_rows($results);
+							while ($data = mysql_fetch_array($results)) { 
+								//$data['ProfileDateViewLast']
+								?>
+								<li>
+									<a href="?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $data['ProfileID']; ?>"><?php echo stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']); ?></a>
+							    	<span class="add-new-h2"><?php echo $data['ProfileStatHits']; ?> <?php echo __("Views", rb_agency_TEXTDOMAIN ) ?></span>
+							    	<span class="add-new-h2">Last viewed <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateViewLast'])); ?></span>
+								</li><?php
+							}
+							mysql_free_result($results);
+							if ($count < 1) {
+								echo "". __("There are currently no profiles added", rb_agency_TEXTDOMAIN) . ".";
+							}
+						}
+						?>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="clear"></div>
+
+	</div>
+</div>

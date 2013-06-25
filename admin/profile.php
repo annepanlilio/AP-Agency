@@ -15,7 +15,7 @@ $rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option
 $rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
 
-if (function_exists(rb_agencyinteract_menu_approvemembers)) {
+if (function_exists(rb_agencyinteract_approvemembers)) {
     // Load Interact Settings
     $rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
     $rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
@@ -91,7 +91,7 @@ if (isset($_POST['action'])) {
         $error .= "<b><i>The " . LabelSingular . " must have a name.</i></b><br>";
         $have_error = true;
     }
-    if ((isset($_GET["action"]) == "add") && function_exists(rb_agencyinteract_menu_approvemembers)) {
+    if ((isset($_GET["action"]) == "add") && function_exists(rb_agencyinteract_approvemembers)) {
         $userdata = array(
             'user_pass' => esc_attr($ProfilePassword),
             'user_login' => esc_attr($ProfileUsername),
@@ -133,7 +133,7 @@ if (isset($_POST['action'])) {
 
                 // Bug Free!
                 if ($have_error == false) {
-                    if (function_exists(rb_agencyinteract_menu_approvemembers)) {
+                    if (function_exists(rb_agencyinteract_approvemembers)) {
                         $new_user = wp_insert_user($userdata);
                     }
 
@@ -196,7 +196,7 @@ if (isset($_POST['action'])) {
 
 
                     // Notify admin and user
-                    if ($ProfileNotifyUser <> "yes" && function_exists(rb_agencyinteract_menu_approvemembers)) {
+                    if ($ProfileNotifyUser <> "yes" && function_exists(rb_agencyinteract_approvemembers)) {
                         wp_new_user_notification($new_user, $ProfilePassword);
                     }
                     // Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
@@ -551,7 +551,10 @@ function rb_display_manage($ProfileID) {
     $rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
     $rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
     echo "<div class=\"wrap\">\n";
-    echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
+    // Include Admin Menu
+    include ("admin-menu.php");
+
+
     echo "  <h2>" . __("Manage " . LabelSingular, rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">" . __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN) . "</a></p>\n";
 
@@ -660,7 +663,7 @@ function rb_display_manage($ProfileID) {
     echo "    </tr>\n";
 
     // password
-    if ((isset($_GET["action"]) && $_GET["action"] == "add") && function_exists(rb_agencyinteract_menu_approvemembers)) {
+    if ((isset($_GET["action"]) && $_GET["action"] == "add") && function_exists(rb_agencyinteract_approvemembers)) {
         echo "    <tr valign=\"top\">\n";
         echo "      <th scope=\"row\">" . __("Username", rb_agency_TEXTDOMAIN) . "</th>\n";
         echo "      <td>\n";
@@ -1029,7 +1032,7 @@ function rb_display_manage($ProfileID) {
     }
     echo "      </fieldset>\n";
     if ($count3 < 1) {
-        echo "" . __("No items to select", rb_agency_TEXTDOMAIN) . ". <a href='" . admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=5") . "'>" . __("Setup Options", rb_agency_TEXTDOMAIN) . "</a>\n";
+        echo "" . __("No items to select", rb_agency_TEXTDOMAIN) . ". <a href='" . admin_url("admin.php?page=rb_agency_settings&ConfigID=5") . "'>" . __("Setup Options", rb_agency_TEXTDOMAIN) . "</a>\n";
     }
 
     echo "      </td>\n";
@@ -1053,7 +1056,7 @@ function rb_display_manage($ProfileID) {
         echo "      </td>\n";
         echo "    </tr>\n";
     }
-    if (function_exists(rb_agencyinteract_menu_approvemembers)) {
+    if (function_exists(rb_agencyinteract_approvemembers)) {
         echo "    <tr valign=\"top\">\n";
         echo "      <th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
         echo "      <td>\n";
@@ -1127,8 +1130,9 @@ function rb_display_list() {
     $rb_agency_options_arr = get_option('rb_agency_options');
     $rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
     echo "<div class=\"wrap\">\n";
-    echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
-    echo "  <h2>" . __("List", rb_agency_TEXTDOMAIN) . " " . LabelPlural . "</h2>\n";
+    // Include Admin Menu
+    include ("admin-menu.php");
+
 
     // Sort By
     $sort = "";
@@ -1224,19 +1228,6 @@ function rb_display_list() {
     
     //Paginate
     $items = mysql_num_rows(mysql_query("SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "")); // number of total rows in the database
-
-    /*
-     * Display Total Records
-     */
-    echo "<div style='float:left; width:100%'> 
-          <div style='float:left; width:50%'> 
-            <h3 class=\"title\">" . __("All Records", rb_agency_TEXTDOMAIN) . "</h3>
-           </div>
-          <div style='float:right; width:200px; text-align:right'> 
-            <h3 class=\"title\">" . __("Total: " . $items . " Profiles", rb_agency_TEXTDOMAIN) . "</h3>
-           </div>
-          </div> \n";
-
     if ($items > 0) {
         $p = new rb_agency_pagination;
         $p->items($items);
@@ -1259,7 +1250,11 @@ function rb_display_list() {
         $limit = "";
     }
 
-    echo "<div class=\"tablenav\">\n";
+    /*
+     * Add New Records
+     */
+
+    echo "<div style='float: left;'>" . __("Currently " . $items . " Profiles", rb_agency_TEXTDOMAIN) . ":</div>\n";
 
     $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ");
     $queryGenderCount = mysql_num_rows($queryGenderResult);
@@ -1267,7 +1262,7 @@ function rb_display_list() {
         echo "  <div style=\"float: left; \"><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
     }
     if ($queryGenderCount < 1) {
-        echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_menu_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
+        echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
     }
     echo "  <div class=\"tablenav-pages\">\n";
     if ($items > 0) {
@@ -1275,6 +1270,11 @@ function rb_display_list() {
     }
     echo "  </div>\n";
     echo "</div>\n";
+
+
+    /*
+     * Filtering Records
+     */
 
     echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
     echo "  <thead>\n";
@@ -1339,7 +1339,7 @@ function rb_display_list() {
     echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
     echo "              <input type=\"submit\" value=\"" . __("Clear Filters", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
     echo "          </form>\n";
-    echo "          <a href=\"" . admin_url("admin.php?page=rb_agency_menu_search") . "\" class=\"button-secondary\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
+    echo "          <a href=\"" . admin_url("admin.php?page=rb_agency_search") . "\" class=\"button-secondary\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
     echo "        </td>\n";
     echo "    </tr>\n";
     echo "  </thead>\n";

@@ -1,8 +1,8 @@
 /* menu & icons */
 #rb-overview-icon { background:transparent url(../style/rb-icon-gray-32.png) no-repeat scroll; }
 
-.checked-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/checked.png) no-repeat scroll; }
-.pending-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/pending.png) no-repeat scroll; }
+.checked-profile {  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/checked.png) no-repeat scroll; }
+.pending-profile {  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/pending.png) no-repeat scroll; }
 .loading-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/loader.gif) no-repeat scroll; }
 .error-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../style/error.png) no-repeat scroll; }
 
@@ -13,9 +13,18 @@
 
 /*Remove icon*/
 #profile-manage-media .rotateimage {background: transparent url(../style/rotate.png); width:16px; height:16px; display:block; float:left;  }
-/*overview page*/
+
+/*
+
 .boxblock-holder { }
-.boxblock-container { float: left; width: 98%; overflow: hidden; padding: 3px 10px 3px 0px; }
+.boxblock-container { 
+    box-sizing: border-box;             
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    float: left;
+    padding: 10px;
+    width: 100%;
+    }
 
 .boxblock { background-color:#FFFFFF; border-color:#DFDFDF; -moz-border-radius:6px 6px 6px 6px; border-style:solid; border-width:1px; line-height:1; margin-bottom:20px; min-width:255px; position:relative; width:99.5%;}
 .boxblock .inner { padding: 10px; }
@@ -44,151 +53,6 @@ vertical-align: top; width: 300px; margin: 10px; min-height: 150px; }
 
 input.stubby { width: 80px; }
 
-/* Profile Page */
-.profileimage { position: relative; width: 100px; float: left; padding: 5px; margin: 0px 10px 10px 0; height: 170px; overflow: hidden; }
-#profile-manage-media .primary { z-index: 5; position: absolute; top: 135px; padding: 2px; text-align: center; width: 100px; color: #fff; }
-#profile-manage-media .delete { z-index: 6; position: absolute; top: 3px; padding: 2px; background: #000; border: solid #000 3px; color: #fff; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 3px; -webkit-border-bottom-right-radius: 3px;}
-#profile-manage-media .delete a { color: #fff; text-decoration: none; }
-#profile-manage-media .delete a span { float: left; display: none; }
-#profile-manage-media .delete a:hover { border: none; }
-#profile-manage-media .delete a:hover span { background: #000; display: inline; }
-
-/*Select Tag CSS*/
-#cs_tag_box{
-    background-color:#FFFFFF;
-    -moz-border-radius:6px 6px 6px 6px;
-    border:solid #DFDFDF 1px;
-    line-height:1;
-    margin-bottom:20px;
-    min-width:255px;
-    position:relative;
-    width:99.5%;
-}
-
-#cs_tag_box h3 {
-    font-size:12px;
-    font-weight:bold;
-    line-height:1;
-    margin:0;
-    padding:7px 9px;
-    background:url("gray-grad.png") repeat-x scroll left top #DFDFDF;
-    text-shadow:0 1px 0 #FFFFFF;
-}
-
-#cs_tag_box #cs_handlediv {
-    float:right;
-    height:26px;
-    width:23px;
-}
-
-#cs_tag_box #cs_handlediv:hover {
-    background:url("menu-bits.gif") no-repeat scroll left -111px;
-}
-
-#cs_tag_box #cs_selected_tag_list{
-    display:none;
-}
-#cs_tag_box #cs_add_select_tag{
-    padding:10px;
-}
-
-#cs_tag_box #cs_add_tag{
-    padding:10px;
-}
-
-#cs_tag_box #cs_popular_tags{
-    padding:10px;
-}
-
-#cs_tag_box #cs_form_text{
-    border: solid 1px #DFDFDF;
-    -moz-border-radius:4px 4px 4px 4px;
-    color:#666666;
-    font-size:12px;
-    padding:3px;
-}
-#cs_tag_box #cs_form_button {
-    -moz-border-radius:11px 11px 11px 11px;
-    -moz-box-sizing:content-box;
-    border:solid 1px #DFDFDF;
-    cursor:pointer;
-    font-size:11px !important;
-    line-height:14px;
-    padding:2px 8px;
-    text-decoration:none;
-    background:#ffffff;
-}
-
-#cs_tag_box #cs_form_button:hover {
-    border:solid 1px #666666;
-}
-#cs_tag_box #cs_howto {
-    display:block;
-    font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
-    font-style:italic;
-    color: #666666;
-}
-#cs_tag_box #cs_howto {
-    display:block;
-    font-family:"Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif;
-    font-style:italic;
-    color: #666666;
-}
-
-
-
-#cs_tag_box .cs_popular_list_hide {
-    /*display: none;*/
-
-}
-#cs_tag_box #cs_popular_list {
-    -moz-border-radius:6px 6px 6px 6px;
-    border:solid 1px #DDDDDD;
-    line-height:1.8em;
-    margin:5px 0 10px;
-    padding:8px;
-    word-spacing:3px;
-}
-#cs_tag_box  a#cs_popular_tags_link {
-    color:#21759B;
-    text-decoration: underline;
-
-}
-#cs_tag_box a#cs_popular_tags_link:hover {
-    color:#B2265D;
-}
-#cs_tag_box .cs_popular_list_hide {
-    display:none;
-}
-#cs_tag_box #cs_popular_list{
-    margin-top:7px;
-}
-#cs_tag_box #cs_popular_list a {
-    word-spacing:5px;
-    font-size:8pt;
-    color:#21759B;
-    text-decoration: underline;
-}
-#cs_tag_box #cs_popular_list a:hover {
-    color:#B2265D;
-}
-#cs_tag_box a.cs_del_button {
-    color:green;
-    background: url("xit0.jpg") no-repeat center center;
-    text-decoration: none;
-}
-
-#cs_tag_box a.cs_del_button:hover {
-    background: url("xit1.jpg") no-repeat center center;
-}
-
-#cs_tag_box #cs_tagchecklist{
-    margin-top: 15px;
-    line-height: 20px;
-}
-#cs_tag_box .cs_inside_hide{
-    display: none;
-}
 
 .boxblock table .textarea-field {
     display:none;   
@@ -239,6 +103,18 @@ input.stubby { width: 80px; }
     overflow: hidden;
     margin-top: 15px;
 }
+*/
+
+/* Profile Page */
+.profileimage { position: relative; width: 100px; float: left; padding: 5px; margin: 0px 10px 10px 0; height: 170px; overflow: hidden; }
+#profile-manage-media .primary { z-index: 5; position: absolute; top: 135px; padding: 2px; text-align: center; width: 100px; color: #fff; }
+#profile-manage-media .delete { z-index: 6; position: absolute; top: 3px; padding: 2px; background: #000; border: solid #000 3px; color: #fff; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 3px; -webkit-border-bottom-right-radius: 3px;}
+#profile-manage-media .delete a { color: #fff; text-decoration: none; }
+#profile-manage-media .delete a span { float: left; display: none; }
+#profile-manage-media .delete a:hover { border: none; }
+#profile-manage-media .delete a:hover span { background: #000; display: inline; }
+
+
 
 #popup_bg{
     position: fixed;

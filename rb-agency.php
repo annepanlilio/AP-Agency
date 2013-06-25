@@ -418,7 +418,7 @@ if ( is_admin() ){
 		function rb_agency_addsettingspage() {
 			if ( !current_user_can('update_core') )
 				return;
-			$pagehook = add_management_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), 'update_core', rb_agency_BASENAME, 'rb_agency_menu_settings', '' );
+			$pagehook = add_management_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), 'update_core', rb_agency_BASENAME, 'rb_agency_settings', '' );
 			add_action( 'load-plugins.php', 'rb_agency_on_load' );
 			//wp_enqueue_script('jquery');
 		}
@@ -529,35 +529,35 @@ if ( is_admin() ){
 	add_action('admin_menu','set_rb_agency_menu');
 		//Create Admin Menu
 		function set_rb_agency_menu(){
-			add_menu_page( __("Agency", rb_agency_TEXTDOMAIN), __("Agency", rb_agency_TEXTDOMAIN), 1,"rb_agency_menu","rb_agency_menu_dashboard","div");
-			add_submenu_page("rb_agency_menu", __("Overview", rb_agency_TEXTDOMAIN), __("Overview", rb_agency_TEXTDOMAIN), 1,"rb_agency_menu","rb_agency_menu_dashboard");
-			add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_menu_profiles","rb_agency_menu_profiles");
-			if (function_exists(rb_agencyinteract_menu_approvemembers)) {
-			add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agencyinteract_menu_approvemembers","rb_agencyinteract_menu_approvemembers");
+			add_menu_page( __("Agency", rb_agency_TEXTDOMAIN), __("Agency", rb_agency_TEXTDOMAIN), 1,"rb_agency_menu","rb_agency_dashboard","div");
+			add_submenu_page("rb_agency_menu", __("Overview", rb_agency_TEXTDOMAIN), __("Overview", rb_agency_TEXTDOMAIN), 1,"rb_agency_menu","rb_agency_dashboard");
+			add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_profiles","rb_agency_profiles");
+			if (function_exists(rb_agencyinteract_approvemembers)) {
+			add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agencyinteract_approvemembers","rb_agencyinteract_approvemembers");
 			}
-			add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_menu_search","rb_agency_menu_search");
-			add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 7,"rb_agency_menu_searchsaved","rb_agency_menu_searchsaved");
-			add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 7,"rb_agency_menu_reports","rb_agency_menu_reports");
-			add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 7,"rb_agency_menu_settings","rb_agency_menu_settings");
+			add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_search","rb_agency_search");
+			add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 7,"rb_agency_searchsaved","rb_agency_searchsaved");
+			add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 7,"rb_agency_reports","rb_agency_reports");
+			add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 7,"rb_agency_settings","rb_agency_settings");
 		}
 		
 		//Pages
-		function rb_agency_menu_dashboard(){
+		function rb_agency_dashboard(){
 			include_once('admin/overview.php');
 		}
-		function rb_agency_menu_profiles(){
+		function rb_agency_profiles(){
 			include_once('admin/profile.php');
 		}
-		function rb_agency_menu_search(){
+		function rb_agency_search(){
 			include_once('admin/search.php');
 		}
-		function rb_agency_menu_searchsaved(){
+		function rb_agency_searchsaved(){
 			include_once('admin/searchsaved.php');
 		}
-		function rb_agency_menu_reports(){
+		function rb_agency_reports(){
 			include_once('admin/reports.php');
 		}
-		function rb_agency_menu_settings(){
+		function rb_agency_settings(){
 			include_once('admin/settings.php');
 		}		
 }
@@ -927,7 +927,7 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 				<script type="text/javascript">
 				jQuery(document).ready( function($) {
 					
-				var options = {"content":"<h3>RB Agency Plugin</h3><p>Thanks for installing RB Plugin, we hope you find it useful.  Lets <a href=\'<?php echo admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=1"); ?>\'>check your settings</a> before we get started.</p>","position":{"edge":"left","align":"center"}};
+				var options = {"content":"<h3>RB Agency Plugin</h3><p>Thanks for installing RB Plugin, we hope you find it useful.  Lets <a href=\'<?php echo admin_url("admin.php?page=rb_agency_settings&ConfigID=1"); ?>\'>check your settings</a> before we get started.</p>","position":{"edge":"left","align":"center"}};
 				if ( ! options )
 					return;
 					options = $.extend( options, {
@@ -935,9 +935,9 @@ if($rb_agencyinteract_option_profilemanage_sidebar == 1){
 						//to do
 						}
 					});
-					<?php if(isset($_GET["page"])!="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_menu_settings") { ?>
+					<?php if(isset($_GET["page"])!="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_settings") { ?>
 					$('#toplevel_page_rb_agency_menu').pointer( options ).pointer("open");
-					<?php } elseif(isset($_GET["page"])=="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_menu_settings") { ?>
+					<?php } elseif(isset($_GET["page"])=="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_settings") { ?>
 					$('#toplevel_page_rb_agency_menu li a').each(function(){
 						if($(this).text() == "Settings"){
 						   $(this).fadeOut().pointer( options ).pointer("open").fadeIn();	

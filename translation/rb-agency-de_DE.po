@@ -327,7 +327,7 @@ msgstr "Fehler, Suchanfrage falsch"
 
 # @ modelagency_casting
 # @ default
-# @ rb_agency_menu_profiles
+# @ rb_agency_profiles
 #: C:/Dropbox/Users/Rob/Scripts/RB
 #: Plugin/rb-agency/admin/casting.php:467
 #: Plugin/rb-agency/admin/profile.php:1444
@@ -1327,7 +1327,7 @@ msgstr "OK"
 
 # @ modelagency_casting
 # @ default
-# @ rb_agency_menu_profiles
+# @ rb_agency_profiles
 #: C:/Dropbox/Users/Rob/Scripts/RB
 #: Plugin/rb-agency/admin/profile.php:1444
 #: Plugin/rb-agency/admin/settings.php:684
@@ -1691,7 +1691,7 @@ msgstr "Keine Profile mit diesen Kriterien gefunden"
 msgid "There aren't any Profiles loaded yet!"
 msgstr "Zur Zeit keine Profile hinzugefügt"
 
-# @ rb_agency_menu_search
+# @ rb_agency_search
 #: C:/Dropbox/Users/Rob/Scripts/RB
 #: Plugin/rb-agency/admin/search.php:466
 msgid "Add to Casting Cart"
