@@ -15,8 +15,8 @@
 <div id="welcome-panel" class="welcome-panel">
 	<div class="welcome-panel-content">
 
-		<h3>Welcome to RB Agency!</h3>
-		<p class="about-description">We’ve assembled some links to get you started:</p>
+		<h3><?php echo __("Welcome to RB Agency", rb_agency_TEXTDOMAIN ) ?>!</h3>
+		<p class="about-description"><?php echo __("We have added some resources below to help you get started.", rb_agency_TEXTDOMAIN ) ?></p>
 
 		<div class="welcome-panel-column-container">
 			<div class="welcome-panel-column">
@@ -70,7 +70,7 @@
 
 				<div id="dashboard_right_now" class="postbox">
 					<div class="handlediv" title="Click to toggle"><br></div>
-					<h3 class="hndle"><span>Quick Search</span></h3>
+					<h3 class="hndle"><span><?php echo __("Quick Search", rb_agency_TEXTDOMAIN ) ?></span></h3>
 					<div class="inside">
 						<?php
 						   if ($user_level >= 7) {
