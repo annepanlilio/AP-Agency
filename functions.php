@@ -1100,9 +1100,11 @@ error_reporting(0);
 					  	$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
 					}
 					  
-					if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
-					    if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
-					    $links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
+					if($_SERVER['REQUEST_URI']!="/profile-casting/"){
+						if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+							if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
+							$links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
+						}
 					}
 					$links.='</div><!-- .rbfavorites-castings -->
 				</div><!-- .rblinks -->';			
@@ -1119,16 +1121,17 @@ error_reporting(0);
 		 	if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 		  
 				/*********** Paginate **************/
-					$items = mysql_num_rows(($qItem = mysql_query("SELECT
+					$qItem = mysql_query("SELECT
 					profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , 
-					 customfield_mux.*,  
-					 (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
-					 AS ProfileMediaURL 
-					 FROM ". table_agency_profile ." profile 
-				 	 LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
-					 ON profile.ProfileID = customfield_mux.ProfileID  
-				 $filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "").""))); // number of total rows in the database
-	                      
+					customfield_mux.*,  
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
+					AS ProfileMediaURL 
+					FROM ". table_agency_profile ." profile 
+				 	LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
+					ON profile.ProfileID = customfield_mux.ProfileID  
+					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
+					$items = mysql_num_rows($qItem); // number of total rows in the database
+				  
 				if($items > 0) {
 					$p = new rb_agency_pagination;
 					$p->items($items);
@@ -1174,7 +1177,7 @@ error_reporting(0);
 			 */
 			if (isset($profilefavorite) && !empty($profilefavorite)){
 				// Execute query showing favorites
-				$queryList = "SELECT profile.*, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 				
 			} elseif (isset($profilecastingcart) && !empty($profilecastingcart)){
 				// There is a Casting Cart ID present
@@ -1265,6 +1268,13 @@ error_reporting(0);
 					 
 					/*********** Show Count/Pages **************/
 					 $displayHTML .= "  <div id=\"profile-results-info\" class=\"six column\">\n";
+					
+						if(count($dataList) > 0){
+							$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
+								echo "<strong>Item on this list: ".count($dataList)."</strong>";
+							$displayHTML .="    </div>\n";
+						}
+						
 						if($items > 0) {
 							if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){ 
 								$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
@@ -1272,13 +1282,14 @@ error_reporting(0);
 								$displayHTML .= "    </div>\n";
 							}
 						}
-					if ($rb_agency_option_profilelist_count) {
-						if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){  
-							$displayHTML .= "    <div id=\"profile-results-info-countrecord\">\n";
-							$displayHTML .="    	". __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
-							$displayHTML .="    </div>\n";
-						}				
-					}
+						
+						if ($rb_agency_option_profilelist_count) {
+							if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){  
+								$displayHTML .= "    <div id=\"profile-results-info-countrecord\">\n";
+								$displayHTML .="    	". __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
+								$displayHTML .="    </div>\n";
+							}				
+						}
 
 					$displayHTML.="  </div><!-- #profile-results-info -->\n";
 					$displayHTML.="  <div class=\"rbclear\"></div>\n";
@@ -1319,11 +1330,11 @@ error_reporting(0);
 				}
 				
 	         	//echo "loaded: ".microtime()." ms";				
-				if($rb_user_isLogged ){
+				//if($rb_user_isLogged ){
 
 				   	//Get Favorite & Casting Cart links
 			        $displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-				}
+				//}
 
 				$displayHTML .=" </div> <!-- .profile-info --> \n";
 				$displayHTML .=" </div><!-- .rbprofile-list -->\n";
@@ -1826,7 +1837,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 	} // End while
 	if ($count3 < 1) {
 		echo "  <tr valign=\"top\">\n";
-		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
+		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_menu_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
 		echo "  </tr>\n";
 	}
 }
@@ -2350,26 +2361,6 @@ function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $ti
 		}
 	} 
 } 
-
-/*/
-* ======================== Get Custom Description ===============
-* @Returns Custom Fields excluding a title
-* @parm includes an array of title
-/*/
-function rb_agency_getProfileCustomdescription($ProfileID, $ProfileGender, $title_to_exclude) {
-
-	global $wpdb;
-	global $rb_agency_option_unittype;
-	
-	$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
-	foreach ($resultsCustom as $resultCustom) {
-		if ($resultCustom->ProfileCustomID == 16){
-			return $resultCustom->ProfileCustomValue; 
-		}
-		
-	} 
-}   
-
  
 function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclude="",$include="") {
 	global $wpdb;
@@ -2576,7 +2567,7 @@ function rb_agency_callafter_setup() {
 			$wp_toolbar->add_node(array(
 				'id' => 'rb-agency-toolbar-settings',
 				'title' => 'RB Agency Settings',
-				'href' =>  get_admin_url().'admin.php?page=rb_agency_settings',
+				'href' =>  get_admin_url().'admin.php?page=rb_agency_menu_settings',
 				'meta' => array('target' => 'rb-agency-toolbar-settings')
 			));
 		}

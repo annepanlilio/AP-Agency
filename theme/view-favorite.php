@@ -29,12 +29,8 @@ get_header();
 
 
 	echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper 
-	echo "<div class=\"PageTitle\"><h1>Favorite Talent</h1></div>\n";	 // Profile Name
+	echo "<div class=\"PageTitle\"><h1>Favorites</h1></div>\n";	 // Profile Name
 	
-
-
-
-
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	
