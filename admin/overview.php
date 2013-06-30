@@ -15,48 +15,38 @@
 <div id="welcome-panel" class="welcome-panel">
 	<div class="welcome-panel-content">
 
-		<h3><?php echo __("Welcome to RB Agency", rb_agency_TEXTDOMAIN ) ?>!</h3>
-		<p class="about-description"><?php echo __("We have added some resources below to help you get started.", rb_agency_TEXTDOMAIN ) ?></p>
 
 		<div class="welcome-panel-column-container">
 			<div class="welcome-panel-column">
-				<h4>Get Started</h4>
-				<a class="button button-primary button-hero load-customize hide-if-no-customize" href="http://localhost:8888/wp-admin/customize.php">Customize Your Site</a>
-				<a class="button button-primary button-hero hide-if-customize" href="http://localhost:8888/wp-admin/themes.php">Customize Your Site</a>
-				<p class="hide-if-no-customize">or, <a href="http://localhost:8888/wp-admin/themes.php">change your theme completely</a></p>
-			</div>
-
-			<div class="welcome-panel-column">
-				<h4>Next Steps</h4>
+				<h3><?php echo __("Welcome to RB Agency", rb_agency_TEXTDOMAIN ) ?>!</h3>
+				<p class="about-description"><?php echo __("We have added some resources below to help you get started.", rb_agency_TEXTDOMAIN ) ?></p>
+				<h4><?php echo __("Quick Links", rb_agency_TEXTDOMAIN ) ?></h4>
 				<ul>
 					<?php
 					if ($user_level >= 7) {
-						echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Browse and edit existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
+						echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
 
 						$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." ");
 						$queryGenderCount = mysql_num_rows($queryGenderResult);
 
 						while($fetchGender = mysql_fetch_assoc($queryGenderResult)){
-						 echo "<li><a href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></li>\n";
+						 echo "<li><a class=\"button-secondary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></li>\n";
 						}
 						if($queryGenderCount < 1){
 						echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", rb_agency_TEXTDOMAIN) ."</li>\n";
 						} 
 
-						echo "<li><a href='?page=rb_agency_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find and send profiles by filtering by chriteria", rb_agency_TEXTDOMAIN) . ".</li>";
+						echo "<li><a href='?page=rb_agency_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find profiles", rb_agency_TEXTDOMAIN) . ".</li>";
 					}
 					?>
 				</ul>
 			</div>
 
-			<div class="welcome-panel-column welcome-panel-last">
-				<h4>More Actions</h4>
-				<ul>
-					<li><div class="welcome-icon welcome-widgets-menus">Manage <a href="http://localhost:8888/wp-admin/widgets.php">widgets</a> or <a href="http://localhost:8888/wp-admin/nav-menus.php">menus</a></div></li>
-					<li><a href="http://localhost:8888/wp-admin/options-discussion.php" class="welcome-icon welcome-comments">Turn comments on or off</a></li>
-					<li><a href="http://codex.wordpress.org/First_Steps_With_WordPress" class="welcome-icon welcome-learn-more">Learn more about getting started</a></li>
-				</ul>
+
+			<div class="welcome-panel-column" style="margin-left: 50px;">
+				<iframe src="http://player.vimeo.com/video/27752740" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 			</div>
+
 		</div>
 	</div>
 </div>

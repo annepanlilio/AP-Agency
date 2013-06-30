@@ -1133,7 +1133,6 @@ function rb_display_list() {
     // Include Admin Menu
     include ("admin-menu.php");
 
-
     // Sort By
     $sort = "";
     if (isset($_GET['sort']) && !empty($_GET['sort'])) {
@@ -1253,43 +1252,65 @@ function rb_display_list() {
     /*
      * Add New Records
      */
+?>
 
-    echo "<div style='float: left;'>" . __("Currently " . $items . " Profiles", rb_agency_TEXTDOMAIN) . ":</div>\n";
+<div id="dashboard-widgets-wrap">
+    <div id="dashboard-widgets" class="metabox-holder columns-2">
+
+        <div id="postbox-container-1" class="postbox-container">
+            <div id="normal-sortables" class="meta-box-sortables ui-sortable">
+
+                <div id="dashboard_right_now" class="postbox">
+                    <div class="handlediv" title="Click to toggle"><br></div>
+                    <h3 class="hndle"><span><?php echo __("Create New Profile", rb_agency_TEXTDOMAIN); ?></span></h3>
+                    <div class="inside">
+<?php echo __("Currently " . $items . " Profiles", rb_agency_TEXTDOMAIN); ?><br />
+<?php
 
     $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ");
     $queryGenderCount = mysql_num_rows($queryGenderResult);
     while ($fetchGender = mysql_fetch_assoc($queryGenderResult)) {
-        echo "  <div style=\"float: left; \"><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
+        echo "  <div><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
     }
     if ($queryGenderCount < 1) {
         echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
     }
+
+
     echo "  <div class=\"tablenav-pages\">\n";
     if ($items > 0) {
         echo $p->show();  // Echo out the list of paging. 
     }
     echo "  </div>\n";
-    echo "</div>\n";
+?>
 
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="postbox-container-2" class="postbox-container">
+            <div id="side-sortables" class="meta-box-sortables ui-sortable">
+
+                <div id="dashboard_recent_drafts" class="postbox" style="display: block;">
+                    <div class="handlediv" title="Click to toggle"><br></div>
+                    <h3 class="hndle"><span><?php echo __("Filter Profiles", rb_agency_TEXTDOMAIN ) ?></span></h3>
+                    <div class="inside">
+
+<?php
 
     /*
      * Filtering Records
      */
 
-    echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
-    echo "  <thead>\n";
-    echo "    <tr>\n";
-    echo "        <td style=\"width: 50px;\">\n";
-    echo "              <strong>" . __("Filter By", rb_agency_TEXTDOMAIN) . ":</strong>\n";
-    echo "        </td>\n";
-    echo "    </tr>\n";
-    echo "    <tr>\n";
-    echo "        <td nowrap=\"nowrap\">\n";
     echo "          <form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
     echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />\n";
     echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
     echo "              <input type=\"hidden\" name=\"type\" value=\"name\" />\n";
     echo "              " . __("First Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" style=\"width: 100px;\" />\n";
+    echo "              " . __("Last Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" style=\"width: 100px;\" />\n";
+    
     echo "              " . __("Category", rb_agency_TEXTDOMAIN) . ":\n";
     echo "              <select name=\"ProfileType\">\n";
     echo "                <option value=\"\">" . __("Any Category", rb_agency_TEXTDOMAIN) . "</option>";
@@ -1309,7 +1330,6 @@ function rb_display_list() {
     echo "                <option value=\"0\"" . selected(0, $selectedVisible) . ">" . __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
     echo "                <option value=\"2\"" . selected(2, $selectedVisible) . ">" . __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
     echo "              </select>\n";
-    echo "              <br />" . __("Last Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" style=\"width: 100px;\" />\n";
     echo "              " . __("Location", rb_agency_TEXTDOMAIN) . ": \n";
     echo "              <select name=\"ProfileLocationCity\">\n";
     echo "                <option value=\"\">" . __("Any Location", rb_agency_TEXTDOMAIN) . "</option>";
@@ -1340,10 +1360,18 @@ function rb_display_list() {
     echo "              <input type=\"submit\" value=\"" . __("Clear Filters", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
     echo "          </form>\n";
     echo "          <a href=\"" . admin_url("admin.php?page=rb_agency_search") . "\" class=\"button-secondary\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
-    echo "        </td>\n";
-    echo "    </tr>\n";
-    echo "  </thead>\n";
-    echo "</table>\n";
+
+
+?>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+<?php
+
+
 
     echo "<form method=\"post\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
     echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
