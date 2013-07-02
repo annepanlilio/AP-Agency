@@ -252,7 +252,6 @@ if (isset($_POST['action'])) {
             ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
             ProfileGender='" . $wpdb->escape($ProfileGender) . "',
 			ProfileGender='" . $wpdb->escape($ProfileGender) . "',
-            
             ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
             ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
             ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
@@ -593,9 +592,8 @@ function rb_display_manage($ProfileID) {
             $ProfileStatHits = stripslashes($data['ProfileStatHits']);
             $ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
 
-            echo "<h2 class=\"title\">" . __("Edit", rb_agency_TEXTDOMAIN) . " " . LabelSingular . " <a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">" . __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN) . "</a></h2>\n";
+            echo "<h2 class=\"title\">" . __("Edit", rb_agency_TEXTDOMAIN) . " " . LabelSingular . " <a class=\"button-secondary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">" . __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN) . "</a> <a class=\"button-primary\" href=\"" . rb_agency_PROFILEDIR . $rb_agency_UPLOADDIR . $ProfileGallery . "/\" target=\"_blank\">Preview Profile</a></h2>\n";
             echo "<p>" . __("Make changes in the form below to edit a", rb_agency_TEXTDOMAIN) . " " . LabelSingular . ". <strong>" . __("Required fields are marked", rb_agency_TEXTDOMAIN) . "Required fields are marked *</strong></p>\n";
-            echo "<p><a href=\"" . rb_agency_PROFILEDIR . $rb_agency_UPLOADDIR . $ProfileGallery . "/\" target=\"_blank\">View Profile</a></p>\n";
         }
     } else {
         // Set default values for new records
@@ -1042,12 +1040,19 @@ function rb_display_manage($ProfileID) {
     echo "            <option value=\"3\"" . selected(3, $ProfileIsActive) . ">" . __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
     echo "          </select></td>\n";
     echo "    </tr>\n";
+    echo "    <tr valign=\"top\">\n";
+    echo "        <th scope=\"row\">" . __("Promotion", rb_agency_TEXTDOMAIN) . ":</th>\n";
+    echo "        <td>\n";
+    echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked($ProfileIsFeatured, 1) . " /> Featured<br />\n";
+    echo "        </td>\n";
+    echo "    </tr>\n";
+
     if (isset($ProfileUserLinked) && $ProfileUserLinked > 0) {
         echo "    <tr valign=\"top\">\n";
         echo "      <th scope=\"row\">" . __("WordPress User", rb_agency_TEXTDOMAIN) . "</th>\n";
         echo "      <td>\n";
-        echo $ProfileUserLinked;
-		echo "<input type='hidden' name='wpuserid' value='".$ProfileUserLinked."' />";
+        echo "        <a href=\"". admin_url("user-edit.php") ."?user_id=". $ProfileUserLinked ."&wp_http_referer=%2Fwp-admin%2Fadmin.php%3Fpage%3Drb_agency_profiles\">ID# ". $ProfileUserLinked ."</a>";
+		echo "        <input type='hidden' name='wpuserid' value='".$ProfileUserLinked."' />";
         echo "      </td>\n";
         echo "    </tr>\n";
     }
@@ -1055,9 +1060,6 @@ function rb_display_manage($ProfileID) {
         echo "    <tr valign=\"top\">\n";
         echo "      <th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
         echo "      <td>\n";
-        echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"";
-        checked($ProfileIsFeatured, 1);
-        echo " /> Featured<br />\n";
         echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"";
         checked($ProfileIsPromoted, 1);
         echo " /> Rising Star<br />\n";

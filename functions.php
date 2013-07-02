@@ -1467,12 +1467,15 @@ error_reporting(0);
 			echo "</div><!-- .rbprofile-list -->\n";
 		}
 		if ($countList < 1) {
-			echo __("No Profiles Found", rb_agency_TEXTDOMAIN);
+			echo __("No Featured Profiles", rb_agency_TEXTDOMAIN);
 		}
 		echo "  <div style=\"clear: both; \"></div>\n";
 		echo "</div><!-- #profile-featured -->\n";
 	}
 		
+
+
+
 	// Profile Search
 	function rb_agency_profilesearch($atts, $content = NULL){
 		/*
@@ -2504,6 +2507,244 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 }
   
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+			
+//****************************************************************************************************//
+// Add / Handles Ajax Request ====== ADD To Favorites		
+
+	function rb_agency_save_favorite() {
+		global $wpdb;
+		if(is_user_logged_in()){	
+			if(isset($_POST["talentID"])){
+				 $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$_POST["talentID"]."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+				 $count_favorite = mysql_num_rows($query_favorite);
+				 $datas_favorite = mysql_fetch_assoc($query_favorite);
+				 
+				 if($count_favorite<=0){ //if not exist insert favorite!
+					 
+					   mysql_query("INSERT INTO ".table_agency_savedfavorite."(SavedFavoriteID,SavedFavoriteProfileID,SavedFavoriteTalentID) VALUES('','".rb_agency_get_current_userid()."','".$_POST["talentID"]."')") or die("error");
+					 
+				 }else{ // favorite model exist, now delete!
+					 
+					  mysql_query("DELETE FROM  ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$_POST["talentID"]."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'") or die("error");
+				 }				
+			}			
+		}
+		else {
+			echo "not_logged";
+		}
+		die();
+	}
+		
+	function rb_agency_save_favorite_javascript() {
+	?>
+
+ <!--RB Agency Favorite -->           
+<script type="text/javascript" >jQuery(document).ready(function() { 
+	jQuery(".favorite a:first, .favorite a").click(function(){
+
+		var Obj = jQuery(this);
+		jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',
+		data: {action: 'rb_agency_save_favorite',  'talentID': jQuery(this).attr("id")},
+
+		success: function(results) {
+		if(results=='error'){ 
+			Obj.fadeOut().empty().html("Error in query. Try again").fadeIn(); 
+		} else if(results==-1) { 
+			Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();
+			setTimeout(function() { 
+				if(Obj.attr("class")=="save_favorite"){ 
+				        
+					Obj.fadeOut().empty().html("").fadeIn();  
+					Obj.attr('title', 'Save to Favorites'); 
+				} else { 
+					Obj.fadeOut().empty().html("Favorited").fadeIn();  
+					Obj.attr('title', 'Remove from Favorites');  
+				} 
+			}, 2000);  
+		} else { 
+			if(Obj.attr("class")=="save_favorite") { 
+				Obj.empty().fadeOut().empty().html("").fadeIn(); 
+				Obj.attr("class","favorited"); 
+				Obj.attr('title', 'Remove from Favorites') 
+			}else{ 
+				Obj.empty().fadeOut().empty().html("").fadeIn();  
+				Obj.attr('title', 'Save to Favorites'); 
+				Obj.attr('href', '<?php echo get_bloginfo('url')?>/profile-favorite'); 
+				jQuery(this).find("a[class=view_all_favorite]").remove(); 
+				Obj.attr("class","save_favorite");
+				<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){ 
+				$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];  ?> 
+				if(jQuery("input[type=hidden][name=favorite]").val() == 1){ 
+					Obj.closest("div[class=profile-list-layout0]").fadeOut();} <?php }?>
+		    }
+		}}})});});
+</script>
+<!--END RB Agency Favorite -->   
+
+
+
+
+ <!--RB Agency Favorite -->           
+<script type="text/javascript" >jQuery(document).ready(function() { 
+	jQuery(".newfavorite a:first, .newfavorite a").click(function(){
+
+		var Obj = jQuery(this);
+		jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',
+		data: {action: 'rb_agency_save_favorite',  'talentID': jQuery(this).attr("id")},
+
+		success: function(results) {
+		if(Obj.attr("class")=="save_favorite") { 
+                                Obj.removeAttr('id');
+                                Obj.removeAttr('class');
+				Obj.empty().fadeOut().empty().html("VIEW FAVORITES").fadeIn(); 
+				Obj.attr('title', 'View Favorites');
+                                Obj.closest('div').attr('class', 'viewfavorites');
+                                Obj.attr('href', '<?php echo get_bloginfo('url'); ?>/profile-favorite/'); 
+			
+                        }
+                        }
+                        });
+                        });
+                        });
+</script>
+<!--END RB Agency Favorite -->
+
+
+<!-- [class=profile-list-layout<?php echo (int)$rb_agency_option_layoutprofilelist; ?>]-->
+		<?php
+	}
+
+	if($rb_agency_option_profilelist_favorite){
+		 add_action('wp_footer', 'rb_agency_save_favorite_javascript');
+	 add_action('wp_ajax_rb_agency_save_favorite', 'rb_agency_save_favorite');
+	}
+
+//****************************************************************************************************//
+// Add / Handles Ajax Request ===== Add To Casting Cart
+
+		    $rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+			
+
+
+			function rb_agency_save_castingcart() {
+				global $wpdb;
+			
+				if(is_user_logged_in()){ 
+					if(isset($_POST["talentID"])){ 
+						$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$_POST["talentID"]."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+						$count_castingcart = mysql_num_rows($query_castingcart);
+						$datas_castingcart = mysql_fetch_assoc($query_castingcart);
+						 
+						if($count_castingcart<=0){ //if not exist insert favorite!
+                                                    
+                                                        $wpdb->insert(table_agency_castingcart, array('CastingCartProfileID'=>rb_agency_get_current_userid(), 'CastingCartTalentID'=>$_POST["talentID"]));
+                                                                
+							
+						} else { // favorite model exist, now delete!
+							 
+							mysql_query("DELETE FROM  ". table_agency_castingcart."  WHERE CastingCartTalentID='".$_POST["talentID"]."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'") or die("error");							 
+						}						
+					}					
+				}
+				else {
+					echo "not_logged";
+				}
+				die();
+			}	  
+		
+		function rb_agency_save_castingcart_javascript() {
+		?>
+<!--RB Agency CastingCart -->
+<script type="text/javascript" >jQuery(document).ready(function($) { $("div[class=castingcart] a").click(function(){var Obj = $(this);jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',data: {action: 'rb_agency_save_castingcart',  'talentID': $(this).attr("id")},success: function(results) {   if(results=='error'){ Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();  } else if(results==-1){ Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();  setTimeout(function() {   if(Obj.attr("class")=="save_castingcart"){  Obj.fadeOut().empty().html("").fadeIn(); }else{  Obj.fadeOut().empty().html("").fadeIn();  } }, 2000);  } else{ if(Obj.attr("class")=="save_castingcart"){
+
+Obj.empty().fadeOut().html("").fadeIn();  Obj.attr("class","saved_castingcart"); Obj.attr('title', 'Remove from Casting Cart'); 
+
+} else { Obj.empty().fadeOut().html("").fadeIn();  Obj.attr("class","save_castingcart"); Obj.attr('title', 'Add to Casting Cart');   $(this).find("a[class=view_all_castingcart]").remove();  <?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){  $rb_agency_options_arr = get_option('rb_agency_options'); $rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist']; ?> if($("input[type=hidden][name=castingcart]").val() == 1){Obj.closest("div[class=profile-list-layout0]").fadeOut();  } <?php } ?> } }}}) });});</script>
+ <!--END RB Agency CastingCart -->
+ 
+ 
+ <!--RB Agency CastingCart -->
+<script type="text/javascript" >
+
+jQuery(document).ready(function($) { 
+    
+    $("div[class=newcastingcart] a").click(function(){
+        
+        var Obj = $(this);
+        jQuery.ajax({
+            type: 'POST',
+            url: '<?php echo admin_url('admin-ajax.php'); ?>',
+            data: {
+                action: 'rb_agency_save_castingcart',  
+                'talentID': $(this).attr("id")
+            },
+            success: function(results) {  
+            
+                Obj.removeAttr('id');
+                Obj.removeAttr('class');
+                Obj.empty().fadeOut().html("VIEW CASTING CART").fadeIn();
+                Obj.closest('div').attr('class', 'gotocastingcard'); 
+                Obj.attr('href', "<?php echo get_bloginfo("wpurl"); ?>" + "/profile-casting/");
+           }});
+           });
+           });
+           
+</script>
+ <!--END RB Agency CastingCart -->
+ 
+ 
+           <?php
+		}
+   if(isset($rb_agency_option_profilelist_castingcart)){
+	
+	  	add_action('wp_ajax_rb_agency_save_castingcart', 'rb_agency_save_castingcart');
+	  	add_action('wp_footer', 'rb_agency_save_castingcart_javascript');
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*/
 * ======================== Get ProfileID by UserLinkedID ===============
 * @Returns ProfileID
