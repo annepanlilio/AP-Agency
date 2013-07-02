@@ -1,8 +1,14 @@
-<?php
+<div class="wrap">        
+    <?php 
+    // Include Admin Menu
+    include ("admin-menu.php"); 
+
+
 if($_GET['action']==""){
 	unset($_SESSION);
 }
 global $wpdb;
+
 
 $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
 
@@ -12,9 +18,6 @@ $rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_pers
 $rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];
 if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
 
-echo "<div class=\"wrap\" style=\"min-width: 1020px;\">\n";
-echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
-echo "  <h2>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h2>\n";
 echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=rb_agency_search';}</script>"; 
 
 // *************************************************************************************************** //
@@ -436,7 +439,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 		$results2 = mysql_query($query);
         $count = mysql_num_rows($results2);
         
-        echo "<h3 class=\"title\">Search Results: " . $count . "</h3>\n";
+        echo "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
         
 		if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
 			echo "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". $sessionString ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
@@ -605,7 +608,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 	echo "<div class=\"boxblock-container\" style=\"float: left; width: 49%; min-width: 500px;\">\n";
 	echo " <div class=\"boxblock\">\n";
-	echo "  <h3>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h3>\n";
+	echo "  <h2>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h2>\n";
 	echo "    <div class=\"inner\">\n";
         if (isset($_SESSION['cartArray']) && !empty($_SESSION['cartArray'])) {
 			 
@@ -1209,12 +1212,10 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 			
 			echo  "			</td>";
 			echo  "			</tr>";
-		
-		
-		
+				
 		} //end of while ($data1
    
-                // status filter
+        // status filter
 
 		echo "				    <tr>\n";
 		echo "				        <th scope=\"row\">". __("Status", rb_agency_TEXTDOMAIN) . ":</th>\n";
@@ -1222,19 +1223,17 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
 		echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
 		echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
-                echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+        echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
 		echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
 		echo "				        	</select>\n";
 		echo "				        </td>\n";
 		echo "				    </tr>\n";
-
 
 		echo "				  </thead>\n";
 		echo "				</table>\n";
 		echo "				<p clas=\"submit\">\n";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "				<input type=\"reset\" onclick=\"redirectSearch();\" name=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
-		echo "				<a href=\"?page=rb_agency_menu\" class=\"button-secondary\">". __("Quick Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 		echo "				</p>\n";
 		echo "        	<form>\n";
 
@@ -1244,3 +1243,4 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "  </div>\n";
 		echo "</div>\n";
 ?>
+</div>

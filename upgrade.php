@@ -351,11 +351,14 @@ if (get_option('rb_agency_version')== "1.9.1") {
   if (get_option('rb_agency_version') == "1.9.2.1") {	
         update_option('rb_agency_version', "1.9.7");
   }
-  if (get_option('rb_agency_version') <> "1.9.9") {	
+  if (get_option('rb_agency_version') <> "1.9.7") {	
 	  update_option('rb_agency_version', "1.9.9");
   }
-// Ensure directory is setup
+  if (substr(get_option('rb_agency_version'), 0, 3) == "1.9") {	
+	  update_option('rb_agency_version', "2.0.0");
+  }
 	
+// Ensure directory is setup
 if (!is_dir(rb_agency_UPLOADPATH)) {
 	mkdir(rb_agency_UPLOADPATH, 0755);
 	chmod(rb_agency_UPLOADPATH, 0777);

@@ -140,57 +140,56 @@ if (isset($_POST['action'])) {
                     $ProfileGallery = rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
                     // Create Record
                      $insert = "INSERT INTO " . table_agency_profile .
-                            " (ProfileGallery,
-                   ProfileContactDisplay,
-                   ProfileUserLinked,
-                   ProfileContactNameFirst,
-                   ProfileContactNameLast,
-                   ProfileContactEmail,
-                   ProfileContactWebsite,
-                   ProfileGender,
-                   ProfileDateBirth,
-                   ProfileLocationStreet,
-                   ProfileLocationCity,
-                   ProfileLocationState,
-                   ProfileLocationZip,
-                   ProfileLocationCountry,
-                   ProfileContactPhoneHome, 
-                   ProfileContactPhoneCell, 
-                   ProfileContactPhoneWork,
-                   ProfileDateUpdated,
-                   ProfileType,
-                   ProfileIsActive,
-                   ProfileIsFeatured,
-                   ProfileIsPromoted,
-                   ProfileStatHits,
-                   ProfileDateViewLast)" .
-                            "VALUES (
-                '" . $wpdb->escape($ProfileGallery) . "',
-                '" . $wpdb->escape($ProfileContactDisplay) . "',
-                '" . $wpdb->escape($new_user) . "',
-                '" . $wpdb->escape($ProfileContactNameFirst) . "',
-                '" . $wpdb->escape($ProfileContactNameLast) . "',
-                '" . $wpdb->escape($ProfileContactEmail) . "',
-                '" . $wpdb->escape($ProfileContactWebsite) . "',
-                '" . $wpdb->escape($ProfileGender) . "',
-                '" . $wpdb->escape($ProfileDateBirth) . "',
-                '" . $wpdb->escape($ProfileLocationStreet) . "',
-                '" . $wpdb->escape($ProfileLocationCity) . "',
-                '" . $wpdb->escape($ProfileLocationState) . "',
-                '" . $wpdb->escape($ProfileLocationZip) . "',
-                '" . $wpdb->escape($ProfileLocationCountry) . "',
-                '" . $wpdb->escape($ProfileContactPhoneHome) . "',
-                '" . $wpdb->escape($ProfileContactPhoneCell) . "',
-                '" . $wpdb->escape($ProfileContactPhoneWork) . "',
-                now(),
-                '" . $wpdb->escape($ProfileType) . "',
-                '" . $wpdb->escape($ProfileIsActive) . "',
-                '" . $wpdb->escape($ProfileIsFeatured) . "',
-                '" . $wpdb->escape($ProfileIsPromoted) . "',
-                '" . $wpdb->escape($ProfileStatHits) . "',
-                '" . $wpdb->escape($ProfileDateViewLast) . "'
-                )";
-
+                        " (ProfileGallery,
+                           ProfileContactDisplay,
+                           ProfileUserLinked,
+                           ProfileContactNameFirst,
+                           ProfileContactNameLast,
+                           ProfileContactEmail,
+                           ProfileContactWebsite,
+                           ProfileGender,
+                           ProfileDateBirth,
+                           ProfileLocationStreet,
+                           ProfileLocationCity,
+                           ProfileLocationState,
+                           ProfileLocationZip,
+                           ProfileLocationCountry,
+                           ProfileContactPhoneHome, 
+                           ProfileContactPhoneCell, 
+                           ProfileContactPhoneWork,
+                           ProfileDateUpdated,
+                           ProfileType,
+                           ProfileIsActive,
+                           ProfileIsFeatured,
+                           ProfileIsPromoted,
+                           ProfileStatHits,
+                           ProfileDateViewLast)" .
+                        "VALUES (
+                            '" . $wpdb->escape($ProfileGallery) . "',
+                            '" . $wpdb->escape($ProfileContactDisplay) . "',
+                            '" . $wpdb->escape($new_user) . "',
+                            '" . $wpdb->escape($ProfileContactNameFirst) . "',
+                            '" . $wpdb->escape($ProfileContactNameLast) . "',
+                            '" . $wpdb->escape($ProfileContactEmail) . "',
+                            '" . $wpdb->escape($ProfileContactWebsite) . "',
+                            '" . $wpdb->escape($ProfileGender) . "',
+                            '" . $wpdb->escape($ProfileDateBirth) . "',
+                            '" . $wpdb->escape($ProfileLocationStreet) . "',
+                            '" . $wpdb->escape($ProfileLocationCity) . "',
+                            '" . $wpdb->escape($ProfileLocationState) . "',
+                            '" . $wpdb->escape($ProfileLocationZip) . "',
+                            '" . $wpdb->escape($ProfileLocationCountry) . "',
+                            '" . $wpdb->escape($ProfileContactPhoneHome) . "',
+                            '" . $wpdb->escape($ProfileContactPhoneCell) . "',
+                            '" . $wpdb->escape($ProfileContactPhoneWork) . "',
+                            now(),
+                            '" . $wpdb->escape($ProfileType) . "',
+                            '" . $wpdb->escape($ProfileIsActive) . "',
+                            '" . $wpdb->escape($ProfileIsFeatured) . "',
+                            '" . $wpdb->escape($ProfileIsPromoted) . "',
+                            '" . $wpdb->escape($ProfileStatHits) . "',
+                            '" . $wpdb->escape($ProfileDateViewLast) . "'
+                        )";
                     $results = $wpdb->query($insert) or die("Add Record: " . mysql_error());
                     $ProfileID = $wpdb->insert_id;
 
@@ -554,13 +553,9 @@ function rb_display_manage($ProfileID) {
     // Include Admin Menu
     include ("admin-menu.php");
 
-
-    echo "  <h2>" . __("Manage " . LabelSingular, rb_agency_TEXTDOMAIN) . "</h2>\n";
-    echo "  <p><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">" . __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN) . "</a></p>\n";
-
     if (!empty($ProfileID) && ($ProfileID > 0)) {
 
-         $query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID='$ProfileID'";
+        $query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID='$ProfileID'";
         $results = mysql_query($query) or die(__("Error, query failed", rb_agency_TEXTDOMAIN));
         $count = mysql_num_rows($results);
 
@@ -598,7 +593,7 @@ function rb_display_manage($ProfileID) {
             $ProfileStatHits = stripslashes($data['ProfileStatHits']);
             $ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
 
-            echo "<h3 class=\"title\">" . __("Edit", rb_agency_TEXTDOMAIN) . " " . LabelSingular . "</h3>\n";
+            echo "<h2 class=\"title\">" . __("Edit", rb_agency_TEXTDOMAIN) . " " . LabelSingular . " <a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">" . __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN) . "</a></h2>\n";
             echo "<p>" . __("Make changes in the form below to edit a", rb_agency_TEXTDOMAIN) . " " . LabelSingular . ". <strong>" . __("Required fields are marked", rb_agency_TEXTDOMAIN) . "Required fields are marked *</strong></p>\n";
             echo "<p><a href=\"" . rb_agency_PROFILEDIR . $rb_agency_UPLOADDIR . $ProfileGallery . "/\" target=\"_blank\">View Profile</a></p>\n";
         }
@@ -610,7 +605,7 @@ function rb_display_manage($ProfileID) {
         $ProfileIsActive = 1;
         $ProfileLocationCountry = $rb_agency_option_locationcountry;
 
-        echo "<h3 class=\"title\">Add New " . LabelSingular . "</h3>\n";
+        echo "<h2 class=\"title\">Add New " . LabelSingular . " <a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">" . __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN) . "</a></h2>\n";
         echo "<p>" . __("Fill in the form below to add a new", rb_agency_TEXTDOMAIN) . " " . LabelSingular . ". <strong>" . __("Required fields are marked", rb_agency_TEXTDOMAIN) . " *</strong></p>\n";
     }
 
@@ -1102,9 +1097,10 @@ function rb_display_manage($ProfileID) {
     }
     echo "  </tbody>\n";
     echo "</table>\n";
-    echo "" . __("Last updated on", rb_agency_TEXTDOMAIN) . ": " . $ProfileDateUpdated . "\n";
 
     if (!empty($ProfileID) && ($ProfileID > 0)) {
+        echo "" . __("Last updated on", rb_agency_TEXTDOMAIN) . ": " . $ProfileDateUpdated . "\n";
+
         echo "<p class=\"submit\">\n";
         echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
         echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
@@ -1257,32 +1253,32 @@ function rb_display_list() {
 <div id="dashboard-widgets-wrap">
     <div id="dashboard-widgets" class="metabox-holder columns-2">
 
-        <div id="postbox-container-1" class="postbox-container">
+        <div id="postbox-container-1" class="postbox-container" style="width: 20%">
             <div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
                 <div id="dashboard_right_now" class="postbox">
                     <div class="handlediv" title="Click to toggle"><br></div>
                     <h3 class="hndle"><span><?php echo __("Create New Profile", rb_agency_TEXTDOMAIN); ?></span></h3>
-                    <div class="inside">
-<?php echo __("Currently " . $items . " Profiles", rb_agency_TEXTDOMAIN); ?><br />
-<?php
+                    <div class="inside-x" style="padding: 10px; ">
+                        <?php echo __("Currently " . $items . " Profiles", rb_agency_TEXTDOMAIN); ?><br />
+                        <?php
 
-    $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ");
-    $queryGenderCount = mysql_num_rows($queryGenderResult);
-    while ($fetchGender = mysql_fetch_assoc($queryGenderResult)) {
-        echo "  <div><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
-    }
-    if ($queryGenderCount < 1) {
-        echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
-    }
+                            $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ");
+                            $queryGenderCount = mysql_num_rows($queryGenderResult);
+                            while ($fetchGender = mysql_fetch_assoc($queryGenderResult)) {
+                                echo "  <div><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
+                            }
+                            if ($queryGenderCount < 1) {
+                                echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
+                            }
 
 
-    echo "  <div class=\"tablenav-pages\">\n";
-    if ($items > 0) {
-        echo $p->show();  // Echo out the list of paging. 
-    }
-    echo "  </div>\n";
-?>
+                            echo "  <div class=\"tablenav-pages\">\n";
+                            if ($items > 0) {
+                                echo $p->show();  // Echo out the list of paging. 
+                            }
+                            echo "  </div>\n";
+                        ?>
 
                     </div>
                 </div>
@@ -1290,7 +1286,7 @@ function rb_display_list() {
             </div>
         </div>
 
-        <div id="postbox-container-2" class="postbox-container">
+        <div id="postbox-container-2" class="postbox-container" style="width: 70%">
             <div id="side-sortables" class="meta-box-sortables ui-sortable">
 
                 <div id="dashboard_recent_drafts" class="postbox" style="display: block;">
@@ -1537,7 +1533,7 @@ function rb_display_list() {
 
     echo "<p class=\"submit\">\n";
     echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
-    echo "  <input type=\"submit\" value=\"" . __('Delete') . "\" class=\"button-primary\" name=\"submit\" />   \n";
+    echo "  <input type=\"submit\" value=\"" . __('Delete Profiles') . "\" class=\"button-primary\" name=\"submit\" />   \n";
     echo "</p>\n";
     echo "</form>\n";
 }

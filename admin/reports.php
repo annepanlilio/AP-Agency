@@ -1,4 +1,8 @@
-<?php
+<div class="wrap">        
+    <?php 
+    // Include Admin Menu
+    include ("admin-menu.php"); 
+
     global $wpdb;
 
     $arrayProfilesRenamedFolders = array();
@@ -7,14 +11,7 @@
     $arrayDuplicateFolders = array();
     $arrayDuplicateFound = array();
  
-?>
-<div class="wrap">
-    <div id="rb-overview-icon" class="icon32"></div>
-    <h2>Data Management</h2>
-    <br />
-    <a class="button-primary" href="?page=rb_agency_reports&ConfigID=0" title="Overview">Overview</a>
-    <br /><br />
-<?php
+
 if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 	if($_REQUEST['action'] == 'douninstall') {
 		modelagency_uninstall();
@@ -22,6 +19,11 @@ if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 }
 
 if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;} else { $ConfigID=$_REQUEST['ConfigID']; }
+
+if ($ConfigID <> 0) { ?>
+    <a class="button-primary" href="?page=rb_agency_reports&ConfigID=0" title="Overview">Back to Overview</a>
+    <?php
+}
 
 if ($ConfigID == 0) {
 	
@@ -37,6 +39,7 @@ if ($ConfigID == 0) {
         echo "      <p>". __("Payments and membership renewals", rb_agency_TEXTDOMAIN) . "</p>\n";
         echo "    </div>\n";
     echo "</div>\n";
+    echo "<hr />\n";
 	}
 
 	//
@@ -44,6 +47,7 @@ if ($ConfigID == 0) {
     echo "  <h2>". __("Initial Setup", rb_agency_TEXTDOMAIN) . "</h2>\n";
     echo "  <p>". __("If you are doing the initial instal of RB Agency you this section will help you get your data inplace", rb_agency_TEXTDOMAIN) . "</p>\n";
     echo "</div>\n";
+    echo "<hr />\n";
 
 	//
     echo "<div class=\"boxlinkgroup\">\n";
@@ -86,6 +90,7 @@ if ($ConfigID == 0) {
     echo "      <p>". __("Check for any empty folders which do no have models assigned using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
     echo "</div>\n";
+    echo "<hr />\n";
 
 	//
     echo "<div class=\"boxlinkgroup\">\n";
@@ -109,15 +114,14 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=14\" title=\"". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "\">". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("You may add dummy profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-    echo "</div>\n";
+    echo "    </div>\n";
 
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Generate User Logins / Passwords", rb_agency_TEXTDOMAIN) . "</h3>\n";
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-
-
+    echo "<hr />\n";
 
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Importing Records", rb_agency_TEXTDOMAIN) . "</h2>\n";
@@ -157,7 +161,6 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=53\" title=\"". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "\">". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Check that all profiles have folder names generated.", rb_agency_TEXTDOMAIN) . ".</p>\n";
     echo "    </div>\n";
-
 
     echo "    <div class=\"boxlink\">\n";
     echo "      <h3>". __("Step 4", rb_agency_TEXTDOMAIN) . "</h3>\n";

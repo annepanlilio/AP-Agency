@@ -1,25 +1,11 @@
-<?php
+<div class="wrap">        
+    <?php 
+    // Include Admin Menu
+    include ("admin-menu.php"); 
+
 global $wpdb;
 // *************************************************************************************************** //
 // Top Menu
-
-    echo "<div class=\"wrap\">\n";
-    echo "  <div id=\"rb-overview-icon\" class=\"icon32\"></div>\n";
-    echo "  <h2>". __("Settings", rb_agency_TEXTDOMAIN);
-	  if($_GET["ConfigID"]==1){
-		    echo " &raquo; Features";
-	  } elseif($_GET["ConfigID"]==10){
-		    echo " &raquo; Style";
-	  } elseif($_GET["ConfigID"]==5){
-		    echo " &raquo; Gender";
-	  } elseif($_GET["ConfigID"]==6){
-		    echo " &raquo; Profile Categories";
-	  } elseif($_GET["ConfigID"]==7){
-		     echo " &raquo; Custom Fields";
-	  } elseif($_GET["ConfigID"]==8){
-		     echo " &raquo; Media Categories";
-	  }
-	echo "</h2>\n";
 
     echo "  <div>\n";
     echo "  	<a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=0\">". __("Overview", rb_agency_TEXTDOMAIN) . "</a> | \n";
@@ -36,6 +22,22 @@ if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 		rb_agency_uninstall();
 	}
 }
+
+	echo "<h2>";
+	  if($_GET["ConfigID"]==1){
+		    echo " &raquo; Features";
+	  } elseif($_GET["ConfigID"]==10){
+		    echo " &raquo; Style";
+	  } elseif($_GET["ConfigID"]==5){
+		    echo " &raquo; Gender";
+	  } elseif($_GET["ConfigID"]==6){
+		    echo " &raquo; Profile Categories";
+	  } elseif($_GET["ConfigID"]==7){
+		     echo " &raquo; Custom Fields";
+	  } elseif($_GET["ConfigID"]==8){
+		     echo " &raquo; Media Categories";
+	  }
+	echo "</h2>\n";
 
 if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;} else { $ConfigID=$_REQUEST['ConfigID']; }
 if ($ConfigID == 0) {
@@ -56,7 +58,8 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=10\" title=\"". __("Style", rb_agency_TEXTDOMAIN) . "\">". __("Style", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Manage the stylesheet (CSS) controlling the category and profile layouts", rb_agency_TEXTDOMAIN) . "</p>\n";
     echo "    </div>\n";
-  
+    echo "<hr />\n";
+
     echo "</div>\n";
 	if (function_exists(rb_agencyinteract_approvemembers)) {
 	// RB Agency Interact Settings
@@ -76,6 +79,7 @@ if ($ConfigID == 0) {
     echo "    </div>\n";
  
     echo "</div>\n";
+    echo "<hr />\n";
 	}
 	// Drop Down Fields
     echo "<div class=\"boxlinkgroup\">\n";
@@ -96,8 +100,9 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Gender", rb_agency_TEXTDOMAIN) . "\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Manage preset Gender choices", rb_agency_TEXTDOMAIN) . "</p>\n";
     echo "    </div>\n";
-  
     echo "</div>\n";
+    echo "<hr />\n";
+
 	// Uninstall
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Uninstall", rb_agency_TEXTDOMAIN) . "</h2>\n";
@@ -105,8 +110,8 @@ if ($ConfigID == 0) {
     echo "    <div class=\"boxlink\">\n";
     echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Uninstall", rb_agency_TEXTDOMAIN) . "\">". __("Uninstall", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "    </div>\n";
-  
     echo "</div>\n";
+
 }
 elseif ($ConfigID == 1) {
 // *************************************************************************************************** //

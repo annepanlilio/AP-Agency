@@ -8,21 +8,16 @@
   Author URI: http://rob.bertholf.com/
   Version: 1.9.9
 */
-$rb_agency_VERSION = "1.9.9"; // starter
+$rb_agency_VERSION = "2.0.0"; // starter
 if(!get_option("rb_agency_version")){  add_option("rb_agency_version", $rb_agency_VERSION , '', 'no');  update_option("rb_agency_version", $rb_agency_VERSION);}
 	
 if (!session_id()) session_start();
 
 // Requires 2.8 or more
-if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '2.8', '<') ) { // if less than 2.8 ?>
-<div class="error" style="margin-top:30px;">
-<p>This plugin requires WordPress version 2.8 or newer.</p>
-</div>
-<?php
-return;
+if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '2.8', '<') ) { // if less than 2.8
+	echo "<div class=\"error\" style=\"margin-top:30px;\"><p>This plugin requires WordPress version 2.8 or newer.</p></div>";
+	return;
 }
-
-
 
 // Avoid direct calls to this file, because now WP core and framework has been used
 	if ( !function_exists('add_action') ) {
