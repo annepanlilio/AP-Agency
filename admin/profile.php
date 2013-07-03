@@ -1273,13 +1273,6 @@ function rb_display_list() {
                             if ($queryGenderCount < 1) {
                                 echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
                             }
-
-
-                            echo "  <div class=\"tablenav-pages\">\n";
-                            if ($items > 0) {
-                                echo $p->show();  // Echo out the list of paging. 
-                            }
-                            echo "  </div>\n";
                         ?>
 
                     </div>
@@ -1368,8 +1361,12 @@ function rb_display_list() {
             </div>
         </div>
 <?php
-
-
+    echo "  <div class=\"tablenav-pages\">\n";
+    if ($items > 0) {
+        echo $p->show();  // Echo out the list of paging. 
+    }
+    echo "  </div>\n";
+                            
 
     echo "<form method=\"post\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
     echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
