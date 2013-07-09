@@ -170,9 +170,10 @@ jQuery(document).ready(function(){
 				</ul>
 				
 			</div>
+					
 			<div id="videos-carousel" class="flexslider col_12 column targetvideo" style="display:none"  >
 				<ul class="slides">
-            <?php   
+ <?php   
 	
 				//Video Slate
 				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
@@ -180,7 +181,7 @@ jQuery(document).ready(function(){
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "<li style='margin-left: 20px;margin-right: 20px;'>	  <object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></li>";
+				echo "<li style='margin-left: 20px;margin-right: 20px;'>	  <object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param> <param name=\"wmode\" value=\"transparent\" /><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" wmode=\"transparent\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></li>";
 				  }
 				}
 
@@ -190,7 +191,7 @@ jQuery(document).ready(function(){
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 					 $profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "<li style='margin-left: 20px;margin-right: 20px;'>  <object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></li>";
+				echo "<li style='margin-left: 20px;margin-right: 20px;'>  <object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param> <param name=\"wmode\" value=\"transparent\" /><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" wmode=\"transparent\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></li>";
 				  }
 				}?>
 </ul>
