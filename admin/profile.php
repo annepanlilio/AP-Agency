@@ -1046,6 +1046,16 @@ function rb_display_manage($ProfileID) {
     echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked($ProfileIsFeatured, 1) . " /> Featured<br />\n";
     echo "        </td>\n";
     echo "    </tr>\n";
+    /*
+    if (function_exists(rb_agencyinteract_approvemembers)) {
+        echo "    <tr valign=\"top\">\n";
+        echo "      <th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
+        echo "      <td>\n";
+        echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"". checked($ProfileIsPromoted, 1) ." /> Rising Star<br />\n";
+        echo "      </td>\n";
+        echo "    </tr>\n";
+    }
+    */
 
     if (isset($ProfileUserLinked) && $ProfileUserLinked > 0) {
         echo "    <tr valign=\"top\">\n";
@@ -1056,14 +1066,7 @@ function rb_display_manage($ProfileID) {
         echo "      </td>\n";
         echo "    </tr>\n";
     }
-    if (function_exists(rb_agencyinteract_approvemembers)) {
-        echo "    <tr valign=\"top\">\n";
-        echo "      <th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
-        echo "      <td>\n";
-        echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"". checked($ProfileIsPromoted, 1) ." /> Rising Star<br />\n";
-        echo "      </td>\n";
-        echo "    </tr>\n";
-    }
+
 
     // Hidden Settings
     if ($_GET["mode"] == "override") {
