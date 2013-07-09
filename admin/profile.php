@@ -1060,9 +1060,7 @@ function rb_display_manage($ProfileID) {
         echo "    <tr valign=\"top\">\n";
         echo "      <th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
         echo "      <td>\n";
-        echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"";
-        checked($ProfileIsPromoted, 1);
-        echo " /> Rising Star<br />\n";
+        echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"". checked($ProfileIsPromoted, 1) ." /> Rising Star<br />\n";
         echo "      </td>\n";
         echo "    </tr>\n";
     }
