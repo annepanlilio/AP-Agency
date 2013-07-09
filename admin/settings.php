@@ -58,10 +58,10 @@ if ($ConfigID == 0) {
     echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=10\" title=\"". __("Style", rb_agency_TEXTDOMAIN) . "\">". __("Style", rb_agency_TEXTDOMAIN) . "</a><br />\n";
     echo "      <p>". __("Manage the stylesheet (CSS) controlling the category and profile layouts", rb_agency_TEXTDOMAIN) . "</p>\n";
     echo "    </div>\n";
+    echo "</div>\n";
     echo "<hr />\n";
 
-    echo "</div>\n";
-	if (function_exists(rb_agencyinteract_approvemembers)) {
+	if (function_exists(rb_agencyinteract_menu_settings)) {
 	// RB Agency Interact Settings
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h2>\n";
