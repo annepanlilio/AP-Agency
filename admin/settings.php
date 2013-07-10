@@ -61,7 +61,7 @@ if ($ConfigID == 0) {
     echo "</div>\n";
     echo "<hr />\n";
 
-	if (function_exists(rb_agencyinteract_menu_settings)) {
+	if (function_exists(rb_agencyinteract_settings)) {
 	// RB Agency Interact Settings
     echo "<div class=\"boxlinkgroup\">\n";
     echo "  <h2>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h2>\n";
