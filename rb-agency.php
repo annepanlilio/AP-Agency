@@ -554,7 +554,10 @@ if ( is_admin() ){
 		}
 		function rb_agency_settings(){
 			include_once('admin/settings.php');
-		}		
+		}
+		function rb_agencyinteract_menu_approvemembers(){
+			include_once('admin/profile-approve.php');
+		}
 }
 
 // *************************************************************************************************** //
