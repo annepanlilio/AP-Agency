@@ -1592,7 +1592,7 @@ class RBAgencyCSVXLSImpoterPlugin {
             $ctrl_end = $_REQUEST['total_header'];
             $incre = 1;
             global $wpdb;
-
+			
             $queryGenderResult = $wpdb->get_row("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='".$data[3]."'", ARRAY_A);
             
             $add_to_p_table="INSERT into rb_agency_profile($p_table_fields)values('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
@@ -1601,7 +1601,7 @@ class RBAgencyCSVXLSImpoterPlugin {
             $last_inserted_mysql_id = mysql_insert_id();
 
             while($ctrl_start < $ctrl_end){
-                $select_id =  $_REQUEST['select'.$incre];
+                $select_id =  mysql_real_escape_string($_REQUEST['select'.$incre]);
                 if(strpos($data[$ctrl_start], ' ft ') !== FALSE)
                 {
                     $cal_height = 0;
@@ -1610,8 +1610,8 @@ class RBAgencyCSVXLSImpoterPlugin {
                     $data[$ctrl_start]  = $cal_height;
                     
                 }
-
-                $add_to_c_table="INSERT into rb_agency_customfield_mux($c_table_fields)values('$select_id','$last_inserted_mysql_id','$data[$ctrl_start]')";
+				
+                $add_to_c_table="INSERT into rb_agency_customfield_mux($c_table_fields)values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($data[$ctrl_start])."')";
                 mysql_query($add_to_c_table) or die(mysql_error());
                 $ctrl_start++;
                 $incre++;
