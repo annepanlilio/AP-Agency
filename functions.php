@@ -1330,11 +1330,10 @@ error_reporting(0);
 				}
 				
 	         	//echo "loaded: ".microtime()." ms";				
-				//if($rb_user_isLogged ){
-
+				if($rb_user_isLogged ){
 				   	//Get Favorite & Casting Cart links
 			        $displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-				//}
+				}
 
 				$displayHTML .=" </div> <!-- .profile-info --> \n";
 				$displayHTML .=" </div><!-- .rbprofile-list -->\n";
@@ -1460,9 +1459,10 @@ error_reporting(0);
 				echo "<div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
 			}
 
-			// Add Favorite and Casting Cart links		
-		  	rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-			
+			if(is_user_logged_in()){
+				// Add Favorite and Casting Cart links		
+				rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+			}
 			echo "  </div><!-- .profile-info -->\n";
 			echo "</div><!-- .rbprofile-list -->\n";
 		}
@@ -2365,6 +2365,7 @@ function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $ti
 	} 
 } 
  
+
 function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclude="",$include="") {
 	global $wpdb;
 	global $rb_agency_option_unittype;
