@@ -55,12 +55,20 @@ Custom Layout 7
 				<div id="profile-slider" class="flexslider col_8 column">
 					<ul class="slides">
 						<?php
+						$ProfileMediaPrimary = ""; 
+						$ProfileMediaSecondry= "";
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
 									$resultsImg = mysql_query($queryImg);
 									$countImg = mysql_num_rows($resultsImg);
 									while ($dataImg = mysql_fetch_array($resultsImg)) {
-									  	echo "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+										if($dataImg['ProfileMediaPrimary']==1){
+											$ProfileMediaPrimary= 	"<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+										}else{
+											$ProfileMediaSecondry .= "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+										}
 									}
+									echo $ProfileMediaPrimary; 
+									echo $ProfileMediaSecondry; 
 						?>
 					</ul>
 				</div>
