@@ -2364,7 +2364,7 @@ function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $ti
 		}
 	} 
 } 
- function rb_agency_getProfileCustomFieldsExTitle123($ProfileID, $ProfileGender, $title_to_exclude) {
+ function rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, $title_to_exclude) {
 
 	global $wpdb;
 	global $rb_agency_option_unittype;

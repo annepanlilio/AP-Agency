@@ -200,7 +200,7 @@ jQuery(document).ready(function(){
 		
 		<?php rb_agency_getSocialLinks();
 		$title_to_exclude = array("Experience");
-		print_r(rb_agency_getProfileCustomFieldsExTitle123($ProfileID, $ProfileGender, 'Experience(s):'));
+		print_r(rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, 'Experience(s):'));
 		
 		?>
 			</div>
