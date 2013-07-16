@@ -1592,33 +1592,40 @@ class RBAgencyCSVXLSImpoterPlugin {
             $ctrl_end = $_REQUEST['total_header'];
             $incre = 1;
             global $wpdb;
-			
-            $queryGenderResult = $wpdb->get_row("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='".$data[3]."'", ARRAY_A);
-            
-            $add_to_p_table="INSERT into rb_agency_profile($p_table_fields)values('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
-            mysql_query($add_to_p_table) or die(mysql_error());
-            
-            $last_inserted_mysql_id = mysql_insert_id();
+			if($data[3]!="" &&  $data[5]!=""){
+				$queryGenderResult = $wpdb->get_row("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='".$data[3]."'", ARRAY_A);
+				$ProfileContactDisplay = $wpdb->get_row("SELECT ProfileID FROM ".rb_agency_profile." WHERE ProfileContactEmail ='".mysql_real_escape_string($data[5])."'", ARRAY_A);
+				if(!isset($ProfileContactDisplay['ProfileID']) ||  $ProfileContactDisplay['ProfileID'] ==""){
+					
+						$add_to_p_table="INSERT into rb_agency_profile($p_table_fields)values('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
+						mysql_query($add_to_p_table) or die(mysql_error());
 
-            while($ctrl_start < $ctrl_end){
-                $select_id =  mysql_real_escape_string($_REQUEST['select'.$incre]);
-                if(strpos($data[$ctrl_start], ' ft ') !== FALSE)
-                {
-                    $cal_height = 0;
-                    $height = explode(' ', $data[$ctrl_start]);
-                    $cal_height = ($height[0] * 12) + $height[2];
-                    $data[$ctrl_start]  = $cal_height;
-                    
-                }
-				
-                $add_to_c_table="INSERT into rb_agency_customfield_mux($c_table_fields)values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($data[$ctrl_start])."')";
-                mysql_query($add_to_c_table) or die(mysql_error());
-                $ctrl_start++;
-                $incre++;
-            }
-          
+						$last_inserted_mysql_id = mysql_insert_id();
+						if($last_inserted_mysql_id){
+							while($ctrl_start < $ctrl_end){
+								$select_id =  mysql_real_escape_string($_REQUEST['select'.$incre]);
+								if(strpos($data[$ctrl_start], ' ft ') !== FALSE){
+									$cal_height = 0;
+									$height = explode(' ', $data[$ctrl_start]);
+									$cal_height = ($height[0] * 12) + $height[2];
+									$data[$ctrl_start]  = $cal_height;
+									
+								}
+								
+								$add_to_c_table="INSERT into rb_agency_customfield_mux($c_table_fields)values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($data[$ctrl_start])."')";
+								mysql_query($add_to_c_table) or die(mysql_error());
+								$ctrl_start++;
+								$incre++;
+							
+							}
+						
+						}
+					 echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- ".$data[0]." & Email:- ".$data[5]."  <b>Successfully Imported Records</b></li></ul></div>";
+				}else{
+					 echo "<div class='wrap' style='color:#FF0000'><ul><li> User Name:- ".$data[0]." & Email:- ".$data[5]."  <b>Successfully Not Imported. Email Already Used on site.</b></li></ul></div>";
+				}
+			}
         }
-        echo '<div class="wrap">Successfully Imported Records</div>';
         if($_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
 
     }
