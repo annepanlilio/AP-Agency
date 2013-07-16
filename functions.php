@@ -2364,8 +2364,30 @@ function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $ti
 		}
 	} 
 } 
- 
+ function rb_agency_getProfileCustomFieldsExTitle123($ProfileID, $ProfileGender, $title_to_exclude) {
 
+	global $wpdb;
+	global $rb_agency_option_unittype;
+	
+	$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
+	foreach ($resultsCustom as $resultCustom) {
+		if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){ 	
+			if(!empty($resultCustom->ProfileCustomValue )){
+				
+				// Lets not do this...
+				$measurements_label = "";
+			 if ($resultCustom->ProfileCustomTitle == 'Experience(s)'){
+				if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
+					
+						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+				   	
+				  
+				}  	
+			 }
+			}
+		}
+	} 
+} 
 function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclude="",$include="") {
 	global $wpdb;
 	global $rb_agency_option_unittype;
