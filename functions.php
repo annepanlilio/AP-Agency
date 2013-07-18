@@ -1271,7 +1271,7 @@ error_reporting(0);
 					
 						if(count($dataList) > 0){
 							$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
-								echo "<strong>Item on this list: ".count($dataList)."</strong>";
+								echo "<strong>Item on this list: ".count($countList)."</strong>";
 							$displayHTML .="    </div>\n";
 						}
 						
