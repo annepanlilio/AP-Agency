@@ -869,13 +869,15 @@ error_reporting(0);
 	                             * AND should be OR
 	                             */
 	                            if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
-                                    $minVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min'];
-                                    $maxVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max'];
-                                    if($filter2 == ""){
-                                        $filter2 .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-                                    } else {
-                                        $filter2 .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-                                    }
+                                    $minVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min']);
+                                    $maxVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max']);
+									if(!empty($minVal) && !empty($maxVal)){
+										if($filter2 == ""){
+											$filter2 .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+										} else {
+											$filter2 .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+										}
+									}
 
                                     //echo "-----";
 	                            }else {
@@ -974,11 +976,13 @@ error_reporting(0);
                                     elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
 
                                                 list($Min_val,$Max_val) = explode(",",$val);
+													$Min_val = trim($Min_val);
+													$Max_val = trim($Max_val);
                                                     if(!empty($Min_val) && !empty($Max_val)){
                                                         if($filter2==""){
-                                                                $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
+                                                                $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
                                                         } else {
-                                                                $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                                $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
 
                                                         }
                                                     $_SESSION[$key] = $val;
