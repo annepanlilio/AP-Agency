@@ -1268,12 +1268,13 @@ error_reporting(0);
 					 
 					/*********** Show Count/Pages **************/
 					 $displayHTML .= "  <div id=\"profile-results-info\" class=\"six column\">\n";
-					
-						if(count($dataList) > 0){
-							$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
-								echo "<strong>Item on this list: ".count($countList)."</strong>";
-							$displayHTML .="    </div>\n";
-						}
+						
+						# Temporarily removed this as required
+						#if(count($dataList) > 0){
+						#	$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
+						#		echo "<strong>Item on this list: ".count($countList)."</strong>";
+						#	$displayHTML .="    </div>\n";
+						#}
 						
 						if($items > 0) {
 							if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){ 
