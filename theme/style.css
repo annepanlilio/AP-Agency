@@ -482,6 +482,20 @@ img.fillheight {
 #rblayout-eight .booklet .b-wrap .page { text-align: center; }
 #rblayout-eight .booklet .b-wrap .page img { max-width: 100%; max-height: 100%; }
 
+/* Profile Layout Nine */
+#rblayout-nine .mCSB_container a img { max-height: 500px; float: left; }
+#rblayout-nine .mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools { background: none; height: 18px; }
+#rblayout-nine .mCSB_scrollTools .mCSB_draggerRail { background: #000; margin: 6px 0px; }
+#rblayout-nine .mCSB_horizontal .mCSB_scrollTools .mCSB_dragger { width: 30px!important; }
+#rblayout-nine .mCSB_scrollTools a+.mCSB_draggerContainer { margin: 0 100px 0 90px; }
+#rblayout-nine .mCSB_horizontal .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar { width: 30px!important; height: 14px; background: url(../style/layout9-dragger.png); margin: 0; }
+#rblayout-nine .mCSB_scrollTools .mCSB_buttonLeft { left: 30px; width: 46px; height: 18px; background: url(../style/layout9-prev.png) no-repeat; }
+#rblayout-nine .mCSB_scrollTools .mCSB_buttonRight { right: 30px; width: 60px; height: 18px; background: url(../style/layout9-next.png) no-repeat; }
+#rblayout-nine #info { text-align: center; }
+#rblayout-nine #info #name { text-transform: uppercase; }
+#rblayout-nine #stats li { display: inline-block; padding: 0 5px; font-weight: bold; }
+#rblayout-nine #stats li strong { font-weight: normal; }
+
 /* Quick Search */
 #rbquick-search { overflow: hidden; padding: 30px 0; padding-top: 0; margin-top: 30px; }
 #rbquick-search h2 { margin-bottom: 15px; text-transform: uppercase; }

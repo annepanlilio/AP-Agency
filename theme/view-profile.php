@@ -201,6 +201,11 @@ while ($data = mysql_fetch_array($results)) {
 						wp_enqueue_script( 'jquery-easing', plugins_url('/js/jquery.easing.js', dirname(__FILE__)) );
 						wp_enqueue_script( 'flexslider', plugins_url('/js/booklet.min.js', dirname(__FILE__)) );						
 						wp_enqueue_script( 'initflexslider', plugins_url('/js/initbooklet.js', dirname(__FILE__)), in_footer );
+					} elseif ($layouttype == 9)  {
+						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
+						wp_enqueue_script( 'js-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', dirname(__FILE__)) );
+						
+						wp_enqueue_script( 'jscroller', plugins_url('/js/scroller.js', dirname(__FILE__)), in_footer );
 					}
 		        } // end if
           } // function end
