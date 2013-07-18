@@ -1111,7 +1111,7 @@ elseif ($ConfigID == 6) {
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
-				echo $update = "UPDATE " . table_agency_data_type . " 
+				$update = "UPDATE " . table_agency_data_type . " 
 							SET 
 								DataTypeTitle='" . $wpdb->escape($DataTypeTitle) . "',
 								DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' 
