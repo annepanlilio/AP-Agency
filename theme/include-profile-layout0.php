@@ -2,7 +2,10 @@
 /*
 Profile View with Scrolling Thumbnails and Primary Image
 */
-
+	# lightbox.	
+  	echo "<script type='text/javascript' src='".rb_agency_BASEDIR."js/slimbox2.js'></script>";
+	echo '<link rel="stylesheet" href="'.rb_agency_BASEDIR.'style/slimbox2.css" type="text/css" media="screen" />';
+	
 	echo "<div id=\"profile\">\n";
 	echo " <div id=\"rblayout-zero\" class=\"rblayout\">\n";
 
@@ -15,9 +18,9 @@ Profile View with Scrolling Thumbnails and Primary Image
 			$countImg = mysql_num_rows($resultsImg);
 			while ($dataImg = mysql_fetch_array($resultsImg)) {
 			  if ($countImg > 1) { 
-				echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div>\n";
+				echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div>\n";
 			  } else {
-				echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div>\n";
+				echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></div>\n";
 			  }
 			}
 
