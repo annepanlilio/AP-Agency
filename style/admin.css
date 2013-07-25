@@ -14,8 +14,6 @@
 /*Remove icon*/
 #profile-manage-media .rotateimage {background: transparent url(../style/rotate.png); width:16px; height:16px; display:block; float:left;  }
 
-/*
-
 .boxblock-holder { }
 .boxblock-container { 
     box-sizing: border-box;             
@@ -26,11 +24,14 @@
     width: 100%;
     }
 
+hr { border: none; }
+.wrap > .boxlinkgroup:first-child { border:none; }
 .boxblock { background-color:#FFFFFF; border-color:#DFDFDF; -moz-border-radius:6px 6px 6px 6px; border-style:solid; border-width:1px; line-height:1; margin-bottom:20px; min-width:255px; position:relative; width:99.5%;}
 .boxblock .inner { padding: 10px; }
 .boxblock h3 { font-size: 1.17em!important; line-height:1; margin: 0px; padding:7px 9px; background:url("../images/gray-grad.png") repeat-x scroll left top #DFDFDF; text-shadow:0 1px 0 #FFFFFF; -moz-border-radius:6px 6px 0 0; }
 .boxblock p.tight { margin: 0px; padding: 0px; }
 .boxblock p.sub { margin: 0px; padding: 0px; color:#777777; font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif; font-size:13px; font-style:italic; }
+.boxblock p.submit { padding: 10px; }
 .boxblock table { width: 100%; background:none repeat scroll 0 0 #F9F9F9; border-bottom:1px solid #ECECEC; border-top:1px solid #ECECEC; margin: 0px; padding: 0px; }
 .boxblock thead tr {  }
 .boxblock thead tr th { font-family: sans-serif; font-size:12px; font-weight:bold; line-height:1; margin: 0px; padding:7px 9px; background:url("../images/gray-grad.png") repeat-x scroll left top #DFDFDF; text-shadow:0 1px 0 #FFFFFF; color:#333333; -moz-border-radius:6px 6px 0 0;  }
@@ -54,56 +55,20 @@ vertical-align: top; width: 300px; margin: 10px; min-height: 150px; }
 input.stubby { width: 80px; }
 
 
-.boxblock table .textarea-field {
-    display:none;   
-}
-
-.boxblock table input {
-    min-width: 218px;
-}
-
-.wp-admin select {
-    min-width: 136px;
-}
-
-.boxblock table select {
-    min-width: 218px;
-}
-
-.boxblock table fieldset label {
-    line-height: 20px;
-}
-
-.boxblock table fieldset {
-    width: 218px;
-}
-
-.boxblock table fieldset div {
-    float: left;
-    width: 100px
-}
-
-.boxblock table fieldset div:first-child {
-    margin-right: 18px;
-}
-
+.boxblock table .textarea-field { display:none; }
+.boxblock table input { min-width: 218px; }
+.wp-admin select { min-width: 136px; }
+.boxblock table select { min-width: 218px; }
+.boxblock table fieldset label {  line-height: 20px; }
+.boxblock table fieldset { width: 218px; }
+.boxblock table fieldset div { float: left; width: 100px }
+.boxblock table fieldset div:first-child { margin-right: 18px; }
 .boxblock table fieldset input[type="text"],
-.boxblock table fieldset select {
-    width: 100%;
-    min-width: auto;
-}
-
+.boxblock table fieldset select { width: 100%; min-width: 50px; }
 .boxblock table fieldset input[type="radio"],
-.boxblock table fieldset input[type="checkbox"] {
-    width: auto;
-    min-width: auto;
-}
-
-.boxblock #submitbox {
-    overflow: hidden;
-    margin-top: 15px;
-}
-*/
+.boxblock table fieldset input[type="checkbox"] { width: auto; min-width: auto; }
+.boxblock table .rbtextarea textarea { width: 218px; height: 100px; }
+.boxblock #submitbox { overflow: hidden; margin-top: 15px; }
 
 /* Profile Page */
 .profileimage { position: relative; width: 100px; float: left; padding: 5px; margin: 0px 10px 10px 0; height: 170px; overflow: hidden; }

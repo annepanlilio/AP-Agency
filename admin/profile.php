@@ -251,7 +251,7 @@ if (isset($_POST['action'])) {
             ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
             ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
             ProfileGender='" . $wpdb->escape($ProfileGender) . "',
-			ProfileGender='" . $wpdb->escape($ProfileGender) . "',
+            ProfileGender='" . $wpdb->escape($ProfileGender) . "',
             ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
             ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
             ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
@@ -267,7 +267,7 @@ if (isset($_POST['action'])) {
             WHERE ProfileID=$ProfileID";
                 $results = $wpdb->query($update) or die(mysql_error());
 
-					update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', esc_attr($ProfileType));
+                    update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', esc_attr($ProfileType));
                     update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_pgender', esc_attr($ProfileGender));
                 
                 if ($ProfileUserLinked > 0) {
@@ -295,7 +295,7 @@ if (isset($_POST['action'])) {
                     }
                 }
                // 5/27/2013 @Satya Fixed 559 Profile Media Folder
-			   //  rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
+               //  rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
                 // Upload Image & Add to Database
                 $i = 1;
 
@@ -559,7 +559,7 @@ function rb_display_manage($ProfileID) {
         $count = mysql_num_rows($results);
 
         while ($data = mysql_fetch_array($results)) {
-		
+        
             $ProfileID = $data['ProfileID'];
             $ProfileUserLinked = $data['ProfileUserLinked'];
             $ProfileGallery = stripslashes($data['ProfileGallery']);
@@ -578,7 +578,7 @@ function rb_display_manage($ProfileID) {
             $ProfileGender = stripslashes($data['ProfileGender']);
             $ProfileTypeArray = stripslashes($data['ProfileType']);
            
-			$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
+            $ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
             $ProfileLocationStreet = stripslashes($data['ProfileLocationStreet']);
             $ProfileLocationCity = stripslashes($data['ProfileLocationCity']);
             $ProfileLocationState = stripslashes($data['ProfileLocationState']);
@@ -762,12 +762,12 @@ function rb_display_manage($ProfileID) {
 
     $ProfileGender1 = get_user_meta($ProfileUserLinked, "rb_agency_interact_pgender", true);
    
-	if($ProfileGender==""){
-		$ProfileGender = $_GET["ProfileGender"];
-	}elseif($ProfileGender1!=""){
-		$ProfileGender =$ProfileGender1 ;
-	}
-	
+    if($ProfileGender==""){
+        $ProfileGender = $_GET["ProfileGender"];
+    }elseif($ProfileGender1!=""){
+        $ProfileGender =$ProfileGender1 ;
+    }
+    
     $query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
     $results1 = mysql_query($query1);
     $count1 = mysql_num_rows($results1);
@@ -1007,8 +1007,8 @@ function rb_display_manage($ProfileID) {
     echo "      <td>\n";
     echo "      <fieldset>\n";
     $ProfileTypeArray = explode(",", $ProfileTypeArray);
-	
-	$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
+    
+    $query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
     $results3 = mysql_query($query3);
     $count3 = mysql_num_rows($results3);
     $action = @$_GET["action"];
@@ -1062,7 +1062,7 @@ function rb_display_manage($ProfileID) {
         echo "      <th scope=\"row\">" . __("WordPress User", rb_agency_TEXTDOMAIN) . "</th>\n";
         echo "      <td>\n";
         echo "        <a href=\"". admin_url("user-edit.php") ."?user_id=". $ProfileUserLinked ."&wp_http_referer=%2Fwp-admin%2Fadmin.php%3Fpage%3Drb_agency_profiles\">ID# ". $ProfileUserLinked ."</a>";
-		echo "        <input type='hidden' name='wpuserid' value='".$ProfileUserLinked."' />";
+        echo "        <input type='hidden' name='wpuserid' value='".$ProfileUserLinked."' />";
         echo "      </td>\n";
         echo "    </tr>\n";
     }
@@ -1256,21 +1256,23 @@ function rb_display_list() {
 <div id="dashboard-widgets-wrap">
     <div id="dashboard-widgets" class="metabox-holder columns-2">
 
-        <div id="postbox-container-1" class="postbox-container" style="width: 20%">
-            <div id="normal-sortables" class="meta-box-sortables ui-sortable">
+        <div id="postbox-container-1" class="postbox-container" style="width: 29%;">
+            <div id="normal-sortables" class="meta-box-sortables ui-sortable" style="margin: 0px;">
 
                 <div id="dashboard_right_now" class="postbox">
                     <div class="handlediv" title="Click to toggle"><br></div>
                     <h3 class="hndle"><span><?php echo __("Create New Profile", rb_agency_TEXTDOMAIN); ?></span></h3>
-                    <div class="inside-x" style="padding: 10px; ">
+                    <div class="inside-x" style="padding: 10px 10px 0px 10px; ">
                         <?php echo __("Currently " . $items . " Profiles", rb_agency_TEXTDOMAIN); ?><br />
                         <?php
 
                             $queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ");
                             $queryGenderCount = mysql_num_rows($queryGenderResult);
+                            echo "<p>";
                             while ($fetchGender = mysql_fetch_assoc($queryGenderResult)) {
-                                echo "  <div><a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a></div>\n";
+                                echo "<a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", rb_agency_TEXTDOMAIN) . "</a>\n";
                             }
+                            echo "</p>";
                             if ($queryGenderCount < 1) {
                                 echo "<p>" . __("No Gender Found. <a href=\"" . admin_url("admin.php?page=rb_agency_settings&ampConfigID=5") . "\">Create New Gender</a>", rb_agency_TEXTDOMAIN) . "</p>\n";
                             }
@@ -1283,7 +1285,7 @@ function rb_display_list() {
         </div>
 
         <div id="postbox-container-2" class="postbox-container" style="width: 70%">
-            <div id="side-sortables" class="meta-box-sortables ui-sortable">
+            <div id="side-sortables" class="meta-box-sortables ui-sortable" style="margin: 0px;">
 
                 <div id="dashboard_recent_drafts" class="postbox" style="display: block;">
                     <div class="handlediv" title="Click to toggle"><br></div>

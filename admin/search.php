@@ -968,12 +968,12 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 			
 
 					if(in_array($data1['ProfileCustomTitle'], $cusFields)) { //used alternative inputs for custom fields defined on top of this page
-						echo  "			<div class=\"rbtext\">";
+						echo  "			<fieldset class=\"rbtext\">";
 						echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 						echo "<input class=\"min_max\" type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>\n";
 						echo "<div><label for=\"ProfileCustomLabel_min\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 						echo "<input class=\"min_max\"  type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_max\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
-						echo  "			</div>";
+						echo  "			</fieldset>";
 					}else{
 			
 									if ($ProfileCustomType == 1) { //TEXT
@@ -984,7 +984,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 										
 										
 									} elseif ($ProfileCustomType == 2) { // Min Max
-									echo  "			<div class=\"rbtext\">";
+									echo  "			<fieldset class=\"rbtext\">";
 									   
 										$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($data1['ProfileCustomOptions'],"}"),"{"));
 										list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
@@ -1005,7 +1005,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									
 										   
 										}
-										echo  "			</div>";
+										echo  "			</fieldset>";
 									 
 									} elseif ($ProfileCustomType == 3) {
 										
@@ -1231,7 +1231,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 
 		echo "				  </thead>\n";
 		echo "				</table>\n";
-		echo "				<p clas=\"submit\">\n";
+		echo "				<p class=\"submit\">\n";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "				<input type=\"reset\" onclick=\"redirectSearch();\" name=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 		echo "				</p>\n";
