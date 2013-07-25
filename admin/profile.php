@@ -1302,10 +1302,11 @@ function rb_display_list() {
     echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />\n";
     echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
     echo "              <input type=\"hidden\" name=\"type\" value=\"name\" />\n";
-    echo "              " . __("First Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" style=\"width: 100px;\" />\n";
-    echo "              " . __("Last Name", rb_agency_TEXTDOMAIN) . ": <input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" style=\"width: 100px;\" />\n";
+    echo "              <p id=\"filter-profiles\">\n";
+    echo "              <span>" . __("<label>First Name:</label>", rb_agency_TEXTDOMAIN) . "<input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" /></span>\n";
+    echo "              <span>" . __("<label>Last Name:</label>", rb_agency_TEXTDOMAIN) . "<input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" /></span>\n";
     
-    echo "              " . __("Category", rb_agency_TEXTDOMAIN) . ":\n";
+    echo "              <span>" . __("<label>Category:</label>", rb_agency_TEXTDOMAIN) . "\n";
     echo "              <select name=\"ProfileType\">\n";
     echo "                <option value=\"\">" . __("Any Category", rb_agency_TEXTDOMAIN) . "</option>";
 
@@ -1315,16 +1316,16 @@ function rb_display_list() {
     while ($data = mysql_fetch_array($results)) {
         echo "<option value=\"" . $data['DataTypeID'] . "\" " . selected($_GET['ProfileType'], $data["DataTypeID"]) . "\">" . $data['DataTypeTitle'] . "</option>\n";
     }
-    echo "              </select>\n";
-    echo "              " . __("Status", rb_agency_TEXTDOMAIN) . ":\n";
+    echo "              </select></span>\n";
+    echo "              <span>" . __("Status", rb_agency_TEXTDOMAIN) . ":\n";
     echo "              <select name=\"ProfileVisible\">\n";
     echo "                <option value=\"\">" . __("Any Status", rb_agency_TEXTDOMAIN) . "</option>";
     echo "                <option value=\"1\"" . selected(1, $selectedVisible) . ">" . __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
     echo "                <option value=\"4\"" . selected(4, $selectedVisible) . ">" . __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
     echo "                <option value=\"0\"" . selected(0, $selectedVisible) . ">" . __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
     echo "                <option value=\"2\"" . selected(2, $selectedVisible) . ">" . __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "              </select>\n";
-    echo "              " . __("Location", rb_agency_TEXTDOMAIN) . ": \n";
+    echo "              </select></span>\n";
+    echo "              <span>" . __("Location", rb_agency_TEXTDOMAIN) . ": \n";
     echo "              <select name=\"ProfileLocationCity\">\n";
     echo "                <option value=\"\">" . __("Any Location", rb_agency_TEXTDOMAIN) . "</option>";
 
@@ -1336,8 +1337,8 @@ function rb_display_list() {
             echo "<option value=\"" . $data['ProfileLocationCity'] . "\" " . selected($selectedCity, $data["ProfileLocationCity"]) . "\">" . $data['ProfileLocationCity'] . ", " . strtoupper($dataLocation["ProfileLocationState"]) . "</option>\n";
         }
     }
-    echo "              </select>\n";
-    echo "              " . __("Gender", rb_agency_TEXTDOMAIN) . ":\n";
+    echo "              </select></span>\n";
+    echo "              <span>" . __("Gender", rb_agency_TEXTDOMAIN) . ":\n";
     echo "              <select name=\"ProfileGender\">\n";
     echo "                  <option value=\"\">" . __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
     $query2 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ORDER BY GenderID";
@@ -1345,15 +1346,15 @@ function rb_display_list() {
     while ($dataGender = mysql_fetch_array($results2)) {
         echo "<option value=\"" . $dataGender["GenderID"] . "\"" . selected($_GET["ProfileGender"], $dataGender["GenderID"], false) . ">" . $dataGender["GenderTitle"] . "</option>";
     }
-    echo "              </select>\n";
-    echo "              <input type=\"submit\" value=\"" . __("Filter", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-    echo "          </form>\n";
-    echo "          <form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
+    echo "              </select></span>\n";
+    echo "              <span class=\"submit\"><input type=\"submit\" value=\"" . __("Filter", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></span>\n";
+    echo "          </p></form>\n";
+    echo "          <form style=\"display: inline; float: left; margin: 17px 5px 0px 0px;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
     echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />  \n";
     echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
     echo "              <input type=\"submit\" value=\"" . __("Clear Filters", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
     echo "          </form>\n";
-    echo "          <a href=\"" . admin_url("admin.php?page=rb_agency_search") . "\" class=\"button-secondary\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
+    echo "          <a  style=\"display: inline; float: left; margin: 17px 5px 0px 0px;\" href=\"" . admin_url("admin.php?page=rb_agency_search") . "\" class=\"button-secondary\">" . __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 
 
 ?>
