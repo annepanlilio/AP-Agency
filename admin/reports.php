@@ -313,7 +313,22 @@ elseif ($ConfigID == 53) {
 		$count1 = mysql_num_rows($results1);
 		while ($data1 = mysql_fetch_array($results1)) {
 			$ProfileID = $data1['ProfileID'];
-			$ProfileGallery = rb_agency_safenames($data1['ProfileContactNameFirst'] . "-" . $data1['ProfileContactNameLast']); 
+		   /*
+			* Create the right folder name for the profile
+			*/
+			$rb_agency_options_arr = get_option('rb_agency_options');
+		    $rb_agency_option_profilenaming  = (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
+			if ($rb_agency_option_profilenaming == 0) {
+					$ProfileGalleryFixed = $data1['ProfileContactNameFirst'] . "-". $data1['ProfileContactNameLast'];
+			} elseif ($rb_agency_option_profilenaming == 1) {
+					$ProfileGalleryFixed = $data1['ProfileContactNameFirst'] . "-". substr($data1['ProfileContactNameLast'], 0, 1);
+			} elseif ($rb_agency_option_profilenaming == 2) {
+					$ProfileGalleryFixed = $data1['ProfileContactDisplay'];
+			} elseif ($rb_agency_option_profilenaming == 3) {
+					$ProfileGalleryFixed = $ProfileID;
+			}
+			$ProfileGallery = rb_agency_safenames($ProfileGalleryFixed); 
+			
 			// Create Folders
 			$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGallery ."' WHERE ProfileID = \"". $ProfileID ."\"";
 			$renamed = mysql_query($rename);
