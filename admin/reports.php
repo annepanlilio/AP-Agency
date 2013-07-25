@@ -329,6 +329,11 @@ elseif ($ConfigID == 53) {
 			}
 			$ProfileGallery = rb_agency_safenames($ProfileGalleryFixed); 
 			
+			// actual folder creation
+			$dirURL = rb_agency_UPLOADPATH. $ProfileGallery;
+			mkdir($dirURL, 0755); //700
+			chmod($dirURL, 0777);
+			
 			// Create Folders
 			$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGallery ."' WHERE ProfileID = \"". $ProfileID ."\"";
 			$renamed = mysql_query($rename);
