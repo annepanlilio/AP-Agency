@@ -381,9 +381,7 @@ img.fillheight {
 #rblayout-three { overflow: hidden; }
 #rblayout-three .row-zero { font-size: 30px; margin: 0 0 20px 0; overflow: hidden; }
 #rblayout-three .row-one { padding: 10px 0; overflow: hidden; }
-#rblayout-three #profile-picture-wrap {  }
-#rblayout-three #profile-picture-wrap img { width: 150px; }
-#rblayout-three #profile-picture { width: 150px; height: 200px; overflow: hidden; }
+#rblayout-three #profile-picture { overflow: hidden; }
 #rblayout-three .profile-picture-favorite { text-align: center; background: #ccc; font-size: 13px; padding: 5px; margin: 5px 0 0 0; }
 #rblayout-three .profile-picture-favorite a { color: #666; }
 #rblayout-three .profile-picture-favorite:hover { background: #bbb; }

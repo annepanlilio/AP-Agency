@@ -83,7 +83,7 @@ Expended Profile with Tabs
 	echo " <div class=\"col_12 column row-one clear\">\n";
 
 	// Column 1
- 	echo "	  <div id=\"profile-picture-wrap\" class=\"three column\">\n";
+ 	echo "	  <div id=\"profile-picture-wrap\" class=\"col_3 column\">\n";
 
 			// Profile Image
 			$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
