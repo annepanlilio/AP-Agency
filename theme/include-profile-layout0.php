@@ -212,12 +212,14 @@ $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHER
 						 
 							
 						} else {
-				  			echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);						  
-						  	echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"rb_button\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
+				  			# removed as required
+							#echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);						  
+						  	#echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"rb_button\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";
 							
 			          	}
 					}	//end if(checkCart(rb_agency_get_current_userid()
-					echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\" class=\"rb_button\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
+					# removed as required.
+					#echo "		<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\" class=\"rb_button\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";
 				}
 				
 
