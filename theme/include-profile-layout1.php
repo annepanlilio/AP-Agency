@@ -85,7 +85,7 @@ Profile View with Thumbnails and Primary Image
 				}
 				
 				//Voice Demo
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Voice Demo\"");
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"VoiceDemo\"");
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
@@ -136,9 +136,10 @@ Profile View with Thumbnails and Primary Image
 				}
 	echo "			</ul>\n";
 	echo "	  </div>\n";  // Close Links
-		if (isset($profileVideoEmbed)) {
-	echo "	  <div id=\"movie\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
-		}
+	# remove this as required.
+	#	if (isset($profileVideoEmbed)) {
+	#echo "	  <div id=\"movie\"><object width=\"250\" height=\"190\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"250\" height=\"190\"></embed></object></div>\n";
+	#	}
        
 	echo "		<div class=\"experience\">\n";
 	echo			$ProfileExperience;
