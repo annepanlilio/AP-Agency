@@ -349,9 +349,9 @@ img.fillheight {
 #profile #stats ul { list-style: none; margin: 0px; padding: 0px; line-height: 22px; font-size: 13px; }
 
 /* Profile Layout with Thumbnails (include-profile-layout0.php) */
-#rblayout-zero #photos { text-align: center; font-size: 0px; }
+#rblayout-zero #photos { font-size: 0px; }
 #rblayout-zero #photos .inner { margin: 0 -5px; }
-#rblayout-zero #photos .photo { width: 40%; max-width: 150px; overflow: hidden; display: inline-block; margin: 0px 7px 15px 7px; border-radius: 5px;
+#rblayout-zero #photos .photo { width: 40%; max-width: 135px; overflow: hidden; display: inline-block; margin: 0px 15px 15px 0px; border-radius: 5px;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ddd) );
 	background:-moz-linear-gradient( center top, #ffffff 5%, #ddd 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ddd');

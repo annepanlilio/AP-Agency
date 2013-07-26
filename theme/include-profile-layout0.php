@@ -9,7 +9,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "<div id=\"profile\">\n";
 	echo " <div id=\"rblayout-zero\" class=\"rblayout\">\n";
 
-	echo "	<div id=\"photos\" class=\"col_4 column\">\n";
+	echo "	<div id=\"photos\" class=\"col_6 column\">\n";
 	echo "	  <div class=\"inner\">\n";
 			// images
 		
@@ -28,7 +28,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "	  </div>\n";
 	echo "	</div>\n"; // close #photos
 	
-		echo "	  <div id=\"stats\" class=\"col_4 column\">\n";
+		echo "	  <div id=\"stats\" class=\"col_3 column\">\n";
 
 		echo "	  <h2>". $ProfileContactDisplay ."</h2>\n";
 
@@ -68,7 +68,7 @@ Profile View with Scrolling Thumbnails and Primary Image
 		echo "	  </ul>\n"; // Close ul
 		echo "	  </div>\n"; // Close Stats
 	
-	echo "		<div id=\"links\" class=\"col_4 column\">\n";
+	echo "		<div id=\"links\" class=\"col_3 column\">\n";
 	echo "			<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
 
 					 // Social Link
