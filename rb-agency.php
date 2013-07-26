@@ -442,7 +442,7 @@ if ( is_admin() ){
 		
 			echo "<div class=\"submitbox\" id=\"add_ticket_box\">";
 			?><script type="text/javascript">
-				function create_profile_list(){
+				function create_profile_list_shortcode(){
 
 					var $rbagency = jQuery.noConflict();
 					str='';
@@ -498,7 +498,7 @@ if ( is_admin() ){
 			echo "</td></tr>\n";
 			
 			echo "</table>\n";
-			echo "<p><input type=\"button\" onclick=\"create_profile_list()\" value=\"". __("Insert Profile List", rb_agency_TEXTDOMAIN) ."\" /></p>\n";
+			echo "<p><input type=\"button\" onclick=\"create_profile_list_shortcode()\" value=\"". __("Insert Profile List", rb_agency_TEXTDOMAIN) ."\" /></p>\n";
 			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", rb_agency_TEXTDOMAIN) ."\" /></p>\n";
 			echo "</div>\n";
 		}
