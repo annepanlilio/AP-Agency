@@ -6,21 +6,20 @@
     });
   });
   function updateImages(){
-    $('.photo a img, #profile-list .rbprofile-list .image a img').each(function(){
+    $('.photo a img').each(function(){
+      var imgW = $(this).width();
+      var imgH = $(this).height();
       var div = $(this).parent("a").parent("div");
-      $divW = $(div).width();
-      $divH = $(div).height();
-      $(div).children("a").height($divW-11);
-        var height = $(this).height();
-        var width = $(this).width();
-        if(height<$divH){
-          $(this).addClass('fillheight');
-          $(this).removeClass('fillwidth');          
-        }
-        if(width<$divW){
-          $(this).addClass('fillwidth');
-          $(this).removeClass('fillheight');
-        }
+      var diva = $(this).parent("a");
+      $(div).height(div.width());
+      $(diva).height(div.width()-11);
+      if(imgW>imgH){
+        $(this).addClass('fillheight');
+        $(this).removeClass('fillwidth');          
+      } else if(imgH>imgW){
+        $(this).addClass('fillwidth');
+        $(this).removeClass('fillheight');
+      }
     });
   }
 })(jQuery);
