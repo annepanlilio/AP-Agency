@@ -1006,7 +1006,7 @@ function rb_display_manage($ProfileID) {
     echo "      <th scope=\"row\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
     echo "      <td>\n";
     echo "      <fieldset>\n";
-    $ProfileTypeArray = explode(",", $ProfileTypeArray);
+    $ProfileTypeArray = explode(" | ", $ProfileTypeArray);
     
     $query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
     $results3 = mysql_query($query3);
