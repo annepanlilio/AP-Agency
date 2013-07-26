@@ -135,7 +135,7 @@ $query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHER
 				}
 				
 				//Voice Demo
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Voice Demo\"");
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"VoiceDemo\"");
 				$countMedia = mysql_num_rows($resultsMedia);
 				if ($countMedia > 0) {
 				  while ($dataMedia = mysql_fetch_array($resultsMedia)) {
