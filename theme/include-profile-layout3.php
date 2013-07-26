@@ -83,14 +83,14 @@ Expended Profile with Tabs
 	echo " <div class=\"col_12 column row-one clear\">\n";
 
 	// Column 1
- 	echo "	  <div id=\"profile-picture-wrap\" class=\"col_3 column\">\n";
+ 	echo "	  <div id=\"profile-picture\" class=\"col_4 column\">\n";
 
 			// Profile Image
 			$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
 			$resultsImg = mysql_query($queryImg);
 			$countImg = mysql_num_rows($resultsImg);
 			while ($dataImg = mysql_fetch_array($resultsImg)) {
-	echo "	  		<div id=\"profile-picture\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
+	echo "	  		<div class=\"adjuster\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
 			}
 		
 			/*  Use this instead of text;
@@ -124,7 +124,7 @@ Expended Profile with Tabs
 	echo "	  </div> <!-- #profile-picture -->\n";
 
 	// Column 2
- 	echo "	  <div id=\"profile-overview\" class=\"col_6 column\">\n";
+ 	echo "	  <div id=\"profile-overview\" class=\"col_5 column\">\n";
 
 	echo "	      <div id=\"profile-name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 	echo "	      <div id=\"profile-liner\">\n";
@@ -158,17 +158,16 @@ Expended Profile with Tabs
 		//Contact Profile
 		if (isset($rb_agency_option_agency_urlcontact) && !empty($rb_agency_option_agency_urlcontact)) {
 	echo "	      <div id=\"profile-actions-contact\"><span><a href=\"". $rb_agency_option_agency_urlcontact ."\">". __("Contact", rb_agency_TEXTDOMAIN). " ". $ProfileClassification ."</a></span></div>\n";
-		echo "		<li class=\"item contact\"></li>\n";
+	echo "		<li class=\"item contact\"></li>\n";
 		}
-	//echo "	      <div id=\"profile-actions-print\"><span>Print Friendly</span></div>\n";
-	echo "	      <div id=\"profile-actions-profileviews\"><strong>". $ProfileStatHits ."</strong> Profile Views</div>\n";
+	echo "	      <div id=\"profile-views\"><strong>". $ProfileStatHits ."</strong> Profile Views</div>\n";
 	//echo "	      <div id=\"profile-actions-favorited\"><strong>".$count_favorite."</strong> favorited</div>\n";
 	
     // added this links to be positioned here in substitute
     // for the favorited label
-    echo '	      <div id="profile-actions-favorited">
-					<a href="'.get_bloginfo('wpurl').'/profile-favorite">View Favorites</a> <br/>
-					<a href="'.get_bloginfo('wpurl').'/profile-casting">View Casting Cart</a> 	
+    echo '	      <div id="profile-links">
+					<a href="'.get_bloginfo('wpurl').'/profile-favorite" class="rb_button">View Favorites</a>
+					<a href="'.get_bloginfo('wpurl').'/profile-casting" class="rb_button">View Casting Cart</a> 	
 				  </div>';
 
 	
