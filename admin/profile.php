@@ -183,7 +183,7 @@ if (isset($_POST['action'])) {
                             '" . $wpdb->escape($ProfileContactPhoneCell) . "',
                             '" . $wpdb->escape($ProfileContactPhoneWork) . "',
                             now(),
-                            '" . $wpdb->escape($ProfileType) . "',
+                            '" . $ProfileType . "',
                             '" . $wpdb->escape($ProfileIsActive) . "',
                             '" . $wpdb->escape($ProfileIsFeatured) . "',
                             '" . $wpdb->escape($ProfileIsPromoted) . "',
@@ -259,7 +259,7 @@ if (isset($_POST['action'])) {
             ProfileLocationZip ='" . $wpdb->escape($ProfileLocationZip) . "',
             ProfileLocationCountry='" . $wpdb->escape($ProfileLocationCountry) . "',
             ProfileDateUpdated=now(),
-            ProfileType='" . $wpdb->escape($ProfileType) . "',
+            ProfileType='" . $ProfileType . "',
             ProfileIsActive='" . $wpdb->escape($ProfileIsActive) . "',
             ProfileIsFeatured='" . $wpdb->escape($ProfileIsFeatured) . "',
             ProfileIsPromoted='" . $wpdb->escape($ProfileIsPromoted) . "',
@@ -267,7 +267,7 @@ if (isset($_POST['action'])) {
             WHERE ProfileID=$ProfileID";
                 $results = $wpdb->query($update) or die(mysql_error());
 
-                    update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', esc_attr($ProfileType));
+                    update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', $ProfileType);
                     update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_pgender', esc_attr($ProfileGender));
                 
                 if ($ProfileUserLinked > 0) {
@@ -585,7 +585,7 @@ function rb_display_manage($ProfileID) {
             $ProfileLocationZip = stripslashes($data['ProfileLocationZip']);
             $ProfileLocationCountry = stripslashes($data['ProfileLocationCountry']);
             $ProfileDateUpdated = stripslashes($data['ProfileDateUpdated']);
-            $ProfileType = stripslashes($data['ProfileType']);
+            $ProfileType = $data['ProfileType'];
             $ProfileIsActive = stripslashes($data['ProfileIsActive']);
             $ProfileIsFeatured = stripslashes($data['ProfileIsFeatured']);
             $ProfileIsPromoted = stripslashes($data['ProfileIsPromoted']);
@@ -1006,7 +1006,7 @@ function rb_display_manage($ProfileID) {
     echo "      <th scope=\"row\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
     echo "      <td>\n";
     echo "      <fieldset>\n";
-    $ProfileTypeArray = explode(" | ", $ProfileTypeArray);
+    $ProfileType = (strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
     
     $query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
     $results3 = mysql_query($query3);
@@ -1018,9 +1018,15 @@ function rb_display_manage($ProfileID) {
         }
         if ($action == "editRecord") {
             echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\"";
-            if (in_array($data3['DataTypeID'], $ProfileTypeArray) && isset($_GET["action"]) == "editRecord") {
-                echo " checked=\"checked\"";
-            } echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+            if(is_array($ProfileType)){
+					if (in_array($data3['DataTypeID'], $ProfileType)) {
+						echo " checked=\"checked\"";
+					} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+			} else {
+					if ($data3['DataTypeID'] == $ProfileType) {
+						echo " checked=\"checked\"";
+					} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+			}
         }
     }
     echo "      </fieldset>\n";
@@ -1440,7 +1446,7 @@ function rb_display_list() {
         /*
          * Get Data Type Title
          */
-        if(strpos($data['ProfileType'], ",") > 0){
+        if(strpos($data['ProfileType'], ",") != -1){
             $title = explode(",",$data['ProfileType']);
             $new_title = "";
             foreach($title as $t){
@@ -1467,7 +1473,7 @@ function rb_display_list() {
         }
          
         
-        $DataTypeTitle = stripslashes($new_title);
+        $DataTypeTitle = $new_title;
 
         $resultImageCount = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaType = 'Image'");
         $profileImageCount = mysql_num_rows($resultImageCount);
