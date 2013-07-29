@@ -114,10 +114,10 @@ Expended Profile with Tabs
 			if($count_favorite>0){ $cl1 = "fav_bg"; $tl1="Remove from Favorites"; }
 			
 			if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
-
-			echo	'<div class="casting-bottom">
-			 					<a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.'" id="'.$ProfileID.'"></a>
-			 					<a title="'.$tl2.'" href="javascript:;" id="'.$ProfileID.'" class="save_cart '.$cl2.'"></a>
+			
+			echo	'<div class="favorite-casting">
+			 					<div class="favorite"><a title="'.$tl1.'" href="javascript:;" id="'.$ProfileID.'" class="save_favorite"></a></div>
+			 					<div class="castingcart"><a title="'.$tl2.'" href="javascript:;" id="'.$ProfileID.'" class="save_castingcart"></a></div>
 					</div>';
 
 						echo '<div id="resultsGoHereAddtoCart"></div>';

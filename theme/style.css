@@ -106,38 +106,38 @@
 }
 
 /* Profile Results Casting */
-#profile-results .rbprofile-list .favorite-casting {
+.favorite-casting {
 	padding: 5px;
 	overflow: hidden;
 }
-#profile-results .rbprofile-list .castingcart {
+.favorite-casting .castingcart {
   float:right;
 }
-#profile-results .rbprofile-list .favorite {
+.favorite-casting .favorite {
   float:left;
 }
-#profile-results .rbprofile-list .castingcart a {
+.favorite-casting .castingcart a {
   width: 13px;
   height: 12px;
   display: inline-block;
   background: url(../style/icon-sprite.png) no-repeat;
 }
-#profile-results .rbprofile-list .castingcart a.saved_castingcart {
+.favorite-casting .castingcart a.saved_castingcart {
   background-position: 0 0;
 }
-#profile-results .rbprofile-list .castingcart a.save_castingcart {
+.favorite-casting .castingcart a.save_castingcart {
   background-position: 0 -16px;
 }
-#profile-results .rbprofile-list .favorite a {
+.favorite-casting .favorite a {
   width: 13px;
   height: 12px;
   display: inline-block;
   background: url(../style/icon-sprite.png) no-repeat;  
 }
-#profile-results .rbprofile-list .favorite a.save_favorite {
+.favorite-casting .favorite a.save_favorite {
 	background-position: 0 -48px;
 }
-#profile-results .rbprofile-list .favorite a.favorited {
+.favorite-casting .favorite a.favorited {
   background-position: 0 -31px;
 }
 
