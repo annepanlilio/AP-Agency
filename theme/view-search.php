@@ -151,7 +151,7 @@ if ($_REQUEST["action"] == "search") {
 		 //echo "<br/>"; 
 	 }
  */
-	echo "<div id=\"primary\" class=\"eight column\">\n";
+	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 
 		echo "<div id=\"profile-search\">\n";

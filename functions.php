@@ -3425,6 +3425,13 @@ function featured_homepage_profile($count){
 
 }
 
+function primary_class(){
+	return $class = "col_8";
+}
+
+function secondary_class(){
+	return $class = "col_4";
+}
 
 /*
  * Self Delete Process for 

@@ -115,7 +115,7 @@ get_header(); ?>
 <h1 class="entry-title">Casting Cart</h1>
 <?php
 
-	echo "<div id=\"primary\" class=\"eight column\">\n";
+	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
 	echo "    <div id=\"content\" role=\"main\" >\n";
 	
 		echo "<div id=\"rbcasting-cart\">\n";
