@@ -655,7 +655,33 @@ error_reporting(0);
 			return $ProfileGallery;		
 		}
     }	
-
+  
+   /**
+     * Generate Folder Name
+     *
+     * @param $ID - record id, $first = first name, $last - last name, $display - contact display
+	 * @return - formatted folder name 
+     */		
+	function generate_foldername($ID = NULL, $first, $last, $display){
+			
+			$rb_agency_options_arr = get_option('rb_agency_options');
+		    $rb_agency_option_profilenaming  = (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
+			if ($rb_agency_option_profilenaming == 0) {
+					$ProfileGalleryFixed = $first . "-". $last;
+			} elseif ($rb_agency_option_profilenaming == 1) {
+					$ProfileGalleryFixed = $first . "-". substr($last, 0, 1);
+			} elseif ($rb_agency_option_profilenaming == 2) {
+					$ProfileGalleryFixed = $display;
+			} elseif ($rb_agency_option_profilenaming == 3) {
+					$ProfileGalleryFixed = "ID".$ID;
+			} elseif ($rb_agency_option_profilenaming == 4) {
+					$ProfileGalleryFixed = $first;
+			} elseif ($rb_agency_option_profilenaming == 5) {
+					$ProfileGalleryFixed = $last;
+			}
+			
+			return rb_agency_safenames($ProfileGalleryFixed); 
+	}
 
    /**
      * List Categories
