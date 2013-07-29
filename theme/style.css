@@ -386,6 +386,9 @@ img.fillheight {
 
 /* Profile Extended Layout (include-profile-layout3.php) */
 #rblayout-three { overflow: hidden; }
+#rblayout-three #go-back { margin-bottom: 15px; }
+#rblayout-three #go-back a { font-size: 14px; font-weight: bold; text-decoration: none; text-transform: uppercase; }
+#rblayout-three #rb-tabs #tab-panels > .column { margin: 0 30px; background: #eee; float: none!important; width: auto!important; }
 #rblayout-three .row-zero { font-size: 30px; margin: 0 0 20px 0; overflow: hidden; }
 #rblayout-three .row-one { padding: 10px 0; overflow: hidden; }
 #rblayout-three #profile-picture { overflow: hidden; }
