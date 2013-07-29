@@ -1614,7 +1614,11 @@ class RBAgencyCSVXLSImpoterPlugin {
 				$queryGenderResult = $wpdb->get_row("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='".$data[3]."'", ARRAY_A);
 				$ProfileContactDisplay = $wpdb->get_row("SELECT ProfileID FROM ".rb_agency_profile." WHERE ProfileContactEmail ='".mysql_real_escape_string($data[5])."'", ARRAY_A);
 				if(!isset($ProfileContactDisplay['ProfileID']) ||  $ProfileContactDisplay['ProfileID'] ==""){
-					
+						// parse profile type
+						if(strpos($data[15], "|") != -1){
+							$ex = explode(" | ",trim($data[15]));
+							$data[15] = trim(implode(",",$ex));
+						}					
 						$add_to_p_table="INSERT into rb_agency_profile($p_table_fields)values('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
 						mysql_query($add_to_p_table) or die(mysql_error());
 
