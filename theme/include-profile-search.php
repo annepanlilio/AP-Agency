@@ -24,6 +24,10 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		} 	
 	}
 	
+	if(isset($_POST['basic_search'])){
+		unset($_GET[srch]);
+	}
+	
    	if ($profilesearch_layout == "condensed" || $profilesearch_layout == "simple") {
 	
 		echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form\">\n";
