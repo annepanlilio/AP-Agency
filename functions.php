@@ -3433,6 +3433,10 @@ function secondary_class(){
 	return $class = "col_4";
 }
 
+function fullwidth_class(){
+	return $class = "col_12";
+}
+
 /*
  * Self Delete Process for 
  * Users
