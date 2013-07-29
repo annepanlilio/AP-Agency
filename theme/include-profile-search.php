@@ -18,6 +18,10 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	// custom fields from search fields
 	if(isset($_GET[srch])){
 	   $profilesearch_layout = "advanced"; 	
+	} else {
+		if( $profilesearch_layout == "advanced"){
+			$_GET[srch]= 1;
+		} 	
 	}
 	
    	if ($profilesearch_layout == "condensed" || $profilesearch_layout == "simple") {
