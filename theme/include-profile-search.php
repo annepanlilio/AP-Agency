@@ -16,15 +16,11 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	
 	// fix advanced search to include
 	// custom fields from search fields
-	if(isset($_GET[srch])){
-	   $profilesearch_layout = "advanced"; 	
-	} else {
-		if( $profilesearch_layout == "advanced"){
+	if( $profilesearch_layout == "advanced"){
 			$_GET[srch]= 1;
-		} 	
-	}
+	} 	
 	
-	if(isset($_POST['basic_search'])){
+	if(isset($_POST['basic_search']) || !isset($_POST['page'])){
 		unset($_GET[srch]);
 	}
 	
