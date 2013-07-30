@@ -345,8 +345,9 @@ img.fillheight {
 #profile-sidebar ul li { list-style: none; }
 
 /* Profile Layouts */
-#profile #info h2 { padding: 15px 0; }
-#profile #stats ul { list-style: none; margin: 0px; padding: 0px; line-height: 22px; font-size: 13px; }
+#rbprofile #info h2 { padding: 15px 0px; margin: 15px 0px 0px 0px; }
+#rbprofile #stats ul { list-style: none; margin: 0px; padding: 0px; line-height: 22px; font-size: 13px; }
+#rbprofile #profile-picture { background: #e9e9e9; padding: 15px; }
 
 /* Profile Layout with Thumbnails (include-profile-layout0.php) */
 #rblayout-zero #photos { font-size: 0px; }
@@ -371,7 +372,6 @@ img.fillheight {
 
 /* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
 #rblayout-one { overflow: hidden; }
-#rblayout-one #profile-picture { background: #e9e9e9; padding: 15px; }
 #rblayout-one #profile-picture,
 #rblayout-one #links,
 #rblayout-one #stats,
@@ -385,8 +385,8 @@ img.fillheight {
 
 /* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
 #rblayout-two { overflow: hidden; }
-#rblayout-two .mCSB_container a img { max-height: 150px; float: left; border: none; }
-#rblayout-two #profile-picture a img { border: none; }
+#rblayout-two .mCSB_container a img { max-height: 150px; float: left; border: 5px solid #e9e9e9; border-right: none; }
+#rblayout-two .mCSB_container a:last-child img { border-right: 5px solid #e9e9e9; }
 
 /* Profile Extended Layout (include-profile-layout3.php) */
 #rblayout-three { overflow: hidden; }
