@@ -90,7 +90,18 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "        	</form>\n";
 		echo "		</div>\n";
    } else {
-	   // Advanced
+	    // Advanced
+	   	// to activate if customfields are included or not.
+		if (!in_the_loop () || !is_main_query ()) {
+        	$_GET[srch]= 1;
+    	} else {
+			if( $profilesearch_layout == "advanced"){
+				$_GET[srch]= 1;
+			} 	
+			if(isset($_POST['basic_search']) || !isset($_POST['page'])){
+				unset($_GET[srch]);
+			}
+    	}
 		echo "  <form method=\"post\" id=\"search-form-advanced\" action=\"". get_bloginfo("wpurl") ."/profile-search/\" class=\"rbsearch-form\">\n";
 		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_search\" />\n";
 		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
