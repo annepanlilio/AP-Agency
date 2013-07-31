@@ -143,14 +143,14 @@
 
 /* Search Forms */
 .rbsearch-form .search-field {
-	float: left;
 	clear: both;
-	width: 300px;
 	border: none;
 	padding: 7px 0;
+	max-width: 400px;
 }
 .rbsearch-form .search-field.submit {
 	padding: 15px 0;
+	text-align: center;
 }
 .rbsearch-form .search-field.single label {
 	width: 35%;
@@ -161,6 +161,9 @@
 	margin: 0;
 	width: 65%;
 	float: left;
+}
+.rb_agency_widget_showsearch .rbsearch-form .search-field.single select {
+	width: 100%;
 }
 .rbsearch-form .search-field.single input,
 .rbsearch-form .search-field.multi div input[type="text"] {
@@ -227,7 +230,7 @@
 	width: 100%;
 	float: none;
 	display: block;
-	text-align: right;
+	text-align: left;
 }
 .rb_agency_widget_showsearch .rbsearch-form .search-field.multi div input[type="text"],
 .rb_agency_widget_showsearch .rbsearch-form .search-field.multi div select {
@@ -363,7 +366,7 @@ img.fillheight {
 }
 #rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; position: relative; }
 #rblayout-zero #photos .photo a img { float: left; }
-#rblayout-zero #photos .photo a img.fillheight { position: absolute; left: 50%; }
+#rblayout-zero #photos .photo a img.fillheight { position: absolute; left: -25%; }
 #rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
 #rblayout-zero #stats h2 { margin-bottom: 15px; }
 #rblayout-zero #links ul li a { margin: 0px 5px 10px 5px; min-width: 200px; font-weight: normal; font-size: 14px; }
