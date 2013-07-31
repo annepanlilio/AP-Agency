@@ -74,7 +74,7 @@ if(!empty($type)){$type=' type="'.$type.'"';}
 			$srcheight = $size[1]; 
 			$targetwidth = 150;
 			$targetheight = 220;
-			$fLetterBox = false; //fit to window
+			$fLetterBox = true; //fit to window
 			
 			// scale to the target width
 			$scaleX1 = $targetwidth;
