@@ -48,7 +48,27 @@ echo "	  					<div id=\"stats\">\n";
 echo "	  						</ul>\n";
 echo "	  					</div>\n"; // #stats
 echo "	  				</div>\n"; // .col_6
-
+// add to fave script
+?><script type="text/javascript">
+			function addtofv(ids){
+					jQuery.ajax({type: 'POST',url: '<?php echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
+									 data: {action: 'rb_agency_save_favorite',  talentID: ids},
+								  success: function(results) {  
+										if(results=='error'){ 
+											alert("Error in query. Try again"); 
+										}else if(results==-1){ 
+											alert("You're not signed in");
+										} else { 
+												 if(jQuery("#save_fav_li").text() == 'Add to Favorites'){
+													jQuery("#save_fav_li").text('<?php echo __("Remove from Favorites", rb_agency_TEXTDOMAIN); ?>');
+												 } else {
+													jQuery("#save_fav_li").text('<?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN); ?>');
+											    }
+										}
+									}
+					   }); // ajax submit
+			}
+</script><?php
 echo "					<div class=\"col_6 column\">\n";
 echo "						<div id=\"links\">\n";
 echo "							<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
@@ -116,7 +136,8 @@ echo "							<ul>\n";
 							    		echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\" class=\"rb_button\">Click Here</a></div>\n";
 									}
 						            // Other links - Favorite, Casting cart...
-								    rb_agency_get_miscellaneousLinks($ProfileID);
+								    // does not need this anymore
+									//rb_agency_get_miscellaneousLinks($ProfileID);
 									
 									// Is Logged?
 									if (is_user_logged_in()) { 
@@ -148,6 +169,25 @@ echo "							<ul>\n";
 												echo " <a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"rb_button\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>\n";						
 										    }
 										}	//end if(checkCart(rb_agency_get_current_userid()
+																				
+										// add save to favorites
+										$rb_agency_option_profilelist_favorite	= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+
+										if($rb_agency_option_profilelist_favorite){
+												$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
+			                             						 ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+												
+												$count_favorite = mysql_num_rows($query_favorite);				 
+												
+												if($count_favorite>0){
+													echo "<li class=\"item cart\">". __("", rb_agency_TEXTDOMAIN);
+													echo " <a id='save_fav_li' onclick=\"javascript:addtofv('$ProfileID');\" href=\"javascript:void(0)\" class=\"rb_button\">". __("Remove from Favorites", rb_agency_TEXTDOMAIN)."</a></li>\n";						
+												} else {
+													echo "<li class=\"item cart\">". __("", rb_agency_TEXTDOMAIN);
+													echo " <a id='save_fav_li' onclick=\"javascript:addtofv('$ProfileID');\" href=\"javascript:void(0)\" class=\"rb_button\">". __("Add to Favorites", rb_agency_TEXTDOMAIN)."</a></li>\n";						
+												}				
+										}
+
 									}
 echo "								<li id=\"resultsGoHereAddtoCart\"></li>";
 echo "								<li id=\"view_casting_cart\" style=\"display:none;\"><a href=\"".get_bloginfo('url')."/profile-casting/\" class=\"rb_button\">". __("View Casting Cart", rb_agency_TEXTDOMAIN)."</a></li>";
