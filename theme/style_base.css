@@ -443,16 +443,6 @@ img.fillheight {
 
 /* Profile Layout Six */
 #layout6-slider { margin-bottom: 15px; }
-#layout6-slider .flex-viewport { height: 300px!important; }
-.portfolio-info .panel { padding: 15px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
-.portfolio-info .panel > div { margin-bottom: 15px; }
-.portfolio-info #odel-links ul,
-.portfolio-info #model-links ul li { list-style: none; margin: 0px; padding: 0px; padding: 5px 0; }
-.portfolio-info #model-links ul li a { text-decoration: none; }
-.portfolio-info #model-nav ul { width: 100%; display: table; text-align: center; }
-.portfolio-info #model-nav ul li { display: table-cell; }
-#layout6-carousel.flexslider .slides li { overflow: hidden; height: 100px; }
-#layout6-carousel { overflow: hidden; }
 
 /* Profile Layout Seven */
 #rblayout-seven { overflow: hidden; margin-bottom: 30px; }

@@ -25,6 +25,7 @@ $(window).load(function() {
     itemWidth: 100,
     animationLoop: false,
     slideshow: false,
+    maxItems: 4,
     asNavFor: '#layout6-slider'
   });
 
