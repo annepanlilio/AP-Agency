@@ -529,7 +529,7 @@ elseif ($ConfigID == 4) {
     					echo "This profile has no images loaded.";
     				} else {
     					while ($data4a = mysql_fetch_array($results4a)) {
-    						echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" class=\"button-primary\" />Select Primary<br /><img src=\"". $dirURL ."/". $data4a['ProfileMediaURL'] ."\" style=\"width: 150px;\" /></div>\n";
+    						echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". $dirURL ."/". $data4a['ProfileMediaURL'] ."\" style=\"width: 150px;\" /></div>\n";
     					}
     					echo "<div style=\"clear: both;\"></div>\n";
     				}
