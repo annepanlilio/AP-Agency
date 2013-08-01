@@ -455,25 +455,26 @@ img.fillheight {
 #layout6-carousel { overflow: hidden; }
 
 /* Profile Layout Seven */
-#rblayout-seven { overflow: hidden; background: #000; margin: 0 15px; margin-bottom: 30px; }
+#rblayout-seven { overflow: hidden; margin-bottom: 30px; }
 #rblayout-seven #profile-slider,
-#profile-carousel { float: left; border: none; padding: 0; border-radius: 0; box-shadow: none; }
-#rblayout-seven #profile-slider { margin-bottom: 0px; }
-#rblayout-seven #profile-carousel { clear: both; width: 100%; display: block; background: #fff; padding-top: 10px; margin: 0; }
-#rblayout-seven #profile-carousel .slides li { height: 150px; overflow: hidden; }
-#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; max-width: none!important; max-height: 100%; height: 100%; width: auto; }
-#rblayout-seven #profile-info { background: #000; padding: 30px 0; }
+#rblayout-seven #profile-carousel { float: left; border: none; padding: 0; border-radius: 0; box-shadow: none; }
+#rblayout-seven #profile-slider { margin-bottom: 0px; overflow: hidden; }
+#rblayout-seven #profile-slider .slides li { height: 100%; text-align: center; }
+#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; display: inline-block; max-height: 500px; width: inherit; max-width: 100%; }
+#rblayout-seven #profile-carousel { clear: both; width: 100%; display: block; background: #fff; margin: 0; }
+#rblayout-seven #profile-carousel .flex-viewport .slides li { height: 150px; overflow: hidden; text-align: center; }
+#rblayout-seven #profile-carousel .flex-viewport .slides li img { display: inline-block; float: none; max-height: 150px; max-width: none; width: auto; }
+#rblayout-seven #profile-info { padding: 30px 0; }
 #rblayout-seven #profile-info h1 { color: #e2e2e2; font-weight: normal; text-transform: uppercase; padding: 30px; }
 #rblayout-seven #profile-info ul { list-style: none; color: #959595; padding: 0 30px; margin: 0; }
-#rblayout-seven #profile-info ul li { list-style: none; display: block; font-size: 16px; padding: 5px 0; }
+#rblayout-seven #profile-info ul li { list-style: none; display: block; font-size: 14px; }
 #rblayout-seven #profile-info ul li span { font-style: italic; }
 #rblayout-seven #profile-links { padding: 15px; float: right; clear: both; }
 #rblayout-seven #profile-links li { display: inline-block; padding: 0 10px; border-right: 1px solid #e2e2e2; font-size: 14px; }
 #rblayout-seven #profile-links li:last-child { border: none; }
 #rblayout-seven #profile-links li a { color: #e2e2e2; text-decoration: none; text-transform: uppercase; }
-#rblayout-seven #profile-carousel .slides li { overflow: hidden; height: 200px; }
 #rblayout-seven #experience { width: 100%; background: #fff; padding: 15px; line-height: normal; }
-#rblayout-seven #videos-carousel { border: none; box-shadow: none; border-radius: 0; width: 100%; margin: 0px!important; }
+#rblayout-seven #videos-carousel { border: none; box-shadow: none; border-radius: 0; width: 100%; margin: 0px!important; padding: 10px 0px; }
 #rblayout-seven #profile-slider.slides li { height: 500px; }
 
 /* Profile Layout Eight */
