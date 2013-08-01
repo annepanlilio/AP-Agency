@@ -1753,7 +1753,8 @@ elseif ($ConfigID == 7) {
 									}else{
 										echo"     <option value=\"7\" id=\"0\">Metric(cm/kg)</option>";
 									}
-									echo "<option value=\"8\">Multiple Options</option>";
+									// temporarily removed as it is required
+									// echo "<option value=\"8\">Multiple Options</option>";
 								 echo"  </select>";					   
 						echo "	</td>
 								<td style=\"font-size:13px;\"></td>
