@@ -15,10 +15,7 @@ Flip Book
 		</div>
 		<div class="cb"></div>
 	    <div class="col_12 column">
-		    <div id="photobook">
-		    	<div class="page cover">
-		    		<div class="branding" style="background-image: url(<?php bloginfo('stylesheet_directory');?>/images/logo.png)"></div>
-		    	</div>
+		    <div id="photobook">		    	
 	            <?php
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
 							$resultsImg = mysql_query($queryImg);

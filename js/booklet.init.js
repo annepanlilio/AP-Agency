@@ -5,7 +5,8 @@ $(function () {
     	pageNumbers: false,
     	pagePadding: 0,
     	overlays: true,
-    	manual: false
+    	manual: false,
+        closed: true
     });
 
     $('#next-page').click(function(e){
