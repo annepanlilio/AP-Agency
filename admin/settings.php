@@ -304,7 +304,7 @@ elseif ($ConfigID == 1) {
 		 echo "       <option value=\"8\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 8,false) ."> ". __("Layout 08 - Photo Book", rb_agency_TEXTDOMAIN) ."</option>\n";
 				}
 				if (file_exists("../". rb_agency_BASEREL ."theme/include-profile-layout9.php")) {
-		 echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 9,false) ."> ". __("Layout 08 - Large Scroller", rb_agency_TEXTDOMAIN) ."</option>\n";
+		 echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 9,false) ."> ". __("Layout 09 - Large Scroller", rb_agency_TEXTDOMAIN) ."</option>\n";
 				}
 		 echo "     </select>\n";
 		 echo "   </td>\n";
