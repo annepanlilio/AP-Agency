@@ -228,8 +228,13 @@ while ($data = mysql_fetch_array($results)) {
 	echo "<div id=\"container\" "; if ($rb_agency_option_profilelist_sidebar==0) { echo "class=\"one-column\""; } echo">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	if ($count > 0) {
-		if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
-			//if (isset($_SESSION['SearchMuxHash'])) { echo "Permission Granted"; }
+            
+		// P R I V A C Y FILTER ====================================================	
+		if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || 
+			 ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) 
+			 || ($rb_agency_option_privacy == 0) ||
+			 //  Must be logged as "Client" to view model list and profile information
+			 ($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype())) { 
 			
 		  // Ok, but whats the status of the profile?
 		  if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {

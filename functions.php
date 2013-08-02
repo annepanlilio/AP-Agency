@@ -1102,7 +1102,18 @@ error_reporting(0);
 		}
 
 		// Can we show the profiles?
-		if ( (isset($OverridePrivacy)) || ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
+		// P R I V A C Y FILTER ====================================================
+		if ( (isset($OverridePrivacy)) || 
+		     
+			  //Must be logged to view model list and profile information
+			 ($rb_agency_option_privacy == 2 && is_user_logged_in()) || 
+			 
+			 // Model list public. Must be logged to view profile information
+			 ($rb_agency_option_privacy == 1) ||
+			 
+			 //  Must be logged as "Client" to view model list and profile information
+			 ($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
+		// P R I V A C Y FILTER ====================================================
 			
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 				
@@ -1395,7 +1406,11 @@ error_reporting(0);
 		$displayHTML .= "</div><!-- #profile-results -->\n";
 				
 		} else {
-			include("theme/include-login.php"); 	
+			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
+				echo "<h2>This is a restricted page. For Clients only.</h2>";
+			} else {
+				include("theme/include-login.php"); 	
+			} 	
 		}
 				
 	  	echo  $displayHTML;
@@ -3469,6 +3484,28 @@ function secondary_class(){
 
 function fullwidth_class(){
 	return $class = "col_12";
+}
+
+/*
+ * Check if profilet type ID is "Client" type
+ */
+function is_client_profiletype(){
+	
+	$query = "SELECT ProfileType FROM ". table_agency_profile ." WHERE ProfileUserLinked = ". rb_agency_get_current_userid();
+	$results = mysql_query($query);
+	
+	if(mysql_num_rows($results)){
+		$id = mysql_fetch_assoc($results);
+		$id = $id['ProfileType'];
+		$queryList = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = ". $id;
+		$resultsList = mysql_query($queryList);
+		while ($d = mysql_fetch_array($resultsList)) {
+			if(strtolower($d["DataTypeTitle"]) == "client"){
+				return true;
+			}
+		}	
+	}	
+	return false;
 }
 
 /*
