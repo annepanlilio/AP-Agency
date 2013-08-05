@@ -233,6 +233,10 @@ while ($data = mysql_fetch_array($results)) {
 		if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || 
 			 ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) 
 			 || ($rb_agency_option_privacy == 0) ||
+			 
+			  //admin users
+			 (is_user_logged_in() && current_user_can( 'manage_options' )) ||
+			 
 			 //  Must be logged as "Client" to view model list and profile information
 			 ($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype())) { 
 			
