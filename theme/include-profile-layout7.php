@@ -51,15 +51,39 @@ Custom Layout 7
 					$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
 								$resultsImg = mysql_query($queryImg);
 								$countImg = mysql_num_rows($resultsImg);
+								$open = 1;
+								$close = false;
 								while ($dataImg = mysql_fetch_array($resultsImg)) {
-									if($dataImg['ProfileMediaPrimary']==1){
-										$ProfileMediaPrimary= 	"<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
-									} else {
-										$ProfileMediaSecondry .= "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
-									}
+								   // testing
+								   if($ProfileID == 4){	
+										   if($open==1){
+											    $close = false;
+												echo "<li>";
+										   } 
+
+											echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a>";
+
+										   $open++;
+										   if($open == 3){
+											  $open = 1;
+											  $close = true;
+											  echo "</li>\n";	
+										   }	
+								   } else {
+			                              
+										   if($dataImg['ProfileMediaPrimary']==1){
+												$ProfileMediaPrimary= 	"<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+											} else {
+												$ProfileMediaSecondry .= "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+											}
+											echo $ProfileMediaPrimary; 
+											echo $ProfileMediaSecondry; 
+								   }
 								}
-								echo $ProfileMediaPrimary; 
-								echo $ProfileMediaSecondry; 
+								if($ProfileID == 4 && !$close){
+									echo "</li>\n";
+								}
+
 					?>
 				</ul>
 			</div>
@@ -154,15 +178,37 @@ Custom Layout 7
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
 							$resultsImg = mysql_query($queryImg);
 							$countImg = mysql_num_rows($resultsImg);
+							$open = 1;
 							while ($dataImg = mysql_fetch_array($resultsImg)) {
-								if($dataImg['ProfileMediaPrimary']==1){
-									$ProfileMediaPrimary= 	"<li><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
+								// testing
+								if($ProfileID == 4){	
+												if($open==1){
+													  $close = false;
+													  echo "<li><figure class=\"multi\">";
+												} 
+								
+													echo "<span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span>";
+								
+												$open++;
+												if($open == 3){
+														$open = 1;
+														$close = true;
+														echo "</figure></li>\n";	
+												}	
 								} else {
-									$ProfileMediaSecondry .= "<li><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
+								
+												if($dataImg['ProfileMediaPrimary']==1){
+															$ProfileMediaPrimary= 	"<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
+													} else {
+															$ProfileMediaSecondry .= "<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
+													}
+													echo $ProfileMediaPrimary; 
+													echo $ProfileMediaSecondry; 
 								}
 							}
-							echo $ProfileMediaPrimary; 
-							echo $ProfileMediaSecondry; 
+							if($ProfileID == 4 && !$close){
+								echo "</li>\n";
+							}
 				?>			
 			</ul>
 			

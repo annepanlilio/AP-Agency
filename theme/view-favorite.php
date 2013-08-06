@@ -26,53 +26,26 @@ if (isset($ProfileType) && !empty($ProfileType)){
 
 get_header(); 
 
+echo "	<div id=\"primary\" class=\"".fullwidth_class()." column\">\n";
+echo "  	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
+echo '			<header class="entry-header">';
+echo '				<h1 class="entry-title">Casting Cart</h1>';
+echo '			</header>';
+echo '			<div class="entry-content">';
+echo "				<div id=\"profile-favorites\">\n";
 
-
-	echo "<div class=\"content_wrapper\">\n"; // Theme Wrapper 
-	echo "<div class=\"PageTitle\"><h1>Favorites</h1></div>\n";	 // Profile Name
-	
-	echo "<div id=\"container\" class=\"".fullwidth_class()." column\">\n";
-	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
-	
-		echo "<div id=\"profile-category\">\n";
-
-
-		echo "	<div class=\"clear line\"></div>\n";
-		echo "	<table class=\"standardTable\">\n";
-		echo "	 <tbody>\n";
-		echo "		<tr>\n";
-		echo "	    <td class=\"profile-category-results-wrapper\">\n";
-		echo "			<div class=\"profile-category-results\">\n";
-	
 						if (function_exists('rb_agency_profilelist')) { 
 						  $atts = array("type" => $DataTypeID,"profilefavorite" => true);
 						  rb_agency_profilelist($atts); 
-						}
-									
-		echo "			</div>\n";
-		echo "	    </td>\n";
-		echo "	    <td class=\"profile-category-filter-wrapper\">\n";
-	//	get_sidebar(); 
-	/*	
-		
-		echo "			<div class=\"profile-category-filter\">\n";
-		echo "			  <h3>". __("Filter Profiles", rb_agency_TEXTDOMAIN) .":</h3>\n";
-	 
-						  $profilesearch_layout = "condensed";
-						  include("include-profile-search.php"); 	
-	
-		echo "			</div>\n";
-		*/
-		echo "	    </td>\n"; 
-		echo 	" </tbody>\n";
-		echo "	</table>\n";
-		echo "</div>\n";
-		echo "<div class=\"clear line\"></div>\n";
-		echo "<input type=\"hidden\" name=\"favorite\" value=\"1\"/>";
-	echo "  </div>\n";
-	echo "</div>\n";
-	echo "</div>\n"; // END .content_wrapper 
-       
+						}							
 
-get_footer(); 
-?>
+echo "				</div>\n";
+echo "				<div class=\"cb\"></div>\n";
+echo "			</div><!-- .entry-content -->\n"; // .entry-content
+echo "			<input type=\"hidden\" name=\"favorite\" value=\"1\"/>";
+echo "  	</div><!-- #content -->\n"; // #content
+echo "	</div><!-- #primary -->\n"; // #primary
+
+//	get_sidebar();        
+
+get_footer(); ?>

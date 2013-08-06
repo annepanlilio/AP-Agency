@@ -112,71 +112,62 @@ get_header(); ?>
      	window.print();
 	} 
 </script>
-<h1 class="entry-title">Casting Cart</h1>
-<?php
-
-	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
-	echo "    <div id=\"content\" role=\"main\" >\n";
-	
-		echo "<div id=\"rbcasting-cart\">\n";
-		echo "	<div class=\"clear line\"></div>\n";
-		?>
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-            <script type="text/javascript">
-			$(document).ready(function(){
-				$('#emailbox').toggle('slow'); 
-				$("#sendemail").click(function(){
-				    $('#emailbox').toggle('slow'); 
-				});			 
-			// $("#emailSent").fadeOut(4000);
-			});
-			</script>
-
-            <div id="emailbox" >
-              <form method="post" enctype="multipart/form-data" action="">
-	              <input type="hidden" name="action" value="cartEmail" />
-	      
-	              <div><label for="SearchMuxToName">Sender Name:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" required/></div>
-	              <div><label for="SearchMuxToEmail">Sender Email:</label><br/><input type="email" id="SearchMuxToEmail" name="SearchMuxToEmail" value="" required/></div>
-	              <div><label for="SearchMuxSubject">Subject:</label><br/><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="Casting Cart" required></div>
-	               <div><label for="SearchMuxMessage">Message to Admin:</label><br/>
-	              <textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; ">[casting-link-placeholder]</textarea></div>
-				   <label>(Note: The "[casting-link-placeholder]" will be the link to your casting cart page) </label>
-	              <p class="submit">
-	                  <input type="hidden" name="action" value="sendEmailCastingCart" />
-	                  <input type="submit" name="submit" value="Send Email" class="button-primary" /> 
-	              </p>      
-              </form>
-            </div>
-            <?php
-		  if(isset($_GET["emailSent"])){ echo "<div id=\"emailSent\">Email Sent Succesfully! Go Back to <a href=\"". get_bloginfo("url")."/search/\">Search</a>.</div>";    }
-		echo "			<div class=\"profile-category-results\" id=\"profile-category-results\">\n";
-	
-						if (function_exists('rb_agency_profilelist')) { 
-						  $atts = array("type" => $DataTypeID,"profilecastingcart" => true);
-						  rb_agency_profilelist($atts); 
-						}
-									
-		echo "			</div>\n";
-          
-	/*	
-		
-		echo "			<div class=\"profile-category-filter\">\n";
-		echo "			  <h3>". __("Filter Profiles", rb_agency_TEXTDOMAIN) .":</h3>\n";
-	 
-						  $profilesearch_layout = "condensed";
-						  include("include-profile-search.php"); 	
-	
-		echo "			</div>\n";
-		*/
-		echo "</div>\n";
-		echo "<div class=\"clear line\"></div>\n";
-		echo "<input type=\"hidden\" name=\"castingcart\" value=\"1\"/>";
-	echo "  </div>\n";
-	echo "  </div>\n";
- ?>
 
 <?php
+
+echo "	<div id=\"primary\" class=\"".primary_class()." column casting-cart\">\n";
+echo "  	<div id=\"content\" role=\"main\" >\n";
+echo '			<header class="entry-header">';
+echo '				<h1 class="entry-title">Casting Cart</h1>';
+echo '			</header>';
+echo '			<div class="entry-content">';
+					
+					if (function_exists('rb_agency_profilelist')) { 
+					  	$atts = array("type" => $DataTypeID,"profilecastingcart" => true);
+					  	rb_agency_profilelist($atts); 
+					}								
+
+					if(isset($_GET["emailSent"])) {
+echo " 					<p id=\"emailSent\">Email Sent Succesfully! Go Back to <a href=\"". get_bloginfo("url")."/search/\">Search</a>.</p>";
+        			}
+
+echo "				<div id=\"rbcasting-cart\">\n";
+echo "					<div class=\"cb\"></div>\n"; ?>
+
+				        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+				        <script type="text/javascript">
+						$(document).ready(function(){
+							$('#emailbox').toggle('slow'); 
+							$("#sendemail").click(function(){
+							    $('#emailbox').toggle('slow'); 
+							});			 
+						// $("#emailSent").fadeOut(4000);
+						});
+						</script>
+
+				        <div id="emailbox" >
+				          	<form method="post" enctype="multipart/form-data" action="">
+				              	<input type="hidden" name="action" value="cartEmail" />	      
+				              	<div class="field"><label for="SearchMuxToName">Sender Name:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" required/></div>
+				              	<div class="field"><label for="SearchMuxToEmail">Sender Email:</label><br/><input type="email" id="SearchMuxToEmail" name="SearchMuxToEmail" value="" required/></div>
+				              	<div class="field"><label for="SearchMuxSubject">Subject:</label><br/><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="Casting Cart" required></div>
+				               	<div class="field"><label for="SearchMuxMessage">Message to Admin:</label><br/>
+				              		<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; ">[casting-link-placeholder]</textarea>
+				              	</div>
+							   	<p>(Note: The "[casting-link-placeholder]" will be the link to your casting cart page) </p>
+				              	<div class="field submit">
+				                  	<input type="hidden" name="action" value="sendEmailCastingCart" />
+				                  	<input type="submit" name="submit" value="Send Email" class="button-primary" /> 
+				              	</div>      
+				          	</form>
+				        </div>
+<?php 
+echo "				</div>\n";
+echo "			</div>\n";
+echo "			<div class=\"cb\"></div>\n";
+echo "			<input type=\"hidden\" name=\"castingcart\" value=\"1\"/>";
+echo "  	</div>\n";
+echo "  </div>\n";
 
 get_sidebar(); 
       

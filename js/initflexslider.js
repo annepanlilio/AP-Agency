@@ -6,7 +6,8 @@ $(window).load(function() {
     controlNav: false,
     animationLoop: false,
     slideshow: false,
-    itemWidth: 210,
+    itemWidth: 150,
+    maxItems: 7,
     asNavFor: '#profile-slider'
   });
 
