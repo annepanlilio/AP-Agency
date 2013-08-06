@@ -29,7 +29,7 @@ get_header();
 echo "	<div id=\"primary\" class=\"".fullwidth_class()." column\">\n";
 echo "  	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 echo '			<header class="entry-header">';
-echo '				<h1 class="entry-title">Casting Cart</h1>';
+echo '				<h1 class="entry-title">Favorites</h1>';
 echo '			</header>';
 echo '			<div class="entry-content">';
 echo "				<div id=\"profile-favorites\">\n";
