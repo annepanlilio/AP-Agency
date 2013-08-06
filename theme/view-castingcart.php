@@ -115,7 +115,7 @@ get_header(); ?>
 
 <?php
 
-echo "	<div id=\"primary\" class=\"".primary_class()." column casting-cart\">\n";
+echo "	<div id=\"primary\" class=\"".fullwidth_class()." column casting-cart\">\n";
 echo "  	<div id=\"content\" role=\"main\" >\n";
 echo '			<header class="entry-header">';
 echo '				<h1 class="entry-title">Casting Cart</h1>';
