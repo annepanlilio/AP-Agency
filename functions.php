@@ -1209,11 +1209,17 @@ error_reporting(0);
 			/*
 			 * Is the user logged in?
 			 */
-	       	if(is_user_logged_in()){
-	       		// Display Favorites or Casting Cart if logged in
-		        $sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-			    $sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".rb_agency_get_current_userid()."'  ";
-		 	} else {
+                        if(is_user_logged_in() || 
+			  //All Public
+                        ($rb_agency_option_privacy == 0) ){
+                            // Display Favorites or Casting Cart if logged in
+                             $sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
+                            if(isset($profilecastingcart) && !is_user_logged_in() && $rb_agency_option_privacy == 0){
+					$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID  ";
+                            } elseif(isset($profilecastingcart)) {
+			   		$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".rb_agency_get_current_userid()."'  ";
+                             }
+			} else {
 		 		// 
 				$sqlFavorite_userID  = "  fav.SavedFavoriteProfileID = profile.ProfileID ";
 				$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = 'none'  "; //this makes cart empty for non logged user
