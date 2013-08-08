@@ -76,14 +76,20 @@ Profile View with Scrolling Thumbnails and Primary Image
 	
 	echo "			<ul>\n";
 
-$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
+                        // public view
+			if($rb_agency_option_privacy == 0){
+				$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID."'" ) or die("error");
+				$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID."'" ) or die("error");
+
+			} else {
+				$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
 			                              ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-			
+				$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
+			                                 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+			}
+                        
 			$count_favorite = mysql_num_rows($query_favorite);
 			$datas_favorite = mysql_fetch_assoc($query_favorite);
-			
-			$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
-			                                 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
 			
 			$count_castingcart = mysql_num_rows($query_castingcart);
 			
