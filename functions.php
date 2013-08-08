@@ -1111,6 +1111,9 @@ error_reporting(0);
 			 // Model list public. Must be logged to view profile information
 			 ($rb_agency_option_privacy == 1) ||
 			 
+			 // All Public
+             ($rb_agency_option_privacy == 0) ||
+			 
 			 //admin users
 			 (is_user_logged_in() && current_user_can( 'manage_options' )) ||
 			 
