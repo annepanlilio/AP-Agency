@@ -6,6 +6,14 @@ Custom Layout 7
 ?>
 <style>
 #main-container { background: #000; padding: 0px; }
+#rblayout-seven #videos-carousel { clear: both; width: 100%; display: block; background: #fff; margin: 0; }
+#rblayout-seven #videos-carousel .flex-viewport .slides li { height: 140px; overflow: hidden; text-align: center; }
+#rblayout-seven #videos-carousel .flex-viewport .slides li figure { overflow: hidden; float: left; margin: 5px; width: 94%; height: 94%; border: 1px solid #ccc; }
+#rblayout-seven #videos-carousel .flex-viewport .slides li figure.multi span { width: 50%; }
+#rblayout-seven #videos-carousel .flex-viewport .slides li figure span { float: left; width: 100%; height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center top;  }
+#rblayout-seven #videos-carousel .flex-viewport .slides li img { display: inline-block; float: none; cursor:hand; cursor:position; }
+#video_player {height:500px; width:66%;}
+#video_player .vids{height:500px; width:100%; position:absolute; z-index:0; top:0px; left:0px;}
 </style>
 <div id="profile">
 	<div id="rblayout-seven" class="rblayout">
@@ -46,6 +54,9 @@ Custom Layout 7
 			<div id="profile-slider" class="flexslider col_8 column">
 				<ul class="slides">
 					<?php
+                                       	// this will be a flag in the future. for enabling
+					// two images in the slider.
+					$option_two_image = 1;
 					$ProfileMediaPrimary = ""; 
 					$ProfileMediaSecondry= "";
 					$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
@@ -54,8 +65,8 @@ Custom Layout 7
 								$open = 1;
 								$close = false;
 								while ($dataImg = mysql_fetch_array($resultsImg)) {
-								   // testing
-								   if($ProfileID == 4){	
+								   // option for two images
+								   if($option_two_image){	
 										   if($open==1){
 											    $close = false;
 												echo "<li>";
@@ -80,20 +91,146 @@ Custom Layout 7
 											echo $ProfileMediaSecondry; 
 								   }
 								}
-								if($ProfileID == 4 && !$close){
+								if($option_two_image && !$close){
 									echo "</li>\n";
 								}
 
 					?>
 				</ul>
 			</div>
+		  <div id="video_player" class="col_8 column" style="display:none; position:relative; ">	
+				<div id="vid_changer" style="position:absolute;	display:none; background:#000;width:100%; height:100%"></div>	
+				<?php
+				//Video Slate
+				$profileVideoEmbed1 = "";
+				$profileVideoEmbed2 = "";
+				$profileVideoEmbed3 = "";
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						$profileVideoEmbed1 = $dataMedia['ProfileMediaURL'];
+						echo "<div class='vids act_vids'><div id='v_slate' style='width:100%; height:100%'></div></div>";
+					}
+				}
 
+				//Video Monologue
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						$profileVideoEmbed2 = $dataMedia['ProfileMediaURL'];
+							echo "<div class='vids' style='display:none;'><div id='v_mono' style='width:100%; height:100%'></div></div>";
+						}
+				}
+				//Demoreel
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						$profileVideoEmbed3 = $dataMedia['ProfileMediaURL'];
+							echo "<div class='vids' style='display:none;'><div id='d_reel' style='width:100%; height:100%'></div></div>";
+						}
+				}
+				 ?>
+				 
+			</div>	
+			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+			
+			<script>
+						var tag = document.createElement('script');
+						tag.src = "//www.youtube.com/iframe_api";
+						var firstScriptTag = document.getElementsByTagName('script')[0];
+						firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+						var yPlayer1;
+						var yPlayer2;
+						var yPlayer3;
+						function onYouTubeIframeAPIReady() {
+						<?php
+							$embed = "profileVideoEmbed";
+							$e = array("","v_slate","v_mono","d_reel");
+							for($x = 1; $x <=3 ; $x++){
+								$ytube = $embed . $x;
+								if(!empty($$ytube)){
+						?>	
+								yPlayer<?php echo $x; ?> = new YT.Player('<?php echo $e[$x]; ?>',{
+									height: '100%',
+									width: '100%',
+									videoId: '<?php echo $$ytube; ?>',
+									events: {
+										'onReady': onYReady<?php echo $x; ?>
+									}
+								});
+								
+						<?php } }?>		
+		
+							}
+						<?php 
+						for($x = 1; $x <=3 ; $x++){
+						?>	
+						function onYReady<?php echo $x; ?>(event) {
+								//event.target.playVideo();
+								jQuery('a').click(function(e) { 
+									yPlayer<?php echo $x;?>.stopVideo();
+									e.preventDefault();
+								});
+							}
+						<?php } ?>	
+
+			</script>
+                        
 			<ul id="profile-links">
 
 				<script type="text/javascript">
 
 					jQuery(document).ready(function(){
-
+						  
+						  jQuery("#videos-carousel").find("li").click(function(){
+							  var _next = "#" + jQuery(this).attr("class");
+							  var _curr = jQuery("#video_player").find(".act_vids");
+								  _curr.removeClass("act_vids");
+								  _curr.hide();	
+								  jQuery(_next).parent().show();
+								  jQuery(_next).parent().addClass("act_vids");
+						  });
+						  
+						  jQuery("#vid_changer").width(jQuery("#video_player").width()+"px");
+						  
+						  jQuery('#videos-carousel').flexslider({
+							animation: "slide",
+							controlNav: false,
+							animationLoop: false,
+							slideshow: false,
+							itemWidth: 210,
+							asNavFor: '#video_player'
+						  });
+						
+						  jQuery('#video_player').flexslider({
+							animation: "slide",
+							controlNav: false,
+							animationLoop: false,
+							slideshow: false,
+							smoothHeight: true,
+							sync: "#videos-carousel"
+						  });
+						
+						jQuery("a.showSingle1[target='1']").click(function(){
+							jQuery("#profile-slider").show();
+							jQuery("#video_player").hide();
+						});
+						jQuery("a.showSingle3[target='2']").click(function(){
+							jQuery("#profile-slider").hide();
+							jQuery("#video_player").show();
+						});
+						jQuery(".video_player").click(function(){
+							jQuery("#profile-slider").hide();
+							jQuery("#video_player").show();
+						});
+						
+						jQuery("#profile-carousel li").click(function(){
+							jQuery("#profile-slider").show();
+							jQuery("#video_player").hide();
+						});
 						jQuery(".save_fav").click(function(){
 							ajax_submit(jQuery(this),"favorite");
 						});
@@ -223,8 +360,8 @@ Custom Layout 7
 				if ($countMedia > 0) {
 				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-						echo "<li style='margin-left: 20px;margin-right: 20px;'>	  <object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param> <param name=\"wmode\" value=\"transparent\" /><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" wmode=\"transparent\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></li>";
-				  	}
+						echo "<li class='v_slate'><figure>".render_content($profileVideoEmbed,0,0, "img","Video Slate")."</figure></li>";
+					}
 				}
 
 				//Video Monologue
@@ -233,9 +370,19 @@ Custom Layout 7
 				if ($countMedia > 0) {
 				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-						echo "<li style='margin-left: 20px;margin-right: 20px;'>  <object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param> <param name=\"wmode\" value=\"transparent\" /><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" wmode=\"transparent\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></li>";
-				  	}
-				} ?>
+							echo "<li class='v_mono'><figure>".render_content($profileVideoEmbed,0,0, "img","Video Monologue")."</figure></li>";
+						}
+				}
+				//Demoreel
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+							echo "<li class='d_reel'><figure>".render_content($profileVideoEmbed,0,0, "img","Demo Reel")."</figure></li>";
+						}
+				}
+				 ?>
 			</ul>
 		</div>
 
