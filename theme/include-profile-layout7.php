@@ -281,14 +281,14 @@ Custom Layout 7
 					
 					$count_castingcart = mysql_num_rows($query_castingcart);
 		
-					if($count_castingcart>0){ ?>
+					if(is_permitted('casting')){ ?>
 
 						<li class="casting"><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
 						<?php }else{ ?>
 						<li><a  class="save_cart" id="mycart_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
 						<li id="mycart_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
 						<?php } 
-						if($count_favorite>0){	 ?>
+						if(is_permitted('favorite')){	 ?>
 						<li class="favorite"><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
 						<?php }else{ ?>
 						<li><a  class="save_fav" id="myfav_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?></a></li>

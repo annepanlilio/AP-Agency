@@ -3515,19 +3515,20 @@ function is_permitted($type){
             
                 if($type=="casting" && !$rb_agency_option_profilelist_castingcart) return false;
                 if($type=="favorite" && !$rb_agency_option_profilelist_favorite) return false;
-                
+                if(!is_user_logged_in()) return false;
+				
                 if($type == "casting" || $type == "favorite" ){
                         
-                     if ( ($rb_agency_option_privacy == 2 && is_user_logged_in()) || 
+                     if ( ($rb_agency_option_privacy == 2) || 
 			 
                            // Model list public. Must be logged to view profile information
-                           ($rb_agency_option_privacy == 1  && is_user_logged_in()) ||
+                           ($rb_agency_option_privacy == 1) ||
 			 
-		            //admin users
-		            (is_user_logged_in() && current_user_can( 'manage_options' )) ||
+		               //admin users
+		               (current_user_can( 'manage_options' )) ||
 			 
 			           //  Must be logged as "Client" to view model list and profile information
-			          ($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
+			          ($rb_agency_option_privacy == 3 && is_client_profiletype()) ) {
                         
                          return true;
                        }

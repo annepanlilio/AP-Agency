@@ -59,7 +59,7 @@ echo "						<ul>\n";
 								// Is Logged?
 								if (is_user_logged_in()) { 
 
-									if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+									if(is_permitted('casting')){
 							 			if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already ?>
 											<script>
 							                    function addtoCart(pid){

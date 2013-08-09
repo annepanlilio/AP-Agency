@@ -142,7 +142,7 @@ echo "							<ul>\n";
 									// Is Logged?
 									if (is_user_logged_in()) { 
 
-										if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+										if(is_permitted('casting')){
 											if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already
 											?>
 												<script>
@@ -173,7 +173,7 @@ echo "							<ul>\n";
 										// add save to favorites
 										$rb_agency_option_profilelist_favorite	= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
 
-										if($rb_agency_option_profilelist_favorite){
+										if(is_permitted('favorite')){
 												$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
 			                             						 ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
 												

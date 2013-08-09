@@ -103,10 +103,11 @@ echo "		  		<div class=\"col_4 column\">\n";
 						
 						if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
 						
-echo '					<div class="favorite-casting">
-			 				<div class="favorite"><a title="'.$tl1.'" href="javascript:;" id="'.$ProfileID.'" class="save_favorite"></a></div>
-			 				<div class="castingcart"><a title="'.$tl2.'" href="javascript:;" id="'.$ProfileID.'" class="save_castingcart"></a></div>
-						</div>';
+echo '					<div class="favorite-casting">';
+			 			if(is_permitted('favorite')){ echo '<div class="favorite"><a title="'.$tl1.'" href="javascript:;" id="'.$ProfileID.'" class="save_favorite"></a></div>';}
+			 			if(is_permitted('casting')){ echo '<div class="castingcart"><a title="'.$tl2.'" href="javascript:;" id="'.$ProfileID.'" class="save_castingcart"></a></div>';}
+echo'						</div>';
+
 echo '					<div id="resultsGoHereAddtoCart"></div>';
 echo "	  			</div> <!-- #profile-picture -->\n";
 
@@ -153,10 +154,10 @@ echo "	      				<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong>
 
 							// added this links to be positioned here in substitute
 							// for the favorited label
-echo '	      				<div id="profile-links">
-								<a href="'.get_bloginfo('wpurl').'/profile-favorite" class="rb_button">View Favorites</a>
-								<a href="'.get_bloginfo('wpurl').'/profile-casting" class="rb_button">View Casting Cart</a> 	
-							</div>';
+echo '	      				<div id="profile-links">';
+								if(is_permitted('favorite')){ echo'<a href="'.get_bloginfo('wpurl').'/profile-favorite" class="rb_button">View Favorites</a>';}
+								if(is_permitted('favorite')){ echo'<a href="'.get_bloginfo('wpurl').'/profile-casting" class="rb_button">View Casting Cart</a>';} 	
+echo '						</div>';
 
 echo "	  				</div> <!-- #profile-actions -->\n";
 echo "	  			</div> <!-- .col_3 -->\n";

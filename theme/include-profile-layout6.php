@@ -176,7 +176,7 @@ Large featured image and scrolling thumbnails
 							}
 						}
 						// Is Logged?
-						if (is_user_logged_in() AND $rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1) { 
+						if (is_permitted('casting')) { 
 							echo "<li class=\"return dashboard\"><a href=\"". get_bloginfo("url") ."/dashboard/\">". __("Access Dashboard", rb_agency_TEXTDOMAIN). "</a></li>\n";?>
 					        <?php         
 							if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already ?>
