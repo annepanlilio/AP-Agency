@@ -77,33 +77,34 @@ Profile View with Scrolling Thumbnails and Primary Image
 	echo "			<ul>\n";
 
                         // public view
-			if($rb_agency_option_privacy == 0){
-				$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID."'" ) or die("error");
-				$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID."'" ) or die("error");
-
-			} else {
-				$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
-			                              ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-				$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
-			                                 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-			}
-                        
-			$count_favorite = mysql_num_rows($query_favorite);
-			$datas_favorite = mysql_fetch_assoc($query_favorite);
-			
-			$count_castingcart = mysql_num_rows($query_castingcart);
+	echo	'<div class="profile-actions-favorited">';		
 			
 			$cl1 = ""; $cl2=""; $tl1="Add to Favorites"; $tl2="Add to Casting Cart";
-						 
-			if($count_favorite>0){ $cl1 = "fav_bg"; $tl1="Remove from Favorites"; }
+
+			if(is_permitted("casting")){
+
+					$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
+													 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+					$count_castingcart = mysql_num_rows($query_castingcart);
+
+					if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
+					
+					echo '<li class=\"favorite\"><a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.' rb_button" id="'.$ProfileID.'">'.$tl1.'</a></li>';
+			}
 			
-			if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
-			
-			echo	'<div class="profile-actions-favorited">
-			 					<li class=\"favorite\"><a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.' rb_button" id="'.$ProfileID.'">'.$tl1.'</a></li>
-					<li><a title="'.$tl2.'" href="javascript:;" id="mycart" class="save_cart '.$cl2.' rb_button">'.$tl2.'</a></li>
-			 					
-					</div>';
+			if(is_permitted("favorite")){
+
+					$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
+												  ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+					$count_favorite = mysql_num_rows($query_favorite);
+					$datas_favorite = mysql_fetch_assoc($query_favorite);				
+
+					if($count_favorite>0){ $cl1 = "fav_bg"; $tl1="Remove from Favorites"; }
+					
+					echo '<li><a title="'.$tl2.'" href="javascript:;" id="mycart" class="save_cart '.$cl2.' rb_button">'.$tl2.'</a></li>';
+			}
+	
+	echo '</div>';
 
 						echo '<div id="resultsGoHereAddtoCart"></div>';
 						?>

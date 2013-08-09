@@ -1143,16 +1143,20 @@ error_reporting(0);
 					  
 					$links.='<div class="rbfavorites-castings">';
 
-					if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
-					  	$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
-					}
-					  
-					if($_SERVER['REQUEST_URI']!="/profile-casting/"){
-						if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
-							if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
-							$links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
+					if(is_permitted("favorite")){
+						if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
+								$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
 						}
 					}
+
+					if(is_permitted("casting")){
+						if($_SERVER['REQUEST_URI']!="/profile-casting/"){
+								if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
+										if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
+										$links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
+								}
+						}
+					}    
 					$links.='</div><!-- .rbfavorites-castings -->
 				</div><!-- .rblinks -->';			
 			}
@@ -3496,6 +3500,39 @@ function secondary_class(){
 
 function fullwidth_class(){
 	return $class = "col_12";
+}
+
+
+/*
+ * Check casting cart / add fav if permitted to be displayed
+ */
+function is_permitted($type){
+    
+                $rb_agency_options_arr = get_option('rb_agency_options');
+                $rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
+                $rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+		$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+            
+                if($type=="casting" && !$rb_agency_option_profilelist_castingcart) return false;
+                if($type=="favorite" && !$rb_agency_option_profilelist_favorite) return false;
+                
+                if($type == "casting" || $type == "favorite" ){
+                        
+                     if ( ($rb_agency_option_privacy == 2 && is_user_logged_in()) || 
+			 
+                           // Model list public. Must be logged to view profile information
+                           ($rb_agency_option_privacy == 1  && is_user_logged_in()) ||
+			 
+		            //admin users
+		            (is_user_logged_in() && current_user_can( 'manage_options' )) ||
+			 
+			           //  Must be logged as "Client" to view model list and profile information
+			          ($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
+                        
+                         return true;
+                       }
+                 }
+        return false;
 }
 
 /*
