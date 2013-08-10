@@ -88,8 +88,8 @@ Profile View with Scrolling Thumbnails and Primary Image
 					$count_castingcart = mysql_num_rows($query_castingcart);
 
 					if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
-					
-					echo '<li class=\"favorite\"><a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.' rb_button" id="'.$ProfileID.'">'.$tl1.'</a></li>';
+
+                                        echo '<li><a title="'.$tl2.'" href="javascript:;" id="mycart" class="save_cart '.$cl2.' rb_button">'.$tl2.'</a></li>';
 			}
 			
 			if(is_permitted("favorite")){
@@ -100,8 +100,9 @@ Profile View with Scrolling Thumbnails and Primary Image
 					$datas_favorite = mysql_fetch_assoc($query_favorite);				
 
 					if($count_favorite>0){ $cl1 = "fav_bg"; $tl1="Remove from Favorites"; }
+
+					echo '<li class=\"favorite\"><a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.' rb_button" id="'.$ProfileID.'">'.$tl1.'</a></li>';
 					
-					echo '<li><a title="'.$tl2.'" href="javascript:;" id="mycart" class="save_cart '.$cl2.' rb_button">'.$tl2.'</a></li>';
 			}
 	
 	echo '</div>';
