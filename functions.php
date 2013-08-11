@@ -1214,7 +1214,7 @@ error_reporting(0);
 			 * check permissions
 			 */
 			$sqlFavorite_userID='';
-			$sqlCasting_userID=''
+			$sqlCasting_userID='';
             if(is_permitted('casting')){
                     // Casting Cart 
 		      	    $sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".rb_agency_get_current_userid()."'  ";
