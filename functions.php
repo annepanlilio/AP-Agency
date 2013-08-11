@@ -3511,7 +3511,7 @@ function is_permitted($type){
                 $rb_agency_options_arr = get_option('rb_agency_options');
                 $rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
                 $rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
-		$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+				$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
             
                 if($type=="casting" && !$rb_agency_option_profilelist_castingcart) return false;
                 if($type=="favorite" && !$rb_agency_option_profilelist_favorite) return false;
@@ -3523,12 +3523,15 @@ function is_permitted($type){
 			 
                            // Model list public. Must be logged to view profile information
                            ($rb_agency_option_privacy == 1) ||
+							
+							// Model list public and information
+                           ($rb_agency_option_privacy == 0) ||
+			 				
+							//admin users
+							(current_user_can( 'manage_options' )) ||
 			 
-		               //admin users
-		               (current_user_can( 'manage_options' )) ||
-			 
-			           //  Must be logged as "Client" to view model list and profile information
-			          ($rb_agency_option_privacy == 3 && is_client_profiletype()) ) {
+							//  Must be logged as "Client" to view model list and profile information
+							($rb_agency_option_privacy == 3 && is_client_profiletype()) ) {
                         
                          return true;
                        }
