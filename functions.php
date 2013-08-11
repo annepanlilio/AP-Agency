@@ -1211,23 +1211,18 @@ error_reporting(0);
 	  		}//if(get_query_var('target')!="print" 
 					  
 			/*
-			 * Is the user logged in?
+			 * check permissions
 			 */
-                        if(is_user_logged_in() || 
-			  //All Public
-                        ($rb_agency_option_privacy == 0) ){
-                            // Display Favorites or Casting Cart if logged in
-                             $sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-                            if(isset($profilecastingcart) && !is_user_logged_in() && $rb_agency_option_privacy == 0){
-					$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID  ";
-                            } elseif(isset($profilecastingcart)) {
-			   		$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".rb_agency_get_current_userid()."'  ";
-                             }
-			} else {
-		 		// 
-				$sqlFavorite_userID  = "  fav.SavedFavoriteProfileID = profile.ProfileID ";
-				$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = 'none'  "; //this makes cart empty for non logged user
-		 	}
+			$sqlFavorite_userID='';
+			$sqlCasting_userID=''
+            if(is_permitted('casting')){
+                    // Casting Cart 
+		      	    $sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".rb_agency_get_current_userid()."'  ";
+			} 
+            if(is_permitted('favorite')){
+                    // Display Favorites 
+		            $sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
+            } 
 
 			/*
 			 * Execute the Query
