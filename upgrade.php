@@ -396,17 +396,17 @@ global $wpdb;
 		$results = $wpdb->query("DROP TABLE rb_agency_data_colorhair");
 
 		// Rename tables to include prefix
-		$results = $wpdb->query("RENAME TABLE rb_agency_profile RENAME TO {$wpdb->prefix}agency_profile");
-		$results = $wpdb->query("RENAME TABLE rb_agency_profile_media RENAME TO {$wpdb->prefix}agency_profile_media");
-		$results = $wpdb->query("RENAME TABLE rb_agency_data_gender RENAME TO {$wpdb->prefix}agency_data_gender");
-		$results = $wpdb->query("RENAME TABLE rb_agency_data_type RENAME TO {$wpdb->prefix}agency_data_type");
-		$results = $wpdb->query("RENAME TABLE rb_agency_mediacategory RENAME TO {$wpdb->prefix}agency_data_media");
-		$results = $wpdb->query("RENAME TABLE rb_agency_customfields RENAME TO {$wpdb->prefix}agency_customfields");
-		$results = $wpdb->query("RENAME TABLE rb_agency_customfield_mux RENAME TO {$wpdb->prefix}agency_customfield_mux");
-		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved RENAME TO {$wpdb->prefix}agency_searchsaved");
-		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved_mux RENAME TO {$wpdb->prefix}agency_searchsaved_mux");
-		$results = $wpdb->query("RENAME TABLE rb_agency_savedfavorite RENAME TO {$wpdb->prefix}agency_savedfavorite");
-		$results = $wpdb->query("RENAME TABLE rb_agency_castingcart RENAME TO {$wpdb->prefix}agency_castingcart");
+		$results = $wpdb->query("RENAME TABLE rb_agency_profile TO {$wpdb->prefix}agency_profile");
+		$results = $wpdb->query("RENAME TABLE rb_agency_profile_media TO {$wpdb->prefix}agency_profile_media");
+		$results = $wpdb->query("RENAME TABLE rb_agency_data_gender TO {$wpdb->prefix}agency_data_gender");
+		$results = $wpdb->query("RENAME TABLE rb_agency_data_type TO {$wpdb->prefix}agency_data_type");
+		$results = $wpdb->query("RENAME TABLE rb_agency_mediacategory TO {$wpdb->prefix}agency_data_media");
+		$results = $wpdb->query("RENAME TABLE rb_agency_customfields TO {$wpdb->prefix}agency_customfields");
+		$results = $wpdb->query("RENAME TABLE rb_agency_customfield_mux TO {$wpdb->prefix}agency_customfield_mux");
+		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved TO {$wpdb->prefix}agency_searchsaved");
+		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved_mux TO {$wpdb->prefix}agency_searchsaved_mux");
+		$results = $wpdb->query("RENAME TABLE rb_agency_savedfavorite TO {$wpdb->prefix}agency_savedfavorite");
+		$results = $wpdb->query("RENAME TABLE rb_agency_castingcart TO {$wpdb->prefix}agency_castingcart");
 
 		update_option('rb_agency_version', "2.0.1");
 	}
