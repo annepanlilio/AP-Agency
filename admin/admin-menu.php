@@ -1,7 +1,7 @@
     <div id="rb-overview-icon" class="icon32"></div>  
     <h2>
     	RB Agency
-    	<a href="http://rbplugin.com" class="add-new-h2">Version <?php get_option('rb_agency_version'); ?></a>
+    	<a href="http://rbplugin.com" class="add-new-h2">Version <?php echo get_option('rb_agency_version'); ?></a>
 
     </h2> 
         <?php 

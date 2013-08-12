@@ -408,6 +408,7 @@ global $wpdb;
 		$results = $wpdb->query("RENAME TABLE rb_agency_savedfavorite TO {$wpdb->prefix}agency_savedfavorite");
 		$results = $wpdb->query("RENAME TABLE rb_agency_castingcart TO {$wpdb->prefix}agency_castingcart");
 
+		// Update Version Number
 		update_option('rb_agency_version', "2.0.1");
 	}
 
