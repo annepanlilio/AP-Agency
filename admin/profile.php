@@ -577,7 +577,7 @@ function rb_display_manage($ProfileID) {
             $ProfileContactPhoneWork = stripslashes($data['ProfileContactPhoneWork']);
             $ProfileGender = stripslashes($data['ProfileGender']);
             $ProfileTypeArray = stripslashes($data['ProfileType']);
-           
+
             $ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
             $ProfileLocationStreet = stripslashes($data['ProfileLocationStreet']);
             $ProfileLocationCity = stripslashes($data['ProfileLocationCity']);
@@ -886,7 +886,7 @@ function rb_display_manage($ProfileID) {
             } else {
                 $styleBackground = "#000000";
                 $isChecked = "";
-                $isCheckedText = " Select";
+                $isCheckedText = " Set Primary";
                 $toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\"><span>Delete</span> &raquo;</a></div>\n";
                 $massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> <span style="color:#FFFFFF">Delete</span>';
             }
