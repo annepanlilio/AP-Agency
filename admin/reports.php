@@ -1518,7 +1518,7 @@ class RBAgencyCSVXLSImpoterPlugin {
             {
                 $inputFileType = 'Excel2007';  /*XLS File type*/  
             }
-            include WP_CONTENT_DIR.'/plugins/rb-agency/Classes/PHPExcel/IOFactory.php';
+            include WP_CONTENT_DIR.'/plugins/rb-agency/tasks/PHPExcel/IOFactory.php';
             $f_name = date('d_M_Y_h_i_s');
             
             move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path);
