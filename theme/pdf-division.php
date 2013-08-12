@@ -149,8 +149,8 @@ $blog_title = strtolower(str_replace(" ","_",get_bloginfo('name')));
 $pdfFile="$blog_title-".$pdfFile;
 
 //die($pdfFile);
-$toRedirect=rb_agency_BASEDIR."dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
-$path="wp-content/plugins/rb-agency/dompdf/htmls/";
+$toRedirect=rb_agency_BASEDIR."tasks/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
+$path="wp-content/plugins/rb-agency/tasks/dompdf/htmls/";
 
 $fp=fopen($path.$htmlFile,"w");
 fwrite($fp,$header);

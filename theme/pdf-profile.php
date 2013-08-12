@@ -351,8 +351,8 @@ $pdfFile="$blog_title-".str_replace(" ","-",$ProfileContactDisplay).$format.date
 
 
 
-$toRedirect=rb_agency_BASEDIR."dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
-$path="wp-content/plugins/rb-agency/dompdf/htmls/";
+$toRedirect=rb_agency_BASEDIR."tasks/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
+$path="wp-content/plugins/rb-agency/tasks/dompdf/htmls/";
 
 //include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
 $fp=fopen($path.$htmlFile,"w");
