@@ -10,7 +10,7 @@
 */
 
 // Delcare Version
-$rb_agency_VERSION = "2.0.1";
+$rb_agency_VERSION = "2.0.2";
 	// Define for good measure
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 
@@ -104,11 +104,6 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
 	if (!defined("table_agency_castingcart"))
 		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
-
-// Do the tables exist?
-	if ($wpdb->get_var("show tables like '". table_agency_profile ."'") == table_agency_profile) { // No, it doesn't
-		// Time for a diaper change, call the upgrade script
-	}
 
 /**
  * Do we need an upgrade?

@@ -414,4 +414,24 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.1");
 	}
 
+	// Update from 2.0.0
+	if (get_option('rb_agency_version') == "2.0.1") {
+
+		// Do the tables exist?
+		if ($wpdb->get_var("show tables like '". table_agency_customfields_types ."'") == table_agency_customfields_types) {
+		} else {
+			// Setup > Custom Field Types
+			$results = $wpdb->query("CREATE TABLE IF NOT EXISTS ". table_agency_customfields_types." (
+				ProfileCustomTypesID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				ProfileCustomID BIGINT(20) NOT NULL,
+				ProfileCustomTitle VARCHAR(255),
+				ProfileCustomTypes VARCHAR(255),
+				PRIMARY KEY (ProfileCustomTypesID)
+				);");
+		}
+
+		// Update Version Number
+		update_option('rb_agency_version', "2.0.2");
+	}
+
 ?>
