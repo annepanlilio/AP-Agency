@@ -233,13 +233,14 @@ error_reporting(0);
 			}
 			return $template;
 		}
-	
-	// Remember to flush_rules() when adding rules
-	add_filter('init','rb_agency_flushrules');
-		function rb_agency_flushRules() {
-			global $wp_rewrite;
-			$wp_rewrite->flush_rules();
-		}	
+
+/**
+ * Remember to flush_rules() when adding rules
+ */
+	function rb_agency_flushRules() {
+		global $wp_rewrite;
+		$wp_rewrite->flush_rules();
+	}
 
 
 
@@ -3096,7 +3097,7 @@ function register_and_send_email(){
     $email = trim($_POST['email']);
 
     // getting required fileds from rb_agency_profile
-    $profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $profileid . "'" );
+    $profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $profileid . "'" );
 
     // creating new user
     $user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
@@ -3120,8 +3121,7 @@ function register_and_send_email(){
             update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
 			
 			// linking the user ID with profile ID
-			$wpdb->update( 
-				'rb_agency_profile',
+			$wpdb->update(table_agency_profile,
 				array( 'ProfileUserLinked' => $user_id ),
 				array( 'ProfileID' => $profile_row[0]->ProfileID ),
 				array( '%d' ),
@@ -3153,7 +3153,7 @@ function bulk_register_and_send_email(){
     $success = FALSE;
     
     foreach($users_lp as $user_lp){ 
-        $profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM rb_agency_profile WHERE ProfileID = '" . $user_lp['pid'] . "'" );
+        $profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $user_lp['pid'] . "'");
         
         $user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
         if ( !$user_id and email_exists($user_email) == false ) { 
@@ -3177,7 +3177,7 @@ function bulk_register_and_send_email(){
 				
 				// linking the user ID with profile ID
 				$wpdb->update( 
-					'rb_agency_profile',
+					table_agency_profile,
 					array( 'ProfileUserLinked' => $user_id ),
 					array( 'ProfileID' => $profile_row[0]->ProfileID ),
 					array( '%d' ),

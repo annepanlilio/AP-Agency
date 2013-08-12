@@ -5,8 +5,8 @@
  * @parm User Id
  */
 
- require_once('../../../../wp-load.php');	 
- require_once('../../../../wp-admin/includes/user.php');	 
+require_once('../../../../wp-load.php');
+require_once('../../../../wp-admin/includes/user.php');
  
     global $wpdb;
  	
@@ -19,13 +19,10 @@
 	   /*
 		* Just update status to inactive
 		*/
-                $update = "UPDATE rb_agency_profile 
-				           SET ProfileIsActive = 0
-				           WHERE ProfileID = " . $id;
-                
-				$results = $wpdb->query($update) or die(mysql_error());
-				
-				wp_logout();
+        $update = "UPDATE ". table_agency_profile ." SET ProfileIsActive = 0 WHERE ProfileID = " . $id;
+		$results = $wpdb->query($update) or die(mysql_error());
+		
+		wp_logout();
 		
 	} elseif($option == 2) {
 
