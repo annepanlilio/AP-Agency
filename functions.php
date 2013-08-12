@@ -158,7 +158,7 @@ error_reporting(0);
 /*
  * Add Rewrite Rules based on Path
  */
-			
+
 	add_filter('rewrite_rules_array','rb_agency_rewriteRules');
 		// Adding a new rule
 		function rb_agency_rewriteRules($rules) {
@@ -177,23 +177,23 @@ error_reporting(0);
 			$newrules['client-view/(.*)$'] = 'index.php?type=profilesecure&target=$matches[1]';
 			$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
 			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
-			
-		    $newrules['version-rb-agency'] = 'index.php?type=rbv'; // ping this page for version checker
-			
-		    $rb_agency_options_arr = get_option('rb_agency_options');
+
+			$newrules['version-rb-agency'] = 'index.php?type=rbv'; // ping this page for version checker
+
+			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
 			
 			$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
 			
-	        if ($rb_agency_option_profilelist_favorite) {
+			if ($rb_agency_option_profilelist_favorite) {
 				$newrules['profile-favorite'] = 'index.php?type=favorite';
-		  	}
-	        if ($rb_agency_option_profilelist_castingcart) {
+			}
+			if ($rb_agency_option_profilelist_castingcart) {
 				$newrules['profile-casting-cart'] = 'index.php?type=castingcart';
-		   	}
+			}
 			return $newrules + $rules;
 		}
-		
+
 	// Get Veriables & Identify View Type
 	add_action( 'query_vars', 'rb_agency_query_vars' );
 		function rb_agency_query_vars( $query_vars ) {
@@ -203,7 +203,7 @@ error_reporting(0);
 			$query_vars[] = 'value';
 			return $query_vars;
 		}
-	
+
 	// Set Custom Template
 	add_filter('template_include', 'rb_agency_template_include', 1, 1); 
 		function rb_agency_template_include( $template ) {
@@ -229,7 +229,7 @@ error_reporting(0);
 					return dirname(__FILE__) . '/theme/view-castingcart.php'; 
 				}elseif (get_query_var( 'type' ) == "version-rb-agency") {
 					return dirname(__FILE__) . '/rbv.php'; 
-				}			  
+				}
 			}
 			return $template;
 		}
@@ -257,7 +257,7 @@ error_reporting(0);
 			echo '<div id="message" class="updated fade">';
 		}
 		echo "<p><strong>$message</strong></p></div>";
-	} 
+	}
 
 	/** 
 	  * Call rb_agency_adminmessage() when showing other admin 
@@ -267,10 +267,10 @@ error_reporting(0);
 	add_action('admin_notices', 'rb_agency_adminmessage'); 
 		function rb_agency_adminmessage() {
 
-		    // Are Permalinks Enabled?
-		    if ( get_option('permalink_structure') == '' ) {
-		    	rb_agency_adminmessage_former('<a href="'. admin_url("options-permalink.php") .'">'. __("Permalinks", rb_agency_TEXTDOMAIN) .'</a> '. __("are not configured.  This will cause RB Agency not to function properly.", rb_agency_TEXTDOMAIN), true);
-		    }
+			// Are Permalinks Enabled?
+			if ( get_option('permalink_structure') == '' ) {
+				rb_agency_adminmessage_former('<a href="'. admin_url("options-permalink.php") .'">'. __("Permalinks", rb_agency_TEXTDOMAIN) .'</a> '. __("are not configured.  This will cause RB Agency not to function properly.", rb_agency_TEXTDOMAIN), true);
+			}
 
 		}
 
@@ -280,8 +280,7 @@ error_reporting(0);
  *  General Functions
  */
 
-
-   /**
+	/**
      * Get Profile Name
      *
      * @param id $ProfileID
@@ -298,8 +297,7 @@ error_reporting(0);
 		}
 	}
 
-
-   /**
+	/**
      * Clean String, remove extra quotes
      *
      * @param string $string
@@ -314,8 +312,7 @@ error_reporting(0);
 		return $string;
 	}
 
-
-   /**
+	/**
      * Identify Current Langauge
      *
      */
@@ -341,16 +338,15 @@ error_reporting(0);
 	}
 	
 
-   /**
+	/**
      * Generate random number
      *
      */
 	function rb_agency_random() {
 		return preg_replace("/([0-9])/e","chr((\\1+112))",rand(100000,999999));
 	}
-	
 
-   /**
+	/**
      * Get users role
      *
      */
@@ -362,8 +358,7 @@ error_reporting(0);
 		return $user_role;
 	};
 
-
-   /**
+	/**
      * Convert Date & time to UnixTimestamp
      *
      * @param string $datetime
@@ -378,8 +373,7 @@ error_reporting(0);
 		return $UnixTimestamp;
 	}
 
-
-   /**
+	/**
      * Get Profile Name
      *
      * @param string $timestamp (unix timestamp)
@@ -417,8 +411,7 @@ error_reporting(0);
 		}
 	}
 
-
-   /**
+	/**
      * Get Profile's Age
      *
      * @param string $p_strDate
@@ -444,7 +437,7 @@ error_reporting(0);
 				$years--;
 				$months = 12 + $today_m - $dob_m;
 			}
-		
+
 			if ($today_d < $dob_d) {
 				$months--;
 			}
@@ -475,16 +468,16 @@ error_reporting(0);
 			if($years == 0){
 			   $years = "";	
 			} else {
-			   $years = $years . " yr(s) "; 	
-			}
-		
-			if($months == 0){
-			   $months = "";	
-			} else {
-			   $months = $months . " mo(s) "; 	
+			   $years = $years . " yr(s) ";
 			}
 
-			return  $years . $months;		
+			if($months == 0){
+			   $months = "";
+			} else {
+			   $months = $months . " mo(s) ";
+			}
+
+			return  $years . $months;
 
 		// Or just do it the old way
 		} else {
@@ -493,10 +486,10 @@ error_reporting(0);
 			 return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
 		}
 
-    }
+	}
 
 
-   /**
+	/**
      * Collapse White Space
      *
      * @param string $string
@@ -506,7 +499,7 @@ error_reporting(0);
 	}
 	
 
-   /**
+	/**
      * Prepare string to be filename
      *
      * @param string $filename
@@ -520,18 +513,18 @@ error_reporting(0);
 	}
 
 
-   /**
+	/**
      * Get Current User ID
      *
      */
 	function rb_agency_get_current_userid(){
 		global $current_user;
-        get_currentuserinfo();
+		get_currentuserinfo();
 		return $current_user->ID;
 	}
 
 
-   /**
+	/**
      * Get Filename Extension
      *
      * @param string $filename
@@ -546,7 +539,7 @@ error_reporting(0);
 	}
 	
 
-   /**
+	/**
      * Format a string in proper case.
      *
      * @param string $string
@@ -556,7 +549,7 @@ error_reporting(0);
 	}
 	
 
-   /**
+	/**
      * Generate Video Thumbnail
      *
      * @param string $videoID
@@ -571,9 +564,8 @@ error_reporting(0);
 		$rb_agency_get_videothumbnail = "<img src='http://img.youtube.com/vi/" . $videoID . "/default.jpg' />";
 		return $rb_agency_get_videothumbnail;
 	}
-	
 
-   /**
+	/**
      * Strip out VideoID from URL
      *
      * @param string $videoURL
@@ -591,8 +583,7 @@ error_reporting(0);
 		return $videoID;
 	}
 
-
-   /**
+	/**
      * Create embed code from URL
      *
      * @param string $videoObject
@@ -611,14 +602,13 @@ error_reporting(0);
 		return $videoObject;
 	}
 
-
-   /**
+	/**
      * Check the directory (create if it doesnt exist)
      *
      * @param string $ProfileGallery
      */
-    function rb_agency_checkdir($ProfileGallery){
-	      	
+	function rb_agency_checkdir($ProfileGallery){
+
 		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
 			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
 			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
@@ -637,15 +627,15 @@ error_reporting(0);
 			endwhile;
 		}
 		return $ProfileGallery;			
-    }
+	}
 
 
-   /**
+	/**
      * Check directory (do not create, just check)
      *
      * @param string $ProfileGallery
      */
-    function rb_agency_createdir($ProfileGallery){
+	function rb_agency_createdir($ProfileGallery){
 		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
 			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
 			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
@@ -655,18 +645,18 @@ error_reporting(0);
 			//defensive return
 			return $ProfileGallery;		
 		}
-    }	
-  
-   /**
+	}	
+
+	/**
      * Generate Folder Name
      *
      * @param $ID - record id, $first = first name, $last - last name, $display - contact display
 	 * @return - formatted folder name 
-     */		
+     */
 	function generate_foldername($ID = NULL, $first, $last, $display){
-			
+
 			$rb_agency_options_arr = get_option('rb_agency_options');
-		    $rb_agency_option_profilenaming  = (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
+			$rb_agency_option_profilenaming  = (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
 			if ($rb_agency_option_profilenaming == 0) {
 					$ProfileGalleryFixed = $first . "-". $last;
 			} elseif ($rb_agency_option_profilenaming == 1) {
@@ -680,11 +670,11 @@ error_reporting(0);
 			} elseif ($rb_agency_option_profilenaming == 5) {
 					$ProfileGalleryFixed = $last;
 			}
-			
+
 			return rb_agency_safenames($ProfileGalleryFixed); 
 	}
 
-   /**
+	/**
      * List Categories
      *
      * @param array $atts 
@@ -749,9 +739,9 @@ error_reporting(0);
 
 		// Set It Up	
 		global $wp_rewrite;
-	    $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
-	    
-	    // Exctract from Shortcode
+		$cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
+
+		// Exctract from Shortcode
 		extract(shortcode_atts(array(
 			"profileid" => NULL,
 			"profilecontactnamefirst" => NULL,
@@ -793,8 +783,8 @@ error_reporting(0);
 		if(strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
 			$OverridePrivacy = 1;
 		}
-	        
-	    // Option to show all profiles
+
+		// Option to show all profiles
 		if (isset($OverridePrivacy)) {
 			// If sent link, show both hidden and visible
 			$filter = "WHERE profile.ProfileIsActive IN (1, 4) AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
@@ -840,64 +830,61 @@ error_reporting(0);
 		$ProfileIsFeatured			= $featured;
 		$ProfileIsPromoted			= $stars;
 		$OverridePrivacy			= $override_privacy;
-	  	$GetProfileSaved			= $getprofile_saved;
+		$GetProfileSaved			= $getprofile_saved;
 		$City						= $profilecity;
 		$State						= $profilestate;
 		$Zip						= $profilezip;  
-	    
-	    // ?
-	   	$filterDropdown = array();
 
-	    // Set CustomFields
-	  	if(isset($atts) && !empty($atts)){
+		// ?
+		$filterDropdown = array();
+
+		// Set CustomFields
+			if(isset($atts) && !empty($atts)){
 			$filter2 = '';
 
 			foreach($atts as $key => $val){
 				
-	            if (substr($key,0,15) == "ProfileCustomID") {
-	            
-	                  /*
-	                   *  Check if this is array or not
-	                   *  because sometimes $val is an array so
-	                   *  array_filter is not applicable
-	                   */	
-	                  if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
-	                       
-	                        /*
-	                         * Id like to chop this one out and extract
-	                         * the array values from here and make it a string with "," or
-	                         * pass the single value back $val
-	                         */
-	                        if(is_array($val)){
-	                          
-	                                if(count(array_filter($val)) > 1) {
-	                                    $ct =1;
-	                                    foreach($val as $v){
-	                                        if($ct == 1){
-	                                            $val = $v;
-	                                            $ct++;
+				if (substr($key,0,15) == "ProfileCustomID") {
 
-	                                        } else {
-	                                            $val = $val .",".$v;
-	                                        }
-	                                    }
-	                                } else {
-	                                    $val = array_shift(array_values($val));
-	                                } 
-	                        }
-		    
-	                        $q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
-		                    $ProfileCustomType = mysql_fetch_assoc($q);
-			
-		
-	                            /*
+					/*
+					*  Check if this is array or not
+					*  because sometimes $val is an array so
+					*  array_filter is not applicable
+					*/
+					if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
+
+						/*
+						* Id like to chop this one out and extract
+						* the array values from here and make it a string with "," or
+						* pass the single value back $val
+						*/
+						if(is_array($val)){
+							if(count(array_filter($val)) > 1) {
+								$ct =1;
+								foreach($val as $v){
+									if($ct == 1){
+										$val = $v;
+										$ct++;
+									} else {
+										$val = $val .",".$v;
+									}
+								}
+							} else {
+								$val = array_shift(array_values($val));
+							} 
+						}
+
+							$q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
+							$ProfileCustomType = mysql_fetch_assoc($q);
+
+								/*
 	                             * Have created a holder $filter2 and
 	                             * create its own filter here and change
 	                             * AND should be OR
 	                             */
-	                            if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
-                                    $minVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min']);
-                                    $maxVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max']);
+								if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
+									$minVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min']);
+									$maxVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max']);
 									if(!empty($minVal) && !empty($maxVal)){
 										if($filter2 == ""){
 											$filter2 .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
@@ -906,10 +893,10 @@ error_reporting(0);
 										}
 									}
 
-                                    //echo "-----";
-	                            }else {
+									//echo "-----";
+								} else {
 
-                                    /******************
+									/******************
                                     1 - Text
                                     2 - Min-Max > Removed
                                     3 - Dropdown
@@ -1205,12 +1192,12 @@ error_reporting(0);
 					$limit = "";
 				}
 
-	            if(get_query_var('target')=="print"){$limit = "";} //to remove limit on print page
+				if(get_query_var('target')=="print"){$limit = "";} //to remove limit on print page
 				if(get_query_var('target')=="pdf"){$limit = "";} //to remove limit on pdf page
-	            mysql_free_result($qItem);
-	  
-	  		}//if(get_query_var('target')!="print" 
-					  
+				mysql_free_result($qItem);
+
+			}//if(get_query_var('target')!="print" 
+
 			/*
 			 * check permissions
 			 */
@@ -3542,35 +3529,35 @@ function delete_script() {?>
                 }
             });	
         });
-    </script>		
+    </script>
 
 <?php
 }
 function self_delete() {
 
-    global $wp_admin_bar;
+	global $wp_admin_bar;
 
-    $href = get_bloginfo('wpurl');
-    $title = '<div>' . '<div class="ab-item">User Profile</div></div>';
-    $prof_href = $href . '/wp-admin/profile.php'; 
+	$href = get_bloginfo('wpurl');
+	$title = '<div>' . '<div class="ab-item">User Profile</div></div>';
+	$prof_href = $href . '/wp-admin/profile.php'; 
 	$account = $href . '/wp-admin/admin.php?page=delete_profile';
-	
-    $wp_admin_bar->add_menu( array(
-        'parent' => false,
-        'id' => 'self_delete',
-        'title' => __($title)
-    ));
-	
-    $wp_admin_bar->add_menu(array(
-        'parent' => 'self_delete',
-        'id' => 'profile_manage',
-        'title' => __('<a class="ab-item" href="'.$prof_href.'">Manage Profile</a>'),
-    )); 
-   $wp_admin_bar->add_menu(array(
-        'parent' => 'self_delete',
-        'id' => 'actual_delete',
-        'title' => __('<a class="ab-item"  href="'.$account.'">Account Settings</a>'),
-    ));
+
+	$wp_admin_bar->add_menu( array(
+		'parent' => false,
+		'id' => 'self_delete',
+		'title' => __($title)
+	));
+
+	$wp_admin_bar->add_menu(array(
+		'parent' => 'self_delete',
+		'id' => 'profile_manage',
+		'title' => __('<a class="ab-item" href="'.$prof_href.'">Manage Profile</a>'),
+	)); 
+	$wp_admin_bar->add_menu(array(
+		'parent' => 'self_delete',
+		'id' => 'actual_delete',
+		'title' => __('<a class="ab-item"  href="'.$account.'">Account Settings</a>'),
+	));
 
 }
 ?>
