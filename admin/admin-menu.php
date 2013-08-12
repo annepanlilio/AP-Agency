@@ -1,9 +1,17 @@
     <div id="rb-overview-icon" class="icon32"></div>  
     <h2>
     	RB Agency
-    	<a href="http://rbplugin.com" class="add-new-h2">Version <?php echo rb_agency_VERSION; ?></a>
+    	<a href="http://rbplugin.com" class="add-new-h2">Version <?php get_option('rb_agency_version'); ?></a>
+
     </h2> 
-    <?php settings_errors(); ?>  
+        <?php 
+        // Just a backup check if version numbers are off
+        if(get_option('rb_agency_version') <> rb_agency_VERSION) {
+            echo "Upgrade Needed";
+        }
+        // Are there errors?
+        settings_errors(); 
+        ?>  
 
 	<?php  
 		if( isset( $_GET['page'] ) ) {  

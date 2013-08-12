@@ -11,10 +11,6 @@
 
 // Delcare Version
 $rb_agency_VERSION = "2.0.1";
-	// Store Version Number
-	if(!get_option("rb_agency_version") || get_option("rb_agency_version") <> $rb_agency_VERSION){
-		add_option("rb_agency_version", $rb_agency_VERSION , '', 'no');  update_option("rb_agency_version", $rb_agency_VERSION);
-	}
 	// Define for good measure
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 
@@ -72,7 +68,10 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	
 
 // *************************************************************************************************** //
-// Declare Global WordPress Database Access
+
+/**
+ * Declare Global WordPress Database Access
+ */
 	global $wpdb;
 
 /**
@@ -107,18 +106,25 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 // Do the tables exist?
 	if ($wpdb->get_var("show tables like '". table_agency_profile ."'") == table_agency_profile) { // No, it doesn't
 		// Time for a diaper change, call the upgrade script
+	}
+
+/**
+ * Do we need an upgrade?
+ */
+	// Is the verion number newer than the stored upgraded version?
+	if(!get_option("rb_agency_version") || get_option("rb_agency_version") <> $rb_agency_VERSION){
 		include_once(dirname(__FILE__).'/upgrade.php');
 	}
 
-// Call default functions
+/**
+ * Call Function and Language
+ */
+	// Call default functions
 	include_once(dirname(__FILE__).'/functions.php');
 
-
-// Now Call the Lanuage
+	// Now Call the Lanuage
 	define("rb_agency_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
 
-// *************************************************************************************************** //
-	
 
 
 // *************************************************************************************************** //
@@ -142,7 +148,7 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 		
 		// Hold the version in a seprate option
 		if(!get_option("rb_agency_version"))
-		add_option("rb_agency_version", $rb_agency_VERSION);
+		add_option("rb_agency_version", $rb_agency_VERSION, '', 'yes');
 		update_option("rb_agency_version", $rb_agency_VERSION);
 		
 		/*
