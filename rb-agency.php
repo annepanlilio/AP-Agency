@@ -112,7 +112,7 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
  * Do we need an upgrade?
  */
 	// Is the verion number newer than the stored upgraded version?
-	if(!get_option("rb_agency_version") || get_option("rb_agency_version") <> $rb_agency_VERSION){
+	if(!get_option("rb_agency_version") || get_option("rb_agency_version") <> rb_agency_VERSION){
 		include_once(dirname(__FILE__).'/upgrade.php');
 	}
 

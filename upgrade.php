@@ -394,6 +394,8 @@ global $wpdb;
 		$results = $wpdb->query("DROP TABLE rb_agency_data_colorskin");
 		$results = $wpdb->query("DROP TABLE rb_agency_data_coloreye");
 		$results = $wpdb->query("DROP TABLE rb_agency_data_colorhair");
+		$results = $wpdb->query("DROP TABLE rb_agency_rel_taxonomy");
+		$results = $wpdb->query("DROP TABLE rb_agency_customfields_types");
 
 		// Rename tables to include prefix
 		$results = $wpdb->query("RENAME TABLE rb_agency_profile TO {$wpdb->prefix}agency_profile");
