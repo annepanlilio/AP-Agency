@@ -32,7 +32,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 	$SearchMuxToEmail		=get_option('admin_email');
 	
 	$SearchMuxEmailToBcc		=$_POST['SearchMuxEmailToBcc'];
-	$SearchMuxSubject		= "The People Studio - ".$_POST['SearchMuxSubject'];
+	$SearchMuxSubject		= get_bloginfo('name') . " - ".$_POST['SearchMuxSubject'];
 	$SearchMuxMessage		=$_POST['SearchMuxMessage'];
 	$SearchMuxCustomValue	=$_POST['SearchMuxCustomValue'];
 
