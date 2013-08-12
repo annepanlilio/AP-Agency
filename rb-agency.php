@@ -232,14 +232,6 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 				$insert = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
 			}
 
-		// Setup > Taxonomy: Actual Taxonomy
-		$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_rel_taxonomy." (
-			ProfileID BIGINT(20) NOT NULL DEFAULT 0,
-			term_taxonomy_id BIGINT(20) NOT NULL DEFAULT 0,
-			PRIMARY KEY (ProfileID,term_taxonomy_id)
-			);";
-		dbDelta($sql);
-
 		// Setup > Custom Field Types
 		$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfields." (
 			ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -820,16 +812,18 @@ register_activation_hook(__FILE__,"rb_agency_notify_installation");
 		// Drop the tables
 		global $wpdb;	// Required for all WordPress database manipulations
 
-		$wpdb->query("DROP TABLE " . table_agency_casting);
 		$wpdb->query("DROP TABLE " . table_agency_profile);
 		$wpdb->query("DROP TABLE " . table_agency_profile_media);
 		$wpdb->query("DROP TABLE " . table_agency_data_gender);
-		$wpdb->query("DROP TABLE " . table_agency_rel_taxonomy);
 		$wpdb->query("DROP TABLE " . table_agency_data_type);
+		$wpdb->query("DROP TABLE " . table_agency_data_media);
 		$wpdb->query("DROP TABLE " . table_agency_customfields);
 		$wpdb->query("DROP TABLE " . table_agency_customfield_mux);
 		$wpdb->query("DROP TABLE " . table_agency_searchsaved);
 		$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
+		$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
+		$wpdb->query("DROP TABLE " . table_agency_castingcart);
+
 
 		// Final Cleanup
 		delete_option('rb_agency_options');

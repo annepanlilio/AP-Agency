@@ -405,7 +405,7 @@ global $wpdb;
 		$wpdb->query("ALTER TABLE rb_agency_searchsaved_mux RENAME TO {$wpdb->prefix}agency_searchsaved_mux");
 		$wpdb->query("ALTER TABLE rb_agency_savedfavorite RENAME TO {$wpdb->prefix}agency_savedfavorite");
 		$wpdb->query("ALTER TABLE rb_agency_castingcart RENAME TO {$wpdb->prefix}agency_castingcart");
-		$wpdb->query("ALTER TABLE rb_agency_mediacategory RENAME TO {$wpdb->prefix}agency_data_medias");
+		$wpdb->query("ALTER TABLE rb_agency_mediacategory RENAME TO {$wpdb->prefix}agency_data_media");
 
 		update_option('rb_agency_version', "2.0.1");
 	}
