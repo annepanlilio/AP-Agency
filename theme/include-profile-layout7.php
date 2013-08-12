@@ -52,9 +52,9 @@ Custom Layout 7
 			</div><!-- .portfolio-info -->
 
 			<div id="profile-slider" class="flexslider col_8 column">
-				<ul class="slides">
+				<ul class="slides" id="img_slde">
 					<?php
-                                       	// this will be a flag in the future. for enabling
+					// this will be a flag in the future. for enabling
 					// two images in the slider.
 					$option_two_image = 1;
 					$ProfileMediaPrimary = ""; 
@@ -72,7 +72,7 @@ Custom Layout 7
 												echo "<li>";
 										   } 
 
-											echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a>";
+											echo "<figure class=\"multi\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
 
 										   $open++;
 										   if($open == 3){
@@ -83,9 +83,9 @@ Custom Layout 7
 								   } else {
 			                              
 										   if($dataImg['ProfileMediaPrimary']==1){
-												$ProfileMediaPrimary= 	"<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+												$ProfileMediaPrimary= 	"<li><figure><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
 											} else {
-												$ProfileMediaSecondry .= "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+												$ProfileMediaSecondry .= "<li><figure><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
 											}
 											echo $ProfileMediaPrimary; 
 											echo $ProfileMediaSecondry; 
@@ -169,33 +169,28 @@ Custom Layout 7
 						for($x = 1; $x <=3 ; $x++){
 						?>	
 						function onYReady<?php echo $x; ?>(event) {
-								//event.target.playVideo();
-								jQuery('a').click(function(e) { 
 									yPlayer<?php echo $x;?>.stopVideo();
 									e.preventDefault();
-								});
 							}
 						<?php } ?>	
 
 			</script>
-                        
-			<ul id="profile-links">
-
-				<script type="text/javascript">
+			
+			<script type="text/javascript">
 
 					jQuery(document).ready(function(){
 						  
 						  jQuery("#videos-carousel").find("li").click(function(){
 							  var _next = "#" + jQuery(this).attr("class");
 							  var _curr = jQuery("#video_player").find(".act_vids");
-								  _curr.removeClass("act_vids");
+							  _curr.removeClass("act_vids");
 								  _curr.hide();	
 								  jQuery(_next).parent().show();
 								  jQuery(_next).parent().addClass("act_vids");
 						  });
 						  
 						  jQuery("#vid_changer").width(jQuery("#video_player").width()+"px");
-						  
+						  	
 						  jQuery('#videos-carousel').flexslider({
 							animation: "slide",
 							controlNav: false,
@@ -214,11 +209,11 @@ Custom Layout 7
 							sync: "#videos-carousel"
 						  });
 						
-						jQuery("a.showSingle1[target='1']").click(function(){
+						jQuery("a.showSingle1").click(function(){
 							jQuery("#profile-slider").show();
 							jQuery("#video_player").hide();
 						});
-						jQuery("a.showSingle3[target='2']").click(function(){
+						jQuery("a.showSingle3").click(function(){
 							jQuery("#profile-slider").hide();
 							jQuery("#video_player").show();
 						});
@@ -231,6 +226,7 @@ Custom Layout 7
 							jQuery("#profile-slider").show();
 							jQuery("#video_player").hide();
 						});
+						
 						jQuery(".save_fav").click(function(){
 							ajax_submit(jQuery(this),"favorite");
 						});
@@ -268,6 +264,9 @@ Custom Layout 7
 					});
 				</script>
 
+
+			<ul id="profile-links">
+
 				<?php if (is_user_logged_in()) { 	
 
 					$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
@@ -281,15 +280,15 @@ Custom Layout 7
 					
 					$count_castingcart = mysql_num_rows($query_castingcart);
 		
-					if(is_permitted('casting')){ ?>
+					if($count_castingcart>0 && is_permitted('casting')){	 ?>
 
 						<li class="casting"><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
 						<?php }else{ ?>
 						<li><a  class="save_cart" id="mycart_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
 						<li id="mycart_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
 						<?php } 
-						if(is_permitted('favorite')){	 ?>
-						<li class="favorite"><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
+						if($count_favorite>0 && is_permitted('favorite')){	 ?>
+						<li class="favorite"><a  href="<?php echo get_bloginfo('url')?>/profile-favorites/"><?php echo __("View Favorites", rb_agency_TEXTDOMAIN);?></a></li>
 						<?php }else{ ?>
 						<li><a  class="save_fav" id="myfav_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
 						<li id="myfav_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
@@ -299,9 +298,9 @@ Custom Layout 7
 				<?php
 				} ?>
 				
-					<li><a  class="showSingle1" target="1">Pictures</a></li>
-					<li><a   class="showSingle2" target="3">Experience</a></li>
-					<li><a  class="showSingle3" target="2">Videos</a></li>
+					<li><a href="javascript:;" class="showSingle1" >Pictures</a></li>
+					<li><a href="javascript:;" class="showSingle2" >Experience</a></li>
+					<li><a href="javascript:;" class="showSingle3" >Videos</a></li>
 					<?php echo '<li id="resultsGoHereAddtoCart"></li>';?>				
 			</ul>
 
@@ -318,7 +317,7 @@ Custom Layout 7
 							$open = 1;
 							while ($dataImg = mysql_fetch_array($resultsImg)) {
 								// testing
-								if($ProfileID == 4){	
+								if($option_two_image){	
 												if($open==1){
 													  $close = false;
 													  echo "<li><figure class=\"multi\">";
@@ -343,7 +342,7 @@ Custom Layout 7
 													echo $ProfileMediaSecondry; 
 								}
 							}
-							if($ProfileID == 4 && !$close){
+							if($option_two_image && !$close){
 								echo "</li>\n";
 							}
 				?>			
