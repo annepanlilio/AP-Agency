@@ -8,9 +8,17 @@
   Author URI: http://rob.bertholf.com/
   Version: 2.0.1
 */
-$rb_agency_VERSION = "2.0.1"; // starter
-if(!get_option("rb_agency_version")){  add_option("rb_agency_version", $rb_agency_VERSION , '', 'no');  update_option("rb_agency_version", $rb_agency_VERSION);}
 
+// Delcare Version
+$rb_agency_VERSION = "2.0.1";
+	// Store Version Number
+	if(!get_option("rb_agency_version") || get_option("rb_agency_version") <> $rb_agency_VERSION){
+		add_option("rb_agency_version", $rb_agency_VERSION , '', 'no');  update_option("rb_agency_version", $rb_agency_VERSION);
+	}
+	// Define for good measure
+	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
+
+// Start Session
 if (!session_id()) session_start();
 
 // Requires 2.8 or more
@@ -40,7 +48,7 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	define("rb_agency_UPLOADPATH", $rb_agency_WPUPLOADARRAY['basedir'] ."/profile-media/" ); // /home/content/99/6048999/html/domain.com/wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_TEXTDOMAIN", basename(dirname( __FILE__ )) ); //   rb-agency
 
-	// Clean Up:
+	// TODO: Clean Up:
 	$pageURL = '';
 	if ($_SERVER["SERVER_PORT"] != "80") {
 		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
@@ -101,12 +109,6 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 		// Time for a diaper change, call the upgrade script
 		include_once(dirname(__FILE__).'/upgrade.php');
 	}
-
-// Declare Version
-	$rb_agency_storedversion = get_option("rb_agency_version");
-	$rb_agency_VERSION = get_option("rb_agency_version");
-	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
-
 
 // Call default functions
 	include_once(dirname(__FILE__).'/functions.php');

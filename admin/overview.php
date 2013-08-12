@@ -1,20 +1,19 @@
-<div class="wrap">        
-    <?php 
-    // Include Admin Menu
-    include ("admin-menu.php"); ?>
-
-
 <?php
-	global $wpdb;
-	$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-	get_currentuserinfo(); global $user_level;
-?>
+global $wpdb, $user_level;
 
+// Get Unit Type
+$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+get_currentuserinfo(); 
+
+?>
+<div class="wrap">
+	<?php 
+	// Include Admin Menu
+	include ("admin-menu.php"); ?>
 
 <div id="welcome-panel" class="welcome-panel">
 	<div class="welcome-panel-content">
-
 
 		<div class="welcome-panel-column-container">
 			<div class="welcome-panel-column">
@@ -26,7 +25,7 @@
 					if ($user_level >= 7) {
 						echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
 
-						$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." ");
+						$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender);
 						$queryGenderCount = mysql_num_rows($queryGenderResult);
 
 						while($fetchGender = mysql_fetch_assoc($queryGenderResult)){

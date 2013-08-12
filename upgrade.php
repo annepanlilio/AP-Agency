@@ -34,12 +34,13 @@ global $wpdb;
 		"rb_agency_option_customfield_loggedin_admin" => "1"
 		);
 
-/**
- * Ensure directories are setup
- *
- *	if (!isset($rb_agency_storedversion) && empty($rb_agency_storedversion)) { // Upgrade from ??
- *		update_option('rb_agency_version', "1.9");
- *	}
+/*
+ * Enable if we do not have a version number
+
+	// Upgrade from unknonwn version
+	if (!isset(get_option('rb_agency_version')) && empty(get_option('rb_agency_version'))) { 
+ 		update_option('rb_agency_version', "1.9");
+	}
  */
 
 	// Safe Add column
