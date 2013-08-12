@@ -2120,50 +2120,41 @@ function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
 /*/		
 function rb_agency_get_miscellaneousLinks($ProfileID = ""){
  
-	$rb_agency_options_arr 						= get_option('rb_agency_options');
-	$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
-	$rb_agency_option_profilelist_castingcart 	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
 	rb_agency_checkExecution();
 
-	if ($rb_agency_option_profilelist_favorite) {
-		//Execute query - Favorite Model
+	$disp = "";
+	$disp .= "<div class=\"favorite-casting\">";
+
+	if (is_permitted('favorite')) {
 		if(!empty($ProfileID)){
 			$queryFavorite = mysql_query("SELECT fav.SavedFavoriteTalentID as favID FROM ".table_agency_savedfavorite." fav WHERE ".rb_agency_get_current_userid()." = fav.SavedFavoriteProfileID AND fav.SavedFavoriteTalentID = '".$ProfileID."' ") or die(mysql_error());
 			$dataFavorite = mysql_fetch_assoc($queryFavorite); 
 			$countFavorite = mysql_num_rows($queryFavorite);
+			if($countFavorite <= 0){
+					$disp .= "    <div class=\"favorite\"><a title=\"Save to Favorites\" rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$ProfileID."\"></a></div>\n";
+			}else{
+					$disp .= "<div class=\"favorite\"><a rel=\"nofollow\" title=\"Remove from Favorites\" href=\"javascript:;\" class=\"favorited\" id=\"".$ProfileID."\"></a></div>\n";
+			}					
+
 		}
 	}	
 	
-	if ($rb_agency_option_profilelist_castingcart) {
-      	//Execute query - Casting Cart
+	if (is_permitted('casting')) {
 		if(!empty($ProfileID)){
 			$queryCastingCart = mysql_query("SELECT cart.CastingCartTalentID as cartID FROM ".table_agency_castingcart."  cart WHERE ".rb_agency_get_current_userid()." = cart.CastingCartProfileID AND cart.CastingCartTalentID = '".$ProfileID."' ") or die(mysql_error());
 			$dataCastingCart = mysql_fetch_assoc($queryCastingCart); 
 			$countCastingCart = mysql_num_rows($queryCastingCart);
+			if($countCastingCart <=0){
+					$disp .= "<div class=\"castingcart\"><a title=\"Add to Casting Cart\" href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"save_castingcart\"></a></div></li>";
+			} else {
+					if(get_query_var('type')=="casting"){ //hides profile block when icon is click
+						$divHide="onclick=\"javascript:document.getElementById('div$ProfileID').style.display='none';\"";
+					}
+					$disp .= "<div class=\"castingcart\"><a $divHide href=\"javascript:void(0)\"  id=\"".$ProfileID."\" title=\"Remove from Casting Cart\"  class=\"saved_castingcart\"></a></div>";
+			}
 		}
 	}
 
-	$disp = "";
-	$disp .= "<div class=\"favorite-casting\">";
-	if ($rb_agency_option_profilelist_favorite) {
-		
-		if($countFavorite <= 0){
-			$disp .= "    <div class=\"favorite\"><a title=\"Save to Favorites\" rel=\"nofollow\" href=\"javascript:;\" class=\"save_favorite\" id=\"".$ProfileID."\"></a></div>\n";
-		}else{
-			$disp .= "<div class=\"favorite\"><a rel=\"nofollow\" title=\"Remove from Favorites\" href=\"javascript:;\" class=\"favorited\" id=\"".$ProfileID."\"></a></div>\n";
-		}					
-	}
-			
-	if ($rb_agency_option_profilelist_castingcart) {
-		if($countCastingCart <=0){
-			$disp .= "<div class=\"castingcart\"><a title=\"Add to Casting Cart\" href=\"javascript:;\" id=\"".$ProfileID."\"  class=\"save_castingcart\"></a></div></li>";
-		} else {
-			if(get_query_var('type')=="casting"){ //hides profile block when icon is click
-			 	$divHide="onclick=\"javascript:document.getElementById('div$ProfileID').style.display='none';\"";
-			}
-			$disp .= "<div class=\"castingcart\"><a $divHide href=\"javascript:void(0)\"  id=\"".$ProfileID."\" title=\"Remove from Casting Cart\"  class=\"saved_castingcart\"></a></div>";
-	  	}
-	}
 	$disp .= "</div><!-- .favorite-casting -->";
  	return $disp; 
 }
@@ -2651,78 +2642,48 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 	function rb_agency_save_favorite_javascript() {
 	?>
 
- <!--RB Agency Favorite -->           
-<script type="text/javascript" >jQuery(document).ready(function() { 
-	jQuery(".favorite a:first, .favorite a").click(function(){
-
-		var Obj = jQuery(this);
-		jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',
-		data: {action: 'rb_agency_save_favorite',  'talentID': jQuery(this).attr("id")},
-
-		success: function(results) {
-		if(results=='error'){ 
-			Obj.fadeOut().empty().html("Error in query. Try again").fadeIn(); 
-		} else if(results==-1) { 
-			Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();
-			setTimeout(function() { 
-				if(Obj.attr("class")=="save_favorite"){ 
-				        
-					Obj.fadeOut().empty().html("").fadeIn();  
-					Obj.attr('title', 'Save to Favorites'); 
+		 <!--RB Agency Favorite -->           
+		<script type="text/javascript" >jQuery(document).ready(function() { 
+			jQuery(".favorite a:first, .favorite a").click(function(){
+		
+				var Obj = jQuery(this);
+				jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',
+				data: {action: 'rb_agency_save_favorite',  'talentID': jQuery(this).attr("id")},
+		
+				success: function(results) {
+				if(results=='error'){ 
+					Obj.fadeOut().empty().html("Error in query. Try again").fadeIn(); 
+				} else if(results==-1) { 
+					Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();
+					setTimeout(function() { 
+						if(Obj.attr("class")=="save_favorite"){ 
+								
+							Obj.fadeOut().empty().html("").fadeIn();  
+							Obj.attr('title', 'Save to Favorites'); 
+						} else { 
+							Obj.fadeOut().empty().html("Favorited").fadeIn();  
+							Obj.attr('title', 'Remove from Favorites');  
+						} 
+					}, 2000);  
 				} else { 
-					Obj.fadeOut().empty().html("Favorited").fadeIn();  
-					Obj.attr('title', 'Remove from Favorites');  
-				} 
-			}, 2000);  
-		} else { 
-			if(Obj.attr("class")=="save_favorite") { 
-				Obj.empty().fadeOut().empty().html("").fadeIn(); 
-				Obj.attr("class","favorited"); 
-				Obj.attr('title', 'Remove from Favorites') 
-			}else{ 
-				Obj.empty().fadeOut().empty().html("").fadeIn();  
-				Obj.attr('title', 'Save to Favorites'); 
-				Obj.attr('href', '<?php echo get_bloginfo('url')?>/profile-favorite'); 
-				jQuery(this).find("a[class=view_all_favorite]").remove(); 
-				Obj.attr("class","save_favorite");
-				<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){ 
-				$rb_agency_options_arr = get_option('rb_agency_options');
-				$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];  ?> 
-				if(jQuery("input[type=hidden][name=favorite]").val() == 1){ 
-					Obj.closest("div[class=profile-list-layout0]").fadeOut();} <?php }?>
-		    }
-		}}})});});
-</script>
-<!--END RB Agency Favorite -->   
-
-
-
-
- <!--RB Agency Favorite -->           
-<script type="text/javascript" >jQuery(document).ready(function() { 
-	jQuery(".newfavorite a:first, .newfavorite a").click(function(){
-
-		var Obj = jQuery(this);
-		jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',
-		data: {action: 'rb_agency_save_favorite',  'talentID': jQuery(this).attr("id")},
-
-		success: function(results) {
-		if(Obj.attr("class")=="save_favorite") { 
-                                Obj.removeAttr('id');
-                                Obj.removeAttr('class');
-				Obj.empty().fadeOut().empty().html("VIEW FAVORITES").fadeIn(); 
-				Obj.attr('title', 'View Favorites');
-                                Obj.closest('div').attr('class', 'viewfavorites');
-                                Obj.attr('href', '<?php echo get_bloginfo('url'); ?>/profile-favorite/'); 
-			
-                        }
-                        }
-                        });
-                        });
-                        });
-</script>
-<!--END RB Agency Favorite -->
-
+					if(Obj.attr("class")=="save_favorite") { 
+						Obj.empty().fadeOut().empty().html("").fadeIn(); 
+						Obj.attr("class","favorited"); 
+						Obj.attr('title', 'Remove from Favorites') 
+					}else{ 
+						Obj.empty().fadeOut().empty().html("").fadeIn();  
+						Obj.attr('title', 'Save to Favorites'); 
+						jQuery(this).find("a[class=view_all_favorite]").remove(); 
+						Obj.attr("class","save_favorite");
+						<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){ 
+						$rb_agency_options_arr = get_option('rb_agency_options');
+						$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];  ?> 
+						if(jQuery("input[type=hidden][name=favorite]").val() == 1){ 
+							Obj.closest("div[class=profile-list-layout0]").fadeOut();} <?php }?>
+					}
+				}}})});});
+		</script>
+		<!--END RB Agency Favorite -->   
 
 <!-- [class=profile-list-layout<?php echo (int)$rb_agency_option_layoutprofilelist; ?>]-->
 		<?php
@@ -2730,7 +2691,7 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 
 	if($rb_agency_option_profilelist_favorite){
 		 add_action('wp_footer', 'rb_agency_save_favorite_javascript');
-	 add_action('wp_ajax_rb_agency_save_favorite', 'rb_agency_save_favorite');
+	 	 add_action('wp_ajax_rb_agency_save_favorite', 'rb_agency_save_favorite');
 	}
 
 //****************************************************************************************************//
@@ -2738,10 +2699,8 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 
 		    $rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
-			
-
-
-			function rb_agency_save_castingcart() {
+	
+	function rb_agency_save_castingcart() {
 				global $wpdb;
 			
 				if(is_user_logged_in()){ 
@@ -2769,44 +2728,35 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 		
 		function rb_agency_save_castingcart_javascript() {
 		?>
-<!--RB Agency CastingCart -->
-<script type="text/javascript" >jQuery(document).ready(function($) { $("div[class=castingcart] a").click(function(){var Obj = $(this);jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',data: {action: 'rb_agency_save_castingcart',  'talentID': $(this).attr("id")},success: function(results) {   if(results=='error'){ Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();  } else if(results==-1){ Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();  setTimeout(function() {   if(Obj.attr("class")=="save_castingcart"){  Obj.fadeOut().empty().html("").fadeIn(); }else{  Obj.fadeOut().empty().html("").fadeIn();  } }, 2000);  } else{ if(Obj.attr("class")=="save_castingcart"){
-
-Obj.empty().fadeOut().html("").fadeIn();  Obj.attr("class","saved_castingcart"); Obj.attr('title', 'Remove from Casting Cart'); 
-
-} else { Obj.empty().fadeOut().html("").fadeIn();  Obj.attr("class","save_castingcart"); Obj.attr('title', 'Add to Casting Cart');   $(this).find("a[class=view_all_castingcart]").remove();  <?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){  $rb_agency_options_arr = get_option('rb_agency_options'); $rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist']; ?> if($("input[type=hidden][name=castingcart]").val() == 1){Obj.closest("div[class=profile-list-layout0]").fadeOut();  } <?php } ?> } }}}) });});</script>
- <!--END RB Agency CastingCart -->
- 
- 
- <!--RB Agency CastingCart -->
-<script type="text/javascript" >
-
-jQuery(document).ready(function($) { 
-    
-    $("div[class=newcastingcart] a").click(function(){
-        
-        var Obj = $(this);
-        jQuery.ajax({
-            type: 'POST',
-            url: '<?php echo admin_url('admin-ajax.php'); ?>',
-            data: {
-                action: 'rb_agency_save_castingcart',  
-                'talentID': $(this).attr("id")
-            },
-            success: function(results) {  
-            
-                Obj.removeAttr('id');
-                Obj.removeAttr('class');
-                Obj.empty().fadeOut().html("VIEW CASTING CART").fadeIn();
-                Obj.closest('div').attr('class', 'gotocastingcard'); 
-                Obj.attr('href', "<?php echo get_bloginfo("wpurl"); ?>" + "/profile-casting/");
-           }});
-           });
-           });
-           
-</script>
- <!--END RB Agency CastingCart -->
- 
+				<!--RB Agency CastingCart -->
+				<script type="text/javascript" >
+					jQuery(document).ready(function($) { 
+						$("div[class=castingcart] a").click(function(){
+							var Obj = $(this);jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',data: {action: 'rb_agency_save_castingcart',  'talentID': $(this).attr("id")},
+								success: function(results) {   
+									if(results=='error'){ Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();  } 
+									else if(results==-1){ Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();  
+											setTimeout(function() {   
+												if(Obj.attr("class")=="save_castingcart"){  
+													Obj.fadeOut().empty().html("").fadeIn();
+												}else{  
+													Obj.fadeOut().empty().html("").fadeIn();  } 
+											 }, 2000);  }
+									else{ if(Obj.attr("class")=="save_castingcart"){
+										Obj.empty().fadeOut().html("").fadeIn();  
+										Obj.attr("class","saved_castingcart"); 
+										Obj.attr('title', 'Remove from Casting Cart'); 
+									} else { 
+									Obj.empty().fadeOut().html("").fadeIn();  
+									Obj.attr("class","save_castingcart"); 
+									Obj.attr('title', 'Add to Casting Cart');   
+									$(this).find("a[class=view_all_castingcart]").remove();  
+									<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){  
+												$rb_agency_options_arr = get_option('rb_agency_options'); 
+												$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist']; ?> 
+												if($("input[type=hidden][name=castingcart]").val() == 1){
+													Obj.closest("div[class=profile-list-layout0]").fadeOut();  } <?php } ?> } }}}) });});</script>
+				 <!--END RB Agency CastingCart -->
  
            <?php
 		}
@@ -2815,32 +2765,6 @@ jQuery(document).ready(function($) {
 	  	add_action('wp_ajax_rb_agency_save_castingcart', 'rb_agency_save_castingcart');
 	  	add_action('wp_footer', 'rb_agency_save_castingcart_javascript');
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*/
 * ======================== Get ProfileID by UserLinkedID ===============
@@ -3026,7 +2950,6 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 	return  $fetch["ProfileGallery"];
 }
 
-
 function getExperience($pid){ 
 	$query = mysql_query("SELECT ProfileCustomValue FROM ".table_agency_customfield_mux." WHERE ProfileID = '".$pid."' AND ProfileCustomID ='16' ");
     $fetch = mysql_fetch_assoc($query);
@@ -3162,7 +3085,6 @@ function rb_display_profile_list(){
     echo "</div>";
 
 }
-
 
 add_action('wp_ajax_send_mail', 'register_and_send_email');
 
@@ -3428,37 +3350,15 @@ function featured_homepage(){
 	
 }
 
-
-
-
-
-
 // *************************************************************************************************** //
 /*
  *  Shortcodes
  */
-
-
 	// Search Form
 	function rb_agency_searchform($DataTypeID) {
 		$profilesearch_layout = "simple";
 		include("theme/include-profile-search.php"); 	
 	}
-
-
-
-
-
-
-
-// *************************************************************************************************** //
-/*
- *  ??????
- */
-
-
-
-
 
 // 5/15/2013 sverma@ Home page
 function featured_homepage_profile($count){
