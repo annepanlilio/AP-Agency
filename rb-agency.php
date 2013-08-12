@@ -93,6 +93,8 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 		define("table_agency_customfields", "{$wpdb->prefix}agency_customfields");
 	if (!defined("table_agency_customfield_mux"))
 		define("table_agency_customfield_mux", "{$wpdb->prefix}agency_customfield_mux");
+	if (!defined("table_agency_customfields_types"))
+		define("table_agency_customfields_types", "{$wpdb->prefix}agency_customfields_types");
 	if (!defined("table_agency_searchsaved"))
 		define("table_agency_searchsaved", "{$wpdb->prefix}agency_searchsaved");
 	// Visitor & Agent Experience
@@ -289,6 +291,16 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 				ProfileID BIGINT(20) NOT NULL DEFAULT '0',
 				ProfileCustomValue TEXT,
 				PRIMARY KEY (ProfileCustomMuxID)
+				);";
+			dbDelta($sql);
+
+			// Setup > Custom Field Types
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfields_types." (
+				ProfileCustomTypesID BIGINT(20) NOT NULL AUTO_INCREMENT,
+				ProfileCustomID BIGINT(20) NOT NULL,
+				ProfileCustomTitle VARCHAR(255),
+				ProfileCustomTypes VARCHAR(255),
+				PRIMARY KEY (ProfileCustomTypesID)
 				);";
 			dbDelta($sql);
 
@@ -828,6 +840,7 @@ register_activation_hook(__FILE__,"rb_agency_notify_installation");
 		$wpdb->query("DROP TABLE " . table_agency_data_media);
 		$wpdb->query("DROP TABLE " . table_agency_customfields);
 		$wpdb->query("DROP TABLE " . table_agency_customfield_mux);
+		$wpdb->query("DROP TABLE " . table_agency_customfields_types);
 		$wpdb->query("DROP TABLE " . table_agency_searchsaved);
 		$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
 		$wpdb->query("DROP TABLE " . table_agency_savedfavorite);

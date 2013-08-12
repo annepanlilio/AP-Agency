@@ -395,7 +395,6 @@ global $wpdb;
 		$results = $wpdb->query("DROP TABLE rb_agency_data_coloreye");
 		$results = $wpdb->query("DROP TABLE rb_agency_data_colorhair");
 		$results = $wpdb->query("DROP TABLE rb_agency_rel_taxonomy");
-		$results = $wpdb->query("DROP TABLE rb_agency_customfields_types");
 
 		// Rename tables to include prefix
 		$results = $wpdb->query("RENAME TABLE rb_agency_profile TO {$wpdb->prefix}agency_profile");
@@ -404,6 +403,7 @@ global $wpdb;
 		$results = $wpdb->query("RENAME TABLE rb_agency_data_type TO {$wpdb->prefix}agency_data_type");
 		$results = $wpdb->query("RENAME TABLE rb_agency_mediacategory TO {$wpdb->prefix}agency_data_media");
 		$results = $wpdb->query("RENAME TABLE rb_agency_customfields TO {$wpdb->prefix}agency_customfields");
+		$results = $wpdb->query("RENAME TABLE rb_agency_customfields_types TO {$wpdb->prefix}agency_customfields_types");
 		$results = $wpdb->query("RENAME TABLE rb_agency_customfield_mux TO {$wpdb->prefix}agency_customfield_mux");
 		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved TO {$wpdb->prefix}agency_searchsaved");
 		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved_mux TO {$wpdb->prefix}agency_searchsaved_mux");
