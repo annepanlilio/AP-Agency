@@ -80,20 +80,21 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 		define("table_agency_data_gender", "{$wpdb->prefix}agency_data_gender");
 	if (!defined("table_agency_data_type"))
 		define("table_agency_data_type", "{$wpdb->prefix}agency_data_type");
+	if (!defined("table_agency_mediacategory"))
+		define("table_agency_mediacategory", "{$wpdb->prefix}agency_data_media");
 	if (!defined("table_agency_customfields"))
 		define("table_agency_customfields", "{$wpdb->prefix}agency_customfields");
 	if (!defined("table_agency_customfield_mux"))
 		define("table_agency_customfield_mux", "{$wpdb->prefix}agency_customfield_mux");
 	if (!defined("table_agency_searchsaved"))
 		define("table_agency_searchsaved", "{$wpdb->prefix}agency_searchsaved");
+	// Visitor & Agent Experience
 	if (!defined("table_agency_searchsaved_mux"))
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
 	if (!defined("table_agency_castingcart"))
 		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
-	if (!defined("table_agency_mediacategory"))
-		define("table_agency_mediacategory", "{$wpdb->prefix}agency_mediacategory");
 
 // Do the tables exist?
 	if ($wpdb->get_var("show tables like '". table_agency_profile ."'") == table_agency_profile) { // No, it doesn't
@@ -824,18 +825,17 @@ register_activation_hook(__FILE__,"rb_agency_notify_installation");
 		$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
 		$wpdb->query("DROP TABLE " . table_agency_castingcart);
 
-
-		// Final Cleanup
+		// Delete Saved Settings
 		delete_option('rb_agency_options');
-		
+
+		// Deactivate Plugin
 		$thepluginfile = "rb-agency/rb-agency.php";
-		/*
 		$current = get_settings('active_plugins');
 		array_splice($current, array_search( $thepluginfile, $current), 1 );
 		update_option('active_plugins', $current);
-		*/
 		do_action('deactivate_' . $thepluginfile );
 
+		// Redirect back to Plugins
 		echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("One More Step", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
 		die;
 	}

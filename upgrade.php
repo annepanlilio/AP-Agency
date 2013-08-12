@@ -399,13 +399,13 @@ global $wpdb;
 		$wpdb->query("ALTER TABLE rb_agency_profile_media RENAME TO {$wpdb->prefix}agency_profile_media");
 		$wpdb->query("ALTER TABLE rb_agency_data_gender RENAME TO {$wpdb->prefix}agency_data_gender");
 		$wpdb->query("ALTER TABLE rb_agency_data_type RENAME TO {$wpdb->prefix}agency_data_type");
+		$wpdb->query("ALTER TABLE rb_agency_mediacategory RENAME TO {$wpdb->prefix}agency_data_media");
 		$wpdb->query("ALTER TABLE rb_agency_customfields RENAME TO {$wpdb->prefix}agency_customfields");
 		$wpdb->query("ALTER TABLE rb_agency_customfield_mux RENAME TO {$wpdb->prefix}agency_customfield_mux");
 		$wpdb->query("ALTER TABLE rb_agency_searchsaved RENAME TO {$wpdb->prefix}agency_searchsaved");
 		$wpdb->query("ALTER TABLE rb_agency_searchsaved_mux RENAME TO {$wpdb->prefix}agency_searchsaved_mux");
 		$wpdb->query("ALTER TABLE rb_agency_savedfavorite RENAME TO {$wpdb->prefix}agency_savedfavorite");
 		$wpdb->query("ALTER TABLE rb_agency_castingcart RENAME TO {$wpdb->prefix}agency_castingcart");
-		$wpdb->query("ALTER TABLE rb_agency_mediacategory RENAME TO {$wpdb->prefix}agency_data_media");
 
 		update_option('rb_agency_version', "2.0.1");
 	}
