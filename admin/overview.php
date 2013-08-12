@@ -41,7 +41,6 @@ get_currentuserinfo();
 				</ul>
 			</div>
 
-
 			<div class="welcome-panel-column" style="margin-left: 50px;">
 				<iframe src="http://player.vimeo.com/video/27752740" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
 			</div>

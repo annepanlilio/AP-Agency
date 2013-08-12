@@ -390,26 +390,25 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "2.0.0") {
 
 		// Remove unneeded tables
-		$wpdb->query("DROP TABLE rb_agency_data_ethnicity");
-		$wpdb->query("DROP TABLE rb_agency_data_colorskin");
-		$wpdb->query("DROP TABLE rb_agency_data_coloreye");
-		$wpdb->query("DROP TABLE rb_agency_data_colorhair");
+		$results = $wpdb->query("DROP TABLE rb_agency_data_ethnicity");
+		$results = $wpdb->query("DROP TABLE rb_agency_data_colorskin");
+		$results = $wpdb->query("DROP TABLE rb_agency_data_coloreye");
+		$results = $wpdb->query("DROP TABLE rb_agency_data_colorhair");
 
 		// Rename tables to include prefix
-		$wpdb->query("ALTER TABLE rb_agency_profile RENAME TO {$wpdb->prefix}agency_profile");
-		$wpdb->query("ALTER TABLE rb_agency_profile_media RENAME TO {$wpdb->prefix}agency_profile_media");
-		$wpdb->query("ALTER TABLE rb_agency_data_gender RENAME TO {$wpdb->prefix}agency_data_gender");
-		$wpdb->query("ALTER TABLE rb_agency_data_type RENAME TO {$wpdb->prefix}agency_data_type");
-		$wpdb->query("ALTER TABLE rb_agency_mediacategory RENAME TO {$wpdb->prefix}agency_data_media");
-		$wpdb->query("ALTER TABLE rb_agency_customfields RENAME TO {$wpdb->prefix}agency_customfields");
-		$wpdb->query("ALTER TABLE rb_agency_customfield_mux RENAME TO {$wpdb->prefix}agency_customfield_mux");
-		$wpdb->query("ALTER TABLE rb_agency_searchsaved RENAME TO {$wpdb->prefix}agency_searchsaved");
-		$wpdb->query("ALTER TABLE rb_agency_searchsaved_mux RENAME TO {$wpdb->prefix}agency_searchsaved_mux");
-		$wpdb->query("ALTER TABLE rb_agency_savedfavorite RENAME TO {$wpdb->prefix}agency_savedfavorite");
-		$wpdb->query("ALTER TABLE rb_agency_castingcart RENAME TO {$wpdb->prefix}agency_castingcart");
+		$results = $wpdb->query("RENAME TABLE rb_agency_profile RENAME TO {$wpdb->prefix}agency_profile");
+		$results = $wpdb->query("RENAME TABLE rb_agency_profile_media RENAME TO {$wpdb->prefix}agency_profile_media");
+		$results = $wpdb->query("RENAME TABLE rb_agency_data_gender RENAME TO {$wpdb->prefix}agency_data_gender");
+		$results = $wpdb->query("RENAME TABLE rb_agency_data_type RENAME TO {$wpdb->prefix}agency_data_type");
+		$results = $wpdb->query("RENAME TABLE rb_agency_mediacategory RENAME TO {$wpdb->prefix}agency_data_media");
+		$results = $wpdb->query("RENAME TABLE rb_agency_customfields RENAME TO {$wpdb->prefix}agency_customfields");
+		$results = $wpdb->query("RENAME TABLE rb_agency_customfield_mux RENAME TO {$wpdb->prefix}agency_customfield_mux");
+		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved RENAME TO {$wpdb->prefix}agency_searchsaved");
+		$results = $wpdb->query("RENAME TABLE rb_agency_searchsaved_mux RENAME TO {$wpdb->prefix}agency_searchsaved_mux");
+		$results = $wpdb->query("RENAME TABLE rb_agency_savedfavorite RENAME TO {$wpdb->prefix}agency_savedfavorite");
+		$results = $wpdb->query("RENAME TABLE rb_agency_castingcart RENAME TO {$wpdb->prefix}agency_castingcart");
 
 		update_option('rb_agency_version', "2.0.1");
 	}
-
 
 ?>
