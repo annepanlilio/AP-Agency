@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
   Plugin Name: RB Agency
   Text Domain: rb-agency
@@ -6,11 +6,11 @@
   Description: With this plugin you can easily manage models profiles and information.
   Author: Rob Bertholf
   Author URI: http://rob.bertholf.com/
-  Version: 1.9.9
+  Version: 2.0.1
 */
-$rb_agency_VERSION = "2.0.0"; // starter
+$rb_agency_VERSION = "2.0.1"; // starter
 if(!get_option("rb_agency_version")){  add_option("rb_agency_version", $rb_agency_VERSION , '', 'no');  update_option("rb_agency_version", $rb_agency_VERSION);}
-	
+
 if (!session_id()) session_start();
 
 // Requires 2.8 or more
@@ -30,20 +30,23 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	define("rb_agency_BASENAME", plugin_basename(__FILE__) );  // rb-agency/rb-agency.php
 	$rb_agency_WPURL = get_bloginfo("wpurl"); // http://domain.com/wordpress
 	$rb_agency_WPUPLOADARRAY = wp_upload_dir(); // Array  $rb_agency_WPUPLOADARRAY['baseurl'] $rb_agency_WPUPLOADARRAY['basedir']
-	define("rb_agency_BASEDIR", get_bloginfo("wpurl") ."/". PLUGINDIR ."/". dirname( plugin_basename(__FILE__) ) ."/" );  // http://domain.com/wordpress/wp-content/plugins/rb-agency/
-	define("rb_agency_BASEREL", str_replace(get_bloginfo('url'), '', rb_agency_BASEDIR));  // /wordpress/wp-content/uploads/profile-media/
-	define("rb_agency_BASEPATH", "/". PLUGINDIR ."/". dirname( plugin_basename(__FILE__) ) ."/" );  // wordpress/wp-content/plugins/rb-agency/
+
+	define("rb_agency_BASEDIR", plugin_dir_url( __FILE__ ) );
+	define("rb_agency_BASEREL", plugin_dir_path( __FILE__ ) );
+	define("rb_agency_BASEPATH", rb_agency_BASEREL );
+
 	define("rb_agency_UPLOADREL", str_replace(get_bloginfo('url'), '', $rb_agency_WPUPLOADARRAY['baseurl']) ."/profile-media/" );  // /wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_UPLOADDIR", $rb_agency_WPUPLOADARRAY['baseurl'] ."/profile-media/" );  // http://domain.com/wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_UPLOADPATH", $rb_agency_WPUPLOADARRAY['basedir'] ."/profile-media/" ); // /home/content/99/6048999/html/domain.com/wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_TEXTDOMAIN", basename(dirname( __FILE__ )) ); //   rb-agency
+
 	// Clean Up:
 	$pageURL = '';
- 	if ($_SERVER["SERVER_PORT"] != "80") {
-  		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
- 	} else {
-  		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
- 	}
+	if ($_SERVER["SERVER_PORT"] != "80") {
+		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	} else {
+		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	}
 
 // Call Language Options
 
@@ -55,66 +58,52 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	}
 
 	add_action('init', 'rb_agency_loadtranslation');
-	function rb_agency_loadtranslation(){
-		load_plugin_textdomain( rb_agency_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' ); 
-	}
+		function rb_agency_loadtranslation(){
+			load_plugin_textdomain( rb_agency_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' );
+		}
 	
 
 // *************************************************************************************************** //
-
-// Set Table Names
-	if (!defined("table_agency_casting"))
-		define("table_agency_casting", "rb_agency_casting");
-	if (!defined("table_agency_profile"))
-		define("table_agency_profile", "rb_agency_profile");
-	if (!defined("table_agency_profile_media"))
-		define("table_agency_profile_media", "rb_agency_profile_media");
-	if (!defined("table_agency_data_ethnicity"))
-		define("table_agency_data_ethnicity", "rb_agency_data_ethnicity");
-	if (!defined("table_agency_data_colorskin"))
-		define("table_agency_data_colorskin", "rb_agency_data_colorskin");
-	if (!defined("table_agency_data_coloreye"))
-		define("table_agency_data_coloreye", "rb_agency_data_coloreye");
-	if (!defined("table_agency_data_colorhair"))
-		define("table_agency_data_colorhair", "rb_agency_data_colorhair");
-	if (!defined("table_agency_data_gender"))
-		define("table_agency_data_gender", "rb_agency_data_gender");
-	if (!defined("table_agency_rel_taxonomy"))
-		define("table_agency_rel_taxonomy", "rb_agency_rel_taxonomy");
-	if (!defined("table_agency_data_type"))
-		define("table_agency_data_type", "rb_agency_data_type");
-	if (!defined("table_agency_customfields"))
-		define("table_agency_customfields", "rb_agency_customfields");
-	if (!defined("table_agency_customfield_mux"))
-		define("table_agency_customfield_mux", "rb_agency_customfield_mux");
-	if (!defined("table_agency_searchsaved"))
-		define("table_agency_searchsaved", "rb_agency_searchsaved");
-	if (!defined("table_agency_searchsaved_mux"))
-		define("table_agency_searchsaved_mux", "rb_agency_searchsaved_mux");
-	if (!defined("table_agency_savedfavorite"))
-		define("table_agency_savedfavorite", "rb_agency_savedfavorite");	
-	if (!defined("table_agency_castingcart"))
-		define("table_agency_castingcart", "rb_agency_castingcart");
-	if (!defined("table_agency_mediacategory"))
-		define("table_agency_mediacategory", "rb_agency_mediacategory");
-	if (!defined("table_agency_customfields_types"))
-	define("table_agency_customfields_types", "rb_agency_customfields_types");				
-
-
 // Declare Global WordPress Database Access
-    global $wpdb;
+	global $wpdb;
 
+/**
+ * Set Table Names
+ */
+	// Profile Records
+	if (!defined("table_agency_profile"))
+		define("table_agency_profile", "{$wpdb->prefix}agency_profile");
+	if (!defined("table_agency_profile_media"))
+		define("table_agency_profile_media", "{$wpdb->prefix}agency_profile_media");
+	// Configuration & Dropdown Values
+	if (!defined("table_agency_data_gender"))
+		define("table_agency_data_gender", "{$wpdb->prefix}agency_data_gender");
+	if (!defined("table_agency_data_type"))
+		define("table_agency_data_type", "{$wpdb->prefix}agency_data_type");
+	if (!defined("table_agency_customfields"))
+		define("table_agency_customfields", "{$wpdb->prefix}agency_customfields");
+	if (!defined("table_agency_customfield_mux"))
+		define("table_agency_customfield_mux", "{$wpdb->prefix}agency_customfield_mux");
+	if (!defined("table_agency_searchsaved"))
+		define("table_agency_searchsaved", "{$wpdb->prefix}agency_searchsaved");
+	if (!defined("table_agency_searchsaved_mux"))
+		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
+	if (!defined("table_agency_savedfavorite"))
+		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
+	if (!defined("table_agency_castingcart"))
+		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
+	if (!defined("table_agency_mediacategory"))
+		define("table_agency_mediacategory", "{$wpdb->prefix}agency_mediacategory");
 
 // Do the tables exist?
 	if ($wpdb->get_var("show tables like '". table_agency_profile ."'") == table_agency_profile) { // No, it doesn't
 		// Time for a diaper change, call the upgrade script
 		include_once(dirname(__FILE__).'/upgrade.php');
 	}
-	
 
 // Declare Version
 	$rb_agency_storedversion = get_option("rb_agency_version");
-	$rb_agency_VERSION = get_option("rb_agency_version");	
+	$rb_agency_VERSION = get_option("rb_agency_version");
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 
 
@@ -142,7 +131,7 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 			@mkdir(rb_agency_UPLOADPATH, 0755);
 			@chmod(rb_agency_UPLOADPATH, 0777);
 		}
-           
+
 		// Update the options in the database
 		if(!get_option("rb_agency_options"))
 		add_option("rb_agency_options",$rb_agency_options_arr);
@@ -158,139 +147,152 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 		 * checked if created.
 		 */
 		// Creating the tables!
-			$sql = "CREATE TABLE IF NOT EXISTS " . table_agency_profile . " (
-				ProfileID BIGINT(20) NOT NULL AUTO_INCREMENT,
-				ProfileUserLinked BIGINT(20) NOT NULL DEFAULT '0',
-				ProfileGallery VARCHAR(255),
-				ProfileContactDisplay VARCHAR(255),
-				ProfileContactNameFirst VARCHAR(255),
-				ProfileContactNameLast VARCHAR(255),
-				ProfileGender VARCHAR(255),
-				ProfileDateBirth DATE,
-				ProfileLocationStreet VARCHAR(255),
-				ProfileLocationCity VARCHAR(255),
-				ProfileLocationState VARCHAR(255),
-				ProfileLocationZip VARCHAR(255),
-				ProfileLocationCountry VARCHAR(255),
-				ProfileContactEmail VARCHAR(255),
-				ProfileContactWebsite VARCHAR(255),
-				ProfileContactPhoneHome VARCHAR(255),
-				ProfileContactPhoneCell VARCHAR(255),
-				ProfileContactPhoneWork VARCHAR(255),
-				ProfileContactLinkTwitter VARCHAR(255),
-				ProfileContactLinkFacebook VARCHAR(255),
-				ProfileContactLinkYoutube VARCHAR(255),
-				ProfileContactLinkFlickr VARCHAR(255),
-				ProfileDateCreated TIMESTAMP DEFAULT NOW(),
-				ProfileDateUpdated TIMESTAMP,
-				ProfileDateViewLast TIMESTAMP,
-				ProfileType VARCHAR(255),
-				ProfileIsActive INT(10) NOT NULL DEFAULT '0',
-				ProfileIsFeatured INT(10) NOT NULL DEFAULT '0',
-				ProfileIsPromoted INT(10) NOT NULL DEFAULT '0',
-				ProfileStatHits INT(10) NOT NULL DEFAULT '0',
-				PRIMARY KEY (ProfileID)
-				);";
-			dbDelta($sql);
-	
-			// Setup > Profile Media
-			$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_profile_media." (
-				ProfileID INT(10) NOT NULL DEFAULT '0',
-				ProfileMediaID INT(10) NOT NULL AUTO_INCREMENT,
-				ProfileMediaType VARCHAR(255),
-				ProfileMediaTitle VARCHAR(255),
-				ProfileMediaText TEXT,
-				ProfileMediaURL VARCHAR(255),
-				ProfileMediaPrimary INT(10) NOT NULL DEFAULT '0',
-				ProfileMediaFeatured INT(10) NOT NULL DEFAULT '0',
-				ProfileMediaOrder VARCHAR(55),
-				PRIMARY KEY (ProfileMediaID)
-				);";
-			dbDelta($sql);
-	
-			// Setup > Classification
-			$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_data_type." (
-				DataTypeID INT(10) NOT NULL AUTO_INCREMENT,
-				DataTypeTitle VARCHAR(255),
-				DataTypeTag VARCHAR(50),
-				PRIMARY KEY (DataTypeID)
-				);";
-			dbDelta($sql);
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Model')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Talent')");
+		$sql = "CREATE TABLE IF NOT EXISTS " . table_agency_profile . " (
+			ProfileID BIGINT(20) NOT NULL AUTO_INCREMENT,
+			ProfileUserLinked BIGINT(20) NOT NULL DEFAULT '0',
+			ProfileGallery VARCHAR(255),
+			ProfileContactDisplay VARCHAR(255),
+			ProfileContactNameFirst VARCHAR(255),
+			ProfileContactNameLast VARCHAR(255),
+			ProfileGender VARCHAR(255),
+			ProfileDateBirth DATE,
+			ProfileLocationStreet VARCHAR(255),
+			ProfileLocationCity VARCHAR(255),
+			ProfileLocationState VARCHAR(255),
+			ProfileLocationZip VARCHAR(255),
+			ProfileLocationCountry VARCHAR(255),
+			ProfileContactEmail VARCHAR(255),
+			ProfileContactWebsite VARCHAR(255),
+			ProfileContactPhoneHome VARCHAR(255),
+			ProfileContactPhoneCell VARCHAR(255),
+			ProfileContactPhoneWork VARCHAR(255),
+			ProfileContactLinkTwitter VARCHAR(255),
+			ProfileContactLinkFacebook VARCHAR(255),
+			ProfileContactLinkYoutube VARCHAR(255),
+			ProfileContactLinkFlickr VARCHAR(255),
+			ProfileDateCreated TIMESTAMP DEFAULT NOW(),
+			ProfileDateUpdated TIMESTAMP,
+			ProfileDateViewLast TIMESTAMP,
+			ProfileType VARCHAR(255),
+			ProfileIsActive INT(10) NOT NULL DEFAULT '0',
+			ProfileIsFeatured INT(10) NOT NULL DEFAULT '0',
+			ProfileIsPromoted INT(10) NOT NULL DEFAULT '0',
+			ProfileStatHits INT(10) NOT NULL DEFAULT '0',
+			PRIMARY KEY (ProfileID)
+			);";
+		dbDelta($sql);
 
-			// Setup > Taxonomy: Gender
-			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_gender ." (
-				GenderID INT(10) NOT NULL AUTO_INCREMENT,
-				GenderTitle VARCHAR(255),
-				PRIMARY KEY (GenderID)
-				);";
-			dbDelta($sql);
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Male')");
-			$results = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
-	
-			// Setup > Taxonomy: Actual Taxonomy
-			$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_rel_taxonomy." (
-				ProfileID BIGINT(20) NOT NULL DEFAULT 0,
-				term_taxonomy_id BIGINT(20) NOT NULL DEFAULT 0,
-				PRIMARY KEY (ProfileID,term_taxonomy_id)
-				);";
-			dbDelta($sql);
-	
-			
-	      	// Setup > Custom Field Types
-			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfields." (
-				ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
-				ProfileCustomTitle VARCHAR(255),
-				ProfileCustomType INT(10) NOT NULL DEFAULT '0',
-				ProfileCustomOptions TEXT,
-				ProfileCustomView INT(10) NOT NULL DEFAULT '0',
-				ProfileCustomOrder INT(10) NOT NULL DEFAULT '0',
-				ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0',
-				ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1',
-				ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1',
-				ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
-				ProfileCustomShowRegistration INT(10) NOT NULL DEFAULT '1',
-				ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1',
-				PRIMARY KEY (ProfileCustomID)
-				);";
-			dbDelta($sql);
-	 	// Populate Custom Fields
-		$query = mysql_query("SELECT ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = 'Ethnicity'");
-		$count = mysql_num_rows($query);
-		if ($count < 1) {
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (1, 'Ethnicity', 	3, '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|', 0, 1, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (2, 'Skin Tone', 	3, '|Fair|Medium|Dark|', 0, 2, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (3, 'Hair Color', 	3, '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|', 0, 3, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (4, 'Eye Color', 	3, '|Blue|Brown|Hazel|Green|Black|', 0, 4, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (5, 'Height', 		7, '3', 0, 5, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (6, 'Weight', 		7, '2', 0, 6, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (7, 'Shirt', 		1, '', 0, 8, 1, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (8, 'Waist', 		7, '1', 0, 9, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (9, 'Hips', 		7, '1', 0, 10, 2, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(10, 'Shoe Size', 	7, '1', 0, 11, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(11, 'Suit', 		3, '|36S|37S|38S|39S|40S|41S|42S|43S|44S|45S|46S|36R|38R|40R|42R|44R|46R|48R|50R|52R|54R|40L|42L|44L|46L|48L|50L|52L|54L|', 0, 7, 1, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(12, 'Inseam', 		7, '1', 0, 10, 1, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(13, 'Dress', 		3, '|2|4|6|8|10|12|14|16|18|', 0, 8, 2, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(14, 'Bust', 		3, '|32A|32B|32C|32D|32DD|34A|34B|34C|34D|34DD|36C|36D|36DD|', 0, 7, 2, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(15, 'Union', 		3, '|SAG/AFTRA|SAG ELIG|NON-UNION|', 0, 20, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(16, 'Experience', 	4, '', 0, 13, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1, 0, 1, 0)");
-		}
-	
+		// Setup > Profile Media
+		$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_profile_media." (
+			ProfileID INT(10) NOT NULL DEFAULT '0',
+			ProfileMediaID INT(10) NOT NULL AUTO_INCREMENT,
+			ProfileMediaType VARCHAR(255),
+			ProfileMediaTitle VARCHAR(255),
+			ProfileMediaText TEXT,
+			ProfileMediaURL VARCHAR(255),
+			ProfileMediaPrimary INT(10) NOT NULL DEFAULT '0',
+			ProfileMediaFeatured INT(10) NOT NULL DEFAULT '0',
+			ProfileMediaOrder VARCHAR(55),
+			PRIMARY KEY (ProfileMediaID)
+			);";
+		dbDelta($sql);
+
+		// Setup > Classification
+		$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_data_type." (
+			DataTypeID INT(10) NOT NULL AUTO_INCREMENT,
+			DataTypeTitle VARCHAR(255),
+			DataTypeTag VARCHAR(50),
+			PRIMARY KEY (DataTypeID)
+			);";
+		dbDelta($sql);
+			// Populate Initial Values
+			$data_type_exists = $wpdb->get_var( $wpdb->prepare( "SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s", 'Model' ) );
+			if ( !$data_type_exists ) {
+				$insert = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Model')");
+			}
+			$data_type_exists = $wpdb->get_var( $wpdb->prepare( "SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s", 'Talent' ) );
+			if ( !$data_type_exists ) {
+				$insert = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Talent')");
+			}
+
+		// Setup > Taxonomy: Gender
+		$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_gender ." (
+			GenderID INT(10) NOT NULL AUTO_INCREMENT,
+			GenderTitle VARCHAR(255),
+			PRIMARY KEY (GenderID)
+			);";
+		dbDelta($sql);
+			// Populate Initial Values
+			$data_gender_exists = $wpdb->get_var( $wpdb->prepare( "SELECT GenderID FROM " . table_agency_data_gender . " WHERE GenderTitle = %s", 'Male' ) );
+			if ( !$data_gender_exists ) {
+				$insert = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Male')");
+			}
+			$data_gender_exists = $wpdb->get_var( $wpdb->prepare( "SELECT GenderID FROM " . table_agency_data_gender . " WHERE GenderTitle = %s", 'Female' ) );
+			if ( !$data_gender_exists ) {
+				$insert = $wpdb->query("INSERT INTO " . table_agency_data_gender . " (GenderID, GenderTitle) VALUES ('','Female')");
+			}
+
+		// Setup > Taxonomy: Actual Taxonomy
+		$sql = "CREATE TABLE IF NOT EXISTS ".table_agency_rel_taxonomy." (
+			ProfileID BIGINT(20) NOT NULL DEFAULT 0,
+			term_taxonomy_id BIGINT(20) NOT NULL DEFAULT 0,
+			PRIMARY KEY (ProfileID,term_taxonomy_id)
+			);";
+		dbDelta($sql);
+
+		// Setup > Custom Field Types
+		$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfields." (
+			ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
+			ProfileCustomTitle VARCHAR(255),
+			ProfileCustomType INT(10) NOT NULL DEFAULT '0',
+			ProfileCustomOptions TEXT,
+			ProfileCustomView INT(10) NOT NULL DEFAULT '0',
+			ProfileCustomOrder INT(10) NOT NULL DEFAULT '0',
+			ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0',
+			ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1',
+			ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1',
+			ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
+			ProfileCustomShowRegistration INT(10) NOT NULL DEFAULT '1',
+			ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1',
+			PRIMARY KEY (ProfileCustomID)
+			);";
+		dbDelta($sql);
+			// Populate Initial Values
+			$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
+			if ( !$data_custom_exists ) {
+				// Assume the rest dont exist either
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (1, 'Ethnicity', 	3, '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|', 0, 1, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (2, 'Skin Tone', 	3, '|Fair|Medium|Dark|', 0, 2, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (3, 'Hair Color', 	3, '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|', 0, 3, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (4, 'Eye Color', 	3, '|Blue|Brown|Hazel|Green|Black|', 0, 4, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (5, 'Height', 		7, '3', 0, 5, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (6, 'Weight', 		7, '2', 0, 6, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (7, 'Shirt', 		1, '', 0, 8, 1, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (8, 'Waist', 		7, '1', 0, 9, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (9, 'Hips', 		7, '1', 0, 10, 2, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(10, 'Shoe Size', 	7, '1', 0, 11, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(11, 'Suit', 		3, '|36S|37S|38S|39S|40S|41S|42S|43S|44S|45S|46S|36R|38R|40R|42R|44R|46R|48R|50R|52R|54R|40L|42L|44L|46L|48L|50L|52L|54L|', 0, 7, 1, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(12, 'Inseam', 		7, '1', 0, 10, 1, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(13, 'Dress', 		3, '|2|4|6|8|10|12|14|16|18|', 0, 8, 2, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(14, 'Bust', 		3, '|32A|32B|32C|32D|32DD|34A|34B|34C|34D|34DD|36C|36D|36DD|', 0, 7, 2, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(15, 'Union', 		3, '|SAG/AFTRA|SAG ELIG|NON-UNION|', 0, 20, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(16, 'Experience', 	4, '', 0, 13, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1, 0, 1, 0)");
+				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1, 0, 1, 0)");
+			}
+
 			// Setup > Custom Field Types > Mux Values
-			$sql9mux = "CREATE TABLE IF NOT EXISTS ". table_agency_customfield_mux ." (
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfield_mux ." (
 				ProfileCustomMuxID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileCustomID BIGINT(20) NOT NULL DEFAULT '0',
 				ProfileID BIGINT(20) NOT NULL DEFAULT '0',
 				ProfileCustomValue TEXT,
 				PRIMARY KEY (ProfileCustomMuxID)
 				);";
-			dbDelta($sql9mux);
-	
+			dbDelta($sql);
+
 			// Setup > Search Saved
-			$sql10 = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved ." (
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved ." (
 				SearchID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SearchTitle VARCHAR(255),
 				SearchType INT(10) NOT NULL DEFAULT '0',
@@ -299,10 +301,10 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 				SearchDate TIMESTAMP DEFAULT NOW(),
 				PRIMARY KEY (SearchID)
 				);";
-			dbDelta($sql10);
+			dbDelta($sql);
 
 			// Setup > Custom Field Types > Mux Values
-			$sql10mux = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved_mux ." (
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved_mux ." (
 				SearchMuxID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SearchID BIGINT(20) NOT NULL DEFAULT '0',
 				SearchMuxHash VARCHAR(255),
@@ -314,48 +316,42 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 				SearchMuxSent TIMESTAMP DEFAULT NOW(),
 				PRIMARY KEY (SearchMuxID)
 				);";
-			dbDelta($sql10mux);
-           	// Setup > Save Favorite
-			$sql11 = "CREATE TABLE IF NOT EXISTS ". table_agency_savedfavorite." (
+			dbDelta($sql);
+
+			// Setup > Save Favorite
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_savedfavorite." (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
-			      SavedFavoriteTalentID VARCHAR(255),
+				SavedFavoriteTalentID VARCHAR(255),
 				PRIMARY KEY (SavedFavoriteID)
 				);";
-			dbDelta($sql11);
+			dbDelta($sql);
 
-			
 			// Setup > Add to Casting Cart
-			$sql12 = "CREATE TABLE IF NOT EXISTS ". table_agency_castingcart." (
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_castingcart." (
 				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				CastingCartProfileID VARCHAR(255),
-			      CastingCartTalentID VARCHAR(255),
+				CastingCartTalentID VARCHAR(255),
 				PRIMARY KEY (CastingCartID)
 				);";
-			dbDelta($sql12);		
+			dbDelta($sql);
+
 			// Setup > Add to Casting Cart
-			$sql13 = "CREATE TABLE IF NOT EXISTS ". table_agency_mediacategory." (
+			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_mediacategory." (
 				MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				MediaCategoryTitle VARCHAR(255),
 				MediaCategoryGender VARCHAR(255),
-			      MediaCategoryOrder VARCHAR(255),
+				MediaCategoryOrder VARCHAR(255),
 				PRIMARY KEY (MediaCategoryID)
 				);";
-			mysql_query($sql13);	
-		  
-		   // Setup > Custom Field Types
-			$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_customfields_types." (
-				ProfileCustomTypesID BIGINT(20) NOT NULL AUTO_INCREMENT,
-				ProfileCustomID BIGINT(20) NOT NULL,
-				ProfileCustomTitle VARCHAR(255),
-				ProfileCustomTypes VARCHAR(255),
-				PRIMARY KEY (ProfileCustomTypesID)
-				);";
-			dbDelta($sql);		
+			dbDelta($sql);
+
+		// Flush rewrite rules
+		rb_agency_flushRules();
 	}
+
 //Activate Install Hook
 register_activation_hook(__FILE__,'rb_agency_install');
-		
 
 // *************************************************************************************************** //
 // Register Administrative Settings
@@ -379,22 +375,21 @@ if ( is_admin() ){
 			//$input['sometext'] =  wp_filter_nohtml_kses($input['sometext']);
 			
 			//return $input;
-		}	
+		}
 
-	
 	/****************  Settings in Plugin Page ***********************/
-	
+
 	add_action( 'plugins_loaded', 'rb_agency_init' );
 		// Initialize Settings
 		function rb_agency_init() {
-		  	if ( is_admin() ){
+			if ( is_admin() ){
 				add_action('admin_menu', 'rb_agency_addsettingspage');
-		  	}
+			}
 		}
 		function rb_agency_on_load() {
 			add_filter( 'plugin_action_links_' . rb_agency_BASENAME, 'rb_agency_filter_plugin_meta', 10, 2 );  
 		}
-		
+
 		// Add Link to Admin Menu
 		function rb_agency_filter_plugin_meta($links, $file) {
 			if (empty($links))
@@ -416,29 +411,27 @@ if ( is_admin() ){
 			add_action( 'load-plugins.php', 'rb_agency_on_load' );
 			//wp_enqueue_script('jquery');
 		}
-	
-	
-	
+
 	/****************  Add Custom Meta Box to Pages/Posts  *********/
-	
+
 	add_action('admin_menu', 'rb_agency_add_custom_box');
 		// Add Custom Meta Box to Posts / Pages
 		function rb_agency_add_custom_box() {
-		  	if( function_exists( 'add_meta_box' )) {
+			if( function_exists( 'add_meta_box' )) {
 				add_meta_box( 'rb_agency_sectionid', __( 'Insert Profiles', rb_agency_TEXTDOMAIN), 
 					'rb_agency_inner_custom_box', 'post', 'advanced' );
 				add_meta_box( 'rb_agency_sectionid', __( 'Insert Profiles', rb_agency_TEXTDOMAIN), 
 					'rb_agency_inner_custom_box', 'page', 'advanced' );
-		   	} else {
+			} else {
 				add_action('dbx_post_advanced', 'rb_agency_old_custom_box' );
 				add_action('dbx_page_advanced', 'rb_agency_old_custom_box' );
-		  	}
+			}
 		}
-	   
+
 		/* Prints the inner fields for the custom post/page section */
 		function rb_agency_inner_custom_box() {
-		  // Use nonce for verification
-		  echo '<input type="hidden" name="rb_agency_noncename" id="rb_agency_noncename" value="'. wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+		// Use nonce for verification
+		echo '<input type="hidden" name="rb_agency_noncename" id="rb_agency_noncename" value="'. wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 		
 			echo "<div class=\"submitbox\" id=\"add_ticket_box\">";
 			?><script type="text/javascript">
@@ -450,19 +443,19 @@ if ( is_admin() ){
 					gender=$rbagency('#rb_agency_gender').val();
 					if(gender!=''&& gender!='')
 					str+=' gender="'+gender+'"';
-		
+
 					age_start=$rbagency('#rb_agency_age_start').val();
 					if(age_start!=''&& age_start!='')
 					str+=' age_start="'+age_start+'"';
-		
+
 					age_stop=$rbagency('#rb_agency_age_stop').val();
 					if(age_stop!=''&& age_stop!='')
 					str+=' age_stop="'+age_stop+'"';
-		
+
 					type=$rbagency('#rb_agency_type').val();
 					if(type!='')
 					str+=' type="'+type+'"';		
-		
+
 					send_to_editor('[profile_list'+str+']');return;
 				}
 
@@ -493,7 +486,7 @@ if ( is_admin() ){
 				$queryShowGender = mysql_query($query);
 				while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
 					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".$dataShowGender["GenderTitle"]."</option>";
-				 }
+				}
 			echo "</select>";
 			echo "</td></tr>\n";
 			
@@ -502,7 +495,7 @@ if ( is_admin() ){
 			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", rb_agency_TEXTDOMAIN) ."\" /></p>\n";
 			echo "</div>\n";
 		}
-		
+
 		/* Prints the edit form for pre-WordPress 2.5 post/page */
 		function rb_agency_old_custom_box() {
 		
@@ -516,10 +509,8 @@ if ( is_admin() ){
 		  echo "</div></div></fieldset></div>\n";
 		}
 
-	
-	
 	/****************  Activate Admin Menu Hook ***********************/
-	
+
 	add_action('admin_menu','set_rb_agency_menu');
 		//Create Admin Menu
 		function set_rb_agency_menu(){
@@ -534,7 +525,7 @@ if ( is_admin() ){
 			add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 7,"rb_agency_reports","rb_agency_reports");
 			add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 7,"rb_agency_settings","rb_agency_settings");
 		}
-		
+
 		//Pages
 		function rb_agency_dashboard(){
 			include_once('admin/overview.php');
@@ -565,13 +556,13 @@ if ( is_admin() ){
 	// View Featured
 	add_action('widgets_init', create_function('', 'return register_widget("rb_agency_widget_showpromoted");'));
 		class rb_agency_widget_showpromoted extends WP_Widget {
-			
+
 			// Setup
 			function rb_agency_widget_showpromoted() {
 				$widget_ops = array('classname' => 'rb_agency_widget_showpromoted', 'description' => __("Displays promoted profiles", rb_agency_TEXTDOMAIN) );
 				$this->WP_Widget('rb_agency_widget_showpromoted', __("RB Agency : Featured", rb_agency_TEXTDOMAIN), $widget_ops);
 			}
-		
+
 			// What Displays
 			function widget($args, $instance) {		
 				extract($args, EXTR_SKIP);
@@ -589,7 +580,7 @@ if ( is_admin() ){
 				}
 				echo $after_widget;
 			}
-		
+
 			// Update
 			function update($new_instance, $old_instance) {				
 				$instance = $old_instance;
@@ -597,7 +588,7 @@ if ( is_admin() ){
 				$instance['count'] = strip_tags($new_instance['count']);
 				return $instance;
 			}
-		
+
 			// Form
 			function form($instance) {				
 				$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
@@ -608,20 +599,20 @@ if ( is_admin() ){
 					<p><label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Number Shown:'); ?> <input id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" /></label></p>
 				<?php 
 			}
-		
+
 		} // Featured
 
 
 	// View Topics
 	add_action('widgets_init', create_function('', 'return register_widget("rb_agency_widget_showsearch");'));
 		class rb_agency_widget_showsearch extends WP_Widget {
-			
+
 			// Setup
 			function rb_agency_widget_showsearch() {
 				$widget_ops = array('classname' => 'rb_agency_widget_showsearch', 'description' => __("Displays profile search fields", rb_agency_TEXTDOMAIN) );
 				$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Search", rb_agency_TEXTDOMAIN), $widget_ops);
 			}
-		
+
 			// What Displays
 			function widget($args, $instance) {		
 				extract($args, EXTR_SKIP);
@@ -639,7 +630,7 @@ if ( is_admin() ){
 				}
 				echo $after_widget;
 			}
-		
+
 			// Update
 			function update($new_instance, $old_instance) {				
 				$instance = $old_instance;
@@ -647,7 +638,7 @@ if ( is_admin() ){
 				$instance['showlayout'] = strip_tags($new_instance['showlayout']);
 				return $instance;
 			}
-		
+
 			// Form
 			function form($instance) {				
 				$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
@@ -658,10 +649,8 @@ if ( is_admin() ){
 					<p><label for="<?php echo $this->get_field_id('showlayout'); ?>"><?php _e('Type:'); ?> <select id="<?php echo $this->get_field_id('showlayout'); ?>" name="<?php echo $this->get_field_name('showlayout'); ?>"><option value="advanced" <?php selected($showlayout, "advanced"); ?>>Advanced Search</option><option value="condensed" <?php selected($showlayout, "condensed"); ?>>Condensed Search</option></select></label></p>
 				<?php 
 			}
-		
+
 		} // class
-
-
 
 
 // *************************************************************************************************** //
@@ -693,12 +682,11 @@ if ( is_admin() ){
 			ob_end_clean();
 			return $output_string;
 		}
-  /*/
-   * ======================== RB Agency Tool Tip===============
-   * 
-  /*/
-  
-  
+	/*/
+	* ======================== RB Agency Tool Tip===============
+	* 
+	/*/
+
 		
 	if(is_admin()){
 		/*
@@ -709,9 +697,9 @@ if ( is_admin() ){
 				 $rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
 				 update_option('rb_agency_options',$rb_agency_options_arr);
 		 }
-    if( $rb_agency_options_arr != "" || is_array($rb_agency_options_arr)){    	
-		 $rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
-		 
+	if( $rb_agency_options_arr != "" || is_array($rb_agency_options_arr)){    	
+		$rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
+
 		if(!@in_array("rb_agency_options_showtooltip",$rb_agency_options_arr) && $rb_agency_options_showtooltip == 0){	 
 			$rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
 			update_option('rb_agency_options',$rb_agency_options_arr);
@@ -823,15 +811,15 @@ register_activation_hook(__FILE__,"rb_agency_notify_installation");
 /****************************************************************/
 //Uninstall
 	function rb_agency_uninstall() {
-		
+
 		register_uninstall_hook(__FILE__, 'rb_agency_uninstall_action');
 		function rb_agency_uninstall_action() {
 			//delete_option('create_my_taxonomies');
 		}
-	
+
 		// Drop the tables
 		global $wpdb;	// Required for all WordPress database manipulations
-	
+
 		$wpdb->query("DROP TABLE " . table_agency_casting);
 		$wpdb->query("DROP TABLE " . table_agency_profile);
 		$wpdb->query("DROP TABLE " . table_agency_profile_media);
@@ -847,11 +835,13 @@ register_activation_hook(__FILE__,"rb_agency_notify_installation");
 		delete_option('rb_agency_options');
 		
 		$thepluginfile = "rb-agency/rb-agency.php";
+		/*
 		$current = get_settings('active_plugins');
 		array_splice($current, array_search( $thepluginfile, $current), 1 );
 		update_option('active_plugins', $current);
+		*/
 		do_action('deactivate_' . $thepluginfile );
-	
+
 		echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("One More Step", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
 		die;
 	}
