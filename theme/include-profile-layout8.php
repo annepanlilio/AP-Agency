@@ -5,7 +5,7 @@ Flip Book
 
 ?>
 
-<div id="profile">
+<div id="rbprofile">
 	<div id="rblayout-eight" class="rblayout">
 		<div class="col_12 column">
 			<div id="layout-head">

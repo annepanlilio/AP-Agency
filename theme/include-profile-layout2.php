@@ -24,7 +24,7 @@ echo "				</div><!-- #scroller -->\n";
 
 echo "				<div class=\"cb\"></div>\n";
 
-echo "				<div id=\"info\">\n";
+echo "				<div id=\"info-links\">\n";
 echo "	  				<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 
 						// Social Link

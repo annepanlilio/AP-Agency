@@ -348,14 +348,19 @@ img.fillheight {
 #profile-sidebar ul li { list-style: none; }
 
 /* Profile Layouts */
-#rbprofile #info h2 { padding: 15px 0px; margin: 15px 0px 0px 0px; }
-#rbprofile #stats ul { list-style: none; margin: 0px; padding: 0px; line-height: 22px; font-size: 13px; }
+#rbprofile #info-links h2 { padding: 15px 0px; margin: 15px 0px 0px 0px; }
+#rbprofile #stats ul,
+#rbprofile #links ul { list-style: none; margin: 0px; padding: 0px; font-size: 13px; }
+#rbprofile #stats ul li { margin: 0px 0px 5px 0px; }
+#rbprofile #links ul li { margin: 0px 0px 10px 0px; }
+#rbprofile #links ul li a { text-decoration: none; font-size: 13px; }
 #rbprofile #profile-picture { background: #e9e9e9; padding: 15px; }
+#rbprofile #profile-picture img { max-width: 100%; }
 
 /* Profile Layout with Thumbnails (include-profile-layout0.php) */
 #rblayout-zero #photos { font-size: 0px; }
 #rblayout-zero #photos .inner { margin: 0 -5px; }
-#rblayout-zero #photos .photo { width: 40%; max-width: 135px; overflow: hidden; display: inline-block; margin: 0px 15px 15px 0px; border-radius: 5px;
+#rblayout-zero #photos .photo { width: 29%; max-width: 135px; overflow: hidden; display: inline-block; margin: 0px 15px 15px 0px; border-radius: 5px;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ddd) );
 	background:-moz-linear-gradient( center top, #ffffff 5%, #ddd 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ddd');
@@ -369,7 +374,6 @@ img.fillheight {
 #rblayout-zero #photos .photo a img.fillheight { position: absolute; left: -25%; }
 #rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
 #rblayout-zero #stats h2 { margin-bottom: 15px; }
-#rblayout-zero #links ul li a { margin: 0px 5px 10px 5px; min-width: 200px; font-weight: normal; font-size: 14px; }
 #rblayout-zero #movie { float: right; }
 #rblayout-zero .experience { float: left; clear: both; margin: 20px 0 0 0; line-height: 18px; font-size: 13px; text-indent: 30px; }
 
@@ -379,11 +383,8 @@ img.fillheight {
 #rblayout-one #links,
 #rblayout-one #stats,
 #rblayout-one #photos { margin: 0px 0px 30px 0px; }
-#rblayout-one #links ul,
-#rblayout-one #links ul li { list-style: none; margin: 0px 0px 5px 0px; padding: 0px; }
-#rblayout-one #links ul li a { list-style: none; font-size: 13px; }
 #rblayout-one #photos { padding: 15px; background: #e9e9e9; }
-#rblayout-one #photos img { height: 150px; float: left; margin: 0px 10px 0px 0px; }
+#rblayout-one #photos img { height: 150px; float: left; margin: 0px 10px 10px 0px; }
 #rblayout-one #photos a:last-of-type img { margin-right: 0px; }
 
 /* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
@@ -395,7 +396,10 @@ img.fillheight {
 #rblayout-three { overflow: hidden; }
 #rblayout-three #go-back { margin-bottom: 10px; }
 #rblayout-three #go-back a { font-size: 14px; font-weight: bold; text-decoration: none; text-transform: uppercase; }
-#rblayout-three #profile-info p, #rblayout-three #profile-info ul { margin: 0 0 15px; }
+#rblayout-three #profile-info h1 { margin: 0px; line-height: normal; }
+#rblayout-three #profile-info p,
+#rblayout-three #profile-info ul { margin: 0px 0px 15px 0px; }
+#rblayout-three #profile-info ul { padding: 0px; list-style: none; }
 #rblayout-three .row-zero { font-size: 30px; margin: 0 0 20px 0; overflow: hidden; }
 #rblayout-three .row-one { padding: 10px 0; overflow: hidden; }
 #rblayout-three .profile-picture-favorite { text-align: center; background: #ccc; font-size: 13px; padding: 5px; margin: 5px 0 0 0; }
@@ -407,6 +411,7 @@ img.fillheight {
 #rblayout-three #profil-actions div { margin: 0px 0px 15px 0px; }
 #rblayout-three #profile-actions div a { margin: 0px 0px 10px 0px; }
 #rblayout-three #tab-panels .column { margin: 0px 0px 15px 0px }
+#rblayout-three #tab-panels .column .tab-panel ul { margin: 0px; padding: 0px; list-style: none; }
 #rblayout-three #tab-panels .column .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
 #rblayout-three #tab-panels .column .video-container iframe,
 #rblayout-three #tab-panels .column .video-container object,
@@ -434,11 +439,12 @@ img.fillheight {
 /* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
 #rblayout-four { overflow: hidden; }
 #rblayout-four #name { margin-bottom: 15px; }
-#rblayout-four h3 { padding: 10px 15px; background: #ccc; font-weight: normal; }
-#rblayout-four #profile-info h3 { margin: -15px -15px 10px -15px; }
+#rblayout-four h3 { margin: -15px -15px 15px -15px; background: #ccc; font-weight: normal; padding: 15px; }
+#rblayout-four #profile-info h3 {  }
 #rblayout-four #profile-info { background: #e9e9e9; padding: 15px; }
 #rblayout-four #profile-info .stats { font-size: 13px; }
-#rblayout-four #profile-info .stats ul { margin-bottom: 15px; }
+#rblayout-four #profile-info .stats ul { margin: 0px 0px 15px 0px; padding: 0px; list-style: none; }
+#rblayout-four .col_8 h3 { margin-top: 0px; }
 #rblayout-four #photos { overflow: hidden; }
 #rblayout-four #photos .photo { float: left; width: 33.33333%; height: 150px; overflow: hidden; }
 #rblayout-four #photos .photo a { float: left; width: 100%; height: 100%; background-size: cover; background-position: center top; background-repeat: no-repeat; background-color: #e9e9e9; border-right: 1px solid #e9e9e9; border-bottom: 1px solid #e9e9e9; }
@@ -452,22 +458,22 @@ img.fillheight {
 /* Profile Layout Seven */
 #rblayout-seven { overflow: hidden; margin-bottom: 30px; }
 #rblayout-seven #profile-slider,
-#rblayout-seven #profile-carousel { float: left; border: none; padding: 0; border-radius: 0; box-shadow: none; }
-#rblayout-seven #profile-slider { margin-bottom: 0px; overflow: hidden; }
+#rblayout-seven #profile-carousel { border: none; padding: 0; border-radius: 0; box-shadow: none; }
+#rblayout-seven #profile-slider { margin-bottom: 0px; overflow: hidden; max-height: 500px; }
 #rblayout-seven #profile-slider .slides li { height: 100%; text-align: center; }
-#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; display: inline-block; max-height: 500px; width: inherit; max-width: 100%; }
+#rblayout-seven #profile-slider .slides li figure.multi { width: 50%; height: 100%; text-align: center; float: left; margin: 0px; }
+#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; display: inline-block; width: inherit; max-width: 100%; }
 #rblayout-seven #profile-carousel { clear: both; width: 100%; display: block; background: #fff; margin: 0; }
-#rblayout-seven #profile-carousel .flex-viewport .slides li { height: 140px; overflow: hidden; text-align: center; }
-#rblayout-seven #profile-carousel .flex-viewport .slides li figure { overflow: hidden; float: left; margin: 5px; width: 94%; height: 94%; border: 1px solid #ccc; }
-#rblayout-seven #profile-carousel .flex-viewport .slides li figure.multi span { width: 50%; }
-#rblayout-seven #profile-carousel .flex-viewport .slides li figure span { float: left; width: 100%; height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center top; }
-#rblayout-seven #profile-carousel .flex-viewport .slides li img { display: inline-block; float: none; }
+#rblayout-seven #profile-carousel .slides li { width: 150px; height: 140px; overflow: hidden; text-align: center; }
+#rblayout-seven #profile-carousel .slides li figure { overflow: hidden; float: left; width: 100%; height: 100%; }
+#rblayout-seven #profile-carousel .slides li figure.multi span { width: 50%; }
+#rblayout-seven #profile-carousel .slides li figure span { float: left; width: 100%; height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center top; }
 #rblayout-seven #profile-info { padding: 30px 0; }
 #rblayout-seven #profile-info h1 { color: #e2e2e2; font-weight: normal; text-transform: uppercase; padding: 30px; }
 #rblayout-seven #profile-info ul { list-style: none; color: #959595; padding: 0 30px; margin: 0; }
 #rblayout-seven #profile-info ul li { list-style: none; display: block; font-size: 14px; }
 #rblayout-seven #profile-info ul li span { font-style: italic; }
-#rblayout-seven #profile-links { padding: 15px; float: right; clear: both; }
+#rblayout-seven #profile-links { padding: 15px 0px; text-align: right; }
 #rblayout-seven #profile-links li { display: inline-block; padding: 0 10px; border-right: 1px solid #e2e2e2; font-size: 14px; }
 #rblayout-seven #profile-links li:last-child { border: none; }
 #rblayout-seven #profile-links li a { color: #e2e2e2; text-decoration: none; text-transform: uppercase; }
@@ -482,15 +488,14 @@ img.fillheight {
 #rblayout-eight #layout-head,
 #rblayout-eight,
 #photobook-pagination { overflow: hidden; }
-#photobook-pagination { margin: 0px 0px 30px 0px; }
-#rblayout-eight #layout-head { padding: 15px; }
-#photobook-pagination { padding: 0 15px; }
-#rblayout-eight #photobook { overflow: hidden; }
+#rblayout-eight #photobook-pagination { margin: 0px 0px 15px 0px; }
+#rblayout-eight #layout-head { padding: 15px 0px; }
+#rblayout-eight #photobook { overflow: hidden; margin: 0 auto 15px auto; }
 #rblayout-eight #layout-head h1 { float: left; color: #6a6a6a; margin: 0; }
 #rblayout-eight #layout-head a { float: right; }
 #rblayout-eight #photobook-pagination a#prev-page { float: left; }
 #rblayout-eight #photobook-pagination a#next-page { float: right; }
-#rblayout-eight #profile-info { overflow: hidden; }
+#rblayout-eight #profile-info { overflow: hidden; list-style: none; padding: 0px; margin: 0px; }
 #rblayout-eight #profile-info li { float: left; padding: 0px 10px 10px 10px; color: #3c3c3c; font-size: 18px; }
 #rblayout-eight #profile-info li em { display: block; color: #8c8b8b; font-style: italic; font-size: 13px; }
 #rblayout-eight .booklet .b-wrap .page { text-align: center; }
@@ -735,10 +740,9 @@ img.fillheight {
 	border:1px solid #dcdcdc;
 	display:inline-block;
 	color:#666666;
-	font-family:arial;
 	font-size:15px;
 	font-weight:bold;
-	padding:6px 24px;
+	padding:6px 15px;
 	text-decoration:none;
 	text-shadow:1px 1px 0px #ffffff;
 }.rb_button:hover {

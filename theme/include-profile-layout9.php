@@ -3,7 +3,7 @@
 Large Scroller
 */
 
-echo "	<div id=\"profile\">\n";
+echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-nine\" class=\"rblayout\">\n";
 
 echo "  		<div class=\"col_12 column\">\n";

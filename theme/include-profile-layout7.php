@@ -6,16 +6,10 @@ Custom Layout 7
 ?>
 <style>
 #main-container { background: #000; padding: 0px; }
-#rblayout-seven #videos-carousel { clear: both; width: 100%; display: block; background: #fff; margin: 0; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li { height: 140px; overflow: hidden; text-align: center; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li figure { overflow: hidden; float: left; margin: 5px; width: 94%; height: 94%; border: 1px solid #ccc; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li figure.multi span { width: 50%; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li figure span { float: left; width: 100%; height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center top;  }
-#rblayout-seven #videos-carousel .flex-viewport .slides li img { display: inline-block; float: none; cursor:hand; cursor:position; }
 #video_player {height:500px; width:66%;}
 #video_player .vids{height:500px; width:100%; position:absolute; z-index:0; top:0px; left:0px;}
 </style>
-<div id="profile">
+<div id="rbprofile">
 	<div id="rblayout-seven" class="rblayout">
 		<div id="info-slide">
 			<div id="profile-info" class="col_4 column">

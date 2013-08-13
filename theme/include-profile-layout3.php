@@ -167,7 +167,7 @@ echo " 			</div>\n"; // #profile-overview
 echo ' 			<div name="space" style="visibility:hidden">text</div>'; // twelve column 1
 echo " 			<div id=\"rb-tabs\">\n";
 echo " 				<div id=\"tabs\">\n";
-echo " 					<div class=\"twelve column row-two clear\">\n";
+echo " 					<div class=\"twelve column row-two \">\n";
 echo "   					<div id=\"subMenuTab\">\n";
 echo " 							<div class=\"maintab tab-left tab-active\" id=\"row-all\">\n";
 echo " 								<a href=\"#space\">\n";
@@ -209,7 +209,7 @@ echo " 					</div>\n"; // twelve column 2
 echo " 				</div>\n"; // end #tabs
 					
 echo " 				<div id=\"tab-panels\">\n";
-echo " 					<div class=\"col_12 column row-photos clear tab\">\n";
+echo " 					<div class=\"col_12 column row-photos tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								// images
 								$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
@@ -225,7 +225,7 @@ echo " 						<div class=\"tab-panel\">\n";
 echo " 						</div>\n"; // .tab-panel
 echo " 					</div>\n"; // twelve column photos
 
-echo " 					<div class=\"col_12 column row-physical clear tab\">\n";
+echo " 					<div class=\"col_12 column row-physical tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 echo "							<ul>";
 									if (!empty($ProfileGender)) {
@@ -246,7 +246,7 @@ echo "							</ul>";
 echo " 						</div>\n"; // .tab-panel
 echo " 					</div>\n"; // twelve column physical
 
-echo " 					<div class=\"col_12 column row-videos clear tab\">\n";
+echo " 					<div class=\"col_12 column row-videos tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								//Video Slate
 								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
@@ -280,7 +280,7 @@ echo " 						<div class=\"tab-panel\">\n";
 echo " 						</div>\n"; // .tab-panel								
 echo " 					</div>\n"; // twelve column videos
 
-echo " 					<div class=\"col_12 column row-experience clear tab\">\n";
+echo " 					<div class=\"col_12 column row-experience tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
 								$results1 = mysql_query($query1);
@@ -288,7 +288,7 @@ echo " 						<div class=\"tab-panel\">\n";
 								while ($data1 = mysql_fetch_array($results1)) {
 
 									if ($data1['ProfileCustomTitle'] == "Experience"){
-										echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." clear\">\n";
+										echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." \">\n";
 										echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
 										echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] 
 											."\" class=\"ProfileExperience\">". nl2br($data1['ProfileCustomValue']) ."</p>\n";
@@ -298,14 +298,14 @@ echo " 						<div class=\"tab-panel\">\n";
 echo " 						</div>\n"; // .tab-panel							
 echo " 					</div>\n"; // twelve column experience
 
-echo " 					<div class=\"col_12 column row-bookings clear tab\">\n";
+echo " 					<div class=\"col_12 column row-bookings tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 echo " 						</div>\n"; // .tab-panel
 echo " 					</div>\n"; // Row booking
 
 // added this section to be able to display downloadable 
 // files attached to a specific profile 
-echo "					<div class=\"col_12 column row-downloads clear tab\">\n";
+echo "					<div class=\"col_12 column row-downloads tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 echo "							<p>". __("The following files (pdf, audio file, etc.) are associated with this profile",
 					        	rb_agencyinteract_TEXTDOMAIN) .".</p>\n";
