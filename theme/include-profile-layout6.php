@@ -27,31 +27,27 @@ Large featured image and scrolling thumbnails
 	<div id="rblayout-six" class="rblayout">
 		<div class="col_12 column">
 			<header class="entry-header">
-				<div class="col_6 column">
-					<h2 class="entry-title"><?php echo $ProfileContactDisplay; ?></h2>
+				<h1 class="entry-title"><?php echo $ProfileContactDisplay; ?></h1>
+				<div id="profile-filter">
+					<div class="filters">
+						<div>
+							<select name="division" id="division">
+								<option value="">Select Division</option>
+								<option value="men">Men</option>
+								<option value="women">Women</option>
+								<option value="teen_girls">Teen Girls</option>
+								<option value="teen_boys">Teen Boys</option>
+								<option value="boys">Boys</option>
+								<option value="girls">Girls</option>
+							</select>
+						</div>
+						<div id="resultsGoHere">
+							<select>
+								<option>Select Division First</option>
+							</select>
+						</div>
+					</div><!-- .filters -->
 				</div>
-				<div class="col_6 column">
-					<div id="profile-filter">
-						<div class="filters">
-							<div>
-								<select name="division" id="division">
-									<option value="">Select Division</option>
-									<option value="men">Men</option>
-									<option value="women">Women</option>
-									<option value="teen_girls">Teen Girls</option>
-									<option value="teen_boys">Teen Boys</option>
-									<option value="boys">Boys</option>
-									<option value="girls">Girls</option>
-								</select>
-							</div>
-							<div id="resultsGoHere">
-								<select>
-									<option>Select Division First</option>
-								</select>
-							</div>
-						</div><!-- .filters -->
-					</div>
-				</div><!-- .model-filter -->
 				<div class="cb"></div>
 			</header>
 		</div>
