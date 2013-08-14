@@ -1561,12 +1561,11 @@ class RBAgencyCSVXLSImpoterPlugin {
         $default = 1;
         $heads = 17;
         $t_head = $custom_header;
-        $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from rb_agency_customfields ORDER BY ProfileCustomID ASC");
+        $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from ". table_agency_customfields." ORDER BY ProfileCustomID ASC");
         echo "<table class=\"form-table\">";
         echo "<tbody>";
         for($i = 0; $i < $t_head; $i++){
             echo '<tr><th><label>'.$header[$heads].'</label></th>';
-            $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from rb_agency_customfields ORDER BY ProfileCustomID ASC");
             echo '<td><select name = "select'.$default.'" id="select'.$default.'">';
             foreach ($custom_fields as $custom_fields_result) {
                 $custom_field_id = intval($custom_fields_result->ProfileCustomID);
