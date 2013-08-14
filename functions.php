@@ -3440,9 +3440,10 @@ function rb_loginform($redirect){?>
 						'password': jQuery('#password').val(), 
 						'security': jQuery('#security').val() },
 					success: function(data){
-						jQuery('#rbsign-in p.status').text(data.message);
 						if (data.loggedin == true){
 							document.location.href = "<?php echo $redirect; ?>";
+						} else {
+                                                    jQuery('#rbsign-in p.status').text(data.message);
 						}
 					}
 				});
