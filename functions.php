@@ -1408,7 +1408,12 @@ error_reporting(0);
 			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
 				echo "<h2>This is a restricted page. For Clients only.</h2>";
 			} else {
-				include("theme/include-login.php"); 	
+				include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+				if(is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
+					include("theme/include-login.php"); 	
+				} else {
+					rb_loginform(rb_current_url());
+				} 	
 			} 	
 		}
 				
@@ -3384,6 +3389,106 @@ function fullwidth_class(){
 	return $class = "col_12";
 }
 
+/*
+ *	Rb Agency login checker 
+ */
+function rb_agency_log(){
+    check_ajax_referer( 'ajax-login-nonce', 'security' );
+    $login_info = array();
+    $login_info['user_login'] = $_POST['username'];
+    $login_info['user_password'] = $_POST['password'];
+    $login_info['remember'] = true;
+    $user_login = wp_signon( $login_info, false );
+    if ( is_wp_error($user_login) ){
+       echo json_encode(array('loggedin'=>false, 'message'=>__('Wrong username or password.')));
+    } else {
+       echo json_encode(array('loggedin'=>true, 'message'=>__('Login successful, redirecting...')));
+    }
+    die();
+}
+/*
+ * Add action hook if interact is inactive
+ */
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
+    add_action('wp_ajax_rb_agency_log', 'rb_agency_log');
+    add_action('wp_ajax_nopriv_rb_agency_log', 'rb_agency_log');
+    add_action('wp_logout','redirect_to_home');
+	function redirect_to_home(){
+		wp_redirect(home_url());
+		exit();
+	}
+} 
+
+/*
+ * WP Login Form
+ */
+function rb_loginform($redirect){?>
+		<!-- ajax submit login -->
+		<script type="text/javascript">
+        jQuery(document).ready(function(){
+		    // Perform AJAX login on form submit
+			jQuery('#submit_login').on('click', function(){
+				jQuery('#rbsign-in p.status').show().text("logging in...");
+				jQuery.ajax({
+					type: 'POST',
+					dataType: 'json',
+					url: '<?php echo admin_url('admin-ajax.php'); ?>',
+					data: { 
+						'action': 'rb_agency_log', 
+						'username': jQuery('#username').val(), 
+						'password': jQuery('#password').val(), 
+						'security': jQuery('#security').val() },
+					success: function(data){
+						jQuery('#rbsign-in p.status').text(data.message);
+						if (data.loggedin == true){
+							document.location.href = "<?php echo $redirect; ?>";
+						}
+					}
+				});
+		     });
+         });
+         </script>
+		<?php	
+		//
+		// Login Form
+		//
+		echo '	<div id="rbsignin-register" class="rbinteract">';	
+		echo '        <div id="rbsign-in" class="inline-block">';
+		echo '          <h1>'. __("Sign in", rb_agencyinteract_TEXTDOMAIN). '</h1>';
+		echo '          <p class="status" style="display:none"></p>'; 
+		echo '          <form name="loginform" id="login_ajax" action="login" method="post">';
+		echo '            <div class="field-row">';
+		echo '              <label for="user-name">'. __("Username", rb_agencyinteract_TEXTDOMAIN). '</label><input type="text" name="user-name" value="'. wp_specialchars( $_POST['user-name'], 1 ) .'" id="username" />';
+		echo '            </div>';
+		echo '            <div class="field-row">';
+		echo '              <label for="password">'. __("Password", rb_agencyinteract_TEXTDOMAIN). '</label><input type="password" name="password" value="" id="password" /> <a href="'. get_bloginfo('wpurl') .'/wp-login.php?action=lostpassword">'. __("forgot password", rb_agencyinteract_TEXTDOMAIN). '?</a>';
+		echo '            </div>';
+		echo '            <div class="field-row submit-row">';
+		echo '              <input type="button" id="submit_login" value="'. __("Sign In", rb_agencyinteract_TEXTDOMAIN).'" /><br />';
+		echo '            </div>';
+							wp_nonce_field( 'ajax-login-nonce', 'security' );
+		echo '          </form>';
+		echo '        </div> <!-- rbsign-in -->';
+		echo '      <div class="clear line"></div>';
+		echo '      </div>';
+} 
+
+/*
+ * Get Current URl for redirection
+ */
+function rb_current_url(){
+	
+	$URL = 'http';
+	if ($_SERVER["HTTPS"] == "on") {$URL .= "s";}
+	$URL .= "://";
+	if ($_SERVER["SERVER_PORT"] != "80") {
+		$URL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	} else {
+		$URL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	}
+	return $URL;
+}
 
 /*
  * Check casting cart / add fav if permitted to be displayed
