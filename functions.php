@@ -3391,21 +3391,25 @@ function fullwidth_class(){
 /*
 * check page
 */
-function rb_is_page(){
+function rb_is_page($page){
 	//casting
+	if(empty($page)) return false;
+	
 	if(isset($_GET['type']) && $_GET['type'] == "casting"){
-	   return "rb_casting";	
+	   if($page == "rb_casting") return true;	
 	}
 
 	//search
 	if(isset($_GET['type']) && $_GET['type'] == "search"){
-	   return "rb_search";	
+	   if($page == "rb_search") return true;	
 	}
 
 	//favorites
 	if(isset($_GET['type']) && $_GET['type'] == "favorites"){
-	   return "rb_favorites";
+	   if($page == "rb_favorites") return true;	
 	}	
+	return false
+	
 }
 /*
  *	Rb Agency login checker 
