@@ -3408,7 +3408,7 @@ function rb_is_page($page){
 	if(isset($_GET['type']) && $_GET['type'] == "favorites"){
 	   if($page == "rb_favorites") return true;	
 	}	
-	return false
+	return false;
 	
 }
 /*
