@@ -135,17 +135,17 @@ error_reporting(0);
 		// Add CSS Class based on URL
 		function rb_agency_insertbodyclass($classes) {
 			// Remove Blog
-			if (substr($_SERVER['REQUEST_URI'], 0, 9) == "/profile/") {
+			if (rb_is_page("rb_profile")) {
 				$classes[] = 'rbagency-profile';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 11) == "/dashboard/") {
+			} elseif (rb_is_page("rb_dashboard")) {
 				$classes[] = 'rbagency-dashboard';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-category/") {
+			} elseif (rb_is_page("rb_category")) {
 				$classes[] = 'rbagency-category';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 18) == "/profile-register/") {
+			} elseif (rb_is_page("rb_register")) {
 				$classes[] = 'rbagency-register';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 17) == "/profile-search/") {
+			} elseif (rb_is_page("rb_search")) {
 				$classes[] = 'rbagency-search';
-			} elseif (substr($_SERVER['REQUEST_URI'], 0, 15) == "/profile-print/") {
+			} elseif (rb_is_page("rb_print")) {
 				$classes[] = 'rbagency-print';
 			} else {
 				$classes[] = 'rbagency';
@@ -3393,23 +3393,28 @@ function fullwidth_class(){
 */
 function rb_is_page($page){
 	//casting
-	if(empty($page)) return false;
+	if(empty($page)){ return false; }
 	
-	if(isset($_GET['type']) && $_GET['type'] == "casting"){
-	   if($page == "rb_casting") return true;	
-	}
+	$uri = $_SERVER['REQUEST_URI'];
 
-	//search
-	if(isset($_GET['type']) && $_GET['type'] == "search"){
-	   if($page == "rb_search") return true;	
-	}
-
-	//favorites
-	if(isset($_GET['type']) && $_GET['type'] == "favorites"){
-	   if($page == "rb_favorites") return true;	
-	}	
+	if (strpos($uri,"/profile/") > -1 ) {
+		if($page == "rb_profile") return true;	
+	} elseif (strpos($uri,"/dashboard/") > -1) {
+		if($page == "rb_dashboard") return true;	
+	} elseif (strpos($uri,"/profile-category/") > -1) {
+		if($page == "rb_category") return true;	
+	} elseif (strpos($uri,"/profile-register/") > 1) {
+		if($page == "rb_register") return true;	
+	} elseif (strpos($uri,"/profile-search/") > -1) {
+		if($page == "rb_search") return true;	
+	} elseif (strpos($uri,"/profile-print/") > -1) {
+		if($page == "rb_print") return true;	
+	} elseif (strpos($uri,"/profile-casting/") > -1) {
+		if($page == "rb_casting") return true;	
+	} elseif (strpos($uri,"/profile-favorites/") > -1) {
+		if($page == "rb_favorites") return true;	
+	} 
 	return false;
-	
 }
 /*
  *	Rb Agency login checker 
