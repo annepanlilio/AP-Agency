@@ -228,7 +228,12 @@ switch ( $sapi ) {
     }
   }
   
-  $outfile = "dompdf_out.pdf"; # Don't allow them to set the output file
+  if ( isset($_GET["output_filed"]) && !empty($_GET["output_filed"])) {
+      $outfile = trim($_GET["output_filed"]); 
+  } else {
+      $outfile = "dompdf_out.pdf";
+  }
+  
   $save_file = false; # Don't save the file
   
   break;
