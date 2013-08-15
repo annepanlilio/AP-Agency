@@ -168,8 +168,6 @@ echo "			<div class=\"cb\"></div>\n";
 echo "			<input type=\"hidden\" name=\"castingcart\" value=\"1\"/>";
 echo "  	</div>\n";
 echo "  </div>\n";
-
-get_sidebar(); 
       
 get_footer(); 
 ?>
