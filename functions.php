@@ -3388,7 +3388,25 @@ function secondary_class(){
 function fullwidth_class(){
 	return $class = "col_12";
 }
+/*
+* check page
+*/
+function rb_is_page(){
+	//casting
+	if(isset($_GET['type']) && $_GET['type'] == "casting"){
+	   return "rb_casting";	
+	}
 
+	//search
+	if(isset($_GET['type']) && $_GET['type'] == "search"){
+	   return "rb_search";	
+	}
+
+	//favorites
+	if(isset($_GET['type']) && $_GET['type'] == "favorites"){
+	   return "rb_favorites";
+	}	
+}
 /*
  *	Rb Agency login checker 
  */
