@@ -3405,7 +3405,9 @@ function rb_is_page($page){
 		if($page == "rb_category") return true;	
 	} elseif (strpos($uri,"/profile-register/") > 1) {
 		if($page == "rb_register") return true;	
-	} elseif (strpos($uri,"/profile-search/") > -1) {
+	} elseif (strpos($uri,"/profile-search/") > -1 ||
+			  strpos($uri,"/search/") > -1 ||
+			  strpos($uri,"/search") > -1)	{
 		if($page == "rb_search") return true;	
 	} elseif (strpos($uri,"/profile-print/") > -1) {
 		if($page == "rb_print") return true;	

@@ -36,7 +36,33 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 			$lay_out = "ADVANCE-LAYOUT";
 		}
 	} 
-	
+?>
+<!-- RESET BACKUP -->
+	<style>
+#rst_btn { padding: 6px 10px; padding: 0.428571429rem 0.714285714rem; font-size: 13px; line-height: 1.428571429; font-weight: bold; color: #fff; background-color: #333; background-repeat: repeat-x; background-image: -moz-linear-gradient(top, #666, #333); background-image: -ms-linear-gradient(top, #666, #333); background-image: -webkit-linear-gradient(top, #666, #333); background-image: -o-linear-gradient(top, #666, #333); background-image: linear-gradient(top, #666, #333); border: none; border-radius: 3px; box-shadow: 0 1px 2px rgba(64, 64, 64, 0.1); }
+</style>
+	<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery.fn.rset = function(slect){
+			jQuery(this).on("click",function(){
+			    var inputs = jQuery(".search-field").find("input[type=text]");
+					for (var i = 0; i<inputs.length; i++) {
+						switch (inputs[i].type) {
+							case 'text':
+								inputs[i].value = '';
+								break;
+							case 'radio':
+							case 'checkbox':
+								inputs[i].checked = false;   
+						}
+					}
+				jQuery(".search-field").find("select").prop('selectedIndex',0);
+			});
+		}
+		jQuery("#rst_btn").rset();	
+	});
+	</script>
+	<?php	
 	switch ($lay_out) {
 		
 	/* ----------------------------------------------------------------------
@@ -92,7 +118,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\">";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
-		echo '				<input type="reset" class=\"button-primary\" value="Empty Form">';
+		echo '				<input type="button" id="rst_btn" class=\"button-primary\" value="Empty Form">';
 		echo "				<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/?srch=1'\" />";
 		echo "				</div>\n";
 		echo "        	</form>\n";
@@ -166,7 +192,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				<div><input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" /></div>\n";
 		echo "				<div class=\"search-field submit\">";
 		echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
-		echo '				<input type="reset" class=\"button-primary\" value="Empty Form">';
+		echo '				<input type="button" id="rst_btn" class=\"button-primary\" value="Empty Form">';
 		echo "				<input type=\"submit\" name=\"basic_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search'\" />";
 		echo "				</div>";
  	    echo'				<div></div>';
