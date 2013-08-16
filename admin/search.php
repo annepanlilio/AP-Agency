@@ -558,8 +558,14 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
 				foreach  ($resultsCustom as $resultCustom) {
 					if(!empty($resultCustom->ProfileCustomValue )){
-					echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-					}
+						if($resultCustom->ProfileCustomType == 7 && strtolower($resultCustom->ProfileCustomTitle)=="height"){
+								$heightraw = $resultCustom->ProfileCustomValue;
+							    $heightfeet = floor($heightraw/12);
+  								$heightinch = $heightraw - floor($heightfeet*12);
+								echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong>". $heightfeet ." ft ". $heightinch ." in</div>\n";
+						} else {
+								echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+						}					}
 				}
        echo "            </td>\n";
         echo "            <td class=\"ProfileImage column-ProfileImage\">\n";
@@ -1153,7 +1159,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 										if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==1){
 											echo  "			<fieldset class=\"rbselect\">";
 
-		  echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+                                                                                        echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 														  if (empty($ProfileCustomValue)) {
 															echo "  <option value=\"\">--</option>\n";
 														  }
@@ -1171,7 +1177,7 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 																}
 														  echo " </select></div>\n";
 														  
-														   echo "<div><label>Max</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														   echo "<div><label>Max</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 														  if (empty($ProfileCustomValue)) {
 															echo "  <option value=\"\">--</option>\n";
 														  }
