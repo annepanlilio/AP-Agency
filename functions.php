@@ -787,9 +787,9 @@ error_reporting(0);
 		// Option to show all profiles
 		if (isset($OverridePrivacy)) {
 			// If sent link, show both hidden and visible
-			$filter = "WHERE profile.ProfileIsActive IN (1, 4) AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
+			$filter = "WHERE profile.ProfileIsActive IN (1, 4)";
 		} else {
-			$filter = "WHERE profile.ProfileIsActive = 1 AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
+			$filter = "WHERE profile.ProfileIsActive = 1";
 		}
 
 		// Pagination
@@ -1271,17 +1271,12 @@ error_reporting(0);
 					profile.ProfileContactDisplay, 
 					profile.ProfileDateBirth, 
 					profile.ProfileLocationState, 
-					customfield_mux.ProfileCustomMuxID, customfield_mux.ProfileCustomMuxID, customfield_mux.ProfileCustomID, customfield_mux.ProfileCustomValue,  
-					media.ProfileMediaURL
+					customfield_mux.ProfileCustomMuxID, customfield_mux.ProfileCustomMuxID, customfield_mux.ProfileCustomID, customfield_mux.ProfileCustomValue 
 				FROM ". table_agency_profile ." profile 
-				LEFT JOIN ". table_agency_profile_media ." 
-					AS media 
-					ON profile.ProfileID = media.ProfileID 
 				LEFT JOIN ". table_agency_customfield_mux ." 
 					AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 				$filter  
-				    AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1
 				GROUP BY profile.ProfileID 
 				ORDER BY $sort $dir $limit";
 			}
@@ -1342,32 +1337,25 @@ error_reporting(0);
 					$displayHTML.="  <div id=\"profile-list\">\n";
 				}
 				$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
-
-				if (isset($dataList["ProfileMediaURL"]) ) { // && (file_exists(rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"])) ) {
+				
+				$p_image = rb_get_primary_image($dataList["ProfileID"]); 
+	
+				if ($p_image){ 
 					
-					//dont need other image for hover if its for print or pdf download view and dont use timthubm
+					#dont need other image for hover if its for print or pdf download view and dont use timthubm
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 								 
 						if($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']==1){  //show profile sub thumbs for thumb slide on hover
 							$images=getAllImages($dataList["ProfileID"]);
 						    $images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 						}
-
-						# this is removed as timthumb always has an issue.
-						#$displayHTML .="<div class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_BASEDIR."tasks/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\" id=\"roll".$dataList["ProfileID"]."\"  /></a>".$images."</div>\n";
-						
-						#phel comment: i decided to remove the actual image, and put the url on anchor as background to fix the image resizing issue
-						#$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."\"  /></a>".$images."</div>\n";
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"].")\"></a>".$images."</div>\n";
-
+						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image.")\"></a>".$images."</div>\n";
 					} else {
-						#phel comment: i decided to remove the actual image, and put the url on anchor as background to fix the image resizing issue
-						#$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."\"  /></a>".$images."</div>\n";
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"].")\"></a>".$images."</div>\n";
+						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image.")\"></a>".$images."</div>\n";
 					}
 				
 				} else {
-				 	$displayHTML .= "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
+				 	$displayHTML .= "  <div class=\"image image-broken\" style='background:lightgray; color:white; font-size:20px; text-align:center; line-height:120px; vertical-align:bottom'>No Image</div>\n";
 				}
 					
 				$displayHTML .= "  <div class=\"profile-info\">\n";
@@ -3387,6 +3375,26 @@ function secondary_class(){
 
 function fullwidth_class(){
 	return $class = "col_12";
+}
+/*
+* Get primary image for profiles
+*/
+function rb_get_primary_image($PID){
+	
+	if(empty($PID) or is_null($PID)) return false;
+	
+	$get_image = "SELECT ProfileMediaURL FROM ". table_agency_profile_media .
+				 " WHERE ProfileID = " .$PID . " AND ProfileMediaPrimary = 1";
+	
+	$get_res = mysql_query($get_image);
+	
+	if(mysql_num_rows($get_res) > 0){
+		while($data = mysql_fetch_assoc($get_res)){
+			return $data['ProfileMediaURL'];
+		}
+	}			
+	
+	return false;
 }
 /*
 * check page
