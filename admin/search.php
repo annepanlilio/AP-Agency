@@ -287,15 +287,15 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 																
                                                                     $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                 } else {
-                                                                    $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                                                    $filter2 .= " OR ( customfield_mux.ProfileCustomValue='".$val."' ";
                                                                 }                                                           
                                                                 $_SESSION[$key] = $val;
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
 															if($filter2==""){
-                                                        $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                        $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') AND customfield_mux.ProfileCustomID = '".substr($key,15)."')";
                                                         } else {
-                                                        $filter2 .=" OR (customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                        $filter2 .=" OR ( customfield_mux.ProfileCustomValue IN('".$val."') AND customfield_mux.ProfileCustomID = '".substr($key,15)."')";
                                                         }
 
 
@@ -303,7 +303,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                                                 if($filter2==""){
                                                                     $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                 } else {
-                                                                    $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                                                    $filter2 .= " OR ( customfield_mux.ProfileCustomValue='".$val."' ";
                                                                 } 
                                                                         $_SESSION[$key] = $val;
 
@@ -315,9 +315,9 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 																	  
                                                                         if($filter2==""){
 																		
-                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue like('%".$val."%') and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue like('%".$val."%') AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
                                                                         } else {
-                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue like('%".$val."%')   and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue like('%".$val."%') AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
                                                                         }
                                                                     } else {
 																		
@@ -356,7 +356,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                                                     if($filter2==""){
                                                                         $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                     } else {
-                                                                        $filter2 .= " or (customfield_mux.ProfileCustomValue like('%".$val."%'))";
+                                                                        $filter2 .= " OR (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                                                     } 
                                                                     $_SESSION[$key] = $val;
                                                                
@@ -367,9 +367,9 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                                                     list($Min_val,$Max_val) = explode(",",$val);
                                                                         if(!empty($Min_val) && !empty($Max_val)){
                                                                             if($filter2==""){
-                                                                                    $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
+                                                                                    $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
                                                                             } else {
-                                                                                    $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                                                    $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
 
                                                                             }
                                                                         $_SESSION[$key] = $val;
