@@ -56,9 +56,7 @@ if (isset($_POST['action'])) {
 
 			$lastid = $wpdb->insert_id;
 
-
-
-			echo ('<div id="message" class="updated"><p>Search saved successfully! <a href="'. admin_url("admin.php?page=". $_GET['page']) .'&action=emailCompose&amp;SearchID='. $lastid .'">Send Email</a></p></div>'); 
+			echo '<div id="message" class="updated"><p>Search saved successfully! <a href="'. admin_url("admin.php?page=". $_GET['page']) .'&action=emailCompose&SearchID='. $lastid .'&SearchMuxHash='.rb_agency_random(8).'">Send Email</a></p></div>'; 
 
 		} else {
        	echo ('<div id="message" class="error"><p>Error creating record, please ensure you have filled out all required fields.</p></div>'); 
