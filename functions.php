@@ -3400,31 +3400,28 @@ function rb_get_primary_image($PID){
 * check page
 */
 function rb_is_page($page){
-	//casting
-	if(empty($page)){ return false; }
+
+        if(empty($page)){ return false; }
 	
 	$uri = $_SERVER['REQUEST_URI'];
 
-	if (strpos($uri,"/profile/") > -1 ) {
-		if($page == "rb_profile") return true;	
-	} elseif (strpos($uri,"/dashboard/") > -1) {
-		if($page == "rb_dashboard") return true;	
-	} elseif (strpos($uri,"/profile-category/") > -1) {
-		if($page == "rb_category") return true;	
-	} elseif (strpos($uri,"/profile-register/") > 1) {
-		if($page == "rb_register") return true;	
-	} elseif (strpos($uri,"/profile-search/") > -1 ||
+	if((strpos($uri,"/profile/") > -1 && $page == "rb_profile" ) ||
+           (strpos($uri,"/dashboard/") > -1 && $page == "rb_dashboard") ||
+           (strpos($uri,"/profile-category/") > -1 && $page == "rb_category") ||
+           (strpos($uri,"/profile-register/") > 1 && $page == "rb_register") ||
+           (strpos($uri,"/profile-search/") > -1 ||
 			  strpos($uri,"/search/") > -1 ||
-			  strpos($uri,"/search") > -1)	{
-		if($page == "rb_search") return true;	
-	} elseif (strpos($uri,"/profile-print/") > -1) {
-		if($page == "rb_print") return true;	
-	} elseif (strpos($uri,"/profile-casting/") > -1) {
-		if($page == "rb_casting") return true;	
-	} elseif (strpos($uri,"/profile-favorites/") > -1) {
-		if($page == "rb_favorites") return true;	
-	} 
-	return false;
+			  strpos($uri,"/search") > -1 &&
+                          $page == "rb_search")	||
+           (strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
+           (strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
+           (strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites" )) {
+
+            return true;	
+            
+        } 
+
+        return false;
 }
 /*
  *	Rb Agency login checker 
