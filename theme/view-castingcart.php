@@ -102,6 +102,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 get_header(); ?>
 
 <script type="text/javascript">
+        jQuery(document).ready(function(){jQuery(".rblinks").css({display:"block"});});
 	function printDiv(divName) {
      	var printContents = document.getElementById(divName).innerHTML;
      	var originalContents = document.body.innerHTML;
