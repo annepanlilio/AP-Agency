@@ -215,7 +215,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 		}
 		   $filterDropdown = array();
             
-        $filter2 = "";  
+                $filter2 = "";  
 		foreach($_GET as $key => $val){
                         
                       if (substr($key,0,15) == "ProfileCustomID") {
@@ -293,13 +293,10 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
 															if($filter2==""){
-               $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-               } else {
-               $filter2 .=" OR (customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-               }
-
-                                                                                //$filter.= " AND LOWER(customfield_mux.ProfileCustomValue) = LOWER(\"".$val."\") ";
-                                                           // array_push($filterDropdown,$val);
+                                                        $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                        } else {
+                                                        $filter2 .=" OR (customfield_mux.ProfileCustomValue IN('".$val."') and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                        }
 
 
                                                         } elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
@@ -324,26 +321,25 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                                                         }
                                                                     } else {
 																		
-																		$likequery = explode(",", $val);
-																		$likecounter = count($likequery);
-																		$i=1; 
-																		$likedata = "" ;
-																		foreach($likequery as $like){
-																			if($i < ($likecounter-1)){
-																				if($like!=""){
-																					$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
-																				}
-																				}else{
-																				if($like!=""){
-																						$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
-																				} 
-																			}
-																			$i++;
-																		}
-																		 
-																		
-																		$val = substr($val, 0, -1);
-																	    if($filter2==""){
+                                                                            $likequery = explode(",", $val);
+                                                                            $likecounter = count($likequery);
+                                                                            $i=1; 
+                                                                            $likedata = "" ;
+                                                                            foreach($likequery as $like){
+                                                                                    if($i < ($likecounter-1)){
+                                                                                            if($like!=""){
+                                                                                                    $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
+                                                                                            }
+                                                                                            }else{
+                                                                                            if($like!=""){
+                                                                                                            $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
+                                                                                            } 
+                                                                                    }
+                                                                                    $i++;
+                                                                            }
+
+                                                                            $val = substr($val, 0, -1);
+                                                                        if($filter2==""){
                                                                             $filter2 .= " AND  ((( ".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
                                                                         } else {
                                                                             $filter2 .= " OR  ((".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
@@ -683,27 +679,24 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 		echo "        </div>\n";
 		echo "     </div>\n";
 	} // Is Cart Empty 
-     $isSent = false;
+         $isSent = false;
 	if(isset($_POST["SendEmail"])){
 		
 
-		$rb_agency_options_arr = get_option('rb_agency_options');
-            $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-      	$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
+                    $rb_agency_options_arr = get_option('rb_agency_options');
+                    $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+                    $rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 		
 		  
-		     add_filter('wp_mail_content_type','rb_agency_set_content_type');
-						function rb_agency_set_content_type($content_type){
-							return 'text/html';
-		}
-  
-		
-			        
+		    add_filter('wp_mail_content_type','rb_agency_set_content_type');
+		    function rb_agency_set_content_type($content_type){
+                        	return 'text/html';
+                    }
+  			        
 					$MassEmailSubject = $_POST["MassEmailSubject"];
 					$MassEmailMessage = $_POST["MassEmailMessage"];
 					$MassEmailRecipient = $_POST["MassEmailRecipient"];
 			      
-					
 					// Mail it
 					$headers[]  = 'MIME-Version: 1.0';
 					$headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -717,7 +710,6 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 					}
 					
 					$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
-						
 
 	}
 	if($_GET["action"]== "massEmail"){
@@ -732,40 +724,40 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
         $query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
 		$results2 = mysql_query($query);
         $count = mysql_num_rows($results2);
-      $pos = 0;	
+        $pos = 0;	
 	$recipient = "";			
         while ($data = mysql_fetch_array($results2)) {
 		$pos ++;
-            $ProfileID = $data['ProfileID'];
-           $recipient .=$data['ProfileContactEmail'];
+             $ProfileID = $data['ProfileID'];
+             $recipient .=$data['ProfileContactEmail'];
 	     if($count != $pos){
 		  $recipient .=", ";     
 	     }
 			
 	  }
 		// Email
-		$rb_agency_options_arr = get_option('rb_agency_options');
-            $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+	$rb_agency_options_arr = get_option('rb_agency_options');
+        $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
       	$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
-		echo "<form method=\"post\">";
-		echo "     <div class=\"boxblock\">\n";
+	echo "<form method=\"post\">";
+	echo "     <div class=\"boxblock\">\n";
         echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
         echo "        <div class=\"inner\">\n";
-	  if($isSent){
+	if($isSent){
 	  echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";	
-	  }
-	  echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$recipient."</textarea><br/>";
+	}
+	echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$recipient."</textarea><br/>";
         echo "        <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
-		echo "<br/>";
-		echo "      <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\">this message was sent to you by ".$rb_agency_value_agencyname." ".network_site_url( '/' )."</textarea>";
-		echo "				<input type=\"submit\" value=\"". __("Send Email", rb_agency_TEXTDOMAIN) . "\" name=\"SendEmail\"class=\"button-primary\" />\n";
-		echo "        </div>\n";
-		echo "     </div>\n";
-	    echo "</form>";
+	echo "<br/>";
+	echo "      <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\">this message was sent to you by ".$rb_agency_value_agencyname." ".network_site_url( '/' )."</textarea>";
+	echo "				<input type=\"submit\" value=\"". __("Send Email", rb_agency_TEXTDOMAIN) . "\" name=\"SendEmail\"class=\"button-primary\" />\n";
+	echo "        </div>\n";
+	echo "     </div>\n";
+	echo "</form>";
 	}
     
 		echo "    </div><!-- .container -->\n";
-} 
+        } 
 
 		echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
 		echo "     <div class=\"boxblock\">\n";
@@ -919,8 +911,8 @@ if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_
 									$ProfileCustomType = $data1['ProfileCustomType'];
 									$ProfileCustomValue = $data1['ProfileCustomValue'];
 			
-  echo "				    <tr>\n";
-  echo " 				    \n";
+               echo "				    <tr>\n";
+               echo " 			    \n";
   
   		
 			
