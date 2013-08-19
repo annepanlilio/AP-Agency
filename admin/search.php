@@ -551,12 +551,12 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 					}
 				}
 
-				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
+				$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,  c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
 				foreach  ($resultsCustom as $resultCustom) {
 					if(!empty($resultCustom->ProfileCustomValue )){
 						if($resultCustom->ProfileCustomType == 7 && strtolower($resultCustom->ProfileCustomTitle)=="height"){
 								$heightraw = $resultCustom->ProfileCustomValue;
-							    $heightfeet = floor($heightraw/12);
+							        $heightfeet = floor($heightraw/12);
   								$heightinch = $heightraw - floor($heightfeet*12);
 								echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong>". $heightfeet ." ft ". $heightinch ." in</div>\n";
 						} else {
