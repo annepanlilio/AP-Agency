@@ -839,7 +839,7 @@ error_reporting(0);
 		$filterDropdown = array();
 
 		// Set CustomFields
-			if(isset($atts) && !empty($atts)){
+		if(isset($atts) && !empty($atts)){
 			$filter2 = '';
 
 			foreach($atts as $key => $val){
@@ -878,10 +878,10 @@ error_reporting(0);
 							$ProfileCustomType = mysql_fetch_assoc($q);
 
 								/*
-	                             * Have created a holder $filter2 and
-	                             * create its own filter here and change
-	                             * AND should be OR
-	                             */
+                                                                * Have created a holder $filter2 and
+                                                                * create its own filter here and change
+                                                                * AND should be OR
+                                                                */
 								if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
 									$minVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min']);
 									$maxVal=trim($_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max']);
@@ -896,7 +896,7 @@ error_reporting(0);
 									//echo "-----";
 								} else {
 
-									/******************
+				  /******************
                                     1 - Text
                                     2 - Min-Max > Removed
                                     3 - Dropdown
@@ -908,9 +908,9 @@ error_reporting(0);
 
                                     if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
                                             if($filter2 == ""){
-											    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
+                                                  $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
                                             } else {
-                                                $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
+                                                  $filter2 .= " OR customfield_mux.ProfileCustomValue='".$val."' ";
                                             }                                                           
                                             $_SESSION[$key] = $val;
 
@@ -945,26 +945,26 @@ error_reporting(0);
                                                     }
                                                 } else {
 													
-													$likequery = explode(",", $val);
-													$likecounter = count($likequery);
-													$i=1; 
-													$likedata = "" ;
-													foreach($likequery as $like){
-														if($i < ($likecounter-1)){
-															if($like!=""){
-																$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
-															}
-															}else{
-															if($like!=""){
-																	$likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
-															} 
-														}
-														$i++;
-													}
-													 
-													
-													$val = substr($val, 0, -1);
-												    if($filter2==""){
+                                                            $likequery = explode(",", $val);
+                                                            $likecounter = count($likequery);
+                                                            $i=1; 
+                                                            $likedata = "" ;
+                                                            foreach($likequery as $like){
+                                                                    if($i < ($likecounter-1)){
+                                                                            if($like!=""){
+                                                                                    $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
+                                                                            }
+                                                                            }else{
+                                                                            if($like!=""){
+                                                                                            $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
+                                                                            } 
+                                                                    }
+                                                                    $i++;
+                                                            }
+
+
+                                                            $val = substr($val, 0, -1);
+                                                        if($filter2==""){
                                                         $filter2 .= " AND  ((( ".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
                                                     } else {
                                                         $filter2 .= " OR  ((".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
@@ -981,7 +981,7 @@ error_reporting(0);
                                                 if($filter2==""){
                                                     $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
                                                 } else {
-                                                    $filter2 .= " or (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                    $filter2 .= " OR (customfield_mux.ProfileCustomValue like('%".$val."%')and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
                                                 } 
                                                 $_SESSION[$key] = $val;
                                            
@@ -1100,14 +1100,14 @@ error_reporting(0);
 			 ($rb_agency_option_privacy == 1) ||
 			 
 			 // All Public
-             ($rb_agency_option_privacy == 0) ||
+                         ($rb_agency_option_privacy == 0) ||
 			 
 			 //admin users
 			 (is_user_logged_in() && current_user_can( 'manage_options' )) ||
 			 
 			 //  Must be logged as "Client" to view model list and profile information
 			 ($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
-		// P R I V A C Y FILTER ====================================================
+                        // P R I V A C Y FILTER ====================================================
 			
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 				
@@ -1119,7 +1119,7 @@ error_reporting(0);
 				# print, downloads links to be added on top of profile list
 				$links='<div class="rblinks">';
 				  
-			       /*
+                                        /*
 					* Set Print / PDF in Settings
 					*/
 					if(get_query_var('target')!="results" && $rb_agency_option_profilelist_printpdf){// hide print and download PDF in Search result
@@ -1203,14 +1203,14 @@ error_reporting(0);
 			 */
 			$sqlFavorite_userID='';
 			$sqlCasting_userID='';
-            if(is_permitted('casting')){
-                    // Casting Cart 
+                        if(is_permitted('casting')){
+                            // Casting Cart 
 		      	    $sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".rb_agency_get_current_userid()."'  ";
 			} 
-            if(is_permitted('favorite')){
-                    // Display Favorites 
+                        if(is_permitted('favorite')){
+                            // Display Favorites 
 		            $sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-            } 
+                        } 
 
 			/*
 			 * Execute the Query
@@ -1235,7 +1235,7 @@ error_reporting(0);
 			
 			} elseif ($_GET['t']=="casting"){
 						   
-	// ?????????????????????  Purpose?
+                                 // ?????????????????????  Purpose?
 				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 				 
 			} elseif ($fastload){
@@ -1296,7 +1296,7 @@ error_reporting(0);
 			# this will replace the timthumb function as it is not working properly all the time.	
 		  	$displayHTML ="	<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
 
-	        $profileDisplay = 0;
+	                $profileDisplay = 0;
 			$countFav = 0;
 			while ($dataList = mysql_fetch_assoc($resultsList)) {
 					
