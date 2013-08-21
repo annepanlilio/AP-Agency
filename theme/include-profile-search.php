@@ -55,7 +55,6 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 					}
 				jQuery(".search-field").find("select").prop('selectedIndex',0);
 			});
-                        var cs = jQuery("input[type='submit']").css();
                         jQuery(this).css(jQuery("input[type='submit']").css());
                 }
 		jQuery("#rst_btn").rset();	
