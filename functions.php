@@ -3377,6 +3377,41 @@ function fullwidth_class(){
 	return $class = "col_12";
 }
 /*
+ * current profile. 
+ * this is for files when profile ID is not available
+ * specially "header files"
+ * to get the current profile info not user info
+ * TODO, should also return any info needed for profiles
+ */
+function get_current_profile_info(){
+        
+        global $wpdb;
+    
+        $uri = $_SERVER['REQUEST_URI'];
+
+        if(!rb_is_page("rb_profile")) return false;
+        
+        $contact = strpos($uri,"/profile/");
+        $contact = substr($uri,$contact+9);
+        $contact = str_replace("/","",$contact);
+        
+        $query = "SELECT ProfileContactDisplay FROM " . table_agency_profile .
+                 " WHERE ProfileGallery = '" . $contact . "'";
+        
+        $contact = $wpdb->get_results($query);
+        
+        if(count($contact)>0){
+            foreach($contact as $c){
+                
+                return ucwords(str_replace("-"," ",$c->ProfileContactDisplay));
+                
+            }
+        }
+        
+        return false;
+        
+}
+/*
 * Get primary image for profiles
 */
 function rb_get_primary_image($PID){
