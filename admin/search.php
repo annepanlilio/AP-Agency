@@ -315,34 +315,35 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 																	  
                                                                         if($filter2==""){
 																		
-                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue like('%".$val."%') AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
                                                                         } else {
-                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue like('%".$val."%') AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
+                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
                                                                         }
                                                                     } else {
 																		
-                                                                            $likequery = explode(",", $val);
-                                                                            $likecounter = count($likequery);
-                                                                            $i=1; 
-                                                                            $likedata = "" ;
-                                                                            foreach($likequery as $like){
-                                                                                    if($i < ($likecounter-1)){
-                                                                                            if($like!=""){
-                                                                                                    $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
-                                                                                            }
-                                                                                            }else{
-                                                                                            if($like!=""){
-                                                                                                            $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
-                                                                                            } 
-                                                                                    }
-                                                                                    $i++;
-                                                                            }
-
-                                                                            $val = substr($val, 0, -1);
-                                                                        if($filter2==""){
-                                                                            $filter2 .= " AND  ((( ".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
+									$likequery = explode(",", $val);
+									$likecounter = count($likequery);
+									$i=1; 
+									$likedata = "" ;
+									foreach($likequery as $like){
+										if($i < ($likecounter-1)){
+											if($like!=""){
+												$likedata.= " customfield_mux.ProfileCustomValue ='".$like."' OR "  ;
+											}
+											}else{
+											if($like!=""){
+													$likedata.= " customfield_mux.ProfileCustomValue ='".$like."' "  ;
+											} 
+										}
+										$i++;
+									}
+									 
+									
+									$val = substr($val, 0, -1);
+								    if($filter2==""){
+                                                                            $filter2 .= " AND  (( ".$likedata." and customfield_mux.ProfileCustomID = ".substr($key,15)." )";
                                                                         } else {
-                                                                            $filter2 .= " OR  ((".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
+                                                                            $filter2 .= " OR  (".$likedata." and customfield_mux.ProfileCustomID = ".substr($key,15).")";
                                                                         }
                                                                     }
 
