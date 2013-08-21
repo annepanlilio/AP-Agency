@@ -38,9 +38,6 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	} 
 ?>
         <!-- RESET BACKUP -->
-	<style>
-	#rst_btn { padding: 6px 10px; padding: 0.428571429rem 0.714285714rem; font-size: 13px; line-height: 1.428571429; font-weight: bold; color: #fff; background-color: #333; background-repeat: repeat-x; background-image: -moz-linear-gradient(top, #666, #333); background-image: -ms-linear-gradient(top, #666, #333); background-image: -webkit-linear-gradient(top, #666, #333); background-image: -o-linear-gradient(top, #666, #333); background-image: linear-gradient(top, #666, #333); border: none; border-radius: 3px; box-shadow: 0 1px 2px rgba(64, 64, 64, 0.1); }
-	</style>
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
 		jQuery.fn.rset = function(slect){
@@ -58,7 +55,9 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 					}
 				jQuery(".search-field").find("select").prop('selectedIndex',0);
 			});
-		}
+                        var cs = jQuery("input[type='submit']").css();
+                        jQuery(this).css(jQuery("input[type='submit']").css());
+                }
 		jQuery("#rst_btn").rset();	
 	});
 	</script>
