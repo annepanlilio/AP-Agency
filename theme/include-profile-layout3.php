@@ -207,7 +207,7 @@ echo " 							</div>\n";
 echo "	   					</div>\n";
 echo " 					</div>\n"; // twelve column 2
 echo " 				</div>\n"; // end #tabs
-					
+echo "				<div class=\"cb\"></div>\n"; // Clear All					
 echo " 				<div id=\"tab-panels\">\n";
 echo " 					<div class=\"col_12 column row-photos tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
@@ -391,7 +391,6 @@ echo " 						</div>\n"; // .tab-panel
 echo " 					</div>\n"; // Download Tab
 
 echo "					<div class=\"cb\"></div>\n"; // Clear All
-
 					
 echo "	 			</div>\n";  // Close Tab Panels
 echo " 			</div>\n";  // Close RB Tabs
