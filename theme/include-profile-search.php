@@ -37,27 +37,50 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		}
 	} 
 ?>
-        <!-- RESET BACKUP -->
+     <!-- RESET BACKUP -->
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
-		jQuery.fn.rset = function(slect){
+		jQuery.fn.rset = function(){
 			jQuery(this).on("click",function(){
 			    var inputs = jQuery(".search-field").find("input[type=text]");
 					for (var i = 0; i<inputs.length; i++) {
 						switch (inputs[i].type) {
 							case 'text':
-								inputs[i].value = '';
-								break;
+							     inputs[i].value = '';
+							     break;
 							case 'radio':
 							case 'checkbox':
-								inputs[i].checked = false;   
+							      inputs[i].checked = false;   
 						}
 					}
 				jQuery(".search-field").find("select").prop('selectedIndex',0);
 			});
-                        jQuery(this).css(jQuery("input[type='submit']").css());
-                }
+		}
+
 		jQuery("#rst_btn").rset();	
+		jQuery("#rst_btn").click();	
+
+		jQuery.fn.css_ = function(){
+			var el = this.get(0); var st; var returns = {};
+			if(window.getComputedStyle){
+				var camel = function(a,b){return b.toUpperCase();}
+				st = window.getComputedStyle(el, null);
+				for(var s=0; s < st.length; s++){
+					var css_style = st[s];
+					var cml = css_style.replace(/\-([a-z])/, camel);
+					var vl = st.getPropertyValue(css_style);
+					returns[cml] = vl;
+				}
+				return returns;
+			}
+			if(el.currentStyle){
+				st = el.currentStyle;
+				for(var prop in style){ returns[prop] = st[prop];}
+				return returns;
+			}
+			return this.css();
+		}
+		jQuery("#rst_btn").css(jQuery("#sr_pr").css_());
 	});
 	</script>
 	<?php	
