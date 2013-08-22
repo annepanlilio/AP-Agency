@@ -39,23 +39,23 @@ if($ProfileCustomType!=4)	{
 				if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
 					if($data1['ProfileCustomOptions'] == 1){
 						
-						$measurements_label  ="<em>(cm)</em>";
+						$measurements_label  ="<em> (cm)</em>";
 					} elseif($data1['ProfileCustomOptions'] == 2){
 						
-						$measurements_label  ="<em>(kg)</em>";
+						$measurements_label  ="<em> (kg)</em>";
 					} elseif($data1['ProfileCustomOptions'] == 3){
-						$measurements_label  ="<em>(In Inches/Feet)</em>";
+						$measurements_label  ="<em> (In Inches/Feet)</em>";
 					}
 				} elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
 					if($data1['ProfileCustomOptions'] == 1){
-						$measurements_label  ="<em>(In Inches)</em>";
+						$measurements_label  ="<em> (In Inches)</em>";
 					   
 					} elseif($data1['ProfileCustomOptions'] == 2){
 						
-						$measurements_label  ="<em>(In Pounds)</em>";
+						$measurements_label  ="<em> (In Pounds)</em>";
 		
 					} elseif($data1['ProfileCustomOptions'] == 3){
-						$measurements_label  ="<em>(In Inches/Feet)</em>";
+						$measurements_label  ="<em> (In Inches/Feet)</em>";
 					}
 				}		
 			}
@@ -136,17 +136,17 @@ if($ProfileCustomType!=4)	{
 						$dataArr = explode(",",implode(",",explode("','",$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])));
 						if(in_array($val,$dataArr,true)){
 							echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-							echo "<span>". $val."</span></label>";
+							echo "<span>&nbsp;&nbsp;". $val."</span></label>";
 						} else {
 							if($val !=""){	
 								echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-								echo "<span>". $val."</span></label>";	
+								echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
 							}
 						}
 						} else {
 							if($val !=""){	
 						     	echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-								echo "<span>". $val."</span></label>";	
+								echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
 							}
 						}
 					}
@@ -167,17 +167,17 @@ if($ProfileCustomType!=4)	{
 		
 						if(in_array($val,$dataArr) && $val !=""){
 							echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-							echo "<span>". $val."</span></label>";
+							echo "<span>&nbsp;&nbsp;". $val."</span></label>";
 						}else{
 						    if($val !=""){	
 								echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-								echo "<span>". $val."</span></label>";	
+								echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
 							}
 						}
 					} else {
 						if($val !=""){	
 							echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-							echo "<span>". $val."</span></label>";	
+							echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
 						}
 					}
 				}
