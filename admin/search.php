@@ -341,11 +341,11 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 									
 									$val = substr($val, 0, -1);
 								    if($filter2==""){
-                                                                            $filter2 .= " AND  (( ".$likedata." and customfield_mux.ProfileCustomID = ".substr($key,15)." )";
-                                                                        } else {
-                                                                            $filter2 .= " OR  (".$likedata." and customfield_mux.ProfileCustomID = ".substr($key,15).")";
-                                                                        }
-                                                                    }
+									    $filter2 .= " AND  (( ".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)." ";
+									} else {
+									    $filter2 .= " OR  (".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)."";
+									}
+								    }
 
                                                                 $_SESSION[$key] = $val;
                                                                 }else{

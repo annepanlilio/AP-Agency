@@ -935,46 +935,45 @@ error_reporting(0);
                                     } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
                                             if(!empty($val)){
                                                 if(strpos($val,",") === false){
-                                                   // $val = implode("','",explode(",",$val));
 												  
-                                                    if($filter2==""){
-													
-                                                            $filter2 .= " AND  ((customfield_mux.ProfileCustomValue like('%".$val."%') and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-                                                    } else {
-                                                            $filter2 .= " OR  (customfield_mux.ProfileCustomValue like('%".$val."%')   and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-                                                    }
-                                                } else {
-													
-                                                            $likequery = explode(",", $val);
-                                                            $likecounter = count($likequery);
-                                                            $i=1; 
-                                                            $likedata = "" ;
-                                                            foreach($likequery as $like){
-                                                                    if($i < ($likecounter-1)){
-                                                                            if($like!=""){
-                                                                                    $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  OR "  ;
-                                                                            }
-                                                                            }else{
-                                                                            if($like!=""){
-                                                                                            $likedata.= " customfield_mux.ProfileCustomValue like('%".$like."%')  "  ;
-                                                                            } 
-                                                                    }
-                                                                    $i++;
-                                                            }
+						      if($filter2==""){
+															      
+							      $filter2 .= " AND  ((customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
+						      } else {
+							      $filter2 .= " OR  (customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
+						      }
+						  } else {
+															      
+							  $likequery = explode(",", $val);
+							  $likecounter = count($likequery);
+							  $i=1; 
+							  $likedata = "" ;
+							  foreach($likequery as $like){
+								  if($i < ($likecounter-1)){
+									  if($like!=""){
+										  $likedata.= " customfield_mux.ProfileCustomValue ='".$like."' OR "  ;
+									  }
+									  }else{
+									  if($like!=""){
+											  $likedata.= " customfield_mux.ProfileCustomValue ='".$like."' "  ;
+									  } 
+								  }
+								  $i++;
+							  }
+							  
+							  $val = substr($val, 0, -1);
+						      if($filter2==""){
+							      $filter2 .= " AND  (( ".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)." ";
+							  } else {
+							      $filter2 .= " OR  (".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)."";
+							  }
+						      }
+						  }
 
-
-                                                            $val = substr($val, 0, -1);
-                                                        if($filter2==""){
-                                                        $filter2 .= " AND  ((( ".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
-                                                    } else {
-                                                        $filter2 .= " OR  ((".$likedata.") and customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-                                                    }
-                                                }
-
-                                            $_SESSION[$key] = $val;
-                                            }else{
-                                                    $_SESSION[$key] = "";
-                                            }
+					      $_SESSION[$key] = $val;
+					      }else{
+						      $_SESSION[$key] = "";
+					      }
                                     } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
                                             //var_dump($ProfileCustomType["ProfileCustomType"]);
                                               // $val = implode("','",explode(",",$val));
@@ -3375,6 +3374,41 @@ function secondary_class(){
 
 function fullwidth_class(){
 	return $class = "col_12";
+}
+/*
+ * current profile. 
+ * this is for files when profile ID is not available
+ * specially "header files"
+ * to get the current profile info not user info
+ * TODO, should also return any info needed for profiles
+ */
+function get_current_profile_info(){
+        
+        global $wpdb;
+    
+        $uri = $_SERVER['REQUEST_URI'];
+
+        if(!rb_is_page("rb_profile")) return false;
+        
+        $contact = strpos($uri,"/profile/");
+        $contact = substr($uri,$contact+9);
+        $contact = str_replace("/","",$contact);
+        
+        $query = "SELECT ProfileContactDisplay FROM " . table_agency_profile .
+                 " WHERE ProfileGallery = '" . $contact . "'";
+        
+        $contact = $wpdb->get_results($query);
+        
+        if(count($contact)>0){
+            foreach($contact as $c){
+                
+                return ucwords(str_replace("-"," ",$c->ProfileContactDisplay));
+                
+            }
+        }
+        
+        return false;
+        
 }
 /*
 * Get primary image for profiles
