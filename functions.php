@@ -3379,6 +3379,43 @@ function secondary_class(){
 function fullwidth_class(){
 	return $class = "col_12";
 }
+
+/*
+ * load script for printing profile pdf 
+ */
+function rb_load_profile_pdf($row = 0, $logo = NULL){?>
+	
+<!-- ajax submit login -->
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery('#print_pr_pdf').on('click', function(){
+		jQuery(this).text("PRINTING...");
+		jQuery.ajax({
+			type: 'POST',
+			dataType: 'html',
+			url: '<?php echo plugins_url("rb-agency/theme/print_profile_pdf.php"); ?>',
+			data: { 
+				pid : <?php echo get_current_profile_info("ProfileID"); ?>, 
+				row : <?php echo $row; ?>, 
+				logo : "<?php echo $logo; ?>"},
+			success: function(response){
+				if (response){
+					var lnk = response;
+					var st = lnk.indexOf("http");
+					lnk =  lnk.substring(st);
+					document.location.href = lnk;
+				} else {
+					jQuery(this).text("ERROR...");
+				}
+			}
+		});
+	 });
+ });
+ </script>        
+ 
+<?php        
+}
+
 /*
  * current profile. 
  * this is for files when profile ID is not available
@@ -3386,7 +3423,7 @@ function fullwidth_class(){
  * to get the current profile info not user info
  * TODO, should also return any info needed for profiles
  */
-function get_current_profile_info(){
+function get_current_profile_info($data=NULL){
         
         global $wpdb;
     
@@ -3398,22 +3435,25 @@ function get_current_profile_info(){
         $contact = substr($uri,$contact+9);
         $contact = str_replace("/","",$contact);
         
-        $query = "SELECT ProfileContactDisplay FROM " . table_agency_profile .
+        $query = "SELECT * FROM " . table_agency_profile .
                  " WHERE ProfileGallery = '" . $contact . "'";
         
         $contact = $wpdb->get_results($query);
         
         if(count($contact)>0){
             foreach($contact as $c){
-                
-                return ucwords(str_replace("-"," ",$c->ProfileContactDisplay));
-                
+                if(is_null($data)){
+                	return ucwords(str_replace("-"," ",$c->ProfileContactDisplay));
+		} else {
+			return $c->$data;
+		}
             }
         }
         
         return false;
         
 }
+
 /*
 * Get primary image for profiles
 */

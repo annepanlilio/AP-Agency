@@ -3,6 +3,11 @@
 Large Scroller
 */
 
+// load script for printing profile pdf
+$row = 4 ;
+$logo = get_template_directory_uri() . '/images/logo.png';
+rb_load_profile_pdf($row,$logo);
+
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-nine\" class=\"rblayout\">\n";
 
@@ -97,12 +102,16 @@ echo "						<ul>\n";
 										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" ". $reltypev .">Watch ShowReel</a></li>\n";
 								  	}
 								}
+								
+								// print details of profiles
+								echo "<li class=\"item resume\"><a id='print_pr_pdf' href='javascript:;'>Print PDF</a></li>\n";
+		
 								// Resume
 								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
 								$countMedia = mysql_num_rows($resultsMedia);
 								if ($countMedia > 0) {
 								  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-										echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print PDF</a></li>\n";
+										echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume PDF</a></li>\n";
 								  	}
 								}							
 								//Contact Profile
