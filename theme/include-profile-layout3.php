@@ -195,7 +195,7 @@ echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><
 echo " 								</a>\n";
 echo " 							</div>\n";
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-bookings\">\n";
-echo " 								<a href=\"javascript:;\">\n";
+echo " 								<a href=\"/profile-casting/\">\n";
 echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Booking</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
