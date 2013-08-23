@@ -2323,7 +2323,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 					if ($resultCustom->ProfileCustomType == 4){
 					   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
 					} else {
-					   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". split_language(',',$resultCustom->ProfileCustomValue) ."</li>\n";
+					   	echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 			   	}
 			  
@@ -2347,12 +2347,13 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 * ======================== Split Languages ===============
 * @Returns languages separatad by space
 * @param $delimiter : the needle to split the languages
+* @param $separator : the language output separator
 * @param $languages : the languages
 /*/
-function split_language($delimiter, $languages){
+function split_language($delimiter, $separator, $languages){
 	$languages = explode($delimiter, $languages);
 	for ($start=0; $start < count($languages); $start++) {
-		$languages = implode(", ", $languages);
+		$languages = implode($separator, $languages);
 	}
 	return $languages;
 }
