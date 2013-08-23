@@ -16,19 +16,51 @@
   class rb_print_pdf{
 
        /*
-        * pdf properties 
+        * pdf property settings
         */
+        
+        # profile id 
         protected $profile_ID; 
+        
+        # dompdf action link
         protected $rendered_action;
+        
+        # wordpress object
         protected $wp;
+        
+        # profile agency table
         protected $prf_tbl;
+        
+        # profile custom fields table
         protected $cus_fld;
+        
+        # profile custom fields mux table
         protected $cus_mux;
+        
+        # profile media table
         protected $med_tbl;
+        
+        # number of images per row
         protected $img_row;
+        
+        # client logo link
         protected $logo;
+        
+        # images per page
         protected $img_page = 16;
-        protected $bse_path ='';
+        
+        # dompdf base path images 
+        protected $bse_path = "htmls/";
+        
+        # image size target height 
+        protected $img_height = 200;
+        
+        # image size target width 
+        protected $img_width = 130;
+        
+        # dompdf table float 
+        protected $table_float = true;
+        
         
        /*
         * our constructor 
@@ -46,7 +78,6 @@
             $this->med_tbl = $pfx . "agency_profile_media";
             $this->img_row = $img_row;
             $this->logo = $logo;
-            $this->bse_path = "htmls/";
             
        }
         
@@ -131,8 +162,12 @@
        */ 
        private function render_data_htm($data=NULL){
            
-            $htm = '<table>'.PHP_EOL;
+            $temp_htm = array();
+            $tr_htm = array();
+            $table_htm = array();
+            
             foreach($data as $d){
+                $htm = '';
                 if(strtolower($d->ProfileCustomTitle) == "height"){
                    $heightraw = $d->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
 	           $val = $heightfeet."ft ".$heightinch." in"; 
@@ -140,19 +175,24 @@
                    $val = $d->ProfileCustomValue; 
                 }
                 $name = $d->ProfileContactDisplay;
-                $htm .="    <tr>";
                 $htm .="        <td>";
                 $htm .= $d->ProfileCustomTitle;
-                $htm .="        </td>";
-                $htm .="        <td>";
+                $htm .="</td>";
+                $htm .="<td>";
                 $htm .= $val;
-                $htm .="        </td>";
-                $htm .="    </tr>".PHP_EOL;
+                $htm .="</td>" . PHP_EOL;
+                $temp_htm[] = $htm;
             }
-            $htm .= '</table>';
-                $n = "   <h2>".$name."</h2><br/>".PHP_EOL;
-            $logo = '   <img src="'.$this->logo.'" style="margin-top:20px; height:80px; width:auto">'.PHP_EOL;
-            return $n . $htm . $logo;
+            
+            $tr_htm = $this->wrapper($temp_htm, 1, "tr", NULL);
+            
+            $table_htm = $this->wrapper($tr_htm, 0, "table", 420);
+            
+            $n = "   <h2 style='margin-left:560px'>".$name."</h2><br/>".PHP_EOL;
+            
+            $logo = '   <img src="'.$this->logo.'" style="top:900px; position:absolute; left:10px; height:60px; width:auto">'.PHP_EOL;
+
+            return $n . $this->convert_to_html($table_htm) . $logo;
       
        }
 
@@ -160,28 +200,112 @@
        * get our table for image
        */ 
        private function render_image_htm($image=NULL){
-            $height = 200;
-            $width = 150;
-            $htm = '<table>' .PHP_EOL;
-            $htm .="    <tr>".PHP_EOL; 
-            $ctr = 0; $total = 0;
+
+            $temp_htm = array();
+            $tr_htm = array();
+            $table_htm = array();
+ 
             foreach($image as $i){
-                if($ctr == $this->img_row) {
-                     $htm .= "  </tr>".PHP_EOL;
-                     $htm .= "  <tr>".PHP_EOL;
-                     $ctr = 0;
-                } 
-                if(($total % $this->img_page)==0 && $total > 0) {$htm .='</table>'.PHP_EOL.'<div style="page-break-before:always"></div>'.PHP_EOL.'<table border="0">'.PHP_EOL.'    <tr>';}
+                $htm = "";
                 $im = $this->get_image_url($i->ProfileMediaURL);
-                $size = $this->get_size_p($im,$width, $height);
+                $size = $this->get_size_p($im,$this->img_width, $this->img_height);
                 $htm .="        <td style='float:left;'>";
-                $htm .="            <img src='".$im."' style='width:".$size[0]."px; height:".$size[1]."px'/>";
-                $htm .="        </td>".PHP_EOL;
-                $ctr++;
-                $total++;
+                $htm .="<img src='".$im."' style='width:".$size[0]."px; height:".$size[1]."px'/>";
+                $htm .="</td>".PHP_EOL;
+                $temp_htm[] = $htm; 
             }
-            $htm .= '</table>'.PHP_EOL;
-            return $htm;
+            
+            $tr_htm = $this->wrapper($temp_htm, $this->img_row, "tr");
+            
+            $table_htm = $this->wrapper($tr_htm, ceil($this->img_page / $this->img_row), "table");
+            
+            return $this->convert_to_html($table_htm);
+       }
+
+      /*
+       * wrap table row
+       */ 
+       private function wrapper($htm = NULL, $row = 0, $wrapper = NULL, $margin = NULL){
+           
+           $new_temp = array();
+           $temp_htm = "";
+           
+           $count = 0;
+           
+           foreach($htm as $h){
+               
+               $temp_htm .= $h;
+               $count++;
+               
+               if($count == $row && $row != 0){
+                  
+                  switch ($wrapper):
+                      case 'tr':
+                          $new_temp[] = $this->tr_($temp_htm);
+                          break;
+                      case 'table':
+                          $new_temp[] = $this->table_($temp_htm, $margin);
+                          break;
+                  endswitch; 
+                    
+                  $count = 0;
+                  $temp_htm = "";
+                  
+               }
+               
+           }
+           
+           if(!empty($temp_htm)) {
+                 switch ($wrapper):
+                      case 'tr':
+                          $new_temp[] = $this->tr_($temp_htm);
+                          break;
+                      case 'table':
+                          $new_temp[] = $this->table_($temp_htm, $margin);
+                          break;
+                  endswitch;
+           }    
+           
+           return $new_temp;
+       }
+
+      /*
+       * wrap table
+       */ 
+       private function table_($htm = NULL, $margin = NULL){
+           
+           $m = (!is_null($margin)) ? " margin-left: ". $margin ."px" : "";
+           
+           $f = ($this->table_float) ? " style='float:left; ".$m."' " : "";
+           
+           $htm = PHP_EOL . '<table '.$f.'>' . PHP_EOL . $htm . '</table>' . PHP_EOL;
+           
+           return $htm;
+       }
+
+      /*
+       * tr wrapper
+       */ 
+       private function tr_($htm = NULL){
+           
+           $htm = '  <tr>' . PHP_EOL . $htm . '  </tr>' . PHP_EOL;
+           
+           return $htm;
+       }       
+       
+      /*
+       * tr wrapper
+       */        
+       private function convert_to_html($arr = array()){
+           
+           $html = "";
+           
+           foreach($arr as $htm){
+               $html .= $htm; 
+           }
+           
+           return $html;
+           
        }
 
       /*

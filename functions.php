@@ -3415,6 +3415,7 @@ jQuery(document).ready(function(){
 				logo : "<?php echo $logo; ?>"},
 			success: function(response){
 				if (response){
+				        jQuery('#print_pr_pdf').text("PRINT PDF");
 					var lnk = response;
 					var st = lnk.indexOf("http");
 					lnk =  lnk.substring(st);
