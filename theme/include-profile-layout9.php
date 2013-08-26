@@ -5,7 +5,8 @@ Large Scroller
 
 // load script for printing profile pdf
 $row = 4 ;
-$logo = get_template_directory_uri() . '/images/logo.png';
+$rb_agency_options_arr = get_option('rb_agency_options');
+$logo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
 rb_load_profile_pdf($row,$logo);
 
 echo "	<div id=\"rbprofile\">\n";
