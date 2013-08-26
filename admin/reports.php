@@ -1270,7 +1270,7 @@ elseif ($ConfigID == 14) {
 								$ProfileGallery = rb_agency_safenames($ProfileContactDisplay); 
 							}
 								
-							  $ProfileGallery = rb_agency_checkdir($ProfileGallery);
+							  $ProfileGallery = rb_agency_createdir($ProfileGallery);
 								
 							  $insert = "INSERT INTO " . table_agency_profile . "(
     								  ProfileGallery,

@@ -137,9 +137,11 @@ if (isset($_POST['action'])) {
                         $new_user = wp_insert_user($userdata);
                     }
 
-                    $ProfileGallery = rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
+                    // Check Directory - create directory if does not exist, rename if does
+                    $ProfileGallery = rb_agency_createdir($ProfileGallery);
+
                     // Create Record
-                     $insert = "INSERT INTO " . table_agency_profile .
+                    $insert = "INSERT INTO " . table_agency_profile .
                         " (ProfileGallery,
                            ProfileContactDisplay,
                            ProfileUserLinked,
@@ -294,8 +296,10 @@ if (isset($_POST['action'])) {
                         $results1 = $wpdb->query($insert1);
                     }
                 }
-               // 5/27/2013 @Satya Fixed 559 Profile Media Folder
-               //  rb_agency_checkdir($ProfileGallery);  // Check Directory - create directory if does not exist
+
+                // Check Directory - create directory if does not exist
+                $ProfileGallery = rb_agency_checkdir($ProfileGallery);
+
                 // Upload Image & Add to Database
                 $i = 1;
 
