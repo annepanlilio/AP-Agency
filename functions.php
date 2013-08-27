@@ -1151,6 +1151,32 @@ error_reporting(0);
 					$links.='</div><!-- .rbfavorites-castings -->
 				</div><!-- .rblinks -->';			
 			}
+                        
+                        /*
+                         *  sorting options is activated if set on in admin/settings
+                         */
+                        if($rb_agency_option_profilelist_sortby){
+
+                                /*
+                                *  enqueue our js script
+                                */
+                                wp_enqueue_script( 'list_reorder', plugins_url('rb-agency/js/list_reorder.js'),array('jquery'));
+
+                                /*
+                                    *  dropdown
+                                    */
+                                $links.='<div style="float:left; clear:both">
+                                              Sort By: <select id="sort_by">
+                                                          <option value="">Sort List</option>
+                                                          <option value="1">Age</option>
+                                                          <option value="2">Name</option>
+                                                          <option value="3">Date Joined</option>
+                                                      </select>
+                                                      <select id="sort_option">
+                                                          <option value="">Sort Options</option>
+                                                      </select>
+                                        </div><br>';
+                        }
 		
 		  	//remove  if its just for client view of listing via casting email
 		 	if(get_query_var('type')=="profilesecure"){ $links="";}
@@ -1273,6 +1299,7 @@ error_reporting(0);
 					profile.ProfileGallery,
 					profile.ProfileContactDisplay, 
 					profile.ProfileDateBirth, 
+                                        profile.ProfileDateCreated,
 					profile.ProfileLocationState, 
 					customfield_mux.ProfileCustomMuxID, customfield_mux.ProfileCustomMuxID, customfield_mux.ProfileCustomID, customfield_mux.ProfileCustomValue 
 				FROM ". table_agency_profile ." profile 
@@ -1342,7 +1369,14 @@ error_reporting(0);
 				$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
 				
 				$p_image = rb_get_primary_image($dataList["ProfileID"]); 
-	
+
+                                /*
+                                 * load sorting values
+                                 */
+                                $displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
+		                $displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
+                                $displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">';
+
 				if ($p_image){ 
 					
 					#dont need other image for hover if its for print or pdf download view and dont use timthubm
