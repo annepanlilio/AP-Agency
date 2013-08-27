@@ -4,6 +4,14 @@
  */
 jQuery(document).ready(function(){
 	
+        /*
+         * create element if not exist
+         */
+        if(jQuery('#hidden_div').length == 0){
+		var h = '<div id="hidden_div" style="display:none !important"></div>';
+		jQuery("body").append(h);
+	}
+        
         jQuery("#sort_by option[value='']").attr("selected", "selected");
         
 	jQuery("#sort_by, #sort_option").change(function(){
