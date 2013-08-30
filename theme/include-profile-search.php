@@ -58,7 +58,6 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		}
 
 		jQuery("#rst_btn").rset();	
-		jQuery("#rst_btn").click();	
 
 		jQuery.fn.css_ = function(){
 			var el = this.get(0); var st; var returns = {};

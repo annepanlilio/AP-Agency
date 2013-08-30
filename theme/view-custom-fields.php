@@ -192,7 +192,7 @@ if($ProfileCustomType!=4)	{
 
 										if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==1){
 
-										echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+										echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 														  if (empty($ProfileCustomValue)) {
 															echo "  <option value=\"\">--</option>\n";
 														  }
@@ -210,7 +210,7 @@ if($ProfileCustomType!=4)	{
 																}
 														  echo " </select></div>\n";
 														  
-														   echo "<div><label>Max</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_min\">\n";
+														   echo "<div><label>Max</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 														  if (empty($ProfileCustomValue)) {
 															echo "  <option value=\"\">--</option>\n";
 														  }

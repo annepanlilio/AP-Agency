@@ -212,196 +212,9 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
             $cartArray = $_SESSION['cartArray'];
             $cartString = implode(",", $cartArray);
 			$cartQuery =  " AND profile.ProfileID NOT IN (". $cartString .")";
-		}
-		   $filterDropdown = array();
-            
-                $filter2 = "";  
-		foreach($_GET as $key => $val){
-                        
-                      if (substr($key,0,15) == "ProfileCustomID") {
-                        
-                              /*
-                               *  Check if this is array or not
-                               *  because sometimes $val is an array so
-                               *  array_filter is not applicable
-                               */	
-                              if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
-                                   
-                                    /*
-                                     * Id like to chop this one out and extract
-                                     * the array values from here and make it a string with "," or
-                                     * pass the single value back $val
-                                     */
-                                    if(is_array($val)){
-                                      
-                                            if(count(array_filter($val)) > 1) {
-                                                $ct =1;
-                                                foreach($val as $v){
-                                                    if($ct == 1){
-                                                        $val = $v;
-                                                        $ct++;
-
-                                                    } else {
-                                                        $val = $val .",".$v;
-                                                    }
-                                                }
-                                            } else {
-                                                $val = array_shift(array_values($val));
-                                            } 
-                                    }
-				    
-                                    $q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
-				    $ProfileCustomType = mysql_fetch_assoc($q);
-					
-				
-                                        /*
-                                         * Have created a holder $filter2 and
-                                         * create its own filter here and change
-                                         * AND should be OR
-                                         */
-                                        if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
-                                                        $minVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_min'];
-                                                        $maxVal=$_GET['ProfileCustomID'.$ProfileCustomType['ProfileCustomID'].'_max'];
-                                                        if($filter2 == ""){
-                                                            $filter2 .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-                                                        } else {
-                                                            $filter2 .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."'and customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-
-                                                        }
-
-                                                        //echo "-----";
-                                        }else {
-
-                                                        /******************
-                                                        1 - Text
-                                                        2 - Min-Max > Removed
-                                                        3 - Dropdown
-                                                        4 - Textbox
-                                                        5 - Checkbox
-                                                        6 - Radiobutton
-                                                        7 - Metrics/Imperials
-                                                        *********************/
-
-                                                        if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
-                                                                if($filter2 == ""){
-																
-                                                                    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
-                                                                } else {
-                                                                    $filter2 .= " OR ( customfield_mux.ProfileCustomValue='".$val."' ";
-                                                                }                                                           
-                                                                $_SESSION[$key] = $val;
-
-                                                        } elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
-															if($filter2==""){
-                                                        $filter2 .=" AND (( customfield_mux.ProfileCustomValue IN('".$val."') AND customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-                                                        } else {
-                                                        $filter2 .=" OR ( customfield_mux.ProfileCustomValue IN('".$val."') AND customfield_mux.ProfileCustomID = '".substr($key,15)."')";
-                                                        }
-
-
-                                                        } elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
-                                                                if($filter2==""){
-                                                                    $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
-                                                                } else {
-                                                                    $filter2 .= " OR ( customfield_mux.ProfileCustomValue='".$val."' ";
-                                                                } 
-                                                                        $_SESSION[$key] = $val;
-
-
-                                                        } elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
-                                                                if(!empty($val)){
-                                                                    if(strpos($val,",") === false){
-                                                                       // $val = implode("','",explode(",",$val));
-																	  
-                                                                        if($filter2==""){
-																		
-                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
-                                                                        } else {
-                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
-                                                                        }
-                                                                    } else {
-																		
-									$likequery = explode(",", $val);
-									$likecounter = count($likequery);
-									$i=1; 
-									$likedata = "" ;
-									foreach($likequery as $like){
-										if($i < ($likecounter-1)){
-											if($like!=""){
-												$likedata.= " customfield_mux.ProfileCustomValue ='".$like."' OR "  ;
-											}
-											}else{
-											if($like!=""){
-													$likedata.= " customfield_mux.ProfileCustomValue ='".$like."' "  ;
-											} 
-										}
-										$i++;
-									}
-									 
-									
-									$val = substr($val, 0, -1);
-								    if($filter2==""){
-									    $filter2 .= " AND  (( ".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)." ";
-									} else {
-									    $filter2 .= " OR  (".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)."";
-									}
-								    }
-
-                                                                $_SESSION[$key] = $val;
-                                                                }else{
-                                                                        $_SESSION[$key] = "";
-                                                                }
-                                                        } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
-                                                                //var_dump($ProfileCustomType["ProfileCustomType"]);
-                                                                   $val = implode("','",explode(",",$val));
-                                                                    if($filter2==""){
-                                                                        $filter2 .= " AND ( (customfield_mux.ProfileCustomValue like('%".$val."%'))";
-                                                                    } else {
-                                                                        $filter2 .= " OR (customfield_mux.ProfileCustomValue like('%".$val."%'))";
-                                                                    } 
-                                                                    $_SESSION[$key] = $val;
-                                                               
-
-                                                        }
-                                                        elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
-
-                                                                    list($Min_val,$Max_val) = explode(",",$val);
-                                                                        if(!empty($Min_val) && !empty($Max_val)){
-                                                                            if($filter2==""){
-                                                                                    $filter2  .= " AND (( customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."' )";
-                                                                            } else {
-                                                                                    $filter2  .= " OR (customfield_mux.ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' AND customfield_mux.ProfileCustomID = '".substr($key,15)."') ";
-
-                                                                            }
-                                                                        $_SESSION[$key] = $val;
-                                                                        }
-
-                                                        }
-                                        }
-						
-						mysql_free_result($q);
-				} // if not empty
-			 }  // end if
-	       } // end for each
-	  
-           if(count($filterDropdown) > 0){
-               if($filter2==""){
-               $filter2 .=" AND ( customfield_mux.ProfileCustomValue IN('".implode("','",$filterDropdown)."')";
-               } else {
-               $filter2 .=" OR customfield_mux.ProfileCustomValue IN('".implode("','",$filterDropdown)."')";
-               }
-               
-           }
-
-           /*
-            * Refine filter and add the created 
-            * holder $filter to $filter if not
-            * equals to blanks
-            */
-           if($filter2!=""){
-            $filter2.= " ) ";
-            $filter .= $filter2;
-           }
+	}
+        
+        $filter .= recreate_custom_search($_GET);
      
 	// Search Results	
 	 $query = "
@@ -411,8 +224,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 			 profile.ProfileContactDisplay, 
 			 profile.ProfileDateBirth, 
 			 profile.ProfileLocationState, 
-			 profile.ProfileID as pID, 
-			 customfield_mux.*,  
+			 profile.ProfileID as pID
 			 		(
 					  SELECT media.ProfileMediaURL 
 					 	      FROM ". table_agency_profile_media ." media 
@@ -423,9 +235,6 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 							media.ProfileMediaPrimary = 1
 					) 
 					AS ProfileMediaURL FROM ". table_agency_profile ." profile 
-			LEFT JOIN ". table_agency_customfield_mux ." 
-			            AS customfield_mux 
-					ON profile.ProfileID = customfield_mux.ProfileID  
 					".$filter." ".$cartQuery."  
 			GROUP BY profile.ProfileID 
 			ORDER BY $sort $dir  $limit";
