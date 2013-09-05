@@ -890,15 +890,15 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                             $dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $data1['ProfileCustomID']])));
 
                                             if(in_array($val,$dataArr,true) && $val != ""){
-                                                    echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
+                                                    echo "<label><input type=\"checkbox\" style='min-width:10px !important;' checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
                                                     echo "<span>". $val."</span></label><br />";
                                             } elseif($val !="") {
-                                                    echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
+                                                    echo "<label><input type=\"checkbox\" style='min-width:10px !important;' value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
                                                     echo "<span>". $val."</span></label><br />";
                                             }
                                     } else {
                                         if($val !=""){	
-                                                            echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
+                                                            echo "<label><input type=\"checkbox\" style='min-width:10px !important;' value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />&nbsp;";
                                                             echo "<span>". $val."</span></label><br />";
                                             }
                                     }
