@@ -1207,7 +1207,11 @@ error_reporting(0);
 				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 
 				if ($rb_agency_option_profilelist_expanddetails) {
-				 	$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
+				 	$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
+					if($dataList["ProfileLocationState"]!=""){
+						$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span>";
+					} 
+					$displayHTML .= "</div>\n";
 				}
 				
 	         	//echo "loaded: ".microtime()." ms";				
@@ -1346,7 +1350,11 @@ error_reporting(0);
 				 
 			echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". $ProfileContactDisplay ."</a></h3>\n";
 			if (isset($rb_agency_option_profilelist_expanddetails)) {
-				echo "<div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span><span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span></div>\n";
+				echo "<div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
+				if($dataList["ProfileLocationState"]!=""){
+					echo "<span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span>";
+				} 
+				echo "</div>\n";
 			}
 
 			if(is_user_logged_in()){
