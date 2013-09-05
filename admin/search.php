@@ -350,27 +350,18 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 
                 // public info
                 echo "            <td class=\"ProfileDetails column-ProfileDetails\">\n";
-
-                if (!empty($data['ProfileGender'])) {
-                        if(rb_agency_getGenderTitle($data['ProfileGender'])){
-                                echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
-                        }else{
-                                echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</div>\n";	
-                        }
-                }
-
-                $resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
-                foreach  ($resultsCustom as $resultCustom) {
-                        if(!empty($resultCustom->ProfileCustomValue )){
-                                if($resultCustom->ProfileCustomType == 7 && strtolower($resultCustom->ProfileCustomTitle)=="height"){
-                                                $heightraw = $resultCustom->ProfileCustomValue;
-                                            $heightfeet = floor($heightraw/12);
-                                                $heightinch = $heightraw - floor($heightfeet*12);
-                                                echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong>". $heightfeet ." ft ". $heightinch ." in</div>\n";
-                                } else {
-                                                echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-                                }					}
-                }
+				echo "<ul style='margin: 0px;'>" ;
+				if (!empty($data['ProfileGender'])) {
+					if(rb_agency_getGenderTitle($data['ProfileGender'])){
+						echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</li>\n";
+					}else{
+						echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";	
+					}
+				}
+				rb_agency_getProfileCustomFields($ProfileID ,$data['ProfileGender']);
+				
+				echo "</ul>" ;
+                
                 echo "            </td>\n";
                 echo "            <td class=\"ProfileImage column-ProfileImage\">\n";
 
@@ -726,42 +717,44 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
           $ProfileCustomValue = $data1['ProfileCustomValue'];
           echo "				    <tr>\n";
           echo " 			    \n";
-
-                // SET Label for Measurements
-                // Imperial(in/lb), Metrics(ft/kg)
-                $rb_agency_options_arr = get_option('rb_agency_options');
-                $rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
-                $measurements_label = "";
-                /*
-                0- metric
-                    1 - cm
-                    2- kg
-                    3 - inches/feet
-                1-imperials	
-                    1- inches
-                    2- pounds
-                    3-inches/feet
-                    */
-                if ($ProfileCustomType == 7) { //measurements field type
-                        if($rb_agency_option_unittype ==1){ // 1 = Metrics(ft/kg)
-                                    if($data1['ProfileCustomOptions'] == 1){
-                                        $measurements_label  ="<em>(Inches)</em>";
-                                    }elseif($data1['ProfileCustomOptions'] == 2){
-                                            $measurements_label  ="<em>(Pounds)</em>";
-                                    }elseif($data1['ProfileCustomOptions'] == 3){
-                                        $measurements_label  ="<em>(Feet/Inches)</em>";
-                                    }
-                            }elseif($rb_agency_option_unittype ==0){ //0 = Imperial(in/lb)
-                                    if($data1['ProfileCustomOptions'] == 1){
-                                    $measurements_label  ="<em>(cm)</em>";
-                                    }elseif($data1['ProfileCustomOptions'] == 2){
-                                        $measurements_label  ="<em>(kg)</em>";
-                                    }elseif($data1['ProfileCustomOptions'] == 3){
-                                            $measurements_label  ="<em>(Inches/Feet)</em>";
-                                    }
-                            }
-
-                }
+// SET Label for Measurements
+			 // Imperial(in/lb), Metrics(ft/kg)
+			 $rb_agency_options_arr = get_option('rb_agency_options');
+			  $rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
+			  $measurements_label = "";
+			  /*
+			    0- metric
+   			      1 - cm
+				2- kg
+				3 - inches/feet
+			    1-imperials	
+				1- inches
+				2- pounds
+				3-inches/feet
+				*/
+			if ($ProfileCustomType == 7) { //measurements field type
+				if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
+					if($data1['ProfileCustomOptions'] == 1){
+					  $measurements_label  ="<em> (cm)</em>";
+					} elseif($data1['ProfileCustomOptions'] == 2){
+					    $measurements_label  ="<em> (kg)</em>";
+					} elseif($data1['ProfileCustomOptions'] == 3){
+						$measurements_label  ="<em> (In Inches/Feet)</em>";
+					}
+				} elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+					if($data1['ProfileCustomOptions'] == 1){
+						$measurements_label  ="<em> (In Inches)</em>";
+					   
+					} elseif($data1['ProfileCustomOptions'] == 2){
+						
+						$measurements_label  ="<em> (In Pounds)</em>";
+		
+					} elseif($data1['ProfileCustomOptions'] == 3){
+						$measurements_label  ="<em> (In Inches/Feet)</em>";
+					}
+				}		
+			}
+		  
              echo " 				    <th scope=\"row\">\n";
             if($ProfileCustomType==7){
                     echo "				       <div class=\"label\">". $data1['ProfileCustomTitle'].$measurements_label."</div> \n";
