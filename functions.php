@@ -417,8 +417,7 @@ error_reporting(0);
      * @param string $p_strDate
      */
 	function rb_agency_get_age($p_strDate) {
-
-		//Get Age Option if it should display with months included
+	//Get Age Option if it should display with months included
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_bday']) && $rb_agency_options_arr['rb_agency_option_profilelist_bday'] == true) {
 			
@@ -437,7 +436,7 @@ error_reporting(0);
 				$years--;
 				$months = 12 + $today_m - $dob_m;
 			}
-
+		
 			if ($today_d < $dob_d) {
 				$months--;
 			}
@@ -460,7 +459,7 @@ error_reporting(0);
 				}
 			}
 
-			if($months > 12){
+			if($months >= 12){
 				$months = $months - 12;
 				$years++;
 			}
@@ -468,16 +467,16 @@ error_reporting(0);
 			if($years == 0){
 			   $years = "";	
 			} else {
-			   $years = $years . " yr(s) ";
+			   $years = $years . " yr(s) "; 	
 			}
-
+		
 			if($months == 0){
-			   $months = "";
+			   $months = "";	
 			} else {
-			   $months = $months . " mo(s) ";
+			   $months = $months . " mo(s) "; 	
 			}
 
-			return  $years . $months;
+			return  $years . $months;		
 
 		// Or just do it the old way
 		} else {
@@ -486,6 +485,7 @@ error_reporting(0);
 			 return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
 		}
 
+	
 	}
 
 
