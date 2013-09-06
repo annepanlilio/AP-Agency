@@ -10,7 +10,7 @@ if($_GET['action']==""){
 global $wpdb;
 
 
-$cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
+$cusFields = array("Suit","Shirt","Dress");  //for custom fields min and max
 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
