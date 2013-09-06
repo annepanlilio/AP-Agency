@@ -3334,40 +3334,49 @@ function recreate_custom_search($GET){
 
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
 							
-                                                        if(!empty($val)){
-								  
-                                                                  if(strpos($val,",") === false){
-											   
-							  		    $filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
-								                
-                                                                  } else {
+                                                         if(!empty($val)){
+                                                                    if(strpos($val,",") === false){
+                                                                       // $val = implode("','",explode(",",$val));
+																	  
+                                                                        if($filter2==""){
 																		
-                                                                            $likequery = explode(",", $val);
-                                                                            $likecounter = count($likequery);
-                                                                            $i=1; 
-                                                                            $likedata = "" ;
-                                                                            foreach($likequery as $like){
-                                                                                    if($i < ($likecounter-1)){
-                                                                                            if($like!=""){
-                                                                                                    $likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-                                                                                            }
-                                                                                            }else{
-                                                                                            if($like!=""){
-                                                                                                            $likedata.= " ProfileCustomValue ='".$like."' "  ;
-                                                                                            } 
-                                                                                    }
-                                                                                    $i++;
-                                                                            }
+                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
+                                                                        } else {
+                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
+                                                                        }
+                                                                    } else {
+																		
+                                                                        $likequery = explode(",", $val);
+                                                                       // var_dump($likequery);
+                                                                        $likecounter = count($likequery);
+                                                                        $i=1; 
+                                                                        $likedata = "" ;
+                                                                        foreach($likequery as $like){
+                                                                                if($i < ($likecounter-1)){
+                                                                                        if($like!=""){
+                                                                                                $likedata.= " customfield_mux.ProfileCustomValue like '%".$like."%' OR "  ;
+                                                                                        }
+                                                                                }else{
+                                                                                        if($like!=""){
+                                                                                                        $likedata.= " customfield_mux.ProfileCustomValue like '%".$like."%' "  ;
+                                                                                        } 
+                                                                                }
+                                                                                $i++;
+                                                                        }
 
-                                                                            $val = substr($val, 0, -1);
-                                                                            $filter2 .= "$open_st ".$likedata." $close_st";
-                                                                  }
 
-                                                                   $_SESSION[$key] = $val;
- 						          }else{
-							      $_SESSION[$key] = "";
-							  }
-                                                 
+                                                                        $val = substr($val, 0, -1);
+                                                                    if($filter2==""){
+                                                                            $filter2 .= " AND  (( ".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)." ";
+                                                                        } else {
+                                                                            $filter2 .= " OR  (".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)."";
+                                                                        }
+                                                                    }
+
+                                                                $_SESSION[$key] = $val;
+                                                                }else{
+                                                                        $_SESSION[$key] = "";
+                                                                }
                                                           
                                                  } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
                                                                    $val = implode("','",explode(",",$val));
