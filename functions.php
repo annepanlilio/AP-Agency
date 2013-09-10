@@ -978,8 +978,9 @@ error_reporting(0);
                                 /*
                                     *  dropdown
                                     */
-                                $links.='<div style="float:left; clear:both">
-                                              Sort By: <select id="sort_by">
+                                $links.='<div id="rbfilter-sort">';
+                                $links.='<div class="rbsort">
+                                              <label>Sort By: </label><select id="sort_by">
                                                           <option value="">Sort List</option>
                                                           <option value="1">Age</option>
                                                           <option value="2">Name</option>
@@ -988,7 +989,8 @@ error_reporting(0);
                                                       <select id="sort_option">
                                                           <option value="">Sort Options</option>
                                                       </select>
-                                        </div><br>';
+                                        </div>';
+                                $links.='</div>';
                         }
 		
 		  	//remove  if its just for client view of listing via casting email
@@ -1140,7 +1142,7 @@ error_reporting(0);
 				if ($profileDisplay == 1 ){
 					 
 					/*********** Show Count/Pages **************/
-					 $displayHTML .= "  <div id=\"profile-results-info\" class=\"six column\">\n";
+					 $displayHTML .= "  <div id=\"profile-results-info\">\n";
 						
 						# Temporarily removed this as required
 						#if(count($dataList) > 0){
