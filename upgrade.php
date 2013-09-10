@@ -434,4 +434,8 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.2");
 	}
 
+	// Nothing to see here...
+	if (get_option('rb_agency_version') == "2.0.1") {
+		update_option('rb_agency_version', "2.0.3");
+	}
 ?>

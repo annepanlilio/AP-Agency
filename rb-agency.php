@@ -6,11 +6,11 @@
   Description: With this plugin you can easily manage models profiles and information.
   Author: Rob Bertholf
   Author URI: http://rob.bertholf.com/
-  Version: 2.0.1
+  Version: 2.0.3
 */
 
 // Delcare Version
-$rb_agency_VERSION = "2.0.2";
+$rb_agency_VERSION = "2.0.3";
 	// Define for good measure
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
 
