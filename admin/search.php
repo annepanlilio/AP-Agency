@@ -94,16 +94,23 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 // Get Search Results
 
 	if ($_GET["action"] == "search") {
-		
-		// Sort By
+
+	/**
+	 * Sort Results
+	 */
+		// Initialize Sort
 		$sort = "";
+		// If sort exists, set value
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
 			$sort = $_GET['sort'];
 		}
 		else {
 			$sort = "profile.ProfileContactNameFirst";
 		}
-	
+
+	/**
+	 * Limit Results
+	 */
 		// Limit
 		if (isset($_GET['limit']) && !empty($_GET['limit'])){
 			$limit = "";
@@ -112,24 +119,30 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 				$limit = " LIMIT 0,". $rb_agency_option_persearch;
 			}
 		}
-	
-		// Sort Order
+
+	/**
+	 * Sort Direction
+	 */
 		$dir = "";
 		if (isset($_GET['dir']) && !empty($_GET['dir'])){
 			$dir = $_GET['dir'];
 			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   	$sortDirection = "asc";
-		   	} else {
-		   		$sortDirection = "desc";
+				$sortDirection = "asc";
+			} else {
+				$sortDirection = "desc";
 			} 
 		} else {
-		   	$sortDirection = "desc";
-		   	$dir = "asc";
+			$sortDirection = "desc";
+			$dir = "asc";
 		}
-	
-		//// Filter
+
+	/**
+	 * Filter Results
+	 */
+		// Initialize Filter
 		$filter = " WHERE profile.ProfileID > 0";
-		// Name
+
+		// Name: If First or Last name exists then filter for it
 		if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
 			if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
 				$ProfileContactNameFirst = $_GET['ProfileContactNameFirst'];
@@ -140,49 +153,44 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 				$filter .= " AND profile.ProfileContactNameLast='". $ProfileContactNameLast ."'";
 			}
 		}
-		// Location
+
+		// Location, City
 		if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity'])){
 			$ProfileLocationCity = $_GET['ProfileLocationCity'];
 			$filter .= " AND profile.ProfileLocationCity='". $ProfileLocationCity ."'";
 		}
-        
-		// Location state
+
+		// Location, State
 		if (isset($_GET['ProfileLocationState']) && !empty($_GET['ProfileLocationState'])){
 			$ProfileLocationState = $_GET['ProfileLocationState'];
 			$filter .= " AND profile.ProfileLocationState='". $ProfileLocationState ."'";
 		}
 
-		// Location Zip
+		// Location, Zip
 		if (isset($_GET['ProfileLocationZip']) && !empty($_GET['ProfileLocationZip'])){
 			$ProfileLocationZip = $_GET['ProfileLocationZip'];
 			$filter .= " AND profile.ProfileLocationZip='". $ProfileLocationZip ."'";
 		}
-		
+
 		// Type
 		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
 			$ProfileType = $_GET['ProfileType'];
 			$filter .= " AND profile.ProfileType like'%". $ProfileType ."%'";
 			//$filter .= " AND Find_in_set (". $ProfileType .",profile.ProfileType) ";
-		}
-             
-                else {
+		} else {
 			$ProfileType = "";
-		}   if (isset($_GET['ProfileIsActive'])&& $_GET['ProfileIsActive'] !=""){
+		}
+
+		// Active
+		if (isset($_GET['ProfileIsActive']) && !empty($_GET['ProfileIsActive'])){
 			$ProfileIsActive = $_GET['ProfileIsActive'];
 			$filter .= " AND profile.ProfileIsActive=". $ProfileIsActive ."";
-			
-		} 		
-        // Set Filter to exclude inactive profiles
-        // and pending for approval profiles from
-        // search 		
-        //$filter .= " AND profile.ProfileIsActive!=0 AND profile.ProfileIsActive!=3";
-		
-        // Gender
+		}
+
+		// Gender
 		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
 			$ProfileGender = $_GET['ProfileGender'];
-		 
 			$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
-		 
 		} else {
 			$ProfileGender = "";
 		}
@@ -192,57 +200,71 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 		$dateInMonth = gmdate('d', time() + $timezone_offset *60 *60);
 		$format = 'Y-m-d';
 		$date = gmdate($format, time() + $timezone_offset *60 *60);
-		
+
 		if (isset($_GET['ProfileDateBirth_min']) && !empty($_GET['ProfileDateBirth_min'])){
 			$ProfileDateBirth_min = $_GET['ProfileDateBirth_min'];
 			$selectedYearMin = date($format, strtotime('-'. $ProfileDateBirth_min .' year'. $date));
 			$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
 		}
-		
 		if (isset($_GET['ProfileDateBirth_max']) && !empty($_GET['ProfileDateBirth_max'])){
 			$ProfileDateBirth_max = $_GET['ProfileDateBirth_max'];
 			$selectedYearMax = date($format, strtotime('-'. $ProfileDateBirth_max-1 .' year'. $date));
 			$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
 		}
 
-        echo "  <div class=\"boxblock-holder\">\n";
+	/**
+	 * Filter Models Already in Cart
+	 */
 
-		// Filter Models Already in Cart
-        if (isset($_SESSION['cartArray'])) {
-            $cartArray = $_SESSION['cartArray'];
-            $cartString = implode(",", $cartArray);
+		// Pull Profiles in Cart
+		if (isset($_SESSION['cartArray'])) {
+			$cartArray = $_SESSION['cartArray'];
+			$cartString = implode(",", $cartArray);
 			$cartQuery =  " AND profile.ProfileID NOT IN (". $cartString .")";
-	}
-        
-        $filter .= recreate_custom_search($_GET);
-     
-	// Search Results	
+		}
+
+		// Set Filter to exclude inactive profiles
+		// and pending for approval profiles from
+		// search 		
+		//$filter .= " AND profile.ProfileIsActive!=0 AND profile.ProfileIsActive!=3";
+
+	/**
+	 * Custom Fields
+	 */
+
+		// Check Custom Fields
+		$filter .= recreate_custom_search($_GET);
+
+	/**
+	 * Build SQL
+	 */
 	 $query = "
-			 SELECT 
-			 profile.*,
-			 profile.ProfileGallery,
-			 profile.ProfileContactDisplay, 
-			 profile.ProfileDateBirth, 
-			 profile.ProfileLocationState, 
-			 profile.ProfileID as pID
-			 		(
-					  SELECT media.ProfileMediaURL 
-					 	      FROM ". table_agency_profile_media ." media 
-					  WHERE profile.ProfileID = media.ProfileID 
-					  		AND 
-							media.ProfileMediaType = \"Image\" 
-							AND 
-							media.ProfileMediaPrimary = 1
-					) 
-					AS ProfileMediaURL FROM ". table_agency_profile ." profile 
-					".$filter." ".$cartQuery."  
-			GROUP BY profile.ProfileID 
+			SELECT 
+			profile.*,
+			profile.ProfileGallery,
+			profile.ProfileContactDisplay, 
+			profile.ProfileDateBirth, 
+			profile.ProfileLocationState, 
+			profile.ProfileID as pID,
+				(
+				SELECT media.ProfileMediaURL 
+				FROM ". table_agency_profile_media ." media
+				WHERE profile.ProfileID = media.ProfileID 
+					AND media.ProfileMediaType = \"Image\"
+					AND media.ProfileMediaPrimary = 1
+				)
+				AS ProfileMediaURL FROM ". table_agency_profile ." profile
+				".$filter." ".$cartQuery."
+			GROUP BY profile.ProfileID
 			ORDER BY $sort $dir  $limit";
 
-	// Search Results	
+	/**
+	 * Return Results
+	 */
   	$results2 = mysql_query($query);
         $count = mysql_num_rows($results2);
         
+		echo "  <div class=\"boxblock-holder\">\n";
         echo "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
         
 		if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
@@ -485,39 +507,47 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                         echo "     </div>\n";
                 } // Is Cart Empty 
 
+
+			/**
+			 * Send Email
+			 */
+
                 $isSent = false;
                 if(isset($_POST["SendEmail"])){
 
+                    $rb_agency_options_arr = get_option('rb_agency_options');
+                    $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+                    $rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 
-                            $rb_agency_options_arr = get_option('rb_agency_options');
-                            $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-                            $rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 
+                    add_filter('wp_mail_content_type','rb_agency_set_content_type');
+                    function rb_agency_set_content_type($content_type){
+                                return 'text/html';
+                    }
 
-                            add_filter('wp_mail_content_type','rb_agency_set_content_type');
-                            function rb_agency_set_content_type($content_type){
-                                        return 'text/html';
+                    $MassEmailSubject = $_POST["MassEmailSubject"];
+                    $MassEmailMessage = $_POST["MassEmailMessage"];
+                    $MassEmailRecipient = $_POST["MassEmailRecipient"];
+
+                    // Mail it
+                    $headers[]  = 'MIME-Version: 1.0';
+                    $headers[] = 'Content-type: text/html; charset=iso-8859-1';
+                    $headers[] = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>';
+
+                    if(!empty($expMail)){
+                            $expMail = explode(",",$MassEmailRecipient);
+                            foreach($expMail as $bccEmail){
+                                    $headers[] = 'Bcc: '.$bccEmail;
                             }
+                    }
 
-                                                $MassEmailSubject = $_POST["MassEmailSubject"];
-                                                $MassEmailMessage = $_POST["MassEmailMessage"];
-                                                $MassEmailRecipient = $_POST["MassEmailRecipient"];
-
-                                                // Mail it
-                                                $headers[]  = 'MIME-Version: 1.0';
-                                                $headers[] = 'Content-type: text/html; charset=iso-8859-1';
-                                                $headers[] = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>';
-
-                                                if(!empty($expMail)){
-                                                        $expMail = explode(",",$MassEmailRecipient);
-                                                        foreach($expMail as $bccEmail){
-                                                                $headers[] = 'Bcc: '.$bccEmail;
-                                                        }
-                                                }
-
-                                                $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
+                    $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 
                 }
+
+			/**
+			 * Send Email
+			 */
                 if($_GET["action"]== "massEmail"){
 
                         // Filter Models Already in Cart
