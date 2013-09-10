@@ -29,7 +29,7 @@ echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 echo "					</div><!-- .scroller -->";
 echo "				</div><!-- #scroller -->\n";
 
-echo "				<div class=\"cb\"></div>\n";
+echo "				<div class=\"rbclear\"></div>\n";
 
 echo "				<div id=\"info\">\n";
 echo "	  				<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
@@ -56,7 +56,7 @@ echo "	  					</ul>\n";
 echo "	  				</div>\n";	
 
 echo "					<div id=\"links\">\n";
-echo "						<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
+
 echo "						<ul>\n";
 
 								// Other links - Favorite, Casting cart...
@@ -123,8 +123,8 @@ echo "						</ul>\n";
 echo "					</div>\n";// Links
 echo "				</div> <!-- #info -->\n";//End Info
 echo "			</div> <!-- #profile-l -->\n";
-echo "			<div class=\"cb\"></div>\n";
+echo "			<div class=\"rbclear\"></div>\n";
 echo " 		</div>\n";  // Close Profile Layout
 echo "	</div>\n";  // Close Profile
-echo "	<div class=\"cb\"></div>\n"; // Clear All
+echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 ?>

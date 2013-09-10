@@ -85,8 +85,10 @@
 #rblayout-six #layout6-slider .slides li { text-align: center; }
 #rblayout-six #layout6-slider .slides li img { max-height: 400px; display: inline-block; width: auto; }
 #rblayout-six #layout6-carousel { background: #e9e9e9; }
+#rblayout-six #layout6-carousel .slides { margin: 0px; }
 #rblayout-six #layout6-carousel .slides li { text-align: center; height: 100px; overflow: hidden; }
 #rblayout-six #layout6-carousel .slides li img { display: inline-block; max-height: 100px; width: auto; }
+#rblayout-six #layout6-carousel .slides li figure { margin: 0px; float: left; width: 100%; height: 100%; background-size: cover; background-position: center top; background-repeat: no-repeat; }
 
 
 /**

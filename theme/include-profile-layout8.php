@@ -13,7 +13,7 @@ Flip Book
 				<a href="">Back to First Page</a>
 			</div>
 		</div>
-		<div class="cb"></div>
+		<div class="rbclear"></div>
 	    <div class="col_12 column">
 		    <div id="photobook">		    	
 	            <?php
@@ -26,14 +26,14 @@ Flip Book
 				?>
 		    </div><!-- .col_12 -->
 	    </div><!-- #photobook -->
-	    <div class="cb"></div>
+	    <div class="rbclear"></div>
 	    <div class="col_12 column">
 		    <div id="photobook-pagination" class="">
 				<a href="" id="prev-page">Previous page</a>
 				<a href="" id="next-page">Next Page</a>
 			</div>
 		</div>
-		<div class="cb"></div>
+		<div class="rbclear"></div>
 		<div class="col_12 column">
 			<ul id="profile-info">
 				<?php

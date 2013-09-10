@@ -22,7 +22,7 @@ echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 echo "					</div><!-- #photo-scroller -->"; //
 echo "				</div><!-- #scroller -->\n";
 
-echo "				<div class=\"cb\"></div>\n";
+echo "				<div class=\"rbclear\"></div>\n";
 
 echo "				<div id=\"info-links\">\n";
 echo "	  				<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
@@ -201,7 +201,7 @@ echo "					</div>\n";// .col_6 ?>
 echo "		  			<div id=\"experience\" class=\"col_12 column\">\n";
 echo						$ProfileExperience;
 echo "		  			</div>\n";
-echo "					<div class=\"cb\"></div>\n"; // Clear All					
+echo "					<div class=\"rbclear\"></div>\n"; // Clear All					
 echo "				</div> <!-- #info -->\n";//End Info
 echo "			</div> <!-- #profile-l -->\n";
 

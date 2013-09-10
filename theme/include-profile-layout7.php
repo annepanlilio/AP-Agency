@@ -398,7 +398,7 @@ Custom Layout 7
 				print_r(rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, 'Experience(s):')); ?>
 			</div>
 		</div>
-		<div class="cb"></div>
+		<div class="rbclear"></div>
 	</div>
 	
 	<script>
@@ -422,5 +422,5 @@ Custom Layout 7
 		
 		});
 	</script>
-	<div class="cb"></div>
+	<div class="rbclear"></div>
 </div><!-- #profile -->

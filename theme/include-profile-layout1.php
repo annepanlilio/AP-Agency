@@ -138,12 +138,12 @@ echo "	  			<div id=\"photos\">\n";
 						while ($dataImg = mysql_fetch_array($resultsImg)) {
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
-						echo "	<div class=\"cb\"></div>\n"; // Clear All
+						echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 echo "	  			</div>\n"; // #photos
 echo "			</div>\n"; // .col_12
 
-echo "	  		<div class=\"cb\"></div>\n"; // Clear All
+echo "	  		<div class=\"rbclear\"></div>\n"; // Clear All
 echo " 		</div>\n";  // Close Profile Layout
 echo "	</div>\n";  // Close Profile
-echo "	<div class=\"cb\"></div>\n"; // Clear All
+echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 ?>

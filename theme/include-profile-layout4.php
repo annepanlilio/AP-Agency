@@ -58,9 +58,9 @@ echo "	  			<div id=\"photos\">\n";
 echo "	  			</div><!-- #photos -->\n";
 echo "			</div><!-- .col_8 -->\n";	
 
-echo "  		<div class=\"cb\"></div>\n"; // Clear All
+echo "  		<div class=\"rbclear\"></div>\n"; // Clear All
 
 echo " 		</div>\n";  // Close Profile Layout
 echo "	</div>\n";  // Close Profile
-echo "	<div class=\"cb\"></div>\n"; // Clear All
+echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 ?>

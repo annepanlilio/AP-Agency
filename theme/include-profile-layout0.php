@@ -24,7 +24,7 @@ echo "	  			<div id=\"photos\">\n";
 						  	}
 						}
 
-echo "	  				<div class=\"cb\"></div>\n";
+echo "	  				<div class=\"rbclear\"></div>\n";
 echo "	  			</div>\n"; // close #photos
 echo "			</div>\n"; // close .col_6
 
@@ -219,9 +219,9 @@ echo					$ProfileExperience;
 echo "	  			</div>\n"; // Close Experience
 echo "	  		</div>\n"; // Close .col_12
 
-echo "		  	<div class=\"cb\"></div>\n"; // Clear All
+echo "		  	<div class=\"rbclear\"></div>\n"; // Clear All
 echo "  	</div>\n";  // Close Profile Zero
-echo "		<div class=\"cb\"></div>\n"; // Clear All
+echo "		<div class=\"rbclear\"></div>\n"; // Clear All
 echo "	</div>\n";  // Close Profile
 ?>
 <script type="text/javascript">

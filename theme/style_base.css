@@ -514,12 +514,12 @@ img.fillheight {
 #rblayout-eight #profile-info li { float: left; padding: 0px 10px 10px 10px; color: #3c3c3c; font-size: 18px; }
 #rblayout-eight #profile-info li em { display: block; color: #8c8b8b; font-style: italic; font-size: 13px; }
 #rblayout-eight .booklet .b-wrap .page { text-align: center; }
-#rblayout-eight .booklet .b-wrap .page img { max-width: none; max-height: 100%; height: 100%; }
+#rblayout-eight .booklet .b-wrap .page img { width: auto; max-height: 100%; height: 100%; }
 #rblayout-eight .booklet .b-wrap .b-page-empty { width: 100%; height: 100%; background-position: center center; background-repeat: no-repeat; }
 
 /* Profile Layout Nine */
 #rblayout-nine { padding-bottom: 60px; }
-#rblayout-nine .mCSB_container a img { max-height: 500px; float: left; }
+#rblayout-nine .mCSB_container a img { max-height: 400px; float: left; }
 #rblayout-nine .mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools { background: none; height: 18px; }
 #rblayout-nine .mCSB_scrollTools .mCSB_draggerRail { background: #000; margin: 6px 0px; }
 #rblayout-nine .mCSB_horizontal .mCSB_scrollTools .mCSB_dragger { width: 30px!important; }
@@ -531,7 +531,7 @@ img.fillheight {
 #rblayout-nine #info #name { text-transform: uppercase; margin: 15px 0px; }
 #rblayout-nine #stats li { display: inline-block; padding: 0 5px; font-weight: bold; }
 #rblayout-nine #stats li strong { font-weight: normal; }
-#rblayout-nine #links { width: 200px; padding: 0 15px; position: absolute; right: -185px; top: 0px; z-index: 5; background: rgba(255,255,255,0.5); text-align: left; }
+#rblayout-nine #links { width: 200px; padding: 15px 15px 0 15px; position: absolute; right: 0px; top: 0px; z-index: 5; background: rgba(255,255,255,0.9); text-align: left; }
 #rblayout-nine #links li a { text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
 #rblayout-nine #resultsGoHereAddtoCart { font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
 

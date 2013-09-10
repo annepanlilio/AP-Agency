@@ -48,11 +48,11 @@ Large featured image and scrolling thumbnails
 						</div>
 					</div><!-- .filters -->
 				</div>
-				<div class="cb"></div>
+				<div class="rbclear"></div>
 			</header>
 		</div>
 
-		<div class="cb"></div>
+		<div class="rbclear"></div>
 
 		<div class="col_12 column">
 			<pre id="description">
@@ -60,7 +60,7 @@ Large featured image and scrolling thumbnails
 			</pre>
 		</div>
 
-		<div class="cb"></div>
+		<div class="rbclear"></div>
 
 		<div class="col_4 column">
 
@@ -483,7 +483,7 @@ Large featured image and scrolling thumbnails
 									$resultsImg = mysql_query($queryImg);
 									$countImg = mysql_num_rows($resultsImg);
 									while ($dataImg = mysql_fetch_array($resultsImg)) {
-									  	echo "<li><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
+									  	echo "<li><figure style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" alt=\"". $ProfileContactDisplay ."\" ></figure></li>\n";
 									}
 						?>
 					</ul>
@@ -492,7 +492,7 @@ Large featured image and scrolling thumbnails
 		
 		<?php }?>
 
-		<div class="cb"></div>
+		<div class="rbclear"></div>
 		
 	</div><!-- #rblayout-six -->
 </div><!-- #rbprofile -->
