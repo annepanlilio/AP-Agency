@@ -9,10 +9,6 @@
 	line-height: 20px;
 }
 
-.rblayout .entry-header {
-	margin-bottom: 30px;
-}
-
 /* Profile Results */
 #profile-list {
 	font-size: 0;
@@ -98,10 +94,6 @@
 	float: right;
 }
 
-#rbfilter-sort {
-	padding: 0px 0px 15px 0px;
-}
-
 /* Pagination */
 .rbpagination { 
 	float: left;
@@ -155,6 +147,7 @@
 	border: none;
 	padding: 7px 0;
 	max-width: 400px;
+	overflow: hidden;
 }
 .rbsearch-form .search-field.submit {
 	padding: 15px 0;
@@ -167,24 +160,24 @@
 .rbsearch-form .search-field.single input,
 .rbsearch-form .search-field.single select {
 	margin: 0;
-	width: 65%;
+	width: 62.4%;
 	float: left;
+}
+.rbsearch-form .search-field.single select {
+	width: 65%;
 }
 .rb_agency_widget_showsearch .rbsearch-form .search-field.single select {
 	width: 100%;
 }
-.rbsearch-form .search-field.single input,
-.rbsearch-form .search-field.multi div input[type="text"] {
+.rbsearch-form .search-field select,
+.rbsearch-form .search-field input[type="text"] {
+	margin: 0px;
 	padding: 5px;
-}
-.rbsearch-form .search-field.single select,
-.rbsearch-form .search-field.multi div select {
-	padding: 2px;
+	border: none;
 }
 .rbsearch-form .search-field.multi legend {
 	float: left;
-	width: 100%;
-	padding-bottom: 5px;
+	width: 35%;
 }
 .rbsearch-form .search-field.multi label {
 	float: left;
@@ -193,23 +186,23 @@
 	line-height: normal;
 }
 .rbsearch-form .search-field.multi div {
-	width: 48%;
+	width: 31%;
 	float: left;
 }
 .rbsearch-form .search-field.multi div:last-child {
-	margin-left: 4%;
+	float: right;
 }
 .rbsearch-form .search-field.multi div label {
-	width: 40%;
+	width: 100%;
 	float: left;
-	line-height: 28px;
-	text-align: center;
 }
-.rbsearch-form .search-field.multi div input[type="text"],
-.rbsearch-form .search-field.multi div select {
+.rbsearch-form .search-field.multi div input[type="text"] {
 	margin: 0;
-	width: 60%;
+	width: 92%;
 	float: left;
+}
+.rbsearch-form .search-field.multi div select {
+	width: 100%;
 }
 .rbsearch-form .search-field.multi label input[type="checkbox"],
 .rbsearch-form .search-field.multi label input[type="radio"] {
@@ -395,8 +388,7 @@ img.fillheight {
 
 /* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
 #rblayout-two { overflow: hidden; }
-#rblayout-two #photo-scroller { background: #e9e9e9; padding: 15px; }
-#rblayout-two .mCSB_container a img { max-height: 150px; float: left; margin-right: 10px; }
+#rblayout-two .mCSB_container a img { max-height: 150px; float: left; border: 5px solid #e9e9e9; border-right: none; }
 #rblayout-two .mCSB_container a:last-child img { border-right: 5px solid #e9e9e9; }
 
 /* Profile Extended Layout (include-profile-layout3.php) */
@@ -464,7 +456,6 @@ img.fillheight {
 #rblayout-six #info-slider { background: #000; } 
 #rblayout-six #layout6-slider { margin-bottom: 15px; }
 #rblayout-six h1.entry-title { float: left; margin: 0px; }
-#rblayout-six #profile-filter { float: right; }
 
 /* Profile Layout Seven */
 #rblayout-seven #video_player {height:500px; width:66%;}
@@ -542,7 +533,7 @@ img.fillheight {
 #rblayout-nine #info #name { text-transform: uppercase; margin: 15px 0px; }
 #rblayout-nine #stats li { display: inline-block; padding: 0 5px; font-weight: bold; }
 #rblayout-nine #stats li strong { font-weight: normal; }
-#rblayout-nine #links { width: 200px; padding: 15px 15px 0 15px; position: absolute; right: 0px; top: 0px; z-index: 5; background: rgba(255,255,255,0.9); text-align: left; }
+#rblayout-nine #links { width: 200px; padding: 0 15px; position: absolute; right: -185px; top: 0px; z-index: 5; background: rgba(255,255,255,0.5); text-align: left; }
 #rblayout-nine #links li a { text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
 #rblayout-nine #resultsGoHereAddtoCart { font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
 
