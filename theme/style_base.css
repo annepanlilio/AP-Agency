@@ -460,9 +460,11 @@ img.fillheight {
 #rblayout-four #photos .photo:nth-last-child(-n+3) a { border-bottom: none; }
 
 /* Profile Layout Six */
-#layout6-slider { margin-bottom: 15px; }
+#rblayout-six #profile-slide { background: #fff; }
+#rblayout-six #info-slider { background: #000; } 
+#rblayout-six #layout6-slider { margin-bottom: 15px; }
 #rblayout-six h1.entry-title { float: left; margin: 0px; }
-#profile-filter { float: right; }
+#rblayout-six #profile-filter { float: right; }
 
 /* Profile Layout Seven */
 #rblayout-seven #video_player {height:500px; width:66%;}

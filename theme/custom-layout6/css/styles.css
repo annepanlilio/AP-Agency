@@ -1,20 +1,17 @@
 @charset "utf-8";
 /* CSS Document */
 
-/* The foundation Grid ---------------------- */
-
 /* Small Devices ------------ */
 @media only screen and (max-width: 767px) { /* Global Misc --- */
 
-#logo { text-align:center; }
-.model-polaroid .polaroid-area .column { padding-top: 20px; }
-.model-polaroid .polaroid-area .column .print-polaroids { float:left; }
-.model-profile .profile-area #model-pictures { padding: 20px 0; }
+	#logo { text-align:center; }
+	.model-polaroid .polaroid-area .column { padding-top: 20px; }
+	.model-polaroid .polaroid-area .column .print-polaroids { float:left; }
+	.model-profile .profile-area #model-pictures { padding: 20px 0; }
 
-#polaroids { padding-top:30px; padding-right:15px; }
-#polaroids .column { padding-right:15px!important; }
-  
-  }
+	#polaroids { padding-top:30px; padding-right:15px; }
+	#polaroids .column { padding-right:15px!important; }  
+}
 
 /* Category Template */
 .model-categories {  }
@@ -65,13 +62,12 @@
 #polaroids .column h3 { text-transform:uppercase; color:#000; margin-bottom:15px; padding-left:20px; font-weight:bold;/* background: url(../images/bullet-round.png) no-repeat;*/ }
 #polaroids .column .polaroid { min-height:200px; background:#fff; display:block; text-align:center; }
 
-
 /* Portfolio Template */
 #rblayout-six .entry-header { padding: 0px 0px 10px 0px; }
 #rblayout-six #profile-filter .filters { float: right; }
 #rblayout-six #profile-filter .filters > * { float: left; }
 #rblayout-six #description { font-family: Arial; margin: 0px 0px 30px 0px; font-size: 13px; }
-#rblayout-six #profile-info { background: #e9e9e9; padding: 15px; overflow: hidden; }
+#rblayout-six #profile-info { padding: 30px 15px; overflow: hidden; }
 #rblayout-six #profile-info a { text-decoration: none; }
 #rblayout-six #profile-info > * { font-size: 13px; line-height: 18px; overflow: hidden; }
 #rblayout-six #profile-info ul { list-style:none; margin:0; padding:0; display:block; }
@@ -82,6 +78,8 @@
 #rblayout-six #profile-info #model-nav { padding-top: 15px; }
 #rblayout-six #profile-info #model-nav li { float: left; width: 33.33333%; text-align: center; }
 #rblayout-six .flexslider { border-radius: 0px; border: none; box-shadow: none; }
+#rblayout-six #layout6-slider,
+#rblayout-six #layout6-slider .slides { margin: 0px!important; }
 #rblayout-six #layout6-slider .slides li { text-align: center; }
 #rblayout-six #layout6-slider .slides li img { max-height: 400px; display: inline-block; width: auto; }
 #rblayout-six #layout6-carousel { background: #e9e9e9; }
