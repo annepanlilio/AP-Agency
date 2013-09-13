@@ -607,24 +607,26 @@ error_reporting(0);
      *
      * @param string $ProfileGallery
      */
-	function rb_agency_createdir($ProfileGallery){
+	function rb_agency_createdir($ProfileGallery, $Force_create = true){
 
 		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
 			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
 			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
 		} else {
-			$finished = false;
-			$pos = 0;                 // we're not finished yet (we just started)
-			while ( ! $finished ):                   // while not finished
-				$pos++;
-				$NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
-				if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ): // if folder DOES NOT exist...
-					mkdir(rb_agency_UPLOADPATH . $NewProfileGallery, 0755);
-					chmod(rb_agency_UPLOADPATH . $NewProfileGallery, 0777);
-					$ProfileGallery = $NewProfileGallery;  // Set it to the new  thing
-					$finished = true;                    // ...we are finished
-				endif;
-			endwhile;
+			if($Force_create){
+				$finished = false;
+				$pos = 0;                 // we're not finished yet (we just started)
+				while ( ! $finished ):                   // while not finished
+					$pos++;
+					$NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
+					if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ): // if folder DOES NOT exist...
+						mkdir(rb_agency_UPLOADPATH . $NewProfileGallery, 0755);
+						chmod(rb_agency_UPLOADPATH . $NewProfileGallery, 0777);
+						$ProfileGallery = $NewProfileGallery;  // Set it to the new  thing
+						$finished = true;                    // ...we are finished
+					endif;
+				endwhile;
+			}
 		}
 		return $ProfileGallery;
 	}

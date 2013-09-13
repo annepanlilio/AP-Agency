@@ -82,6 +82,7 @@ if (is_user_logged_in()) {
 
 	echo "<div id=\"rbdashboard\">\n";
 	echo "<h1>Welcome ". $current_user->user_firstname ."</h1>\n";
+        echo "<h1>We have registered you as Agent/Producer.</h1>\n";
 
   // Return them where we found them 
   if (isset($_SESSION['ProfileLastViewed']) && ($_SESSION['ProfileLastViewed'])) {
