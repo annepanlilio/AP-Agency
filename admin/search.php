@@ -978,7 +978,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 
                             list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
-                            if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==3){
+                            if($data1['ProfileCustomTitle']=="Height" && $data1['ProfileCustomOptions']==3){
                                     echo  "			<fieldset class=\"rbselect\">";
 
                                     echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
