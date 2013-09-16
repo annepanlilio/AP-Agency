@@ -34,12 +34,12 @@ global $wpdb;
                                 $data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
 				$csv_output .= implode(',', $data_value);
 				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
-                $temp_array = array();
+                                $temp_array = array();
 				$c_value_array = array(); 
 				foreach ($subresult as $sub_value) {
 					$ProfileCustomValue = ""  ;
 					if(trim($sub_value['ProfileCustomValue']) != ""){
-                    	$ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+                                            $ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
 					} else {
 					    $ProfileCustomValue = "";
 					}

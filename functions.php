@@ -3246,18 +3246,17 @@ function secondary_class(){
 function fullwidth_class(){
 	return $class = "col_12";
 }
-
 /*
  * recreate custom field search
  */
 function recreate_custom_search($GET){
     
 	 global $wpdb;
-		
+
 	 $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
-		
+
 	 $filterDropdown = array();
-		
+
 	 $filter2 = "";
 
 	 foreach($GET as $key => $val){
@@ -3294,11 +3293,11 @@ function recreate_custom_search($GET){
                                                 $val = array_shift(array_values($val));
                                             } 
                                     }
-				    
+
                                     $q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
 				    $ProfileCustomType = mysql_fetch_assoc($q);
-					
-				
+
+
                                     /*
                                      * Have created a holder $filter2 and
                                      * create its own filter here and change
@@ -3314,73 +3313,64 @@ function recreate_custom_search($GET){
                                       6 - Radiobutton
                                       7 - Metrics/Imperials
                                      *********************/
-								
+
                                       $open_st = ' AND EXISTS( SELECT * FROM '. table_agency_customfield_mux . ' WHERE ' ;
                                       $close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID ) ';
 
    				      if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
-						
+
                                                 list($minVal,$maxVal) = explode(",",$val);
                                                 $filter2 .= "$open_st ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' $close_st";
-					
+
 				      } else {
-														
+
 						if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
 							$filter2 .= "$open_st ProfileCustomValue like('%".$val."%') $close_st";
 							$_SESSION[$key] = $val;
 
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
 							$filter2 .="$open_st ProfileCustomValue IN('".$val."') $close_st";
-								
+
                                 		} elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
 							$filter2 .= "$open_st ProfileCustomValue like('%".$val."%') $close_st";
 							$_SESSION[$key] = $val;
 
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
-							
-                                                         if(!empty($val)){
-                                                                    if(strpos($val,",") === false){
-                                                                       // $val = implode("','",explode(",",$val));
-																	  
-                                                                        if($filter2==""){
-																		
-                                                                                $filter2 .= " AND  ((customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
-                                                                        } else {
-                                                                                $filter2 .= " OR  (customfield_mux.ProfileCustomValue = '".$val."' AND customfield_mux.ProfileCustomID = ".substr($key,15).") ";
-                                                                        }
-                                                                    } else {
-																		
-                                                                        $likequery = explode(",", $val);
-                                                                       // var_dump($likequery);
-                                                                        $likecounter = count($likequery);
-                                                                        $i=1; 
-                                                                        $likedata = "" ;
-                                                                        foreach($likequery as $like){
-                                                                                if($i < ($likecounter-1)){
-                                                                                        if($like!=""){
-                                                                                                $likedata.= " customfield_mux.ProfileCustomValue like '%".$like."%' OR "  ;
-                                                                                        }
-                                                                                }else{
-                                                                                        if($like!=""){
-                                                                                                        $likedata.= " customfield_mux.ProfileCustomValue like '%".$like."%' "  ;
-                                                                                        } 
-                                                                                }
-                                                                                $i++;
-                                                                        }
 
+                                                        if(!empty($val)){
 
-                                                                        $val = substr($val, 0, -1);
-                                                                    if($filter2==""){
-                                                                            $filter2 .= " AND  (( ".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)." ";
-                                                                        } else {
-                                                                            $filter2 .= " OR  (".$likedata." ) and customfield_mux.ProfileCustomID = ".substr($key,15)."";
-                                                                        }
-                                                                    }
+                                                                  if(strpos($val,",") === false){
 
-                                                                $_SESSION[$key] = $val;
-                                                                }else{
-                                                                        $_SESSION[$key] = "";
-                                                                }
+							  		    $filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
+
+                                                                  } else {
+
+                                                                            $likequery = explode(",", $val);
+                                                                            $likecounter = count($likequery);
+                                                                            $i=1; 
+                                                                            $likedata = "" ;
+                                                                            foreach($likequery as $like){
+                                                                                    if($i < ($likecounter-1)){
+                                                                                            if($like!=""){
+                                                                                                    $likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+                                                                                            }
+                                                                                            }else{
+                                                                                            if($like!=""){
+                                                                                                            $likedata.= " ProfileCustomValue ='".$like."' "  ;
+                                                                                            } 
+                                                                                    }
+                                                                                    $i++;
+                                                                            }
+
+                                                                            $val = substr($val, 0, -1);
+                                                                            $filter2 .= "$open_st ".$likedata." $close_st";
+                                                                  }
+
+                                                                   $_SESSION[$key] = $val;
+ 						          }else{
+							      $_SESSION[$key] = "";
+							  }
+                                                 
                                                           
                                                  } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
                                                                    $val = implode("','",explode(",",$val));
@@ -3402,13 +3392,13 @@ function recreate_custom_search($GET){
 				} // if not empty
 			 }  // end if
 	 } // end for each
-		   
+
 	 if(count($filterDropdown) > 0){
                $filter2 .="$open_st ProfileCustomValue IN('".implode("','",$filterDropdown)."') $close_st";
          }
-		   
+
   return $filter2;
-		   
+
 
 }
 
