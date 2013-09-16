@@ -990,7 +990,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                                                 $heightraw = 0;
                                                                 $heightfeet = 0;
                                                                 $heightinch = 0;
-                                                                while($i<=90)  { 
+                                                                while($i<=96)  { 
                                                                         $heightraw = $i;
                                                                         $heightfeet = floor($heightraw/12);
                                                                         $heightinch = $heightraw - floor($heightfeet*12);
@@ -1008,7 +1008,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                                                 $heightraw = 0;
                                                                 $heightfeet = 0;
                                                                 $heightinch = 0;
-                                                                while($i<=90)  { 
+                                                                while($i<=96)  { 
                                                                         $heightraw = $i;
                                                                         $heightfeet = floor($heightraw/12);
                                                                         $heightinch = $heightraw - floor($heightfeet*12);
