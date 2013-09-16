@@ -232,7 +232,7 @@ if($ProfileCustomType!=4)	{
 											
 											// for other search
 											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-											."_min\">Min</label><input value=\""
+											."[]\">Min</label><input value=\""
 											.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 											."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
 											.$data1['ProfileCustomID']."[]\" /></div>";
