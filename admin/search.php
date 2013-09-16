@@ -978,7 +978,7 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 
                             list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
-                            if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==1){
+                            if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==3){
                                     echo  "			<fieldset class=\"rbselect\">";
 
                                     echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
@@ -1021,13 +1021,13 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
                                     echo  "			<fieldset class=\"rbtext\">";
                                     // for other search
                                     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-                                    ."_min\">Min</label><input value=\""
+                                    ."[]\">Min</label><input value=\""
                                     .(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
                                     ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
                                     .$data1['ProfileCustomID']."[]\" /></div>";
 
                                     echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-                                    ."_max\">Max</label><input value=\"".$max_val
+                                    ."[]\">Max</label><input value=\"".$max_val
                                     ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
                                     echo  "			</fieldset>";
                             }

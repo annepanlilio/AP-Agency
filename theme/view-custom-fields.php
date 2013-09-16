@@ -190,7 +190,7 @@ if($ProfileCustomType!=4)	{
 				
 				list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
-										if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==1){
+										if($data1['ProfileCustomTitle']=="Height" AND $rb_agency_option_unittype==3){
 
 										echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 														  if (empty($ProfileCustomValue)) {
@@ -232,7 +232,7 @@ if($ProfileCustomType!=4)	{
 											
 											// for other search
 											echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-											."[]\">Min</label><input value=\""
+											."_min\">Min</label><input value=\""
 											.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 											."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
 											.$data1['ProfileCustomID']."[]\" /></div>";
