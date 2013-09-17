@@ -3348,23 +3348,34 @@ function recreate_custom_search($GET){
                                                                             $likequery = explode(",", $val);
                                                                             $likecounter = count($likequery);
                                                                             $i=1; 
-                                                                            $likedata = "" ;
-                                                                            foreach($likequery as $like){
+                                                                            
+																			$likedata = "" ;
+																			
+																			// for profiles with multiple values
+																			$likedata2 = "" ;
+																			$likedata3 = "" ;
+                                                                        
+																		    foreach($likequery as $like){
                                                                                     if($i < ($likecounter-1)){
                                                                                             if($like!=""){
                                                                                                     $likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-                                                                                            }
-                                                                                            }else{
+                                                                                                    $likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') OR "  ;
+                                                                                                    $likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+                                                                                           }
+                                                                                    }else{
                                                                                             if($like!=""){
                                                                                                             $likedata.= " ProfileCustomValue ='".$like."' "  ;
+                                                                                		                    $likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') ";
+                                                                                  		                    $likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
                                                                                             } 
                                                                                     }
                                                                                     $i++;
                                                                             }
 
                                                                             $val = substr($val, 0, -1);
-                                                                            $filter2 .= "$open_st ".$likedata." $close_st";
-                                                                  }
+																			$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
+                                                                            $filter2 .= "$open_st (".$sr_data.") $close_st";
+															      }
 
                                                                    $_SESSION[$key] = $val;
  						          }else{
