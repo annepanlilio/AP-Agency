@@ -101,7 +101,7 @@ if (isset($_POST['action'])) {
 
 			$SearchMuxSubject		=$_POST['SearchMuxSubject'];
 
-			$SearchMuxMessage		=$_POST['SearchMuxMessage'];
+			$SearchMuxMessage		=nl2br($_POST['SearchMuxMessage']);
 
 			$SearchMuxCustomValue	=$_POST['SearchMuxCustomValue'];
                   $SearchMuxMessage	= str_ireplace("[link-place-holder]",get_bloginfo("url") ."/client-view/".$SearchMuxHash,$SearchMuxMessage);
