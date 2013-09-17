@@ -94,6 +94,10 @@ if (isset($_POST['action'])) {
 			$SearchID				=$_GET['SearchID'];
 
 			$SearchMuxHash			=@$_GET["SearchMuxHash"];
+			
+			$FromName              =$_POST['SearchMuxFromName']; 
+			
+			$FromEmail              =$_POST['SearchMuxFromEmail']; 
 
 			$SearchMuxToName		=$_POST['SearchMuxToName'];
 
@@ -106,27 +110,14 @@ if (isset($_POST['action'])) {
 			$SearchMuxCustomValue	=$_POST['SearchMuxCustomValue'];
                   $SearchMuxMessage	= str_ireplace("[link-place-holder]",get_bloginfo("url") ."/client-view/".$SearchMuxHash,$SearchMuxMessage);
 
-			// Create Record
-
-			$insert = "INSERT INTO " . table_agency_searchsaved_mux .
-
-			" (SearchID,SearchMuxHash,SearchMuxToName,SearchMuxToEmail,SearchMuxSubject,SearchMuxMessage,SearchMuxCustomValue)" .
-
-			"VALUES ('" . $wpdb->escape($SearchID) . "','" . $wpdb->escape($SearchMuxHash) . "','" . $wpdb->escape($SearchMuxToName) . "','" . $wpdb->escape($SearchMuxToEmail) . "','" . $wpdb->escape($SearchMuxSubject) . "','" . $wpdb->escape($SearchMuxMessage) . "','" . $wpdb->escape($SearchMuxCustomValue) . "')";
-
-		     $results = $wpdb->query($insert);
-
-			$lastid = $wpdb->insert_id;
-
-
-
-		
-
-			// To send HTML mail, the Content-type header must be set
-
-			//$headers .= 'To: '. $SearchMuxToName .' <'. $SearchMuxToEmail .'>' . "\r\n";
-
 			
+			// set from name
+			$send_name = "";
+			if(!empty($FromName)){
+				$send_name = $FromName;
+			} else {
+				$send_name = $rb_agency_option_agencyname;
+			}
 
 			add_filter('wp_mail_content_type','rb_agency_set_content_type');
 
@@ -136,27 +127,72 @@ if (isset($_POST['action'])) {
 
 			}
 
-			
-
 			// Mail it
 
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			
+			$email_error = "";
+			
+			if(!empty($FromEmail)){
+				
+				if ( !is_email($FromEmail, true)) {
+                      $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
+                } else {
+					  $headers = 'From: '. $send_name .' <'. $FromEmail .'>' . "\r\n";
+				}
+			
+			} else {
+			
+				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+			
+			}
+			
+			if(!$email_error){
+				
+				// Create Record
 
-			$headers = 'From: '. $rb_agency_option_agencyname .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+				$insert = "INSERT INTO " . table_agency_searchsaved_mux .
 
-			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
+				" (SearchID,SearchMuxHash,SearchMuxToName,SearchMuxToEmail,SearchMuxSubject,SearchMuxMessage,SearchMuxCustomValue)" .
 
-			if($isSent){
+			   "VALUES ('" . $wpdb->escape($SearchID) . "','" . $wpdb->escape($SearchMuxHash) . "','" . $wpdb->escape($SearchMuxToName) . "','" . $wpdb->escape($SearchMuxToEmail) . "','" . $wpdb->escape($SearchMuxSubject) . "','" . $wpdb->escape($SearchMuxMessage) . "','" . $wpdb->escape($SearchMuxCustomValue) . "')";
+
+		        $results = $wpdb->query($insert);
+
+			    $lastid = $wpdb->insert_id;
+			
+				$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
 	
-			echo "<div style=\"margin:15px;\">";
-			echo "<div id=\"message\" class=\"updated\">";
-			echo "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-			echo "Message sent: <p>". $SearchMuxMessage ."</p>";
-			echo "</div>";
-			echo "</div>";	
+				if($isSent){
+				
+					if(!empty($FromEmail)){
+						echo "<div style=\"margin:15px;\">";
+						echo "<div id=\"message\" class=\"updated\">";
+						echo "Email successfully sent from <strong>". $FromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+						echo "Message sent: <p>". $SearchMuxMessage ."</p>";
+						echo "</div>";
+						echo "</div>";	
+					} else {
+						echo "<div style=\"margin:15px;\">";
+						echo "<div id=\"message\" class=\"updated\">";
+						echo "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+						echo "Message sent: <p>". $SearchMuxMessage ."</p>";
+						echo "</div>";
+						echo "</div>";	
+					}
+				
+				}
 	
+			} else {
+
+				echo "<div style=\"margin:15px;\">";
+				echo "<div id=\"message\" class=\"updated\">";
+				echo $email_error;
+				echo "</div>";
+				echo "</div>";	
+			
 			}
 
 		}
@@ -213,6 +249,8 @@ if (isset($_POST['action'])) {
      <h2><?php echo __("Search Saved", rb_agency_TEXTDOMAIN); ?></h2>
       <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
        <input type="hidden" name="action" value="cartEmail" />
+       <div><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+       <div><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
        <div><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
        <div><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
        <div><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart" /></div>
