@@ -12,12 +12,6 @@
     $arrayDuplicateFound = array();
  
 
-if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
-	if($_REQUEST['action'] == 'douninstall') {
-		modelagency_uninstall();
-	}
-}
-
 if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;} else { $ConfigID=$_REQUEST['ConfigID']; }
 
 if ($ConfigID <> 0) { ?>
