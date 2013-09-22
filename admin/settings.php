@@ -19,7 +19,7 @@ global $wpdb;
 
 if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 	if($_REQUEST['action'] == 'douninstall') {
-		rb_agency_uninstall();
+		RBAgency::Uninstall();
 	}
 }
 

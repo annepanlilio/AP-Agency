@@ -224,8 +224,8 @@ class RBAgency {
 
 
 	/*
-	 * Plugin Installation
-	 * Run when the plugin is activated.
+	 * Plugin Activation
+	 * Run when the plugin is installed.
 	 */
 
 		public static function install(){
@@ -504,6 +504,66 @@ class RBAgency {
 
 
 	/*
+	 * Plugin Deactivation
+	 * Cleanup when complete
+	 */
+
+		public static function unistall(){
+
+			// TODO
+		}
+
+
+	/*
+	 * Plugin Uninstall
+	 * Cleanup when complete
+	 */
+
+		public static function remove(){
+			// Does user have permission?
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+			check_admin_referer( 'bulk-plugins' );
+
+			// Important: Check if the file is the one that was registered during the uninstall hook.
+			if ( __FILE__ != WP_UNINSTALL_PLUGIN )
+				return;
+
+			// Permission Granted... Remove
+			global $wpdb; // Required for all WordPress database manipulations
+
+			// Drop the tables
+			$wpdb->query("DROP TABLE " . table_agency_profile);
+			$wpdb->query("DROP TABLE " . table_agency_profile_media);
+			$wpdb->query("DROP TABLE " . table_agency_data_gender);
+			$wpdb->query("DROP TABLE " . table_agency_data_type);
+			$wpdb->query("DROP TABLE " . table_agency_data_media);
+			$wpdb->query("DROP TABLE " . table_agency_customfields);
+			$wpdb->query("DROP TABLE " . table_agency_customfield_mux);
+			$wpdb->query("DROP TABLE " . table_agency_customfields_types);
+			$wpdb->query("DROP TABLE " . table_agency_searchsaved);
+			$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
+			$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
+			$wpdb->query("DROP TABLE " . table_agency_castingcart);
+
+			// Delete Saved Settings
+			delete_option('rb_agency_options');
+
+			// Deactivate Plugin
+			$thepluginfile = "rb-agency/rb-agency.php";
+			$current = get_settings('active_plugins');
+			array_splice($current, array_search( $thepluginfile, $current), 1 );
+			update_option('active_plugins', $current);
+			do_action('deactivate_' . $thepluginfile );
+
+			// Redirect back to Plugins
+			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("One More Step", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
+			die;
+
+		}
+
+
+	/*
 	 * Flush Rewrite Rules
 	 * Remember to flush_rules() when adding rules
 	 */
@@ -738,58 +798,6 @@ class RBAgency {
 */
 
 
-	/*
-	 * Uninstall
-	 * Cleanup when complete
-	 */
-
-		public static function unistall(){
-
-			global $wpdb; // Required for all WordPress database manipulations
-
-			// Drop the tables
-			$wpdb->query("DROP TABLE " . table_agency_profile);
-			$wpdb->query("DROP TABLE " . table_agency_profile_media);
-			$wpdb->query("DROP TABLE " . table_agency_data_gender);
-			$wpdb->query("DROP TABLE " . table_agency_data_type);
-			$wpdb->query("DROP TABLE " . table_agency_data_media);
-			$wpdb->query("DROP TABLE " . table_agency_customfields);
-			$wpdb->query("DROP TABLE " . table_agency_customfield_mux);
-			$wpdb->query("DROP TABLE " . table_agency_customfields_types);
-			$wpdb->query("DROP TABLE " . table_agency_searchsaved);
-			$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
-			$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
-			$wpdb->query("DROP TABLE " . table_agency_castingcart);
-
-			// Delete Saved Settings
-			delete_option('rb_agency_options');
-
-			// Deactivate Plugin
-			$thepluginfile = "rb-agency/rb-agency.php";
-			$current = get_settings('active_plugins');
-			array_splice($current, array_search( $thepluginfile, $current), 1 );
-			update_option('active_plugins', $current);
-			do_action('deactivate_' . $thepluginfile );
-
-			// Redirect back to Plugins
-			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("One More Step", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
-			die;
-		}
-
-		public static function remove(){
-			// Does user have permission?
-			if ( ! current_user_can( 'activate_plugins' ) )
-				return;
-			check_admin_referer( 'bulk-plugins' );
-
-			// Important: Check if the file is the one that was registered during the uninstall hook.
-			if ( __FILE__ != WP_UNINSTALL_PLUGIN )
-				return;
-
-			// Permission Granted... Remove
-			// TODO
-
-		}
 
 
 
