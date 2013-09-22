@@ -975,7 +975,7 @@ elseif ($ConfigID == 80) {
 
     global $wpdb;
 
-    $custom_fields_rb_agency = $wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder", ARRAY_A);
+    $custom_fields_rb_agency = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder", ARRAY_A));
     $fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive'));
 
     $count = count($fields_array[0]);
@@ -1561,7 +1561,7 @@ class RBAgencyCSVXLSImpoterPlugin {
         $default = 1;
         $heads = 17;
         $t_head = $custom_header;
-        $custom_fields = $wpdb->get_results("Select ProfileCustomID,ProfileCustomTitle from ". table_agency_customfields." ORDER BY ProfileCustomID ASC");
+        $custom_fields = $wpdb->get_results($wpdb->prepare("SELECT ProfileCustomID,ProfileCustomTitle FROM ". table_agency_customfields." ORDER BY ProfileCustomID ASC"));
         echo "<table class=\"form-table\">";
         echo "<tbody>";
         for($i = 0; $i < $t_head; $i++){

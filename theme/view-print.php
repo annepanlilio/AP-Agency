@@ -234,37 +234,37 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 							echo "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 						}
 */
-						$resultsCustomPrivate =  $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+						$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC"));
 						foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 							echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 						}
 
-							if (!empty($data['ProfileGender'])) {
-								if(rb_agency_getGenderTitle($data['ProfileGender'])){
-									echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
-								}else{
-									echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</div>\n";	
-								}
+						if (!empty($data['ProfileGender'])) {
+							if(rb_agency_getGenderTitle($data['ProfileGender'])){
+								echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
+							}else{
+								echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</div>\n";	
 							}
+						}
 
-							$resultsCustom = $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
-							foreach  ($resultsCustom as $resultCustom) {
-								if(!empty($resultCustom->ProfileCustomValue )){
-								echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
-								}
+						$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+						foreach  ($resultsCustom as $resultCustom) {
+							if(!empty($resultCustom->ProfileCustomValue )){
+							echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
 							}
+						}
 
 						echo " </div>";
 						echo " <div style=\"clear: both; text-align: center; padding: 5px; \">\n";
 					} else {
 						echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactDisplay']) . "</h2>"; 
-					}					
+					}
 				
 					echo " </div>";
 					echo "</div>";
-			  	} // elseif (layout style is another value......) {
-			  // 
-			  // }
+				} // elseif (layout style is another value......) {
+
+			// }
 			}
 			mysql_free_result($results);
 			echo "<div style=\"clear: both;\"></div>";
