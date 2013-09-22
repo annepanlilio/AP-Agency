@@ -61,7 +61,7 @@ error_reporting(0);
 
 	if($rb_agency_option_advertise == 0) {  // Reversed it, now 1 = Hide Advertising
 
-	  add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );		
+	add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );
 		// Hoook into the 'wp_dashboard_setup' action to register our other functions
 		function rb_agency_add_dashboard() {
 
@@ -233,15 +233,6 @@ error_reporting(0);
 			}
 			return $template;
 		}
-
-/**
- * Remember to flush_rules() when adding rules
- */
-	function rb_agency_flushRules() {
-		global $wp_rewrite;
-		$wp_rewrite->flush_rules();
-	}
-
 
 
 // *************************************************************************************************** //
