@@ -14,7 +14,6 @@ if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyima
 $rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
 $rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
-
 if (function_exists(rb_agencyinteract_approvemembers)) {
     // Load Interact Settings
     $rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
@@ -1383,12 +1382,14 @@ function rb_display_list() {
             </div>
         </div>
 <?php
-    echo "  <div class=\"tablenav-pages\">\n";
+    // Show Pagination
+    echo "<div class=\"tablenav\">\n";
+    echo "  <div class='tablenav-pages'>\n";
     if ($items > 0) {
         echo $p->show();  // Echo out the list of paging. 
     }
     echo "  </div>\n";
-                            
+    echo "</div>\n";
 
     echo "<form method=\"post\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
     echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
@@ -1483,8 +1484,7 @@ function rb_display_list() {
                     $new_title = $get['DataTypeTitle']; 
                 }
         }
-         
-        
+
         $DataTypeTitle = $new_title;
 
         $resultImageCount = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaType = 'Image'");
@@ -1494,7 +1494,6 @@ function rb_display_list() {
         $resultProfileGender = mysql_query("SELECT * FROM " . table_agency_data_gender . " WHERE GenderID = '" . $ProfileGender . "' ");
         $fetchProfileGender = mysql_fetch_assoc($resultProfileGender);
         $ProfileGender = $fetchProfileGender["GenderTitle"];
-
 
         echo "    <tr" . $rowColor . ">\n";
         echo "        <th class=\"check-column\" scope=\"row\">\n";
@@ -1542,16 +1541,17 @@ function rb_display_list() {
     }
     echo " </tbody>\n";
     echo "</table>\n";
+
+    // Show Pagination
     echo "<div class=\"tablenav\">\n";
     echo "  <div class='tablenav-pages'>\n";
-
     if ($items > 0) {
         echo $p->show();  // Echo out the list of paging. 
     }
-
     echo "  </div>\n";
     echo "</div>\n";
 
+    // Show Actions
     echo "<p class=\"submit\">\n";
     echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
     echo "  <input type=\"submit\" value=\"" . __('Delete Profiles') . "\" class=\"button-primary\" name=\"submit\" />   \n";

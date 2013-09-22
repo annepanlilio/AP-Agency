@@ -61,8 +61,8 @@ get_currentuserinfo();
 					<h3 class="hndle"><span><?php echo __("Quick Search", rb_agency_TEXTDOMAIN ) ?></span></h3>
 					<div class="inside">
 						<?php
-						   if ($user_level >= 7) {
-						   	?>
+						if ($user_level >= 7) {
+						?>
 							<form method="GET" action="<?php echo admin_url("admin.php?page=rb_agency_search") ?>">
 							<input type="hidden" name="page" id="page" value="rb_agency_search" />
 							<input type="hidden" name="action" value="search" />
@@ -187,8 +187,8 @@ get_currentuserinfo();
 								?>
 								<li>
 									<a href="?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $data['ProfileID']; ?>"><?php echo stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']); ?></a>
-							    	<span class="add-new-h2"><?php echo $data['ProfileStatHits']; ?> <?php echo __("Views", rb_agency_TEXTDOMAIN ) ?></span>
-							    	<span class="add-new-h2">Last viewed <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateViewLast'])); ?></span>
+									<span class="add-new-h2"><?php echo $data['ProfileStatHits']; ?> <?php echo __("Views", rb_agency_TEXTDOMAIN ) ?></span>
+									<span class="add-new-h2">Last viewed <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateViewLast'])); ?></span>
 								</li><?php
 							}
 							mysql_free_result($results);
