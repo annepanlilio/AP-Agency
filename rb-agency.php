@@ -105,12 +105,12 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 
 // *************************************************************************************************** //
 
-/**
+/*
  * Declare Global WordPress Database Access
  */
 	global $wpdb;
 
-/**
+/*
  * Set Table Names
  */
 	// Profile Records
@@ -141,12 +141,16 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	if (!defined("table_agency_castingcart"))
 		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
 
-/**
+/*
  * Call Function and Language
  */
 	// Call default functions
 	//require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/common.php");
+
 	require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/functions.php");
+
+	// Widgets & Shortcodes
+	require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/extend.php");
 
 
 	// Now Call the Lanuage
@@ -156,7 +160,7 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 // *************************************************************************************************** //
 
 
-/**
+/*
  * Initialize
  */
 	// Call the initialization function
@@ -208,9 +212,10 @@ class RBAgency {
 				add_action('plugin_action_links', array('RBAgency', 'menu_addlinkto_plugin'),10,2);
 
 				// Add Notification to Plugins Page
-				add_action('after_plugin_row_rb-agency/rb-agency.php', array('RBAgency', 'plugin_row') );
+				add_action('after_plugin_row_rb-agency/rb-agency.php', array('RBAgency', 'plugin_row'));
 
-
+				// Register Settings
+				add_action('admin_init', array('RBAgency', 'do_register_settings') );
 
 			}
 
@@ -228,6 +233,17 @@ class RBAgency {
 			// Required for all WordPress database manipulations
 			global $wpdb;
 			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+			/*
+			 * Check Permissions
+			 */
+				// Does the user have permission to activate the plugin
+				if ( !current_user_can('activate_plugins') )
+					return;
+				// Check Admin Referer
+				$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+				check_admin_referer( "activate-plugin_{$plugin}" );
+
 
 			/*
 			 * Setup Required Directories
@@ -527,7 +543,6 @@ class RBAgency {
 			//return RBAgency_Update::check_version($update_plugins_option, true);
 		}
 
-
 	/*
 	 * Administrative Menu
 	 * Create the admin menu items
@@ -569,6 +584,40 @@ class RBAgency {
 		}
 		public static function menu_approvemembers(){
 			include_once('admin/profile-approve.php');
+		}
+
+	/*
+	 * Plugin Page
+	 * Add links and information to the plugins page
+	 */
+
+		// Add Menu Item to Settings Dropdown
+		public static function menu_addlinkto_settings() {
+			// Check Permissions
+			if ( !current_user_can('update_core') )
+				return;
+			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), 7, "rb_agency_settings", array('RBAgency', 'menu_settings'));
+		}
+
+		// Add Link to Settings Page
+		public static function menu_addlinkto_plugin( $links, $file ) {
+			static $this_plugin;
+
+			if (!$this_plugin) {
+				$this_plugin = plugin_basename(__FILE__);
+			}
+
+			// check to make sure we are on the correct plugin
+			if ($file == $this_plugin) {
+
+				// Create Link for Settings Page
+				$settings_link = '<a href="' . admin_url("admin.php") . '?page=rb_agency_settings">Settings</a>';
+				// Add link to List
+				array_unshift($links, $settings_link);
+			}
+
+			return $links;
+
 		}
 
 
@@ -650,38 +699,26 @@ class RBAgency {
 			echo "</div>\n";
 		}
 
+
 	/*
-	 * Plugin Page
-	 * Add links and information to the plugins page
+	 * Register Settings
+	 * Register Settings group
 	 */
 
-		// Add Menu Item to Settings Dropdown
-		public static function menu_addlinkto_settings() {
-			// Check Permissions
-			if ( !current_user_can('update_core') )
-				return;
-			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), 7, "rb_agency_settings", array('RBAgency', 'menu_settings'));
+		public static function do_register_settings() {
+			register_setting('rb-agency-settings-group', 'rb_agency_options'); //, 'rb_agency_options_validate'
+			register_setting('rb-agency-dummy-settings-group', 'rb_agency_dummy_options'); //, setup dummy profile options
 		}
 
-		// Add Link to Settings Page
-		public static function menu_addlinkto_plugin( $links, $file ) {
-			static $this_plugin;
 
-			if (!$this_plugin) {
-				$this_plugin = plugin_basename(__FILE__);
-			}
+	/*
+	 * License
+	 * Updates and License related
+	 */
 
-			// check to make sure we are on the correct plugin
-			if ($file == $this_plugin) {
-
-				// Create Link for Settings Page
-				$settings_link = '<a href="' . admin_url("admin.php") . '?page=rb_agency_settings">Settings</a>';
-				// Add link to List
-				array_unshift($links, $settings_link);
-			}
-
-			return $links;
-
+		// Get License Key
+		public static function get_key(){
+			return get_option("rb_agency_license");
 		}
 /*
 		//Displays message on Plugin's page
@@ -701,392 +738,81 @@ class RBAgency {
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/*
-	 * 
-	 * 
+	 * Uninstall
+	 * Cleanup when complete
 	 */
 
-// TODO: PULL ALL CODE INSIDE
+		public static function unistall(){
+
+			global $wpdb; // Required for all WordPress database manipulations
+
+			// Drop the tables
+			$wpdb->query("DROP TABLE " . table_agency_profile);
+			$wpdb->query("DROP TABLE " . table_agency_profile_media);
+			$wpdb->query("DROP TABLE " . table_agency_data_gender);
+			$wpdb->query("DROP TABLE " . table_agency_data_type);
+			$wpdb->query("DROP TABLE " . table_agency_data_media);
+			$wpdb->query("DROP TABLE " . table_agency_customfields);
+			$wpdb->query("DROP TABLE " . table_agency_customfield_mux);
+			$wpdb->query("DROP TABLE " . table_agency_customfields_types);
+			$wpdb->query("DROP TABLE " . table_agency_searchsaved);
+			$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
+			$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
+			$wpdb->query("DROP TABLE " . table_agency_castingcart);
+
+			// Delete Saved Settings
+			delete_option('rb_agency_options');
+
+			// Deactivate Plugin
+			$thepluginfile = "rb-agency/rb-agency.php";
+			$current = get_settings('active_plugins');
+			array_splice($current, array_search( $thepluginfile, $current), 1 );
+			update_option('active_plugins', $current);
+			do_action('deactivate_' . $thepluginfile );
+
+			// Redirect back to Plugins
+			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("One More Step", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
+			die;
+		}
+
+		public static function remove(){
+			// Does user have permission?
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+			check_admin_referer( 'bulk-plugins' );
+
+			// Important: Check if the file is the one that was registered during the uninstall hook.
+			if ( __FILE__ != WP_UNINSTALL_PLUGIN )
+				return;
+
+			// Permission Granted... Remove
+			// TODO
+
+		}
 
 
-
-
-    public static function get_key(){
-        return get_option("rg_gforms_key");
-    }
 
 }
+
 
 // *************************************************************************************************** //
 
 /*
- * Register Plugin
+ * Plugin Actions
  */
 
-	//Activate Install Hook
+	// Activate Plugin
 	register_activation_hook(__FILE__, array('RBAgency', 'install'));
 
+	// Deactivate Plugin
+	register_deactivation_hook(__FILE__, array('RBAgency', 'uninstall'));
+
+	// Uninstall Plugin
+	register_uninstall_hook(__FILE__, array('RBAgency', 'remove'));
 
 // *************************************************************************************************** //
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-/*
- * Register Administrative Settings
- */
-
-if ( is_admin() ){
-
-	/*
-	 * Add Options Page Settings Group
-	 */
-
-	add_action('admin_init', 'rb_agency_register_settings');
-		// Register our Array of settings
-		function rb_agency_register_settings() {
-			register_setting('rb-agency-settings-group', 'rb_agency_options'); //, 'rb_agency_options_validate'
-			register_setting('rb-agency-dummy-settings-group', 'rb_agency_dummy_options'); //, setup dummy profile options
-		}
-		// TODO: CLEAN UP ::: Validate/Sanitize Data
-		function rb_agency_options_validate($input) {
-			// Our first value is either 0 or 1
-			//$input['option1'] = ( $input['option1'] == 1 ? 1 : 0 );
-			
-			// Say our second option must be safe text with no HTML tags
-			//$input['sometext'] =  wp_filter_nohtml_kses($input['sometext']);
-			
-			//return $input;
-		}
-
-
-
-}
-
-// *************************************************************************************************** //
-// Add Widgets
-
-	// View Featured
-	add_action('widgets_init', create_function('', 'return register_widget("rb_agency_widget_showpromoted");'));
-		class rb_agency_widget_showpromoted extends WP_Widget {
-
-			// Setup
-			function rb_agency_widget_showpromoted() {
-				$widget_ops = array('classname' => 'rb_agency_widget_showpromoted', 'description' => __("Displays promoted profiles", rb_agency_TEXTDOMAIN) );
-				$this->WP_Widget('rb_agency_widget_showpromoted', __("RB Agency : Featured", rb_agency_TEXTDOMAIN), $widget_ops);
-			}
-
-			// What Displays
-			function widget($args, $instance) {		
-				extract($args, EXTR_SKIP);
-				echo $before_widget;
-				$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-					if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };		
-				$count = $instance['count'];
-					if ( empty( $count ) ) { $count = 1; };		
-					
-				if (function_exists('rb_agency_profilefeatured')) { 
-				  $atts = array('count' => $count);
-				  rb_agency_profilefeatured($atts); 
-				} else {
-					echo "Invalid Function.";
-				}
-				echo $after_widget;
-			}
-
-			// Update
-			function update($new_instance, $old_instance) {				
-				$instance = $old_instance;
-				$instance['title'] = strip_tags($new_instance['title']);
-				$instance['count'] = strip_tags($new_instance['count']);
-				return $instance;
-			}
-
-			// Form
-			function form($instance) {				
-				$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-				$title = esc_attr($instance['title']);
-				$count = esc_attr($instance['count']);
-				?>
-					<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-					<p><label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Number Shown:'); ?> <input id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" /></label></p>
-				<?php 
-			}
-
-		} // Featured
-
-
-	// View Topics
-	add_action('widgets_init', create_function('', 'return register_widget("rb_agency_widget_showsearch");'));
-		class rb_agency_widget_showsearch extends WP_Widget {
-
-			// Setup
-			function rb_agency_widget_showsearch() {
-				$widget_ops = array('classname' => 'rb_agency_widget_showsearch', 'description' => __("Displays profile search fields", rb_agency_TEXTDOMAIN) );
-				$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Search", rb_agency_TEXTDOMAIN), $widget_ops);
-			}
-
-			// What Displays
-			function widget($args, $instance) {		
-				extract($args, EXTR_SKIP);
-				echo $before_widget;
-				$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-					if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };		
-				$showlayout = $instance['showlayout'];
-					if ( empty( $showlayout ) ) { $showlayout = "condensed"; };	
-						
-				if (function_exists('rb_agency_profilesearch')) { 
-					$atts = array('profilesearch_layout' => $showlayout);
-					rb_agency_profilesearch($atts);
-				} else {
-					echo "Invalid Function";
-				}
-				echo $after_widget;
-			}
-
-			// Update
-			function update($new_instance, $old_instance) {				
-				$instance = $old_instance;
-				$instance['title'] = strip_tags($new_instance['title']);
-				$instance['showlayout'] = strip_tags($new_instance['showlayout']);
-				return $instance;
-			}
-
-			// Form
-			function form($instance) {				
-				$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-				$title = esc_attr($instance['title']);
-				$showlayout = esc_attr($instance['showlayout']);
-				?>
-					<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-					<p><label for="<?php echo $this->get_field_id('showlayout'); ?>"><?php _e('Type:'); ?> <select id="<?php echo $this->get_field_id('showlayout'); ?>" name="<?php echo $this->get_field_name('showlayout'); ?>"><option value="advanced" <?php selected($showlayout, "advanced"); ?>>Advanced Search</option><option value="condensed" <?php selected($showlayout, "condensed"); ?>>Condensed Search</option></select></label></p>
-				<?php 
-			}
-
-		} // class
-
-
-// *************************************************************************************************** //
-// Add Short Codes
-
-	add_shortcode("category_list","rb_agency_shortcode_categorylist");
-		function rb_agency_shortcode_categorylist($atts, $content = null){
-			ob_start();
-			rb_agency_categorylist($atts);
-			$output_string=ob_get_contents();;
-			ob_end_clean();
-			return $output_string;
-		}
-
-	add_shortcode("profile_list","rb_agency_shortcode_profilelist");
-		function rb_agency_shortcode_profilelist($atts, $content = null){
-			ob_start();
-			rb_agency_profilelist($atts);
-			$output_string=ob_get_contents();;
-			ob_end_clean();
-			return $output_string;
-		}
-	
-	add_shortcode("profile_search","rb_agency_shortcode_profilesearch");
-		function rb_agency_shortcode_profilesearch($atts, $content = null){
-			ob_start();
-			rb_agency_profilesearch($atts);
-			$output_string=ob_get_contents();;
-			ob_end_clean();
-			return $output_string;
-		}
-	/*/
-	* ======================== RB Agency Tool Tip===============
-	* 
-	/*/
-
-		
-	if(is_admin()){
-		/*
-		 * just not to get the tooltip error
-		 */
-		 $rb_agency_options_arr = get_option('rb_agency_options');
-		 if($rb_agency_options_arr == ""){
-				 $rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
-				 update_option('rb_agency_options',$rb_agency_options_arr);
-		 }
-
-		if( $rb_agency_options_arr != "" || is_array($rb_agency_options_arr)){
-			$rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
-
-			if(!@in_array("rb_agency_options_showtooltip",$rb_agency_options_arr) && $rb_agency_options_showtooltip == 0){	 
-				$rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
-				update_option('rb_agency_options',$rb_agency_options_arr);
-				wp_enqueue_style('wp-pointer');
-				wp_enqueue_script('wp-pointer');
-				function  add_js_code(){
-					?>
-					<script type="text/javascript">
-					jQuery(document).ready( function($) {
-						
-					var options = {"content":"<h3>RB Agency Plugin</h3><p>Thanks for installing RB Plugin, we hope you find it useful.  Lets <a href=\'<?php echo admin_url("admin.php?page=rb_agency_settings&ConfigID=1"); ?>\'>check your settings</a> before we get started.</p>","position":{"edge":"left","align":"center"}};
-					if ( ! options )
-						return;
-						options = $.extend( options, {
-							close: function() {
-							//to do
-							}
-						});
-						<?php if(isset($_GET["page"])!="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_settings") { ?>
-						$('#toplevel_page_rb_agency_menu').pointer( options ).pointer("open");
-						<?php } elseif(isset($_GET["page"])=="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_settings") { ?>
-						$('#toplevel_page_rb_agency_menu li a').each(function(){
-							if($(this).text() == "Settings"){
-							   $(this).fadeOut().pointer( options ).pointer("open").fadeIn();	
-							   $(this).css("background","#EAF2FA");
-							}
-						});
-						<?php } ?>
-					});
-					</script>
-					';
-					<?php
-				}
-				add_action("admin_footer","add_js_code");
-			}
-		}
-	}
-
-
-
-
- /*/
-
-
-
-   *================ Notify Admin installation report ==============================
-  /*/ 
-
-
-$running = true;
-function rb_agency_notify_installation(){
-
-    include_once(ABSPATH . 'wp-includes/pluggable.php');		
-	$json_url = 'http://agency.rbplugin.com/rb-license-checklist/';
-	
-	$client_domain = network_site_url('/');
-    $client_sitename = get_bloginfo( 'name' );
-	$client_admin_email = get_bloginfo('admin_email');
-    $client_plugin_version = get_option('rb_agency_version');
-	
-	 
-	$data = array(
-	"client_domain" => $client_domain,
-	"client_admin_email"  => $client_admin_email,
-	"client_sitename" =>$client_sitename,
-	"client_plugin_version" => $client_plugin_version,
-	"client_plugin_name" =>"RB Plugin");                                                                    
-	$data_string = json_encode($data);
-		if(function_exists("rb_agencyinteract_install")){
-			$client_interact_exist = get_option('rb_agency_version');	
-			array_push($data,array("client_interact_exist" => $client_interact_exist)); 
-		}
-		
-	// Initializing curl
-	$ch = curl_init( $json_url );
-	 
-	// Configuring curl options
-	$options = array(
-	CURLOPT_RETURNTRANSFER => true,
-	CURLOPT_HTTPHEADER => array('Content-type: application/json') ,
-	CURLOPT_POSTFIELDS => $data_string
-	);
-	 
-	// Setting curl options
-	curl_setopt_array( $ch, $options );
-	 
-	// Getting results
-	$result =  curl_exec($ch); // Getting jSON result string
-	$isReported = get_option("rb_agency_notify");	
-         
-	if($result){
-	
-		$message .= "RB Plugin was installed in the server that is not a member of or registered to the list of clients.". "\r\n\r\n";
-		$message .= sprintf('Domain: %s',$client_domain). "\r\n\r\n";  
-		$message .= sprintf('Date: %s',date('l jS \of F Y h:i:s A')) . "\r\n\r\n";  
-		$message .= sprintf('Admin Email: %s', get_option('admin_email')) . "\r\n";  
-  		
-		$headers = array();
-		$headers[] = 'Cc: Rob <rob@clearlym.com>';
-		$headers[] = 'Cc: Operations <operations@clearlym.com>'; // note you can just use a simple email address           
-		
-	//	wp_mail("champ.kazban25@gmail.com", sprintf('RB Plugin Installed - Unknown Server/Domain[%s]', get_option('blogname')), $message,$headers);
-	}			
-}
-register_activation_hook(__FILE__,"rb_agency_notify_installation");
-
-
-
-/****************************************************************/
-//Uninstall
-	function rb_agency_uninstall() {
-
-		register_uninstall_hook(__FILE__, 'rb_agency_uninstall_action');
-		function rb_agency_uninstall_action() {
-			//delete_option('create_my_taxonomies');
-		}
-
-		// Drop the tables
-		global $wpdb;	// Required for all WordPress database manipulations
-
-		$wpdb->query("DROP TABLE " . table_agency_profile);
-		$wpdb->query("DROP TABLE " . table_agency_profile_media);
-		$wpdb->query("DROP TABLE " . table_agency_data_gender);
-		$wpdb->query("DROP TABLE " . table_agency_data_type);
-		$wpdb->query("DROP TABLE " . table_agency_data_media);
-		$wpdb->query("DROP TABLE " . table_agency_customfields);
-		$wpdb->query("DROP TABLE " . table_agency_customfield_mux);
-		$wpdb->query("DROP TABLE " . table_agency_customfields_types);
-		$wpdb->query("DROP TABLE " . table_agency_searchsaved);
-		$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
-		$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
-		$wpdb->query("DROP TABLE " . table_agency_castingcart);
-
-		// Delete Saved Settings
-		delete_option('rb_agency_options');
-
-		// Deactivate Plugin
-		$thepluginfile = "rb-agency/rb-agency.php";
-		$current = get_settings('active_plugins');
-		array_splice($current, array_search( $thepluginfile, $current), 1 );
-		update_option('active_plugins', $current);
-		do_action('deactivate_' . $thepluginfile );
-
-		// Redirect back to Plugins
-		echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("One More Step", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
-		die;
-	}
 ?>
