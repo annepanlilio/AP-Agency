@@ -2375,11 +2375,11 @@ elseif ($ConfigID == 8){
 	// Edit Record
 	switch($_POST["action"]){
 	case "editRecord":
-	    mysql_query("UPDATE ".table_agency_mediacategory." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die("1".mysql_error());
+	    mysql_query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die("1".mysql_error());
       break;
 	// Add Record
 	case "addRecord":
-	     mysql_query("INSERT INTO ".table_agency_mediacategory." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
+	     mysql_query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
       break;
 	
 	}
@@ -2387,11 +2387,11 @@ elseif ($ConfigID == 8){
 	if(isset($_POST["action"])=="deleteRecord"  || isset($_GET["deleteRecord"])){
 		
 		 if(isset($_GET["deleteRecord"])){
-				 mysql_query("DELETE FROM ". table_agency_mediacategory ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
+				 mysql_query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
 		 }
 		 if(isset($_POST["MediaCategoryID"])){
 			 foreach($_POST["MediaCategoryID"] as $id){
-				mysql_query("DELETE FROM ". table_agency_mediacategory ." WHERE MediaCategoryID = '".$id."'");
+				mysql_query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$id."'");
 			 }
 		 }
 		
@@ -2402,7 +2402,7 @@ elseif ($ConfigID == 8){
 		 
 		 echo "  <h3 class=\"title\">". __("Edit Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
 		 
-		 $query = "SELECT * FROM ". table_agency_mediacategory ." WHERE MediaCategoryID='".$_GET["MediaCategoryID"]."'";
+		 $query = "SELECT * FROM ". table_agency_data_media ." WHERE MediaCategoryID='".$_GET["MediaCategoryID"]."'";
 		 $results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 		 $count = mysql_num_rows($results);
 		 $data = mysql_fetch_array($results);
@@ -2423,9 +2423,7 @@ elseif ($ConfigID == 8){
 					echo "<option value=\"\">All Gender</option>";
 					$queryShowGender = mysql_query($query);
 					while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
-															
 						echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data["MediaCategoryGender"] ,$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
-															
 					}
 					echo "</select>";
 					echo "<br/>";
@@ -2496,7 +2494,7 @@ elseif ($ConfigID == 8){
 		
 		echo "<tbody>\n";
 	
-		$query = "SELECT * FROM ". table_agency_mediacategory ." ORDER BY $sort $dir";
+		$query = "SELECT * FROM ". table_agency_data_media ." ORDER BY $sort $dir";
 		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ).mysql_error());
 		$count = mysql_num_rows($results);
 		while ($data = mysql_fetch_array($results)) {

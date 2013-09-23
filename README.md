@@ -11,8 +11,17 @@ Model and Talent Agency CRM management and scheduling tool.
 
 With our intuitive admin dashboard you can add models and talent, update their details, upload photos and other media such as resumes and even video!
 
- 
-
 == Installation ==
 
 Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page. `[vimeo http://vimeo.com/27752740]`
+
+
+== Change Log
+
+=== 2.0.3
+Major Overhaul of PHP classes
++ Add notice if upgrade is available
++ Code Cleanup
+
+=== 2.0.2
++ Minor Updates

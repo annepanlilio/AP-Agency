@@ -1,0 +1,77 @@
+CF Commercial-to-GPL License
+Version 1.0 – 2010-06-29
+
+This License is a legal agreement between You and the Developer for the use of the Software. By installing, copying, or otherwise using the Software, You agree to be bound by the terms of this License. If You do not agree to the terms of this License, do not install or use the Software.
+
+1. Definitions.
+
+(a) “Commercial Code” means all parts of the Software not licensed under the GPL. Details are provided in the Commercial Code notice required by exhibit A.
+
+(b) “Developer” means the individual or entity identified as the Developer in the Commercial Code notice required by exhibit A.
+
+(c) “GPL” means the GNU Public License included with the Software (also available at http://www.gnu.org/licenses/gpl.html).
+
+(d) “GPL Code” means the portions of the Software licensed under the GPL. Details are provided in the Commercial Code notice required by exhibit A.
+
+(e) “Intended Use” means only the intended use indentified in the Commercial Code notice required by exhibit A.
+
+(f) “License” means this document.
+
+(g) “Modifications” means any addition to or deletion from the substance or structure of the Commercial Code. When Commercial Code is released as a series of files, a Modification is: (1) any addition to or deletion from the contents of a file containing the Commercial Code; (2) any new file that contains any part of the Commercial Code.
+
+(h) “Software” means the software distributed with this License.
+
+(i) “You” or “Your” means an individual or a legal entity exercising rights under, and complying with all of the terms of, this License or a future version of this License. For legal entities, “You” includes any entity that controls, is controlled by, or is under common control with You. For purposes of this definition, “control” means (1) the power, direct or indirect, to cause the direction or management of such entity, whether by contract or otherwise, or (2) ownership of more than 50% of the outstanding shares or beneficial ownership of such entity.
+
+2. Scope of License. Portions of the code contained in the Software are licensed under the GPL (the “GPL Code”). All other parts of the Software (the “Commercial Code”) are licensed according to this License.
+
+3. Grant of License.
+
+(a) Grant. Subject to the terms and conditions set forth in this License, You are hereby granted a nonexclusive, nontransferable, license in the Commercial Code, to use and reproduce the Commercial Code for the Intended Use.
+
+(b) License Restrictions. Except as specifically granted in this License, the Developer owns and retains all right, title, and interest in the Commercial Code and any and all related materials. This License does not transfer ownership rights in the Commercial Code, or any related materials to You or any third party. You shall not distribute the Commercial Code to any persons or entities. Subject to section 5, You shall not distribute derivative works based on the Commercial Code to any persons or entities. You shall not sell the Commercial Code to any person. You shall retain all copyright and trademark notices on the Commercial Code and shall take other necessary steps to protect the Developer’s intellectual property rights.
+
+(c) Exclusions. Nothing in this License shall be deemed to grant any rights to trademarks, copyrights, patents, trade secrets or any other intellectual property of the Developer except as expressly stated herein. No right is granted to the trademarks of the Developer even if such marks are included in the Commercial Code. Nothing in this License shall be interpreted to prohibit the Developer from licensing under different terms from this License any code that the Developer otherwise would have a right to license.
+
+4. Community Pledge.
+
+(a) GPL Trigger. On the happening of any of the following triggering events, this License shall immediately terminate and the Commercial Code shall be licensed under the GPL: (1) the Commercial Code becomes unavailable for license for a period of 60 or more consecutive days and the Developer does not offer an upgraded or successor version of the Commercial Code, or (2) the Developer makes a statement in writing affirming its decision to stop maintaining the Commercial Code.
+
+(b) Irrevocable. This rights granted to You under this section 4 are irrevocable.
+
+5. Modifications. You may make Modifications to Your copy of the Commercial Code, provided that any use of Your Modifications is governed by the terms of this License, including without limitation section 3(b). You may distribute Your Modifications, but only to venues that the Developer has explicitly approved.
+
+6. Termination. The Developer may immediately terminate this License if You fail to comply with the terms and conditions of this License. On termination, all rights granted to You under this License cease and You will promptly destroy all of Your copies of the Commercial Code.
+
+7. DISCLAIMER OF WARRANTIES. THE COMMERCIAL CODE IS PROVIDED “AS IS” WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NONINFRINGEMENT, CAPACITY, AND TITLE. THE DEVELOPER DOES NOT WARRANT THAT THE OPERATION OF THE COMMERCIAL CODE WILL BE UNINTERRUPTED OR ERROR-FREE OR WILL MEET ALL YOUR NEEDS. THE DEVELOPER DOES NOT AND CANNOT WARRANT THE PERFORMANCE OR RESULTS OF USING THE COMMERCIAL CODE.
+
+8. LIMITATION OF LIABILITY. IN NO EVENT WILL THE DEVELOPER BE LIABLE WITH RESPECT TO ANY SUBJECT MATTER OF THIS LICENSE UNDER ANY CONTRACT, NEGLIGENCE, STRICT LIABILITY OR OTHER LEGAL OR EQUITABLE THEORY FOR: (1) ANY SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES; (2) THE COST OF PROCUREMENT OR SUBSTITUTE PRODUCTS OR SERVICES; (3) FOR INTERRUPTION OF USE OR LOSS OR CORRUPTION OF DATA; OR (4) FOR ANY AMOUNTS THAT EXCEED THE FEES PAID BY YOU TO THE DEVELOPER UNDER THIS LICENSE. THE DEVELOPER SHALL HAVE NO LIABILITY FOR ANY FAILURE OR DELAY DUE TO MATTERS BEYOND THEIR REASONABLE CONTROL. THE FOREGOING SHALL NOT APPLY TO THE EXTENT PROHIBITED BY APPLICABLE LAW.
+
+9. Application of This License. This License applies to code to which the Developer has attached the Notice in exhibit A, which is incorporated herein by this reference.
+
+10. Versions of This License.
+
+(a) New Versions. Crowd Favorite, Ltd. (“CF”) is the initial license steward and may publish revised and/or new versions of this License from time to time. Each version will be given a distinguishing version number.
+
+(b) Effect of New Versions. You may always continue to use the Commercial Code available under the terms of the version of the License under which You originally received the Commercial Code.
+
+(c) Modified Versions. This License is made available by CF under the Creative Commons Attribution-NoDerivs 3.0 Unported License (available at http://www.creativecommons.org/licenses/by-nd/3.0). No modifications are permitted. (Filling in the name of the Developer, the Intended Use, GPL Code, Commercial Code, or jurisdiction and venue in the notice required by exhibit A shall not of themselves be deemed to be modifications of this License).
+
+11. Miscellaneous. This License constitutes the entire agreement between the Developer and You concerning the subject matter hereof. If any provision of this License is held to be unenforceable, such provision shall be reformed only to the extent necessary to make it enforceable. A waiver by either party of any term or condition of this License or any breach thereof, in any one instance, will not waive such term or condition or any subsequent breach thereof. This License shall be governed by the law of the jurisdiction specified in a notice required by exhibit A (except to the extent applicable law, if any, provides otherwise), excluding such jurisdiction’s conflict-of-law provisions. Any litigation relating to this License shall be subject to the jurisdiction of the courts located in the jurisdiction and venue specified in a notice required by exhibit A, with the losing party responsible for costs, including, without limitation, court costs and reasonable attorneys’ fees and expenses.
+
+EXHIBIT A 
+CF COMMERICAL-TO-GPL LICENSE
+
+“The contents of this file are subject to the CF Commercial-to-GPL License Version 1.0 (the “License”); You may not copy or use this file except in compliance with the License. Software distributed under the License is distributed on an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for the specific language governing rights and limitations under the License.
+
+The Developer of the Commercial Code: Rob Bertholf. All portions created by the Developer are Copyright (C) 2009-2013 the Developer. All Rights Reserved.
+
+GPL Code: ALL PHP CODE CONTAINED IN THE SOFTWARE.
+
+Commerical Code: ALL OTHER PARTS OF THE SOFTWARE, INCLUDING CSS CODE, IMAGES, DESIGN AND JAVASCRIPT.
+
+Intended Use: LIMITED BY ONE (1) WEBSITE OR BLOGS OWNED BY YOU.
+
+Jurisdiction: HAWAII, USA.
+
+Venue: CITY AND COUNTY OF HONOLULU.

@@ -9,31 +9,6 @@ global $wpdb;
 		chmod(rb_agency_UPLOADPATH, 0777);
 	}
 
-/**
- * Set default option values
- */
-	$rb_agency_options_arr = array(
-		"rb_agency_option_agencyname" => "",
-		"rb_agency_option_agencyemail" => "",
-		"rb_agency_option_agencyheader" => "",
-		"rb_agency_option_agencylogo" => "",
-		"rb_agency_option_unittype" => "1",
-		"rb_agency_option_showsocial" => "1",
-		"rb_agency_option_galleryorder" => "1",
-		"rb_agency_option_gallerytype" => "1",
-		"rb_agency_option_layoutprofile" => "0",
-		"rb_agency_option_advertise" => "1",
-		"rb_agency_option_privacy" => "0",
-		"rb_agency_option_agencyimagemaxwidth" => "1000",
-		"rb_agency_option_agencyimagemaxheight" => "800",
-		"rb_agency_option_profilenaming" => "0",
-		"rb_agency_option_showcontactpage" =>"1",
-		"rb_agency_option_customfield_profilepage" => "1",
-		"rb_agency_option_customfield_searchpage" => "1",
-		"rb_agency_option_customfield_loggedin_all" => "1",
-		"rb_agency_option_customfield_loggedin_admin" => "1"
-		);
-
 /*
  * Enable if we do not have a version number
 
@@ -435,7 +410,17 @@ global $wpdb;
 	}
 
 	// Nothing to see here...
-	if (get_option('rb_agency_version') == "2.0.1") {
-		update_option('rb_agency_version', "2.0.3");
+	if (get_option('rb_agency_version') == "2.0.1" || get_option('rb_agency_version') == "2.0.2" || get_option('rb_agency_version') == "2.0.3") {
+
+		// Does the media table exist?
+		if ($wpdb->get_var("show tables like 'rb_agency_mediacategory'") == 'rb_agency_mediacategory') {
+			$results = $wpdb->query("RENAME TABLE rb_agency_mediacategory TO {$wpdb->prefix}agency_data_media");
+		} else {
+			$results = $wpdb->query("RENAME TABLE {$wpdb->prefix}agency_customfields TO {$wpdb->prefix}agency_data_media");
+		}
+		
+		update_option('rb_agency_version', "2.0.4");
 	}
+
+
 ?>

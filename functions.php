@@ -2566,7 +2566,7 @@ function rb_agency_getProfileIDByUserLinked($ProfileUserLinked){
 /*/
 function rb_agency_getMediaCategories($GenderID){
 
-	$query = mysql_query("SELECT MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder FROM  ".table_agency_mediacategory." ORDER BY MediaCategoryOrder");
+	$query = mysql_query("SELECT MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder FROM  ".table_agency_data_media." ORDER BY MediaCategoryOrder");
 	$count = mysql_num_rows($query);
 	while($f = mysql_fetch_assoc($query)){
 		if($f["MediaCategoryGender"] == $GenderID || $f["MediaCategoryGender"] == 0){

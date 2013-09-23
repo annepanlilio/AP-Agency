@@ -6,94 +6,72 @@ Plugin URI: http://rbplugin.com/wordpress/model-talent-agency-software/
 Description: With this plugin you can easily manage models profiles and information.
 Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
-Version: 2.0.3
-
-------------------------------------------------------------------------
+Version: 2.0.4
+*/
+$rb_agency_VERSION = "2.0.4";
+/*
+License: CF Commercial-to-GPL License
 Copyright 2007-2013 Rob Bertholf
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+This License is a legal agreement between You and the Developer for the use of the Software. 
+By installing, copying, or otherwise using the Software, You agree to be bound by the terms of this License. 
+If You do not agree to the terms of this License, do not install or use the Software.
+See license.txt for full details.
 */
 
+// *************************************************************************************************** //
+
+/*
+ * Initialize
+ */
+
+	// Start Session
+	if (!session_id()) session_start();
+
+
+/*
+ * Security
+ */
+
+	// Avoid direct calls to this file, because now WP core and framework has been used
+	if ( !function_exists('add_action') ) {
+		header('Status: 403 Forbidden');
+		header('HTTP/1.1 403 Forbidden');
+		exit();
+	}
 
 // *************************************************************************************************** //
 
+/*
+ * License
+ */
 
-
-// Start Session
-if (!session_id()) session_start();
-
-// Avoid direct calls to this file, because now WP core and framework has been used
-if ( !function_exists('add_action') ) {
-	header('Status: 403 Forbidden');
-	header('HTTP/1.1 403 Forbidden');
-	exit();
-}
+	//If you hardcode a RB Agency License Key here, it will automatically populate on activation.
+	$rb_agency_LICENSE = "";
+	//-- OR ---//
+	//You can also add the RB Agency license key to your wp-config.php file to automatically populate on activation
+	//Add the code in the comment below to your wp-config.php to do so:
+	//define('RB_AGENCY_LICENSE','YOUR_KEY_GOES_HERE');
 
 
 // *************************************************************************************************** //
-// License Key
-//If you hardcode a RB Agency License Key here, it will automatically populate on activation.
-$rb_agency_LICENSE = "";
-//-- OR ---//
 
-//You can also add the RB Agency license key to your wp-config.php file to automatically populate on activation
-//Add the code in the comment below to your wp-config.php to do so:
-//define('RB_AGENCY_LICENSE','YOUR_KEY_GOES_HERE');
+/*
+ * Declare Global Constants
+ */
 
-// *************************************************************************************************** //
-
-
-// Delcare Version
-$rb_agency_VERSION = "2.0.3";
-	// Define for good measure
+	// Version
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
-
-
-// Requires 2.8 or more
-if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '3.2', '<=') ) { // if less than 2.8
-	echo "<div class=\"error\" style=\"margin-top:30px;\"><p>This plugin requires WordPress version 2.8 or newer.</p></div>";
-	return;
-}
-
-// *************************************************************************************************** //
-
-
-
-// Plugin Definitions
+	// Paths
 	define("rb_agency_BASENAME", plugin_basename(__FILE__) );  // rb-agency/rb-agency.php
 	$rb_agency_WPURL = get_bloginfo("wpurl"); // http://domain.com/wordpress
 	$rb_agency_WPUPLOADARRAY = wp_upload_dir(); // Array  $rb_agency_WPUPLOADARRAY['baseurl'] $rb_agency_WPUPLOADARRAY['basedir']
-
 	define("rb_agency_BASEDIR", plugin_dir_url( __FILE__ ) );
 	define("rb_agency_BASEREL", plugin_dir_path( __FILE__ ) );
 	define("rb_agency_BASEPATH", rb_agency_BASEREL );
-
 	define("rb_agency_UPLOADREL", str_replace(get_bloginfo('url'), '', $rb_agency_WPUPLOADARRAY['baseurl']) ."/profile-media/" );  // /wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_UPLOADDIR", $rb_agency_WPUPLOADARRAY['baseurl'] ."/profile-media/" );  // http://domain.com/wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_UPLOADPATH", $rb_agency_WPUPLOADARRAY['basedir'] ."/profile-media/" ); // /home/content/99/6048999/html/domain.com/wordpress/wp-content/uploads/profile-media/
 	define("rb_agency_TEXTDOMAIN", basename(dirname( __FILE__ )) ); //   rb-agency
-
-	// TODO: Clean Up:
-	$pageURL = '';
-	if ($_SERVER["SERVER_PORT"] != "80") {
-		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-	} else {
-		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-	}
-
-// Call Language Options
 
 	// Check for WPMU installation
 	if (!defined ('IS_WPMU')){
@@ -103,16 +81,40 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	}
 
 
+/*
+ * Set Dependencies
+ */
+
+	// Requires 2.8 or more
+	if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '3.2', '<=') ) { // if less than 2.8
+		echo "<div class=\"error\" style=\"margin-top:30px;\"><p>This plugin requires WordPress version 3.2 or newer.</p></div>";
+		return;
+	}
+
+
+// *************************************************************************************************** //
+
+// TODO: Clean Up:
+	$pageURL = '';
+	if ($_SERVER["SERVER_PORT"] != "80") {
+		$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	} else {
+		$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+	}
+
 // *************************************************************************************************** //
 
 /*
  * Declare Global WordPress Database Access
  */
+
 	global $wpdb;
+
 
 /*
  * Set Table Names
  */
+
 	// Profile Records
 	if (!defined("table_agency_profile"))
 		define("table_agency_profile", "{$wpdb->prefix}agency_profile");
@@ -123,8 +125,8 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 		define("table_agency_data_gender", "{$wpdb->prefix}agency_data_gender");
 	if (!defined("table_agency_data_type"))
 		define("table_agency_data_type", "{$wpdb->prefix}agency_data_type");
-	if (!defined("table_agency_mediacategory"))
-		define("table_agency_mediacategory", "{$wpdb->prefix}agency_data_media");
+	if (!defined("table_agency_data_media"))
+		define("table_agency_data_media", "{$wpdb->prefix}agency_data_media");
 	if (!defined("table_agency_customfields"))
 		define("table_agency_customfields", "{$wpdb->prefix}agency_customfields");
 	if (!defined("table_agency_customfield_mux"))
@@ -141,17 +143,18 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	if (!defined("table_agency_castingcart"))
 		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
 
+
+// *************************************************************************************************** //
+
+
 /*
  * Call Function and Language
  */
-	// Call default functions
-	//require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/common.php");
 
 	require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/functions.php");
 
 	// Widgets & Shortcodes
 	require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/extend.php");
-
 
 	// Now Call the Lanuage
 	define("rb_agency_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
@@ -169,7 +172,6 @@ if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], 
 	add_action('init',  array('RBAgency', 'check_update_needed'));
 	// Check server if software is most current version
 	add_action('init',  array('RBAgency', 'check_upgrade_available'));
-
 
 
 // *************************************************************************************************** //
@@ -219,7 +221,6 @@ class RBAgency {
 
 			}
 
-
 		}
 
 
@@ -261,15 +262,37 @@ class RBAgency {
 			 */
 
 				// Update the options in the database
-				if(!get_option("rb_agency_options"))
-					add_option("rb_agency_options",$rb_agency_options_arr);
-				update_option("rb_agency_options",$rb_agency_options_arr);
+				if(!get_option("rb_agency_options")) {
 
-				// Hold the version in a seprate option
-				if(!get_option("rb_agency_version"))
-					add_option("rb_agency_version", $rb_agency_VERSION, '', 'yes');
-				update_option("rb_agency_version", $rb_agency_VERSION);
-
+					// Set Default Options
+					$rb_agency_options_arr = array(
+						"rb_agency_option_agencyname" => "",
+						"rb_agency_option_agencyemail" => "",
+						"rb_agency_option_agencyheader" => "",
+						"rb_agency_option_agencylogo" => "",
+						"rb_agency_option_unittype" => "1",
+						"rb_agency_option_showsocial" => "1",
+						"rb_agency_option_galleryorder" => "1",
+						"rb_agency_option_gallerytype" => "1",
+						"rb_agency_option_layoutprofile" => "0",
+						"rb_agency_option_layoutprofilelist" => "0",
+						"rb_agency_option_profilelist_sortby" => "1",
+						"rb_agency_option_advertise" => "1",
+						"rb_agency_option_privacy" => "0",
+						"rb_agency_option_agencyimagemaxwidth" => "1000",
+						"rb_agency_option_agencyimagemaxheight" => "800",
+						"rb_agency_option_profilenaming" => "0",
+						"rb_agency_option_showcontactpage" =>"1",
+						"rb_agency_option_profiledeletion" => "2",
+						"rb_agency_option_customfield_profilepage" => "1",
+						"rb_agency_option_customfield_searchpage" => "1",
+						"rb_agency_option_customfield_loggedin_all" => "1",
+						"rb_agency_option_customfield_loggedin_admin" => "1"
+						);
+					// Add Options
+					//add_option("rb_agency_options",$rb_agency_options_arr);
+					update_option("rb_agency_options",$rb_agency_options_arr);
+				}
 
 			/*
 			 * License Key
@@ -279,9 +302,10 @@ class RBAgency {
 				global $rb_agency_LICENSE;
 				// Set Constant
 				$license_key = defined("RB_AGENCY_LICENSE") && empty($rb_agency_LICENSE) ? RB_AGENCY_LICENSE : $rb_agency_LICENSE;
-				if(!empty($license_key))
+				if(!empty($license_key)) {
 					// Store Key
 					update_option("rb_agency_license", md5($license_key));
+				}
 
 
 			/*
@@ -336,6 +360,16 @@ class RBAgency {
 					ProfileMediaFeatured INT(10) NOT NULL DEFAULT '0',
 					ProfileMediaOrder VARCHAR(55),
 					PRIMARY KEY (ProfileMediaID)
+					);";
+				dbDelta($sql);
+
+				// Types of Media
+				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_media." (
+					MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
+					MediaCategoryTitle VARCHAR(255),
+					MediaCategoryGender VARCHAR(255),
+					MediaCategoryOrder VARCHAR(255),
+					PRIMARY KEY (MediaCategoryID)
 					);";
 				dbDelta($sql);
 
@@ -483,15 +517,6 @@ class RBAgency {
 					);";
 				dbDelta($sql);
 
-				// Setup > Add to Casting Cart
-				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_mediacategory." (
-					MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
-					MediaCategoryTitle VARCHAR(255),
-					MediaCategoryGender VARCHAR(255),
-					MediaCategoryOrder VARCHAR(255),
-					PRIMARY KEY (MediaCategoryID)
-					);";
-				dbDelta($sql);
 
 
 			/*
@@ -583,11 +608,17 @@ class RBAgency {
 
 		public static function check_update_needed(){
 
-			// Is the verion number newer than the stored upgraded version?
-			if(!get_option("rb_agency_version") || get_option("rb_agency_version") <> rb_agency_VERSION){
-				require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/upgrade.php");
+			// Hold the version in a seprate option
+			if(!get_option("rb_agency_version")) {
+				update_option("rb_agency_version", rb_agency_VERSION);
+			} else {
+				// Version Exists, but is it out of date?
+				if(get_option("rb_agency_version") <> rb_agency_VERSION){
+					require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/upgrade.php");
+				} else {
+					// Namaste, version is number is correct
+				}
 			}
-
 		}
 
 

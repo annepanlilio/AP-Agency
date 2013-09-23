@@ -1,7 +1,9 @@
 <?php
 header("Content-type: text/xml; charset=utf-8");
 
-	$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+
+		$xml .= "<rb_agency>\n";
 
 // Initialize
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
@@ -9,45 +11,46 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 /*
  * Base Plugin
  */
-	if (is_plugin_active('rb-agency/rb-agency.php')) {
-		$xml .= "<rbagency_core>";
-		$xml .= "	<version>";
-		$xml .= "		". get_option("rb_agency_version");
-		$xml .= "	</version>";
-		$xml .= "</rbagency_core>";
-	}
+		$xml .= "<core>\n";
+		$xml .= "	<version>\n";
+		$xml .= "		". get_option("rb_agency_version") ."\n";
+		$xml .= "	</version>\n";
+		$xml .= "</core>\n";
 
 /*
  * Interact Plugin
  */
 	if (is_plugin_active('rb-agency-interact/rb-agency-interact.php')) {
-		$xml .= "<rbagency_interact>";
+		$xml .= "<interact>\n";
 		$xml .= "	<version>";
-		$xml .= "		". get_option("rb_agency_version");
-		$xml .= "	</version>";
-		$xml .= "</rbagency_interact>";
+		$xml .= "		". get_option("rb_agencyinteract_version") ."\n";
+		$xml .= "	</version>\n";
+		$xml .= "</interact>\n";
 	} else {
-		$xml .= "<rbagency_interact>";
-		$xml .= "	<version>";
-		$xml .= "		Not Installed";
-		$xml .= "	</version>";
-		$xml .= "</rbagency_interact>";
+		$xml .= "<interact>\n";
+		$xml .= "	<version>\n";
+		$xml .= "		Not Installed\n";
+		$xml .= "	</version>\n";
+		$xml .= "</interact>\n";
 	}
 
 /*
  * Casting Plugin
  */
 	if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
-		$xml .= "<rbagency_casting>";
-		$xml .= "	<version>";
-		$xml .= "		". get_option("rb_agency_version");
-		$xml .= "	</version>";
-		$xml .= "</rbagency_casting>";
+		$xml .= "<casting>\n";
+		$xml .= "	<version>\n";
+		$xml .= "		". get_option("rb_agency_casting_version") ."\n";
+		$xml .= "	</version>\n";
+		$xml .= "</casting>\n";
 	} else {
-		$xml .= "<rbagency_casting>";
-		$xml .= "	<version>";
-		$xml .= "		Not Installed";
-		$xml .= "	</version>";
-		$xml .= "</rbagency_casting>";
+		$xml .= "<casting>\n";
+		$xml .= "	<version>\n";
+		$xml .= "		Not Installed\n";
+		$xml .= "	</version>\n";
+		$xml .= "</casting>\n";
 	}
+		$xml .= "</rb_agency>\n";
+
+echo $xml;
 ?>
