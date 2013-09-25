@@ -1,7 +1,7 @@
 <div class="wrap">        
     <?php 
     // Include Admin Menu
-    include ("admin-menu.php"); 
+    include ("admin-include-menu.php"); 
 
 
 if($_GET['action']==""){

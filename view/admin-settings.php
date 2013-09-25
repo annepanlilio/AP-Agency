@@ -1,127 +1,195 @@
-<div class="wrap">        
-    <?php 
-    // Include Admin Menu
-    include ("admin-menu.php"); 
+<div class="wrap">
+<?php
 
 global $wpdb;
-// *************************************************************************************************** //
-// Top Menu
 
-    echo "  <p>\n";
-    echo "  	<a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=0\">". __("Overview", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\">". __("Features", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=10\">". __("Style", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\">". __("Profile Types", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  	<a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\">". __("Media Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
-    echo "  </p>\n";
+// Include Admin Menu
+	include (rb_agency_BASEREL ."view/admin-include-menu.php");
 
-if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
-	if($_REQUEST['action'] == 'douninstall') {
-		RBAgency::Uninstall();
+// Call Common Class
+	include(rb_agency_BASEREL ."app/common.class.php");
+
+// Get Current Page
+	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ 
+		$ConfigID = 0;
+	} else {
+		$ConfigID = $_REQUEST['ConfigID']; 
 	}
-}
 
-	echo "<h2>";
-	  if($_GET["ConfigID"]==1){
-		    echo " &raquo; Features";
-	  } elseif($_GET["ConfigID"]==10){
-		    echo " &raquo; Style";
-	  } elseif($_GET["ConfigID"]==5){
-		    echo " &raquo; Gender";
-	  } elseif($_GET["ConfigID"]==6){
-		    echo " &raquo; Profile Categories";
-	  } elseif($_GET["ConfigID"]==7){
-		     echo " &raquo; Custom Fields";
-	  } elseif($_GET["ConfigID"]==8){
-		     echo " &raquo; Media Categories";
-	  }
-	echo "</h2>\n";
+/*
+ * Display Appropriate Page
+ */
+	switch ($ConfigID) {
+		// Overview
+		case 0:
+			echo "<h1>Settings &raquo; Overview</h1>";
+			//return RBAgency_AdminSettings::Overview();
+			break;
 
-if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;} else { $ConfigID=$_REQUEST['ConfigID']; }
+		// Settings
+		case 1:
+			echo "<h1>Settings &raquo; Configuration</h1>";
+			//return RBAgency_AdminSettings::Configuration();
+			break;
+
+		// Style
+		case 2:
+			echo "<h1>Settings &raquo; Style</h1>";
+			//return RBAgency_AdminSettings::Style();
+			break;
+
+		// Data: Gender
+		case 3:
+			echo "<h1>Settings &raquo; Data &raquo; Gender</h1>";
+			//return RBAgency_AdminSettings::DataGender();
+			break;
+
+		// Data: Profile Types
+		case 4:
+			echo "<h1>Settings &raquo; Data &raquo; Profile Types</h1>";
+			//return RBAgency_AdminSettings::DataProfileType();
+			break;
+
+		// Data: Custom Fields
+		case 5:
+			echo "<h1>Settings &raquo; Data &raquo; Custom Fields</h1>";
+			//return RBAgency_AdminSettings::DataCustomFields();
+			break;
+
+		// Data: Media Types
+		case 6:
+			echo "<h1>Settings &raquo; Data &raquo; Media Types</h1>";
+			//return RBAgency_AdminSettings::DataMediaType();
+			break;
+
+		// Data: Media Types
+		case 99:
+			echo "<h1>Settings &raquo; Uninstall</h1>";
+			//return RBAgency_AdminSettings::Uninstall();
+			break;
+
+	}
+
+
+
 if ($ConfigID == 0) {
+?>
+	<div id="welcome-panel" class="welcome-panel">
+		<div class="welcome-panel-content">
+			<div class="welcome-panel-column-container">
+				<div class="welcome-panel-column">
+					<h3><?php echo __("Configuration", rb_agency_TEXTDOMAIN ) ?>:</h3>
+					<ul>
+						<li><a href="?page=<?php echo $_GET["page"]; ?>&ConfigID=1"><strong><?php _e("Settings", rb_agency_TEXTDOMAIN); ?></strong></a> - <?php _e("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN); ?></li>
+						<li><a href="?page=<?php echo $_GET["page"]; ?>&ConfigID=2"><strong><?php _e("Style", rb_agency_TEXTDOMAIN); ?></strong></a> - <?php _e("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN); ?></li>
+					</ul>
+				</div>
+
+				<div class="welcome-panel-column" style="margin-left: 50px;">
+					<h3><?php echo __("Diagnostics", rb_agency_TEXTDOMAIN ) ?>:</h3>
+						<?php
+						echo "No Diagnostic has been run.  Please run now.";
+						// Diagnostic Tests
+						//require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/diagnostic.php");
+
+						// TODO: Add Diagnostic
+						?>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+<?php
 	
-// *************************************************************************************************** //
-// Overview Page
+//*************************************************************************************************** //
+/*
+ * Overview Page
+ */
+
 	// Core Settings
-    echo "<div class=\"boxlinkgroup\">\n";
-    echo "  <h2>". __("Configuration", rb_agency_TEXTDOMAIN) . "</h2>\n";
-    echo "  <p>". __("The following settings modify the core RB Agency settings.", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Features", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Settings", rb_agency_TEXTDOMAIN) . "\">". __("Settings", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Style", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=10\" title=\"". __("Style", rb_agency_TEXTDOMAIN) . "\">". __("Style", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Manage the stylesheet (CSS) controlling the category and profile layouts", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-    echo "</div>\n";
-    echo "<hr />\n";
+	echo "<div class=\"boxlinkgroup\">\n";
+	echo "  <h2>". __("Configuration", rb_agency_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("The following settings modify the core RB Agency settings.", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Features", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Settings", rb_agency_TEXTDOMAIN) . "\">". __("Settings", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    </div>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Style", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=10\" title=\"". __("Style", rb_agency_TEXTDOMAIN) . "\">". __("Style", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage the stylesheet (CSS) controlling the category and profile layouts", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    </div>\n";
+	echo "</div>\n";
+	echo "<hr />\n";
 
 	if (function_exists(rb_agencyinteract_settings)) {
 	// RB Agency Interact Settings
-    echo "<div class=\"boxlinkgroup\">\n";
-    echo "  <h2>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h2>\n";
-    echo "  <p>". __("These settings modify the behavior of the RB Agency Interactive plugin.", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "\">". __("Settings", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
- 
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=12\" title=\"". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "\">". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Manage the subscription rate tiers and descriptions", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
- 
-    echo "</div>\n";
-    echo "<hr />\n";
+	echo "<div class=\"boxlinkgroup\">\n";
+	echo "  <h2>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("These settings modify the behavior of the RB Agency Interactive plugin.", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "\">". __("Settings", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    </div>\n";
+
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=12\" title=\"". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "\">". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage the subscription rate tiers and descriptions", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    </div>\n";
+
+	echo "</div>\n";
+	echo "<hr />\n";
 	}
 	// Drop Down Fields
-    echo "<div class=\"boxlinkgroup\">\n";
-    echo "  <h2>". __("Customize Profile Fields", rb_agency_TEXTDOMAIN) . "</h2>\n";
-    echo "  <p>". __("You have full control over all drop downs and ability to add new custom fields of your own.", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\" title=\"". __("Profile Categories", rb_agency_TEXTDOMAIN) . "\">". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Choose custom category types to classify profiles", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\" title=\"". __("Custom Fields", rb_agency_TEXTDOMAIN) . "\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Add public and private custom fields", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <h3>". __("Gender", rb_agency_TEXTDOMAIN) . "</h3>\n";
-    echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Gender", rb_agency_TEXTDOMAIN) . "\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "      <p>". __("Manage preset Gender choices", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    </div>\n";
-    echo "</div>\n";
-    echo "<hr />\n";
+	echo "<div class=\"boxlinkgroup\">\n";
+	echo "  <h2>". __("Customize Profile Fields", rb_agency_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("You have full control over all drop downs and ability to add new custom fields of your own.", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\" title=\"". __("Profile Categories", rb_agency_TEXTDOMAIN) . "\">". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Choose custom category types to classify profiles", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    </div>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\" title=\"". __("Custom Fields", rb_agency_TEXTDOMAIN) . "\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Add public and private custom fields", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    </div>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Gender", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Gender", rb_agency_TEXTDOMAIN) . "\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage preset Gender choices", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    </div>\n";
+	echo "</div>\n";
+	echo "<hr />\n";
 
 	// Uninstall
-    echo "<div class=\"boxlinkgroup\">\n";
-    echo "  <h2>". __("Uninstall", rb_agency_TEXTDOMAIN) . "</h2>\n";
-    echo "  <p>". __("Uninstall RB Agency software and completely remove all data", rb_agency_TEXTDOMAIN) . "</p>\n";
-    echo "    <div class=\"boxlink\">\n";
-    echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Uninstall", rb_agency_TEXTDOMAIN) . "\">". __("Uninstall", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-    echo "    </div>\n";
-    echo "</div>\n";
+	echo "<div class=\"boxlinkgroup\">\n";
+	echo "  <h2>". __("Uninstall", rb_agency_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("Uninstall RB Agency software and completely remove all data", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Uninstall", rb_agency_TEXTDOMAIN) . "\">". __("Uninstall", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "    </div>\n";
+	echo "</div>\n";
 
 }
 elseif ($ConfigID == 1) {
-// *************************************************************************************************** //
-// Manage Settings
-    echo "<h3>". __("Settings", rb_agency_TEXTDOMAIN) . "</h3>\n";
-		echo "<form method=\"post\" action=\"options.php\">\n";
-		settings_fields( 'rb-agency-settings-group' ); 
-		//do_settings_fields( 'rb-agency-settings-group' );
+//*************************************************************************************************** //
+/*
+ * Manage Settings
+ */
+
+	/*
+	 * Declare Values
+	 */
+		// Get Group
 		$rb_agency_options_arr = get_option('rb_agency_options');
-		
+
+		// Set Default Values
 		$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 			if (empty($rb_agency_value_agencyname)) { $rb_agency_value_agencyname = get_bloginfo('name'); }
 		$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
@@ -131,279 +199,334 @@ elseif ($ConfigID == 1) {
 		$rb_agency_value_maxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
 			if (empty($rb_agency_value_maxheight)) { $rb_agency_value_maxheight = "800"; }
 		$rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
-			if (empty($rb_agency_option_locationcountry)) { $rb_agency_option_locationcountry = "USA"; }
+			if (empty($rb_agency_option_locationcountry)) { $rb_agency_option_locationcountry = "US"; }
 		$rb_agency_option_profilelist_perpage = $rb_agency_options_arr['rb_agency_option_profilelist_perpage'];
 			if (empty($rb_agency_option_profilelist_perpage)) { $rb_agency_option_profilelist_perpage = "20"; }
 		$rb_agency_option_persearch = $rb_agency_options_arr['rb_agency_option_persearch'];
 			if (empty($rb_agency_option_persearch)) { $rb_agency_option_persearch = "100"; }
 		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
 			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "0"; }
-		
 		$rb_agency_option_profilelist_favorite = $rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
 			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
 		$rb_agency_option_profilelist_castingcart = $rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
 			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }
-	
 		$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
 			if (empty($rb_agency_option_privacy)) { $rb_agency_option_privacy = "0"; }
-		
-		 echo "<table class=\"form-table\">\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Database Version', rb_agency_TEXTDOMAIN); echo "</th>\n";
-		 echo "   <td><input name=\"rb_agency_version\" value=\"". rb_agency_VERSION ."\" disabled /></td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Agency Details', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Agency Name', rb_agency_TEXTDOMAIN); echo "</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyname]\" value=\"". $rb_agency_value_agencyname ."\" /></td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Agency Email', rb_agency_TEXTDOMAIN); echo "</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyemail]\" value=\"". $rb_agency_value_agencyemail ."\" /></td>\n";
-		 echo " </tr>\n";
-		 
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Location Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Default Country', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_locationcountry]\" value=\"". $rb_agency_option_locationcountry ."\" /></td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Server Timezone', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_locationtimezone]\">\n";
-		 echo "       <option value=\"+12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+12",false) ."> UTC+12</option>\n";
-		 echo "       <option value=\"+11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+11",false) ."> UTC+11</option>\n";
-		 echo "       <option value=\"+10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+10",false) ."> UTC+10</option>\n";
-		 echo "       <option value=\"+9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+9",false) ."> UTC+9</option>\n";
-		 echo "       <option value=\"+8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+8",false) ."> UTC+8</option>\n";
-		 echo "       <option value=\"+7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+7",false) ."> UTC+7</option>\n";
-		 echo "       <option value=\"+6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+6",false) ."> UTC+6</option>\n";
-		 echo "       <option value=\"+5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+5",false) ."> UTC+5</option>\n";
-		 echo "       <option value=\"+4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+4",false) ."> UTC+4</option>\n";
-		 echo "       <option value=\"+3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+3",false) ."> UTC+3</option>\n";
-		 echo "       <option value=\"+2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+2",false) ."> UTC+2</option>\n";
-		 echo "       <option value=\"+1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+1",false) ."> UTC+1</option>\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "0",false) ."> UTC 0</option>\n";
-		 echo "       <option value=\"-1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-1",false) ."> UTC-1</option>\n";
-		 echo "       <option value=\"-2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-2",false) ."> UTC-2</option>\n";
-		 echo "       <option value=\"-3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-3",false) ."> UTC-3</option>\n";
-		 echo "       <option value=\"-4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-4",false) ."> UTC-4</option>\n";
-		 echo "       <option value=\"-5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-5",false) ."> UTC-5</option>\n";
-		 echo "       <option value=\"-6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-6",false) ."> UTC-6</option>\n";
-		 echo "       <option value=\"-7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-7",false) ."> UTC-7</option>\n";
-		 echo "       <option value=\"-8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-8",false) ."> UTC-8</option>\n";
-		 echo "       <option value=\"-9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-9",false) ."> UTC-9</option>\n";
-		 echo "       <option value=\"-10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-10",false) ."> UTC-10</option>\n";
-		 echo "       <option value=\"-11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-11",false) ."> UTC-11</option>\n";
-		 echo "       <option value=\"-12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-12",false) ."> UTC-12</option>\n";
-		 echo "     </select> (<a href=\"http://www.worldtimezone.com/index24.php\" target=\"_blank\">Find</a>)\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 
-		 
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Unit Type', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_unittype]\">\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 1,false) ."> ". __("Imperial", rb_agency_TEXTDOMAIN) ." (ft/in/lb)</option>\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 0,false) ."> ". __("Metric", rb_agency_TEXTDOMAIN) ." (cm/kg)</option>\n";
-		 echo "     </select>\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile List Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Display', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_count'], 1,false)."/> ". __("Show Model Count", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sortby'], 1,false)."/> ". __("Show Sort Options", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'], 1,false)."/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_favorite'], 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'], 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'], 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'], 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_bday'], 1,false)."/> ". __("Show Birthday With Months", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'], 1,false)."/> ". __("Show Print and Download PDF Link", rb_agency_TEXTDOMAIN) ."<br />\n";	
-                 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_subscription'], 1,false)."/> ". __("Show Manage Your Subscription", rb_agency_TEXTDOMAIN) ."<br />\n";	
-                 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Profiles Per Page', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_profilelist_perpage]\" value=\"". $rb_agency_option_profilelist_perpage ."\" /></td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Profiles Max Per Search', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_persearch]\" value=\"". $rb_agency_option_persearch ."\" /></td>\n";
-		 echo " </tr>\n";
-                 
- 		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Allow Profile Deletion', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Delete Options', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 1,false)."/> ". __("No", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"2\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 2,false)."/> ". __("Yes (Allow USers to delete)", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"3\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 3,false)."/> ". __("Archive Only (Users can remove themselves as active but profile remains)", rb_agency_TEXTDOMAIN) ."<br />\n";
-                 echo "   </td>\n";
-		 echo " </tr>\n";		 
-		                 
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile View Options', rb_agency_TEXTDOMAIN) ."</h3></th>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Path to Logo', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencylogo]\" value=\"". $rb_agency_options_arr['rb_agency_option_agencylogo'] ."\" /></td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Email Header', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyheader]\" value=\"". $rb_agency_options_arr['rb_agency_option_agencyheader'] ."\" /></td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Resize Images', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>";
-					 _e('Maximum Width', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" />\n";
-					 _e('Maximum Height', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Profile Name Format', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_profilenaming]\">\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 0,false) ."> ". __("First Last", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 1,false) ."> ". __("First L", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 4,false) ."> ". __("First", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 5,false) ."> ". __("Last", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 2,false) ."> ". __("Display Name", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 3,false) ."> ". __("Auto Generated Record ID", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "     </select>\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Profile Layout Style', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofile]\">\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 0,false) ."> ". __("Layout 00 - Profile View with Thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
-				if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout6.php")) {
-		 echo "       <option value=\"6\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 6,false) ."> ". __("Layout 06 - Large featured image and scrolling thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
-				}
-				if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout7.php")) {
-		 echo "       <option value=\"7\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 7,false) ."> ". __("Layout 07 - Custom Layout 7", rb_agency_TEXTDOMAIN) ."</option>\n";
-				}
-				if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout8.php")) {
-		 echo "       <option value=\"8\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 8,false) ."> ". __("Layout 08 - Photo Book", rb_agency_TEXTDOMAIN) ."</option>\n";
-				}
-				if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout9.php")) {
-		 echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 9,false) ."> ". __("Layout 09 - Large Scroller", rb_agency_TEXTDOMAIN) ."</option>\n";
-				}
-		 echo "     </select>\n";
-		 echo "   </td>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Profile List Style', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist]\">\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 0,false) ."> ". __("Name Over Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 1,false) ."> ". __("Name Under Image with Color", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 2,false) ."> ". __("Name Under Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "     </select>\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\" style=\"display:none\">\n";
-		 echo "   <th scope=\"row\">". __('Image Gallery Type', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_gallerytype]\">\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 1,false) ."> ". __("Slimbox Popup", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 2,false) ."> ". __("Pretty Photo", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 9,false) ."> ". __("No Gallery, Deregister jQuery", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 0,false) ."> ". __("No Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "     </select>\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Image Gallery Sort Order', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_galleryorder]\">\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_galleryorder'], 1,false) ."> ". __("Show most recently uploaded first", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_galleryorder'], 0,false) ."> ". __("Show chronological order", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "     </select>\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Privacy Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <select name=\"rb_agency_options[rb_agency_option_privacy]\">\n";
-		 echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", rb_agency_TEXTDOMAIN) ."</option>\n";
-		 echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged as "Client" to view model list and profile information', rb_agency_TEXTDOMAIN) ."</option>\n";
-                 echo "     </select>\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Show Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_advertise'], 1,false)."/> Remove Updates on Dashboard<br />\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-		 
-		 //Commented by @Gaurav as We will be creating this as a separate plugin
-		 // Member Contact form link
-		 /*echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Contact Options', rb_agency_TEXTDOMAIN) ."</h3></th>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Contact Page Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"2\" ".checked($rb_agency_option_showcontactpage, 2,false)."/>Disable Contact<br />\n";
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" ".checked($rb_agency_option_showcontactpage, 1,false)."/>Email to both the model and the site owner<br />\n";
-		 echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" ".checked($rb_agency_option_showcontactpage, "0",false)."/>Only email to the site owner, not to the model<br/>\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";*/
-		 // comment by @Gaurav ends
-		 
+		// Profile Search Options
+		$rb_agency_option_formshow_location = $rb_agency_options_arr['rb_agency_option_formshow_location'];
+			if (empty($rb_agency_option_formshow_location)) { $rb_agency_option_formshow_location = "1"; }
+		$rb_agency_option_formshow_name = $rb_agency_options_arr['rb_agency_option_formshow_name'];
+			if (empty($rb_agency_option_formshow_name)) { $rb_agency_option_formshow_name = "1"; }
+		$rb_agency_option_formshow_type = $rb_agency_options_arr['rb_agency_option_formshow_type'];
+			if (empty($rb_agency_option_formshow_type)) { $rb_agency_option_formshow_type = "1"; }
+		$rb_agency_option_formshow_gender = $rb_agency_options_arr['rb_agency_option_formshow_gender'];
+			if (empty($rb_agency_option_formshow_gender)) { $rb_agency_option_formshow_gender = "1"; }
+		$rb_agency_option_formshow_age = $rb_agency_options_arr['rb_agency_option_formshow_age'];
+			if (empty($rb_agency_option_formshow_age)) { $rb_agency_option_formshow_age = "1"; }
+
+
+
+
+	/*
+	 * Form
+	 */
+		echo "<form method=\"post\" action=\"options.php\">\n";
+		settings_fields( 'rb-agency-settings-group' ); 
+		echo "<table class=\"form-table\">\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Website Details', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Agency Name', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyname]\" value=\"". $rb_agency_value_agencyname ."\" /></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Agency Email', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyemail]\" value=\"". $rb_agency_value_agencyemail ."\" /></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Path to Logo', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencylogo]\" value=\"". $rb_agency_options_arr['rb_agency_option_agencylogo'] ."\" /></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Email Header', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyheader]\" value=\"". $rb_agency_options_arr['rb_agency_option_agencyheader'] ."\" /></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Show Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_advertise'], 1,false)."/> Remove Updates on Dashboard<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";		/*
+		 * Agency Internationalization
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Internationalization', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Default Country', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_locationcountry]\">\n";
+					$country_array = RBAgency_Common::Data_Country();
+					foreach ($country_array AS $country_code => $country_name) {
+		echo "       <option value=\"". $country_code ."\" ". selected($country_code, $rb_agency_option_locationcountry,false) ."> ". $country_name ."</option>\n";
+					}
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Server Timezone', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_locationtimezone]\">\n";
+		echo "       <option value=\"+12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+12",false) ."> UTC+12</option>\n";
+		echo "       <option value=\"+11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+11",false) ."> UTC+11</option>\n";
+		echo "       <option value=\"+10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+10",false) ."> UTC+10</option>\n";
+		echo "       <option value=\"+9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+9",false) ."> UTC+9</option>\n";
+		echo "       <option value=\"+8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+8",false) ."> UTC+8</option>\n";
+		echo "       <option value=\"+7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+7",false) ."> UTC+7</option>\n";
+		echo "       <option value=\"+6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+6",false) ."> UTC+6</option>\n";
+		echo "       <option value=\"+5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+5",false) ."> UTC+5</option>\n";
+		echo "       <option value=\"+4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+4",false) ."> UTC+4</option>\n";
+		echo "       <option value=\"+3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+3",false) ."> UTC+3</option>\n";
+		echo "       <option value=\"+2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+2",false) ."> UTC+2</option>\n";
+		echo "       <option value=\"+1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+1",false) ."> UTC+1</option>\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "0",false) ."> UTC 0</option>\n";
+		echo "       <option value=\"-1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-1",false) ."> UTC-1</option>\n";
+		echo "       <option value=\"-2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-2",false) ."> UTC-2</option>\n";
+		echo "       <option value=\"-3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-3",false) ."> UTC-3</option>\n";
+		echo "       <option value=\"-4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-4",false) ."> UTC-4</option>\n";
+		echo "       <option value=\"-5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-5",false) ."> UTC-5</option>\n";
+		echo "       <option value=\"-6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-6",false) ."> UTC-6</option>\n";
+		echo "       <option value=\"-7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-7",false) ."> UTC-7</option>\n";
+		echo "       <option value=\"-8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-8",false) ."> UTC-8</option>\n";
+		echo "       <option value=\"-9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-9",false) ."> UTC-9</option>\n";
+		echo "       <option value=\"-10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-10",false) ."> UTC-10</option>\n";
+		echo "       <option value=\"-11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-11",false) ."> UTC-11</option>\n";
+		echo "       <option value=\"-12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-12",false) ."> UTC-12</option>\n";
+		echo "     </select> (<a href=\"http://www.worldtimezone.com/index24.php\" target=\"_blank\">Find</a>)\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Unit Type', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_unittype]\">\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 1,false) ."> ". __("Imperial", rb_agency_TEXTDOMAIN) ." (ft/in/lb)</option>\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 0,false) ."> ". __("Metric", rb_agency_TEXTDOMAIN) ." (cm/kg)</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		/*
+		 * Profile Display
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile List Options', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Display Options', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_count'], 1,false)."/> ". __("Show Model Count", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sortby'], 1,false)."/> ". __("Show Sort Options", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'], 1,false)."/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_favorite'], 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'], 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'], 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'], 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_bday'], 1,false)."/> ". __("Show Birthday With Months", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'], 1,false)."/> ". __("Show Print and Download PDF Link", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_subscription'], 1,false)."/> ". __("Show Manage Your Subscription", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profiles Per Page', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_profilelist_perpage]\" value=\"". $rb_agency_option_profilelist_perpage ."\" /></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profile List Style', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist]\">\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 0,false) ."> ". __("Name Over Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 1,false) ."> ". __("Name Under Image with Color", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 2,false) ."> ". __("Name Under Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		/*
+		 * Profile Search
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile Search Options', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Maximum Records Returned', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_persearch]\" value=\"". $rb_agency_option_persearch ."\" /></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Search Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_name]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_name'], 1,false)."/> Show Name Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_type]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_type'], 1,false)."/> Show Type Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_location]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_location'], 1,false)."/> Show Location Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_gender]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_gender'], 1,false)."/> Show Gender Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_age]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_age'], 1,false)."/> Show Age Search Fields<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		/*
+		 * Profile View
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile View Options', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Resize Images', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+				 _e('Maximum Width', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" />\n";
+				 _e('Maximum Height', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profile Name Format', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_profilenaming]\">\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 0,false) ."> ". __("First Last", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 1,false) ."> ". __("First L", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 4,false) ."> ". __("First", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 5,false) ."> ". __("Last", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 2,false) ."> ". __("Display Name", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 3,false) ."> ". __("Auto Generated Record ID", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profile Layout Style', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofile]\">\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 0,false) ."> ". __("Layout 00 - Profile View with Thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
+			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout6.php")) {
+		echo "       <option value=\"6\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 6,false) ."> ". __("Layout 06 - Large featured image and scrolling thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
+			}
+			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout7.php")) {
+		echo "       <option value=\"7\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 7,false) ."> ". __("Layout 07 - Custom Layout 7", rb_agency_TEXTDOMAIN) ."</option>\n";
+			}
+			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout8.php")) {
+		echo "       <option value=\"8\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 8,false) ."> ". __("Layout 08 - Photo Book", rb_agency_TEXTDOMAIN) ."</option>\n";
+			}
+			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout9.php")) {
+		echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 9,false) ."> ". __("Layout 09 - Large Scroller", rb_agency_TEXTDOMAIN) ."</option>\n";
+			}
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\" style=\"display:none\">\n";
+		echo "   <th scope=\"row\">". __('Image Gallery Type', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_gallerytype]\">\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 1,false) ."> ". __("Slimbox Popup", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 2,false) ."> ". __("Pretty Photo", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 9,false) ."> ". __("No Gallery, Deregister jQuery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 0,false) ."> ". __("No Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Image Gallery Sort Order', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_galleryorder]\">\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_galleryorder'], 1,false) ."> ". __("Show most recently uploaded first", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_galleryorder'], 0,false) ."> ". __("Show chronological order", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Privacy Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_privacy]\">\n";
+		echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged as "Client" to view model list and profile information', rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		/*
+		 * Interact Settings
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Interact Settings', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Delete Options', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 1,false)."/> ". __("No", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"2\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 2,false)."/> ". __("Yes (Allow users to perminently delete their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"3\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 3,false)."/> ". __("Archive Only (Allow users to hide their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
+
+		//Commented by @Gaurav as We will be creating this as a separate plugin
+		// Member Contact form link
+		/*echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Contact Options', rb_agency_TEXTDOMAIN) ."</h3></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Contact Page Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"2\" ".checked($rb_agency_option_showcontactpage, 2,false)."/>Disable Contact<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" ".checked($rb_agency_option_showcontactpage, 1,false)."/>Email to both the model and the site owner<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"0\" ".checked($rb_agency_option_showcontactpage, "0",false)."/>Only email to the site owner, not to the model<br/>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";*/
+		// comment by @Gaurav ends
+
 		/*####### HIDE THIS OPTION FOR THE MEAN TIME #### 
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Override Contact Page Path', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_urlcontact]\" value=\"". $rb_agency_options_arr['rb_agency_option_agency_urlcontact'] ."\" /></td>\n";
-		 echo " </tr>\n";
-		 ################/*
-		 
-    /*############# hide Profile Custom Fields Options - FOR THE MEAN TIME######################
-          // Profile Custom Fields Options
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
-		 echo " </tr>\n";
-		 echo " <tr valign=\"top\">\n";
-		 echo "   <th scope=\"row\">". __('Show Custom Fields on', rb_agency_TEXTDOMAIN) ."</th>\n";
-		 echo "   <td>\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_profilepage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_profilepage'], 1,false)."/> ". __("Profile Page", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_searchpage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_searchpage'], 1,false)."/> ". __("Search Results Page", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_all]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_all'], 1,false)."/> ". __("User must be Logged In to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1,false)."/> ". __("User must be an Admin to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
-		 echo "   </td>\n";
-		 echo " </tr>\n";
-	      
-	##### HIDE */
-	
-		 echo "</table>\n";
-		 echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
-		  echo "<input type=\"hidden\" name=\"rb_agency_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
-		 echo "</form>\n";
-}	 // End	
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Override Contact Page Path', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_urlcontact]\" value=\"". $rb_agency_options_arr['rb_agency_option_agency_urlcontact'] ."\" /></td>\n";
+		echo " </tr>\n";
+		################/*
+
+		/*############# hide Profile Custom Fields Options - FOR THE MEAN TIME######################
+		// Profile Custom Fields Options
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Show Custom Fields on', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_profilepage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_profilepage'], 1,false)."/> ". __("Profile Page", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_searchpage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_searchpage'], 1,false)."/> ". __("Search Results Page", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_all]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_all'], 1,false)."/> ". __("User must be Logged In to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1,false)."/> ". __("User must be an Admin to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
+		##### HIDE */
+
+		echo "</table>\n";
+		echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
+		echo "<input type=\"hidden\" name=\"rb_agency_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
+		echo "</form>\n";
+
+
+
+}
 elseif ($ConfigID == 11) {
-// *************************************************************************************************** //
-// Manage Settings
+//*************************************************************************************************** //
+/*
+ * Manage Settings
+ */
+
+	/*
+	 * Form
+	 */
+
+
     echo "<h3>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h3>\n";
 		echo "<form method=\"post\" action=\"options.php\">\n";
 		settings_fields( 'rb-agencyinteract-settings-group' ); 
@@ -536,11 +659,17 @@ elseif ($ConfigID == 11) {
 		echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
 		 
 		 echo "</form>\n";
-}	 // End	
-// *************************************************************************************************** //
-// Setup Custom Fields
+
+
+
+}
 elseif ($ConfigID == 12) {
-	
+//*************************************************************************************************** //
+/*
+ * TODO REMOVE
+ */
+
+
 	/** Identify Labels **/
 	define("LabelPlural", __("Subscription Tiers", rb_agency_TEXTDOMAIN));
 	define("LabelSingular", __("Subscription Tier", rb_agency_TEXTDOMAIN));
@@ -801,20 +930,29 @@ elseif ($ConfigID == 12) {
 		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
 		
-   		echo "</form>\n";
-}	 // End	
-elseif ($ConfigID == 10) {
-// *************************************************************************************************** //
-// Manage Style
+		echo "</form>\n";
+
+
+
+
+}
+elseif ($ConfigID == 2) {
+//*************************************************************************************************** //
+/*
+ * Manage Style
+ */
+
 	// Get the file
 	$rb_agency_stylesheet = rb_agency_BASEREL ."theme/style.css";
-	
+
+	// Update File
 	if ($_POST["action"] == "saveChanges") {
 		$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"w") or exit("<p>Unable to open file to write!  Please edit via FTP</p>");
 		$rb_agency_stylesheet_string = stripslashes($_POST["rb_agency_stylesheet_string"]);
 		fwrite($rb_agency_stylesheet_file,$rb_agency_stylesheet_string,strlen($rb_agency_stylesheet_string));
 	}
-	
+
+	// Read the File
 	if (file_exists($rb_agency_stylesheet)) {
 		//echo "File Exists";
 	} else { // File Does Not Exist
@@ -848,19 +986,28 @@ elseif ($ConfigID == 10) {
 	echo "		<input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "		<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes'); echo "\" />\n";
 	echo "		</form>\n";
-}	 // End	
-// *************************************************************************************************** //
-// Setup Gender
-elseif ($ConfigID == 5) {
-	
-	/** Identify Labels **/
+
+
+
+}
+elseif ($ConfigID == 3) {
+//*************************************************************************************************** //
+/*
+ * Manage Style
+ */
+
+	// Identify Labels
 	define("LabelPlural", __("Gender Types", rb_agency_TEXTDOMAIN));
 	define("LabelSingular", __("Gender Type", rb_agency_TEXTDOMAIN));
-  /* Initial Registration [RESPOND TO POST] ***********/ 
-  if ( isset($_POST['action']) ) {
-	
-		$GenderID 	= $_POST['GenderID'];
-		$GenderTitle 	= $_POST['GenderTitle'];
+
+	/*
+	 * Save Record
+	 */
+	if ( isset($_POST['action']) ) {
+
+		$GenderID = $_POST['GenderID'];
+		$GenderTitle = $_POST['GenderTitle'];
+
 		// Error checking
 		$error = "";
 		$have_error = false;
@@ -868,24 +1015,24 @@ elseif ($ConfigID == 5) {
 			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
+
 		$action = $_POST['action'];
 		switch($action) {
-	
+
 		// Add
 		case 'addRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
-		
 				// Create Record
 				$insert = "INSERT INTO " . table_agency_data_gender . " (GenderTitle) VALUES ('" . $wpdb->escape($GenderTitle) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
-				
+
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>added</strong> successfully! You may now %1$s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 			}
 		break;
-	
+
 		// Manage
 		case 'editRecord':
 			if($have_error){
@@ -918,53 +1065,67 @@ elseif ($ConfigID == 5) {
 			  } // it was numeric
 			} // for each
 		break;
-		
+
 		} // Switch
-		
-  } // Action Post
-  elseif ($_GET['action'] == "deleteRecord") {
-	
-	$GenderID = $_GET['GenderID'];
-	  if (is_numeric($GenderID)) {
-		// Verify Record
-		$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
-		$resultsDelete = mysql_query($queryDelete);
-		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-	
-			// Remove Record
-			$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
-			$results = $wpdb->query($delete);
-			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+
+
+	} elseif ($_GET['action'] == "deleteRecord") {
+	// Delete Record
+
+		$GenderID = $_GET['GenderID'];
+		if (is_numeric($GenderID)) {
+			// Verify Record
+			$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
+			$resultsDelete = mysql_query($queryDelete);
+			while ($dataDelete = mysql_fetch_array($resultsDelete)) {
+
+				// Remove Record
+				$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
+				$results = $wpdb->query($delete);
 				
-		} // is there record?
-	  } // it was numeric
-  }
-  elseif ($_GET['action'] == "editRecord") {
+				echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+					
+			} // is there record?
+		} // it was numeric
+
+	/*
+	 * Edit Record
+	 */
+	} elseif ($_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$GenderID = $_GET['GenderID'];
-		
+
 		if ( $GenderID > 0) {
 			$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID='$GenderID'";
 			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
 			$count = mysql_num_rows($results);
 			while ($data = mysql_fetch_array($results)) {
-				$GenderID	=$data['GenderID'];
-				$GenderTitle	=stripslashes($data['GenderTitle']);
-			} 
-		
+				$GenderID =$data['GenderID'];
+				$GenderTitle =stripslashes($data['GenderTitle']);
+			}
+
 			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
 			echo "<p>". sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
 		}
-  } else {
-		
-			$GenderID		= 0;
-			$GenderTitle	="";
-			$GenderTag	="";
-			
+
+	/*
+	 * Create New
+	 */
+	} else {
+
+			$GenderID = 0;
+			$GenderTitle ="";
+			$GenderTag ="";
+
 			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
-  }
+	}
+
+
+	/*
+	 * Input Data
+	 */
+
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
@@ -991,84 +1152,85 @@ elseif ($ConfigID == 5) {
 	echo "</form>\n";
 	
 	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
+
+	/******** Sort Order ************/
+	$sort = "";
+	if (isset($_GET['sort']) && !empty($_GET['sort'])){
+		$sort = $_GET['sort'];
+	}
+	else {
+		$sort = "GenderTitle";
+	}
 	
-		/******** Sort Order ************/
-		$sort = "";
-		if (isset($_GET['sort']) && !empty($_GET['sort'])){
-			$sort = $_GET['sort'];
-		}
-		else {
-			$sort = "GenderTitle";
-		}
+	/******** Direction ************/
+	$dir = "";
+	if (isset($_GET['dir']) && !empty($_GET['dir'])){
+		$dir = $_GET['dir'];
+		if ($dir == "desc" || !isset($dir) || empty($dir)){
+		   $sortDirection = "asc";
+		   } else {
+		   $sortDirection = "desc";
+		} 
+	} else {
+		   $sortDirection = "desc";
+		   $dir = "asc";
+	}
+
+	echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
+	echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
+	echo "<thead>\n";
+	echo "    <tr class=\"thead\">\n";
+	echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+	echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=GenderTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+	echo "    </tr>\n";
+	echo "</thead>\n";
+	echo "<tfoot>\n";
+	echo "    <tr class=\"thead\">\n";
+	echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
+	echo "    </tr>\n";
+	echo "</tfoot>\n";
+	echo "<tbody>\n";
+
+	$query = "SELECT * FROM ". table_agency_data_gender ." ORDER BY $sort $dir";
+	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+	$count = mysql_num_rows($results);
+	while ($data = mysql_fetch_array($results)) {
+		$GenderID	=$data['GenderID'];
 		
-		/******** Direction ************/
-		$dir = "";
-		if (isset($_GET['dir']) && !empty($_GET['dir'])){
-			$dir = $_GET['dir'];
-			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
-			} 
-		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
-		}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
-		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
-		echo "<thead>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=GenderTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "    </tr>\n";
-		echo "</thead>\n";
-		echo "<tfoot>\n";
-		echo "    <tr class=\"thead\">\n";
-		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "    </tr>\n";
-		echo "</tfoot>\n";
-		echo "<tbody>\n";
-	
-		$query = "SELECT * FROM ". table_agency_data_gender ." ORDER BY $sort $dir";
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
-			$GenderID	=$data['GenderID'];
-			
-			
-		echo "    <tr>\n";
-		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $GenderID ."\" name=\"". $GenderID ."\" value=\"". $GenderID ."\" /></th>\n";
-		echo "        <td class=\"column\">". stripslashes($data['GenderTitle']) ."\n";
-		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
-		echo "          </div>\n";
-		echo "        </td>\n";
-		echo "    </tr>\n";
-		}
-		mysql_free_result($results);
-		if ($count < 1) {
-		echo "    <tr>\n";
-		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
-		echo "    </tr>\n";
-		}
-		echo "</tbody>\n";
-		echo "</table>\n";
-		echo "<p class=\"submit\">\n";
-		echo "    <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "</p>\n";
 		
-   		echo "</form>\n";
-}	 // End	
+	echo "    <tr>\n";
+	echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $GenderID ."\" name=\"". $GenderID ."\" value=\"". $GenderID ."\" /></th>\n";
+	echo "        <td class=\"column\">". stripslashes($data['GenderTitle']) ."\n";
+	echo "          <div class=\"row-actions\">\n";
+	echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+	echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+	echo "          </div>\n";
+	echo "        </td>\n";
+	echo "    </tr>\n";
+	}
+	mysql_free_result($results);
+	if ($count < 1) {
+	echo "    <tr>\n";
+	echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
+	echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
+	echo "    </tr>\n";
+	}
+	echo "</tbody>\n";
+	echo "</table>\n";
+	echo "<p class=\"submit\">\n";
+	echo "    <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
+	echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
+	echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+	echo "</p>\n";
+	
+	echo "</form>\n";
+
+
+
+} elseif ($ConfigID == 4) {
 // *************************************************************************************************** //
-// Setup Profile Categories
-elseif ($ConfigID == 6) {
-	
+// Setup Profile Categories	
 	/** Identify Labels **/
 	define("LabelPlural", __("Profile Types", rb_agency_TEXTDOMAIN));
 	define("LabelSingular", __("Profile Type", rb_agency_TEXTDOMAIN));
@@ -1293,27 +1455,34 @@ elseif ($ConfigID == 6) {
 		
    		echo "</form>\n";
 }	 // End	
+
+
+
+
 // *************************************************************************************************** //
 // Setup Custom Fields
-elseif ($ConfigID == 7) {
+
+
+
+
+elseif ($ConfigID == 5) {
 	/** Identify Labels **/
 	define("LabelPlural", __("Custom Fields", rb_agency_TEXTDOMAIN));
 	define("LabelSingular", __("Custom Field", rb_agency_TEXTDOMAIN));
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 	
-  /* Initial Registration [RESPOND TO POST] ***********/ 
-  if ( isset($_POST['action']) ) {
-	
-   
-		$ProfileCustomID 			= $_POST['ProfileCustomID'];
-		$ProfileCustomTitle 		= $_POST['ProfileCustomTitle'];
-		$ProfileCustomType 			= $_POST['ProfileCustomType'];
+	/* Initial Registration [RESPOND TO POST] ***********/ 
+	if ( isset($_POST['action']) ) {
+
+		$ProfileCustomID			= $_POST['ProfileCustomID'];
+		$ProfileCustomTitle			= $_POST['ProfileCustomTitle'];
+		$ProfileCustomType			= $_POST['ProfileCustomType'];
 		$ProfileCustomOptions 		= $_POST['ProfileCustomOptions'];
 		$ProfileCustomView 			= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
-	    $ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
+		$ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= (int)$_POST['ProfileCustomShowLogged'];
 		$ProfileCustomShowRegistration= (int)$_POST['ProfileCustomShowRegistration'];
@@ -1323,32 +1492,31 @@ elseif ($ConfigID == 7) {
 		/*
 		 * Set profile types here
 		 */
-		 
+
 		$get_types = "SELECT * FROM ". table_agency_data_type;
-						
 		$result = mysql_query($get_types);
-						
 		while ( $typ = mysql_fetch_array($result)){
-                  $t = trim($typ['DataTypeTitle']);
-				  $t = str_replace(' ', '_', $t);
-			      $name = 'ProfileType' . $t; 
-				  $$name = (int) $_POST['ProfileType' . $t]; 
-		} 		
+			$t = trim($typ['DataTypeTitle']);
+			$t = str_replace(' ', '_', $t);
+			$name = 'ProfileType' . $t; 
+			$$name = (int) $_POST['ProfileType' . $t]; 
+		}
 
 		//adjustment in making the visibility fields into a checkbox
-		if($ProfileCustomPrivacy==3){   
-		   	$ProfileCustomShowLogged = "0";  
+		if($ProfileCustomPrivacy==3){
+			$ProfileCustomShowLogged = "0";
 			$ProfileCustomShowAdmin  = "0";
 		}elseif($ProfileCustomPrivacy==2){
 			$ProfileCustomShowLogged = "0";
 			$ProfileCustomShowAdmin  = "1";
 		}else{
 			$ProfileCustomShowLogged = "1";
-			$ProfileCustomShowAdmin  = "0";			
+			$ProfileCustomShowAdmin  = "0";
 		}
-        $error = "";	
+
+		$error = "";
 		if($ProfileCustomType == 1){ //Text
-			 //...
+			//...
 		} elseif ($ProfileCustomType == 3){ //Dropdown
 			 $label_option ="";
 			 $option = "";
@@ -1372,7 +1540,7 @@ elseif ($ConfigID == 7) {
 			}
 			$ProfileCustomOptions = $label_option.$label_option2; 
 		}elseif($ProfileCustomType == 4){ //TextArea
-		  	$ProfileCustomOptions = $_POST["ProfileCustomOptions"];
+			$ProfileCustomOptions = $_POST["ProfileCustomOptions"];
 		}elseif($ProfileCustomType == 5){ //Checkbox
 			$pos = 0;
 			foreach($_POST["label"] as $key => $val){
@@ -1679,35 +1847,34 @@ elseif ($ConfigID == 7) {
 			$count = mysql_num_rows($results);
 			while ($data = mysql_fetch_array($results)) {
 				$ProfileCustomID			=	$data['ProfileCustomID'];
-				$ProfileCustomTitle		=	stripslashes($data['ProfileCustomTitle']);
-				$ProfileCustomType		=	$data['ProfileCustomType'];
+				$ProfileCustomTitle			=	stripslashes($data['ProfileCustomTitle']);
+				$ProfileCustomType			=	$data['ProfileCustomType'];
 				$ProfileCustomOptions		=	$data['ProfileCustomOptions'];
-				$ProfileCustomView		=	$data['ProfileCustomView'];
-				$ProfileCustomOrder		=	$data['ProfileCustomOrder'];
+				$ProfileCustomView			=	$data['ProfileCustomView'];
+				$ProfileCustomOrder			=	$data['ProfileCustomOrder'];
 				$ProfileCustomShowGender	=	$data['ProfileCustomShowGender'];
 				$ProfileCustomShowProfile	=	$data['ProfileCustomShowProfile'];
 				$ProfileCustomShowSearch	=	$data['ProfileCustomShowSearch'];
 				$ProfileCustomShowLogged	=	$data['ProfileCustomShowLogged'];
 				$ProfileCustomShowRegistration=	$data['ProfileCustomShowRegistration'];
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
-			} 
+			}
 		
-			echo " 
-		<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	
-		<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
-		 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
-		 echo" <div class=\"inside\"> ";
-		
-	      
+		echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>	
+				<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+		echo "<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
+		echo "<div class=\"inside\"> ";
+
 		}
+
   } else {
 		
 			$ProfileCustomID			=	0;
-			$ProfileCustomTitle		=	"";
-			$ProfileCustomType		=	"";
+			$ProfileCustomTitle			=	"";
+			$ProfileCustomType			=	"";
 			$ProfileCustomOptions		=	"";
-			$ProfileCustomView		=	0;
-			$ProfileCustomOrder		=	0;
+			$ProfileCustomView			=	0;
+			$ProfileCustomOrder			=	0;
 			$ProfileCustomShowGender	=	0;
 			$ProfileCustomShowProfile	=	0;
 			$ProfileCustomShowSearch	=	0;
@@ -1720,7 +1887,7 @@ elseif ($ConfigID == 7) {
 		<h3 style=\"width:430px;\">". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
 		<div class=\"postbox \"  style=\"width:430px;float:left;border:0px solid black;\">
     		 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>
-        <div class=\"inside\"> ";	
+        <div class=\"inside\"> ";
   	}
 	if(isset($_GET["action"]) == "editRecord"){
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileCustomID=".$_GET["ProfileCustomID"]."&ConfigID=".$_GET["ConfigID"]."\">\n";
@@ -1729,8 +1896,7 @@ elseif ($ConfigID == 7) {
 	}
 	echo "<table class=\"form-table\">\n";
 		if(!isset($_GET["action"])){  // Create new Field		
-			echo " <tr>
-                    <td> 
+			echo "
 						<tr>
 							<td>Type*:</td>
 							<td>";
@@ -1751,49 +1917,28 @@ elseif ($ConfigID == 7) {
 									}else{
 										echo"     <option value=\"7\" id=\"0\">Metric(cm/kg)</option>";
 									}
-									// temporarily removed as it is required
-									// echo "<option value=\"8\">Multiple Options</option>";
-								 echo"  </select>";					   
-						echo "	</td>
-								<td style=\"font-size:13px;\"></td>
-								<td style=\"font-size:13px;\"></td>
+			echo"				</select>";
+			echo "			</td>
 						</tr>
 						<tr>
 							<td valign=\"top\">Visibility*:</td>
 							<td style=\"font-size:13px;\">
-							<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" />Show Everywhere(Front-end & Back-end)&nbsp;<br/>
-							<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" />Private(Only show in Admin CRM)&nbsp;<br/>
-							<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" />Custom(Used in Custom Views)&nbsp;
-							</td>
-							<td style=\"font-size:13px;\">
-						   
-							</td>
-							<td style=\"font-size:13px;\">
-						   
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" /> <strong>". __("Public", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible on Profile & Search, Profile Management, Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" /> <strong>". __("Private", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible in Profile Management & Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" /> <strong>". __("Restricted", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
 							</td>
 						</tr>
 						<tr>
 							<td valign=\"top\">Custom Views:</td>
 							<td style=\"font-size:13px;\">
-							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Manage Profile (Back-end)&nbsp; <br/>
-							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Search Form (Back-end)&nbsp; <br/>  
-							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\"  checked=\"checked\" /> Profile Registration Form 			                                      &nbsp; <br/>
-							</td>
-					  	</tr>
-					  	<tr>
-							<td valign=\"top\">Privacy:</td>
-							<td style=\"font-size:13px;\">
-							<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"1\"  /> User must be logged in to see It &nbsp;<br/>
-							<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"2\" /> User must be an admin to see It<br/>
-							<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"3\" /> Visible to Public 
-							</td>
-							<td style=\"font-size:13px;\">
-						   
-							</td>
-							<td style=\"font-size:13px;\">
-						   
+							IF PUBLIC:<br />
+							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" /> Show on Registration Form<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)<br/>  
+							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile<br/>
 							</td>
 						</tr>
+
 						<tr>
 							<td valign=\"top\">Gender*:</td>
 							<td valign=\"top\" style=\"font-size:13px;\">";
@@ -1811,8 +1956,6 @@ elseif ($ConfigID == 7) {
 							echo "</select>";
 							
 							echo " </td>
-							<td style=\"font-size:13px;\"></td>
-							<td style=\"font-size:13px;\"></td>
 						</tr>
 						<tr>
 						<td valign=\"top\">Profile Type:</td>
@@ -1925,10 +2068,9 @@ elseif ($ConfigID == 7) {
 												<tr>
 												<td valign=\"top\">Visibility*:</td>
 												<td style=\"font-size:13px;\">
-												<input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." />Show Everywhere(Front-end & Back-end)&nbsp;<br/>
-												<input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')."/>Private(Only show in Admin CRM)&nbsp;<br/>
-												<input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')."/>Custom(Used in Custom Views)&nbsp;
-												
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." /> <strong>". __("Public", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible on Profile & Search, Profile Management, Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')." /> <strong>". __("Private", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible in Profile Management & Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')." /> <strong>". __("Restricted", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
 												</td>
 											
 												<td style=\"font-size:13px;\">
@@ -1942,27 +2084,13 @@ elseif ($ConfigID == 7) {
 												<tr>
 													<td valign=\"top\">Custom View*:</td>
 													<td style=\"font-size:13px;\">
-													<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')."/> Manage Profile (Back-end)&nbsp; <br/>
-													<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')."/> Search Form (Back-end)&nbsp;  <br/>
-													<input type=\"checkbox\" ".($ProfileCustomType==4 ? "" : "")." name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')."/> Profile Registration Form &nbsp; <br/> </td>
+							IF PUBLIC:<br />
+							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)<br/>  
+							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile<br/>
 												</tr>
-												
-												<tr>
-													<td valign=\"top\">Privacy*:</td>
-													<td style=\"font-size:13px;\">
-													
-													
-										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"1\" ". ($data1["ProfileCustomShowLogged"] == 1 ? 'checked=\"checked\"':'')." /> User must be logged in to see It &nbsp;<br/>
-										<input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"2\" ". ($data1["ProfileCustomShowAdmin"] == 1 ? 'checked=\"checked\"':'')."/> User must be an admin to see It<br/>
-                                        <input type=\"radio\" name=\"ProfileCustomPrivacy\" value=\"3\" ". ($data1["ProfileCustomShowAdmin"] == 0 && $data1["ProfileCustomShowLogged"] == 0 ? 'checked=\"checked\"':'')." /> Visible to Public 
-													</td>
-													<td style=\"font-size:13px;\">
-												   
-													</td>
-													<td style=\"font-size:13px;\">
-												   
-													</td>
-												</tr>
+
 												<tr>
 													<td valign=\"top\">Gender*:</td>
 													<td valign=\"top\" style=\"font-size:13px;\">";
@@ -2364,11 +2492,11 @@ elseif ($ConfigID == 7) {
 		
    		echo "</form>\n";
 echo "</div>";
-}	 // End
- /*/
-  *  MEDIA CATEGORIES
- /*/
-elseif ($ConfigID == 8){
+
+
+
+
+} elseif ($ConfigID == 6){
 	
 	
 	
@@ -2535,10 +2663,13 @@ elseif ($ConfigID == 8){
    		echo "</form>\n";
  
  echo "</div>\n";
-	
-}
-// End Config == 8	
-elseif ($ConfigID == 99) {
+
+
+
+
+
+
+} elseif ($ConfigID == 99) {
 	
 	echo "    <h3>Uninstall</h3>\n";
 	echo "    <div>Are you sure you want to uninstall?</div>\n";

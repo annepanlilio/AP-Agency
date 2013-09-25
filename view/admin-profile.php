@@ -553,7 +553,7 @@ function rb_display_manage($ProfileID) {
     $rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
     echo "<div class=\"wrap\">\n";
     // Include Admin Menu
-    include ("admin-menu.php");
+    include ("admin-include-menu.php");
 
     if (!empty($ProfileID) && ($ProfileID > 0)) {
 

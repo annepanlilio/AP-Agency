@@ -10,45 +10,45 @@ get_currentuserinfo();
 <div class="wrap">
 	<?php 
 	// Include Admin Menu
-	include ("admin-menu.php"); ?>
+	include ("admin-include-menu.php"); ?>
 
-<div id="welcome-panel" class="welcome-panel">
-	<div class="welcome-panel-content">
+	<div id="welcome-panel" class="welcome-panel">
+		<div class="welcome-panel-content">
 
-		<div class="welcome-panel-column-container">
-			<div class="welcome-panel-column">
-				<h3><?php echo __("Welcome to RB Agency", rb_agency_TEXTDOMAIN ) ?>!</h3>
-				<p class="about-description"><?php echo __("We have added some resources below to help you get started.", rb_agency_TEXTDOMAIN ) ?></p>
-				<h4><?php echo __("Quick Links", rb_agency_TEXTDOMAIN ) ?></h4>
-				<ul>
-					<?php
-					if ($user_level >= 7) {
-						echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
+			<div class="welcome-panel-column-container">
+				<div class="welcome-panel-column">
+					<h3><?php echo __("Welcome to RB Agency", rb_agency_TEXTDOMAIN ) ?>!</h3>
+					<p class="about-description"><?php echo __("We have added some resources below to help you get started.", rb_agency_TEXTDOMAIN ) ?></p>
+					<h4><?php echo __("Quick Links", rb_agency_TEXTDOMAIN ) ?></h4>
+					<ul>
+						<?php
+						if ($user_level >= 7) {
+							echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
 
-						$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender);
-						$queryGenderCount = mysql_num_rows($queryGenderResult);
+							$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender);
+							$queryGenderCount = mysql_num_rows($queryGenderResult);
 
-						while($fetchGender = mysql_fetch_assoc($queryGenderResult)){
-						 echo "<li><a class=\"button-secondary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></li>\n";
+							while($fetchGender = mysql_fetch_assoc($queryGenderResult)){
+							 echo "<li><a class=\"button-secondary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></li>\n";
+							}
+							if($queryGenderCount < 1){
+							echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", rb_agency_TEXTDOMAIN) ."</li>\n";
+							} 
+
+							echo "<li><a href='?page=rb_agency_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find profiles", rb_agency_TEXTDOMAIN) . ".</li>";
 						}
-						if($queryGenderCount < 1){
-						echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", rb_agency_TEXTDOMAIN) ."</li>\n";
-						} 
+						?>
+					</ul>
+				</div>
 
-						echo "<li><a href='?page=rb_agency_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find profiles", rb_agency_TEXTDOMAIN) . ".</li>";
-					}
-					?>
-				</ul>
+				<div class="welcome-panel-column" style="margin-left: 50px;">
+					<iframe src="http://player.vimeo.com/video/27752740" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+				</div>
+
 			</div>
-
-			<div class="welcome-panel-column" style="margin-left: 50px;">
-				<iframe src="http://player.vimeo.com/video/27752740" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-			</div>
-
 		</div>
 	</div>
 </div>
-
 
 <div id="dashboard-widgets-wrap">
 	<div id="dashboard-widgets" class="metabox-holder columns-2">

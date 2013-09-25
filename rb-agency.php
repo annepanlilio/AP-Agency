@@ -656,22 +656,22 @@ class RBAgency {
 
 		//Pages
 		public static function menu_dashboard(){
-			include_once('admin/overview.php');
+			include_once('view/admin-overview.php');
 		}
 		public static function menu_profiles(){
-			include_once('admin/profile.php');
+			include_once('view/admin-profile.php');
 		}
 		public static function menu_search(){
-			include_once('admin/search.php');
+			include_once('view/admin-search.php');
 		}
 		public static function menu_searchsaved(){
-			include_once('admin/searchsaved.php');
+			include_once('view/admin-searchsaved.php');
 		}
 		public static function menu_reports(){
-			include_once('admin/reports.php');
+			include_once('view/admin-reports.php');
 		}
 		public static function menu_settings(){
-			include_once('admin/settings.php');
+			include_once('view/admin-settings.php');
 		}
 		public static function menu_approvemembers(){
 			include_once('admin/profile-approve.php');
