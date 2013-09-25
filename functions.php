@@ -210,7 +210,7 @@ error_reporting(0);
 			if ( get_query_var( 'type' ) ) {				
 				//echo get_query_var( 'type' );
 				if (get_query_var( 'type' ) == "search") {
-					return dirname(__FILE__) . '/theme/view-search.php'; 
+					return dirname(__FILE__) . '/view/profile-search.php'; 
 				} elseif (get_query_var( 'type' ) == "category") {
 					return dirname(__FILE__) . '/theme/view-category.php'; 
 				} elseif (get_query_var( 'type' ) == "profile") {
@@ -702,7 +702,11 @@ error_reporting(0);
      */
 	function rb_agency_profilelist($atts, $content = NULL) {
 
-		// Get Preferences
+			// Print or Export
+			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
+				
+				if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
+					// Get Preferences
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_privacy					 = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
 		$rb_agency_option_profilelist_count			 = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
@@ -899,11 +903,7 @@ error_reporting(0);
 			($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) )
 		{
 
-			// Print or Export
-			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-				
-				if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
-					$atts["type"]="casting";
+		$atts["type"]="casting";
 					$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
 				}
 				

@@ -22,21 +22,27 @@ get_header();
 
 			// Convert Requests to Sessions
 			foreach ($_REQUEST as $key => $value) {
+				//echo $key .":". $value ."<br />";
 				if (substr($key, 0, 9) != "ProfileID") {
 					$_SESSION[$key] = $value;  //$$key = $value;
 				}
 			}
 
 			// Process Form Submission
-			$search_sql = RBAgency_Profile::search_process($filterArray);
-echo $search_sql;
+			$search_array = RBAgency_Profile::search_process($filterArray);
+
 			// Return Search
-			//return RBAgency_Profile::search_results($search_sql);
+			$search_sql_where = RBAgency_Profile::search_generate_sqlwhere($search_array);
+
+			// Process Form Submission
+			$search_results = RBAgency_Profile::search_results($search_sql_where, 0);
+			$formatted = RBAgency_Profile::search_formatted($search_results);
 
 		} else {
 			echo "<strong>". __("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
 		}
 		echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
+		echo "<hr />";
 
 		return RBAgency_Profile::search_form();
 
