@@ -23,7 +23,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if (is_plugin_active('rb-agency-interact/rb-agency-interact.php')) {
 		$xml .= "<interact>\n";
 		$xml .= "	<version>";
-		$xml .= "		". get_option("rb_agencyinteract_version") ."\n";
+		$xml .= "		". get_option("rb_agency_interact_version") ."\n";
 		$xml .= "	</version>\n";
 		$xml .= "</interact>\n";
 	} else {
