@@ -256,7 +256,7 @@ if($_POST['print_option']==14){  // print for division
 					if($printType!="Polaroid"){ 
 						 if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){
 							 
-							 $allImages.="<td>$modelInfo<img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/theme/custom-layout6/images/trans.png\" alt=' ' class='allimages_thumbs'  /></td>";
+							 $allImages.="<td>$modelInfo</td>";
 							$cnt=1;  $cnt2=1; 
 						 }
 					 }
@@ -270,13 +270,14 @@ if($_POST['print_option']==14){  // print for division
 					$timthumbHW=str_replace('style="width:',"&w=",$widthAndHeight);
 					$timthumbHW=str_replace('px; height:',"&h=",$timthumbHW);
 					$timthumbHW=str_replace('px;"',"",$timthumbHW);
-					
+					$timthumbHW=str_replace('px"',"",$timthumbHW);
 				
 			//	$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
-
-				copy(get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW,"/home/content/99/6048999/html/rbplugin.agency/wp-content/plugins/rb-agency/cache/images/".$totalCount.".jpg");
+				
+					$allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src='".get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."' alt='' class='allimages_thumbs' /></td>\n";
 					
-				$allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src='".get_bloginfo("url")."/wp-content/plugins/rb-agency/cache/images/".$totalCount.".jpg' alt='' class='allimages_thumbs' /></td>\n";
+				
+
 
 					
 					 //src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\"
@@ -332,7 +333,7 @@ echo $footer;
 die();*/
 
 
-$htmlFile=date("ymd").".html"; 
+$htmlFile=rand(1,10000).time().date("ymd").".html"; 
 //$pdfFile=str_replace(".html",".pdf",$htmlFile);
 
 
