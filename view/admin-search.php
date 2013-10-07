@@ -620,19 +620,19 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
     echo "				        <td><select name=\"ProfileType\" id=\"ProfileType\">\n";               
     echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
                                     /* 
-                                                                        * set filter from theis array
-                                                                        * to block the following profile types 
-                                                                        * in search
-                                                                        */
+                                        * set filter from theis array
+                                        * to block the following profile types 
+                                        * in search
+                                        */
 
-                                                                    $filter = array( 'agents', 'agent', 'clients', 'client', 'producer', 'producers' );
+                                    $filter = array( 'agents', 'agent', 'clients', 'client', 'producer', 'producers' );
 
-                                                                    $profileDataTypes = mysql_query("SELECT * FROM ". table_agency_data_type ."");
-                                                                    while ($dataType = mysql_fetch_array($profileDataTypes)) {
-                                                                            if(!in_array(strtolower($dataType["DataTypeTitle"]),$filter)){
-                                                                                    echo "<option value=\"". $dataType["DataTypeID"] ."\" ".selected($_SESSION['ProfileType'],$dataType["DataTypeID"],false).">". $dataType["DataTypeTitle"] ."</option>";
-                                                                            }
-                                                                    }
+                                    $profileDataTypes = mysql_query("SELECT * FROM ". table_agency_data_type ."");
+                                    while ($dataType = mysql_fetch_array($profileDataTypes)) {
+                                            if(!in_array(strtolower($dataType["DataTypeTitle"]),$filter)){
+                                                    echo "<option value=\"". $dataType["DataTypeID"] ."\" ".selected($_SESSION['ProfileType'],$dataType["DataTypeID"],false).">". $dataType["DataTypeTitle"] ."</option>";
+                                            }
+                                    }
     echo "				        	</select>\n";
     echo "				        </td>\n";
     echo "				    </tr>\n";
@@ -640,11 +640,11 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
     echo "				        <th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) . ":</th>\n";
     echo "				        <td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
     echo "						<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
-                                                                            $query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
-                                                                            $results2 = mysql_query($query2);
-                                                                            while ($dataGender = mysql_fetch_array($results2)) {
-                                                                                    echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION["ProfileGender"],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
-                                                                            }
+                                        $query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+                                        $results2 = mysql_query($query2);
+                                        while ($dataGender = mysql_fetch_array($results2)) {
+                                                echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION["ProfileGender"],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
+                                        }
     echo "						</select>\n";
     echo "				        </td>\n";
     echo "				    </tr>\n";
@@ -674,19 +674,19 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
     echo "				        <th scope=\"row\">". __("City", rb_agency_TEXTDOMAIN) . ":</th>\n";
     echo "				        <td><select name=\"ProfileLocationCity\" id=\"ProfileLocationCity\">\n";               
     echo "							<option value=\"\">". __("Any City", rb_agency_TEXTDOMAIN) . "</option>";
-                                                                        /*
-                                                                        * lets get the variables first for use
-                                                                        * in city 
-                                                                        */
-                                                                    $profilecity = mysql_query("SELECT DISTINCT ProfileLocationCity FROM ". table_agency_profile ."");
+                                        /*
+                                        * lets get the variables first for use
+                                        * in city 
+                                        */
+                                    $profilecity = mysql_query("SELECT DISTINCT ProfileLocationCity FROM ". table_agency_profile ."");
 
-                                                                    while ($dataLocation = mysql_fetch_array($profilecity)) {
-                                                        if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity']) && $_SESSION['ProfileLocationCity'] == $dataLocation["ProfileLocationCity"]) {
-                                                                                    echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
-                                                                            } else {
-                                                                                    echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
-                                                                            }
-                                                                    }
+                                    while ($dataLocation = mysql_fetch_array($profilecity)) {
+										if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity']) && $_SESSION['ProfileLocationCity'] == $dataLocation["ProfileLocationCity"]) {
+										    echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+										} else {
+										    echo "<option value=\"". $dataLocation["ProfileLocationCity"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationCity"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+										}
+                                    }
 
     echo "				        	</select>\n";
     echo "				        </td>\n";
@@ -696,19 +696,19 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
     echo "				        <th scope=\"row\">". __("State", rb_agency_TEXTDOMAIN) . ":</th>\n";
     echo "				        <td><select name=\"ProfileLocationState\" id=\"ProfileLocationState\">\n";               
     echo "							<option value=\"\">". __("Any State", rb_agency_TEXTDOMAIN) . "</option>";
-                                                                        /*
-                                                                        * lets get the variables first for use
-                                                                        * in state
-                                                                        */
-                                                                    $profilestate = mysql_query("SELECT DISTINCT ProfileLocationState FROM ". table_agency_profile ."");
+                                        /*
+                                        * lets get the variables first for use
+                                        * in state
+                                        */
+                                    $profilestate = mysql_query("SELECT DISTINCT ProfileLocationState FROM ". table_agency_profile ."");
 
-                                                                    while ($dataLocation = mysql_fetch_array($profilestate)) {
-                                                        if (isset($_GET['ProfileLocationState']) && !empty($_GET['ProfileLocationState']) && $_SESSION['ProfileLocationState'] == $dataLocation["ProfileLocationState"]) {
-                                                                                    echo "<option value=\"". $dataLocation["ProfileLocationState"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationState"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
-                                                                            } else {
-                                                                                    echo "<option value=\"". $dataLocation["ProfileLocationState"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationState"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
-                                                                            }
-                                                                    }
+                                    while ($dataLocation = mysql_fetch_array($profilestate)) {
+                        					if (isset($_GET['ProfileLocationState']) && !empty($_GET['ProfileLocationState']) && $_SESSION['ProfileLocationState'] == $dataLocation["ProfileLocationState"]) {
+                                                    echo "<option value=\"". $dataLocation["ProfileLocationState"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationState"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+                                            } else {
+                                                    echo "<option value=\"". $dataLocation["ProfileLocationState"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationState"]) .", ". strtoupper($dataLocation["ProfileLocationState"]) ."</option>";
+                                            }
+                                    }
 
     echo "				        	</select>\n";
     echo "				        </td>\n";
@@ -718,19 +718,19 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
     echo "				        <th scope=\"row\">". __("Zip", rb_agency_TEXTDOMAIN) . ":</th>\n";
     echo "				        <td><select name=\"ProfileLocationZip\" id=\"ProfileLocationZip\">\n";               
     echo "							<option value=\"\">". __("Any Zip", rb_agency_TEXTDOMAIN) . "</option>";
-                                                                        /*
-                                                                        * lets get the variables first for use
-                                                                        * in sip
-                                                                        */
-                                                                    $profilestate = mysql_query("SELECT DISTINCT ProfileLocationZip FROM ". table_agency_profile ."");
+										    /*
+										    * lets get the variables first for use
+										    * in sip
+										    */
+										$profilestate = mysql_query("SELECT DISTINCT ProfileLocationZip FROM ". table_agency_profile ."");
 
-                                                                    while ($dataLocation = mysql_fetch_array($profilestate)) {
-                                                        if (isset($_GET['ProfileLocationZip']) && !empty($_GET['ProfileLocationZip']) && $_SESSION['ProfileLocationZip'] == $dataLocation["ProfileLocationZip"]) {
-                                                                                    echo "<option value=\"". $dataLocation["ProfileLocationZip"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationZip"]) .", ". strtoupper($dataLocation["ProfileLocationZip"]) ."</option>";
-                                                                            } else {
-                                                                                    echo "<option value=\"". $dataLocation["ProfileLocationZip"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationZip"]) .", ". strtoupper($dataLocation["ProfileLocationZip"]) ."</option>";
-                                                                            }
-                                                                    }
+										while ($dataLocation = mysql_fetch_array($profilestate)) {
+											if (isset($_GET['ProfileLocationZip']) && !empty($_GET['ProfileLocationZip']) && $_SESSION['ProfileLocationZip'] == $dataLocation["ProfileLocationZip"]) {
+									                echo "<option value=\"". $dataLocation["ProfileLocationZip"] ."\" selected>". rb_agency_strtoproper($dataLocation["ProfileLocationZip"]) .", ". strtoupper($dataLocation["ProfileLocationZip"]) ."</option>";
+									        } else {
+									                echo "<option value=\"". $dataLocation["ProfileLocationZip"] ."\">". rb_agency_strtoproper($dataLocation["ProfileLocationZip"]) .", ". strtoupper($dataLocation["ProfileLocationZip"]) ."</option>";
+									        }
+										}
     echo "				        	</select>\n";
     echo "				        </td>\n";
     echo "				    </tr>\n";
@@ -1040,31 +1040,31 @@ echo "<script>function redirectSearch(){ window.location.href = 'admin.php?page=
 
     } //end of while ($data1
 
-    // status filter
-    echo "				    <tr>\n";
-    echo "				        <th scope=\"row\">". __("Status", rb_agency_TEXTDOMAIN) . ":</th>\n";
-    echo "				        <td><select name=\"ProfileIsActive\" id=\"ProfileIsActive\">\n";               
-    echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-    echo "				        	</select>\n";
-    echo "				        </td>\n";
-    echo "				    </tr>\n";
+	// status filter
+	echo "					<tr>\n";
+	echo "						<th scope=\"row\">". __("Status", rb_agency_TEXTDOMAIN) . ":</th>\n";
+	echo "						<td><select name=\"ProfileIsActive\" id=\"ProfileIsActive\">\n";               
+	echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
+	echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+	echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+	echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Active - Not visible on website", rb_agency_TEXTDOMAIN) . "</option>\n";
+	echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+	echo "							</select>\n";
+	echo "						</td>\n";
+	echo "					</tr>\n";
 
-    echo "				  </thead>\n";
-    echo "				</table>\n";
-    echo "				<p class=\"submit\">\n";
-    echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-    echo "				<input type=\"reset\" onclick=\"redirectSearch();\" name=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
-    echo "				</p>\n";
-    echo "        	<form>\n";
+	echo "				  </thead>\n";
+	echo "				</table>\n";
+	echo "				<p class=\"submit\">\n";
+	echo "				<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+	echo "				<input type=\"reset\" onclick=\"redirectSearch();\" name=\"reset\" value=\"". __("Reset Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
+	echo "				</p>\n";
+	echo "			<form>\n";
 
-    echo "        	<div>\n";
+	echo "			<div>\n";
 
-    echo "    </div><!-- .container -->\n";
-    echo "  </div>\n";
-    echo "</div>\n";
+	echo "    </div><!-- .container -->\n";
+	echo "  </div>\n";
+	echo "</div>\n";
 ?>
 </div>
