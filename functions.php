@@ -1208,15 +1208,11 @@ error_reporting(0);
 			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
 				echo "<h2>This is a restricted page. For Clients only.</h2>";
 			} else {
-				include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
-				if(is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
-					include("theme/include-login.php"); 	
-				} else {
-					rb_loginform(rb_current_url());
-				} 	
-			} 	
+				// Show Login Form
+				include("theme/include-login.php");
+			}
 		}
-				
+
 		echo  $displayHTML;
 
 		// debug mode
@@ -3498,6 +3494,7 @@ if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-
 
 /*
  * WP Login Form
+ * TODO REMOVE
  */
 function rb_loginform($redirect){?>
 		<!-- ajax submit login -->
