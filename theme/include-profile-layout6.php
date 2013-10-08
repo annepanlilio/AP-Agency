@@ -6,28 +6,25 @@ Large featured image and scrolling thumbnails
 $profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 $urlexploade = explode("/", $profileURLString);
 $subview=$urlexploade[1];
-if(isset($_POST['print_type']) && $_POST['print_type']!=""){
-	switch ($_POST['pdf_all_images']) {
-		case 'Download PDF':
-			include 'pdf-profile.php';
-			break;
-		default :
-			include 'printable-profile.php';
-	}
+if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
+	include 'pdf-profile.php';
 	exit;
 }
+
+
+
 ?>
 
 <script type="text/javascript">
-	$(document).ready(function() {
+	jQuery(document).ready(function() {
 
-	    $('#division').change(function() {   
+	    jQuery('#division').change(function() {   
 	        var qString = 'sub=' +$(this).val();
-	        $.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponse);
+	        jQuery.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponse);
 	    });
 
 	    function processResponse(data) {
-	        $('#resultsGoHere').html(data);
+	        jQuery('#resultsGoHere').html(data);
 	    }
 
 	});
@@ -271,17 +268,28 @@ if(isset($_POST['print_type']) && $_POST['print_type']!=""){
 							}
 
 						}
+
+						function validateAllImageForm()
+						{
+							if (!jQuery(".allImageCheck").is(":checked"))
+							{
+								alert("Please select atleast one photo!");
+								return false;
+							}
+
+							return true;
+						}
 					</script>
-					<span class="allimages_text"><?php echo __("Next", rb_agency_TEXTDOMAIN)?><br /></span><br />
-					<form action="../print-images/" method="post" id="allimageform">
+					<span class="allimages_text"><?php echo __("Please select photos to print. Maximum is 100 photos only", rb_agency_TEXTDOMAIN)?><br /></span><br />
+					<form action="../print-images/" method="post" id="allimageform" onsubmit="return validateAllImageForm()">
 						<input type="hidden" id="selected_image" name="selected_image" />
 						<?php  
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
 						$resultsImg = mysql_query($queryImg);
 						$countImg = mysql_num_rows($resultsImg);
 						while ($dataImg = mysql_fetch_array($resultsImg)) {
-							echo '<a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
-							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
+							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
 						}
 						?> <br clear="all" />
 						<input type="submit" value="Next, Select Print Format" />
@@ -300,7 +308,7 @@ if(isset($_POST['print_type']) && $_POST['print_type']!=""){
 						$countImg = mysql_num_rows($resultsImg);
 						while ($dataImg = mysql_fetch_array($resultsImg)) {
 						echo '<a class="allimages_print" href="'. rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery">';
-						echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+						echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 					}
 					?> <br clear="all" />
 
@@ -343,7 +351,7 @@ if(isset($_POST['print_type']) && $_POST['print_type']!=""){
 						<?php  
 						while ($dataImg = mysql_fetch_array($resultsImg)) {
 							echo '<a href="'. rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
-							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 						}
 						?> <br clear="all" />
 
@@ -456,8 +464,17 @@ if(isset($_POST['print_type']) && $_POST['print_type']!=""){
 							</div><!-- polariod -->
 						</div><!-- .six .column -->
 
-					</div><!-- polariod -->
-
+						<?php
+							if(isset($_POST['pdf_image_id'])) {
+								$pdf_image_id=implode(',',$_POST['pdf_image_id']);
+						?>
+							<input type="hidden" name="pdf_image_id" value="<?php echo($pdf_image_id);?>" />
+						<?php
+							}
+						?>
+						
+						
+						</div><!-- polariod -->
 					<center>
 						<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
 

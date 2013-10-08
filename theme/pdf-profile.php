@@ -23,7 +23,7 @@ $header='
 	'; 
 
  //where we decide what print format will it be.
- 
+
   if($_POST['print_option']==1){
 	  $chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;  //detect if CHROME
 	  if($chrome){
@@ -248,7 +248,16 @@ if($_POST['print_option']==14){  // print for division
 		
 			if($_POST['print_type']=="print-polaroids"){$printType="Polaroid";}
 			else{$printType="Image";}
-			$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
+
+			if(count($_POST['pdf_image_id'])>0) {
+				$pdf_image_id=$_POST['pdf_image_id'];
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY $orderBy";
+
+			}
+			else {
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
+			
+			}
 					$resultsImg = mysql_query($queryImg);
 					$countImg = mysql_num_rows($resultsImg);
 					while ($dataImg = mysql_fetch_array($resultsImg)){$totalCount++;
@@ -338,7 +347,6 @@ $htmlFile=rand(1,10000).time().date("ymd").".html";
 
 
 //PDF FILE NAMING
-$pdfFile=str_replace(" ","_",$ProfileContactDisplay).$fileFormat.".pdf";
 if($_POST['print_option']=="1"){$format="-Photos-Large-with-info-";}
 elseif($_POST['print_option']=="3"){$format="-Photos-Medium-with-info-";}
 elseif($_POST['print_option']=="1-1"){$format="-Photos-Large-no-Info-";}
@@ -347,9 +355,10 @@ elseif($_POST['print_option']=="11"){$format="-Polaroids-4perpage-with-Info-";}
 elseif($_POST['print_option']=="12"){$format="-Polaroids-1perpage-with-Info-";}
 else{$format="";}
 
-$blog_title = strtolower(str_replace(" ","_",get_bloginfo('name')));
-$pdfFile="$blog_title-".str_replace(" ","-",$ProfileContactDisplay).$format.date("ymd").".pdf";
+//$blog_title = strtolower(str_replace(" ","_",get_bloginfo('name')));
+//$pdfFile="$blog_title-".str_replace(" ","-",$ProfileContactDisplay).$format.date("ymd").".pdf";
 
+$pdfFile=strtolower(str_replace(" ","-",$ProfileContactDisplay)).".pdf";
 
 
 $toRedirect=rb_agency_BASEDIR."tasks/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;

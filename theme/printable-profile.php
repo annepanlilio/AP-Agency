@@ -31,7 +31,6 @@ return(eregi("chrome", $_SERVER['HTTP_USER_AGENT']));
     
 <?php //where we decide what print format will it be.
 	$chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;  //detect if CHROME
-
 if($_POST['print_option']==1){
 	if($chrome){
 	  $widthAndHeight='style="width:420px; height:550px;"';
@@ -142,9 +141,8 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 ?>
         <div id="model_info">
             <h1><?php echo $ProfileContactDisplay; ?></h1>
-        
             <ul>
-            <?php rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender);?>
+            <?php echo rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,"dontecho");?>
             </ul>
         </div>	
 
@@ -152,7 +150,16 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 <?php 
     if($_POST['print_type']=="print-polaroids"){$printType="Polaroid";}
 	else{$printType="Image";}
-   	$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
+
+			if(count($_POST['pdf_image_id'])>0) {
+				$pdf_image_id=$_POST['pdf_image_id'];
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY $orderBy";
+
+			}
+			else {
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
+			
+			}
 			$resultsImg = mysql_query($queryImg);
 			$countImg = mysql_num_rows($resultsImg);
 			while ($dataImg = mysql_fetch_array($resultsImg)){$imageCnt++; $rowCount++;

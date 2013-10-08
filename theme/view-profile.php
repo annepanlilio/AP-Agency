@@ -9,7 +9,10 @@ header("Cache-control: private"); //IE 6 Fix
 	$CurrentUser = $current_user->id;
 
 // Get Profile
-$profileURL = get_query_var('target'); //$_REQUEST["profile"];
+
+$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
+$urlexploade = explode("/", $profileURLString);
+$profileURL=$urlexploade[0];  
 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
@@ -212,6 +215,11 @@ while ($data = mysql_fetch_array($results)) {
     }// if function exist(rb_agency_inserthead_profile)
    
 // GET HEADER  
+if(isset($_POST['print_all_images']) && $_POST['print_all_images']!=""){
+	include 'printable-profile.php';
+	exit;
+}
+
 	get_header();
 
 /*	$LayoutType = "";
