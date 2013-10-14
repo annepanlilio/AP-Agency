@@ -1,7 +1,7 @@
 <?php
 get_header();
 
-	// Widgets & Shortcodes
+	// Profile Class
 	include(rb_agency_BASEREL ."app/profile.class.php");
 
 	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
@@ -20,22 +20,14 @@ get_header();
 		echo "	<div id=\"profile-search-results\">\n";
 		if ($_REQUEST["action"] == "search") {
 
-			// Convert Requests to Sessions
-			foreach ($_REQUEST as $key => $value) {
-				//echo $key .":". $value ."<br />";
-				if (substr($key, 0, 9) != "ProfileID") {
-					$_SESSION[$key] = $value;  //$$key = $value;
-				}
-			}
-
 			// Process Form Submission
-			$search_array = RBAgency_Profile::search_process($filterArray);
+			$search_array = RBAgency_Profile::search_process();
 
 			// Return Search
-			$search_sql_where = RBAgency_Profile::search_generate_sqlwhere($search_array);
+			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 
 			// Process Form Submission
-			$search_results = RBAgency_Profile::search_results($search_sql_where, 0);
+			$search_results = RBAgency_Profile::search_results($search_sql_query, 0);
 			$formatted = RBAgency_Profile::search_formatted($search_results);
 
 		} else {
@@ -44,7 +36,7 @@ get_header();
 		echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 		echo "<hr />";
 
-		return RBAgency_Profile::search_form();
+		return RBAgency_Profile::search_form("", "", 0);
 
 	echo "		</div><!-- #profile-search -->\n"; // #profile-search
 	echo "	</div><!-- #content -->\n"; // #content

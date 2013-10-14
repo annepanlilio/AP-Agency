@@ -6,6 +6,18 @@ error_reporting(0);
  */
 
 
+/*
+ * Set Sessions
+ */
+
+	add_action('init', 'rb_agency_init_sessions');
+		function rb_agency_init_sessions() {
+			if (!session_id()) {
+				session_start();
+			}
+		}
+
+
 // *************************************************************************************************** //
 /*
  * Header for Administrative Pages
@@ -3176,8 +3188,8 @@ function fullwidth_class(){
  * recreate custom field search
  */
 function recreate_custom_search($GET){
-    
-	 global $wpdb;
+
+	global $wpdb;
 
 	 $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
 
@@ -3263,67 +3275,65 @@ function recreate_custom_search($GET){
 
 						} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
 
-                                                        if(!empty($val)){
+							if(!empty($val)){
 
-                                                                  if(strpos($val,",") === false){
+								if(strpos($val,",") === false){
 
-							  		    $filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
+									$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
 
-                                                                  } else {
+								} else {
 
-                                                                            $likequery = explode(",", $val);
-                                                                            $likecounter = count($likequery);
-                                                                            $i=1; 
-                                                                            
-																			$likedata = "" ;
-																			
-																			// for profiles with multiple values
-																			$likedata2 = "" ;
-																			$likedata3 = "" ;
-                                                                        
-																		    foreach($likequery as $like){
-                                                                                    if($i < ($likecounter-1)){
-                                                                                            if($like!=""){
-                                                                                                    $likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-                                                                                                    $likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') OR "  ;
-                                                                                                    $likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-                                                                                           }
-                                                                                    }else{
-                                                                                            if($like!=""){
-                                                                                                            $likedata.= " ProfileCustomValue ='".$like."' "  ;
-                                                                                		                    $likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') ";
-                                                                                  		                    $likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-                                                                                            } 
-                                                                                    }
-                                                                                    $i++;
-                                                                            }
+									$likequery = explode(",", $val);
+									$likecounter = count($likequery);
+									$i=1; 
 
-                                                                            $val = substr($val, 0, -1);
-																			$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
-                                                                            $filter2 .= "$open_st (".$sr_data.") $close_st";
-															      }
+									$likedata = "" ;
 
-                                                                   $_SESSION[$key] = $val;
- 						          }else{
-							      $_SESSION[$key] = "";
-							  }
-                                                 
-                                                          
-                                                 } elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
-                                                                   $val = implode("','",explode(",",$val));
-                                                                   $filter2 .= "$open_st ProfileCustomValue like('%".$val."%') $close_st";
-                                                                   $_SESSION[$key] = $val;
-                                                               
+									// for profiles with multiple values
+									$likedata2 = "" ;
+									$likedata3 = "" ;
 
-                                                 } elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
-                                                                    list($Min_val,$Max_val) = explode(",",$val);
-                                                                        if(!empty($Min_val) && !empty($Max_val)){
-                                                                           	$filter2  .= "$open_st ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' $close_st";
-                                                                       		$_SESSION[$key] = $val;
-                                                                        
+									foreach($likequery as $like){
+										if($i < ($likecounter-1)){
+											if($like!="") {
+												$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+												$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') OR "  ;
+												$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+											}
+										} else {
+											if($like!=""){
+												$likedata.= " ProfileCustomValue ='".$like."' "  ;
+												$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') ";
+												$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+											} 
+										}
+										$i++;
 									}
 
-                                                 }
+									$val = substr($val, 0, -1);
+									$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
+									$filter2 .= "$open_st (".$sr_data.") $close_st";
+								}
+
+									$_SESSION[$key] = $val;
+							} else {
+								$_SESSION[$key] = "";
+						}
+
+					} elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
+                                       $val = implode("','",explode(",",$val));
+                                       $filter2 .= "$open_st ProfileCustomValue like('%".$val."%') $close_st";
+                                       $_SESSION[$key] = $val;
+                                   
+
+					} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
+						list($Min_val,$Max_val) = explode(",",$val);
+						if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
+							$filter2  .= "$open_st ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' $close_st";
+							$_SESSION[$key] = $val;
+						}
+
+                     }
 					}
 					mysql_free_result($q);
 				} // if not empty

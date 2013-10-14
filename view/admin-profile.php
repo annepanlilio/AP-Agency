@@ -551,6 +551,8 @@ function rb_display_manage($ProfileID) {
     }
     $rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
     $rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
+
+    // Add Header
     echo "<div class=\"wrap\">\n";
     // Include Admin Menu
     include ("admin-include-menu.php");
@@ -1147,7 +1149,7 @@ function rb_display_list() {
     $rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
     echo "<div class=\"wrap\">\n";
     // Include Admin Menu
-    include ("admin-menu.php");
+    include ("admin-include-menu.php");
 
     // Sort By
     $sort = "";

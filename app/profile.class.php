@@ -6,7 +6,7 @@ class RBAgency_Profile {
 	 * Process Search
 	 */
 
-		public static function search_form($atts, $args = ""){
+		public static function search_form($atts = "", $args = "", $type = 0){
 
 			/*
 			 * Setup Requirements
@@ -24,29 +24,47 @@ class RBAgency_Profile {
 					$rb_agency_option_formshow_gender = $rb_agency_options_arr['rb_agency_option_formshow_gender'];
 					$rb_agency_option_formshow_age = $rb_agency_options_arr['rb_agency_option_formshow_age'];
 
+				// Which Type?
+				if ($type = 1) {
+
+					// Admin Back-end 
+					$rb_agency_searchurl = admin_url("admin.php?page=". $_GET['page']);
+					$search_layout = "admin";
+
+				} else {
+
+					// Front Back-end
+					$rb_agency_searchurl = get_bloginfo("wpurl") ."/profile-search/";
+
+
+					// Are we inside the content only
+					if(in_the_loop() && is_main_query()){
+
+						if ( (isset($_POST['basic_search']) || !isset($_POST['page'])) && !isset($_GET[srch])) {
+							$search_layout = "simple";
+						} else {
+							$search_layout = "full";
+						}
+
+					// Or we are inside the widgets
+					} else {
+
+						if ( $profilesearch_layout == "advanced") {
+							$search_layout = "full";
+						} else {
+							$search_layout = "simple";
+						}
+
+					}
+
+
+				}
+
+
 			/*
 			 * Where is Form Located?
 			 */
 
-				// Are we inside the content only
-				if(in_the_loop() && is_main_query()){
-
-					if ( (isset($_POST['basic_search']) || !isset($_POST['page'])) && !isset($_GET[srch])) {
-						$search_layout = "simple";
-					} else {
-						$search_layout = "full";
-					}
-
-				// Or we are inside the widgets
-				} else {
-
-					if ( $profilesearch_layout == "advanced") {
-						$search_layout = "full";
-					} else {
-						$search_layout = "simple";
-					}
-
-				}
 
 
 			/*
@@ -107,34 +125,34 @@ class RBAgency_Profile {
 			 */
 
 				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
-				echo "			<form method=\"post\" id=\"search-form-condensed\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
+				echo "			<form method=\"post\" id=\"search-form-condensed\" action=\"". $rb_agency_searchurl ."\">\n";
 				echo "				<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
 				echo "				<input type=\"hidden\" name=\"mode\" value=\"". $search_layout ."\" />\n";
-				echo "				<input type=\"hidden\" name=\"ProfileIsActive\" value=\"1\" />\n";
+				echo "				<input type=\"hidden\" name=\"isactive\" value=\"1\" />\n";
 
 									// Show Profile Name
-									if ( ($rb_agency_option_formshow_name > 0) || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
+									if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
 				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-				echo "					<input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" />\n";
+				echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
+				echo "					<input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"". $_SESSION["namefirst"] ."\" />\n";
 				echo "				</div>\n";
 				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"ProfileLastName\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-				echo "					<input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION["ProfileContactNameLast"] ."\" />\n";
+				echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
+				echo "					<input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"". $_SESSION["namelast"] ."\" />\n";
 				echo "				</div>\n";
 									}
 
 									// Show Profile Type
-									if ( ($rb_agency_option_formshow_type > 0) || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
+									if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
 				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
-				echo "					<select name=\"ProfileType\" id=\"ProfileType\">\n";               
+				echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
+				echo "					<select name=\"type\" id=\"type\">\n";               
 				echo "						<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 											$results2 = mysql_query($query);
 											while ($dataType = mysql_fetch_array($results2)) {
-												if ($_SESSION['ProfileType']) {
-													if ($dataType["DataTypeID"] ==  $_SESSION['ProfileType']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
+												if ($_SESSION['type']) {
+													if ($dataType["DataTypeID"] ==  $_SESSION['type']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 												} else { $selectedvalue = ""; }
 												echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
 											}
@@ -143,49 +161,50 @@ class RBAgency_Profile {
 									}
 
 									// Show Profile Gender
-									if ( ($rb_agency_option_formshow_gender > 0) || ($search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
+									if ( ($rb_agency_option_formshow_gender > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
 				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"ProfileGender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
-				echo "					<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
+				echo "					<label for=\"gender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
+				echo "					<select name=\"gender\" id=\"gender\">\n";
 				echo "						<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
-													$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
-													$results2 = mysql_query($query2);
-													while ($dataGender = mysql_fetch_array($results2)) {
-														echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['ProfileGender'],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
-													}
+												// Pul Genders from Database
+												$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+												$results2 = mysql_query($query2);
+												while ($dataGender = mysql_fetch_array($results2)) {
+													echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['gender'],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
+												}
 				echo "					</select>\n";
 				echo "				</div>\n";
 									}
 
 									// Show Profile Age
-									if ( ($rb_agency_option_formshow_age > 0) || ($search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
+									if ( ($rb_agency_option_formshow_age > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
 				echo "				<div class=\"search-field single\">\n";
 				echo "				  <fieldset class=\"search-field multi\">";
 				echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 				echo "					<div>\n";
-				echo "						<label for=\"ProfileDateBirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
-				echo "						<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" />\n";
+				echo "						<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
+				echo "						<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"". $_SESSION['datebirth_min'] ."\" />\n";
 				echo "					</div>";
 				echo "					<div>\n";
-				echo "						<label for=\"ProfileDateBirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-				echo "						<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" />\n";
+				echo "						<label for=\"datebirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
+				echo "						<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"". $_SESSION['datebirth_max'] ."\" />\n";
 				echo "				  </fieldset>";
 				echo "				</div>\n";
 									}
 
 									// Show Location Search
-									if ( ($rb_agency_option_formshow_location > 0) || ($search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
+									if ( ($rb_agency_option_formshow_location > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
 				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"ProfileCity\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
-				echo "					<input type=\"text\" id=\"ProfileCity\" name=\"ProfileCity\" value=\"". $_SESSION["ProfileCity"] ."\" />\n";
+				echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
+				echo "					<input type=\"text\" id=\"city\" name=\"city\" value=\"". $_SESSION["city"] ."\" />\n";
 				echo "				</div>\n";
 				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"ProfileState\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
-				echo "					<input type=\"text\" id=\"ProfileState\" name=\"ProfileState\" value=\"". $_SESSION["ProfileState"] ."\" />\n";
+				echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
+				echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"". $_SESSION["state"] ."\" />\n";
 				echo "				</div>\n";
 				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"ProfileZip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
-				echo "					<input type=\"text\" id=\"ProfileZip\" name=\"ProfileZip\" value=\"". $_SESSION["ProfileZip"] ."\" />\n";
+				echo "					<label for=\"zip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
+				echo "					<input type=\"text\" id=\"zip\" name=\"zip\" value=\"". $_SESSION["zip"] ."\" />\n";
 				echo "				</div>\n";
 									}
 
@@ -206,7 +225,7 @@ class RBAgency_Profile {
 					$ProfileCustomShowSearch = $data['ProfileCustomShowSearch'];
 
 					// Show this Custom Field on Search
-					if($ProfileCustomShowSearch == 1 && ( ($search_layout == "simple" && $ProfileCustomShowSearch) || ($search_layout == "full" && $ProfileCustomShowSearch) ) ){
+					if($search_layout == "admin" || $ProfileCustomShowSearch == 1 && ( ($search_layout == "simple" && $ProfileCustomShowSearch) || ($search_layout == "full" && $ProfileCustomShowSearch) ) ){
 
 						/* Field Type 
 						 * 1 = Single Line Text
@@ -228,7 +247,7 @@ class RBAgency_Profile {
 						if($ProfileCustomType == 1) {
 											echo "<div class=\"search-field single\">";
 											echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-											echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
+											echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
 											echo "</div>";
 
 
@@ -253,11 +272,11 @@ class RBAgency_Profile {
 											} else {
 												echo "<div>";
 												echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_REQUEST["ProfileCustomID". $ProfileCustomID]."\" />";
+												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
 												echo "</div>";
 												echo "<div>";
 												echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_REQUEST["ProfileCustomID". $ProfileCustomID]."\" />";
+												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
 												echo "</div>";
 											}
 											echo "</div>";
@@ -313,7 +332,7 @@ class RBAgency_Profile {
 											foreach($array_customOptions_values as $val){
 												if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
 
-													$dataArr = explode(",",implode(",",explode("','",$_REQUEST["ProfileCustomID". $ProfileCustomID])));
+													$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
 													if(in_array($val,$dataArr,true)){
 														echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
 														echo "<span>&nbsp;&nbsp;". $val."</span></label>";
@@ -344,9 +363,9 @@ class RBAgency_Profile {
 
 											foreach($array_customOptions_values as $val){
 
-												if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]) && $_REQUEST["ProfileCustomID". $ProfileCustomID] !=""){ 
+												if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $ProfileCustomID] !=""){ 
 
-													$dataArr = explode(",",implode(",",explode("','",$_REQUEST["ProfileCustomID". $ProfileCustomID])));
+													$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
 
 													if(in_array($val,$dataArr) && $val !=""){
 														echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
@@ -447,8 +466,7 @@ class RBAgency_Profile {
 													.$ProfileCustomID."[]\" /></div>";
 
 													echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-													."_max\">Max</label><input value=\"".$max_val
-													."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
+													."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
 													
 												}
 										echo "</fieldset>";
@@ -461,20 +479,20 @@ class RBAgency_Profile {
 
 
 				echo "				<div class=\"search-field submit\">";
-				echo "					<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/'\" />";
+				echo "					<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
 				echo "					<input type=\"button\" name=\"search\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
-				echo "					<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/advanced/'\" />";
+				//echo "					<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/advanced/'\" />";
 				echo "				</div>\n";
 				echo "			</form>\n";
 
 				echo "			<script>\n";
 				echo "			function clearForm(){\n";
-				echo "				$('ProfileContactNameFirst').val('');\n";
-				echo "				$('ProfileType').val('');\n";
-				echo "				$('ProfileGender').val('');\n";
-				echo "				$('ProfileContactNameLast').val('');\n";
-				echo "				$('ProfileDateBirth_min').val('');\n";
-				echo "				$('ProfileDateBirth_max').val('');\n";
+				echo "				$('namefirst').val('');\n";
+				echo "				$('namelast').val('');\n";
+				echo "				$('type').val('');\n";
+				echo "				$('gender').val('');\n";
+				echo "				$('datebirth_min').val('');\n";
+				echo "				$('datebirth_max').val('');\n";
 				echo "			}\n";
 				echo "			</script>\n";
 				echo "		</div>\n";
@@ -487,6 +505,15 @@ class RBAgency_Profile {
 	 */
 
 		public static function search_process(){
+
+
+			/*
+			 * Set Session
+			 * TODO: Ensure all keys are valid.
+			 */
+
+			// Check if a new search is posted
+			if ($_REQUEST["action"] == "search") {
 
 				// Initialize
 				$filterArray = array();
@@ -530,9 +557,9 @@ class RBAgency_Profile {
 						$filterArray['page'] = 1;
 					}
 
-					// Override Privacy
-					if (isset($_REQUEST['override_privacy']) && !empty($_REQUEST['override_privacy'])){
-						$filterArray['override_privacy'] = $_REQUEST['override_privacy'];
+					// Override Privacy or Show in Admin Mode
+					if ( (isset($_REQUEST['override_privacy']) && !empty($_REQUEST['override_privacy'])) || $_REQUEST['mode'] == "admin") {
+						$filterArray['override_privacy'] = 1;
 					}
 
 
@@ -541,17 +568,17 @@ class RBAgency_Profile {
 				 */
 
 					// Specific User ID
-					if (isset($_REQUEST['ProfileID']) && !empty($_REQUEST['ProfileID'])){
-						$filterArray['id'] = $_REQUEST['ProfileID'];
+					if (isset($_REQUEST['id']) && !empty($_REQUEST['id'])){
+						$filterArray['id'] = $_REQUEST['id'];
 					}
 
 					// Name
-					if ((isset($_REQUEST['ProfileContactNameFirst']) && !empty($_REQUEST['ProfileContactNameFirst'])) || isset($_REQUEST['ProfileContactNameLast']) && !empty($_REQUEST['ProfileContactNameLast'])){
-						if (isset($_REQUEST['ProfileContactNameFirst']) && !empty($_REQUEST['ProfileContactNameFirst'])){
-							$filterArray['namefirst'] = $_REQUEST['ProfileContactNameFirst'];
+					if ((isset($_REQUEST['namefirst']) && !empty($_REQUEST['namefirst'])) || isset($_REQUEST['namelast']) && !empty($_REQUEST['namelast'])){
+						if (isset($_REQUEST['namefirst']) && !empty($_REQUEST['namefirst'])){
+							$filterArray['namefirst'] = $_REQUEST['namefirst'];
 						}
-						if (isset($_REQUEST['ProfileContactNameLast']) && !empty($_REQUEST['ProfileContactNameLast'])){
-							$filterArray['namelast'] = $_REQUEST['ProfileContactNameLast'];
+						if (isset($_REQUEST['namelast']) && !empty($_REQUEST['namelast'])){
+							$filterArray['namelast'] = $_REQUEST['namelast'];
 						}
 					}
 
@@ -561,21 +588,21 @@ class RBAgency_Profile {
 				 */
 
 					// Type
-					if (isset($_REQUEST['ProfileType']) && !empty($_REQUEST['ProfileType'])){
-						$filterArray['type'] = $_REQUEST['ProfileType'];
+					if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])){
+						$filterArray['type'] = $_REQUEST['type'];
 					}
 
 					// Gender
-					if (isset($_REQUEST['ProfileGender']) && !empty($_REQUEST['ProfileGender'])){
-						$filterArray['gender'] = $_REQUEST['ProfileGender'];
+					if (isset($_REQUEST['gender']) && !empty($_REQUEST['gender'])){
+						$filterArray['gender'] = $_REQUEST['gender'];
 					}
 
 					// Age by Date
-					if (isset($_REQUEST['ProfileDateBirth_min']) && !empty($_REQUEST['ProfileDateBirth_min'])){
-						$filterArray['datebirth_min'] = $_REQUEST['ProfileDateBirth_min'];
+					if (isset($_REQUEST['datebirth_min']) && !empty($_REQUEST['datebirth_min'])){
+						$filterArray['datebirth_min'] = $_REQUEST['datebirth_min'];
 					}
-					if (isset($_REQUEST['ProfileDateBirth_max']) && !empty($_REQUEST['ProfileDateBirth_max'])){
-						$filterArray['datebirth_max'] = $_REQUEST['ProfileDateBirth_max'];
+					if (isset($_REQUEST['datebirth_max']) && !empty($_REQUEST['datebirth_max'])){
+						$filterArray['datebirth_max'] = $_REQUEST['datebirth_max'];
 					}
 
 					// Age by Number
@@ -590,28 +617,24 @@ class RBAgency_Profile {
 				 * Location
 				 */
 
-					// Location
-					if (isset($_REQUEST['ProfileLocationCity']) && !empty($_REQUEST['ProfileLocationCity'])){
-						$filterArray['city'] = $_REQUEST['ProfileLocationCity'];
-					}
 					// City
-					if (isset($_REQUEST['ProfileCity']) && !empty($_REQUEST['ProfileCity'])){
-						$filterArray['city'] = $_REQUEST['ProfileCity'];
+					if (isset($_REQUEST['city']) && !empty($_REQUEST['city'])){
+						$filterArray['city'] = $_REQUEST['city'];
 					}		
 
 					// State
-					if (isset($_REQUEST['ProfileState']) && !empty($_REQUEST['ProfileState'])){
-						$filterArray['state'] = $_REQUEST['ProfileState'];
+					if (isset($_REQUEST['state']) && !empty($_REQUEST['state'])){
+						$filterArray['state'] = $_REQUEST['state'];
 					}
 
 					// ZIP
-					if (isset($_REQUEST['ProfileZip']) && !empty($_REQUEST['ProfileZip'])){
-						$filterArray['zip'] = $_REQUEST['ProfileZip'];
+					if (isset($_REQUEST['zip']) && !empty($_REQUEST['zip'])){
+						$filterArray['zip'] = $_REQUEST['zip'];
 					}
 
 					// Country
-					if (isset($_REQUEST['ProfileCountry']) && !empty($_REQUEST['ProfileCountry'])){
-						$filterArray['country'] = $_REQUEST['ProfileCountry'];
+					if (isset($_REQUEST['country']) && !empty($_REQUEST['country'])){
+						$filterArray['country'] = $_REQUEST['country'];
 					}
 
 				/*
@@ -648,11 +671,12 @@ class RBAgency_Profile {
 					}
 
 				// Active
-				if (isset($_REQUEST['ProfileIsActive'])){
-					$filterArray['isactive'] = $_REQUEST['ProfileIsActive'];
+				if (isset($_REQUEST['isactive'])){
+					$filterArray['isactive'] = $_REQUEST['isactive'];
 				}
 
 			return $filterArray;
+			} // If no post, ignore.
 
 		}
 
@@ -662,7 +686,7 @@ class RBAgency_Profile {
 	 * Process Search converting array to HTML
 	 */
 
-		public static function search_generate_sqlwhere($atts){
+		public static function search_generate_sqlwhere($atts, $exclude){
 
 			$rb_agency_options_arr = get_option('rb_agency_options');
 				// Time Zone
@@ -687,8 +711,8 @@ class RBAgency_Profile {
 					"gender" => NULL,
 					"datebirth_min" => NULL,
 					"datebirth_max" => NULL,
-					"age_start" => NULL,
-					"age_stop" => NULL,
+					"age_min" => NULL,
+					"age_max" => NULL,
 					// Location
 					"city" => NULL,
 					"state" => NULL,
@@ -717,7 +741,7 @@ class RBAgency_Profile {
 			 */
 
 				// Option to show all profiles
-				if (isset($override_privacy)) {
+				if (isset($override_privacy) && !empty($override_privacy)) {
 					// If sent link, show both hidden and visible
 					$filter = "profile.ProfileIsActive IN (1, 4)";
 				} else {
@@ -751,6 +775,12 @@ class RBAgency_Profile {
 
 				// Age
 				$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
+				/* 
+				$timezone_offset = -10; // Hawaii Time
+				$dateInMonth = gmdate('d', time() + $timezone_offset *60 *60);
+				$format = 'Y-m-d';
+				$date = gmdate($format, time() + $timezone_offset *60 *60);
+				*/
 				if (isset($datebirth_min) && !empty($datebirth_min)){
 					$minyear = date('Y-m-d', strtotime('-'. $datebirth_min .' year'. $date));
 					$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
@@ -760,7 +790,6 @@ class RBAgency_Profile {
 					$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
 				}
 
-				// TODO ADD Age number
 
 				// City
 				if (isset($city) && !empty($city)){
@@ -799,6 +828,16 @@ class RBAgency_Profile {
 				// Set CustomFields search
 				if(isset($atts) && !empty($atts)){
 					$filter .= recreate_custom_search($atts);
+				}
+
+			/**
+			 * Filter Models Already in Cart
+			 */
+
+				// Pull Profiles in Cart
+				if (isset($exclude) && !empty($exclude)) {
+					//$cartString = implode(",", $exclude);
+					$filter .= " AND profile.ProfileID NOT IN (". $exclude .")";
 				}
 
 			/*
