@@ -268,7 +268,6 @@ if (isset($_POST['action'])) {
        <?php
 	 
 	              $query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
-      
 /*	   $SearchMuxHash = $dataSearchSavedMux["SearchMuxHash"];
 			
                   $query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
@@ -351,7 +350,6 @@ if (isset($_POST['action'])) {
 						<?php
                                    
 						$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY ProfileContactNameFirst ASC";
-
 						$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 
 						$count = mysql_num_rows($results);

@@ -718,9 +718,8 @@ class RBAgency_Profile {
 					"state" => NULL,
 					"zip" => NULL,
 					"country" => NULL,
-					// REmove
-					"castingcart" => NULL,
-					"getprofile_saved" => NULL,
+					// Casting Cart
+					"include" => NULL,
 					// Distinction
 					"promoted" => NULL,
 					"featured" => NULL,
@@ -746,11 +745,6 @@ class RBAgency_Profile {
 					$filter = "profile.ProfileIsActive IN (1, 4)";
 				} else {
 					$filter = "profile.ProfileIsActive = 1";
-				}
-
-				// ID
-				if (isset($id) && !empty($id)){
-					$filter .= " AND profile.ProfileID = '". $id ."%'";
 				}
 
 				// First Name
@@ -811,13 +805,6 @@ class RBAgency_Profile {
 					$filter .= " AND profile.ProfileLocationCountry = '". ucfirst($country) ."'";
 				}
 
-
-				// Profile Search Saved 
-				if(isset($GetProfileSaved) && !empty($GetProfileSaved)){
-					$filter .= " AND profile.ProfileID IN(".$GetProfileSaved.") ";
-				}
-
-
 				if (isset($featured)){
 					$filter .= " AND profile.ProfileIsFeatured = '1' ";
 				}
@@ -828,6 +815,15 @@ class RBAgency_Profile {
 				// Set CustomFields search
 				if(isset($atts) && !empty($atts)){
 					$filter .= recreate_custom_search($atts);
+				}
+
+			/**
+			 * Only Show from Casting Cart
+			 */
+
+				// Profile Search Saved 
+				if(isset($include) && !empty($include)){
+					$filter .= " AND profile.ProfileID IN (".$include.") ";
 				}
 
 			/**
