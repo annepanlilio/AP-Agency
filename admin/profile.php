@@ -25,6 +25,17 @@ if (function_exists(rb_agencyinteract_approvemembers)) {
 // *************************************************************************************************** //
 // Handle Post Actions
 
+
+      // Verify Record
+		$selectLastName = "SELECT * FROM " . table_agency_profile;
+		$resultsLastName = mysql_query($selectLastName);
+
+		while ($dataLastName = mysql_fetch_array($resultsLastName)) {
+			$ProfileGallery = $dataLastName['ProfileGallery'].'<br>';
+			$ar=explode("-",$ProfileGallery);
+		}	
+		
+
 if (isset($_POST['action'])) {
 
     $ProfileID = $_POST['ProfileID'];
@@ -36,7 +47,18 @@ if (isset($_POST['action'])) {
         if ($rb_agency_option_profilenaming == 0) {
             $ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
         } elseif ($rb_agency_option_profilenaming == 1) {
-            $ProfileContactDisplay = $ProfileContactNameFirst . " " . substr($ProfileContactNameLast, 0, 1);
+            //$ProfileContactDisplay = $ProfileContactNameFirst . " " . substr($ProfileContactNameLast, 0, 1);
+			
+			for ($i = 'a', $j = 1; $j <= 26; $i++, $j++) {
+			  if(in_array($i,$ar)){
+			  	$ProfileContactDisplay = $ProfileContactNameFirst . " " . $i.'-'.$j;
+			  }else{
+			  	$ProfileContactDisplay = $ProfileContactNameFirst . " " . substr($ProfileContactNameLast, 0, 1);
+			  }
+			}
+			
+			
+			
         } elseif ($rb_agency_option_profilenaming == 2) {
             $error .= "<b><i>" . __(LabelSingular . " must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
             $have_error = true;
@@ -315,7 +337,7 @@ if (isset($_POST['action'])) {
                             $count = mysql_num_rows($results);
 
                             if ($count < 1) {
-                                if ($uploadMediaType == "Image" || $uploadMediaType == "Polaroid") {
+                                if ($uploadMediaType == "Image") {
 
                                     if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
 
@@ -992,7 +1014,7 @@ function rb_display_manage($ProfileID) {
         echo "      <p>" . __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 
         for ($i = 1; $i < 10; $i++) {
-            echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>";
+            echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option>";
             rb_agency_getMediaCategories($ProfileGender);
             echo"</select><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></div>\n";
         }
