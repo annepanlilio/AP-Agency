@@ -462,7 +462,7 @@ class RBAgency_Profile {
 													echo "<div><label for=\"ProfileCustomID".$ProfileCustomID
 													."_min\">Min</label><input value=\""
 													.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
-													."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
+													."\" class=\"stusbby\" type=\"text\" name=\"ProfileCustomID"
 													.$ProfileCustomID."[]\" /></div>";
 
 													echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
