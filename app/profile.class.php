@@ -126,7 +126,7 @@ class RBAgency_Profile {
 
 				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
 				echo "			<form class=\"test\" method=\"post\" id=\"search-form-condensed\" action=\"". $rb_agency_searchurl ."\">\n";
-				echo "				<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
+				echo "				ddd<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
 				echo "				<input type=\"hidden\" name=\"mode\" value=\"". $search_layout ."\" />\n";
 				echo "				<input type=\"hidden\" name=\"isactive\" value=\"1\" />\n";
 
