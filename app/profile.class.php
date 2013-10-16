@@ -54,17 +54,16 @@ class RBAgency_Profile {
 						} else {
 							$search_layout = "simple";
 						}
-
 					}
-
-
 				}
 
 
 			/*
-			 * Where is Form Located?
+			 * Override
 			 */
 
+				// Override any of the following to use Min-Max values
+				$overrideMinMax = array("Shirt", "Dress");  //   "Suit", "Bust" for custom fields min and max
 
 
 			/*
@@ -240,72 +239,71 @@ class RBAgency_Profile {
 						 *     3 = Feet/Inches
 						 */
 
+						/*
+						 * Min Max
+						 */
+						if($ProfileCustomType == 2 || in_array($ProfileCustomTitle, $overrideMinMax)) {
+
+								echo "<div class=\"search-field single\">";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+								$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($ProfileCustomOptions,"}"),"{"));
+								list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
+
+								if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
+									echo "<div>";
+									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />";
+									echo "</div>";
+									echo "<div>";
+									echo "<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"". $ProfileCustomOptions_Max_value ."\" />";
+									echo "</div>";
+								} else {
+									echo "<div>";
+									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
+									echo "</div>";
+									echo "<div>";
+									echo "<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
+									echo "</div>";
+								}
+								echo "</div>";
 
 						/*
 						 * Single Text Line
 						 */
-						if($ProfileCustomType == 1) {
-											echo "<div class=\"search-field single\">";
-											echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-											echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
-											echo "</div>";
-
-
-						/*
-						 * Min Max
-						 */
-						} elseif($ProfileCustomType == 2) {
-											echo "<div class=\"search-field single\">";
-											echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-											$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($ProfileCustomOptions,"}"),"{"));
-											list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
-
-											if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
-												echo "<div>";
-												echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />";
-												echo "</div>";
-												echo "<div>";
-												echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"". $ProfileCustomOptions_Max_value ."\" />";
-												echo "</div>";
-											} else {
-												echo "<div>";
-												echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
-												echo "</div>";
-												echo "<div>";
-												echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-												echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
-												echo "</div>";
-											}
-											echo "</div>";
+						} elseif($ProfileCustomType == 1) {
+								echo "<div class=\"search-field single\">";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+								echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
+								echo "</div>";
 
 						/*
 						 * Dropdown
 						 */
 						} elseif($ProfileCustomType == 3) {
-											echo "<div class=\"search-field single\">";
-											echo "	<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-											echo "	<select name=\"ProfileCustomID". $ProfileCustomID ."\">";
-											echo "		<option value=\"\">--</option>";
+								echo "<div class=\"search-field single\">";
+								echo "	<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+								echo "	<select name=\"ProfileCustomID". $ProfileCustomID ."\">";
+								echo "		<option value=\"\">--</option>";
 
-												$values = explode("|",$ProfileCustomOptions);
-												foreach($values as $value){
-													// Validate Value
-													if(!empty($value)) {
-														// Identify Existing Value
-														$isSelected = "";
-														if($_REQUEST["ProfileCustomID". $ProfileCustomID]==$value){
-															$isSelected = "selected=\"selected\"";
-															echo "<option value=\"".$value."\" ".$isSelected .">".$value."</option>";
-														}else{
-															echo "<option value=\"".$value."\" >".$value."</option>"; 
-														}
-													}
-												}
-											echo "</select>";
-											echo "</div>";
+									$values = explode("|",$ProfileCustomOptions);
+									foreach($values as $value){
+										// Validate Value
+										if(!empty($value)) {
+											// Identify Existing Value
+											$isSelected = "";
+											if($_REQUEST["ProfileCustomID". $ProfileCustomID]==$value){
+												$isSelected = "selected=\"selected\"";
+												echo "<option value=\"".$value."\" ".$isSelected .">".$value."</option>";
+											}else{
+												echo "<option value=\"".$value."\" >".$value."</option>"; 
+											}
+										}
+									}
+								echo "</select>";
+								echo "</div>";
 
 
 						/*
@@ -324,152 +322,152 @@ class RBAgency_Profile {
 						 * Checkbox
 						 */
 						} elseif($ProfileCustomType == 5) {
-											echo "<fieldset class=\"search-field multi\">";
-											echo "<legend>". $ProfileCustomTitle ."</legend>";
+								echo "<fieldset class=\"search-field multi\">";
+								echo "<legend>". $ProfileCustomTitle ."</legend>";
 
-											$array_customOptions_values = explode("|", $ProfileCustomOptions);
+								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 
-											foreach($array_customOptions_values as $val){
-												if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
+								foreach($array_customOptions_values as $val){
+									if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
 
-													$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
-													if(in_array($val,$dataArr,true)){
-														echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-														echo "<span>&nbsp;&nbsp;". $val."</span></label>";
-													} else {
-														if($val !=""){	
-															echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-															echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
-														}
-													}
-												} else {
-													if($val !=""){	
-														echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-														echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
-													}
-												}
+										$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
+										if(in_array($val,$dataArr,true)){
+											echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+										} else {
+											if($val !=""){	
+												echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+												echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
 											}
+										}
+									} else {
+										if($val !=""){	
+											echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
+										}
+									}
+								}
 
-											echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";
-											echo "</fieldset>";
+								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";
+								echo "</fieldset>";
 
 						/*
 						 * Radio Button
 						 */
 						} elseif($ProfileCustomType == 6) {
-											echo "<fieldset class=\"search-field multi\">";
-											echo "<legend>". $ProfileCustomTitle ."</legend>";
-											$array_customOptions_values = explode("|", $ProfileCustomOptions);
+								echo "<fieldset class=\"search-field multi\">";
+								echo "<legend>". $ProfileCustomTitle ."</legend>";
+								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 
-											foreach($array_customOptions_values as $val){
+								foreach($array_customOptions_values as $val){
 
-												if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $ProfileCustomID] !=""){ 
+									if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]) && $_SESSION["ProfileCustomID". $ProfileCustomID] !=""){ 
 
-													$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
+										$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
 
-													if(in_array($val,$dataArr) && $val !=""){
-														echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-														echo "<span>&nbsp;&nbsp;". $val."</span></label>";
-													}else{
-														if($val !=""){
-															echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-															echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
-														}
-													}
-												} else {
-													if($val !=""){
-														echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-														echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
-													}
-												}
+										if(in_array($val,$dataArr) && $val !=""){
+											echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+										}else{
+											if($val !=""){
+												echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+												echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
 											}
-											echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";	       
-											echo "</fieldset>";
+										}
+									} else {
+										if($val !=""){
+											echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
+										}
+									}
+								}
+								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";	       
+								echo "</fieldset>";
 
 						/*
 						 * Metric
 						 */
 						} elseif($ProfileCustomType == 7) {
-											echo "<fieldset class=\"search-field multi\">";
+								echo "<fieldset class=\"search-field multi\">";
 
-											$measurements_label = "";
+								$measurements_label = "";
 
-											// 0 = Metrics(ft/kg)
-											if($rb_agency_option_unittype ==0){
-												if($ProfileCustomOptions == 1){
-													$measurements_label  ="<em> (cm)</em>";
-												} elseif($ProfileCustomOptions == 2){
-													$measurements_label  ="<em> (kg)</em>";
-												} elseif($ProfileCustomOptions == 3){
-													$measurements_label  ="<em> (ft/in)</em>";
+								// 0 = Metrics(ft/kg)
+								if($rb_agency_option_unittype ==0){
+									if($ProfileCustomOptions == 1){
+										$measurements_label  ="<em> (cm)</em>";
+									} elseif($ProfileCustomOptions == 2){
+										$measurements_label  ="<em> (kg)</em>";
+									} elseif($ProfileCustomOptions == 3){
+										$measurements_label  ="<em> (ft/in)</em>";
+									}
+
+								//1 = Imperial(in/lb)
+								} elseif($rb_agency_option_unittype ==1){
+									if($ProfileCustomOptions == 1){
+										$measurements_label  ="<em> (in)</em>";
+									} elseif($ProfileCustomOptions == 2){
+										$measurements_label  ="<em> (lb)</em>";
+									} elseif($ProfileCustomOptions == 3){
+										$measurements_label  ="<em> (ft/in)</em>";
+									}
+								}
+								echo "<legend>". $ProfileCustomTitle . $measurements_label ."</legend>";
+
+								list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
+
+									if($ProfileCustomTitle=="Height" && $ProfileCustomID==3){
+
+									echo "<div><label>Min</label><select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
+										  if (empty($ProfileCustomValue)) {
+											echo "  <option value=\"\">--</option>\n";
+										  }
+										  // 
+										  $i=12;
+										  $heightraw = 0;
+										  $heightfeet = 0;
+										  $heightinch = 0;
+										  while($i<=96)  { 
+											  $heightraw = $i;
+											  $heightfeet = floor($heightraw/12);
+											  $heightinch = $heightraw - floor($heightfeet*12);
+										  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+												  $i++;
 												}
-
-											//1 = Imperial(in/lb)
-											} elseif($rb_agency_option_unittype ==1){
-												if($ProfileCustomOptions == 1){
-													$measurements_label  ="<em> (in)</em>";
-												} elseif($ProfileCustomOptions == 2){
-													$measurements_label  ="<em> (lb)</em>";
-												} elseif($ProfileCustomOptions == 3){
-													$measurements_label  ="<em> (ft/in)</em>";
+										  echo " </select></div>\n";
+										  
+										   echo "<div><label>Max</label><select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
+										  if (empty($ProfileCustomValue)) {
+											echo "  <option value=\"\">--</option>\n";
+										  }
+										  // 
+										  $i=12;
+										  $heightraw = 0;
+										  $heightfeet = 0;
+										  $heightinch = 0;
+										  while($i<=96)  { 
+											  $heightraw = $i;
+											  $heightfeet = floor($heightraw/12);
+											  $heightinch = $heightraw - floor($heightfeet*12);
+											echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+												  $i++;
 												}
-											}
-											echo "<legend>". $ProfileCustomTitle . $measurements_label ."</legend>";
+											echo " </select></div>\n";
 
-											list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
+									} else {
+										
+										// for other search
+										echo "<div><label for=\"ProfileCustomID".$ProfileCustomID
+										."_min\">Min</label><input value=\""
+										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
+										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
+										.$ProfileCustomID."[]\" /></div>";
 
-												if($ProfileCustomTitle=="Height" && $ProfileCustomID==3){
-
-												echo "<div><label>Min</label><select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
-													  if (empty($ProfileCustomValue)) {
-														echo "  <option value=\"\">--</option>\n";
-													  }
-													  // 
-													  $i=12;
-													  $heightraw = 0;
-													  $heightfeet = 0;
-													  $heightinch = 0;
-													  while($i<=96)  { 
-														  $heightraw = $i;
-														  $heightfeet = floor($heightraw/12);
-														  $heightinch = $heightraw - floor($heightfeet*12);
-													  echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-															  $i++;
-															}
-													  echo " </select></div>\n";
-													  
-													   echo "<div><label>Max</label><select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
-													  if (empty($ProfileCustomValue)) {
-														echo "  <option value=\"\">--</option>\n";
-													  }
-													  // 
-													  $i=12;
-													  $heightraw = 0;
-													  $heightfeet = 0;
-													  $heightinch = 0;
-													  while($i<=96)  { 
-														  $heightraw = $i;
-														  $heightfeet = floor($heightraw/12);
-														  $heightinch = $heightraw - floor($heightfeet*12);
-														echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-															  $i++;
-															}
-														echo " </select></div>\n";
-
-												} else {
-													
-													// for other search
-													echo "<div><label for=\"ProfileCustomID".$ProfileCustomID
-													."_min\">Min</label><input value=\""
-													.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
-													."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
-													.$ProfileCustomID."[]\" /></div>";
-
-													echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-													."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
-													
-												}
-										echo "</fieldset>";
+										echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
+										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
+										
+									}
+							echo "</fieldset>";
 
 						} // End Type
 
@@ -501,7 +499,7 @@ class RBAgency_Profile {
 
 	/*
 	 * Search: Process Form Submission
-	 * Process Search conerting requests to an array of search terms
+	 * Process Search converting requests to an array of search terms
 	 */
 
 		public static function search_process(){
@@ -683,7 +681,7 @@ class RBAgency_Profile {
 
 	/*
 	 * Search: Prepare SQL String
-	 * Process Search converting array to HTML
+	 * Process values into SQL string holding WHERE clause
 	 */
 
 		public static function search_generate_sqlwhere($atts, $exclude){
@@ -814,7 +812,159 @@ class RBAgency_Profile {
 
 				// Set CustomFields search
 				if(isset($atts) && !empty($atts)){
-					$filter .= recreate_custom_search($atts);
+
+				/*
+				 *  Custom Fields
+				 */
+					// TODO NEEDED?
+					$overrideMinMax = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
+					$filterDropdown = array();
+					$filter2 = "";
+
+					// Loop through all attributes looking for custom
+					foreach ($atts as $key => $val) {
+						if (substr($key,0,15) == "ProfileCustomID") {
+
+						/*
+						 *  Check if this is array or not because sometimes $val is an array so
+						 *  array_filter is not applicable
+						 */
+							if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
+
+								/*
+								 * Id like to chop this one out and extract
+								 * the array values from here and make it a string with "," or
+								 * pass the single value back $val
+								 */
+								if(is_array($val)){
+									if(count(array_filter($val)) > 1) {
+										$ct =1;
+										foreach($val as $v){
+											if($ct == 1){
+												$val = $v;
+												$ct++;
+											} else {
+												$val = $val .",".$v;
+											}
+										}
+									} else {
+										$val = array_shift(array_values($val));
+									} 
+								}
+
+								$q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
+								$ProfileCustomType = mysql_fetch_assoc($q);
+
+								/*
+								 * Have created a holder $filter2 and
+								 * create its own filter here and change
+								 * AND should be OR
+								 */
+
+								/******************
+								  1 - Text
+								  2 - Min-Max > Removed
+								  3 - Dropdown
+								  4 - Textbox
+								  5 - Checkbox
+								  6 - Radiobutton
+								  7 - Metrics/Imperials
+								 *********************/
+
+								$open_st = ' AND EXISTS( SELECT * FROM '. table_agency_customfield_mux . ' WHERE ' ;
+								$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID ) ';
+
+								if(in_array($ProfileCustomType['ProfileCustomTitle'], $overrideMinMax)) {
+
+									list($minVal,$maxVal) = explode(",",$val);
+									$filter2 .= "$open_st ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' $close_st";
+
+								} else {
+
+									if ($ProfileCustomType["ProfileCustomType"] == 1) {
+										// Text
+										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+										$_SESSION[$key] = $val;
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 3) {
+										// Dropdown
+										$filter2 .="$open_st ProfileCustomValue IN ('".$val."') $close_st";
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
+										// Textarea
+										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+										$_SESSION[$key] = $val;
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
+
+										if(!empty($val)){
+
+											if(strpos($val,",") === false){
+												$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
+
+											} else {
+
+												$likequery = explode(",", $val);
+												$likecounter = count($likequery);
+												$i=1; 
+
+												$likedata = "" ;
+
+												// for profiles with multiple values
+												$likedata2 = "" ;
+												$likedata3 = "" ;
+
+												foreach($likequery as $like){
+													if($i < ($likecounter-1)){
+														if($like!="") {
+															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+															$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') OR "  ;
+															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+														}
+													} else {
+														if($like!=""){
+															$likedata.= " ProfileCustomValue ='".$like."' "  ;
+															$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') ";
+															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+														}
+													}
+													$i++;
+												}
+
+												$val = substr($val, 0, -1);
+												$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
+												$filter2 .= "$open_st (".$sr_data.") $close_st";
+											}
+
+											$_SESSION[$key] = $val;
+										} else {
+											$_SESSION[$key] = "";
+										}
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
+										//Radiobutton 
+										$val = implode("','",explode(",",$val));
+										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+										$_SESSION[$key] = $val;
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
+										list($Min_val,$Max_val) = explode(",",$val);
+										if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
+											$filter2  .= "$open_st ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' $close_st";
+											$_SESSION[$key] = $val;
+										}
+									}
+								}
+								mysql_free_result($q);
+							} // if not empty
+						} // end if
+					} // end for each
+
+					if(count($filterDropdown) > 0){
+						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
+					}
+
+					$filter .= $filter2;
 				}
 
 			/**
@@ -908,16 +1058,16 @@ class RBAgency_Profile {
 			 */
 				// Execute Query   removed profile.*,
 				$queryList = "
-				SELECT 
-					profile.ProfileID,
-					profile.ProfileGallery,
-					profile.ProfileContactDisplay, 
-					profile.ProfileDateBirth, 
-					profile.ProfileDateCreated,
-					profile.ProfileLocationState
-				FROM ". table_agency_profile ." profile 
-				WHERE profile.ProfileID IN ($ids)
-				GROUP BY profile.ProfileID";
+					SELECT 
+						profile.ProfileID,
+						profile.ProfileGallery,
+						profile.ProfileContactDisplay, 
+						profile.ProfileDateBirth, 
+						profile.ProfileDateCreated,
+						profile.ProfileLocationState
+					FROM ". table_agency_profile ." profile 
+					WHERE profile.ProfileID IN ($ids)
+					GROUP BY profile.ProfileID";
 				$results = mysql_query($queryList);
 				$count = mysql_num_rows($results);
 				if ($count > 0){

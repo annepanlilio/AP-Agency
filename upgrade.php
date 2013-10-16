@@ -59,7 +59,7 @@ global $wpdb;
 	}
 
 	// Upgradef rom 1.8.2
-	if (get_option('rb_agency_version') == "1.8.2") { 
+	if (get_option('rb_agency_version') == "1.8.2") {
 
 		// Change Field Names
 		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." CHANGE ProfileCustomOptions ProfileCustomOptions TEXT");
@@ -84,7 +84,7 @@ global $wpdb;
 	}
 
 	// Upgrade from 1.8.5
-	if (get_option('rb_agency_version') == "1.8.5") { 
+	if (get_option('rb_agency_version') == "1.8.5") {
 
 		// Setup > Taxonomy: Gender
 		if ($wpdb->get_var("show tables like '".  table_agency_data_gender ."'") !=  table_agency_data_gender ) { 
@@ -112,7 +112,7 @@ global $wpdb;
 	}
 
 	// Upgrade from 1.8.9
-	if (get_option('rb_agency_version') == "1.8.9") {	
+	if (get_option('rb_agency_version') == "1.8.9") {
 		update_option('rb_agency_version', "1.9");
 	}
 
@@ -258,7 +258,7 @@ global $wpdb;
 		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
 			$ProfileID = $f_Profile["ProfileID"];
 			$ProfileGender = $f_Profile["ProfileGender"];
-			
+
 			$arr_profile_features = array(
 				"ProfileLanguage" => "Language",
 				"ProfileStatEthnicity" => "Ethnicity",
@@ -275,31 +275,31 @@ global $wpdb;
 				"ProfileUnion" => "Union",
 				"ProfileExperience" => "Experience");
 				// old column   to  custom fields 
-			foreach($arr_profile_features as $oldColumn => $migrate_data):		
+			foreach($arr_profile_features as $oldColumn => $migrate_data):
 				$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
-				 	   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
-				 	   FROM   " . table_agency_customfields . "  
-			       	   WHERE ProfileCustomTitle ='". $migrate_data."'";
+						SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
+						FROM   " . table_agency_customfields . "  
+						WHERE ProfileCustomTitle ='". $migrate_data."'";
 				 mysql_query($query) or die(mysql_error());
-		      endforeach;
+			endforeach;
 		}// end while data fetch
-		
+
 		// Updating version number!
 		update_option('rb_agency_version', "1.9.1.2");
 	}
-	if (get_option('rb_agency_version') == "1.9.1.2") {	
+	if (get_option('rb_agency_version') == "1.9.1.2") {
 		update_option('rb_agency_version', "1.9.1.3");
 	}
-	if (get_option('rb_agency_version') == "1.9.1.3") {	
+	if (get_option('rb_agency_version') == "1.9.1.3") {
 		update_option('rb_agency_version', "1.9.1.4");
 	}
-	if (get_option('rb_agency_version') == "1.9.1.4") {	
+	if (get_option('rb_agency_version') == "1.9.1.4") {
 		update_option('rb_agency_version', "1.9.1.5");
 	}
-	if (get_option('rb_agency_version') == "1.9.1.5") {	
+	if (get_option('rb_agency_version') == "1.9.1.5") {
 		update_option('rb_agency_version', "1.9.1.6");
 	}
-	if (get_option('rb_agency_version') == "1.9.1.6") {	
+	if (get_option('rb_agency_version') == "1.9.1.6") {
 		update_option('rb_agency_version', "1.9.2");
 	}
 
@@ -418,7 +418,7 @@ global $wpdb;
 		} else {
 			$results = $wpdb->query("RENAME TABLE {$wpdb->prefix}agency_customfields TO {$wpdb->prefix}agency_data_media");
 		}
-		
+
 		update_option('rb_agency_version', "2.0.4");
 	}
 
