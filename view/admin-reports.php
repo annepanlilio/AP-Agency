@@ -1494,6 +1494,7 @@ class RBAgencyCSVXLSImpoterPlugin {
         {
             if(move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path))
             {
+//TODO: Need to replace file_upload with WP-Content/Upload/rb-agency/ path
                 $file_name = WP_CONTENT_DIR.'/plugins/rb-agency/file_upload/'.basename( $_FILES['source_file']['name']);
                 update_option('wp_csvtodb_input_file_url', $file_name);
             }
