@@ -341,11 +341,11 @@ class RBAgency_Profile {
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
-							
-								foreach($array_customOptions_values as $val){
-									echo "session";
+								echo "session";
 									print_r($_SESSION["ProfileCustomID". $ProfileCustomID]);
 									echo "<br /><br />";
+								foreach($array_customOptions_values as $val){
+								
 									if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
 										
 										$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
