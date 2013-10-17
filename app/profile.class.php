@@ -121,7 +121,10 @@ class RBAgency_Profile {
 
 			/*
 			 * Search Form
-			 */
+			 */  
+			 echo "Session data--";
+			 print_r($_SESSION);
+			 
 
 				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
 				echo "			<form method=\"post\" id=\"search-form-condensed\" action=\"". $rb_agency_searchurl ."\">\n";
