@@ -251,7 +251,7 @@ class RBAgency_Profile {
 								list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
 							if(is_array($_SESSION["ProfileCustomID".$ProfileCustomID])){
 								$_SESSION["ProfileCustomID".$ProfileCustomID]=@implode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
-								list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
+								list($min_val2,$max_val2) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
 								}
 								
 								
@@ -267,11 +267,11 @@ class RBAgency_Profile {
 								} else {
 									echo "<div>";
 									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$min_val."\" />";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$min_val2."\" />";
 									echo "</div>";
 									echo "<div>";
 									echo "<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val."\" />";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val2."\" />";
 									echo "</div>";
 								}
 								echo "</div>";
