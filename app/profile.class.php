@@ -918,7 +918,7 @@ class RBAgency_Profile {
 												$filter2 .= "$open_st ProfileCustomValue LIKE '%".$val."%' $close_st";
 
 											} else {
-												echo $val;
+												
 												$likequery = explode(",", $val);
 												$likecounter = count($likequery);
 												$i=1; 
@@ -933,8 +933,8 @@ class RBAgency_Profile {
 													if($i != $likecounter){
 														if($like!="") {
 															
-															$likedata.= " ProfileCustomValue ='".$like."' AND "  ;
-															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') OR "  ;
+															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') AND "  ;
 															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') AND "  ;
 														}
 													} else {
