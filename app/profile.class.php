@@ -341,11 +341,11 @@ class RBAgency_Profile {
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
-								print_r($_SESSION);
+								
 									echo $_SESSION["ProfileCustomID". $ProfileCustomID];
 								foreach($array_customOptions_values as $val){
 								
-									if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
+									if(isset($_SESSION["ProfileCustomID". $ProfileCustomID])){ 
 										
 										$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
 										if(in_array($val,$dataArr,true)){
@@ -949,7 +949,7 @@ class RBAgency_Profile {
 													}
 													$i++;
 												}
-												//Commented to fix checkbox selected issue
+												//Commented to fix checkbox issue
 												//$val = substr($val, 0, -1);
 												$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
 												$filter2 .= "$open_st (".$sr_data.") $close_st";
