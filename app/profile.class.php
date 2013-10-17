@@ -339,10 +339,7 @@ class RBAgency_Profile {
 						} elseif($ProfileCustomType == 5) {
 								echo "<fieldset class=\"search-field multi\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
-
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
-								
-									echo $_SESSION["ProfileCustomID". $ProfileCustomID];
 								foreach($array_customOptions_values as $val){
 								
 									if(isset($_SESSION["ProfileCustomID". $ProfileCustomID])){ 
@@ -918,7 +915,7 @@ class RBAgency_Profile {
 										if(!empty($val)){
 
 											if(strpos($val,",") === false){
-												$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
+												$filter2 .= "$open_st ProfileCustomValue LIKE '%".$val."%' $close_st";
 
 											} else {
 
