@@ -415,9 +415,8 @@ class RBAgency_Profile {
 								}
 								echo "<legend>". $ProfileCustomTitle . $measurements_label ."</legend>";
 								if(is_array($_SESSION["ProfileCustomID".$ProfileCustomID])){
-								$_SESSION["ProfileCustomID".$ProfileCustomID]=@implode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
+									$_SESSION["ProfileCustomID".$ProfileCustomID]=@implode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
 									}
-									print_r($_SESSION["ProfileCustomID".$ProfileCustomID]);
 								list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
 
 									if($ProfileCustomTitle=="Height" && $ProfileCustomID==3){
