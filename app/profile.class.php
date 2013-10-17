@@ -123,7 +123,23 @@ class RBAgency_Profile {
 			 * Search Form
 			 */
 
-		
+				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
+				echo "			<form method=\"post\" id=\"search-form-condensed\" action=\"". $rb_agency_searchurl ."\">\n";
+				echo "				<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
+				echo "				<input type=\"hidden\" name=\"mode\" value=\"". $search_layout ."\" />\n";
+				echo "				<input type=\"hidden\" name=\"isactive\" value=\"1\" />\n";
+
+									// Show Profile Name
+									if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
+				echo "				<div class=\"search-field single\">\n";
+				echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
+				echo "					<input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"". $_SESSION["namefirst"] ."\" />\n";
+				echo "				</div>\n";
+				echo "				<div class=\"search-field single\">\n";
+				echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
+				echo "					<input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"". $_SESSION["namelast"] ."\" />\n";
+				echo "				</div>\n";
+									}
 
 									// Show Profile Type
 									if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
