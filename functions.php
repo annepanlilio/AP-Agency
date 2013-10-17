@@ -182,7 +182,7 @@ error_reporting(0);
 			$newrules['profile-category/(.*)$'] = 'index.php?type=category&target=$matches[1]';
 			$newrules['profile-category'] = 'index.php?type=category&target=all';
 			$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
-			$newrules['profile-casting'] = 'index.php?type=casting&target=casting'; 
+			$newrules['profile-casting'] = 'index.php?type=casting&target=casting';
 			$newrules['profile-print'] = 'index.php?type=print';
 			$newrules['profile-email'] = 'index.php?type=email';
 			$newrules['dashboard'] = 'index.php?type=dashboard';
@@ -217,29 +217,47 @@ error_reporting(0);
 		}
 
 	// Set Custom Template
-	add_filter('template_include', 'rb_agency_template_include', 1, 1); 
+	add_filter('template_include', 'rb_agency_template_include', 1, 1);
 		function rb_agency_template_include( $template ) {
-			if ( get_query_var( 'type' ) ) {				
+			if ( get_query_var( 'type' ) ) {
 				//echo get_query_var( 'type' );
+
 				if (get_query_var( 'type' ) == "search") {
-					return dirname(__FILE__) . '/view/profile-search.php'; 
+				// Public Profile Search
+					return rb_agency_BASEREL . 'view/profile-search.php';
+
 				} elseif (get_query_var( 'type' ) == "profilecastingcart") {
-					return dirname(__FILE__) . '/view/profile-castingcart.php'; 
+				// Casting cart
+					return rb_agency_BASEREL . 'view/profile-castingcart.php';
+
 				} elseif (get_query_var( 'type' ) == "category") {
-					return dirname(__FILE__) . '/theme/view-category.php'; 
+				// Category View
+					return dirname(__FILE__) . '/theme/view-category.php';
+
 				} elseif (get_query_var( 'type' ) == "profile") {
-					return dirname(__FILE__) . '/theme/view-profile.php'; 
+				// Profile View
+					return rb_agency_BASEREL . 'view/profile-view.php';
+
 				} elseif (get_query_var( 'type' ) == "profilecontact") {
-					return dirname(__FILE__) . '/theme/view-profile-contact.php'; 
+				// Profile Contact Form
+					return dirname(__FILE__) . '/theme/view-profile-contact.php';
+
 				} elseif (get_query_var( 'type' ) == "dashboard") {
-					return dirname(__FILE__) . '/theme/view-dashboard.php'; 
+				// Dashboard TODO: REMOVE
+					return dirname(__FILE__) . '/theme/view-dashboard.php';
+
 				} elseif (get_query_var( 'type' ) == "print") {
-					return dirname(__FILE__) . '/theme/view-print.php'; 
+				// Print Mode: TODO REFACTOR
+					return dirname(__FILE__) . '/theme/view-print.php';
+
 				} elseif (get_query_var( 'type' ) == "favorite") {
-					return dirname(__FILE__) . '/theme/view-favorite.php'; 
-				}elseif (get_query_var( 'type' ) == "casting") {
-					return dirname(__FILE__) . '/theme/view-castingcart.php'; 
-				}elseif (get_query_var( 'type' ) == "version") {
+				// VIEW Favorites: TODO REFACTOR
+					return dirname(__FILE__) . '/theme/view-favorite.php';
+
+				} elseif (get_query_var( 'type' ) == "casting") {
+					return dirname(__FILE__) . '/theme/view-castingcart.php';
+
+				} elseif (get_query_var( 'type' ) == "version") {
 					return dirname(__FILE__) . '/version.php'; 
 				}
 			}
@@ -762,6 +780,7 @@ error_reporting(0);
 			"override_privacy" => NULL,
 			"profilefavorite" => NULL,
 			"profilecastingcart" => NULL,
+			"getprofile_saved" => NULL,
 			"profilecity" => NULL,
 			"profilestate" => NULL,
 			"profilezip" => NULL
@@ -829,10 +848,6 @@ error_reporting(0);
 		$State						= $profilestate;
 		$Zip						= $profilezip;  
 
-			// Set CustomFields search
-		if(isset($atts) && !empty($atts)){
-			   $filter .= recreate_custom_search($atts);
-		}
 
 		// Name
 		if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
@@ -3498,163 +3513,7 @@ function fullwidth_class(){
  * recreate custom field search
  */
 function recreate_custom_search($GET){
-
-	global $wpdb;
-
-	 $cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
-
-	 $filterDropdown = array();
-
-	 $filter2 = "";
-
-	 foreach($GET as $key => $val){
-                        
-                
-                if (substr($key,0,15) == "ProfileCustomID") {
-                        
-                              /*
-                               *  Check if this is array or not
-                               *  because sometimes $val is an array so
-                               *  array_filter is not applicable
-                               */	
-                              if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
-                                   
-                                    /*
-                                     * Id like to chop this one out and extract
-                                     * the array values from here and make it a string with "," or
-                                     * pass the single value back $val
-                                     */
-                                    if(is_array($val)){
-                                      
-                                            if(count(array_filter($val)) > 1) {
-                                                $ct =1;
-                                                foreach($val as $v){
-                                                    if($ct == 1){
-                                                        $val = $v;
-                                                        $ct++;
-
-                                                    } else {
-                                                        $val = $val .",".$v;
-                                                    }
-                                                }
-                                            } else {
-                                                $val = array_shift(array_values($val));
-                                            } 
-                                    }
-
-                                    $q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
-				    $ProfileCustomType = mysql_fetch_assoc($q);
-
-
-                                    /*
-                                     * Have created a holder $filter2 and
-                                     * create its own filter here and change
-                                     * AND should be OR
-                                     */
-
-                                     /******************
-                                      1 - Text
-                                      2 - Min-Max > Removed
-                                      3 - Dropdown
-                                      4 - Textbox
-                                      5 - Checkbox
-                                      6 - Radiobutton
-                                      7 - Metrics/Imperials
-                                     *********************/
-
-                                      $open_st = ' AND EXISTS( SELECT * FROM '. table_agency_customfield_mux . ' WHERE ' ;
-                                      $close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID ) ';
-
-   				      if(in_array($ProfileCustomType['ProfileCustomTitle'], $cusFields)) {
-
-                                                list($minVal,$maxVal) = explode(",",$val);
-                                                $filter2 .= "$open_st ProfileCustomValue BETWEEN '".$minVal."' AND '".$maxVal."' $close_st";
-
-				      } else {
-
-						if ($ProfileCustomType["ProfileCustomType"] == 1) { //TEXT
-							$filter2 .= "$open_st ProfileCustomValue like('%".$val."%') $close_st";
-							$_SESSION[$key] = $val;
-
-						} elseif ($ProfileCustomType["ProfileCustomType"] == 3) { // Dropdown
-							$filter2 .="$open_st ProfileCustomValue IN('".$val."') $close_st";
-
-                                		} elseif ($ProfileCustomType["ProfileCustomType"] == 4) { //Textarea
-							$filter2 .= "$open_st ProfileCustomValue like('%".$val."%') $close_st";
-							$_SESSION[$key] = $val;
-
-						} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
-
-							if(!empty($val)){
-
-								if(strpos($val,",") === false){
-
-									$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
-
-								} else {
-
-									$likequery = explode(",", $val);
-									$likecounter = count($likequery);
-									$i=1; 
-
-									$likedata = "" ;
-
-									// for profiles with multiple values
-									$likedata2 = "" ;
-									$likedata3 = "" ;
-
-									foreach($likequery as $like){
-										if($i < ($likecounter-1)){
-											if($like!="") {
-												$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-												$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') OR "  ;
-												$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-											}
-										} else {
-											if($like!=""){
-												$likedata.= " ProfileCustomValue ='".$like."' "  ;
-												$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') ";
-												$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-											} 
-										}
-										$i++;
-									}
-
-									$val = substr($val, 0, -1);
-									$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
-									$filter2 .= "$open_st (".$sr_data.") $close_st";
-								}
-
-									$_SESSION[$key] = $val;
-							} else {
-								$_SESSION[$key] = "";
-						}
-
-					} elseif ($ProfileCustomType["ProfileCustomType"] == 6) { //Radiobutton 
-                                       $val = implode("','",explode(",",$val));
-                                       $filter2 .= "$open_st ProfileCustomValue like('%".$val."%') $close_st";
-                                       $_SESSION[$key] = $val;
-                                   
-
-					} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
-						list($Min_val,$Max_val) = explode(",",$val);
-						if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
-							$filter2  .= "$open_st ProfileCustomValue BETWEEN '".$Min_val."' AND '".$Max_val."' $close_st";
-							$_SESSION[$key] = $val;
-						}
-
-                     }
-					}
-					mysql_free_result($q);
-				} // if not empty
-			 }  // end if
-	 } // end for each
-
-	 if(count($filterDropdown) > 0){
-               $filter2 .="$open_st ProfileCustomValue IN('".implode("','",$filterDropdown)."') $close_st";
-         }
-
-  return $filter2;
+// TODO REMOVED
 
 
 }
