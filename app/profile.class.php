@@ -929,10 +929,6 @@ class RBAgency_Profile {
 												// for profiles with multiple values
 												$likedata2 = "" ;
 												$likedata3 = "" ;
-												echo $val;
-												echo "likequery";
-												echo "<br />";
-												print_r($likequery);
 												foreach($likequery as $like){
 													if($i < ($likecounter-1)){
 														if($like!="") {
@@ -942,9 +938,9 @@ class RBAgency_Profile {
 														}
 													} else {
 														if($like!=""){
-															$likedata.= " ProfileCustomValue ='".$like."' "  ;
-															$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') ";
-															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+															$likedata.= "OR ProfileCustomValue ='".$like."' "  ;
+															$likedata2.= " OR  (ProfileCustomValue LIKE '".$like."%' OR ProfileCustomValue LIKE '%".$like."%') ";
+															$likedata3.= " (ProfileCustomValue LIKE '%".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
 														}
 													}
 													$i++;
