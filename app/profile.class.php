@@ -341,10 +341,7 @@ class RBAgency_Profile {
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
-								echo "session";
-								echo  "ProfileCustomID". $ProfileCustomID;
-									print_r($_SESSION["ProfileCustomID". $ProfileCustomID]);
-									echo "<br /><br />";
+									echo $_SESSION["ProfileCustomID". $ProfileCustomID];
 								foreach($array_customOptions_values as $val){
 								
 									if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
