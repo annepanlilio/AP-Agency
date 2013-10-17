@@ -929,8 +929,9 @@ class RBAgency_Profile {
 												// for profiles with multiple values
 												$likedata2 = "" ;
 												$likedata3 = "" ;
-												echo "likequery".$likequery;
+												echo "likequery";
 												echo "<br />";
+												print_r($likequery);
 												foreach($likequery as $like){
 													if($i < ($likecounter-1)){
 														if($like!="") {
