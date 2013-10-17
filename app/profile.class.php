@@ -931,7 +931,7 @@ class RBAgency_Profile {
 												$likedata3 = "" ;
 												
 												foreach($likequery as $like){
-													if($i != ($likecounter-1)){
+													if($i != $likecounter){
 														if($like!="") {
 															echo "not last";
 															echo "i=".$i;
