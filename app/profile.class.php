@@ -122,8 +122,6 @@ class RBAgency_Profile {
 			/*
 			 * Search Form
 			 */  
-			 echo "Session data--";
-			 print_r($_SESSION);
 			 
 
 				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
@@ -416,7 +414,7 @@ class RBAgency_Profile {
 									}
 								}
 								echo "<legend>". $ProfileCustomTitle . $measurements_label ."</legend>";
-
+								print_r($_SESSION["ProfileCustomID".$ProfileCustomID]);
 								list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
 
 									if($ProfileCustomTitle=="Height" && $ProfileCustomID==3){
@@ -460,8 +458,7 @@ class RBAgency_Profile {
 									} else {
 										
 										// for other search
-										echo "<div><label for=\"ssProfileCustomID".$ProfileCustomID
-										."_min\">Min</label><input value=\""
+										echo "<div><label for=\"ProfileCustomID".$ProfileCustomID."_min\">Min</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
 										.$ProfileCustomID."[]\" /></div>";
