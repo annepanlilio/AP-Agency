@@ -930,11 +930,12 @@ class RBAgency_Profile {
 												$likedata3 = "" ;
 												
 												foreach($likequery as $like){
+													echo $combineValues = implode("|", $val);
 													if($i != $likecounter){
 														if($like!="") {
 															
 															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') AND "  ;
+															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') OR (ProfileCustomValue LIKE '".$combineValues."%') "  ;
 															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
 														}
 													} else {
