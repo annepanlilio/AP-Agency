@@ -249,7 +249,10 @@ class RBAgency_Profile {
 								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($ProfileCustomOptions,"}"),"{"));
 								list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
-
+								print_r($_SESSION["ProfileCustomID". $ProfileCustomID]);
+								echo "---------<br />";
+								echo $ProfileCustomOptions_Min_value."---------<br />";
+								echo $ProfileCustomOptions_Max_value."---------<br />";
 								if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
 									echo "<div>";
 									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
