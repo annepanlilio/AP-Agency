@@ -256,7 +256,7 @@ class RBAgency_Profile {
 								}
 								else
 								{
-									
+									list($min_val2,$max_val2) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
 								}
 								
 								
