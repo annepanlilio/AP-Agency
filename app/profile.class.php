@@ -253,20 +253,20 @@ class RBAgency_Profile {
 								if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
 									echo "<div>";
 									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" />";
 									echo "</div>";
 									echo "<div>";
 									echo "<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"". $ProfileCustomOptions_Max_value ."\" />";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Max_value ."\" />";
 									echo "</div>";
 								} else {
 									echo "<div>";
 									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
 									echo "</div>";
 									echo "<div>";
 									echo "<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
+									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$_SESSION["ProfileCustomID". $ProfileCustomID]."\" />";
 									echo "</div>";
 								}
 								echo "</div>";
