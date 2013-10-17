@@ -950,7 +950,7 @@ class RBAgency_Profile {
 												$val = substr($val, 0, -1);
 												$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
 												$filter2 .= "$open_st (".$sr_data.") $close_st";
-												echo "filter2".$filter2 ;
+												echo "filter2".$filter2."<br /<br />" ;
 											}
 
 											$_SESSION[$key] = $val;
