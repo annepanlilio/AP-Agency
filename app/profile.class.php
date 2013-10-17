@@ -464,7 +464,7 @@ class RBAgency_Profile {
 										.$ProfileCustomID."[]\" /></div>";
 
 										echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\4" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
+										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby4\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
 										
 									}
 							echo "</fieldset>";
