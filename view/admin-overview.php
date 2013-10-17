@@ -62,78 +62,12 @@ get_currentuserinfo();
 					<div class="inside">
 						<?php
 						if ($user_level >= 7) {
-						?>
-							<form method="GET" action="<?php echo admin_url("admin.php?page=rb_agency_search") ?>">
-							<input type="hidden" name="page" id="page" value="rb_agency_search" />
-							<input type="hidden" name="action" value="search" />
-							<table class="form-table">
-							<tbody>
-							  <tr valign="top">
-								<th scope="row"><label for="blogname"><?php echo  __("First Name", rb_agency_TEXTDOMAIN); ?></label></th>
-								<td><input type="text" name="ProfileContactNameFirst" value="<?php echo $_SESSION['ProfileContactNameFirst']; ?>" class="regular-text" /></td>
-							  </tr>
+							// Profile Class
+							include(rb_agency_BASEREL ."app/profile.class.php");
 
-							<?php
-							// @ToDo
-							echo "				    <tr>\n";
-							echo "				        <th scope=\"row\">". __("Last Name", rb_agency_TEXTDOMAIN) . ":</th>\n";
-							echo "				        <td><input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION['ProfileContactNameLast'] ."\" />\n";               
-							echo "				        </td>\n";
-							echo "				    </tr>\n";
-							
-							echo "				    <tr>\n";
-							echo "				        <th scope=\"row\">". __("Classification", rb_agency_TEXTDOMAIN) . ":</th>\n";
-							echo "				        <td><select name=\"ProfileType\" id=\"ProfileType\">\n";               
-							echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
-															$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
-															$results2 = mysql_query($query);
-															while ($dataType = mysql_fetch_array($results2)) {
-																if ($_SESSION['ProfileType']) {
-																	if ($dataType["DataTypeID"] ==  $_SESSION['ProfileType']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
-																} else { $selectedvalue = ""; }
-																echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
-															}
-							echo "				        	</select></td>\n";
-							echo "				        </td>\n";
-							echo "				    </tr>\n";
-							echo "				    <tr>\n";
-							echo "				        <th scope=\"row\">". __("Gender", rb_agency_TEXTDOMAIN) . ":</th>\n";
-							echo "				        <td><select name=\"ProfileGender\" id=\"ProfileGender\">\n";       
-										$query1 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ."";
-										$results1 = mysql_query($query1);
-										$count1 = mysql_num_rows($results1);
-										if ($count1 > 0) {
-											echo " <option value=\"\">All Gender</option>";
-											while ($data1 = mysql_fetch_array($results1)) {
-												
-												echo " <option value=\"". $data1["GenderID"] ."\" ". selected( $_SESSION['ProfileGender'], $data1["GenderID"]) .">". $data1["GenderTitle"] ."</option>\n";
-											}
-											echo "</select>\n";
-										} else {
-											echo "". __("No items to select", rb_restaurant_TEXTDOMAIN) .".";
-										}
-							echo "				        </td>\n";
-							echo "				    </tr>\n";
-							echo "				    <tr>\n";
-							echo "				        <th scope=\"row\">". __("Age", rb_agency_TEXTDOMAIN) . ":</th>\n";
-							echo "				        <td>\n";
-							echo "				        <fieldset>\n";
-							echo "				        	<div><label>". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
-							echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_min\" name=\"ProfileDateBirth_min\" value=\"". $_SESSION['ProfileDateBirth_min'] ."\" /><br /></div>\n";
-							echo "				        	<div><label>". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-							echo "				        	<input type=\"text\" class=\"stubby\" id=\"ProfileDateBirth_max\" name=\"ProfileDateBirth_max\" value=\"". $_SESSION['ProfileDateBirth_max'] ."\" /></div>\n";
-							echo "				        </fieldset>\n";
-							echo "				        </td>\n";
-							echo "				    </tr>\n";
-							echo "				  </thead>\n";
-							echo "				</table>\n";
-							echo "				<p class=\"submit\">\n";
-							echo "				<input type=\"submit\" value=\"". __("Quick Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-							echo "				<a href=\"?page=rb_agency_search\" class=\"button-secondary\">". __("Advanced Search", rb_agency_TEXTDOMAIN) . "</a></p>\n";
-							echo "				</p>\n";
-							echo "        	<form>\n";
-							
-						   } // Editor  
+							return RBAgency_Profile::search_form("", "", 0);
+
+						} // Editor
 						?>
 					</div>
 				</div>

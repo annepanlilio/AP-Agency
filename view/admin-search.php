@@ -494,7 +494,6 @@ echo $query;
 
 		return RBAgency_Profile::search_form("", "", 1);
 
-
 	echo "        </div><!-- .inner -->\n";
 	echo "     </div><!-- .inner -->\n";
 	echo "    </div><!-- .container -->\n";
