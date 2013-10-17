@@ -933,14 +933,14 @@ class RBAgency_Profile {
 												foreach($likequery as $like){
 													if($i < ($likecounter-1)){
 														if($like!="") {
-															$likedata.= " ProfileCustomValue ='".$like."' OR1 "  ;
-															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' OR ProfileCustomValue LIKE '%".$like."%') OR2 "  ;
-															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR3 "  ;
+															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' OR ProfileCustomValue LIKE '%".$like."%') OR "  ;
+															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
 														}
 													} else {
 														if($like!=""){
 															$likedata.= " ProfileCustomValue ='".$like."' "  ;
-															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' OR4 ProfileCustomValue LIKE '%".$like."%') ";
+															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' OR ProfileCustomValue LIKE '%".$like."%') ";
 															$likedata3.= " (ProfileCustomValue LIKE '%".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
 														}
 													}
@@ -948,8 +948,9 @@ class RBAgency_Profile {
 												}
 
 												$val = substr($val, 0, -1);
-												$sr_data = $likedata . " OR5 " . $likedata2 . " OR6 " . $likedata3;
+												$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
 												$filter2 .= "$open_st (".$sr_data.") $close_st";
+												echo "filter2".$filter2 ;
 											}
 
 											$_SESSION[$key] = $val;
