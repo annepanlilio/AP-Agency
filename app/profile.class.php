@@ -123,23 +123,7 @@ class RBAgency_Profile {
 			 * Search Form
 			 */
 
-				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
-				echo "			<form method=\"post\" id=\"search-form-condensed\" action=\"". $rb_agency_searchurl ."\">\n";
-				echo "				<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
-				echo "				<input type=\"hidden\" name=\"mode\" value=\"". $search_layout ."\" />\n";
-				echo "				<input type=\"hidden\" name=\"isactive\" value=\"1\" />\n";
-
-									// Show Profile Name
-									if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
-				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-				echo "					<input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"". $_SESSION["namefirst"] ."\" />\n";
-				echo "				</div>\n";
-				echo "				<div class=\"search-field single\">\n";
-				echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-				echo "					<input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"". $_SESSION["namelast"] ."\" />\n";
-				echo "				</div>\n";
-									}
+		
 
 									// Show Profile Type
 									if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
@@ -182,11 +166,11 @@ class RBAgency_Profile {
 				echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 				echo "					<div>\n";
 				echo "						<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
-				echo "						<input type=\"text\" class=\"stubby1\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"". $_SESSION['datebirth_min'] ."\" />\n";
+				echo "						<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"". $_SESSION['datebirth_min'] ."\" />\n";
 				echo "					</div>";
 				echo "					<div>\n";
 				echo "						<label for=\"datebirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-				echo "						<input type=\"text\" class=\"stubby2\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"". $_SESSION['datebirth_max'] ."\" />\n";
+				echo "						<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"". $_SESSION['datebirth_max'] ."\" />\n";
 				echo "				  </fieldset>";
 				echo "				</div>\n";
 									}
@@ -460,11 +444,11 @@ class RBAgency_Profile {
 										echo "<div><label for=\"ProfileCustomID".$ProfileCustomID
 										."_min\">Min</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
-										."\" class=\"stubby3\" type=\"text\" name=\"ProfileCustomID"
+										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
 										.$ProfileCustomID."[]\" /></div>";
 
 										echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-										."_max\">Max</label><input value=\"".$max_val ."\" id=\"test\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
+										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
 										
 									}
 							echo "</fieldset>";
