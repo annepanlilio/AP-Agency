@@ -928,12 +928,7 @@ class RBAgency_Profile {
 												// for profiles with multiple values
 												$likedata2 = "" ;
 												$likedata3 = "" ;
-								$query = mysql_query("SELECT * FROM wp_agency_customfield_mux");
-								while ($row = mysql_fetch_assoc($query)) {
-								foreach($row as $key => $value) {
-								print "$key = $value <br />";
-								}
-								}
+								
 
 
 
@@ -943,7 +938,8 @@ class RBAgency_Profile {
 															
 															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') OR "  ;
-															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') AND "  ;
+															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+															$linkdata4="(ProfileCustomValue LIKE '%,".$val."%'";
 														}
 													} else {
 														
@@ -951,6 +947,7 @@ class RBAgency_Profile {
 															$likedata.= " ProfileCustomValue ='".$like."' "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%')";
 															$likedata3.= " (ProfileCustomValue LIKE '%".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+															$linkdata4="(ProfileCustomValue LIKE '%,".$val."%'";
 														}
 													}
 													$i++;
