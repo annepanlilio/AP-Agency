@@ -940,7 +940,6 @@ class RBAgency_Profile {
 														}
 													} else {
 														if($like!=""){
-															
 															$likedata.= " ProfileCustomValue ='".$like."' "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' OR ProfileCustomValue LIKE '%".$like."%') ";
 															$likedata3.= " (ProfileCustomValue LIKE '%".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
