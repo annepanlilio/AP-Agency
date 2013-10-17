@@ -930,12 +930,11 @@ class RBAgency_Profile {
 												$likedata3 = "" ;
 												
 												foreach($likequery as $like){
-													echo $combineValues = implode("|", $val);
 													if($i != $likecounter){
 														if($like!="") {
 															
-															$likedata.= " ProfileCustomValue ='".$like."' AND "  ;
-															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') AND "  ;
+															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') OR "  ;
 															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
 														}
 													} else {
@@ -949,7 +948,7 @@ class RBAgency_Profile {
 												}
 												//Commented to fix checkbox issue
 												//$val = substr($val, 0, -1);
-												$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
+												$sr_data = $likedata . " AND " . $likedata2 . " OR " . $likedata3;
 												$filter2 .= "$open_st (".$sr_data.") $close_st";
 												
 											}
