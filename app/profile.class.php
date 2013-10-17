@@ -928,7 +928,15 @@ class RBAgency_Profile {
 												// for profiles with multiple values
 												$likedata2 = "" ;
 												$likedata3 = "" ;
-												
+								$query = mysql_query("SELECT * FROM profile");
+								while ($row = mysql_fetch_assoc($query)) {
+								foreach($row as $key => $value) {
+								print "$key = $value <br />";
+								}
+								}
+
+
+
 												foreach($likequery as $like){
 													if($i != $likecounter){
 														if($like!="") {
