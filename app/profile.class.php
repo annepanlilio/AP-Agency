@@ -933,16 +933,14 @@ class RBAgency_Profile {
 												foreach($likequery as $like){
 													if($i != $likecounter){
 														if($like!="") {
-															echo "not last";
-															echo "i=".$i;
+															
 															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' OR ProfileCustomValue LIKE '%".$like."%') OR "  ;
 															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
 														}
 													} else {
 														if($like!=""){
-															echo "last";
-															echo "i=".$i;
+															
 															$likedata.= " ProfileCustomValue ='".$like."' "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' OR ProfileCustomValue LIKE '%".$like."%') ";
 															$likedata3.= " (ProfileCustomValue LIKE '%".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
@@ -954,7 +952,7 @@ class RBAgency_Profile {
 												$val = substr($val, 0, -1);
 												$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3;
 												$filter2 .= "$open_st (".$sr_data.") $close_st";
-												echo "filter2".$filter2."<br /<br />" ;
+												
 											}
 
 											$_SESSION[$key] = $val;
