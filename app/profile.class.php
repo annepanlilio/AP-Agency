@@ -182,11 +182,11 @@ class RBAgency_Profile {
 				echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 				echo "					<div>\n";
 				echo "						<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
-				echo "						<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"". $_SESSION['datebirth_min'] ."\" />\n";
+				echo "						<input type=\"text\" class=\"stubby1\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"". $_SESSION['datebirth_min'] ."\" />\n";
 				echo "					</div>";
 				echo "					<div>\n";
 				echo "						<label for=\"datebirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-				echo "						<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"". $_SESSION['datebirth_max'] ."\" />\n";
+				echo "						<input type=\"text\" class=\"stubby2\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"". $_SESSION['datebirth_max'] ."\" />\n";
 				echo "				  </fieldset>";
 				echo "				</div>\n";
 									}
@@ -460,11 +460,11 @@ class RBAgency_Profile {
 										echo "<div><label for=\"ProfileCustomID".$ProfileCustomID
 										."_min\">Min</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
-										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
+										."\" class=\"stubby3\" type=\"text\" name=\"ProfileCustomID"
 										.$ProfileCustomID."[]\" /></div>";
 
 										echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
+										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\4" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
 										
 									}
 							echo "</fieldset>";
