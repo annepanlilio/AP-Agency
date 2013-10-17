@@ -344,7 +344,7 @@ class RBAgency_Profile {
 
 								foreach($array_customOptions_values as $val){
 									if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])){ 
-
+										print_r($_SESSION["ProfileCustomID". $ProfileCustomID]);
 										$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
 										if(in_array($val,$dataArr,true)){
 											echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
