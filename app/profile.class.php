@@ -939,7 +939,7 @@ class RBAgency_Profile {
 															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') OR "  ;
 															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-															$linkdata4="(ProfileCustomValue LIKE '%,".$val."%'";
+															$linkdata4="(ProfileCustomValue2 LIKE '%,".$val."%'";
 														}
 													} else {
 														
@@ -947,7 +947,7 @@ class RBAgency_Profile {
 															$likedata.= " ProfileCustomValue ='".$like."' "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%')";
 															$likedata3.= " (ProfileCustomValue LIKE '%".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-															$linkdata4="(ProfileCustomValue LIKE '%,".$val."%'";
+															$linkdata4="(ProfileCustomValue2 LIKE '%,".$val."%'";
 														}
 													}
 													$i++;
