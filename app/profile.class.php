@@ -274,10 +274,13 @@ class RBAgency_Profile {
 						/*
 						 * Single Text Line
 						 */
+						 print_r($_SESSION);
+						 echo $data1['ProfileCustomID'];
 						} elseif($ProfileCustomType == 1) {
 								echo "<div class=\"search-field single\">";
-								echo "<label for=\"ffProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-								echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+								echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".
+								$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
 								echo "</div>";
 
 						/*
