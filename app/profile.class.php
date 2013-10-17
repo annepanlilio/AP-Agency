@@ -460,7 +460,7 @@ class RBAgency_Profile {
 									} else {
 										
 										// for other search
-										echo "<div><label for=\"ProfileCustomID".$ProfileCustomID
+										echo "<div><label for=\"ssProfileCustomID".$ProfileCustomID
 										."_min\">Min</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
