@@ -77,7 +77,7 @@ class RBAgency_Profile {
 					jQuery.fn.rset = function(){
 						jQuery(this).on("click",function(){
 							var inputs = jQuery(".search-field").find("input[type=text]");
-								for (var i = 0; i<inputs.length; i++) {
+								for (var i = 0; i < inputs.length; i++) {
 									switch (inputs[i].type) {
 										case 'text':
 											inputs[i].value = '';
