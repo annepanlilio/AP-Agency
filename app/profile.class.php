@@ -934,7 +934,7 @@ class RBAgency_Profile {
 
 
 												foreach($likequery as $like){
-													echo $combineCon = implode(",", $likequery);
+													echo "combineCon".$combineCon = implode(",", $likequery);
 													if($i != $likecounter){
 														if($like!="") {
 															
