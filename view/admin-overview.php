@@ -65,7 +65,7 @@ get_currentuserinfo();
 							// Profile Class
 							include(rb_agency_BASEREL ."app/profile.class.php");
 
-							//return RBAgency_Profile::search_form("", "", 0);
+							return RBAgency_Profile::search_form("", "", 0);
 
 						} // Editor
 						?>
@@ -75,7 +75,7 @@ get_currentuserinfo();
 			</div>
 		</div>
 
-		<div id="postbox-container-2" >gfdgdgf
+		<div id="postbox-container-2" class="postbox-container">
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
 				<div id="dashboard_recent_drafts" class="postbox" style="display: block;">
