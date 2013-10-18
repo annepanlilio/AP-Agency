@@ -901,10 +901,10 @@ class RBAgency_Profile {
 										}
 										
 									if(!is_int($maxVal)){
-									$filter2 .= "AND1  ProfileCustomValue >= '".$maxVal."' $close_st";
+									$filter2 .= "AND  ProfileCustomValue >= '".$maxVal."' $close_st";
 										}
 										else{
-									$filter2 .= "AND2 ProfileCustomValue >= ".$maxVal." $close_st";
+									$filter2 .= "AND ProfileCustomValue >= ".$maxVal." $close_st";
 										}
 									
 
@@ -998,10 +998,10 @@ class RBAgency_Profile {
 										}
 										
 									if(!is_int($Max_val)){
-									$filter2 .= "AND1  ProfileCustomValue >= '".$Max_val."' $close_st";
+									$filter2 .= "AND  ProfileCustomValue >= '".$Max_val."' $close_st";
 										}
 										else{
-									$filter2 .= "AND2 ProfileCustomValue >= ".$Max_val." $close_st";
+									$filter2 .= "AND ProfileCustomValue >= ".$Max_val." $close_st";
 										}
 										
 									$_SESSION[$key] = $val;
