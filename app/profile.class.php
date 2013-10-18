@@ -57,15 +57,6 @@ class RBAgency_Profile {
 					}
 				}
 
-
-			/*
-			 * Override
-			 */
-
-				// Override any of the following to use Min-Max values
-				$overrideMinMax = array("Shirt", "Dress");  //   "Suit", "Bust" for custom fields min and max
-
-
 			/*
 			 * Display Form
 			 */
@@ -240,10 +231,24 @@ class RBAgency_Profile {
 						 *     3 = Feet/Inches
 						 */
 
+
+						/*
+						 * Single Text Line
+						 */
+						
+						if($ProfileCustomType == 1) {
+								echo "<div class=\"search-field single\">";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+								//Commentd to fix language value populate
+								//echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
+								echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".
+								$_SESSION["ProfileCustomID".$ProfileCustomID]."\" />";
+								echo "</div>";
+
 						/*
 						 * Min Max
 						 */
-						if($ProfileCustomType == 2 || in_array($ProfileCustomTitle, $overrideMinMax)) {
+						} elseif($ProfileCustomType == 2) {
 
 								echo "<div class=\"search-field single\">";
 								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
@@ -279,19 +284,6 @@ class RBAgency_Profile {
 									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val2."\" />";
 									echo "</div>";
 								}
-								echo "</div>";
-
-						/*
-						 * Single Text Line
-						 */
-						
-						} elseif($ProfileCustomType == 1) {
-								echo "<div class=\"search-field single\">";
-								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-								//Commentd to fix language value populate
-								//echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
-								echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".
-								$_SESSION["ProfileCustomID".$ProfileCustomID]."\" />";
 								echo "</div>";
 
 						/*
@@ -831,8 +823,6 @@ class RBAgency_Profile {
 				/*
 				 *  Custom Fields
 				 */
-					// TODO NEEDED?
-					$overrideMinMax = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
 					$filterDropdown = array();
 					$filter2 = "";
 
@@ -889,128 +879,103 @@ class RBAgency_Profile {
 								$open_st = ' AND EXISTS( SELECT * FROM '. table_agency_customfield_mux . ' WHERE ' ;
 								$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID ) ';
 
-								if(in_array($ProfileCustomType['ProfileCustomTitle'], $overrideMinMax)) {
+								if ($ProfileCustomType["ProfileCustomType"] == 1) {
+									// Text
+									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+									$_SESSION[$key] = $val;
 
-									list($minVal,$maxVal) = explode(",",$val);
-									
-									if(!is_numeric($minVal)){
-									$filter2 .= "$open_st ProfileCustomValue >= '".$minVal."' AND";
-										}
-										else{
-									$filter2 .= "$open_st ProfileCustomValue >= ".$minVal." AND ";
-										}
-										
-									if(!is_numeric($maxVal)){
-									$filter2 .= "  ProfileCustomValue <= '".$maxVal."' $close_st";
-										}
-										else{
-									$filter2 .= "  ProfileCustomValue <= ".$maxVal." $close_st";
-										}
-									
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 3) {
+									// Dropdown
+									$filter2 .="$open_st ProfileCustomValue IN ('".$val."') $close_st";
 
-								} else {
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
+									// Textarea
+									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+									$_SESSION[$key] = $val;
 
-									if ($ProfileCustomType["ProfileCustomType"] == 1) {
-										// Text
-										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
-										$_SESSION[$key] = $val;
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
 
-									} elseif ($ProfileCustomType["ProfileCustomType"] == 3) {
-										// Dropdown
-										$filter2 .="$open_st ProfileCustomValue IN ('".$val."') $close_st";
+									if(!empty($val)){
 
-									} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
-										// Textarea
-										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
-										$_SESSION[$key] = $val;
+										if(strpos($val,",") === false){
+											$filter2 .= "$open_st ProfileCustomValue LIKE '%".$val."%' $close_st";
 
-									} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
+										} else {
+											
+											$likequery = explode(",", $val);
+											echo $likedata4= "(ProfileCustomValue LIKE  '%".$val."%')";
+											$likecounter = count($likequery);
+											$i=1; 
 
-										if(!empty($val)){
+											$likedata = "" ;
 
-											if(strpos($val,",") === false){
-												$filter2 .= "$open_st ProfileCustomValue LIKE '%".$val."%' $close_st";
+											// for profiles with multiple values
+											$likedata2 = "" ;
+											$likedata3 = "" ;
 
-											} else {
+											foreach($likequery as $like){
 												
-												$likequery = explode(",", $val);
-												echo $likedata4= "(ProfileCustomValue LIKE  '%".$val."%')";
-												$likecounter = count($likequery);
-												$i=1; 
-
-												$likedata = "" ;
-
-												// for profiles with multiple values
-												$likedata2 = "" ;
-												$likedata3 = "" ;
-												
-								
-
-
-
-												foreach($likequery as $like){
-													
-													if($i != $likecounter){
-														if($like!="") {
-															
-														$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-															$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') OR "  ;
-															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-															
-														}
-													} else {
+												if($i != $likecounter){
+													if($like!="") {
 														
-														if($like!=""){
-															$likedata.= " ProfileCustomValue ='".$like."' "  ;
-															$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') ";
-															$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-															
-														}
+													$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+														$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') OR "  ;
+														$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+														
 													}
-													$i++;
+												} else {
 													
+													if($like!=""){
+														$likedata.= " ProfileCustomValue ='".$like."' "  ;
+														$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') ";
+														$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+														
+													}
 												}
-												//Commented to fix checkbox issue
-												//$val = substr($val, 0, -1);
-								$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 ;
-									
-												 $filter2 .= "$open_st (".$sr_data.") AND ".$likedata4." $close_st";
+												$i++;
 												
 											}
-
-											$_SESSION[$key] = $val;
-										} else {
-											$_SESSION[$key] = "";
-										}
-
-									} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
-										//Radiobutton 
-										$val = implode("','",explode(",",$val));
-										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
-										$_SESSION[$key] = $val;
-
-									} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
-										list($Min_val,$Max_val) = explode(",",$val);
-										if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
+											//Commented to fix checkbox issue
+											//$val = substr($val, 0, -1);
+											$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 ;
+								
+											 $filter2 .= "$open_st (".$sr_data.") AND ".$likedata4." $close_st";
 											
-												if(!is_numeric($Min_val)){
-									$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
 										}
-										else{
-									$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
-										}
-										
-									if(!is_numeric($Max_val)){
-									$filter2 .= "  ProfileCustomValue <= '".$Max_val."' $close_st";
-										}
-										else{
-									$filter2 .= "  ProfileCustomValue <= ".$Max_val." $close_st";
-										}
-										
+
+										$_SESSION[$key] = $val;
+									} else {
+										$_SESSION[$key] = "";
+									}
+
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
+									//Radiobutton 
+									$val = implode("','",explode(",",$val));
+									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
 									$_SESSION[$key] = $val;
-										}
+
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
+									list($Min_val,$Max_val) = explode(",",$val);
+									if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
+										
+											if(!is_numeric($Min_val)){
+								$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
+									}
+									else{
+								$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
+									}
+									
+								if(!is_numeric($Max_val)){
+								$filter2 .= "  ProfileCustomValue <= '".$Max_val."' $close_st";
+									}
+									else{
+								$filter2 .= "  ProfileCustomValue <= ".$Max_val." $close_st";
+									}
+									
+								$_SESSION[$key] = $val;
 									}
 								}
+
 								mysql_free_result($q);
 							} // if not empty
 						} // end if
