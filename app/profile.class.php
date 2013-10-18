@@ -974,7 +974,7 @@ class RBAgency_Profile {
 												//$val = substr($val, 0, -1);
 								$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 ;
 									
-												 $filter2 .= "$open_st (".$sr_data.") OR $likedata4 $close_st";
+												 $filter2 .= "$open_st (".$sr_data.") OR ".$likedata4." $close_st";
 												
 											}
 
