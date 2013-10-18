@@ -976,7 +976,7 @@ class RBAgency_Profile {
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
 										list($Min_val,$Max_val) = explode(",",$val);
 										if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
-											$filter2  .= "$open_st ProfileCustomValue >= ".$Min_val." AND ProfileCustomValue <= ".$Max_val."' $close_st";
+											$filter2  .= "$open_st ProfileCustomValue >= ".$Min_val." AND ProfileCustomValue <= ".$Max_val." $close_st";
 											$_SESSION[$key] = $val;
 										}
 									}
