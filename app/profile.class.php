@@ -893,12 +893,19 @@ class RBAgency_Profile {
 
 									list($minVal,$maxVal) = explode(",",$val);
 									if(!is_int($minVal)){
-										$minVal='".$minVal."';
+									$filter2 .= "$open_st ProfileCustomValue >= '".$minVal."'";
 										}
-										if(!is_int($maxVal)){
-										$minVal='".$maxVal."';
+										else{
+									$filter2 .= "$open_st ProfileCustomValue >= ".$minVal."";
 										}
-									$filter2 .= "$open_st ProfileCustomValue >= ".$minVal." AND ProfileCustomValue <= ".$maxVal." $close_st";
+										
+									if(!is_int($maxVal)){
+									$filter2 .= "AND  ProfileCustomValue >= '".$maxVal."' $close_st";
+										}
+										else{
+									$filter2 .= "AND ProfileCustomValue >= ".$maxVal." $close_st";
+										}
+									
 
 								} else {
 
