@@ -894,17 +894,17 @@ class RBAgency_Profile {
 									list($minVal,$maxVal) = explode(",",$val);
 									
 									if(!is_numeric($minVal)){
-									$filter2 .= "$open_st ProfileCustomValue >= '".$minVal."'";
+									$filter2 .= "$open_st ProfileCustomValue >= '".$minVal."' AND";
 										}
 										else{
-									$filter2 .= "$open_st ProfileCustomValue >= ".$minVal."";
+									$filter2 .= "$open_st ProfileCustomValue >= ".$minVal." AND ";
 										}
 										
 									if(!is_numeric($maxVal)){
-									$filter2 .= "  AND  ProfileCustomValue <= '".$maxVal."' $close_st";
+									$filter2 .= "ProfileCustomValue <= '".$maxVal."' $close_st";
 										}
 										else{
-									$filter2 .= "  AND ProfileCustomValue <= ".$maxVal." $close_st";
+									$filter2 .= " ProfileCustomValue <= ".$maxVal." $close_st";
 										}
 									
 
@@ -991,17 +991,17 @@ class RBAgency_Profile {
 										if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
 											
 												if(!is_numeric($Min_val)){
-									$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."'";
+									$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
 										}
 										else{
-									$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val."";
+									$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
 										}
 										
 									if(!is_numeric($Max_val)){
-									$filter2 .= " AND  ProfileCustomValue <= '".$Max_val."' $close_st";
+									$filter2 .= "ProfileCustomValue <= '".$Max_val."' $close_st";
 										}
 										else{
-									$filter2 .= "  AND ProfileCustomValue <= ".$Max_val." $close_st";
+									$filter2 .= "ProfileCustomValue <= ".$Max_val." $close_st";
 										}
 										
 									$_SESSION[$key] = $val;
