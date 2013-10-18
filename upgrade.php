@@ -425,15 +425,16 @@ global $wpdb;
 	// Update from 2.0.4
 	if (get_option('rb_agency_version') == "2.0.4") {
 
-
-		// Setup > Define Country
-		$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_country ." (
+		// Setup > Country
+		if ($wpdb->get_var("show tables like '". table_agency_data_country."'") != table_agency_data_country) { 
+			$results = $wpdb->query("CREATE TABLE IF NOT EXISTS ". table_agency_data_country ." (
 			CountryID INT(10) NOT NULL AUTO_INCREMENT,
 			CountryTitle VARCHAR(255),
 			CountryCode VARCHAR(20),
 			PRIMARY KEY (CountryID)
-			);";
-		dbDelta($sql);
+			);");
+		}
+
 		// Populate Initial Values
 			$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT CountryTitle FROM " . myclubdancer_config_country . " WHERE CountryTitle = %s", 'United States' ) );
 			if ( !$data_custom_exists ) {
@@ -445,14 +446,16 @@ global $wpdb;
 			}
 
 		// Setup > States
-		$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_state ." (
+		if ($wpdb->get_var("show tables like '". table_agency_data_state."'") != table_agency_data_state) { 
+			$results = $wpdb->query("CREATE TABLE IF NOT EXISTS ". table_agency_data_state ." (
 			StateID INT(20) NOT NULL AUTO_INCREMENT,
 			CountryID INT(20) NOT NULL,
 			StateTitle VARCHAR(255),
 			StateCode VARCHAR(255),
 			PRIMARY KEY (StateID)
-			);";
-		dbDelta($sql);
+			);");
+		}
+
 		// Populate Initial Values
 			$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT StateTitle FROM " . table_agency_data_state . " WHERE StateTitle = %s", 'Alabama' ) );
 			if ( !$data_custom_exists ) {
