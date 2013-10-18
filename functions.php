@@ -263,7 +263,7 @@ error_reporting(0);
 				} elseif (get_query_var( 'type' ) == "version") {
 					return dirname(__FILE__) . '/version.php'; 
 				} elseif (get_query_var( 'type' ) == "getstate") {
-					return rb_agency_BASEREL . 'view/get-state.php'; 
+					return rb_agency_BASEREL . 'view/partial/get-state.php'; 
 				}
 			}
 			return $template;
