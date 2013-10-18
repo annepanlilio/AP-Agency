@@ -133,9 +133,13 @@ See license.txt for full details.
 		define("table_agency_customfield_mux", "{$wpdb->prefix}agency_customfield_mux");
 	if (!defined("table_agency_customfields_types"))
 		define("table_agency_customfields_types", "{$wpdb->prefix}agency_customfields_types");
+	if (!defined("table_agency_data_country"))
+		define("table_agency_data_country", "{$wpdb->prefix}agency_data_country");
+	if (!defined("table_agency_data_state"))
+		define("table_agency_data_state", "{$wpdb->prefix}agency_data_state");
+	// Visitor & Agent Experience
 	if (!defined("table_agency_searchsaved"))
 		define("table_agency_searchsaved", "{$wpdb->prefix}agency_searchsaved");
-	// Visitor & Agent Experience
 	if (!defined("table_agency_searchsaved_mux"))
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
@@ -499,6 +503,235 @@ class RBAgency {
 					);";
 				dbDelta($sql);
 
+				// Setup > Define Country
+				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_country ." (
+					CountryID INT(10) NOT NULL AUTO_INCREMENT,
+					CountryTitle VARCHAR(255),
+					CountryCode VARCHAR(20),
+					PRIMARY KEY (CountryID)
+					);";
+				dbDelta($sql);
+				// Populate Initial Values
+					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT CountryTitle FROM " . myclubdancer_config_country . " WHERE CountryTitle = %s", 'United States' ) );
+					if ( !$data_custom_exists ) {
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_country ." (CountryTitle, CountryCode) VALUES ('United States','US')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_country ." (CountryTitle, CountryCode) VALUES ('Canada','CA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_country ." (CountryTitle, CountryCode) VALUES ('Mexico','MX')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_country ." (CountryTitle, CountryCode) VALUES ('Australia','AU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_country ." (CountryTitle, CountryCode) VALUES ('United Kingdom','UK')");
+					}
+
+				// Setup > States
+				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_data_state ." (
+					StateID INT(20) NOT NULL AUTO_INCREMENT,
+					CountryID INT(20) NOT NULL,
+					StateTitle VARCHAR(255),
+					StateCode VARCHAR(255),
+					PRIMARY KEY (StateID)
+					);";
+				dbDelta($sql);
+				// Populate Initial Values
+					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT StateTitle FROM " . table_agency_data_state . " WHERE StateTitle = %s", 'Alabama' ) );
+					if ( !$data_custom_exists ) {
+						// United States
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Alabama','AL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Alaska','AK')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Arizona','AZ')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Arkansas','AR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'California','CA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Colorado','CO')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Connecticut','CT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Delaware','DE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'District of Columbia','DC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Florida','FL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Georgia','GA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Hawaii','HI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Idaho','ID')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Illinois','IL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Indiana','IN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Iowa','IA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Kansas','KS')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Kentucky','KY')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Louisiana','LA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Maine','ME')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Maryland','MD')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Massachusetts','MA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Michigan','MI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Minnesota','MN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Mississippi','MS')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Missouri','MO')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Montana','MT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Nebraska','NE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Nevada','NV')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'New Hampshire','NH')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'New Jersey','NJ')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'New Mexico','NM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'New York','NY')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'North Carolina','NC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'North Dakota','ND')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Ohio','OH')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Oklahoma','OK')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Oregon','OR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Pennsylvania','PA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Rhode Island','RI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'South Carolina','SC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'South Dakota','SD')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Tennessee','TN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Texas','TX')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Utah','UT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Vermont','VT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Virginia','VA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Washington','WA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'West Virginia','WV')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Wisconsin','WI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (1, 'Wyoming','WY')");
+						// Canada
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'British Columbia','BC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Ontario','ON')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Newfoundland and Labrador','NL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Nova Scotia','NS')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Prince Edward Island','PE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'New Brunswick','NB')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Quebec','QC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Manitoba','MB')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Saskatchewan','SK')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Alberta','AB')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Northwest Territories','NT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Nunavut','NU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (2, 'Yukon Territory','YT')");
+						// Mexico
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Aguascalientes','AG')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Baja California','BN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Baja California Sur','BS')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Campeche','CM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Chiapas','CP')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Chihuahua','CH')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Coahuila','CA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Colima','CL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Distrito Federal','DF')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Durango','DU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Guanajuato','GJ')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Guerrero','GR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Hidalgo','HI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Jalisco','JA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Mexico State','MX')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Micohancan','MC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Morelos','MR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Nayarit','NA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Nuevo Leon','NL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Oaxaca','OA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Puebla','PU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Queretaro','QE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Quintana Roo','QR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'San Luis Potosi','SL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Sinaloa','SI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Sonora','SO')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Tabasco','TB')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Tamaulipas','TM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Tlaxcala','TL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Veracruz','VE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Yucatan','YU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (3, 'Zacatecas','ZA')");
+						// Australia
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'Australian Capital Territory','ACT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'Jervis Bay Territory','JBT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'New South Wales','NSW')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'Northern Territory','NT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'Queensland','QLD')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'South Australia','SA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'Tasmania','TAS')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'Victoria','VIC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (4, 'Western Australia','WA')");
+						// Great Britan
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Aberdeenshire','AB')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Anglesey',''AN)");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Angus','AG')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Argyll','AR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Ayrshire','AY')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Banffshire','BN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Bedfordshire','BD')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Berwickshire','BI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Breconshire','BR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Buckinghamshire','BK')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Bute','BU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Caernarvonshire','CN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Caithness','CT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Cambridgeshire','CM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Cardiganshire','CG')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Carmarthenshire','CR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Cheshire','CH')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Clackmannanshire','CL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Cumbria','CU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Denbighshire','DI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Derbyshire','DB')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Devon','DV')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Dorset','DO')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Dumbartonshire','DA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Dumfriesshire','DU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Durham','DR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'East Lothian','EL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'East Sussex','ES')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Essex','EX')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Fife','FI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Flintshire','FL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Glamorgan','GM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Gloucestershire','GL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Greater London','GR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Greater Manchester','GM2')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Hampshire','HM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Hertfordshire','HT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Inverness','IV')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Kent','KN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Kincardineshire','KE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Kinross-shire','KP')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Kirkcudbrightshire','KC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Lanarkshire','LA')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Lancashire','LC')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Leicestershire','LE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Lincolnshire','LN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'London','LD')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Merionethshire','ME')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Merseyside','MR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Midlothian','MI')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Monmouthshire','MO')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Montgomeryshire','MG')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Moray','MY')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Nairnshire','NN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Norfolk','NR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Northamptonshire','NH')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Northumberland','NU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'North Yorkshire','NY')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Nottinghamshire','NO')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Orkney','OR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Oxfordshire','OX')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Peebleshire','PB')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Pembrokeshire','PM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Perthshire','PT')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Radnorshire','RD')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Renfrewshire','RN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Ross & Cromarty','RS')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Roxburghshire','RX')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Selkirkshire','SL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Shetland','SE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Shropshire','SH')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Somerset','SO')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'South Yorkshire','SY')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Staffordshire','ST')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Stirlingshire','SN')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Suffolk','SU')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Surrey','SUR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Sutherland','SR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Tyne and Wear','TW')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Warwickshire','WR')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'West Lothian','WE')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'West Midlands','WM')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'West Sussex','WS')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'West Yorkshire','WY')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Wigtownshire','WG')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Wiltshire','WL')");
+						$results = $wpdb->query("INSERT INTO ". table_agency_data_state ." (CountryID, StateTitle, StateCode) VALUES (5, 'Worcestershire','WO')");
+					}
+
 				// Setup > Save Favorite
 				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_savedfavorite." (
 					SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
@@ -568,6 +801,8 @@ class RBAgency {
 			$wpdb->query("DROP TABLE " . table_agency_customfields_types);
 			$wpdb->query("DROP TABLE " . table_agency_searchsaved);
 			$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
+			$wpdb->query("DROP TABLE " . table_agency_data_country);
+			$wpdb->query("DROP TABLE " . table_agency_data_state);
 			$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
 			$wpdb->query("DROP TABLE " . table_agency_castingcart);
 
