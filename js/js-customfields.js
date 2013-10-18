@@ -185,3 +185,21 @@ function remove_more_option_field(objNum){
    document.getElementById("min_field").value="";
    document.getElementById("add_more_object_show").style.display="inline";
 }
+
+//Populate state options for selected  country
+function populateStates(){
+	var url=jQuery("#url").val();
+	if(jQuery("#ProfileLocationCountry").val()!=""){
+			jQuery("#ProfileLocationState").show();
+			jQuery("#ProfileLocationState").find("option:gt(0)").remove();
+			jQuery("#ProfileLocationState").find("option:first").text("Loading...");
+			jQuery.getJSON(url+"/get-state/"+ jQuery("#ProfileLocationCountry").val(), function (data) {
+																									   
+			for (var i = 0; i < data.length; i++) {
+				jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#ProfileLocationState"));
+			}
+			jQuery("#ProfileLocationState").find("option:eq(0)").remove();
+		
+		});
+		}
+	}
