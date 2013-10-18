@@ -956,7 +956,7 @@ class RBAgency_Profile {
 												}
 												//Commented to fix checkbox issue
 												//$val = substr($val, 0, -1);
-												$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 . " OR " . $likedata4;
+												echo "strdata".$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 . " OR " . $likedata4;
 												 $filter2 .= "$open_st (".$sr_data.") $close_st";
 												
 											}
