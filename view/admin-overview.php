@@ -53,7 +53,7 @@ get_currentuserinfo();
 <div id="dashboard-widgets-wrap">
 	<div id="dashboard-widgets" class="metabox-holder columns-2">
 
-		<div id="postbox-container-1" class="postbox-container">
+		<div id="postbox-container-1" class="postbox-container">dasd
 			<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 				<div id="dashboard_right_now" class="postbox">
