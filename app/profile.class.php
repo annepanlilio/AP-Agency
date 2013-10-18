@@ -934,14 +934,14 @@ class RBAgency_Profile {
 
 
 												foreach($likequery as $like){
-													echo "combineCon".$combineCon = implode(",", $likequery);
+													$combineCon = implode(",", $likequery);
 													if($i != $likecounter){
 														if($like!="") {
 															
 															$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%') OR "  ;
 															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-															$likedata4.="(ProfileCustomValue2 LIKE '%".$combineCon."%' OR";
+															$likedata4.="(ProfileCustomValue LIKE '%".$combineCon."%' OR";
 														}
 													} else {
 														
@@ -949,14 +949,14 @@ class RBAgency_Profile {
 															$likedata.= " ProfileCustomValue ='".$like."' "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like."%' AND ProfileCustomValue LIKE '%".$like."%')";
 															$likedata3.= " (ProfileCustomValue LIKE '%".$like."%' AND ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-															$likedata4.="(ProfileCustomValue2 LIKE '%".$combineCon."%'";
+															$likedata4.="(ProfileCustomValue LIKE '%".$combineCon."%'";
 														}
 													}
 													$i++;
 												}
 												//Commented to fix checkbox issue
 												//$val = substr($val, 0, -1);
-								echo "strdata".$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 . " OR " . $likedata4."<br />
+								$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 . " OR " . $likedata4."<br />
 <br />";
 												 $filter2 .= "$open_st (".$sr_data.") $close_st";
 												
