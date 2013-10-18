@@ -53,7 +53,7 @@ get_currentuserinfo();
 <div id="dashboard-widgets-wrap">
 	<div id="dashboard-widgets" class="metabox-holder columns-2">
 
-		<div id="postbox-container-1" class="postbox-container">dasd
+		<div id="postbox-container-1" class="postbox-container">
 			<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 				<div id="dashboard_right_now" class="postbox">
@@ -75,7 +75,7 @@ get_currentuserinfo();
 			</div>
 		</div>
 
-		<div id="postbox-container-2" >
+		<div id="postbox-container-2" >gfdgdgf
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
 				<div id="dashboard_recent_drafts" class="postbox" style="display: block;">
