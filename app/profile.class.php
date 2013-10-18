@@ -903,7 +903,7 @@ class RBAgency_Profile {
 									$filter2 .= "AND1  ProfileCustomValue >= '".$maxVal."' $close_st";
 										}
 										else{
-									$filter2 .= "AND ProfileCustomValue >= ".$maxVal." $close_st";
+									$filter2 .= "AND2 ProfileCustomValue >= ".$maxVal." $close_st";
 										}
 									
 
