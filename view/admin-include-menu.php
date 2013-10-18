@@ -40,6 +40,7 @@
     echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\">". __("Profile Types", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a> | \n";
     echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\">". __("Media Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Manage Locations", rb_agency_TEXTDOMAIN) . "</a> \n";
     echo "  </p>\n";
     }
     ?>

@@ -723,6 +723,43 @@ function rb_display_manage($ProfileID) {
 	echo "      </fieldset>\n";
 	echo "      </td>\n";
 	echo "    </tr>\n";
+	
+	echo "    <tr valign=\"top\">\n";
+	echo "      <th scope=\"row\">" . __("Country", rb_agency_TEXTDOMAIN) . "</th>\n";
+	echo "      <td>\n";
+	
+	$query_get ="SELECT * FROM `". table_agency_data_country ."`" ;
+	$result_query_get = $wpdb->get_results($query_get);
+	$location= site_url();
+	
+	echo '<input type="hidden" id="url" value="'.$location.'">';
+	echo '<select name="ProfileLocationCountry" id="ProfileLocationCountry"  onchange="javascript:populateStates();">';
+	echo '<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
+	 foreach($result_query_get as $r){
+		  $selected =$ProfileLocationCountry==$r->CountryID?"selected=selected":"";
+		echo '<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
+	 }
+	echo '</select>';
+	echo "      </td>\n";
+	echo "    </tr>\n";
+	
+	
+	echo "    <tr valign=\"top\">\n";
+	echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
+	echo "      <td>\n";
+	$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
+	$result_query_get = $wpdb->get_results($query_get);
+	echo '<select name="ProfileLocationState" id="ProfileLocationState">';
+	echo '<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
+	 foreach($result_query_get as $r){
+		 $selected =$ProfileLocationState==$r->StateID?"selected=selected":"";
+		echo '<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
+	 }
+	echo '</select>';
+	
+	echo "      </td>\n";
+	echo "    </tr>\n";
+	
 	// Address
 	echo "    <tr valign=\"top\">\n";
 	echo "      <th scope=\"row\">" . __("Street", rb_agency_TEXTDOMAIN) . "</th>\n";
@@ -736,24 +773,22 @@ function rb_display_manage($ProfileID) {
 	echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . $ProfileLocationCity . "\" />\n";
 	echo "      </td>\n";
 	echo "    </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
-	echo "      <td>\n";
-	echo "          <input type=\"text\" id=\"ProfileLocationState\" name=\"ProfileLocationState\" value=\"" . $ProfileLocationState . "\" />\n";
-	echo "      </td>\n";
-	echo "    </tr>\n";
+	
+	
 	echo "    <tr valign=\"top\">\n";
 	echo "      <th scope=\"row\">" . __("Zip", rb_agency_TEXTDOMAIN) . "</th>\n";
 	echo "      <td>\n";
 	echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . $ProfileLocationZip . "\" />\n";
 	echo "      </td>\n";
 	echo "    </tr>\n";
-	echo "    <tr valign=\"top\">\n";
-	echo "      <th scope=\"row\">" . __("Country", rb_agency_TEXTDOMAIN) . "</th>\n";
-	echo "      <td>\n";
-	echo "          <input type=\"text\" id=\"ProfileLocationCountry\" name=\"ProfileLocationCountry\" value=\"" . $ProfileLocationCountry . "\" />\n";
-	echo "      </td>\n";
-	echo "    </tr>\n";
+	
+	
+	
+
+	
+	
+	
+	
 	// Custom Admin Fields
 	// ProfileCustomView = 1 , Private
 	if (isset($_GET["ProfileGender"])) {
