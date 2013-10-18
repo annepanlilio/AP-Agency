@@ -892,6 +892,12 @@ class RBAgency_Profile {
 								if(in_array($ProfileCustomType['ProfileCustomTitle'], $overrideMinMax)) {
 
 									list($minVal,$maxVal) = explode(",",$val);
+									if(!is_int($minVal)){
+										$minVal='".$minVal."';
+										}
+										if(!is_int($maxVal)){
+										$minVal='".$maxVal."';
+										}
 									$filter2 .= "$open_st ProfileCustomValue >= ".$minVal." AND ProfileCustomValue <= ".$maxVal." $close_st";
 
 								} else {
@@ -940,7 +946,7 @@ class RBAgency_Profile {
 															
 														$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
 															$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') OR "  ;
-															$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
 															
 														}
 													} else {
