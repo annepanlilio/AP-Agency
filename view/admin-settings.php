@@ -2676,61 +2676,105 @@ elseif ($ConfigID == 7){
 
 global $wpdb;
 echo "<div class=\"wrap\">\n";
-echo "  <h3 class=\"title\">". __("Define Country", myclubdancer_TEXTDOMAIN) ."</h3>\n";
-if(isset($_REQUEST['country_add'])) {
-$CountryTitle  = $_REQUEST['CountryTitle'];
-$CountryCode  = $_REQUEST['CountryCode'];
-$wpdb->insert( 
-	'wp_agency_data_country', 
-	array( 
+echo "  <h3 class=\"title\">". __("Define Country", rb_agency_TEXTDOMAIN) ."</h3>\n";
+if(isset($_POST['country_add'])) {
+	$CountryTitle  = $_POST['CountryTitle'];
+	$CountryCode  = $_POST['CountryCode'];
+	// Error checking
+	$error = "";
+	$have_error = false;
+	if(trim($CountryTitle) == ""){
+		$error .= "<b><i>". __("Country title is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	if(trim($CountryCode) == ""){
+		$error .= "<b><i>". __("Country code is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	
+	if($have_error){
+		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating country, please ensure you have filled out all required fields", 		rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+	} 
+	else{				
+		
+		$wpdb->insert( 
+		table_agency_data_country, 
+		array( 
 		'CountryTitle' => $CountryTitle,
 		'CountryCode' => $CountryCode 
-			) 
-);
-echo '<span class="msg">You have added new entry for country</span>';
+		) 
+		);
+		echo '<span class="msg">You have added new entry for country</span>';
+	}
 }
  ?>
-<form method="post">
+
+<form method="post" name="add_country" id="add_country" action="<?php echo admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7"; ?>">
+<input type="hidden" value="addCountry" name="action">
 <div class="country_added">
-<div class="country_txt"><span>Country</span></div>
-<div class="country_in"><input type="text" name="CountryTitle" size="27">
+<div class="error"></div>
+<div class="country_txt"><span>Country Title</span></div>
+<div class="country_in"><input type="text" name="CountryTitle" id="CountryTitle" size="27" value="<?php echo $_POST["CountryTitle"];?>">
+<div class="country_txt"><span>Country Code</span></div>
+<div class="country_in"><input type="text" name="CountryCode" id="CountryCode" size="27" value="<?php echo $_POST["CountryCode"];?>">
 </div>
-<div class="country_ro"><input type="submit" name="country_add" value="Add"></div>
+<div class="country_ro"><input type="submit" class="button-primary" name="country_add" value="Add"></div>
 </div>
 </form>
-<?php  echo "  <h3 class=\"title\">". __("Insert State", myclubdancer_TEXTDOMAIN) ."</h3>\n";
-if(isset($_REQUEST['state_add']))
-{
-$CountryID  = $_REQUEST['CountryID'];
-$StateTitle  = $_REQUEST['StateTitle'];
-$StateCode  = $_REQUEST['StateCode'];
-$wpdb->insert( 
-	'myclubdancer_states', 
-	array( 
+<?php  echo "  <h3 class=\"title\">". __("Insert State", rb_agency_TEXTDOMAIN) ."</h3>\n";
+if(isset($_POST['state_add'])) {
+	$CountryID  = $_POST['CountryID'];
+	$StateTitle  = $_POST['StateTitle'];
+	$StateCode  = $_POST['StateCode'];
+	
+	// Error checking
+	$error = "";
+	$have_error = false;
+	if(trim($CountryID) == "-1"){
+		$error .= "<b><i>". __("Please select country", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	if(trim($StateTitle) == ""){
+		$error .= "<b><i>". __("State title is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	if(trim($StateCode) == ""){
+		$error .= "<b><i>". __("State code is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	
+	if($have_error){
+		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating state, please ensure you have filled out all required fields", 		rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+	} 
+	else{				
+		$wpdb->insert( 
+		table_agency_data_state, 
+		array( 
 		'CountryID' => $CountryID,
-		'StateTitle' => $StateTitle,
+		'StateTitle' => $StateTitle, 
 		'StateCode' => $StateCode 
-	) 
-);
-echo '<span class="msg">You have added new entry for states</span>';
+		) 
+		);
+		echo '<span class="msg">You have added new entry for states</span>';
+	}
 }
  ?>
 <form method="post">
 <div class="country_added">
 <div class="country_txt"><span>Select Country</span></div>
-<div class="country_in"><select name="countryid" ><option>Select Country</option><?php 
-$myrows = $wpdb->get_results( "SELECT * FROM myclubdancer_config_country" );
+<div class="country_in"><select name="CountryID" ><option value="-1">Select Country</option><?php 
+$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
 foreach($myrows as $result) {
  ?>
-<option value="<?php echo $result->CountryID; ?>"><?php echo $result->CountryTitle; ?></option>
+<option <?php if($_POST['CountryID']==$result->CountryID){?>selected="selected"<?php }?> value="<?php echo $result->CountryID; ?>"><?php echo $result->CountryTitle; ?></option>
 <?php } ?>
 </select></div>
 <div class="country_txt" style="width:6%;"><span>State Name</span></div>
-<div class="country_in"><input type="text" name="StateTitle" size="27">
+<div class="country_in"><input type="text" name="StateTitle" value="<?php echo $_POST['StateTitle'];?>" size="27">
 <div class="country_txt" style="width:6%;"><span>Code</span></div>
-<div class="country_in"><input type="text" name="StateCode" size="27">
+<div class="country_in"><input type="text" name="StateCode" value="<?php echo $_POST['StateCode'];?>" size="27">
 </div>
-<div class="country_ro"><input type="submit" name="state_add" value="Add"></div>
+<div class="country_ro"><input type="submit" name="state_add" class="button-primary" value="Add"></div>
 </div>
 </form>
 <div class="clear"></div>
