@@ -963,14 +963,14 @@ class RBAgency_Profile {
 															$likedata.= " ProfileCustomValue ='".$like."' "  ;
 															$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') ";
 															$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-															//$likedata4.="(ProfileCustomValue LIKE '%".$combineCon."%'";
+															$likedata4.="(ProfileCustomValue IN ('".$combineCon."')";
 														}
 													}
 													$i++;
 												}
 												//Commented to fix checkbox issue
 												//$val = substr($val, 0, -1);
-								$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 ;
+								$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3. " OR " . $likedata4 ;
 												 $filter2 .= "$open_st (".$sr_data.") $close_st";
 												
 											}
