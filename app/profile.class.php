@@ -892,6 +892,7 @@ class RBAgency_Profile {
 								if(in_array($ProfileCustomType['ProfileCustomTitle'], $overrideMinMax)) {
 
 									list($minVal,$maxVal) = explode(",",$val);
+									
 									if(!is_int($minVal)){
 									$filter2 .= "$open_st ProfileCustomValue >= '".$minVal."'";
 										}
@@ -988,8 +989,22 @@ class RBAgency_Profile {
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
 										list($Min_val,$Max_val) = explode(",",$val);
 										if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
-											$filter2  .= "$open_st ProfileCustomValue >= ".$Min_val." AND ProfileCustomValue <= ".$Max_val." $close_st";
-											$_SESSION[$key] = $val;
+											
+												if(!is_int($Min_val)){
+									$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."'";
+										}
+										else{
+									$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val."";
+										}
+										
+									if(!is_int($Max_val)){
+									$filter2 .= "AND1  ProfileCustomValue >= '".$Max_val."' $close_st";
+										}
+										else{
+									$filter2 .= "AND2 ProfileCustomValue >= ".$Max_val." $close_st";
+										}
+										
+									$_SESSION[$key] = $val;
 										}
 									}
 								}
