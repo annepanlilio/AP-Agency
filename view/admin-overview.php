@@ -73,9 +73,9 @@ get_currentuserinfo();
 				</div>
 
 			</div>
-		
+		</div>
 
-		<div id="postbox-container-2" class="postbox-container">
+		<div id="postbox-container-2" >
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
 				<div id="dashboard_recent_drafts" class="postbox" style="display: block;">
