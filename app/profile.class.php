@@ -934,7 +934,7 @@ class RBAgency_Profile {
 											} else {
 												
 												$likequery = explode(",", $val);
-												echo "(ProfileCustomValue LIKE  '%".$val."%')";
+												echo $likedata4= "(ProfileCustomValue LIKE  '%".$val."%')";
 												$likecounter = count($likequery);
 												$i=1; 
 
