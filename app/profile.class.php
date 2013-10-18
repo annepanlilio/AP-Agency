@@ -876,24 +876,25 @@ class RBAgency_Profile {
 								  7 - Metrics/Imperials
 								 *********************/
 
-								$open_st = ' AND EXISTS( SELECT * FROM '. table_agency_customfield_mux . ' WHERE ' ;
+								$open_st = ' AND EXISTS (SELECT * FROM '. table_agency_customfield_mux . ' WHERE ' ;
 								$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID ) ';
 
 								if ($ProfileCustomType["ProfileCustomType"] == 1) {
 									// Text
-									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+									$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
 									$_SESSION[$key] = $val;
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 3) {
 									// Dropdown
-									$filter2 .="$open_st ProfileCustomValue IN ('".$val."') $close_st";
+									$filter2 .="$open_st ProfileCustomValue = '".$val."' $close_st";
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
 									// Textarea
 									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
 									$_SESSION[$key] = $val;
 
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) { //Checkbox
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
+									//Checkbox
 
 									if(!empty($val)){
 
@@ -914,33 +915,29 @@ class RBAgency_Profile {
 											$likedata3 = "" ;
 
 											foreach($likequery as $like){
-												
+
 												if($i != $likecounter){
 													if($like!="") {
-														
+
 													$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
 														$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') OR "  ;
 														$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-														
 													}
 												} else {
-													
 													if($like!=""){
 														$likedata.= " ProfileCustomValue ='".$like."' "  ;
 														$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') ";
 														$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-														
 													}
 												}
 												$i++;
-												
+
 											}
 											//Commented to fix checkbox issue
 											//$val = substr($val, 0, -1);
 											$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 ;
-								
-											 $filter2 .= "$open_st (".$sr_data.") AND ".$likedata4." $close_st";
-											
+											$filter2 .= "$open_st (".$sr_data.") AND ".$likedata4." $close_st";
+
 										}
 
 										$_SESSION[$key] = $val;
@@ -954,25 +951,23 @@ class RBAgency_Profile {
 									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
 									$_SESSION[$key] = $val;
 
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 7) { //Measurements 
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 7) {
+									//Measurements 
 									list($Min_val,$Max_val) = explode(",",$val);
 									if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
-										
-											if(!is_numeric($Min_val)){
-								$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
-									}
-									else{
-								$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
-									}
-									
-								if(!is_numeric($Max_val)){
-								$filter2 .= "  ProfileCustomValue <= '".$Max_val."' $close_st";
-									}
-									else{
-								$filter2 .= "  ProfileCustomValue <= ".$Max_val." $close_st";
-									}
-									
-								$_SESSION[$key] = $val;
+										if(!is_numeric($Min_val)){
+											$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
+										} else {
+											$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
+										}
+
+										if(!is_numeric($Max_val)){
+											$filter2 .= "  ProfileCustomValue <= '".$Max_val."' $close_st";
+										} else {
+											$filter2 .= "  ProfileCustomValue <= ".$Max_val." $close_st";
+										}
+
+										$_SESSION[$key] = $val;
 									}
 								}
 
