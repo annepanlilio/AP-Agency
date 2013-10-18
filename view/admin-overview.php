@@ -66,7 +66,7 @@ get_currentuserinfo();
 							include(rb_agency_BASEREL ."app/profile.class.php");
 
 							$form=RBAgency_Profile::search_form("", "", 0);
-							echo "testform".$form;
+							echo $form;
 
 						} // Editor
 						?>
