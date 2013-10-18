@@ -940,7 +940,7 @@ class RBAgency_Profile {
 															
 														$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
 															$likedata2.= " (ProfileCustomValue LIKE '".$like.",%' OR ProfileCustomValue LIKE '%,".$like.",%') OR "  ;
-															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' OR ProfileCustomValue NOT LIKE '%".$like."-%' AND ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+															$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
 															$likedata4.="(ProfileCustomValue LIKE '%".$combineCon."%' OR";
 														}
 													} else {
