@@ -796,13 +796,13 @@ class RBAgency {
 			$wpdb->query("DROP TABLE " . table_agency_data_gender);
 			$wpdb->query("DROP TABLE " . table_agency_data_type);
 			$wpdb->query("DROP TABLE " . table_agency_data_media);
+			$wpdb->query("DROP TABLE " . table_agency_data_country);
+			$wpdb->query("DROP TABLE " . table_agency_data_state);
 			$wpdb->query("DROP TABLE " . table_agency_customfields);
 			$wpdb->query("DROP TABLE " . table_agency_customfield_mux);
 			$wpdb->query("DROP TABLE " . table_agency_customfields_types);
 			$wpdb->query("DROP TABLE " . table_agency_searchsaved);
 			$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
-			$wpdb->query("DROP TABLE " . table_agency_data_country);
-			$wpdb->query("DROP TABLE " . table_agency_data_state);
 			$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
 			$wpdb->query("DROP TABLE " . table_agency_castingcart);
 

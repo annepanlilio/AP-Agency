@@ -424,7 +424,7 @@ global $wpdb;
 
 
 	// Update from 2.0.4
-	if (get_option('rb_agency_version') == "2.0.4") {
+	//if (get_option('rb_agency_version') == "2.0.4") {
 
 		// Do the tables exist?
 		if ($wpdb->get_var("show tables like '". table_agency_data_country ."'") == table_agency_data_country) {
@@ -667,8 +667,8 @@ global $wpdb;
 			}
 		}
 
-		update_option('rb_agency_version', "2.0.5");
-	}
+	//	update_option('rb_agency_version', "2.0.5");
+	//}
 
 
 
