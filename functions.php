@@ -214,6 +214,8 @@ error_reporting(0);
 			$query_vars[] = 'target';
 			$query_vars[] = 'paging';
 			$query_vars[] = 'value';
+			$query_vars[] = 'country';
+			
 			return $query_vars;
 		}
 
