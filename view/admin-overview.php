@@ -58,7 +58,7 @@ get_currentuserinfo();
 
 				<div id="dashboard_right_now" class="postbox">
 					<div class="handlediv" title="Click to toggle"><br></div>
-					<h3 class="hndle" id="asdasd"><span><?php echo __("Quick Search", rb_agency_TEXTDOMAIN ) ?></span></h3>
+					<h3 class="hndle" ><span><?php echo __("Quick Search", rb_agency_TEXTDOMAIN ) ?></span></h3>
 					<div class="inside">
 						<?php
 						if ($user_level >= 7) {
@@ -73,7 +73,7 @@ get_currentuserinfo();
 				</div>
 
 			</div>
-		</div>
+		
 
 		<div id="postbox-container-2" class="postbox-container">
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
