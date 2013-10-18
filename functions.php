@@ -189,6 +189,7 @@ error_reporting(0);
 			$newrules['client-view/(.*)$'] = 'index.php?type=profilecastingcart&target=$matches[1]';
 			$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
 			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
+			$newrules['get-state/(.*)$'] = 'index.php?type=getstate&country=$matches[1]';
 
 			$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
 
@@ -259,6 +260,8 @@ error_reporting(0);
 
 				} elseif (get_query_var( 'type' ) == "version") {
 					return dirname(__FILE__) . '/version.php'; 
+				} elseif (get_query_var( 'type' ) == "getstate") {
+					return rb_agency_BASEREL . 'view/get-state.php'; 
 				}
 			}
 			return $template;
