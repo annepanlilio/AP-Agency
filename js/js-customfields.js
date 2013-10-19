@@ -187,19 +187,109 @@ function remove_more_option_field(objNum){
 }
 
 //Populate state options for selected  country
-function populateStates(){
+function populateStates(countryId,stateId){
 	var url=jQuery("#url").val();
-	if(jQuery("#ProfileLocationCountry").val()!=""){
-			jQuery("#ProfileLocationState").show();
-			jQuery("#ProfileLocationState").find("option:gt(0)").remove();
-			jQuery("#ProfileLocationState").find("option:first").text("Loading...");
-			jQuery.getJSON(url+"/get-state/"+ jQuery("#ProfileLocationCountry").val(), function (data) {
-																									   
+	if(jQuery("#"+countryId).val()!=""){
+			jQuery("#"+stateId).show();
+			jQuery("#"+stateId).find("option:gt(0)").remove();
+			jQuery("#"+stateId).find("option:first").text("Loading...");
+			jQuery.getJSON(url+"/get-state/"+ jQuery("#"+countryId).val(), function (data) {
 			for (var i = 0; i < data.length; i++) {
-				jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#ProfileLocationState"));
+				jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#"+stateId));
 			}
-			jQuery("#ProfileLocationState").find("option:eq(0)").remove();
+			jQuery("#"+stateId).find("option:eq(0)").remove();
 		
 		});
 		}
 	}
+	
+function saveCountry(){
+	var countryTitle=jQuery("#countryTitle").val();
+	var countryCode=jQuery("#countryCode").val();
+	var countryId=jQuery("#countryId").val();
+	var url=jQuery("#url").val();
+	if(countryTitle==""){
+		alert("Please enter country title");
+		jQuery("#countryTitle").focus();
+		return false;
+		}
+	if(countryCode==""){
+		alert("Please enter country code");
+		jQuery("#countryCode").focus();
+		return false;
+	}
+		var dataString = 'id='+countryId+'&code='+countryCode+'&title='+countryTitle+'&editaction=1';
+		jQuery.ajax({
+		type:'POST',
+		data:dataString,
+		url:url,
+		success:function(data) {
+			window.location=url;
+	}
+  });
+	
+	
+
+}
+function saveState(){
+	
+	var stateTitle=jQuery("#StateTitle").val();
+	var stateCode=jQuery("#StateCode").val();
+	var stateId=jQuery("#stateId").val();
+	var url=jQuery("#url").val();
+	if(stateTitle==""){
+		alert("Please enter state title");
+		jQuery("#stateTitle").focus();
+		return false;
+		}
+	if(stateCode==""){
+		alert("Please enter state code");
+		jQuery("#stateCode").focus();
+		return false;
+	}
+		var dataString = 'id='+stateId+'&code='+stateCode+'&title='+stateTitle+'&editaction=2';
+		jQuery.ajax({
+		type:'POST',
+		data:dataString,
+		url:url,
+		success:function(data) {
+			window.location=url;
+	}
+  });
+	
+	
+
+}
+
+function redirectToSetting(){
+	var url=jQuery("#url").val();
+	window.location=url
+	}
+//Edit country
+function editCountry(aId){
+jQuery("#"+aId).parent('td').siblings().each (function() {
+	var text =jQuery(this).text();
+	var className = jQuery(this).attr('class');
+	jQuery(this).html('<input type="text" id='+className+' value='+text+'>');
+
+});    
+jQuery("#"+aId).parent('td').prepend('<input type="hidden" id="url" value='+jQuery("#"+aId).attr("class")+'><input type="hidden" id="countryId" value='+jQuery("#"+aId).attr("id")+'><input type="button" name="submit" class="button-primary"  onclick="javascript:saveCountry();" value="Save"><input type="button" name="reset" value="Cancel" class="button-primary" onclick="javascript:redirectToSetting();">');
+	jQuery("#"+aId).parent('td').find('a').hide();
+
+}
+
+
+
+
+//Edit state
+function editState(aId){
+jQuery("#"+aId).parent('td').siblings().each (function() {
+	var text =jQuery(this).text();
+	var className = jQuery(this).attr('class');
+	jQuery(this).html('<input type="text" id='+className+' value='+text+'>');
+
+});    
+jQuery("#"+aId).parent('td').prepend('<input type="hidden" id="url" value='+jQuery("#"+aId).attr("class")+'><input type="hidden" id="stateId" value='+jQuery("#"+aId).attr("id")+'><input type="button" class="button-primary" name="submit"  onclick="javascript:saveState();" value="Save"><input type="button" name="reset" onclick="javascript:redirectToSetting();" class="button-primary" value="Cancel">');
+jQuery("#"+aId).parent('td').find('a').hide();
+}
+
