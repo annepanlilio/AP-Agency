@@ -15,6 +15,16 @@ global $wpdb;
 	} else {
 		$ConfigID = $_REQUEST['ConfigID']; 
 	}
+	
+	
+	
+	// Get State to be deleted
+	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){ 
+		$delState = 0;
+	} else {
+		$delState = $_REQUEST['delstate']; 
+	}
+	
 
 /*
  * Display Appropriate Page
@@ -2707,8 +2717,40 @@ if(isset($_POST['country_add'])) {
 		echo '<span class="msg">You have added new entry for country</span>';
 	}
 }
+if(isset($_POST["editaction"])){
+	if($_POST["editaction"]=="1"){
+		$CountryTitle  = $_POST['title'];
+		$CountryCode  = $_POST['code'];
+		$CountryID  = $_POST['id'];
+		$wpdb->update( 
+			table_agency_data_country, 
+			array( 
+			'CountryTitle' => $CountryTitle,
+			'CountryCode' => $CountryCode 
+			),
+			array( 
+			'CountryID' => $CountryID,
+			) 
+		);
+	}
+	if($_POST["editaction"]=="2"){
+		$StateTitle  = $_POST['title'];
+		$StateCode  = $_POST['code'];
+		$StateID  = $_POST['id'];
+		$wpdb->update( 
+			table_agency_data_state, 
+			array( 
+			'StateTitle' => $StateTitle,
+			'StateCode' => $StateCode 
+			),
+			array( 
+			'StateID' => $StateID,
+			) 
+		);
+	}
+		
+	}
  ?>
-
 <form method="post" name="add_country" id="add_country" action="<?php echo admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7"; ?>">
 <input type="hidden" value="addCountry" name="action">
 <div class="country_added">
@@ -2721,7 +2763,38 @@ if(isset($_POST['country_add'])) {
 <div class="country_ro"><input type="submit" class="button-primary" name="country_add" value="Add"></div>
 </div>
 </form>
-<?php  echo "  <h3 class=\"title\">". __("Insert State", rb_agency_TEXTDOMAIN) ."</h3>\n";
+<?php 
+$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
+// Get Country to be deleted
+	if(!isset($_REQUEST['delcountry']) && empty($_REQUEST['delcountry'])){ 
+		$delCountry = 0;
+	} else {
+		$delCountry = $_REQUEST['delcountry']; 
+		// Remove Record
+		$delete = "DELETE FROM " . table_agency_data_country . " WHERE CountryID = \"". $delCountry ."\"";
+		$results = $wpdb->query($delete);
+		echo '<span class="msg">Country has been deleted successfully</span>';
+	}
+echo '<div class="msg"></div>';
+echo '<table><tr>';
+echo '<th>'.__("Country Title", rb_agency_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Country Code", rb_agency_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
+
+echo '</tr>';
+$location=admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7";
+foreach($myrows as $result) {
+echo '<tr>';
+echo '<td class="countryTitle" >'.$result->CountryTitle.'</td>';
+echo '<td class="countryCode">'.$result->CountryCode.'</td>';
+echo '<td>'.__('<a id='.$result->CountryID.' class='.$location.' href="javascript:void(0)" onclick="editCountry(this.id);">Edit&nbsp;</a>'.
+'<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delcountry=".$result->CountryID.'" 
+onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
+echo '</tr>';
+}
+echo '</table>';
+
+echo "  <h3 class=\"title\">". __("Insert State", rb_agency_TEXTDOMAIN) ."</h3>\n";
 if(isset($_POST['state_add'])) {
 	$CountryID  = $_POST['CountryID'];
 	$StateTitle  = $_POST['StateTitle'];
@@ -2758,12 +2831,14 @@ if(isset($_POST['state_add'])) {
 		echo '<span class="msg">You have added new entry for states</span>';
 	}
 }
+
+
+
  ?>
 <form method="post">
 <div class="country_added">
 <div class="country_txt"><span>Select Country</span></div>
 <div class="country_in"><select name="CountryID" ><option value="-1">Select Country</option><?php 
-$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
 foreach($myrows as $result) {
  ?>
 <option <?php if($_POST['CountryID']==$result->CountryID){?>selected="selected"<?php }?> value="<?php echo $result->CountryID; ?>"><?php echo $result->CountryTitle; ?></option>
@@ -2778,6 +2853,38 @@ foreach($myrows as $result) {
 </div>
 </form>
 <div class="clear"></div>
+
+
+<?php
+$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_state."" );
+// Get Country to be deleted
+	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){ 
+		$delState = 0;
+	} else {
+		$delState = $_REQUEST['delstate']; 
+		// Remove Record
+		$delete = "DELETE FROM " . table_agency_data_state . " WHERE StateID = \"". $delState ."\"";
+		$results = $wpdb->query($delete);
+		echo '<span class="msg">State has been deleted successfully</span>';
+	}
+	
+echo '<table><tr>';
+echo '<th>'.__("State Title", rb_agency_TEXTDOMAIN).'</th>';
+echo '<th>'.__("State Code", rb_agency_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
+
+echo '</tr>';
+foreach($myrows as $result) {
+echo '<tr>';
+echo '<td class="StateTitle">'.$result->StateTitle.'</td>';
+echo '<td class="StateCode">'.$result->StateCode.'</td>';
+echo '<td>'.__('<a id='.$result->StateID.' class='.$location.' href="javascript:void(0)" onclick="editState(this.id);">Edit&nbsp;</a>'.
+'<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delstate=".$result->StateID.'" 
+onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
+echo '</tr>';
+}
+echo '</table>';
+?>
 </div>
 <?php } 
 elseif ($ConfigID == 99) {
