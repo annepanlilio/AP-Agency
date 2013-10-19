@@ -2787,7 +2787,7 @@ foreach($myrows as $result) {
 echo '<tr>';
 echo '<td class="countryTitle" >'.$result->CountryTitle.'</td>';
 echo '<td class="countryCode">'.$result->CountryCode.'</td>';
-echo '<td>'.__('<a id='.$result->CountryID.' class='.$location.' href="javascript:void(0)" onclick="editCountry(this.id);">Edit&nbsp;</a>'.
+echo '<td>'.__('<a id="country'.$result->CountryID.'" class='.$location.' href="javascript:void(0)" onclick="editCountry(this.id);">Edit&nbsp;</a>'.
 '<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delcountry=".$result->CountryID.'" 
 onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
 echo '</tr>';
@@ -2878,7 +2878,7 @@ foreach($myrows as $result) {
 echo '<tr>';
 echo '<td class="StateTitle">'.$result->StateTitle.'</td>';
 echo '<td class="StateCode">'.$result->StateCode.'</td>';
-echo '<td>'.__('<a id='.$result->StateID.' class='.$location.' href="javascript:void(0)" onclick="editState(this.id);">Edit&nbsp;</a>'.
+echo '<td>'.__('<a id="state'.$result->StateID.'" class='.$location.' href="javascript:void(0)" onclick="editState(this.id);">Edit&nbsp;</a>'.
 '<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delstate=".$result->StateID.'" 
 onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
 echo '</tr>';
