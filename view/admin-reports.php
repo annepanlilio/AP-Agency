@@ -1194,10 +1194,31 @@ elseif ($ConfigID == 14) {
 	 * Next Step
 	 */
 
-	
+		if(isset($_GET["settings-updated"]) && empty($rb_agency_dummy_options_installdummy)){
+			
+			echo "<h2>". __("Removing Dummy Profiles...", rb_agency_TEXTDOMAIN) . "</h2>\n";
+			echo "<br/>Succesfully removed...";
+			echo "<br/>";
+
+			$trackDummies = explode(",",$_SESSION["trackDummies_text"]);
+
+			// Track dummies to pull out
+			foreach($trackDummies as $gallery){
+				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
+				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ";
+				$qID = mysql_query($getGallary) or die("1".mysql_error());
+				$fID = mysql_fetch_assoc($qID);
+				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
+				mysql_query($pSql) or die("2".mysql_error());
+				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
+				mysql_query($pmSql) or die("3".mysql_error());
+				uninstall_dummy_profile($gallery);
+			}
+			unset($_SESSION["trackDummies_text"]); 
+		}
 		
 		
-		if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdummy) && isset($_SESSION["trackDummies_text"])){	
+		if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdummy)){	
 			echo "<h2>". __("Installing Dummies...", rb_agency_TEXTDOMAIN) . "</h2>\n";
 			echo "<br/>";  
 			echo "Succesfully created ".count($userProfileNames)." dummy profiles..<br/>";
@@ -1323,28 +1344,7 @@ elseif ($ConfigID == 14) {
 
 			unset($_SESSION["trackDummies_text"]);
 		} // if option is empty
-	if(isset($_GET["settings-updated"]) && empty($rb_agency_dummy_options_installdummy)){
 
-			echo "<h2>". __("Removing Dummy Profiles...", rb_agency_TEXTDOMAIN) . "</h2>\n";
-			echo "<br/>Succesfully removed...";
-			echo "<br/>";
-
-			$trackDummies = explode(",",$_SESSION["trackDummies_text"]);
-
-			// Track dummies to pull out
-			foreach($trackDummies as $gallery){
-				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
-				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ";
-				$qID = mysql_query($getGallary) or die("1".mysql_error());
-				$fID = mysql_fetch_assoc($qID);
-				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				mysql_query($pSql) or die("2".mysql_error());
-				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				mysql_query($pmSql) or die("3".mysql_error());
-				uninstall_dummy_profile($gallery);
-			}
-			unset($_SESSION["trackDummies_text"]); 
-		}
 		if (isset($_GET["a"])){
 			unset($_SESSION["trackDummies_text"]); 
 			uninstall_allprofile();
