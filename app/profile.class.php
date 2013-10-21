@@ -109,7 +109,7 @@ class RBAgency_Profile {
 				</script>
 				<?php
 
-
+print_r($_SESSION);
 			/*
 			 * Search Form
 			 */  
