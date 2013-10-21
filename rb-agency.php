@@ -155,10 +155,14 @@ See license.txt for full details.
  * Call Function and Language
  */
 
-	require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/functions.php");
+	// Functions
+	require_once(rb_agency_BASEREL ."functions.php");
+
+	// Common Functions
+	require_once(rb_agency_BASEREL ."app/common.class.php");
 
 	// Widgets & Shortcodes
-	require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/extend.php");
+	require_once(rb_agency_BASEREL ."extend.php");
 
 	// Now Call the Lanuage
 	define("rb_agency_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/

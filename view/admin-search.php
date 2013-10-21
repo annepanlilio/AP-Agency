@@ -17,44 +17,14 @@
 		$rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];
 		if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
 
-
 // *************************************************************************************************** //
-/* TODO: REMOVE REDUNDANT  Setup Functions 
-
-		$cusFields = array("Suit","Shirt","Dress");  //for custom fields min and max
-
-		// TODO: REMOVE REDUNDANT
-		$sessionString = "";
-		// Gobble Up The Variables, Set em' Sessions
-		foreach ($_GET as $key => $value) {
-			if (substr($key, 0, 9) != "ProfileID") {
-				$_SESSION[$key] = $value;  //$$key = $value;
-				$sessionString .= $key ."=". $value ."&";
-			}
-		}
-		// Clean It!
-		$sessionString = rb_agency_cleanString($sessionString);
-
-				// Convert Requests to Sessions
-				foreach ($_REQUEST as $key => $value) {
-					// Clear old values
-					unset($_SESSION[$key]);
-					
-					// Set the new value
-					if (isset($value) && !empty($value)) {
-						$_SESSION[$key] = $value; //$$key = $value;
-					}
-				}
-*/
-
-
-// *************************************************************************************************** //
-// Get Actions 
-
+/* 
+ * Casting Cart
+ */
 	// Protect and defend the cart string!
 		$cartString = "";
 	// Add to Cart
-		if ($_GET["action"] == "cartAdd" ) { 
+		if ($_GET["action"] == "cartAdd" ) {
 			
 			if(count($_GET["ProfileID"])>0){
 				foreach($_GET["ProfileID"] as $value) {
@@ -62,7 +32,7 @@
 				}
 			}
 			// Clean It!
-			$cartString = rb_agency_cleanString($cartString);
+			$cartString = RBAgency_Common::Clean_String($cartString);
 			
 			if (isset($_SESSION['cartArray'])) {
 				$cartArray = $_SESSION['cartArray'];
@@ -89,7 +59,7 @@
 			$cartString = implode(",", $cartArray);
 			$cartRemoveID = $_GET["RemoveID"];
 			$cartString = str_replace($_GET['RemoveID'] ."", "", $cartString);
-			$cartString = rb_agency_cleanString($cartString);
+			$cartString = RBAgency_Common::Clean_String($cartString);
 			// Put it back in the array, and wash your hands
 			$_SESSION['cartArray'] = array($cartString);
 
@@ -122,7 +92,7 @@ echo "</pre>";
 		// Exclude IDs in Cart
 		$exclude = $_SESSION['cartArray'];
 			$exclude = implode(",", array_unique($exclude));
-			$exclude = rb_agency_cleanString($exclude);
+			$exclude = RBAgency_Common::Clean_String($exclude);
 
 		// Return Search
 		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array, $exclude);
@@ -335,7 +305,7 @@ echo $query;
 
 			$cartArray = $_SESSION['cartArray'];
 				$cartString = implode(",", array_unique($cartArray));
-				$cartString = rb_agency_cleanString($cartString);
+				$cartString = RBAgency_Common::Clean_String($cartString);
 
 			// Show Cart  
 			$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY profile.ProfileContactNameFirst ASC";

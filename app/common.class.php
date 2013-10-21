@@ -2,6 +2,21 @@
 
 class RBAgency_Common {
 
+	/**
+     * Clean String, remove extra quotes
+     *
+     * @param string $string
+     */
+	static function Clean_String($string) {
+		// Remove trailing dingleberry
+		if (substr($string, -1) == ",") {  $string = substr($string, 0, strlen($string)-1); }
+		if (substr($string, 0, 1) == ",") { $string = substr($string, 1, strlen($string)-1); }
+		// Just Incase
+		$string = str_replace(",,", ",", $string);
+
+		return $string;
+	}
+
 	/*
 	 * Data: Country
 	 */
