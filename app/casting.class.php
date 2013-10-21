@@ -19,6 +19,7 @@ class RBAgency_Casting {
 
 
 				if ($action == "cartAdd") {
+					error_reporting(1);
 					// Add to Cart
 					echo $response = $this->Cart_Process_Add();
 					print_r($_SESSION);
