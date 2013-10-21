@@ -18,7 +18,7 @@ class RBAgency_Casting {
 				$action = $_GET["action"];
 
 
-			/*	if ($action == "cartAdd") {
+				if ($action == "cartAdd") {
 					// Add to Cart
 					return $this->Cart_Process_Add();
 
@@ -31,7 +31,7 @@ class RBAgency_Casting {
 						}
 					}
 
-				} elseif ($action == "cartEmpty") {
+				} /*elseif ($action == "cartEmpty") {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
