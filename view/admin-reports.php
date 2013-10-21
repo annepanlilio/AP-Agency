@@ -1216,7 +1216,9 @@ elseif ($ConfigID == 14) {
 			}
 			unset($_SESSION["trackDummies_text"]); 
 		}
-
+		echo '<pre>';
+		print_r($_SESSION);
+		
 		if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdummy) && isset($_SESSION["trackDummies_text"])){	
 			echo "<h2>". __("Installing Dummies...", rb_agency_TEXTDOMAIN) . "</h2>\n";
 			echo "<br/>";  
