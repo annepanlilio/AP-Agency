@@ -189,21 +189,21 @@ class RBAgency_Profile {
 				echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
 				echo "					<input type=\"text\" id=\"city\" name=\"city\" value=\"". $_SESSION["city"] ."\" />\n";
 				echo "				</div>\n";
-				
-				echo "<div class=\"search-field single\">\n";
-				$location= site_url();
-				echo '<input type="hidden" id="url" value="'.$location.'">';
+								
+				echo "				<div class=\"search-field single\">\n";
+										$location= site_url();
+				echo '					<input type="hidden" id="url" value="'.$location.'">';
 				echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
-				$query_get ="SELECT * FROM `".table_agency_data_country."`" ;
-				$result_query_get = $wpdb->get_results($query_get);
-				echo "<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>";
-				echo '<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
-				foreach($result_query_get as $r){
-					$selected =$_SESSION["country"]==$r->CountryID?"selected=selected":"";
-					echo '<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
-				}
-				echo '</select>';
-				
+										$query_get ="SELECT * FROM `".table_agency_data_country."`" ;
+										$result_query_get = $wpdb->get_results($query_get);
+				echo "					<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>";
+				echo '					<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
+										foreach($result_query_get as $r){
+											$selected =$_SESSION["country"]==$r->CountryID?"selected=selected":"";
+				echo '						<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
+										}
+				echo '					</select>';
+				echo "				</div>\n";
 				echo "				<div class=\"search-field single\">\n";
 				echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
 				//echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"". $_SESSION["state"] ."\" />\n";
