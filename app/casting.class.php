@@ -35,7 +35,7 @@ class RBAgency_Casting {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
-				}  elseif ($action == "cartRemove") {
+				} elseif ($action == "cartRemove") {
 					// Remove ID from Cart
 					$id = $_GET["RemoveID"];
 					return $this->Cart_Process_Remove($id);
@@ -52,10 +52,9 @@ class RBAgency_Casting {
 
 					}
 
-				} */// 
-				
+				}
 
-				return $action;
+				return true;
 		}
 
 
