@@ -35,7 +35,7 @@ class RBAgency_Casting {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
-				} elseif ($action == "cartRemove") {
+				}  /*elseif ($action == "cartRemove") {
 					// Remove ID from Cart
 
 					isset($_GET["RemoveID"]) {
@@ -49,7 +49,7 @@ class RBAgency_Casting {
 						$_SESSION['cartArray'] = array($cartString);
 					}
 
-				} /*elseif ($action == "searchSave") {
+				}*/elseif ($action == "searchSave") {
 					// Save the Search
 					if isset($_SESSION['cartArray']) {
 
@@ -63,7 +63,7 @@ class RBAgency_Casting {
 
 				} // 
 
-				return $action;*/
+				return $action;
 		}
 
 
