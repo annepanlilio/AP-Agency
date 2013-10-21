@@ -1143,11 +1143,11 @@ elseif ($ConfigID == 14) {
 			$ProfileContactDisplay = "";
 			$ProfileGallery = "";
 
-			if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+				if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 				if ($rb_agency_option_profilenaming == 0) {
-					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+					$ProfileContactDisplay = $ProfileContactNameLast . " ". $ProfileContactNameFirst;
 				} elseif ($rb_agency_option_profilenaming == 1) {
-					$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+					$ProfileContactDisplay = $ProfileContactNameLast . " ". substr($ProfileContactNameFirst, 0, 1);
 				} elseif ($rb_agency_option_profilenaming == 2) {
 					$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 					$have_error = true;
