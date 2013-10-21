@@ -15,7 +15,7 @@ class RBAgency_Casting {
 			// Protect and defend the cart string!
 				$cartString = "";
 				$action = $_GET["action"];
-/*
+
 				if ($action == "cartAdd") {
 					// Add to Cart
 					return $this->Cart_Process_Add();
@@ -60,7 +60,7 @@ class RBAgency_Casting {
 					}
 
 				} //
-*/
+
 				return $action;
 		}
 
