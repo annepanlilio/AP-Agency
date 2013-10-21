@@ -49,7 +49,7 @@ class RBAgency_Casting {
 						$_SESSION['cartArray'] = array($cartString);
 					}
 
-				}*/ elseif ($action == "searchSave") {
+				} elseif ($action == "searchSave") {
 					// Save the Search
 					if isset($_SESSION['cartArray']) {
 
@@ -59,12 +59,11 @@ class RBAgency_Casting {
 						}
 						$_SESSION['cartArray'] = $cartArray;
 
-					}
+					}*/
 
 				} // 
-				else
-				{
-					}
+				else{
+				}
 
 				return $action;
 		}
