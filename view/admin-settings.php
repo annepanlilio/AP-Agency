@@ -2777,6 +2777,7 @@ if(isset($_POST["editaction"])){
 	echo '<span class="msg">Country has been deleted successfully</span>';
 	}
 echo '<div class="msg"></div>';
+$location=admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7";
 echo '<input type="hidden" name="url" id="url" value='.$location.'/>';
 echo '<table><tr>';
 echo '<th>'.__("Country Title", rb_agency_TEXTDOMAIN).'</th>';
@@ -2784,7 +2785,6 @@ echo '<th>'.__("Country Code", rb_agency_TEXTDOMAIN).'</th>';
 echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
 
 echo '</tr>';
-$location=admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7";
 $myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
 
 foreach($myrows as $result) {
