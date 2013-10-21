@@ -1880,24 +1880,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	} // End if Empty ProfileCustomID
 }
 
-/*/
-*   ================ Get Profile Gender for each user ===================
-*   @returns GenderTitle
-/*/   
-function rb_agency_getGenderTitle($ProfileGenderID){
- 
-	$query = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID='".$ProfileGenderID."'";
-	$results = mysql_query($query) or die(mysql_error());
-	$count = mysql_num_rows($results);
 
-	if($count > 0){
-	 	$data = mysql_fetch_assoc($results);
-		return $data["GenderTitle"];
-	} else {
-		return 0;	 
-	}
-	rb_agency_checkExecution();
-}
 
 /*/
 *   ================ Filters custom fields to show based on assigned gender ===================
@@ -2665,7 +2648,7 @@ function rb_agency_checkExecution() {
       	if (is_object($object)) { $object = get_class($object); }
 		$result = var_export( $var, true );
         
-        echo "\n<pre>Dump: $result</pre>";		
+        echo "\n<pre>Dump: $result</pre>";
 		echo "\n<pre>";
 
 		debug_print_backtrace();
@@ -3423,13 +3406,13 @@ function featured_homepage(){
 						 
 						 $custom2 = mysql_fetch_assoc($result2);
 						 
-						 if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "male"){
+						 if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "male"){
 							 
 							 if(in_array(strtolower($custom2['ProfileCustomTitle']),$a_male)){
 								 $array_male[$custom2['ProfileCustomTitle']] = $custom['ProfileCustomValue'];
 							 }
 						 
-						 } else if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "female"){
+						 } else if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "female"){
 							 
 							 if(in_array(strtolower($custom2['ProfileCustomTitle']),$a_female)){
 								 $array_female[$custom2['ProfileCustomTitle']] = $custom['ProfileCustomValue'];
@@ -3438,11 +3421,11 @@ function featured_homepage(){
 					
 					}
 					
-					if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "male"){
+					if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "male"){
 						
 						$array_data = array($name,'male',$array_male,$dataList["ProfileGallery"],$dataList["ProfileMediaURL"]);
 						
-					} else if(strtolower(rb_agency_getGenderTitle($dataList['ProfileGender'])) == "female"){
+					} else if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "female"){
 						
 						$array_data = array($name,'female',$array_female,$dataList["ProfileGallery"],$dataList["ProfileMediaURL"]);
 								 
@@ -3461,7 +3444,7 @@ function featured_homepage(){
 	// Search Form
 	function rb_agency_searchform($DataTypeID) {
 		$profilesearch_layout = "simple";
-		include("theme/include-profile-search.php"); 	
+		include("theme/include-profile-search.php");
 	}
 
 // 5/15/2013 sverma@ Home page

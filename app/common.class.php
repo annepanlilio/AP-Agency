@@ -7,7 +7,9 @@ class RBAgency_Common {
      *
      * @param string $string
      */
+
 	static function Clean_String($string) {
+
 		// Remove trailing dingleberry
 		if (substr($string, -1) == ",") {  $string = substr($string, 0, strlen($string)-1); }
 		if (substr($string, 0, 1) == ",") { $string = substr($string, 1, strlen($string)-1); }
@@ -16,6 +18,32 @@ class RBAgency_Common {
 
 		return $string;
 	}
+
+
+	/**
+     * Get Gender Title
+     *
+     * @param int $ProfileGenderID
+     * @return str $GenderTitle
+     */
+
+	static function Profile_Meta_GenderTitle($ProfileGenderID){
+
+		// Get DB
+		global $wpdb;
+
+		// Get Gender
+		$gender = $wpdb->get_col( $wpdb->prepare( "SELECT GenderTitle FROM " . table_agency_data_gender . " WHERE GenderID = %s", $ProfileGenderID ) );
+
+		// Check if Value Exists
+		if($gender){
+			return $gender[0];
+		} else {
+			return false;
+		}
+
+	}
+
 
 	/*
 	 * Data: Country
