@@ -1180,7 +1180,7 @@ elseif ($ConfigID == 14) {
 		if (empty($rb_agency_dummy_options_installdummy)) { $rb_agency_dummy_options_installdummy =""; }
 		$rb_agency_dummy_options_installdummy = $rb_agency_dummy_options_arr['rb_agency_dummy_options_installdummy'];
 
-		if(empty($rb_agency_dummy_options_installdummy)){
+		if(empty($rb_agency_dummy_options_installdummy) && isset($_GET["settings-updated"])){
 			echo "<input type=\"hidden\" name=\"rb_agency_dummy_options[rb_agency_dummy_options_installdummy]\" value=\"".$trackDummies_text."\" />\n";
 			echo "<input type=\"submit\" name=\"generate\" value=\"Generate Dummies Now!\" />\n";
 			$_SESSION["trackDummies_text"] = $trackDummies_text;
