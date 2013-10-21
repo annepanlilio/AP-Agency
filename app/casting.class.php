@@ -42,6 +42,8 @@ class RBAgency_Casting {
 						$cartArray = $_SESSION['cartArray'];
 						$cartString = implode(",", $cartArray);
 						$cartRemoveID = $_GET["RemoveID"];
+
+						// TODO: FIX  this, if ID = 3, changes 38 to 8
 						$cartString = str_replace($_GET['RemoveID'] ."", "", $cartString);
 						$cartString = RBAgency_Common::Clean_String($cartString);
 
@@ -51,7 +53,6 @@ class RBAgency_Casting {
 
 				} elseif ($action == "searchSave") {
 					// Save the Search
-					$cart = $_SESSION['cartArray'];
 					if (isset($_SESSION['cartArray'])) {
 
 						extract($_SESSION);
