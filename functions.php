@@ -1119,6 +1119,8 @@ error_reporting(0);
 				ORDER BY $sort $dir $limit";
 			}
 			// Query
+			echo $queryList;
+			echo "<br />".$limit;
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
 
@@ -1228,7 +1230,7 @@ error_reporting(0);
 
 		// There are no profiles returned.  Display empty message
 		if ($countList < 1) {
-			$displayHTML .= __("Nos Profiles Found", rb_agency_TEXTDOMAIN);
+			$displayHTML .= __("No Profiles Found", rb_agency_TEXTDOMAIN);
 		}
 		
 		// Close Formatting
