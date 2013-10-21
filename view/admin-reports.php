@@ -1302,7 +1302,7 @@ elseif ($ConfigID == 14) {
 								echo "<br/>";
 								die("Failed to Copy files... <br/>".phpinfo());
 							}
-							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImages[$a] ."','". $userMediaImages[$a] ."')");
+							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$a] ."','". $userMediaImagesF[$a] ."')");
 						}
 					}
 					if($a<=3){
