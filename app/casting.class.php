@@ -59,11 +59,10 @@ class RBAgency_Casting {
 						}
 						$_SESSION['cartArray'] = $cartArray;
 
-					}*/
+					}
 
-				} // 
-				else{
-				}
+				} */// 
+				
 
 				return $action;
 		}
