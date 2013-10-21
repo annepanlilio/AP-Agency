@@ -733,7 +733,7 @@ function rb_display_manage($ProfileID) {
 	$location= site_url();
 	
 	echo '<input type="hidden" id="url" value="'.$location.'">';
-	echo '<select name="ProfileLocationCountry" id="ProfileLocationCountry"  onchange="javascript:populateStates();">';
+	echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");'>";
 	echo '<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
 	 foreach($result_query_get as $r){
 		  $selected =$ProfileLocationCountry==$r->CountryID?"selected=selected":"";
