@@ -31,11 +31,11 @@ class RBAgency_Casting {
 						}
 					}
 
-				} /*elseif ($action == "cartEmpty") {
+				} elseif ($action == "cartEmpty") {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
-				}elseif ($action == "cartRemove") {
+				}/*elseif ($action == "cartRemove") {
 					// Remove ID from Cart
 
 					isset($_GET["RemoveID"]) {
