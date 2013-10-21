@@ -5,7 +5,6 @@ class RBAgency_Casting {
 	 * Casting Cart
 	 * Process Actions
 	 */
-	 echo "cartpageishere";
 
 		public static function Cart_Process(){
 
