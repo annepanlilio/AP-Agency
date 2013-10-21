@@ -2764,18 +2764,20 @@ if(isset($_POST["editaction"])){
 </div>
 </form>
 <?php 
-$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
 // Get Country to be deleted
 	if(!isset($_REQUEST['delcountry']) && empty($_REQUEST['delcountry'])){ 
 		$delCountry = 0;
 	} else {
-		$delCountry = $_REQUEST['delcountry']; 
-		// Remove Record
-		$delete = "DELETE FROM " . table_agency_data_country . " WHERE CountryID = \"". $delCountry ."\"";
-		$results = $wpdb->query($delete);
-		echo '<span class="msg">Country has been deleted successfully</span>';
+	$delCountry = $_REQUEST['delcountry']; 
+	// Remove Records from country and states
+	$deleteCountry = "DELETE FROM " . table_agency_data_country . " WHERE CountryID = \"". $delCountry ."\"";
+	$resultsCountry = $wpdb->query($deleteCountry);
+	 $deleteState= "DELETE FROM " . table_agency_data_state . " WHERE CountryID = \"". $delCountry ."\"";
+	$resultsState = $wpdb->query($deleteState);
+	echo '<span class="msg">Country has been deleted successfully</span>';
 	}
 echo '<div class="msg"></div>';
+echo '<input type="hidden" name="url" id="url" value='.$location.'/>';
 echo '<table><tr>';
 echo '<th>'.__("Country Title", rb_agency_TEXTDOMAIN).'</th>';
 echo '<th>'.__("Country Code", rb_agency_TEXTDOMAIN).'</th>';
@@ -2783,6 +2785,8 @@ echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
 
 echo '</tr>';
 $location=admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7";
+$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
+
 foreach($myrows as $result) {
 echo '<tr>';
 echo '<td class="countryTitle" >'.$result->CountryTitle.'</td>';
@@ -2856,32 +2860,36 @@ foreach($myrows as $result) {
 
 
 <?php
-$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_state."" );
 // Get Country to be deleted
 	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){ 
 		$delState = 0;
 	} else {
 		$delState = $_REQUEST['delstate']; 
 		// Remove Record
-		$delete = "DELETE FROM " . table_agency_data_state . " WHERE StateID = \"". $delState ."\"";
-		$results = $wpdb->query($delete);
+		$deleteState = "DELETE FROM " . table_agency_data_state . " WHERE StateID = \"". $delState ."\"";
+		$results = $wpdb->query($deleteState);
+		
 		echo '<span class="msg">State has been deleted successfully</span>';
 	}
-	
-echo '<table><tr>';
-echo '<th>'.__("State Title", rb_agency_TEXTDOMAIN).'</th>';
-echo '<th>'.__("State Code", rb_agency_TEXTDOMAIN).'</th>';
-echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
-
-echo '</tr>';
-foreach($myrows as $result) {
-echo '<tr>';
-echo '<td class="StateTitle">'.$result->StateTitle.'</td>';
-echo '<td class="StateCode">'.$result->StateCode.'</td>';
-echo '<td>'.__('<a id="state'.$result->StateID.'" class='.$location.' href="javascript:void(0)" onclick="editState(this.id);">Edit&nbsp;</a>'.
-'<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delstate=".$result->StateID.'" 
-onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
-echo '</tr>';
+echo '<table>';
+$getCountry = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
+foreach($getCountry as $countryRs) {
+	echo '<tr><td><h3>'.$countryRs->CountryTitle.'</h3></td></tr>';
+	echo '<tr>';
+	echo '<th style="text-align:left;">'.__("State Title", rb_agency_TEXTDOMAIN).'</th>';
+	echo '<th style="text-align:left;">'.__("State Code", rb_agency_TEXTDOMAIN).'</th>';
+	echo '<th style="text-align:left;">'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
+	echo '</tr>';
+	echo '<tr>';
+	$getStates = $wpdb->get_results( "SELECT * FROM ".table_agency_data_state." WHERE CountryID='$countryRs->CountryID'" );
+	foreach($getStates as $result) {
+		echo '<td class="StateTitle">'.$result->StateTitle.'</td>';
+		echo '<td class="StateCode">'.$result->StateCode.'</td>';
+		echo '<td>'.__('<a id="state'.$result->StateID.'" class='.$location.' href="javascript:void(0)" onclick="editState(this.id);">Edit&nbsp;</a>'.
+		'<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delstate=".$result->StateID.'" 
+		onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
+		echo '</tr>';
+	}
 }
 echo '</table>';
 ?>
