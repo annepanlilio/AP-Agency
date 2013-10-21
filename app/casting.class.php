@@ -16,7 +16,7 @@ class RBAgency_Casting {
 				$cartString = "";
 				$action = $_GET["action"];
 
-
+/*
 				if ($action == "cartAdd") {
 					// Add to Cart
 					return $this->Cart_Process_Add();
@@ -48,7 +48,7 @@ class RBAgency_Casting {
 						$_SESSION['cartArray'] = array($cartString);
 					}
 
-				} /*elseif ($action == "searchSave") {
+				} elseif ($action == "searchSave") {
 					// Save the Search
 					if isset($_SESSION['cartArray']) {
 
@@ -60,9 +60,9 @@ class RBAgency_Casting {
 
 					}
 
-				} //*/ 
+				} // 
 
-				return $action;
+				return $action;*/
 		}
 
 
