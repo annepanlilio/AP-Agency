@@ -109,7 +109,6 @@ class RBAgency_Profile {
 				</script>
 				<?php
 
-echo '7';
 			/*
 			 * Search Form
 			 */
