@@ -139,7 +139,7 @@
 			echo "                    <span class=\"delete\"><a class=\"submitdelete\" title=\"Remove this Profile\" href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;deleteRecord&amp;ProfileID=". $ProfileID ."' onclick=\"if ( confirm('You are about to delete the model \'". $ProfileContactNameFirst ." ". $ProfileContactNameLast ."\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;\">Delete</a></span>\n";
 			echo "                </div>\n";
 			if(!empty($isInactiveDisable)){
-			       echo "<div><strong>Profile Status:</strong> <span style=\"color:red;\">Inactive</span></div>\n";
+				   echo "<div><strong>Profile Status:</strong> <span style=\"color:red;\">Inactive</span></div>\n";
 			}
 			echo "            </td>\n";
 
@@ -147,35 +147,35 @@
 			echo "            <td class=\"ProfileStats column-ProfileStats\">\n";
 
 			if (!empty($data['ProfileContactEmail'])) {
-			        echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
+					echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
 			}
 
 			if (!empty($data['ProfileLocationStreet'])) {
-			        echo "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
+					echo "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
 			}
 			if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
-			        echo "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
+					echo "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
 			}
 			if (!empty($data['ProfileLocationCountry'])) {
-			        echo "<div><strong>". __("Country", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileLocationCountry'] ."</div>\n";
+					echo "<div><strong>". __("Country", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileLocationCountry'] ."</div>\n";
 			}
 			if (!empty($data['ProfileDateBirth'])) {
-			        echo "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
+					echo "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
 			}
 			if (!empty($data['ProfileDateBirth'])) {
-			        echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
+					echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
 			}
 			if (!empty($data['ProfileContactWebsite'])) {
-			        echo "<div><strong>". __("Website", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
+					echo "<div><strong>". __("Website", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
 			}
 			if (!empty($data['ProfileContactPhoneHome'])) {
-			        echo "<div><strong>". __("Phone Home", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
+					echo "<div><strong>". __("Phone Home", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
 			}
 			if (!empty($data['ProfileContactPhoneCell'])) {
-			        echo "<div><strong>". __("Phone Cell", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
+					echo "<div><strong>". __("Phone Cell", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
 			}
 			if (!empty($data['ProfileContactPhoneWork'])) {
-			        echo "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
+					echo "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 			}
 
 			$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC"));
@@ -259,107 +259,15 @@
 		$castingcart = RBAgency_Casting::Cart_Show();
 		echo $castingcart;
 
+		echo "    </div>\n";
 		echo " </div>\n";
 		echo "</div>\n";
 
-		if (($cartAction == "cartEmpty") || ($cartAction == "cartRemove")) {
-		echo "<a name=\"compose\">&nbsp;</a>"; 
-		echo "     <div class=\"boxblock\">\n";
-		echo "        <h3>". __("Cart Actions", rb_agency_TEXTDOMAIN) ."</h3>\n";
-		echo "        <div class=\"inner\">\n";
-		echo "      	<a href=\"?page=rb_agency_searchsaved&action=searchSave\" title=\"". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."</a>\n";
-		echo "      	<a href=\"?page=rb_agency_search&action=massEmail#compose\" title=\"". __("Mass Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Mass Email", rb_agency_TEXTDOMAIN) ."</a>\n";
-		echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
-		echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
-		echo "        </div>\n";
-		echo "     </div>\n";
-		} // Is Cart Empty 
-
-
 	/**
 	 * Send Email
 	 */
 
-        $isSent = false;
-        if(isset($_POST["SendEmail"])){
 
-            $rb_agency_options_arr = get_option('rb_agency_options');
-            $rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-            $rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
-
-
-            add_filter('wp_mail_content_type','rb_agency_set_content_type');
-            function rb_agency_set_content_type($content_type){
-                        return 'text/html';
-            }
-
-            $MassEmailSubject = $_POST["MassEmailSubject"];
-            $MassEmailMessage = $_POST["MassEmailMessage"];
-            $MassEmailRecipient = $_POST["MassEmailRecipient"];
-
-            // Mail it
-            $headers[]  = 'MIME-Version: 1.0';
-            $headers[] = 'Content-type: text/html; charset=iso-8859-1';
-            $headers[] = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>';
-
-            if(!empty($expMail)){
-                    $expMail = explode(",",$MassEmailRecipient);
-                    foreach($expMail as $bccEmail){
-                            $headers[] = 'Bcc: '.$bccEmail;
-                    }
-            }
-
-            $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
-
-        }
-
-	/**
-	 * Send Email
-	 */
-		if($_GET["action"]== "massEmail"){
-
-			// Filter Models Already in Cart
-			if (isset($_SESSION['cartArray'])) {
-				$cartArray = $_SESSION['cartArray'];
-				$cartString = implode(",", $cartArray);
-				$cartQuery =  " AND profile.ProfileID IN (". $cartString .")";
-			}
-
-			// Search Results	
-			$query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
-			$results2 = mysql_query($query);
-			$count = mysql_num_rows($results2);
-			$pos = 0;
-			$recipient = "";
-			while ($data = mysql_fetch_array($results2)) {
-				$pos ++;
-				$ProfileID = $data['ProfileID'];
-				$recipient .=$data['ProfileContactEmail'];
-				if($count != $pos){
-					$recipient .=", ";
-				}
-
-			}
-			// Email
-			$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-			$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
-			echo "<form method=\"post\">";
-			echo "     <div class=\"boxblock\">\n";
-			echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
-			echo "        <div class=\"inner\">\n";
-			if($isSent){
-			echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";	
-			}
-			echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$recipient."</textarea><br/>";
-			echo "        <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
-			echo "<br/>";
-			echo "      <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\">this message was sent to you by ".$rb_agency_value_agencyname." ".network_site_url( '/' )."</textarea>";
-			echo "				<input type=\"submit\" value=\"". __("Send Email", rb_agency_TEXTDOMAIN) . "\" name=\"SendEmail\"class=\"button-primary\" />\n";
-			echo "        </div>\n";
-			echo "     </div>\n";
-			echo "</form>";
-		}
 
 	echo "    </div><!-- .container -->\n";
 	}
