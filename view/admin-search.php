@@ -34,7 +34,6 @@
 		}
 		// Clean It!
 		$sessionString = rb_agency_cleanString($sessionString);
-*/
 
 				// Convert Requests to Sessions
 				foreach ($_REQUEST as $key => $value) {
@@ -46,6 +45,7 @@
 						$_SESSION[$key] = $value; //$$key = $value;
 					}
 				}
+*/
 
 
 // *************************************************************************************************** //

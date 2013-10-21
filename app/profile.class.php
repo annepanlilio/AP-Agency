@@ -541,7 +541,21 @@ class RBAgency_Profile {
 
 			/*
 			 * Set Session
-			 * TODO: Ensure all keys are valid.
+			 */
+
+				// Convert Requests to Sessions
+				foreach ($_REQUEST as $key => $value) {
+					// Clear old values
+					unset($_SESSION[$key]);
+					
+					// Set the new value
+					if (isset($value) && !empty($value)) {
+						$_SESSION[$key] = $value; //$$key = $value;
+					}
+				}
+
+			/*
+			 * Create Array
 			 */
 
 			// Check if a new search is posted
