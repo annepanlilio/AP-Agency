@@ -74,7 +74,7 @@ class RBAgency_Casting {
 			}
 
 			// Clean It!
-			$cartString = RBAgency_Common::Clean_String($cartString);
+			//$cartString = RBAgency_Common::Clean_String($cartString);
 
 			// Add to Session
 			if (isset($_SESSION['cartArray'])) {
