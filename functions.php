@@ -796,6 +796,7 @@ error_reporting(0);
 
 		//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		$dir = "asc";
+echo "sort1".$sort;
 		// Should we override the privacy settings?
 		if(strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
 			$OverridePrivacy = 1;
@@ -852,6 +853,7 @@ error_reporting(0);
 		$State						= $profilestate;
 		$Zip						= $profilezip;  
 
+echo "sort2".$sort;
 		// Name
 		if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
 			$ProfileContactNameFirst = $ProfileContactNameFirst;
@@ -967,6 +969,7 @@ error_reporting(0);
 					$links.='</div><!-- .rbfavorites-castings -->
 				</div><!-- .rblinks -->';			
 			}
+echo "sort5".$sort;
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
@@ -1034,6 +1037,7 @@ error_reporting(0);
 				} else {
 					$limit = "";
 				}
+echo "sort5".$sort;
 				if(get_query_var('target')=="print"){$limit = "";} //to remove limit on print page
 				if(get_query_var('target')=="pdf"){$limit = "";} //to remove limit on pdf page
 				mysql_free_result($qItem);
@@ -1114,11 +1118,11 @@ error_reporting(0);
 				ORDER BY $sort $dir $limit";
 			}
 			// Query
-		/*	echo "queryList".$queryList;
+			echo "queryList".$queryList;
 			echo "<br /><br />";
 			echo "sort7".$sort;
 			echo "dir".$dir;
-			echo "limit".$limit;*/
+			echo "limit".$limit;
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
 
