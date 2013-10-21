@@ -37,19 +37,8 @@ class RBAgency_Casting {
 
 				}  elseif ($action == "cartRemove") {
 					// Remove ID from Cart
-
-					if (isset($_GET["RemoveID"])) {
-						$cartArray = $_SESSION['cartArray'];
-						$cartString = implode(",", $cartArray);
-						$cartRemoveID = $_GET["RemoveID"];
-
-						// TODO: FIX  this, if ID = 3, changes 38 to 8
-						$cartString = str_replace($_GET['RemoveID'] ."", "", $cartString);
-						$cartString = RBAgency_Common::Clean_String($cartString);
-
-						// Put it back in the array, and wash your hands
-						$_SESSION['cartArray'] = array($cartString);
-					}
+					$id = $_GET["RemoveID"];
+					return $this->Cart_Process_Remove($id);
 
 				} elseif ($action == "searchSave") {
 					// Save the Search
@@ -102,6 +91,31 @@ class RBAgency_Casting {
 			return $cartString;
 
 		}
+
+
+	/*
+	 * Casting Cart - Remove from Cart
+	 * @return str $cartString
+	 */
+
+		public static function Cart_Process_Remove($id){
+
+			// Remove ID from Cart
+			if (isset($id)) {
+				$cartArray = $_SESSION['cartArray'];
+				$cartString = implode(",", $cartArray);
+
+				// TODO: FIX  this, if ID = 3, changes 38 to 8
+				$cartString = str_replace($id ."", "", $cartString);
+				$cartString = RBAgency_Common::Clean_String($cartString);
+
+				// Put it back in the array, and wash your hands
+				$_SESSION['cartArray'] = array($cartString);
+			}
+
+
+		}
+
 
 
 	/*
