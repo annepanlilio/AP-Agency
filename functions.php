@@ -1119,9 +1119,9 @@ error_reporting(0);
 				ORDER BY $sort $dir $limit";
 			}
 			// Query
-			echo $queryList;
+			echo "queryList".$queryList;
 			echo "<br /><br />";
-			echo $limit;
+			echo "limit".$limit;
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
 
