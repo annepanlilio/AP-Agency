@@ -1121,6 +1121,8 @@ error_reporting(0);
 			// Query
 			echo "queryList".$queryList;
 			echo "<br /><br />";
+			echo "sort".$sort;
+			echo "dir".$dir;
 			echo "limit".$limit;
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
