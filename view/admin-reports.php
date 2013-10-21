@@ -1613,7 +1613,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 							$ex = explode(" | ",trim($data[15]));
 							$data[15] = trim(implode(",",$ex));
 						}					
-						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
+						echo $add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
 						mysql_query($add_to_p_table) or die(mysql_error());
 
 						$last_inserted_mysql_id = mysql_insert_id();
