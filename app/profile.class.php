@@ -112,8 +112,7 @@ class RBAgency_Profile {
 print_r($_SESSION);
 			/*
 			 * Search Form
-			 */  
-			 
+			 */
 
 				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
 				echo "			<form method=\"post\" id=\"search-form-condensed\" action=\"". $rb_agency_searchurl ."\">\n";
@@ -189,7 +188,7 @@ print_r($_SESSION);
 				echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
 				echo "					<input type=\"text\" id=\"city\" name=\"city\" value=\"". $_SESSION["city"] ."\" />\n";
 				echo "				</div>\n";
-								
+
 				echo "				<div class=\"search-field single\">\n";
 										$location= site_url();
 				echo '					<input type="hidden" id="url" value="'.$location.'">';
@@ -204,27 +203,26 @@ print_r($_SESSION);
 										}
 				echo '					</select>';
 				echo "				</div>\n";
+
 				echo "				<div class=\"search-field single\">\n";
 				echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
-				//echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"". $_SESSION["state"] ."\" />\n";
-				$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
-				$result_query_get = $wpdb->get_results($query_get);
-				echo '<select name="state" id="state">';
-				echo '<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
-				foreach($result_query_get as $r){
-					$selected =$_SESSION["state"]==$r->StateID?"selected=selected":"";
-					echo '<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
-				}
-				echo '</select>';
-	
-	
-	
+										//echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"". $_SESSION["state"] ."\" />\n";
+										$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
+										$result_query_get = $wpdb->get_results($query_get);
+				echo '						<select name="state" id="state">';
+				echo '					<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
+										foreach($result_query_get as $r){
+											$selected =$_SESSION["state"]==$r->StateID?"selected=selected":"";
+				echo '					<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
+										}
+				echo '					</select>';
 				echo "				</div>\n";
+
 				echo "				<div class=\"search-field single\">\n";
 				echo "					<label for=\"zip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
 				echo "					<input type=\"text\" id=\"zip\" name=\"zip\" value=\"". $_SESSION["zip"] ."\" />\n";
 				echo "				</div>\n";
-									}
+									} // Show Location Search
 
 				/*
 				 * Custom Fields
@@ -294,21 +292,21 @@ print_r($_SESSION);
 								
 								if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
 									echo "<div>";
-									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" />";
+									echo "		<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "		<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" />";
 									echo "</div>";
 									echo "<div>";
-									echo "<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Max_value ."\" />";
+									echo "		<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "		<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Max_value ."\" />";
 									echo "</div>";
 								} else {
 									echo "<div>";
-									echo "<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$min_val2."\" />";
+									echo "		<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "		<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$min_val2."\" />";
 									echo "</div>";
 									echo "<div>";
-									echo "<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-									echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val2."\" />";
+									echo "		<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+									echo "		<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val2."\" />";
 									echo "</div>";
 								}
 								echo "</div>";
@@ -330,13 +328,13 @@ print_r($_SESSION);
 											$isSelected = "";
 											if($_REQUEST["ProfileCustomID". $ProfileCustomID]==$value){
 												$isSelected = "selected=\"selected\"";
-												echo "<option value=\"".$value."\" ".$isSelected .">".$value."</option>";
+												echo "		<option value=\"".$value."\" ".$isSelected .">".$value."</option>";
 											}else{
-												echo "<option value=\"".$value."\" >".$value."</option>"; 
+												echo "		<option value=\"".$value."\" >".$value."</option>"; 
 											}
 										}
 									}
-								echo "</select>";
+								echo "	</select>";
 								echo "</div>";
 
 
@@ -480,14 +478,15 @@ print_r($_SESSION);
 										  $heightraw = 0;
 										  $heightfeet = 0;
 										  $heightinch = 0;
-										  while($i<=96)  { 
-											  $heightraw = $i;
-											  $heightfeet = floor($heightraw/12);
-											  $heightinch = $heightraw - floor($heightfeet*12);
-											echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
-												  $i++;
-												}
-											echo " </select></div>\n";
+											while($i<=96)  { 
+												$heightraw = $i;
+												$heightfeet = floor($heightraw/12);
+												$heightinch = $heightraw - floor($heightfeet*12);
+												echo " <option value=\"". $i ."\" ". selected($ProfileCustomValue, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+												$i++;
+											}
+											echo " </select>\n";
+											echo "</div>\n";
 
 									} else {
 										
@@ -499,7 +498,7 @@ print_r($_SESSION);
 
 										echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
-										
+
 									}
 							echo "</fieldset>";
 
