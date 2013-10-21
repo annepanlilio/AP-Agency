@@ -21,7 +21,7 @@ class RBAgency_Casting {
 					// Add to Cart
 					return $this->Cart_Process_Add();
 
-				} elseif ($action == "formEmpty") {
+				} /*elseif ($action == "formEmpty") {
 					// Empty the Form
 					extract($_SESSION);
 					foreach($_SESSION as $key=>$value) {
@@ -30,7 +30,7 @@ class RBAgency_Casting {
 						}
 					}
 
-				} elseif ($action == "cartEmpty") {
+				}*/ elseif ($action == "cartEmpty") {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
