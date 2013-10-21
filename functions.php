@@ -1228,7 +1228,7 @@ error_reporting(0);
 
 		// There are no profiles returned.  Display empty message
 		if ($countList < 1) {
-			$displayHTML .= __("No Profiles Found", rb_agency_TEXTDOMAIN);
+			$displayHTML .= __("Nos Profiles Found", rb_agency_TEXTDOMAIN);
 		}
 		
 		// Close Formatting
