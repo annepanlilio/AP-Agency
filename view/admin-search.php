@@ -1,14 +1,17 @@
 <div class="wrap">
 <?php
 
+	// Setup DB connection
+	global $wpdb;
+
 	// Include Admin Menu
 	include ("admin-include-menu.php"); 
 
 	// Profile Class
 	include(rb_agency_BASEREL ."app/profile.class.php");
 
-	// Setup DB connection
-	global $wpdb;
+	// Casting Class
+	include(rb_agency_BASEREL ."app/casting.class.php");
 
 	// Define Options
 	$rb_agency_options_arr = get_option('rb_agency_options');
@@ -17,61 +20,18 @@
 		$rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];
 		if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
 
+
 // *************************************************************************************************** //
 /* 
  * Casting Cart
  */
-	// Protect and defend the cart string!
-		$cartString = "";
-	// Add to Cart
-		if ($_GET["action"] == "cartAdd" ) {
-			
-			if(count($_GET["ProfileID"])>0){
-				foreach($_GET["ProfileID"] as $value) {
-					$cartString .= $value .",";
-				}
-			}
-			// Clean It!
-			$cartString = RBAgency_Common::Clean_String($cartString);
-			
-			if (isset($_SESSION['cartArray'])) {
-				$cartArray = $_SESSION['cartArray'];
-				array_push($cartArray, $cartString);
-			} else {
-				$cartArray = array($cartString);
-			}
 
-			$_SESSION['cartArray'] = $cartArray;
+	if(isset($_REQUEST["action"])) {
 
-		} elseif ($_GET["action"] == "formEmpty") {  // Handle Form Empty 
-			extract($_SESSION);
-			foreach($_SESSION as $key=>$value) {
-				if (substr($key, 0, 7) == "Profile") {
-					unset($_SESSION[$key]);
-				}
-			}
-		} elseif ($_GET["action"] == "cartEmpty") {  // Handle Cart Removal
-			// Throw the baby out with the bathwater
-			unset($_SESSION['cartArray']);
+		// Process Cart
+		$cart = RBAgency_Casting::Cart_Process();
 
-		} elseif (($_GET["action"] == "cartRemove") && (isset($_GET["RemoveID"]))) {
-			$cartArray = $_SESSION['cartArray'];
-			$cartString = implode(",", $cartArray);
-			$cartRemoveID = $_GET["RemoveID"];
-			$cartString = str_replace($_GET['RemoveID'] ."", "", $cartString);
-			$cartString = RBAgency_Common::Clean_String($cartString);
-			// Put it back in the array, and wash your hands
-			$_SESSION['cartArray'] = array($cartString);
-
-		} elseif (($_GET["action"] == "searchSave") && isset($_SESSION['cartArray'])) {
-			extract($_SESSION);
-			foreach($_SESSION as $key=>$value) {
-				// TODO: Why is this empty?
-			}
-			$_SESSION['cartArray'] = $cartArray;
-
-		}
-
+	}
 
 
 // *************************************************************************************************** //
@@ -79,45 +39,39 @@
 
 	if ($_REQUEST["action"] == "search") {
 
-
 	/**
 	 * Generate SQL Statement
 	 */
 
 		// Process Form Submission
 		$search_array = RBAgency_Profile::search_process();
-echo "<pre>";
-print_r($search_array);
-echo "</pre>";
+
 		// Exclude IDs in Cart
 		$exclude = $_SESSION['cartArray'];
 			$exclude = implode(",", array_unique($exclude));
 			$exclude = RBAgency_Common::Clean_String($exclude);
 
 		// Return Search
-		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array, $exclude);
+		$search_sql_query_where = RBAgency_Profile::search_generate_sqlwhere($search_array, $exclude);
+		$search_sql_query_order = RBAgency_Profile::search_generate_sqlorder($search_array);
 
 		// Build SQL Query
 		$query = "
 			SELECT 
-			profile.*,
-			profile.ProfileGallery,
-			profile.ProfileContactDisplay, 
-			profile.ProfileDateBirth, 
-			profile.ProfileLocationState, 
-			profile.ProfileID as pID,
-				(
-				SELECT media.ProfileMediaURL 
-				FROM ". table_agency_profile_media ." media
-				WHERE profile.ProfileID = media.ProfileID 
-					AND media.ProfileMediaType = \"Image\"
-					AND media.ProfileMediaPrimary = 1
-				)
-				AS ProfileMediaURL FROM ". table_agency_profile ." profile
-			WHERE ". $search_sql_query ."
-			"; // GROUP BY profile.ProfileID  ORDER BY $sort $dir  $limit"
+				profile.*,
+				profile.ProfileGallery,
+				profile.ProfileContactDisplay, 
+				profile.ProfileDateBirth, 
+				profile.ProfileLocationState, 
+				profile.ProfileID as pID,
+				media.ProfileMediaURL as ProfileMediaURL
+			FROM ". table_agency_profile ." profile
+			LEFT JOIN ". table_agency_profile_media ." media ON profile.ProfileID = media.ProfileID 
+			WHERE ". $search_sql_query_where ." 
+				AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1
+				". $search_sql_query_order ."
+			";
 
-echo $query;
 	/**
 	 * Return Results
 	 */
@@ -235,10 +189,10 @@ echo $query;
 			echo "            <td class=\"ProfileDetails column-ProfileDetails\">\n";
 			echo "<ul style='margin: 0px;'>" ;
 			if (!empty($data['ProfileGender'])) {
-				if(rb_agency_getGenderTitle($data['ProfileGender'])){
-					echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</li>\n";
+				if(RBAgency_Common::Profile_Meta_GenderTitle($data['ProfileGender'])){
+					echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".RBAgency_Common::Profile_Meta_GenderTitle($data['ProfileGender'])."</li>\n";
 				}else{
-					echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";	
+					echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";
 				}
 			}
 			rb_agency_getProfileCustomFields($ProfileID ,$data['ProfileGender']);
