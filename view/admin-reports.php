@@ -1208,7 +1208,7 @@ elseif ($ConfigID == 14) {
 				echo $getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ";
 				$qID = mysql_query($getGallary) or die("1".mysql_error());
 				$fID = mysql_fetch_assoc($qID);
-				echo $psql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
+				echo $pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
 				mysql_query($pSql) or die("2".mysql_error());
 				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
 				mysql_query($pmSql) or die("3".mysql_error());
