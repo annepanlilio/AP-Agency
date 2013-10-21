@@ -1034,7 +1034,7 @@ error_reporting(0);
 						$p->page = $paging;
 					}
 					//Query for limit paging
-					$limit = "LIMIT " . ($p->page - 1) * $p->limit  . ", " . $p->limit;
+					$limit = "";
 				} else {
 					$limit = "";
 				}
