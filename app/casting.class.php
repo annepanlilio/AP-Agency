@@ -16,6 +16,7 @@ class RBAgency_Casting {
 				$cartString = "";
 				$action = $_GET["action"];
 
+
 				if ($action == "cartAdd") {
 					// Add to Cart
 					return $this->Cart_Process_Add();
@@ -25,7 +26,7 @@ class RBAgency_Casting {
 					extract($_SESSION);
 					foreach($_SESSION as $key=>$value) {
 						if (substr($key, 0, 7) == "Profile") {
-							//unset($_SESSION[$key]);
+							unset($_SESSION[$key]);
 						}
 					}
 
@@ -33,7 +34,7 @@ class RBAgency_Casting {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
-				} elseif ($action == "cartRemove") {
+				} /*elseif ($action == "cartRemove") {
 					// Remove ID from Cart
 
 					isset($_GET["RemoveID"]) {
@@ -59,7 +60,7 @@ class RBAgency_Casting {
 
 					}
 
-				} //
+				} //*/
 
 				return $action;
 		}
