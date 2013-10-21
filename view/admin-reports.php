@@ -1207,9 +1207,10 @@ elseif ($ConfigID == 14) {
 				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
 				$qID = mysql_query("SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ") or die("1".mysql_error());
 				$fID = mysql_fetch_assoc($qID);
-
-				mysql_query("DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ") or die("2".mysql_error());
-				mysql_query("DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ") or die("3".mysql_error());
+				echo $psql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
+				mysql_query($pSql) or die("2".mysql_error());
+				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
+				mysql_query($pmSql) or die("3".mysql_error());
 				uninstall_dummy_profile($gallery);
 			}
 			unset($_SESSION["trackDummies_text"]); 
