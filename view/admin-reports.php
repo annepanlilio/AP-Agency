@@ -1205,7 +1205,8 @@ elseif ($ConfigID == 14) {
 			// Track dummies to pull out
 			foreach($trackDummies as $gallery){
 				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
-				$qID = mysql_query("SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ") or die("1".mysql_error());
+				echo $getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ";
+				$qID = mysql_query($getGallary) or die("1".mysql_error());
 				$fID = mysql_fetch_assoc($qID);
 				echo $psql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
 				mysql_query($pSql) or die("2".mysql_error());
