@@ -251,14 +251,14 @@
 
 		echo "<div class=\"boxblock-container\" style=\"float: left; width: 49%; min-width: 500px;\">\n";
 		echo " <div class=\"boxblock\">\n";
-		echo "  <h2>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h2>\n";
-		echo "    <div class=\"inner\">\n";
+		echo "   <h2>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h2>\n";
+		echo "   <div class=\"inner\">\n";
 
 		// Show Cart
 		$castingcart = RBAgency_Casting::Cart_Show();
 		echo $castingcart;
 
-		echo "    </div>\n";
+		echo "   </div>\n";
 		echo " </div>\n";
 		echo "</div>\n";
 
@@ -274,11 +274,11 @@
 	echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
 	echo "     <div class=\"boxblock\">\n";
 	echo "      <h3>". __("Advance Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
-	echo "        <div class=\"inner\">\n";
+	echo "      <div class=\"inner\">\n";
 
 		return RBAgency_Profile::search_form("", "", 1);
 
-	echo "        </div><!-- .inner -->\n";
+	echo "      </div><!-- .inner -->\n";
 	echo "     </div><!-- .boxblock -->\n";
 	echo "    </div><!-- .boxblock-container -->\n";
 ?>
