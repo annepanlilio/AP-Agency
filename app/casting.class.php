@@ -20,7 +20,8 @@ class RBAgency_Casting {
 
 				if ($action == "cartAdd") {
 					// Add to Cart
-					$response = $this->Cart_Process_Add();
+					echo $response = $this->Cart_Process_Add();
+					print_r($_SESSION);
 
 				} elseif ($action == "formEmpty") {
 					// Empty the Form
