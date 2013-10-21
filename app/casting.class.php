@@ -5,6 +5,7 @@ class RBAgency_Casting {
 	 * Casting Cart
 	 * Process Actions
 	 */
+	 echo "cartpageishere";
 
 		public static function Cart_Process(){
 
@@ -12,11 +13,12 @@ class RBAgency_Casting {
 			 * Setup Requirements
 			 */
 
+
 			// Protect and defend the cart string!
 				$cartString = "";
 				$action = $_GET["action"];
 
-/*
+
 				if ($action == "cartAdd") {
 					// Add to Cart
 					return $this->Cart_Process_Add();
@@ -30,7 +32,7 @@ class RBAgency_Casting {
 						}
 					}
 
-				} elseif ($action == "cartEmpty") {
+				}/* elseif ($action == "cartEmpty") {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
