@@ -19,11 +19,11 @@ class RBAgency_Casting {
 				$action = $_GET["action"];
 
 
-				if ($action == "cartAdd") {
+			/*	if ($action == "cartAdd") {
 					// Add to Cart
 					return $this->Cart_Process_Add();
 
-				} /*elseif ($action == "formEmpty") {
+				} elseif ($action == "formEmpty") {
 					// Empty the Form
 					extract($_SESSION);
 					foreach($_SESSION as $key=>$value) {
