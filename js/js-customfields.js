@@ -273,7 +273,7 @@ jQuery("#"+aId).parent('td').siblings().each (function() {
 	jQuery(this).html('<input type="text" id='+className+' value='+text+'>');
 
 });    
-jQuery("#country"+aId).parent('td').prepend('<input type="hidden" id="countryId" value='+jQuery("#"+aId).attr("id")+'><input type="button" name="submit" class="button-primary"  onclick="javascript:saveCountry();" value="Save"><input type="button" name="reset" value="Cancel" class="button-primary" onclick="javascript:redirectToSetting();">');
+jQuery("#"+aId).parent('td').prepend('<input type="hidden" id="url" value='+jQuery("#"+aId).attr("class")+'><input type="hidden" id="countryId" value='+jQuery("#"+aId).attr("id")+'><input type="button" name="submit" class="button-primary"  onclick="javascript:saveCountry();" value="Save"><input type="button" name="reset" value="Cancel" class="button-primary" onclick="javascript:redirectToSetting();">');
 	jQuery("#"+aId).parent('td').find('a').hide();
 
 }
@@ -283,12 +283,13 @@ jQuery("#country"+aId).parent('td').prepend('<input type="hidden" id="countryId"
 
 //Edit state
 function editState(aId){
-jQuery("#state"+aId).parent('td').siblings().each (function() {
+jQuery("#"+aId).parent('td').siblings().each (function() {
 	var text =jQuery(this).text();
 	var className = jQuery(this).attr('class');
 	jQuery(this).html('<input type="text" id='+className+' value='+text+'>');
 
 });    
-jQuery("#"+aId).parent('td').prepend('<input type="hidden" id="stateId" value='+jQuery("#"+aId).attr("id")+'><input type="button" class="button-primary" name="submit"  onclick="javascript:saveState();" value="Save"><input type="button" name="reset" onclick="javascript:redirectToSetting();" class="button-primary" value="Cancel">');
+jQuery("#"+aId).parent('td').prepend('<input type="hidden" id="url" value='+jQuery("#"+aId).attr("class")+'><input type="hidden" id="stateId" value='+jQuery("#"+aId).attr("id")+'><input type="button" class="button-primary" name="submit"  onclick="javascript:saveState();" value="Save"><input type="button" name="reset" onclick="javascript:redirectToSetting();" class="button-primary" value="Cancel">');
 jQuery("#"+aId).parent('td').find('a').hide();
 }
+
