@@ -728,7 +728,7 @@ class RBAgency_Profile {
 
 
 	/*
-	 * Search: Prepare SQL String
+	 * Search: Prepare WHERE SQL String
 	 * Process values into SQL string holding WHERE clause
 	 */
 
@@ -772,12 +772,6 @@ class RBAgency_Profile {
 					// ?
 					"stars" => NULL,
 					"favorite" => NULL,
-					// Handling
-					"sort" => NULL,
-					"dir" => NULL,
-					"limit" => NULL,
-					"perpage" => NULL,
-					"page" => NULL,
 					"override_privacy" => NULL
 				), $atts));
 
@@ -1043,6 +1037,41 @@ class RBAgency_Profile {
 					$filter .= " AND profile.ProfileID NOT IN (". $exclude .")";
 				}
 
+				return $filter;
+
+			} else {
+				// Empty Search
+				return false;
+			}
+
+		}
+
+
+	/*
+	 * Search: Prepare ORDER SQL String
+	 * Process values into SQL string holding ORDER clause
+	 */
+
+		public static function search_generate_sqlorder($atts){
+
+			// Convert Input
+			if(is_array($atts)) {
+
+			/*
+			 * Get Search Chriteria
+			 */
+
+				// Exctract from Shortcode
+				extract(shortcode_atts(array(
+
+					// Handling
+					"sort" => NULL,
+					"dir" => NULL,
+					"limit" => NULL,
+					"perpage" => NULL,
+					"page" => NULL
+				), $atts));
+
 			/*
 			 * ORDER BY
 			 */
@@ -1067,6 +1096,8 @@ class RBAgency_Profile {
 			}
 
 		}
+
+
 
 	/*
 	 * Search: Results as Profile IDs
