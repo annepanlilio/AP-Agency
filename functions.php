@@ -1034,7 +1034,7 @@ error_reporting(0);
 						$p->page = $paging;
 					}
 					//Query for limit paging
-					$limit = "";
+					$limit = "LIMIT " . ($p->page - 1) * $p->limit  . ", " . $p->limit;
 				} else {
 					$limit = "";
 				}
@@ -1120,7 +1120,8 @@ error_reporting(0);
 			}
 			// Query
 			echo $queryList;
-			echo "<br />".$limit;
+			echo "<br /><br />";
+			echo $limit;
 			$resultsList = mysql_query($queryList);
 			$countList = mysql_num_rows($resultsList);
 
