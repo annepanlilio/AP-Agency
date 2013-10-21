@@ -25,7 +25,7 @@ class RBAgency_Casting {
 					extract($_SESSION);
 					foreach($_SESSION as $key=>$value) {
 						if (substr($key, 0, 7) == "Profile") {
-							unset($_SESSION[$key]);
+							//unset($_SESSION[$key]);
 						}
 					}
 
