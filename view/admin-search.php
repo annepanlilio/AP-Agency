@@ -71,7 +71,8 @@
 				AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1
 				". $search_sql_query_order ."
 			";
-echo "<pre>". $query ."</pre>";
+			//echo "<pre>". $query ."</pre>";
+
 	/**
 	 * Return Results
 	 */
