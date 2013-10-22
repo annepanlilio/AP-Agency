@@ -35,7 +35,9 @@ if(isset($_POST["SendEmail"])){
 		// Process Form
 		$isSent = RBAgency_Casting::Cart_Send_Process();
 		if($isSent){
-			echo '<script type=\"text/javascript\">window.location='.admin_url("admin.php?page=". $_GET["page"]).';</script>';
+			
+			echo '<script type=\"text/javascript\"> alert("sdfasdf");window.location='.admin_url("admin.php?page=". $_GET["page"]).';</script>';
+			die;
 			}
 }
 
