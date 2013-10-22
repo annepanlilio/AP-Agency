@@ -35,7 +35,7 @@ hr { border: none; }
 #filter-profiles span input[type="submit"] { margin-top: 17px; }
 .postbox .inside { overflow: hidden; }
 
-.boxblock { background-color:#FFFFFF; border-color:#DFDFDF; -moz-border-radius:6px 6px 6px 6px; border-style:solid; border-width:1px; line-height:1; margin-bottom:20px; min-width:255px; position:relative; width:99.5%;}
+.boxblock { /*background-color:#FFFFFF;*/ border-color:#DFDFDF; -moz-border-radius:6px 6px 6px 6px; border-style:solid; border-width:1px; line-height:1; margin-bottom:20px; min-width:255px; position:relative; width:99.5%;}
 .boxblock .inner { padding: 10px; }
 .boxblock h3 { font-size: 1.17em!important; line-height:1; margin: 0px; padding:7px 9px; background:url("../images/gray-grad.png") repeat-x scroll left top #DFDFDF; text-shadow:0 1px 0 #FFFFFF; -moz-border-radius:6px 6px 0 0; }
 .boxblock p.tight { margin: 0px; padding: 0px; }
