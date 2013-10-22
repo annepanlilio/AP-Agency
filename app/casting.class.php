@@ -232,7 +232,8 @@ class RBAgency_Casting {
 	 */
 
 		public static function Cart_Send_Form(){
-
+			print_r($_POST);
+			
 			if(isset($_POST["SendEmail"])){
 				// Process Form
 				$isSent = self::Cart_Send_Process;
