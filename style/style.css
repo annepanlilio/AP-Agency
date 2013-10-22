@@ -1,0 +1,29 @@
+.search-field {
+	padding: 10px 0px;
+}
+.search-field * {
+	margin: 0px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.search-field > label,
+.search-field > legend {
+	padding: 8px 0px;
+	line-height: normal;
+}
+.search-field > label,
+.search-field > legend,
+.search-field > div {
+	float: left;
+	width: 200px;
+}
+.search-field > div input[type="text"],
+.search-field > div input[type="password"] {
+	width: 100%;
+}
+.search-field input[type="text"],
+.search-field select,
+.search-field textarea {
+	padding: 5px;
+}
