@@ -26,20 +26,15 @@
  * Casting Cart
  */
 
-	if(isset($_REQUEST["action"])) {
-
+if(isset($_REQUEST["action"])) {
 		// Process Cart
 		$cart = RBAgency_Casting::Cart_Process();
 
-	}
-
+}
 if(isset($_POST["SendEmail"])){
-	echo '<pre>Post data';
-	print_r($_POST);
-				// Process Form
-				$isSent = RBAgency_Casting::Cart_Send_Process;
-
-			}
+		// Process Form
+		$isSent = RBAgency_Casting::Cart_Send_Process();
+}
 
 
 // *************************************************************************************************** //
