@@ -249,7 +249,7 @@
 	}
 	if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_SESSION['cartArray']))) {
 
-		echo "<div class=\"boxblock-container\" style=\"float: left; width: 49%; min-width: 500px;\">\n";
+		echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 		echo " <div class=\"boxblock\">\n";
 		echo "   <h2>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h2>\n";
 		echo "   <div class=\"inner\">\n";
