@@ -247,7 +247,7 @@
 	// else for if ($_GET["action"] == "search")     
 
 	}
-
+print_r($_SESSION);
 	if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_SESSION['cartArray']))) {
 
 		echo "<div class=\"boxblock-container\" style=\"float: left; width: 49%; min-width: 500px;\">\n";
