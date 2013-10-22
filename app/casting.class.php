@@ -204,10 +204,10 @@ class RBAgency_Casting {
 			$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 			$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 
-			echo $MassEmailSubject = $_POST["MassEmailSubject"];
-			echo $MassEmailMessage = $_POST["MassEmailMessage"];
-			echo $MassEmailRecipient = $_POST["MassEmailRecipient"];
-
+			$MassEmailSubject = $_POST["MassEmailSubject"];
+			$MassEmailMessage = $_POST["MassEmailMessage"];
+			$MassEmailRecipient = $_POST["MassEmailRecipient"];
+			print_r($rb_agency_options_arr);
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -219,7 +219,6 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bccEmail;
 				}
 			}
-			print_r($headers);
 			echo "isSent".$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 			
 			return $isSent;
