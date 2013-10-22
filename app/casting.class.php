@@ -198,8 +198,7 @@ class RBAgency_Casting {
 	 */
 
 		public static function Cart_Send_Process(){
-			echo "mail here";
-			die;
+			
 			$isSent = false;
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
