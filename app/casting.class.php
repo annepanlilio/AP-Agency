@@ -229,12 +229,12 @@ class RBAgency_Casting {
 	 */
 
 		public static function Cart_Send_Form(){
-			
-			if(isset($_POST["SendEmail"])){
+			// Commented as It is of no use as post data never come here 
+			/*if(isset($_POST["SendEmail"])){
 				// Process Form
 				$isSent = self::Cart_Send_Process;
 
-			}
+			}*/
 
 			if($_GET["action"] == "massEmail"){
 
