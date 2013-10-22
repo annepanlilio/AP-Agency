@@ -211,7 +211,7 @@ class RBAgency_Casting {
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
-			$headers[] = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>';
+			$headers[] = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_value_agencyemail .'>';
 
 			if(!empty($expMail)){
 				$expMail = explode(",",$MassEmailRecipient);
