@@ -33,6 +33,14 @@
 
 	}
 
+if(isset($_POST["SendEmail"])){
+	echo '<pre>Post data';
+	print_r($_POST);
+				// Process Form
+				$isSent = self::Cart_Send_Process;
+
+			}
+
 
 // *************************************************************************************************** //
 // Get Search Results
