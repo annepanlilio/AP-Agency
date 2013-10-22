@@ -235,7 +235,7 @@ class RBAgency_Casting {
 
 			if(isset($_POST["SendEmail"])){
 				// Process Form
-				//$isSent = self::Cart_Send_Process;
+				$isSent = self::Cart_Send_Process;
 
 			}
 
