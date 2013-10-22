@@ -34,6 +34,10 @@ if(isset($_REQUEST["action"])) {
 if(isset($_POST["SendEmail"])){
 		// Process Form
 		$isSent = RBAgency_Casting::Cart_Send_Process();
+		if($isSent){
+			wp_redirect(admin_url("admin.php?page=". $_GET['page']));
+			die;
+			}
 }
 
 
