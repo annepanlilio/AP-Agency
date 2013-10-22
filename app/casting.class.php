@@ -12,7 +12,7 @@ class RBAgency_Casting {
 			 * Setup Requirements
 			 */
 
-
+	
 			// Protect and defend the cart string!
 				$cartString = "";
 				$action = $_GET["action"];
@@ -20,7 +20,7 @@ class RBAgency_Casting {
 
 				if ($action == "cartAdd") {
 					// Add to Cart
-					$response = $this->Cart_Process_Add();
+					$response = self::Cart_Process_Add();
 
 				} elseif ($action == "formEmpty") {
 					// Empty the Form
@@ -38,7 +38,7 @@ class RBAgency_Casting {
 				} elseif ($action == "cartRemove") {
 					// Remove ID from Cart
 					$id = $_GET["RemoveID"];
-					$response = $this->Cart_Process_Remove($id);
+					$response = self::Cart_Process_Remove($id);
 
 				} elseif ($action == "searchSave") {
 					// Save the Search
@@ -235,7 +235,7 @@ class RBAgency_Casting {
 
 			if(isset($_POST["SendEmail"])){
 				// Process Form
-				//$isSent = $this->Cart_Send_Process;
+				//$isSent = self::Cart_Send_Process;
 
 			}
 
