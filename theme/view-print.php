@@ -240,7 +240,7 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 						}
 
 						if (!empty($data['ProfileGender'])) {
-							if(RBAgency_Common::Profile_Meta_GenderTitle($data['ProfileGender'])){
+							if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
 								echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
 							}else{
 								echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</div>\n";	

@@ -4,27 +4,35 @@ global $wpdb;
 define("LabelPlural", "Profile");
 define("LabelSingular", "Profiles");
 
-$rb_agency_options_arr = get_option('rb_agency_options');
-$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
-$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
-if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
-	$rb_agency_option_agencyimagemaxheight = 800;
-}
-$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
-$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
+/*
+ * Pull Options
+ */
 
-if (function_exists(rb_agencyinteract_approvemembers)) {
-	// Load Interact Settings
-	$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
-	$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
-}
+	$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+		$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
+		$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
+		if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
+			$rb_agency_option_agencyimagemaxheight = 800;
+		}
+		$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
+		$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
+
+		if (function_exists(rb_agencyinteract_approvemembers)) {
+			// Load Interact Settings
+			$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
+			$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
+		}
 
 
 // *************************************************************************************************** //
 // Handle Post Actions
 
 if (isset($_POST['action'])) {
+
+	/*
+	 * Pull Post Values
+	 */
 
 	$ProfileID = $_POST['ProfileID'];
 	$ProfileUserLinked = $_POST['ProfileUserLinked'];
@@ -57,7 +65,7 @@ if (isset($_POST['action'])) {
 	}
 	$ProfileGallery = $_POST['ProfileGallery'];
 	if (empty($ProfileGallery)) {  // Probably a new record... 
-		$ProfileGallery = RBAgency_Common::Format_StripChars($ProfileContactDisplay);
+		$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay);
 	}
 	$ProfileGender = $_POST['ProfileGender'];
 	$ProfileDateBirth = $_POST['ProfileDateBirth'];
@@ -69,7 +77,7 @@ if (isset($_POST['action'])) {
 	$ProfileContactPhoneCell = $_POST['ProfileContactPhoneCell'];
 	$ProfileContactPhoneWork = $_POST['ProfileContactPhoneWork'];
 	$ProfileLocationStreet = $_POST['ProfileLocationStreet'];
-	$ProfileLocationCity = RBAgency_Common::Format_Propercase($_POST['ProfileLocationCity']);
+	$ProfileLocationCity = RBAgency_Common::format_propercase($_POST['ProfileLocationCity']);
 	$ProfileLocationState = strtoupper($_POST['ProfileLocationState']);
 	$ProfileLocationZip = $_POST['ProfileLocationZip'];
 	$ProfileLocationCountry = $_POST['ProfileLocationCountry'];
@@ -250,30 +258,30 @@ if (isset($_POST['action'])) {
 
 				// Update Record
 				 $update = "UPDATE " . table_agency_profile . " SET 
-			ProfileGallery='" . $wpdb->escape($ProfileGallery) . "',
-			ProfileContactDisplay='" . $wpdb->escape($ProfileContactDisplay) . "',
-			ProfileContactNameFirst='" . $wpdb->escape($ProfileContactNameFirst) . "',
-			ProfileContactNameLast='" . $wpdb->escape($ProfileContactNameLast) . "',
-			ProfileContactEmail='" . $wpdb->escape($ProfileContactEmail) . "',
-			ProfileContactWebsite='" . $wpdb->escape($ProfileContactWebsite) . "',
-			ProfileContactPhoneHome='" . $wpdb->escape($ProfileContactPhoneHome) . "',
-			ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
-			ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
-			ProfileGender='" . $wpdb->escape($ProfileGender) . "',
-			ProfileGender='" . $wpdb->escape($ProfileGender) . "',
-			ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
-			ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
-			ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
-			ProfileLocationState='" . $wpdb->escape($ProfileLocationState) . "',
-			ProfileLocationZip ='" . $wpdb->escape($ProfileLocationZip) . "',
-			ProfileLocationCountry='" . $wpdb->escape($ProfileLocationCountry) . "',
-			ProfileDateUpdated=now(),
-			ProfileType='" . $ProfileType . "',
-			ProfileIsActive='" . $wpdb->escape($ProfileIsActive) . "',
-			ProfileIsFeatured='" . $wpdb->escape($ProfileIsFeatured) . "',
-			ProfileIsPromoted='" . $wpdb->escape($ProfileIsPromoted) . "',
-			ProfileStatHits='" . $wpdb->escape($ProfileStatHits) . "'
-			WHERE ProfileID=$ProfileID";
+					ProfileGallery='" . $wpdb->escape($ProfileGallery) . "',
+					ProfileContactDisplay='" . $wpdb->escape($ProfileContactDisplay) . "',
+					ProfileContactNameFirst='" . $wpdb->escape($ProfileContactNameFirst) . "',
+					ProfileContactNameLast='" . $wpdb->escape($ProfileContactNameLast) . "',
+					ProfileContactEmail='" . $wpdb->escape($ProfileContactEmail) . "',
+					ProfileContactWebsite='" . $wpdb->escape($ProfileContactWebsite) . "',
+					ProfileContactPhoneHome='" . $wpdb->escape($ProfileContactPhoneHome) . "',
+					ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
+					ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
+					ProfileGender='" . $wpdb->escape($ProfileGender) . "',
+					ProfileGender='" . $wpdb->escape($ProfileGender) . "',
+					ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
+					ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
+					ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
+					ProfileLocationState='" . $wpdb->escape($ProfileLocationState) . "',
+					ProfileLocationZip ='" . $wpdb->escape($ProfileLocationZip) . "',
+					ProfileLocationCountry='" . $wpdb->escape($ProfileLocationCountry) . "',
+					ProfileDateUpdated=now(),
+					ProfileType='" . $ProfileType . "',
+					ProfileIsActive='" . $wpdb->escape($ProfileIsActive) . "',
+					ProfileIsFeatured='" . $wpdb->escape($ProfileIsFeatured) . "',
+					ProfileIsPromoted='" . $wpdb->escape($ProfileIsPromoted) . "',
+					ProfileStatHits='" . $wpdb->escape($ProfileStatHits) . "'
+					WHERE ProfileID=$ProfileID";
 				$results = $wpdb->query($update) or die(mysql_error());
 
 					update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', $ProfileType);
@@ -317,7 +325,7 @@ if (isset($_POST['action'])) {
 						if ($have_error != true) {
 							// Upload if it doesnt exist already
 							$path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
-							$safeProfileMediaFilename = RBAgency_Common::Format_StripChars($path_parts['filename'] . "." . $path_parts['extension']);
+							$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] . "." . $path_parts['extension']);
 							$results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaURL = '" . $safeProfileMediaFilename . "'") or die(mysql_error());
 							$count = mysql_num_rows($results);
 
@@ -590,7 +598,6 @@ function rb_display_manage($ProfileID) {
 			$ProfileContactPhoneWork = stripslashes($data['ProfileContactPhoneWork']);
 			$ProfileGender = stripslashes($data['ProfileGender']);
 			$ProfileTypeArray = stripslashes($data['ProfileType']);
-
 			$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
 			$ProfileLocationStreet = stripslashes($data['ProfileLocationStreet']);
 			$ProfileLocationCity = stripslashes($data['ProfileLocationCity']);
@@ -1480,7 +1487,7 @@ function rb_display_list() {
 		$ProfileGallery = stripslashes($data['ProfileGallery']);
 		$ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 		$ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
-		$ProfileLocationCity = RBAgency_Common::Format_Propercase(stripslashes($data['ProfileLocationCity']));
+		$ProfileLocationCity = RBAgency_Common::format_propercase(stripslashes($data['ProfileLocationCity']));
 		$ProfileLocationState = stripslashes($data['ProfileLocationState']);
 		$ProfileGender = stripslashes($data['ProfileGender']);
 		$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);

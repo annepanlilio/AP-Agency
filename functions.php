@@ -691,7 +691,7 @@ error_reporting(0);
 				$ProfileGalleryFixed = $last;
 		}
 
-		return RBAgency_Common::Format_StripChars($ProfileGalleryFixed); 
+		return RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
 	}
 
 	/**
@@ -2894,7 +2894,7 @@ function rb_display_profile_list(){
 		  $ProfileID = $data['ProfileID'];
 		  $ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 		  $ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
-		  $ProfileContactEmail = RBAgency_Common::Format_Propercase(stripslashes($data['ProfileContactEmail']));
+		  $ProfileContactEmail = RBAgency_Common::format_propercase(stripslashes($data['ProfileContactEmail']));
 
 		  $i++;
 		  if ($i % 2 == 0) {
@@ -3426,13 +3426,13 @@ function featured_homepage(){
 						 
 						 $custom2 = mysql_fetch_assoc($result2);
 						 
-						 if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "male"){
+						 if(strtolower(RBAgency_Common::profile_meta_gendertitle($dataList['ProfileGender'])) == "male"){
 							 
 							 if(in_array(strtolower($custom2['ProfileCustomTitle']),$a_male)){
 								 $array_male[$custom2['ProfileCustomTitle']] = $custom['ProfileCustomValue'];
 							 }
 						 
-						 } else if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "female"){
+						 } else if(strtolower(RBAgency_Common::profile_meta_gendertitle($dataList['ProfileGender'])) == "female"){
 							 
 							 if(in_array(strtolower($custom2['ProfileCustomTitle']),$a_female)){
 								 $array_female[$custom2['ProfileCustomTitle']] = $custom['ProfileCustomValue'];
@@ -3441,11 +3441,11 @@ function featured_homepage(){
 					
 					}
 					
-					if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "male"){
+					if(strtolower(RBAgency_Common::profile_meta_gendertitle($dataList['ProfileGender'])) == "male"){
 						
 						$array_data = array($name,'male',$array_male,$dataList["ProfileGallery"],$dataList["ProfileMediaURL"]);
 						
-					} else if(strtolower(RBAgency_Common::Profile_Meta_GenderTitle($dataList['ProfileGender'])) == "female"){
+					} else if(strtolower(RBAgency_Common::profile_meta_gendertitle($dataList['ProfileGender'])) == "female"){
 						
 						$array_data = array($name,'female',$array_female,$dataList["ProfileGallery"],$dataList["ProfileMediaURL"]);
 								 

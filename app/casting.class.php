@@ -6,7 +6,7 @@ class RBAgency_Casting {
 	 * Process Actions
 	 */
 
-		public static function Cart_Process(){
+		public static function cart_process(){
 
 			/*
 			 * Setup Requirements
@@ -20,7 +20,7 @@ class RBAgency_Casting {
 
 				if ($action == "cartAdd") {
 					// Add to Cart
-					$response = self::Cart_Process_Add();
+					$response = self::cart_process_add();
 
 				} elseif ($action == "formEmpty") {
 					// Empty the Form
@@ -38,7 +38,7 @@ class RBAgency_Casting {
 				} elseif ($action == "cartRemove") {
 					// Remove ID from Cart
 					$id = $_GET["RemoveID"];
-					$response = self::Cart_Process_Remove($id);
+					$response = self::cart_process_remove($id);
 
 				} elseif ($action == "searchSave") {
 					// Save the Search
@@ -64,7 +64,7 @@ class RBAgency_Casting {
 	 * @return str $cartString
 	 */
 
-		public static function Cart_Process_Add(){
+		public static function cart_process_add(){
 
 			// Get String
 			if(count($_GET["ProfileID"]) > 0) {
@@ -74,7 +74,7 @@ class RBAgency_Casting {
 			}
 
 			// Clean It!
-			$cartString = RBAgency_Common::Clean_String($cartString);
+			$cartString = RBAgency_Common::clean_string($cartString);
 
 			// Add to Session
 			if (isset($_SESSION['cartArray'])) {
@@ -97,7 +97,7 @@ class RBAgency_Casting {
 	 * @return str $cartString
 	 */
 
-		public static function Cart_Process_Remove($id){
+		public static function cart_process_remove($id){
 
 			// Remove ID from Cart
 			if (isset($id)) {
@@ -106,7 +106,7 @@ class RBAgency_Casting {
 
 				// TODO: FIX  this, if ID = 3, changes 38 to 8
 				$cartString = str_replace($id ."", "", $cartString);
-				$cartString = RBAgency_Common::Clean_String($cartString);
+				$cartString = RBAgency_Common::clean_string($cartString);
 
 				// Put it back in the array, and wash your hands
 				$_SESSION['cartArray'] = array($cartString);
@@ -121,13 +121,13 @@ class RBAgency_Casting {
 	 * Show Casting Cart
 	 */
 
-		public static function Cart_Show(){
+		public static function cart_show(){
 
 			if (isset($_SESSION['cartArray']) && !empty($_SESSION['cartArray'])) {
 
 				$cartArray = $_SESSION['cartArray'];
 					$cartString = implode(",", array_unique($cartArray));
-					$cartString = RBAgency_Common::Clean_String($cartString);
+					$cartString = RBAgency_Common::clean_string($cartString);
 
 				// Show Cart  
 				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY profile.ProfileContactNameFirst ASC";
@@ -197,7 +197,7 @@ class RBAgency_Casting {
 	 * Casting Cart - Send Email Process
 	 */
 
-		public static function Cart_Send_Process(){
+		public static function cart_send_process(){
 			
 			$isSent = false;
 			$rb_agency_options_arr = get_option('rb_agency_options');
@@ -228,11 +228,11 @@ class RBAgency_Casting {
 	 * Form to Send Casting Cart
 	 */
 
-		public static function Cart_Send_Form(){
+		public static function cart_send_form(){
 			// Commented as It is of no use as post data never come here 
 			/*if(isset($_POST["SendEmail"])){
 				// Process Form
-				$isSent = self::Cart_Send_Process;
+				$isSent = self::cart_send_process;
 
 			}*/
 

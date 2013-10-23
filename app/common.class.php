@@ -8,7 +8,7 @@ class RBAgency_Common {
      * @param string $string
      */
 
-	static function Clean_String($string) {
+	static function clean_string($string) {
 
 		// Remove trailing dingleberry
 		if (substr($string, -1) == ",") {  $string = substr($string, 0, strlen($string)-1); }
@@ -25,7 +25,7 @@ class RBAgency_Common {
      *
      * @param string $string
      */
-	static function Format_WhiteSpace($string) {
+	static function format_whitespace($string) {
 		return preg_replace('/\s+/', ' ', $string);
 	}
 
@@ -35,8 +35,8 @@ class RBAgency_Common {
      *
      * @param string $filename
      */
-	static function Format_StripChars($filename) {
-		$filename = self::Format_WhiteSpace(trim($filename));
+	static function format_stripchars($filename) {
+		$filename = self::format_whitespace(trim($filename));
 		$filename = str_replace(' ', '-', $filename);
 		$filename = preg_replace('/[^a-z0-9-.]/i','',$filename);
 		$filename = str_replace('--', '-', $filename);
@@ -49,7 +49,7 @@ class RBAgency_Common {
      *
      * @param string $string
      */
-	static function Format_Propercase($string) {
+	static function format_propercase($string) {
 		return ucwords(strtolower($string));
 	}
 
@@ -60,7 +60,7 @@ class RBAgency_Common {
      * @return str $GenderTitle
      */
 
-	static function Profile_Meta_GenderTitle($ProfileGenderID){
+	static function profile_meta_gendertitle($ProfileGenderID){
 
 		// Get DB
 		global $wpdb;
@@ -81,7 +81,7 @@ class RBAgency_Common {
 	/*
 	 * Data: Country
 	 */
-	static function Data_Country(){
+	static function data_country(){
 
 		return array(
 			'AF'=>'Afghanistan',

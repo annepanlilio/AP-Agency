@@ -383,7 +383,7 @@ elseif ($ConfigID == 3) {
 						  echo ("Deleted $file");
 						}
 					} elseif ($file != "." && $file != "..") {
-						$new_file = RBAgency_Common::Format_StripChars($file);
+						$new_file = RBAgency_Common::format_stripchars($file);
 						rename($dirURL ."/". $file, $dirURL ."/". $new_file);
 						
 						$file_ext = rb_agency_filenameextension($new_file);
@@ -678,7 +678,7 @@ elseif ($ConfigID == 8) {
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileGalleryFixed = "ID ";
 				}
-				$ProfileGalleryFixed = RBAgency_Common::Format_StripChars($ProfileGalleryFixed); 
+				$ProfileGalleryFixed = RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
 			
 			  if(in_array($ProfileGallery,$arrayReservedFoldername)){
 				$ProfileGalleryFixed = rb_agency_set_directory($ProfileGalleryFixed);
@@ -777,7 +777,7 @@ elseif ($ConfigID == 8) {
 			} elseif ($rb_agency_option_profilenaming == 3) {
 				$ProfileGalleryFixed = "ID ". $ProfileID;
 			}
-			$ProfileGalleryFixed = RBAgency_Common::Format_StripChars($ProfileGalleryFixed); 
+			$ProfileGalleryFixed = RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
 		
 			if(in_array($ProfileGallery,$arrayReservedFoldername)){
 				$ProfileGalleryFixed = rb_agency_just_checkdir($ProfileGalleryFixed);
@@ -1157,7 +1157,7 @@ elseif ($ConfigID == 14) {
 			}
 
 			if (empty($ProfileGallery)) {  // Probably a new record... 
-				$ProfileGallery = RBAgency_Common::Format_StripChars($ProfileContactDisplay); 
+				$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay); 
 			}
 
 			$ProfileGallery = rb_agency_just_checkdir($ProfileGallery);
@@ -1255,7 +1255,7 @@ elseif ($ConfigID == 14) {
 				}
 
 				if (empty($ProfileGallery)) {  // Probably a new record... 
-					$ProfileGallery = RBAgency_Common::Format_StripChars($ProfileContactDisplay); 
+					$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay); 
 				}
 
 				$ProfileGallery = rb_agency_createdir($ProfileGallery);

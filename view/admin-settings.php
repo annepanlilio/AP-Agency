@@ -278,7 +278,7 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Default Country', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_locationcountry]\">\n";
-					$country_array = RBAgency_Common::Data_Country();
+					$country_array = RBAgency_Common::data_country();
 					foreach ($country_array AS $country_code => $country_name) {
 		echo "       <option value=\"". $country_code ."\" ". selected($country_code, $rb_agency_option_locationcountry,false) ."> ". $country_name ."</option>\n";
 					}
@@ -1250,7 +1250,7 @@ elseif ($ConfigID == 3) {
 		$DataTypeID 	= $_POST['DataTypeID'];
 		$DataTypeTitle 	= $_POST['DataTypeTitle'];
 		$DataTypeTag 	= $_POST['DataTypeTag'];
-			if (empty($DataTypeTag)) { $DataTypeTag = RBAgency_Common::Format_StripChars($DataTypeTitle); }
+			if (empty($DataTypeTag)) { $DataTypeTag = RBAgency_Common::format_stripchars($DataTypeTitle); }
 		// Error checking
 		$error = "";
 		$have_error = false;

@@ -28,12 +28,12 @@
 
 if(isset($_REQUEST["action"])) {
 		// Process Cart
-		$cart = RBAgency_Casting::Cart_Process();
+		$cart = RBAgency_Casting::cart_process();
 
 }
 if(isset($_POST["SendEmail"])){
 		// Process Form
-		$isSent = RBAgency_Casting::Cart_Send_Process();
+		$isSent = RBAgency_Casting::cart_send_process();
 		
 }
 
@@ -53,7 +53,7 @@ if(isset($_POST["SendEmail"])){
 		// Exclude IDs in Cart
 		$exclude = $_SESSION['cartArray'];
 			$exclude = implode(",", array_unique($exclude));
-			$exclude = RBAgency_Common::Clean_String($exclude);
+			$exclude = RBAgency_Common::clean_string($exclude);
 
 		// Return Search
 		$search_sql_query_where = RBAgency_Profile::search_generate_sqlwhere($search_array, $exclude);
@@ -193,8 +193,8 @@ if(isset($_POST["SendEmail"])){
 			echo "            <td class=\"ProfileDetails column-ProfileDetails\">\n";
 			echo "                <ul style='margin: 0px;'>" ;
 			if (!empty($data['ProfileGender'])) {
-				if(RBAgency_Common::Profile_Meta_GenderTitle($data['ProfileGender'])){
-					echo "                <li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".RBAgency_Common::Profile_Meta_GenderTitle($data['ProfileGender'])."</li>\n";
+				if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
+					echo "                <li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])."</li>\n";
 				}else{
 					echo "                <li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";
 				}
@@ -259,7 +259,7 @@ if(isset($_POST["SendEmail"])){
 		echo "   <div class=\"inner\">\n";
 
 		// Show Cart
-		$castingcart = RBAgency_Casting::Cart_Show();
+		$castingcart = RBAgency_Casting::cart_show();
 		echo $castingcart;
 
 		echo "   </div>\n";
@@ -268,7 +268,7 @@ if(isset($_POST["SendEmail"])){
 
 
 		// Send Email Form
-		$sendemail = RBAgency_Casting::Cart_Send_Form();
+		$sendemail = RBAgency_Casting::cart_send_form();
 		echo $sendemail;
 
 
