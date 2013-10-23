@@ -73,7 +73,7 @@ error_reporting(0);
                         if( !is_admin() ) {
                                 // on {site}/profile-search only
 				if (get_query_var( 'type' ) == "search") {
-					wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
+					wp_register_style( 'rbagency-formstyle', plugins_url('RB-Agency/style/forms.css'));
 					wp_enqueue_style( 'rbagency-formstyle' );
 				}
                                 
