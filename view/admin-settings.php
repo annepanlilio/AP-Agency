@@ -1466,7 +1466,219 @@ elseif ($ConfigID == 3) {
    		echo "</form>\n";
 }	 // End	
 
+elseif ($ConfigID == 7){
 
+global $wpdb;
+echo "<div class=\"wrap\">\n";
+echo "  <h3 class=\"title\">". __("Define Country", rb_agency_TEXTDOMAIN) ."</h3>\n";
+if(isset($_POST['country_add'])) {
+	$CountryTitle  = $_POST['CountryTitle'];
+	$CountryCode  = $_POST['CountryCode'];
+	// Error checking
+	$error = "";
+	$have_error = false;
+	if(trim($CountryTitle) == ""){
+		$error .= "<b><i>". __("Country title is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	if(trim($CountryCode) == ""){
+		$error .= "<b><i>". __("Country code is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	
+	if($have_error){
+		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating country, please ensure you have filled out all required fields", 		rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+	} 
+	else{				
+		
+		$wpdb->insert( 
+		table_agency_data_country, 
+		array( 
+		'CountryTitle' => $CountryTitle,
+		'CountryCode' => $CountryCode 
+		) 
+		);
+		echo '<span class="msg">You have added new entry for country</span>';
+	}
+}
+if(isset($_POST["editaction"])){
+	if($_POST["editaction"]=="1"){
+		$CountryTitle  = $_POST['title'];
+		$CountryCode  = $_POST['code'];
+		$CountryID  = $_POST['id'];
+		$wpdb->update( 
+			table_agency_data_country, 
+			array( 
+			'CountryTitle' => $CountryTitle,
+			'CountryCode' => $CountryCode 
+			),
+			array( 
+			'CountryID' => $CountryID,
+			) 
+		);
+	}
+	if($_POST["editaction"]=="2"){
+		$StateTitle  = $_POST['title'];
+		$StateCode  = $_POST['code'];
+		$StateID  = $_POST['id'];
+		$wpdb->update( 
+			table_agency_data_state, 
+			array( 
+			'StateTitle' => $StateTitle,
+			'StateCode' => $StateCode 
+			),
+			array( 
+			'StateID' => $StateID,
+			) 
+		);
+	}
+		
+	}
+ ?>
+<form method="post" name="add_country" id="add_country" action="<?php echo admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7"; ?>">
+<input type="hidden" value="addCountry" name="action">
+<div class="country_added">
+<div class="error"></div>
+<div class="country_txt"><span>Country Title</span></div>
+<div class="country_in"><input type="text" name="CountryTitle" id="CountryTitle" size="27" value="<?php echo $_POST["CountryTitle"];?>">
+<div class="country_txt"><span>Country Code</span></div>
+<div class="country_in"><input type="text" name="CountryCode" id="CountryCode" size="27" value="<?php echo $_POST["CountryCode"];?>">
+</div>
+<div class="country_ro"><input type="submit" class="button-primary" name="country_add" value="Add"></div>
+</div>
+</form>
+<?php 
+// Get Country to be deleted
+	if(!isset($_REQUEST['delcountry']) && empty($_REQUEST['delcountry'])){ 
+		$delCountry = 0;
+	} else {
+	$delCountry = $_REQUEST['delcountry']; 
+	// Remove Records from country and states
+	$deleteCountry = "DELETE FROM " . table_agency_data_country . " WHERE CountryID = \"". $delCountry ."\"";
+	$resultsCountry = $wpdb->query($deleteCountry);
+	 $deleteState= "DELETE FROM " . table_agency_data_state . " WHERE CountryID = \"". $delCountry ."\"";
+	$resultsState = $wpdb->query($deleteState);
+	echo '<span class="msg">Country has been deleted successfully</span>';
+	}
+echo '<div class="msg"></div>';
+$location=admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7";
+echo '<input type="hidden" name="url" id="url" value='.$location.'/>';
+echo '<table><tr>';
+echo '<th>'.__("Country Title", rb_agency_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Country Code", rb_agency_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
+
+echo '</tr>';
+$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
+
+foreach($myrows as $result) {
+echo '<tr>';
+echo '<td class="countryTitle" >'.$result->CountryTitle.'</td>';
+echo '<td class="countryCode">'.$result->CountryCode.'</td>';
+echo '<td>'.__('<a id="country'.$result->CountryID.'" class='.$location.' href="javascript:void(0)" onclick="editCountry(this.id);">Edit&nbsp;</a>'.
+'<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delcountry=".$result->CountryID.'" 
+onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
+echo '</tr>';
+}
+echo '</table>';
+
+echo "  <h3 class=\"title\">". __("Insert State", rb_agency_TEXTDOMAIN) ."</h3>\n";
+if(isset($_POST['state_add'])) {
+	$CountryID  = $_POST['CountryID'];
+	$StateTitle  = $_POST['StateTitle'];
+	$StateCode  = $_POST['StateCode'];
+	
+	// Error checking
+	$error = "";
+	$have_error = false;
+	if(trim($CountryID) == "-1"){
+		$error .= "<b><i>". __("Please select country", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	if(trim($StateTitle) == ""){
+		$error .= "<b><i>". __("State title is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	if(trim($StateCode) == ""){
+		$error .= "<b><i>". __("State code is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$have_error = true;
+	}
+	
+	if($have_error){
+		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating state, please ensure you have filled out all required fields", 		rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+	} 
+	else{				
+		$wpdb->insert( 
+		table_agency_data_state, 
+		array( 
+		'CountryID' => $CountryID,
+		'StateTitle' => $StateTitle, 
+		'StateCode' => $StateCode 
+		) 
+		);
+		echo '<span class="msg">You have added new entry for states</span>';
+	}
+}
+
+
+
+ ?>
+<form method="post">
+<div class="country_added">
+<div class="country_txt"><span>Select Country</span></div>
+<div class="country_in"><select name="CountryID" ><option value="-1">Select Country</option><?php 
+foreach($myrows as $result) {
+ ?>
+<option <?php if($_POST['CountryID']==$result->CountryID){?>selected="selected"<?php }?> value="<?php echo $result->CountryID; ?>"><?php echo $result->CountryTitle; ?></option>
+<?php } ?>
+</select></div>
+<div class="country_txt" style="width:6%;"><span>State Name</span></div>
+<div class="country_in"><input type="text" name="StateTitle" value="<?php echo $_POST['StateTitle'];?>" size="27">
+<div class="country_txt" style="width:6%;"><span>Code</span></div>
+<div class="country_in"><input type="text" name="StateCode" value="<?php echo $_POST['StateCode'];?>" size="27">
+</div>
+<div class="country_ro"><input type="submit" name="state_add" class="button-primary" value="Add"></div>
+</div>
+</form>
+<div class="clear"></div>
+
+
+<?php
+// Get Country to be deleted
+	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){ 
+		$delState = 0;
+	} else {
+		$delState = $_REQUEST['delstate']; 
+		// Remove Record
+		$deleteState = "DELETE FROM " . table_agency_data_state . " WHERE StateID = \"". $delState ."\"";
+		$results = $wpdb->query($deleteState);
+		
+		echo '<span class="msg">State has been deleted successfully</span>';
+	}
+echo '<table>';
+$getCountry = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
+foreach($getCountry as $countryRs) {
+	echo '<tr><td><h3>'.$countryRs->CountryTitle.'</h3></td></tr>';
+	echo '<tr>';
+	echo '<th style="text-align:left;">'.__("State Title", rb_agency_TEXTDOMAIN).'</th>';
+	echo '<th style="text-align:left;">'.__("State Code", rb_agency_TEXTDOMAIN).'</th>';
+	echo '<th style="text-align:left;">'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
+	echo '</tr>';
+	echo '<tr>';
+	$getStates = $wpdb->get_results( "SELECT * FROM ".table_agency_data_state." WHERE CountryID='$countryRs->CountryID'" );
+	foreach($getStates as $result) {
+		echo '<td class="StateTitle">'.$result->StateTitle.'</td>';
+		echo '<td class="StateCode">'.$result->StateCode.'</td>';
+		echo '<td>'.__('<a id="state'.$result->StateID.'" class='.$location.' href="javascript:void(0)" onclick="editState(this.id);">Edit&nbsp;</a>'.
+		'<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delstate=".$result->StateID.'" 
+		onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
+		echo '</tr>';
+	}
+}
+echo '</table>';
+?>
+</div>
+<?php } 
 
 
 // *************************************************************************************************** //
