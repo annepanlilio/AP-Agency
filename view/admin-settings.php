@@ -6,9 +6,6 @@ global $wpdb;
 // Include Admin Menu
 	include (rb_agency_BASEREL ."view/admin-include-menu.php");
 
-// Call Common Class
-	include(rb_agency_BASEREL ."app/common.class.php");
-
 // Get Current Page
 	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ 
 		$ConfigID = 0;
