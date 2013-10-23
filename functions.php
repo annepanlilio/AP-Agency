@@ -66,6 +66,20 @@ error_reporting(0);
 			}	
 		}
 
+        add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
+		
+                function rb_agency_insertscripts() {
+
+                        if( !is_admin() ) {
+                                // on {site}/profile-search only
+				if (get_query_var( 'type' ) == "search") {
+					wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
+					wp_enqueue_style( 'rbagency-formstyle' );
+				}
+                                
+			}	
+		}
+
 
 // *************************************************************************************************** //
 /*
