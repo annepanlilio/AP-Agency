@@ -1250,7 +1250,7 @@ elseif ($ConfigID == 3) {
 		$DataTypeID 	= $_POST['DataTypeID'];
 		$DataTypeTitle 	= $_POST['DataTypeTitle'];
 		$DataTypeTag 	= $_POST['DataTypeTag'];
-			if (empty($DataTypeTag)) { $DataTypeTag = rb_agency_safenames($DataTypeTitle); }
+			if (empty($DataTypeTag)) { $DataTypeTag = RBAgency_Common::Format_StripChars($DataTypeTitle); }
 		// Error checking
 		$error = "";
 		$have_error = false;
@@ -2868,6 +2868,7 @@ foreach($myrows as $result) {
 		// Remove Record
 		$deleteState = "DELETE FROM " . table_agency_data_state . " WHERE StateID = \"". $delState ."\"";
 		$results = $wpdb->query($deleteState);
+		
 		echo '<span class="msg">State has been deleted successfully</span>';
 	}
 echo '<table>';
