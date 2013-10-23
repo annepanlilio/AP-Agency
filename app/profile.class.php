@@ -25,7 +25,7 @@ class RBAgency_Profile {
 					$rb_agency_option_formshow_age = $rb_agency_options_arr['rb_agency_option_formshow_age'];
 
 				// Which Type?
-				if ($type = 1) {
+				if ($type == 1) {
 
 					// Admin Back-end 
 					$rb_agency_searchurl = admin_url("admin.php?page=". $_GET['page']);
@@ -52,7 +52,7 @@ class RBAgency_Profile {
 						if ( $profilesearch_layout == "advanced") {
 							$search_layout = "full";
 						} else {
-							$search_layout = "simple";
+							$profilesearch_layout = "simple";
 						}
 					}
 				}
@@ -240,7 +240,7 @@ class RBAgency_Profile {
 					$ProfileCustomShowSearch = $data['ProfileCustomShowSearch'];
 
 					// Show this Custom Field on Search
-					if($search_layout == "admin" || $ProfileCustomShowSearch == 1 && ( ($search_layout == "simple" && $ProfileCustomShowSearch) || ($search_layout == "full" && $ProfileCustomShowSearch) ) ){
+					if($search_layout == "admin" || ($ProfileCustomShowSearch == 1 &&  ($search_layout == "simple" || $search_layout == "full" ))){
 
 						/* Field Type 
 						 * 1 = Single Line Text
