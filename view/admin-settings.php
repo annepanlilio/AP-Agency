@@ -1250,9 +1250,7 @@ elseif ($ConfigID == 3) {
 		$DataTypeID 	= $_POST['DataTypeID'];
 		$DataTypeTitle 	= $_POST['DataTypeTitle'];
 		$DataTypeTag 	= $_POST['DataTypeTag'];
-			//Causing page break
-			//if (empty($DataTypeTag)) { $DataTypeTag = RBAgency_Common::Format_StripChars($DataTypeTitle); }
-			if (empty($DataTypeTag)) { $DataTypeTag = rb_agency_safenames($DataTypeTitle); }
+			if (empty($DataTypeTag)) { $DataTypeTag = RBAgency_Common::Format_StripChars($DataTypeTitle); }
 		// Error checking
 		$error = "";
 		$have_error = false;
