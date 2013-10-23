@@ -18,7 +18,7 @@ if (isset($_POST['action'])) {
 	$CastingContactPhoneHome	=$_POST['CastingContactPhoneHome'];
 	$CastingContactPhoneCell	=$_POST['CastingContactPhoneCell'];
 	$CastingContactPhoneWork	=$_POST['CastingContactPhoneWork'];
-	$CastingLocationCity		=rb_agency_strtoproper($_POST['CastingLocationCity']);
+	$CastingLocationCity		=RBAgency_Common::Format_Propercase($_POST['CastingLocationCity']);
 	$CastingLocationState		=strtoupper($_POST['CastingLocationState']);
 	$CastingLocationZip			=$_POST['CastingLocationZip'];
 	$CastingLocationCountry		=$_POST['CastingLocationCountry'];
@@ -205,7 +205,7 @@ if (isset($_POST['action'])) {
 		       	<tr valign="top">
 					<th scope="row">City</th>
 					<td>
-						<input type="text" id="CastingLocationCity" name="CastingLocationCity" value="<?php echo rb_agency_strtoproper($CastingLocationCity); ?>" />
+						<input type="text" id="CastingLocationCity" name="CastingLocationCity" value="<?php echo RBAgency_Common::Format_Propercase($CastingLocationCity); ?>" />
 					</td>
 				</tr>
 		       	<tr valign="top">
@@ -348,9 +348,9 @@ function rb_display_list() { ?>
 									echo "<option value=\"\">Any Location</option>";
 								while ($dataLocation = mysql_fetch_array($CastingLocations)) {
 								  	if (isset($_GET['CastingLocationCity']) && !empty($_GET['CastingLocationCity']) && $selectedCity == $dataLocation["CastingLocationCity"]) {
-										echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\" selected>". rb_agency_strtoproper($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
+										echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\" selected>". RBAgency_Common::Format_Propercase($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
 								  	} else {
-										echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\">". rb_agency_strtoproper($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
+										echo "<option value=\"". $dataLocation["CastingLocationCity"] ."\">". RBAgency_Common::Format_Propercase($dataLocation["CastingLocationCity"]) .", ". strtoupper($dataLocation["CastingLocationState"]) ."</option>";
 								  	}
 								}
 							?>
@@ -394,7 +394,7 @@ function rb_display_list() { ?>
 		           	$CastingCompany = stripslashes($data['CastingCompany']);
 		           	$CastingContactNameFirst = stripslashes($data['CastingContactNameFirst']);
 		           	$CastingContactNameLast = stripslashes($data['CastingContactNameLast']);
-		           	$CastingLocationCity = rb_agency_strtoproper(stripslashes($data['CastingLocationCity']));
+		           	$CastingLocationCity = RBAgency_Common::Format_Propercase(stripslashes($data['CastingLocationCity']));
 		           	$CastingLocationState = stripslashes($data['CastingLocationState']);
 					if ($data['CastingIsActive']) { $rowColor = ""; } else { $rowColor = " style=\"background: #FFEBE8\""; } ?>
 			       	<tr<?php echo $rowColor; ?>>

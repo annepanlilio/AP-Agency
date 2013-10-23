@@ -27,7 +27,7 @@ while ($data = mysql_fetch_array($results2)) {
   $ProfileID = $data['ProfileID'];
   $ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
   $ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
-  $ProfileContactEmail = rb_agency_strtoproper(stripslashes($data['ProfileContactEmail']));
+  $ProfileContactEmail = RBAgency_Common::Format_Propercase(stripslashes($data['ProfileContactEmail']));
 
   $i++;
   if ($i % 2 == 0) {

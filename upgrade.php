@@ -43,7 +43,7 @@ global $wpdb;
 		$results = mysql_query($query) or die ( __("Cant load types", rb_agency_TEXTDOMAIN ));
 		while ($data = mysql_fetch_array($results)) {
 			if (!isset($data['DataTypeTag']) || empty($data['DataTypeTag'])) {
-				$DataTypeTag = rb_agency_safenames($data['DataTypeTitle']);
+				$DataTypeTag = RBAgency_Common::Format_StripChars($data['DataTypeTitle']);
 				
 				$update = "UPDATE " . table_agency_data_type . " SET DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' WHERE DataTypeID='". $data['DataTypeID'] ."'";
 				$updated = $wpdb->query($update);

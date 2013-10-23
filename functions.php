@@ -326,6 +326,75 @@ error_reporting(0);
  *  General Functions
  */
 
+
+
+
+	/**
+     * Create the directory (if exists, create new name)
+     *
+     * @param string $ProfileGallery
+     */
+	function rb_agency_createdir($ProfileGallery, $Force_create = true){
+
+		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
+			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
+			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
+		} else {
+			if($Force_create){
+				$finished = false;
+				$pos = 0;                 // we're not finished yet (we just started)
+				while ( ! $finished ):                   // while not finished
+					$pos++;
+					$NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
+					if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ): // if folder DOES NOT exist...
+						mkdir(rb_agency_UPLOADPATH . $NewProfileGallery, 0755);
+						chmod(rb_agency_UPLOADPATH . $NewProfileGallery, 0777);
+						$ProfileGallery = $NewProfileGallery;  // Set it to the new  thing
+						$finished = true;                    // ...we are finished
+					endif;
+				endwhile;
+			}
+		}
+		return $ProfileGallery;
+	}
+
+	/**
+     * Check directory, if doesnt exist, create, if exists, skip
+     *
+     * @param string $ProfileGallery
+     */
+	function rb_agency_checkdir($ProfileGallery){
+		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
+			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
+			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
+			// defensive return
+			return $ProfileGallery;
+		} else {
+			//defensive return
+			return $ProfileGallery;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/**
      * Get Profile Name
      *
@@ -513,27 +582,9 @@ error_reporting(0);
 
 	}
 
-	/**
-     * Collapse White Space
-     *
-     * @param string $string
-     */
-	function rb_agency_collapseWhiteSpace($string) {
-		return preg_replace('/\s+/', ' ', $string);
-	}
 
-	/**
-     * Prepare string to be filename
-     *
-     * @param string $filename
-     */
-	function rb_agency_safenames($filename) {
-		$filename = rb_agency_collapseWhiteSpace(trim($filename));
-		$filename = str_replace(' ', '-', $filename);
-		$filename = preg_replace('/[^a-z0-9-.]/i','',$filename);
-		$filename = str_replace('--', '-', $filename);
-		return strtolower($filename);
-	}
+
+
 
 	/**
      * Get Current User ID
@@ -559,14 +610,7 @@ error_reporting(0);
 		}
 	}
 
-	/**
-     * Format a string in proper case.
-     *
-     * @param string $string
-     */
-	function rb_agency_strtoproper($string) {
-		return ucwords(strtolower($string));
-	}
+
 
 	/**
      * Generate Video Thumbnail
@@ -621,51 +665,7 @@ error_reporting(0);
 		return $videoObject;
 	}
 
-	/**
-     * Create the directory (if exists, create new name)
-     *
-     * @param string $ProfileGallery
-     */
-	function rb_agency_createdir($ProfileGallery, $Force_create = true){
 
-		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
-			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
-			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
-		} else {
-			if($Force_create){
-				$finished = false;
-				$pos = 0;                 // we're not finished yet (we just started)
-				while ( ! $finished ):                   // while not finished
-					$pos++;
-					$NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
-					if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ): // if folder DOES NOT exist...
-						mkdir(rb_agency_UPLOADPATH . $NewProfileGallery, 0755);
-						chmod(rb_agency_UPLOADPATH . $NewProfileGallery, 0777);
-						$ProfileGallery = $NewProfileGallery;  // Set it to the new  thing
-						$finished = true;                    // ...we are finished
-					endif;
-				endwhile;
-			}
-		}
-		return $ProfileGallery;
-	}
-
-	/**
-     * Check directory, if doesnt exist, create, if exists, skip
-     *
-     * @param string $ProfileGallery
-     */
-	function rb_agency_checkdir($ProfileGallery){
-		if (!is_dir(rb_agency_UPLOADPATH . $ProfileGallery)) {
-			mkdir(rb_agency_UPLOADPATH . $ProfileGallery, 0755);
-			chmod(rb_agency_UPLOADPATH . $ProfileGallery, 0777);
-			// defensive return
-			return $ProfileGallery;
-		} else {
-			//defensive return
-			return $ProfileGallery;
-		}
-	}
 
 	/**
      * Generate Folder Name
@@ -691,7 +691,7 @@ error_reporting(0);
 				$ProfileGalleryFixed = $last;
 		}
 
-		return rb_agency_safenames($ProfileGalleryFixed); 
+		return RBAgency_Common::Format_StripChars($ProfileGalleryFixed); 
 	}
 
 	/**
@@ -2894,7 +2894,7 @@ function rb_display_profile_list(){
 		  $ProfileID = $data['ProfileID'];
 		  $ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 		  $ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
-		  $ProfileContactEmail = rb_agency_strtoproper(stripslashes($data['ProfileContactEmail']));
+		  $ProfileContactEmail = RBAgency_Common::Format_Propercase(stripslashes($data['ProfileContactEmail']));
 
 		  $i++;
 		  if ($i % 2 == 0) {

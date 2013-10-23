@@ -21,6 +21,39 @@ class RBAgency_Common {
 
 
 	/**
+     * Collapse White Space
+     *
+     * @param string $string
+     */
+	static function Format_WhiteSpace($string) {
+		return preg_replace('/\s+/', ' ', $string);
+	}
+
+
+	/**
+     * Prepare string to be filename
+     *
+     * @param string $filename
+     */
+	static function Format_StripChars($filename) {
+		$filename = self::Format_WhiteSpace(trim($filename));
+		$filename = str_replace(' ', '-', $filename);
+		$filename = preg_replace('/[^a-z0-9-.]/i','',$filename);
+		$filename = str_replace('--', '-', $filename);
+		return strtolower($filename);
+	}
+
+
+	/**
+     * Format a string in proper case.
+     *
+     * @param string $string
+     */
+	static function Format_Propercase($string) {
+		return ucwords(strtolower($string));
+	}
+
+	/**
      * Get Gender Title
      *
      * @param int $ProfileGenderID

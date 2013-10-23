@@ -57,7 +57,7 @@ if (isset($_POST['action'])) {
 	}
 	$ProfileGallery = $_POST['ProfileGallery'];
 	if (empty($ProfileGallery)) {  // Probably a new record... 
-		$ProfileGallery = rb_agency_safenames($ProfileContactDisplay);
+		$ProfileGallery = RBAgency_Common::Format_StripChars($ProfileContactDisplay);
 	}
 	$ProfileGender = $_POST['ProfileGender'];
 	$ProfileDateBirth = $_POST['ProfileDateBirth'];
@@ -69,7 +69,7 @@ if (isset($_POST['action'])) {
 	$ProfileContactPhoneCell = $_POST['ProfileContactPhoneCell'];
 	$ProfileContactPhoneWork = $_POST['ProfileContactPhoneWork'];
 	$ProfileLocationStreet = $_POST['ProfileLocationStreet'];
-	$ProfileLocationCity = rb_agency_strtoproper($_POST['ProfileLocationCity']);
+	$ProfileLocationCity = RBAgency_Common::Format_Propercase($_POST['ProfileLocationCity']);
 	$ProfileLocationState = strtoupper($_POST['ProfileLocationState']);
 	$ProfileLocationZip = $_POST['ProfileLocationZip'];
 	$ProfileLocationCountry = $_POST['ProfileLocationCountry'];
@@ -317,7 +317,7 @@ if (isset($_POST['action'])) {
 						if ($have_error != true) {
 							// Upload if it doesnt exist already
 							$path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
-							$safeProfileMediaFilename = rb_agency_safenames($path_parts['filename'] . "." . $path_parts['extension']);
+							$safeProfileMediaFilename = RBAgency_Common::Format_StripChars($path_parts['filename'] . "." . $path_parts['extension']);
 							$results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaURL = '" . $safeProfileMediaFilename . "'") or die(mysql_error());
 							$count = mysql_num_rows($results);
 
@@ -1480,7 +1480,7 @@ function rb_display_list() {
 		$ProfileGallery = stripslashes($data['ProfileGallery']);
 		$ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 		$ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
-		$ProfileLocationCity = rb_agency_strtoproper(stripslashes($data['ProfileLocationCity']));
+		$ProfileLocationCity = RBAgency_Common::Format_Propercase(stripslashes($data['ProfileLocationCity']));
 		$ProfileLocationState = stripslashes($data['ProfileLocationState']);
 		$ProfileGender = stripslashes($data['ProfileGender']);
 		$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
