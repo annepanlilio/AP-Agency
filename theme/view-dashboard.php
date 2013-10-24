@@ -79,7 +79,8 @@ if (is_user_logged_in()) {
 	global $current_user;
 	get_currentuserinfo();
 	$curauth = get_user_by('id', $current_user->ID);
-
+	echo('<pre>');
+	print_r(get_user_meta($current_user->ID));
 	echo "<div id=\"rbdashboard\">\n";
 	echo "<h1>Welcome ". $current_user->user_firstname ."</h1>\n";
         echo "<h1>We have registered you as Agent/Producer.</h1>\n";
