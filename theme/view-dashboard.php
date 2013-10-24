@@ -129,7 +129,6 @@ if (isset($curauth->user_login)) {
 
 	$user_data=get_user_meta($current_user->ID,'rb_agency_interact_clientdata',true);
 	$user_company=$user_data['company'];
-	print_r($user_data);
 	echo "  <div id=\"profile-info\">\n";
 	echo "		<h3>Profile</h3>\n";
 	echo "		<ul>\n";
