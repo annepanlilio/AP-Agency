@@ -700,7 +700,7 @@ function rb_display_manage($ProfileID) {
 
 	// Private Information
 	echo "    <tr valign=\"top\">\n";
-	echo "      <th scope=\"row\" colspan=\"2\"><h3>" . __("Private Information", rb_agency_TEXTDOMAIN) . "</h3>" . __("The following information will NOT appear in public areas and is for administrative use only.", rb_agency_TEXTDOMAIN) . "</th>\n";
+	echo "      <th scope=\"row\" colspan=\"2\"><h3>" . __("Private Information1", rb_agency_TEXTDOMAIN) . "</h3>" . __("The following information will NOT appear in public areas and is for administrative use only.", rb_agency_TEXTDOMAIN) . "</th>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "      <th scope=\"row\">" . __("Birthdate", rb_agency_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
