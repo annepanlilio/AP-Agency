@@ -79,8 +79,7 @@ if (is_user_logged_in()) {
 	global $current_user;
 	get_currentuserinfo();
 	$curauth = get_user_by('id', $current_user->ID);
-	echo('<pre>');
-	print_r(get_user_meta($current_user->ID));
+
 	echo "<div id=\"rbdashboard\">\n";
 	echo "<h1>Welcome ". $current_user->user_firstname ."</h1>\n";
         echo "<h1>We have registered you as Agent/Producer.</h1>\n";
@@ -96,7 +95,6 @@ if (is_user_logged_in()) {
 	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 	$count = mysql_num_rows($results);
 	while ($data = mysql_fetch_array($results)) {
-		print_r($results);
 		$ProfileGallery			=stripslashes($data['ProfileGallery']);
 		$ProfileContactNameFirst=stripslashes($data['ProfileContactNameFirst']);
 		$ProfileContactNameLast	=stripslashes($data['ProfileContactNameLast']);
@@ -128,6 +126,9 @@ if (is_user_logged_in()) {
 	echo "  </div>\n";
   */
 if (isset($curauth->user_login)) {
+
+	$user_data=get_user_meta($current_user->ID,'rb_agency_interact_clientdata',false);
+	print_r($user_data);
 	echo "  <div id=\"profile-info\">\n";
 	echo "		<h3>Profile</h3>\n";
 	echo "		<ul>\n";
