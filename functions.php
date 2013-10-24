@@ -61,7 +61,7 @@ error_reporting(0);
 			if( !is_admin() ) {
 				
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('/theme/style.css', __FILE__) );
+				wp_register_style( 'rbagency-style', plugins_url('RB-Agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-style' );
 			}	
 		}
@@ -252,7 +252,7 @@ error_reporting(0);
 				//echo get_query_var( 'type' );
 
 				if (get_query_var( 'type' ) == "search-basic" || 
-					get_query_var( 'type' ) == "search-results" || 
+					get_query_var( 'type' ) == "search-result" || 
 					get_query_var( 'type' ) == "search-advanced" ) {
 	
 					// Public Profile Search
@@ -3796,7 +3796,8 @@ function is_client_profiletype(){
 		$queryList = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = ". $id;
 		$resultsList = mysql_query($queryList);
 		while ($d = mysql_fetch_array($resultsList)) {
-			if(strtolower($d["DataTypeTitle"]) == "client"){
+			if(strtolower($d["DataTypeTitle"]) == "client" ||
+			   strtolower($d["DataTypeTitle"]) == "casting director"){
 				return true;
 			}
 		}	

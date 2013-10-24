@@ -8,18 +8,19 @@ get_header();
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	echo "		<div id=\"profile-search\">\n";
 
-	if ($_REQUEST["action"] == "search") {
+	if ($_REQUEST["action"] == "search_profiles") {
 	echo "			<h1 class=\"entry-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 	} else {
-		if ( (get_query_var("type") == "search-basic") ){
+		if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
 				echo "	<h1 class=\"entry-title\">". __("Basic Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
-		} elseif ( (get_query_var("type") == "search-advanced") ){
+		} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
 				echo "	<h1 class=\"entry-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
 		}
 	}
 
 	echo "			<div id=\"profile-search-results\">\n";
-	if ($_REQUEST["action"] == "search") {
+
+	if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
 
 
 		// Process Form Submission & catch variables
@@ -39,7 +40,7 @@ get_header();
 	echo "			</div><!-- #profile-search-results -->\n"; // #profile-search-results
 	echo "			<hr />";
 
-	return RBAgency_Profile::search_form("", "", 0);
+	echo RBAgency_Profile::search_form("", "", 0);
 
 	echo "		</div><!-- #profile-search -->\n"; // #profile-search
 	echo "	</div><!-- #content -->\n"; // #content

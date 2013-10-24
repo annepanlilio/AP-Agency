@@ -38,12 +38,11 @@ class RBAgency_Profile {
 					// Or we are inside the widgets
 					//} else {
 					//}
+					$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
 					if ( (get_query_var("type") == "search-basic") ){
 							$search_layout = "simple";
-							$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-basic/";
 					} elseif ( (get_query_var("type") == "search-advanced") ){
 							$search_layout = "full";
-							$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-advanced/";
 					}
 
 					
@@ -106,9 +105,9 @@ class RBAgency_Profile {
 			 */
 
 				echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form form-". $search_layout ."\">\n";
-				echo "			<form method=\"post\" id=\"search-form-condensed\" action=\"". $rb_agency_searchurl ."\">\n";
-				echo "				<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
-				echo "				<input type=\"hidden\" name=\"mode\" value=\"". $search_layout ."\" />\n";
+				echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". $rb_agency_searchurl ."\">\n";
+				echo "				<input type=\"hidden\" name=\"form_action\" value=\"search_profiles\" />\n";
+				echo "				<input type=\"hidden\" name=\"form_mode\" value=\"". $search_layout ."\" />\n";
 				echo "				<input type=\"hidden\" name=\"isactive\" value=\"1\" />\n";
 
 									// Show Profile Name
@@ -127,7 +126,7 @@ class RBAgency_Profile {
 									if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
 				echo "				<div class=\"search-field single\">\n";
 				echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
-				echo "					<select name=\"type\" id=\"type\">\n";               
+				echo "					<select name=\"ProfileType\" id=\"type\">\n";               
 				echo "						<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 											$results2 = mysql_query($query);
@@ -233,7 +232,8 @@ class RBAgency_Profile {
 
 					// Show this Custom Field on Search
 					if( $search_layout == "admin" || 
-					    ($ProfileCustomShowSearch == 1 && $search_layout == "full" )){
+					    ($ProfileCustomShowSearch == 1 && $search_layout == "full" || 
+						(isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) )){
 
 						/* Field Type 
 						 * 1 = Single Line Text
@@ -502,11 +502,11 @@ class RBAgency_Profile {
 
 
 				echo "				<div class=\"search-field submit\">";
-				echo "					<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
-				echo "					<input type=\"button\" name=\"search\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
-				if ( (get_query_var("type") == "search-basic") ){
+				echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
+				echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
+				if ( (get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
 				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-				} elseif ( (get_query_var("type") == "search-advanced") ){
+				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
 				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 				}
 				echo "				</div>\n";
@@ -554,7 +554,7 @@ class RBAgency_Profile {
 			 */
 
 			// Check if a new search is posted
-			if ($_REQUEST["action"] == "search") {
+			if ($_REQUEST["form_action"] == "search_profiles") {
 
 				// Initialize
 				$filterArray = array();
