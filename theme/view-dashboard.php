@@ -127,13 +127,14 @@ if (is_user_logged_in()) {
   */
 if (isset($curauth->user_login)) {
 
-	$user_data=get_user_meta($current_user->ID,'rb_agency_interact_clientdata',false);
+	$user_data=get_user_meta($current_user->ID,'rb_agency_interact_clientdata',true);
+	$user_company=$user_data['company'];
 	print_r($user_data);
 	echo "  <div id=\"profile-info\">\n";
 	echo "		<h3>Profile</h3>\n";
 	echo "		<ul>\n";
 	echo "		<li>Username: <strong>" . $curauth->user_login . "</strong></li>\n";
-	echo "		<li>Company: <strong>" . $curauth->user_company . "</strong></li>\n";
+	echo "		<li>Company: <strong>" . $user_company . "</strong></li>\n";
 	echo "		<li>First Name: <strong>" . $curauth->user_firstname . "</strong></li>\n";
 	echo "		<li>Last Name: <strong>" . $curauth->user_lastname . "</strong></li>\n";
 	echo "		<li>User Email: <strong>" . $curauth->user_email . "</strong></li>\n";
