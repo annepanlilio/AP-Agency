@@ -190,13 +190,19 @@ error_reporting(0);
 /*
  * Add Rewrite Rules based on Path
  */
-
+	add_filter('init','rbflush_rules');
+	function rbflush_rules() {
+		global $wp_rewrite;
+		$wp_rewrite->flush_rules();
+	}
+		
 	add_filter('rewrite_rules_array','rb_agency_rewriteRules');
 		// Adding a new rule
 		function rb_agency_rewriteRules($rules) {
 			$newrules = array();
-			$newrules['profile-search/([0-9])$'] = 'index.php?type=search&paging=$matches[1]';
-			$newrules['profile-search'] = 'index.php?type=search&target=results';
+			$newrules['search-basic'] = 'index.php?type=search-basic';
+			$newrules['search-advanced'] = 'index.php?type=search-advanced';
+			$newrules['search-results'] = 'index.php?type=search-result';
 			$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
 			$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
 			$newrules['profile-category/(.*)$'] = 'index.php?type=category&target=$matches[1]';
@@ -245,8 +251,11 @@ error_reporting(0);
 			if ( get_query_var( 'type' ) ) {
 				//echo get_query_var( 'type' );
 
-				if (get_query_var( 'type' ) == "search") {
-				// Public Profile Search
+				if (get_query_var( 'type' ) == "search-basic" || 
+					get_query_var( 'type' ) == "search-results" || 
+					get_query_var( 'type' ) == "search-advanced" ) {
+	
+					// Public Profile Search
 					return rb_agency_BASEREL . 'view/profile-search.php';
 
 				} elseif (get_query_var( 'type' ) == "profilecastingcart") {
@@ -928,7 +937,7 @@ error_reporting(0);
 			//Must be logged to view model list and profile information
 			($rb_agency_option_privacy == 2 && is_user_logged_in()) || 
 			// Model list public. Must be logged to view profile information
-			($rb_agency_option_privacy == 1) ||
+			($rb_agency_option_privacy == 1 && is_user_logged_in()) ||
 			// All Public
 			($rb_agency_option_privacy == 0) ||
 			//admin users

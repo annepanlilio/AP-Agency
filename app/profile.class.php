@@ -10,8 +10,7 @@ class RBAgency_Profile {
 
 			/*
 			 * Setup Requirements
-			 */
-
+			 */	
 				global $wpdb;
 				$rb_agency_options_arr = get_option('rb_agency_options');
 					// What is the unit of measurement?
@@ -34,27 +33,20 @@ class RBAgency_Profile {
 				} else {
 
 					// Front Back-end
-					$rb_agency_searchurl = get_bloginfo("wpurl") ."/profile-search/";
-
-
 					// Are we inside the content only
-					if(in_the_loop() && is_main_query()){
-
-						if ( (isset($_POST['basic_search']) || !isset($_POST['page'])) && !isset($_GET[srch])) {
-							$search_layout = "simple";
-						} else {
-							$search_layout = "full";
-						}
-
+					//if(in_the_loop() && is_main_query()){
 					// Or we are inside the widgets
-					} else {
-
-						if ( $profilesearch_layout == "advanced") {
+					//} else {
+					//}
+					if ( (get_query_var("type") == "search-basic") ){
+							$search_layout = "simple";
+							$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-basic/";
+					} elseif ( (get_query_var("type") == "search-advanced") ){
 							$search_layout = "full";
-						} else {
-							$profilesearch_layout = "simple";
-						}
+							$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-advanced/";
 					}
+
+					
 				}
 
 			/*
@@ -240,7 +232,8 @@ class RBAgency_Profile {
 					$ProfileCustomShowSearch = $data['ProfileCustomShowSearch'];
 
 					// Show this Custom Field on Search
-					if($search_layout == "admin" || ($ProfileCustomShowSearch == 1 &&  ($search_layout == "simple" || $search_layout == "full" ))){
+					if( $search_layout == "admin" || 
+					    ($ProfileCustomShowSearch == 1 && $search_layout == "full" )){
 
 						/* Field Type 
 						 * 1 = Single Line Text
@@ -511,7 +504,11 @@ class RBAgency_Profile {
 				echo "				<div class=\"search-field submit\">";
 				echo "					<input type=\"submit\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
 				echo "					<input type=\"button\" name=\"search\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
-				//echo "					<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/profile-search/advanced/'\" />";
+				if ( (get_query_var("type") == "search-basic") ){
+				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+				} elseif ( (get_query_var("type") == "search-advanced") ){
+				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+				}
 				echo "				</div>\n";
 				echo "			</form>\n";
 

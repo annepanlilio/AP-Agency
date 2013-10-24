@@ -11,7 +11,11 @@ get_header();
 	if ($_REQUEST["action"] == "search") {
 	echo "			<h1 class=\"entry-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 	} else {
-	echo "			<h1 class=\"entry-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		if ( (get_query_var("type") == "search-basic") ){
+				echo "	<h1 class=\"entry-title\">". __("Basic Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		} elseif ( (get_query_var("type") == "search-advanced") ){
+				echo "	<h1 class=\"entry-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+		}
 	}
 
 	echo "			<div id=\"profile-search-results\">\n";
