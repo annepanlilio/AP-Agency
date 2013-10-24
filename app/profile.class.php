@@ -120,7 +120,7 @@ class RBAgency_Profile {
                                 if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
                                         echo "				<div class=\"search-field single\">\n";
                                         echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
-                                        echo "					<select name=\"ProfileType\" id=\"type\">\n";               
+                                        echo "					<select name=\"profiletype\" id=\"type\">\n";               
                                         echo "						<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
                                                                                                 $query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
                                                                                                 $results2 = mysql_query($query);
@@ -743,7 +743,7 @@ class RBAgency_Profile {
 					"namefirst" => NULL,
 					"namelast" => NULL,
 					// General
-					"type" => NULL,
+					"profiletype" => NULL,
 					"gender" => NULL,
 					"datebirth_min" => NULL,
 					"datebirth_max" => NULL,
@@ -788,7 +788,7 @@ class RBAgency_Profile {
 				}
 
 				// Type
-				if (isset($type) && !empty($type)){
+				if (isset($profiletype) && !empty($profiletype)){
 					$filter .= " AND FIND_IN_SET(". $type .", profile.ProfileType) ";
 				}
 
