@@ -95,6 +95,7 @@ if (is_user_logged_in()) {
 	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 	$count = mysql_num_rows($results);
 	while ($data = mysql_fetch_array($results)) {
+		print_r($results);
 		$ProfileGallery			=stripslashes($data['ProfileGallery']);
 		$ProfileContactNameFirst=stripslashes($data['ProfileContactNameFirst']);
 		$ProfileContactNameLast	=stripslashes($data['ProfileContactNameLast']);
