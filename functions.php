@@ -806,9 +806,9 @@ error_reporting(0);
 			"profilestate" => NULL,
 			"profilezip" => NULL
 		), $atts));
-
+		echo('in');
 		// Filter It
-		$sort = "profile.ProfileContactDisplay";
+		echo $sort = "profile.ProfileContactDisplay";
 
 		//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		$dir = "asc";
@@ -840,8 +840,7 @@ error_reporting(0);
 			}
 		}
 		if (!isset($pagingperpage) || empty($pagingperpage)) { $pagingperpage = $rb_agency_option_profilelist_perpage; }
-		if($pagingperpage=="0" || is_null($pagingperpage)){$pagingperpage="10";}//make it a default value
-		$limit = " LIMIT 0,". $pagingperpage;
+		if($pagingperpage=="0"){$pagingperpage="10";}//make it a default value
 
 		// Legacy Field Names
 		if (isset($type) && !empty($type)){ $profiletype = $type; }
@@ -1016,7 +1015,7 @@ error_reporting(0);
 			
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
-			$sort = "profile.ProfileContactDisplay";
+			
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
@@ -1034,7 +1033,7 @@ error_reporting(0);
 				if($items > 0) {
 					$p = new rb_agency_pagination;
 					$p->items($items);
-					$p->limit(10); // Limit entries per page
+					$p->limit($pagingperpage); // Limit entries per page
 					$p->target($_SERVER["REQUEST_URI"]);
 					$p->currentPage($paging); // Gets and validates the current page
 					$p->calculate(); // Calculates what to show
