@@ -1909,6 +1909,26 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			}									
 	} // End if Empty ProfileCustomID
 }
+/*/
+*   ================ Get Country Title ===================
+*   @returns Country Title
+/*/   
+function rb_agency_getCountryTitle($country_id=""){
+	
+	global $wpdb;
+	
+	if(empty($country_id)) return false;
+	
+	$query ="SELECT CountryTitle FROM ". table_agency_data_country ." WHERE CountryID = " . $country_id;
+	$result = $wpdb->get_row($query);
+
+	if(count($result) > 0){
+		return $result->CountryTitle;
+	}	
+	
+	return false;
+
+}
 
 /*/
 *   ================ Get Profile Gender for each user ===================

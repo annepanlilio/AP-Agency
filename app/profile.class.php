@@ -1247,7 +1247,8 @@ class RBAgency_Profile {
 								$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
 						}
 						if (!empty($data['ProfileLocationCountry'])) {
-								$displayHtml .=  "<div><strong>". __("Country", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileLocationCountry'] ."</div>\n";
+								$country = (rb_agency_getCountryTitle($data['ProfileLocationCountry']) != false) ? rb_agency_getCountryTitle($data['ProfileLocationCountry']):"";
+								$displayHtml .=  "<div><strong>". __("Country", rb_agency_TEXTDOMAIN) .":</strong> ". $country ."</div>\n";
 						}
 						if (!empty($data['ProfileDateBirth'])) {
 								$displayHtml .=  "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
