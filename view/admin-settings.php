@@ -2718,7 +2718,7 @@ echo "</div>";
 } elseif ($ConfigID == 6){
 	
 	
-	
+	echo($_POST["action"]);
 	// Edit Record
 	switch($_POST["action"]){
 	case "editRecord":
@@ -2726,6 +2726,7 @@ echo "</div>";
       break;
 	// Add Record
 	case "addRecord":
+		echo("addRecord");
 	     mysql_query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
       break;
 	
