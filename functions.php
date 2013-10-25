@@ -1017,6 +1017,7 @@ error_reporting(0);
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
 			$sort = "profile.ProfileContactDisplay";
+			echo($sort);
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
@@ -1030,7 +1031,7 @@ error_reporting(0);
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
 					$items = mysql_num_rows($qItem); // number of total rows in the database
-				  
+				  echo($qItem);
 				if($items > 0) {
 					$p = new rb_agency_pagination;
 					$p->items($items);
