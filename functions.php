@@ -841,7 +841,8 @@ error_reporting(0);
 		}
 		if (!isset($pagingperpage) || empty($pagingperpage)) { $pagingperpage = $rb_agency_option_profilelist_perpage; }
 		if($pagingperpage=="0" || is_null($pagingperpage)){$pagingperpage="10";}//make it a default value
-		$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
+		$limit = " LIMIT 0,". $pagingperpage;
+		echo($limit );
 		// Legacy Field Names
 		if (isset($type) && !empty($type)){ $profiletype = $type; }
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
