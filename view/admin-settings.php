@@ -2718,7 +2718,7 @@ echo "</div>";
 } elseif ($ConfigID == 6){
 	
 	
-	echo($_POST["action"]);
+	
 	// Edit Record
 	switch($_POST["action"]){
 	case "editRecord":
@@ -2726,7 +2726,6 @@ echo "</div>";
       break;
 	// Add Record
 	case "addRecord":
-		echo("addRecord");
 	     mysql_query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
       break;
 	
@@ -2757,7 +2756,7 @@ echo "</div>";
 		 echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ConfigID=8&MediaCategoryID=".$_GET["MediaCategoryID"]."\">\n";
 		}else{
              echo "  <h3 class=\"title\">". __("Add New Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
-		  echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=8\">\n";
+		  echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=6\">\n";
 		}
 		
 		 echo "<table>";
