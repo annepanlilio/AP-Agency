@@ -281,8 +281,7 @@ if(isset($_POST["SendEmail"])){
                 echo "<div id=\"profile-search-results\">\n";
                 $search_array = RBAgency_Profile::search_process();
                 $search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-                $search_results = RBAgency_Profile::search_results($search_sql_query, 0);
-                $formatted = RBAgency_Profile::search_formatted($search_results);
+                echo RBAgency_Profile::search_results($search_sql_query, 0);
                 echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
         } else {
