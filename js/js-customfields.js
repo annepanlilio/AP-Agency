@@ -194,7 +194,8 @@ function populateStates(countryId,stateId){
 			jQuery("#"+stateId).find("option:gt(0)").remove();
 			jQuery("#"+stateId).find("option:first").text("Loading...");
 			jQuery.getJSON(url+"/get-state/"+ jQuery("#"+countryId).val(), function (data) {
-			for (var i = 0; i < data.length; i++) {
+			jQuery("<option/>").attr("value", "").text("Select State").appendTo(jQuery("#"+stateId));	
+                        for (var i = 0; i < data.length; i++) {
 				jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#"+stateId));
 			}
 			jQuery("#"+stateId).find("option:eq(0)").remove();
