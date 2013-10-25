@@ -810,7 +810,7 @@ error_reporting(0);
 		// Filter It
 		$sort = "profile.ProfileContactDisplay";
 
-		//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
+		$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		$dir = "asc";
 		// Should we override the privacy settings?
 		if(strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
@@ -1129,7 +1129,6 @@ error_reporting(0);
 				GROUP BY profile.ProfileID 
 				ORDER BY $sort $dir $limit";
 			}
-			echo($queryList);
 			// Query
 			/*echo "queryList".$queryList;
 			echo "<br /><br />";
