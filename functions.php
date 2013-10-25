@@ -1129,6 +1129,7 @@ error_reporting(0);
 				GROUP BY profile.ProfileID 
 				ORDER BY $sort $dir $limit";
 			}
+			echo($queryList);
 			// Query
 			/*echo "queryList".$queryList;
 			echo "<br /><br />";
