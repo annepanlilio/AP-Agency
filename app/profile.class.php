@@ -1294,9 +1294,11 @@ class RBAgency_Profile {
 						
 						$displayHtml .=  "            </td>\n";
 						$displayHtml .=  "            <td class=\"ProfileImage column-ProfileImage\">\n";
-		
-						if (isset($data['ProfileMediaURL']) && !empty($data['ProfileMediaURL'])) {
-								$displayHtml .=  "				<div class=\"image\"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></div>\n";
+						
+						$p_image = rb_get_primary_image($data["ProfileID"]); 
+						
+						if ($p_image) {
+								$displayHtml .=  "				<div class=\"image\"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $p_image ."\" /></div>\n";
 						} else {
 								$displayHtml .=  "				<div class=\"image no-image\">NO IMAGE</div>\n";
 						}
