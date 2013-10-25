@@ -279,8 +279,6 @@ if(isset($_POST["SendEmail"])){
 		echo RBAgency_Profile::search_results($search_sql_query, 0);
 		echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
-	} else {
-		echo "				<strong>". __("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
 	}
 
 	echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
