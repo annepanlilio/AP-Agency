@@ -86,10 +86,10 @@ if (isset($_POST['action'])) {
 	// Email
 
 	case 'emailSend':
-
+		echo('emailSend1');
 		if (!empty($SearchID)) {
 
-		
+		echo('emailSend2');
 
 			$SearchID				=$_GET['SearchID'];
 
@@ -148,7 +148,7 @@ if (isset($_POST['action'])) {
 				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
 			
 			}
-			
+			echo('emailSend3');
 			if(!$email_error){
 				
 				// Create Record
