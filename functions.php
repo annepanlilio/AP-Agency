@@ -1015,7 +1015,7 @@ error_reporting(0);
 			
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
-			echo("$sort 1");
+			$sort = "profile.ProfileContactDisplay";
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
@@ -1055,7 +1055,7 @@ error_reporting(0);
 				mysql_free_result($qItem);
 
 			}//if(get_query_var('target')!="print" 
-			echo("$sort 2");
+
 			/*
 			 * check permissions
 			 */
@@ -1129,7 +1129,7 @@ error_reporting(0);
 				GROUP BY profile.ProfileID 
 				ORDER BY $sort $dir $limit";
 			}
-			echo("$sort 3");
+			echo($queryList);
 			// Query
 			/*echo "queryList".$queryList;
 			echo "<br /><br />";
