@@ -129,7 +129,7 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 							  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-				                    echo "<li class=\"item video demoreel\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".$dataMedia['ProfileMediaType']. "</a></li>\n";
+				                    echo "<li class=\"item video demoreel\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".$dataMedia['ProfileMediaType']. "</a></li>\n";
 							  	}
 							}
 							//Contact Profile
