@@ -275,6 +275,20 @@ if(isset($_POST["SendEmail"])){
 	echo "    </div><!-- .boxblock -->\n";
 	}
 
+        // search result
+        if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
+
+                echo "<div id=\"profile-search-results\">\n";
+                $search_array = RBAgency_Profile::search_process();
+                $search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
+                $search_results = RBAgency_Profile::search_results($search_sql_query, 0);
+                $formatted = RBAgency_Profile::search_formatted($search_results);
+                echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
+
+        } else {
+                echo "				<strong>". __("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
+        }
+        
 	echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
 	echo "     <div class=\"boxblock\">\n";
 	echo "      <h3>". __("Advance Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
