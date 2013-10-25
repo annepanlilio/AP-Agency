@@ -755,7 +755,7 @@ error_reporting(0);
 
 			// Print or Export
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-				
+				// Commented by Sunil to fix profile display issue
 				//if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
 					// Get Preferences
 		$rb_agency_options_arr = get_option('rb_agency_options');
