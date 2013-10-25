@@ -26,7 +26,7 @@
  * Casting Cart
  */
 
-if(isset($_REQUEST["action"])) {
+if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
 		// Process Cart
 		$cart = RBAgency_Casting::cart_process();
 
@@ -251,7 +251,7 @@ if(isset($_POST["SendEmail"])){
 	// else for if ($_GET["action"] == "search")     
 
 	}
-	if (($_GET["action"] == "search") || ($_GET["action"] == "cartAdd") || (isset($_SESSION['cartArray']))) {
+	if (isset($_GET["action"]) && $_GET["action"] == "cartAdd") {
 
 		echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 		echo " <div class=\"boxblock\">\n";
@@ -259,41 +259,36 @@ if(isset($_POST["SendEmail"])){
 		echo "   <div class=\"inner\">\n";
 
 		// Show Cart
-		$castingcart = RBAgency_Casting::cart_show();
-		echo $castingcart;
+		echo RBAgency_Casting::cart_show();
 
 		echo "   </div>\n";
 		echo " </div>\n";
 		echo "</div>\n";
 
-
 		// Send Email Form
-		$sendemail = RBAgency_Casting::cart_send_form();
-		echo $sendemail;
-
-
-	echo "    </div><!-- .boxblock -->\n";
+		echo RBAgency_Casting::cart_send_form();
+		echo "    </div><!-- .boxblock -->\n";
 	}
 
-        // search result
-        if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
+	// search result
+	if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
 
-                echo "<div id=\"profile-search-results\">\n";
-                $search_array = RBAgency_Profile::search_process();
-                $search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-                echo RBAgency_Profile::search_results($search_sql_query, 0);
-                echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
+		echo "<div id=\"profile-search-results\">\n";
+		$search_array = RBAgency_Profile::search_process();
+		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
+		echo RBAgency_Profile::search_results($search_sql_query, 0);
+		echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
-        } else {
-                echo "				<strong>". __("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
-        }
-        
+	} else {
+		echo "				<strong>". __("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
+	}
+
 	echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
 	echo "     <div class=\"boxblock\">\n";
 	echo "      <h3>". __("Advance Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
 	echo "      <div class=\"inner\">\n";
 
-		return RBAgency_Profile::search_form("", "", 1);
+	return RBAgency_Profile::search_form("", "", 1);
 
 	echo "      </div><!-- .inner -->\n";
 	echo "     </div><!-- .boxblock -->\n";
