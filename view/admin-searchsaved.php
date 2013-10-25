@@ -86,10 +86,10 @@ if (isset($_POST['action'])) {
 	// Email
 
 	case 'emailSend':
-		echo('emailSend1');
+
 		if (!empty($SearchID)) {
 
-		echo('emailSend2');
+		
 
 			$SearchID				=$_GET['SearchID'];
 
@@ -118,7 +118,7 @@ if (isset($_POST['action'])) {
 			} else {
 				$send_name = $rb_agency_option_agencyname;
 			}
-
+echo('emailSend3');
 			add_filter('wp_mail_content_type','rb_agency_set_content_type');
 
 			function rb_agency_set_content_type($content_type){
@@ -126,7 +126,7 @@ if (isset($_POST['action'])) {
 				return 'text/html';
 
 			}
-
+echo('emailSend4');
 			// Mail it
 
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -136,7 +136,7 @@ if (isset($_POST['action'])) {
 			$email_error = "";
 			
 			if(!empty($FromEmail)){
-				
+				echo('emailSend5');
 				if ( !is_email($FromEmail, true)) {
                       $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
                 } else {
@@ -148,7 +148,7 @@ if (isset($_POST['action'])) {
 				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
 			
 			}
-			echo('emailSend3');
+			echo('emailSend6');
 			if(!$email_error){
 				
 				// Create Record
