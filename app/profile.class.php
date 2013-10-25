@@ -623,8 +623,8 @@ class RBAgency_Profile {
 				 */
 
 					// Type
-					if (isset($_REQUEST['type']) && !empty($_REQUEST['type'])){
-						$filterArray['type'] = $_REQUEST['type'];
+					if (isset($_REQUEST['profiletype']) && !empty($_REQUEST['profiletype'])){
+						$filterArray['profiletype'] = $_REQUEST['profiletype'];
 					}
 
 					// Gender
