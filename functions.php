@@ -756,7 +756,7 @@ error_reporting(0);
 			// Print or Export
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 				
-				if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
+				//if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
 					// Get Preferences
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_privacy					 = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
@@ -806,9 +806,9 @@ error_reporting(0);
 			"profilestate" => NULL,
 			"profilezip" => NULL
 		), $atts));
-		echo('in');
+
 		// Filter It
-		echo $sort = "profile.ProfileContactDisplay";
+		$sort = "profile.ProfileContactDisplay";
 
 		//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		$dir = "asc";
@@ -982,7 +982,7 @@ error_reporting(0);
 					}
 					$links.='</div><!-- .rbfavorites-castings -->
 				</div><!-- .rblinks -->';			
-			}
+			//}
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
