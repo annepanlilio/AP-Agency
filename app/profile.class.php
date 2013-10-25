@@ -1281,11 +1281,9 @@ class RBAgency_Profile {
 						$displayHtml .=  "<ul style='margin: 0px;'>" ;
 						
 						if (!empty($data['ProfileGender'])) {
-							if(rb_agency_filterfieldGender($data['ProfileGender'])){
-								$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_filterfieldGender($data['ProfileGender'])."</li>\n";
-							}else{
-								$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";	
-							}
+							$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</li>\n";
+						}else{
+							$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";	
 						}
 						
 						rb_agency_getProfileCustomFields($ProfileID ,$data['ProfileGender']);

@@ -1910,7 +1910,24 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	} // End if Empty ProfileCustomID
 }
 
+/*/
+*   ================ Get Profile Gender for each user ===================
+*   @returns GenderTitle
+/*/   
+function rb_agency_getGenderTitle($ProfileGenderID){
+ 
+	$query = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID='".$ProfileGenderID."'";
+	$results = mysql_query($query) or die(mysql_error());
+	$count = mysql_num_rows($results);
 
+	if($count > 0){
+	 	$data = mysql_fetch_assoc($results);
+		return $data["GenderTitle"];
+	} else {
+		return 0;	 
+	}
+	rb_agency_checkExecution();
+}
 
 /*/
 *   ================ Filters custom fields to show based on assigned gender ===================
