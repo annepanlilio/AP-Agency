@@ -842,7 +842,7 @@ error_reporting(0);
 		if (!isset($pagingperpage) || empty($pagingperpage)) { $pagingperpage = $rb_agency_option_profilelist_perpage; }
 		if($pagingperpage=="0" || is_null($pagingperpage)){$pagingperpage="10";}//make it a default value
 		$limit = " LIMIT 0,". $pagingperpage;
-		echo($limit );
+
 		// Legacy Field Names
 		if (isset($type) && !empty($type)){ $profiletype = $type; }
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
@@ -1017,7 +1017,6 @@ error_reporting(0);
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
 			$sort = "profile.ProfileContactDisplay";
-			echo($sort);
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
@@ -1031,11 +1030,11 @@ error_reporting(0);
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
 					$items = mysql_num_rows($qItem); // number of total rows in the database
-				  echo($qItem);
+				  
 				if($items > 0) {
 					$p = new rb_agency_pagination;
 					$p->items($items);
-					$p->limit($pagingperpage); // Limit entries per page
+					$p->limit(10); // Limit entries per page
 					$p->target($_SERVER["REQUEST_URI"]);
 					$p->currentPage($paging); // Gets and validates the current page
 					$p->calculate(); // Calculates what to show
