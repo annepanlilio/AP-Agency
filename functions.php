@@ -810,7 +810,7 @@ error_reporting(0);
 		// Filter It
 		$sort = "profile.ProfileContactDisplay";
 
-		$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
+		//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		$dir = "asc";
 		// Should we override the privacy settings?
 		if(strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
@@ -840,8 +840,8 @@ error_reporting(0);
 			}
 		}
 		if (!isset($pagingperpage) || empty($pagingperpage)) { $pagingperpage = $rb_agency_option_profilelist_perpage; }
-		if($pagingperpage=="0"){$pagingperpage="10";}//make it a default value
-
+		if($pagingperpage=="0" || is_null($pagingperpage)){$pagingperpage="10";}//make it a default value
+		$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		// Legacy Field Names
 		if (isset($type) && !empty($type)){ $profiletype = $type; }
 		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
