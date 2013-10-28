@@ -754,7 +754,9 @@ error_reporting(0);
 	function rb_agency_profilelist($atts, $content = NULL) {
 
 			// Print or Export
-			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
+
+			// Commented by Sunil to fix profile print/pdf issue
+		//	if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 				// Commented by Sunil to fix profile display issue
 				//if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
 					// Get Preferences
@@ -1250,15 +1252,16 @@ error_reporting(0);
 		// Close Formatting
 		$displayHTML .= "  <div class=\"rbclear\"></div>\n";
 		$displayHTML .= "</div><!-- #profile-results -->\n";
-				
-		} else {
-			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
-				echo "<h2>This is a restricted page. For Clients only.</h2>";
-			} else {
-				// Show Login Form
-				include("theme/include-login.php");
-			}
-		}
+		
+		// Commented by Sunil to fix profile display issue
+//		} else {
+//			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
+//				echo "<h2>This is a restricted page. For Clients only.</h2>";
+//			} else {
+//				// Show Login Form
+//				include("theme/include-login.php");
+//			}
+//		}
 
 		echo  $displayHTML;
 
