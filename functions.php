@@ -726,7 +726,7 @@ error_reporting(0);
 		), $atts));
 
 		// Query
-		$queryList = "SELECT dt.DataTypeID, dt.DataTypeTitle, dt.DataTypeTag, COUNT(profile.ProfileID) AS CategoryCount FROM ".table_agency_data_type." dt,".table_agency_profile." profile where dt.DataTypeID= profile.ProfileType group by dt.DataTypeID ORDER BY dt.DataTypeTitle ASC";
+		$queryList = "SELECT dt.DataTypeID, dt.DataTypeTitle, dt.DataTypeTag, COUNT(profile.ProfileID) AS CategoryCount FROM ".table_agency_data_type." dt,".table_agency_profile." profile where dt.DataTypeID= profile.ProfileType and profile.ProfileIsActive = 1 group by dt.DataTypeID ORDER BY dt.DataTypeTitle ASC";
 		$resultsList = mysql_query($queryList);
 		$countList = mysql_num_rows($resultsList);			
 
