@@ -21,8 +21,8 @@ global $wpdb;
 	}
 	if(isset($_POST)) {
 		if($_POST['file_type'] == 'csv') { 
-			$profile_data = $wpdb->get_results($wpdb->prepare("SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM ". table_agency_profile, ARRAY_A));
-			$profile_data_id = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst  FROM ". table_agency_profile, ARRAY_A));
+			$profile_data = $wpdb->get_results("SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM ". table_agency_profile, ARRAY_A);
+			$profile_data_id = $wpdb->get_results("SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst  FROM ". table_agency_profile, ARRAY_A);
 			$csv_output .= "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,";
 			$csv_output .= implode(',', $custom_fields_name);
 			$csv_output .= "\n"; 
@@ -31,7 +31,7 @@ global $wpdb;
 				$data_value['ProfileGender'] = $gender['GenderTitle'];
 				$data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
 				$csv_output .= implode(',', $data_value);
-				$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A));
+				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
 				$temp_array = array();
 				$c_value_array = array(); 
 				foreach ($subresult as $sub_value) {
