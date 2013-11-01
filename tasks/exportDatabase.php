@@ -21,10 +21,20 @@ global $wpdb;
 	$csv_output .= "\n";
 	
 	$values = mysql_query("SELECT * FROM ".$wpdb->prefix."agency_profile");
-	while ($rowr = mysql_fetch_row($values)) {
-		for ($j=0;$j<$i;$j++) {
-		$csv_output .= $rowr[$j].", ";
+	while ($rowr = mysql_fetch_assoc($values)) {
+		foreach ($rowr as $key=>$val) {
+			if($key=="ProfileStatHeight"){
+				$rawValue=$val;
+				$feet=intval($rawValue/12);
+				$inches=intval($rawValue%12);
+				if($feet==0 && $inches==0)
+					$val='';
+				else
+					$val=$feet."ft ".$inches."in";			
+			}
+		$csv_output .= $val.", ";
 		}
+		
 	  $csv_output .= "\n";
 	}
 	
