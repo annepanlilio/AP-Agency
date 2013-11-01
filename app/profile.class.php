@@ -1,7 +1,7 @@
 <?php
 class RBAgency_Profile {
 	 
-	 protected static $error_debug = true;
+	 protected static $error_debug = false;
 	 protected static $error_checking = array();
 
 	/*
@@ -1151,7 +1151,7 @@ class RBAgency_Profile {
 				$all_html .= '<div id="profile-results-info">';
 											if ($rb_agency_option_profilelist_favorite){ 
 													$all_html .= "<div class=\"profile-results-info-countpage\">\n";
-													$all_html .= $p->show();  // Echo out the list of paging. 
+													$all_html .= $count;  // Echo out the list of paging. 
 													$all_html .= "</div>\n";
 											}
 											if ($rb_agency_option_profilelist_count) {
