@@ -127,6 +127,21 @@ global $wpdb;
 				foreach($custom_fields_id as $d){
 					$c_value_array[] = $temp_array[$d];
 				}
+				
+				//Height conversion from inches to feet n inches
+				foreach($custom_fields_title as $key=>$title){
+					if($title=="Height"){
+						$rawValue=$temp_array[$custom_fields_id[$key]];
+						$feet=intval($rawValue/12);
+						$inches=intval($rawValue%12);
+						if($feet==0 && $inches==0)
+							$c_value_array[$key]='';
+						else
+							$c_value_array[$key]=$feet."ft ".$inches."in";
+							
+						
+						}
+				}
 
 				$data = array_merge($data, $c_value_array);
 				$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
