@@ -131,7 +131,6 @@ if ($ConfigID == 0) {
 	echo "    </div>\n";
 	echo "</div>\n";
 	echo "<hr />\n";
-
 	//if (function_exists(rb_agencyinteract_settings)) {
 	if (is_plugin_active('rb-agency-interact/rb-agency-interact.php')) {
 	// RB Agency Interact Settings
