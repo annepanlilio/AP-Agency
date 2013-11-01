@@ -81,8 +81,8 @@ global $wpdb;
 
 			print $csv_output;
 		} elseif($_POST['file_type'] == 'xls') {
-			require_once WP_CONTENT_DIR.'/plugins/rb-agency/tasks/PHPExcel.php';
-			require_once WP_CONTENT_DIR.'/plugins/rb-agency/tasks/PHPExcel/IOFactory.php';
+			require_once('PHPExcel.php');
+			require_once('PHPExcel/IOFactory.php');
 			$objPHPExcel = new PHPExcel();
 			$objPHPExcel->setActiveSheetIndex(0);
 			$rowNumber = 1;
