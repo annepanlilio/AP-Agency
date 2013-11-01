@@ -98,12 +98,12 @@ global $wpdb;
 			/*Profile data*/
 			$row_data = array();
 			$row_data = $wpdb->get_results('SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile, ARRAY_A);
-			$profile_data_id = $wpdb->get_results($wpdb->prepare("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A));
+			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
 
 			foreach ($row_data as $key => $data) 
 			{
 				$rowNumber++;
-				$subresult = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A));
+				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
 
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
 
