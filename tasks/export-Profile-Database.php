@@ -108,6 +108,7 @@ global $wpdb;
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
 
 				$data['ProfileGender'] =$gender['GenderTitle'];
+				$data['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);
 				$c_value_array = array();
 				$temp_array = array();
 
