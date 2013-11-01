@@ -14,10 +14,12 @@ global $wpdb;
 	$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." ORDER BY ProfileCustomOrder";
 	$custom_fields_name = array();
 	$custom_fields_id = array();
+	$custom_fields_title = array();
 	$custom_fields = $wpdb->get_results($query3,ARRAY_A);
 	foreach ($custom_fields as $key => $value) {
 		array_push($custom_fields_name, 'Client'.str_replace(' ', '', $value['ProfileCustomTitle']));
 		array_push($custom_fields_id, $value['ProfileCustomID']);
+		array_push($custom_fields_title, $value['ProfileCustomTitle']);
 	}
 	if(isset($_POST)) {
 		if($_POST['file_type'] == 'csv') { 
@@ -50,6 +52,22 @@ global $wpdb;
 				foreach($custom_fields_id as $d){
 					$c_value_array[] = $temp_array[$d];
 				}
+				
+				//Height conversion from inches to feet n inches
+				foreach($custom_fields_title as $key=>$title){
+					if($title=="Height"){
+						$rawValue=$temp_array[$custom_fields_id[$key]];
+						$feet=intval($rawValue/12);
+						$inches=intval($rawValue%12);
+						if($feet==0 && $inches==0)
+							$c_value_array[$key]='';
+						else
+							$c_value_array[$key]=$feet."ft ".$inches."in";
+							
+						
+						}
+				}
+				
 				
 				$csv_output .= ','.implode(',', $c_value_array);
 				$csv_output .="\n";
