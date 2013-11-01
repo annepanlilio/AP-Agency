@@ -39,7 +39,7 @@ global $wpdb;
 				foreach ($subresult as $sub_value) {
 					$ProfileCustomValue = ""  ;
 					if(trim($sub_value['ProfileCustomValue']) != ""){
-						$ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+						$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
 					} else {
 						$ProfileCustomValue = "";
 					}
@@ -114,7 +114,7 @@ global $wpdb;
 
 				foreach ($subresult as $sub_value) {
 					if(trim($sub_value['ProfileCustomValue']) != ""){
-						$ProfileCustomValue = str_replace(',', '/', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+						$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
 					} else {
 						$ProfileCustomValue = "";
 					}
