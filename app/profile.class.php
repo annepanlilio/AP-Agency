@@ -1,5 +1,8 @@
 <?php
 class RBAgency_Profile {
+	 
+	 protected static $error_debug = true;
+	 protected static $error_checking = array();
 
 	/*
 	 * Search Form
@@ -684,7 +687,10 @@ class RBAgency_Profile {
 					if (isset($_REQUEST['isactive'])){
 						$filterArray['isactive'] = $_REQUEST['isactive'];
 					}
-
+			if(self::$error_debug){		
+				self::$error_checking[] = array('search_process',$filterArray);
+				var_dump(self::$error_checking);			
+			}
 			return $filterArray;
 			} // If no post, ignore.
 
@@ -1001,7 +1007,11 @@ class RBAgency_Profile {
 					//$cartString = implode(",", $exclude);
 					$filter .= " AND profile.ProfileID NOT IN (". $exclude .")";
 				}
-
+				
+				if(self::$error_debug){		
+					self::$error_checking[] = array('search_generate_sqlwhere',$filter);
+					var_dump(self::$error_checking);	
+				}
 				return $filter;
 
 			} else {
@@ -1052,7 +1062,10 @@ class RBAgency_Profile {
 				if (isset($sort)){
 					$filter .= " LIMIT 0, $limit ";
 				}
-
+				if(self::$error_debug){		
+					self::$error_checking[] = array('search_generate_sqlorder',$filter);
+					var_dump(self::$error_checking);
+				}
 				return $filter;
 
 			} else {
@@ -1100,8 +1113,8 @@ class RBAgency_Profile {
 		}
 
 		public static function search_result_public($sql){
-                        
-                        global $wpdb;
+			
+			global $wpdb;
 			/* 
 			 * format profile list per profile
 			 */
@@ -1142,7 +1155,10 @@ class RBAgency_Profile {
 				 * wrap profile listing
 				 */				
 				$all_html .="<div id='profile-list'>".$profile_list."</div></div>";
-
+				if(self::$error_debug){		
+					self::$error_checking[] = array('search_result_public',$all_html);
+					var_dump(self::$error_checking);
+				}
 				return $all_html;
 
 			} else {
@@ -1151,7 +1167,10 @@ class RBAgency_Profile {
 				 * No results Found.
 				 */				
 				$no_rec_html = '<div class=\"rbclear\"></div>' . __("No Profiles Found", rb_agency_TEXTDOMAIN);
-
+				if(self::$error_debug){		
+					self::$error_checking[] = array('search_result_public',$no_rec_html);
+					var_dump(self::$error_checking);
+				}
 				return $no_rec_html;
 			
 			}
@@ -1421,6 +1440,10 @@ class RBAgency_Profile {
 			}
 
 			$displayHTML .=" </div> <!-- .profile-info --> \n";
+			if(self::$error_debug){		
+				self::$error_checking[] = array('search_formatted',$displayHTML);
+				var_dump(self::$error_checking);
+			}
 			return $displayHTML;
 
 		}
