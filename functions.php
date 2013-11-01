@@ -3828,6 +3828,8 @@ function is_permitted($type){
  */
 function is_client_profiletype(){
 	
+	global $current_user;
+	
 	$query = "SELECT ProfileType FROM ". table_agency_profile ." WHERE ProfileUserLinked = ". rb_agency_get_current_userid();
 	$results = mysql_query($query);
 	
@@ -3837,12 +3839,28 @@ function is_client_profiletype(){
 		$queryList = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = ". $id;
 		$resultsList = mysql_query($queryList);
 		while ($d = mysql_fetch_array($resultsList)) {
-			if(strtolower($d["DataTypeTitle"]) == "client" ||
-			   strtolower($d["DataTypeTitle"]) == "casting director"){
+			if(strtolower($d["DataTypeTitle"]) == "client"){
 				return true;
 			}
 		}	
+		/*
+		 * lets check postmeta field
+		 */
+		$check_type = get_user_meta($current_user->ID, 'rb_agency_interact_clientdata', true);
+		if($check_type != ""){
+		   return true;
+		} 
+	} 
+	/*
+	 * lets check postmeta field
+	 */
+	else {
+		$check_type = get_user_meta($current_user->ID, 'rb_agency_interact_clientdata', true);
+		if($check_type != ""){
+		   return true;
+		} 	
 	}	
+	
 	return false;
 }
 
