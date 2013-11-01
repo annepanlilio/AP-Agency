@@ -2,6 +2,7 @@
 class RBAgency_Profile {
 	 
 	 protected static $error_debug = false;
+	 protected static $error_debug_query = true;
 	 protected static $error_checking = array();
 
 	/*
@@ -1101,7 +1102,7 @@ class RBAgency_Profile {
 					break;
 			}
 
-			if(self::$error_debug){		
+			if(self::$error_debug || self::$error_debug_query){		
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
 				var_dump(self::$error_checking);
 			}
