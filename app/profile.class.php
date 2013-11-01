@@ -1144,6 +1144,15 @@ class RBAgency_Profile {
 
 				return $all_html;
 
+			} else {
+
+				/* 
+				 * No results Found.
+				 */				
+				$no_rec_html = '<div class=\"rbclear\"></div>' . __("No Profiles Found", rb_agency_TEXTDOMAIN);
+
+				return $no_rec_html;
+			
 			}
 		
 		}
