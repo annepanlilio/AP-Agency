@@ -834,7 +834,7 @@ class RBAgency_Profile {
 					$filter2 = "";
 
 					// Loop through all attributes looking for custom
-					foreach ($atts as $key => $val) {
+					foreach ($_POST as $key => $val) {
 						if (substr($key,0,15) == "ProfileCustomID") {
 
 						/*
