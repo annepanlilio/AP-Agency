@@ -1100,7 +1100,8 @@ class RBAgency_Profile {
 		}
 
 		public static function search_result_public($sql){
-
+                        
+                        global $wpdb;
 			/* 
 			 * format profile list per profile
 			 */
