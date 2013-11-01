@@ -1100,6 +1100,11 @@ class RBAgency_Profile {
 					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 					break;
 			}
+
+			if(self::$error_debug){		
+				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
+				var_dump(self::$error_checking);
+			}
 			
 			/*
 			 * check if search is admin or public
@@ -1125,6 +1130,11 @@ class RBAgency_Profile {
 			if ($count > 0){
 				while ($profile = mysql_fetch_array($results)) {
 					$profile_list .= self::search_formatted($profile);
+				}
+				
+				if(self::$error_debug){		
+					self::$error_checking[] = array('search_formatted','success');
+					var_dump(self::$error_checking);
 				}
 
 				/* 
