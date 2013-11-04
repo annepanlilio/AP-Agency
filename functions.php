@@ -3346,7 +3346,7 @@ function bulk_register_and_send_email(){
                 update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
 				
 				// to store plain text login info
-				$user_info_arr = serialize(array($login,$password));
+				$user_info_arr = serialize(array($user_lp['login'], $user_lp['password']));
 				update_user_meta( $user_id, 'user_login_info', $user_info_arr);
 				
 				// linking the user ID with profile ID
