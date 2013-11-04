@@ -2945,7 +2945,16 @@ function rb_display_profile_list(){
 		  $ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 		  $ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
 		  $ProfileContactEmail = RBAgency_Common::format_propercase(stripslashes($data['ProfileContactEmail']));
-
+		  
+		  //get wp user info
+		  $user_info = get_user_meta($data['ProfileUserLinked'],'user_login_info',true);
+      	  $userlogin="";
+		  $userpass="";
+		  if($user_info){
+			  $user_info = unserialize($user_info);	
+			  $userlogin = $user_info[0];
+			  $userpass = $user_info[1];
+		  }
 		  $i++;
 		  if ($i % 2 == 0) {
 		          $rowColor = " style='background: #fcfcfc'"; 
@@ -2962,8 +2971,8 @@ function rb_display_profile_list(){
 		    <td><a href="javascript:void(0)" class="email_lp button-primary" disabled="disabled" data-id="<?php echo $ProfileID ?>" id="em_<?php echo $ProfileID ?>" data-email="<?php echo $ProfileContactEmail ?>">Send Email</a></td>
 		    <td>
 		      <div id="ch_<?php echo $ProfileID ?>"></div>
-		      <input id="l_<?php echo $ProfileID ?>" type="text" placeholder="Login" /><br />
-		      <input id="p_<?php echo $ProfileID ?>" type="text" placeholder="Password" />         
+		      <input id="l_<?php echo $ProfileID ?>" type="text" placeholder="Login" value="<?php echo (!empty($userlogin)) ? $userlogin : ""; ?>" /><br />
+		      <input id="p_<?php echo $ProfileID ?>" type="text" placeholder="Password" value="<?php echo (!empty($userpass)) ? $userpass : "";  ?>" />         
 		    </td>
 		  </tr>
 		  <?php
@@ -3277,6 +3286,10 @@ function register_and_send_email(){
             update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
             update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
 			
+			// to store plain text login info
+			$user_info_arr = serialize(array($login,$password));
+			update_user_meta( $user_id, 'user_login_info', $user_info_arr);
+			
 			// linking the user ID with profile ID
 			$wpdb->update(table_agency_profile,
 				array( 'ProfileUserLinked' => $user_id ),
@@ -3331,6 +3344,10 @@ function bulk_register_and_send_email(){
                 // inserting some information we have in wp_usermeta
                 update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
                 update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
+				
+				// to store plain text login info
+				$user_info_arr = serialize(array($login,$password));
+				update_user_meta( $user_id, 'user_login_info', $user_info_arr);
 				
 				// linking the user ID with profile ID
 				$wpdb->update( 
