@@ -109,13 +109,15 @@ if ($ConfigID == 0) {
 	echo "      <p>". __("You may add dummy profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 	echo "    </div>\n";
-
-	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Generate User Logins / Passwords", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
-	echo "    </div>\n";
-	echo "<hr />\n";
+        
+        if (function_exists('rb_agency_interact_admin_head')){  
+            echo "    <div class=\"boxlink\">\n";
+            echo "      <h3>". __("Generate User Logins / Passwords", rb_agency_TEXTDOMAIN) . "</h3>\n";
+            echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+            echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
+            echo "    </div>\n";
+        }
+        echo "<hr />\n";
 
 	echo "<div class=\"boxlinkgroup\">\n";
 	echo "  <h2>". __("Importing Records", rb_agency_TEXTDOMAIN) . "</h2>\n";
@@ -1354,13 +1356,20 @@ elseif ($ConfigID == 14) {
 
 } //END $ConfigID == 14
 elseif($ConfigID == '99'){
+	
+        if (function_exists('rb_agency_interact_admin_head')){
 
-	echo "<h2>". __("Generate Login / Passwords", rb_agency_TEXTDOMAIN) . "</h2>\n";
+		echo "<h2>". __("Generate Login / Passwords", rb_agency_TEXTDOMAIN) . "</h2>\n";
+		rb_display_profile_list();
 
-	rb_display_profile_list();
+	} else {
 
+		echo "<h3>". __("Activate/Install Rb Agency Interact plugin to use this feature", rb_agency_TEXTDOMAIN) . "</h3>\n";
+
+	}
 	
 }
+
 
 
 
