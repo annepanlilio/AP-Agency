@@ -136,7 +136,7 @@ if (isset($_POST['action'])) {
                       $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
                 } else {
 					  $headers = 'From: '. $send_name .' <'. $FromEmail .'>' . "\r\n";
-					  //$headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
+					  $headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
 					
 					 
 				}
@@ -144,7 +144,7 @@ if (isset($_POST['action'])) {
 			} else {
 			
 				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
-				//$headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
+				$headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
 
 			
 			}
@@ -253,7 +253,7 @@ if (isset($_POST['action'])) {
        <div><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
        <div><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
        
-        <div><label for="SearchMuxBccName"><strong>Bcc:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxBccName" name="SearchMuxBccName" value="<?php echo $dataSearchSavedMux["SearchMuxBccName"]; ?>" /></div>
+        <div><label for="SearchMuxBccName"><strong>Bcc:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxBccName" name="SearchMuxBccName" value="" /></div>
         
         
        <div><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
