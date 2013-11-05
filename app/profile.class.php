@@ -1055,7 +1055,7 @@ class RBAgency_Profile {
 				}
 				
 				self::search_generate_sqlorder($atts);
-				echo "filter".$filter;
+				
 				return $filter;
 
 			} else {
