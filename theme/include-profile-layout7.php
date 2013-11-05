@@ -225,6 +225,24 @@ Custom Layout 7
 							jQuery("#profile-slider").hide();
 							jQuery("#video_player").show();
 						});
+						 jQuery('#media-carousel').flexslider({
+							animation: "slide",
+							controlNav: false,
+							animationLoop: false,
+							slideshow: false,
+							itemWidth: 210,
+							asNavFor: '#media_player'
+						  });
+						
+						  jQuery('#media_player').flexslider({
+							animation: "slide",
+							controlNav: false,
+							animationLoop: false,
+							slideshow: false,
+							smoothHeight: true,
+							sync: "#media-carousel"
+						  });
+						  
 						
 						jQuery("#profile-carousel li").click(function(){
 							jQuery("#profile-slider").show();
@@ -306,6 +324,19 @@ Custom Layout 7
 					<li><a href="javascript:;" class="showSingle1" >Pictures</a></li>
 					<li><a href="javascript:;" class="showSingle2" >Experience</a></li>
 					<li><a href="javascript:;" class="showSingle3" >Videos</a></li>
+                      <?php
+				$resultsHeadshot = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Headshot\"");
+				$countHeadshot = mysql_num_rows($resultsHeadshot);
+				$resultsVoiceDemo = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"VoiceDemo\"");
+				$countVoiceDemo = mysql_num_rows($resultsVoiceDemo);
+				$resultsCompCard = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"CompCard\"");
+				$countCompCard = mysql_num_rows($resultsCompCard);
+				$resultsResume = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
+				$countResume = mysql_num_rows($resultsResume);
+				
+				if($countHeadshot>0 || $countVoiceDemo>0 || $countCompCard>0 || $countResume>0 ){?>
+                    <li><a href="javascript:;" class="showSingle4" >Media</a></li>
+                    
 					<?php echo '<li id="resultsGoHereAddtoCart"></li>';?>				
 			</ul>
 		</div>		
@@ -389,6 +420,46 @@ Custom Layout 7
 				 ?>
 			</ul>
 		</div>
+        <div id="media-carousel" class="flexslider col_12 column targetmedia" style="display:none"  >
+			<ul class="slides">
+				<?php
+				//Headshot
+				
+				if ($countHeadshot > 0) {
+				  	while ($dataHeadshot = mysql_fetch_array($resultsHeadshot)) {
+						$profileHeadshotUrl = $dataHeadshot['ProfileMediaURL'];
+						echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
+					}
+				}
+
+				//VoiceDemo
+				
+				if ($countVoiceDemo > 0) {
+				  	while ($dataVoiceDemo = mysql_fetch_array($resultsVoiceDemo)) {
+						$profileVoiceDemo = $dataVoiceDemo['ProfileMediaURL'];
+							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
+						}
+				}
+				//CompCard
+				
+				if ($countCompCard > 0) {
+				  	while ($dataCompCard = mysql_fetch_array($resultsCompCard)) {
+						$profileCompCardUrl = $dataCompCard['ProfileMediaURL'];
+							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
+						}
+				}
+				//Resume
+				
+				if ($countResume > 0) {
+				  	while ($dataResume = mysql_fetch_array($resultsResume)) {
+						$profileResumeUrl = $dataResume['ProfileMediaURL'];
+							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
+						}
+				}
+				 ?>
+			</ul>
+		</div>
+        
 
 		<div class="col_12 column targetexperience" style="display:none">
 			<div id="experience">
@@ -407,18 +478,29 @@ Custom Layout 7
 			jQuery('.showSingle1').click(function(){
 				  jQuery('.targetpictures').show();
 				  jQuery('.targetexperience').hide();
-				  jQuery('.targetvideo').hide();				  
+				  jQuery('.targetvideo').hide();
+				  jQuery('.targetmedia').hide();
 			});
 			jQuery('.showSingle2').click(function(){
 				  jQuery('.targetexperience').show();
 				  jQuery('.targetpictures').hide();
-				  jQuery('.targetvideo').hide();				  
+				  jQuery('.targetvideo').hide();	
+				  jQuery('.targetmedia').hide();
 			});
 			jQuery('.showSingle3').click(function(){
 				  jQuery('.targetvideo').show();
 				  jQuery('.targetpictures').hide();
+				  jQuery('.targetexperience').hide();
+				  jQuery('.targetmedia').hide();
+				  
+			});
+			jQuery('.showSingle4').click(function(){
+				  jQuery('.targetmedia').show();
+				  jQuery('.targetvideo').hide();
+				  jQuery('.targetpictures').hide();
 				  jQuery('.targetexperience').hide();				  
 			});
+		
 		
 		});
 	</script>
