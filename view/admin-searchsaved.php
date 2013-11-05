@@ -248,7 +248,7 @@ if (isset($_POST['action'])) {
        <div><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
        <div><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
        
-       <div><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
+       <div><label for="SearchMuxBccEmail"><strong>Bcsc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
        
        <div><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart" /></div>
        <div><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
