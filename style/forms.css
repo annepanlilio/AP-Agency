@@ -38,6 +38,10 @@
 .rbform .rbform-field div div:last-child {
 	float: right;
 }
+.rbform .rbform-field.multi > div label {
+	float: left;
+	clear: both;
+}
 .rbform .rbform-field.submit {
 	text-align: center;
 }
