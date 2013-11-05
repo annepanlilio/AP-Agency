@@ -1,29 +1,38 @@
-.search-field {
-	padding: 10px 0px;
+.rbform {
+	max-width: 400px;
 }
-.search-field * {
-	margin: 0px;
+.rbform * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	margin: 0px;
 }
-.search-field > label,
-.search-field > legend {
-	padding: 8px 0px;
-	line-height: normal;
+.rbform .rbform-field {
+	padding: 10px 0px;
 }
-.search-field > label,
-.search-field > legend,
-.search-field > div {
+.rbform .rbform-field > div,
+.rbform .rbform-field > label,
+.rbform .rbform-field > legend {
+	width: 50%;
 	float: left;
-	width: 200px;
+	padding: 8px 0px;
+	line-height: normal;		
 }
-.search-field > div input[type="text"],
-.search-field > div input[type="password"] {
+.rbform .rbform-field textarea,
+.rbform .rbform-field input[type="text"],
+.rbform .rbform-field input[type="email"],
+.rbform .rbform-field input[type="password"] {
 	width: 100%;
-}
-.search-field input[type="text"],
-.search-field select,
-.search-field textarea {
 	padding: 5px;
+}
+.rbform .rbform-field select {
+	width: 100%;
+	padding: 3px;
+}
+.rbform .rbform-field div div {
+	width: 45%;
+	float: left;
+}
+.rbform .rbform-field div div:last-child {
+	float: right;
 }
