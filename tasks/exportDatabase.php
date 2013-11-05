@@ -9,7 +9,7 @@ global $wpdb;
 
 // *************************************************************************************************** //
 // Get Going
-
+ if ( is_user_logged_in() ) {
 	$result = mysql_query("SHOW COLUMNS FROM  ".$wpdb->prefix."agency_profile");
 	$i = 0;
 	if (mysql_num_rows($result) > 0) {
@@ -44,6 +44,11 @@ global $wpdb;
 	header( "Content-disposition: filename=".$filename.".csv");		
 	print $csv_output;
 	exit;
-
+ }
+ else
+	{
+	wp_redirect(wp_login_url( home_url()));
+	die;
+	}
 
 ?>
