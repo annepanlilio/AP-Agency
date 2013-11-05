@@ -135,7 +135,7 @@ if (isset($_POST['action'])) {
                       $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
                 } else {
 					  $headers = 'From: '. $send_name .' <'. $FromEmail .'>' . "\r\n";
-					  $headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
+					  $headers. = 'Bcc: '.$SearchMuxBccName. '"\r\n";
 					
 					 
 				}
