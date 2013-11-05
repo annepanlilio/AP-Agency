@@ -4,6 +4,7 @@ class RBAgency_Profile {
 	protected static $error_debug = false;
 	protected static $error_debug_query = false;
 	protected static $error_checking = array();
+	protected static $order_by ='';
 
 	/*
 	 * Search Form
@@ -111,7 +112,6 @@ class RBAgency_Profile {
 				echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". $rb_agency_searchurl ."\">\n";
 				echo "				<input type=\"hidden\" name=\"form_action\" value=\"search_profiles\" />\n";
 				echo "				<input type=\"hidden\" name=\"form_mode\" value=\"". $search_layout ."\" />\n";
-				echo "				<input type=\"hidden\" name=\"isactive\" value=\"1\" />\n";
 
 				// Show Profile Name
 				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
@@ -220,7 +220,7 @@ class RBAgency_Profile {
 						//status
 						echo "				<div class=\"search-field single\">\n";
 						echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "				        <select name=\"ProfileIsActive\" id=\"ProfileIsActive\">\n";               
+						echo "				        <select name=\"isactive\" id=\"ProfileIsActive\">\n";               
 						echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
 						echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
 						echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
@@ -750,6 +750,8 @@ class RBAgency_Profile {
 					// Distinction
 					"promoted" => NULL,
 					"featured" => NULL,
+					"isactive" => NULL,
+					
 					// ?
 					"stars" => NULL,
 					"favorite" => NULL,
@@ -765,7 +767,9 @@ class RBAgency_Profile {
 					// If sent link, show both hidden and visible
 					$filter = "profile.ProfileIsActive IN (1, 4)";
 				} else {
-					$filter = "profile.ProfileIsActive = 1";
+					if (isset($isactive) && $isactive != ''){
+						$filter = "profile.ProfileIsActive = " . $isactive;
+					}
 				}
 
 				// First Name
@@ -1022,6 +1026,9 @@ class RBAgency_Profile {
 					self::$error_checking[] = array('search_generate_sqlwhere',$filter);
 					var_dump(self::$error_checking);
 				}
+				
+				self::search_generate_sqlorder($atts);
+				
 				return $filter;
 
 			} else {
@@ -1061,15 +1068,15 @@ class RBAgency_Profile {
 			 * ORDER BY
 			 */
 
-				if (isset($sort)){
-					$filter .= " ORDER BY $sort $desc ";
+				if (isset($sort) && !empty($sort)){
+					$filter .= " ORDER BY $sort ";
 				}
 
 			/*
 			 * LIMIT
 			 */
 
-				if (isset($sort)){
+				if (isset($limit) && !empty($limit)){
 					$filter .= " LIMIT 0, $limit ";
 				}
 
@@ -1078,7 +1085,7 @@ class RBAgency_Profile {
 					self::$error_checking[] = array('search_generate_sqlorder',$filter);
 					var_dump(self::$error_checking);
 				}
-				return $filter;
+				self::$order_by = $filter;
 
 			} else {
 				// Empty Search
@@ -1101,7 +1108,7 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
-					$sql = "SELECT * FROM ". table_agency_profile ." profile WHERE ". $sql_where;
+					$sql = "SELECT * FROM ". table_agency_profile ." profile WHERE ". $sql_where . self::$order_by;
 					break;
 
 				/* 
@@ -1109,7 +1116,7 @@ class RBAgency_Profile {
 				 */
 				 case 1:
 					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID"  . self::$order_by;
 					break;
 			}
 
