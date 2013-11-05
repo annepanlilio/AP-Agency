@@ -1,7 +1,7 @@
 // Profile Seven Slider - Scroller
-$(window).load(function() {
+jQuery(window).load(function() {
     
-  $('#profile-carousel').flexslider({
+  jQuery('#profile-carousel').flexslider({
     animation: "slide",
     controlNav: false,
     animationLoop: false,
@@ -11,7 +11,7 @@ $(window).load(function() {
     asNavFor: '#profile-slider'
   });
 
-  $('#profile-slider').flexslider({
+  jQuery('#profile-slider').flexslider({
     animation: "slide",
     controlNav: false,
     animationLoop: false,
@@ -20,7 +20,7 @@ $(window).load(function() {
     sync: "#profile-carousel"
   });
 
-  $('#layout6-carousel').flexslider({
+  jQuery('#layout6-carousel').flexslider({
     animation: "slide",
     controlNav: false,
     itemWidth: 100,
@@ -30,7 +30,7 @@ $(window).load(function() {
     asNavFor: '#layout6-slider'
   });
 
-  $('#layout6-slider').flexslider({
+  jQuery('#layout6-slider').flexslider({
     animation: "slide",
     directionNav: false,
     controlNav: false,
@@ -39,11 +39,38 @@ $(window).load(function() {
     smoothHeight: true,
     sync: "#layout6-carousel"
   });
-  $('#videos-carousel').flexslider({
-    animation: "slide",
-    controlNav: false,
-    animationLoop: false,
-    slideshow: false,
-    itemWidth: 210,
-  });  
+  jQuery('#videos-carousel').flexslider({
+	animation: "slide",
+	controlNav: false,
+	animationLoop: false,
+	slideshow: false,
+	itemWidth: 210,
+	asNavFor: '#video_player'
+	});
+	
+  jQuery('#video_player').flexslider({
+	animation: "slide",
+	controlNav: false,
+	animationLoop: false,
+	slideshow: false,
+	smoothHeight: true,
+	sync: "#videos-carousel"
+	});
+  jQuery('#media-carousel').flexslider({
+	animation: "slide",
+	controlNav: false,
+	animationLoop: false,
+	slideshow: false,
+	itemWidth: 210,
+	asNavFor: '#media_player'
+  });
+
+  jQuery('#media_player').flexslider({
+	animation: "slide",
+	controlNav: false,
+	animationLoop: false,
+	slideshow: false,
+	smoothHeight: true,
+	sync: "#media-carousel"
+  });
 });
