@@ -1,16 +1,23 @@
 <?php
 class RBAgency_Profile {
 
-	protected static $error_debug = false;
+	/*
+	 * debug options
+	 */
+        protected static $error_debug = false;
 	protected static $error_debug_query = false;
 	protected static $error_checking = array();
-	protected static $order_by ='';
-
+	
 	/*
-	 * Search Form
-	 * Process Search
+	 * order by storage field
 	 */
+        protected static $order_by ='';
 
+
+               /*
+                * Search Form
+                * Process Search
+                */
 		public static function search_form($atts = "", $args = "", $type = 0){
 
 			/*
@@ -539,11 +546,10 @@ class RBAgency_Profile {
 		}
 
 
-	/*
-	* Search: Process Form Submission
-	* Process Search converting requests to an array of search terms
-	*/
-
+                /*
+                * Search: Process Form Submission
+                * Process Search converting requests to an array of search terms
+                */
 		public static function search_process(){
 
 
@@ -707,11 +713,10 @@ class RBAgency_Profile {
 		}
 
 
-	/*
-	 * Search: Prepare WHERE SQL String
-	 * Process values into SQL string holding WHERE clause
-	 */
-
+                /*
+                * Search: Prepare WHERE SQL String
+                * Process values into SQL string holding WHERE clause
+                */
 		public static function search_generate_sqlwhere($atts, $exclude){
 
 			$rb_agency_options_arr = get_option('rb_agency_options');
@@ -1004,18 +1009,18 @@ class RBAgency_Profile {
 					$filter .= $filter2;
 				}
 
-			/**
-			 * Only Show from Casting Cart
-			 */
+                                /**
+                                * Only Show from Casting Cart
+                                */
 
 				// Profile Search Saved 
 				if(isset($include) && !empty($include)){
 					$filter .= " AND profile.ProfileID IN (".$include.") ";
 				}
 
-			/**
-			 * Filter Models Already in Cart
-			 */
+                                /**
+                                * Filter Models Already in Cart
+                                */
 
 				// Pull Profiles in Cart
 				if (isset($exclude) && !empty($exclude)) {
@@ -1041,11 +1046,10 @@ class RBAgency_Profile {
 		}
 
 
-	/*
-	 * Search: Prepare ORDER SQL String
-	 * Process values into SQL string holding ORDER clause
-	 */
-
+                /*
+                * Search: Prepare ORDER SQL String
+                * Process values into SQL string holding ORDER clause
+                */
 		public static function search_generate_sqlorder($atts){
 
 			// Convert Input
@@ -1138,6 +1142,9 @@ class RBAgency_Profile {
 
 		}
 
+               	/* 
+		 * search for public 
+		 */
 		public static function search_result_public($sql){
 
 			global $wpdb;
@@ -1212,7 +1219,7 @@ class RBAgency_Profile {
 		/* 
 		 * search for admin 
 		 */
-				public static function search_result_admin($sql){
+		public static function search_result_admin($sql){
 
 				global $wpdb;
 				/* 
