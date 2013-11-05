@@ -337,7 +337,8 @@ Custom Layout 7
 				if($countHeadshot>0 || $countVoiceDemo>0 || $countCompCard>0 || $countResume>0 ){?>
                     <li><a href="javascript:;" class="showSingle4" >Media</a></li>
                     
-					<?php echo '<li id="resultsGoHereAddtoCart"></li>';?>				
+					<?php }
+					echo '<li id="resultsGoHereAddtoCart"></li>';?>				
 			</ul>
 		</div>		
 		
