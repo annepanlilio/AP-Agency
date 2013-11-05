@@ -739,7 +739,7 @@ class RBAgency_Profile {
 		public static function search_generate_sqlwhere($atts, $exclude){
 
 			$rb_agency_options_arr = get_option('rb_agency_options');
-	echo "<pre>";print_r($atts);
+	
 			// Time Zone
 			$rb_agency_option_locationtimezone = $rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
