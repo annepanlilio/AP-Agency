@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 $siteurl = get_option('siteurl');
 
 global $wpdb;
@@ -135,7 +136,7 @@ if (isset($_POST['action'])) {
                       $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
                 } else {
 					  $headers = 'From: '. $send_name .' <'. $FromEmail .'>' . "\r\n";
-					  
+					  $headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
 					
 					 
 				}
@@ -143,7 +144,7 @@ if (isset($_POST['action'])) {
 			} else {
 			
 				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
-				
+				$headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
 
 			
 			}
@@ -161,7 +162,7 @@ if (isset($_POST['action'])) {
 		        $results = $wpdb->query($insert);
 
 			    $lastid = $wpdb->insert_id;
-			//	$headers. = "Bcc:".$SearchMuxBccName."\r\n";
+			
 				$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
 	
 				if($isSent){
