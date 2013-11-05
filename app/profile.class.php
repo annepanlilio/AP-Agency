@@ -18,7 +18,7 @@ class RBAgency_Profile {
                 * Search Form
                 * Process Search
                 */
-		public static function search_form($atts = "", $args = "", $type = 0,$profilesearch_layout = 'condensed'){
+		public static function search_form($atts = "", $args = "", $type = 0,$profilesearch_layout = ''){
 
 			/*
 			* Setup Requirements
