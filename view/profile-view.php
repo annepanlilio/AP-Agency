@@ -188,10 +188,10 @@ header("Cache-control: private"); //IE 6 Fix
 						wp_enqueue_script( 'flexslider', plugins_url('/js/jquery.flexslider.js', dirname(__FILE__)) );						
 						wp_enqueue_script( 'initflexslider', plugins_url('/js/initflexslider.js', dirname(__FILE__)), in_footer );
 					} elseif ($layouttype == 7)  {						 
+						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
 						wp_enqueue_script( 'flexslider1', plugins_url('/js/jquery.flexslider.js', dirname(__FILE__)) );												
 						wp_register_style( 'flexslider', plugins_url('/style/flexslider.css', dirname(__FILE__)) );
 	        			wp_enqueue_style( 'flexslider' );
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
 						wp_enqueue_script( 'initflexslider', plugins_url('/js/initflexslider.js', dirname(__FILE__)), in_footer );
 					} elseif ($layouttype == 8)  {
 						wp_register_style( 'booklet', plugins_url('/style/booklet.css', dirname(__FILE__)) );
