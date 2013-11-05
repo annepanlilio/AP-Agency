@@ -1,7 +1,7 @@
 <?php
 class RBAgency_Profile {
 
-	protected static $error_debug = true;
+	protected static $error_debug = false;
 	protected static $error_debug_query = false;
 	protected static $error_checking = array();
 	protected static $order_by ='';
@@ -769,6 +769,8 @@ class RBAgency_Profile {
 				} else {
 					if (isset($isactive) && $isactive != ''){
 						$filter = "profile.ProfileIsActive = " . $isactive;
+					} else {
+						$filter = "profile.ProfileIsActive = 1 ";
 					}
 				}
 
