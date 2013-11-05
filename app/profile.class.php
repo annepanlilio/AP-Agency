@@ -216,7 +216,18 @@ class RBAgency_Profile {
 						echo "					<input type=\"text\" id=\"zip\" name=\"zip\" value=\"". $_SESSION["zip"] ."\" />\n";
 						echo "				</div>\n";
 				} // Show Location Search
-
+						
+						//status
+						echo "				<div class=\"search-field single\">\n";
+						echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
+						echo "				        <select name=\"ProfileIsActive\" id=\"ProfileIsActive\">\n";               
+						echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
+						echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+						echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
+						echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+						echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+						echo "				        	</select>\n";
+						echo "				    </div>\n";
 
 			/*
 			 * Custom Fields
@@ -442,7 +453,7 @@ class RBAgency_Profile {
 									}
 								list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
 
-									if($ProfileCustomTitle=="Height" && $ProfileCustomID==3){
+									if($ProfileCustomTitle=="Height" && $data['ProfileCustomOptions']==3){
 
 										echo "<div><label>Min</label><select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
 										if (empty($ProfileCustomValue)) {
@@ -1205,17 +1216,18 @@ class RBAgency_Profile {
 				if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
 
 				/* 
+				 * process query 
+				 */
+				 
+				$results = mysql_query($sql);
+				$count = mysql_num_rows($results);
+				
+				/* 
 				 * initialize html 
 				 */
 				$displayHtml = "";
 				$displayHtml .=  "  <div class=\"boxblock-holder\">\n";
 				$displayHtml .=  "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
-
-				/* 
-				 * process query 
-				 */
-				$results = mysql_query($sql);
-				$count = mysql_num_rows($results);
 
 				if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
 					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". $sessionString ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
@@ -1248,8 +1260,7 @@ class RBAgency_Profile {
 				$displayHtml .=  "        <tbody>\n";
 
 				while ($data = mysql_fetch_array($results)) {
-
-						$ProfileID = $data['pID'];
+						$ProfileID = $data['ProfileID'];
 						$isInactive = '';
 						$isInactiveDisable = '';
 						if ($data['ProfileIsActive'] == 0 || empty($data['ProfileIsActive'])){
@@ -1330,7 +1341,7 @@ class RBAgency_Profile {
 							$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";	
 						}
 
-						rb_agency_getProfileCustomFields($ProfileID ,$data['ProfileGender']);
+						$displayHtml .= rb_agency_getProfileCustomFields_admin($ProfileID ,$data['ProfileGender']);
 
 						$displayHtml .=  "</ul>" ;
 						
