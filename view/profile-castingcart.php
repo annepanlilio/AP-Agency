@@ -1,7 +1,7 @@
 <?php 
 session_start();
 get_header();
-
+echo "sdfasd";
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 
