@@ -4,6 +4,7 @@ ini_set('display_errors',1);
 include(rb_agency_BASEREL ."app/profile.class.php");
 session_start();
 get_header();
+echo 'gg';
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 
@@ -37,7 +38,6 @@ get_header();
 
 				// Process Form Submission
 				$search_results = RBAgency_Profile::search_results($search_sql_query, 0);
-				print_r(search_results);
 			    $formatted = RBAgency_Profile::search_formatted($search_results);
 
 
