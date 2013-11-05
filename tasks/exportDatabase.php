@@ -9,6 +9,7 @@ global $wpdb;
 // *************************************************************************************************** //
 // Get Going
  if ( is_user_logged_in() ) {
+	  if ( is_super_admin() ) {
 	$result = mysql_query("SHOW COLUMNS FROM  ".$wpdb->prefix."agency_profile");
 	$i = 0;
 	if (mysql_num_rows($result) > 0) {
@@ -43,6 +44,12 @@ global $wpdb;
 	header( "Content-disposition: filename=".$filename.".csv");		
 	print $csv_output;
 	exit;
+ }
+ else
+	{
+	wp_die( __( 'You do not have sufficient permissions to manage plugins for this site.' ) );
+	die;
+	}
  }
  else
 	{
