@@ -48,7 +48,6 @@ global $wpdb;
  else
 	{
 	wp_die( __( 'You do not have sufficient permissions to manage plugins for this site.' ) );
-	die;
 	}
  }
  else
