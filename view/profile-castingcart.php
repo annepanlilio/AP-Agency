@@ -1,10 +1,7 @@
 <?php
-error_reporting(1);
-ini_set('display_errors',1);
-include(rb_agency_BASEREL ."app/profile.class.php");
+
 session_start();
 get_header();
-echo 'gg';
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 
