@@ -65,9 +65,8 @@ get_header();
 				if(!isset($_POST['form_mode'])){
 					echo RBAgency_Profile::search_form("", "", 0);
 				} else {
-					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+					if ( isset($_POST['form_mode']) ){
 							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
 							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					}
 				}
