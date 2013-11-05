@@ -1,5 +1,4 @@
 <?php
-
 // Tap into WordPress Database
 include_once('../../../../wp-config.php');
 include_once('../../../../wp-load.php');
