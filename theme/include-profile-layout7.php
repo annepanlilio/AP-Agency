@@ -496,6 +496,7 @@ Custom Layout 7
 				  
 			});
 			jQuery('.showSingle4').click(function(){
+				 
 				  jQuery('.targetmedia').show();
 				  jQuery('.targetvideo').hide();
 				  jQuery('.targetpictures').hide();
