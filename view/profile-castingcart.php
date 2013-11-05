@@ -1,7 +1,6 @@
 <?php 
 session_start();
 get_header();
-echo "sdfasd";
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 
@@ -11,7 +10,7 @@ echo "sdfasd";
 		echo " <div id=\"profile-private\">\n";
 
 		// Get Profile
-		$SearchMuxHash = get_query_var('target');
+		echo $SearchMuxHash = get_query_var('target');
 
 		if (isset($SearchMuxHash)) {
 
@@ -20,8 +19,8 @@ echo "sdfasd";
 
 			// Get Casting Cart by Identifier
 			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
-			$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-			$count = mysql_num_rows($results);
+			echo $results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			echo $count = mysql_num_rows($results);
 
 			// Get Casting Cart ID
 			while ($data = mysql_fetch_array($results)) {
