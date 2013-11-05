@@ -368,6 +368,7 @@ class RBAgency_Profile {
 						} elseif($ProfileCustomType == 5) {
 								echo "<fieldset class=\"rbform-field multi\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
+								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 								foreach($array_customOptions_values as $val){
 
@@ -392,6 +393,7 @@ class RBAgency_Profile {
 								}
 
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";
+								echo "</div>";
 								echo "</fieldset>";
 
 						/*
@@ -400,6 +402,7 @@ class RBAgency_Profile {
 						} elseif($ProfileCustomType == 6) {
 								echo "<fieldset class=\"rbform-field multi\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
+								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 
 								foreach($array_customOptions_values as $val){
@@ -425,6 +428,7 @@ class RBAgency_Profile {
 									}
 								}
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";	       
+								echo "</div>";
 								echo "</fieldset>";
 
 						/*
@@ -462,8 +466,9 @@ class RBAgency_Profile {
 								list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
 
 									if($ProfileCustomTitle=="Height" && $data['ProfileCustomOptions']==3){
-
-										echo "<div><label>Min</label><select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
+										echo "<div>";
+										echo "<div><label>Min</label>";
+										echo "<select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
 										if (empty($ProfileCustomValue)) {
 											echo "  <option value=\"\">--</option>\n";
 										}
@@ -500,9 +505,9 @@ class RBAgency_Profile {
 										}
 										echo " </select>\n";
 										echo "</div>\n";
-
+										echo "</div>";
 									} else {
-
+										echo "<div>";
 										// for other search
 										echo "<div><label for=\"ProfileCustomID".$ProfileCustomID."_min\">Min</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
@@ -511,7 +516,7 @@ class RBAgency_Profile {
 
 										echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 										."_max\">Max</label><input value=\"".$max_val ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" /></div>";
-
+										echo "</div>";
 									}
 							echo "</fieldset>";
 

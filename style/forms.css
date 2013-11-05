@@ -8,6 +8,8 @@
 	margin: 0px;
 }
 .rbform .rbform-field {
+	float: left;
+	width: 100%;
 	padding: 10px 0px;
 }
 .rbform .rbform-field > div,
@@ -35,4 +37,7 @@
 }
 .rbform .rbform-field div div:last-child {
 	float: right;
+}
+.rbform .rbform-field.submit {
+	text-align: center;
 }
