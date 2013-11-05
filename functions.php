@@ -1383,14 +1383,13 @@ error_reporting(0);
 
 	// Profile Search
 	function rb_agency_profilesearch($atts, $content = NULL){
-		/*
-		if (function_exists('rb_agency_profilesearch')) { 
-			$atts = array('profilesearch_layout' => 'advanced');
-			rb_agency_profilesearch($atts); }
-		*/
-		// Get Privacy Information
+
+		// Profile Class
+		include(rb_agency_BASEREL ."app/profile.class.php");
+		
 		$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_option_privacy					 = $rb_agency_options_arr['rb_agency_option_privacy'];
+		$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
+		
 		// Set It Up	
 		global $wp_rewrite;
 		extract(shortcode_atts(array(
@@ -1399,11 +1398,15 @@ error_reporting(0);
 		
 		if ( ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 		 	$isSearchPage = 1;
-			//echo "<div id=\"profile-search-form-embed\">\n";
-				include("theme/include-profile-search.php"); 	
-			//echo "</div>\n";
-		} else {
-			//include("theme/include-login.php"); 	
+				if(!isset($_POST['form_mode'])){
+					echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout);
+				} else {
+					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
+							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+					}
+				}
 		}
 	}
 

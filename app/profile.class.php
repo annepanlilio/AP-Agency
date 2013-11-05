@@ -18,7 +18,7 @@ class RBAgency_Profile {
                 * Search Form
                 * Process Search
                 */
-		public static function search_form($atts = "", $args = "", $type = 0){
+		public static function search_form($atts = "", $args = "", $type = 0,$profilesearch_layout = 'condensed'){
 
 			/*
 			* Setup Requirements
@@ -47,9 +47,9 @@ class RBAgency_Profile {
 
 					// Front Back-end
 					$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
-					if ( (get_query_var("type") == "search-basic") ){
+					if ( (get_query_var("type") == "search-basic") || ($profilesearch_layout == 'condensed') ){
 							$search_layout = "simple";
-					} elseif ( (get_query_var("type") == "search-advanced") ){
+					} elseif ( (get_query_var("type") == "search-advanced") || ($profilesearch_layout == 'advanced') ){
 							$search_layout = "full";
 					}
 
@@ -524,9 +524,9 @@ class RBAgency_Profile {
 				echo "				<div class=\"search-field submit\">";
 				echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
 				echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
-				if ( (get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
+				if ( (get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' ){
 				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" )  || $profilesearch_layout == 'advanced' ){
 				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 				}
 				echo "				</div>\n";
