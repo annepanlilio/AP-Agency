@@ -34,9 +34,7 @@ get_header();
 		
 			$search_array = array("perpage" => 9999, "include" => $castingcart_id);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-echo "<pre>";
-print_r($search_sql_query);
-echo "</pre>";
+
 				// Process Form Submission
 				$search_results = RBAgency_Profile::search_results($search_sql_query, 0);
 			   $formatted = RBAgency_Profile::search_formatted($search_results);
