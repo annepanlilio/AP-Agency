@@ -737,9 +737,9 @@ class RBAgency_Profile {
                 * Process values into SQL string holding WHERE clause
                 */
 		public static function search_generate_sqlwhere($atts, $exclude){
-			
+
 			$rb_agency_options_arr = get_option('rb_agency_options');
-			echo "<pre>";print_r($atts);
+	echo "<pre>";print_r($atts);
 			// Time Zone
 			$rb_agency_option_locationtimezone = $rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
