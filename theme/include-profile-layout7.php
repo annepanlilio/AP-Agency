@@ -195,23 +195,7 @@ Custom Layout 7
 						  
 						  jQuery("#vid_changer").width(jQuery("#video_player").width()+"px");
 						  	
-						  jQuery('#videos-carousel').flexslider({
-							animation: "slide",
-							controlNav: false,
-							animationLoop: false,
-							slideshow: false,
-							itemWidth: 210,
-							asNavFor: '#video_player'
-						  });
-						
-						  jQuery('#video_player').flexslider({
-							animation: "slide",
-							controlNav: false,
-							animationLoop: false,
-							slideshow: false,
-							smoothHeight: true,
-							sync: "#videos-carousel"
-						  });
+						 
 						
 						jQuery("a.showSingle1").click(function(){
 							jQuery("#profile-slider").show();
@@ -225,23 +209,7 @@ Custom Layout 7
 							jQuery("#profile-slider").hide();
 							jQuery("#video_player").show();
 						});
-						 jQuery('#media-carousel').flexslider({
-							animation: "slide",
-							controlNav: false,
-							animationLoop: false,
-							slideshow: false,
-							itemWidth: 210,
-							asNavFor: '#media_player'
-						  });
-						
-						  jQuery('#media_player').flexslider({
-							animation: "slide",
-							controlNav: false,
-							animationLoop: false,
-							slideshow: false,
-							smoothHeight: true,
-							sync: "#media-carousel"
-						  });
+						 
 						  
 						
 						jQuery("#profile-carousel li").click(function(){
@@ -496,7 +464,6 @@ Custom Layout 7
 				  
 			});
 			jQuery('.showSingle4').click(function(){
-				 
 				  jQuery('.targetmedia').show();
 				  jQuery('.targetvideo').hide();
 				  jQuery('.targetpictures').hide();
