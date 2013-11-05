@@ -126,7 +126,7 @@ if (isset($_POST['action'])) {
 			$headers  = 'MIME-Version: 1.0' . "\r\n";
 
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers. = "Bcc:".$SearchMuxBccName."\r\n";
+			
 			$email_error = "";
 			
 			if(!empty($FromEmail)){
@@ -161,7 +161,7 @@ if (isset($_POST['action'])) {
 		        $results = $wpdb->query($insert);
 
 			    $lastid = $wpdb->insert_id;
-			
+				$headers. = "Bcc:".$SearchMuxBccName."\r\n";
 				$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
 	
 				if($isSent){
