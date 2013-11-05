@@ -163,7 +163,7 @@ Custom Layout 7
 									}
 								});
 								
-						<?php } }?>		
+						<?php //} }?>		
 		
 							}
 						<?php 
