@@ -28,7 +28,7 @@ get_header();
 			}
 
 			// Return Search
-			echo "castingcart_id".$castingcart_id;
+			echo "bb";
 			$search_array = array("perpage" => 9999, "include" => $castingcart_id);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 echo "<pre>";
