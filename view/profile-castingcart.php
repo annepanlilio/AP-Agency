@@ -10,7 +10,7 @@ get_header();
 		echo " <div id=\"profile-private\">\n";
 
 		// Get Profile
-		echo $SearchMuxHash = get_query_var('target');
+		 $SearchMuxHash = get_query_var('target');
 
 		if (isset($SearchMuxHash)) {
 
@@ -19,8 +19,8 @@ get_header();
 
 			// Get Casting Cart by Identifier
 			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
-			echo $results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-			echo $count = mysql_num_rows($results);
+			$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			echo "count".$count = mysql_num_rows($results);
 
 			// Get Casting Cart ID
 			while ($data = mysql_fetch_array($results)) {
@@ -28,6 +28,7 @@ get_header();
 			}
 
 			// Return Search
+			echo "castingcart_id".$castingcart_id;
 			$search_array = array("perpage" => 9999, "include" => $castingcart_id);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 echo "<pre>";
