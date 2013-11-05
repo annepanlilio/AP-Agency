@@ -20,7 +20,7 @@ get_header();
 			// Get Casting Cart by Identifier
 			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
 			$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-			echo "count".$count = mysql_num_rows($results);
+			$count = mysql_num_rows($results);
 
 			// Get Casting Cart ID
 			while ($data = mysql_fetch_array($results)) {
