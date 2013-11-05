@@ -1,4 +1,6 @@
-<?php 
+<?php
+error_reporting(1);
+ini_set('display_errors',1);
 session_start();
 get_header();
 	$rb_agency_options_arr = get_option('rb_agency_options');
