@@ -223,18 +223,7 @@ class RBAgency_Profile {
 						echo "					<input type=\"text\" id=\"zip\" name=\"zip\" value=\"". $_SESSION["zip"] ."\" />\n";
 						echo "				</div>\n";
 				} // Show Location Search
-						
-						//status
-						echo "				<div class=\"search-field single\">\n";
-						echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "				        <select name=\"isactive\" id=\"ProfileIsActive\">\n";               
-						echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
-						echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-						echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
-						echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-						echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-						echo "				        	</select>\n";
-						echo "				    </div>\n";
+
 
 			/*
 			 * Custom Fields
@@ -520,6 +509,17 @@ class RBAgency_Profile {
 
 				}
 
+                                //status
+                                echo "				<div class=\"search-field single\">\n";
+                                echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
+                                echo "				        <select name=\"isactive\" id=\"ProfileIsActive\">\n";               
+                                echo "							<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
+                                echo "							<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+                                echo "							<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
+                                echo "							<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+                                echo "							<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+                                echo "				        	</select>\n";
+                                echo "				    </div>\n";                                
 
 				echo "				<div class=\"search-field submit\">";
 				echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
