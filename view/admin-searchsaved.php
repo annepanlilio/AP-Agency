@@ -161,7 +161,7 @@ if (isset($_POST['action'])) {
 		        $results = $wpdb->query($insert);
 
 			    $lastid = $wpdb->insert_id;
-				$headers. = "Bcc:".$SearchMuxBccName."\r\n";
+			//	$headers. = "Bcc:".$SearchMuxBccName."\r\n";
 				$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
 	
 				if($isSent){
