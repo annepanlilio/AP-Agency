@@ -134,7 +134,7 @@ Custom Layout 7
 				 
 			</div>	
 <!--			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
--->			
+		
 			<script>
 						var tag = document.createElement('script');
 						tag.src = "//www.youtube.com/iframe_api";
@@ -145,21 +145,21 @@ Custom Layout 7
 						var yPlayer3;
 						function onYouTubeIframeAPIReady() {
 						<?php
-							$embed = "profileVideoEmbed";
+							/*$embed = "profileVideoEmbed";
 							$e = array("","v_slate","v_mono","d_reel");
 							for($x = 1; $x <=$count_video ; $x++){
 								$ytube = $embed . $x;
-								if(!empty($$ytube)){
+								if(!empty($$ytube)){*/
 						?>	
-								yPlayer<?php echo $x; ?> = new YT.Player('<?php echo $e[$x]; ?>',{
+								yPlayer<?php //echo $x; ?> = new YT.Player('<?php //echo $e[$x]; ?>',{
 									height: '100%',
 									width: '100%',
-									videoId: '<?php echo $$ytube; ?>',
+									videoId: '<?php //echo $$ytube; ?>',
 									playerVars: {
 									  wmode: "opaque"
 									},
 									events: {
-										'onReady': onYReady<?php echo $x; ?>
+										'onReady': onYReady<?php //echo $x; ?>
 									}
 								});
 								
@@ -167,23 +167,23 @@ Custom Layout 7
 		
 							}
 						<?php 
-						for($x = 1; $x <=$count_video ; $x++){
+						//for($x = 1; $x <=$count_video ; $x++){
 						?>	
-						function onYReady<?php echo $x; ?>(event) {
-									yPlayer<?php echo $x;?>.stopVideo();
+						function onYReady<?php //echo $x; ?>(event) {
+									yPlayer<?php //echo $x;?>.stopVideo();
 									e.preventDefault();
 							}
-						<?php } ?>	
+						<?php //} ?>	
 
 	
 					jQuery(document).ready(function(){
 						  
 						  jQuery("#videos-carousel").find("li").click(function(){
 							  <?php 
-								for($x = 1; $x <=$count_video ; $x++){
+								//for($x = 1; $x <=$count_video ; $x++){
 								?>	
-									yPlayer<?php echo $x;?>.pauseVideo();
-							  <?php } ?>	
+									//yPlayer<?php //echo $x;?>.pauseVideo();
+							  <?php // } ?>	
 						
 					  		  var _next = "#" + jQuery(this).attr("class");
 							  var _curr = jQuery("#video_player").find(".act_vids");
@@ -232,8 +232,8 @@ Custom Layout 7
 								var action_function = "rb_agency_save_castingcart";
 							}
 							
-							jQuery.ajax({type: 'POST',url: '<?php echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
-										 data: {action: action_function,  'talentID': <?php echo $ProfileID ?>},
+							jQuery.ajax({type: 'POST',url: '<?php //echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
+										 data: {action: action_function,  'talentID': <?php //echo $ProfileID ?>},
 									  	success: function(results) {  
 											if(results=='error'){ 
 												alert("Error in query. Try again"); 
@@ -252,7 +252,7 @@ Custom Layout 7
 						   }); // ajax submit
 						} // end function
 					});
-				</script>
+				</script>-->	
 		</div><!-- #info-slide -->
 
 		<div class="col_12 column">
