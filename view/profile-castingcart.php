@@ -36,8 +36,8 @@ get_header();
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 
 				// Process Form Submission
-				//$search_results = RBAgency_Profile::search_results($search_sql_query, 0);
-			  // $formatted = RBAgency_Profile::search_formatted($search_results);
+				$search_results = RBAgency_Profile::search_results($search_sql_query, 0);
+			   $formatted = RBAgency_Profile::search_formatted($search_results);
 
 
 
