@@ -143,7 +143,8 @@ if (isset($_POST['action'])) {
 			} else {
 			
 				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
-				
+				$headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
+
 			
 			}
 			
