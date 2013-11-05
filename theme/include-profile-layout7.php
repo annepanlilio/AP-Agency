@@ -133,8 +133,8 @@ Custom Layout 7
 				 ?>
 				 
 			</div>	
-			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
-			
+<!--			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+-->			
 			<script>
 						var tag = document.createElement('script');
 						tag.src = "//www.youtube.com/iframe_api";
