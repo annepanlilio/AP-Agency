@@ -919,11 +919,15 @@ elseif ($ConfigID == 12) {
 //Export database
 // *************************************************************************************************** //
 // Manage Settings
+		echo '<br /><br /><br />';
+		echo "<form action=\"".rb_agency_BASEDIR."tasks/exportDatabase.php\" method=\"post\">";
+		echo '<input type="submit" class="button-primary" value='. __('"Export Database"', rb_agency_TEXTDOMAIN).'>';
+		echo '</form>';
 
-	echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
-
-	echo "<a href=\"". rb_agency_BASEDIR ."tasks/exportDatabase.php\">Export Database</a>\n";
-
+		/*echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
+		
+			echo "<a href=\"". rb_agency_BASEDIR ."tasks/exportDatabase.php\">Export Database</a>\n";
+		*/
 }
 elseif ($ConfigID == 81) 
 {
