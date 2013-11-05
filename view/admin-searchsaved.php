@@ -134,16 +134,16 @@ if (isset($_POST['action'])) {
 				if ( !is_email($FromEmail, true)) {
                       $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
                 } else {
-					  $headers = "From: '. $send_name .' <'. $FromEmail .'>' . "\r\n";
-					  $headers. = "Bcc: '.$SearchMuxBccName. '"\r\n";
+					  $headers = 'From: '. $send_name .' <'. $FromEmail .'>' . "\r\n";
+					  $headers. = 'Bcc: '.$SearchMuxBccName. "\r\n";
 					
 					 
 				}
 			
 			} else {
 			
-				$headers = "From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
-			    $headers. = "Bcc: '.$SearchMuxBccName. '"\r\n";
+				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+				
 			
 			}
 			
