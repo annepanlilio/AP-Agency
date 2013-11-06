@@ -57,6 +57,9 @@
 	float: left;
 	width: 100%;
 	height: 100%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top center;	
 }
 #rblayout-seven #profile-carousel .slides > li figure.multi span {
 	width: 50%;
