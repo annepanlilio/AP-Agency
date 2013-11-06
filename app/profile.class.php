@@ -737,7 +737,7 @@ class RBAgency_Profile {
                 * Process values into SQL string holding WHERE clause
                 */
 		public static function search_generate_sqlwhere($atts, $exclude){
-
+			
 			$rb_agency_options_arr = get_option('rb_agency_options');
 	
 			// Time Zone
@@ -1134,7 +1134,8 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
-					$sql = "SELECT * FROM ". table_agency_profile ." profile WHERE ". $sql_where . self::$order_by;
+				 $sql = "SELECT * FROM ". table_agency_profile ."  profile WHERE ". $sql_where . self::$order_by;
+					
 					break;
 
 				/* 
@@ -1155,8 +1156,10 @@ class RBAgency_Profile {
 			 * check if search is admin or public
 			 */
 			 if(is_admin()){
+				
 				return self::search_result_admin($sql);
 			 } else {
+				 
 				return self::search_result_public($sql);
 			 }
 
@@ -1171,7 +1174,8 @@ class RBAgency_Profile {
 			/* 
 			 * format profile list per profile
 			 */
-			$results = mysql_query($sql);
+			
+			$results = mysql_query($sql) or die(mysql_error());
 			$count = mysql_num_rows($results);
 			$profile_list = "";
 			$all_html = "";
@@ -1217,6 +1221,7 @@ class RBAgency_Profile {
 					self::$error_checking[] = array('search_result_public',$all_html);
 					var_dump(self::$error_checking);
 				}
+			
 				return $all_html;
 
 			} else {
@@ -1435,6 +1440,7 @@ class RBAgency_Profile {
 		 * Create list from IDs
 		 */
 		public static function search_formatted($dataList){
+			
 
 			/* 
 			 * rb agency options
@@ -1495,12 +1501,13 @@ class RBAgency_Profile {
 			if(is_user_logged_in()){
 				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 			}
-
+			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			$displayHTML .=" </div> <!-- .profile-info --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
 				var_dump(self::$error_checking);
 			}
+			
 			return $displayHTML;
 
 		}
