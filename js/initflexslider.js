@@ -44,7 +44,7 @@ jQuery(window).load(function() {
 	controlNav: false,
 	animationLoop: false,
 	slideshow: false,
-	itemWidth: 210,
+	itemWidth: 120,
 	asNavFor: '#video_player'
 	});
 	
@@ -61,7 +61,7 @@ jQuery(window).load(function() {
 	controlNav: false,
 	animationLoop: false,
 	slideshow: false,
-	itemWidth: 210,
+	itemWidth: 120,
 	asNavFor: '#media_player'
   });
 
