@@ -2,6 +2,8 @@
 
 session_start();
 get_header();
+// Profile Class
+include(rb_agency_BASEREL ."app/profile.class.php");
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 
@@ -22,7 +24,6 @@ get_header();
 			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
 			$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 			$count = mysql_num_rows($results);
-
 			// Get Casting Cart ID
 			while ($data = mysql_fetch_array($results)) {
 				$castingcart_id = $data['SearchProfileID'];
@@ -32,10 +33,11 @@ get_header();
 		
 			$search_array = array("perpage" => 9999, "include" => $castingcart_id);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-
-				// Process Form Submission
-				$search_results = RBAgency_Profile::search_results($search_sql_query, 0);
-			    $formatted = RBAgency_Profile::search_formatted($search_results);
+			
+			// Process Form Submission
+			echo $search_results = RBAgency_Profile::search_results($search_sql_query, 0);
+			
+		  // echo  $formatted = RBAgency_Profile::search_formatted($search_array);
 
 
 
@@ -45,10 +47,10 @@ get_header();
 			echo "<strong>". __("No search results found.  Please check link again.", rb_agency_TEXTDOMAIN) ."</strong>";
 		}
 
-		echo "  <div style=\"clear: both;\"></div>\n";
+		echo "  <div style=\"clear: both;\"></div>";
 		echo " </div>\n";
-	echo "  </div>\n";
-	echo "</div>\n";
+		echo "  </div>\n";
+		echo "</div>\n";
 
 //get_sidebar(); 
 get_footer(); 
