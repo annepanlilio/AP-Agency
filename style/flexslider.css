@@ -21,7 +21,7 @@
 
 /* FlexSlider Necessary Styles
 *********************************/ 
-.flexslider {margin: 0; padding: 0;}
+.flexslider {margin: 0; padding: 0;overflow: hidden;}
 .flexslider .slides > li {display: none; -webkit-backface-visibility: hidden; position:relative;} /* Hide the slides before the JS is loaded. Avoids image jumping */
 .flexslider .slides > li .caption {position:absolute; left:0; bottom:0; padding: 20px; }
 .flexslider .slides > li .caption h2 {font-size:18px;margin:0 0 10px 0;}

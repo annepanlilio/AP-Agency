@@ -3,9 +3,6 @@
 Custom Layout 7
 */
 ?>
-<style>
-#main-container { background: #000; padding: 0px; }
-</style>
 <div id="rbprofile">
 	<div id="rblayout-seven" class="rblayout">
 		<div id="info-slide">
@@ -18,7 +15,7 @@ Custom Layout 7
 						if (!empty($ProfileGender)) {
 							$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
 							$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
-	                                                        echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
+	                        echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
 						}								
 						if (!empty($ProfileStatHeight)) {
 							if ($rb_agency_option_unittype == 0) { // Metric
@@ -355,42 +352,44 @@ Custom Layout 7
 			</div>
 		</div>
 				
-		<div id="videos-carousel" class="flexslider col_12 column rbtab-content targetvideo" style="display:none"  >
-			<ul class="slides">
-				<?php
-				//Video Slate
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
-				$countMedia = mysql_num_rows($resultsMedia);
-				if ($countMedia > 0) {
-				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-						echo "<li class='v_slate'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Slate'></span></li>";
+		<div id="videos-carousel" class="col_12 column rbtab-content targetvideo" style="display:none"  >
+			<div class="flexslider">
+				<ul class="slides">
+					<?php
+					//Video Slate
+					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
+					$countMedia = mysql_num_rows($resultsMedia);
+					if ($countMedia > 0) {
+					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+							echo "<li class='v_slate'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Slate'></span></li>";
+						}
 					}
-				}
 
-				//Video Monologue
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
-				$countMedia = mysql_num_rows($resultsMedia);
-				if ($countMedia > 0) {
-				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-							echo "<li class='v_mono'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Monologue'></span></li>";
-						}
-				}
-				//Demoreel
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
-				$countMedia = mysql_num_rows($resultsMedia);
-				if ($countMedia > 0) {
-				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-							echo "<li class='d_reel'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Demo Reel'></span></li>";
-						}
-				}
-				 ?>
-			</ul>
+					//Video Monologue
+					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
+					$countMedia = mysql_num_rows($resultsMedia);
+					if ($countMedia > 0) {
+					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+								echo "<li class='v_mono'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Monologue'></span></li>";
+							}
+					}
+					//Demoreel
+					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
+					$countMedia = mysql_num_rows($resultsMedia);
+					if ($countMedia > 0) {
+					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+								echo "<li class='d_reel'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Demo Reel'></span></li>";
+							}
+					}
+					 ?>
+				</ul>
+			</div>
 		</div>
-        <div id="media-tab" class="col_12 column rbtab-content targetmedia" style="display:none"  >
-			<ul class="slides">
+        <div class="col_12 column rbtab-content targetmedia" style="display:none"  >
+			<ul id="media-tab">
 				<?php
 				//Headshot
 				

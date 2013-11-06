@@ -46,6 +46,9 @@
 }
 
 /* RB Agency Layout 7 */
+#rblayout-seven #stats h1 {
+	margin-bottom: 30px;
+}
 #rblayout-seven #profile-slider .slides > li .multi {
 	width: 50%;
 	float: left;
@@ -98,7 +101,9 @@
 #rblayout-seven #profile-links li a {
 	text-decoration: none;
 }
-#rblayout-seven .rbtab-content {
+#rblayout-seven .rbtab-content .flexslider,
+#rblayout-seven .rbtab-content #experience,
+#rblayout-seven .rbtab-content #media-tab {
 	padding: 15px;
 	background: #fff;
 }
