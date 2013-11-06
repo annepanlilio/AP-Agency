@@ -252,51 +252,49 @@ Custom Layout 7
 						} // end function
 					});
 				</script>
-			</div><!-- #slider -->
-			<div class="col_12 column targetpictures rbtab-content">
-			<div id="profile-carousel" class="flexslider">
-				<ul class="slides">
-					<?php
-					$ProfileMediaPrimary = ""; 
-					$ProfileMediaSecondry= "";
-					$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
-								$resultsImg = mysql_query($queryImg);
-								$countImg = mysql_num_rows($resultsImg);
-								$open = 1;
-								while ($dataImg = mysql_fetch_array($resultsImg)) {
-									// testing
-									if($option_two_image){	
-													if($open==1){
-														  $close = false;
-														  echo "<li><figure class=\"multi\">";
-													} 
-									
-														echo "<span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span>";
-									
-													$open++;
-													if($open == 3){
-															$open = 1;
-															$close = true;
-															echo "</figure></li>\n";	
-													}	
-									} else {
-									
-													if($dataImg['ProfileMediaPrimary']==1){
-																$ProfileMediaPrimary= 	"<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
-														} else {
-																$ProfileMediaSecondry .= "<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
-														}
-														echo $ProfileMediaPrimary; 
-														echo $ProfileMediaSecondry; 
+				<div id="profile-carousel" class="flexslider">
+					<ul class="slides">
+						<?php
+						$ProfileMediaPrimary = ""; 
+						$ProfileMediaSecondry= "";
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
+									$resultsImg = mysql_query($queryImg);
+									$countImg = mysql_num_rows($resultsImg);
+									$open = 1;
+									while ($dataImg = mysql_fetch_array($resultsImg)) {
+										// testing
+										if($option_two_image){	
+														if($open==1){
+															  $close = false;
+															  echo "<li><figure class=\"multi\">";
+														} 
+										
+															echo "<span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span>";
+										
+														$open++;
+														if($open == 3){
+																$open = 1;
+																$close = true;
+																echo "</figure></li>\n";	
+														}	
+										} else {
+										
+														if($dataImg['ProfileMediaPrimary']==1){
+																	$ProfileMediaPrimary= 	"<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
+															} else {
+																	$ProfileMediaSecondry .= "<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
+															}
+															echo $ProfileMediaPrimary; 
+															echo $ProfileMediaSecondry; 
+										}
 									}
-								}
-								if($option_two_image && !$close){
-									echo "</li>\n";
-								}
-					?>			
-				</ul>			
-			</div>
-		</div>
+									if($option_two_image && !$close){
+										echo "</li>\n";
+									}
+						?>			
+					</ul>			
+				</div>				
+			</div><!-- #slider -->
 		</div><!-- #info-slide -->
 	<div id="rbtabs">
 		<div class="col_12 column">
