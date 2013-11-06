@@ -676,26 +676,32 @@ function rb_display_manage($ProfileID) {
 	echo "    </tr>\n";
 
 	// password
-	if ((isset($_GET["action"]) && $_GET["action"] == "add") && function_exists(rb_agencyinteract_approvemembers)) {
-		echo "    <tr valign=\"top\">\n";
-		echo "      <th scope=\"row\">" . __("Username", rb_agency_TEXTDOMAIN) . "</th>\n";
-		echo "      <td>\n";
-		echo "          <input type=\"text\" id=\"ProfileUsername\" name=\"ProfileUsername\" />\n";
-		echo "      </td>\n";
-		echo "    </tr>\n";
-		echo "    <tr valign=\"top\">\n";
-		echo "      <th scope=\"row\">" . __("Password", rb_agency_TEXTDOMAIN) . "</th>\n";
-		echo "      <td>\n";
-		echo "          <input type=\"text\" id=\"ProfilePassword\" name=\"ProfilePassword\" />\n";
-		echo "          <input type=\"button\" onclick=\"javascript:document.getElementById('ProfilePassword').value=Math.random().toString(36).substr(2,6);\" value=\"Generate Password\"  name=\"GeneratePassword\" />\n";
-		echo "      </td>\n";
-		echo "    </tr>\n";
-		echo "    <tr valign=\"top\">\n";
-		echo "      <th scope=\"row\">" . __("Send Login details?", rb_agency_TEXTDOMAIN) . "</th>\n";
-		echo "      <td>\n";
-		echo "          <input type=\"checkbox\"  name=\"ProfileNotifyUser\" /> Send login details to the new user and admin by email.\n";
-		echo "      </td>\n";
-		echo "    </tr>\n";
+	if ((isset($_GET["action"]) && $_GET["action"] == "add")) {
+		$active = get_option('active_plugins');
+		foreach($active as $act){
+			if(preg_match('/rb-agency-interact\.php/',$act)){
+				echo "    <tr valign=\"top\">\n";
+				echo "      <th scope=\"row\">" . __("Username", rb_agency_TEXTDOMAIN) . "</th>\n";
+				echo "      <td>\n";
+				echo "          <input type=\"text\" id=\"ProfileUsername\" name=\"ProfileUsername\" />\n";
+				echo "      </td>\n";
+				echo "    </tr>\n";
+				echo "    <tr valign=\"top\">\n";
+				echo "      <th scope=\"row\">" . __("Password", rb_agency_TEXTDOMAIN) . "</th>\n";
+				echo "      <td>\n";
+				echo "          <input type=\"text\" id=\"ProfilePassword\" name=\"ProfilePassword\" />\n";
+				echo "          <input type=\"button\" onclick=\"javascript:document.getElementById('ProfilePassword').value=Math.random().toString(36).substr(2,6);\" value=\"Generate Password\"  name=\"GeneratePassword\" />\n";
+				echo "      </td>\n";
+				echo "    </tr>\n";
+				echo "    <tr valign=\"top\">\n";
+				echo "      <th scope=\"row\">" . __("Send Login details?", rb_agency_TEXTDOMAIN) . "</th>\n";
+				echo "      <td>\n";
+				echo "          <input type=\"checkbox\"  name=\"ProfileNotifyUser\" /> Send login details to the new user and admin by email.\n";
+				echo "      </td>\n";
+				echo "    </tr>\n";
+				break;
+			}
+		}
 	}
 
 	// Private Information
