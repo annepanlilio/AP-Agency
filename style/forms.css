@@ -50,6 +50,10 @@
 	width: 50%;
 	float: left;
 }
+#rblayout-seven #profile-links {
+	padding: 15px 0px;
+	text-align: right;
+}
 #rblayout-seven #profile-links li {
 	padding: 0px 5px;
 	display: inline-block;
@@ -60,4 +64,8 @@
 #rblayout-seven .rbtab-content {
 	padding: 15px;
 	background: #fff;
+}
+#rblayout-seven #media-tab ul li a {
+	line-height: 18px;
+	text-decoration: none;
 }
