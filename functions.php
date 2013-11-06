@@ -265,7 +265,7 @@ error_reporting(0);
 
 				} elseif (get_query_var( 'type' ) == "category") {
 				// Category View
-					return dirname(__FILE__) . '/theme/view-category.php';
+					return dirname(__FILE__) . '/view/profile-category.php';
 
 				} elseif (get_query_var( 'type' ) == "profile") {
 				// Profile View
