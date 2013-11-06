@@ -10,8 +10,7 @@ Custom Layout 7
 	<div id="rblayout-seven" class="rblayout">
 		<div id="info-slide">
 			<div class="col_4 column">
-				<div id="stats">
-					
+				<div id="stats">					
 					<?php echo " <h1>". $ProfileContactDisplay ."</h1>\n"; ?>
 					<ul>
 						<?php
@@ -253,8 +252,9 @@ Custom Layout 7
 						} // end function
 					});
 				</script>
+			</div><!-- #slider -->
 		</div><!-- #info-slide -->
-
+	<div id="rbtabs">
 		<div class="col_12 column">
 			<ul id="profile-links">
 
@@ -310,7 +310,7 @@ Custom Layout 7
 			</ul>
 		</div>		
 		
-		<div class="col_12 column targetpictures">
+		<div class="col_12 column targetpictures rbtab-content">
 			<div id="profile-carousel" class="flexslider">
 				<ul class="slides">
 					<?php
@@ -355,7 +355,7 @@ Custom Layout 7
 			</div>
 		</div>
 				
-		<div id="videos-carousel" class="flexslider col_12 column targetvideo" style="display:none"  >
+		<div id="videos-carousel" class="flexslider col_12 column rbtab-content targetvideo" style="display:none"  >
 			<ul class="slides">
 				<?php
 				//Video Slate
@@ -389,7 +389,7 @@ Custom Layout 7
 				 ?>
 			</ul>
 		</div>
-        <div id="media-tab" class="col_12 column targetmedia" style="display:none"  >
+        <div id="media-tab" class="col_12 column rbtab-content targetmedia" style="display:none"  >
 			<ul class="slides">
 				<?php
 				//Headshot
@@ -430,7 +430,7 @@ Custom Layout 7
 		</div>
         
 
-		<div class="col_12 column targetexperience" style="display:none">
+		<div class="col_12 column  rbtab-content targetexperience" style="display:none">
 			<div id="experience">
 				<?php
 				rb_agency_getSocialLinks();
@@ -439,7 +439,7 @@ Custom Layout 7
 			</div>
 		</div>
 		<div class="rbclear"></div>
-	</div>
+	</div> <!-- #rbtabs -->
 	
 	<script>
 		jQuery(function(){

@@ -44,3 +44,20 @@
 .rbform .rbform-field.submit {
 	text-align: center;
 }
+
+/* RB Agency Layout 7 */
+#rblayout-seven #profile-slider .slides > li .multi {
+	width: 50%;
+	float: left;
+}
+#rblayout-seven #profile-links li {
+	padding: 0px 5px;
+	display: inline-block;
+}
+#rblayout-seven #profile-links li a {
+	text-decoration: none;
+}
+#rblayout-seven .rbtab-content {
+	padding: 15px;
+	background: #fff;
+}
