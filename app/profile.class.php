@@ -4,14 +4,15 @@ class RBAgency_Profile {
 	/*
 	 * debug options
 	 */
-        protected static $error_debug = false;
+    protected static $error_debug = false;
 	protected static $error_debug_query = false;
 	protected static $error_checking = array();
 	
 	/*
-	 * order by storage field
+	 * class properties
 	 */
-        protected static $order_by ='';
+    protected static $order_by ='';
+	protected static $castingcart = false;
 
 
                /*
@@ -777,7 +778,7 @@ class RBAgency_Profile {
 					"featured" => NULL,
 					"isactive" => NULL,
 					
-					// ?
+					"profilecasting" => NULL,
 					"stars" => NULL,
 					"favorite" => NULL,
 					"override_privacy" => NULL
@@ -818,6 +819,11 @@ class RBAgency_Profile {
 				if (isset($gender) && !empty($gender)){
 					$filter .= " AND profile.ProfileGender='".$gender."'";
 				}
+
+				// casting
+				if (isset($profilecasting) && $profilecasting){
+					self::$castingcart = true;
+				}				
 
 				// Age
 				$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
@@ -1211,6 +1217,11 @@ class RBAgency_Profile {
 					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
 				}
+				if (self::$castingcart){   //allow email to admin casting
+					$all_html .= "<div>\n";
+					$all_html .= '	<a id="sendemail" href="javascript:;">Email to Admin</a>';
+					$all_html .= "</div>\n";
+				}				
 				$all_html .= '</div>';
 
 				/* 

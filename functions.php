@@ -206,7 +206,7 @@ error_reporting(0);
 			$newrules['search-results'] = 'index.php?type=search-result';
 			$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
 			$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
-			$newrules['profile-category/(.*)$'] = 'index.php?type=category&target=$matches[1]';
+			$newrules['profile-category/(.*)'] = 'index.php?type=category&target=$matches[1]';
 			$newrules['profile-category'] = 'index.php?type=category&target=all';
 			$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
 			$newrules['profile-casting'] = 'index.php?type=casting&target=casting';
@@ -1385,7 +1385,7 @@ error_reporting(0);
 	function rb_agency_profilesearch($atts, $content = NULL){
 
 		// Profile Class
-		include(rb_agency_BASEREL ."app/profile.class.php");
+		include_once(rb_agency_BASEREL ."app/profile.class.php");
 		
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
