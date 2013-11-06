@@ -64,6 +64,9 @@
 #rblayout-seven #profile-carousel .slides > li figure.multi span {
 	width: 50%;
 }
+#rblayout-seven #videos-carousel .slides > li figure {
+	height: 90px;
+}
 #rblayout-seven #videos-carousel .slides > li figure span {
 	float: left;
 	width: 100%;
