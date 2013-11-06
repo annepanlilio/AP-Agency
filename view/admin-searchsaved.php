@@ -165,7 +165,7 @@ if (isset($_POST['action'])) {
 						echo "<div style=\"margin:15px;\">";
 						echo "<div id=\"message\" class=\"updated\">";
 						echo "Email successfully sent from <strong>". $FromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-						echo "Message sent: <p>". $SearchMuxMessage ."</p>";
+						echo "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
 						echo "</div>";
 						echo "</div>";	
 					} else {
