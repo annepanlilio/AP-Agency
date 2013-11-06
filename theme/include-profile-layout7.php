@@ -10,7 +10,8 @@ Custom Layout 7
 	<div id="rblayout-seven" class="rblayout">
 		<div id="info-slide">
 			<div class="col_4 column">
-				<div id="stats">					
+				<div id="stats">
+					
 					<?php echo " <h1>". $ProfileContactDisplay ."</h1>\n"; ?>
 					<ul>
 						<?php
@@ -91,7 +92,7 @@ Custom Layout 7
 						?>
 					</ul>
 				</div>
-			 <div id="video_player" style="display:none; position:relative; ">	
+			 <div id="video_player" class="col_8 column" style="display:none; position:relative; ">	
 				<?php
 				//Video Slate
 				$count_video = 0;
@@ -251,64 +252,65 @@ Custom Layout 7
 						   }); // ajax submit
 						} // end function
 					});
-				</script>				
-			</div><!-- #slider -->
+				</script>
 		</div><!-- #info-slide -->
-		<div id="rbtabs">
-			<div class="col_12 column">
-				<ul id="profile-links">
 
-					<?php if (is_user_logged_in()) { 	
+		<div class="col_12 column">
+			<ul id="profile-links">
 
-						$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
-			                              ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-			
-						$count_favorite = mysql_num_rows($query_favorite);
-						$datas_favorite = mysql_fetch_assoc($query_favorite);
-						
-						$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
-														 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-						
-						$count_castingcart = mysql_num_rows($query_castingcart);
-			
-						if($count_castingcart>0 && is_permitted('casting')){	 ?>
+				<?php if (is_user_logged_in()) { 	
 
-							<li class="casting"><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
-							<?php }else{ ?>
-							<li><a  class="save_cart" id="mycart_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
-							<li id="mycart_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
-							<?php } 
-							if($count_favorite>0 && is_permitted('favorite')){	 ?>
-							<li class="favorite"><a  href="<?php echo get_bloginfo('url')?>/profile-favorites/"><?php echo __("View Favorites", rb_agency_TEXTDOMAIN);?></a></li>
-							<?php }else{ ?>
-							<li><a  class="save_fav" id="myfav_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
-							<li id="myfav_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
-						<?php
-						} ?> 
+					$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
+		                              ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+		
+					$count_favorite = mysql_num_rows($query_favorite);
+					$datas_favorite = mysql_fetch_assoc($query_favorite);
 					
+					$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
+													 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+					
+					$count_castingcart = mysql_num_rows($query_castingcart);
+		
+					if($count_castingcart>0 && is_permitted('casting')){	 ?>
+
+						<li class="casting"><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
+						<?php }else{ ?>
+						<li><a  class="save_cart" id="mycart_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
+						<li id="mycart_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
+						<?php } 
+						if($count_favorite>0 && is_permitted('favorite')){	 ?>
+						<li class="favorite"><a  href="<?php echo get_bloginfo('url')?>/profile-favorites/"><?php echo __("View Favorites", rb_agency_TEXTDOMAIN);?></a></li>
+						<?php }else{ ?>
+						<li><a  class="save_fav" id="myfav_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
+						<li id="myfav_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
 					<?php
-					} ?>
-					
-						<li><a href="javascript:;" class="showSingle1" >Pictures</a></li>
-						<li><a href="javascript:;" class="showSingle2" >Experience</a></li>
-						<li><a href="javascript:;" class="showSingle3" >Videos</a></li>
-	                      <?php
-					$resultsHeadshot = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Headshot\"");
-					$countHeadshot = mysql_num_rows($resultsHeadshot);
-					$resultsVoiceDemo = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"VoiceDemo\"");
-					$countVoiceDemo = mysql_num_rows($resultsVoiceDemo);
-					$resultsCompCard = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"CompCard\"");
-					$countCompCard = mysql_num_rows($resultsCompCard);
-					$resultsResume = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
-					$countResume = mysql_num_rows($resultsResume);
-					
-					if($countHeadshot>0 || $countVoiceDemo>0 || $countCompCard>0 || $countResume>0 ){?>
-	                    <li><a href="javascript:;" class="showSingle4" >Media</a></li>
-	                    
-						<?php }
-						echo '<li id="resultsGoHereAddtoCart"></li>';?>				
-				</ul>
-			</div>
+					} ?> 
+				
+				<?php
+				} ?>
+				
+					<li><a href="javascript:;" class="showSingle1" >Pictures</a></li>
+					<li><a href="javascript:;" class="showSingle2" >Experience</a></li>
+					<li><a href="javascript:;" class="showSingle3" >Videos</a></li>
+                      <?php
+				$resultsHeadshot = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Headshot\"");
+				$countHeadshot = mysql_num_rows($resultsHeadshot);
+				$resultsVoiceDemo = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"VoiceDemo\"");
+				$countVoiceDemo = mysql_num_rows($resultsVoiceDemo);
+				$resultsCompCard = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"CompCard\"");
+				$countCompCard = mysql_num_rows($resultsCompCard);
+				$resultsResume = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
+				$countResume = mysql_num_rows($resultsResume);
+				
+				if($countHeadshot>0 || $countVoiceDemo>0 || $countCompCard>0 || $countResume>0 ){?>
+                    <li><a href="javascript:;" class="showSingle4" >Media</a></li>
+                    
+					<?php }
+					echo '<li id="resultsGoHereAddtoCart"></li>';?>				
+			</ul>
+		</div>		
+		
+		<div class="col_12 column targetpictures rbtab-content">
 			<div id="profile-carousel" class="flexslider">
 				<ul class="slides">
 					<?php
@@ -350,126 +352,126 @@ Custom Layout 7
 								}
 					?>			
 				</ul>			
-			</div>		
+			</div>
+		</div>
 				
-			<div id="videos-carousel" class="flexslider col_12 column rbtab-content targetvideo" style="display:none"  >
-				<ul class="slides">
-					<?php
-					//Video Slate
-					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
-					$countMedia = mysql_num_rows($resultsMedia);
-					if ($countMedia > 0) {
-					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-							echo "<li class='v_slate'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Slate'></span></li>";
+		<div id="videos-carousel" class="flexslider col_12 column rbtab-content targetvideo" style="display:none"  >
+			<ul class="slides">
+				<?php
+				//Video Slate
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+						echo "<li class='v_slate'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Slate'></span></li>";
+					}
+				}
+
+				//Video Monologue
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+							echo "<li class='v_mono'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Monologue'></span></li>";
 						}
-					}
-
-					//Video Monologue
-					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
-					$countMedia = mysql_num_rows($resultsMedia);
-					if ($countMedia > 0) {
-					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-								echo "<li class='v_mono'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Monologue'></span></li>";
-							}
-					}
-					//Demoreel
-					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
-					$countMedia = mysql_num_rows($resultsMedia);
-					if ($countMedia > 0) {
-					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-								echo "<li class='d_reel'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Demo Reel'></span></li>";
-							}
-					}
-					 ?>
-				</ul>
-			</div>
-	        <div id="media-tab" class="col_12 column rbtab-content targetmedia" style="display:none"  >
-				<ul class="slides">
-					<?php
-					//Headshot
-					
-					if ($countHeadshot > 0) {
-					  	while ($dataHeadshot = mysql_fetch_array($resultsHeadshot)) {
-							$profileHeadshotUrl = $dataHeadshot['ProfileMediaURL'];
-							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
+				}
+				//Demoreel
+				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
+				$countMedia = mysql_num_rows($resultsMedia);
+				if ($countMedia > 0) {
+				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+						$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+							echo "<li class='d_reel'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Demo Reel'></span></li>";
 						}
+				}
+				 ?>
+			</ul>
+		</div>
+        <div id="media-tab" class="col_12 column rbtab-content targetmedia" style="display:none"  >
+			<ul class="slides">
+				<?php
+				//Headshot
+				
+				if ($countHeadshot > 0) {
+				  	while ($dataHeadshot = mysql_fetch_array($resultsHeadshot)) {
+						$profileHeadshotUrl = $dataHeadshot['ProfileMediaURL'];
+						echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
 					}
+				}
 
-					//VoiceDemo
-					
-					if ($countVoiceDemo > 0) {
-					  	while ($dataVoiceDemo = mysql_fetch_array($resultsVoiceDemo)) {
-							$profileVoiceDemo = $dataVoiceDemo['ProfileMediaURL'];
-								echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
-							}
-					}
-					//CompCard
-					
-					if ($countCompCard > 0) {
-					  	while ($dataCompCard = mysql_fetch_array($resultsCompCard)) {
-							$profileCompCardUrl = $dataCompCard['ProfileMediaURL'];
-								echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
-							}
-					}
-					//Resume
-					
-					if ($countResume > 0) {
-					  	while ($dataResume = mysql_fetch_array($resultsResume)) {
-							$profileResumeUrl = $dataResume['ProfileMediaURL'];
-								echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
-							}
-					}
-					 ?>
-				</ul>
-			</div>
-	        
+				//VoiceDemo
+				
+				if ($countVoiceDemo > 0) {
+				  	while ($dataVoiceDemo = mysql_fetch_array($resultsVoiceDemo)) {
+						$profileVoiceDemo = $dataVoiceDemo['ProfileMediaURL'];
+							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
+						}
+				}
+				//CompCard
+				
+				if ($countCompCard > 0) {
+				  	while ($dataCompCard = mysql_fetch_array($resultsCompCard)) {
+						$profileCompCardUrl = $dataCompCard['ProfileMediaURL'];
+							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
+						}
+				}
+				//Resume
+				
+				if ($countResume > 0) {
+				  	while ($dataResume = mysql_fetch_array($resultsResume)) {
+						$profileResumeUrl = $dataResume['ProfileMediaURL'];
+							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
+						}
+				}
+				 ?>
+			</ul>
+		</div>
+        
 
-			<div class="col_12 column  rbtab-content targetexperience" style="display:none">
-				<div id="experience">
-					<?php
-					rb_agency_getSocialLinks();
-					$title_to_exclude = array("Experience");
-					print_r(rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, 'Experience(s):')); ?>
-				</div>
+		<div class="col_12 column  rbtab-content targetexperience" style="display:none">
+			<div id="experience">
+				<?php
+				rb_agency_getSocialLinks();
+				$title_to_exclude = array("Experience");
+				print_r(rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, 'Experience(s):')); ?>
 			</div>
-			<div class="rbclear"></div>
-		</div> <!-- #rbtabs -->
-	
-		<script>
-			jQuery(function(){
-					
-				jQuery('.showSingle1').click(function(){
-					  jQuery('.targetpictures').show();
-					  jQuery('.targetexperience').hide();
-					  jQuery('.targetvideo').hide();
-					  jQuery('.targetmedia').hide();
-				});
-				jQuery('.showSingle2').click(function(){
-					  jQuery('.targetexperience').show();
-					  jQuery('.targetpictures').hide();
-					  jQuery('.targetvideo').hide();	
-					  jQuery('.targetmedia').hide();
-				});
-				jQuery('.showSingle3').click(function(){
-					  jQuery('.targetvideo').show();
-					  jQuery('.targetpictures').hide();
-					  jQuery('.targetexperience').hide();
-					  jQuery('.targetmedia').hide();
-					  
-				});
-				jQuery('.showSingle4').click(function(){
-					  jQuery('.targetmedia').show();
-					  jQuery('.targetvideo').hide();
-					  jQuery('.targetpictures').hide();
-					  jQuery('.targetexperience').hide();				  
-				});
-			
-			
-			});
-		</script>
+		</div>
 		<div class="rbclear"></div>
-	</div><!-- .rblayout -->
+	</div>
+	
+	<script>
+		jQuery(function(){
+				
+			jQuery('.showSingle1').click(function(){
+				  jQuery('.targetpictures').show();
+				  jQuery('.targetexperience').hide();
+				  jQuery('.targetvideo').hide();
+				  jQuery('.targetmedia').hide();
+			});
+			jQuery('.showSingle2').click(function(){
+				  jQuery('.targetexperience').show();
+				  jQuery('.targetpictures').hide();
+				  jQuery('.targetvideo').hide();	
+				  jQuery('.targetmedia').hide();
+			});
+			jQuery('.showSingle3').click(function(){
+				  jQuery('.targetvideo').show();
+				  jQuery('.targetpictures').hide();
+				  jQuery('.targetexperience').hide();
+				  jQuery('.targetmedia').hide();
+				  
+			});
+			jQuery('.showSingle4').click(function(){
+				  jQuery('.targetmedia').show();
+				  jQuery('.targetvideo').hide();
+				  jQuery('.targetpictures').hide();
+				  jQuery('.targetexperience').hide();				  
+			});
+		
+		
+		});
+	</script>
+	<div class="rbclear"></div>
 </div><!-- #profile -->
