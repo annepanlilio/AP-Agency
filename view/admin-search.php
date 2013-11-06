@@ -266,10 +266,10 @@ if(isset($_POST["SendEmail"])){
 		echo "</div>\n";
 
 		// Send Email Form
-		echo RBAgency_Casting::cart_send_form();
+		
 		echo "    </div><!-- .boxblock -->\n";
 	}
-
+		echo RBAgency_Casting::cart_send_form();
 	// search result
 	if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
 
