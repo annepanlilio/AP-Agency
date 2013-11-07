@@ -146,11 +146,10 @@ class RBAgency_Casting {
 				} else {
 					$cartAction = "cartRemove";
 				}
-
+				
 				while ($data = mysql_fetch_array($results)) {
-
+					
 					$ProfileDateUpdated = $data['ProfileDateUpdated'];
-
 					echo "  <div style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 210px; margin: 6px; \">";
 					echo "    <div style=\"text-align: center; \"><h3>". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h3></div>"; 
 					echo "    <div style=\"float: left; width: 100px; height: 100px; overflow: hidden; margin-top: 2px; \"><img style=\"width: 100px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></div>\n";
@@ -296,6 +295,7 @@ class RBAgency_Casting {
 			}*/
 
 			if($_GET["action"] == "massEmail"){
+				cart_show();
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
 					$cartArray = $_SESSION['cartArray'];
