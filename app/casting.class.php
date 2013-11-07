@@ -224,7 +224,7 @@ class RBAgency_Casting {
 			if(!empty($MassEmailBccEmail)){
 				$bccMail = explode(",",$MassEmailBccEmail);
 				foreach($bccMail as $bcc){
-					if(!empty($bcc))
+					if($bcc!="")
 						$headers[] = 'Bcc: '.$bcc;
 				}
 			}
