@@ -261,7 +261,7 @@ class RBAgency_Casting {
 				$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 				// Search Results	
-				 $query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
+				echo  $query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
 				$results2 = mysql_query($query);
 				$count = mysql_num_rows($results2);
 				$pos = 0;
