@@ -257,7 +257,7 @@ class RBAgency_Casting {
 					$cartQuery =  " AND profile.ProfileID IN (". $cartString .")";
 				}
 				
-		print_r($_SESSION);
+	
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
