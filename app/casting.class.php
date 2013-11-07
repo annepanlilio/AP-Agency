@@ -219,10 +219,12 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bccEmail;
 				}
 			}
+			
 			//For Bcc emails
 			if(!empty($MassEmailBccEmail)){
 				$bccMail = explode(",",$MassEmailBccEmail);
 				foreach($bccMail as $bcc){
+					if(!empty($bcc))
 						$headers[] = 'Bcc: '.$bcc;
 				}
 			}
