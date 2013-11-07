@@ -209,10 +209,10 @@ class RBAgency_Casting {
 			$MassEmailMessage = $_POST["MassEmailMessage"];
 			$MassEmailRecipient = $_POST["MassEmailRecipient"];
 			$MassEmailBccEmail = $_POST["MassEmailBccEmail"];
-			echo "0";	
+			
 			$SearchID				= time(U);
 			$SearchMuxHash			= rb_agency_random(8);
-			echo "-1";	
+		
 			$SearchMuxToName		=$_POST["MassEmailRecipient"];
 			$SearchMuxToEmail		=$_POST["MassEmailRecipient"];
 			
@@ -221,13 +221,13 @@ class RBAgency_Casting {
 			$SearchMuxMessage		=$_POST['MassEmailMessage'];
 			$SearchMuxCustomValue	='';
 			$cartArray = $_SESSION['cartArray'];
-			echo "-2";
+			
 			$cartString = implode(",", array_unique($cartArray));
 			$cartString = rb_agency_cleanString($cartString);
-			echo "1";
+			
 			global $wpdb;
 		$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die(mysql_error());
-					echo "2";	
+					
 		$lastid = $wpdb->insert_id;
 		
 		// Create Record
@@ -252,7 +252,6 @@ class RBAgency_Casting {
 				'" . $wpdb->escape($SearchMuxCustomValue) ."'
 				)";
 		$results = $wpdb->query($insert);                 
-					echo "3";			
 					
 					
 			
@@ -297,7 +296,6 @@ class RBAgency_Casting {
 			}*/
 
 			if($_GET["action"] == "massEmail"){
-				echo "fff";
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
 					$cartArray = $_SESSION['cartArray'];
