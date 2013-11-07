@@ -218,9 +218,14 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bccEmail;
 				}
 			}
-			print_r($headers);
+			//For Bcc emails
+			if(!empty($MassEmailBccEmail)){
+				$bccMail = explode(",",$MassEmailBccEmail);
+				foreach($bccMail as $bcc){
+						$headers[] = 'Bcc: '.$bcc;
+				}
+			}
 			
-			die;
 			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 			
 			return $isSent;
