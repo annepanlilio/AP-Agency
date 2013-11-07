@@ -227,7 +227,9 @@ class RBAgency_Casting {
 				}
 			}
 			
-			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
+			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("url"),$MassEmailMessage);
+			 $MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("name"),$MassEmailMessage);
+		   	 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 			
 			return $isSent;
 
