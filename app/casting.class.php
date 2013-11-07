@@ -275,7 +275,6 @@ class RBAgency_Casting {
 					}
 
 				}
-
 			
 				// Email
 				//echo "Email starts";
