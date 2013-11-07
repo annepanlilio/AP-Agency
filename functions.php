@@ -3913,7 +3913,31 @@ function is_permitted($type){
                  }
         return false;
 }
+ /**
+     * Clean String, remove extra quotes
+     *
+     * @param string $string
+     */
+	function rb_agency_cleanString($string) {
+		// Remove trailing dingleberry
+		if (substr($string, -1) == ",") {  $string = substr($string, 0, strlen($string)-1); }
+		if (substr($string, 0, 1) == ",") { $string = substr($string, 1, strlen($string)-1); }
+		// Just Incase
+		$string = str_replace(",,", ",", $string);
 
+		return $string;
+	}
+	
+
+   /**
+     * Generate random number
+     *
+     */
+	function rb_agency_random() {
+		return preg_replace("/([0-9])/e","chr((\\1+112))",rand(100000,999999));
+	}
+	
+	
 /*
  * Check if profilet type ID is "Client" type
  */
