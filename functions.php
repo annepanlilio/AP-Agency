@@ -3928,15 +3928,6 @@ function is_permitted($type){
 		return $string;
 	}
 	
-
-   /**
-     * Generate random number
-     *
-     */
-	function rb_agency_random() {
-		return preg_replace("/([0-9])/e","chr((\\1+112))",rand(100000,999999));
-	}
-	
 	
 /*
  * Check if profilet type ID is "Client" type
