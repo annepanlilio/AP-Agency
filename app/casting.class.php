@@ -237,14 +237,17 @@ class RBAgency_Casting {
 			}*/
 
 			if($_GET["action"] == "massEmail"){
-
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
 					$cartArray = $_SESSION['cartArray'];
 					$cartString = implode(",", $cartArray);
 					$cartQuery =  " AND profile.ProfileID IN (". $cartString .")";
 				}
+				
 
+				$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 				// Search Results	
 				$query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
 				$results2 = mysql_query($query);
@@ -256,16 +259,14 @@ class RBAgency_Casting {
 					$ProfileID = $data['ProfileID'];
 					$recipient .=$data['ProfileContactEmail'];
 					if($count != $pos){
-						$recipient .= ", ";
+						$recipient .= ",";
 					}
 
 				}
 
 				// Email
 				//echo "Email starts";
-				$rb_agency_options_arr = get_option('rb_agency_options');
-				$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
+				
 				echo "<form method=\"post\">";
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
@@ -273,10 +274,17 @@ class RBAgency_Casting {
 				if($isSent){
 				echo "          <div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
 				}
-				echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$recipient."</textarea><br/>";
+				echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$rb_agency_value_agencyemail."</textarea><br/>";
+				echo "          <strong>Bcc:</strong><br/><textarea name=\"MassEmailBccEmail\" style=\"width:100%;\">".$recipient."</textarea><br/>";
 				echo "          <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
 				echo "          <br/>";
-				echo "          <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\">this message was sent to you by ".$rb_agency_value_agencyname." ".network_site_url( '/' )."</textarea>";
+			/*	echo "          <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\">this message was sent to you by ".$rb_agency_value_agencyname." ".network_site_url( '/' )."</textarea>";*/
+				//Adding Wp editor
+				$content = "Add Message Here<br />Click the following link (or copy and paste it into your browser):<br />
+[link-place-holder]<br /><br />This message was sent to you by:<br />[site-title]<br />[site-url]";
+				$editor_id = 'MassEmailMessage';
+				wp_editor( $content, $editor_id,array("wpautop"=>false,"tinymce"=>true) );
+				
 				echo "          <input type=\"submit\" value=\"". __("Send Email", rb_agency_TEXTDOMAIN) . "\" name=\"SendEmail\"class=\"button-primary\" />\n";
 				echo "        </div>\n";
 				echo "     </div>\n";
