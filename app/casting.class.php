@@ -218,6 +218,9 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bccEmail;
 				}
 			}
+			print_r($headers);
+			
+			die;
 			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 			
 			return $isSent;
