@@ -296,7 +296,7 @@ class RBAgency_Casting {
 			}*/
 
 			if($_GET["action"] == "massEmail"){
-				echo "sdfsd";
+				echo "sdfdsfsdfsd";
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
 					$cartArray = $_SESSION['cartArray'];
