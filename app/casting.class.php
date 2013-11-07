@@ -169,7 +169,7 @@ class RBAgency_Casting {
 				mysql_free_result($results);
 				echo "  <div style=\"clear: both;\"></div>\n";
 				echo "</div>";
-
+				echo "cartAction".$cartAction;
 				if (($cartAction == "cartEmpty") || ($cartAction == "cartRemove")) {
 				echo "<a name=\"compose\">&nbsp;</a>"; 
 				echo "<div class=\"boxblock\">\n";
