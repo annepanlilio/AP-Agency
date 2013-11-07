@@ -215,14 +215,14 @@ class RBAgency_Casting {
 			$SearchMuxToName		=$_POST["MassEmailRecipient"];
 			$SearchMuxToEmail		=$_POST["MassEmailRecipient"];
 			
-			$SearchMuxEmailToBcc	=$_POST['MassEmailBccRecipient'];
+			$SearchMuxEmailToBcc	=$_POST['MassEmailBccEmail'];
 			$SearchMuxSubject		= $_POST['MassEmailSubject'];
 			$SearchMuxMessage		=$_POST['MassEmailMessage'];
 			$SearchMuxCustomValue	='';
 			$cartArray = $_SESSION['cartArray'];
 			
 			$cartString = implode(",", array_unique($cartArray));
-			$cartString = bb_agency_cleanString($cartString);
+			$cartString = rb_agency_cleanString($cartString);
 			
 
 		$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die(mysql_error());
