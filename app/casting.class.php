@@ -278,7 +278,6 @@ class RBAgency_Casting {
 			
 				// Email
 				//echo "Email starts";
-				
 				echo "<form method=\"post\">";
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
