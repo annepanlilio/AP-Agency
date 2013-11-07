@@ -269,13 +269,14 @@ class RBAgency_Casting {
 				while ($data = mysql_fetch_array($results2)) {
 					$pos ++;
 					$ProfileID = $data['ProfileID'];
-					echo $recipient .=$data['ProfileContactEmail'];
+					$recipient .=$data['ProfileContactEmail'];
 					if($count != $pos){
 						$recipient .= ",";
 					}
 
 				}
 
+			echo $recipient;
 				// Email
 				//echo "Email starts";
 				
