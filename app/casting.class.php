@@ -225,7 +225,7 @@ class RBAgency_Casting {
 			$cartString = implode(",", array_unique($cartArray));
 			$cartString = rb_agency_cleanString($cartString);
 			echo "1";
-
+			global $wpdb;
 		$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die(mysql_error());
 					echo "2";	
 		$lastid = $wpdb->insert_id;
