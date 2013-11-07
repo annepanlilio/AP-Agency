@@ -32,6 +32,7 @@ class RBAgency_Casting {
 					}
 
 				} elseif ($action == "cartEmpty") {
+					echo "Empting cart":
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
