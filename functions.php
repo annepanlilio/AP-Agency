@@ -1910,7 +1910,9 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					echo "  <input type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
 					}
 				} else {
-				echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";
+					  //validate for float type.
+					  echo "  <input class='imperial_metrics' type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />
+					          <div class='error_msg' style='color:red; min-width:0px'></div>";
 				}						
 			}									
 	} // End if Empty ProfileCustomID
