@@ -280,7 +280,7 @@ class RBAgency_Casting {
 			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 		   	 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 			if($isSent){
-				echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+				wp_redirect("admin.php?page=rb_agency_searchsaved&m=1");
 			}
 			return $isSent;
 
