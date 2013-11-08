@@ -290,14 +290,14 @@ class RBAgency_Casting {
 
 		public static function cart_send_form(){
 		
-			if(isset($_POST["SendEmail"])){
+		if(isset($_POST["SendEmail"])){
 				// Process Form
-				$isSent = self::cart_send_process;
+				$isSent = RBAgency_Casting::cart_send_process;
 
 			}
 
 			if($_GET["action"] == "massEmail"){
-				
+				echo "test";
 				echo RBAgency_Casting::cart_show();
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
