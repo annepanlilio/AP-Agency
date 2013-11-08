@@ -1,9 +1,7 @@
 <div class="wrap">
 <?php
-
 	// Setup DB connection
 	global $wpdb;
-
 	// Include Admin Menu
 	include ("admin-include-menu.php"); 
 
@@ -14,12 +12,11 @@
 	include(rb_agency_BASEREL ."app/casting.class.php");
 
 	// Define Options
-	$rb_agency_options_arr = get_option('rb_agency_options');
+	    $rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
 		$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
 		$rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];
 		if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
-
 
 // *************************************************************************************************** //
 /* 
@@ -249,7 +246,6 @@ if(isset($_POST["SendEmail"])){
 	} else {
 	// Ok.. now what ???
 	// else for if ($_GET["action"] == "search")     
-
 	}
 	if (isset($_GET["action"]) && $_GET["action"] == "cartAdd") {
 
@@ -264,9 +260,7 @@ if(isset($_POST["SendEmail"])){
 		echo "   </div>\n";
 		echo " </div>\n";
 		echo "</div>\n";
-
 		// Send Email Form
-		
 		echo "    </div><!-- .boxblock -->\n";
 	}
 		echo RBAgency_Casting::cart_send_form();
