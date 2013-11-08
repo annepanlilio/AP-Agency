@@ -279,7 +279,7 @@ class RBAgency_Casting {
 			 $MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 		   	 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
-			 $url = admin_url('admin.php?page=rb_agency_searchsaved');
+			 $url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
 			if($isSent){?>
 			<script type="text/javascript"> 
 				window.location="<?php echo $url;?>";
@@ -303,7 +303,7 @@ class RBAgency_Casting {
 			}*/
 
 			if($_GET["action"] == "massEmail"){
-				echo "iyuiyu";
+			
 				echo RBAgency_Casting::cart_show();
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
