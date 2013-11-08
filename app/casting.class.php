@@ -5,6 +5,7 @@ class RBAgency_Casting {
 	 * Casting Cart
 	 * Process Actions
 	 */
+	 
 
 		public static function cart_process(){
 
@@ -32,7 +33,7 @@ class RBAgency_Casting {
 					}
 
 				} elseif ($action == "cartEmpty") {
-					echo "Empting cart";
+					
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
