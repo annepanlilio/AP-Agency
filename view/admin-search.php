@@ -34,7 +34,6 @@ if(isset($_POST["SendEmail"])){
 		$isSent = RBAgency_Casting::cart_send_process();
 		$url = admin_url( 'admin.php?page=rb_agency_searchsaved&m=1');
 		if($isSent){
-			echo $url; die;
 				wp_redirect($url);
 			}
 		
