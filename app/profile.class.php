@@ -1371,10 +1371,6 @@ class RBAgency_Profile {
 						if (!empty($data['ProfileContactPhoneCell'])) {
 								$displayHtml .=  "<div><strong>". __("Phone Cell", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
 						}
-						if (!empty($data['ProfileContactPhoneWork'])) {
-								$displayHtml .=  "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
-						}
-
                                                 if (!empty($data['ProfileType'])) {
                                                         if(strpos($data['ProfileType'],",") > -1){
                                                                 $t = explode(",",$data['ProfileType']);
@@ -1389,6 +1385,9 @@ class RBAgency_Profile {
                                                         }
                                                         $displayHtml .= "<div><strong>". __("Profile Type", rb_agency_TEXTDOMAIN) .":</strong> ".$ptype."</div>\n";
                                                 }
+                                                if (!empty($data['ProfileContactPhoneWork'])) {
+								$displayHtml .=  "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
+						}
 				
 						$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC"));
 						if (count($resultsCustomPrivate) > 0){
