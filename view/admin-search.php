@@ -32,6 +32,8 @@ if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
 if(isset($_POST["SendEmail"])){
 		// Process Form
 		$isSent = RBAgency_Casting::cart_send_process();
+		
+		
 }
 
 

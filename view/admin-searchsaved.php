@@ -394,6 +394,11 @@ if (isset($_POST['action'])) {
 
 		<?php 
 
+if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
+	// Message of successful mail form mass email 
+	echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+}
+
 
 
 		  $rb_agency_options_arr = get_option('rb_agency_options');
