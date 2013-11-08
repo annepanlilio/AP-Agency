@@ -888,7 +888,8 @@ class RBAgency {
 			add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 7,"rb_agency_reports", array('RBAgency', 'menu_reports'));
 			add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 7,"rb_agency_settings", array('RBAgency', 'menu_settings'));
 			// RB Agency Interact Menu Items
-			if (function_exists(rb_agencyinteract_approvemembers)) {
+			//if (function_exists(rb_agencyinteract_approvemembers)) {
+		if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
 			add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agencyinteract_approvemembers", array('RBAgency', 'menu_approvemembers'));
 			}
 		}
@@ -914,6 +915,12 @@ class RBAgency {
 		}
 		public static function menu_approvemembers(){
 			include_once('admin/profile-approve.php');
+		}
+		
+		function rb_agencyinteract_approvemembers(){
+
+			include_once(ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php');
+
 		}
 
 	/*
