@@ -1378,7 +1378,8 @@ class RBAgency_Profile {
                                                 if (!empty($data['ProfileType'])) {
                                                         if(strpos($data['ProfileType'],",") > -1){
                                                                 $t = explode(",",$data['ProfileType']);
-                                                                $ptype = ""; 
+                                                                $ptype = "";
+                                                                $ptyp = array();
                                                                 foreach($t as $val){
                                                                         $ptyp[] = retrieve_title($val);
                                                                 }
