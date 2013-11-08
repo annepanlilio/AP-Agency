@@ -279,7 +279,9 @@ class RBAgency_Casting {
 			 $MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 		   	 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
-			
+			if($isSent){
+				$msg= "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+				}
 			return $isSent;
 
 		}
@@ -290,11 +292,11 @@ class RBAgency_Casting {
 
 		public static function cart_send_form(){
 		
-		if(isset($_POST["SendEmail"])){
+		/*if(isset($_POST["SendEmail"])){
 				// Process Form
 				$isSent = RBAgency_Casting::cart_send_process();
 
-			}
+			}*/
 
 			if($_GET["action"] == "massEmail"){
 				echo "testtest";
@@ -333,7 +335,7 @@ class RBAgency_Casting {
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
 				echo "        <div class=\"inner\">\n";
-				if($isSent){
+				if($msg!=""){
 				echo "          <div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
 				}
 				echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$rb_agency_value_agencyemail."</textarea><br/>";
