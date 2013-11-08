@@ -812,7 +812,7 @@ class RBAgency_Profile {
 
 				// Type
 				if (isset($profiletype) && !empty($profiletype)){
-					$filter .= " AND FIND_IN_SET(". $profiletype .", profile.ProfileType) ";
+					$filter .= " AND FIND_IN_SET('". $profiletype ."', profile.ProfileType) ";
 				}
 
 				// Gender

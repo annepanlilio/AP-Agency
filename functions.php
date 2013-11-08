@@ -1721,29 +1721,97 @@ class rb_agency_pagination {
 	}
 }
 
+// retrieving data type title
+// if rb-interact is not installed
+if ( !function_exists('retrieve_title') ) {  
+	function retrieve_title($id=0) {
+	   global $wpdb;
+                /* 
+		* return title
+		*/
+		$check_type = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = " . $id;
+		$check_query = mysql_query($check_type) OR die(mysql_error());
+		if(mysql_num_rows($check_query) > 0){
+			$fetch = mysql_fetch_assoc($check_query);
+			return $fetch['DataTypeTitle'];
+		} else {
+			return false;
+		}
+	}
+}
+
 // *************************************************************************************************** //
 // Custom Fields
 function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileGenderShow = false, $SearchMode = false){
-				
+
+    $query = mysql_query("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID);
+    $fetchID = mysql_fetch_assoc($query);
+	$ptype = $fetchID["ProfileType"];	
+	if(strpos($ptype,",") > -1){
+		$t = explode(",",$ptype);
+		$ptype = ""; 
+		foreach($t as $val){
+			$ptyp[] = retrieve_title($val);
+		}
+		$ptype = implode(",",$ptyp);
+	} else {
+		$ptype = retrieve_title($ptype);
+	}
+	
+	$ptype = str_replace(",","",$ptype);
+	
 	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = ".$visibility."  ORDER BY ProfileCustomOrder";
 	$results3 = mysql_query($query3) or die(mysql_error());
-	$count3 = mysql_num_rows($results3);
+	$count3 = 0;
 	
 	while ($data3 = mysql_fetch_assoc($results3)) {
-		 if($ProfileGenderShow ==true){
-			if($data3["ProfileCustomShowGender"] == $ProfileGender && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
-				rb_custom_fields_template($visibility, $ProfileID, $data3);
-			} elseif(empty($data3["ProfileCustomShowGender"])) {
-				rb_custom_fields_template($visibility, $ProfileID, $data3);
+
+		   /*
+			* Get Profile Types to
+			* filter models from clients
+			*/
+			$permit_type = false;
+			$PID = $data3['ProfileCustomID'];
+			$get_types = "SELECT ProfileCustomTypes FROM ". table_agency_customfields_types .
+						" WHERE ProfileCustomID = " . $PID;
+	
+			$result = mysql_query($get_types);
+			$types = "";
+			while ( $p = mysql_fetch_array($result)){
+					$types = $p['ProfileCustomTypes'];			    
 			}
-		 } else {
-					 rb_custom_fields_template($visibility, $ProfileID, $data3);
-		 }
+			if($types != "" || $types != NULL){
+				if(strpos($types,",") > -1){
+					$types = explode(",",$types);
+					foreach($types as $t){
+						if(strpos($ptype,$t) > -1) {$permit_type=true; break;}  
+					}			
+				} else {
+						if(strpos($ptype,$types) > -1) $permit_type=true;  
+				}
+			}
+			  
+			
+			if($permit_type){
+				if($ProfileGenderShow ==true){
+					if($data3["ProfileCustomShowGender"] == $ProfileGender && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
+						$count3++;
+						rb_custom_fields_template($visibility, $ProfileID, $data3);
+					} elseif(empty($data3["ProfileCustomShowGender"])) {
+						$count3++;
+						rb_custom_fields_template($visibility, $ProfileID, $data3);
+					}
+				} else {
+						$count3++;
+						rb_custom_fields_template($visibility, $ProfileID, $data3);
+				}
+			}
+
 			// END Query2
 		echo "    </td>\n";
 		echo "  </tr>\n";
 	} // End while
-	if ($count3 < 1) {
+	if ($count3 == 0) {
 		echo "  <tr valign=\"top\">\n";
 		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
 		echo "  </tr>\n";
