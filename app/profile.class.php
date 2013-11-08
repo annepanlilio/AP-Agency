@@ -1374,7 +1374,21 @@ class RBAgency_Profile {
 						if (!empty($data['ProfileContactPhoneWork'])) {
 								$displayHtml .=  "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 						}
-						
+
+                                                if (!empty($data['ProfileType'])) {
+                                                        if(strpos($data['ProfileType'],",") > -1){
+                                                                $t = explode(",",$data['ProfileType']);
+                                                                $ptype = ""; 
+                                                                foreach($t as $val){
+                                                                        $ptyp[] = retrieve_title($val);
+                                                                }
+                                                                $ptype = implode(",",$ptyp);
+                                                        } else {
+                                                                $ptype = retrieve_title($data['ProfileType']);
+                                                        }
+                                                        $displayHtml .= "<div><strong>". __("Profile Type", rb_agency_TEXTDOMAIN) .":</strong> ".$ptype."</div>\n";
+                                                }
+				
 						$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC"));
 						if (count($resultsCustomPrivate) > 0){
 							foreach ($resultsCustomPrivate as $resultCustomPrivate) {
