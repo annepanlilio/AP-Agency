@@ -292,12 +292,12 @@ class RBAgency_Casting {
 		
 		if(isset($_POST["SendEmail"])){
 				// Process Form
-				$isSent = RBAgency_Casting::cart_send_process;
+				$isSent = RBAgency_Casting::cart_send_process();
 
 			}
 
 			if($_GET["action"] == "massEmail"){
-				echo "test";
+				echo "testtest";
 				echo RBAgency_Casting::cart_show();
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
