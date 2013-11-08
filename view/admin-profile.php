@@ -106,36 +106,58 @@ if (isset($_POST['action'])) {
 		$error .= "<b><i>The " . LabelSingular . " must have a name.</i></b><br>";
 		$have_error = true;
 	}
-	if ((isset($_GET["action"]) == "add") && function_exists(rb_agencyinteract_approvemembers)) {
-		$userdata = array(
-			'user_pass' => esc_attr($ProfilePassword),
-			'user_login' => esc_attr($ProfileUsername),
-			'first_name' => esc_attr($ProfileContactNameFirst),
-			'last_name' => esc_attr($ProfileContactNameLast),
-			'user_email' => esc_attr($ProfileContactEmail),
-			'role' => get_option('default_role')
-		);
-		if (empty($userdata['user_login'])) {
-			$error .= __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
-			$have_error = true;
-		}
-		if (username_exists($userdata['user_login'])) {
-			$error .= __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
-			$have_error = true;
-		}
-		if (!is_email($userdata['user_email'], true)) {
-			$error .= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
-			$have_error = true;
-		}
-		if (email_exists($userdata['user_email'])) {
-			$error .= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
-			$have_error = true;
-		}if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
-			$error .= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
-			$have_error = true;
-		}
-	}
+        if ($_GET["action"] == "add") {
+            $userdata = array(
+                'user_pass' => esc_attr($ProfilePassword),
+                'user_login' => esc_attr($ProfileUsername),
+                'first_name' => esc_attr($ProfileContactNameFirst),
+                'last_name' => esc_attr($ProfileContactNameLast),
+                'user_email' => esc_attr($ProfileContactEmail),
+                'role' => get_option('default_role')
+            );
+                    if(function_exists(rb_agencyinteract_approvemembers)){
+                            if (empty($userdata['user_login'])) {
+                                    $error .= __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
+                                    $have_error = true;
+                            }
+                            if (username_exists($userdata['user_login'])) {
+                                    $error .= __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
+                                    $have_error = true;
+                            }
+                            if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
+                                    $error .= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
+                                    $have_error = true;
+                            }
+                    }
+            if (!is_email($userdata['user_email'], true)) {
+                $error .= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
+                $have_error = true;
+            }
+            if (email_exists($userdata['user_email'])) {
+                $error .= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+                $have_error = true;
+            } else {
+                            if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
+                                    $error .= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+                                    $have_error = true;
+                            }		
+                    }
 
+        }
+
+        if ($_POST["action"] == "editRecord") {
+		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
+			if (!is_email($ProfileContactEmail, true)) {
+				$error .= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
+				$have_error = true;
+			}
+			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
+				$error .= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+				$have_error = true;
+			}
+		}
+        }
+        
 
 	// Get Post State
 	$action = $_POST['action'];
@@ -777,7 +799,8 @@ function rb_display_manage($ProfileID) {
 	echo "      <th scope=\"row\">" . __("Email Address", rb_agency_TEXTDOMAIN) . "</th>\n";
 	echo "      <td>\n";
 	echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
-	echo "      </td>\n";
+        echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
+        echo "      </td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "      <th scope=\"row\">" . __("Website", rb_agency_TEXTDOMAIN) . "</th>\n";
