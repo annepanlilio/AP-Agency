@@ -916,7 +916,6 @@ class RBAgency {
 		public static function menu_approvemembers(){
 			include_once('admin/profile-approve.php');
 		}
-		echo "aa";
 		function rb_agencyinteract_approvemembers(){
 
 			include_once(ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php');
