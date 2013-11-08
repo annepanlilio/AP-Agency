@@ -280,8 +280,8 @@ class RBAgency_Casting {
 			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 		   	 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 			if($isSent){
-				$msg= "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
-				}
+				echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+			}
 			return $isSent;
 
 		}
@@ -335,9 +335,9 @@ class RBAgency_Casting {
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
 				echo "        <div class=\"inner\">\n";
-				if($msg!=""){
+				/*if($msg!=""){
 				echo "          <div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
-				}
+				}*/
 				echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$rb_agency_value_agencyemail."</textarea><br/>";
 				echo "          <strong>Bcc:</strong><br/><textarea name=\"MassEmailBccEmail\" style=\"width:100%;\">".$recipient."</textarea><br/>";
 				echo "          <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
