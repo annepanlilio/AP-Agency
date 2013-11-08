@@ -890,7 +890,7 @@ class RBAgency {
 			// RB Agency Interact Menu Items
 			//if (function_exists(rb_agencyinteract_approvemembers)) {
 		if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
-			add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agencyinteract_approvemembers", array('RBAgency', 'menu_approvemembers'));
+			add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agencyinteract_approvemembers", array('RBAgency', 'rb_agencyinteract_approvemembers'));
 			}
 		}
 
