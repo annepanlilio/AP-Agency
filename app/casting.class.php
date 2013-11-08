@@ -303,17 +303,13 @@ class RBAgency_Casting {
 			}*/
 
 			if($_GET["action"] == "massEmail"){
-			
 				echo RBAgency_Casting::cart_show();
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
 					$cartArray = $_SESSION['cartArray'];
 					$cartString = implode(",", $cartArray);
 					$cartQuery =  " AND profile.ProfileID IN (". $cartString .")";
-					
 				}
-				
-	
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
