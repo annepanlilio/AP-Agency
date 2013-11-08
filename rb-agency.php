@@ -890,7 +890,7 @@ class RBAgency {
 			// RB Agency Interact Menu Items
 			//if (function_exists(rb_agencyinteract_approvemembers)) {
 		if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
-			add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agencyinteract_approvemembers", array('RBAgency', 'rb_agencyinteract_approvemembers'));
+			add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"menu_approvemembers", array('RBAgency', 'menu_approvemembers'));
 			}
 		}
 
@@ -914,11 +914,11 @@ class RBAgency {
 			include_once('view/admin-settings.php');
 		}
 		public static function menu_approvemembers(){
-			include_once('admin/profile-approve.php');
+			echo ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php';
+			die;
+			include_once(ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php');
 		}
-		public static function rb_agencyinteract_approvemembers(){
-			include_once(ABSPATH . 'wp-content/plugins/rb-agency-interact/view/profile-approve.php');
-		 }
+
 
 	/*
 	 * Plugin Page
