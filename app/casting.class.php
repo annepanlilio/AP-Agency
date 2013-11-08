@@ -135,7 +135,7 @@ class RBAgency_Casting {
 				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY profile.ProfileContactNameFirst ASC";
 				$results = mysql_query($query) or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", rb_agency_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 				$count = mysql_num_rows($results);
-
+				echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 				echo "<div style=\"float: right; width: 100px; \"><a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("Empty Cart", rb_agency_TEXTDOMAIN) ."</a></div>";
 				echo "<div style=\"float: left; line-height: 22px; font-family:Georgia; font-size:13px; font-style: italic; color: #777777; \">". __("Currently", rb_agency_TEXTDOMAIN) ." <strong>". $count ."</strong> ". __("in Cart", rb_agency_TEXTDOMAIN) ."</div>";
 				echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; \" class=\"profile\">";
@@ -328,7 +328,7 @@ class RBAgency_Casting {
 				}
 			
 				// Email
-				//echo "Email starts";
+				echo "Email starts";
 				echo "<form method=\"post\">";
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", rb_agency_TEXTDOMAIN) ."</h3>\n";
@@ -351,6 +351,7 @@ class RBAgency_Casting {
 				echo "        </div>\n";
 				echo "     </div>\n";
 				echo "</form>";
+				echo "     </div>\n";
 			}
 
 			return true;
