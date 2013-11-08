@@ -1,3 +1,4 @@
+<hr />
 <div class="wrap">
 <?php
 	// Setup DB connection
@@ -31,6 +32,11 @@ if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
 if(isset($_POST["SendEmail"])){
 		// Process Form
 		$isSent = RBAgency_Casting::cart_send_process();
+		$url = admin_url( 'admin.php?page=rb_agency_searchsaved&m=1');
+		if($isSent){
+			echo $url; die;
+				wp_redirect($url);
+			}
 		
 }
 
