@@ -914,7 +914,10 @@ class RBAgency {
 			include_once('view/admin-settings.php');
 		}
 		public static function menu_approvemembers(){
-			echo ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php';
+			if(file_exists(ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php')
+			echo "yes";
+			else
+			echo "no";
 			die;
 			include_once(ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php');
 		}
