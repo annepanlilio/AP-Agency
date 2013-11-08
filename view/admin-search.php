@@ -32,9 +32,10 @@ if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
 if(isset($_POST["SendEmail"])){
 		// Process Form
 		$isSent = RBAgency_Casting::cart_send_process();
-		$url = admin_url( 'admin.php?page=rb_agency_searchsaved&m=1');
+		$url = admin_url( 'admin.php?page=rb_agency_searchsaved');
 		if($isSent){
 				wp_redirect($url);
+				exit;
 			}
 		
 }
