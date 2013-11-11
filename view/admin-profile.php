@@ -389,6 +389,15 @@ if (isset($_POST['action'])) {
 										$error .= "<b><i>Please upload PDF/MSword/RTF files only</i></b><br />";
 										$have_error = true;
 									}
+								} else if ($uploadMediaType == "Polaroid") {
+									// Add to database
+									if ($_FILES['profileMedia' . $i]['type'] == "application/pdf") {
+										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+									} else {
+										$error .= "<b><i>Please upload PDF files only</i></b><br />";
+										$have_error = true;
+									}
 								} else if ($uploadMediaType == "Headshot") {
 									// Add to database
 									if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
