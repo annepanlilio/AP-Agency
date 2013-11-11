@@ -3048,7 +3048,7 @@ function rb_display_profile_list(){
     }
 	
 	
-	if(isset($_GET['search_profiles']){
+	if(isset($_GET['search_profiles'])){
 		$searchTerm=$_GET['search_profiles'];
 		$filter .= " AND profile.ProfileContactNameFirst LIKE '%". $searchTerm ."%'";
 		$filter .= "OR profile.ProfileContactNameLast LIKE '%". $searchTerm ."%'";
