@@ -3093,7 +3093,7 @@ function rb_display_profile_list(){
 	if($ConfigID == '99'){
 		
 		//Search profiles starts ..
-    	echo "<form method=\"get\" action=\"".$_SERVER['PHP_SELF']."\">";
+    	echo "<form method=\"get\" action=\"".admin_url("admin.php?page=rb_agency_reports&ConfigID=99")."\">";
 		echo  __("Search User", rb_agency_TEXTDOMAIN) ."\n";
 		echo "<input type=\"text\" name=\"search_profiles\" id=\"search_profiles\" size=\"50\" >";
 		echo "</form>";
