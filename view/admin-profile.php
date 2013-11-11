@@ -1345,11 +1345,11 @@ function rb_display_list() {
 		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
 			$selectedType = strtolower($_GET['ProfileType']);
 			$query .= "&ProfileType=". $selectedType ."";
-			if(strpos($filter,'profile') > 0){
-				 $filter .= " AND profile.ProfileType LIKE '%". $selectedType ."%'";
-			} else {
-				  $filter .= " profile.ProfileType LIKE '%". $selectedType ."%'";
-			}
+                        if(strpos($filter,'profile') > 0){
+                            $filter .= " AND FIND_IN_SET('". $selectedType ."', profile.ProfileType)";
+                        } else {
+                            $filter .= " FIND_IN_SET('". $selectedType ."', profile.ProfileType)";
+                        }
 		}
 		if (isset($_GET['ProfileVisible'])){
 			$selectedVisible = $_GET['ProfileVisible'];
