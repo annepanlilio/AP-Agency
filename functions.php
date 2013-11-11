@@ -3070,7 +3070,7 @@ function rb_display_profile_list(){
     } else {
         $limit = "";
     }
-    
+
     /* Top pagination */
     echo "<div class=\"tablenav\">\n";
     echo "  <div class=\"tablenav-pages\">\n";
@@ -3078,7 +3078,19 @@ function rb_display_profile_list(){
     if($items > 0) {
         echo $p->show();  // Echo out the list of paging. 
     }
-    echo "  </div>\n";
+
+	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;} else { $ConfigID=$_REQUEST['ConfigID']; }
+	//Is it generate login page?
+	if($ConfigID == '99'){
+		
+		//Search profiles starts ..
+    	echo "<form method=\"post\">";
+		echo  __("Search User", rb_agency_TEXTDOMAIN) ."\n";
+		echo "<input type=\"text\" name=\"search_profiles\" id=\"search_profiles\" size=\"50\" >";
+		echo "</form>";
+	}
+	
+	echo "  </div>\n";
     echo "</div>\n";
     /* End Top pagination */
      
@@ -3104,7 +3116,22 @@ function rb_display_profile_list(){
 		 <tbody>
 
 		<?php
-		$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
+//Search starts
+		if(!isset($_POST['search_profiles'])){
+			$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
+		}
+		else
+		{
+			$searchTerm=$_POST['search_profiles'];
+			$filter .= " AND profile.ProfileContactNameFirst LIKE '%". $searchTerm ."%'";
+			$filter .= "OR profile.ProfileContactNameLast LIKE '%". $searchTerm ."%'";
+			$filter .= "OR profile.ProfileLocationCity='%". $searchTerm ."'";
+			$filter .= "OR profile.ProfileContactEmail='%". $searchTerm ."'";
+			
+			$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
+		}
+		
+
 		$results2 = mysql_query($query);
 		$count = mysql_num_rows($results2);
 		$i = 0;
