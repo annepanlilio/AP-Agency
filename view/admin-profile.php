@@ -1131,7 +1131,7 @@ function rb_display_manage($ProfileID) {
 
 		for ($i = 1; $i < 10; $i++) {
 			echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option>
-<option value=\"Polaroid\">Polaroid</option>";
+";
 			rb_agency_getMediaCategories($ProfileGender);
 			echo"</select><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></div>\n";
 		}
