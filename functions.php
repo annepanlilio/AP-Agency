@@ -3087,6 +3087,9 @@ function rb_display_profile_list(){
     if($items > 0) {
         echo $p->show();  // Echo out the list of paging. 
     }
+	
+	echo "  </div>\n";
+    echo "</div>\n";
 
 	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ $ConfigID=0;} else { $ConfigID=$_REQUEST['ConfigID']; }
 	//Is it generate login page?
@@ -3098,10 +3101,8 @@ function rb_display_profile_list(){
 		echo "<input type=\"text\" value=\"".$_POST['search_profiles']."\" name=\"search_profiles\" id=\"search_profiles\" size=\"50\" >";
 		echo "</form>";
 	}
-	
-	echo "  </div>\n";
-    echo "</div>\n";
-    /* End Top pagination */
+
+/* End Top pagination */
      
     /* Table Content */
 		    ?>
