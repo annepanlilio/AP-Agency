@@ -64,17 +64,6 @@ echo "			<div class=\"col_3 column\">\n";
 echo "	  			<div id=\"links\">\n";
 echo "					<ul>\n";
 
-						// Polaroid
-						$resultsPolaroid = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Polaroid\"");
-						$countPolaroid = mysql_num_rows($resultsPolaroid);
-						if ($countMedia > 0) {
-						while ($dataPolaroid = mysql_fetch_array($resultsPolaroid)) {
-							echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Print Polaroid</a></li>\n";
-						}
-						}
-
-
-
 						// Resume
 							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
 							$countMedia = mysql_num_rows($resultsMedia);
