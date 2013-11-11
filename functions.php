@@ -1743,22 +1743,28 @@ if ( !function_exists('retrieve_title') ) {
 // *************************************************************************************************** //
 // Custom Fields
 function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileGenderShow = false, $SearchMode = false){
-
-    $query = mysql_query("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID);
-    $fetchID = mysql_fetch_assoc($query);
-	$ptype = $fetchID["ProfileType"];	
-	if(strpos($ptype,",") > -1){
-		$t = explode(",",$ptype);
-		$ptype = ""; 
-		foreach($t as $val){
-			$ptyp[] = retrieve_title($val);
+	
+	$all_permit = false; // set to false
+	
+	if($ProfileID != 0){
+		$query = mysql_query("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID);
+		$fetchID = mysql_fetch_assoc($query);
+		$ptype = $fetchID["ProfileType"];	
+		if(strpos($ptype,",") > -1){
+			$t = explode(",",$ptype);
+			$ptype = ""; 
+			foreach($t as $val){
+				$ptyp[] = retrieve_title($val);
+			}
+			$ptype = implode(",",$ptyp);
+		} else {
+			$ptype = retrieve_title($ptype);
 		}
-		$ptype = implode(",",$ptyp);
+		$ptype = str_replace(",","",$ptype);
 	} else {
-		$ptype = retrieve_title($ptype);
+		$all_permit = true;
 	}
 	
-	$ptype = str_replace(",","",$ptype);
 	
 	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = ".$visibility."  ORDER BY ProfileCustomOrder";
 	$results3 = mysql_query($query3) or die(mysql_error());
@@ -1792,7 +1798,7 @@ function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileG
 			}
 			  
 			
-			if($permit_type){
+			if($permit_type || $all_permit){
 				if($ProfileGenderShow ==true){
 					if($data3["ProfileCustomShowGender"] == $ProfileGender && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
 						$count3++;
