@@ -1742,7 +1742,7 @@ if ( !function_exists('retrieve_title') ) {
 
 // *************************************************************************************************** //
 // Custom Fields
-function rb_custom_fields($visibility = 0, $ProfileID, $ProfileGender, $ProfileGenderShow = false, $SearchMode = false){
+function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $ProfileGenderShow = false, $SearchMode = false){
 	
 	$all_permit = false; // set to false
 	
