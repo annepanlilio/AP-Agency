@@ -2836,6 +2836,25 @@ function rb_agency_callafter_setup() {
 add_action( 'after_setup_theme',"rb_agency_callafter_setup");
 
 /*/
+* ======================== check agency data ===============
+* @Returns Check agency data
+/*/
+function rb_check_exists($data,$proerty,$type){
+	
+	$count = 0;
+	if($type == 'text'){
+		$query = mysql_query("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = '" . $data . "'");
+		$count = mysql_num_rows($query);
+	} elseif($type == 'numeric'){
+		$query = mysql_query("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = " . $data );
+		$count = mysql_num_rows($query);
+	} 
+	if($count > 0) return true;
+	return false;	
+
+}
+
+/*/
 *  PHP Profiler DEBUG MODE
 /*/ 
 function rb_agency_checkExecution() {
