@@ -3095,7 +3095,7 @@ function rb_display_profile_list(){
 		//Search profiles starts ..
     	echo "<form method=\"post\">";
 		echo  __("Search User", rb_agency_TEXTDOMAIN) ."\n";
-		echo "<input type=\"text\" name=\"search_profiles\" id=\"search_profiles\" size=\"50\" >";
+		echo "<input type=\"text\" value=\"".$_POST['search_profiles']."\" name=\"search_profiles\" id=\"search_profiles\" size=\"50\" >";
 		echo "</form>";
 	}
 	
