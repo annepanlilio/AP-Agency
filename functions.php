@@ -3046,6 +3046,15 @@ function rb_display_profile_list(){
             if($ProfileGender)
                     $filter .= " AND profile.ProfileGender='".$ProfileGender."'";
     }
+	
+	
+	if(isset($_GET['search_profiles']){
+		$searchTerm=$_GET['search_profiles'];
+		$filter .= " AND profile.ProfileContactNameFirst LIKE '%". $searchTerm ."%'";
+		$filter .= "OR profile.ProfileContactNameLast LIKE '%". $searchTerm ."%'";
+		$filter .= "OR profile.ProfileLocationCity='%". $searchTerm ."'";
+		$filter .= "OR profile.ProfileContactEmail='%". $searchTerm ."'";
+	 }
 		
     //Paginate
     $items = mysql_num_rows(mysql_query("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."")); // number of total rows in the database
@@ -3084,7 +3093,7 @@ function rb_display_profile_list(){
 	if($ConfigID == '99'){
 		
 		//Search profiles starts ..
-    	echo "<form method=\"post\">";
+    	echo "<form method=\"get\">";
 		echo  __("Search User", rb_agency_TEXTDOMAIN) ."\n";
 		echo "<input type=\"text\" name=\"search_profiles\" id=\"search_profiles\" size=\"50\" >";
 		echo "</form>";
@@ -3117,17 +3126,12 @@ function rb_display_profile_list(){
 
 		<?php
 //Search starts
-		if(!isset($_POST['search_profiles'])){
+		if(!isset($_GET['search_profiles'])){
 			$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
 		}
 		else
 		{
-			$searchTerm=$_POST['search_profiles'];
-			$filter .= " AND profile.ProfileContactNameFirst LIKE '%". $searchTerm ."%'";
-			$filter .= "OR profile.ProfileContactNameLast LIKE '%". $searchTerm ."%'";
-			$filter .= "OR profile.ProfileLocationCity='%". $searchTerm ."'";
-			$filter .= "OR profile.ProfileContactEmail='%". $searchTerm ."'";
-			
+						
 			$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
 		}
 		
