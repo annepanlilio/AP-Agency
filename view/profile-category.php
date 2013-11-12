@@ -252,14 +252,7 @@ get_header();
 			echo __("No Categories Found", rb_agency_TEXTDOMAIN);
 		}
 
-		/*
-		 * Get Profile Results
-		 */ 
-		echo "	<div id=\"profile-category-results\">\n";
-		$atts = array("profiletype" => $DataTypeID, "profilecasting" => true);
-		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($atts);
-		echo $search_results = RBAgency_Profile::search_results($search_sql_query, 0);
-		echo "	</div><!-- #profile-category-results -->\n";
+		
 		
 		/*
 		 * Email to admin
@@ -293,6 +286,16 @@ get_header();
 									</form>
 								</div>
 		<?php 
+		
+		/*
+		 * Get Profile Results
+		 */ 
+		echo "	<div id=\"profile-category-results\">\n";
+		$atts = array("profiletype" => $DataTypeID, "profilecasting" => true);
+		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($atts);
+		echo $search_results = RBAgency_Profile::search_results($search_sql_query, 0);
+		echo "	</div><!-- #profile-category-results -->\n";
+		
 		echo "				</div>\n";
 
 		echo "</div><!-- #profile-category -->\n";
