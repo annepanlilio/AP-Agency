@@ -213,7 +213,7 @@ header("Cache-control: private"); //IE 6 Fix
 
 // GET HEADER  
 if(isset($_POST['print_all_images']) && $_POST['print_all_images']!=""){
-	include 'printable-profile.php';
+	include(rb_agency_BASEREL . 'theme/printable-profile.php');
 	exit;
 }
 
