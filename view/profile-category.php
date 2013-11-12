@@ -271,6 +271,7 @@ get_header();
 								$(document).ready(function(){
 									$('#emailbox').toggle('slow'); 
 									$("#sendemail").click(function(){
+										alert("testtest");
 										$('#emailbox').toggle('slow'); 
 									});			 
 								});
