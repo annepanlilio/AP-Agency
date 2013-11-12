@@ -195,13 +195,10 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 
 	if(!empty($SearchMuxEmailToBcc)){
 		$headers = 'Bcc: '.$SearchMuxEmailToBcc.'' . "\r\n";
-	}
- 	echo $headers;
-	echo "Issent".$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
+	}	
+	$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
 	
     if($isSent){
-		echo "Mail sent";
-		die;
 		wp_redirect(network_site_url()."/profile-category/email_sent");  exit;	
 	}	
 } 
