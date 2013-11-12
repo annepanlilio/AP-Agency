@@ -168,7 +168,8 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 	$SearchMuxToName		=$_POST['SearchMuxToName'];
 	$SearchMuxToEmail		=get_option('admin_email');
 	
-	$SearchMuxEmailToBcc	=$_POST['SearchMuxEmailToBcc'];
+	if(isset($_POST['SearchMuxEmailToBcc']))
+		$SearchMuxEmailToBcc	=$_POST['SearchMuxEmailToBcc'];
 	$SearchMuxSubject		= get_bloginfo('name') . " - ".$_POST['SearchMuxSubject'];
 	$SearchMuxMessage		=$_POST['SearchMuxMessage'];
 	$SearchMuxCustomValue	=$_POST['SearchMuxCustomValue'];
@@ -195,10 +196,11 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 	if(!empty($SearchMuxEmailToBcc)){
 		$headers = 'Bcc: '.$SearchMuxEmailToBcc.'' . "\r\n";
 	}
- 	
-	$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
+ 	echo $headers;
+	echo "Issent".$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
 	
     if($isSent){
+		echo "Mail sent";
 		wp_redirect(network_site_url()."/profile-category/email_sent");  exit;	
 	}	
 } 
