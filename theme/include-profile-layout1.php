@@ -2,6 +2,239 @@
 /*
 Profile View with Thumbnails and Primary Image
 */
+
+$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
+$urlexploade = explode("/", $profileURLString);
+$subview=$urlexploade[1];
+
+
+if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
+				<div class="allimages_div">
+					<script>  //JS to higlight selected images 
+						function selectImg(mid){
+						//document.getElementById('selected_image').value=mid+"|"+document.getElementById('selected_image').value;
+
+							if(document.getElementById("p"+mid).value==1){
+								img = document.getElementById(mid);
+								img.style.filter       = "alpha(opacity=100)";
+								img.style.MozOpacity   = "100";
+								img.style.opacity      = "100";
+								img.style.KhtmlOpacity = "100";    
+								document.getElementById("p"+mid).value=0;
+							}else{
+								document.getElementById("p"+mid).value=1;
+								img = document.getElementById(mid);
+								img.style.filter       = "alpha(opacity=25)";
+								img.style.MozOpacity   = "0.25";
+								img.style.opacity      = "0.25";
+								img.style.KhtmlOpacity = "0.25";    
+							}
+
+						}
+
+						function validateAllImageForm()
+						{
+							if (!jQuery(".allImageCheck").is(":checked"))
+							{
+								alert("Please select atleast one photo!");
+								return false;
+							}
+
+							return true;
+						}
+					</script>
+					<span class="allimages_text"><?php echo __("Please select photos to print. Maximum is 100 photos only", rb_agency_TEXTDOMAIN)?><br /></span><br />
+					<form action="../print-images/" method="post" id="allimageform" onsubmit="return validateAllImageForm()">
+						<input type="hidden" id="selected_image" name="selected_image" />
+						<?php  
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
+						$resultsImg = mysql_query($queryImg);
+						$countImg = mysql_num_rows($resultsImg);
+						while ($dataImg = mysql_fetch_array($resultsImg)) {
+							echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
+							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
+						}
+						?> <br clear="all" />
+						<input type="submit" value="Next, Select Print Format" />
+					</form>
+					</div><!-- allimages_div-->
+
+					<?php  //load lightbox for images
+					}
+elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
+
+				<div class="allimages_div">
+					<script>  //JS to higlight selected images 
+						function selectImg(mid){
+							//document.getElementById('selected_image').value=mid+"|"+document.getElementById('selected_image').value;
+
+							if(document.getElementById("p"+mid).value==1){
+								img = document.getElementById(mid);
+								img.style.filter       = "alpha(opacity=100)";
+								img.style.MozOpacity   = "100";
+								img.style.opacity      = "100";
+								img.style.KhtmlOpacity = "100";    
+								document.getElementById("p"+mid).value=0;
+							}else{
+								document.getElementById("p"+mid).value=1;
+								img = document.getElementById(mid);
+								img.style.filter       = "alpha(opacity=25)";
+								img.style.MozOpacity   = "0.25";
+								img.style.opacity      = "0.25";
+								img.style.KhtmlOpacity = "0.25";    
+							}
+
+						}
+					</script>
+					<?php 
+					$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Polaroid\" ORDER BY $orderBy";
+					$resultsImg = mysql_query($queryImg);
+					$countImg = mysql_num_rows($resultsImg);?>
+					<?php if($countImg>0){?>
+					<span class="allimages_text"><br /></span><br />
+					<form action="../print-polaroids/" method="post" id="allimageform">
+						<input type="hidden" id="selected_image" name="selected_image" />
+						<?php  
+						while ($dataImg = mysql_fetch_array($resultsImg)) {
+							echo '<a href="'. rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
+							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/tasks/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+						}
+						?> <br clear="all" />
+
+						<!--	<input type="submit" value="Next, Select Print Format" />-->
+
+					</form> <?php }else{?>Sorry, there is no available polaroid images for this profile.<?php }?>
+				</div><!-- allimages_div-->
+
+			<?php } else if ($subview=="print-polaroids"){  //show print options
+
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Polaroid\" ORDER BY $orderBy";
+				$resultsImg = mysql_query($queryImg);
+				$countImg = mysql_num_rows($resultsImg);
+				while ($dataImg = mysql_fetch_array($resultsImg)){
+					if($_POST[$dataImg['ProfileMediaID']]==1){
+						$selected.="<input type='hidden' value='1' name='".$dataImg['ProfileMediaID']."'>";
+						$withSelected=1;
+					}
+						$lasID=$dataImg['ProfileMediaID']; //make sure it will display picture even nothing weere selected
+				}
+				if($withSelected!=1){$selected="<input type='hidden' value='1' name='".$lasID."'>";}
+				?>
+
+				<div class="print_options">
+					<span class="allimages_text">Select Print Format</span><br /><br />
+				</div> 
+
+				<form action="" method="post" target="_blank">
+					<?php echo $selected;?>
+					<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
+					<!-- display options-->
+
+					<div id="polaroids" class="col_8 column">
+
+						<div class="col_6 column">
+							<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
+							<div class="polaroid">
+								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-four-per-page.png" alt="" />
+							</div><!-- polariod -->
+						</div><!-- .six .column -->
+
+						<div class="col_6 column">
+							<input type="radio" value="12" name="print_option" /><h3>One Polaroid Per Page</h3>
+							<div class="polaroid">
+								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-one-per-page.png" alt="" />
+							</div><!-- polariod -->
+						</div><!-- .six .column -->
+
+					</div><!-- polariod -->
+
+					<center>
+						<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
+
+						<input type="submit" value="Print Polaroids" name="print_all_images" />
+						<input type="submit" value="Download PDF Polaroids" name="pdf_all_images" />
+					</center>
+				</form>
+
+
+			<?php } else if($subview=="print-images") {  //show print options
+				 $queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
+				$resultsImg = mysql_query($queryImg);
+				$countImg = mysql_num_rows($resultsImg);
+				while ($dataImg = mysql_fetch_array($resultsImg)){
+				if($_POST[$dataImg['ProfileMediaID']]==1){
+				$selected.="<input type='hidden' value='1' name='".$dataImg['ProfileMediaID']."'>";
+				$withSelected=1;
+				}
+				$lasID=$dataImg['ProfileMediaID']; //make sure it will display picture even nothing weere selected
+				}
+				if($withSelected!=1){$selected="<input type='hidden' value='1' name='".$lasID."'>";}
+				?>
+				
+				<div class="print_options">
+					<span class="allimages_text">Select Print Format</span><br /><br />
+				</div> 
+
+				<form action="" method="post" target="_blank">
+					<?php echo $selected;?>
+					<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
+					<!-- display options-->
+
+					<div id="polaroids" class="col_8 column">
+						<div class="col_6 column">
+							<input type="radio" value="1" name="print_option" checked="checked" /><h3>Print Large Photos</h3>
+							<div class="polaroid">
+								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-with-model-info.png" alt="" />
+							</div><!-- polariod -->
+						</div><!-- .six .column -->
+
+						<div class="col_6 column">
+							<input type="radio" value="3" name="print_option" /><h3>Print Medium Size Photos</h3>
+							<div class="polaroid">
+								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-with-model-info.png" alt="" />
+							</div><!-- polariod -->
+						</div><!-- .six .column -->
+
+
+						<div class="col_6 column">
+							<input type="radio" value="1-1" name="print_option" /><h3>Print Large Photos Without Model Info</h3>
+							<div class="polaroid">
+								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-without-model-info.png" alt="" />
+							</div><!-- polariod -->
+						</div><!-- .six .column -->
+
+						<div class="col_6 column">
+							<input type="radio" value="3-1" name="print_option" /><h3>Print Medium Size Photos Without Model Info</h3>
+							<div class="polaroid">
+								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-without-model-info.png" alt="" />
+							</div><!-- polariod -->
+						</div><!-- .six .column -->
+
+						<?php
+							if(isset($_POST['pdf_image_id'])) {
+								$pdf_image_id=implode(',',$_POST['pdf_image_id']);
+						?>
+							<input type="hidden" name="pdf_image_id" value="<?php echo($pdf_image_id);?>" />
+						<?php
+							}
+						?>
+						
+						
+						</div><!-- polariod -->
+					<center>
+						<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
+
+						<input type="submit" value="Print Pictures" name="print_all_images" />&nbsp;
+						<input type="submit" value="Download PDF" name="pdf_all_images" />
+					</center>
+				</form>
+				
+			<?php }
+					
+					
+			
+			
+			
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-one\" class=\"rblayout\">\n";
 echo "			<div class=\"col_12 column\">\n";
@@ -63,7 +296,10 @@ echo "	  		</div>\n";  // .col_5
 echo "			<div class=\"col_3 column\">\n";
 echo "	  			<div id=\"links\">\n";
 echo "					<ul>\n";
-
+						
+						echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
+						echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
+						echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
 						// Resume
 							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
 							$countMedia = mysql_num_rows($resultsMedia);
