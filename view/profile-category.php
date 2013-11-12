@@ -201,6 +201,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 	
     if($isSent){
 		echo "Mail sent";
+		die;
 		wp_redirect(network_site_url()."/profile-category/email_sent");  exit;	
 	}	
 } 
