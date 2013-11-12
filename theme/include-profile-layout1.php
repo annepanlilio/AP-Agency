@@ -361,7 +361,7 @@ echo "					<ul>\n";
 							// Other Media Type not the 
 							// default ones
 							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" 
-							                             AND ProfileMediaType NOT IN ('Image','Resume','CompCard','Comp Card','Headshot','VoiceDemo','Voice Demo','Video Slate','Video Monologue','Demo Reel')
+							                             AND ProfileMediaType NOT IN ('Image','Resume','Polaroid','CompCard','Comp Card','Headshot','VoiceDemo','Voice Demo','Video Slate','Video Monologue','Demo Reel')
 														 ");
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
