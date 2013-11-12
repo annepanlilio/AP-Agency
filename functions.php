@@ -1028,6 +1028,7 @@ error_reporting(0);
 				}
 				$links.='</div>';
 				$links.='</div>';
+				$links.='<p></p>';	
 
 			}			
 
