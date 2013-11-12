@@ -871,9 +871,14 @@ error_reporting(0);
 		$Zip						= $profilezip;  
 
 		// Name
-		if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
-			$ProfileContactNameFirst = $ProfileContactNameFirst;
-			$filter .= " AND profile.ProfileContactNameFirst LIKE '". $ProfileContactNameFirst ."%'";
+		if(isset($_GET['filter'])){
+				$start = preg_replace('/[^A-Za-z]/','',$_GET['filter']);
+				$filter .= " AND profile.ProfileContactNameFirst LIKE '". $start ."%'";
+		}else{
+			if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
+				$ProfileContactNameFirst = $ProfileContactNameFirst;
+				$filter .= " AND profile.ProfileContactNameFirst LIKE '". $ProfileContactNameFirst ."%'";
+			}
 		}
 		if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
 			$ProfileContactNameLast = $ProfileContactNameLast;
@@ -1009,6 +1014,22 @@ error_reporting(0);
 						</div>';
 				$links.='</div>';
 			}
+
+			/*
+			 *  if featured is set
+			 */
+			if (isset($ProfileIsFeatured)){
+
+				// Dropdown
+				$links.='<div style="float:left; width:100%">';
+				$links.='<div class="rbsort">';
+				foreach (range('A', 'Z') as $letter) {
+					$links.='<a href="?filter='.$letter.'" style="width:10px; height:8px; border-right:1px solid #333; margin:2px; padding-right:4px">'.$letter.'</a>';
+				}
+				$links.='</div>';
+				$links.='</div>';
+
+			}			
 
 			//remove  if its just for client view of listing via casting email
 			if(get_query_var('type')=="profilesecure"){ $links="";}
