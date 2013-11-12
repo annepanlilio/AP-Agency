@@ -265,8 +265,9 @@ if(isset($_POST["SendEmail"])){
 		// Send Email Form
 		echo "    </div><!-- .boxblock -->\n";
 	}
-		echo RBAgency_Casting::cart_send_form();
-	// search result
+		$cartHTML= RBAgency_Casting::cart_send_form();
+		if($cartHTML!=1)
+			echo $cartHTML;	// search result
 	if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
 
 		echo "<div id=\"profile-search-results\">\n";
