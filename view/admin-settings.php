@@ -426,6 +426,9 @@ elseif ($ConfigID == 1) {
 			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout9.php")) {
 		echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 9,false) ."> ". __("Layout 09 - Large Scroller", rb_agency_TEXTDOMAIN) ."</option>\n";
 			}
+			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout10.php")) {
+		echo "       <option value=\"10\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 10,false) ."> ". __("Layout 10  - Profile View with Thumbnails and Primary Image V2", rb_agency_TEXTDOMAIN) ."</option>\n";
+			}			
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -1705,6 +1708,7 @@ elseif ($ConfigID == 5) {
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= (int)$_POST['ProfileCustomShowLogged'];
 		$ProfileCustomShowRegistration= (int)$_POST['ProfileCustomShowRegistration'];
+		$ProfileCustomShowSearchSimple= (int)$_POST['ProfileCustomShowSearchSimple'];
 		$ProfileCustomShowAdmin   	= (int)$_POST['ProfileCustomShowAdmin'];
 		$ProfileCustomPrivacy   	= (int)$_POST['ProfileCustomPrivacy'];
 
@@ -1830,7 +1834,7 @@ elseif ($ConfigID == 5) {
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "','" . $wpdb->escape($ProfileCustomOrder ) . "','" . $wpdb->escape($ProfileCustomShowGender ) . "','" . $wpdb->escape($ProfileCustomShowProfile ) . "','" . $wpdb->escape($ProfileCustomShowSearch) . "','" . $wpdb->escape($ProfileCustomShowLogged ) . "','" . $wpdb->escape($ProfileCustomShowAdmin) . "','" . $wpdb->escape($ProfileCustomShowRegistration) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "','" . $wpdb->escape($ProfileCustomOrder ) . "','" . $wpdb->escape($ProfileCustomShowGender ) . "','" . $wpdb->escape($ProfileCustomShowProfile ) . "','" . $wpdb->escape($ProfileCustomShowSearch) . "','" . $wpdb->escape($ProfileCustomShowLogged ) . "','" . $wpdb->escape($ProfileCustomShowAdmin) . "','" . $wpdb->escape($ProfileCustomShowRegistration). "','" . $wpdb->escape($ProfileCustomShowSearchSimple) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -1914,6 +1918,7 @@ elseif ($ConfigID == 5) {
 								ProfileCustomShowSearch=" . $wpdb->escape($ProfileCustomShowSearch) . " ,
 								ProfileCustomShowLogged=" . $wpdb->escape($ProfileCustomShowLogged) . " ,
 								ProfileCustomShowRegistration=" . $wpdb->escape($ProfileCustomShowRegistration) . " ,
+								ProfileCustomShowSearchSimple=" . $wpdb->escape($ProfileCustomShowSearchSimple) . " ,
 								ProfileCustomShowAdmin=" . $wpdb->escape($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = mysql_query($update) or die(mysql_error());
@@ -2076,6 +2081,7 @@ elseif ($ConfigID == 5) {
 				$ProfileCustomShowSearch	=	$data['ProfileCustomShowSearch'];
 				$ProfileCustomShowLogged	=	$data['ProfileCustomShowLogged'];
 				$ProfileCustomShowRegistration=	$data['ProfileCustomShowRegistration'];
+				$ProfileCustomShowSearchSimple=	$data['ProfileCustomShowSearchSimple'];
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			}
 		
@@ -2097,6 +2103,7 @@ elseif ($ConfigID == 5) {
 			$ProfileCustomShowGender	=	0;
 			$ProfileCustomShowProfile	=	0;
 			$ProfileCustomShowSearch	=	0;
+			$ProfileCustomShowSearchSimple	=	0;
 			$ProfileCustomShowLogged	=	0;
 			$ProfileCustomShowRegistration=	0;
 			$ProfileCustomShowAdmin		=	0;
@@ -2232,7 +2239,7 @@ elseif ($ConfigID == 5) {
 		
 		
 		}else{ //Edit/Update Field
-					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions,  ProfileCustomOrder, ProfileCustomView,  ProfileCustomShowGender	, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
+					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions,  ProfileCustomOrder, ProfileCustomView,  ProfileCustomShowGender	, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration, ProfileCustomShowSearchSimple  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = mysql_query($query1);
 					$count1 = mysql_num_rows($results1);
 					$pos = 0;
@@ -2304,10 +2311,10 @@ elseif ($ConfigID == 5) {
 													<td valign=\"top\">Custom View*:</td>
 													<td style=\"font-size:13px;\">
 							IF PUBLIC:<br />
-							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data['ProfileCustomShowRegistration'] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form<br/>
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)<br/>  
-							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)<br/>
-							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowRegistration"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowSearchSimple"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile<br/>
 												</tr>
 
 												<tr>
