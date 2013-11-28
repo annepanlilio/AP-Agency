@@ -242,7 +242,7 @@ class RBAgency_Profile {
 			 */
 
 				// Query Fields
-				$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
+				$field_sql = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
 				$field_results = mysql_query($field_sql);
 				while ($data = mysql_fetch_array($field_results)) { 
 
@@ -252,11 +252,13 @@ class RBAgency_Profile {
 					$ProfileCustomType = $data['ProfileCustomType'];
 					$ProfileCustomOptions = $data['ProfileCustomOptions'];
 					$ProfileCustomShowSearch = $data['ProfileCustomShowSearch'];
+                                        $ProfileCustomShowSearchSimple = $data['ProfileCustomShowSearchSimple'];
 
 					// Show this Custom Field on Search
 					if( $search_layout == "admin" || 
 						($ProfileCustomShowSearch == 1 && $search_layout == "full" || 
-						(isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) )){
+                                                ($ProfileCustomShowSearchSimple == 1 && $search_layout == "condensed") || 
+						(isset($_POST['form_mode']) && $_POST['form_mode'] == "full" )  )){
 
 						/* Field Type 
 						 * 1 = Single Line Text
