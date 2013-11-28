@@ -2643,7 +2643,11 @@ elseif ($ConfigID == 5) {
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
 	
-		$query = "SELECT * FROM ". table_agency_customfields ." ORDER BY $sort $dir";
+		$query = "SELECT main.*, 
+		          (SELECT ProfileCustomTypes FROM ". table_agency_customfields_types ." a WHERE a.ProfileCustomID = main.ProfileCustomID) as ProfileCustomTypes 
+		          FROM ". table_agency_customfields ." main
+				 ORDER BY $sort $dir";
+				 
 		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 		$count = mysql_num_rows($results);
            
@@ -2700,6 +2704,24 @@ elseif ($ConfigID == 5) {
 		 }else{
 			echo "        <th class=\"column\">All Gender</th>\n";
 		 }
+
+		 $custom_views="";
+		 if($data["ProfileCustomShowRegistration"]==1){
+			$custom_views ="Registration<br/>";
+		 }
+		 if($data["ProfileCustomShowSearch"]==1){
+			$custom_views .="Advanced<br/>";
+		 }
+		 if($data["ProfileCustomShowSearchSimple"]==1){
+			$custom_views .="Simple<br/>";
+		 }
+		 if($data["ProfileCustomShowProfile"]==1){
+			$custom_views .="Profile";
+		 }
+		 
+		 echo "        <td class=\"column\">".$custom_views."</td>\n";
+		 echo "        <td class=\"column\">".str_replace(",","<br/>",$data["ProfileCustomTypes"])."</td>\n";
+		 
 		echo "    </tr>\n";
 		}
 		mysql_free_result($results);
