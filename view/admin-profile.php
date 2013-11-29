@@ -234,7 +234,7 @@ if (isset($_POST['action'])) {
 
 
 					// Notify admin and user
-					if ($ProfileNotifyUser <> "yes" && function_exists(rb_agencyinteract_approvemembers)) {
+					if ($ProfileNotifyUser == "on" && function_exists(rb_agencyinteract_approvemembers)) {
 						wp_new_user_notification($new_user, $ProfilePassword);
 					}
 					// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
