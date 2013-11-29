@@ -2311,7 +2311,7 @@ elseif ($ConfigID == 5) {
 													<td valign=\"top\">Custom View*:</td>
 													<td style=\"font-size:13px;\">
 							IF PUBLIC:<br />
-							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data['ProfileCustomShowRegistration'] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1['ProfileCustomShowRegistration'] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form<br/>
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)<br/>  
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowSearchSimple"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)<br/>
 							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile<br/>
