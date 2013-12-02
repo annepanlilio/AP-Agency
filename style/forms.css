@@ -7,41 +7,41 @@
 	box-sizing: border-box;
 	margin: 0px;
 }
-.rbform .rbform-field {
+.rbform .rbfield {
 	float: left;
 	width: 100%;
 	padding: 10px 0px;
 }
-.rbform .rbform-field > div,
-.rbform .rbform-field > label,
-.rbform .rbform-field > legend {
+.rbform .rbfield > div,
+.rbform .rbfield > label,
+.rbform .rbfield > legend {
 	width: 50%;
 	float: left;
 	line-height: normal;		
 }
-.rbform .rbform-field textarea,
-.rbform .rbform-field input[type="text"],
-.rbform .rbform-field input[type="email"],
-.rbform .rbform-field input[type="password"] {
+.rbform .rbfield select,
+.rbform .rbfield textarea,
+.rbform .rbfield input[type="text"],
+.rbform .rbfield input[type="email"],
+.rbform .rbfield input[type="password"] {
 	width: 100%;
 	padding: 5px;
 }
-.rbform .rbform-field select {
-	width: 100%;
+.rbform .rbfield select {
 	padding: 3px;
 }
-.rbform .rbform-field div div {
+.rbform .rbfield div div {
 	width: 45%;
 	float: left;
 }
-.rbform .rbform-field div div:last-child {
+.rbform .rbfield div div:last-child {
 	float: right;
 }
-.rbform .rbform-field.multi > div label {
+.rbform .rbfield.rbmulti > div label {
 	float: left;
 	clear: both;
 }
-.rbform .rbform-field.submit {
+.rbform .rbfield.rbsubmit {
 	text-align: center;
 }
 
@@ -49,7 +49,7 @@
 #rblayout-seven #stats h1 {
 	margin-bottom: 30px;
 }
-#rblayout-seven #profile-slider .slides > li .multi {
+#rblayout-seven #profile-slider .slides > li .rbmulti {
 	width: 50%;
 	float: left;
 }
@@ -70,7 +70,7 @@
 	background-repeat: no-repeat;
 	background-position: top center;
 }
-#rblayout-seven #profile-carousel .slides > li figure.multi span {
+#rblayout-seven #profile-carousel .slides > li figure.rbmulti span {
 	width: 50%;
 }
 #rblayout-seven #videos-carousel .slides > li {
