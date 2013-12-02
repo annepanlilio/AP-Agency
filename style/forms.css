@@ -1,15 +1,20 @@
 .rbform {
-	max-width: 400px;
+	
 }
 .rbform * {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	margin: 0px;
+	min-height: 1px;
+}
+.rbform p {
+	margin-bottom: 15px;
 }
 .rbform .rbfield {
 	float: left;
 	width: 100%;
+	max-width: 500px;
 	padding: 10px 0px;
 }
 .rbform .rbfield > div,
@@ -30,16 +35,14 @@
 .rbform .rbfield select {
 	padding: 3px;
 }
-.rbform .rbfield div div {
+.rbform .rbtext div div,
+.rbform .rbselect div div {
 	width: 45%;
 	float: left;
 }
-.rbform .rbfield div div:last-child {
+.rbform .rbtext div div:last-child,
+.rbform .rbselect div div:last-child {
 	float: right;
-}
-.rbform .rbfield.rbmulti > div label {
-	float: left;
-	clear: both;
 }
 .rbform .rbfield.rbsubmit {
 	text-align: center;
