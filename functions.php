@@ -39,6 +39,9 @@ error_reporting(0);
 				wp_register_style( 'rbagencyadmin', plugins_url('/style/admin.css', __FILE__) );
 				wp_enqueue_style( 'rbagencyadmin' );
 
+				wp_register_style( 'rbagency-formstyle', plugins_url('RB-Agency/style/forms.css'));
+				wp_enqueue_style( 'rbagency-formstyle' );
+
 				// Load Jquery if not registered
 				if ( ! wp_script_is( 'jquery', 'registered' ) )
 					wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
@@ -61,23 +64,21 @@ error_reporting(0);
 			if( !is_admin() ) {
 				
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('RB-Agency/style/forms.css'));
+				wp_register_style( 'rbagency-style', plugins_url('RB-Agency/theme/style.css'));
 				wp_enqueue_style( 'rbagency-style' );
+
+				wp_register_style( 'rbagency-formstyle', plugins_url('RB-Agency/style/forms.css'));
+				wp_enqueue_style( 'rbagency-formstyle' );
 			}	
 		}
 
         add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
 		
-                function rb_agency_insertscripts() {
-
-                        if( !is_admin() ) {
-					if(get_query_var('type') == "search-basic" || 
-					   get_query_var('type') == "search-badvanced" ){
-						wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
-						wp_register_style( 'rbagency-formstyle', plugins_url('RB-Agency/style/forms.css'));
-						wp_enqueue_style( 'rbagency-formstyle' );
-					}
-                                
+        function rb_agency_insertscripts() {
+            if( !is_admin() ) {
+				if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
+					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );					
+				}                                
 			}	
 		}
 

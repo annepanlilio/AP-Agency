@@ -13,9 +13,14 @@
 }
 .rbform .rbfield {
 	float: left;
+	clear: both;
 	width: 100%;
-	max-width: 500px;
-	padding: 10px 0px;
+	max-width: 400px;
+	padding: 10px 0px;	
+}
+.rbform.form-admin .rbfield {
+	max-width: 100%;
+	border-bottom: 1px solid #eee;
 }
 .rbform .rbfield > div,
 .rbform .rbfield > label,
@@ -30,10 +35,29 @@
 .rbform .rbfield input[type="email"],
 .rbform .rbfield input[type="password"] {
 	width: 100%;
-	padding: 5px;
+	padding: 5px;	
+	border-radius: 3px;
+	font-family: inherit;
+	border: 1px solid #ccc;
 }
 .rbform .rbfield select {
 	padding: 3px;
+	min-width: 100%;
+	min-height: 30px;
+}
+.rbform .rbfield.rbblock div > div {
+	width: 100%;
+	margin-bottom: 10px;
+}
+.rbform .rbfield.rbblock div > div label,
+.rbform .rbfield.rbblock div > div div {
+	float: left;
+}
+.rbform .rbfield.rbblock div > div label {
+	width: 30%;
+}
+.rbform .rbfield.rbblock div > div div {
+	width: 70%;
 }
 .rbform .rbtext div div,
 .rbform .rbselect div div {
