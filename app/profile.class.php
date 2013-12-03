@@ -67,7 +67,7 @@ class RBAgency_Profile {
 				jQuery(document).ready(function(){
 					jQuery.fn.rset = function(){
 						jQuery(this).on("click",function(){
-							var inputs = jQuery(".rbform-field").find("input[type=text]");
+							var inputs = jQuery(".rbfield").find("input[type=text]");
 								for (var i = 0; i < inputs.length; i++) {
 									switch (inputs[i].type) {
 										case 'text':
@@ -78,7 +78,7 @@ class RBAgency_Profile {
 											inputs[i].checked = false;
 									}
 								}
-							jQuery(".rbform-field").find("select").prop('selectedIndex',0);
+							jQuery(".rbfield").find("select").prop('selectedIndex',0);
 						});
 					}
 
@@ -123,11 +123,11 @@ class RBAgency_Profile {
 
 				// Show Profile Name
 				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
 						echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"". $_SESSION["namefirst"] ."\" /></div>\n";
 						echo "				</div>\n";
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
 						echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"". $_SESSION["namelast"] ."\" /></div>\n";
 						echo "				</div>\n";
@@ -135,7 +135,7 @@ class RBAgency_Profile {
 
 				// Show Profile Type
 				if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbselect rbsingle\">\n";
 						echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"profiletype\" id=\"type\">\n";               
@@ -155,7 +155,7 @@ class RBAgency_Profile {
 
 				// Show Profile Gender
 				if ( ($rb_agency_option_formshow_gender > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
 						echo "					<label for=\"gender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"gender\" id=\"gender\">\n";
@@ -173,8 +173,7 @@ class RBAgency_Profile {
 
 				// Show Profile Age
 				if ( ($rb_agency_option_formshow_age > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
-						echo "				<div class=\"rbform-field single\">\n";
-						echo "				  <fieldset class=\"rbform-field multi\">";
+						echo "				  <fieldset class=\"rbfield rbtext rbmulti\">";
 						echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 						echo "					<div>\n";
 						echo "						<div>\n";
@@ -187,17 +186,16 @@ class RBAgency_Profile {
 						echo "						</div>";
 						echo "					</div>";
 						echo "				  </fieldset>";
-						echo "				</div>\n";
 				}
 
 				// Show Location Search
 				if ( ($rb_agency_option_formshow_location > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
 						echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"". $_SESSION["city"] ."\" /></div>\n";
 						echo "				</div>\n";
 
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbselect rbsingle\">\n";
 																		$location= site_url();
 						echo '					<input type="hidden" id="url" value="'.$location.'">';
 						echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
@@ -214,7 +212,7 @@ class RBAgency_Profile {
 						echo "					</div>\n";
 						echo "				</div>\n";
 
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbselect rbsingle\">\n";
 						echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
 																		//echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"". $_SESSION["state"] ."\" />\n";
 																		$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
@@ -230,7 +228,7 @@ class RBAgency_Profile {
 						echo "					</div>\n";
 						echo "				</div>\n";
 
-						echo "				<div class=\"rbform-field single\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
 						echo "					<label for=\"zip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"". $_SESSION["zip"] ."\" /></div>\n";
 						echo "				</div>\n";
@@ -279,7 +277,7 @@ class RBAgency_Profile {
 						 */
 
 						if($ProfileCustomType == 1) {
-								echo "<div class=\"rbform-field single\">";
+								echo "<div class=\"rbfield rbtext rbsingle\">";
 								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								//Commentd to fix language value populate
 								//echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
@@ -292,7 +290,7 @@ class RBAgency_Profile {
 						 */
 						} elseif($ProfileCustomType == 2) {
 
-								echo "<div class=\"rbform-field single\">";
+								echo "<div class=\"rbfield rbtext rbsingle\">";
 								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($ProfileCustomOptions,"}"),"{"));
 								list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
@@ -329,7 +327,7 @@ class RBAgency_Profile {
 						 * Dropdown
 						 */
 						} elseif($ProfileCustomType == 3) {
-								echo "<div class=\"rbform-field single\">";
+								echo "<div class=\"rbfield rbselect rbsingle\">";
 								echo "	<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								echo "	<div>";
 								echo "		<select name=\"ProfileCustomID". $ProfileCustomID ."\">";
@@ -359,7 +357,7 @@ class RBAgency_Profile {
 						} elseif($ProfileCustomType == 4) {
 							/*
 							TODO: Should we search text inside of text area?
-											echo "<div class=\"rbform-field single\">";
+											echo "<div class=\"rbfield rbsingle\">";
 											echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 											echo "<textarea name=\"ProfileCustomID". $ProfileCustomID ."\">". $_REQUEST["ProfileCustomID". $ProfileCustomID] ."</textarea>";
 											echo "</div>";
@@ -369,7 +367,7 @@ class RBAgency_Profile {
 						 * Checkbox
 						 */
 						} elseif($ProfileCustomType == 5) {
-								echo "<fieldset class=\"rbform-field multi\">";
+								echo "<fieldset class=\"rbfield rbcheckbox rbmulti\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
@@ -379,18 +377,18 @@ class RBAgency_Profile {
 
 										$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
 										if(in_array($val,$dataArr,true)){
-											echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+											echo "<div><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span> ". $val."</span></label></div>";
 										} else {
 											if($val !=""){
-												echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-												echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+												echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+												echo "<span> ". $val."</span></label></div>";
 											}
 										}
 									} else {
 										if($val !=""){
-											echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+											echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span> ". $val."</span></label></div>";
 										}
 									}
 								}
@@ -403,7 +401,7 @@ class RBAgency_Profile {
 						 * Radio Button
 						 */
 						} elseif($ProfileCustomType == 6) {
-								echo "<fieldset class=\"rbform-field multi\">";
+								echo "<fieldset class=\"rbfield rbradio rbmulti\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
@@ -415,18 +413,18 @@ class RBAgency_Profile {
 										$dataArr = explode(",",implode(",",explode("','",$_SESSION["ProfileCustomID". $ProfileCustomID])));
 
 										if(in_array($val,$dataArr) && $val !=""){
-											echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+											echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span> ". $val."</span></label></div>";
 										}else{
 											if($val !=""){
-												echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-												echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
+												echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+												echo "<span> ". $val."</span></label></div>";	
 											}
 										}
 									} else {
 										if($val !=""){
-											echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
+											echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<span> ". $val."</span></label></div>";	
 										}
 									}
 								}
@@ -438,7 +436,7 @@ class RBAgency_Profile {
 						 * Metric
 						 */
 						} elseif($ProfileCustomType == 7) {
-								echo "<fieldset class=\"rbform-field multi\">";
+								echo "<fieldset class=\"rbfield rbselect rbmulti\">";
 
 								$measurements_label = "";
 
@@ -530,7 +528,7 @@ class RBAgency_Profile {
 				}
 
                                 //status
-                                echo "				<div class=\"rbform-field single\">\n";
+                                echo "				<div class=\"rbfield rbselect rbsingle\">\n";
                                 echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
                                 echo "						<div>";
                                 echo "				        	<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
@@ -543,7 +541,7 @@ class RBAgency_Profile {
                                 echo "				    	</div>\n";
                                 echo "				    </div>\n";
 
-				echo "				<div class=\"rbform-field submit\">";
+				echo "				<div class=\"rbfield rbsubmit rbsingle\">";
 				echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
 				echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
 				if ( (get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' ){
@@ -893,7 +891,7 @@ class RBAgency_Profile {
 								/*
 								 * Id like to chop this one out and extract
 								 * the array values from here and make it a string with "," or
-								 * pass the single value back $val
+								 * pass the rbsingle value back $val
 								 */
 								if(is_array($val)){
 									if(count(array_filter($val)) > 1) {
