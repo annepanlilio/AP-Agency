@@ -4,15 +4,6 @@
 
 session_start();
 header("Cache-control: private"); //IE 6 Fix
-// Can we show the pages?
-if((is_user_logged_in() && $rb_agency_options_arr['rb_agency_option_privacy']==2)||
-// Must be logged to view model list and profile information
-($rb_agency_options_arr['rb_agency_option_privacy']==1) ||
-// Model list public. Must be logged to view profile information
-($rb_agency_options_arr['rb_agency_option_privacy']==0) ||
-// Model list public. Must be logged to view profile information
-($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
-{
 
 // Get Profile
 $ProfileType = get_query_var('target'); 
@@ -215,11 +206,22 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 
 get_header(); 
 
+
+
 	// Profile Class
 	include(rb_agency_BASEREL ."app/profile.class.php");
 
 	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
+	// Can we show the pages?
+	if((is_user_logged_in() && $rb_agency_options_arr['rb_agency_option_privacy']==2)||
+	// Must be logged to view model list and profile information
+	($rb_agency_options_arr['rb_agency_option_privacy']==1) ||
+	// Model list public. Must be logged to view profile information
+	($rb_agency_options_arr['rb_agency_option_privacy']==0) ||
+	// Model list public. Must be logged to view profile information
+	($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
+	{
 	
 		echo "<div id=\"profile-category\">\n";
 
@@ -310,13 +312,18 @@ get_header();
 		echo "</div><!-- #profile-category -->\n";
 		echo "<div class=\"cb\"></div>\n";
 		
+		}else{
+			echo "	<div>\n";
+			echo "<h2>Page Reatricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
+			echo "  </div><!-- #content -->\n";
+			
+		}
+		
 	echo "  </div><!-- #content -->\n";
 	echo "</div><!-- #primary -->\n";
-       
+	
+
 get_sidebar();
 get_footer(); 
-}else{
-wp_safe_redirect(get_bloginfo("wpurl"). "/profile-login/");
-die;
-}
+
 ?>
