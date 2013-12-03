@@ -72,6 +72,14 @@
 	text-align: center;
 }
 
+/* Widget Login Form */
+.rbform #rbform-login .rbfield > label {
+	width: 40%;
+}
+.rbform #rbform-login .rbfield > div {
+	width: 60%;
+}
+
 /* RB Agency Layout 7 */
 #rblayout-seven #stats h1 {
 	margin-bottom: 30px;
