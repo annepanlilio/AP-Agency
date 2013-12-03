@@ -314,7 +314,7 @@ get_header();
 		
 		}else{
 			echo "	<div>\n";
-			echo "<h2>Page Reatricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
+			echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
 			echo "  </div><!-- #content -->\n";
 			
 		}

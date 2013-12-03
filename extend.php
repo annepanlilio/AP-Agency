@@ -149,9 +149,9 @@
 			ob_end_clean();
 			return $output_string;
 			}else{
-			wp_safe_redirect(get_bloginfo("wpurl"). "/profile-login/");
-			die;
-			
+				echo "	<div>\n";
+				echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
+				echo "  </div><!-- #content -->\n";
 			}
 		}
 
