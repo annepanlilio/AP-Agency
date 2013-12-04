@@ -36,6 +36,10 @@ if(isset($_POST["SendEmail"])){
 		
 }
 
+if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
+		// Empty Cart
+		unset($_SESSION['cartArray']);
+}
 
 // *************************************************************************************************** //
 // Get Search Results
