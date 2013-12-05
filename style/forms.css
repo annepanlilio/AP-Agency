@@ -45,9 +45,13 @@
 	min-width: 100%;
 	min-height: 30px;
 }
+.rbform .rbfield .rbfield-note { line-height: normal; }
 .rbform .rbfield.rbblock div > div {
 	width: 100%;
 	margin-bottom: 10px;
+}
+.rbform .rbfield.rbblock div > div:last-child {
+	margin-bottom: 0px;
 }
 .rbform .rbfield.rbblock div > div label,
 .rbform .rbfield.rbblock div > div div {
