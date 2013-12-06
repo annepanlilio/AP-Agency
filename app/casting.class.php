@@ -17,9 +17,10 @@ class RBAgency_Casting {
 			// Protect and defend the cart string!
 				$cartString = "";
 				$action = $_GET["action"];
+				$actiontwo = $_GET["actiontwo"];
 
 
-				if ($action == "cartAdd") {
+				if ($action == "cartAdd" && !isset($_GET["actiontwo"])) {
 					// Add to Cart
 					$response = self::cart_process_add();
 
@@ -37,7 +38,7 @@ class RBAgency_Casting {
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
-				} elseif ($action == "cartRemove") {
+				} elseif ($action == "cartAdd" && $actiontwo ="cartRemove") {
 					// Remove ID from Cart
 					$id = $_GET["RemoveID"];
 					$response = self::cart_process_remove($id);
@@ -114,7 +115,7 @@ class RBAgency_Casting {
 				$_SESSION['cartArray'] = array($cartString);
 			}
 
-			echo "TEST";
+			// echo "TEST";
 		}
 
 
@@ -163,7 +164,7 @@ class RBAgency_Casting {
 					// TODO: ADD MORE FIELDS
 
 					echo "    </div>";
-					echo "    <div style=\"position: absolute; z-index: 20; top: 120px; left: 200px; width: 20px; height: 20px; overflow: hidden; \"><a href=\"?page=". $_GET['page'] ."&action=". $cartAction ."&RemoveID=". $data['ProfileID'] ."\" title=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\"><img src=\"". rb_agency_BASEDIR ."style/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\" /></a></div>";
+					echo "    <div style=\"position: absolute; z-index: 20; top: 120px; left: 200px; width: 20px; height: 20px; overflow: hidden; \"><a href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\"><img src=\"". rb_agency_BASEDIR ."style/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\" /></a></div>";
 					echo "    <div style=\"clear: both; \"></div>";
 					echo "  </div>";
 				}
@@ -252,9 +253,26 @@ class RBAgency_Casting {
 				'" . $wpdb->escape($SearchMuxMessage) . "',
 				'" . $wpdb->escape($SearchMuxCustomValue) ."'
 				)";
-		$results = $wpdb->query($insert);                 
-					
-					
+			$results = $wpdb->query($insert);  
+
+			$profileimage = "";  
+			$profileimage .='<p><div style="width:550px;min-height: 170px;">';
+			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $lastid ."\"";
+			$qProfiles =  mysql_query($query);
+			$data = mysql_fetch_array($qProfiles);
+			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$data['SearchProfileID'].") ORDER BY ProfileContactNameFirst ASC";
+			$results = mysql_query($query);
+			$count = mysql_num_rows($results);
+			while ($data2 = mysql_fetch_array($results)) {
+				$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
+				$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
+				$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+				$profileimage .= "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+				$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+				$profileimage .= "</div>\n";
+				$profileimage .= "</div>\n";
+			  }
+			 $profileimage .="</div></p>";
 			
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
@@ -275,7 +293,7 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bcc;
 				}
 			}
-			 $MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash,$MassEmailMessage);
+			 $MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$MassEmailMessage);
 			 $MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 		   	 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
