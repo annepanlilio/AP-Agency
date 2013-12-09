@@ -2627,7 +2627,8 @@ elseif ($ConfigID == 5) {
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Visibility", rb_agency_TEXTDOMAIN) ."</a></th>\n";
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Custom Order", rb_agency_TEXTDOMAIN) ."</a></th>\n";
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-	
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Custom View", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Profile Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		echo "<tfoot>\n";
@@ -2639,6 +2640,8 @@ elseif ($ConfigID == 5) {
 		echo "        <th class=\"column\" scope=\"col\">". __("Visibility", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Custom Order", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Custom View", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Profile Type", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
