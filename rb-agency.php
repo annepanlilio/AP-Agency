@@ -6,9 +6,9 @@ Plugin URI: http://rbplugin.com/wordpress/model-talent-agency-software/
 Description: With this plugin you can easily manage models profiles and information.
 Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
-Version: 2.0.4
+Version: 2.0.6
 */
-$rb_agency_VERSION = "2.0.5";
+$rb_agency_VERSION = "2.0.6";
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2013 Rob Bertholf
