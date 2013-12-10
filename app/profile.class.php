@@ -250,12 +250,10 @@ class RBAgency_Profile {
 					$ProfileCustomType = $data['ProfileCustomType'];
 					$ProfileCustomOptions = $data['ProfileCustomOptions'];
 					$ProfileCustomShowSearch = $data['ProfileCustomShowSearch'];
-                                        $ProfileCustomShowSearchSimple = $data['ProfileCustomShowSearchSimple'];
+                    $ProfileCustomShowSearchSimple = $data['ProfileCustomShowSearchSimple'];
 
 					// Show this Custom Field on Search
-					if( $search_layout == "admin" || 
-						($ProfileCustomShowSearch == 1 && $search_layout == "full" || 
-                                                ($ProfileCustomShowSearchSimple == 1 && $search_layout == "condensed") || 
+					if( $search_layout == "admin" || ($ProfileCustomShowSearch == 1 && $search_layout == "full" || ($ProfileCustomShowSearchSimple == 1 && $search_layout=='simple') || 
 						(isset($_POST['form_mode']) && $_POST['form_mode'] == "full" )  )){
 
 						/* Field Type 
