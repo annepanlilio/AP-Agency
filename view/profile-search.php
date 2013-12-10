@@ -52,18 +52,34 @@ get_header();
 			
 					// Process Form Submission
 					echo RBAgency_Profile::search_results($search_sql_query, 0);
-					//$formatted = RBAgency_Profile::search_formatted($search_results);
+					//  echo $formatted = RBAgency_Profile::search_formatted($search_results);
+					
 			
 			
 				} else {
-				echo "				<strong>". __("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
+				if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' )
+					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' )){
+						
+							// echo RBAgency_Profile::search_form("", "", 0);
+					}else{
+					echo "				<strong>". _e("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
+					}
+				
+				
 				}
 				echo "			</div><!-- #profile-search-results -->\n"; // #profile-search-results
 				echo "			<hr />";
 			
 					//do not display on results
 				if(!isset($_POST['form_mode'])){
-					echo RBAgency_Profile::search_form("", "", 0);
+					if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' )
+					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' )){
+						
+							echo RBAgency_Profile::search_form("", "", 0);
+					}else{
+							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+					}
 				} else {
 					if ( isset($_POST['form_mode']) ){
 							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
@@ -90,6 +106,6 @@ get_header();
 	echo "	</div><!-- #content -->\n"; // #content
 	echo "</div><!-- #primary -->\n"; // #primary
 
-get_sidebar(); 
+// get_sidebar(); 
 get_footer(); 
 ?>

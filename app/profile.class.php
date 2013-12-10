@@ -526,21 +526,23 @@ class RBAgency_Profile {
 					}
 
 				}
-
-                                //status
-                                echo "				<div class=\"rbfield rbselect rbsingle\">\n";
-                                echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
-                                echo "						<div>";
-                                echo "				        	<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
-                                echo "								<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
-                                echo "								<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-                                echo "								<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
-                                echo "								<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-                                echo "								<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-                                echo "				        	</select>\n";
-                                echo "				    	</div>\n";
-                                echo "				    </div>\n";
-
+								
+								 /* status The “Status” field should not show up on front-end search.*/ 
+								if(isset($_REQUEST['page']) && $_REQUEST['page']=='rb_agency_search'){
+									echo "				<div class=\"rbfield rbselect rbsingle\">\n";
+									echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
+									echo "						<div>";
+									echo "				        	<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
+									echo "								<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
+									echo "								<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+									echo "								<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
+									echo "								<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+									echo "								<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+									echo "				        	</select>\n";
+									echo "				    	</div>\n";
+									echo "				    </div>\n";
+								}
+							
 				echo "				<div class=\"rbfield rbsubmit rbsingle\">";
 				echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
 				echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
@@ -554,12 +556,13 @@ class RBAgency_Profile {
 
 				echo "			<script>\n";
 				echo "			function clearForm(){\n";
-				echo "				$('namefirst').val('');\n";
-				echo "				$('namelast').val('');\n";
-				echo "				$('type').val('');\n";
-				echo "				$('gender').val('');\n";
-				echo "				$('datebirth_min').val('');\n";
-				echo "				$('datebirth_max').val('');\n";
+				echo "				jQuery('#namefirst').val('');\n";
+				echo "				jQuery('#namelast').val('');\n";
+				echo "				jQuery(\"select[name*='ProfileCustomID']\" ).val('');\n";
+				echo "				jQuery('#type').val('');\n";
+				echo "				jQuery('#gender').val('');\n";
+				echo "				jQuery('#datebirth_min').val('');\n";
+				echo "				jQuery('#datebirth_max').val('');\n";
 				echo "			}\n";
 				echo "			</script>\n";
 				echo "		</div>\n";
@@ -1227,7 +1230,7 @@ class RBAgency_Profile {
 				/* 
 				 * wrap profile listing
 				 */				
-				$all_html .="<div id='profile-list'>".$profile_list."</div></div>";
+				$all_html .="<div id='profile-list'>".$profile_list."</div>";
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
 					var_dump(self::$error_checking);
