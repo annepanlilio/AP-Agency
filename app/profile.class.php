@@ -1181,11 +1181,39 @@ class RBAgency_Profile {
 			/* 
 			 * format profile list per profile
 			 */
-			
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_profilelist_sortby		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
 			$results = mysql_query($sql) or die(mysql_error());
 			$count = mysql_num_rows($results);
 			$profile_list = "";
 			$all_html = "";
+			$all_html.='<div id="rbfilter-sort">';
+			$all_html.='<div class="rbsort">';
+			$all_html.='<label>Total Results : '.$count.' </label> <br/><br/>';
+			/*
+			 *  sorting options is activated if set on in admin/settings
+			 */
+			if($rb_agency_option_profilelist_sortby){
+
+				// Enqueue our js script
+				wp_enqueue_script( 'list_reorder', plugins_url('rb-agency/js/list_reorder.js'),array('jquery'));
+
+				// Dropdown
+				
+				$all_html.='<label>Sort By: </label>
+						<select id="sort_by">
+							<option value="">Sort List</option>
+							<option value="1">Age</option>
+							<option value="2">Name</option>
+							<option value="3">Date Joined</option>
+						</select>
+						<select id="sort_option">
+							<option value="">Sort Options</option>
+						</select>';
+			
+			}
+			$all_html.='</div></div>';
+			$all_html .= "	<hr />";
 			if ($count > 0){
 				while ($profile = mysql_fetch_array($results)) {
 					$profile_list .= self::search_formatted($profile);
@@ -1206,7 +1234,8 @@ class RBAgency_Profile {
 				/* 
 				 * this is the upper header html of the profile list
 				 */
-				$all_html =  "<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
+
+				$all_html .=  "<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
 				$all_html .= '<div id="profile-results-info">';
 				if ($rb_agency_option_profilelist_favorite){ 
 					$all_html .= "<div class=\"profile-results-info-countpage\">\n";
