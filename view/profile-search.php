@@ -28,8 +28,8 @@ get_header();
 		 //  Must be logged as "Client" to view model list and profile information
 		 ($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
 	
-	
-				if ($_REQUEST["action"] == "search_profiles") {
+
+				if ($_REQUEST["form_action"] == "search_profiles") {
 				echo "			<h1 class=\"entry-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 				} else {
 					if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
