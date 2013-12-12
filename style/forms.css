@@ -8,6 +8,10 @@
 	margin: 0px;
 	min-height: 1px;
 }
+.rbform h3,
+.rbform p {
+	clear: both;
+}
 .rbform p {
 	margin-bottom: 15px;
 }
@@ -39,13 +43,22 @@
 	border-radius: 3px;
 	font-family: inherit;
 	border: 1px solid #ccc;
+	min-height: 30px;
 }
 .rbform .rbfield select {
 	padding: 3px;
 	min-width: 100%;
 	min-height: 30px;
 }
-.rbform .rbfield .rbfield-note { line-height: normal; }
+.rbform .rbfield textarea {
+	min-height: 100px;
+}
+.rbform .rbfield .rbfield-note {
+	line-height: normal;
+}
+.rbform .rbfield .rbfield-note.error {
+	color: red;
+}
 .rbform .rbfield.rbblock div > div {
 	width: 100%;
 	margin-bottom: 10px;
@@ -76,12 +89,14 @@
 	text-align: center;
 }
 
-/* Widget Login Form */
-.rbform #rbform-login .rbfield > label {
+/* Widget RBForm */
+.widget .rbform .rbfield > label,
+.widget .rbform .rbfield > legend {
 	width: 40%;
 }
-.rbform #rbform-login .rbfield > div {
+.widget .rbform .rbfield > div {
 	width: 60%;
+	padding-left: 3%;
 }
 
 /* RB Agency Layout 7 */
