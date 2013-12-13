@@ -1864,6 +1864,15 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		$ProfileCustomValue = $row["ProfileCustomValue"];
 		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 		$ProfileCustomType  = $data3['ProfileCustomType'];
+		/* Pull data from post so data will not lost @Satya 12/12/2013 */
+		if($ProfileCustomValue=="" && isset($_POST)){
+			$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ; 
+			If (is_array($_POST[$customindex])) {
+				$ProfileCustomValue = implode(",", $_POST[$customindex]);
+			}else{
+					$ProfileCustomValue = $_POST[$customindex] ;
+			}
+		}
 	
 			// SET Label for Measurements
 			// Imperial(in/lb), Metrics(ft/kg)

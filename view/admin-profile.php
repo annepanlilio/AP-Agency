@@ -27,7 +27,7 @@ define("LabelSingular", "Profiles");
 
 // *************************************************************************************************** //
 // Handle Post Actions
-
+$errorValidation = array();
 if (isset($_POST['action'])) {
 
 	/*
@@ -53,7 +53,7 @@ if (isset($_POST['action'])) {
 			}
 
 		} elseif ($rb_agency_option_profilenaming == 2) {
-			$error .= "<b><i>" . __(LabelSingular . " must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+			$errorValidation['rb_agency_option_profilenaming'] = "<b><i>" . __(LabelSingular . " must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		} elseif ($rb_agency_option_profilenaming == 3) {
 			$ProfileContactDisplay = "ID " . $ProfileID;
@@ -100,10 +100,10 @@ if (isset($_POST['action'])) {
 	$ProfileNotifyUser = $_POST["ProfileNotifyUser"];
 
 	// Error checking
-	$error = "";
+	
 	$have_error = false;
 	if (trim($ProfileContactNameFirst) == "") {
-		$error .= "<b><i>The " . LabelSingular . " must have a name.</i></b><br>";
+		$errorValidation['ProfileContactNameFirst']= "<b><i>The " . LabelSingular . " must have a name.</i></b><br>";
 		$have_error = true;
 	}
         if ($_GET["action"] == "add") {
@@ -117,28 +117,28 @@ if (isset($_POST['action'])) {
             );
                     if(function_exists(rb_agencyinteract_approvemembers)){
                             if (empty($userdata['user_login'])) {
-                                    $error .= __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
+                                   $errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
                                     $have_error = true;
                             }
                             if (username_exists($userdata['user_login'])) {
-                                    $error .= __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
+                                    $errorValidation['user_login'] = __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
                                     $have_error = true;
                             }
                             if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
-                                    $error .= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
+                                    $errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
                                     $have_error = true;
                             }
                     }
             if (!is_email($userdata['user_email'], true)) {
-                $error .= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
+                $errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
                 $have_error = true;
             }
             if (email_exists($userdata['user_email'])) {
-                $error .= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+                $errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
                 $have_error = true;
             } else {
                             if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
-                                    $error .= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+                                    $errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
                                     $have_error = true;
                             }		
                     }
@@ -148,17 +148,16 @@ if (isset($_POST['action'])) {
         if ($_POST["action"] == "editRecord") {
 		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
 			if (!is_email($ProfileContactEmail, true)) {
-				$error .= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
+				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
 				$have_error = true;
 			}
 			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
-				$error .= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
 				$have_error = true;
 			}
 		}
         }
         
-
 	// Get Post State
 	$action = $_POST['action'];
 	switch ($action) {
@@ -234,7 +233,7 @@ if (isset($_POST['action'])) {
 
 
 					// Notify admin and user
-					if ($ProfileNotifyUser == "on" && function_exists(rb_agencyinteract_approvemembers)) {
+					if ($ProfileNotifyUser <> "yes" && function_exists(rb_agencyinteract_approvemembers)) {
 						wp_new_user_notification($new_user, $ProfilePassword);
 					}
 					// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
@@ -265,10 +264,8 @@ if (isset($_POST['action'])) {
 				}
 			} else {
 				echo ('<div id="message" class="error"><p>' . __("Error creating record, please ensure you have filled out all required fields.", rb_agency_TEXTDOMAIN) . '</p></div>');
-				echo ('<div id="message" class="error"><p>' . $error);
-				echo "<br/><a href=\"javascript:;\" onclick=\"if(document.referrer) {window.open(document.referrer,'_self');} else {history.go(-1);} return false;\">&larr;Go back and Edit</a>";
-				echo "</p></div>";
-				rb_display_manage($ProfileID);
+				rb_display_manage($ProfileID,$errorValidation);
+				
 			}
 
 			break;
@@ -367,7 +364,7 @@ if (isset($_POST['action'])) {
 										// Add to database
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 									} else {
-										$error .= "<b><i>Please upload an image file only</i></b><br />";
+										$errorValidation['profileMedia'] = "<b><i>Please upload an image file only</i></b><br />";
 										$have_error = true;
 									}
 								} else if ($uploadMediaType == "VoiceDemo") {
@@ -377,7 +374,7 @@ if (isset($_POST['action'])) {
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 									} else {
-										$error .= "<b><i>Please upload a mp3 file only</i></b><br />";
+										$errorValidation['profileMedia'] = "<b><i>Please upload a mp3 file only</i></b><br />";
 										$have_error = true;
 									}
 								} else if ($uploadMediaType == "Resume") {
@@ -386,7 +383,7 @@ if (isset($_POST['action'])) {
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 									} else {
-										$error .= "<b><i>Please upload PDF/MSword/RTF files only</i></b><br />";
+										$errorValidation['profileMedia'] = "<b><i>Please upload PDF/MSword/RTF files only</i></b><br />";
 										$have_error = true;
 									}
 								} else if ($uploadMediaType == "Headshot") {
@@ -395,7 +392,7 @@ if (isset($_POST['action'])) {
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 									} else {
-										$error .= "<b><i>Please upload PDF/MSWord/RTF/Image files only</i></b><br />";
+										$errorValidation['profileMedia'] = "<b><i>Please upload PDF/MSWord/RTF/Image files only</i></b><br />";
 										$have_error = true;
 									}
 								} else if ($uploadMediaType == "Compcard") {
@@ -404,7 +401,7 @@ if (isset($_POST['action'])) {
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 									} else {
-										$error .= "<b><i>Please upload jpeg or png files only</i></b><br />";
+										$errorValidation['profileMedia'] = "<b><i>Please upload jpeg or png files only</i></b><br />";
 										$have_error = true;
 									}
 								} else {
@@ -413,7 +410,7 @@ if (isset($_POST['action'])) {
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 									} else {
-										$error .= "<b><i>" . __("Please upload jpeg or png files only", rb_agencyinteract_TEXTDOMAIN) . "</i></b><br />";
+										$errorValidation['profileMedia'] = "<b><i>" . __("Please upload jpeg or png files only", rb_agencyinteract_TEXTDOMAIN) . "</i></b><br />";
 										$have_error = true;
 									}
 								}
@@ -569,7 +566,7 @@ elseif (($_GET['action'] == "editRecord") || ($_GET['action'] == "add")) {
 	$action = $_GET['action'];
 	$ProfileID = $_GET['ProfileID'];
 
-	rb_display_manage($ProfileID);
+	rb_display_manage($ProfileID,$errorValidation);
 } else {
 // *************************************************************************************************** //
 // Show List
@@ -578,7 +575,7 @@ elseif (($_GET['action'] == "editRecord") || ($_GET['action'] == "add")) {
 
 // *************************************************************************************************** //
 // Manage Record
-function rb_display_manage($ProfileID) {
+function rb_display_manage($ProfileID, $errorValidation) {
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
@@ -697,17 +694,61 @@ function rb_display_manage($ProfileID) {
 			echo "<p>" . __("Make changes in the form below to edit a", rb_agency_TEXTDOMAIN) . " " . LabelSingular . ". <strong>" . __("Required fields are marked", rb_agency_TEXTDOMAIN) . "Required fields are marked *</strong></p>\n";
 		}
 	} else {
+
 		// Set default values for new records
 		$ProfilesModelDate = $date;
 		$ProfileType = 1;
 		$ProfileGender = "Unknown";
 		$ProfileIsActive = 1;
-		$ProfileLocationCountry = $rb_agency_option_locationcountry;
+		
+		/*
+		 * Pull Post Values and  Form value should not lost on error @Satya 12/12/2013
+		 */
+		if (isset($_POST['action'])) {
+			$ProfileID = $_POST['ProfileID'];
+			$ProfileUserLinked = $_POST['ProfileUserLinked'];
+			$ProfileContactNameFirst = trim($_POST['ProfileContactNameFirst']);
+			$ProfileContactNameLast = trim($_POST['ProfileContactNameLast']);
+			$ProfileContactDisplay = trim($_POST['ProfileContactDisplay']);
+			$ProfileGallery = $_POST['ProfileGallery'];
+			$ProfileGender = $_POST['ProfileGender'];
+			$ProfileDateBirth = $_POST['ProfileDateBirth'];
+			$ProfileContactEmail = $_POST['ProfileContactEmail'];
+			$ProfileUsername = $_POST["ProfileUsername"];
+			$ProfilePassword = $_POST['ProfilePassword'];
+			$ProfileContactWebsite = $_POST['ProfileContactWebsite'];
+			$ProfileContactPhoneHome = $_POST['ProfileContactPhoneHome'];
+			$ProfileContactPhoneCell = $_POST['ProfileContactPhoneCell'];
+			$ProfileContactPhoneWork = $_POST['ProfileContactPhoneWork'];
+			$ProfileLocationStreet = $_POST['ProfileLocationStreet'];
+			$ProfileLocationCity = RBAgency_Common::format_propercase($_POST['ProfileLocationCity']);
+			$ProfileLocationState = strtoupper($_POST['ProfileLocationState']);
+			$ProfileLocationZip = $_POST['ProfileLocationZip'];
+			$ProfileLocationCountry = $_POST['ProfileLocationCountry'];
+			$ProfileLanguage = $_POST['ProfileLanguage'];
+			$ProfileDateUpdated = $_POST['ProfileDateUpdated'];
+			$ProfileDateViewLast = $_POST['ProfileDateViewLast'];
+			$ProfileType = $_POST['ProfileType'];
+			if (is_array($ProfileType)) {
+				$ProfileType = implode(",", $ProfileType);
+			}
+			$ProfileIsActive = $_POST['ProfileIsActive']; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
+			$ProfileIsFeatured = $_POST['ProfileIsFeatured'];
+			$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
+			$ProfileStatHits = $_POST['ProfileStatHits'];
 
+			// Get Primary Image
+			$ProfileMediaPrimaryID = $_POST['ProfileMediaPrimary'];
+
+			// Notify User and Admin
+			$ProfileNotifyUser = $_POST["ProfileNotifyUser"];
+
+		}
+
+		
 		echo "<h2 class=\"title\">Add New " . LabelSingular . " <a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">" . __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN) . "</a></h2>\n";
 		echo "<p>" . __("Fill in the form below to add a new", rb_agency_TEXTDOMAIN) . " " . LabelSingular . ". <strong>" . __("Required fields are marked", rb_agency_TEXTDOMAIN) . " *</strong></p>\n";
 	}
-
 	if ($_GET["action"] == "add") {
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $_GET["ProfileGender"] . "\">\n";
 	} else {
@@ -724,6 +765,7 @@ function rb_display_manage($ProfileID) {
 		echo "      <th scope=\"row\">" . __("Display Name", rb_agency_TEXTDOMAIN) . "</th>\n";
 		echo "      <td>\n";
 		echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . $ProfileContactDisplay . "\" />\n";
+		if(isset($errorValidation['rb_agency_option_profilenaming'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['rb_agency_option_profilenaming']."</p>\n";} 
 		echo "      </td>\n";
 		echo "    </tr>\n";
 	}
@@ -747,6 +789,7 @@ function rb_display_manage($ProfileID) {
 	echo "      <th scope=\"row\">" . __("First Name", rb_agency_TEXTDOMAIN) . "</th>\n";
 	echo "      <td>\n";
 	echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . $ProfileContactNameFirst . "\" />\n";
+	if(isset($errorValidation['ProfileContactNameFirst'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactNameFirst']."</p>\n";} 
 	echo "      </td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
@@ -765,6 +808,7 @@ function rb_display_manage($ProfileID) {
 				echo "      <th scope=\"row\">" . __("Username", rb_agency_TEXTDOMAIN) . "</th>\n";
 				echo "      <td>\n";
 				echo "          <input type=\"text\" id=\"ProfileUsername\" name=\"ProfileUsername\" />\n";
+				if(isset($errorValidation['user_login'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['user_login']."</p>\n";} 
 				echo "      </td>\n";
 				echo "    </tr>\n";
 				echo "    <tr valign=\"top\">\n";
@@ -772,6 +816,7 @@ function rb_display_manage($ProfileID) {
 				echo "      <td>\n";
 				echo "          <input type=\"text\" id=\"ProfilePassword\" name=\"ProfilePassword\" />\n";
 				echo "          <input type=\"button\" onclick=\"javascript:document.getElementById('ProfilePassword').value=Math.random().toString(36).substr(2,6);\" value=\"Generate Password\"  name=\"GeneratePassword\" />\n";
+				if(isset($errorValidation['user_password'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['user_password']."</p>\n";} 
 				echo "      </td>\n";
 				echo "    </tr>\n";
 				echo "    <tr valign=\"top\">\n";
@@ -799,6 +844,7 @@ function rb_display_manage($ProfileID) {
 	echo "      <th scope=\"row\">" . __("Email Address", rb_agency_TEXTDOMAIN) . "</th>\n";
 	echo "      <td>\n";
 	echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
+	if(isset($errorValidation['ProfileContactEmail'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactEmail']."</p>\n";} 
         echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
         echo "      </td>\n";
 	echo "    </tr>\n";
@@ -1128,7 +1174,7 @@ function rb_display_manage($ProfileID) {
 		echo "      <div style=\"clear: both;\"></div>\n";
 		echo "      <h3>" . __("Upload", rb_agency_TEXTDOMAIN) . "</h3>\n";
 		echo "      <p>" . __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) . ".</p>\n";
-
+		if(isset($errorValidation['profileMedia'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['profileMedia']."</p>\n";} 
 		for ($i = 1; $i < 10; $i++) {
 			echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>
 ";
@@ -1166,6 +1212,15 @@ function rb_display_manage($ProfileID) {
 	while ($data3 = mysql_fetch_array($results3)) {
 		if ($action == "add") {
 			echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" /> " . $data3['DataTypeTitle'] . "<br />\n";
+			if(is_array($ProfileType)){
+					if (in_array($data3['DataTypeID'], $ProfileType)) {
+						echo " checked=\"checked\"";
+					} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+			} else {
+					if ($data3['DataTypeID'] == $ProfileType) {
+						echo " checked=\"checked\"";
+					} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+			}
 		}
 		if ($action == "editRecord") {
 			echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\"";
