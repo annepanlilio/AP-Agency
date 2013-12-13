@@ -149,10 +149,11 @@
 			ob_end_clean();
 			return $output_string;
 			}else{
-				echo "	<div>\n";
+				echo "	<div class='restricted'>\n";
 				echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
 				echo "  </div><!-- #content -->\n";
 			}
+
 		}
 
 	/*
@@ -160,11 +161,30 @@
 	 */
 		add_shortcode("profile_search","rb_agency_shortcode_profilesearch");
 		function rb_agency_shortcode_profilesearch($atts, $content = null){
-			ob_start();
-			rb_agency_profilesearch($atts);
-			$output_string=ob_get_contents();;
-			ob_end_clean();
-			return $output_string;
+		
+		
+		$rb_agency_options_arr = get_option('rb_agency_options');
+			// Can we show the pages?
+			if((is_user_logged_in() && $rb_agency_options_arr['rb_agency_option_privacy']==2)||
+			// Must be logged to view model list and profile information
+			($rb_agency_options_arr['rb_agency_option_privacy']==1) ||
+			// Model list public. Must be logged to view profile information
+			($rb_agency_options_arr['rb_agency_option_privacy']==0) ||
+			// Model list public. Must be logged to view profile information
+			($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
+			{
+				ob_start();
+				rb_agency_profilesearch($atts);
+				$output_string=ob_get_contents();;
+				ob_end_clean();
+				return $output_string;
+		
+			}else{
+				echo "	<div class='restricted'>\n";
+				echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
+				echo "  </div><!-- #content -->\n";
+			}
+			
 		}
 
 
