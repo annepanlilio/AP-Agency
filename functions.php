@@ -39,7 +39,7 @@ error_reporting(0);
 				wp_register_style( 'rbagencyadmin', plugins_url('/style/admin.css', __FILE__) );
 				wp_enqueue_style( 'rbagencyadmin' );
 
-				wp_register_style( 'rbagency-formstyle', plugins_url('RB-Agency/style/forms.css'));
+				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-formstyle' );
 
 				// Load Jquery if not registered
@@ -64,10 +64,10 @@ error_reporting(0);
 			if( !is_admin() ) {
 				
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('RB-Agency/theme/style.css'));
+				wp_register_style( 'rbagency-style', plugins_url('rb-agency/theme/style.css'));
 				wp_enqueue_style( 'rbagency-style' );
 
-				wp_register_style( 'rbagency-formstyle', plugins_url('RB-Agency/style/forms.css'));
+				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-formstyle' );
 			}	
 		}
