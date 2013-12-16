@@ -428,7 +428,10 @@ elseif ($ConfigID == 1) {
 			}
 			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout10.php")) {
 		echo "       <option value=\"10\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 10,false) ."> ". __("Layout 10  - Profile View with Thumbnails and Primary Image V2", rb_agency_TEXTDOMAIN) ."</option>\n";
-			}			
+			}	
+		if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout11.php")) {
+                     echo "       <option value=\"11\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 11,false) ."> ". __("Layout 11 - Profile View with Thumbnails, Primary Image, & Video Embed", rb_agency_TEXTDOMAIN) ."</option>\n";
+		}                        
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";

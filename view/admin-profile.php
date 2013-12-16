@@ -420,21 +420,24 @@ if (isset($_POST['action'])) {
 					$i++;
 				} // endwhile           
 				// Upload Videos to Database
-				if (isset($_POST['profileMediaV1']) && !empty($_POST['profileMediaV1'])) {
-					$profileMediaType = $_POST['profileMediaV1Type'];
-					$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV1']);
-					$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaType . "','" . $profileMediaURL . "')");
-				}
-				if (isset($_POST['profileMediaV2']) && !empty($_POST['profileMediaV2'])) {
-					$profileMediaType = $_POST['profileMediaV2Type'];
-					$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV2']);
-					$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaType . "','" . $profileMediaURL . "')");
-				}
-				if (isset($_POST['profileMediaV3']) && !empty($_POST['profileMediaV3'])) {
-					$profileMediaType = $_POST['profileMediaV3Type'];
-					$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV3']);
-					$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaType . "','" . $profileMediaURL . "')");
-				}
+                                if (isset($_POST['profileMediaV1']) && !empty($_POST['profileMediaV1'])) {
+                                    $profileMediaType = $_POST['profileMediaV1Type'];
+                                                        $profileMediaTitle = $_POST['media1_title'] ."<br>". $_POST['media1_caption'];
+                                    $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV1']);
+                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "')");
+                                }
+                                if (isset($_POST['profileMediaV2']) && !empty($_POST['profileMediaV2'])) {
+                                    $profileMediaType = $_POST['profileMediaV2Type'];
+                                    $profileMediaTitle = $_POST['media2_title'] ."<br>". $_POST['media2_caption'];
+                                    $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV2']);
+                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "')");
+                                }
+                                if (isset($_POST['profileMediaV3']) && !empty($_POST['profileMediaV3'])) {
+                                    $profileMediaType = $_POST['profileMediaV3Type'];
+                                    $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV3']);
+                                    $profileMediaTitle = $_POST['media3_title'] ."<br>". $_POST['media3_caption'];
+                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "')");
+                                }
 
 				/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 				// Do we have a custom image yet? Lets just set the first one as primary.
@@ -1176,17 +1179,74 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		echo "      <p>" . __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 		if(isset($errorValidation['profileMedia'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['profileMedia']."</p>\n";} 
 		for ($i = 1; $i < 10; $i++) {
-			echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>
-";
+			echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>";
 			rb_agency_getMediaCategories($ProfileGender);
 			echo"</select><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></div>\n";
 		}
 		echo "      <p>" . __("Paste the video URL below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 
-		echo "<div>Type: <select name=\"profileMediaV1Type\"><option selected>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option><option>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option><option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select><textarea id='profileMediaV1' name='profileMediaV1'></textarea></div>\n";
-		echo "<div>Type: <select name=\"profileMediaV2Type\"><option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option><option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option><option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select><textarea id='profileMediaV2' name='profileMediaV2'></textarea></div>\n";
-		echo "<div>Type: <select name=\"profileMediaV3Type\"><option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option><option>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option><option selected>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select><textarea id='profileMediaV3' name='profileMediaV3'></textarea></div>\n";
-	}
+                echo "<div><div style='float:left; clear:both'>
+                        Type: 
+                                <select name=\"profileMediaV1Type\">
+                                        <option selected>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
+                                        <option>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
+                                        <option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
+                        </div>	
+                        <div style='float:left'>
+                        <table>
+                        <tbody>
+                        <tr>
+                                <td>Video ID: </td><td><input type='text' id='profileMediaV1' name='profileMediaV1'></td>
+                        </tr>
+                        <tr>
+                                <td>Title: </td><td><input type='text' name='media1_title'></td>
+                        </tr>
+                        <tr>
+                                <td>Caption</td><td><input type='text' name='media1_caption'></td>
+                        </tr>
+                        </tbody></table></div></div>";
+
+                echo "<div><div style='float:left; clear:both'>
+                        Type: 
+                                <select name=\"profileMediaV2Type\">
+                                        <option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
+                                        <option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
+                                        <option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
+                        </div>	
+                        <div style='float:left'>
+                        <table>
+                        <tbody>
+                        <tr>
+                                <td>Video ID: </td><td><input type='text' id='profileMediaV2' name='profileMediaV2'></td>
+                        </tr>
+                        <tr>
+                                <td>Title: </td><td><input type='text' name='media2_title'></td>
+                        </tr>
+                        <tr>
+                                <td>Caption</td><td><input type='text' name='media2_caption'></td>
+                        </tr>
+                        </tbody></table></div></div>";
+                echo "<div> <div style='float:left; clear:both'>
+                        Type: 
+                                <select name=\"profileMediaV3Type\">
+                                        <option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
+                                        <option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
+                                        <option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
+                        </div>	
+                        <div style='float:left'>
+                        <table>
+                        <tbody>
+                        <tr>
+                                <td>Video ID: </td><td><input type='text' id='profileMediaV3' name='profileMediaV3'></td>
+                        </tr>
+                        <tr>
+                                <td>Title: </td><td><input type='text' name='media3_title'></td>
+                        </tr>
+                        <tr>
+                                <td>Caption</td><td><input type='text' name='media3_caption'></td>
+                        </tr>
+                        </tbody></table></div></div>";	
+        }
 	echo "</div>\n";
 
 	echo "<div style=\"clear: both; \"></div>\n";
