@@ -12,6 +12,9 @@
 .rbform p {
 	clear: both;
 }
+.rbform h3 {
+	padding-top: 30px;
+}
 .rbform p {
 	margin-bottom: 15px;
 }
