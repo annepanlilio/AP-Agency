@@ -105,9 +105,13 @@ echo "					<ul>\n";
 							if ($countMedia > 0) {
 							  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 									$desc = explode("<br>",$dataMedia['ProfileMediaTitle']);
-									echo "<li class=\"item video slate\" style='float:left'>
-										<iframe width='400' height='225' src='//www.youtube.com/embed/".$dataMedia['ProfileMediaURL']."' frameborder='0' allowfullscreen></iframe>
-										<br>".$desc[0]."<br><span style='font-size:12px; font-weight:normal'>".$desc[1]."</span>
+									echo "<li class=\"item video slate\" style='float:left'>";
+									if($dataMedia['ProfileVideoType'] == "youtube" || $dataMedia['ProfileVideoType'] == ""){	
+										echo "<iframe style='width:400px; height:225px;'  src='//www.youtube.com/embed/".$dataMedia['ProfileMediaURL']."' frameborder='0' allowfullscreen></iframe>";
+									} elseif($dataMedia['ProfileVideoType'] == "vimeo") {
+										echo '<iframe style="width:400px; height:225px;" src="//player.vimeo.com/video/'.$dataMedia['ProfileMediaURL'].'?portrait=0&amp;badge=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+									}
+									echo "<br>".$desc[0]."<br><span style='font-size:12px; font-weight:normal'>".$desc[1]."</span>
 									</li>\n";
 							  	}
 							}

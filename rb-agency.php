@@ -362,6 +362,7 @@ class RBAgency {
 					ProfileMediaID INT(10) NOT NULL AUTO_INCREMENT,
 					ProfileMediaType VARCHAR(255),
 					ProfileMediaTitle VARCHAR(255),
+                                        ProfileVideoType VARCHAR(255),
 					ProfileMediaText TEXT,
 					ProfileMediaURL VARCHAR(255),
 					ProfileMediaPrimary INT(10) NOT NULL DEFAULT '0',
