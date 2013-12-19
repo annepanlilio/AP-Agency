@@ -106,9 +106,6 @@ get_header(); ?>
 	function printDiv(divName) {
      	var printContents = document.getElementById(divName).innerHTML;
      	var originalContents = document.body.innerHTML;
-
-     	//document.body.innerHTML = printContents;
-	   	//  window.print();
      	document.body.innerHTML = originalContents;	     
      	window.print();
 	} 
@@ -116,33 +113,21 @@ get_header(); ?>
 
 <?php
 
-echo "	<div id=\"primary\" class=\"".fullwidth_class()." column casting-cart\">\n";
+echo "	<div id=\"primary\" class=\"".fullwidth_class()."  clearfix\">\n";
 echo "  	<div id=\"content\" role=\"main\" >\n";
 echo '			<header class="entry-header">';
 echo '				<h1 class="entry-title">Casting Cart</h1>';
 echo '			</header>';
 echo '			<div class="entry-content">';
-					
-					if (function_exists('rb_agency_profilelist')) { 
-					  	$atts = array("type" => $DataTypeID,"profilecastingcart" => true);
-					  	rb_agency_profilelist($atts); 
-					}								
-
-					if(isset($_GET["emailSent"])) {
-echo " 					<p id=\"emailSent\">Email Sent Succesfully! Go Back to <a href=\"". get_bloginfo("url")."/search/\">Search</a>.</p>";
-        			}
-
 echo "				<div id=\"rbcasting-cart\">\n";
 echo "					<div class=\"cb\"></div>\n"; ?>
 
-				        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 				        <script type="text/javascript">
-						$(document).ready(function(){
-							$('#emailbox').toggle('slow'); 
-							$("#sendemail").click(function(){
-							    $('#emailbox').toggle('slow'); 
+						jQuery(document).ready(function(){
+							jQuery('#emailbox').toggle('slow'); 
+							jQuery("#sendemail").click(function(){
+							    jQuery('#emailbox').toggle('slow'); 
 							});			 
-						// $("#emailSent").fadeOut(4000);
 						});
 						</script>
 
@@ -165,6 +150,19 @@ echo "					<div class=\"cb\"></div>\n"; ?>
 <?php 
 echo "				</div>\n";
 echo "			</div>\n";
+
+echo "			<div class=\"cb\"></div>\n";
+					
+					if (function_exists('rb_agency_profilelist')) { 
+					  	$atts = array("type" => $DataTypeID,"profilecastingcart" => true);
+					  	rb_agency_profilelist($atts); 
+					}								
+
+					if(isset($_GET["emailSent"])) {
+echo " 					<p id=\"emailSent\">Email Sent Succesfully! Go Back to <a href=\"". get_bloginfo("url")."/search/\">Search</a>.</p>";
+        			}
+
+
 echo "			<div class=\"cb\"></div>\n";
 echo "			<input type=\"hidden\" name=\"castingcart\" value=\"1\"/>";
 echo "  	</div>\n";

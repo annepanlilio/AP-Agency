@@ -2679,44 +2679,52 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 	?>
 
 		<!--RB Agency Favorite -->
-		<script type="text/javascript" >jQuery(document).ready(function() { 
-			jQuery(".favorite a:first, .favorite a").click(function(){
+		<script type="text/javascript" >
+		jQuery(document).ready(function () {
+			jQuery(".favorite a:first, .favorite a").click(function () {
 				var Obj = jQuery(this);
-				jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',
-				data: {action: 'rb_agency_save_favorite',  'talentID': jQuery(this).attr("id")},
-
-				success: function(results) {
-				if(results=='error'){ 
-					Obj.fadeOut().empty().html("Error in query. Try again").fadeIn(); 
-				} else if(results==-1) { 
-					Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();
-					setTimeout(function() { 
-						if(Obj.attr("class")=="save_favorite"){ 
-								
-							Obj.fadeOut().empty().html("").fadeIn();
-							Obj.attr('title', 'Save to Favorites');
-						} else { 
-							Obj.fadeOut().empty().html("Favorited").fadeIn();
-							Obj.attr('title', 'Remove from Favorites');
-						} 
-					}, 2000);
-				} else { 
-					if(Obj.attr("class")=="save_favorite") { 
-						Obj.empty().fadeOut().empty().html("").fadeIn();
-						Obj.attr("class","favorited"); 
-						Obj.attr('title', 'Remove from Favorites') 
-					}else{ 
-						Obj.empty().fadeOut().empty().html("").fadeIn();
-						Obj.attr('title', 'Save to Favorites'); 
-						jQuery(this).find("a[class=view_all_favorite]").remove();
-						Obj.attr("class","save_favorite");
-						<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){ 
-						$rb_agency_options_arr = get_option('rb_agency_options');
-						$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist'];  ?> 
-						if(jQuery("input[type=hidden][name=favorite]").val() == 1){ 
-							Obj.closest("div[class=profile-list-layout0]").fadeOut();} <?php }?>
+				jQuery.ajax({
+					type: 'POST',
+					url: 'http://www.beblueagency.be/wp-admin/admin-ajax.php',
+					data: {
+						action: 'rb_agency_save_favorite',
+						'talentID': jQuery(this).attr("id")
+					},
+					success: function (results) {
+						if (results == 'error') {
+							Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();
+						} else if (results == -1) {
+							Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"http://www.beblueagency.be/profile-member/\">Sign In</a>.").fadeIn();
+							setTimeout(function () {
+								if (Obj.attr("class") == "save_favorite") {
+									Obj.fadeOut().empty().html("").fadeIn();
+									Obj.attr('title', 'Save to Favorites');
+								} else {
+									Obj.fadeOut().empty().html("Favorited").fadeIn();
+									Obj.attr('title', 'Remove from Favorites');
+								}
+							}, 2000);
+						} else {
+							<?php
+							if (get_query_var('type') == "favorite"){?>
+									Obj.parents(".rbprofile-list").hide("slow",function(){Obj.parents(".rbprofile-list").remove();});
+							<?php } else { ?>
+								if (Obj.attr("class") == "save_favorite") {
+									Obj.empty().fadeOut().empty().html("").fadeIn();
+									Obj.attr("class", "favorited");
+									Obj.attr('title', 'Remove from Favorites')
+								} else {
+									Obj.empty().fadeOut().empty().html("").fadeIn();
+									Obj.attr('title', 'Save to Favorites');
+									jQuery(this).find("a[class=view_all_favorite]").remove();
+									Obj.attr("class", "save_favorite");
+								}
+						    <?php } ?>
+						}
 					}
-				}}})});});
+				})
+			});
+		});
 		</script>
 		<!--END RB Agency Favorite -->
 
@@ -2761,33 +2769,52 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 		?>
 				<!--RB Agency CastingCart -->
 				<script type="text/javascript" >
-					jQuery(document).ready(function($) { 
-						$("div[class=castingcart] a").click(function(){
-							var Obj = $(this);jQuery.ajax({type: 'POST',url: '<?php echo admin_url('admin-ajax.php'); ?>',data: {action: 'rb_agency_save_castingcart',  'talentID': $(this).attr("id")},
-								success: function(results) {   
-									if(results=='error'){ Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();  } 
-									else if(results==-1){ Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo("wpurl"); ?>/profile-member/\">Sign In</a>.").fadeIn();  
-											setTimeout(function() {   
-												if(Obj.attr("class")=="save_castingcart"){  
-													Obj.fadeOut().empty().html("").fadeIn();
-												}else{  
-													Obj.fadeOut().empty().html("").fadeIn();  } 
-											 }, 2000);  }
-									else{ if(Obj.attr("class")=="save_castingcart"){
-										Obj.empty().fadeOut().html("").fadeIn();  
-										Obj.attr("class","saved_castingcart"); 
-										Obj.attr('title', 'Remove from Casting Cart'); 
-									} else { 
-									Obj.empty().fadeOut().html("").fadeIn();  
-									Obj.attr("class","save_castingcart"); 
-									Obj.attr('title', 'Add to Casting Cart');   
-									$(this).find("a[class=view_all_castingcart]").remove();  
-									<?php  if(get_query_var( 'type' )=="favorite" || get_query_var( 'type' )=="castingcart"){  
-												$rb_agency_options_arr = get_option('rb_agency_options'); 
-												$rb_agency_option_layoutprofilelist = $rb_agency_options_arr['rb_agency_option_layoutprofilelist']; ?> 
-												if($("input[type=hidden][name=castingcart]").val() == 1){
-													Obj.closest("div[class=profile-list-layout0]").fadeOut();  } <?php } ?> } }}}) });});</script>
-				 <!--END RB Agency CastingCart -->
+					jQuery(document).ready(function ($) {
+						$("div[class=castingcart] a").click(function () {
+							var Obj = $(this);
+							jQuery.ajax({
+								type: 'POST',
+								url: 'http://www.beblueagency.be/wp-admin/admin-ajax.php',
+								data: {
+									action: 'rb_agency_save_castingcart',
+									'talentID': $(this).attr("id")
+								},
+								success: function (results) {
+									if (results == 'error') {
+										Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();
+									} else if (results == -1) {
+										Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"http://www.beblueagency.be/profile-member/\">Sign In</a>.").fadeIn();
+										setTimeout(function () {
+											if (Obj.attr("class") == "save_castingcart") {
+												Obj.fadeOut().empty().html("").fadeIn();
+											} else {
+												Obj.fadeOut().empty().html("").fadeIn();
+											}
+										}, 2000);
+									} else {
+										<?php 
+										if (get_query_var('type') == "casting"){?>
+											Obj.parents(".rbprofile-list").hide("slow",function(){Obj.parents(".rbprofile-list").remove();});
+										<?php
+										} else { 
+										?>
+											if (Obj.attr("class") == "save_castingcart") {
+												Obj.empty().fadeOut().html("").fadeIn();
+												Obj.attr("class", "saved_castingcart");
+												Obj.attr('title', 'Remove from Casting Cart');
+											} else {
+												Obj.empty().fadeOut().html("").fadeIn();
+												Obj.attr("class", "save_castingcart");
+												Obj.attr('title', 'Add to Casting Cart');
+												$(this).find("a[class=view_all_castingcart]").remove();
+											}
+										<?php } ?>
+									}
+								}
+							})
+						});
+				});	
+			 </script>
 		<?php
 		}
 	if(isset($rb_agency_option_profilelist_castingcart)){
