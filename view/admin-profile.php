@@ -1295,7 +1295,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	$action = @$_GET["action"];
 	while ($data3 = mysql_fetch_array($results3)) {
 		if ($action == "add") {
-			echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" /> " . $data3['DataTypeTitle'] . "<br />\n";
+			echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\"";
 			if(is_array($ProfileType)){
 					if (in_array($data3['DataTypeID'], $ProfileType)) {
 						echo " checked=\"checked\"";
