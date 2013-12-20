@@ -23,6 +23,45 @@ echo "				</div>\n"; // #profile-picture
 echo "			</div>\n"; // .col_4
 
 echo "			<div class=\"col_5 column\">\n";
+echo "	  			<div id=\"profile-info\">\n";
+echo "	  				<div id=\"stats\">\n";
+echo "	  					<ul>\n";
+								if (!empty($ProfileGender)) {
+									$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
+									$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+									echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+								}
+
+								
+								if (!empty($ProfileStatHeight)) {
+									if ($rb_agency_option_unittype == 0) { // Metric
+										echo "<li><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									} else { // Imperial
+										$heightraw = $ProfileStatHeight;
+										$heightfeet = floor($heightraw/12);
+										$heightinch = $heightraw - floor($heightfeet*12);
+										echo "<li><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									}
+								}
+								if (!empty($ProfileStatWeight)) {
+									if ($rb_agency_option_unittype == 0) { // Metric
+										echo "<li><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
+									} else { // Imperial
+										echo "<li><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
+									}
+								}
+
+								// Insert Custom Fields
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+echo "	  					</ul>\n"; // Close Stats ul
+echo "	  				</div>\n"; // #stats
+echo "					<div id=\"experience\">\n";
+echo						$ProfileExperience;
+echo "					</div>\n"; // #experience
+echo "	  			</div>\n"; // #profile-info
+echo "	  		</div>\n";  // .col_5
+
+echo "			<div class=\"col_3 column\">\n";
 echo "	  			<div id=\"links\">\n";
 echo "					<ul>\n";
 						
@@ -108,45 +147,6 @@ echo "					</ul>\n";
 echo "	  			</div>\n";  // #links
 echo "	  		</div>\n";  // .col_8
 
-echo "			<div class=\"col_3 column\">\n";
-echo "	  			<div id=\"profile-info\">\n";
-echo "	  				<div id=\"stats\">\n";
-echo "	  					<ul>\n";
-								if (!empty($ProfileGender)) {
-									$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-									$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
-									echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
-								}
-
-								
-								if (!empty($ProfileStatHeight)) {
-									if ($rb_agency_option_unittype == 0) { // Metric
-										echo "<li><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
-									} else { // Imperial
-										$heightraw = $ProfileStatHeight;
-										$heightfeet = floor($heightraw/12);
-										$heightinch = $heightraw - floor($heightfeet*12);
-										echo "<li><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
-									}
-								}
-								if (!empty($ProfileStatWeight)) {
-									if ($rb_agency_option_unittype == 0) { // Metric
-										echo "<li><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
-									} else { // Imperial
-										echo "<li><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
-									}
-								}
-
-								// Insert Custom Fields
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-echo "	  					</ul>\n"; // Close Stats ul
-echo "	  				</div>\n"; // #stats
-echo "					<div id=\"experience\">\n";
-echo						$ProfileExperience;
-echo "					</div>\n"; // #experience
-echo "	  			</div>\n"; // #profile-info
-echo "	  		</div>\n";  // .col_5
-
 echo "			<div class=\"col_12 column\" style='clear:both;'>\n";
 
 $profileURLString = get_query_var('target'); //$_REQUEST["profile"];
@@ -154,10 +154,11 @@ $urlexploade = explode("/", $profileURLString);
 $subview=$urlexploade[1];
 
 if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
-	include 'pdf-profile.php';
+	ob_start();
+	include_once(ABSPATH . 'wp-content/plugins/rb-agency/theme/pdf-profile.php');
+	ob_end_flush();
 	exit;
 }
-
 
 if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
 				<div class="allimages_div">
