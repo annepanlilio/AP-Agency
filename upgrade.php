@@ -667,4 +667,11 @@ global $wpdb;
 		// Updating version number!
 		update_option('rb_agency_version', "2.0.6");
 	}
+
+        if (get_option('rb_agency_version') == "2.0.6") {
+		// Add Column to media file for holding video type media
+		rb_agency_addColumn( table_agency_profile_media,"ProfileVideoType","VARCHAR(255) NOT NULL DEFAULT 'youtube'");
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.7");
+	}
 ?>
