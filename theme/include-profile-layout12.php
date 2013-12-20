@@ -138,9 +138,11 @@ echo "					<ul>\n";
 							if($rb_agency_option_showcontactpage==1){
 					    		echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\" class=\"rb_button\">Click Here</a></div>\n";
 							}
-							
+				
+							echo "<li class=\"item resume\"><a class='rb_button' href=\"".get_bloginfo('wpurl')."/profile/".$ProfileGallery."/\">". __("View Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
 							echo "<li class=\"item resume\"><a class='rb_button' href=\"".get_bloginfo('wpurl')."/profile/".$ProfileGallery."/images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
-						    echo "<li class=\"item resume\"><a class='rb_button' href=\"".get_bloginfo('wpurl')."/profile/".$ProfileGallery."/print-polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
+						    echo "<li class=\"item resume\"><a class='rb_button' href=\"".get_bloginfo('wpurl')."/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
+						    echo "<li class=\"item resume\"><a class='rb_button' href=\"".get_bloginfo('wpurl')."/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
 						
 							
 echo "					</ul>\n";
