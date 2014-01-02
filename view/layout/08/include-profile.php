@@ -1,7 +1,21 @@
 <?php
 /*
-Flip Book
+Title:  Flipbook
+Author: RB Plugin
+Text:   Flipbook
 */
+
+/*
+ * Insert Javascript into Head
+ */
+	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_enqueue_style( 'rblayout-style' );
+
+
+/*
+ * Layout 
+ */
+
 
 ?>
 

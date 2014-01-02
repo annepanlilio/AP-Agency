@@ -1,3 +1,22 @@
+<?php
+/*
+Title:  Scrolling
+Author: RB Plugin
+Text:   Profile View with Scrolling Thumbnails and Primary Image
+*/
+
+/*
+ * Insert Javascript into Head
+ */
+	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_enqueue_style( 'rblayout-style' );
+
+
+/*
+ * Layout 
+ */
+
+?>
 <script type="text/javascript">
 
 jQuery(document).ready(function(){

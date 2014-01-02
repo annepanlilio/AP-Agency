@@ -7,13 +7,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 /*
  * Insert Javascript into Head
-	add_action('wp_head', 'rb_agency_inserthead_profile');
-		// Call Custom Code to put in header
-		function rb_agency_inserthead_profile() {
-		}
  */
-			wp_register_style( 'rblayout-zero', plugins_url('/css/style.css', __FILE__) );
-			wp_enqueue_style( 'rblayout-zero' );
+	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_enqueue_style( 'rblayout-style' );
 
 
 /*
