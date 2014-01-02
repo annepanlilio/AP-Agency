@@ -25,28 +25,36 @@ header("Cache-control: private"); //IE 6 Fix
 		$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 		$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
 		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-		$rb_agency_option_galleryorder = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
-
-			if ($rb_agency_option_galleryorder == 1) { $orderBy = "ProfileMediaID DESC, ProfileMediaPrimary DESC"; } else { $orderBy = "ProfileMediaID ASC, ProfileMediaPrimary DESC"; }
-				$rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
-				$rb_agency_option_gallerytype = (int)$rb_agency_options_arr['rb_agency_option_gallerytype'];
-			if ($rb_agency_option_gallerytype == 1) {
-				// Slimbox
-				$reltype = "rel=\"lightbox-profile\"";
-				$reltypev = "target=\"_blank\"";
-			} elseif ($rb_agency_option_gallerytype == 2) {
-				// PrettyBox
-				$reltype = "rel=\"prettyPhoto\"";
-				$reltypev = "rel=\"prettyPhoto\"";
-			} else {
-				// None
-				$reltype = "rel=\"lightbox-profile\"";
-				$reltypev = "target=\"_blank\"";
-			}
 		$rb_agency_option_agency_urlcontact = $rb_agency_options_arr['rb_agency_option_agency_urlcontact'];
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 		$rb_agency_option_profilelist_sidebar = $rb_agency_options_arr['rb_agency_option_profilelist_sidebar'];
+
+		// Layout Type
+		$rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
+			$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
+
+		// Gallery Type
+		$rb_agency_option_gallerytype = (int)$rb_agency_options_arr['rb_agency_option_gallerytype'];
+			if ($rb_agency_option_gallerytype == 1) {
+				// Lightbox 2
+				$reltype = "data-lightbox=\"rbagency\"";
+				$reltarget = ""; // target=\"_blank\"
+
+				wp_enqueue_script( 'lightbox2', plugins_url('/ext/lightbox2/js/lightbox-2.6.min.js', dirname(__FILE__)), array( 'jquery' ));
+				wp_register_style( 'lightbox2', plugins_url('/ext/lightbox2/css/style/lightbox.css', dirname(__FILE__)) );
+				wp_enqueue_style( 'lightbox2' );
+
+			} else {
+				// None
+				$reltype = "";
+				$reltarget = "";
+			}
+
+		// Gallery Order
+		$rb_agency_option_galleryorder = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+			if ($rb_agency_option_galleryorder == 1) { $orderBy = "ProfileMediaID DESC, ProfileMediaPrimary DESC"; } else { $orderBy = "ProfileMediaID ASC, ProfileMediaPrimary DESC"; }
+
 
 	/*
 	 * Get Profile
@@ -110,169 +118,62 @@ header("Cache-control: private"); //IE 6 Fix
 				}
 		}
 
-// TODO WHAT IS THIS ??****************************************************************************
-	if(!function_exists("rb_agency_inserthead_profile")){
-		add_action('wp_head', 'rb_agency_inserthead_profile');
-			// Call Custom Code to put in header
-			function rb_agency_inserthead_profile() {
-				global $rb_agency_option_layoutprofile;
+	/*
+	 * TODO: WHT IS THIS?
+	 */
+		// GET HEADER  
+		if(isset($_POST['print_all_images']) && $_POST['print_all_images']!=""){
+			include(rb_agency_BASEREL . 'theme/printable-profile.php');
+			exit;
+		}
 
-				$rb_agency_options_arr = get_option('rb_agency_options');
-				
-				if (isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])) {
-					$layouttype = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
+	/*
+	 * Create View
+	 */
 
-					if ($layouttype == 99) {
-						// Slimbox
-						wp_enqueue_script( 'slimbox2', plugins_url('/js/slimbox2.js', __FILE__) );
-						wp_register_style( 'slimbox2', plugins_url('/style/slimbox2.css', __FILE__) );
-	        			wp_enqueue_style( 'slimbox2' );
+		get_header();
 
-						//wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
+		echo "<div id=\"container\" "; if ($rb_agency_option_profilelist_sidebar==0) { echo "class=\"one-column\""; } echo">\n";
+		echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
+		if ($count > 0) {
 
-					} elseif ($layouttype == 99) {
-						// Prettyphoto
-						wp_register_style( 'prettyphoto', plugins_url('/style/prettyPhoto.css', __FILE__) );
-	        			wp_enqueue_style( 'prettyphoto' );
-						wp_enqueue_script( 'prettyphoto', plugins_url('/js/prettyPhoto.js', __FILE__) );
+			// P R I V A C Y FILTER ====================================================
+			if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || 
+				( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) )
+				|| ($rb_agency_option_privacy == 0) ||
 
+				//admin users
+				(is_user_logged_in() && current_user_can( 'manage_options' )) ||
 
-					} elseif ($layouttype == 0) {
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/image-resize.js', dirname(__FILE__)) );	
-					} elseif ($layouttype == 2) {
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
-						wp_enqueue_script( 'js-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', dirname(__FILE__)) );
-						
-						wp_enqueue_script( 'jscroller', plugins_url('/js/scroller.js', dirname(__FILE__)), in_footer );
-						
-					// Slider Gallery			
-					} elseif ($rb_agency_option_layoutprofile == "3") {
-						?>
-						<script>
-						var $tab = jQuery.noConflict();
-						$tab(window).load(function() {
-								/*$tab(".tab").hide();
-								$tab(".row-photos").show();
-								$tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-								$tab("#row-photos").removeClass("tab-inactive").addClass("tab-active");*/
-								$tab(".maintab").click(function(){
-									   var idx = this.id;
-									   var elem = "." + idx;
-									   var elem_id = "#" + idx;
-									   if ((idx=="row-all")){
-												$tab(".tab").hide();
-												$tab(".tab").show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
-												$tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-										} else {
-											  if(idx=="row-bookings"){
-													
-													var url = "<?php echo get_permalink(get_page_by_title('booking')); ?>";
-													window.location = url;
-													
-											  } else {
-													   
-													  $tab(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-													  $tab(".tab").css({ opacity: 1.0 }).stop().animate({ opacity: 0.0 }, 2000).hide();
-													  $tab(elem).show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
-													  $tab(elem_id).removeClass("tab-inactive").addClass("tab-active");
-											  }
-									   }
-								});
-						});
-						</script>
-						<?php
-					} elseif ($layouttype == 6) {
-						wp_register_style( 'flexslider', plugins_url('/style/flexslider.css', dirname(__FILE__)) );
-	        			wp_enqueue_style( 'flexslider' );
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
-						wp_enqueue_script( 'flexslider', plugins_url('/js/jquery.flexslider.js', dirname(__FILE__)) );						
-						wp_enqueue_script( 'initflexslider', plugins_url('/js/initflexslider.js', dirname(__FILE__)), in_footer );
-					} elseif ($layouttype == 7)  {						 
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
-						wp_enqueue_script( 'flexslider1', plugins_url('/js/jquery.flexslider.js', dirname(__FILE__)) );												
-						wp_register_style( 'flexslider', plugins_url('/style/flexslider.css', dirname(__FILE__)) );
-	        			wp_enqueue_style( 'flexslider' );
-						wp_enqueue_script( 'initflexslider', plugins_url('/js/initflexslider.js', dirname(__FILE__)), in_footer );
-					} elseif ($layouttype == 8)  {
-						wp_register_style( 'booklet', plugins_url('/style/booklet.css', dirname(__FILE__)) );
-	        			wp_enqueue_style( 'booklet' );
-						wp_enqueue_script( 'jquerys', plugins_url('/js/booklet-jquery.min.js', dirname(__FILE__)) );
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/booklet-jquery-ui.min.js', dirname(__FILE__)) );
-						wp_enqueue_script( 'jquery-easing', plugins_url('/js/booklet-jquery.easing.1.3.js', dirname(__FILE__)) );
-						wp_enqueue_script( 'flexslider', plugins_url('/js/booklet.min.js', dirname(__FILE__)) );						
-						wp_enqueue_script( 'initflexslider', plugins_url('/js/booklet.init.js', dirname(__FILE__)), in_footer );
-					} elseif ($layouttype == 9)  {
-						wp_enqueue_script( 'jquery-ui', plugins_url('/js/jquery-1.9.1.min.js', dirname(__FILE__)) );
-						wp_enqueue_script( 'js-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', dirname(__FILE__)) );
-						
-						wp_enqueue_script( 'jscroller', plugins_url('/js/scroller.js', dirname(__FILE__)), in_footer );
-					}
-		        } // end if
-          } // function end
-    }// if function exist(rb_agency_inserthead_profile)
+				//  Must be logged as "Client" to view model list and profile information
+				($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype())) {
 
-// GET HEADER  
-if(isset($_POST['print_all_images']) && $_POST['print_all_images']!=""){
-	include(rb_agency_BASEREL . 'theme/printable-profile.php');
-	exit;
-}
-
-	get_header();
-
-		/*	$LayoutType = "";
-			if ($rb_agency_option_profilelist_sidebar) {
-				if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
-					echo "	<div id=\"profile-sidebar\">\n";
-						$LayoutType = "profile";
-						get_sidebar(); 
-					echo "	</div>\n";
-				 }
-			}
-		*/
-
-	echo "<div id=\"container\" "; if ($rb_agency_option_profilelist_sidebar==0) { echo "class=\"one-column\""; } echo">\n";
-	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
-	if ($count > 0) {
-
-		// P R I V A C Y FILTER ====================================================
-		if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || 
-			( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) )
-			|| ($rb_agency_option_privacy == 0) ||
-
-			//admin users
-			(is_user_logged_in() && current_user_can( 'manage_options' )) ||
-
-			//  Must be logged as "Client" to view model list and profile information
-			($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype())) {
-
-			// Ok, but whats the status of the profile?
-			if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
-				include (rb_agency_BASEREL .'theme/include-profile-layout'. $rb_agency_option_layoutprofile .'.php');
-			} else {
-				/*
-				 * display this profile as long as it came
-				 * from the page profilesecure else inactive if
-	             * directly viewed.
-				 */
-				if(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
-					include (rb_agency_BASEREL .'theme/include-profile-layout'. $rb_agency_option_layoutprofile .'.php');
+				// Ok, but whats the status of the profile?
+				if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
+					// If the profile is active or its your own profile or you are an admin, show it.
+					include (rb_agency_BASEREL .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
+				} elseif(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
+					// Show it if it came from an email sent
+					include (rb_agency_BASEREL .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 				} else {
+					// Dont show it
 					echo "". __("Inactive Profile", rb_agency_TEXTDOMAIN) ."\n";
 				}
+			} else {
+				// hold last model requested as session so we can return them where we found them 
+				$ProfileLastViewed = get_query_var('profile');
+				$profileviewed = get_query_var('target');
+				$_SESSION['ProfileLastViewed'] = $profileviewed;
+				include(rb_agency_BASEREL .'theme/include-login.php');
 			}
-		} else {
-			// hold last model requested as session so we can return them where we found them 
-			$ProfileLastViewed = get_query_var('profile');
-			$profileviewed = get_query_var('target');
-			$_SESSION['ProfileLastViewed'] = $profileviewed;
-			include(rb_agency_BASEREL .'theme/include-login.php');
-		}
-	} else {
-		// There is no record found.
-			echo "". __("Invalid Profile", rb_agency_TEXTDOMAIN) ."\n";
-	}
-	echo "  </div>\n";
-	echo "</div>\n";
 
-	get_footer();
+		} else {
+			// There is no record found.
+			echo "". __("Profile not found", rb_agency_TEXTDOMAIN) ."\n";
+		}
+
+		echo "  </div>\n";
+		echo "</div>\n";
+
+		get_footer();
 ?>
