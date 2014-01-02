@@ -414,27 +414,13 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
-			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout6.php")) {
-		echo "       <option value=\"6\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 6,false) ."> ". __("Layout 06 - Large featured image and scrolling thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
+			$x=6;
+			while($x<=15) {
+				if (file_exists(rb_agency_BASEREL .'view/layout/'. sprintf("%02s", $x) .'/include-profile.php')) {
+				echo "       <option value=\"". $x ."\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 6,false) ."> ". __("Layout". $k, rb_agency_TEXTDOMAIN). $x ."</option>\n";
+				}
+				$x++;
 			}
-			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout7.php")) {
-		echo "       <option value=\"7\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 7,false) ."> ". __("Layout 07 - Custom Layout 7", rb_agency_TEXTDOMAIN) ."</option>\n";
-			}
-			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout8.php")) {
-		echo "       <option value=\"8\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 8,false) ."> ". __("Layout 08 - Photo Book", rb_agency_TEXTDOMAIN) ."</option>\n";
-			}
-			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout9.php")) {
-		echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 9,false) ."> ". __("Layout 09 - Large Scroller", rb_agency_TEXTDOMAIN) ."</option>\n";
-			}
-			if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout10.php")) {
-		echo "       <option value=\"10\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 10,false) ."> ". __("Layout 10  - Profile View with Thumbnails and Primary Image V2", rb_agency_TEXTDOMAIN) ."</option>\n";
-			}	
-		if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout11.php")) {
-                     echo "       <option value=\"11\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 11,false) ."> ". __("Layout 11 - Profile View with Thumbnails, Primary Image, & Video Embed", rb_agency_TEXTDOMAIN) ."</option>\n";
-		}                        
-		if (file_exists(rb_agency_BASEREL ."theme/include-profile-layout12.php")) {
-                     echo "       <option value=\"12\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 12,false) ."> ". __("Layout 12 - Profile View with Thumbnails, Primary Image & Print", rb_agency_TEXTDOMAIN) ."</option>\n";
-		}    
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
