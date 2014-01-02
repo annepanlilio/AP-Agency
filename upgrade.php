@@ -14,7 +14,7 @@ global $wpdb;
 
 	// Upgrade from unknonwn version
 	if (!isset(get_option('rb_agency_version')) && empty(get_option('rb_agency_version'))) { 
- 		update_option('rb_agency_version', "1.9");
+		update_option('rb_agency_version', "1.9");
 	}
  */
 
@@ -37,22 +37,22 @@ global $wpdb;
 	// Upgrade from 1.8
 	if (get_option('rb_agency_version') == "1.8" || get_option('rb_agency_version') == "1.8.1") { 
 
-		$results = $wpdb->query("ALTER TABLE ". table_agency_data_type ." ADD DataTypeTag VARCHAR(55)");
+		$results = $wpdb->query("ALTER TABLE rb_agency_data_type ADD DataTypeTag VARCHAR(55)");
 		
-		$query = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM ". table_agency_data_type ."";
+		$query = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM rb_agency_data_type";
 		$results = mysql_query($query) or die ( __("Cant load types", rb_agency_TEXTDOMAIN ));
 		while ($data = mysql_fetch_array($results)) {
 			if (!isset($data['DataTypeTag']) || empty($data['DataTypeTag'])) {
 				$DataTypeTag = RBAgency_Common::Format_StripChars($data['DataTypeTitle']);
 				
-				$update = "UPDATE " . table_agency_data_type . " SET DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' WHERE DataTypeID='". $data['DataTypeID'] ."'";
+				$update = "UPDATE rb_agency_data_type SET DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' WHERE DataTypeID='". $data['DataTypeID'] ."'";
 				$updated = $wpdb->query($update);
 				echo "- Updated tag ". $DataTypeTag ."<br />\n";
 			}
 		}
 
 		// Privacy in Custom Fields
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomView","INT(10) NOT NULL DEFAULT '0'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomView","INT(10) NOT NULL DEFAULT '0'");
 
 		// Updating version number!
 		update_option('rb_agency_version', "1.8.2");
@@ -62,16 +62,16 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "1.8.2") {
 
 		// Change Field Names
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfields ." CHANGE ProfileCustomOptions ProfileCustomOptions TEXT");
-		$results = $wpdb->query("ALTER TABLE ". table_agency_customfield_mux ." CHANGE ProfileCustomValue ProfileCustomValue TEXT");
+		$results = $wpdb->query("ALTER TABLE rb_agency_customfields CHANGE ProfileCustomOptions ProfileCustomOptions TEXT");
+		$results = $wpdb->query("ALTER TABLE rb_agency_customfield_mux CHANGE ProfileCustomValue ProfileCustomValue TEXT");
 
 		// Add Column
-		rb_agency_addColumn( table_agency_profile,"ProfileIsFeatured","INT(10) NOT NULL DEFAULT '0'");
-		rb_agency_addColumn( table_agency_profile,"ProfileIsPromoted","INT(10) NOT NULL DEFAULT '0'");
+		rb_agency_addColumn("rb_agency_profile","ProfileIsFeatured","INT(10) NOT NULL DEFAULT '0'");
+		rb_agency_addColumn("rb_agency_profile","ProfileIsPromoted","INT(10) NOT NULL DEFAULT '0'");
 
 		// Setup > Save Favorited
-		if ($wpdb->get_var("show tables like '".  table_agency_savedfavorite ."'") !=  table_agency_savedfavorite ) { 
-			 $results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
+		if ($wpdb->get_var("show tables like 'rb_agency_savedfavorite'") !=  "rb_agency_savedfavorite") { 
+			 $results = $wpdb->query("CREATE TABLE rb_agency_savedfavorite (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
 				SavedFavoriteTalentID VARCHAR(255),
@@ -87,25 +87,25 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "1.8.5") {
 
 		// Setup > Taxonomy: Gender
-		if ($wpdb->get_var("show tables like '".  table_agency_data_gender ."'") !=  table_agency_data_gender ) { 
-			$results = $wpdb->query("CREATE TABLE ". table_agency_data_gender ." (
+		if ($wpdb->get_var("show tables like 'rb_agency_data_gender'") !=  "rb_agency_data_gender" ) { 
+			$results = $wpdb->query("CREATE TABLE rb_agency_data_gender (
 				GenderID INT(10) NOT NULL AUTO_INCREMENT,
 				GenderTitle VARCHAR(255),
 				PRIMARY KEY (GenderID)
 				);");
 			// Populate Initial Values
-			$data_type_exists = $wpdb->get_var( $wpdb->prepare( "SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s", 'Model' ) );
+			$data_type_exists = $wpdb->get_var( $wpdb->prepare( "SELECT DataTypeID FROM rb_agency_data_type WHERE DataTypeTitle = %s", 'Model' ) );
 			if ( !$data_type_exists ) {
-				$insert = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Model')");
+				$insert = $wpdb->query("INSERT INTO rb_agency_data_type (DataTypeID, DataTypeTitle) VALUES ('','Model')");
 			}
-			$data_type_exists = $wpdb->get_var( $wpdb->prepare( "SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s", 'Talent' ) );
+			$data_type_exists = $wpdb->get_var( $wpdb->prepare( "SELECT DataTypeID FROM rb_agency_data_type WHERE DataTypeTitle = %s", 'Talent' ) );
 			if ( !$data_type_exists ) {
-				$insert = $wpdb->query("INSERT INTO " . table_agency_data_type . " (DataTypeID, DataTypeTitle) VALUES ('','Talent')");
+				$insert = $wpdb->query("INSERT INTO rb_agency_data_type (DataTypeID, DataTypeTitle) VALUES ('','Talent')");
 			}
 		}
 
 		// Custom Order in Custom Fields
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomOrder","INT(10) NOT NULL DEFAULT '0'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomOrder","INT(10) NOT NULL DEFAULT '0'");
 		
 		// Updating version number!
 		update_option('rb_agency_version', "1.9");
@@ -120,8 +120,8 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "1.9") {
 
 		// Setup > Save Favorited
-		if ($wpdb->get_var("show tables like '".  table_agency_savedfavorite ."'") !=  table_agency_savedfavorite ) { 
-			$results = $wpdb->query("CREATE TABLE ". table_agency_savedfavorite." (
+		if ($wpdb->get_var("show tables like 'rb_agency_savedfavorite'") !=  "rb_agency_savedfavorite" ) { 
+			$results = $wpdb->query("CREATE TABLE rb_agency_savedfavorite (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
 				SavedFavoriteTalentID VARCHAR(255),
@@ -130,8 +130,8 @@ global $wpdb;
 		}
 
 		// Add Casting Cart
-		if ($wpdb->get_var("show tables like '".  table_agency_castingcart ."'") != table_agency_castingcart ) { 
-			$results = $wpdb->query("CREATE TABLE ". table_agency_castingcart." (
+		if ($wpdb->get_var("show tables like 'rb_agency_castingcart'") != "rb_agency_castingcart" ) { 
+			$results = $wpdb->query("CREATE TABLE rb_agency_castingcart (
 				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				CastingCartProfileID VARCHAR(255),
 				CastingCartTalentID VARCHAR(255),
@@ -140,8 +140,8 @@ global $wpdb;
 		}
 
 		// Add Media Category
-		if ($wpdb->get_var("show tables like '".  table_agency_mediacategory ."'") != table_agency_mediacategory) { 
-			$results = $wpdb->query("CREATE TABLE ". table_agency_mediacategory." (
+		if ($wpdb->get_var("show tables like 'rb_agency_mediacategory'") != "rb_agency_mediacategory") { 
+			$results = $wpdb->query("CREATE TABLE rb_agency_mediacategory (
 				MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				MediaCategoryTitle VARCHAR(255),
 				MediaCategoryGender VARCHAR(255),
@@ -151,8 +151,8 @@ global $wpdb;
 		}
 
 		// Add Custom Fields
-		if ($wpdb->get_var("show tables like '". table_agency_customfields."'") != table_agency_customfields) { 
-			$results = $wpdb->query("CREATE TABLE ". table_agency_customfields." (
+		if ($wpdb->get_var("show tables like 'rb_agency_customfields'") != "rb_agency_customfields") { 
+			$results = $wpdb->query("CREATE TABLE rb_agency_customfields (
 				ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileCustomTitle VARCHAR(255),
 				ProfileCustomType INT(10) NOT NULL DEFAULT '0',
@@ -170,61 +170,61 @@ global $wpdb;
 		}
 
 		// Custom Order in Custom Fields
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomOrder"," INT(10) NOT NULL DEFAULT '0'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomOrder"," INT(10) NOT NULL DEFAULT '0'");
 
 		// Custom Visibility in Custom Fields
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowProfile"," INT(10) NOT NULL DEFAULT '1'");
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowGender"," INT(10) NOT NULL DEFAULT '0'");
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowSearch"," INT(10) NOT NULL DEFAULT '1'");
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowLogged"," INT(10) NOT NULL DEFAULT '1'");
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowRegistration"," INT(10) NOT NULL DEFAULT '1'");
-		rb_agency_addColumn(table_agency_customfields,"ProfileCustomShowAdmin"," INT(10) NOT NULL DEFAULT '1'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowProfile"," INT(10) NOT NULL DEFAULT '1'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowGender"," INT(10) NOT NULL DEFAULT '0'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowSearch"," INT(10) NOT NULL DEFAULT '1'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowLogged"," INT(10) NOT NULL DEFAULT '1'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowRegistration"," INT(10) NOT NULL DEFAULT '1'");
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowAdmin"," INT(10) NOT NULL DEFAULT '1'");
 		
 		// Populate Initial Values
-		$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
+		$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM rb_agency_customfields WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
 		if ( !$data_custom_exists ) {
 			// Assume the rest dont exist either
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (1, 'Ethnicity', 	3, '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|', 0, 1, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (2, 'Skin Tone', 	3, '|Fair|Medium|Dark|', 0, 2, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (3, 'Hair Color', 	3, '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|', 0, 3, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (4, 'Eye Color', 	3, '|Blue|Brown|Hazel|Green|Black|', 0, 4, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (5, 'Height', 		7, '3', 0, 5, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (6, 'Weight', 		7, '2', 0, 6, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (7, 'Shirt', 		1, '', 0, 8, 1, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (8, 'Waist', 		7, '1', 0, 9, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (9, 'Hips', 		7, '1', 0, 10, 2, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(10, 'Shoe Size', 	7, '1', 0, 11, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(11, 'Suit', 		3, '|36S|37S|38S|39S|40S|41S|42S|43S|44S|45S|46S|36R|38R|40R|42R|44R|46R|48R|50R|52R|54R|40L|42L|44L|46L|48L|50L|52L|54L|', 0, 7, 1, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(12, 'Inseam', 		7, '1', 0, 10, 1, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(13, 'Dress', 		3, '|2|4|6|8|10|12|14|16|18|', 0, 8, 2, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(14, 'Bust', 		3, '|32A|32B|32C|32D|32DD|34A|34B|34C|34D|34DD|36C|36D|36DD|', 0, 7, 2, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(15, 'Union', 		3, '|SAG/AFTRA|SAG ELIG|NON-UNION|', 0, 20, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(16, 'Experience', 	4, '', 0, 13, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1, 0, 1, 0)");
-			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (1, 'Ethnicity', 	3, '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|', 0, 1, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (2, 'Skin Tone', 	3, '|Fair|Medium|Dark|', 0, 2, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (3, 'Hair Color', 	3, '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|', 0, 3, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (4, 'Eye Color', 	3, '|Blue|Brown|Hazel|Green|Black|', 0, 4, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (5, 'Height', 		7, '3', 0, 5, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (6, 'Weight', 		7, '2', 0, 6, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (7, 'Shirt', 		1, '', 0, 8, 1, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (8, 'Waist', 		7, '1', 0, 9, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES (9, 'Hips', 		7, '1', 0, 10, 2, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(10, 'Shoe Size', 	7, '1', 0, 11, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(11, 'Suit', 		3, '|36S|37S|38S|39S|40S|41S|42S|43S|44S|45S|46S|36R|38R|40R|42R|44R|46R|48R|50R|52R|54R|40L|42L|44L|46L|48L|50L|52L|54L|', 0, 7, 1, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(12, 'Inseam', 		7, '1', 0, 10, 1, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(13, 'Dress', 		3, '|2|4|6|8|10|12|14|16|18|', 0, 8, 2, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(14, 'Bust', 		3, '|32A|32B|32C|32D|32DD|34A|34B|34C|34D|34DD|36C|36D|36DD|', 0, 7, 2, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(15, 'Union', 		3, '|SAG/AFTRA|SAG ELIG|NON-UNION|', 0, 20, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(16, 'Experience', 	4, '', 0, 13, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1, 0, 1, 0)");
+			$insert = $wpdb->query("INSERT INTO rb_agency_customfields VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1, 0, 1, 0)");
 		}
 
 		//Fix Custom Fields compatibility. 1.8 to 1.9.1
-		$q2 = mysql_query("SELECT * FROM ".table_agency_customfields." ");
+		$q2 = mysql_query("SELECT * FROM rb_agency_customfields ");
 		while($fetchData = mysql_fetch_assoc($q2)):
 			if($fetchData["ProfileCustomType"] == 0){
-				mysql_query("UPDATE ".table_agency_customfields." SET  ProfileCustomType = 1 WHERE ProfileCustomType = 0 ") or die(mysql_error());
+				mysql_query("UPDATE rb_agency_customfields SET  ProfileCustomType = 1 WHERE ProfileCustomType = 0 ") or die(mysql_error());
 			}
 			if($fetchData["ProfileCustomType"] == 3){
-				mysql_query("UPDATE ".table_agency_customfields." SET  ProfileCustomOptions = '"."|".$fetchData["ProfileCustomOptions"]."' WHERE ProfileCustomID = ".$fetchData["ProfileCustomID"]."") or die(mysql_error());
+				mysql_query("UPDATE rb_agency_customfields SET  ProfileCustomOptions = '"."|".$fetchData["ProfileCustomOptions"]."' WHERE ProfileCustomID = ".$fetchData["ProfileCustomID"]."") or die(mysql_error());
 			}
 		endwhile;
 		
 		// Fix Gender compatibility
-		if ($wpdb->get_var("show tables like '".table_agency_profile."'") != table_agency_profile) { 
-			$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die(mysql_error());
+		if ($wpdb->get_var("show tables like 'rb_agency_profile'") != "rb_agency_profile") { 
+			$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM rb_agency_profile ") or die(mysql_error());
 		
 			while($fetchData = mysql_fetch_assoc($q3)):
-				$queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die(mysql_error());
+				$queryGender = mysql_query("SELECT GenderID, GenderTitle FROM rb_agency_data_gender WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die(mysql_error());
 				$fetchGender = mysql_fetch_assoc($queryGender);
 				$count = mysql_num_rows($queryGender);
 				if($count > 0){
-					$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$fetchGender["GenderID"]."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
+					$wpdb->query("UPDATE rb_agency_profile SET ProfileGender='".$fetchGender["GenderID"]."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
 				}
 			endwhile;
 		}
@@ -237,16 +237,16 @@ global $wpdb;
 	if (get_option('rb_agency_version')== "1.9.1") {
 
 		// Fix Gender compatibility
-		$q4 = mysql_query("SELECT ProfileID, ProfileGender FROM ".table_agency_profile." ") or die("1".mysql_error());
+		$q4 = mysql_query("SELECT ProfileID, ProfileGender FROM rb_agency_profile ") or die("1".mysql_error());
 		while($fetchData = mysql_fetch_assoc($q4)):
 
-		         $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die("2".mysql_error());
-		         $fetchGender = mysql_fetch_assoc($queryGender);
-			   $count = mysql_num_rows($queryGender);
-			   if($count > 0){
-			   	mysql_query("UPDATE ".table_agency_profile." SET ProfileGender='".(0 + (int)$fetchGender["GenderID"])."' WHERE ProfileID='".$fetchData["ProfileID"]."'")  or die("4".mysql_error());
-			   }
-			 
+			$queryGender = mysql_query("SELECT GenderID, GenderTitle FROM rb_agency_data_gender WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die("2".mysql_error());
+			$fetchGender = mysql_fetch_assoc($queryGender);
+			$count = mysql_num_rows($queryGender);
+			if($count > 0){
+				mysql_query("UPDATE rb_agency_profile SET ProfileGender='".(0 + (int)$fetchGender["GenderID"])."' WHERE ProfileID='".$fetchData["ProfileID"]."'")  or die("4".mysql_error());
+			}
+
 		endwhile;
 		// Updating version number!
 		update_option('rb_agency_version', "1.9.1.1");
@@ -254,7 +254,7 @@ global $wpdb;
 
 	// Upgrade from 1.9.1.1
 	if (get_option('rb_agency_version') == "1.9.1.1") {	
-		$resultsProfile = mysql_query("SELECT * FROM ".table_agency_profile." ");
+		$resultsProfile = mysql_query("SELECT * FROM rb_agency_profile");
 		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
 			$ProfileID = $f_Profile["ProfileID"];
 			$ProfileGender = $f_Profile["ProfileGender"];
@@ -276,9 +276,9 @@ global $wpdb;
 				"ProfileExperience" => "Experience");
 				// old column   to  custom fields 
 			foreach($arr_profile_features as $oldColumn => $migrate_data):
-				$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
-						SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
-						FROM   " . table_agency_customfields . "  
+				$query ="INSERT INTO rb_agency_customfield_mux (ProfileCustomID,ProfileID,ProfileCustomValue)
+						SELECT ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
+						FROM rb_agency_customfields
 						WHERE ProfileCustomTitle ='". $migrate_data."'";
 				 mysql_query($query) or die(mysql_error());
 			endforeach;
@@ -307,9 +307,9 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "1.9.2") {
 
 		/**
-	     *  Update custom fields
-	     */
-		$resultsProfile = mysql_query("SELECT * FROM ".table_agency_profile." "); // Get all profiles
+		 *  Update custom fields
+		 */
+		$resultsProfile = mysql_query("SELECT * FROM rb_agency_profile"); // Get all profiles
 		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
 
 			$ProfileID = $f_Profile["ProfileID"];   // set the profile id
@@ -332,20 +332,20 @@ global $wpdb;
 				// old column   to  custom fields 
 			foreach($arr_profile_features as $oldColumn => $migrate_data):
 
-				$qCustomFieldID = mysql_query("SELECT ProfileCustomID,ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomTitle = '".$migrate_data."'");	
+				$qCustomFieldID = mysql_query("SELECT ProfileCustomID,ProfileCustomTitle FROM rb_agency_customfields WHERE ProfileCustomTitle = '".$migrate_data."'");	
 				$count = mysql_num_rows($qCustomFieldID);
 				if($count > 0){
 					$fCustomFieldID = mysql_fetch_assoc($qCustomFieldID);
 					if (isset($f_Profile[$oldColumn])) {
-						$query1 ="UPDATE " . table_agency_customfield_mux. " SET  ProfileCustomValue = '". $f_Profile[$oldColumn] ."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."' AND ProfileID = '".$ProfileID ."'";
+						$query1 ="UPDATE rb_agency_customfield_mux SET  ProfileCustomValue = '". $f_Profile[$oldColumn] ."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."' AND ProfileID = '".$ProfileID ."'";
 						$q1 =  mysql_query($query1) or die(mysql_error());
 						//mysql_free_result($q1);
 					}
 				} /*else{
 					$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
-				 	   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
-				 	   FROM   " . table_agency_customfields . "  
-			       	   WHERE ProfileCustomTitle ='". $migrate_data."'";
+					   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
+					   FROM   " . table_agency_customfields . "  
+					   WHERE ProfileCustomTitle ='". $migrate_data."'";
 					 $q2 = mysql_query($query) or die(mysql_error());
 					 mysql_free_result($q2);
 				}*/
@@ -416,7 +416,8 @@ global $wpdb;
 		if ($wpdb->get_var("show tables like 'rb_agency_mediacategory'") == 'rb_agency_mediacategory') {
 			$results = $wpdb->query("RENAME TABLE rb_agency_mediacategory TO {$wpdb->prefix}agency_data_media");
 		} else {
-			$results = $wpdb->query("RENAME TABLE {$wpdb->prefix}agency_customfields TO {$wpdb->prefix}agency_data_media");
+			// TODO WHY THIS LINE? 
+			//$results = $wpdb->query("RENAME TABLE {$wpdb->prefix}agency_customfields TO {$wpdb->prefix}agency_data_media");
 		}
 
 		update_option('rb_agency_version', "2.0.4");
@@ -668,7 +669,7 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.6");
 	}
 
-        if (get_option('rb_agency_version') == "2.0.6") {
+		if (get_option('rb_agency_version') == "2.0.6") {
 		// Add Column to media file for holding video type media
 		rb_agency_addColumn( table_agency_profile_media,"ProfileVideoType","VARCHAR(255) NOT NULL DEFAULT 'youtube'");
 		// Updating version number!
