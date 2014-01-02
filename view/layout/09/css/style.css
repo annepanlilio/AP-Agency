@@ -15,3 +15,12 @@
 #rblayout-nine #links { width: 200px; padding: 0 15px; position: absolute; right: -185px; top: 0px; z-index: 5; background: rgba(255,255,255,0.5); text-align: left; }
 #rblayout-nine #links li a { text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
 #rblayout-nine #resultsGoHereAddtoCart { font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
+
+/* < 960 */
+@media screen and (max-width: 960px) {
+	#rblayout-nine #links { position: static; float: left; display: block; padding: 15px 0 15px 15px; margin-top: 15px; border-top: 3px solid #ccc; width: 100%; }
+	#rblayout-nine #links li { display: inline-block; margin: 0 5px; }
+}
+@media screen and (max-width: 480px) {
+	#rblayout-nine #links li { display: block; margin: 0px; }
+}
