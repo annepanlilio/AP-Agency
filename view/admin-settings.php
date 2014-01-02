@@ -428,9 +428,7 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Image Gallery Type', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_gallerytype]\">\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 1,false) ."> ". __("Slimbox Popup", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 2,false) ."> ". __("Pretty Photo", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"9\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 9,false) ."> ". __("No Gallery, Deregister jQuery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 1,false) ."> ". __("Slimbox2", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 0,false) ."> ". __("No Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
