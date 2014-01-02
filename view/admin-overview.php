@@ -87,7 +87,7 @@ get_currentuserinfo();
 						<?php
 						if ($user_level >= 7) {
 							// Recently Updated
-							$query = "SELECT ProfileID, ProfileContactNameLast, ProfileContactNameLast, ProfileDateUpdated FROM ". table_agency_profile ." ORDER BY ProfileDateUpdated DESC LIMIT 0,10";
+							$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileDateUpdated FROM ". table_agency_profile ." ORDER BY ProfileDateUpdated DESC LIMIT 0,10";
 							$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 							$count = mysql_num_rows($results);
 							while ($data = mysql_fetch_array($results)) { ?>
