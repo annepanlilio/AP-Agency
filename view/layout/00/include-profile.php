@@ -7,15 +7,14 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 /*
  * Insert Javascript into Head
+	add_action('wp_head', 'rb_agency_inserthead_profile');
+		// Call Custom Code to put in header
+		function rb_agency_inserthead_profile() {
+		}
  */
+			wp_register_style( 'rblayout-zero', plugins_url('/css/style.css', __FILE__) );
+			wp_enqueue_style( 'rblayout-zero' );
 
-	if(!function_exists("rb_agency_inserthead_profile")){
-		add_action('wp_head', 'rb_agency_inserthead_profile');
-	}
-	// Call Custom Code to put in header
-	function rb_agency_inserthead_profile() {
-		wp_enqueue_script( 'jquery-ui', plugins_url('/js/image-resize.js', dirname(__FILE__)) );
-	}
 
 /*
  * Layout 
@@ -33,9 +32,9 @@ echo "				<div id=\"photos\">\n";
 						$countImg = mysql_num_rows($resultsImg);
 						while ($dataImg = mysql_fetch_array($resultsImg)) {
 							if ($countImg > 1) { 
-								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a>\n";
+								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" class=\"photo\" /></a>\n";
 							} else {
-								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" class=\"photo\" /></a>\n";
 							}
 						}
 

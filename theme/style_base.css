@@ -358,138 +358,13 @@ img.fillheight {
 #rbprofile #profile-picture { background: #e9e9e9; padding: 15px; }
 #rbprofile #profile-picture img { max-width: 100%; }
 
-/* Profile Layout with Thumbnails (include-profile-layout0.php) */
-#rblayout-zero #photos { font-size: 0px; }
-#rblayout-zero #photos .inner { margin: 0 -5px; }
-#rblayout-zero #photos .photo { width: 29%; max-width: 135px; overflow: hidden; display: inline-block; margin: 0px 15px 15px 0px; border-radius: 5px;
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ddd) );
-	background:-moz-linear-gradient( center top, #ffffff 5%, #ddd 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ddd');
-	background-color:#ffffff;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	box-shadow: 0px 0px 3px rgba(0,0,0,0.5)
-}
-#rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; background-size: cover; background-repeat: no-repeat; background-position: top center; }
-#rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
-#rblayout-zero #stats h2 { margin-bottom: 15px; }
-#rblayout-zero #movie { float: right; }
-#rblayout-zero .experience { float: left; clear: both; margin: 20px 0 0 0; line-height: 18px; font-size: 13px; text-indent: 30px; }
 
-/* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
-#rblayout-one { overflow: hidden; }
-#rblayout-one #profile-picture,
-#rblayout-one #links,
-#rblayout-one #stats,
-#rblayout-one #photos { margin: 0px 0px 30px 0px; }
-#rblayout-one #photos { padding: 15px 15px 0px 15px; background: #e9e9e9; }
-#rblayout-one #photos img { height: 150px; float: left; margin: 0px 10px 15px 0px; }
-#rblayout-one #photos a:last-of-type img { margin-right: 0px; }
 
-/* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
-#rblayout-two { overflow: hidden; }
-#rblayout-two .mCSB_container a img { max-height: 150px; float: left; border: 5px solid #e9e9e9; border-right: none; }
-#rblayout-two .mCSB_container a:last-child img { border-right: 5px solid #e9e9e9; }
 
-/* Profile Extended Layout (include-profile-layout3.php) */
-#rblayout-three { overflow: hidden; }
-#rblayout-three #go-back { margin-bottom: 10px; }
-#rblayout-three #go-back a { font-size: 14px; font-weight: bold; text-decoration: none; text-transform: uppercase; }
-#rblayout-three #profile-info h1 { margin: 0px; line-height: normal; }
-#rblayout-three #profile-info p,
-#rblayout-three #profile-info ul { margin: 0px 0px 15px 0px; }
-#rblayout-three #profile-info ul { padding: 0px; list-style: none; }
-#rblayout-three .row-zero { font-size: 30px; margin: 0 0 20px 0; overflow: hidden; }
-#rblayout-three .row-one { padding: 10px 0; overflow: hidden; }
-#rblayout-three .profile-picture-favorite { text-align: center; background: #ccc; font-size: 13px; padding: 5px; margin: 5px 0 0 0; }
-#rblayout-three .profile-picture-favorite a { color: #666; }
-#rblayout-three .profile-picture-favorite:hover { background: #bbb; }
-#rblayout-three #profile-overview { line-height: 20px; }
-#rblayout-three #profile-actions { line-height: 22px; }
-#rblayout-three #profile-actions p,
-#rblayout-three #profil-actions div { margin: 0px 0px 15px 0px; }
-#rblayout-three #profile-actions div a { margin: 0px 0px 10px 0px; }
-#rblayout-three #tab-panels .column { margin: 0px 0px 15px 0px }
-#rblayout-three #tab-panels .column .tab-panel ul { margin: 0px; padding: 0px; list-style: none; }
-#rblayout-three #tab-panels .column .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
-#rblayout-three #tab-panels .column .video-container iframe,
-#rblayout-three #tab-panels .column .video-container object,
-#rblayout-three #tab-panels .column .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-#rblayout-three #tab-panels .column .tab-panel { overflow: hidden; padding: 15px; background: #e9e9e9; }
-#rblayout-three #tab-panels .column .tab-panel p { margin: 0px 0px 15px 0px }
-#rblayout-three #tab-panels .row-photos div.photo { float: left; width: 160px; height: 160px; margin: 10px; overflow: hidden; background-color: #e9e9e9; border: 7px solid #fff; }
-#rblayout-three #tab-panels .row-photos div.photo:hover { box-shadow: 0 0 3px #aaa; }
-#rblayout-three #tab-panels .row-photos div.photo a { float: left; width: 100%; height: 100%; overflow: hidden; background-size: cover; background-position: center top; background-repeat: no-repeat; }
-#rblayout-three .row-two { overflow: hidden; margin: 20px 0 0 0; }
-#rblayout-three .row-two #subMenuTab { overflow: hidden; }
-#rblayout-three .row-two #subMenuTab a { float: left; border-left: 1px solid #fff; padding: 10px 20px; color: #555; background: url(style/bg-tab.png) repeat-x }
-#rblayout-three .row-two #subMenuTab a:hover { color: #444; background: url(style/bg-tab.png) 0 -38px repeat-x  }
-#rblayout-three .row-two #subMenuTab div.tab-inner, #rblayout-three .row-two #subMenuTab .tab-left, #rblayout-three .row-two #subMenuTab .tab-right { float: left; border: 1px solid #d1d1d1; border-bottom: 1px solid #acaca8; }
-#rblayout-three .row-two #subMenuTab div.tab-inner, #rblayout-three .row-two #subMenuTab .tab-right { border-left: none; }
-#rblayout-three .row-two #subMenuTab .tab-left { -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; }
-#rblayout-three .row-two #subMenuTab .tab-left a { -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; }
-#rblayout-three .row-two #subMenuTab .tab-left a { border: none; }
-#rblayout-three .row-two #subMenuTab .tab-right { -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; }
-#rblayout-three .row-two #subMenuTab .tab-right a { -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; }
-#rblayout-three .row-two #subMenuTab .tab-active, #rblayout-three .row-two #subMenuTab .tab-active a { background: #fff; border-bottom: 1px solid #fff; }
-#rblayout-three .row-physical div { padding: 5px; border-bottom: 1px solid #fff; }
-#rblayout-three .row-physical div:nth-child(even){ background: #ddd; }
 
-/* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
-#rblayout-four { overflow: hidden; }
-#rblayout-four #name { margin-bottom: 15px; }
-#rblayout-four h3 { margin: -15px -15px 15px -15px; background: #ccc; font-weight: normal; padding: 15px; }
-#rblayout-four #profile-info h3 {  }
-#rblayout-four #profile-info { background: #e9e9e9; padding: 15px; }
-#rblayout-four #profile-info .stats { font-size: 13px; }
-#rblayout-four #profile-info .stats ul { margin: 0px 0px 15px 0px; padding: 0px; list-style: none; }
-#rblayout-four .col_8 h3 { margin-top: 0px; }
-#rblayout-four #photos { overflow: hidden; }
-#rblayout-four #photos .photo { float: left; width: 33.33333%; height: 150px; overflow: hidden; }
-#rblayout-four #photos .photo a { float: left; width: 100%; height: 100%; background-size: cover; background-position: center top; background-repeat: no-repeat; background-color: #e9e9e9; border-right: 1px solid #e9e9e9; border-bottom: 1px solid #e9e9e9; }
-#rblayout-four #photos .photo:last-of-type a,
-#rblayout-four #photos .photo:nth-child(3n+0) a { border-right: none; }
-#rblayout-four #photos .photo:nth-last-child(-n+3) a { border-bottom: none; }
 
-/* Profile Layout Six */
-#rblayout-six #profile-slide { background: #fff; }
-#rblayout-six #info-slider { background: #000; } 
-#rblayout-six #layout6-slider { margin-bottom: 15px; }
-#rblayout-six h1.entry-title { float: left; margin: 0px; }
 
-/* Profile Layout Seven */
-#rblayout-seven #video_player {height:500px; width:66%;}
-#rblayout-seven #video_player .vids {height:500px; width:100%; position:absolute; z-index:0; top:0px; left:0px;}
-#rblayout-seven #profile-slider,
-#rblayout-seven #profile-carousel { border: none; padding: 0; border-radius: 0; box-shadow: none; }
-#rblayout-seven #profile-slider { margin-bottom: 0px; }
-#rblayout-seven #profile-slider .slides { margin: 0px; }
-#rblayout-seven #profile-slider .slides li { height: 100%; text-align: center; overflow: hidden; max-height: 350px; }
-#rblayout-seven #profile-slider .slides li figure.multi { width: 50%; height: 100%; text-align: center; float: left; margin: 0px; overflow: hidden; }
-#rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; display: inline-block; width: inherit; max-width: 100%; }
-#rblayout-seven #profile-carousel { clear: both; width: 100%; display: block; background: #fff; margin: 0; }
-#rblayout-seven #profile-carousel .slides li { width: 150px; height: 140px; overflow: hidden; text-align: center; }
-#rblayout-seven #profile-carousel .slides li figure { overflow: hidden; float: left; width: 100%; height: 100%; margin: 0px; }
-#rblayout-seven #profile-carousel .slides li figure.multi span { width: 50%; }
-#rblayout-seven #profile-carousel .slides li figure span { float: left; width: 100%; height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center top; }
-#rblayout-seven #profile-info { padding: 30px 0; }
-#rblayout-seven #profile-info h1 { color: #e2e2e2; font-weight: normal; text-transform: uppercase; padding: 30px; }
-#rblayout-seven #profile-info ul { list-style: none; color: #959595; padding: 0 30px; margin: 0; }
-#rblayout-seven #profile-info ul li { list-style: none; display: block; font-size: 14px; }
-#rblayout-seven #profile-info ul li span { font-style: italic; }
-#rblayout-seven #profile-links { padding: 0px; margin: 15px 0px; list-style: none; text-align: right; }
-#rblayout-seven #profile-links li { display: inline-block; padding: 0 10px; border-right: 1px solid #e2e2e2; font-size: 14px; }
-#rblayout-seven #profile-links li:last-child { border: none; }
-#rblayout-seven #profile-links li a { text-decoration: none; text-transform: uppercase; }
-#rblayout-seven #experience { width: 100%; background: #fff; padding: 15px; line-height: normal; }
-#rblayout-seven #videos-carousel { border: none; box-shadow: none; border-radius: 0; width: 100%; margin: 0px!important; padding: 10px 0px; }
-#rblayout-seven #profile-slider.slides li { height: 500px; }
-#rblayout-seven #videos-carousel { clear: both; width: 100%; display: block; background: #fff; margin: 0; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li { height: 140px; overflow: hidden; text-align: center; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li figure { overflow: hidden; float: left; margin: 5px; width: 94%; height: 94%; border: 1px solid #ccc; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li figure.multi span { width: 50%; }
-#rblayout-seven #videos-carousel .flex-viewport .slides li figure span { float: left; width: 100%; height: 100%; background-repeat: no-repeat; background-size: cover; background-position: center top;  }
-#rblayout-seven #videos-carousel .flex-viewport .slides li img { display: inline-block; float: none; cursor:pointer; }
+
 #video_player {height:500px; width:66%;}
 #video_player .vids{height:500px; width:100%; display:none; position:absolute; z-index:0; top:0px; left:0px;}
 #video_player .act_vids{height:500px; width:100%; display:block; position:absolute; z-index:100; top:0px; left:0px;}
@@ -498,44 +373,6 @@ img.fillheight {
 #videos-carousel li{ height:100px; width:150px; float:left; margin-left:5px; display:inline;}
 #videos-carousel figure{ height:100%; width:100%;}
 
-/* Profile Layout Eight */
-#rblayout-eight { margin-bottom: 60px; }
-#rblayout-eight a { color: #8c8b8b; text-decoration: none; }
-#rblayout-eight a:hover { color: #bdbdbd; }
-#rblayout-eight #layout-head,
-#rblayout-eight,
-#photobook-pagination { overflow: hidden; }
-#rblayout-eight #photobook-pagination { margin: 0px 0px 15px 0px; }
-#rblayout-eight #layout-head { padding: 15px 0px; }
-#rblayout-eight #photobook { overflow: hidden; margin: 0 auto 15px auto; }
-#rblayout-eight #layout-head h1 { float: left; color: #6a6a6a; margin: 0; }
-#rblayout-eight #layout-head a { float: right; }
-#rblayout-eight #photobook-pagination a#prev-page { float: left; }
-#rblayout-eight #photobook-pagination a#next-page { float: right; }
-#rblayout-eight #profile-info { overflow: hidden; list-style: none; padding: 0px; margin: 0px; }
-#rblayout-eight #profile-info li { float: left; padding: 0px 10px 10px 10px; color: #3c3c3c; font-size: 18px; }
-#rblayout-eight #profile-info li em { display: block; color: #8c8b8b; font-style: italic; font-size: 13px; }
-#rblayout-eight .booklet .b-wrap .page { text-align: center; }
-#rblayout-eight .booklet .b-wrap .page img { max-width: none; max-height: 300px }
-#rblayout-eight .booklet .b-wrap .b-page-empty { width: 100%; height: 100%; background-position: center center; background-repeat: no-repeat; }
-
-/* Profile Layout Nine */
-#rblayout-nine { padding-bottom: 60px; }
-#rblayout-nine .mCSB_container a img { max-height: 400px; float: left; }
-#rblayout-nine .mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools { background: none; height: 18px; }
-#rblayout-nine .mCSB_scrollTools .mCSB_draggerRail { background: #000; margin: 6px 0px; }
-#rblayout-nine .mCSB_horizontal .mCSB_scrollTools .mCSB_dragger { width: 30px!important; }
-#rblayout-nine .mCSB_scrollTools a+.mCSB_draggerContainer { margin: 0 100px 0 90px; }
-#rblayout-nine .mCSB_horizontal .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar { width: 30px!important; height: 14px; background: url(../style/layout9-dragger.png); margin: 0; }
-#rblayout-nine .mCSB_scrollTools .mCSB_buttonLeft { left: 30px; width: 46px; height: 18px; background: url(../style/layout9-prev.png) no-repeat; }
-#rblayout-nine .mCSB_scrollTools .mCSB_buttonRight { right: 30px; width: 60px; height: 18px; background: url(../style/layout9-next.png) no-repeat; }
-#rblayout-nine #info { text-align: center; }
-#rblayout-nine #info #name { text-transform: uppercase; margin: 15px 0px; }
-#rblayout-nine #stats li { display: inline-block; padding: 0 5px; font-weight: bold; }
-#rblayout-nine #stats li strong { font-weight: normal; }
-#rblayout-nine #links { width: 200px; padding: 0 15px; position: absolute; right: -185px; top: 0px; z-index: 5; background: rgba(255,255,255,0.5); text-align: left; }
-#rblayout-nine #links li a { text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
-#rblayout-nine #resultsGoHereAddtoCart { font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
 
 /* Quick Search */
 #rbquick-search { overflow: hidden; padding: 30px 0; padding-top: 0; margin-top: 30px; }

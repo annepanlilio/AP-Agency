@@ -1,0 +1,43 @@
+/* Profile Extended Layout (include-profile-layout3.php) */
+#rblayout-three { overflow: hidden; }
+#rblayout-three #go-back { margin-bottom: 10px; }
+#rblayout-three #go-back a { font-size: 14px; font-weight: bold; text-decoration: none; text-transform: uppercase; }
+#rblayout-three #profile-info h1 { margin: 0px; line-height: normal; }
+#rblayout-three #profile-info p,
+#rblayout-three #profile-info ul { margin: 0px 0px 15px 0px; }
+#rblayout-three #profile-info ul { padding: 0px; list-style: none; }
+#rblayout-three .row-zero { font-size: 30px; margin: 0 0 20px 0; overflow: hidden; }
+#rblayout-three .row-one { padding: 10px 0; overflow: hidden; }
+#rblayout-three .profile-picture-favorite { text-align: center; background: #ccc; font-size: 13px; padding: 5px; margin: 5px 0 0 0; }
+#rblayout-three .profile-picture-favorite a { color: #666; }
+#rblayout-three .profile-picture-favorite:hover { background: #bbb; }
+#rblayout-three #profile-overview { line-height: 20px; }
+#rblayout-three #profile-actions { line-height: 22px; }
+#rblayout-three #profile-actions p,
+#rblayout-three #profil-actions div { margin: 0px 0px 15px 0px; }
+#rblayout-three #profile-actions div a { margin: 0px 0px 10px 0px; }
+#rblayout-three #tab-panels .column { margin: 0px 0px 15px 0px }
+#rblayout-three #tab-panels .column .tab-panel ul { margin: 0px; padding: 0px; list-style: none; }
+#rblayout-three #tab-panels .column .video-container { position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; }
+#rblayout-three #tab-panels .column .video-container iframe,
+#rblayout-three #tab-panels .column .video-container object,
+#rblayout-three #tab-panels .column .video-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+#rblayout-three #tab-panels .column .tab-panel { overflow: hidden; padding: 15px; background: #e9e9e9; }
+#rblayout-three #tab-panels .column .tab-panel p { margin: 0px 0px 15px 0px }
+#rblayout-three #tab-panels .row-photos div.photo { float: left; width: 160px; height: 160px; margin: 10px; overflow: hidden; background-color: #e9e9e9; border: 7px solid #fff; }
+#rblayout-three #tab-panels .row-photos div.photo:hover { box-shadow: 0 0 3px #aaa; }
+#rblayout-three #tab-panels .row-photos div.photo a { float: left; width: 100%; height: 100%; overflow: hidden; background-size: cover; background-position: center top; background-repeat: no-repeat; }
+#rblayout-three .row-two { overflow: hidden; margin: 20px 0 0 0; }
+#rblayout-three .row-two #subMenuTab { overflow: hidden; }
+#rblayout-three .row-two #subMenuTab a { float: left; border-left: 1px solid #fff; padding: 10px 20px; color: #555; background: url(style/bg-tab.png) repeat-x }
+#rblayout-three .row-two #subMenuTab a:hover { color: #444; background: url(style/bg-tab.png) 0 -38px repeat-x  }
+#rblayout-three .row-two #subMenuTab div.tab-inner, #rblayout-three .row-two #subMenuTab .tab-left, #rblayout-three .row-two #subMenuTab .tab-right { float: left; border: 1px solid #d1d1d1; border-bottom: 1px solid #acaca8; }
+#rblayout-three .row-two #subMenuTab div.tab-inner, #rblayout-three .row-two #subMenuTab .tab-right { border-left: none; }
+#rblayout-three .row-two #subMenuTab .tab-left { -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; }
+#rblayout-three .row-two #subMenuTab .tab-left a { -webkit-border-top-left-radius: 5px; -moz-border-radius-topleft: 5px; border-top-left-radius: 5px; }
+#rblayout-three .row-two #subMenuTab .tab-left a { border: none; }
+#rblayout-three .row-two #subMenuTab .tab-right { -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; }
+#rblayout-three .row-two #subMenuTab .tab-right a { -webkit-border-top-right-radius: 5px; -moz-border-radius-topright: 5px; border-top-right-radius: 5px; }
+#rblayout-three .row-two #subMenuTab .tab-active, #rblayout-three .row-two #subMenuTab .tab-active a { background: #fff; border-bottom: 1px solid #fff; }
+#rblayout-three .row-physical div { padding: 5px; border-bottom: 1px solid #fff; }
+#rblayout-three .row-physical div:nth-child(even){ background: #ddd; }

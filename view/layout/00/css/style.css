@@ -1,0 +1,17 @@
+/* Profile Layout with Thumbnails (include-profile-layout0.php) */
+#rblayout-zero #photos { font-size: 0px; }
+#rblayout-zero #photos .inner { margin: 0 -5px; }
+#rblayout-zero #photos .photo { width: 29%; max-width: 135px; overflow: hidden; display: inline-block; margin: 0px 15px 15px 0px; border-radius: 5px;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ddd) );
+	background:-moz-linear-gradient( center top, #ffffff 5%, #ddd 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ddd');
+	background-color:#ffffff;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.5)
+}
+#rblayout-zero #photos .photo a { display: block; overflow: hidden; margin: 5px; border-radius: 2px; border: 1px solid #ddd; background-size: cover; background-repeat: no-repeat; background-position: top center; }
+#rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
+#rblayout-zero #stats h2 { margin-bottom: 15px; }
+#rblayout-zero #movie { float: right; }
+#rblayout-zero .experience { float: left; clear: both; margin: 20px 0 0 0; line-height: 18px; font-size: 13px; text-indent: 30px; }

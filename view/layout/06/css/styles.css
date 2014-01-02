@@ -13,6 +13,12 @@
 	#polaroids .column { padding-right:15px!important; }  
 }
 
+/* Profile Layout Six */
+#rblayout-six #profile-slide { background: #fff; }
+#rblayout-six #info-slider { background: #000; } 
+#rblayout-six #layout6-slider { margin-bottom: 15px; }
+#rblayout-six h1.entry-title { float: left; margin: 0px; }
+
 /* Category Template */
 .model-categories {  }
 .model-categories .model-filter { padding-bottom:20px; }
