@@ -11,7 +11,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
 	wp_enqueue_style( 'rblayout-style' );
  echo plugins_url('/css/style.css', __FILE__);
-
+echo "<h1>RobTest</h1>";
 /*
  * Layout 
  */
