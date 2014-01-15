@@ -947,34 +947,40 @@ elseif ($ConfigID == 80) {
 // *************************************************************************************************** //
 // Import CSV or XLS files (NK)
 
-	$obj_csv = new RBAgencyCSVXLSImpoterPlugin();
 	$error_message = ""; 
 	$form_display_flag = true;
-
-	global $wpdb;
-
-	$custom_fields_rb_agency = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder", ARRAY_A));
-	$fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive'));
-
-	$count = count($fields_array[0]);
-	foreach ($custom_fields_rb_agency as $key => $c_field) 
-	{
-		$fields_array[0][$count] = 'Client'.str_replace(' ', '',$c_field['ProfileCustomTitle']);
-		$count++;
-	}
-
-	$target_path = WP_CONTENT_DIR.'/FORMAT.csv';
-
-	$csv_format = fopen($target_path,'w');
-	fputcsv($csv_format, $fields_array[0]);  
-			
-//    foreach ($fields_array as $key => $value) 
-//    {
-//        fputcsv($csv_format, $value);
-//    }
-	fclose($csv_format);
-	chmod($target_path, 0777);
 	
+	// do this only when data has been submitted.	
+	if(isset($_POST['submit_importer']) || isset($_POST['submit_importer_to_db'])){
+		
+		$obj_csv = new RBAgencyCSVXLSImpoterPlugin();
+		
+		global $wpdb;
+	
+		$custom_fields_rb_agency = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder", ARRAY_A));
+		$fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive'));
+	
+		$count = count($fields_array[0]);
+                
+                // right distribution of header keys
+		foreach ($custom_fields_rb_agency as $keys) 
+		{	
+			foreach ($keys as $key => $c_field) 
+				{	
+					if($key == 'ProfileCustomTitle'){
+					  $fields_array[0][$count] = 'Client'.str_replace(' ', '',$c_field);
+					  $count++;
+					}
+				}
+		}
+
+		$target_path = WP_CONTENT_DIR.'/FORMAT.csv';
+		$csv_format = fopen($target_path,'w');
+		fputcsv($csv_format, $fields_array[0]);  
+		fclose($csv_format);
+		chmod($target_path, 0777);
+
+	}
 
 	if(isset($_POST['submit_importer']))
 	{   
@@ -1504,18 +1510,25 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 	function match_column_and_table(){
 		global $wpdb;
+
+		//have replace file_upload with WP-Content/Uploads/rb-agency/ path
+		//create folder new upload path if not yet created
+		$rb_upload_dr = wp_upload_dir(); 
+		$new_upload_path = $rb_upload_dr['basedir'] . '/rb-agency/'; 
+		if (!is_dir($new_upload_path)) {
+			@mkdir($new_upload_path, 0755);
+			@chmod($new_upload_path, 0777);		
+		}
 		
-		//$get_ext =  explode('.', $_FILES['source_file']['name']);
 		$get_ext = pathinfo($_FILES['source_file']['name'], PATHINFO_EXTENSION);
-		$target_path = WP_CONTENT_DIR.'/plugins/rb-agency/file_upload/';
+		$target_path = $new_upload_path ;
 		$target_path = $target_path . basename( $_FILES['source_file']['name']);
 		
 		if( strtolower($get_ext) == 'csv' )  /*If uploaded file is a CSV*/
 		{
 			if(move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path))
 			{
-//TODO: Need to replace file_upload with WP-Content/Upload/rb-agency/ path
-				$file_name = WP_CONTENT_DIR.'/plugins/rb-agency/file_upload/'.basename( $_FILES['source_file']['name']);
+				$file_name = $target_path;
 				update_option('wp_csvtodb_input_file_url', $file_name);
 			}
 			else
@@ -1558,12 +1571,11 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$handle = fopen($file_path ,"r");       
 		$header=fgetcsv($handle, 4096, ",");
 		$total_header = count($header);
-
+		
 		$custom_header = $total_header - 17;//17 are the number of column for the personal profile table
 		
 		if( $custom_header <= 0 ) return 0; /*If no custom field found*/
 
-		
 		/*Column head form*/
 		echo "<div class=\"wrap\">";
 		echo "<h2>Import CSV</h2>";
@@ -1633,7 +1645,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 							$ex = explode(" | ",trim($data[15]));
 							$data[15] = trim(implode(",",$ex));
 						}					
-						echo $add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
+						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
 						mysql_query($add_to_p_table) or die(mysql_error());
 
 						$last_inserted_mysql_id = mysql_insert_id();
