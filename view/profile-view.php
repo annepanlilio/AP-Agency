@@ -132,7 +132,6 @@ header("Cache-control: private"); //IE 6 Fix
 	 */
 
 		get_header();
-echo "<h1>RobTest1</h1>";
 
 		echo "<div id=\"container\" "; if ($rb_agency_option_profilelist_sidebar==0) { echo "class=\"one-column\""; } echo">\n";
 		echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
