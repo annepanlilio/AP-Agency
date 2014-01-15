@@ -962,7 +962,7 @@ elseif ($ConfigID == 80) {
 	
 		$count = count($fields_array[0]);
                 
-                // right distribution of header keys
+        // right distribution of header keys
 		foreach ($custom_fields_rb_agency as $keys) 
 		{	
 			foreach ($keys as $key => $c_field) 
@@ -1591,22 +1591,24 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$custom_fields = $wpdb->get_results($wpdb->prepare("SELECT ProfileCustomID,ProfileCustomTitle FROM ". table_agency_customfields." ORDER BY ProfileCustomID ASC"));
 		echo "<table class=\"form-table\">";
 		echo "<tbody>";
-		for($i = 0; $i < $t_head; $i++){
-			echo '<tr><th><label>'.$header[$heads].'</label></th>';
-			echo '<td><select name = "select'.$default.'" id="select'.$default.'">';
-			foreach ($custom_fields as $custom_fields_result) {
-				$custom_field_id = intval($custom_fields_result->ProfileCustomID);
-				$custom_field_title = $custom_fields_result->ProfileCustomTitle;
-				if($custom_field_id==$default){
-					$is_default = ' selected="selected" ';
+		for($i = 0; $i <= $t_head; $i++){
+			if(!empty($header[$heads]) && $header[$heads] != ''){
+				echo '<tr><th><label>'.$header[$heads].'</label></th>';
+				echo '<td><select name = "select'.$default.'" id="select'.$default.'">';
+				foreach ($custom_fields as $custom_fields_result) {
+					$custom_field_id = intval($custom_fields_result->ProfileCustomID);
+					$custom_field_title = $custom_fields_result->ProfileCustomTitle;
+					if($custom_field_id==$default){
+						$is_default = ' selected="selected" ';
+					}
+					else{
+						$is_default =''; 
+					}
+					echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
 				}
-				else{
-					$is_default =''; 
-				}
-				echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
+				echo '</select>';
+				echo '</td></tr>';
 			}
-			echo '</select>';
-			echo '</td></tr>';
 			//$custom_header++;
 			$heads++;
 			$default++;
