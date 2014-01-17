@@ -1538,7 +1538,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 		}
 		else    /*If uploaded file is excel*/
 		{
-			if( strtolower($get_ext[1]) == 'xls' )
+			if( strtolower($get_ext) == 'xls' )
 			{
 				$inputFileType = 'Excel5';  /*XLS File type*/
 			} 
