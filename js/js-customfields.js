@@ -142,7 +142,14 @@ jQuery(document).ready(function(){
 
 
 function add_more_option_field(objNum){
-	
+	 
+	 //get all values from current class 1 input
+	 var arr = [];
+	 var x = 0;
+	 jQuery(".1").each(function(){
+	 	arr.push(jQuery(this).val());
+	 });
+	 
      var a = document.getElementById("addoptions_field_"+objNum);
 	 var b = a.innerHTML;
 	 a.innerHTML = b + ' <tr> '  
@@ -150,7 +157,12 @@ function add_more_option_field(objNum){
           +'<td>'
           +'</td>   '
           +'</tr> ';
-		 
+
+	 //put all values to class 1	
+	 jQuery(".1").each(function(){
+	 	jQuery(this).val(arr[x]);
+		x++;
+	 });	 
    
 }
 
