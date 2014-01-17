@@ -1646,7 +1646,40 @@ class RBAgencyCSVXLSImpoterPlugin {
 						if(strpos($data[15], "|") != -1){
 							$ex = explode(" | ",trim($data[15]));
 							$data[15] = trim(implode(",",$ex));
-						}					
+						}
+						
+						// check if country and state are numeric probably code
+						// need to get ID's before inserting to DB
+						if(!is_numeric($data[14])){
+							$query ="SELECT CountryID FROM ". table_agency_data_country ." WHERE LOWER(CountryCode) = '" . strtolower(trim($data[14])) . "'";
+							$result = $wpdb->get_row($query);
+							if(count($result) > 0){
+								$data[14] = $result->CountryID;
+							} else {
+								// compare to title instead
+								$query ="SELECT CountryID FROM ". table_agency_data_country ." WHERE LOWER(CountryTitle) = '" . strtolower(trim($data[14])) . "'";
+								$result = $wpdb->get_row($query);
+								if(count($result) > 0){
+									$data[14] = $result->CountryID;
+								} 
+							}
+						}
+						if(!is_numeric($data[12])){
+							$query ="SELECT StateID FROM ". table_agency_data_state ." WHERE LOWER(StateCode) = '" . strtolower(trim($data[12])) . "'";
+							$result = $wpdb->get_row($query);
+							$data[12] = $result->StateID;
+							if(count($result) > 0){
+								$data[12] = $result->StateID;
+							} else {
+								// compare to title instead
+								$query ="SELECT StateID FROM ". table_agency_data_state ." WHERE LOWER(StateTitle) = '" . strtolower(trim($data[12])) . "'";
+								$result = $wpdb->get_row($query);
+								if(count($result) > 0){
+									$data[12] = $result->StateID;
+								} 
+							}							
+						}
+											
 						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
 						mysql_query($add_to_p_table) or die(mysql_error());
 
