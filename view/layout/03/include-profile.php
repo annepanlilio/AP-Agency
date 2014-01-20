@@ -72,6 +72,29 @@ jQuery(document).ready(function(){
 			}
 	   }); // ajax submit
 	} // end function
+	
+	// tab functionality
+	jQuery(".maintab").click(function(){
+		   var idx = this.id;
+		   var elem = "." + idx;
+		   var elem_id = "#" + idx;
+		   if ((idx=="row-all")){
+					jQuery(".tab").hide();
+					jQuery(".tab").show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
+					jQuery(".tab-active").removeClass("tab-active").addClass("tab-inactive");
+			} else {
+				  if(idx=="row-bookings"){
+						var url = "<?php echo get_permalink(get_page_by_title('booking')); ?>";
+						window.location = url;
+				  } else {
+						  jQuery(".tab-active").removeClass("tab-active").addClass("tab-inactive");
+						  jQuery(".tab").css({ opacity: 1.0 }).stop().animate({ opacity: 0.0 }, 2000).hide();
+						  jQuery(elem).show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
+						  jQuery(elem_id).removeClass("tab-inactive").addClass("tab-active");
+				  }
+		   }
+	});
+	
 });
 </script>
 <?php
