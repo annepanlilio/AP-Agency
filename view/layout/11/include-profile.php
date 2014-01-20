@@ -98,9 +98,9 @@ echo "	  			<div id=\"videos\">\n";
 echo "					<ul>\n";
 							//Videos
 							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" 
-														 AND ProfileMediaType = 'Video Slate' OR 
+														 AND (ProfileMediaType = 'Video Slate' OR 
 														 ProfileMediaType = 'Video Monologue' OR
-														 ProfileMediaType = 'Demo Reel'");
+														 ProfileMediaType = 'Demo Reel')");
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 							  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {

@@ -428,14 +428,14 @@ if (isset($_POST['action'])) {
                                     $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
                                 }
                                 if (isset($_POST['profileMediaV2']) && !empty($_POST['profileMediaV2'])) {
-                                    $profileMediaType = $_POST['profileMediaV2Type'] ."|". $_POST['media2_vtype'];
+                                    $profileMediaType = $_POST['profileMediaV2Type'] ;
                                     $profileMediaTitle = $_POST['media2_title'] ."<br>". $_POST['media2_caption'];
                                     $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV2']);
                                     $profileVideoType = $_POST['media2_vtype'];
                                     $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
                                 }
                                 if (isset($_POST['profileMediaV3']) && !empty($_POST['profileMediaV3'])) {
-                                    $profileMediaType = $_POST['profileMediaV3Type'] ."|". $_POST['media3_vtype'];
+                                    $profileMediaType = $_POST['profileMediaV3Type'] ;
                                     $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV3']);
                                     $profileMediaTitle = $_POST['media3_title'] ."<br>". $_POST['media3_caption'];
                                     $profileVideoType = $_POST['media3_vtype'];
