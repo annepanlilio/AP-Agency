@@ -286,7 +286,7 @@ error_reporting(0);
 
 				} elseif (get_query_var( 'type' ) == "favorite") {
 				// VIEW Favorites: TODO REFACTOR
-					return dirname(__FILE__) . '/theme/view-favorite.php';
+					return dirname(__FILE__) . '/view/profile-favorite.php';
 
 				} elseif (get_query_var( 'type' ) == "casting") {
 					return dirname(__FILE__) . '/theme/view-castingcart.php';
