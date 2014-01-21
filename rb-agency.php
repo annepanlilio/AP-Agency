@@ -518,7 +518,7 @@ class RBAgency {
 					);";
 				dbDelta($sql);
 				// Populate Initial Values
-					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT CountryTitle FROM " . myclubdancer_config_country . " WHERE CountryTitle = %s", 'United States' ) );
+					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT CountryTitle FROM " . table_agency_data_country . " WHERE CountryTitle = %s", 'United States' ) );
 					if ( !$data_custom_exists ) {
 						$results = $wpdb->query("INSERT INTO ". table_agency_data_country ." (CountryTitle, CountryCode) VALUES ('United States','US')");
 						$results = $wpdb->query("INSERT INTO ". table_agency_data_country ." (CountryTitle, CountryCode) VALUES ('Canada','CA')");
