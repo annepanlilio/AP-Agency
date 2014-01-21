@@ -31,6 +31,8 @@ global $wpdb;
 			foreach ($profile_data as $key => $data_value) { 
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data_value['ProfileGender'], ARRAY_A);
 				$data_value['ProfileGender'] = $gender['GenderTitle'];
+				$data_value['ProfileLocationCountry'] = rb_agency_getCountryTitle($data_value['ProfileLocationCountry'],true); // returns country code
+				$data_value['ProfileLocationState'] = rb_agency_getStateTitle($data_value['ProfileLocationState'],true); // returns state code
 				$data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
 				$csv_output .= implode(',', $data_value);
 				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
@@ -63,11 +65,8 @@ global $wpdb;
 							$c_value_array[$key]='';
 						else
 							$c_value_array[$key]=$feet."ft ".$inches."in";
-							
-						
 						}
 				}
-				
 				
 				$csv_output .= ','.implode(',', $c_value_array);
 				$csv_output .="\n";
@@ -108,7 +107,10 @@ global $wpdb;
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
 
 				$data['ProfileGender'] =$gender['GenderTitle'];
+				$data['ProfileLocationCountry'] = rb_agency_getCountryTitle($data['ProfileLocationCountry'],true); // returns country code
+				$data['ProfileLocationState'] = rb_agency_getStateTitle($data['ProfileLocationState'],true); // returns state code
 				$data['ProfileType'] = str_replace(","," | ",$data['ProfileType']);
+				
 				$c_value_array = array();
 				$temp_array = array();
 

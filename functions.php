@@ -2026,18 +2026,59 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 /*/
 *   ================ Get Country Title ===================
 *   @returns Country Title
+*   @returns Country Code if $country_code = true
 /*/   
-function rb_agency_getCountryTitle($country_id=""){
+function rb_agency_getCountryTitle($country_id="",$contry_code = false){
 	
 	global $wpdb;
 	
 	if(empty($country_id)) return false;
 	
-	$query ="SELECT CountryTitle FROM ". table_agency_data_country ." WHERE CountryID = " . $country_id;
-	$result = $wpdb->get_row($query);
+	$return = "";
+	
+	if($country_code === true){
+		$query ="SELECT CountryCode FROM ". table_agency_data_country ." WHERE CountryID = " . $country_id;
+		$result = $wpdb->get_row($query);
+		$return = $result->CountryCode;
+	} else {
+		$query ="SELECT CountryTitle FROM ". table_agency_data_country ." WHERE CountryID = " . $country_id;
+		$result = $wpdb->get_row($query);
+		$return = $result->CountryTitle;
+	}
 
 	if(count($result) > 0){
-		return $result->CountryTitle;
+		return $return;
+	}	
+	
+	return false;
+
+}
+
+/*/
+*   ================ Get State Title ===================
+*   @returns State Title
+*   @returns State Code if $state_code = true
+/*/   
+function rb_agency_getStateTitle($state_id="",$state_code = false){
+	
+	global $wpdb;
+	
+	if(empty($state_id)) return false;
+	
+	$return = "";
+	
+	if($state_code === true){
+		$query ="SELECT StateCode FROM ". table_agency_data_state ." WHERE StateID = " . $state_id;
+		$result = $wpdb->get_row($query);
+		$return = $result->StateCode;
+	} else {
+		$query ="SELECT StateTitle FROM ". table_agency_data_state ." WHERE StateID = " . $state_id;
+		$result = $wpdb->get_row($query);
+		$return = $result->StateTitle;
+	}
+
+	if(count($result) > 0){
+		return $return;
 	}	
 	
 	return false;
