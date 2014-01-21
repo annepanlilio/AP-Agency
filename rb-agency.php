@@ -915,7 +915,13 @@ class RBAgency {
 			include_once('view/admin-settings.php');
 		}
 		public static function menu_approvemembers(){
-			include_once(ABSPATH . 'wp-content/plugins/rb-agency-interact/admin/profile-approve.php');
+			$arr_loc = array('Rb-Agency-Interact','Rb-Agency-Interact-Master');
+			foreach($arr_loc as $loc){
+				if(file_exists(ABSPATH . 'wp-content/plugins/'.$loc.'/admin/profile-approve.php')){
+					include_once(ABSPATH . 'wp-content/plugins/'.$loc.'/admin/profile-approve.php');
+					break;
+				}
+			}	
 		}
 
 
