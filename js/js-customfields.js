@@ -131,12 +131,15 @@ jQuery(document).ready(function(){
      }
 	
 		jQuery("#addmoreoption_1").click(function(){
-			jQuery("#editfield_add_more_options_1").append("Option:<input type=\"text\" name=\"option[]\"></br>");
+			jQuery("#editfield_add_more_options_1").append("<li>Option:<input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
 		});
 		jQuery("#addmoreoption_2").click(function(){
-			jQuery("#editfield_add_more_options_2").append("Option:<input type=\"text\" name=\"option2[]\"></br>");
+			jQuery("#editfield_add_more_options_2").append("<li>Option:<input type=\"text\" name=\"option2[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
 		}); 
-	
+
+		jQuery("a.del_opt").live('click',function(){
+			jQuery(this).parents("li").remove();
+		});	
 	 
 });
 

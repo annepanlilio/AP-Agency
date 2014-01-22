@@ -1,4 +1,14 @@
 <div class="wrap">
+<!--sort option values-->
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery( "#editfield_add_more_options_1" ).sortable();
+	jQuery( "#editfield_add_more_options_1" ).disableSelection();
+	jQuery( "#editfield_add_more_options_2" ).sortable();
+	jQuery( "#editfield_add_more_options_2" ).disableSelection();	
+});
+</script>
 <?php
 
 global $wpdb;
@@ -2264,7 +2274,7 @@ elseif ($ConfigID == 5) {
 		
 		
 		}else{ //Edit/Update Field
-					$query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions,  ProfileCustomOrder, ProfileCustomView,  ProfileCustomShowGender	, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin, ProfileCustomShowRegistration, ProfileCustomShowSearchSimple  FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
+					$query1 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = mysql_query($query1);
 					$count1 = mysql_num_rows($results1);
 					$pos = 0;
@@ -2450,20 +2460,18 @@ elseif ($ConfigID == 5) {
 											echo "</td>";
 											echo "<td>";
 											 echo "<br/>";
-											//echo "Label:<input type=\"text\" value=\"".current($data1)."\" name=\"option_label\"/><br/>";
+											 
+											 echo '<ul id="editfield_add_more_options_1">';
 											    $pos = 0;
 												foreach($data1 as $val1){
 													
 													if($val1 != end($data1) && $val1 != $data1[0]){
 													 $pos++;
-													 echo "Option:<input type=\"text\"  value=\"".$val1."\" name=\"option[]\"/>";
-														//if($pos==1){
-														// echo "<input type=\"checkbox\" ".(end($data1)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_1\"/><span style=\"font-size:11px;\">(set as selected)</span>";	
-														// }
-													  echo "<br/>";
+													 echo "<li>Option:<input type=\"text\"  value=\"".$val1."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></li>";
 													}
 												}
-											echo "<div  id=\"editfield_add_more_options_1\"></div>";
+										    echo '</ul>'; 
+											//echo "<div  id=\"editfield_add_more_options_1\"></div>";
 											echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
 											echo "<br/>";	
 											echo "<br/>";	
