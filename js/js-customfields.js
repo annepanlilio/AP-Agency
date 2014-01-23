@@ -15,8 +15,9 @@ jQuery(document).ready(function(){
 				}else{
 				 jQuery(".add_more_object").fadeIn("fast");	
 				}
-				
-				jQuery("#obj_edit").hide();
+				if(jQuery("#obj_edit").attr("class") != jQuery(this).val()){
+					jQuery("#obj_edit").hide();
+				}
 		}
      
 	});
@@ -56,12 +57,10 @@ jQuery(document).ready(function(){
 					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:10px;">Max*:</td><td style="width:10px;"><input type="text" name="textmax"/></td></td></tr></tr>');
 			break;  
 			case "3":
-				jQuery("table tr[id=objtype_customize]").empty();
-				jQuery("table tr[id=objtype_customize]").html("<strong>Title*:</strong><input type='text' name='ProfileCustomTitle' /><br/>");
-				// jQuery("table tr[id=objtype_customize]").append("Label*:<input type='text' name=\"option_label\" value=\"\" id=\"min_field\" />"); //<input type=\"checkbox\" class=\"set_as_default\" name=\"option_default_1\"\/><span style=\"font-size:11px;\">(set as selected)<\/span>
-				 jQuery("table tr[id=objtype_customize]").append("<div id=\'dropdown_custom\' class=\"dropdown_1\">Option*:<input type=\"text\" name=\"option[]\"\/>");
-				 jQuery("table tr[id=objtype_customize]").append("Option*:<input type=\"text\" name=\"option[]\"\/><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
-				 jQuery("table tr[id=objtype_customize]").append("<div id=\"addoptions_field_1\"></div></div>");
+				var appnd = '<div id="obj_edit" class="3">Title:<input name="ProfileCustomTitle" value="" style="width:190px;" type="text"><br><ul id="editfield_add_more_options_12"><li>Option:<input value="" name="option[]" type="text"><a href="javascript:;" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li></ul><br><a href="javascript:;" id="addmoreoption_12">add more option[+]</a><br><br><div class="ui-sortable" id="editfield_add_more_options_2"></div><br></div>';
+				jQuery(".inside form").find('.submit').before(appnd);
+				jQuery("#obj_edit").css({display:'block'});
+				jQuery( "#editfield_add_more_options_12" ).sortable();
 			break;  
 			case "4":
 			     return '<tr>'
@@ -130,12 +129,15 @@ jQuery(document).ready(function(){
 		 
      }
 	
-		jQuery("#addmoreoption_1").click(function(){
+		jQuery("#addmoreoption_1").live('click',function(){
 			jQuery("#editfield_add_more_options_1").append("<li>Option:<input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
 		});
-		jQuery("#addmoreoption_2").click(function(){
+		jQuery("#addmoreoption_2").live('click',function(){
 			jQuery("#editfield_add_more_options_2").append("<li>Option:<input type=\"text\" name=\"option2[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
 		}); 
+		jQuery("#addmoreoption_12").live('click',function(){
+			jQuery("#editfield_add_more_options_12").append("<li>Option:<input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
+		});
 
 		jQuery("a.del_opt").live('click',function(){
 			jQuery(this).parents("li").remove();

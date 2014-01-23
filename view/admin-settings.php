@@ -4,9 +4,7 @@
 <script type="text/javascript">
 jQuery(document).ready(function(){
 	jQuery( "#editfield_add_more_options_1" ).sortable();
-	jQuery( "#editfield_add_more_options_1" ).disableSelection();
 	jQuery( "#editfield_add_more_options_2" ).sortable();
-	jQuery( "#editfield_add_more_options_2" ).disableSelection();	
 });
 </script>
 <?php
