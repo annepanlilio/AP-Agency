@@ -954,35 +954,64 @@ elseif ($ConfigID == 2) {
 	// Get the file
 	$rb_agency_stylesheet = rb_agency_BASEREL ."theme/style.css";
 
-	// Update File
-	if ($_POST["action"] == "saveChanges") {
-		$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"w") or exit("<p>Unable to open file to write!  Please edit via FTP</p>");
-		$rb_agency_stylesheet_string = stripslashes($_POST["rb_agency_stylesheet_string"]);
-		fwrite($rb_agency_stylesheet_file,$rb_agency_stylesheet_string,strlen($rb_agency_stylesheet_string));
-	}
 
-	// Read the File
-	if (file_exists($rb_agency_stylesheet)) {
-		//echo "File Exists";
-	} else { // File Does Not Exist
-		$rb_agency_stylesheet = rb_agency_BASEREL ."theme/style_base.css";
-		//echo "File Does NOT exist";
-	}
+	/*
+	 * Save File
+	 */
 
-	$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"r") or exit("Unable to open file to read!");
-	$rb_agency_stylesheet_string = "";
-	while(!feof($rb_agency_stylesheet_file)) {
-	  $rb_agency_stylesheet_string .= fgets($rb_agency_stylesheet_file);
-	}
-	
-	// Im done
-	fclose($rb_agency_stylesheet_file);
-	// Copy style over
-	if ($_GET["mode"] == "override") {
-		echo "<h1>OVERRIDE</h1>";
-	$rb_agency_options_arr = get_option('rb_agency_options');
-		if ($rb_agency_options_arr['rb_agency_option_defaultcss']) { $rb_agency_stylesheet_string = $rb_agency_options_arr['rb_agency_option_defaultcss']; }
-	}
+		// Update File
+		if ($_POST["action"] == "saveChanges") {
+			$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"w") or exit("<p>Unable to open file to write!  Please edit via FTP</p>");
+			$rb_agency_stylesheet_string = stripslashes($_POST["rb_agency_stylesheet_string"]);
+			fwrite($rb_agency_stylesheet_file,$rb_agency_stylesheet_string,strlen($rb_agency_stylesheet_string));
+		}
+
+
+	/*
+	 * Ensure Stylesheet Exists
+	 */
+
+		if (file_exists($rb_agency_stylesheet)) {
+			//echo "File Exists";
+		} else { // File Does Not Exist
+			$rb_agency_stylesheet = rb_agency_BASEREL ."theme/style_base.css";
+			echo "Stylesheet not setup, please click submit to initialize";
+		}
+
+
+	/*
+	 * Open File & Get Text
+	 */
+
+		// Open File
+		$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"r") or exit("Unable to open file to read!");
+
+		// Initialize Stgring
+		$rb_agency_stylesheet_string = "";
+
+		// Get all lines from css file
+		while(!feof($rb_agency_stylesheet_file)) {
+			$rb_agency_stylesheet_string .= fgets($rb_agency_stylesheet_file);
+		}
+
+		// Close File
+		fclose($rb_agency_stylesheet_file);
+
+
+	/*
+	 * Edit
+	 */
+
+		// Override
+		if ($_GET["mode"] == "override") {
+			echo "<h1>OVERRIDE</h1>";
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			if ($rb_agency_options_arr['rb_agency_option_defaultcss']) {
+				$rb_agency_stylesheet_string = $rb_agency_options_arr['rb_agency_option_defaultcss'];
+			}
+		}
+
+
 	echo "		<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 	echo "		<table class=\"form-table\">\n";
 	echo "		<tbody>\n";
