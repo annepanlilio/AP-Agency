@@ -106,46 +106,46 @@ if (isset($_POST['action'])) {
 		$errorValidation['ProfileContactNameFirst']= "<b><i>The " . LabelSingular . " must have a name.</i></b><br>";
 		$have_error = true;
 	}
-        if ($_GET["action"] == "add") {
-            $userdata = array(
-                'user_pass' => esc_attr($ProfilePassword),
-                'user_login' => esc_attr($ProfileUsername),
-                'first_name' => esc_attr($ProfileContactNameFirst),
-                'last_name' => esc_attr($ProfileContactNameLast),
-                'user_email' => esc_attr($ProfileContactEmail),
-                'role' => get_option('default_role')
-            );
-                    if(function_exists(rb_agencyinteract_approvemembers)){
-                            if (empty($userdata['user_login'])) {
-                                   $errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
-                                    $have_error = true;
-                            }
-                            if (username_exists($userdata['user_login'])) {
-                                    $errorValidation['user_login'] = __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
-                                    $have_error = true;
-                            }
-                            if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
-                                    $errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
-                                    $have_error = true;
-                            }
-                    }
-            if (!is_email($userdata['user_email'], true)) {
-                $errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
-                $have_error = true;
-            }
-            if (email_exists($userdata['user_email'])) {
-                $errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
-                $have_error = true;
-            } else {
-                            if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
-                                    $errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
-                                    $have_error = true;
-                            }		
-                    }
+		if ($_GET["action"] == "add") {
+			$userdata = array(
+				'user_pass' => esc_attr($ProfilePassword),
+				'user_login' => esc_attr($ProfileUsername),
+				'first_name' => esc_attr($ProfileContactNameFirst),
+				'last_name' => esc_attr($ProfileContactNameLast),
+				'user_email' => esc_attr($ProfileContactEmail),
+				'role' => get_option('default_role')
+			);
+					if(function_exists(rb_agencyinteract_approvemembers)){
+							if (empty($userdata['user_login'])) {
+								   $errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
+									$have_error = true;
+							}
+							if (username_exists($userdata['user_login'])) {
+									$errorValidation['user_login'] = __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
+									$have_error = true;
+							}
+							if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
+									$errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
+									$have_error = true;
+							}
+					}
+			if (!is_email($userdata['user_email'], true)) {
+				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
+				$have_error = true;
+			}
+			if (email_exists($userdata['user_email'])) {
+				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+				$have_error = true;
+			} else {
+							if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
+									$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+									$have_error = true;
+							}
+					}
 
-        }
+		}
 
-        if ($_POST["action"] == "editRecord") {
+		if ($_POST["action"] == "editRecord") {
 		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
 			if (!is_email($ProfileContactEmail, true)) {
 				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
@@ -156,8 +156,8 @@ if (isset($_POST['action'])) {
 				$have_error = true;
 			}
 		}
-        }
-        
+		}
+
 	// Get Post State
 	$action = $_POST['action'];
 	switch ($action) {
@@ -344,7 +344,7 @@ if (isset($_POST['action'])) {
 						if ($have_error != true) {
 							// Upload if it doesnt exist already
 							$path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
-							$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] . "." . $path_parts['extension']);
+							$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] ."_". RBAgency_Common::generate_random_string(6) . "." . $path_parts['extension']);
 							$results = mysql_query("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaURL = '" . $safeProfileMediaFilename . "'") or die(mysql_error());
 							$count = mysql_num_rows($results);
 
@@ -420,27 +420,27 @@ if (isset($_POST['action'])) {
 					$i++;
 				} // endwhile           
 				// Upload Videos to Database
-                                if (isset($_POST['profileMediaV1']) && !empty($_POST['profileMediaV1'])) {
-                                    $profileMediaType = $_POST['profileMediaV1Type'];
-                                    $profileMediaTitle = $_POST['media1_title'] ."<br>". $_POST['media1_caption'];
-                                    $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV1']);
-                                    $profileVideoType = $_POST['media1_vtype'];
-                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
-                                }
-                                if (isset($_POST['profileMediaV2']) && !empty($_POST['profileMediaV2'])) {
-                                    $profileMediaType = $_POST['profileMediaV2Type'] ;
-                                    $profileMediaTitle = $_POST['media2_title'] ."<br>". $_POST['media2_caption'];
-                                    $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV2']);
-                                    $profileVideoType = $_POST['media2_vtype'];
-                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
-                                }
-                                if (isset($_POST['profileMediaV3']) && !empty($_POST['profileMediaV3'])) {
-                                    $profileMediaType = $_POST['profileMediaV3Type'] ;
-                                    $profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV3']);
-                                    $profileMediaTitle = $_POST['media3_title'] ."<br>". $_POST['media3_caption'];
-                                    $profileVideoType = $_POST['media3_vtype'];
-                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
-                                }
+								if (isset($_POST['profileMediaV1']) && !empty($_POST['profileMediaV1'])) {
+									$profileMediaType = $_POST['profileMediaV1Type'];
+									$profileMediaTitle = $_POST['media1_title'] ."<br>". $_POST['media1_caption'];
+									$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV1']);
+									$profileVideoType = $_POST['media1_vtype'];
+									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
+								}
+								if (isset($_POST['profileMediaV2']) && !empty($_POST['profileMediaV2'])) {
+									$profileMediaType = $_POST['profileMediaV2Type'] ;
+									$profileMediaTitle = $_POST['media2_title'] ."<br>". $_POST['media2_caption'];
+									$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV2']);
+									$profileVideoType = $_POST['media2_vtype'];
+									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
+								}
+								if (isset($_POST['profileMediaV3']) && !empty($_POST['profileMediaV3'])) {
+									$profileMediaType = $_POST['profileMediaV3Type'] ;
+									$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV3']);
+									$profileMediaTitle = $_POST['media3_title'] ."<br>". $_POST['media3_caption'];
+									$profileVideoType = $_POST['media3_vtype'];
+									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
+								}
 
 				/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 				// Do we have a custom image yet? Lets just set the first one as primary.
@@ -592,7 +592,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	}
 	$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
 	$rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
-    ?>
+	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
 		jQuery('.imperial_metrics').keyup(function(){
@@ -851,8 +851,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	echo "      <td>\n";
 	echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
 	if(isset($errorValidation['ProfileContactEmail'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactEmail']."</p>\n";} 
-        echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
-        echo "      </td>\n";
+		echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
+		echo "      </td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "      <th scope=\"row\">" . __("Website", rb_agency_TEXTDOMAIN) . "</th>\n";
@@ -1144,14 +1144,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		$countMedia = mysql_num_rows($resultsMedia);
 		while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 			if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-                            if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
-                                $outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"http://www.youtube.com/watch?v=" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
-                            }elseif($dataMedia['ProfileVideoType'] == "vimeo"){
-                                $json = file_get_contents('http://vimeo.com/api/v2/video/'.$dataMedia['ProfileMediaURL'].'.json');
-                                $data = json_decode($json,true);
-                                $outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">" . $dataMedia['ProfileMediaType'] . "<br /><img src='" . $data[0]['thumbnail_small'] . "'><br /><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
-                            }
-                        } elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+							if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
+								$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"http://www.youtube.com/watch?v=" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
+							}elseif($dataMedia['ProfileVideoType'] == "vimeo"){
+								$json = file_get_contents('http://vimeo.com/api/v2/video/'.$dataMedia['ProfileMediaURL'].'.json');
+								$data = json_decode($json,true);
+								$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">" . $dataMedia['ProfileMediaType'] . "<br /><img src='" . $data[0]['thumbnail_small'] . "'><br /><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
+							}
+						} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 				$outLinkVoiceDemo .= "<div>" . $dataMedia['ProfileMediaType'] . ": <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 			} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 				$outLinkResume .= "<div>" . $dataMedia['ProfileMediaType'] . ": <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
@@ -1194,8 +1194,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		}
 		echo "      <p>" . __("Paste the video URL below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 
-        echo "<div>
-		        <div style='float:left; clear:both'>
+		echo "<div>
+				<div style='float:left; clear:both'>
 				Type: 
 					<select name=\"profileMediaV1Type\">
 						<option selected>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
@@ -1220,8 +1220,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				</tr>
 				</tbody></table></div></div>";
 
-        echo "<div>
-		        <div style='float:left; clear:both'>
+		echo "<div>
+				<div style='float:left; clear:both'>
 				Type: 
 					<select name=\"profileMediaV2Type\">
 						<option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
@@ -1245,8 +1245,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					<input type='radio' name='media2_vtype' value='vimeo'>&nbsp; Vimeo </td>
 				</tr>				
 				</tbody></table></div></div>";
-        echo "<div>
-		        <div style='float:left; clear:both'>
+		echo "<div>
+				<div style='float:left; clear:both'>
 				Type: 
 					<select name=\"profileMediaV3Type\">
 						<option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
@@ -1270,7 +1270,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					<input type='radio' name='media3_vtype' value='vimeo'>&nbsp; Vimeo </td>
 				</tr>
 				</tbody></table></div></div>";	
-        }
+		}
 	echo "</div>\n";
 
 	echo "<div style=\"clear: both; \"></div>\n";
@@ -1485,11 +1485,11 @@ function rb_display_list() {
 		if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
 			$selectedType = strtolower($_GET['ProfileType']);
 			$query .= "&ProfileType=". $selectedType ."";
-                        if(strpos($filter,'profile') > 0){
-                            $filter .= " AND FIND_IN_SET('". $selectedType ."', profile.ProfileType)";
-                        } else {
-                            $filter .= " FIND_IN_SET('". $selectedType ."', profile.ProfileType)";
-                        }
+						if(strpos($filter,'profile') > 0){
+							$filter .= " AND FIND_IN_SET('". $selectedType ."', profile.ProfileType)";
+						} else {
+							$filter .= " FIND_IN_SET('". $selectedType ."', profile.ProfileType)";
+						}
 		}
 		if (isset($_GET['ProfileVisible'])){
 			$selectedVisible = $_GET['ProfileVisible'];
@@ -1550,60 +1550,60 @@ function rb_display_list() {
 ?>
 <script type="text/javascript">
 jQuery(document).ready(function(){
-        jQuery('.imperial_metrics').keyup(function(){
-                var vals = jQuery(this).val();
-                var new_val = extractNumber(vals,2,false);
-                if(new_val !== true){
-                        jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
-                        new_val.replace(/[^/\d*\.*]/g,'');
-                        jQuery(this).val(new_val);
-                }
-        });
-        jQuery('.imperial_metrics').focusout(function(){
-                var vals = jQuery(this).val();
-                var new_val = extractNumber(vals,2,false);
-                if(new_val !== true){
-                        jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
-                        new_val.replace(/[^/\d*\.*]/g,'');
-                        jQuery(this).val(new_val);
-                } else {
-                        jQuery(this).nextAll('.error_msg').eq(0).html('');
-                }
-        });		
+		jQuery('.imperial_metrics').keyup(function(){
+				var vals = jQuery(this).val();
+				var new_val = extractNumber(vals,2,false);
+				if(new_val !== true){
+						jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
+						new_val.replace(/[^/\d*\.*]/g,'');
+						jQuery(this).val(new_val);
+				}
+		});
+		jQuery('.imperial_metrics').focusout(function(){
+				var vals = jQuery(this).val();
+				var new_val = extractNumber(vals,2,false);
+				if(new_val !== true){
+						jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
+						new_val.replace(/[^/\d*\.*]/g,'');
+						jQuery(this).val(new_val);
+				} else {
+						jQuery(this).nextAll('.error_msg').eq(0).html('');
+				}
+		});		
 });
 function extractNumber(obj, decimalPlaces, allowNegative)
 {
-        var temp = obj; var reg0Str = '[0-9]*';
-        if (decimalPlaces > 0) { 
-                reg0Str += '\\.?[0-9]{0,' + decimalPlaces + '}';
-        } else if (decimalPlaces < 0) {
-                reg0Str += '\\.?[0-9]*';
-        }
-        reg0Str = allowNegative ? '^-?' + reg0Str : '^' + reg0Str;
-        reg0Str = reg0Str + '$';
-        var reg0 = new RegExp(reg0Str);
-        if (reg0.test(temp)) return true;
-        var reg1Str = '[^0-9' + (decimalPlaces != 0 ? '.' : '') + (allowNegative ? '-' : '') + ']';
-        var reg1 = new RegExp(reg1Str, 'g');
-        temp = temp.replace(reg1, '');
-        if (allowNegative) {
-                var hasNegative = temp.length > 0 && temp.charAt(0) == '-';
-                var reg2 = /-/g;
-                temp = temp.replace(reg2, '');
-                if (hasNegative) temp = '-' + temp;
-        }
-        if (decimalPlaces != 0) {
-                var reg3 = /\./g;
-                var reg3Array = reg3.exec(temp);
-                if (reg3Array != null) {
-                        var reg3Right = temp.substring(reg3Array.index + reg3Array[0].length);
-                        reg3Right = reg3Right.replace(reg3, '');
-                        reg3Right = decimalPlaces > 0 ? reg3Right.substring(0, decimalPlaces) : reg3Right;
-                        temp = temp.substring(0,reg3Array.index) + '.' + reg3Right;
-                }
-        }
+		var temp = obj; var reg0Str = '[0-9]*';
+		if (decimalPlaces > 0) { 
+				reg0Str += '\\.?[0-9]{0,' + decimalPlaces + '}';
+		} else if (decimalPlaces < 0) {
+				reg0Str += '\\.?[0-9]*';
+		}
+		reg0Str = allowNegative ? '^-?' + reg0Str : '^' + reg0Str;
+		reg0Str = reg0Str + '$';
+		var reg0 = new RegExp(reg0Str);
+		if (reg0.test(temp)) return true;
+		var reg1Str = '[^0-9' + (decimalPlaces != 0 ? '.' : '') + (allowNegative ? '-' : '') + ']';
+		var reg1 = new RegExp(reg1Str, 'g');
+		temp = temp.replace(reg1, '');
+		if (allowNegative) {
+				var hasNegative = temp.length > 0 && temp.charAt(0) == '-';
+				var reg2 = /-/g;
+				temp = temp.replace(reg2, '');
+				if (hasNegative) temp = '-' + temp;
+		}
+		if (decimalPlaces != 0) {
+				var reg3 = /\./g;
+				var reg3Array = reg3.exec(temp);
+				if (reg3Array != null) {
+						var reg3Right = temp.substring(reg3Array.index + reg3Array[0].length);
+						reg3Right = reg3Right.replace(reg3, '');
+						reg3Right = decimalPlaces > 0 ? reg3Right.substring(0, decimalPlaces) : reg3Right;
+						temp = temp.substring(0,reg3Array.index) + '.' + reg3Right;
+				}
+		}
 
-        return temp;
+		return temp;
 }
 </script>
 <div id="dashboard-widgets-wrap">
