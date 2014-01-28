@@ -80,8 +80,8 @@ global $wpdb;
 
 			print $csv_output;
 		} elseif($_POST['file_type'] == 'xls') {
-			require_once('PHPExcel.php');
-			require_once('PHPExcel/IOFactory.php');
+			require_once('../ext/PHPExcel.php');
+			require_once('../ext/PHPExcel/IOFactory.php');
 			$objPHPExcel = new PHPExcel();
 			$objPHPExcel->setActiveSheetIndex(0);
 			$rowNumber = 1;

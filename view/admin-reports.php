@@ -1546,7 +1546,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 			{
 				$inputFileType = 'Excel2007';  /*XLS File type*/  
 			}
-			include WP_CONTENT_DIR.'/plugins/rb-agency/tasks/PHPExcel/IOFactory.php';
+			include WP_CONTENT_DIR.'/plugins/rb-agency/ext/PHPExcel/IOFactory.php';
 			$f_name = date('d_M_Y_h_i_s');
 			
 			move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path);
@@ -1677,9 +1677,9 @@ class RBAgencyCSVXLSImpoterPlugin {
 								if(count($result) > 0){
 									$data[12] = $result->StateID;
 								} 
-							}							
+							}
 						}
-											
+
 						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
 						mysql_query($add_to_p_table) or die(mysql_error());
 

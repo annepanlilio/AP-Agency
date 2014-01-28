@@ -30,7 +30,7 @@ global $wpdb;
 				if($feet==0 && $inches==0)
 					$val='';
 				else
-					$val=$feet."ft ".$inches."in";			
+					$val=$feet."ft ".$inches."in";
 			}
 		$csv_output .= $val.", ";
 		}
@@ -38,10 +38,10 @@ global $wpdb;
 	  $csv_output .= "\n";
 	}
 	
-	$filename = $_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time());	
-	header("Content-type: application/vnd.ms-excel");	
-	header("Content-disposition: csv" . date("Y-m-d") . ".csv");	
-	header( "Content-disposition: filename=".$filename.".csv");		
+	$filename = $_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time());
+	header("Content-type: application/vnd.ms-excel");
+	header("Content-disposition: csv" . date("Y-m-d") . ".csv");
+	header( "Content-disposition: filename=".$filename.".csv");
 	print $csv_output;
 	exit;
  }
