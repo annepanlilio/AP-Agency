@@ -21,6 +21,58 @@ class RBAgency_Common {
 
 
 	/**
+     * Generate random string
+     *
+     * @param int $length
+     * @return string
+     */
+
+	static function generate_random_string($length) {
+
+		// Set Characters
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+		// Set Dictionary Size
+		$size = strlen( $chars );
+
+		// Loop
+		for( $i = 0; $i < $length; $i++ ) {
+			$string .= $chars[ rand( 0, $size - 1 ) ];
+		}
+
+		return $string;
+
+	}
+
+
+
+	/**
+     * Generate random number
+     *
+     * @param int $length
+     * @return string
+     */
+
+	static function generate_random_numeric($length) {
+
+		// Set Characters
+		$chars = "0123456789";
+
+		// Set Dictionary Size
+		$size = strlen( $chars );
+
+		// Loop
+		for( $i = 0; $i < $length; $i++ ) {
+			$string .= $chars[ rand( 0, $size - 1 ) ];
+		}
+
+		return $string;
+
+	}
+
+
+
+	/**
      * Collapse White Space
      *
      * @param string $string
