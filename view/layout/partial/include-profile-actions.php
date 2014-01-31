@@ -102,32 +102,51 @@ echo "								<li id=\"view_casting_cart\" style=\"display:none;\"><a href=\"".g
 			}
 </script><?php
 
-echo						'<li class="profile-actions-favorited">';
-							$cl1 = ""; $cl2=""; $tl1="Add to Favorites"; $tl2="Add to Casting Cart";
+							$cl1 = "save_favorite"; $cl2="save_castingcart"; $tl1="Add to Favorites"; $tl2="Add to Casting Cart";
 
 							if(is_permitted("casting")){
+
 								$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
+
 																 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+
 								$count_castingcart = mysql_num_rows($query_castingcart);
 
-								if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
-								echo '<li><a title="'.$tl2.'" href="javascript:;" id="mycart" class="save_cart '.$cl2.' rb_button">'.$tl2.'</a></li>';
-							}
+
+
+								if($count_castingcart>0){ $cl2 = "cart_bg saved_castingcart"; $tl2="Remove from Casting Cart"; }
+
+								echo '<li class="castingcart"><a title="'.$tl2.'" href="javascript:;" id="'.$ProfileID.'" class="save_cart '.$cl2.' rb_button">'.$tl2.'</a></li>';
+
+							}?>
+
+							<li id="view_casting_cart" style="<?php if($tl2=="Add to Casting Cart"){ ?>display:none;<?php }else{?>display:block;<?php }?>"><li class="casting"><a class="rb_button" href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>    
 							
+							<?php
+
 							if(is_permitted("favorite")){
+
 								$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
+
 															  ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
+
 								$count_favorite = mysql_num_rows($query_favorite);
+
 								$datas_favorite = mysql_fetch_assoc($query_favorite);				
 
-								if($count_favorite>0){ $cl1 = "fav_bg"; $tl1="Remove from Favorites"; }
-								echo '<li class=\"favorite\"><a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.' rb_button" id="'.$ProfileID.'">'.$tl1.'</a></li>';				
-							}
 
-	echo 					'</li>';
+
+								if($count_favorite>0){ $cl1 = "fav_bg favorited"; $tl1="Remove from Favorites"; }
+
+								echo '<li class="favorite"><a title="'.$tl1.'" href="javascript:;" class="save_fav '.$cl1.' rb_button" id="'.$ProfileID.'">'.$tl1.'</a></li>';				
+
+							}?>
+
+						<li id="view_favorite" style="<?php if($tl1=="Add to Favorites"){?>display:none;<?php }else{?>display:block;<?php }?>"><li class="favorite"><a class="rb_button" href="<?php echo get_bloginfo('url')?>/profile-favorite/"><?php echo __("View favorite", rb_agency_TEXTDOMAIN);?></a></li>
+                                                
+                                                 <?php
 	echo 					'<li id="resultsGoHereAddtoCart"></li>'; ?>    
 							<li id="view_casting_cart" style="<?php if($tl2=="Add to Casting Cart"){?>display:none;<?php }else{?>display:block;<?php }?>"><li class="casting"><a class="rb_button" href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>    
-							<li id="view_favorite" style="<?php if($tl1=="Add to Favorites"){?>display:none;<?php }else{?>display:block;<?php }?>"><li class="favorite"><a class="rb_button" href="<?php echo get_bloginfo('url')?>/profile-favorite/"><?php echo __("View favorite", rb_agency_TEXTDOMAIN);?></a></li>
 							<?php
 
 
