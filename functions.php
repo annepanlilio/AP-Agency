@@ -2727,7 +2727,7 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 				var Obj = jQuery(this);
 				jQuery.ajax({
 					type: 'POST',
-					url: 'http://www.beblueagency.be/wp-admin/admin-ajax.php',
+					url: '<?php echo get_bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php',
 					data: {
 						action: 'rb_agency_save_favorite',
 						'talentID': jQuery(this).attr("id")
@@ -2736,7 +2736,7 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 						if (results == 'error') {
 							Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();
 						} else if (results == -1) {
-							Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"http://www.beblueagency.be/profile-member/\">Sign In</a>.").fadeIn();
+							Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo('wpurl'); ?>/profile-member/\">Sign In</a>.").fadeIn();
 							setTimeout(function () {
 								if (Obj.attr("class") == "save_favorite") {
 									Obj.fadeOut().empty().html("").fadeIn();
@@ -2816,7 +2816,7 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 							var Obj = $(this);
 							jQuery.ajax({
 								type: 'POST',
-								url: 'http://www.beblueagency.be/wp-admin/admin-ajax.php',
+								url: '<?php echo get_bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php',
 								data: {
 									action: 'rb_agency_save_castingcart',
 									'talentID': $(this).attr("id")
@@ -2825,7 +2825,7 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 									if (results == 'error') {
 										Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();
 									} else if (results == -1) {
-										Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"http://www.beblueagency.be/profile-member/\">Sign In</a>.").fadeIn();
+										Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo get_bloginfo('wpurl'); ?>/profile-member/\">Sign In</a>.").fadeIn();
 										setTimeout(function () {
 											if (Obj.attr("class") == "save_castingcart") {
 												Obj.fadeOut().empty().html("").fadeIn();

@@ -1187,9 +1187,10 @@ class RBAgency_Profile {
 			$count = mysql_num_rows($results);
 			$profile_list = "";
 			$all_html = "";
+			
 			$all_html.='<div id="rbfilter-sort">';
+			$all_html.='<div class="rbtotal-results">Total Results : '.$count.' </div>';
 			$all_html.='<div class="rbsort">';
-			$all_html.='<label>Total Results : '.$count.' </label> <br/><br/>';
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
