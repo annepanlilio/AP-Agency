@@ -290,7 +290,7 @@ error_reporting(0);
 					return dirname(__FILE__) . '/view/profile-favorite.php';
 
 				} elseif (get_query_var( 'type' ) == "casting") {
-					return dirname(__FILE__) . '/theme/view-castingcart.php';
+					return dirname(__FILE__) . '/view/profile-viewcasting.php';
 
 				} elseif (get_query_var( 'type' ) == "version") {
 					return dirname(__FILE__) . '/version.php'; 
@@ -2727,7 +2727,7 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 				var Obj = jQuery(this);
 				jQuery.ajax({
 					type: 'POST',
-					url: '<?php echo get_bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php',
+					url: '<?php echo admin_url('admin-ajax.php'); ?>',
 					data: {
 						action: 'rb_agency_save_favorite',
 						'talentID': jQuery(this).attr("id")
@@ -2812,11 +2812,11 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 				<!--RB Agency CastingCart -->
 				<script type="text/javascript" >
 					jQuery(document).ready(function ($) {
-						$("div[class=castingcart] a").click(function () {
+						$(".castingcart a").click(function () {
 							var Obj = $(this);
 							jQuery.ajax({
 								type: 'POST',
-								url: '<?php echo get_bloginfo('wpurl'); ?>/wp-admin/admin-ajax.php',
+								url: '<?php echo admin_url('admin-ajax.php'); ?>',
 								data: {
 									action: 'rb_agency_save_castingcart',
 									'talentID': $(this).attr("id")
