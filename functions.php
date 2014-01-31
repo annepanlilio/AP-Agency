@@ -202,6 +202,7 @@ error_reporting(0);
 		// Adding a new rule
 		function rb_agency_rewriteRules($rules) {
 			$newrules = array();
+			$newrules['profile-search'] = 'index.php?type=search-basic'; // Cannot remove this route.
 			$newrules['search-basic'] = 'index.php?type=search-basic';
 			$newrules['search-advanced'] = 'index.php?type=search-advanced';
 			$newrules['search-results'] = 'index.php?type=search-result';
