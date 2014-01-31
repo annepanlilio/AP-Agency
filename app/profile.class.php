@@ -1213,7 +1213,7 @@ class RBAgency_Profile {
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
-			if($rb_agency_option_profilelist_sortby && !self::$castingcart){
+			if($rb_agency_option_profilelist_sortby && !self::$castingcart && !strpos($_SERVER['REQUEST_URI'],'profile-favorite') > -1){
 
 				// Enqueue our js script
 				wp_enqueue_script( 'list_reorder', plugins_url('rb-agency/js/list_reorder.js'),array('jquery'));

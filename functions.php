@@ -222,17 +222,8 @@ error_reporting(0);
 
 			$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
 
-			$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
-			
-			$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
-			
-			if ($rb_agency_option_profilelist_favorite) {
-				$newrules['profile-favorite'] = 'index.php?type=favorite';
-			}
-			if ($rb_agency_option_profilelist_castingcart) {
-				$newrules['profile-casting-cart'] = 'index.php?type=castingcart';
-			}
+			$newrules['profile-favorite'] = 'index.php?type=favorite';
+	
 			return $newrules + $rules;
 		}
 
