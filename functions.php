@@ -2695,10 +2695,13 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 				 if($count_favorite<=0){ //if not exist insert favorite!
 					 
 					   mysql_query("INSERT INTO ".table_agency_savedfavorite."(SavedFavoriteID,SavedFavoriteProfileID,SavedFavoriteTalentID) VALUES('','".rb_agency_get_current_userid()."','".$_POST["talentID"]."')") or die("error");
-					 
+					   echo "inserted";
+					   
 				 }else{ // favorite model exist, now delete!
 					 
-					  mysql_query("DELETE FROM  ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$_POST["talentID"]."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'") or die("error");
+					   mysql_query("DELETE FROM  ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$_POST["talentID"]."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'") or die("error");
+					   echo "deleted";
+				
 				 }				
 			}			
 		}
@@ -2709,10 +2712,16 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 	}
 
 	function rb_agency_save_favorite_javascript() {
+
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
+			$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
+
 	?>
 
 		<!--RB Agency Favorite -->
 		<script type="text/javascript" >
+		var layout_favorite = "<?php echo $rb_agency_option_layoutprofile; ?>";
 		jQuery(document).ready(function () {
 			jQuery(".favorite a:first, .favorite a").click(function () {
 				var Obj = jQuery(this);
@@ -2742,15 +2751,29 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 							if (get_query_var('type') == "favorite"){?>
 									Obj.parents(".rbprofile-list").hide("slow",function(){Obj.parents(".rbprofile-list").remove();});
 							<?php } else { ?>
-								if (Obj.attr("class") == "save_favorite") {
-									Obj.empty().fadeOut().empty().html("").fadeIn();
-									Obj.attr("class", "favorited");
-									Obj.attr('title', 'Remove from Favorites')
+								if(layout_favorite == "00"){
+									if (Obj.hasClass("save_favorite") || (Obj.hasClass("favorited") && jQuery.trim(results)=="inserted") ) {
+										Obj.removeClass("save_favorite");
+										Obj.addClass("favorited");
+										Obj.attr('title', 'Remove from Favorites');
+										Obj.html('Remove from Favorites');
+									} else {
+										Obj.removeClass("favorited");
+										Obj.addClass("save_favorite");
+										Obj.attr('title', 'Add to Favorites');
+										Obj.html('Add to Favorites');
+									}
 								} else {
-									Obj.empty().fadeOut().empty().html("").fadeIn();
-									Obj.attr('title', 'Save to Favorites');
-									jQuery(this).find("a[class=view_all_favorite]").remove();
-									Obj.attr("class", "save_favorite");
+									if (Obj.attr("class") == "save_favorite") {
+										Obj.empty().fadeOut().empty().html("").fadeIn();
+										Obj.attr("class", "favorited");
+										Obj.attr('title', 'Remove from Favorites')
+									} else {
+										Obj.empty().fadeOut().empty().html("").fadeIn();
+										Obj.attr('title', 'Save to Favorites');
+										jQuery(this).find("a[class=view_all_favorite]").remove();
+										Obj.attr("class", "save_favorite");
+									}
 								}
 						    <?php } ?>
 						}
@@ -2787,8 +2810,10 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 						 
 						if($count_castingcart<=0){ //if not exist insert favorite!
 							$wpdb->insert(table_agency_castingcart, array('CastingCartProfileID'=>rb_agency_get_current_userid(), 'CastingCartTalentID'=>$_POST["talentID"]));
+							echo "inserted";
 						} else { // favorite model exist, now delete!
 							mysql_query("DELETE FROM  ". table_agency_castingcart."  WHERE CastingCartTalentID='".$_POST["talentID"]."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'") or die("error");
+							echo "deleted";
 						}
 					}
 				}
@@ -2799,9 +2824,15 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 			}
 		
 		function rb_agency_save_castingcart_javascript() {
+			
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
+			$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
+
 		?>
 				<!--RB Agency CastingCart -->
 				<script type="text/javascript" >
+					var layout_casting = "<?php echo $rb_agency_option_layoutprofile; ?>";
 					jQuery(document).ready(function ($) {
 						$(".castingcart a").click(function () {
 							var Obj = $(this);
@@ -2831,15 +2862,29 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 										<?php
 										} else { 
 										?>
-											if (Obj.attr("class") == "save_castingcart") {
-												Obj.empty().fadeOut().html("").fadeIn();
-												Obj.attr("class", "saved_castingcart");
-												Obj.attr('title', 'Remove from Casting Cart');
+											if(layout_casting == "00"){
+												if (Obj.hasClass("save_castingcart") || (Obj.hasClass("saved_castingcart") && jQuery.trim(results)=="inserted")) {
+													Obj.removeClass("save_castingcart");
+													Obj.addClass("saved_castingcart");
+													Obj.attr('title', 'Remove from Casting Cart');
+													Obj.html('Remove from Casting Cart');
+												} else {
+													Obj.removeClass("saved_castingcart");
+													Obj.addClass("save_castingcart");
+													Obj.attr('title', 'Add to Casting Cart');
+													Obj.html('Add to Casting Cart');
+												}
 											} else {
-												Obj.empty().fadeOut().html("").fadeIn();
-												Obj.attr("class", "save_castingcart");
-												Obj.attr('title', 'Add to Casting Cart');
-												$(this).find("a[class=view_all_castingcart]").remove();
+												if (Obj.attr("class") == "save_castingcart") {
+													Obj.empty().fadeOut().html("").fadeIn();
+													Obj.attr("class", "saved_castingcart");
+													Obj.attr('title', 'Remove from Casting Cart');
+												} else {
+													Obj.empty().fadeOut().html("").fadeIn();
+													Obj.attr("class", "save_castingcart");
+													Obj.attr('title', 'Add to Casting Cart');
+													$(this).find("a[class=view_all_castingcart]").remove();
+												}
 											}
 										<?php } ?>
 									}
