@@ -972,10 +972,12 @@ elseif ($ConfigID == 2) {
 	 */
 
 		if (file_exists($rb_agency_stylesheet)) {
-			//echo "File Exists";
+			// File Exists, check when it was modified last.
+			echo "<div id=\"message\" class=\"updated\"><p>Style last updated on " . date ("F d Y H:i:s.", filemtime($rb_agency_stylesheet)) .".</p></div>";
+
 		} else { // File Does Not Exist
 			$rb_agency_stylesheet = rb_agency_BASEREL ."theme/style_base.css";
-			echo "Stylesheet not setup, please click submit to initialize";
+			echo "<div id=\"message\" class=\"error\"><p>Stylesheet not setup, please click <strong>Save Changes</strong> below to initialize.</p></div>";
 		}
 
 
