@@ -798,7 +798,7 @@ class RBAgency {
 	 */
 
 		public static function deactivation(){
-
+			/*
 			// Does user have correct permissions?
 			if ( ! current_user_can( 'activate_plugins' ) )
 				return;
@@ -806,6 +806,8 @@ class RBAgency {
 			// Is it coming from the right referer?
 			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 			check_admin_referer( "deactivate-plugin_{$plugin}" );
+			*/
+			// TODO: Enhance
 
 		}
 
@@ -839,15 +841,17 @@ class RBAgency {
 			// Delete Saved Settings
 			delete_option('rb_agency_options');
 
+			/*
 			// Deactivate Plugin
 			$thepluginfile = "rb-agency/rb-agency.php";
 			$current = get_settings('active_plugins');
 			array_splice($current, array_search( $thepluginfile, $current), 1 );
 			update_option('active_plugins', $current);
 			do_action('deactivate_' . $thepluginfile );
+			*/
 
 			// Redirect back to Plugins
-			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("One More Step", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
+			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("please uninstall on plugins page.", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
 			die;
 
 		}
