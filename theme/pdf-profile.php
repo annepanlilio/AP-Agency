@@ -361,8 +361,8 @@ else{$format="";}
 $pdfFile=strtolower(str_replace(" ","-",$ProfileContactDisplay)).".pdf";
 
 
-$toRedirect=rb_agency_BASEDIR."tasks/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
-$path="wp-content/plugins/rb-agency/tasks/dompdf/htmls/";
+$toRedirect=rb_agency_BASEDIR."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
+$path="wp-content/plugins/rb-agency/ext/dompdf/htmls/";
 
 //include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
 $fp=fopen($path.$htmlFile,"w");

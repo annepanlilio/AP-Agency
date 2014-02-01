@@ -109,7 +109,7 @@
         private function generate_file($htm){
  
             $htm_name = "print-pdf-".$this->profile_ID.".html";
-            $path= "../../../../wp-content/plugins/rb-agency/tasks/dompdf/htmls/";
+            $path= "../../../../wp-content/plugins/rb-agency/ext/dompdf/htmls/";
             $fp=fopen($path.$htm_name,"w");
             fwrite($fp,$htm);
             fclose($fp);
@@ -129,7 +129,7 @@
             
             if(is_null($file)) return false;
             
-            $add = plugins_url("rb-agency/tasks/dompdf/");
+            $add = plugins_url("rb-agency/ext/dompdf/");
             $this->rendered_action = $add. 'dompdf.php?base_path='.$this->bse_path.'&options[Attachment]=0&input_file='.$file.'&view=FitH&statusbar=0&messages=0&navpanes=0';
         }
         
