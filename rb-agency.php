@@ -237,7 +237,7 @@ class RBAgency {
 	 * Run when the plugin is installed.
 	 */
 
-		public static function install(){
+		public static function activation(){
 
 			// Required for all WordPress database manipulations
 			global $wpdb;
@@ -362,7 +362,7 @@ class RBAgency {
 					ProfileMediaID INT(10) NOT NULL AUTO_INCREMENT,
 					ProfileMediaType VARCHAR(255),
 					ProfileMediaTitle VARCHAR(255),
-                                        ProfileVideoType VARCHAR(255),
+					ProfileVideoType VARCHAR(255),
 					ProfileMediaText TEXT,
 					ProfileMediaURL VARCHAR(255),
 					ProfileMediaPrimary INT(10) NOT NULL DEFAULT '0',
@@ -430,7 +430,7 @@ class RBAgency {
 					ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0',
 					ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1',
 					ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1',
-                                        ProfileCustomShowSearchSimple INT(10) NOT NULL DEFAULT '0',
+					ProfileCustomShowSearchSimple INT(10) NOT NULL DEFAULT '0',
 					ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
 					ProfileCustomShowRegistration INT(10) NOT NULL DEFAULT '1',
 					ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1',
@@ -481,6 +481,31 @@ class RBAgency {
 					PRIMARY KEY (ProfileCustomTypesID)
 					);";
 				dbDelta($sql);
+
+				// Populate Initial Values
+					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
+					if ( !$data_custom_exists ) {
+						// Assume the rest dont exist either
+						// TODO: REFACTOR THIS! 
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (1, 1, 'Ethnicity', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (2, 2, 'Skin Tone', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (3, 3, 'Hair Color', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (4, 4, 'Eye Color', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (5, 5, 'Height', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (6, 6, 'Weight', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (7, 7, 'Shirt', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (8, 8, 'Waist', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (9, 9, 'Hips', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(10, 10, 'Shoe Size', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(11, 11, 'Suit', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(12, 12, 'Inseam', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(13, 13, 'Dress', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(14, 14, 'Bust', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(15, 15, 'Union', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(16, 16, 'Experience', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(17, 17, 'Language', 'Model,Talent')");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(18, 18, 'Booking', 'Model,Talent')");
+					}
 
 				// Setup > Search Saved
 				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved ." (
@@ -772,9 +797,16 @@ class RBAgency {
 	 * Cleanup when complete
 	 */
 
-		public static function unistall(){
+		public static function deactivation(){
 
-			// TODO
+			// Does user have correct permissions?
+			if ( ! current_user_can( 'activate_plugins' ) )
+				return;
+
+			// Is it coming from the right referer?
+			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
+			check_admin_referer( "deactivate-plugin_{$plugin}" );
+
 		}
 
 
@@ -783,15 +815,7 @@ class RBAgency {
 	 * Cleanup when complete
 	 */
 
-		public static function remove(){
-			// Does user have permission?
-			if ( ! current_user_can( 'activate_plugins' ) )
-				return;
-			check_admin_referer( 'bulk-plugins' );
-
-			// Important: Check if the file is the one that was registered during the uninstall hook.
-			if ( __FILE__ != WP_UNINSTALL_PLUGIN )
-				return;
+		public static function uninstall(){
 
 			// Permission Granted... Remove
 			global $wpdb; // Required for all WordPress database manipulations
@@ -1091,13 +1115,13 @@ class RBAgency {
  */
 
 	// Activate Plugin
-	register_activation_hook(__FILE__, array('RBAgency', 'install'));
+	register_activation_hook(__FILE__, array('RBAgency', 'activation'));
 
 	// Deactivate Plugin
-	register_deactivation_hook(__FILE__, array('RBAgency', 'uninstall'));
+	register_deactivation_hook(__FILE__, array('RBAgency', 'deactivation'));
 
 	// Uninstall Plugin
-	register_uninstall_hook(__FILE__, array('RBAgency', 'remove'));
+	register_uninstall_hook(__FILE__, array('RBAgency', 'uninstall'));
 
 // *************************************************************************************************** //
 
