@@ -483,29 +483,18 @@ class RBAgency {
 				dbDelta($sql);
 
 				// Populate Initial Values
-					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
-					if ( !$data_custom_exists ) {
-						// Assume the rest dont exist either
-						// TODO: REFACTOR THIS! 
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (1, 1, 'Ethnicity', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (2, 2, 'Skin Tone', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (3, 3, 'Hair Color', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (4, 4, 'Eye Color', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (5, 5, 'Height', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (6, 6, 'Weight', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (7, 7, 'Shirt', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (8, 8, 'Waist', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES (9, 9, 'Hips', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(10, 10, 'Shoe Size', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(11, 11, 'Suit', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(12, 12, 'Inseam', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(13, 13, 'Dress', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(14, 14, 'Bust', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(15, 15, 'Union', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(16, 16, 'Experience', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(17, 17, 'Language', 'Model,Talent')");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields_types . " VALUES(18, 18, 'Booking', 'Model,Talent')");
+                                $data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
+				if ( !$data_custom_exists ) {
+					// Assume the rest dont exist either
+					$arr_ = array('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking');
+                                        $wpdb->query("DELETE FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle IN ('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking')");
+					$insert_arr = array();
+					for($count = 1; $count <= count($arr_); $count++){
+						$insert_arr[] = "(" .$count.",".$count.",'".$arr_[$count-1]."','Model,Talent')";
 					}
+					$insert = "INSERT INTO " . table_agency_customfields_types . " VALUES " . implode(",",$insert_arr);
+					$insert = $wpdb->query($insert);
+				}
 
 				// Setup > Search Saved
 				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved ." (
