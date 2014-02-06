@@ -10,7 +10,7 @@ $ProfileType = get_query_var('target');
 
 if($ProfileType=="print"){  // print by custom
 	//$ProfileType=$_GET['cname'];
-    $division=$_GET['gd'];
+	$division=$_GET['gd'];
 	$ageStart=$_GET['ast'];
 	$ageStop=$_GET['asp'];
 	$type=$_GET['t'];
@@ -19,8 +19,8 @@ if($ProfileType=="print"){  // print by custom
 }
 
 if($ProfileType=="pdf"){  // print by custom
-    //$ProfileType=$_GET['cname'];
-    $division=$_GET['gd'];
+	//$ProfileType=$_GET['cname'];
+	$division=$_GET['gd'];
 	$ageStart=$_GET['ast'];
 	$ageStop=$_GET['asp'];
 	$type=$_GET['t'];
@@ -29,7 +29,7 @@ if($ProfileType=="pdf"){  // print by custom
 }
 
 if($ProfileType=="women-print"){  //request to print women division page
-    $division="2";
+	$division="2";
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
@@ -39,7 +39,7 @@ if($ProfileType=="women-print"){  //request to print women division page
 
 
 if($ProfileType=="women-pdf"){  //request to PDF women division page
-    $division="2";
+	$division="2";
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
@@ -49,7 +49,7 @@ if($ProfileType=="women-pdf"){  //request to PDF women division page
 
 
 if($ProfileType=="men-print"){  //request to print men division page
-    $division="1";
+	$division="1";
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
@@ -58,7 +58,7 @@ if($ProfileType=="men-print"){  //request to print men division page
 }
 
 if($ProfileType=="men-pdf"){  //request to PDF men division page
-    $division="1";
+	$division="1";
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
@@ -68,7 +68,7 @@ if($ProfileType=="men-pdf"){  //request to PDF men division page
 
 
 if($ProfileType=="teen-boys-print"){  //request to print men division page
-    $division="1";
+	$division="1";
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
@@ -77,7 +77,7 @@ if($ProfileType=="teen-boys-print"){  //request to print men division page
 }
 
 if($ProfileType=="teen-boys-pdf"){  //request to PDF men division page
-    $division="1";
+	$division="1";
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
@@ -87,7 +87,7 @@ if($ProfileType=="teen-boys-pdf"){  //request to PDF men division page
 
 
 if($ProfileType=="teen-girls-print"){  //request to print men division page
-    $division="2";
+	$division="2";
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
@@ -96,7 +96,7 @@ if($ProfileType=="teen-girls-print"){  //request to print men division page
 }
 
 if($ProfileType=="teen-girls-pdf"){  //request to PDF men division page
-    $division="2";
+	$division="2";
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
@@ -106,7 +106,7 @@ if($ProfileType=="teen-girls-pdf"){  //request to PDF men division page
 
 
 if($ProfileType=="boys-print"){  //request to print men division page
-    $division="1";
+	$division="1";
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
@@ -115,7 +115,7 @@ if($ProfileType=="boys-print"){  //request to print men division page
 }
 
 if($ProfileType=="boys-pdf"){  //request to PDF men division page
-    $division="1";
+	$division="1";
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
@@ -125,7 +125,7 @@ if($ProfileType=="boys-pdf"){  //request to PDF men division page
 
 
 if($ProfileType=="girls-print"){  //request to print men division page
-    $division="2";
+	$division="2";
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
@@ -134,7 +134,7 @@ if($ProfileType=="girls-print"){  //request to print men division page
 }
 
 if($ProfileType=="girls-pdf"){  //request to PDF men division page
-    $division="2";
+	$division="2";
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
@@ -189,7 +189,7 @@ echo $rb_header = RBAgency_Common::rb_header();
 		
 	echo "  </div><!-- #content -->\n";
 	echo "</div><!-- #primary -->\n";
-       
+	   
 get_sidebar();
 echo $rb_footer = RBAgency_Common::rb_footer(); 
 ?>
