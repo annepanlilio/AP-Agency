@@ -1049,90 +1049,81 @@ elseif ($ConfigID == 14) {
 
 		// Names  (TODO: Segment Male and Female)
 		$userProfileNames = array(
-			"Arvay"		=> "Steven",
-			"Bailey"	=>"Victor",
-			"Barr"		=>"Ann",
-			"Benton"	=>"Jared",
-			"Bousfield"	=>"Joanne",
-			"Brading"	=>"Eric",
-			"Brading"	=>"Richard",
-			"Brading"	=>"Monique",
-			"Bradley"	=>"John",
-			"Champ"		=>"Camba",
-			"Kristel"	=> "Cuadra",
-			"Fhil"		=>"Barrion",
-			"Anne"		=> "Panlilio",
-			"Childs"	=>"Trevor",
-			"Cowal"		=>"Randy",
-			"Curtis"	=>"Bradley",
-			"Dales"		=>"Otmar",
-			"Dickson"	=>"Elizabeth",
-			"Downs"		=>"Ricardo",
-			"Ellis"		=>"Carlita",
-			"Ezeard"	=>"Theresa",
-			"Fields"	=>"Grace",
-			"Fields"	=>"Marvette",
-			"Goutouski"	=>"Geoffrey",
-			"Gullis"	=>"Nancy",
-			"Hastman"	=>"Joanne",
-			"Hearns"	=>"Joyce",
-			"Holmes"	=>"Bernice",
-			"Holmes"	=>"Myra",
-			"Holmes"	=>"Kelly",
-			"Ingles"	=>"Patrick",
-			"Jackson"	=>"Jeffrey",
-			"Jesch"		=>"Kay ",
-			"Johnson"	=>"Jeanette",
-			"Johnson"	=>"David",
-			"Johnson"	=>"Leonard",
-			"Jones"		=>"Ford",
-			"Jones"		=>"Ford",
-			"Kunick"	=>"Samuel",
-			"Ladell"	=>"Jillian",
-			"Lazenby"	=>"Andrew",
-			"Leonard"	=>"Heather",
-			"Leonard"	=>"Heather",
-			"Leslie"	=>"Sharon",
-			"Marr"		=>"Edward",
-			"McCarron"	=>"Elijah",
-			"McKinnon"	=>"Jeanette",
-			"McKinnon"	=>"Adele",
-			"Muir"		=>"Caitlin",
-			"Newell"	=>"Samantha",
-			"Onstein"	=>"Ethel",
-			"Onstein"	=>"Lee",
-			"Page"		=>"Inez",
-			"Ralph"		=>"Debra",
-			"Riaz"		=>"Carl",
-			"Robertson"	=>"Ethel",
-			"Rouse"		=>"Wycliffe",
-			"Rouse"		=>"Marco",
-			"Schmitz"	=>"Joseph",
-			"Shannon"	=>"Barbara",
-			"Smith"		=>"Jason",
-			"Smith"		=>"Carrie",
-			"Smith"		=>"Margaret",
-			"Smith"		=>"Margaret",
-			"Smith"		=>"Bradley",
-			"Stanfield"	=>"Joyce",
-			"Sutherland"=>"Louise",
-			"Sutherland"=>"Lynn",
-			"Taylor"	=>"Valerie",
-			"Tallyn"	=>"Glenn",
-			"Taylor"	=>"Eleanor",
-			"Taylor"	=>"Ann",
-			"Taylor"	=>"Valerie",
-			"Timber"	=>"Doris",
-			"Valdez"	=>"Karen",
-			"Wickson"	=>"Jean",
-			"Wilson"	=>"Millicent",
-			"Wood"		=>"Drucylla",
-			"Taylor"	=>"Valerie",
-			"Wood"		=>"Janice",
-			"Woodley"	=>"Bartholomew",
-			"Wright"	=>"Andre",
-			"Wright"	=>"Brenda"
-		);
+			array('Adele','McKinnon','Female'),
+			array('Andre','Wright','Male'),
+			array('Andrew','Lazenby','Male'),
+			array('Ann','Barr','Female'),
+			array('Ann','Taylor','Female'),
+			array('Barbara','Shannon','Female'),
+			array('Barrion','Fhil','Male'),
+			array('Bartholomew','Woodley','Male'),
+			array('Bernice','Holmes','Female'),
+			array('Bradley','Curtis','Male'),
+			array('Bradley','Smith','Male'),
+			array('Brenda','Wright','Female'),
+			array('Caitlin','Muir','Female'),
+			array('Carl','Riaz','Male'),
+			array('Carlita','Ellis','Female'),
+			array('Carrie','Smith','Female'),
+			array('David','Johnson','Male'),
+			array('Debra','Ralph','Female'),
+			array('Doris','Timber','Female'),
+			array('Drucylla','Wood','Female'),
+			array('Edward','Marr','Male'),
+			array('Eleanor','Taylor','Female'),
+			array('Elijah','McCarron','Female'),
+			array('Elizabeth','Dickson','Female'),
+			array('Eric','Brading','Male'),
+			array('Ethel','Onstein','Female'),
+			array('Ethel','Robertson','Female'),
+			array('Ford','Jones','Male'),
+			array('Geoffrey','Goutouski','Male'),
+			array('Glenn','Tallyn','Male'),
+			array('Grace','Fields','Female'),
+			array('Heather','Leonard','Female'),
+			array('Inez','Page','Female'),
+			array('Janice','Wood','Female'),
+			array('Jared','Benton','Male'),
+			array('Jason','Smith','Male'),
+			array('Jean','Wickson','Female'),
+			array('Jeanette','Johnson','Female'),
+			array('Jeanette','McKinnon','Female'),
+			array('Jeffrey','Jackson','Male'),
+			array('Jillian','Ladell','Female'),
+			array('Joanne','Bousfield','Female'),
+			array('Joanne','Hastman','Female'),
+			array('John','Bradley','Male'),
+			array('Joseph','Schmitz','Male'),
+			array('Joyce','Hearns','Female'),
+			array('Joyce','Stanfield','Female'),
+			array('Karen','Valdez','Female'),
+			array('Kay ','Jesch','Female'),
+			array('Kelly','Holmes','Female'),
+			array('Lee','Onstein','Male'),
+			array('Leonard','Johnson','Male'),
+			array('Louise','Sutherland','Male'),
+			array('Lynn','Sutherland','Female'),
+			array('Marco','Rouse','Male'),
+			array('Margaret','Smith','Female'),
+			array('Marvette','Fields','Female'),
+			array('Millicent','Wilson','Female'),
+			array('Monique','Brading','Female'),
+			array('Myra','Holmes','Female'),
+			array('Nancy','Gullis','Female'),
+			array('Otmar','Dales','Male'),
+			array('Patrick','Ingles','Male'),
+			array('Randy','Cowal','Male'),
+			array('Ricardo','Downs','Male'),
+			array('Richard','Brading','Male'),
+			array('Samantha','Newell','Female'),
+			array('Samuel','Kunick','Male'),
+			array('Sharon','Leslie','Female'),
+			array('Steven','Arvay','Male'),
+			array('Theresa','Ezeard','Female'),
+			array('Trevor','Childs','Male'),
+			array('Valerie','Taylor','Female'),
+			array('Victor','Bailey','Male'),
+			array('Wycliffe','Rouse','Male'));
 
 		$userMediaVideo = array(
 			"http://www.youtube.com/watch?v=0hMzBRM96gk",
@@ -1155,15 +1146,15 @@ elseif ($ConfigID == 14) {
 	 * Register dummies to track
 	 */
 
-		foreach($userProfileNames as $ProfileContactNameFirst => $ProfileContactNameLast):
+		foreach($userProfileNames as $ProfileContact):
 			$ProfileContactDisplay = "";
 			$ProfileGallery = "";
 
 				if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 				if ($rb_agency_option_profilenaming == 0) {
-					$ProfileContactDisplay = $ProfileContactNameLast . " ". $ProfileContactNameFirst;
+					$ProfileContactDisplay = $ProfileContact[1] . " ". $ProfileContact[0];
 				} elseif ($rb_agency_option_profilenaming == 1) {
-					$ProfileContactDisplay = $ProfileContactNameLast . " ". substr($ProfileContactNameFirst, 0, 1);
+					$ProfileContactDisplay = $ProfileContact[1] . " ". substr($ProfileContact[0], 0, 1);
 				} elseif ($rb_agency_option_profilenaming == 2) {
 					$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 					$have_error = true;
@@ -1178,6 +1169,7 @@ elseif ($ConfigID == 14) {
 
 			$ProfileGallery = rb_agency_just_checkdir($ProfileGallery);
 			#DEBBUG echo $ProfileGallery ."<Br/>";
+			#DEBBUG echo $ProfileContactDisplay ."<Br/>";
 			array_push($trackDummies,$ProfileGallery);
 		endforeach;
 
@@ -1239,29 +1231,33 @@ elseif ($ConfigID == 14) {
 			echo "<br/>";  
 			echo "Succesfully created ".count($userProfileNames)." dummy profiles..<br/>";
 
-			foreach($userProfileNames as $ProfileContactNameLast => $ProfileContactNameFirst){
+			foreach($userProfileNames as $ProfileContact){
 
 				$ProfileContactDisplay = "";
 				$ProfileGallery = "";
 				$userCategory = "";
 				$userGender ="";
-
-				$queryGender = mysql_query("SELECT * FROM ".table_agency_data_gender."  WHERE GenderID >= (SELECT FLOOR( MAX(GenderID) * RAND()) FROM ".table_agency_data_gender." ) ORDER BY RAND() LIMIT 1");
+				$queryGender = mysql_query("SELECT * FROM ".table_agency_data_gender."  ");
 				$userGender = mysql_fetch_assoc($queryGender);
+				while ($row = mysql_fetch_array($queryGender)) {
+					if($ProfileContact[2]==$row['GenderTitle']){
+						$userGender["GenderID"]=$row['GenderID']; 
+					}
+					  
+				}
 
 				$queryCategory = mysql_query("SELECT * FROM ".table_agency_data_type."  WHERE DataTypeID >= (SELECT FLOOR( MAX(DataTypeID) * RAND()) FROM ".table_agency_data_type." ) ORDER BY  RAND() LIMIT 1");
 				$userCategory = mysql_fetch_assoc($queryCategory);
 				mysql_free_result($queryGender);
 				mysql_free_result($queryCategory);
 
-
-				echo $ProfileContactNameFirst." ".$ProfileContactNameLast."<br/>";
+				echo $ProfileContact[0]." ".$ProfileContact[1]."<br/>";
 
 				if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 					if ($rb_agency_option_profilenaming == 0) {
-						$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+						$ProfileContactDisplay = $ProfileContact[1] . " ". $ProfileContact[0];
 					} elseif ($rb_agency_option_profilenaming == 1) {
-						$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+						$ProfileContactDisplay = $ProfileContact[1] . " ". substr($ProfileContact[0], 0, 1);
 					} elseif ($rb_agency_option_profilenaming == 2) {
 						$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 						$have_error = true;
@@ -1276,6 +1272,8 @@ elseif ($ConfigID == 14) {
 
 				$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
+				
+
 				$insert = "INSERT INTO " . table_agency_profile . "(
 							ProfileGallery,
 							ProfileContactDisplay,
@@ -1288,13 +1286,14 @@ elseif ($ConfigID == 14) {
 						) VALUES (
 							'".$ProfileGallery."',
 							'".trim($ProfileContactDisplay)."',
-							'".trim($ProfileContactNameFirst)."',
-							'".trim($ProfileContactNameLast)."',
+							'".trim($ProfileContact[0])."',
+							'".trim($ProfileContact[1])."',
 							1,
 							'".$userGender["GenderID"]."',
 							'".$userCategory["DataTypeID"]."',
 							'".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."'
 						);"; 
+				
 				$results = $wpdb->query($insert) or die(mysql_error());
 				$ProfileID = $wpdb->insert_id;
 
@@ -1307,7 +1306,7 @@ elseif ($ConfigID == 14) {
 
 					// Copy images
 					if($a<=3){
-						if ($userGender["GenderID"] % 2 != 0) {
+						if ($ProfileContact[2]=='Male') {
 							if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a]))){
 								echo $sample_url."/".$userMediaImagesM[$a]."<br/>".rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a];
 								echo "<br/>";
@@ -1329,7 +1328,7 @@ elseif ($ConfigID == 14) {
 					}
 					if($a==1){
 
-						if ($userGender["GenderID"] % 2 != 0) {
+						if ($ProfileContact[2]=='Male') {
 						// Male
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
 						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)") or die(mysql_error());
