@@ -144,7 +144,8 @@ See license.txt for full details.
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
-	
+	if (!defined("table_agency_castingcart"))
+		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
 
 
 // *************************************************************************************************** //
@@ -486,7 +487,7 @@ class RBAgency {
 				if ( !$data_custom_exists ) {
 					// Assume the rest dont exist either
 					$arr_ = array('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking');
-				    $wpdb->query("DELETE FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle IN ('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking')");
+                                        $wpdb->query("DELETE FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle IN ('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking')");
 					$insert_arr = array();
 					for($count = 1; $count <= count($arr_); $count++){
 						$insert_arr[] = "(" .$count.",".$count.",'".$arr_[$count-1]."','Model,Talent')";
@@ -760,7 +761,16 @@ class RBAgency {
 					);";
 				dbDelta($sql);
 
-				
+				// Setup > Add to Casting Cart
+				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_castingcart." (
+					CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
+					CastingCartProfileID VARCHAR(255),
+					CastingCartTalentID VARCHAR(255),
+					PRIMARY KEY (CastingCartID)
+					);";
+				dbDelta($sql);
+
+
 
 			/*
 			 * Flush rewrite rules
@@ -815,7 +825,7 @@ class RBAgency {
 			$wpdb->query("DROP TABLE " . table_agency_searchsaved);
 			$wpdb->query("DROP TABLE " . table_agency_searchsaved_mux);
 			$wpdb->query("DROP TABLE " . table_agency_savedfavorite);
-		
+			$wpdb->query("DROP TABLE " . table_agency_castingcart);
 
 			// Delete Saved Settings
 			delete_option('rb_agency_options');
@@ -897,9 +907,7 @@ class RBAgency {
 					add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"menu_approvemembers", array('RBAgency', 'menu_approvemembers'));
 				}
 				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_search", array('RBAgency', 'menu_search'));
-				if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
-					add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 7,"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
-				}
+				add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 7,"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
 				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 7,"rb_agency_reports", array('RBAgency', 'menu_reports'));
 				add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 7,"rb_agency_settings", array('RBAgency', 'menu_settings'));
 		}

@@ -9,7 +9,8 @@
 	// Profile Class
 	include(rb_agency_BASEREL ."app/profile.class.php");
 
-	
+	// Casting Class
+	include(rb_agency_BASEREL ."app/casting.class.php");
 
 	// Define Options
 	    $rb_agency_options_arr = get_option('rb_agency_options');
@@ -22,27 +23,23 @@
 /* 
  * Casting Cart
  */
-	if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
-		include_once( ABSPATH . '/wp-content/plugins/rb-agency-casting/app/casting.class.php' );
-		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
+
+if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
 		// Process Cart
 		$cart = RBAgency_Casting::cart_process();
 
-		}
-		if(isset($_POST["SendEmail"])){
-				// Process Form
-				$isSent = RBAgency_Casting::cart_send_process();
-				
-				
-		}
+}
+if(isset($_POST["SendEmail"])){
+		// Process Form
+		$isSent = RBAgency_Casting::cart_send_process();
+		
+		
+}
 
-		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
-				// Empty Cart
-				unset($_SESSION['cartArray']);
-		}
-
-	}
-
+if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
+		// Empty Cart
+		unset($_SESSION['cartArray']);
+}
 
 // *************************************************************************************************** //
 // Get Search Results
@@ -245,9 +242,7 @@
 			echo "    </table>\n";
 
 			echo "     <p>\n";
-			if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
-				echo "          <input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
-			}
+			echo "          <input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
 			echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 			echo "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 			echo "     </p>\n";
@@ -258,28 +253,25 @@
 	// Ok.. now what ???
 	// else for if ($_GET["action"] == "search")     
 	}
-	if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
-		if (isset($_GET["action"]) && $_GET["action"] == "cartAdd") {
+	if (isset($_GET["action"]) && $_GET["action"] == "cartAdd") {
 
-			echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
-			echo " <div class=\"boxblock\">\n";
-			echo "   <h2>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h2>\n";
-			echo "   <div class=\"inner\">\n";
+		echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
+		echo " <div class=\"boxblock\">\n";
+		echo "   <h2>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h2>\n";
+		echo "   <div class=\"inner\">\n";
 
-			// Show Cart
-			echo RBAgency_Casting::cart_show();
+		// Show Cart
+		echo RBAgency_Casting::cart_show();
 
-			echo "   </div>\n";
-			echo " </div>\n";
-			echo "</div>\n";
-			// Send Email Form
-			echo "    </div><!-- .boxblock -->\n";
-		}
-			$cartHTML= RBAgency_Casting::cart_send_form();
-			if($cartHTML!=1)
-				echo $cartHTML;	// search result
-			
+		echo "   </div>\n";
+		echo " </div>\n";
+		echo "</div>\n";
+		// Send Email Form
+		echo "    </div><!-- .boxblock -->\n";
 	}
+		$cartHTML= RBAgency_Casting::cart_send_form();
+		if($cartHTML!=1)
+			echo $cartHTML;	// search result
 	if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
 
 		echo "<div id=\"profile-search-results\">\n";
