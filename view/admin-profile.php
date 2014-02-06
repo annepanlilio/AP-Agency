@@ -1033,7 +1033,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						echo "      <th scope=\"row\">" . __("Country", rb_agency_TEXTDOMAIN) . "</th>\n";
 						echo "      <td>\n";
 						
-						$query_get ="SELECT * FROM `". table_agency_data_country ."`" ;
+						$query_get ="SELECT * FROM `". table_agency_data_country ."` ORDER BY CountryTitle ASC" ;
 						$result_query_get = $wpdb->get_results($query_get);
 						$location= site_url();
 						
@@ -1052,7 +1052,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						echo "    <tr valign=\"top\">\n";
 						echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
 						echo "      <td>\n";
-						$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
+						$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
 						$result_query_get = $wpdb->get_results($query_get);
 						echo '<select name="ProfileLocationState" id="ProfileLocationState">';
 						echo '<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';

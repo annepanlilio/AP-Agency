@@ -199,7 +199,7 @@ class RBAgency_Profile {
 																		$location= site_url();
 						echo '					<input type="hidden" id="url" value="'.$location.'">';
 						echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
-																		$query_get ="SELECT * FROM `".table_agency_data_country."`" ;
+																		$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
 																		$result_query_get = $wpdb->get_results($query_get);
 						echo "					<div>";
 						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>";
@@ -215,7 +215,7 @@ class RBAgency_Profile {
 						echo "				<div class=\"rbfield rbselect rbsingle\">\n";
 						echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
 																		//echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"". $_SESSION["state"] ."\" />\n";
-																		$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
+																		$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
 																		$result_query_get = $wpdb->get_results($query_get);
 						echo "					<div>";
 						echo '						<select name="state" id="state">';

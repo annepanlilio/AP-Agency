@@ -1632,7 +1632,7 @@ echo '<th>'.__("Country Code", rb_agency_TEXTDOMAIN).'</th>';
 echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
 
 echo '</tr>';
-$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
+$myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country." ORDER BY CountryTitle ASC" );
 
 foreach($myrows as $result) {
 echo '<tr>';
@@ -1719,7 +1719,7 @@ foreach($myrows as $result) {
 		echo '<span class="msg">State has been deleted successfully</span>';
 	}
 echo '<table>';
-$getCountry = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country."" );
+$getCountry = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country." ORDER BY CountryTitle ASC" );
 foreach($getCountry as $countryRs) {
 	echo '<tr><td><h3>'.$countryRs->CountryTitle.'</h3></td></tr>';
 	echo '<tr>';
@@ -1728,7 +1728,7 @@ foreach($getCountry as $countryRs) {
 	echo '<th style="text-align:left;">'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
 	echo '</tr>';
 	echo '<tr>';
-	$getStates = $wpdb->get_results( "SELECT * FROM ".table_agency_data_state." WHERE CountryID='$countryRs->CountryID'" );
+	$getStates = $wpdb->get_results( "SELECT * FROM ".table_agency_data_state." WHERE CountryID='$countryRs->CountryID' ORDER BY StateTitle ASC" );
 	foreach($getStates as $result) {
 		echo '<td class="StateTitle">'.$result->StateTitle.'</td>';
 		echo '<td class="StateCode">'.$result->StateCode.'</td>';
