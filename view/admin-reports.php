@@ -1273,7 +1273,7 @@ elseif ($ConfigID == 14) {
 				$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
 				
-
+				
 				$insert = "INSERT INTO " . table_agency_profile . "(
 							ProfileGallery,
 							ProfileContactDisplay,
@@ -1296,6 +1296,23 @@ elseif ($ConfigID == 14) {
 				
 				$results = $wpdb->query($insert) or die(mysql_error());
 				$ProfileID = $wpdb->insert_id;
+
+				// Inserting Custom Field 
+				$queryCustom = mysql_query("SELECT * FROM ".table_agency_customfields."  ");
+				while ($rowCustom = mysql_fetch_array($queryCustom)) {
+					if($rowCustom['ProfileCustomType']==3){
+						 $customValueArray = explode("|", $rowCustom['ProfileCustomOptions']);
+						 $customValue= $customValueArray[1];
+					}elseif($rowCustom['ProfileCustomType']==7 || $rowCustom['ProfileCustomType']==1){
+						$customValue = rand(0,15) ; 
+					}elseif($rowCustom['ProfileCustomType']==4){
+						$customValue = "Dummy ".$rowCustom['ProfileCustomTitle']  ; 
+					}
+					$results = mysql_query("INSERT INTO " . table_agency_customfield_mux . " ( ProfileCustomID, ProfileID, ProfileCustomValue) VALUES ('". $rowCustom['ProfileCustomID'] ."','". $ProfileID ."','". $customValue ."')");
+				}
+				
+
+				
 
 				$rand = rand(0,1); // 2
 				$randTo6 = rand(0,5); //6
