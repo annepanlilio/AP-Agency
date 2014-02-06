@@ -143,3 +143,10 @@ input.stubby { width: 80px; }
 .tablenav .tablenav-pages .current {
     margin-right: 1px;
 }
+
+/* Dashboard Widget Forms */
+.postbox .rbform-table { width: 100%; }
+.postbox .rbform-table th { text-align: left; }
+.postbox .rbform-table td input[type=""] { width: 30%; }
+#dashboard_public_information td label.dropdown { display: none; }
+#dashboard_upload_images td input[type="file"] { width: 100%; }

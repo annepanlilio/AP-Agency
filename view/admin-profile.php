@@ -9,20 +9,23 @@ define("LabelSingular", "Profiles");
  */
 
 	$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-		$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
-		$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
-		if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
-			$rb_agency_option_agencyimagemaxheight = 800;
-		}
-		$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
-		$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
-		if (function_exists(rb_agencyinteract_approvemembers)) {
-			// Load Interact Settings
-			$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
-			$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
-		}
+	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+	$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
+	$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
+
+	if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
+		$rb_agency_option_agencyimagemaxheight = 800;
+	}
+
+	$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
+	$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
+
+	if (function_exists(rb_agencyinteract_approvemembers)) {
+		// Load Interact Settings
+		$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
+		$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
+	}
 
 
 // *************************************************************************************************** //
@@ -63,10 +66,13 @@ if (isset($_POST['action'])) {
 			$ProfileContactDisplay = $ProfileContactNameLast;
 		}
 	}
+
 	$ProfileGallery = $_POST['ProfileGallery'];
+
 	if (empty($ProfileGallery)) {  // Probably a new record... 
 		$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay);
 	}
+
 	$ProfileGender = $_POST['ProfileGender'];
 	$ProfileDateBirth = $_POST['ProfileDateBirth'];
 	$ProfileContactEmail = $_POST['ProfileContactEmail'];
@@ -85,9 +91,11 @@ if (isset($_POST['action'])) {
 	$ProfileDateUpdated = $_POST['ProfileDateUpdated'];
 	$ProfileDateViewLast = $_POST['ProfileDateViewLast'];
 	$ProfileType = $_POST['ProfileType'];
+
 	if (is_array($ProfileType)) {
 		$ProfileType = implode(",", $ProfileType);
 	}
+
 	$ProfileIsActive = $_POST['ProfileIsActive']; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileIsFeatured = $_POST['ProfileIsFeatured'];
 	$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
@@ -106,46 +114,48 @@ if (isset($_POST['action'])) {
 		$errorValidation['ProfileContactNameFirst']= "<b><i>The " . LabelSingular . " must have a name.</i></b><br>";
 		$have_error = true;
 	}
-		if ($_GET["action"] == "add") {
-			$userdata = array(
-				'user_pass' => esc_attr($ProfilePassword),
-				'user_login' => esc_attr($ProfileUsername),
-				'first_name' => esc_attr($ProfileContactNameFirst),
-				'last_name' => esc_attr($ProfileContactNameLast),
-				'user_email' => esc_attr($ProfileContactEmail),
-				'role' => get_option('default_role')
-			);
-					if(function_exists(rb_agencyinteract_approvemembers)){
-							if (empty($userdata['user_login'])) {
-								   $errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
-									$have_error = true;
-							}
-							if (username_exists($userdata['user_login'])) {
-									$errorValidation['user_login'] = __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
-									$have_error = true;
-							}
-							if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
-									$errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
-									$have_error = true;
-							}
-					}
-			if (!is_email($userdata['user_email'], true)) {
-				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
-				$have_error = true;
-			}
-			if (email_exists($userdata['user_email'])) {
+
+	if ($_GET["action"] == "add") {
+		$userdata = array(
+			'user_pass' => esc_attr($ProfilePassword),
+			'user_login' => esc_attr($ProfileUsername),
+			'first_name' => esc_attr($ProfileContactNameFirst),
+			'last_name' => esc_attr($ProfileContactNameLast),
+			'user_email' => esc_attr($ProfileContactEmail),
+			'role' => get_option('default_role')
+		);
+
+		if(function_exists(rb_agencyinteract_approvemembers)){
+				if (empty($userdata['user_login'])) {
+					   $errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
+						$have_error = true;
+				}
+				if (username_exists($userdata['user_login'])) {
+						$errorValidation['user_login'] = __("Sorry, that username already exists!<br />", rb_agencyinteract_TEXTDOMAIN);
+						$have_error = true;
+				}
+				if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
+						$errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
+						$have_error = true;
+				}
+		}
+		if (!is_email($userdata['user_email'], true)) {
+			$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
+			$have_error = true;
+		}
+		if (email_exists($userdata['user_email'])) {
+			$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+			$have_error = true;
+		} else {
+			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
 				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
 				$have_error = true;
-			} else {
-							if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
-									$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
-									$have_error = true;
-							}
-					}
-
+			}
 		}
 
-		if ($_POST["action"] == "editRecord") {
+	}
+
+	if ($_POST["action"] == "editRecord") {
 		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
 			if (!is_email($ProfileContactEmail, true)) {
 				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
@@ -156,7 +166,7 @@ if (isset($_POST['action'])) {
 				$have_error = true;
 			}
 		}
-		}
+	}
 
 	// Get Post State
 	$action = $_POST['action'];
@@ -276,7 +286,7 @@ if (isset($_POST['action'])) {
 			if (!empty($ProfileContactNameFirst) && !empty($ProfileID)) {
 
 				// Update Record
-				 $update = "UPDATE " . table_agency_profile . " SET 
+				$update = "UPDATE " . table_agency_profile . " SET 
 					ProfileGallery='" . $wpdb->escape($ProfileGallery) . "',
 					ProfileContactDisplay='" . $wpdb->escape($ProfileContactDisplay) . "',
 					ProfileContactNameFirst='" . $wpdb->escape($ProfileContactNameFirst) . "',
@@ -524,6 +534,7 @@ if (isset($_POST['action'])) {
 			break;
 	}
 }
+
 // *************************************************************************************************** //
 // Delete Single
 elseif ($_GET['action'] == "deleteRecord") {
@@ -565,6 +576,7 @@ elseif ($_GET['action'] == "deleteRecord") {
 	} // is there record?
 	rb_display_list();
 }
+
 // *************************************************************************************************** //
 // Show Edit Record
 elseif (($_GET['action'] == "editRecord") || ($_GET['action'] == "add")) {
@@ -771,12 +783,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	</div>
 
 	<div id="dashboard-widgets-wrap">
-		<div id="dashboard-widgets" class="metabox-holder">
+		<div id="dashboard-widgets" class="metabox-holder columns-3">
 
 			<div id="postbox-container-1" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
-					<div id="dashboard_rbagency_profile_glance" class="postbox ">
+					<div id="dashboard_rbagency_profile_glance" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo __("Contact Information", rb_agency_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
@@ -861,7 +873,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
-					<div id="dashboard_right_now" class="postbox ">
+					<div id="dashboard_account_information" class="postbox ">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Account Information", rb_agency_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
@@ -989,7 +1001,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
-					<div id="dashboard_right_now" class="postbox ">
+					<div id="dashboard_private_information" class="postbox ">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Private Information", rb_agency_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
@@ -1033,7 +1045,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						echo "      <th scope=\"row\">" . __("Country", rb_agency_TEXTDOMAIN) . "</th>\n";
 						echo "      <td>\n";
 						
-						$query_get ="SELECT * FROM `". table_agency_data_country ."` ORDER BY CountryTitle ASC" ;
+						$query_get ="SELECT * FROM `". table_agency_data_country ."`" ;
 						$result_query_get = $wpdb->get_results($query_get);
 						$location= site_url();
 						
@@ -1052,7 +1064,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						echo "    <tr valign=\"top\">\n";
 						echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
 						echo "      <td>\n";
-						$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
+						$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
 						$result_query_get = $wpdb->get_results($query_get);
 						echo '<select name="ProfileLocationState" id="ProfileLocationState">';
 						echo '<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
@@ -1108,7 +1120,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			<div id="postbox-container-2" class="postbox-container">
 				<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
-					<div id="dashboard_right_now" class="postbox ">
+					<div id="dashboard_at_a_glance" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span>At a Glance</span></h3>
 						<div class="inside">
@@ -1124,13 +1136,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 
-					<div id="dashboard_right_now" class="postbox ">
+					<div id="dashboard_public_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Public Information", rb_agency_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
 							<div class="main">
 <?php
 							// Public Information
+							echo "    <table class=\"rbform-table\">\n";
 							echo "    <tr valign=\"top\">\n";
 							echo "      <th scope=\"row\">" . __("Gender", rb_agency_TEXTDOMAIN) . "</th>\n";
 							echo "      <td>";
@@ -1180,15 +1193,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				</div>
 			</div>
 
-		</div>
-	</div>
-
-	<div id="welcome-panel" class="welcome-panel">
-		<div class="welcome-panel-content">
+		<!-- </div> -->
+	<!-- </div> -->
+	<div id="postbox-container-3" class="postbox-container">
+	<div id="side-sortables" class="meta-box-sortables ui-sortable">
+	<div id="dashboard_gallery" class="postbox">
+		<div class="handlediv" title="Click to toggle"><br></div>
+		<h3 class="hndle"><span>Gallery</span></h3>
+		<div class="inside">
+		<div class="main">
 			<?php 
 
 			if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record
-				echo "      <h3>" . __("Gallery", rb_agency_TEXTDOMAIN) . "</h3>\n";
+				//echo "      <h3>" . __("Gallery", rb_agency_TEXTDOMAIN) . "</h3>\n";
 
 				echo "<script type='text/javascript'>\n";
 				echo "function confirmDelete(delMedia,mediaType) {\n";
@@ -1262,9 +1279,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				if($order){
-					 $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID ASC";
+					$queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID ASC";
 				} elseif(!$order){
-					 $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID DESC";
+					$queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID DESC";
 				}
 				$resultsImg = mysql_query($queryImg);
 				$countImg = mysql_num_rows($resultsImg);
@@ -1286,13 +1303,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						$toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\"><span>Delete</span> &raquo;</a></div>\n";
 						$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
 					}
-					echo "<div class=\"profileimage\" style=\"height: auto !important; background: " . $styleBackground . "; \">\n" . $toDelete . "";
-					echo "  <img src=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "\" style=\"width: 100px; z-index: 1; \" />\n";
 					echo "  <div class=\"primary\" style=\"background: " . $styleBackground . "; \">";
 					echo "    <input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "";
 					echo "    <div>$massDelete</div>";
 					echo "    Order: <input type=\"text\" name=\"ProfileMediaOrder\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" />";
 					echo "  </div>\n";
+
 					echo "</div>\n";
 				}
 				if ($countImg < 1) {
@@ -1333,13 +1349,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 ?>
 		</div>
 	</div>
+	</div> <!-- #dashboard_gallery -->
 
 
-	<div id="welcome-panel" class="welcome-panel">
-		<div class="welcome-panel-content">
+	<div id="dashboard_media" class="postbox">
+		<div class="handlediv" title="Click to toggle"><br></div>
+		<h3 class="hndle"><span>Media</span></h3>
+		<div class="inside" >
 
 <?php
-				echo "      <br><br><h3>" . __("Media", rb_agencyinteract_TEXTDOMAIN) . "</h3>\n";
+				//echo "      <br><br><h3>" . __("Media", rb_agencyinteract_TEXTDOMAIN) . "</h3>\n";
 				echo "      <p>" . __("The following files (pdf, audio file, etc.) are associated with this record", rb_agencyinteract_TEXTDOMAIN) . ".</p>\n";
 
 				$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType <> \"Image\"";
@@ -1352,9 +1371,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						}elseif($dataMedia['ProfileVideoType'] == "vimeo"){
 							$json = file_get_contents('http://vimeo.com/api/v2/video/'.$dataMedia['ProfileMediaURL'].'.json');
 							$data = json_decode($json,true);
-							$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">" . $dataMedia['ProfileMediaType'] . "<br /><img src='" . $data[0]['thumbnail_small'] . "'><br /><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
-						}
-					} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+ 							$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">" . $dataMedia['ProfileMediaType'] . "<br /><img src='" . $data[0]['thumbnail_small'] . "'><br /><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
+ 						}
+ 					} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 						$outLinkVoiceDemo .= "<div>" . $dataMedia['ProfileMediaType'] . ": <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 					} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 						$outLinkResume .= "<div>" . $dataMedia['ProfileMediaType'] . ": <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
@@ -1388,15 +1407,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				}
 				?>
 		</div>
-	</div>
+		</div>
 
-	<div id="dashboard-widgets-wrap">
-		<div id="dashboard-widgets" class="metabox-holder">
-
-			<div id="postbox-container-1" class="postbox-container">
-				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-
-					<div id="dashboard_rbagency_profile_glance" class="postbox ">
+					<div id="dashboard_upload_images" class="postbox ">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo __("Upload Images", rb_agency_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
@@ -1405,24 +1418,22 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							// Upload Images
 				echo "      <p>" . __("Upload new media using the forms below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 				if(isset($errorValidation['profileMedia'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['profileMedia']."</p>\n";} 
+				echo "<table class=\"rbform-table\">";
 				for ($i = 1; $i < 10; $i++) {
-					echo "<div>Type: <select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>";
+					echo "<tr><th colspan=\"2\">Type:</th></tr><tr><td><select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>";
 					rb_agency_getMediaCategories($ProfileGender);
-					echo"</select><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></div>\n";
+					echo"</select></td><td><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></td></tr>\n";
 				}
+				echo "</table>";
 
 ?>
 							</div>
 						</div>
 					</div>
 
-				</div>
-			</div>
+			
 
-			<div id="postbox-container-2" class="postbox-container">
-				<div id="side-sortables" class="meta-box-sortables ui-sortable">
-
-					<div id="dashboard_right_now" class="postbox ">
+					<div id="dashboard_line_to_videos" class="postbox ">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Link to Videos", rb_agency_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
@@ -1431,94 +1442,83 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								// Add Videos
 				echo "      <p>" . __("Paste the video URL below", rb_agency_TEXTDOMAIN) . ".</p>\n";
 
-				echo "<div>
-						<div style='float:left; clear:both'>
+				echo "<table class=\"rbform-table\">
+						<tr valign=\"top\">
+						<th>
 						Type: 
 							<select name=\"profileMediaV1Type\">
 								<option selected>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
 								<option>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
 								<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
-						</div>	
-						<div style='float:left'>
-						<table>
-						<tbody>
-						<tr>
-							<td>Video ID: </td><td><input type='text' id='profileMediaV1' name='profileMediaV1'></td>
+						</th>
+						<td>
+							<table>
+								<tr><td>Video ID: </td><td><input type='text' id='profileMediaV1' name='profileMediaV1'></td></tr>
+								<tr><td>Title: </td><td><input type='text' name='media1_title'></td></tr>
+								<tr><td>Caption </td><td><input type='text' name='media1_caption'></td></tr>
+								<tr><td>Video Type </td><td><input type='radio' name='media1_vtype' value='youtube' checked>&nbsp; Youtube <br/>
+									<input type='radio' name='media1_vtype' value='vimeo' >&nbsp; Vimeo</td></tr>
+							</table>
+						</td>
 						</tr>
-						<tr>
-							<td>Title: </td><td><input type='text' name='media1_title'></td>
-						</tr>
-						<tr>
-							<td>Caption</td><td><input type='text' name='media1_caption'></td>
-						</tr>
-						<tr>
-							<td>Video Type</td><td><input type='radio' name='media1_vtype' value='youtube' checked>&nbsp; Youtube <br/>
-							<input type='radio' name='media1_vtype' value='vimeo' >&nbsp; Vimeo </td>
-						</tr>
-						</tbody></table></div></div>";
+							</table>";
 
-				echo "<div>
-						<div style='float:left; clear:both'>
+				echo "<table class=\"rbform-table\">
+						<tr valign=\"top\">
+						<th>
 						Type: 
 							<select name=\"profileMediaV2Type\">
 								<option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
 								<option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
 								<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
-						</div>	
-						<div style='float:left'>
-						<table>
-						<tbody>
-						<tr>
-							<td>Video ID: </td><td><input type='text' id='profileMediaV2' name='profileMediaV2'></td>
-						</tr>
-						<tr>
-							<td>Title: </td><td><input type='text' name='media2_title'></td>
-						</tr>
-						<tr>
-							<td>Caption</td><td><input type='text' name='media2_caption'></td>
-						</tr>
-						<tr>
-							<td>Video Type</td><td><input type='radio' name='media2_vtype' value='youtube' checked>&nbsp; Youtube <br/>
-							<input type='radio' name='media2_vtype' value='vimeo'>&nbsp; Vimeo </td>
-						</tr>				
-						</tbody></table></div></div>";
-				echo "<div>
-						<div style='float:left; clear:both'>
+						</th>	
+						<td>
+							<table>
+								<tr><td>Video ID: </td><td><input type='text' id='profileMediaV2' name='profileMediaV2'></td></tr>
+								<tr><td>Title: </td><td><input type='text' name='media2_title'></td></tr>
+								<tr><td>Caption</td><td><input type='text' name='media2_caption'></td></tr>
+								<tr><td>Video Type</td><td><input type='radio' name='media2_vtype' value='youtube' checked>&nbsp; Youtube <br/>
+									<input type='radio' name='media2_vtype' value='vimeo'>&nbsp; Vimeo </td>
+								</tr>				
+							</table>
+						</td>
+						</table>";
+				echo "<table class=\"rbform-table\">
+						<tr valign=\"top\">
+						<th>
 						Type: 
 							<select name=\"profileMediaV3Type\">
 								<option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
 								<option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
 								<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
-						</div>	
-						<div style='float:left'>
-						<table>
-						<tbody>
-						<tr>
-							<td>Video ID: </td><td><input type='text' id='profileMediaV3' name='profileMediaV3'></td>
-						</tr>
-						<tr>
-							<td>Title: </td><td><input type='text' name='media3_title'></td>
-						</tr>
-						<tr>
-							<td>Caption</td><td><input type='text' name='media3_caption'></td>
-						</tr>
-						<tr>
-							<td>Video Type</td><td><input type='radio' name='media3_vtype' value='youtube' checked>&nbsp; Youtube <br/>
-							<input type='radio' name='media3_vtype' value='vimeo'>&nbsp; Vimeo </td>
-						</tr>
-						</tbody></table></div></div>";
+						</th>
+						<td>
+							<table>
+								<tr><td>Video ID: </td><td><input type='text' id='profileMediaV3' name='profileMediaV3'></td></tr>
+								<tr><td>Title: </td><td><input type='text' name='media3_title'></td></tr>
+								<tr><td>Caption</td><td><input type='text' name='media3_caption'></td></tr>
+								<tr><td>Video Type</td><td><input type='radio' name='media3_vtype' value='youtube' checked>&nbsp; Youtube <br/>
+									<input type='radio' name='media3_vtype' value='vimeo'>&nbsp; Vimeo </td></tr>
+							</table>
+						</td>
+						</table>";
 				}
 			?>
 
 							</div>
 						</div>
 					</div>
+					</div>
 
-				</div>
-			</div>
 
-		</div>
-	</div>
+	</div> <!-- #postbox-container-3 -->
+
+
+			
+
+
+
+
 
 <?php
 
@@ -1533,19 +1533,23 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 
-	if (!empty($ProfileID) && ($ProfileID > 0)) {
-		echo "" . __("Last updated on", rb_agency_TEXTDOMAIN) . ": " . $ProfileDateUpdated . "\n";
+	if (!empty($ProfileID) && ($ProfileID > 0)) {		
 
+		echo "<div class=\"tool-box\">\n";
 		echo "<p class=\"submit\">\n";
+		echo "" . __("Last updated on", rb_agency_TEXTDOMAIN) . ": " . $ProfileDateUpdated . "\n";
 		echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "     <br /><br /><input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
+		echo "</div>\n";
 	} else {
+		echo "<div class=\"tool-box\">\n";
 		echo "<p class=\"submit\">\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Create Record", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
+		echo "</div>\n";
 	}
 	echo "</form>\n";
 }
@@ -1853,6 +1857,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 
 			</div>
 		</div>
+		</div>
 <?php
 	// Show Pagination
 	echo "<div class=\"tablenav\">\n";
@@ -2031,5 +2036,6 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "</form>\n";
 }
 
+echo "</div>\n";
 echo "</div>\n";
 ?>
