@@ -73,7 +73,7 @@
 			$_SESSION['cartArray'] = $cartArray;
 		}
 
-rb_header();
+echo $rb_header = RBAgency_Common::rb_header();
 
 if (is_user_logged_in()) { 
 	global $current_user;
@@ -161,5 +161,5 @@ if (isset($curauth->user_login)) {
 }
     
 //get_sidebar(); 
-rb_footer(); 
+echo $rb_footer = RBAgency_Common::rb_footer(); 
 ?>

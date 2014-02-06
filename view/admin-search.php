@@ -13,7 +13,7 @@
 	include(rb_agency_BASEREL ."app/casting.class.php");
 
 	// Define Options
-	    $rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
 		$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
 		$rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];

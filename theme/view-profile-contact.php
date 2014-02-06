@@ -165,7 +165,7 @@ if ($_POST["contact-action"] == "contact") {
 
    
 // GET HEADER  
-	rb_header();
+	echo $rb_header = RBAgency_Common::rb_header();
 
 	if ($rb_agency_option_profilelist_sidebar) {
 		echo "	<div id=\"profile-sidebar\">\n";
@@ -207,5 +207,5 @@ if ($_POST["contact-action"] == "contact") {
 	echo "  </div>\n";
 	echo "</div>\n";
 
-	rb_footer(); 
+	echo $rb_footer = RBAgency_Common::rb_footer(); 
 ?>

@@ -131,7 +131,7 @@ header("Cache-control: private"); //IE 6 Fix
 	 * Create View
 	 */
 
-		rb_header();
+		echo $rb_header = RBAgency_Common::rb_header();
 
 		echo "<div id=\"container\" "; if ($rb_agency_option_profilelist_sidebar==0) { echo "class=\"one-column\""; } echo">\n";
 		echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
@@ -175,5 +175,5 @@ header("Cache-control: private"); //IE 6 Fix
 		echo "  </div>\n";
 		echo "</div>\n";
 
-		rb_footer();
+		echo $rb_footer = RBAgency_Common::rb_footer();
 ?>

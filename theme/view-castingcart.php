@@ -99,7 +99,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 	}	
 }
 
-rb_header(); ?>
+echo $rb_header = RBAgency_Common::rb_header(); ?>
 
 <script type="text/javascript">
         jQuery(document).ready(function(){jQuery(".rblinks").css({display:"block"});});
@@ -168,5 +168,5 @@ echo "			<input type=\"hidden\" name=\"castingcart\" value=\"1\"/>";
 echo "  	</div>\n";
 echo "  </div>\n";
       
-rb_footer(); 
+echo $rb_footer = RBAgency_Common::rb_footer(); 
 ?>

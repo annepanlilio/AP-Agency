@@ -204,7 +204,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 } 
 
 
-rb_header(); 
+echo $rb_header = RBAgency_Common::rb_header(); 
 
 
 
@@ -324,6 +324,6 @@ rb_header();
 	
 
 get_sidebar();
-rb_footer(); 
+echo $rb_footer = RBAgency_Common::rb_footer(); 
 
 ?>

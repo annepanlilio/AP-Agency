@@ -11,7 +11,7 @@ class RBAgency_Common {
 	static function rb_header() {
 
 		// Call WordPress Header
-		rb_header();
+		get_header();
 
 		// Now Call Our Header
 		global $wpdb;
@@ -39,7 +39,7 @@ class RBAgency_Common {
 			echo $rb_agency_value_stylefooter;
 
 		// Call WordPress Header
-		rb_footer();
+		get_footer();
 	}
 
 	/**

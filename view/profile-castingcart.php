@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-rb_header();
+echo $rb_header = RBAgency_Common::rb_header();
 // Profile Class
 include(rb_agency_BASEREL ."app/profile.class.php");
 	$rb_agency_options_arr = get_option('rb_agency_options');
@@ -53,5 +53,5 @@ include(rb_agency_BASEREL ."app/profile.class.php");
 		echo "</div>\n";
 
 //get_sidebar(); 
-rb_footer(); 
+echo $rb_footer = RBAgency_Common::rb_footer(); 
 ?>

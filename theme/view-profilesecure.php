@@ -4,7 +4,7 @@ session_start();
 // Get Profile
 $SearchMuxHash = get_query_var('target');
 
-rb_header();
+echo $rb_header = RBAgency_Common::rb_header();
 
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
@@ -43,5 +43,5 @@ rb_header();
 	echo "</div>\n";
 	
 //get_sidebar(); 
-rb_footer(); 
+echo $rb_footer = RBAgency_Common::rb_footer(); 
 ?>

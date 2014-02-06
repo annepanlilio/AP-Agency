@@ -24,7 +24,7 @@ if (isset($ProfileType) && !empty($ProfileType)){
 	}
 }
 
-rb_header(); 
+echo $rb_header = RBAgency_Common::rb_header(); 
 
 echo "	<div id=\"primary\" class=\"".fullwidth_class()." column\">\n";
 echo "  	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
@@ -48,4 +48,4 @@ echo "	</div><!-- #primary -->\n"; // #primary
 
 //	get_sidebar();        
 
-rb_footer(); ?>
+echo $rb_footer = RBAgency_Common::rb_footer(); ?>
