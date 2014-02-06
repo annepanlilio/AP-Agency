@@ -1272,8 +1272,13 @@ elseif ($ConfigID == 14) {
 
 				$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
-				
-				
+				// Select city and state
+				$queryCountry = mysql_query("SELECT * FROM ".table_agency_data_country." ORDER BY RAND( ) ASC LIMIT 1");
+				$userCountry = mysql_fetch_assoc($queryCountry);
+
+				$queryState = mysql_query("SELECT * FROM ".table_agency_data_state."  where CountryID = ".$userCountry['CountryID']." ORDER BY RAND( ) ASC LIMIT 1");
+				$userState = mysql_fetch_assoc($queryState);
+								
 				$insert = "INSERT INTO " . table_agency_profile . "(
 							ProfileGallery,
 							ProfileContactDisplay,
@@ -1282,7 +1287,16 @@ elseif ($ConfigID == 14) {
 							ProfileIsActive,
 							ProfileGender,
 							ProfileType,
-							ProfileDateBirth 
+							ProfileDateBirth,
+							ProfileLocationCountry,
+							ProfileLocationState,
+							ProfileLocationStreet,
+							ProfileLocationCity,
+							ProfileLocationZip,
+							ProfileContactEmail,
+							ProfileContactPhoneHome,
+							ProfileContactPhoneCell,
+							ProfileContactPhoneWork
 						) VALUES (
 							'".$ProfileGallery."',
 							'".trim($ProfileContactDisplay)."',
@@ -1291,7 +1305,18 @@ elseif ($ConfigID == 14) {
 							1,
 							'".$userGender["GenderID"]."',
 							'".$userCategory["DataTypeID"]."',
-							'".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."'
+							'".date('Y-m-d', strtotime(mt_rand(1970,2010).'-'.mt_rand(1,12)."-".mt_rand(1,30)))."',
+							'".$userCountry['CountryID']."',
+							'".$userState['StateID']."',
+							'Street',
+							'City',
+							'Zip',
+							'".$ProfileContact[0]."@modelingagencysoftware.com',
+							'1.415.871.0504',
+							'1.415.871.0504',
+							'1.415.871.0504'
+							
+							
 						);"; 
 				
 				$results = $wpdb->query($insert) or die(mysql_error());
@@ -1341,7 +1366,9 @@ elseif ($ConfigID == 14) {
 						}
 					}
 					if($a<=3){
-						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
+						if($userMediaVideoType[$a]!=""){
+							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
+						}
 					}
 					if($a==1){
 
