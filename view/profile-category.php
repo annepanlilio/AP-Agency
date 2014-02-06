@@ -204,7 +204,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 } 
 
 
-get_header(); 
+rb_header(); 
 
 
 
@@ -324,6 +324,6 @@ get_header();
 	
 
 get_sidebar();
-get_footer(); 
+rb_footer(); 
 
 ?>

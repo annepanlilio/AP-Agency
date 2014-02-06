@@ -2,7 +2,7 @@
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
 	
-get_header();
+rb_header();
 
 	// Profile Class
 	include(rb_agency_BASEREL ."app/profile.class.php");
@@ -107,5 +107,5 @@ get_header();
 	echo "</div><!-- #primary -->\n"; // #primary
 
 // get_sidebar(); 
-get_footer(); 
+rb_footer(); 
 ?>

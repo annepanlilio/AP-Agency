@@ -100,7 +100,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 	}
 }
 
-get_header(); ?>
+rb_header(); ?>
 
 <script type="text/javascript">
 		jQuery(document).ready(function(){jQuery(".rblinks").css({display:"block"});});
@@ -171,5 +171,5 @@ echo "			<input type=\"hidden\" name=\"castingcart\" value=\"1\"/>";
 echo "  	</div>\n";
 echo "  </div>\n";
 	  
-get_footer(); 
+rb_footer(); 
 ?>

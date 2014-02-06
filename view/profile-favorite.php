@@ -20,7 +20,7 @@ if (isset($ProfileType) && !empty($ProfileType)){
 	}
 }
 
-get_header(); 
+rb_header(); 
 
 echo "	<div id=\"primary\" class=\"".fullwidth_class()." column\">\n";
 echo "  	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
@@ -49,4 +49,4 @@ echo "	</div><!-- #primary -->\n"; // #primary
 
 //	get_sidebar();        
 
-get_footer(); ?>
+rb_footer(); ?>
