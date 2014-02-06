@@ -468,6 +468,16 @@ if (isset($_POST['action'])) {
 					$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=$ProfileID");
 					$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=$ProfileID AND ProfileMediaID=$ProfileMediaPrimaryID");
 				}
+				// Update Image order 
+				foreach ($_POST as $key => $val) {
+					if (substr($key,0,18) == "ProfileMediaOrder_") {
+						$pieces = explode("_", $key);
+						if($pieces[1]>0 && $val!=""){
+								$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$pieces[1]");
+						}
+					}
+
+				}
 				/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 
 				echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! <a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "\">" . __("Continue editing the record", rb_agency_TEXTDOMAIN) . "?</a></p></div>");
@@ -1279,7 +1289,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				if($order){
-					$queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID ASC";
+					$queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY $order";
 				} elseif(!$order){
 					$queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID DESC";
 				}
@@ -1306,7 +1316,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					echo "  <div class=\"primary\" style=\"background: " . $styleBackground . "; \">";
 					echo "    <input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "";
 					echo "    <div>$massDelete</div>";
-					echo "    Order: <input type=\"text\" name=\"ProfileMediaOrder\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" />";
+					echo "    Order: <input type=\"text\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" />";
 					echo "  </div>\n";
 
 					echo "</div>\n";

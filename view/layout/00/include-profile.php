@@ -23,7 +23,12 @@ echo "			<div class=\"col_6 column\">\n";
 echo "				<div id=\"photos\">\n";
 
 						// images
+						if($orderBy){
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
+						}else{
+							$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID DESC";
+						}
+						
 						$resultsImg = mysql_query($queryImg);
 						$countImg = mysql_num_rows($resultsImg);
 						while ($dataImg = mysql_fetch_array($resultsImg)) {
