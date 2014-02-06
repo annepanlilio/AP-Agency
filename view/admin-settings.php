@@ -1024,6 +1024,42 @@ elseif ($ConfigID == 2) {
 	echo "		<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes'); echo "\" />\n";
 	echo "		</form>\n";
 
+	echo "<hr />NOTE: These forms must be saved seprately.  Only make changes to one at a time.";
+
+	/*
+	 * Update Options
+	 */
+		// Get Group
+		$rb_agency_options_arr = get_option('rb_agency_options');
+
+		// Set Default Values
+		$rb_agency_value_styleheader = $rb_agency_options_arr['rb_agency_option_styleheader'];
+		$rb_agency_value_stylefooter = $rb_agency_options_arr['rb_agency_option_stylefooter'];
+
+		/*
+		 * Form
+		 */
+		echo "<form method=\"post\" action=\"options.php\">\n";
+		settings_fields( 'rb-agency-settings-group' ); 
+		echo "<table class=\"form-table\">\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Extra HTML', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Header', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <td><textarea name=\"rb_agency_options[rb_agency_option_styleheader]\">". $rb_agency_value_styleheader ."</textarea></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Footer', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <td><textarea name=\"rb_agency_options[rb_agency_option_stylefooter]\">". $rb_agency_value_stylefooter ."</textarea></td>\n";
+		echo " </tr>\n";
+		echo "</table>\n";
+		echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
+		echo "<input type=\"hidden\" name=\"rb_agency_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
+		echo "</form>\n";
+
+
+
 
 
 }
