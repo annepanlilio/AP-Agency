@@ -1222,11 +1222,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 	<div id="dashboard-widgets-wrap">
-		<div id="dashboard-widgets" class="metabox-holder columns-2">
+		<div id="dashboard-widgets" class="metabox-holder">
 
 			<!-- Row 2: Column Left Start -->
 
-			<div id="postbox-container-3" class="postbox-container">
+			<div> <!-- id="postbox-container-3" class="postbox-container"-->
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 					<div id="dashboard_gallery" class="postbox">
@@ -1341,7 +1341,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "    Order: <input type=\"text\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" />";
 									echo "  </div>\n";
 
-									echo "</div>\n";
 								}
 								if ($countImg < 1) {
 									echo "<div>" . __("There are no images loaded for this profile yet.", rb_agency_TEXTDOMAIN) . "</div>\n";
@@ -1386,12 +1385,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				</div>
 			</div>
 
-			<!-- Row 2: Column Left End -->
+			<!-- Row 1: Column Right End -->
 
-			<!-- Row 2: Column Right Start -->
 
-			<div id="postbox-container-4" class="postbox-container">
-				<div id="side-sortables" class="meta-box-sortables ui-sortable">
+		</div>
+	</div>
+
+
+	<div id="dashboard-widgets-wrap">
+		<div id="dashboard-widgets" class="metabox-holder">
+
+			<!-- Row 2: Column Left Start -->
+
+			<div> <!-- id="postbox-container-3" class="postbox-container"-->
+				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 					<div id="dashboard_media" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
@@ -1451,6 +1458,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div id="dashboard-widgets-wrap">
+		<div id="dashboard-widgets" class="metabox-holder columns-2">
+
+			<!-- Row 4: Column Left Start -->
+
+			<div id="postbox-container-5" class="postbox-container">
+				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 					<div id="dashboard_upload_images" class="postbox ">
 						<div class="handlediv" title="Click to toggle"><br></div>
@@ -1473,6 +1494,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							</div>
 						</div>
 					</div>
+
+				</div>
+			</div>
+
+			<div id="postbox-container-6" class="postbox-container">
+				<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
 
 					<div id="dashboard_line_to_videos" class="postbox ">
