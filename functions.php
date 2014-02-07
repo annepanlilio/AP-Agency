@@ -69,6 +69,13 @@ error_reporting(0);
 
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-formstyle' );
+
+				$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
+				if($rb_agency_option_layoutprofile == 00 ) {
+					wp_register_style( 'isotope-css', plugins_url('rb-agency/view/layout/00/css/isotope.css'));
+					wp_enqueue_style( 'isotope-css' );
+				}
 			}	
 		}
 
@@ -82,10 +89,14 @@ error_reporting(0);
 
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
+				if($rb_agency_option_layoutprofile == 00 ) {
+					wp_enqueue_script( 'isotope-jquery', plugins_url('view/layout/00/js/jquery.isotope.min.js', __FILE__) );
+					wp_enqueue_script( 'isotope-init', plugins_url('view/layout/00/js/init-isotope.js', __FILE__) );
+				}
 				if($rb_agency_option_layoutprofile == 02 ) {
 					wp_enqueue_script( 'photo-scroller', plugins_url('view/layout/02/js/jquery.mCustomScrollbar.concat.min.js', __FILE__) );
 					wp_enqueue_script( 'init-scroller', plugins_url('view/layout/02/js/init-scroller.js', __FILE__) );
-				}
+				}				
 			}	
 		}
 
