@@ -4362,12 +4362,13 @@ return $userState['StateTitle'];
 
 // Genrate query for gallary Order
 function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaType){
-
+	$queryImg = ""; 
 	if($order){
-		return $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"" . $ProfileMediaType . "\" ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC,";
+		 $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $profileID . "\" AND ProfileMediaType = \"" . $ProfileMediaType . "\" ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC";
 	} else {
-		return $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"" . $ProfileMediaType . "\" ORDER BY  ProfileMediaOrder DESC";
+		 $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $profileID . "\" AND ProfileMediaType = \"" . $ProfileMediaType . "\" ORDER BY  ProfileMediaOrder DESC";
 	}
+	return $queryImg ;
 }
 
 ?>
