@@ -1310,11 +1310,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								# 1 - recent 0 - chronological
 								$rb_agency_options_arr = get_option('rb_agency_options');
 								$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
-								if($order){
-									$queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY $order";
-								} elseif(!$order){
-									$queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaOrder ASC, ProfileMediaID DESC";
-								}
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 								$resultsImg = mysql_query($queryImg);
 								$countImg = mysql_num_rows($resultsImg);
 								while ($dataImg = mysql_fetch_array($resultsImg)) {
