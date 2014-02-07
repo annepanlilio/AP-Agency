@@ -1218,15 +1218,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 		</div>
-	</div>
 
-
-	<div id="dashboard-widgets-wrap">
-		<div id="dashboard-widgets" class="metabox-holder">
+		<div id="dashboard-widgets" class="metabox-holder columns-1">
 
 			<!-- Row 2: Column Left Start -->
 
-			<div> <!-- id="postbox-container-3" class="postbox-container"-->
+			<div id="postbox-container-3" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 					<div id="dashboard_gallery" class="postbox">
@@ -1385,15 +1382,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 		</div>
-	</div>
 
-
-	<div id="dashboard-widgets-wrap">
-		<div id="dashboard-widgets" class="metabox-holder">
+		<div id="dashboard-widgets" class="metabox-holder columns-1">
 
 			<!-- Row 2: Column Left Start -->
 
-			<div> <!-- id="postbox-container-3" class="postbox-container"-->
+			<div id="postbox-container-3" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 					<div id="dashboard_media" class="postbox">
@@ -1429,21 +1423,24 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$outCustomMediaLink .= "<div>" . $dataMedia['ProfileMediaType'] . ": <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 								}
 							}
-							echo '<div style=\"width:500px;\">';
+							echo '<div class="media-files">';
+							echo '<div class="media-file">';
 							echo $outLinkVoiceDemo;
 							echo '</div>';
-							echo '<div style=\"width:500px;\">';
+							echo '<div class="media-file">';
 							echo $outLinkResume;
 							echo '</div>';
-							echo '<div style=\"width:500px;\">';
+							echo '<div class="media-file">';
 							echo $outLinkHeadShot;
 							echo '</div>';
-							echo '<div style=\"width:500px;\">';
+							echo '<div class="media-file">';
 							echo $outLinkComCard;
 							echo '</div>';
-							echo '<div style=\"width:500px;\">';
+							echo '<div class="media-file">';
 							echo $outCustomMediaLink;
 							echo '</div>';
+							echo '</div>';
+							
 							echo $outVideoMedia;
 
 							if ($countMedia < 1) {
@@ -1458,10 +1455,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			</div>
 
 		</div>
-	</div>
 
-
-	<div id="dashboard-widgets-wrap">
 		<div id="dashboard-widgets" class="metabox-holder columns-2">
 
 			<!-- Row 4: Column Left Start -->
@@ -1581,7 +1575,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			<!-- Row 2: Column Right End -->
 
 		</div>
-	</div>
+
 
 
 
@@ -1590,7 +1584,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 	if (!empty($ProfileID) && ($ProfileID > 0)) {
 
-		echo "<div class=\"tool-box\">\n";
+		echo "<div class=\"rbtool-box\">\n";
 		echo "<p class=\"submit\">\n";
 		echo "" . __("Last updated on", rb_agency_TEXTDOMAIN) . ": " . $ProfileDateUpdated . "\n";
 		echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
@@ -1599,7 +1593,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		echo "</p>\n";
 		echo "</div>\n";
 	} else {
-		echo "<div class=\"tool-box\">\n";
+		echo "<div class=\"rbtool-box\">\n";
 		echo "<p class=\"submit\">\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Create Record", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
@@ -1801,7 +1795,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		return temp;
 }
 </script>
-<div id="dashboard-widgets-wrap">
+
 	<div id="dashboard-widgets" class="metabox-holder columns-2">
 
 		<div id="postbox-container-1" class="postbox-container" style="width: 29%;">

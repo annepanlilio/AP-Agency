@@ -145,6 +145,7 @@ input.stubby { width: 80px; }
 }
 
 /* Dashboard Widget Forms */
+.rbtool-box { clear: both; }
 .postbox .rbform-table { width: 100%; }
 .postbox .rbform-table th { text-align: left; }
 .postbox .rbform-table td input[type=""] { width: 30%; }
