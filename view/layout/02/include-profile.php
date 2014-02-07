@@ -11,13 +11,26 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
 	wp_enqueue_style( 'rblayout-style' );
 
-
 /*
  * Layout 
  */
 
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-two\" class=\"rblayout\">\n";
+
+echo "  		<div class=\"rbcol-5 rbcolumn\">\n";
+echo "				<div id=\"profile-picture\">\n";
+
+						// images
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
+						$resultsImg = mysql_query($queryImg);
+						$countImg = mysql_num_rows($resultsImg);
+						while ($dataImg = mysql_fetch_array($resultsImg)) {
+							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+						}
+
+echo "				</div> <!-- #profile-picture -->\n";
+echo "			</div>\n"; // .rbcol-5
 
 echo "  		<div class=\"rbcol-7 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
@@ -89,19 +102,6 @@ echo "					<div class=\"rbclear\"></div>\n"; // Clear All
 echo "				</div> <!-- #info -->\n";//End Info
 echo "			</div> <!-- #profile-l -->\n";
 
-echo "  		<div class=\"rbcol-5 rbcolumn\">\n";
-echo "				<div id=\"profile-picture\">\n";
-
-						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
-							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
-						}
-
-echo "				</div> <!-- #profile-picture -->\n";
-echo "			</div>\n"; // .rbcol-5
 echo " 		</div>\n";  // Close Profile Layout
 echo "	</div>\n";  // Close Profile
 echo "	<div class=\"cb;\"></div>\n"; // Clear All

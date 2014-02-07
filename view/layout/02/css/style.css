@@ -2,6 +2,9 @@
 #rblayout-two { overflow: hidden; }
 #rblayout-two .mCSB_container a img { max-height: 150px; float: left; border: 5px solid #e9e9e9; border-right: none; }
 #rblayout-two .mCSB_container a:last-child img { border-right: 5px solid #e9e9e9; }
+@media only screen and (min-width: 767px) {
+  .rbcol-5 { float: right; }
+}
 
 /* basic scrollbar styling */
 /* vertical scrollbar */
@@ -151,7 +154,7 @@
 }
 .mCSB_scrollTools .mCSB_buttonLeft,
 .mCSB_scrollTools .mCSB_buttonRight{
-  background-image:url(../style/mCSB_buttons.png);
+  background-image:url(../images/mCSB_buttons.png);
   background-repeat:no-repeat;
   opacity:0.4;
   filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
