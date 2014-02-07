@@ -1328,10 +1328,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\"><span>Delete</span> &raquo;</a></div>\n";
 										$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
 									}
+									echo "<div class=\"profileimage\" style=\"height: auto !important; background: " . $styleBackground . "; \">\n" . $toDelete . "";
+									echo "  <img src=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "\" style=\"width: 100px; z-index: 1; \" />\n"; 
 									echo "  <div class=\"primary\" style=\"background: " . $styleBackground . "; \">";
+
 									echo "    <input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "";
 									echo "    <div>$massDelete</div>";
 									echo "    Order: <input type=\"text\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" />";
+									echo "  </div>\n";
 									echo "  </div>\n";
 
 								}
