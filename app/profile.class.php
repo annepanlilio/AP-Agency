@@ -524,6 +524,7 @@ class RBAgency_Profile {
 					}
 
 				}
+
 								
 								 /* status The “Status” field should not show up on front-end search.*/ 
 								if(isset($_REQUEST['page']) && $_REQUEST['page']=='rb_agency_search'){
@@ -533,9 +534,10 @@ class RBAgency_Profile {
 									echo "				        	<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
 									echo "								<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
 									echo "								<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-									echo "								<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
+									echo "								<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
 									echo "								<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
 									echo "								<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+									echo "								<option value=\"3\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
 									echo "				        	</select>\n";
 									echo "				    	</div>\n";
 									echo "				    </div>\n";
