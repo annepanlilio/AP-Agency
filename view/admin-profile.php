@@ -1973,7 +1973,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		$ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 		$ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
 		$ProfileLocationCity = RBAgency_Common::format_propercase(stripslashes($data['ProfileLocationCity']));
-		$ProfileLocationState = stripslashes($data['ProfileLocationState']);
+		$ProfileLocationState = stripslashes(get_state_by_id($data['ProfileLocationState']));
 		$ProfileGender = stripslashes($data['ProfileGender']);
 		$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
 		$ProfileStatHits = stripslashes($data['ProfileStatHits']);

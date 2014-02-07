@@ -4353,4 +4353,11 @@ function self_delete() {
 	));
 
 }
+// Get State Name by State ID
+function get_state_by_id($stateId){
+$queryState = mysql_query("SELECT StateTitle FROM ".table_agency_data_state."  where StateID = ".$stateId." ");
+$userState = mysql_fetch_assoc($queryState);
+return $userState['StateTitle'];
+}
+
 ?>
