@@ -104,7 +104,7 @@ Expended Profile with Tabs
 
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-three\" class=\"rblayout\">\n";
-echo " 			<div class=\"col_12 column\">\n";
+echo " 			<div class=\"rbcol-12 rbcolumn\">\n";
 echo " 				<div id=\"go-back\">\n";
 echo "   				<a href=\"". get_bloginfo("wpurl") ."/profile-category/\">Go Back</a>\n";
 echo " 				</div>\n";
@@ -113,7 +113,7 @@ echo " 			</div>\n";
 echo " 			<div id=\"profile-overview\">\n";
 
 // Column 1
-echo "		  		<div class=\"col_4 column\">\n";
+echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
 
 						// Profile Image
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
@@ -154,7 +154,7 @@ echo '					<div id="resultsGoHereAddtoCart"></div>';
 echo "	  			</div> <!-- #profile-picture -->\n";
 
 // Column 2
-echo "	  			<div class=\"col_5 column\">\n";
+echo "	  			<div class=\"rbcol-5 rbcolumn\">\n";
 echo "	  				<div id=\"profile-info\">\n";
 
 echo "	      				<h1>". $ProfileContactDisplay ."</h1>\n";
@@ -180,10 +180,10 @@ echo "		  				</ul>\n";
 echo "		  				<p>". $ProfileExperience ."</p>\n";
 
 echo "	  				</div> <!-- #profile-info -->\n";
-echo "	  			</div> <!-- .col_5 -->\n";
+echo "	  			</div> <!-- .rbcol-5 -->\n";
 
 					// Column 3
-echo "			  	<div class=\"col_3 column\">\n";
+echo "			  	<div class=\"rbcol-3 rbcolumn\">\n";
 echo "			  		<div id=\"profile-actions\">\n";
 
 							//Contact Profile
@@ -202,15 +202,15 @@ echo '	      				<div id="profile-links">';
 echo '						</div>';
 
 echo "	  				</div> <!-- #profile-actions -->\n";
-echo "	  			</div> <!-- .col_3 -->\n";
+echo "	  			</div> <!-- .rbcol-3 -->\n";
 echo "				<div class=\"rbclear\"></div>\n"; // Clear All
 echo " 			</div>\n"; // #profile-overview
 
-echo ' 			<div name="space" style="visibility:hidden">text</div>'; // twelve column 1
+echo ' 			<div name="space" style="visibility:hidden">text</div>'; // twelve rbcolumn 1
 echo "				<div class=\"rbclear\"></div>\n"; // Clear All
 echo " 			<div id=\"rb-tabs\">\n";
 echo " 				<div id=\"tabs\">\n";
-echo " 					<div class=\"twelve column row-two \">\n";
+echo " 					<div class=\"twelve rbcolumn row-two \">\n";
 echo "   					<div id=\"subMenuTab\">\n";
 echo " 							<div class=\"maintab tab-left tab-active\" id=\"row-all\">\n";
 echo " 								<a href=\"#space\">\n";
@@ -248,11 +248,11 @@ echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><
 echo " 								</a>\n";
 echo " 							</div>\n";	
 echo "	   					</div>\n";
-echo " 					</div>\n"; // twelve column 2
+echo " 					</div>\n"; // twelve rbcolumn 2
 echo " 				</div>\n"; // end #tabs
 echo "				<div class=\"rbclear\"></div>\n"; // Clear All					
 echo " 				<div id=\"tab-panels\">\n";
-echo " 					<div class=\"col_12 column row-photos tab\">\n";
+echo " 					<div class=\"rbcol-12 rbcolumn row-photos tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								// images
 								$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
@@ -266,9 +266,9 @@ echo " 						<div class=\"tab-panel\">\n";
 								  	}
 								}
 echo " 						</div>\n"; // .tab-panel
-echo " 					</div>\n"; // twelve column photos
+echo " 					</div>\n"; // twelve rbcolumn photos
 
-echo " 					<div class=\"col_12 column row-physical tab\">\n";
+echo " 					<div class=\"rbcol-12 rbcolumn row-physical tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 echo "							<ul>";
 									if (!empty($ProfileGender)) {
@@ -287,9 +287,9 @@ echo "							<ul>";
 									}
 echo "							</ul>";
 echo " 						</div>\n"; // .tab-panel
-echo " 					</div>\n"; // twelve column physical
+echo " 					</div>\n"; // twelve rbcolumn physical
 
-echo " 					<div class=\"col_12 column row-videos tab\">\n";
+echo " 					<div class=\"rbcol-12 rbcolumn row-videos tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								//Video Slate
 								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
@@ -297,7 +297,7 @@ echo " 						<div class=\"tab-panel\">\n";
 								if ($countMedia > 0) {
 								  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 										$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-										echo"<div class=\"video slate col_4 column\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
+										echo"<div class=\"video slate rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 								  	}
 								}
 
@@ -307,7 +307,7 @@ echo " 						<div class=\"tab-panel\">\n";
 								if ($countMedia > 0) {
 								  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 										$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-										echo"<div class=\"video monologue col_4 column\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
+										echo"<div class=\"video monologue rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 								  	}
 								}
 
@@ -317,13 +317,13 @@ echo " 						<div class=\"tab-panel\">\n";
 								if ($countMedia > 0) {
 								  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 										$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-										echo"<div class=\"video demoreel col_4 column\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
+										echo"<div class=\"video demoreel rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 								  	}
 								}
 echo " 						</div>\n"; // .tab-panel								
-echo " 					</div>\n"; // twelve column videos
+echo " 					</div>\n"; // twelve rbcolumn videos
 
-echo " 					<div class=\"col_12 column row-experience tab\">\n";
+echo " 					<div class=\"rbcol-12 rbcolumn row-experience tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
 								$results1 = mysql_query($query1);
@@ -339,16 +339,16 @@ echo " 						<div class=\"tab-panel\">\n";
 									}
 								}
 echo " 						</div>\n"; // .tab-panel							
-echo " 					</div>\n"; // twelve column experience
+echo " 					</div>\n"; // twelve rbcolumn experience
 
-echo " 					<div class=\"col_12 column row-bookings tab\">\n";
+echo " 					<div class=\"rbcol-12 rbcolumn row-bookings tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 echo " 						</div>\n"; // .tab-panel
 echo " 					</div>\n"; // Row booking
 
 // added this section to be able to display downloadable 
 // files attached to a specific profile 
-echo "					<div class=\"col_12 column row-downloads tab\">\n";
+echo "					<div class=\"rbcol-12 rbcolumn row-downloads tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 echo "							<p>". __("The following files (pdf, audio file, etc.) are associated with this profile",
 					        	rb_agencyinteract_TEXTDOMAIN) .".</p>\n";

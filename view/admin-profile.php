@@ -108,7 +108,7 @@ if (isset($_POST['action'])) {
 	$ProfileNotifyUser = $_POST["ProfileNotifyUser"];
 
 	// Error checking
-	
+
 	$have_error = false;
 	if (trim($ProfileContactNameFirst) == "") {
 		$errorValidation['ProfileContactNameFirst']= "<b><i>The " . LabelSingular . " must have a name.</i></b><br>";
@@ -275,7 +275,7 @@ if (isset($_POST['action'])) {
 			} else {
 				echo ('<div id="message" class="error"><p>' . __("Error creating record, please ensure you have filled out all required fields.", rb_agency_TEXTDOMAIN) . '</p></div>');
 				rb_display_manage($ProfileID,$errorValidation);
-				
+
 			}
 
 			break;
@@ -315,7 +315,7 @@ if (isset($_POST['action'])) {
 
 					update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', $ProfileType);
 					update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_pgender', esc_attr($ProfileGender));
-				
+
 				if ($ProfileUserLinked > 0) {
 					/* Update WordPress user information. */
 					update_usermeta($ProfileUserLinked, 'first_name', esc_attr($ProfileContactNameFirst));
@@ -532,7 +532,7 @@ if (isset($_POST['action'])) {
 				// Gimme an admin:
 				$AdminID = $wpdb->prepare("SELECT $wpdb->users.ID FROM $wpdb->users WHERE user_login = 'admin'");
 				if ($AdminID > 0) {
-					
+
 				} else {
 					$AdminID = 1;
 				}
@@ -686,7 +686,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		$count = mysql_num_rows($results);
 
 		while ($data = mysql_fetch_array($results)) {
-		
+
 			$ProfileID = $data['ProfileID'];
 			$ProfileUserLinked = $data['ProfileUserLinked'];
 			$ProfileGallery = stripslashes($data['ProfileGallery']);
@@ -728,7 +728,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		$ProfileType = 1;
 		$ProfileGender = "Unknown";
 		$ProfileIsActive = 1;
-		
+
 		/*
 		 * Pull Post Values and  Form value should not lost on error @Satya 12/12/2013
 		 */
@@ -1052,15 +1052,15 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      </fieldset>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
-								
+
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Country", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								
+
 								$query_get ="SELECT * FROM `". table_agency_data_country ."`" ;
 								$result_query_get = $wpdb->get_results($query_get);
 								$location= site_url();
-								
+
 								echo '<input type="hidden" id="url" value="'.$location.'">';
 								echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");'>";
 								echo '<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
@@ -1071,8 +1071,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo '</select>';
 								echo "      </td>\n";
 								echo "    </tr>\n";
-								
-								
+
+
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
@@ -1085,10 +1085,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo '<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
 								 }
 								echo '</select>';
-								
+
 								echo "      </td>\n";
 								echo "    </tr>\n";
-								
+
 								// Address
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Street", rb_agency_TEXTDOMAIN) . "</th>\n";
@@ -1102,8 +1102,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . $ProfileLocationCity . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
-								
-								
+
+
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Zip", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
@@ -1177,7 +1177,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							}elseif($ProfileGender1!=""){
 								$ProfileGender =$ProfileGender1 ;
 							}
-							
+
 							$query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
 							$results1 = mysql_query($query1);
 							$count1 = mysql_num_rows($results1);
@@ -1655,7 +1655,7 @@ function rb_display_list() {
 			if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
 			$selectedNameFirst = $_GET['ProfileContactNameFirst'];
 			$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
-			
+
 			  if(strpos($filter,'profile') > 0){
 					$filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
 			  } else {
@@ -1710,7 +1710,7 @@ function rb_display_list() {
 					$filter .= " profile.ProfileGender='".$ProfileGender."'";
 			  }
 		}
-		
+
 		/*
 		 * Trap WHERE 
 		 */
@@ -1718,7 +1718,7 @@ function rb_display_list() {
 				$filter = "";
 		}
 
-	
+
 	//Paginate
 	$items = mysql_num_rows(mysql_query("SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "")); // number of total rows in the database
 	if ($items > 0) {
@@ -1857,7 +1857,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "              <p id=\"filter-profiles\">\n";
 	echo "              <span>" . __("<label>First Name:</label>", rb_agency_TEXTDOMAIN) . "<input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" /></span>\n";
 	echo "              <span>" . __("<label>Last Name:</label>", rb_agency_TEXTDOMAIN) . "<input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" /></span>\n";
-	
+
 	echo "              <span>" . __("<label>Category:</label>", rb_agency_TEXTDOMAIN) . "\n";
 	echo "              <select name=\"ProfileType\">\n";
 	echo "                <option value=\"\">" . __("Any Category", rb_agency_TEXTDOMAIN) . "</option>";

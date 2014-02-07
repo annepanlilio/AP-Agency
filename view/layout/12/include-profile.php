@@ -4,13 +4,13 @@ Profile View with Thumbnails and Primary Image with Print
 */
 
 echo "	<div id=\"rbprofile\">\n";
-echo " 		<div id=\"rblayout-one\" class=\"rblayout\">\n";
-echo "			<div class=\"col_12 column\">\n";
+echo " 		<div id=\"rblayout-eleven\" class=\"rblayout\">\n";
+echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<header class=\"entry-header\">";
 echo "					<h1 class=\"entry-title\">". $ProfileContactDisplay ."</h1>";
 echo "				</header>";
-echo "			</div>\n"; // .col_12
-echo "			<div class=\"col_4 column\">\n";
+echo "			</div>\n"; // .rbcol-12
+echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
@@ -20,9 +20,9 @@ echo "				<div id=\"profile-picture\">\n";
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 echo "				</div>\n"; // #profile-picture
-echo "			</div>\n"; // .col_4
+echo "			</div>\n"; // .rbcol-4
 
-echo "			<div class=\"col_5 column\">\n";
+echo "			<div class=\"rbcol-5 rbcolumn\">\n";
 echo "	  			<div id=\"profile-info\">\n";
 echo "	  				<div id=\"stats\">\n";
 echo "	  					<ul>\n";
@@ -59,9 +59,9 @@ echo "					<div id=\"experience\">\n";
 echo						$ProfileExperience;
 echo "					</div>\n"; // #experience
 echo "	  			</div>\n"; // #profile-info
-echo "	  		</div>\n";  // .col_5
+echo "	  		</div>\n";  // .rbcol-5
 
-echo "			<div class=\"col_3 column\">\n";
+echo "			<div class=\"rbcol-3 rbcolumn\">\n";
 echo "	  			<div id=\"links\">\n";
 echo "					<ul>\n";
 						
@@ -147,9 +147,9 @@ echo "					<ul>\n";
 							
 echo "					</ul>\n";
 echo "	  			</div>\n";  // #links
-echo "	  		</div>\n";  // .col_8
+echo "	  		</div>\n";  // .rbcol-8
 
-echo "			<div class=\"col_12 column\" style='clear:both;'>\n";
+echo "			<div class=\"rbcol-12 rbcolumn\" style='clear:both;'>\n";
 
 $profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 $urlexploade = explode("/", $profileURLString);
@@ -284,21 +284,21 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 					<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 					<!-- display options-->
 
-					<div id="polaroids" class="col_8 column">
+					<div id="polaroids" class="rbcol-8 rbcolumn">
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
 							<div class="polaroid">
 								<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-four-per-page.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="12" name="print_option" /><h3>One Polaroid Per Page</h3>
 							<div class="polaroid">
 								<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-one-per-page.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
 					</div><!-- polariod -->
 
@@ -334,35 +334,35 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 					<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 					<!-- display options-->
 
-					<div id="polaroids" class="col_8 column">
-						<div class="col_6 column">
+					<div id="polaroids" class="rbcol-8 rbcolumn">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1" name="print_option" checked="checked" /><h3>Print Large Photos</h3>
 							<div class="polaroid">
 								<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3" name="print_option" /><h3>Print Medium Size Photos</h3>
 							<div class="polaroid">
 								<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1-1" name="print_option" /><h3>Print Large Photos Without Model Info</h3>
 							<div class="polaroid">
 								<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3-1" name="print_option" /><h3>Print Medium Size Photos Without Model Info</h3>
 							<div class="polaroid">
 								<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
 						<?php
 							if(isset($_POST['pdf_image_id'])) {
@@ -399,7 +399,7 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 			}
 
 
-echo "			</div>\n"; // .col_12
+echo "			</div>\n"; // .rbcol-12
 
 echo "	  		<div class=\"rbclear\"></div>\n"; // Clear All
 echo " 		</div>\n";  // Close Profile Layout

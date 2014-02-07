@@ -26,7 +26,7 @@ rb_load_profile_pdf($row,$logo);
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-nine\" class=\"rblayout\">\n";
 
-echo "  		<div class=\"col_12 column\">\n";
+echo "  		<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
 echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 							// Image Slider
@@ -51,7 +51,7 @@ echo "	  				<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 							// Social Link
 							rb_agency_getSocialLinks();
  
-echo "	  				<div id=\"stats\" class=\"col_12 column\">\n";
+echo "	  				<div id=\"stats\" class=\"rbcol-12 rbcolumn\">\n";
 echo "	  					<ul>\n";
 
 								if (!empty($ProfileGender)) {

@@ -19,7 +19,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 echo "	<div id=\"rbprofile\">\n";
 echo "		<div id=\"rblayout-zero\" class=\"rblayout\">\n";
 
-echo "			<div class=\"col_6 column\">\n";
+echo "			<div class=\"rbcol-6 rbcolumn\">\n";
 echo "				<div id=\"photos\">\n";
 
 						// images
@@ -41,9 +41,9 @@ echo "				<div id=\"photos\">\n";
 
 echo "					<div class=\"rbclear\"></div>\n";
 echo "				</div>\n"; // close #photos
-echo "			</div>\n"; // close .col_6
+echo "			</div>\n"; // close .rbcol-6
 
-echo "			<div class=\"col_3 column\">\n";
+echo "			<div class=\"rbcol-3 rbcolumn\">\n";
 echo "				<div id=\"stats\">\n";
 echo "					<h2>". $ProfileContactDisplay ."</h2>\n";
 echo "					<ul>\n";
@@ -79,9 +79,9 @@ echo "					<ul>\n";
 							}
 echo "	  				</ul>\n"; // Close ul
 echo "	  			</div>\n"; // Close Stats
-echo "	  		</div>\n"; // Close .col_3
+echo "	  		</div>\n"; // Close .rbcol-3
 
-echo "			<div class=\"col_3 column\">\n";
+echo "			<div class=\"rbcol-3 rbcolumn\">\n";
 echo "				<div id=\"links\">\n";
 
 					/*
@@ -92,13 +92,13 @@ echo "				<div id=\"links\">\n";
 
 
 echo "				</div>\n";  // Close Links
-echo "			</div>\n";  // Close .col_3
+echo "			</div>\n";  // Close .rbcol-3
 
-echo "	  		<div class=\"col_12 column\">\n";
+echo "	  		<div class=\"rbcol-12 rbcolumn\">\n";
 echo "	  			<div id=\"experience\">\n";
 echo					$ProfileExperience;
 echo "	  			</div>\n"; // Close Experience
-echo "	  		</div>\n"; // Close .col_12
+echo "	  		</div>\n"; // Close .rbcol-12
 
 echo "		  	<div class=\"rbclear\"></div>\n"; // Clear All
 echo "  	</div>\n";  // Close Profile Zero

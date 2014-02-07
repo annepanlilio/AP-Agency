@@ -19,7 +19,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-two\" class=\"rblayout\">\n";
 
-echo "  		<div class=\"col_7 column\">\n";
+echo "  		<div class=\"rbcol-7 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
 echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 							// Image Slider
@@ -42,7 +42,7 @@ echo "				<div id=\"info-links\">\n";
 echo "	  				<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 
  
-echo "	  				<div class=\"col_6 column\">\n";
+echo "	  				<div class=\"rbcol-6 rbcolumn\">\n";
 echo "	  					<div id=\"stats\">\n";
 	echo "	  					<ul>\n";
 
@@ -59,9 +59,9 @@ echo "	  					<div id=\"stats\">\n";
 									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);    
 echo "	  						</ul>\n";
 echo "	  					</div>\n"; // #stats
-echo "	  				</div>\n"; // .col_6
+echo "	  				</div>\n"; // .rbcol-6
 
-echo "					<div class=\"col_6 column\">\n";
+echo "					<div class=\"rbcol-6 rbcolumn\">\n";
 echo "						<div id=\"links\">\n";
 echo "							<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
 
@@ -74,19 +74,19 @@ echo "							<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
 
 
 echo "						</div>\n";// #links
-echo "					</div>\n";// .col_6 ?>
+echo "					</div>\n";// .rbcol-6 ?>
 
 
 <?php
 //Experience
-echo "		  			<div id=\"experience\" class=\"col_12 column\">\n";
+echo "		  			<div id=\"experience\" class=\"rbcol-12 rbcolumn\">\n";
 echo						$ProfileExperience;
 echo "		  			</div>\n";
 echo "					<div class=\"rbclear\"></div>\n"; // Clear All					
 echo "				</div> <!-- #info -->\n";//End Info
 echo "			</div> <!-- #profile-l -->\n";
 
-echo "  		<div class=\"col_5 column\">\n";
+echo "  		<div class=\"rbcol-5 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 
 						// images
@@ -98,7 +98,7 @@ echo "				<div id=\"profile-picture\">\n";
 						}
 
 echo "				</div> <!-- #profile-picture -->\n";
-echo "			</div>\n"; // .col_5
+echo "			</div>\n"; // .rbcol-5
 echo " 		</div>\n";  // Close Profile Layout
 echo "	</div>\n";  // Close Profile
 echo "	<div class=\"cb;\"></div>\n"; // Clear All

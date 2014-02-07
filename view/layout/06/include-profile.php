@@ -53,7 +53,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 <div id="rbprofile" class="model-portfolio">
 
 	<div id="rblayout-six" class="rblayout">
-		<div class="col_12 column">
+		<div class="rbcol-12 rbcolumn">
 			<header class="entry-header">				
 				<div id="profile-filter">
 					<div class="filters">
@@ -84,7 +84,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 		<?php
 		$experience = getExperience($ProfileID);
 		if(!empty($experience)) : ?>
-			<div class="col_12 column">
+			<div class="rbcol-12 rbcolumn">
 				<pre id="description">
 					<?php echo getExperience($ProfileID); ?>
 				</pre>
@@ -93,8 +93,8 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 
 		<div class="rbclear"></div>
 
-		<div class="col_12 column">
-			<div id="profile-info" class="col_4 column">
+		<div class="rbcol-12 rbcolumn">
+			<div id="profile-info" class="rbcol-4 rbcolumn">
 
 				<div class="panel">
 
@@ -260,7 +260,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 						</ul>
 					</div>
 				</div> <!-- #profile-info -->
-			</div><!-- .col_4 -->
+			</div><!-- .rbcol-4 -->
 
 			<?php  //to load profile page sub pages or just load the main profile page
 			if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
@@ -402,21 +402,21 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 					<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 					<!-- display options-->
 
-					<div id="polaroids" class="col_8 column">
+					<div id="polaroids" class="rbcol-8 rbcolumn">
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-four-per-page.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="12" name="print_option" /><h3>One Polaroid Per Page</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-one-per-page.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
 					</div><!-- polariod -->
 
@@ -452,35 +452,35 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 					<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 					<!-- display options-->
 
-					<div id="polaroids" class="col_8 column">
-						<div class="col_6 column">
+					<div id="polaroids" class="rbcol-8 rbcolumn">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1" name="print_option" checked="checked" /><h3>Print Large Photos</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3" name="print_option" /><h3>Print Medium Size Photos</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1-1" name="print_option" /><h3>Print Large Photos Without Model Info</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
-						<div class="col_6 column">
+						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3-1" name="print_option" /><h3>Print Medium Size Photos Without Model Info</h3>
 							<div class="polaroid">
 								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
-						</div><!-- .six .column -->
+						</div><!-- .six .rbcolumn -->
 
 						<?php
 							if(isset($_POST['pdf_image_id'])) {
@@ -503,7 +503,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 				
 			<?php } else { ?> 
 
-				<div id="profile-slide" class="col_8 column">
+				<div id="profile-slide" class="rbcol-8 rbcolumn">
 					<div id="layout6-slider" class="flexslider">
 						<ul class="slides">
 							<?php
@@ -516,7 +516,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							?>
 						</ul>
 					</div>
-					<div id="layout6-carousel" class="flexslider col_12 column">
+					<div id="layout6-carousel" class="flexslider rbcol-12 rbcolumn">
 						<ul class="slides">
 							<?php
 							$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
@@ -531,7 +531,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 				</div><!-- #portfolio-slide -->
 			
 			<?php }?>
-		</div><!-- .col_12 -->
+		</div><!-- .rbcol-12 -->
 		<div class="rbclear"></div>
 		
 	</div><!-- #rblayout-six -->

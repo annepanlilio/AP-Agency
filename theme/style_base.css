@@ -404,8 +404,6 @@ img.fillheight {
 #rbsignin-register .inline-block .field-row input[type="password"] { width: 100%; }
 #rbsignin-register .inline-block .field-row input[type="password"] { margin-bottom: 5px; }
 
-
-
 .rb_button {
 	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -436,3 +434,34 @@ img.fillheight {
 }
 
 .restricted h2{padding-left:17px;}
+
+/* RB Columns */
+.rbcol, .rbcol:before, .rbcol:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.rbcol { float: left; min-height: 1px; padding: 0 15px; position: relative; }
+.rbcol.centered { float: none; margin: 0 auto; }
+[class*="rbcol"] + [class*="rbcol"]:last-child { float: right; }
+[class*="rbcol"] + [class*="rbcol"].end { float: left; }
+.rbcol-1 { width: 8.33333%; }
+.rbcol-2 { width: 16.66667%; }
+.rbcol-3 { width: 25%; }
+.rbcol-4 { width: 33.33333%; }
+.rbcol-5 { width: 41.66667%; }
+.rbcol-6 { width: 50%; }
+.rbcol-7 { width: 58.33333%; }
+.rbcol-8 { width: 66.66667%; }
+.rbcol-9 { width: 75%; }
+.rbcol-10 { width: 83.33333%; }
+.rbcol-11 { width: 91.66667%; }
+.rbcol-12 { width: 100%; }
+
+/* Small Devices ------------ */
+@media only screen and (max-width: 768px) {
+ 
+  body { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; width: 100%; min-width: 0; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
+  /* The Grid --- */
+  .rbcol { width: auto !important; float: none; }
+  .rbcol:last-child { float: none; }
+  [class*="rbcol"] + [class*="rbcol"]:last-child { float: none; }
+  .rbcol:before, .rbcol:after { content: ""; display: table; }
+  .rbcol:after, { clear: both; }
+}

@@ -20,7 +20,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 <div id="rbprofile">
 	<div id="rblayout-seven" class="rblayout">
 		<div id="info-slide">
-			<div class="col_4 column">
+			<div class="rbcol-4 rbcolumn">
 				<div id="stats">
 					
 					<?php echo " <h1>". $ProfileContactDisplay ."</h1>\n"; ?>
@@ -55,7 +55,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 				</div><!-- .portfolio-info -->
 			</div><!-- .portfolio-info -->
 
-			<div class="col_8 column">
+			<div class="rbcol-8 rbcolumn">
 				<div id="profile-slider" class="flexslider">
 					<ul class="slides" id="img_slde">
 						<?php
@@ -103,7 +103,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 						?>
 					</ul>
 				</div>
-			 <div id="video_player" class="col_8 column" style="display:none; position:relative; ">	
+			 <div id="video_player" class="rbcol-8 rbcolumn" style="display:none; position:relative; ">	
 				<?php
 				//Video Slate
 				$count_video = 0;
@@ -266,7 +266,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 				</script>
 		</div><!-- #info-slide -->
 
-		<div class="col_12 column">
+		<div class="rbcol-12 rbcolumn">
 			<ul id="profile-links">
 
 				<?php if (is_user_logged_in()) { 	
@@ -321,7 +321,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 			</ul>
 		</div>		
 		
-		<div class="col_12 column targetpictures rbtab-content">
+		<div class="rbcol-12 rbcolumn targetpictures rbtab-content">
 			<div id="profile-carousel" class="flexslider">
 				<ul class="slides">
 					<?php
@@ -366,7 +366,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 			</div>
 		</div>
 				
-		<div id="videos-carousel" class="col_12 column rbtab-content targetvideo" style="display:none"  >
+		<div id="videos-carousel" class="rbcol-12 rbcolumn rbtab-content targetvideo" style="display:none"  >
 			<div class="flexslider">
 				<ul class="slides">
 					<?php
@@ -402,7 +402,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 				</ul>
 			</div>
 		</div>
-        <div class="col_12 column rbtab-content targetmedia" style="display:none"  >
+        <div class="rbcol-12 rbcolumn rbtab-content targetmedia" style="display:none"  >
 			<ul id="media-tab">
 				<?php
 				//Headshot
@@ -443,7 +443,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 		</div>
         
 
-		<div class="col_12 column  rbtab-content targetexperience" style="display:none">
+		<div class="rbcol-12 rbcolumn  rbtab-content targetexperience" style="display:none">
 			<div id="experience">
 				<?php
 				rb_agency_getSocialLinks();

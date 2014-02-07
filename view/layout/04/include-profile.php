@@ -20,13 +20,13 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-four\" class=\"rblayout\">\n";
 
-echo "			<div class=\"col_12 column\">";
+echo "			<div class=\"rbcol-12 rbcolumn\">";
 echo "				<header class=\"entry-header\">";
 echo "	  				<h1 class=\"entry-title\">". $ProfileContactDisplay ." <a href=\"/contact/\">Book Now!</a></h1>\n";
 echo "				</header>";
 echo "			</div>";
 
-echo "			<div class=\"col_4 column\">\n";
+echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-info\">\n";
 
 echo "	  			<h3>Statistics</h3>\n";
@@ -45,9 +45,9 @@ echo "	  					</ul>\n"; // Close ul
 echo "	    				<div id=\"book-now\"><a href=\"contact/\" title=\"Book Now!\" class=\"rb_button\">Book Now!</a></div>\n"; // Close Stats
 echo "	  				</div>\n"; // Close Stats	
 echo "				</div><!-- #profile-info -->\n";
-echo "			</div><!-- .col_4 -->\n";
+echo "			</div><!-- .rbcol-4 -->\n";
 
-echo "			<div class=\"col_8 column\">\n";	
+echo "			<div class=\"rbcol-8 rbcolumn\">\n";	
 echo "	  			<h3>". __("Call", rb_agency_TEXTDOMAIN). ": <span>". $ProfileContactPhoneWork ."</span></h3>\n";
 echo "	  			<div id=\"photos\">\n";
 	
@@ -63,7 +63,7 @@ echo "	  			<div id=\"photos\">\n";
 						  	}
 						}
 echo "	  			</div><!-- #photos -->\n";
-echo "			</div><!-- .col_8 -->\n";	
+echo "			</div><!-- .rbcol-8 -->\n";	
 
 echo "  		<div class=\"rbclear\"></div>\n"; // Clear All
 
