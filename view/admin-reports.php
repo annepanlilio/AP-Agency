@@ -1296,7 +1296,8 @@ elseif ($ConfigID == 14) {
 							ProfileContactEmail,
 							ProfileContactPhoneHome,
 							ProfileContactPhoneCell,
-							ProfileContactPhoneWork
+							ProfileContactPhoneWork,
+							ProfileContactWebsite
 						) VALUES (
 							'".$ProfileGallery."',
 							'".trim($ProfileContactDisplay)."',
@@ -1312,11 +1313,10 @@ elseif ($ConfigID == 14) {
 							'City',
 							'Zip',
 							'".$ProfileContact[0]."@modelingagencysoftware.com',
-							'1.415.871.0504',
-							'1.415.871.0504',
-							'1.415.871.0504'
-							
-							
+							'000-000-000',
+							'000-000-000',
+							'000-000-000',
+							'http://wwww.modelingagencysoftware.com'
 						);"; 
 				
 				$results = $wpdb->query($insert) or die(mysql_error());
