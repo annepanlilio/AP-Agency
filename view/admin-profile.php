@@ -1867,9 +1867,11 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "              <select name=\"ProfileVisible\">\n";
 	echo "                <option value=\"\">" . __("Any Status", rb_agency_TEXTDOMAIN) . "</option>";
 	echo "                <option value=\"1\"" . selected(1, $selectedVisible) . ">" . __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-	echo "                <option value=\"4\"" . selected(4, $selectedVisible) . ">" . __("Not Visible", rb_agency_TEXTDOMAIN) . "</option>\n";
+	echo "                <option value=\"4\"" . selected(4, $selectedVisible) . ">" . __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
 	echo "                <option value=\"0\"" . selected(0, $selectedVisible) . ">" . __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
 	echo "                <option value=\"2\"" . selected(2, $selectedVisible) . ">" . __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+	echo "                <option value=\"3\"" . selected(3, $selectedVisible) . ">" . __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
+	
 	echo "              </select></span>\n";
 	echo "              <span>" . __("Location", rb_agency_TEXTDOMAIN) . ": \n";
 	echo "              <select name=\"ProfileLocationCity\">\n";
