@@ -100,7 +100,11 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 						}
 					</script>
 					<?php 
-					$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Polaroid\" ORDER BY $orderBy";
+					# rb_agency_option_galleryorder
+					$rb_agency_options_arr = get_option('rb_agency_options');
+					$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
+					
 					$resultsImg = mysql_query($queryImg);
 					$countImg = mysql_num_rows($resultsImg);?>
 					<?php if($countImg>0){?>

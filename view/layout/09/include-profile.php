@@ -29,8 +29,11 @@ echo " 		<div id=\"rblayout-nine\" class=\"rblayout\">\n";
 echo "  		<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
 echo "					<div id=\"photo-scroller\" class=\"scroller\">";
-							// Image Slider
-							$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC";
+						// Image Slider
+						# rb_agency_option_galleryorder
+						$rb_agency_options_arr = get_option('rb_agency_options');
+						$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 							$resultsImg = mysql_query($queryImg);
 							$countImg = mysql_num_rows($resultsImg);
 							while ($dataImg = mysql_fetch_array($resultsImg)) {
