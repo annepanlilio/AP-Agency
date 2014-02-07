@@ -151,3 +151,8 @@ input.stubby { width: 80px; }
 .postbox .rbform-table td input[type=""] { width: 30%; }
 #dashboard_public_information td label.dropdown { display: none; }
 #dashboard_upload_images td input[type="file"] { width: 100%; }
+#dashboard_media .media-files .media-file { display: inline-block; height: 17px; padding: 3px 3px 3px 7px; margin: 0px 3px 5px 3px; background: #eee; border: 1px solid #ddd; }
+#dashboard_media .media-files .media-file:hover { background: #ddd; }
+#dashboard_media .media-files .media-file span { font-weight: bold; }
+#dashboard_media .media-files .media-file a.delete-file { display: inline-block; text-indent: -50px; width: 19px; height: 17px; background-image: url(delete-file.jpg); background-repeat: no-repeat; vertical-align: top; margin-left: 5px; overflow: hidden; }
+#dashboard_media .media-files .media-file a.delete-file:hover { background-position: 0px -17px; }

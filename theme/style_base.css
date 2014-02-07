@@ -436,11 +436,11 @@ img.fillheight {
 .restricted h2{padding-left:17px;}
 
 /* RB Columns */
-.rbcol, .rbcol:before, .rbcol:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-.rbcol { float: left; min-height: 1px; padding: 0 15px; position: relative; }
-.rbcol.centered { float: none; margin: 0 auto; }
-[class*="rbcol"] + [class*="rbcol"]:last-child { float: right; }
-[class*="rbcol"] + [class*="rbcol"].end { float: left; }
+.rbcolumn, .rbcol:before, .rbcol:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.rbcolumn { float: left; min-height: 1px; padding: 0 15px; position: relative; }
+.rbcolumn.centered { float: none; margin: 0 auto; }
+[class*="rbcolumn"] + [class*="rbcolumn"]:last-child { float: right; }
+[class*="rbcolumn"] + [class*="rbcolumn"].end { float: left; }
 .rbcol-1 { width: 8.33333%; }
 .rbcol-2 { width: 16.66667%; }
 .rbcol-3 { width: 25%; }
