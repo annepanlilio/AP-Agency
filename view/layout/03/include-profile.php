@@ -21,58 +21,6 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 jQuery(document).ready(function(){
 
-	jQuery(".save_fav").click(function(){
-		ajax_submit(jQuery(this),"favorite");
-	});
-
-	jQuery(".save_cart").click(function(){
-		ajax_submit(jQuery(this),"casting");
-	});	
-
-    function ajax_submit(Obj,type){
-                
-		if(type == "favorite"){					
-			var action_function = "rb_agency_save_favorite";				
-		} else if(type == "casting"){				
-			var action_function = "rb_agency_save_castingcart";				
-		}
-		
-		jQuery.ajax({type: 'POST',url: '<?php echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
-
-		 	data: {action: action_function,  'talentID': Obj.attr("id")},
-		  	success: function(results) {  
-
-				if(results=='error'){ 
-					alert("Error in query. Try again"); 
-				} else if(results==-1){
-					alert("You're not signed in");
-				} else { 
-
-					if(type == "favorite"){
-			             
-						if(Obj.hasClass('fav_bg')){
-							Obj.removeClass('fav_bg');
-							Obj.attr('title','Add to Favorites'); 
-						} else {
-							Obj.addClass('fav_bg');
-							Obj.attr('title','Remove from Favorites'); 
-						}
-			  
-					} else if(type == "casting") {
-						 
-						if(Obj.hasClass('cart_bg')){
-							Obj.removeClass('cart_bg');
-							Obj.attr('title','Add to Casting Cart'); 
-						} else {
-						 	Obj.addClass('cart_bg');
-						 	Obj.attr('title','Remove from Casting Cart');
-						}							
-					}							
-				}
-			}
-	   }); // ajax submit
-	} // end function
-	
 	// tab functionality
 	jQuery(".maintab").click(function(){
 		   var idx = this.id;
@@ -131,28 +79,10 @@ echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
 						 *  This can update database for favorites and casting cart
 						 */
 						echo '<input type="hidden" id="aps12-id" value="'. $ProfileID .' - ' .rb_agency_get_current_userid().'">';
-						$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
-						                              ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
 						
-						$count_favorite = mysql_num_rows($query_favorite);
-						$datas_favorite = mysql_fetch_assoc($query_favorite);
-						
-						$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
-						                                 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-						
-						$count_castingcart = mysql_num_rows($query_castingcart);
-						
-						$cl1 = ""; $cl2=""; $tl1="Add to Favorites"; $tl2="Add to Casting Cart";
-									 
-						if($count_favorite>0){ $cl1 = "fav_bg"; $tl1="Remove from Favorites"; }
-						
-						if($count_castingcart>0){ $cl2 = "cart_bg"; $tl2="Remove from Casting Cart"; }
-						
-echo '					<div class="favorite-casting">';
-			 			if(is_permitted('favorite')){ echo '<div class="favorite"><a title="'.$tl1.'" href="javascript:;" id="'.$ProfileID.'" class="save_favorite"></a></div>';}
-			 			if(is_permitted('casting')){ echo '<div class="castingcart"><a title="'.$tl2.'" href="javascript:;" id="'.$ProfileID.'" class="save_castingcart"></a></div>';}
-echo'						</div>';
-
+						if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+							echo rb_agency_get_new_miscellaneousLinks($ProfileID);
+						} 
 echo '					<div id="resultsGoHereAddtoCart"></div>';
 echo "	  			</div> <!-- #profile-picture -->\n";
 
@@ -200,8 +130,9 @@ echo "	      				<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong>
 							// added this links to be positioned here in substitute
 							// for the favorited label
 echo '	      				<div id="profile-links">';
-								if(is_permitted('favorite')){ echo'<a href="'.get_bloginfo('wpurl').'/profile-favorite" class="rb_button">View Favorites</a>';}
-								if(is_permitted('favorite')){ echo'<a href="'.get_bloginfo('wpurl').'/profile-casting" class="rb_button">View Casting Cart</a>';} 	
+								if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+								echo rb_agency_get_new_miscellaneousLinks($ProfileID);
+							} 		
 echo '						</div>';
 
 echo "	  				</div> <!-- #profile-actions -->\n";

@@ -271,37 +271,11 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 		<div class="rbcol-12 rbcolumn">
 			<ul id="profile-links">
-
-				<?php if (is_user_logged_in()) { 	
-
-					$query_favorite = mysql_query("SELECT * FROM ".table_agency_savedfavorite." WHERE SavedFavoriteTalentID='".$ProfileID
-		                              ."'  AND SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-		
-					$count_favorite = mysql_num_rows($query_favorite);
-					$datas_favorite = mysql_fetch_assoc($query_favorite);
-					
-					$query_castingcart = mysql_query("SELECT * FROM ". table_agency_castingcart."  WHERE CastingCartTalentID='".$ProfileID
-													 ."'  AND CastingCartProfileID = '".rb_agency_get_current_userid()."'" ) or die("error");
-					
-					$count_castingcart = mysql_num_rows($query_castingcart);
-		
-					if($count_castingcart>0 && is_permitted('casting')){	 ?>
-
-						<li class="casting"><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
-						<?php }else{ ?>
-						<li><a  class="save_cart" id="mycart_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
-						<li id="mycart_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></li>
-						<?php } 
-						if($count_favorite>0 && is_permitted('favorite')){	 ?>
-						<li class="favorite"><a  href="<?php echo get_bloginfo('url')?>/profile-favorites/"><?php echo __("View Favorites", rb_agency_TEXTDOMAIN);?></a></li>
-						<?php }else{ ?>
-						<li><a  class="save_fav" id="myfav_add" href="javascript:;" id="mycart" title="<?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?>" ><?php echo __("Add to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
-						<li id="myfav_view" style="display:none" ><a  href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View to Favorites", rb_agency_TEXTDOMAIN);?></a></li>
-					<?php
-					} ?> 
-				
-				<?php
-				} ?>
+					<?php  
+					if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+							echo rb_agency_get_new_miscellaneousLinks($ProfileID);
+						} 
+					?>
 				
 					<li><a href="javascript:;" class="showSingle1" >Pictures</a></li>
 					<li><a href="javascript:;" class="showSingle2" >Experience</a></li>

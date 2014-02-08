@@ -293,14 +293,6 @@ error_reporting(0);
 				} elseif (get_query_var( 'type' ) == "print") {
 				// Print Mode: TODO REFACTOR
 					return dirname(__FILE__) . '/theme/view-print.php';
-
-				} elseif (get_query_var( 'type' ) == "favorite") {
-				// VIEW Favorites: TODO REFACTOR
-					return dirname(__FILE__) . '/view/profile-favorite.php';
-
-				} elseif (get_query_var( 'type' ) == "casting") {
-					return dirname(__FILE__) . '/view/profile-viewcasting.php';
-
 				} elseif (get_query_var( 'type' ) == "version") {
 					return dirname(__FILE__) . '/version.php'; 
 				} elseif (get_query_var( 'type' ) == "getstate") {
@@ -981,7 +973,7 @@ error_reporting(0);
 							<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'
 						</div><!-- .rbprint-download -->';
 					}
-
+			if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
 					$links.='<div class="rbfavorites-castings">';
 
 					if(is_permitted("favorite") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites")) ){
@@ -998,8 +990,9 @@ error_reporting(0);
 								}
 						}
 					}
-					$links.='</div><!-- .rbfavorites-castings -->
-				</div><!-- .rblinks -->';			
+					$links.='</div><!-- .rbfavorites-castings -->';
+			}
+			$links.='</div><!-- .rbfavorites-castings -->';
 			//}
 			/*
 			 *  sorting options is activated if set on in admin/settings
