@@ -232,10 +232,10 @@ echo $rb_header = RBAgency_Common::rb_header();
 
 		echo "	<div class=\"cb\"></div>\n";
 		if(get_query_var('value') == 'email_sent'){
-		    echo '<p id="emailSent">Email Sent Succesfully!</p>';
+			echo '<p id="emailSent">Email Sent Succesfully!</p>';
 		} else {
 			if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
-			    echo '<p id="emailSent">Email was not sent.</p>';
+				echo '<p id="emailSent">Email was not sent.</p>';
 			}
 		}
 		echo "	<div class=\"cb\"></div>\n";
@@ -249,7 +249,7 @@ echo $rb_header = RBAgency_Common::rb_header();
 					  WHERE  FIND_IN_SET(dt.DataTypeID, profile.ProfileType) and profile.ProfileIsActive = 1 
 					  GROUP BY dt.DataTypeID ORDER BY dt.DataTypeTitle ASC";
 		$resultsList = mysql_query($queryList);
-		$countList = mysql_num_rows($resultsList);			
+		$countList = mysql_num_rows($resultsList);
 		while ($dataList = mysql_fetch_array($resultsList)) {
 			echo "<div class=\"profile-category\">\n";
 			if ($DataTypeID == $dataList["DataTypeID"]) {
@@ -263,8 +263,7 @@ echo $rb_header = RBAgency_Common::rb_header();
 			echo __("No Categories Found", rb_agency_TEXTDOMAIN);
 		}
 
-		
-		
+
 		/*
 		 * Email to admin
 		 */ 
@@ -276,10 +275,10 @@ echo $rb_header = RBAgency_Common::rb_header();
 									$('#emailbox').toggle('slow'); 
 									$("#sendemail").click(function(){
 										$('#emailbox').toggle('slow'); 
-									});			 
+									});
 								});
 								</script>
-		
+
 								<div id="emailbox" >
 									<form method="post" enctype="multipart/form-data" action="">
 										<input type="hidden" name="action" value="cartEmail" />	      
@@ -293,11 +292,11 @@ echo $rb_header = RBAgency_Common::rb_header();
 										<div class="field submit">
 											<input type="hidden" name="action" value="sendEmailCastingCart" />
 											<input type="submit" name="submit" value="Send Email" class="button-primary" /> 
-										</div>      
+										</div>
 									</form>
 								</div>
-		<?php 
-		
+		<?php
+
 		/*
 		 * Get Profile Results
 		 */ 

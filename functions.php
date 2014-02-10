@@ -871,7 +871,7 @@ error_reporting(0);
 		$GetProfileSaved			= $getprofile_saved;
 		$City						= $profilecity;
 		$State						= $profilestate;
-		$Zip						= $profilezip;  
+		$Zip						= $profilezip;
 
 		// Name
 		if(isset($_GET['filter'])){
@@ -955,45 +955,50 @@ error_reporting(0);
 			(is_user_logged_in() && current_user_can( 'manage_options' )) ||
 			//  Must be logged as "Client" to view model list and profile information
 			($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) )
-		{
+			{
 
-		$atts["type"]="casting";
-					$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
-				}
-				
+				$atts["type"]="casting";
+				$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
+			}
+
 				// print, downloads links to be added on top of profile list
 				$links='<div class="rblinks">';
 
-				/*
-				 * Set Print / PDF in Settings
-				 */
+					/*
+					 * Set Print / PDF in Settings
+					 */
 					if(get_query_var('target')!="results" && $rb_agency_option_profilelist_printpdf){// hide print and download PDF in Search result
 						$links.='
 						<div class="rbprint-download">
 							<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'
 						</div><!-- .rbprint-download -->';
 					}
-			if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
-					$links.='<div class="rbfavorites-castings">';
 
-					if(is_permitted("favorite") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites")) ){
-						if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
-								$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
+					/*
+					 * Favorite Settings
+					 */
+					if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+						$links.='<div class="rbfavorites-castings">';
+
+						if(is_permitted("favorite") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites")) ){
+							if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
+									$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
+							}
 						}
-					}
 
-					if(is_permitted("casting") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites"))){
-						if($_SERVER['REQUEST_URI']!="/profile-casting/"){
+						if(is_permitted("casting") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites"))){
+							if($_SERVER['REQUEST_URI']!="/profile-casting/"){
 								if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
 									if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
 									$links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
 								}
+							}
 						}
+						$links.='</div><!-- .rbfavorites-castings -->';
 					}
-					$links.='</div><!-- .rbfavorites-castings -->';
-			}
-			$links.='</div><!-- .rbfavorites-castings -->';
-			//}
+
+				$links.='</div><!-- .rbfavorites-castings -->';
+
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
@@ -1032,18 +1037,18 @@ error_reporting(0);
 				}
 				$links.='</div>';
 				$links.='</div>';
-				$links.='<p></p>';	
+				$links.='<p></p>';
 
-			}			
+			}
 
 			//remove  if its just for client view of listing via casting email
 			if(get_query_var('type')=="profilesecure"){ $links="";}
 
 			if(get_query_var('type')=="favorite"){ $links="";} // we dont need print and download pdf in favorites page
-			
+
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
-			
+
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
@@ -1057,7 +1062,7 @@ error_reporting(0);
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
 					$items = mysql_num_rows($qItem); // number of total rows in the database
-				  
+
 				if($items > 0) {
 					$p = new rb_agency_pagination;
 					$p->items($items);
@@ -1227,7 +1232,7 @@ error_reporting(0);
 				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">';
 
-				if ($p_image){ 
+				if ($p_image){
 					
 					#dont need other image for hover if its for print or pdf download view and dont use timthubm
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
@@ -1267,7 +1272,7 @@ error_reporting(0);
 			} // endwhile datalist
 
 			$displayHTML .= "  <div class=\"rbclear\"></div>\n";
-			$displayHTML .= "  </div><!-- #profile-list -->\n";		
+			$displayHTML .= "  </div><!-- #profile-list -->\n";
 		} // endif countlist
 
 		// There are no profiles returned.  Display empty message
@@ -1308,11 +1313,13 @@ error_reporting(0);
 							//document.getElementById(pid).style.display="none";
 							// document.getElementById(apid).style.backgroundPosition="0 -134px;";
 							}
-						function processResponseAddtoCart(data) {			
+						function processResponseAddtoCart(data) {
 						}
 					</script>';
 		} //end if(get_query_var
 	}
+
+
 
 	//get profile images
 	function getAllImages($profileID){
@@ -1320,10 +1327,12 @@ error_reporting(0);
 		$resultsImg = mysql_query($queryImg);
 		$countImg = mysql_num_rows($resultsImg);
 		while ($dataImg = mysql_fetch_array($resultsImg)) {//style=\"display:none\" 
-		 	$images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/ext/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+			$images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/ext/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 		}
 	return $images;
 	}
+
+
 
 	// Profile List
 	function rb_agency_profilefeatured($atts, $content = NULL) {
@@ -1428,9 +1437,9 @@ error_reporting(0);
 					echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout);
 				} else {
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
 					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-							echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					}
 				}
 		}
@@ -1810,7 +1819,7 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 			$result = mysql_query($get_types);
 			$types = "";
 			while ( $p = mysql_fetch_array($result)){
-					$types = $p['ProfileCustomTypes'];			    
+					$types = $p['ProfileCustomTypes'];
 			}
 			if($types != "" || $types != NULL){
 				if(strpos($types,",") > -1){
