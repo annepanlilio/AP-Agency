@@ -920,20 +920,20 @@ elseif ($ConfigID == 12) {
 // *************************************************************************************************** //
 // Manage Settings
 		echo '<br /><br /><br />';
-		echo "<form action=\"".rb_agency_BASEDIR."tasks/exportDatabase.php\" method=\"post\">";
+		echo "<form action=\"".rb_agency_BASEDIR."view/exportDatabase.php\" method=\"post\">";
 		echo '<input type="submit" class="button-primary" value='. __('"Export Database"', rb_agency_TEXTDOMAIN).'>';
 		echo '</form>';
 
 		/*echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
 		
-			echo "<a href=\"". rb_agency_BASEDIR ."tasks/exportDatabase.php\">Export Database</a>\n";
+			echo "<a href=\"". rb_agency_BASEDIR ."view/exportDatabase.php\">Export Database</a>\n";
 		*/
 }
 elseif ($ConfigID == 81) 
 {
 	echo "<h2>". __(" Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
 	
-	echo " <form action=\"".rb_agency_BASEDIR."tasks/export-Profile-Database.php\" method=\"post\">";
+	echo " <form action=\"".rb_agency_BASEDIR."view/export-Profile-Database.php\" method=\"post\">";
 	echo "      <select name=\"file_type\">";
 	echo "          <option value=\"\">Select file format</option>";
 	echo "          <option value=\"xls\">XLS</option>";
@@ -1041,7 +1041,7 @@ elseif ($ConfigID == 80) {
 elseif ($ConfigID == 14) {
 
 		$trackDummies = array();
-		$sample_url = rb_agency_BASEPATH."tasks/samples"; // Samples' folder
+		$sample_url = rb_agency_BASEPATH."view/samples"; // Samples' folder
 
 	/*
 	 * Sample Data Values
