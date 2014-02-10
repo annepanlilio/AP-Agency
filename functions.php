@@ -1320,7 +1320,7 @@ error_reporting(0);
 		$resultsImg = mysql_query($queryImg);
 		$countImg = mysql_num_rows($resultsImg);
 		while ($dataImg = mysql_fetch_array($resultsImg)) {//style=\"display:none\" 
-		 	$images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/view/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+		 	$images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/ext/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 		}
 	return $images;
 	}
