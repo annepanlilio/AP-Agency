@@ -469,15 +469,39 @@ if (isset($_POST['action'])) {
 					$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=$ProfileID AND ProfileMediaID=$ProfileMediaPrimaryID");
 				}
 				// Update Image order 
+				$ProfileMediaOrder1 =  array();
+				$ProfileMediaOrder2 =  array();
 				foreach ($_POST as $key => $val) {
 					if (substr($key,0,18) == "ProfileMediaOrder_") {
-						$pieces = explode("_", $key);
-						if($pieces[1]>0 && $val!=""){
-								$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$pieces[1]");
+						 $pieces = explode("_", $key);
+						if($pieces[1]>0){
+							if($val!=""){
+								$ProfileMediaOrder1[$pieces[1]] = (int) $val ; 
+							}else{
+								$ProfileMediaOrder2[$pieces[1]] = (int) $val ; 
+							}
+								
 						}
 					}
 
 				}
+				
+				asort($ProfileMediaOrder1);
+				$imedia=1; 
+				if(is_array($ProfileMediaOrder1) && count($ProfileMediaOrder1)){
+					foreach($ProfileMediaOrder1 as $key => $val){
+						$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$imedia."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
+						 $imedia++; 
+					}
+				}
+				if(is_array($ProfileMediaOrder2) && count($ProfileMediaOrder2)){
+					foreach($ProfileMediaOrder2 as $key => $val){
+						 $results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$imedia."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
+						 $imedia++; 
+					}
+				}
+
+			
 				/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 
 				echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! <a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "\">" . __("Continue editing the record", rb_agency_TEXTDOMAIN) . "?</a></p></div>");
