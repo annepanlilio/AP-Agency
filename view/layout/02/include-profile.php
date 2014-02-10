@@ -55,7 +55,7 @@ echo "				</div><!-- #scroller -->\n";
 echo "				<div class=\"rbclear\"></div>\n";
 
 echo "				<div id=\"info-links\">\n";
-echo "	  				<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
+echo "	  				<div id=\"name\" class=\"rbcol-12 rbcolumn\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 
  
 echo "	  				<div class=\"rbcol-6 rbcolumn\">\n";

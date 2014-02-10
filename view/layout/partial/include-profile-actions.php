@@ -22,7 +22,7 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-									echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Print Resume</a></li>\n";
+									echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume</a></li>\n";
 								}
 							}						
 							// Comp Card
@@ -30,7 +30,7 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-									echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Comp Card</a></li>\n";
+									echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Comp Card</a></li>\n";
 								}
 							}
 							// Headshots
@@ -38,7 +38,7 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-									echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Headshot</a></li>\n";
+									echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Headshot</a></li>\n";
 								}
 							}
 							//Voice Demo
@@ -46,7 +46,7 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-									echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Listen to Voice Demo</a></li>\n";
+									echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Listen to Voice Demo</a></li>\n";
 								}
 							}
 							//Video Slate
@@ -55,7 +55,7 @@ echo "					<ul>\n";
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
 									$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-									echo "<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"rb_button\">Watch Video Slate</a></li>\n";
+									echo "<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Video Slate</a></li>\n";
 								}
 							}
 							//Video Monologue
@@ -63,7 +63,7 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-									echo "<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"rb_button\">Watch Video Monologue</a></li>\n";
+									echo "<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Video Monologue</a></li>\n";
 								}
 							}
 							//Demo Reel
@@ -71,7 +71,7 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-									echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\" class=\"rb_button\">Watch Demo Reel</a></li>\n";
+									echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\"></a><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Demo Reel</a></li>\n";
 								}
 							}
 
@@ -83,12 +83,12 @@ echo "					<ul>\n";
 							$countMedia = mysql_num_rows($resultsMedia);
 							if ($countMedia > 0) {
 								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
-									echo "<li class=\"item video demoreel\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".$dataMedia['ProfileMediaType']. "</a></li>\n";
+									echo "<li class=\"item video demoreel\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">".$dataMedia['ProfileMediaType']. "</a></li>\n";
 								}
 							}
 							//Contact Profile
 							if($rb_agency_option_showcontactpage==1){
-								echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\" class=\"rb_button\">Click Here</a></div>\n";
+								echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
 							}
 echo "					</ul>\n";
 

@@ -348,22 +348,17 @@ img.fillheight {
 #profile-sidebar ul { margin: 0; padding: 0; }
 #profile-sidebar ul li { list-style: none; }
 
-/* Profile Layouts */
-#rbprofile #info-links h2 { padding: 15px 0px; margin: 15px 0px 0px 0px; }
+/* Profile View */
+#rbprofile #info-links h2 { padding: 15px 0px; margin: 15px 0px 0px 0px; font-size: initial; }
 #rbprofile #stats ul,
 #rbprofile #links ul { list-style: none; margin: 0px; padding: 0px; font-size: 13px; }
-#rbprofile #stats ul li { margin: 0px 0px 5px 0px; }
-#rbprofile #links ul li { margin: 0px 0px 10px 0px; }
+#rbprofile #stats ul li { margin: 0px; }
+#rbprofile #links ul li { padding: 7px; border-bottom: 1px solid #ddd; }
 #rbprofile #links ul li a { text-decoration: none; font-size: 13px; }
-#rbprofile #profile-picture { background: #e9e9e9; padding: 15px; }
-#rbprofile #profile-picture img { max-width: 100%; }
-
-
-
-
-
-
-
+#rbprofile #profile-picture { background: #e9e9e9; padding: 7px; float: left; }
+#rbprofile #profile-picture img { max-width: 100%; float: left; }
+.rbcolumn .addthis_toolbox { margin-bottom: 15px; padding: 7px; background: #ddd; }
+.rblayout #photos .photo { vertical-align: top; }
 
 #video_player {height:500px; width:66%;}
 #video_player .vids{height:500px; width:100%; display:none; position:absolute; z-index:0; top:0px; left:0px;}
@@ -459,7 +454,7 @@ img.fillheight {
  
   body { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; width: 100%; min-width: 0; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
   /* The Grid --- */
-  .rbcolumn { width: auto !important; float: none; }
+  .rbcolumn { width: auto !important; float: none; margin-bottom: 30px; }
   .rbcolumn:last-child { float: none; }
   [class*="rbcolumn"] + [class*="rbcolumn"]:last-child { float: none; }
   .rbcolumn:before, .rbcolumn:after { content: ""; display: table; }

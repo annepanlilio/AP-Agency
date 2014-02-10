@@ -2,7 +2,6 @@
 #rblayout-zero #photos { font-size: 0px; }
 #rblayout-zero #photos .photo { max-width: 29.22222222222222%; padding: 1%; margin: 0 1% 1% 1%; background: #ddd; }
 #rblayout-zero #photos .photo img { max-width: 100%; float: left; }
-#rblayout-zero #stats { border: 1px solid #ccc; padding: 15px; }
 #rblayout-zero #stats h2 { margin-bottom: 15px; }
 #rblayout-zero #movie { float: right; }
 #rblayout-zero .experience { float: left; clear: both; margin: 20px 0 0 0; line-height: 18px; font-size: 13px; text-indent: 30px; }
