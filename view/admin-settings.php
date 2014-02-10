@@ -131,7 +131,7 @@ if ($ConfigID == 0) {
 	echo "    </div>\n";
 	echo "    <div class=\"boxlink\">\n";
 	echo "      <h3>". __("Style", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=10\" title=\"". __("Style", rb_agency_TEXTDOMAIN) . "\">". __("Style", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\" title=\"". __("Style", rb_agency_TEXTDOMAIN) . "\">". __("Style", rb_agency_TEXTDOMAIN) . "</a><br />\n";
 	echo "      <p>". __("Manage the stylesheet (CSS) controlling the category and profile layouts", rb_agency_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "</div>\n";
