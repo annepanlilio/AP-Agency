@@ -1,5 +1,5 @@
 /* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
-#rblayout-one { overflow: hidden; }
+
 #rblayout-one #profile-picture,
 #rblayout-one #links,
 #rblayout-one #stats { margin: 0px 0px 30px 0px; }

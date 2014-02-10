@@ -1,5 +1,5 @@
 /* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
-#rblayout-four { overflow: hidden; }
+
 #rblayout-four #name { margin-bottom: 15px; }
 #rblayout-four h3 { margin: -15px -15px 15px -15px; background: #ccc; font-weight: normal; padding: 15px; }
 #rblayout-four #profile-info h3 {  }
