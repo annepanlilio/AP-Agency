@@ -286,10 +286,6 @@ error_reporting(0);
 				// Profile Contact Form
 					return dirname(__FILE__) . '/view/profile-contact.php';
 
-				} elseif (get_query_var( 'type' ) == "dashboard") {
-				// Dashboard TODO: REMOVE
-					return dirname(__FILE__) . '/view/view-dashboard.php';
-
 				} elseif (get_query_var( 'type' ) == "print") {
 				// Print Mode: TODO REFACTOR
 					return dirname(__FILE__) . '/view/profile-print.php';
