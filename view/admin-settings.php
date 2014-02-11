@@ -973,7 +973,7 @@ elseif ($ConfigID == 2) {
 			echo "<div id=\"message\" class=\"updated\"><p>Style last updated on " . date ("F d Y H:i:s.", filemtime($rb_agency_stylesheet)) .".</p></div>";
 
 		} else { // File Does Not Exist
-			$rb_agency_stylesheet = rb_agency_BASEREL ."theme/style_base.css";
+			$rb_agency_stylesheet = rb_agency_BASEREL ."style/style_base.css";
 			echo "<div id=\"message\" class=\"error\"><p>Stylesheet not setup, please click <strong>Save Changes</strong> below to initialize.</p></div>";
 		}
 
