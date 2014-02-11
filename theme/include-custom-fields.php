@@ -23,26 +23,26 @@ while ($data1 = mysql_fetch_array($results1)) {
 					#DEBUG
 					#echo "ShowGender";
 					if($data1["ProfileCustomShowAdmin"] == 1 && current_user_can("level_10") ){ 
-						include("view-custom-fields.php");
+						include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-1";
 					}
 					// Show custom fields for logged in users - below admin level.
 					else {
-						include("view-custom-fields.php");
+						include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-2";
 					}
 				} else { // not in search page
 					// Show custom fields for admins only.
 					if($data1["ProfileCustomShowAdmin"] == 1 && is_user_logged_in()  && current_user_can("level_10") ){ 
-						include("view-custom-fields.php");
+						include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-3";
 					}
 					// Show custom fields for logged in users - below admin level.
 					elseif(is_user_logged_in() ){
-						include("view-custom-fields.php");
+						include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-4";
 					}						
@@ -56,26 +56,26 @@ while ($data1 = mysql_fetch_array($results1)) {
 					#DEBUG
 					#echo "ShowGender";
 					if($data1["ProfileCustomShowAdmin"] == 1 && current_user_can("level_10") ){ 
-						include("view-custom-fields.php");
+						include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-1";
 					}
 					// Show custom fields for logged in users - below admin level.
 					else{
-					 	include("view-custom-fields.php");
+					 	include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-2";
 					}
 				} else { // not in search page
 					// Show custom fields for admins only.
 					if($data1["ProfileCustomShowAdmin"] == 1 && is_user_logged_in()  && current_user_can("level_10") ){ 
-						include("view-custom-fields.php");
+						include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-3";
 					}
 					// Show custom fields for logged in users - below admin level.
 					elseif(is_user_logged_in() ){
-						include("view-custom-fields.php");
+						include("../view/view-custom-fields.php");
 						#DEBUG!
 						#echo "-4";
 					}						
@@ -87,7 +87,7 @@ while ($data1 = mysql_fetch_array($results1)) {
 			if($isSearchPage == 1 && $data1["ProfileCustomShowSearch"] == 1 && $data1["ProfileCustomShowLogged"] == 0){ // In Search  page
 			 	// Show custom fields to public
 			 	if($data1["ProfileCustomShowLogged"] == 0 && !is_user_logged_in()){
-				include("view-custom-fields.php");
+				include("../view/view-custom-fields.php");
 				#DEBUG!
 				//echo "-7";
 			}
@@ -95,7 +95,7 @@ while ($data1 = mysql_fetch_array($results1)) {
 			} elseif ($isSearchpage == 0 && $data1["ProfileCustomShowProfile"] == 1  && $data1["ProfileCustomShowLogged"] == 0){ //Profile Page
 			  	// Show custom fields to public
 			 	if(!is_user_logged_in()){
-					include("view-custom-fields.php");
+					include("../view/view-custom-fields.php");
 					#DEBUG!
 					//echo "-8";
 				}
