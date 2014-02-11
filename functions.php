@@ -284,19 +284,19 @@ error_reporting(0);
 
 				} elseif (get_query_var( 'type' ) == "profilecontact") {
 				// Profile Contact Form
-					return dirname(__FILE__) . '/theme/view-profile-contact.php';
+					return dirname(__FILE__) . '/view/view-profile-contact.php';
 
 				} elseif (get_query_var( 'type' ) == "dashboard") {
 				// Dashboard TODO: REMOVE
-					return dirname(__FILE__) . '/theme/view-dashboard.php';
+					return dirname(__FILE__) . '/view/view-dashboard.php';
 
 				} elseif (get_query_var( 'type' ) == "print") {
 				// Print Mode: TODO REFACTOR
-					return dirname(__FILE__) . '/theme/view-print.php';
+					return dirname(__FILE__) . '/view/view-print.php';
 				} elseif (get_query_var( 'type' ) == "version") {
 					return dirname(__FILE__) . '/version.php'; 
 				} elseif (get_query_var( 'type' ) == "getstate") {
-					return rb_agency_BASEREL . 'view/partial/get-state.php'; 
+					return rb_agency_BASEREL . '/view/partial/get-state.php'; 
 				}
 			}
 			return $template;
