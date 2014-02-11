@@ -1,6 +1,6 @@
 <?php
 
-class RBAgency_imageRotate{
+class RBAgency_ProfileImage{
 
 	
 	// File and rotation
