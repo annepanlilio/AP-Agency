@@ -1255,8 +1255,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<h3 class="hndle"><span>Gallery</span></h3>
 						<div class="inside">
 							<div class="main">
-							<?php 
-
+							<?php
 							if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record
 								//echo "      <h3>" . __("Gallery", rb_agency_TEXTDOMAIN) . "</h3>\n";
 
@@ -1336,30 +1335,28 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$countImg = mysql_num_rows($resultsImg);
 								while ($dataImg = mysql_fetch_array($resultsImg)) {
 									if ($dataImg['ProfileMediaPrimary']) {
-										$styleBackground = "#900000";
+										$toggleClass = " primary";
 										$isChecked = " checked";
 										$isCheckedText = " Primary";
 										if ($countImg == 1) {
-											$toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\"><span>Delete</span> &raquo;</a></div>\n";
+											$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
 										} else {
 											$toDelete = "";
 											$massDelete = "";
 										}
 									} else {
-										$styleBackground = "#fff";
+										$toggleClass = "";
 										$isChecked = "";
 										$isCheckedText = " Set Primary";
-										$toDelete = "  <div class=\"delete\"><a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\"><span>Delete</span> &raquo;</a></div>\n";
+										$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
 										$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
 									}
-									echo "<div class=\"profileimage\" style=\"height: auto !important; background: " . $styleBackground . "; \">\n" . $toDelete . "";
-									echo "  <img src=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "\" style=\"width: 100px; z-index: 1; \" />\n"; 
-									echo "  <div class=\"primary\" style=\"background: " . $styleBackground . "; \">";
-
-									echo "    <input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "";
-									echo "    <div>$massDelete</div>";
-									echo "    Order: <input type=\"text\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" />";
-									echo "  </div>\n";
+									echo "<div class=\"gallery-item".$toggleClass."\">\n";
+									echo $toDelete;									
+									echo "  <div class=\"photo\"><img src=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "\"/></div>\n";
+									echo "    <div class=\"item-order\">Order: <input type=\"text\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
+									echo "  <div class=\"make-primary\"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "</div>";																		
+									echo "    <div>".$massDelete."</div>";
 									echo "  </div>\n";
 
 								}
