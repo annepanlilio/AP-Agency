@@ -1,8 +1,8 @@
 /* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
 
-#rblayout-two.mCSB_container a img { max-height: 150px; float: left; margin: 0px 3px; }
-#rblayout-two.mCSB_container a:first-child img { margin-left: 0px }
-#rblayout-two.mCSB_container a:last-child img { margin-right: 0px; }
+#rblayout-two .mCSB_container a img { max-height: 150px; float: left; margin: 0px 3px; }
+#rblayout-two .mCSB_container a:first-child img { margin-left: 0px }
+#rblayout-two .mCSB_container a:last-child img { margin-right: 0px; }
 @media only screen and (min-width: 767px) {
   #rblayout-two .rbcol-5 { float: right; }
   #rblayout-two #info-links { margin: 0px -15px; }
