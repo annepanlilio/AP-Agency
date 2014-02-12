@@ -272,7 +272,7 @@ error_reporting(0);
 
 				} elseif (get_query_var( 'type' ) == "profilecastingcart") {
 				// Casting cart
-					return rb_agency_BASEREL . 'view/profile-castingcart.php';
+					return rb_agency_BASEREL . 'view/profile-admincart.php';
 
 				} elseif (get_query_var( 'type' ) == "category") {
 				// Category View
