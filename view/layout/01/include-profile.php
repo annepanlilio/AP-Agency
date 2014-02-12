@@ -20,6 +20,9 @@ $profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 $urlexploade = explode("/", $profileURLString);
 $subview=$urlexploade[1];
 
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
 if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
 				<div class="allimages_div">
@@ -60,10 +63,11 @@ if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
 					<form action="../print-images/" method="post" id="allimageform" onsubmit="return validateAllImageForm()">
 						<input type="hidden" id="selected_image" name="selected_image" />
 						<?php  
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
+						
+						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
 							echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
 							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/view/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
 						}
@@ -100,19 +104,17 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 						}
 					</script>
 					<?php 
-					# rb_agency_option_galleryorder
-					$rb_agency_options_arr = get_option('rb_agency_options');
-					$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
-					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 					
-					$resultsImg = mysql_query($queryImg);
-					$countImg = mysql_num_rows($resultsImg);?>
-					<?php if($countImg>0){?>
+					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
+					$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+					$countImg  = $wpdb->num_rows;
+						
+					 if($countImg>0){?>
 					<span class="allimages_text"><br /></span><br />
 					<form action="../print-polaroids/" method="post" id="allimageform">
 						<input type="hidden" id="selected_image" name="selected_image" />
 						<?php  
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
+						foreach($resultsImg as $dataImg ){
 							echo '<a href="'. rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
 							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/view/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 						}
@@ -125,10 +127,10 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 
 			<?php } else if ($subview=="print-polaroids"){  //show print options
 
-				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Polaroid\" ORDER BY $orderBy";
-				$resultsImg = mysql_query($queryImg);
-				$countImg = mysql_num_rows($resultsImg);
-				while ($dataImg = mysql_fetch_array($resultsImg)){
+				$queryImg = rb_agency_option_galleryorder_query($orderBy ,$ProfileID,"Polaroid");
+				$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$countImg  = $wpdb->num_rows;
+				foreach($resultsImg as $dataImg ){
 					if($_POST[$dataImg['ProfileMediaID']]==1){
 						$selected.="<input type='hidden' value='1' name='".$dataImg['ProfileMediaID']."'>";
 						$withSelected=1;
@@ -175,15 +177,15 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 
 
 			<?php } else if($subview=="print-images") {  //show print options
-				 $queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
-				$resultsImg = mysql_query($queryImg);
-				$countImg = mysql_num_rows($resultsImg);
-				while ($dataImg = mysql_fetch_array($resultsImg)){
-				if($_POST[$dataImg['ProfileMediaID']]==1){
-				$selected.="<input type='hidden' value='1' name='".$dataImg['ProfileMediaID']."'>";
-				$withSelected=1;
-				}
-				$lasID=$dataImg['ProfileMediaID']; //make sure it will display picture even nothing weere selected
+				 $queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+				$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$countImg  = $wpdb->num_rows;
+				foreach($resultsImg as $dataImg ){
+					if($_POST[$dataImg['ProfileMediaID']]==1){
+					$selected.="<input type='hidden' value='1' name='".$dataImg['ProfileMediaID']."'>";
+					$withSelected=1;
+					}
+					$lasID=$dataImg['ProfileMediaID']; //make sure it will display picture even nothing weere selected
 				}
 				if($withSelected!=1){$selected="<input type='hidden' value='1' name='".$lasID."'>";}
 				?>
@@ -259,9 +261,9 @@ echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 echo "				</div>\n"; // #profile-picture
@@ -272,8 +274,7 @@ echo "				<div id=\"profile-info\">\n";
 echo "					<div id=\"stats\">\n";
 echo "						<ul>\n";
 								if (!empty($ProfileGender)) {
-									$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-									$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
 									echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 								}
 
@@ -325,9 +326,9 @@ echo "				<div id=\"photos\">\n";
 	
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 						echo "	<div class=\"rbclear\"></div>\n"; // Clear All

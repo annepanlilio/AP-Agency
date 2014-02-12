@@ -27,15 +27,17 @@ echo "				<div id=\"photos\">\n";
 						$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 											
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
+										
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
 							if ($countImg > 1) { 
 								echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
 							} else {
 								echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
 							}
 						}
+
 
 echo "					<div class=\"rbclear\"></div>\n";
 echo "				</div>\n"; // close #photos
@@ -47,8 +49,7 @@ echo "					<h2>". $ProfileContactDisplay ."</h2>\n";
 echo "					<ul>\n";
 
 							if (!empty($ProfileGender)) {
-								$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-								$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
 								echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 							}
 							if (!empty($ProfileStatHeight)) {

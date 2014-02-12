@@ -14,6 +14,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Layout 
  */
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-two\" class=\"rblayout\">\n";
@@ -23,9 +26,9 @@ echo "				<div id=\"profile-picture\">\n";
 
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 
@@ -36,13 +39,11 @@ echo "  		<div class=\"rbcol-7 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
 echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 							// Image Slider
-							# rb_agency_option_galleryorder
-							$rb_agency_options_arr = get_option('rb_agency_options');
-							$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+							
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-							$resultsImg = mysql_query($queryImg);
-							$countImg = mysql_num_rows($resultsImg);
-							while ($dataImg = mysql_fetch_array($resultsImg)) {
+							$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$countImg  = $wpdb->num_rows;
+							foreach($resultsImg as $dataImg ){
 								if ($countImg > 1) { 
 									echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a>\n";
 								} else {
@@ -63,11 +64,10 @@ echo "	  					<div id=\"stats\">\n";
 	echo "	  					<ul>\n";
 
 									if (!empty($ProfileGender)) {
-										$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-										$count = mysql_num_rows($queryGenderResult);
+										$fetchGenderData=  $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A);
+										$count  = $wpdb->num_rows;
 										if($count > 0){
-											$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
-											echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+												echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 										}
 									}
 
