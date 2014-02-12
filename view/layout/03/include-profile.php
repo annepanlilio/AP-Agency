@@ -15,7 +15,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Layout 
  */
-
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 ?>
 <script type="text/javascript">
 
@@ -64,16 +66,14 @@ echo " 			<div id=\"profile-overview\">\n";
 echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
 
 						// Profile Image
-						# rb_agency_option_galleryorder
-						$rb_agency_options_arr = get_option('rb_agency_options');
-						$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
-							echo "<div id=\"profile-picture\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
+								echo "<div id=\"profile-picture\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a></div>\n";
 						}
-	
+
+							
 						/*  Use this instead of text;
 						 *  this will display heart and star for favorite and casting respectively.
 						 *  This can update database for favorites and casting cart
@@ -100,10 +100,11 @@ echo "								from <span class=\"city\"> ". $ProfileLocationCity ."</span>,<span
 								}
 echo "	      				</p>\n";
 echo "		  				<ul>\n";	
+
+
 								$queryType = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID IN ($ProfileType) ORDER BY DataTypeTitle";
-								$resultsType = mysql_query($queryType);
-								$countType = mysql_num_rows($resultsType);
-								while ($dataType = mysql_fetch_array($resultsType)) {
+								$resultsType=  $wpdb->get_results($wpdb->prepare($queryType ),ARRAY_A);
+								foreach($resultsType as $dataType ){
 									echo "<li>". $dataType["DataTypeTitle"] ."</li>";
 								}
 echo "		  				</ul>\n";
@@ -189,10 +190,10 @@ echo " 				<div id=\"tab-panels\">\n";
 echo " 					<div class=\"rbcol-12 rbcolumn row-photos tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								// images
-								$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
-								$resultsImg = mysql_query($queryImg);
-								$countImg = mysql_num_rows($resultsImg);
-								while ($dataImg = mysql_fetch_array($resultsImg)) {
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+								$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+								$countImg  = $wpdb->num_rows;
+								foreach($resultsImg as $dataImg ){
 								  	if ($countImg > 1) { 
 										echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\"></a></div>\n";
 								  	} else {
@@ -206,8 +207,7 @@ echo " 					<div class=\"rbcol-12 rbcolumn row-physical tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 echo "							<ul>";
 									if (!empty($ProfileGender)) {
-										$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-										$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+										$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
 										echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 									}
 
@@ -226,30 +226,34 @@ echo " 					</div>\n"; // twelve rbcolumn physical
 echo " 					<div class=\"rbcol-12 rbcolumn row-videos tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								//Video Slate
-								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
-								$countMedia = mysql_num_rows($resultsMedia);
+								$queryMedia = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Slate");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
+
 								if ($countMedia > 0) {
-								  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+								  		foreach($resultsMedia as $dataMedia ){
 										$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 										echo"<div class=\"video slate rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 								  	}
 								}
 
 								//Video Monologue
-								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
-								$countMedia = mysql_num_rows($resultsMedia);
+								$queryMedia = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Monologue");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
-								  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+								  	foreach($resultsMedia as $dataMedia ){
 										$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 										echo"<div class=\"video monologue rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 								  	}
 								}
 
 								//Demo Reel
-								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
-								$countMedia = mysql_num_rows($resultsMedia);
+								$queryMedia = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
-								  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+								  	foreach($resultsMedia as $dataMedia ){
 										$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 										echo"<div class=\"video demoreel rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"http://www.youtube.com/v/". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 								  	}
@@ -260,10 +264,9 @@ echo " 					</div>\n"; // twelve rbcolumn videos
 echo " 					<div class=\"rbcol-12 rbcolumn row-experience tab\">\n";
 echo " 						<div class=\"tab-panel\">\n";
 								$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
-								$results1 = mysql_query($query1);
-								$count1 = mysql_num_rows($results1);
-								while ($data1 = mysql_fetch_array($results1)) {
-
+								$results1=  $wpdb->get_results($wpdb->prepare($query1),ARRAY_A);
+								$count1  = $wpdb->num_rows;
+								foreach($results1 as $data1 ){
 									if ($data1['ProfileCustomTitle'] == "Experience"){
 										echo "    <div class=\"inner experience-". $data1['ProfileCustomTitle'] ." \">\n";
 										echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
@@ -290,10 +293,9 @@ echo "							<p>". __("The following files (pdf, audio file, etc.) are associate
 								$queryMedia = "SELECT * FROM ". table_agency_profile_media ." 
 								              WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType <> \"Image\"";
 								
-								$resultsMedia = mysql_query($queryMedia);
-								$countMedia = mysql_num_rows($resultsMedia);
-								
-								while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+								$countImg  = $wpdb->num_rows;
+								foreach($resultsMedia as $dataMedia ){
 										
 									if ($dataMedia['ProfileMediaType'] == "Demo Reel" || 
 									    $dataMedia['ProfileMediaType'] == "Video Monologue" || 

@@ -15,7 +15,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Layout 
  */
-
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 ?>
 <div id="rbprofile">
 	<div id="rblayout-seven" class="rblayout">
@@ -27,8 +29,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 					<ul>
 						<?php
 						if (!empty($ProfileGender)) {
-							$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-							$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+							$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
 	                        echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
 						}								
 						if (!empty($ProfileStatHeight)) {
@@ -64,15 +65,14 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 						$option_two_image = 1;
 						$ProfileMediaPrimary = ""; 
 						$ProfileMediaSecondry= "";
-						# rb_agency_option_galleryorder
-						$rb_agency_options_arr = get_option('rb_agency_options');
-						$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
-						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-									$resultsImg = mysql_query($queryImg);
-									$countImg = mysql_num_rows($resultsImg);
+					
+									$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+									$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+									$countImg  = $wpdb->num_rows;
+									
 									$open = 1;
 									$close = false;
-									while ($dataImg = mysql_fetch_array($resultsImg)) {
+									foreach($resultsImg as $dataImg ){
 									   // option for two images
 									   if($option_two_image){	
 											   if($open==1){
@@ -113,10 +113,12 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 				$profileVideoEmbed1 = "";
 				$profileVideoEmbed2 = "";
 				$profileVideoEmbed3 = "";
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
-				$countMedia = mysql_num_rows($resultsMedia);
+			
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Slate");
+				$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$countMedia  = $wpdb->num_rows;
 				if ($countMedia > 0) {
-				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+					foreach($resultsMedia as $dataMedia ){
 						$profileVideoEmbed1 = $dataMedia['ProfileMediaURL'];
 						$count_video++;
 						echo "<div class='act_vids'><div id='v_slate' style='width:100%; height:100%'></div></div>";
@@ -124,10 +126,11 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 				}
 
 				//Video Monologue
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
-				$countMedia = mysql_num_rows($resultsMedia);
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Monologue");
+				$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$countMedia  = $wpdb->num_rows;
 				if ($countMedia > 0) {
-				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+					foreach($resultsMedia as $dataMedia ){
 						$profileVideoEmbed2 = $dataMedia['ProfileMediaURL'];
 						$count_video++;
 	
@@ -135,10 +138,12 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 						}
 				}
 				//Demoreel
-				$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
-				$countMedia = mysql_num_rows($resultsMedia);
+				
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
+				$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$countMedia  = $wpdb->num_rows;
 				if ($countMedia > 0) {
-				  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+					foreach($resultsMedia as $dataMedia ){
 						$profileVideoEmbed3 = $dataMedia['ProfileMediaURL'];
 						$count_video++;
 							echo "<div class='vids' style='display:none;'><div id='d_reel' style='width:100%; height:100%'></div></div>";

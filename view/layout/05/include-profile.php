@@ -16,7 +16,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
  * Layout 
  */
 
-
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
 /*
 Custom Layout: Shake it like a polaroid picture
@@ -97,8 +99,7 @@ Custom Layout: Shake it like a polaroid picture
  // Social Link
 	 rb_agency_getSocialLinks();
  			if (!empty($ProfileGender)) {
-			$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-			$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+			$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
 			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
 		}
 	
@@ -148,13 +149,11 @@ Custom Layout: Shake it like a polaroid picture
 	echo "		  <div class=\"album\">\n";
 
 			// images
-			# rb_agency_option_galleryorder
-			$rb_agency_options_arr = get_option('rb_agency_options');
-			$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+		
 			$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-			$resultsImg = mysql_query($queryImg);
-			$countImg = mysql_num_rows($resultsImg);
-			while ($dataImg = mysql_fetch_array($resultsImg)) {
+			$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+			$countImg  = $wpdb->num_rows;
+			foreach($resultsImg as $dataImg ){
 	echo "		  	<div class=\"content\">\n";
 	echo "		  		<img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" />\n";
 	echo "		  		<span>". $ProfileContactDisplay ."</span>\n";
