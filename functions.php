@@ -76,6 +76,10 @@ error_reporting(0);
 					wp_register_style( 'isotope-css', plugins_url('rb-agency/view/layout/00/css/isotope.css'));
 					wp_enqueue_style( 'isotope-css' );
 				}
+				if($rb_agency_option_layoutprofile == 08 ) {
+					wp_register_style( 'booklet-css', plugins_url('rb-agency/view/layout/08/css/booklet.css'));
+					wp_enqueue_style( 'booklet-css' );
+				}
 			}	
 		}
 
@@ -96,7 +100,13 @@ error_reporting(0);
 				if($rb_agency_option_layoutprofile == 02 ) {
 					wp_enqueue_script( 'photo-scroller', plugins_url('view/layout/02/js/jquery.mCustomScrollbar.concat.min.js', __FILE__) );
 					wp_enqueue_script( 'init-scroller', plugins_url('view/layout/02/js/init-scroller.js', __FILE__) );
-				}				
+				}
+				if($rb_agency_option_layoutprofile == 08 ) {
+					wp_enqueue_script( 'photo-booklet-ui', plugins_url('view/layout/08/js/booklet-jquery-ui.min.js', __FILE__) );
+					wp_enqueue_script( 'photo-booklet-easing', plugins_url('view/layout/08/js/booklet-jquery.easing.1.3.js', __FILE__) );
+					wp_enqueue_script( 'photo-booklet', plugins_url('view/layout/08/js/booklet.min.js', __FILE__) );
+					wp_enqueue_script( 'init-booklet', plugins_url('view/layout/08/js/booklet.init.js', __FILE__) );
+				}
 			}	
 		}
 
