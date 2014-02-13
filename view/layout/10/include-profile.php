@@ -2,6 +2,11 @@
 /*
 Profile View with Thumbnails, Primary Image, & Video Embed
 */
+
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-ten\" class=\"rblayout\">\n";
 echo "			<header class=\"entry-header\">";
@@ -10,14 +15,12 @@ echo "			</header>";
 echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 						// images
-						# rb_agency_option_galleryorder
-						$rb_agency_options_arr = get_option('rb_agency_options');
-						$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+						
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
-							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
+								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 echo "				</div>\n"; // #profile-picture
 
@@ -28,8 +31,7 @@ echo "	  			<div id=\"profile-info\">\n";
 echo "	  				<div id=\"stats\">\n";
 echo "	  					<ul>\n";
 								if (!empty($ProfileGender)) {
-									$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-									$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
+									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
 									echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 								}
 
@@ -59,34 +61,40 @@ echo "	  				</div>\n"; // #stats
 echo "	  			<div id=\"links\">\n";
 echo "					<ul>\n";
 							// Resume
-							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
-							$countMedia = mysql_num_rows($resultsMedia);
-							if ($countMedia > 0) {
-							  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
+								if ($countMedia > 0) {
+									foreach($resultsMedia as $dataMedia ){
 									echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Print Resume</a></li>\n";
 							  	}
 							}						
 							// Comp Card
-							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Comp Card\"");
-							$countMedia = mysql_num_rows($resultsMedia);
-							if ($countMedia > 0) {
-							  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+							
+							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Comp Card");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
+								if ($countMedia > 0) {
+									foreach($resultsMedia as $dataMedia ){
 									echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Comp Card</a></li>\n";
 							  	}
 							}
 							// Headshots
-							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Headshot\"");
-							$countMedia = mysql_num_rows($resultsMedia);
-							if ($countMedia > 0) {
-							  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+							
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
+								if ($countMedia > 0) {
+									foreach($resultsMedia as $dataMedia ){
 									echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Headshot</a></li>\n";
 							  	}
 							}			
 							//Voice Demo
-							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"VoiceDemo\"");
-							$countMedia = mysql_num_rows($resultsMedia);
-							if ($countMedia > 0) {
-							 	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"VoiceDemo");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
+								if ($countMedia > 0) {
+									foreach($resultsMedia as $dataMedia ){
 									echo "<li class=\"item voice\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Listen to Voice Demo</a></li>\n";
 							  	}
 							}
@@ -100,13 +108,14 @@ echo "	  			</div>\n";  // #links
 echo "	  			<div id=\"videos\">\n";
 echo "					<ul>\n";
 							//Videos
-							$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" 
+							$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" 
 														 AND (ProfileMediaType = 'Video Slate' OR 
 														 ProfileMediaType = 'Video Monologue' OR
-														 ProfileMediaType = 'Demo Reel')");
-							$countMedia = mysql_num_rows($resultsMedia);
+														 ProfileMediaType = 'Demo Reel')";
+							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
-							  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+							  	foreach($resultsMedia as $dataMedia ){
 									$desc = explode("<br>",$dataMedia['ProfileMediaTitle']);
 									echo "<li class=\"item video slate\" style='float:left'>";
 									if($dataMedia['ProfileVideoType'] == "youtube" || $dataMedia['ProfileVideoType'] == ""){	
@@ -132,9 +141,9 @@ echo "	  			<div id=\"photos\">\n";
 	
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
-						$resultsImg = mysql_query($queryImg);
-						$countImg = mysql_num_rows($resultsImg);
-						while ($dataImg = mysql_fetch_array($resultsImg)) {
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 						echo "	<div class=\"cb\"></div>\n"; // Clear All

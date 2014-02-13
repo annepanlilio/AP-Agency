@@ -16,7 +16,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
  * Layout 
  */
 
-
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 // load script for printing profile pdf
 $row = 4 ;
 $rb_agency_options_arr = get_option('rb_agency_options');
@@ -30,14 +32,12 @@ echo "  		<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
 echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 						// Image Slider
-						# rb_agency_option_galleryorder
-						$rb_agency_options_arr = get_option('rb_agency_options');
-						$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+						
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-							$resultsImg = mysql_query($queryImg);
-							$countImg = mysql_num_rows($resultsImg);
-							while ($dataImg = mysql_fetch_array($resultsImg)) {
-								if ($countImg > 1) { 
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
+							if ($countImg > 1) { 
 									echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a>\n";
 								} else {
 									echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
@@ -58,10 +58,9 @@ echo "	  				<div id=\"stats\" class=\"rbcol-12 rbcolumn\">\n";
 echo "	  					<ul>\n";
 
 								if (!empty($ProfileGender)) {
-									$queryGenderResult = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' ");
-									$count = mysql_num_rows($queryGenderResult);
+									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
+									$count = $wpdb->num_rows;
 									if($count > 0){
-										$fetchGenderData = mysql_fetch_assoc($queryGenderResult);
 										echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 									}
 								}
@@ -113,10 +112,11 @@ echo "						<ul>\n";
 								<?php
 								}
 								//Demo Reel
-								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
-								$countMedia = mysql_num_rows($resultsMedia);
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
-									while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+									foreach($resultsMedia as $dataMedia ){
 										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" ". $reltarget .">Watch ShowReel</a></li>\n";
 									}
 								}
@@ -125,10 +125,12 @@ echo "						<ul>\n";
 								echo "<li class=\"item resume\"><a id='print_pr_pdf' href='javascript:;'>Print PDF</a></li>\n";
 		
 								// Resume
-								$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
-								$countMedia = mysql_num_rows($resultsMedia);
+								
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
+								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
-									while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+									foreach($resultsMedia as $dataMedia ){
 										echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume PDF</a></li>\n";
 									}
 								}							

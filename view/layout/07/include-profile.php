@@ -286,14 +286,18 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					<li><a href="javascript:;" class="showSingle2" >Experience</a></li>
 					<li><a href="javascript:;" class="showSingle3" >Videos</a></li>
                       <?php
-				$resultsHeadshot = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Headshot\"");
-				$countHeadshot = mysql_num_rows($resultsHeadshot);
-				$resultsVoiceDemo = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"VoiceDemo\"");
-				$countVoiceDemo = mysql_num_rows($resultsVoiceDemo);
-				$resultsCompCard = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"CompCard\"");
-				$countCompCard = mysql_num_rows($resultsCompCard);
-				$resultsResume = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Resume\"");
-				$countResume = mysql_num_rows($resultsResume);
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
+				$countHeadshot = $wpdb->num_rows;
+
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"VoiceDemo");
+				$countVoiceDemo = $wpdb->num_rows;
+
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CompCard");
+				$countCompCard = $wpdb->num_rows;
+
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
+				$countResume = $wpdb->num_rows;
+
 				
 				if($countHeadshot>0 || $countVoiceDemo>0 || $countCompCard>0 || $countResume>0 ){?>
                     <li><a href="javascript:;" class="showSingle4" >Media</a></li>
@@ -309,11 +313,13 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					<?php
 					$ProfileMediaPrimary = ""; 
 					$ProfileMediaSecondry= "";
-					$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" ORDER BY $orderBy";
-								$resultsImg = mysql_query($queryImg);
-								$countImg = mysql_num_rows($resultsImg);
+					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+											
+										
+								$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);			
+								$countImg =$wpdb->num_rows;
 								$open = 1;
-								while ($dataImg = mysql_fetch_array($resultsImg)) {
+								foreach($resultsImg as $dataImg ){
 									// testing
 									if($option_two_image){	
 													if($open==1){
@@ -353,29 +359,33 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				<ul class="slides">
 					<?php
 					//Video Slate
-					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Slate\"");
-					$countMedia = mysql_num_rows($resultsMedia);
+
+					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Slate");
+					$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+					$countMedia = $wpdb->num_rows;
 					if ($countMedia > 0) {
-					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+					  	foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 							echo "<li class='v_slate'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Slate'></span></li>";
 						}
 					}
 
 					//Video Monologue
-					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Video Monologue\"");
-					$countMedia = mysql_num_rows($resultsMedia);
+					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Monologue");
+					$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+					$countMedia = $wpdb->num_rows;
 					if ($countMedia > 0) {
-					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+					   	foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 								echo "<li class='v_mono'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Monologue'></span></li>";
 							}
 					}
 					//Demoreel
-					$resultsMedia = mysql_query("SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Demo Reel\"");
-					$countMedia = mysql_num_rows($resultsMedia);
+					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
+					$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+					$countMedia =  $wpdb->num_rows;
 					if ($countMedia > 0) {
-					  	while ($dataMedia = mysql_fetch_array($resultsMedia)) {
+					  	 	foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 								echo "<li class='d_reel'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Demo Reel'></span></li>";
 							}
@@ -390,7 +400,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				//Headshot
 				
 				if ($countHeadshot > 0) {
-				  	while ($dataHeadshot = mysql_fetch_array($resultsHeadshot)) {
+				  	foreach($resultsHeadshot as $dataHeadshot ){
 						$profileHeadshotUrl = $dataHeadshot['ProfileMediaURL'];
 						echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
 					}
@@ -399,7 +409,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				//VoiceDemo
 				
 				if ($countVoiceDemo > 0) {
-				  	while ($dataVoiceDemo = mysql_fetch_array($resultsVoiceDemo)) {
+				  	foreach($resultsVoiceDemo as $dataVoiceDemo ){
 						$profileVoiceDemo = $dataVoiceDemo['ProfileMediaURL'];
 							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
 						}
@@ -407,7 +417,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				//CompCard
 				
 				if ($countCompCard > 0) {
-				  	while ($dataCompCard = mysql_fetch_array($resultsCompCard)) {
+				  	foreach($resultsCompCard as $dataCompCard ){
 						$profileCompCardUrl = $dataCompCard['ProfileMediaURL'];
 							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
 						}
@@ -415,7 +425,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				//Resume
 				
 				if ($countResume > 0) {
-				  	while ($dataResume = mysql_fetch_array($resultsResume)) {
+				  	foreach($resultsResume as $dataResume ){
 						$profileResumeUrl = $dataResume['ProfileMediaURL'];
 							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
 						}

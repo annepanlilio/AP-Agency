@@ -16,7 +16,9 @@ Text:   Flipbook
  * Layout 
  */
 
-
+# rb_agency_option_galleryorder
+$rb_agency_options_arr = get_option('rb_agency_options');
+$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 ?>
 
 <div id="rbprofile">
@@ -31,15 +33,13 @@ Text:   Flipbook
 	    <div class="rbcol-12 rbcolumn">
 		    <div id="photobook">		    	
 	            <?php
-				# rb_agency_option_galleryorder
-				$rb_agency_options_arr = get_option('rb_agency_options');
-				$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
-				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");			
-							$resultsImg = mysql_query($queryImg);
-							$countImg = mysql_num_rows($resultsImg);
-							while ($dataImg = mysql_fetch_array($resultsImg)) {
-							  	echo "<div class=\"page\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
-							}
+
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+				 $resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);			
+						$countImg =$wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
+						  	echo "<div class=\"page\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
+						}
 				?>
 		    </div><!-- .rbcol-12 -->
 	    </div><!-- #photobook -->
