@@ -84,8 +84,9 @@ if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
 	 * Return Results
 	 */
 
-		$results2 = mysql_query($query);
-		$count = mysql_num_rows($results2);
+		$results2 =  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+		$count =  $wpdb->num_rows;
+
 
 		echo "<div class=\"boxblock-holder\">\n";
 		echo "  <h2 class=\"title\">Search Results: " . $count . "</h2>\n";
@@ -120,7 +121,7 @@ if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
 			echo "        </tfoot>\n";
 			echo "        <tbody>\n";
 
-		while ($data = mysql_fetch_array($results2)) {
+		foreach ($results2 as $data) {
 			$ProfileID = $data['pID'];
 			$isInactive = '';
 			$isInactiveDisable = '';
@@ -220,7 +221,7 @@ if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
 
 		} // End While
 
-			mysql_free_result($results2);
+			
 			if ($count < 1) {
 					if (isset($filter)) {
 			echo "        <tr>\n";
