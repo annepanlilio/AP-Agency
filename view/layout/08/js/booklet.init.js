@@ -1,4 +1,4 @@
-$(function () {		
+(function($){
     $("#photobook").booklet({
     	width: '100%',
     	height: 300,
@@ -6,7 +6,7 @@ $(function () {
     	pagePadding: 0,
     	overlays: true,
     	manual: false,
-        closed: true
+        closed: true,        
     });
 
     $('#next-page').click(function(e){
@@ -18,4 +18,4 @@ $(function () {
 		e.preventDefault();
 		$('#photobook').booklet("prev");
 	});
-});
+})(jQuery);
