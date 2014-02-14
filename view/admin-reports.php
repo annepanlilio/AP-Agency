@@ -938,7 +938,7 @@ elseif ($ConfigID == 81)
 	echo "<h2>". __(" Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
 	
 	echo " <form action=\"".rb_agency_BASEDIR."view/export-Profile-Database.php\" method=\"post\">";
-	echo "      <select name=\"file_type\">";
+	echo "      <select name=\"file_type\" required>";
 	echo "          <option value=\"\">Select file format</option>";
 	echo "          <option value=\"xls\">XLS</option>";
 	echo "          <option value=\"csv\">CSV</option>";
