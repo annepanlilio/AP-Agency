@@ -676,9 +676,9 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.7");
 	}
 
-	if (get_option('rb_agency_version') == "2.0.7") {
+	if (substr(get_option('rb_agency_version'), 0, 3) == "1.7") {
 		// Updating version number!
-		update_option('rb_agency_version', "2.0.7.1");
+		update_option('rb_agency_version', "2.0.7.2");
 	}
 
 ?>
