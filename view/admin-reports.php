@@ -187,9 +187,9 @@ elseif ($ConfigID == 1) {
 	$throw_error = false;
 	
 	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-	$results1 = mysql_query($query1);
-	$count1 = mysql_num_rows($results1);
-	while ($data1 = mysql_fetch_array($results1)) {
+	$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+	$count1 =  $wpdb->num_rows;
+	foreach ($results1 as $data1) {
 		$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
 		echo $dirURL;
 		echo "<div>\n";
@@ -218,9 +218,9 @@ elseif ($ConfigID == 2) {
 
 	if($_REQUEST['action'] == 'generate') {
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 = mysql_query($query1);
-		$count1 = mysql_num_rows($results1);
-		while ($data1 = mysql_fetch_array($results1)) {
+		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$count1 =  $wpdb->num_rows;
+		foreach ($results1 as $data1) {
 			$dirURL = rb_agency_UPLOADPATH. $data1['ProfileGallery'];
 			if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
 			} else {
@@ -238,9 +238,9 @@ elseif ($ConfigID == 2) {
 	<?php
 
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 = mysql_query($query1);
-		$count1 = mysql_num_rows($results1);
-		while ($data1 = mysql_fetch_array($results1)) {
+		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$count1 =  $wpdb->num_rows;
+		foreach ($results1 as $data1) {
 			$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
 			echo "<div>\n";
 			if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
@@ -281,9 +281,9 @@ elseif ($ConfigID == 53) {
 
 	if($_REQUEST['action'] == 'generate') {
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 = mysql_query($query1);
-		$count1 = mysql_num_rows($results1);
-		while ($data1 = mysql_fetch_array($results1)) {
+		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$count1 =  $wpdb->num_rows;
+		foreach ($results1 as $data1) {
 			$ProfileID = $data1['ProfileID'];
 
 			$ProfileGallery = $data1['ProfileGallery'];
@@ -305,7 +305,7 @@ elseif ($ConfigID == 53) {
 
 			// Then Update our DB
 			$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryCurrent ."' WHERE ProfileID = \"". $ProfileID ."\"";
-			$renamed = mysql_query($rename);
+			$renamed = $wpdb->query($rename);
 
 			echo "  <div id=\"message\" class=\"updated highlight\">Folder name <strong>/" . $ProfileGalleryCurrent . "/</strong> has been set for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 		}
@@ -316,14 +316,14 @@ elseif ($ConfigID == 53) {
 		 * generated total count for folders
 		 */
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 = mysql_query($query1);
-		$count1 = mysql_num_rows($results1);
-		
+		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$count1 =  $wpdb->num_rows;
+	
 		echo "<h3>". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</h3>\n";
 		echo "<p>". __("Check that all profiles have folder names generated.", rb_agency_TEXTDOMAIN) . "</p>\n";
 		echo "<p>". __("Total Number of Folders Created: <strong>".$count1."</strong>", rb_agency_TEXTDOMAIN) . "</p>\n";
 
-			while ($data1 = mysql_fetch_array($results1)) {
+			foreach ($results1 as $data1) {
 				$ProfileGallery = $data1['ProfileGallery'];
 
 				// Create the right folder name for the profile
@@ -374,9 +374,10 @@ elseif ($ConfigID == 3) {
 	global $wpdb;
 
 	$query3 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-	$results3 = mysql_query($query3);
-	$count3 = mysql_num_rows($results3);
-	while ($data3 = mysql_fetch_array($results3)) {
+	$results3 =$wpdb->get_results($wpdb->prepare($query3), ARRAY_A);
+	$count3 =  $wpdb->num_rows;
+	
+	foreach ($results3 as $data3) {
 		$dirURL = rb_agency_UPLOADPATH . $data3['ProfileGallery'];
 		if (is_dir($dirURL)) {  // Does folder exist?
 			echo "<div style=\"background-color: lightYellow; \">\n<h3>". $data3['ProfileContactNameFirst'] ." ". $data3['ProfileContactNameLast'] ."</h3>\n";
@@ -396,8 +397,8 @@ elseif ($ConfigID == 3) {
 						if ($file_ext == "jpg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
 						
 							$query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = \"". $new_file ."\"";
-							$results3a = mysql_query($query3a);
-							$count3a = mysql_num_rows($results3a);
+							$results3a =$wpdb->get_results($wpdb->prepare($query3a), ARRAY_A);
+							$count3a =  $wpdb->num_rows;
 							if ($count3a < 1) {
 								if($_GET['action'] == "add") {
 								$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $data3['ProfileID'] ."','Image','". $data3['ProfileContactNameFirst'] ."-". $new_file ."','". $new_file ."')");
@@ -435,9 +436,8 @@ elseif ($ConfigID == 4) {
 
 	$stepSize = 100;
 	$query4t = "SELECT ProfileID FROM ". table_agency_profile ."";
-	$results4t = mysql_query($query4t);
-	$count4total = mysql_num_rows($results4t);
-	
+	$results4t =$wpdb->get_results($wpdb->prepare($query4t), ARRAY_A);
+	$count4total =  $wpdb->num_rows;
 	if (isset($_GET['Step'])) { 
 		$currentPage = $_GET['Step']; 
 		$step = $currentPage * $stepSize;
@@ -477,29 +477,28 @@ elseif ($ConfigID == 4) {
 		<p>Select the checkbox for the model desired.</p>
 		<form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 			<?php
-			
 			$query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT $step,$stepSize"; //LIMIT $step,100
-			$results4 = mysql_query($query4);
-			$count4 = mysql_num_rows($results4);
-			while ($data4 = mysql_fetch_array($results4)) {
+			$results4 =$wpdb->get_results($wpdb->prepare($query4), ARRAY_A);
+			$count4 =$wpdb->num_rows;
+			foreach ($results4 as $data4)  {
 				$dirURL = rb_agency_UPLOADDIR . $data4['ProfileGallery'];
 				$profileID = $data4['ProfileID'];
 
 				$query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
-				$results4b = mysql_query($query4b);
-				$count4b = mysql_num_rows($results4b);
+				$results4b = $wpdb->get_results($wpdb->prepare($query4b), ARRAY_A);
+				$count4b = $wpdb->num_rows;
 				//echo $query4b ."<br />". $count4b ."<hr />";
 				if ($count4b < 1) {
 
 					echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
 			
 					$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image'";
-					$results4a = mysql_query($query4a);
-					$count4a = mysql_num_rows($results4a);
+					$results4a = $wpdb->get_results($wpdb->prepare($query4), ARRAY_A);
+					$count4a = $wpdb->num_rows;
 					if ($count4a < 1) {
 						echo "This profile has no images loaded.";
 					} else {
-						while ($data4a = mysql_fetch_array($results4a)) {
+						foreach ($results4a as $data4a) {
 							echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". $dirURL ."/". $data4a['ProfileMediaURL'] ."\" style=\"width: 150px;\" /></div>\n";
 						}
 						echo "<div style=\"clear: both;\"></div>\n";
@@ -528,9 +527,10 @@ elseif ($ConfigID == 5) {
 	global $wpdb;
 	
 	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-	$results1 = mysql_query($query1);
-	$count1 = mysql_num_rows($results1);
-	while ($data1 = mysql_fetch_array($results1)) {
+	$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+	$count1 = $wpdb->num_rows;
+
+	foreach ($results1 as $data1) {
 		$ProfileDateBirth = $data1['ProfileDateBirth'];
 		$ProfileAge = rb_agency_get_age($ProfileDateBirth);
 		if ($ProfileDateBirth == "0000-00-00" || !isset($ProfileDateBirth) || empty($ProfileDateBirth)) {
@@ -548,6 +548,7 @@ elseif ($ConfigID == 5) {
 	if ($count1 < 1) {
 		echo "There are currently no profile records.";
 	}
+
 	?>
 
 
@@ -573,9 +574,10 @@ elseif ($ConfigID == 6) {
 	<?php
 	
 	$query6 = "SELECT * FROM ". table_agency_profile ." WHERE ProfileIsActive = '0' ORDER BY ProfileContactNameFirst";
-	$results6 = mysql_query($query6);
-	$count6 = mysql_num_rows($results6);
-	while ($data6 = mysql_fetch_array($results6)) {
+	$results6 = $wpdb->get_results($wpdb->prepare($query6), ARRAY_A);
+	$count6 = $wpdb->num_rows;
+
+	foreach ($results6 as $data6) {
 		echo "<div><input type=\"checkbox\" name=\"". $data6['ProfileID'] ."\" value=\"". $data6['ProfileID'] ."\" class=\"button-primary\" />". $data6['ProfileContactNameFirst'] ." ". $data6['ProfileContactNameLast'] ."</div>\n";
 	}
 	if ($count6 < 1) {
@@ -598,9 +600,10 @@ elseif ($ConfigID == 7) {
 	<h3>Remove Orphans from Database</h3>
 	<?php
 	$query7 = "SELECT ProfileID, ProfileGallery FROM ". table_agency_profile ."";
-	$results7 = mysql_query($query7);
-	$count7 = mysql_num_rows($results7);
-	while ($data7 = mysql_fetch_array($results7)) {
+	$results7 = $wpdb->get_results($wpdb->prepare($query7), ARRAY_A);
+	$count7 = $wpdb->num_rows;
+
+	foreach ($results7 as $data7 ) {
 		$ProfileID = $data7['ProfileID'];
 		$dirURL = rb_agency_UPLOADPATH . $data7['ProfileGallery'];
 		if (is_dir(".." . $dirURL)) {  // Does folder exist?
@@ -608,9 +611,9 @@ elseif ($ConfigID == 7) {
 			if ($handle = opendir(".." . $dirURL)) {  //  Open seasame 
 			
 				$query7a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = ". $ProfileID ." AND ProfileMediaType = 'Image'";
-				$results7a = mysql_query($query7a);
-				$count7a = mysql_num_rows($results7a);
-				while ($data7a = mysql_fetch_array($results7a)) {
+				$results7a = $wpdb->get_results($wpdb->prepare($query7a), ARRAY_A);
+				$count7a = $wpdb->num_rows;
+				foreach ($results7a as $data7a) {
 					$fileCheck = rb_agency_UPLOADPATH . $data7['ProfileGallery'] ."/". $data7a['ProfileMediaURL'];
 					if (file_exists($fileCheck)) {
 					echo "<div style=\"color: green;\">". $fileCheck ."</div>\n";
@@ -619,8 +622,8 @@ elseif ($ConfigID == 7) {
 							$ProfileMediaID = $data7a['ProfileMediaID'];
 							// Remove Orphans
 							$query7b = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileMediaID = \"". $ProfileMediaID ."\"";
-							$results7b = mysql_query($query7b);
-							echo $query7b;
+							$results7b =  $wpdb->query($query7b);
+							// echo $query7b;
 							
 						echo "<div style=\"color: red;\">". $fileCheck ." DELETED</div>\n";
 						} else {
@@ -665,11 +668,11 @@ elseif ($ConfigID == 8) {
 
 		// LETS DO IT!
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 = mysql_query($query1);
-		$count1 = mysql_num_rows($results1);
+		$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$count1 = $wpdb->num_rows;
 		$arrayReservedFoldername = array();
 		$pos = 0;
-		while ($data1 = mysql_fetch_array($results1)) {
+		foreach ($results1 as $data1) {
 			$ProfileID				=$data1["ProfileID"];
 			$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
 			$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
@@ -709,7 +712,7 @@ elseif ($ConfigID == 8) {
 
 							if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
 								$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
-								$renamed = mysql_query($rename);
+								$renamed = $wpdb->query($rename);
 								echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 							} else {
 								echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
@@ -725,7 +728,7 @@ elseif ($ConfigID == 8) {
 					rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
 					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
 						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
-						$renamed = mysql_query($rename);
+						$renamed = $wpdb->query($rename);
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					} else {
 						echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
@@ -759,13 +762,13 @@ elseif ($ConfigID == 8) {
 		*/
 
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 = mysql_query($query1);
-		$count1 = mysql_num_rows($results1);
-		
+		$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$count1 = $wpdb->num_rows;
+
 		$pos = 0;
 		$pos_suggested = 0;
 		$arrayReservedFoldername = array();
-		while ($data1 = mysql_fetch_array($results1)) {
+		foreach ($results1 as $data1 ) {
 			$ProfileID				=$data1["ProfileID"];
 			$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
 			$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
@@ -792,8 +795,9 @@ elseif ($ConfigID == 8) {
 			echo "<div>\n";
 			// Check for duplicate
 			$query_duplicate = "SELECT ProfileGallery, count(ProfileGallery) as cnt FROM ". table_agency_profile ." WHERE ProfileGallery='".$ProfileGallery."' GROUP BY ProfileGallery   HAVING cnt > 1";
-			$rs = mysql_query($query_duplicate);
-			$count  = mysql_num_rows($rs);
+			$rs = $wpdb->get_results($wpdb->prepare($query_duplicate), ARRAY_A);
+			$count  = $wpdb->num_rows;
+
 			if($count > 0){
 					
 				// Add Profiles to Array to Create later
@@ -843,8 +847,8 @@ elseif ($ConfigID == 13) {
 	/*********** Step Size *************************************/
 	$stepSize = 20;
 	$query4t = "SELECT ProfileID FROM ". table_agency_profile ."";
-	$results4t = mysql_query($query4t);
-	$count4total = mysql_num_rows($results4t);
+	$results4t = $wpdb->get_results($wpdb->prepare($query4t), ARRAY_A);
+	$count4total =  $wpdb->num_rows;
 	
 	if (isset($_GET['Step'])) { 
 		$currentPage = $_GET['Step']; 
@@ -868,9 +872,9 @@ elseif ($ConfigID == 13) {
 	/*********** Query Database *************************************/
 	
 		$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileGallery FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT $step,$stepSize"; //LIMIT $step,100
-		$results = mysql_query($query);
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
+		$results =  $wpdb->get_results($wpdb->prepare($query), ARRAY_A); 
+		$count = $wpdb->num_rows;
+		foreach ($results as $data ) {
 			
 			echo "<div>\n";
 			echo "<h3>". $data['ProfileContactNameFirst'] ." ". $data['ProfileContactNameLast'] ."</h3>\n";
@@ -879,10 +883,10 @@ elseif ($ConfigID == 13) {
 
 
 			$queryImg = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  $ProfileID AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC";
-			$resultsImg = mysql_query($queryImg);
-			$countImg = mysql_num_rows($resultsImg);
+			$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg), ARRAY_A); 
+			$countImg = $wpdb->num_rows;
 			echo "<div><strong>$countImg total</strong></div>\n";
-			while ($dataImg = mysql_fetch_array($resultsImg)) {
+			foreach ($resultsImg as $dataImg ) {
 				$filename = rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
 				
 				$image = new rb_agency_image();
@@ -1214,12 +1218,11 @@ elseif ($ConfigID == 14) {
 			foreach($trackDummies as $gallery){
 				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
 				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ";
-				$qID = mysql_query($getGallary) or die("1".mysql_error());
-				$fID = mysql_fetch_assoc($qID);
+				$fID =  $wpdb->get_row($wpdb->prepare($getGallary), ARRAY_A);
 				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				mysql_query($pSql) or die("2".mysql_error());
+				$wpdb->query($pSql) or die("2".mysql_error());
 				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				mysql_query($pmSql) or die("3".mysql_error());
+				$wpdb->query($pmSql) or die("3".mysql_error());
 				uninstall_dummy_profile($gallery);
 			}
 			unset($_SESSION["trackDummies_text"]); 
@@ -1237,19 +1240,18 @@ elseif ($ConfigID == 14) {
 				$ProfileGallery = "";
 				$userCategory = "";
 				$userGender ="";
-				$queryGender = mysql_query("SELECT * FROM ".table_agency_data_gender."  ");
-				$userGender = mysql_fetch_assoc($queryGender);
-				while ($row = mysql_fetch_array($queryGender)) {
+				$queryGender = "SELECT * FROM ".table_agency_data_gender."  ";
+				$userGender = $wpdb->get_results($wpdb->prepare($queryGender), ARRAY_A);
+				foreach ($userGender as $row ) {
 					if($ProfileContact[2]==$row['GenderTitle']){
 						$userGender["GenderID"]=$row['GenderID']; 
 					}
 					  
 				}
 
-				$queryCategory = mysql_query("SELECT * FROM ".table_agency_data_type."  WHERE DataTypeID >= (SELECT FLOOR( MAX(DataTypeID) * RAND()) FROM ".table_agency_data_type." ) ORDER BY  RAND() LIMIT 1");
-				$userCategory = mysql_fetch_assoc($queryCategory);
-				mysql_free_result($queryGender);
-				mysql_free_result($queryCategory);
+				$queryCategory = "SELECT * FROM ".table_agency_data_type."  WHERE DataTypeID >= (SELECT FLOOR( MAX(DataTypeID) * RAND()) FROM ".table_agency_data_type." ) ORDER BY  RAND() LIMIT 1";
+				$userCategory = $wpdb->get_row($wpdb->prepare($queryCategory), ARRAY_A);
+				
 
 				echo $ProfileContact[0]." ".$ProfileContact[1]."<br/>";
 
@@ -1273,11 +1275,11 @@ elseif ($ConfigID == 14) {
 				$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
 				// Select city and state
-				$queryCountry = mysql_query("SELECT * FROM ".table_agency_data_country." ORDER BY RAND( ) ASC LIMIT 1");
-				$userCountry = mysql_fetch_assoc($queryCountry);
+				$queryCountry = "SELECT * FROM ".table_agency_data_country." ORDER BY RAND( ) ASC LIMIT 1";
+				$userCountry =  $wpdb->get_row($wpdb->prepare($queryCountry), ARRAY_A);
 
-				$queryState = mysql_query("SELECT * FROM ".table_agency_data_state."  where CountryID = ".$userCountry['CountryID']." ORDER BY RAND( ) ASC LIMIT 1");
-				$userState = mysql_fetch_assoc($queryState);
+				$queryState = "SELECT * FROM ".table_agency_data_state."  where CountryID = ".$userCountry['CountryID']." ORDER BY RAND( ) ASC LIMIT 1";
+				$userState = $wpdb->get_row($wpdb->prepare($queryState), ARRAY_A);
 								
 				$insert = "INSERT INTO " . table_agency_profile . "(
 							ProfileGallery,
@@ -1323,8 +1325,8 @@ elseif ($ConfigID == 14) {
 				$ProfileID = $wpdb->insert_id;
 
 				// Inserting Custom Field 
-				$queryCustom = mysql_query("SELECT * FROM ".table_agency_customfields."  ");
-				while ($rowCustom = mysql_fetch_array($queryCustom)) {
+				$queryCustom = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_customfields." "), ARRAY_A); 
+				foreach ($queryCustom as $rowCustom) {
 					if($rowCustom['ProfileCustomType']==3){
 						 $customValueArray = explode("|", $rowCustom['ProfileCustomOptions']);
 						 $customValue= $customValueArray[1];
@@ -1333,7 +1335,7 @@ elseif ($ConfigID == 14) {
 					}elseif($rowCustom['ProfileCustomType']==4){
 						$customValue = "Dummy ".$rowCustom['ProfileCustomTitle']  ; 
 					}
-					$results = mysql_query("INSERT INTO " . table_agency_customfield_mux . " ( ProfileCustomID, ProfileID, ProfileCustomValue) VALUES ('". $rowCustom['ProfileCustomID'] ."','". $ProfileID ."','". $customValue ."')");
+					$results =  $wpdb->query("INSERT INTO " . table_agency_customfield_mux . " ( ProfileCustomID, ProfileID, ProfileCustomValue) VALUES ('". $rowCustom['ProfileCustomID'] ."','". $ProfileID ."','". $customValue ."')");
 				}
 				
 
@@ -1354,7 +1356,7 @@ elseif ($ConfigID == 14) {
 								echo "<br/>";
 								die("Failed to Copy files... <br/>".phpinfo());
 							}
-							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$a] ."','". $userMediaImagesM[$a] ."')");
+							$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$a] ."','". $userMediaImagesM[$a] ."')");
 
 						} else {
 							if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$a]))){
@@ -1362,12 +1364,12 @@ elseif ($ConfigID == 14) {
 								echo "<br/>";
 								die("Failed to Copy files... <br/>".phpinfo());
 							}
-							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$a] ."','". $userMediaImagesF[$a] ."')");
+							$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$a] ."','". $userMediaImagesF[$a] ."')");
 						}
 					}
 					if($a<=3){
 						if($userMediaVideoType[$a]!=""){
-							$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
+							$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
 						}
 					}
 					if($a==1){
@@ -1375,26 +1377,26 @@ elseif ($ConfigID == 14) {
 						if ($ProfileContact[2]=='Male') {
 						// Male
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
-						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)") or die(mysql_error());
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)") or die(mysql_error());
 						
 						} else {
 						// Female
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$randTo8]);
-						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)") or die(mysql_error());
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)") or die(mysql_error());
 						}
 
 						// Any Gender
 						copy(rb_chmod_file_display($sample_url."/".$userMediaHeadshot[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
-						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Headshot','". $userMediaHeadshot[$rand]."','". $userMediaHeadshot[$rand] ."')");
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Headshot','". $userMediaHeadshot[$rand]."','". $userMediaHeadshot[$rand] ."')");
 
 						copy(rb_chmod_file_display($sample_url."/".$userMediaVoicedemo[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaVoicedemo[0]);
-						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','VoiceDemo','". $userMediaVoicedemo[0] ."','".  $userMediaVoicedemo[0] ."')");
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','VoiceDemo','". $userMediaVoicedemo[0] ."','".  $userMediaVoicedemo[0] ."')");
 
 						copy(rb_chmod_file_display($sample_url."/".$userMediaCompcard[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaCompcard[0]);
-						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','CompCard','".$userMediaCompcard[0] ."','". $userMediaCompcard[0]."')");
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','CompCard','".$userMediaCompcard[0] ."','". $userMediaCompcard[0]."')");
 
 						copy(rb_chmod_file_display($sample_url."/".$userMediaResume[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaResume[$rand]);
-						$results = mysql_query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Resume','". $userMediaResume[$rand]."','".$userMediaResume[$rand]."')");
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Resume','". $userMediaResume[$rand]."','".$userMediaResume[$rand]."')");
 
 					}
 
@@ -1449,9 +1451,9 @@ function uninstall_dummy_profile($profile){
 }
 
 function uninstall_allprofile(){
-	
-	  mysql_query("TRUNCATE TABLE ".table_agency_profile ."");
-	  mysql_query("TRUNCATE TABLE ".table_agency_profile_media ."");
+	  global $wpdb;
+	  $wpdb->query("TRUNCATE TABLE ".table_agency_profile ."");
+	  $wpdb->query("TRUNCATE TABLE ".table_agency_profile_media ."");
 	 $dir  = rb_agency_UPLOADPATH."/";  
 	 foreach (scandir($dir) as $item) {
 			if ($item == '.' || $item == '..') continue;
@@ -1724,9 +1726,9 @@ class RBAgencyCSVXLSImpoterPlugin {
 						}
 
 						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
-						mysql_query($add_to_p_table) or die(mysql_error());
+						$wpdb->query($add_to_p_table) or die(mysql_error());
 
-						$last_inserted_mysql_id = mysql_insert_id();
+						$last_inserted_mysql_id = $wpdb->insert_id ;
 						if($last_inserted_mysql_id){
 							while($ctrl_start < $ctrl_end){
 								$select_id =  mysql_real_escape_string($_REQUEST['select'.$incre]);
@@ -1739,7 +1741,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 								}
 								
 								$add_to_c_table="INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields)values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($data[$ctrl_start])."')";
-								mysql_query($add_to_c_table) or die(mysql_error());
+								$wpdb->query($add_to_c_table) or die(mysql_error());
 								$ctrl_start++;
 								$incre++;
 							
