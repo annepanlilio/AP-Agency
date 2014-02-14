@@ -6,10 +6,24 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 */
 
 /*
- * Insert Javascript into Head
+ * Insert Style
  */
+
 	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
 	wp_enqueue_style( 'rblayout-style' );
+
+	wp_register_style( 'rblayout-style-custom', plugins_url('/css/isotope.css', __FILE__) );
+	wp_enqueue_style( 'rblayout-style-custom' );
+
+/*
+ * Insert Scripts
+ */
+
+	wp_register_script( 'isotope-jquery', plugins_url('/js/jquery.isotope.min.js', __FILE__), array(), false, false );
+	wp_enqueue_script( 'isotope-jquery' );
+
+	wp_register_script( 'isotope-init', plugins_url('/js/init-isotope.js', __FILE__), false, false );
+	wp_enqueue_script( 'isotope-init' );
 
 
 /*

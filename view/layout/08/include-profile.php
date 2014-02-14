@@ -6,10 +6,31 @@ Text:   Flipbook
 */
 
 /*
- * Insert Javascript into Head
+ * Insert Style
  */
+
 	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
 	wp_enqueue_style( 'rblayout-style' );
+
+	wp_register_style( 'rblayout-style-custom', plugins_url('/css/booklet.css', __FILE__) );
+	wp_enqueue_style( 'rblayout-style-custom' );
+
+/*
+ * Insert Scripts
+ */
+
+	wp_enqueue_script( 'photo-booklet-ui', plugins_url('/js/booklet-jquery-ui.min.js', __FILE__) );
+	wp_enqueue_script( 'photo-booklet-ui' );
+
+	wp_enqueue_script( 'photo-booklet-easing', plugins_url('/js/booklet-jquery.easing.1.3.js', __FILE__) );
+	wp_enqueue_script( 'photo-booklet-easing' );
+
+	wp_enqueue_script( 'photo-booklet', plugins_url('/js/booklet.min.js', __FILE__) );
+	wp_enqueue_script( 'photo-booklet' );
+
+	wp_enqueue_script( 'init-booklet', plugins_url('/js/booklet.init.js', __FILE__) );
+	wp_enqueue_script( 'init-booklet' );
+
 
 
 /*
