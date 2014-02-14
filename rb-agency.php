@@ -934,7 +934,6 @@ class RBAgency {
 		public static function menu_approvemembers(){
 			$arr_loc = array('Rb-Agency-Interact','Rb-Agency-Interact-Master');
 			foreach($arr_loc as $loc){
-				var_dump($loc . '-' . file_exists(ABSPATH . 'wp-content/plugins/'.$loc.'/admin/profile-approve.php'));
 				if(file_exists(ABSPATH . 'wp-content/plugins/'.$loc.'/admin/profile-approve.php')){
 					include_once(ABSPATH . 'wp-content/plugins/'.$loc.'/admin/profile-approve.php');
 					break;
