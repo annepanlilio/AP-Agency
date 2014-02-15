@@ -1514,6 +1514,7 @@ function rb_chmod_file_display($file){
 }
 
 
+
 /*Naresh Kumar @ Matrix Infologics*/
 
 class RBAgencyCSVXLSImpoterPlugin {
@@ -1597,14 +1598,16 @@ class RBAgencyCSVXLSImpoterPlugin {
 			move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path);
 			
 			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-			$objReader->setReadDataOnly(true);
+			//$objReader->setReadDataOnly(true);
 			$objPHPExcel = $objReader->load($target_path);
 			$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 			$t_file = date('d_M_Y_h_i_s');
 			$csv_file = fopen($target_path.$t_file.'(1).csv','w');
 			
+        
 			foreach ($sheetData as $key => $value) 
 			{
+
 				fputcsv($csv_file, $value);
 			}
 			fclose($csv_file);
@@ -1614,11 +1617,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 		
 		$file_path = $this->csv_to_db_get_abs_path_from_src_file($file_name);   
 		$handle = fopen($file_path ,"r");       
-		$header=fgetcsv($handle, 4096, ",");
+		$header = fgetcsv($handle, 4096, ",");
 		$total_header = count($header);
 		
 		$custom_header = $total_header - 17;//17 are the number of column for the personal profile table
-		
 		if( $custom_header <= 0 ) return 0; /*If no custom field found*/
 
 		/*Column head form*/
@@ -1679,6 +1681,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$handle = fopen($path_to_file ,"r");
 		fgets($handle);//read and ignore the first line
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+
+		
 			$ctrl_start = 17;
 			$ctrl_end = $_REQUEST['total_header'];
 			$incre = 1;
@@ -1725,7 +1729,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 							}
 						}
 
-						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','$data[4]','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
+						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','".date("Y-m-d",strtotime($data[4]))."','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
 						$wpdb->query($add_to_p_table) or die(mysql_error());
 
 						$last_inserted_mysql_id = $wpdb->insert_id ;
@@ -1748,7 +1752,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 							}
 						
 						}
-					 echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- ".$data[0]." & Email:- ".$data[5]."  <b>Successfully Imported Records</b></li></ul></div>";
+					 echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_mysql_id)."'>".$data[0]."</a> & Email:- ".$data[5]."  <b>Successfully Imported Records</b></li></ul></div>";
 				}else{
 					 echo "<div class='wrap' style='color:#FF0000'><ul><li> User Name:- ".$data[0]." & Email:- ".$data[5]."  <b>Successfully Not Imported. Email Already Used on site.</b></li></ul></div>";
 				}
