@@ -75,6 +75,13 @@ global $wpdb;
 			break;
 
 		// Data: Media Types
+		case 12:
+			echo "<h1>Settings &raquo; Subscription</h1>";
+			//return RBAgency_AdminSettings::Uninstall();
+			break;
+
+
+		// Data: Media Types
 		case 99:
 			echo "<h1>Settings &raquo; Uninstall</h1>";
 			//return RBAgency_AdminSettings::Uninstall();
@@ -758,9 +765,8 @@ elseif ($ConfigID == 12) {
 	  if (is_numeric($SubscriptionRateID)) {
 		// Verify Record
 		$queryDelete = "SELECT SubscriptionRateID, SubscriptionRateTitle FROM ". table_agencyinteract_subscription_rates ." WHERE SubscriptionRateID =  \"". $SubscriptionRateID ."\"";
-		$resultsDelete = mysql_query($queryDelete);
-		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-
+		$resultsDelete =  $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+		foreach ($resultsDelete as $dataDelete) {
 	
 			// Remove Record
 			$delete = "DELETE FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID = \"". $SubscriptionRateID ."\"";
@@ -777,9 +783,9 @@ elseif ($ConfigID == 12) {
 		
 		if ( $SubscriptionRateID > 0) {
 			$query = "SELECT * FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID='$SubscriptionRateID'";
-			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
-			$count = mysql_num_rows($results);
-			while ($data = mysql_fetch_array($results)) {
+			$results =  $wpdb->get_results($wpdb->prepare($query ), ARRAY_A);
+			$count =  $wpdb->num_rows;
+		 	foreach($results as $data ) {
 				$SubscriptionRateID		=$data['SubscriptionRateID'];
 				$SubscriptionRateTitle	=stripslashes($data['SubscriptionRateTitle']);
 				$SubscriptionRateType	=$data['SubscriptionRateType'];
@@ -882,7 +888,7 @@ elseif ($ConfigID == 12) {
 			   $dir = "asc";
 		}
 	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=rb_agency_settings&ConfigID=12") ."\">\n";	
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -905,10 +911,10 @@ elseif ($ConfigID == 12) {
 		echo "<tbody>\n";
 	
 		$query = "SELECT * FROM ". table_agencyinteract_subscription_rates ." ORDER BY $sort $dir";
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
-			$SubscriptionRateID	=$data['SubscriptionRateID'];
+		$results =  $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+		$count = $wpdb->num_rows;
+		foreach ($results as $data) {
+				$SubscriptionRateID	=$data['SubscriptionRateID'];
 		echo "    <tr>\n";
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $SubscriptionRateID ."\" name=\"". $SubscriptionRateID ."\" value=\"". $SubscriptionRateID ."\" /></th>\n";
 		echo "        <td class=\"column\">". stripslashes($data['SubscriptionRateTitle']) ."\n";
@@ -922,7 +928,6 @@ elseif ($ConfigID == 12) {
 		echo "        <td class=\"column\">". $data['SubscriptionRateText'] ."</td>\n";
 		echo "    </tr>\n";
 		}
-		mysql_free_result($results);
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
@@ -1125,9 +1130,8 @@ elseif ($ConfigID == 3) {
 			  if (is_numeric($GenderID)) {
 				// Verify Record
 				$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
-				$resultsDelete = mysql_query($queryDelete);
-				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-			
+				$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+				foreach ($resultsDelete as $dataDelete) {
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
 					$results = $wpdb->query($delete);
@@ -1149,9 +1153,9 @@ elseif ($ConfigID == 3) {
 		if (is_numeric($GenderID)) {
 			// Verify Record
 			$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
-			$resultsDelete = mysql_query($queryDelete);
-			while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-
+			$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+			foreach ($resultsDelete as $dataDelete) {
+			
 				// Remove Record
 				$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
 				$results = $wpdb->query($delete);
@@ -1170,9 +1174,9 @@ elseif ($ConfigID == 3) {
 
 		if ( $GenderID > 0) {
 			$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID='$GenderID'";
-			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
-			$count = mysql_num_rows($results);
-			while ($data = mysql_fetch_array($results)) {
+			$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+			$count = $wpdb->num_rows;
+			foreach ($results as $data) {
 				$GenderID =$data['GenderID'];
 				$GenderTitle =stripslashes($data['GenderTitle']);
 			}
@@ -1266,10 +1270,10 @@ elseif ($ConfigID == 3) {
 	echo "<tbody>\n";
 
 	$query = "SELECT * FROM ". table_agency_data_gender ." ORDER BY $sort $dir";
-	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-	$count = mysql_num_rows($results);
-	while ($data = mysql_fetch_array($results)) {
-		$GenderID	=$data['GenderID'];
+	$results =$wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+	$count = $wpdb->num_rows;
+	foreach ($results as $data) {
+			$GenderID	=$data['GenderID'];
 		
 		
 	echo "    <tr>\n";
@@ -1282,7 +1286,6 @@ elseif ($ConfigID == 3) {
 	echo "        </td>\n";
 	echo "    </tr>\n";
 	}
-	mysql_free_result($results);
 	if ($count < 1) {
 	echo "    <tr>\n";
 	echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
@@ -1359,9 +1362,9 @@ elseif ($ConfigID == 3) {
 			  if (is_numeric($DataTypeID)) {
 				// Verify Record
 				$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  \"". $DataTypeID ."\"";
-				$resultsDelete = mysql_query($queryDelete);
-				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-			
+				$resultsDelete =$wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+
+				foreach ($resultsDelete as $dataDelete) {
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = \"". $DataTypeID ."\"";
 					$results = $wpdb->query($delete);
@@ -1382,9 +1385,9 @@ elseif ($ConfigID == 3) {
 	  if (is_numeric($DataTypeID)) {
 		// Verify Record
 		$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  \"". $DataTypeID ."\"";
-		$resultsDelete = mysql_query($queryDelete);
-		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
-	
+		$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+		foreach ($resultsDelete as $dataDelete) {
+		
 			// Remove Record
 			$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = \"". $DataTypeID ."\"";
 			$results = $wpdb->query($delete);
@@ -1400,9 +1403,9 @@ elseif ($ConfigID == 3) {
 		
 		if ( $DataTypeID > 0) {
 			$query = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeID='$DataTypeID'";
-			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
-			$count = mysql_num_rows($results);
-			while ($data = mysql_fetch_array($results)) {
+			$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+			$count = $wpdb->num_rows;
+			foreach ($results as $data) {
 				$DataTypeID		=$data['DataTypeID'];
 				$DataTypeTitle	=stripslashes($data['DataTypeTitle']);
 				$DataTypeTitle = str_replace(' ', '_', $DataTypeTitle);
@@ -1496,9 +1499,9 @@ elseif ($ConfigID == 3) {
 		echo "<tbody>\n";
 	
 		$query = "SELECT * FROM ". table_agency_data_type ." ORDER BY $sort $dir";
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
+		$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+		$count = $wpdb->num_rows;
+		foreach ($results as $data) {
 			$DataTypeID	=$data['DataTypeID'];
 		echo "    <tr>\n";
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $DataTypeID ."\" name=\"". $DataTypeID ."\" value=\"". $DataTypeID ."\" /></th>\n";
@@ -1511,7 +1514,6 @@ elseif ($ConfigID == 3) {
 		echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
 		echo "    </tr>\n";
 		}
-		mysql_free_result($results);
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
@@ -2974,6 +2976,7 @@ echo "</div>";
 		echo "          </div>\n";
 		echo "        </th>\n";
 		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$data['MediaCategoryGender']."'"); 
+
 		 $fetchGender = mysql_fetch_assoc($queryGender);
 		 $countGender = mysql_num_rows($queryGender);
 		 if($countGender > 0){
