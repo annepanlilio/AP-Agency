@@ -2843,11 +2843,11 @@ echo "</div>";
 	// Edit Record
 	switch($_POST["action"]){
 	case "editRecord":
-		mysql_query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die("1".mysql_error());
+		$wpdb->query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die("1".mysql_error());
 	  break;
 	// Add Record
 	case "addRecord":
-		 mysql_query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
+		 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
 	  break;
 	
 	}
@@ -2855,11 +2855,11 @@ echo "</div>";
 	if(isset($_POST["action"])=="deleteRecord"  || isset($_GET["deleteRecord"])){
 		
 		 if(isset($_GET["deleteRecord"])){
-				 mysql_query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
+				 $wpdb->query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
 		 }
 		 if(isset($_POST["MediaCategoryID"])){
 			 foreach($_POST["MediaCategoryID"] as $id){
-				mysql_query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$id."'");
+				$wpdb->query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$id."'");
 			 }
 		 }
 		
@@ -2871,9 +2871,9 @@ echo "</div>";
 		 echo "  <h3 class=\"title\">". __("Edit Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
 		 
 		 $query = "SELECT * FROM ". table_agency_data_media ." WHERE MediaCategoryID='".$_GET["MediaCategoryID"]."'";
-		 $results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-		 $count = mysql_num_rows($results);
-		 $data = mysql_fetch_array($results);
+		 $data = $wpdb->get_row($wpdb->prepare($query),ARRAY_A,0 );
+		 $count =$wpdb->num_rows;
+		
 		 echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ConfigID=6&MediaCategoryID=".$_GET["MediaCategoryID"]."\">\n";
 		}else{
 			 echo "  <h3 class=\"title\">". __("Add New Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
@@ -2889,8 +2889,8 @@ echo "</div>";
 		 $query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 					echo "<select name=\"MediaCategoryGender\">";
 					echo "<option value=\"\">All Gender</option>";
-					$queryShowGender = mysql_query($query);
-					while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+					$queryShowGender = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+					foreach( $queryShowGender as $dataShowGender ){
 						echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data["MediaCategoryGender"] ,$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
 					}
 					echo "</select>";
@@ -2940,7 +2940,7 @@ echo "</div>";
 					   $dir = "asc";
 				}
 	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=8\">\n";	
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=6\">\n";	
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -2963,9 +2963,9 @@ echo "</div>";
 		echo "<tbody>\n";
 	
 		$query = "SELECT * FROM ". table_agency_data_media ." ORDER BY $sort $dir";
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ).mysql_error());
-		$count = mysql_num_rows($results);
-		while ($data = mysql_fetch_array($results)) {
+		$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+		$count = $wpdb->num_rows;
+		foreach ($results as $data) {
 			$MediaCategoryID	=$data['MediaCategoryID'];
 		echo "    <tr>\n";
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $MediaCategoryID ."\" name=\"MediaCategoryID[]\" value=\"". $MediaCategoryID ."\" /></th>\n";
@@ -2975,10 +2975,9 @@ echo "</div>";
 		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </th>\n";
-		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$data['MediaCategoryGender']."'"); 
-
-		 $fetchGender = mysql_fetch_assoc($queryGender);
-		 $countGender = mysql_num_rows($queryGender);
+		 $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$data['MediaCategoryGender']."'"; 
+		 $fetchGender = $wpdb->get_row($wpdb->prepare( $queryGender),ARRAY_A,0 	 );
+		 $countGender = $wpdb->num_rows;
 		 if($countGender > 0){
 			echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
 		 }else{
@@ -2987,7 +2986,7 @@ echo "</div>";
 		echo "        <th class=\"column\">"; echo $data["MediaCategoryOrder"]; echo "</th>\n";
 		echo "    </tr>\n";
 		}
-		mysql_free_result($results);
+
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
