@@ -257,7 +257,7 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 						echo " </div>";
 						echo " <div style=\"clear: both; text-align: center; padding: 5px; \">\n";
 					} else {
-						echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactDisplay']) . "</h2>"; 
+						echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast'])  . "</h2>"; 
 					}
 				
 					echo " </div>";
