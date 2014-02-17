@@ -3,6 +3,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
 
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -13,6 +14,7 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 	<link rel="stylesheet" type="text/css" media="screen, print" href="<?php bloginfo('stylesheet_directory'); ?>/style.css" />
 	<script language="Javascript1.2">
 		<!--
+		
 		function printpage() {
 			window.print();
 		}
@@ -45,6 +47,9 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 			
 			//// Filter
 			$filter = " WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
+			if(isset($_GET['id']) && $_GET['id']){
+				$filter .= " AND profile.ProfileID IN (".$_GET['id'].") "; 
+			} 
 			// Name
 			if ((isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)) || isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
 				if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){

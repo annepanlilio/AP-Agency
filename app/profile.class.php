@@ -1501,8 +1501,22 @@ class RBAgency_Profile {
 				$displayHtml .=  "    </table>\n";
 				$displayHtml .=  "     <p>\n";
 				$displayHtml .=  "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
-				$displayHtml .=  "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
-				$displayHtml .=  "          <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
+				$displayHtml .=  "          <a href=\"#\" onClick=\"testPrint(1);\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
+				echo "<script> function testPrint(type){
+
+					var checkboxes = document.getElementsByName('ProfileID[]');
+						var vals = '';
+						for (var i=0, n=checkboxes.length;i<n;i++) {
+						  if (checkboxes[i].checked) 
+						  {
+						  vals += ','+checkboxes[i].value;
+						  }
+						}
+						if (vals) vals = vals.substring(1);
+						window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD='+type+'&id='+vals,'mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes');
+				}
+					</script>" ; 
+				$displayHtml .=  "          <a href=\"#\" onClick=\"testPrint(0); \" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 				$displayHtml .=  "     </p>\n";
 				$displayHtml .=  "  </form>\n";
 				$displayHtml .=  "</div>";
