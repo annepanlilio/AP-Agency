@@ -170,6 +170,76 @@ class RBAgency_Common {
 	}
 
 
+
+	/**
+     * Check if RB Agency Plugin Exists
+     *
+     * @return bool true
+     */
+
+	public static function rb_agency_exists(){
+
+		if (is_plugin_active('rb-agency/rb-agency-casting.php')) {
+			return true;
+		} elseif (is_plugin_active('RB-Agency/rb-agency-casting.php')) {
+			return true;
+		} elseif (is_plugin_active('RB-Agency-master/rb-agency-casting.php')) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
+
+
+	/**
+     * Check if Plugin Exists
+     *
+     * @return bool true
+     */
+
+	public static function rb_agency_interact_exists(){
+
+		if (is_plugin_active('rb-agency-interact/rb-agency-casting.php')) {
+			return true;
+		} elseif (is_plugin_active('RB-Agency-Interact/rb-agency-casting.php')) {
+			return true;
+		} elseif (is_plugin_active('RB-Agency-Interact-master/rb-agency-casting.php')) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
+
+
+
+	/**
+     * Check if RB Agency Casting Plugin Exists
+     *
+     * @return bool true
+     */
+
+	public static function rb_agency_casting_exists(){
+
+		if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+			return true;
+		} elseif (is_plugin_active('RB-Agency-Casting/rb-agency-casting.php')) {
+			return true;
+		} elseif (is_plugin_active('RB-Agency-Casting-master/rb-agency-casting.php')) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
+
 	/*
 	 * Data: Country
 	 */
