@@ -93,7 +93,10 @@ get_currentuserinfo();
 							foreach ($results as $data ) { ?>
 								<li>
 									<a href="?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $data['ProfileID']; ?>"><?php echo stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) ?></a>
+									<?php 
+									if ($data['ProfileDateUpdated'] <> "0000-00-00 00:00:00" && isset($data['ProfileDateUpdated']) && !empty($data['ProfileDateUpdated'])){ ?>
 									<span class="add-new-h2">Updated <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateUpdated'])); ?></span>
+									<?php } ?>
 								</li><?php
 							}
 							mysql_free_result($results);
@@ -122,7 +125,10 @@ get_currentuserinfo();
 								<li>
 									<a href="?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $data['ProfileID']; ?>"><?php echo stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']); ?></a>
 									<span class="add-new-h2"><?php echo $data['ProfileStatHits']; ?> <?php echo __("Views", rb_agency_TEXTDOMAIN ) ?></span>
+									<?php 
+									if ($data['ProfileDateViewLast'] <> "0000-00-00 00:00:00" && isset($data['ProfileDateViewLast']) && !empty($data['ProfileDateViewLast'])){ ?>
 									<span class="add-new-h2">Last viewed <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateViewLast'])); ?></span>
+									<?php } ?>
 								</li><?php
 							}
 							
@@ -138,6 +144,7 @@ get_currentuserinfo();
 			</div>
 		</div>
 		<div class="clear"></div>
+
 
 	</div>
 </div>
