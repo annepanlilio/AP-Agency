@@ -14,7 +14,7 @@ global $wpdb;
 
 	// Upgrade from unknonwn version
 	if (!isset(get_option('rb_agency_version')) && empty(get_option('rb_agency_version'))) { 
-		update_option('rb_agency_version', "1.9");
+		update_option('rb_agency_version', "1.8");
 	}
  */
 
@@ -214,7 +214,7 @@ global $wpdb;
 				mysql_query("UPDATE rb_agency_customfields SET  ProfileCustomOptions = '"."|".$fetchData["ProfileCustomOptions"]."' WHERE ProfileCustomID = ".$fetchData["ProfileCustomID"]."") or die(mysql_error());
 			}
 		endwhile;
-		
+
 		// Fix Gender compatibility
 		if ($wpdb->get_var("show tables like 'rb_agency_profile'") != "rb_agency_profile") { 
 			$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM rb_agency_profile ") or die(mysql_error());
@@ -274,7 +274,8 @@ global $wpdb;
 				"ProfileStatDress" => "Dress",
 				"ProfileUnion" => "Union",
 				"ProfileExperience" => "Experience");
-				// old column   to  custom fields 
+
+			// old column   to  custom fields 
 			foreach($arr_profile_features as $oldColumn => $migrate_data):
 				$query ="INSERT INTO rb_agency_customfield_mux (ProfileCustomID,ProfileID,ProfileCustomValue)
 						SELECT ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
@@ -676,7 +677,7 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.7");
 	}
 
-	if (substr(get_option('rb_agency_version'), 0, 3) == "1.7") {
+	if (substr(get_option('rb_agency_version'), 0, 5) == "2.0.7") {
 		// Updating version number!
 		update_option('rb_agency_version', "2.0.7.2");
 	}
