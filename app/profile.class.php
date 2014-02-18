@@ -1833,7 +1833,7 @@ class RBAgency_Profile {
 							."_max\">Max</label><input value=\"".$max_val
 							."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";											
 						}
-					// END - RYAN EDITING
+
 				}
 
 				/*
