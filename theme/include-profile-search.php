@@ -92,7 +92,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	
 		echo "		<div id=\"profile-search-form-condensed\" class=\"rbsearch-form\">\n";
 		echo "        	<form method=\"post\" id=\"search-form-condensed\" action=\"". get_bloginfo("wpurl") ."/profile-search/\">\n";
-		echo "        		<div><input type=\"hidden\" name=\"action\" value=\"search\" /></div>\n";
+		echo "        		<div><input type=\"hidden\" name=\"form_action\" value=\"search_profiles\" /></div>\n";
 		echo "	 			      <div class=\"search-field single\">\n";
 		echo "		 				<label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 		echo "		 				<input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" />\n";
@@ -100,7 +100,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "	 				<div class=\"search-field single\">\n";
 		echo "		 				<label for=\"ProfileLastName\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 		echo "						 <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"". $_SESSION["ProfileContactNameLast"] ."\" />\n";
-		echo "					 </div>\n";		
+		echo "					 </div>\n";
 		echo "				    <div class=\"search-field single\">\n";
 		echo "				       <label for=\"ProfileType\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 		echo "				        	<select name=\"ProfileType\" id=\"ProfileType\">\n";               
@@ -124,7 +124,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 											while ($dataGender = mysql_fetch_array($results2)) {
 												echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['ProfileGender'],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
 											}
-	        echo "				        </select>\n";
+		echo "				        </select>\n";
 		echo "				    </div>\n";
 		echo "				    <fieldset class=\"search-field multi\">";
 		echo "				        <legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
@@ -160,7 +160,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	
 		echo "  <form method=\"post\" id=\"search-form-advanced\" action=\"". get_bloginfo("wpurl") ."/profile-search/\" class=\"rbsearch-form\">\n";
 		echo "        		<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_search\" />\n";
-		echo "        		<input type=\"hidden\" name=\"action\" value=\"search\" />\n";
+		echo "        		<input type=\"hidden\" name=\"form_action\" value=\"search_profiles\" />\n";
 		echo "	 			      <div class=\"search-field single\">\n";
 		echo "		 				<label for=\"ProfileFirstName\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 	        echo "		 				<input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"". $_SESSION["ProfileContactNameFirst"] ."\" />\n";

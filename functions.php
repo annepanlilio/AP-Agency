@@ -2829,7 +2829,7 @@ function rb_display_profile_list(){
 	   $sortDirection = "desc";
 	   $dir = "asc";
 	}
-	
+
 	// Filter
 	$filter = "WHERE profile.ProfileIsActive IN (0,1,4) ";
 	if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
