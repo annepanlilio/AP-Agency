@@ -331,7 +331,7 @@ if (isset($_POST['action'])) {
 
 				// Add New Custom Field Values
 				foreach ($_POST as $key => $value) {
-					if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value))) {
+					if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value) | $value == 0)) {
 						$ProfileCustomID = substr($key, 15);
 						if (is_array($value)) {
 							$value = implode(",", $value);
