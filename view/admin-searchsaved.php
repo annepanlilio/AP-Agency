@@ -1,7 +1,9 @@
 <?php
 
 $siteurl = get_option('siteurl');
-
+	// Casting Class
+	include(rb_agency_casting_BASEREL ."app/casting.class.php");
+	
 global $wpdb;
 
 
@@ -88,107 +90,7 @@ if (isset($_POST['action'])) {
 	case 'emailSend':
 
 		if (!empty($SearchID)) {
-
-		
-
-			$SearchID				=$_GET['SearchID'];
-
-			$SearchMuxHash			=@$_GET["SearchMuxHash"];
-			
-			$FromName              =$_POST['SearchMuxFromName']; 
-			
-			$FromEmail              =$_POST['SearchMuxFromEmail']; 
-
-			$SearchMuxToName		=$_POST['SearchMuxToName'];
-
-			$SearchMuxToEmail		=$_POST['SearchMuxToEmail'];
-			
-			$SearchMuxBccEmail		=$_POST['SearchMuxBccEmail'];
-			
-			$SearchMuxSubject		=$_POST['SearchMuxSubject'];
-
-			$SearchMuxMessage		=nl2br($_POST['SearchMuxMessage']);
-
-			$SearchMuxCustomValue	=$_POST['SearchMuxCustomValue'];
-                  $SearchMuxMessage	= str_ireplace("[link-place-holder]",get_bloginfo("url") ."/client-view/".$SearchMuxHash,$SearchMuxMessage);
-
-			
-			// set from name
-			$send_name = "";
-			if(!empty($FromName)){
-				$send_name = $FromName;
-			} else {
-				$send_name = $rb_agency_option_agencyname;
-			}
-
-			// Mail it
-
-			$headers  = 'MIME-Version: 1.0' . "\r\n";
-
-			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			
-			$email_error = "";
-			
-			if(!empty($FromEmail)){
-				
-				if ( !is_email($FromEmail, true)) {
-                      $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
-                } else {
-					  $headers = 'From: '. $send_name .' <'. $FromEmail .'>' . "\r\n";
-				}
-			
-			} else {
-			
-				$headers = 'From: '. $send_name .' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
-			
-			}
-			
-			if(!$email_error){
-				
-				// Create Record
-
-				$insert = "INSERT INTO " . table_agency_searchsaved_mux .
-
-				" (SearchID,SearchMuxHash,SearchMuxToName,SearchMuxToEmail,SearchMuxSubject,SearchMuxMessage,SearchMuxCustomValue)" .
-
-			   "VALUES ('" . $wpdb->escape($SearchID) . "','" . $wpdb->escape($SearchMuxHash) . "','" . $wpdb->escape($SearchMuxToName) . "','" . $wpdb->escape($SearchMuxToEmail) . "','" . $wpdb->escape($SearchMuxSubject) . "','" . $wpdb->escape($SearchMuxMessage) . "','" . $wpdb->escape($SearchMuxCustomValue) . "')";
-
-		        $results = $wpdb->query($insert);
-
-			    $lastid = $wpdb->insert_id;
-				 $headers = 'Bcc: '. $SearchMuxBccEmail ."\r\n";
-				$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
-	
-				if($isSent){
-				
-					if(!empty($FromEmail)){
-						echo "<div style=\"margin:15px;\">";
-						echo "<div id=\"message\" class=\"updated\">";
-						echo "Email successfully sent from <strong>". $FromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-						echo "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
-						echo "</div>";
-						echo "</div>";	
-					} else {
-						echo "<div style=\"margin:15px;\">";
-						echo "<div id=\"message\" class=\"updated\">";
-						echo "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-						echo "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
-						echo "</div>";
-						echo "</div>";	
-					}
-				
-				}
-	
-			} else {
-
-				echo "<div style=\"margin:15px;\">";
-				echo "<div id=\"message\" class=\"updated\">";
-				echo $email_error;
-				echo "</div>";
-				echo "</div>";	
-			
-			}
-
+			echo RBAgency_Casting::cart_email_send_process();
 		}
 
 	break;
