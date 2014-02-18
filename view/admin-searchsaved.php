@@ -152,26 +152,22 @@ $siteurl = get_option('siteurl');
 		$count = $wpdb->num_rows;
 
 		 ?>
-		   <div style="padding:10px;max-width:580px;float:left;">
+		<div style="padding:10px;max-width:580px;float:left;">
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
-				  <div style="height:550px; width:580px; overflow-y:scroll;">
-					  <?php
-					
-					
-						foreach ($results as $data2 ) {
-							echo " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 180px; margin: 2px; overflow:hidden;  \">";
+				<div style="height:550px; width:580px; overflow-y:scroll;">
+					<?php
+					foreach ($results as $data2 ) {
+					echo " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 180px; margin: 2px; overflow:hidden;  \">";
 					echo " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
 					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 					echo "<img style=\"max-width:130px; max-height:150px; \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
 					echo "</div>\n";
 					echo "</div>\n";
-					  }
-					  
-			
-					  ?>
-				 </div>
-		   </div>
+					}
+					?>
+				</div>
+		</div>
 		<?php
 
 	} else {
@@ -253,93 +249,51 @@ $siteurl = get_option('siteurl');
 
 	} // End All
 
-
-
-
-
 	?>
   <div style="clear:both"></div>
 		<h3 class="title">Recently Saved Searches</h3>
 
 		<?php 
 
-if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
-	// Message of successful mail form mass email 
-	echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
-}
+		if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
+			// Message of successful mail form mass email 
+			echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+		}
 
-
-
-		  $rb_agency_options_arr = get_option('rb_agency_options');
-
-			$rb_agency_option_locationtimezone 		= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
-
-		
+		$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_locationtimezone = (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
 		// Sort By
-
 		$sort = "";
-
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
-
 			$sort = $_GET['sort'];
-
-		}
-
-		else {
-
+		} else {
 			$sort = "search.SearchDate";
-
 		}
-
-		
 
 		// Sort Order
-
 		$dir = "";
-
 		if (isset($_GET['dir']) && !empty($_GET['dir'])){
-
 			$dir = $_GET['dir'];
-
 			if ($dir == "desc" || !isset($dir) || empty($dir)){
-
-			   $sortDirection = "desc";
-
-			   } else {
-
-			   $sortDirection = "desc";
-
-			} 
-
+				$sortDirection = "desc";
+			} else {
+				$sortDirection = "desc";
+			}
 		} else {
-
-			   $sortDirection = "desc";
-
-			   $dir = "desc";
-
+			$sortDirection = "desc";
+			$dir = "desc";
 		}
-
-	
 
 		// Filter
-
 		$filter = "WHERE search.SearchID > 0 ";
-
 		if (isset($_GET['SearchTitle']) && !empty($_GET['SearchTitle'])){
-
 			$selectedTitle = $_GET['SearchTitle'];
-
 			$query .= "&SearchTitle=". $selectedTitle ."";
-
 			$filter .= " AND search.SearchTitle='". $selectedTitle ."'";
-
 		}
 
-		
-
 		//Paginate
-
 		$sqldata  == "SELECT * FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
 		$results=  $wpdb->get_results($sqldata);
 		
@@ -347,65 +301,37 @@ if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
 		if($items > 0) {
 
 			$p = new rb_agency_pagination;
-
 			$p->items($items);
-
 			$p->limit(50); // Limit entries per page
-
 			$p->target("admin.php?page=". $_GET['page'] .$query);
-
 			$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
-
 			$p->calculate(); // Calculates what to show
-
 			$p->parameterName('paging');
-
 			$p->adjacents(1); //No. of page away from the current page
 
-	 
-
 			if(!isset($_GET['paging'])) {
-
 				$p->page = 1;
-
 			} else {
-
 				$p->page = $_GET['paging'];
-
 			}
-
-	 
 
 			//Query for limit paging
 
 			$limit = "LIMIT " . ($p->page - 1) * $p->limit  . ", " . $p->limit;
 
 		} else {
-
 			$limit = "";
-
 		}
 
-		
-
 		?>
-
 		<div class="tablenav">
-
 			<div class='tablenav-pages'>
-
 				<?php
-
 				if($items > 0) {
-
 					echo $p->show();  // Echo out the list of paging. 
-
 				}
-
 				?>
-
 			</div>
-
 		</div>
 
 		<table cellspacing="0" class="widefat fixed">
@@ -414,8 +340,6 @@ if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
 					<td style="width: 360px;" nowrap="nowrap">
 						<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
 						 <input type='hidden' name='page_index' id='page_index' value='<?php echo $_GET['page_index']; ?>' />  
-						 <input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
-						 <input type="hidden" name="type" value="name" />
 						 Search by : 
 						 Title: <input type="text" name="SearchTitle" value="<?php echo $SearchTitle; ?>" style="width: 100px;" />
 							<input type="submit" value="Filter" class="button-primary" />
@@ -483,15 +407,15 @@ if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
 			<td>
 				<?php echo $SearchTitle; ?>
 				<div class="row-actions">
-					   <?php
-				  if($count3<=0){
+				<?php
+				if($count3<=0){
 				?>
 					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".rb_agency_random(8); ?>">Create Email</a> | </span>
 				<?php
-				  }else{
+				}else{
 				?>
 						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Create Email</a> | </span>
-					   <?php } ?>
+				<?php } ?>
 						<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 				</div>
 			</td>
