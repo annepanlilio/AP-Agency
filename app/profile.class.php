@@ -549,12 +549,12 @@ class RBAgency_Profile {
 					echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
 					echo "						<div>";
 					echo "							<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
-					echo "								<option value=\"\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"5\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
 					echo "								<option value=\"1\"". selected($_SESSION['ProfileIsActive'], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
 					echo "								<option value=\"4\"". selected($_SESSION['ProfileIsActive'], 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
 					echo "								<option value=\"0\"". selected($_SESSION['ProfileIsActive'], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
 					echo "								<option value=\"2\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"3\"". selected($_SESSION['ProfileIsActive'], 2) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"3\"". selected($_SESSION['ProfileIsActive'], 3) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
 					echo "							</select>\n";
 					echo "						</div>\n";
 					echo "				</div>\n";
@@ -812,9 +812,14 @@ class RBAgency_Profile {
 					// If sent link, show both hidden and visible
 					$filter = "profile.ProfileIsActive IN (1, 4)";
 				} else {
-					if (isset($isactive) && $isactive != ''){
+					if ($isactive == 5) {
+						// Just ignore.  Need a value to show all
+						$filter = "profile.ProfileID > 0 ";
+					} elseif (isset($isactive) && $isactive != ''){
+						// Show the specified value
 						$filter = "profile.ProfileIsActive = " . $isactive;
 					} else {
+						// Default to active profiles
 						$filter = "profile.ProfileIsActive = 1 ";
 					}
 				}
