@@ -904,20 +904,20 @@ class RBAgency {
 				add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
 
 			// RB Agency Interact Menu Approve
-			if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
-				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"menu_approvemembers", array('RBAgency', 'menu_approvemembers'));
+			if(is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
+				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_interact_approvemembers", array('RBAgency', 'menu_interact_approvemembers'));
 			}
 
 				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_search", array('RBAgency', 'menu_search'));
 				add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 7,"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
 
 			// RB Agency Interact Menu Approve
-			if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-casting/rb-agency-casting.php')){
+			if(is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-casting/rb-agency-casting.php')){
 				// saved search for casting
-				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_searchsaved", array('RBAgencyCasting', 'rb_agency_casting_searchsaved'));
+				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_casting_searchsaved", array('RBAgencyCasting', 'menu_casting_searchsaved'));
 
 				// job postings
-				add_submenu_page("rb_agency_menu", __("Client Jobs", rb_agency_casting_TEXTDOMAIN), __("Client Jobs", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_casting_job_postings", array('RBAgencyCasting', 'rb_agency_casting_jobpostings'));
+				add_submenu_page("rb_agency_menu", __("Client Jobs", rb_agency_casting_TEXTDOMAIN), __("Client Jobs", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_casting_jobpostings", array('RBAgencyCasting', 'menu_casting_jobpostings'));
 			}
 
 				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 7,"rb_agency_reports", array('RBAgency', 'menu_reports'));
@@ -944,16 +944,36 @@ class RBAgency {
 		public static function menu_settings(){
 			include_once('view/admin-settings.php');
 		}
-		public static function menu_approvemembers(){
-			$arr_loc = array('Rb-Agency-Interact','Rb-Agency-Interact-Master','rb-agency-interact');
+
+		// TODO: MOVE CHANGE SOMETHING BELOW
+
+		// RB Agency Interact Menus
+		public static function menu_interact_approvemembers(){
+			$arr_loc = array('RB-Agency-Interact','RB-Agency-Interact-Master','rb-agency-interact');
 			foreach($arr_loc as $loc){
 				if(file_exists(ABSPATH . 'wp-content/plugins/'.$loc.'/admin/profile-approve.php')){
 					include_once(ABSPATH . 'wp-content/plugins/'.$loc.'/admin/profile-approve.php');
 					break;
 				}
-			}	
+			}
 		}
 
+		// RB Agency Casting Menus
+		public static function menu_casting_searchsaved(){
+			include_once(ABSPATH . 'wp-content/plugins/rb-agency-casting/view/admin-searchsaved.php');
+			/*
+			$arr_loc = array('RB-Agency-Casting','RB-Agency-Casting-Master','rb-agency-casting');
+			foreach($arr_loc as $loc){
+				if(file_exists(ABSPATH . 'wp-content/plugins/'.$loc.'/view/admin-searchsaved.php')){
+					break;
+				}
+			}
+			*/
+		}
+
+		public static function menu_casting_jobpostings(){
+			include_once(ABSPATH . 'wp-content/plugins/rb-agency-casting/view/admin-jobpostings.php');
+		}
 
 	/*
 	 * Plugin Page
