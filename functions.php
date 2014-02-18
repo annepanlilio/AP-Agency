@@ -1871,13 +1871,13 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			 $rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 			 $measurements_label = "";
 			if ($ProfileCustomType == 7) { //measurements field type
-				if ($rb_agency_option_unittype ==0) { // 0 = Metrics(ft/kg)
+				if ($rb_agency_option_unittype ==0) { // 0 = Metrics(cm/kg)
 					if($data3['ProfileCustomOptions'] == 1){
 						$measurements_label  ="<em>(cm)</em>";
 					} elseif($data3['ProfileCustomOptions'] == 2) {
 						$measurements_label  ="<em>(kg)</em>";
 					} elseif($data3['ProfileCustomOptions'] == 3) {
-						$measurements_label  ="<em>(In Feet/Inches)</em>";
+						$measurements_label  ="<em>(cm)</em>";
 					}
 				} elseif($rb_agency_option_unittype ==1) { //1 = Imperial(in/lb)
 					if($data3['ProfileCustomOptions'] == 1){
