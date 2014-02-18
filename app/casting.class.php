@@ -5,7 +5,6 @@ class RBAgency_Casting {
 	 * Casting Cart
 	 * Process Actions
 	 */
-	 
 
 		public static function cart_process(){
 
@@ -13,7 +12,6 @@ class RBAgency_Casting {
 			 * Setup Requirements
 			 */
 
-	
 			// Protect and defend the cart string!
 				$cartString = "";
 				$action = $_GET["action"];
@@ -296,12 +294,12 @@ class RBAgency_Casting {
 			 $MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$MassEmailMessage);
 			 $MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
-		   	 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
+			 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, $MassEmailMessage, $headers);
 			 $url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
 			if($isSent){?>
 			<script type="text/javascript"> 
 				window.location="<?php echo $url;?>";
-            </script>
+			</script>
 			<?php 
 			}
 			 return $isSent;
@@ -376,25 +374,23 @@ class RBAgency_Casting {
 				$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
 				$profileimage .= "</div>\n";
 				$profileimage .= "</div>\n";
-			  }
-			 $profileimage .="</div></p>";
-			
+			}
+			$profileimage .="</div></p>";
+
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
-	
+
 			if(!empty($SearchMuxFromEmail)){
 				if ( !is_email($SearchMuxFromEmail, true)) {
-                       $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
-                } else {
-					 $headers[]  = 'From: '. $SearchMuxFromName .' <'. $SearchMuxFromEmail.'>' . "\r\n";
+					$email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
+				} else {
+					$headers[]  = 'From: '. $SearchMuxFromName .' <'. $SearchMuxFromEmail.'>' . "\r\n";
 				}
 			} else {
 					$headers[]  = 'From: RB Agency <'. $rb_agency_option_agencyemail .'>' . "\r\n";
 			}
-			
 
-			
 			//For Bcc emails
 			if(!empty($SearchMuxBccEmail)){
 				$bccMail = explode(",",$SearchMuxBccEmail);
@@ -402,32 +398,31 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bcc;
 				}
 			}
-			 $SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$SearchMuxMessage);
-			 $SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
-			 $SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
+			$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$SearchMuxMessage);
+			$SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
+			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
 			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
-			
-			 if($isSent){
-					if(!empty($FromEmail)){
-						$email_error .= "<div style=\"margin:15px;\">";
-						$email_error .= "<div id=\"message\" class=\"updated\">";
-						$email_error .= "Email successfully sent from <strong>". $FromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-						$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
-						$email_error .= "</div>";
-						$email_error .= "</div>";	
-					} else {
-						$email_error .= "<div style=\"margin:15px;\">";
-						$email_error .= "<div id=\"message\" class=\"updated\">";
-						$email_error .= "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-						$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
-						$email_error .= "</div>";
-						$email_error .= "</div>";	
-					}
-				
+
+			if($isSent){
+				if(!empty($FromEmail)){
+					$email_error .= "<div style=\"margin:15px;\">";
+					$email_error .= "<div id=\"message\" class=\"updated\">";
+					$email_error .= "Email successfully sent from <strong>". $FromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+					$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
+					$email_error .= "</div>";
+					$email_error .= "</div>";
+				} else {
+					$email_error .= "<div style=\"margin:15px;\">";
+					$email_error .= "<div id=\"message\" class=\"updated\">";
+					$email_error .= "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+					$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
+					$email_error .= "</div>";
+					$email_error .= "</div>";
 				}
+			}
 			return $email_error ;
 		}
-		
+
 	/*
 	 * Form to Send Casting Cart
 	 */
@@ -435,10 +430,10 @@ class RBAgency_Casting {
 		public static function cart_send_form(){
 		
 		/*if(isset($_POST["SendEmail"])){
-				// Process Form
-				$isSent = RBAgency_Casting::cart_send_process();
+			// Process Form
+			$isSent = RBAgency_Casting::cart_send_process();
 
-			}*/
+		}*/
 
 			if($_GET["action"] == "massEmail"){
 				echo RBAgency_Casting::cart_show();
