@@ -2,7 +2,7 @@
 
 $siteurl = get_option('siteurl');
 	// Casting Class
-	include(rb_agency_casting_BASEREL ."app/casting.class.php");
+	include(rb_agency_BASEREL ."app/casting.class.php");
 	
 global $wpdb;
 

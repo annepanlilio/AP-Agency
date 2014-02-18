@@ -308,6 +308,126 @@ class RBAgency_Casting {
 
 		}
 
+			//TODO : need to verify above method used or not 
+		public static function cart_email_send_process(){
+			
+			$isSent = false;
+			$email_error=  "" ; 
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+			$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
+		
+			$SearchID				= time(U);
+			$SearchMuxHash			= rb_agency_random(8);
+		
+			$SearchMuxFromName		=$_POST["SearchMuxFromName"];
+			$SearchMuxFromEmail		=$_POST["SearchMuxFromEmail"];
+			$SearchMuxToName	=$_POST['SearchMuxToName'];
+			$SearchMuxToEmail		= $_POST['SearchMuxToEmail'];
+			$SearchMuxBccEmail		=$_POST['SearchMuxBccEmail'];
+			$SearchMuxSubject		= $_POST['SearchMuxSubject'];
+			$SearchMuxMessage		=$_POST['SearchMuxMessage'];
+			$SearchMuxCustomValue	='';
+			$cartArray = $_SESSION['cartArray'];
+			
+			$cartString = implode(",", array_unique($cartArray));
+			$cartString = rb_agency_cleanString($cartString);
+			
+			global $wpdb;
+			$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die(mysql_error());
+					
+		$lastid = $wpdb->insert_id;
+		
+		// Create Record
+		$insert = "INSERT INTO " . table_agency_searchsaved_mux ." 
+				(
+				SearchID,
+				SearchMuxHash,
+				SearchMuxToName,
+				SearchMuxToEmail,
+				SearchMuxSubject,
+				SearchMuxMessage,
+				SearchMuxCustomValue
+				)" .
+				"VALUES
+				(
+				'" . $wpdb->escape($lastid) . "',
+				'" . $wpdb->escape($SearchMuxHash) . "',
+				'" . $wpdb->escape($SearchMuxToName) . "',
+				'" . $wpdb->escape($SearchMuxToEmail) . "',
+				'" . $wpdb->escape($SearchMuxSubject) . "',
+				'" . $wpdb->escape($SearchMuxMessage) . "',
+				'" . $wpdb->escape($SearchMuxCustomValue) ."'
+				)";
+			$results = $wpdb->query($insert);  
+			$profileimage = "";  
+			$profileimage .='<p><div style="width:550px;min-height: 170px;">';
+			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $lastid ."\"";
+			$qProfiles =  mysql_query($query);
+			$data = mysql_fetch_array($qProfiles);
+			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$data['SearchProfileID'].") ORDER BY ProfileContactNameFirst ASC";
+			$results = mysql_query($query);
+			$count = mysql_num_rows($results);
+			while ($data2 = mysql_fetch_array($results)) {
+				$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
+				$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
+				$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+				$profileimage .= "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+				$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+				$profileimage .= "</div>\n";
+				$profileimage .= "</div>\n";
+			  }
+			 $profileimage .="</div></p>";
+			
+			// Mail it
+			$headers[]  = 'MIME-Version: 1.0';
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+	
+			if(!empty($SearchMuxFromEmail)){
+				if ( !is_email($SearchMuxFromEmail, true)) {
+                       $email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
+                } else {
+					 $headers[]  = 'From: '. $SearchMuxFromName .' <'. $SearchMuxFromEmail.'>' . "\r\n";
+				}
+			} else {
+					$headers[]  = 'From: RB Agency <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+			}
+			
+
+			
+			//For Bcc emails
+			if(!empty($SearchMuxBccEmail)){
+				$bccMail = explode(",",$SearchMuxBccEmail);
+				foreach($bccMail as $bcc){
+						$headers[] = 'Bcc: '.$bcc;
+				}
+			}
+			 $SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$SearchMuxMessage);
+			 $SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
+			 $SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
+			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
+			
+			 if($isSent){
+					if(!empty($FromEmail)){
+						$email_error .= "<div style=\"margin:15px;\">";
+						$email_error .= "<div id=\"message\" class=\"updated\">";
+						$email_error .= "Email successfully sent from <strong>". $FromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+						$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
+						$email_error .= "</div>";
+						$email_error .= "</div>";	
+					} else {
+						$email_error .= "<div style=\"margin:15px;\">";
+						$email_error .= "<div id=\"message\" class=\"updated\">";
+						$email_error .= "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+						$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
+						$email_error .= "</div>";
+						$email_error .= "</div>";	
+					}
+				
+				}
+			return $email_error ;
+		}
+		
 	/*
 	 * Form to Send Casting Cart
 	 */
