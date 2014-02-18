@@ -1684,7 +1684,7 @@ class RBAgency_Profile {
 				if($ProfileCustomType == 7 OR $ProfileCustomType == 5 OR $ProfileCustomType == 6){
 					echo "<legend>".$data1['ProfileCustomTitle'].$measurements_label."</legend>";
 				} else {
-					echo "<label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label>";							 
+					echo "<label for=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $data1['ProfileCustomTitle']."</label>";
 				}
 
 				if ($ProfileCustomType == 1) { //TEXT		
@@ -1701,7 +1701,7 @@ class RBAgency_Profile {
 						echo "</div>";
 						echo "<div>";
 						echo "	<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-						echo "	<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>";					
+						echo "	<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>";
 						echo "</div>";
 					} else {
 						echo "<div>";
@@ -1785,7 +1785,7 @@ class RBAgency_Profile {
 							} else {
 								if($val !="") {
 									echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-									echo "<span>&nbsp;&nbsp;". $val."</span></label>";	
+									echo "<span>&nbsp;&nbsp;". $val."</span></label>";
 								}
 							}
 						} else {
@@ -1795,13 +1795,13 @@ class RBAgency_Profile {
 							}
 						}
 					}
-					echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/>";	       
+					echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/>";
 				} elseif ($ProfileCustomType == 7) {
 
 
 					list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
-						if($data1['ProfileCustomTitle']=="Height" && $data1['ProfileCustomOptions']==3){
+						if($data1['ProfileCustomTitle']=="Height" && $rb_agency_option_unittype == 1 && $data1['ProfileCustomOptions']==3){
 
 							echo "<div><label>Min</label><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\">\n";
 							if (empty($ProfileCustomValue)) {
@@ -1841,7 +1841,7 @@ class RBAgency_Profile {
 							echo " </select></div>\n";
 
 						} else {
-							
+
 							// for other search
 							echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 							."_min\">Min</label><input value=\""
@@ -1851,7 +1851,7 @@ class RBAgency_Profile {
 
 							echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
 							."_max\">Max</label><input value=\"".$max_val
-							."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";											
+							."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
 						}
 
 				}
