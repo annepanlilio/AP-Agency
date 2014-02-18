@@ -2122,7 +2122,7 @@ function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelT
 	global $wpdb;
 	global $rb_agency_option_unittype;
 	
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
 	foreach ($resultsCustom as $resultCustom) { 
 
 		if( $resultCustom->ProfileCustomID != 16 ):
@@ -2189,7 +2189,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 	global $wpdb;
 	global $rb_agency_option_unittype;
 	
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
 	foreach ($resultsCustom as $resultCustom) {
 		if(!empty($resultCustom->ProfileCustomValue )){
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
@@ -2215,7 +2215,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 
 			// Lets not do this...
 			$measurements_label = "";
-		   if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
+			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
@@ -2234,7 +2234,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
-			  
+
 			} elseif ($resultCustom->ProfileCustomView == "2") {
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
