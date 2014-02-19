@@ -1257,7 +1257,7 @@ elseif ($ConfigID == 14) {
 
 				if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 					if ($rb_agency_option_profilenaming == 0) {
-						$ProfileContactDisplay = $ProfileContact[1] . " ". $ProfileContact[0];
+						$ProfileContactDisplay = $ProfileContact[0] . " ". $ProfileContact[1];
 					} elseif ($rb_agency_option_profilenaming == 1) {
 						$ProfileContactDisplay = $ProfileContact[1] . " ". substr($ProfileContact[0], 0, 1);
 					} elseif ($rb_agency_option_profilenaming == 2) {
