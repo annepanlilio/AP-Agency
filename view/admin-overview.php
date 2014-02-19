@@ -36,6 +36,9 @@ get_currentuserinfo();
 							} 
 
 							echo "<li><a href='?page=rb_agency_search' class=\"button-secondary\">". __("Search Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Find profiles", rb_agency_TEXTDOMAIN) . ".</li>";
+							
+							echo "<li><a href='?page=rb_agency_interact_approvemembers' class=\"button-secondary\">". __("Approve profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Approve profiles", rb_agency_TEXTDOMAIN) . ".</li>";
+						
 						}
 						?>
 					</ul>
