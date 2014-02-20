@@ -904,10 +904,10 @@ class RBAgency {
 				add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
 
 			// RB Agency Interact 
-			//if(function_exists('rb_agency_interact_menu')){
+			if(function_exists('rb_agency_interact_exist')){
 				// Menu Approve
 				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_interact_approvemembers", array('RBAgencyInteract', 'rb_agency_interact_approvemembers'));
-			//}
+			}
 
 				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_search", array('RBAgency', 'menu_search'));
 				add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 7,"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
