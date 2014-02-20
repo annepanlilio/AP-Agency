@@ -1241,7 +1241,7 @@ error_reporting(0);
 				}
 				
 				//echo "loaded: ".microtime()." ms";
-				if($rb_user_isLogged ){
+				if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks")){
 					//Get Favorite & Casting Cart links
 					$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 				}
@@ -1381,7 +1381,7 @@ error_reporting(0);
 				echo "</div>\n";
 			}
 
-			if(is_user_logged_in()){
+			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks")){
 				// Add Favorite and Casting Cart links		
 				rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 			}
