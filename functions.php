@@ -215,7 +215,6 @@ error_reporting(0);
 			$newrules['profile-casting'] = 'index.php?type=casting&target=casting';
 			$newrules['profile-print'] = 'index.php?type=print';
 			$newrules['profile-email'] = 'index.php?type=email';
-			$newrules['dashboard'] = 'index.php?type=dashboard';
 			$newrules['client-view/(.*)$'] = 'index.php?type=profilecastingcart&target=$matches[1]';
 			$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
 			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
