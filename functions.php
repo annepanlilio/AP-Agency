@@ -2117,7 +2117,7 @@ function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
 * ======================== Get New Custom Fields ===============
 * @Returns Custom Fields
 /*/
-function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelTag="strong") {
+function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelTag="strong", $LabelSeparator=": ") {
 
 	global $wpdb;
 	global $rb_agency_option_unittype;
@@ -2156,23 +2156,23 @@ function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelT
 				if ($resultCustom->ProfileCustomType == 7){ 
 					if($resultCustom->ProfileCustomOptions == 3){ 
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label.":</".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
+						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label .$LabelSeparator." </".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
 					} else {
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label.":</".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} else {
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label.":</".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 				}
 			} elseif ($resultCustom->ProfileCustomView == "2") {
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label.":</".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
+						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
 					} else {
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label.":</".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} else {
-					echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label.":</".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+					echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 				}
 			}
 		}
