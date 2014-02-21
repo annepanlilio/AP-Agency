@@ -172,8 +172,6 @@ error_reporting(0);
 			// Remove Blog
 			if (rb_is_page("rb_profile")) {
 				$classes[] = 'rbagency-profile';
-			} elseif (rb_is_page("rb_dashboard")) {
-				$classes[] = 'rbagency-dashboard';
 			} elseif (rb_is_page("rb_category")) {
 				$classes[] = 'rbagency-category';
 			} elseif (rb_is_page("rb_register")) {
@@ -271,10 +269,15 @@ error_reporting(0);
 				} elseif (get_query_var( 'type' ) == "print") {
 				// Print Mode: TODO REFACTOR
 					return dirname(__FILE__) . '/view/profile-print.php';
+
 				} elseif (get_query_var( 'type' ) == "version") {
+				// Have a dedicated route to ping latest version
 					return dirname(__FILE__) . '/version.php'; 
+
 				} elseif (get_query_var( 'type' ) == "getstate") {
+				// TODO: What is this????
 					return rb_agency_BASEREL . '/view/partial/get-state.php'; 
+
 				}
 			}
 			return $template;
