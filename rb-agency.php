@@ -904,9 +904,9 @@ class RBAgency {
 				add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
 
 			// RB Agency Interact 
-			if(function_exists('rb_agency_interact_exist')){
+			if(function_exists('rb_agency_interact_menu')){
 				// Menu Approve
-				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_interact_approvemembers", array('RBAgencyInteract', 'rb_agency_interact_approvemembers'));
+				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_interact_approvemembers", array('RBAgency', 'menu_interact_approvemembers'));
 			}
 
 				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 7,"rb_agency_search", array('RBAgency', 'menu_search'));
@@ -915,20 +915,18 @@ class RBAgency {
 			// RB Agency Casting
 			if(function_exists('rb_agency_casting_menu')){
 				// saved search for casting
-				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_casting_searchsaved", array('RBAgencyCasting', 'rb_agency_casting_searchsaved'));
+				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_casting_searchsaved", array('RBAgency', 'menu_casting_searchsaved'));
 
 				// job postings
-				add_submenu_page("rb_agency_menu", __("Client Jobs", rb_agency_casting_TEXTDOMAIN), __("Client Jobs", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_casting_jobpostings", array('RBAgencyCasting', 'rb_agency_casting_jobpostings'));
+				add_submenu_page("rb_agency_menu", __("Client Jobs", rb_agency_casting_TEXTDOMAIN), __("Client Jobs", rb_agency_casting_TEXTDOMAIN), 7,"rb_agency_casting_jobpostings", array('RBAgency', 'menu_casting_jobpostings'));
 			}
-           
-
 
 				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 7,"rb_agency_reports", array('RBAgency', 'menu_reports'));
 				add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 7,"rb_agency_settings", array('RBAgency', 'menu_settings'));
 
 		}
 
-		//Pages
+		//Core
 		public static function menu_dashboard(){
 			include_once('view/admin-overview.php');
 		}
@@ -946,6 +944,21 @@ class RBAgency {
 		}
 		public static function menu_settings(){
 			include_once('view/admin-settings.php');
+		}
+
+		// Interact
+		public static function menu_interact_approvemembers(){
+			rb_agency_interact_approvemembers();
+		}
+
+
+		// Casting
+		public static function menu_casting_searchsaved(){
+			rb_agency_casting_searchsaved();
+		}
+
+		public static function menu_casting_jobpostings(){
+			rb_agency_casting_jobpostings();
 		}
 
 
