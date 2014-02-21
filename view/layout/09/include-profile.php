@@ -74,9 +74,10 @@ echo "	  				</div>\n";
 echo "					<div id=\"links\">\n";
 
 echo "						<ul>\n";
-
-								// Other links - Favorite, Casting cart...
-								rb_agency_get_miscellaneousLinks($ProfileID);
+                                if(function_exists("rb_agency_get_miscellaneousLinks")){
+									// Other links - Favorite, Casting cart...
+									rb_agency_get_miscellaneousLinks($ProfileID);
+								}
 								
 								// Is Logged?
 								if (is_user_logged_in()) { 

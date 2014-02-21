@@ -1607,7 +1607,7 @@ class RBAgency_Profile {
 				$displayHTML .= "</div>\n";
 			}
 
-			if(is_user_logged_in()){
+			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks")){
 				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 			}
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
