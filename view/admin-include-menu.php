@@ -2,10 +2,10 @@
 	<h2>
 		RB Agency
 		<a href="http://rbplugin.com" class="add-new-h2">Base Version <?php echo get_option('rb_agency_version'); ?></a>
-		<?php if (rb_agency_interact_menu()) && get_option('rb_agency_interact_version')) { ?>
+		<?php if (function_exists('rb_agency_interact_menu') && get_option('rb_agency_interact_version')) { ?>
 		<a href="http://rbplugin.com" class="add-new-h2">Interact Version <?php echo get_option("rb_agency_interact_version"); ?></a>
 		<?php } ?>
-		<?php if (rb_agency_casting_menu()) && get_option('rb_agency_casting_version')) { ?>
+		<?php if (function_exists('rb_agency_casting_menu') && get_option('rb_agency_casting_version')) { ?>
 		<a href="http://rbplugin.com" class="add-new-h2">Casting Cart Version <?php echo get_option('rb_agency_casting_version'); ?></a>
 		<?php } ?>
 	</h2>
