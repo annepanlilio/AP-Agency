@@ -193,7 +193,6 @@ class RBAgency_Common {
 
 
 
-
 	/**
      * Check if Plugin Exists
      *
