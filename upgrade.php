@@ -680,7 +680,7 @@ global $wpdb;
 		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowSearchSimple","INT(10) NOT NULL DEFAULT '0'");
 
 		// Updating version number!
-		update_option('rb_agency_version', "2.0.7.2");
+		update_option('rb_agency_version', "2.0.7.3");
 	}
 
 ?>
