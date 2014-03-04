@@ -1091,6 +1091,7 @@ class RBAgency {
 
 		public static function do_register_settings() {
 			register_setting('rb-agency-settings-group', 'rb_agency_options'); //, 'rb_agency_options_validate'
+			register_setting('rb-agency-settings-layout-group', 'rb_agency_layout_options');
 			register_setting('rb-agency-dummy-settings-group', 'rb_agency_dummy_options'); //, setup dummy profile options
 		}
 

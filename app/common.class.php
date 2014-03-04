@@ -15,7 +15,7 @@ class RBAgency_Common {
 
 		// Now Call Our Header
 		global $wpdb;
-		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_options_arr = get_option('rb_agency_layout_options');
 			// What is the unit of measurement?
 			$rb_agency_value_styleheader = $rb_agency_options_arr['rb_agency_option_styleheader'];
 			// Display the custom header html
@@ -32,7 +32,7 @@ class RBAgency_Common {
 
 		// Now Call Our Header
 		global $wpdb;
-		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_options_arr = get_option('rb_agency_layout_options');
 			// What is the unit of measurement?
 			$rb_agency_value_stylefooter = $rb_agency_options_arr['rb_agency_option_stylefooter'];
 			// Display the custom header html
