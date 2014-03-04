@@ -145,8 +145,8 @@ class RBAgency_Profile {
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 														$results2 = mysql_query($query);
 														while ($dataType = mysql_fetch_array($results2)) {
-																if ($_SESSION['type']) {
-																		if ($dataType["DataTypeID"] ==  $_SESSION['type']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
+																if ($_SESSION['profiletype']) {
+																		if ($dataType["DataTypeID"] ==  $_SESSION['profiletype']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 																} else { $selectedvalue = ""; }
 																echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
 														}
@@ -1288,11 +1288,11 @@ class RBAgency_Profile {
 					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
 				}
-				if (self::$castingcart){   //allow email to admin casting
+		/*		if (self::$castingcart){   //allow email to admin casting
 					$all_html .= "<div>\n";
 					$all_html .= '	<a id="sendemail" href="javascript:;">Email to Admin</a>';
 					$all_html .= "</div>\n";
-				}
+				}*/
 				$all_html .= '</div>';
 
 				/* 
@@ -1404,7 +1404,7 @@ class RBAgency_Profile {
 						$displayHtml .=  "                <div class=\"row-actions\">\n";
 						$displayHtml .=  "                    <span class=\"edit\"><a href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=editRecord&amp;ProfileID=". $ProfileID ."\" title=\"Edit this post\">Edit</a> | </span>\n";
 						$displayHtml .=  "                    <span class=\"review\"><a href=\"". rb_agency_PROFILEDIR . $rb_agency_UPLOADDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">View</a> | </span>\n";
-						$displayHtml .=  "                    <span class=\"delete\"><a class=\"submitdelete\" title=\"Remove this Profile\" href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;deleteRecord&amp;ProfileID=". $ProfileID ."' onclick=\"if ( confirm('You are about to delete the model \'". $ProfileContactNameFirst ." ". $ProfileContactNameLast ."\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;\">Delete</a></span>\n";
+						$displayHtml .=  "                    <span class=\"delete\"><a class=\"submitdelete\" title=\"Remove this Profile\" href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=deleteRecord&amp;ProfileID=". $ProfileID ."\" onclick=\"if ( confirm('You are about to delete the model ". ucfirst($data['ProfileContactNameFirst']) ." ". ucfirst($data['ProfileContactNameLast']) ."') ) { return true;}return false;\">Delete</a></span>\n";
 						$displayHtml .=  "                </div>\n";
 						if(!empty($isInactiveDisable)){
 								$displayHtml .=  "<div><strong>Profile Status:</strong> <span style=\"color:red;\">Inactive</span></div>\n";

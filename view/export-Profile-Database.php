@@ -30,6 +30,9 @@ global $wpdb;
 			$csv_output .= "\n"; 
 			foreach ($profile_data as $key => $data_value) { 
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data_value['ProfileGender'], ARRAY_A);
+				$data_value['ProfileContactNameFirst'] = stripcslashes(stripcslashes($data_value['ProfileContactNameFirst']));
+				$data_value['ProfileContactNameLast'] = stripcslashes(stripcslashes($data_value['ProfileContactNameLast']));
+					$data_value['ProfileContactDisplay'] = stripcslashes(stripcslashes($data_value['ProfileContactDisplay']));
 				$data_value['ProfileGender'] = $gender['GenderTitle'];
 				$data_value['ProfileLocationCountry'] = rb_agency_getCountryTitle($data_value['ProfileLocationCountry'],true); // returns country code
 				$data_value['ProfileLocationState'] = rb_agency_getStateTitle($data_value['ProfileLocationState'],true); // returns state code
@@ -61,12 +64,16 @@ global $wpdb;
 						$rawValue=$temp_array[$custom_fields_id[$key]];
 						$feet=intval($rawValue/12);
 						$inches=intval($rawValue%12);
-						if($feet==0 && $inches==0)
-							$c_value_array[$key]='';
-						else
+						if($feet==0 && $inches==0){
+						 	$c_value_array[$key]='';
+						}
+						elseif(!is_int($rawValue)){
+                             $c_value_array[$key] = $rawValue;
+					    }else
 							$c_value_array[$key]=$feet."ft ".$inches."in";
 						}
-				}
+					}
+			
 				
 				$csv_output .= ','.implode(',', $c_value_array);
 				$csv_output .="\n";
@@ -105,7 +112,9 @@ global $wpdb;
 				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
 
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
-
+                $data['ProfileContactNameFirst'] = stripcslashes(stripcslashes($data['ProfileContactNameFirst']));
+				$data['ProfileContactNameLast'] = stripcslashes(stripcslashes($data['ProfileContactNameLast']));
+				$data['ProfileContactDisplay'] = stripcslashes(stripcslashes($data['ProfileContactDisplay']));
 				$data['ProfileGender'] =$gender['GenderTitle'];
 				$data['ProfileLocationCountry'] = rb_agency_getCountryTitle($data['ProfileLocationCountry'],true); // returns country code
 				$data['ProfileLocationState'] = rb_agency_getStateTitle($data['ProfileLocationState'],true); // returns state code
@@ -137,14 +146,19 @@ global $wpdb;
 						$rawValue=$temp_array[$custom_fields_id[$key]];
 						$feet=intval($rawValue/12);
 						$inches=intval($rawValue%12);
-						if($feet==0 && $inches==0)
+						if($feet==0 && $inches==0){
 							$c_value_array[$key]='';
+						}
+						elseif(!is_int($rawValue)){
+                             $c_value_array[$key] = $rawValue;
+					    }
 						else
 							$c_value_array[$key]=$feet."ft ".$inches."in";
 							
 						
 						}
-				}
+                    }
+				
 
 				$data = array_merge($data, $c_value_array);
 				$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	

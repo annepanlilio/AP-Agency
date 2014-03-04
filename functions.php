@@ -925,7 +925,7 @@ error_reporting(0);
 			{
 
 				$atts["type"]="casting";
-				$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';
+				/*$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';*/
 			}
 
 				// print, downloads links to be added on top of profile list
