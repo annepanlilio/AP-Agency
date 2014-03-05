@@ -14,12 +14,11 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 	<link rel="stylesheet" type="text/css" media="screen, print" href="<?php bloginfo('stylesheet_directory'); ?>/style.css" />
 	<script language="Javascript1.2">
 		<!--
-		
 		function printpage() {
 			window.print();
 		}
 		//-->
-    </script>
+	</script>
 </head>
 <body onload="printpage()" style="background: #fff;">
 	<div id="print_wrapper" style="width: 887px;">
@@ -30,8 +29,8 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 			<?php echo $rb_agency_option_agencyname; ?>
 			<?php } ?>
 		</div>
-		  	<div id="print_actions" style="float: left; text-align: right; width: 50%;"><a href="#" onclick="printpage();">Print</a> | <a href="javascript:window.opener='x';window.close();">Close</a></div>
-		  	<div style="clear: both;"></div>
+			<div id="print_actions" style="float: left; text-align: right; width: 50%;"><a href="#" onclick="printpage();">Print</a> | <a href="javascript:window.opener='x';window.close();">Close</a></div>
+			<div style="clear: both;"></div>
 		<?php
 
 		global $wpdb;
@@ -65,23 +64,23 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 			}
 			// Type
 			if (isset($ProfileType) && !empty($ProfileType)){
-			  	if ($ProfileType == "Model") {
+				if ($ProfileType == "Model") {
 					$selectedIsModel = " selected";
 					$filter .= " AND profile.ProfileIsModel='1'";
-			  	} elseif ($ProfileType == "Talent") {
+				} elseif ($ProfileType == "Talent") {
 					$selectedIsTalent = " selected";
 					$filter .= " AND profile.ProfileIsTalent='1'";
-			  	}
+				}
 			}
 			// Active
 			if (isset($ProfileIsActive)){
-			  	if ($ProfileIsActive == "1") {
+				if ($ProfileIsActive == "1") {
 					$selectedActive = "active";
 					$filter .= " AND profile.ProfileIsActive=1";
-			  	} elseif ($ProfileIsActive == "0") {
+				} elseif ($ProfileIsActive == "0") {
 					$selectedActive = "inactive";
 					$filter .= " AND profile.ProfileIsActive=0";
-			  	}
+				}
 			} else {
 				$selectedActive = "";
 			}
@@ -197,7 +196,7 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 		if ($hasQuery) {
 			echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width: 887px; \" class=\"profile\">";
 			while ($data = mysql_fetch_array($results)) {
-			  	if (1 == 1) {
+				if (1 == 1) {
 					echo "<div style=\"float: left; width: 420px; min-height: 220px; overflow: hidden; margin: 5px; padding: 5px; border: 1px solid #e1e1e1; \">";
 					echo " <div style=\"float: left; width: 150px; height: 180px; margin-right: 5px; overflow: hidden; \"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
 					echo " <div style=\"float: left; width: 230px; padding: 15px; \">";
