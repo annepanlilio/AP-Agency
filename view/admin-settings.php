@@ -1954,7 +1954,7 @@ elseif ($ConfigID == 5) {
 				while ( $typ = mysql_fetch_array($result)){
 					$profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);
 					$profiletyp = str_replace(' ', '_', $profiletyp);
-					if($$profiletyp) { $Types .= trim($typ['DataTypeTitle']) . "," ; }
+					if($_POST[$profiletyp]) { $Types .= trim($typ['DataTypeTitle']) . "," ; }
 				}
 
 				$Types = rtrim($Types, ",");
@@ -1962,13 +1962,13 @@ elseif ($ConfigID == 5) {
 				if($Types != "" or !empty($Types)){
 
 							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types . 
-							" WHERE ProfileCustomID= " . $lastid; 
+							" WHERE ProfileCustomID = " . $lastid; 
 
 							$check_results = mysql_query($check_sql);
 
 							$count_check = mysql_num_rows($check_results);
-
-							if($count_check <= 0){
+							
+							if($count_check == 0){
 								//create record in Custom Clients
 								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
 								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes) 
@@ -1976,14 +1976,14 @@ elseif ($ConfigID == 5) {
 										  . $wpdb->escape($ProfileCustomTitle) . "','" 
 										  . $Types . "')";
 								
-								$results_client = $wpdb->query($insert_client);
+								$results_client = mysql_query($insert_client) or die(mysql_error());
 							} else {
 								//update if already existing 
 								$update = "UPDATE " . table_agency_customfields_types . " 
 										  SET 
 										  ProfileCustomTypes='" . $Types . "' 
 										  WHERE ProfileCustomID = ".$lastid;
-								$updated = $wpdb->query($update);
+								$updated = mysql_query($update) or die(mysql_error());
 							}
 
 				}
@@ -2158,7 +2158,7 @@ elseif ($_GET['action'] == "editRecord") {
 		
 		if ( $ProfileCustomID > 0) {
 			$query = "SELECT * FROM " . table_agency_customfields . " WHERE ProfileCustomID='$ProfileCustomID'";
-			$results = mysql_query($query) or die (__('Error, query failed', rb_agency_TEXTDOMAIN));
+			$results = mysql_query($query) or die (__(mysql_error(), rb_agency_TEXTDOMAIN));
 			$count = mysql_num_rows($results);
 			while ($data = mysql_fetch_array($results)) {
 				$ProfileCustomID			=	$data['ProfileCustomID'];
@@ -2287,11 +2287,11 @@ elseif ($_GET['action'] == "editRecord") {
 						
 						$result = mysql_query($get_types);
 						
-						while ( $typ = mysql_fetch_array($result)){
-										$t = trim($typ['DataTypeTitle']);
-										$t = str_replace(' ', '_', $t);
+						while ( $typ = mysql_fetch_assoc($result)){
+                                        $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));    
+										$checked = 'checked="checked"';                    
 										echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
-											 ($$t == true ? 'checked="checked"':''). '  />&nbsp;'.
+											 $checked . '  />&nbsp;'.
 											 trim($typ['DataTypeTitle'])
 											 .'&nbsp;<br/>';
 						} 
@@ -2437,18 +2437,45 @@ elseif ($_GET['action'] == "editRecord") {
 													<td valign=\"top\">Profile Type:</td>
 													<td style=\"font-size:13px;\"> ";
 											
-											$get_types = "SELECT * FROM ". table_agency_data_type;
-										
-											$result = mysql_query($get_types);
-										
-											while ( $typ = mysql_fetch_array($result)){
-												$t = trim($typ['DataTypeTitle']);
-												$t = str_replace(' ', '_', $t);
-												echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
-													 ($$t == true ? 'checked="checked"':''). '  />&nbsp;'.
-													 trim($typ['DataTypeTitle'])
-													 .'&nbsp;<br/>';
-											} 
+                                                                                        /*
+                                                                                        * get the proper fields on
+                                                                                        * profile types here
+                                                                                        */
+																						$ProfileCustomID = $_GET['ProfileCustomID'];
+																						
+																						//get custom types
+																						$_sql = "SELECT ProfileCustomTypes FROM " . table_agency_customfields_types . 
+																							" WHERE ProfileCustomID = $ProfileCustomID";
+																						$x = $wpdb->get_row($_sql) or die(mysql_error());
+
+                                                                                        if(strpos($x->ProfileCustomTypes,",") > -1){
+                                                                                                $rTypes = explode(",",$x->ProfileCustomTypes);
+                                                                                        } else {
+                                                                                                $rTypes = $r->ProfileCustomTypes;
+                                                                                        }	
+
+                                                                                        $get_types = "SELECT * FROM ". table_agency_data_type;
+
+                                                                                        $result = mysql_query($get_types);
+
+                                                                                        while ( $typ = mysql_fetch_assoc($result)){
+                                                                                          $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));                        
+                                                                                                                        $checked = '';
+                                                                                                                        if(is_array($rTypes)){
+                                                                                                                                if(in_array($typ['DataTypeTitle'],$rTypes)){
+                                                                                                                                        $checked = 'checked="checked"';
+                                                                                                                                }
+                                                                                                                        } else {
+                                                                                                                                if($typ['DataTypeTitle'] == $rTypes){
+                                                                                                                                        $checked = 'checked="checked"';
+                                                                                                                                }
+                                                                                                                        }
+
+                                                                                                                        echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
+                                                                                                                                $checked . '  />&nbsp;'.
+                                                                                                                                trim($typ['DataTypeTitle'])
+                                                                                                                                .'&nbsp;<br/>';
+                                                                                        } 
 													
 											echo "	</td>
 													<td style=\"font-size:13px;\">
@@ -2740,7 +2767,7 @@ elseif ($_GET['action'] == "editRecord") {
 				  FROM ". table_agency_customfields ." main
 				 ORDER BY $sort $dir";
 				 
-		$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+		$results = mysql_query($query) or die ( __(mysql_error(), rb_agency_TEXTDOMAIN ));
 		$count = mysql_num_rows($results);
 		   
 		 $rb_agency_options_arr = get_option('rb_agency_options');
