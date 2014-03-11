@@ -1788,6 +1788,8 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 			while ( $p = mysql_fetch_array($result)){
 					$types = $p['ProfileCustomTypes'];
 			}
+			
+			$ptype = str_replace(' ','_',$ptype);
 			if($types != "" || $types != NULL){
 				if(strpos($types,",") > -1){
 					$types = explode(",",$types);
