@@ -1954,7 +1954,7 @@ elseif ($ConfigID == 5) {
 				while ( $typ = mysql_fetch_array($result)){
 					$profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);
 					$profiletyp = str_replace(' ', '_', $profiletyp);
-					if($_POST[$profiletyp]) { $Types .= trim($typ['DataTypeTitle']) . "," ; }
+					if($_POST[$profiletyp]) { $Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ; }
 				}
 
 				$Types = rtrim($Types, ",");
@@ -2042,15 +2042,13 @@ elseif ($ConfigID == 5) {
 					$n = str_replace(' ', '_', $n);
 					if($$t) { 
 						$$n = true;
-						$Types .= $n . "," ; 
+						$Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ; 
 					} else { 
 						$$n = false;
 					}
 				}
 
 				$Types = rtrim($Types, ",");
-
-				echo '<input type="hidden" name="apstypes" value="'.$Types.'">';
 
 				if($Types != "" or !empty($Types)){
 
@@ -2065,14 +2063,14 @@ elseif ($ConfigID == 5) {
 								VALUES (" . $ProfileCustomID . ",'" 
 										  . $wpdb->escape($ProfileCustomTitle) . "','" 
 										  . $Types . "')";
-								$results_client = $wpdb->query($insert_client);
+								$results_client = mysql_query($insert_client);
 							} else {
 								//update if already existing 
 								$update = "UPDATE " . table_agency_customfields_types . " 
 										  SET 
 										  ProfileCustomTypes='" . $Types . "' 
 										  WHERE ProfileCustomID = ".$ProfileCustomID;
-								$updated = $wpdb->query($update);
+								$updated = mysql_query($update);
 							}
 
 				} else {
@@ -2462,11 +2460,11 @@ elseif ($_GET['action'] == "editRecord") {
                                                                                           $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));                        
                                                                                                                         $checked = '';
                                                                                                                         if(is_array($rTypes)){
-                                                                                                                                if(in_array($typ['DataTypeTitle'],$rTypes)){
+                                                                                                                                if(in_array($t,$rTypes)){
                                                                                                                                         $checked = 'checked="checked"';
                                                                                                                                 }
                                                                                                                         } else {
-                                                                                                                                if($typ['DataTypeTitle'] == $rTypes){
+                                                                                                                                if($t == $rTypes){
                                                                                                                                         $checked = 'checked="checked"';
                                                                                                                                 }
                                                                                                                         }
@@ -2763,9 +2761,11 @@ elseif ($_GET['action'] == "editRecord") {
 		echo "<tbody>\n";
 	
 		$query = "SELECT main.*, 
-				  (SELECT ProfileCustomTypes FROM ". table_agency_customfields_types ." a WHERE a.ProfileCustomID = main.ProfileCustomID) as ProfileCustomTypes 
+				  a.ProfileCustomTypes
 				  FROM ". table_agency_customfields ." main
-				 ORDER BY $sort $dir";
+				  LEFT JOIN ". table_agency_customfields_types ." a 
+				  ON a.ProfileCustomID = main.ProfileCustomID 
+				  ORDER BY $sort $dir";
 				 
 		$results = mysql_query($query) or die ( __(mysql_error(), rb_agency_TEXTDOMAIN ));
 		$count = mysql_num_rows($results);
@@ -2839,7 +2839,7 @@ elseif ($_GET['action'] == "editRecord") {
 		 }
 		 
 		 echo "        <td class=\"column\">".$custom_views."</td>\n";
-		 echo "        <td class=\"column\">".str_replace(",","<br/>",$data["ProfileCustomTypes"])."</td>\n";
+		 echo "        <td class=\"column\">".str_replace(",","<br/>",str_replace('_',' ',$data["ProfileCustomTypes"]))."</td>\n";
 		 
 		echo "    </tr>\n";
 		}
