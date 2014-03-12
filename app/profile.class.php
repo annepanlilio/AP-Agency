@@ -745,7 +745,7 @@ class RBAgency_Profile {
 			// Debug
 			if(self::$error_debug){
 				self::$error_checking[] = array('search_process',$filterArray);
-				var_dump(self::$error_checking);
+				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
 				return $filterArray;
 			} // If no post, ignore.
@@ -826,12 +826,12 @@ class RBAgency_Profile {
 
 				// First Name
 				if (isset($namefirst) && !empty($namefirst)){
-					$filter .= " AND profile.ProfileContactNameFirst LIKE '". $namefirst ."%'";
+					$filter .= " AND profile.ProfileContactNameFirst LIKE '". mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namefirst))))) ."%'";
 				}
 
 				// Last Name
 				if (isset($namelast) && !empty($namelast)){
-					$filter .= " AND profile.ProfileContactNameLast LIKE '". $namelast ."%'";
+					$filter .= " AND profile.ProfileContactNameLast LIKE '".  mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namelast))))) ."%'";
 				}
 
 				// Type
@@ -1081,7 +1081,7 @@ class RBAgency_Profile {
 				// Debug
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_generate_sqlwhere',$filter);
-					var_dump(self::$error_checking);
+					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
 				
 				self::search_generate_sqlorder($atts);
@@ -1140,7 +1140,7 @@ class RBAgency_Profile {
 				// Debug
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_generate_sqlorder',$filter);
-					var_dump(self::$error_checking);
+					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
 				self::$order_by = $filter;
 
@@ -1198,7 +1198,7 @@ class RBAgency_Profile {
 
 			if(self::$error_debug || self::$error_debug_query){
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
-				var_dump(self::$error_checking);
+				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
 
 			/*
@@ -1262,7 +1262,7 @@ class RBAgency_Profile {
 
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_formatted','success');
-					var_dump(self::$error_checking);
+					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
 
 				/* 
@@ -1301,7 +1301,7 @@ class RBAgency_Profile {
 				$all_html .="<div id='profile-list'>".$profile_list."</div>";
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
-					var_dump(self::$error_checking);
+					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
 
 				return $all_html;
@@ -1314,7 +1314,7 @@ class RBAgency_Profile {
 				$no_rec_html = '<div class=\"rbclear\"></div>' . __("No Profiles Found", rb_agency_TEXTDOMAIN);
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$no_rec_html);
-					var_dump(self::$error_checking);
+					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
 				return $no_rec_html;
 
@@ -1399,7 +1399,7 @@ class RBAgency_Profile {
 						$displayHtml .=  "                <div class=\"detail\">\n";
 						$displayHtml .=  "                </div>\n";
 						$displayHtml .=  "                <div class=\"title\">\n";
-						$displayHtml .=  "                	<h2>". $data['ProfileContactNameFirst'] ." ". $data['ProfileContactNameLast'] ."</h2>\n";
+						$displayHtml .=  "                	<h2>". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) ."</h2>\n";
 						$displayHtml .=  "                </div>\n";
 						$displayHtml .=  "                <div class=\"row-actions\">\n";
 						$displayHtml .=  "                    <span class=\"edit\"><a href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=editRecord&amp;ProfileID=". $ProfileID ."\" title=\"Edit this post\">Edit</a> | </span>\n";
@@ -1614,7 +1614,7 @@ class RBAgency_Profile {
 			$displayHTML .=" </div> <!-- .profile-info --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
-				var_dump(self::$error_checking);
+				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
 
 			return $displayHTML;
