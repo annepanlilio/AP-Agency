@@ -1756,11 +1756,11 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 			$t = explode(",",$ptype);
 			$ptype = ""; 
 			foreach($t as $val){
-				$ptyp[] = retrieve_title($val);
+				$ptyp[] = str_replace(" ","_",retrieve_title($val));
 			}
 			$ptype = implode(",",$ptyp);
 		} else {
-			$ptype = retrieve_title($ptype);
+			$ptype = str_replace(" ","_",retrieve_title($ptype));
 		}
 		$ptype = str_replace(",","",$ptype);
 	} else {
