@@ -1821,7 +1821,7 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 		echo "    </td>\n";
 		echo "  </tr>\n";
 	} // End while
-	if ($count3 == 0) {
+	if ($count3 == 0 && $visibility != 1) {
 		echo "  <tr valign=\"top\">\n";
 		echo "    <th scope=\"row\">". __("There are no custom fields loaded", rb_agency_TEXTDOMAIN) .".  <a href=". admin_url("admin.php?page=rb_agency_settings&ConfigID=7") ."'>". __("Setup Custom Fields", rb_agency_TEXTDOMAIN) ."</a>.</th>\n";
 		echo "  </tr>\n";
