@@ -1316,6 +1316,7 @@ elseif ($ConfigID == 3) {
 		$DataTypeID 	= $_POST['DataTypeID'];
 		$DataTypeTitle 	= $_POST['DataTypeTitle'];
 		$DataTypeTag 	= $_POST['DataTypeTag'];
+		$DataTypeOldTitle = $_POST["oldTitle"];
 			if (empty($DataTypeTag)) { $DataTypeTag = RBAgency_Common::format_stripchars($DataTypeTitle); }
 		// Error checking
 		$error = "";
@@ -1353,6 +1354,18 @@ elseif ($ConfigID == 3) {
 								DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' 
 							WHERE DataTypeID='$DataTypeID'";
 				$updated = $wpdb->query($update);
+			
+				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".$wpdb->escape($DataTypeOldTitle)."', ProfileCustomTypes) > 0;";
+				$result =  mysql_query($update_customfields);
+				  $total = mysql_num_rows($result);
+
+				while($d = mysql_fetch_array($result)){
+					  $ptype = $d["ProfileCustomTypes"];
+					  $nptype = str_replace($DataTypeOldTitle, $DataTypeTitle, $ptype);
+				      mysql_query("UPDATE ". table_agency_customfields_types ."  SET ProfileCustomTypes='".$nptype."' WHERE ProfileCustomID='".$d["ProfileCustomID"]."'");
+				}
+				
+				echo "Updated $total custom fields assigned to this Profile Type<br/>";
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
 		break;
@@ -1444,6 +1457,7 @@ elseif ($ConfigID == 3) {
 	echo "     <input type=\"hidden\" name=\"DataTypeID\" value=\"". $DataTypeID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
+	echo "     <input type=\"hidden\" name=\"oldTitle\" value=\"".$DataTypeTitle."\" />\n";
 	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} else {

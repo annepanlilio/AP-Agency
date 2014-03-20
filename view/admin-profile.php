@@ -1235,6 +1235,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								rb_custom_fields(0, 0, $ProfileGender, true);
 							} else {
 								rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+								
 							}
 
 							echo "  </tbody>\n";
@@ -1252,7 +1253,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 		</div>
-
+<?php 	if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record ?>
 		<div id="dashboard-widgets" class="metabox-holder columns-1">
 
 			<!-- Row 2: Column Left Start -->
@@ -1266,7 +1267,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<div class="inside">
 							<div class="main">
 							<?php
-							if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record
+						
 								//echo "      <h3>" . __("Gallery", rb_agency_TEXTDOMAIN) . "</h3>\n";
 
 												echo "<script type='text/javascript'>\n";
@@ -1406,7 +1407,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							}
 							</script>';
-						}
+					
 							?>
 							</div>
 						</div>
@@ -1620,6 +1621,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			</div>
 
 			<!-- Row 2: Column Right End -->
+			<?php } ?>
 
 		</div>
 
