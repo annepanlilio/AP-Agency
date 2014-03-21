@@ -2076,7 +2076,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 
 		echo "    <tr" . $rowColor . ">\n";
 		echo "        <th class=\"check-column\" scope=\"row\">\n";
-		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\" class=\"administrator\" id=\"" . $ProfileID . "\" name=\"" . $ProfileID . "\"/>\n";
+		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\"  data-name=\"".$ProfileContactNameFirst." ". $ProfileContactNameLast."\" class=\"administrator\" id=\"" . $ProfileID . "\" name=\"" . $ProfileID . "\"/>\n";
 		echo "        </th>\n";
 		echo "        <td class=\"ProfileID column-ProfileID\">" . $ProfileID . "</td>\n";
 		echo "        <td class=\"ProfileContactNameFirst column-ProfileContactNameFirst\">\n";
@@ -2133,9 +2133,22 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	// Show Actions
 	echo "<p class=\"submit\">\n";
 	echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
-	echo "  <input type=\"submit\" value=\"" . __('Delete Profiles') . "\" class=\"button-primary\" name=\"submit\" />   \n";
+	echo "  <input type=\"submit\" value=\"" . __('Delete Profiles') . "\" class=\"delete-profiles button-primary\" name=\"submit\" />   \n";
 	echo "</p>\n";
 	echo "</form>\n";
+	echo "<script  type=\"text/javascript\">\n\n";
+    echo "jQuery('.delete-profiles').click(function(){\n\n";
+    echo "    var profiles = '';\n\n";
+    echo "       jQuery('tbody .check-column input[type=checkbox]:checked').each(function(){ \n\n";
+    echo "           profiles = profiles +'\\n'+jQuery(this).attr('data-name'); \n\n";
+    echo "       });   \n\n";
+    echo "  if(profiles !=='') {if(!confirm('Are you sure that you want to delete the following profiles? \\n'+profiles)){ \n\n";
+    echo "           return false; \n\n";
+    echo "  }}else{\n\n";
+    echo "   alert('Please \'check\' the profiles that you want to delete.'); return false;\n\n";
+    echo "  }\n\n";
+    echo "});\n\n";
+    echo "</script>";
 }
 
 echo "</div>\n";

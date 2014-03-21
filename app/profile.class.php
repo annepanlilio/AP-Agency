@@ -1602,7 +1602,7 @@ class RBAgency_Profile {
 			if ($rb_agency_option_profilelist_expanddetails) {
 				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
 				if($dataList["ProfileLocationState"]!=""){
-					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span>";
+					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 				}
 				$displayHTML .= "</div>\n";
 			}

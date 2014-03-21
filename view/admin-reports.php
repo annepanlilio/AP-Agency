@@ -63,7 +63,7 @@ if ($ConfigID == 0) {
 	echo "    <div class=\"boxlink\">\n";
 	echo "      <h3>". __("Rename Profile Folder Names", rb_agency_TEXTDOMAIN) . "</h3>\n";
 	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\" title=\"". __("Rename Folders", rb_agency_TEXTDOMAIN) . "\">". __("Rename Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("If you created model profiles while under 'First Last' or 'First L' and wish to switch to Display names or IDs you will have to rename the existing folders so that they do not have the models name in it", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <p>". __("If you created model profiles while under "First Last" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it.", rb_agency_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
@@ -678,6 +678,8 @@ elseif ($ConfigID == 8) {
 			$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
 			$ProfileContactDisplay	=$data1["ProfileContactDisplay"];
 			$ProfileGallery			=$data1["ProfileGallery"];
+			$arra_duplicates = array();
+
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {
@@ -699,6 +701,23 @@ elseif ($ConfigID == 8) {
 				} else {
 							$ProfileGalleryFixed  = rb_agency_set_directory($ProfileGalleryFixed);
 				}
+
+				
+
+
+                 array_push($arr_duplicates, $ProfileGalleryFixed);
+
+                 $arr = array_count_values($arr_duplicates);
+                 //print_r($arr);
+                  
+                  $file_rename_count = $arr[$ProfileGalleryFixed];
+ 
+                  if($file_rename_count > 1){
+                       $ProfileGalleryFixed = $ProfileGalleryFixed."-".$file_rename_count;
+                  }else{
+                        $ProfileGalleryFixed = $ProfileGalleryFixed;
+                  }
+
 
 			if ($ProfileGallery == $ProfileGalleryFixed) {
 			} else {
@@ -730,8 +749,6 @@ elseif ($ConfigID == 8) {
 						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
 						$renamed = $wpdb->query($rename);
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-					} else {
-						echo "  <div id=\"message\" class=\"error\">Error renaming <strong>/" . $ProfileGalleryFixed . "/</strong> for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					}
 				}
 			}
