@@ -63,7 +63,7 @@ if ($ConfigID == 0) {
 	echo "    <div class=\"boxlink\">\n";
 	echo "      <h3>". __("Rename Profile Folder Names", rb_agency_TEXTDOMAIN) . "</h3>\n";
 	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\" title=\"". __("Rename Folders", rb_agency_TEXTDOMAIN) . "\">". __("Rename Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("If you created model profiles while under "First Last" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <p>". __("If you created model profiles while under \"First Last\" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it.", rb_agency_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
@@ -719,9 +719,12 @@ elseif ($ConfigID == 8) {
                         $ProfileGalleryFixed = $ProfileGalleryFixed;
                   }
 
+                  echo $ProfileGalleryFixed;
+                  echo "<br/>";
 
-			if ($ProfileGallery == $ProfileGalleryFixed) {
-			} else {
+
+			/*if ($ProfileGallery == $ProfileGalleryFixed) {
+			} else {*/
 				// Folder Exist?
 				if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
 					$finished = false;                       // we're not finished yet (we just started)
@@ -752,7 +755,7 @@ elseif ($ConfigID == 8) {
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					}
 				}
-			}
+			//}
 			$pos++;
 		}
 

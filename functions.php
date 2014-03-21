@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 /*
  * Debug Mode
    //$RB_DEBUG_MODE = true;
