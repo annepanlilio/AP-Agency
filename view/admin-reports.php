@@ -671,6 +671,7 @@ elseif ($ConfigID == 8) {
 		$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
 		$count1 = $wpdb->num_rows;
 		$arrayReservedFoldername = array();
+		$arr_duplicates = array();
 		$pos = 0;
 		foreach ($results1 as $data1) {
 			$ProfileID				=$data1["ProfileID"];
@@ -678,7 +679,7 @@ elseif ($ConfigID == 8) {
 			$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
 			$ProfileContactDisplay	=$data1["ProfileContactDisplay"];
 			$ProfileGallery			=$data1["ProfileGallery"];
-			$arra_duplicates = array();
+			
 
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;

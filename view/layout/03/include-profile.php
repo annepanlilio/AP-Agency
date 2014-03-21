@@ -106,7 +106,7 @@ echo "	      				<p>\n";
 echo "								<span class=\"age\">". rb_agency_get_age($ProfileDateBirth) ."</span>\n";
 								}
 								if (isset($ProfileLocationCity)) {
-echo "								from <span class=\"city\"> ". $ProfileLocationCity ."</span>,<span class=\"state\"> ". $ProfileLocationState ."</span>\n";
+echo "								from <span class=\"state\"> ".rb_agency_getStateTitle($ProfileLocationState,true)."</span>\n";
 								}
 echo "	      				</p>\n";
 echo "		  				<ul>\n";	
@@ -161,9 +161,13 @@ echo " 								<a href=\"#space\">\n";
 echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">All</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
+								    $queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+									$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+									$countImg  = $wpdb->num_rows;
+
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-photos\">\n";
 echo " 								<a href=\"#space\">\n";
-echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Photos</div></div></div>\n";
+echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Photos(".$countImg.")</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-physical\">\n";
@@ -202,15 +206,13 @@ echo " 				<div class=\"rbcol-12 rbcolumn\">\n";
 echo " 					<div id=\"tab-panels\">\n";
 echo " 						<div class=\"row-photos tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
+
 									// images
-									$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-									$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
-									$countImg  = $wpdb->num_rows;
-									foreach($resultsImg as $dataImg ){
+								   foreach($resultsImg as $dataImg ){
 									  	if ($countImg > 1) { 
-											echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\"></a></div>\n";
+											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
 									  	} else {
-											echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\"></a></div>\n";
+											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
 									  	}
 									}
 echo " 							</div>\n"; // .tab-panel
