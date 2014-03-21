@@ -277,7 +277,7 @@ class RBAgency_Profile {
 						 */
 
 						if($ProfileCustomType == 1) {
-								echo "<div class=\"rbfield rbtext rbsingle\">";
+								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								//Commentd to fix language value populate
 								//echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
@@ -290,7 +290,7 @@ class RBAgency_Profile {
 						 */
 						} elseif($ProfileCustomType == 2) {
 
-								echo "<div class=\"rbfield rbtext rbsingle\">";
+								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($ProfileCustomOptions,"}"),"{"));
 								list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
@@ -327,7 +327,7 @@ class RBAgency_Profile {
 						 * Dropdown
 						 */
 						} elseif($ProfileCustomType == 3) {
-								echo "<div class=\"rbfield rbselect rbsingle\">";
+								echo "<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "	<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								echo "	<div>";
 								echo "		<select name=\"ProfileCustomID". $ProfileCustomID ."\">";
@@ -367,7 +367,7 @@ class RBAgency_Profile {
 						 * Checkbox
 						 */
 						} elseif($ProfileCustomType == 5) {
-								echo "<fieldset class=\"rbfield rbcheckbox rbmulti\">";
+								echo "<fieldset class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
@@ -401,7 +401,7 @@ class RBAgency_Profile {
 						 * Radio Button
 						 */
 						} elseif($ProfileCustomType == 6) {
-								echo "<fieldset class=\"rbfield rbradio rbmulti\">";
+								echo "<fieldset class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
@@ -436,7 +436,7 @@ class RBAgency_Profile {
 						 * Metric
 						 */
 						} elseif($ProfileCustomType == 7) {
-								echo "<fieldset class=\"rbfield rbselect rbmulti\">";
+								echo "<fieldset class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 
 							/*
 							 * Measurement Label
@@ -545,7 +545,7 @@ class RBAgency_Profile {
 
 				/* status The “Status” field should not show up on front-end search.*/ 
 				if(isset($_REQUEST['page']) && $_REQUEST['page']=='rb_agency_search'){
-					echo "				<div class=\"rbfield rbselect rbsingle\">\n";
+					echo "				<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
 					echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
 					echo "						<div>";
 					echo "							<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
@@ -1637,9 +1637,9 @@ class RBAgency_Profile {
 			 * Opening of Field or Div
 			 */
 				if($ProfileCustomType == 7 OR $ProfileCustomType == 5 OR $ProfileCustomType == 6){
-					echo "<fieldset class=\"search-field multi\">";
+					echo "<fieldset class=\"search-field multi profilecustomfieldid_".$ProfileCustomID."\" id=\"profilecustomfieldid_".$ProfileCustomID."\">";
 				} else {
-					echo "<div class=\"search-field single\">";	
+					echo "<div class=\"search-field single profilecustomfieldid_".$ProfileCustomID."\" id=\"profilecustomfieldid_".$ProfileCustomID."\">";	
 				}
 
 			/*
