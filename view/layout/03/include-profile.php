@@ -181,11 +181,13 @@ echo " 								<a href=\"#space\">\n";
 echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Experience</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
+if(function_exists('rb_agency_casting_menu')){
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-bookings\">\n";
 echo " 								<a href=\"/profile-casting/\">\n";
 echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Booking</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
+}
 echo " 							<div class=\"maintab tab-right tab-inactive\" id=\"row-downloads\">\n";
 echo " 								<a href=\"javascript:;\">\n";
 echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Downloads</div></div></div>\n";
@@ -289,12 +291,13 @@ echo " 							<div class=\"tab-panel\">\n";
 echo " 							</div>\n"; // .tab-panel							
 echo " 						</div>\n"; // twelve rbcolumn experience
 
+if(function_exists('rb_agency_casting_menu')){
 echo " 						<div class=\"row-bookings tab\">\n";
 echo "						<h3>Bookings</h3>";
 echo " 						<div class=\"tab-panel\">\n";
 echo " 						</div>\n"; // .tab-panel
 echo " 						</div>\n"; // Row booking
-
+}
 // added this section to be able to display downloadable 
 // files attached to a specific profile 
 echo "						<div class=\"row-downloads tab\">\n";

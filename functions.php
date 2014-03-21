@@ -2148,23 +2148,23 @@ function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelT
 				if ($resultCustom->ProfileCustomType == 7){ 
 					if($resultCustom->ProfileCustomOptions == 3){ 
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label .$LabelSeparator." </".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label .$LabelSeparator." </".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
 					} else {
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} else {
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 				}
 			} elseif ($resultCustom->ProfileCustomView == "2") {
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ".$heightfeet."ft ".$heightinch." in</li>\n";
 					} else {
-						echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} else {
-					echo "<li><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
+					echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$LabelTag.">". $resultCustom->ProfileCustomTitle .$measurements_label. $LabelSeparator." </".$LabelTag."> ". $resultCustom->ProfileCustomValue ."</li>\n";
 				}
 			}
 		}
@@ -2241,31 +2241,31 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 
 					if($resultCustom->ProfileCustomOptions == 3 && $rb_agency_option_unittype ==1){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$heightfeet." ft ".$heightinch." in</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$heightfeet." ft ".$heightinch." in</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 2){
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 1){
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} else {
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
 					}
 				} else {
 					if ($resultCustom->ProfileCustomType == 4){
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
 					} else {
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
 			} elseif ($resultCustom->ProfileCustomView == "2") {  // TODO: Why is admin view showing? (Rob)
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet." ft ".$heightinch." in</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet." ft ".$heightinch." in</li>\n";
 					} else {
-						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} else {
-					echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+					echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 				}
 			}
 

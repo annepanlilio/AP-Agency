@@ -125,11 +125,11 @@ class RBAgency_Profile {
 
 				// Show Profile Name
 				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\">\n";
 						echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"". $_SESSION["namefirst"] ."\" /></div>\n";
 						echo "				</div>\n";
-						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\">\n";
 						echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"". $_SESSION["namelast"] ."\" /></div>\n";
 						echo "				</div>\n";
@@ -137,7 +137,7 @@ class RBAgency_Profile {
 
 				// Show Profile Type
 				if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
-						echo "				<div class=\"rbfield rbselect rbsingle\">\n";
+						echo "				<div class=\"rbfield rbselect rbsingle rb_profiletype\" id=\"rb_profiletype\">\n";
 						echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"profiletype\" id=\"type\">\n";               
@@ -157,7 +157,7 @@ class RBAgency_Profile {
 
 				// Show Profile Gender
 				if ( ($rb_agency_option_formshow_gender > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\">\n";
 						echo "					<label for=\"gender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"gender\" id=\"gender\">\n";
@@ -175,7 +175,7 @@ class RBAgency_Profile {
 
 				// Show Profile Age
 				if ( ($rb_agency_option_formshow_age > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
-						echo "				  <fieldset class=\"rbfield rbtext rbmulti\">";
+						echo "				  <fieldset class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
 						echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 						echo "					<div>\n";
 						echo "						<div>\n";
@@ -192,12 +192,12 @@ class RBAgency_Profile {
 
 				// Show Location Search
 				if ( ($rb_agency_option_formshow_location > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\">\n";
 						echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"". $_SESSION["city"] ."\" /></div>\n";
 						echo "				</div>\n";
 
-						echo "				<div class=\"rbfield rbselect rbsingle\">\n";
+						echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\">\n";
 																		$location= site_url();
 						echo '					<input type="hidden" id="url" value="'.$location.'">';
 						echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
@@ -214,7 +214,7 @@ class RBAgency_Profile {
 						echo "					</div>\n";
 						echo "				</div>\n";
 
-						echo "				<div class=\"rbfield rbselect rbsingle\">\n";
+						echo "				<div class=\"rbfield rbselect rbsingle rb_state\" id=\"rb_state\"\n";
 						echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
 																		//echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"". $_SESSION["state"] ."\" />\n";
 																		$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
@@ -230,7 +230,7 @@ class RBAgency_Profile {
 						echo "					</div>\n";
 						echo "				</div>\n";
 
-						echo "				<div class=\"rbfield rbtext rbsingle\">\n";
+						echo "				<div class=\"rbfield rbtext rbsingle rb_zip\" id=\"rb_zip\">\n";
 						echo "					<label for=\"zip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"". $_SESSION["zip"] ."\" /></div>\n";
 						echo "				</div>\n";
