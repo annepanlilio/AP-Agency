@@ -25,7 +25,7 @@ get_currentuserinfo();
 						if ($user_level >= 7) {
 							echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
 
-							$queryGenderResult =$wpdb->get_results($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender), ARRAY_A);
+							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender);
 							$queryGenderCount = $wpdb->num_rows;
 
 							foreach($queryGenderResult as $fetchGender){
