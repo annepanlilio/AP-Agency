@@ -1099,6 +1099,8 @@ elseif ($ConfigID == 14) {
 
 		$trackDummies = array();
 		$sample_url = rb_agency_BASEPATH."view/samples"; // Samples' folder
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_profilenaming = (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
 
 	/*
 	 * Sample Data Values
@@ -1219,7 +1221,9 @@ elseif ($ConfigID == 14) {
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileContactDisplay = "ID ". $ProfileID;
 				}
-
+				
+				$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
+                
 
                  array_push($arr_duplicates, $ProfileGalleryFixed);
 
@@ -1234,10 +1238,11 @@ elseif ($ConfigID == 14) {
                        $ProfileGallery = $ProfileGalleryFixed;
                   }
 
+                 
 			}
 
 			if (empty($ProfileGallery)) {  // Probably a new record... 
-				$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay); 
+				$ProfileGallery = RBAgency_Common::format_stripchars($ProfileGallery); 
 			}
 
 			$ProfileGallery = rb_agency_just_checkdir($ProfileGallery);
@@ -1281,20 +1286,52 @@ elseif ($ConfigID == 14) {
 			echo "<br/>Succesfully removed...";
 			echo "<br/>";
 
-			$trackDummies = explode(",",$_SESSION["trackDummies_text"]);
-
+		
 			// Track dummies to pull out
-			foreach($trackDummies as $gallery){
+		   $arr_duplicates = array();
+			foreach($userProfileNames as $ProfileContact){
+				$ProfileContactDisplay = "";
+				$ProfileGallery = "";
+
+							if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+								if ($rb_agency_option_profilenaming == 0) {
+									$ProfileContactDisplay = $ProfileContact[1] . " ". $ProfileContact[0];
+								} elseif ($rb_agency_option_profilenaming == 1) {
+									$ProfileContactDisplay = $ProfileContact[0] . " ". substr($ProfileContact[1], 0, 1);
+								} elseif ($rb_agency_option_profilenaming == 2) {
+									$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+									$have_error = true;
+								} elseif ($rb_agency_option_profilenaming == 3) {
+									$ProfileContactDisplay = "ID ". $ProfileID;
+								}
+
+								$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
+                              
+				                 array_push($arr_duplicates, $ProfileGalleryFixed);
+
+				                 $arr = array_count_values($arr_duplicates);
+				                 //print_r($arr);
+				                  
+				                  $file_rename_count = $arr[$ProfileGalleryFixed];
+				 
+				                  if($file_rename_count > 1){
+				                      $gallery = $ProfileGalleryFixed."-".$file_rename_count;
+				                  }else{
+				                       $gallery = $ProfileGalleryFixed;
+				                  }
+
+							}
+
 				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
 				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ";
 				$fID =  $wpdb->get_row($wpdb->prepare($getGallary), ARRAY_A);
 				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				$wpdb->query($pSql) or die("2".mysql_error());
+				$wpdb->query($pSql);// or die("2".mysql_error());
 				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				$wpdb->query($pmSql) or die("3".mysql_error());
+				$wpdb->query($pmSql);// or die("3".mysql_error());
 				uninstall_dummy_profile($gallery);
 			}
-			unset($_SESSION["trackDummies_text"]); 
+			
 		}
 		
 		
@@ -1328,7 +1365,7 @@ elseif ($ConfigID == 14) {
 					if ($rb_agency_option_profilenaming == 0) {
 						$ProfileContactDisplay = $ProfileContact[0] . " ". $ProfileContact[1];
 					} elseif ($rb_agency_option_profilenaming == 1) {
-						$ProfileContactDisplay = $ProfileContact[1] . " ". substr($ProfileContact[0], 0, 1);
+						$ProfileContactDisplay = $ProfileContact[0] . " ". substr($ProfileContact[1], 0, 1);
 					} elseif ($rb_agency_option_profilenaming == 2) {
 						$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
 						$have_error = true;
@@ -1336,6 +1373,9 @@ elseif ($ConfigID == 14) {
 						$ProfileContactDisplay = "ID ". $ProfileID;
 					}
 
+						$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
+                              
+                                 
 					     array_push($arr_duplicates, $ProfileGalleryFixed);
 
 		                 $arr = array_count_values($arr_duplicates);
@@ -1352,7 +1392,7 @@ elseif ($ConfigID == 14) {
 
 
 				if (empty($ProfileGallery)) {  // Probably a new record... 
-					$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay); 
+					$ProfileGallery = RBAgency_Common::format_stripchars($ProfileGallery); 
 				}
 
 				$ProfileGallery = rb_agency_createdir($ProfileGallery);
