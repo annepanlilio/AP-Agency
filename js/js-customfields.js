@@ -32,12 +32,19 @@ jQuery(document).ready(function(){
 	        jQuery(this).fadeOut();
 		}
 	});
+    var dropdown_values = [];
+	jQuery("#obj_edit input[type=text]").each(function(i,d){
+		if(jQuery(this).attr("name") != "ProfileCustomTitle" ){
+			dropdown_values.push(jQuery(this).val());
+		}
+	});
+	var OriginalProfileCustomTitle = jQuery("input[name=ProfileCustomTitle]").val();
 	
 	//Get objects by selected type
 	function getObj(type){
 	
 	      switch(type){
-			case "1":
+			case "1": // Text
 			     return '<tr>'
 				          +'<td>'
 						     +'<tr>'
@@ -51,18 +58,23 @@ jQuery(document).ready(function(){
 						  +'</td>'
 						+'</tr>';
 			break;  
-			case "2":
+			case "2": 
 			        jQuery("#objtype_customize").empty().html('<tr><td><td align="right" style="width:50px;">Title:</td><td style="width:10px;"><input type="text" name="ProfileCustomTitle"/></td></td></tr>');
 					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:50px;">Min*:</td><td style="width:10px;"><input type="text" name="textmin"/></td></td></tr>');
 					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:10px;">Max*:</td><td style="width:10px;"><input type="text" name="textmax"/></td></td></tr></tr>');
 			break;  
-			case "3":
-				var appnd = '<div id="obj_edit" class="3">Title:<input name="ProfileCustomTitle" value="" style="width:190px;" type="text"><br><ul id="editfield_add_more_options_12"><li>Option:<input value="" name="option[]" type="text"><a href="javascript:;" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li></ul><br><a href="javascript:;" id="addmoreoption_12">add more option[+]</a><br><br><div class="ui-sortable" id="editfield_add_more_options_2"></div><br></div>';
+			case "3":  // Dropdown
+			    jQuery("#objtype_customize").empty();
+
+				var appnd = '<div id="obj_edit" class="3">Title:<input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" style="width:190px;" type="text"><br><ul id="editfield_add_more_options_12"><li>Option:<input value="" name="option[]" type="text"><a href="javascript:;" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li></ul><br><a href="javascript:;" id="addmoreoption_12">add more option[+]</a><br><br><div class="ui-sortable" id="editfield_add_more_options_2"></div><br></div>';
 				jQuery(".inside form").find('.submit').before(appnd);
 				jQuery("#obj_edit").css({display:'block'});
+				jQuery.each(dropdown_values,function(i,v){
+					jQuery( "#editfield_add_more_options_12" ).append('<li class="" style="">Option:<input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li>');
+				});
 				jQuery( "#editfield_add_more_options_12" ).sortable();
 			break;  
-			case "4":
+			case "4": // Textbox
 			     return '<tr>'
 				          +'<td>'
 						     +'<tr>'
@@ -76,17 +88,41 @@ jQuery(document).ready(function(){
 						  +'</td>'
 					+'</tr>';
 			break;  
-			case "5":
-			    jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
-				jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
-				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+			case "5": // Checkbox
+			   
+			    if(dropdown_values.length < 0){
+				  	jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+				  	jQuery("#objtype_customize").empty().html('Title*:<input type="text" name="ProfileCustomTitle"/><br/>');
+				 }else{
+				 	jQuery("#objtype_customize").empty().html('Title*:<input type="text" value="'+OriginalProfileCustomTitle+'" name="ProfileCustomTitle"/><br/>');
+				 }
+
+				var append_vals = "";
+				
+				jQuery.each(dropdown_values,function(i,v){
+
+					append_vals += "Values: <input type=\"text\" value=\""+v+"\" name=\"label[]\"/><br/>";
+				});
+
+				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1">'+append_vals+'</div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			break;  
-			case "6":
-		   	    jQuery("#objtype_customize").empty().html('Title*:<input type="value" name="ProfileCustomTitle"/><br/>');
-				jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
-				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1"></div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+			case "6": // Radio button
+			   	    
+			     if(dropdown_values.length < 0){
+			     	jQuery("#objtype_customize").append('Values:<input type="text" name="label[]"/><br/>');
+			     	jQuery("#objtype_customize").empty().html('Title*:<input type="text" name="ProfileCustomTitle"/><br/>');
+				 }else{
+				 	jQuery("#objtype_customize").empty().html('Title*:<input type="text" value="'+OriginalProfileCustomTitle+'" name="ProfileCustomTitle"/><br/>');
+				 }
+				var append_vals = "";
+				
+				jQuery.each(dropdown_values,function(i,v){
+
+					append_vals += "Values: <input type=\"text\" value=\""+v+"\" name=\"label[]\"/><br/>";
+				});
+				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1">'+append_vals+'</div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
 			  break;  
-			case "7":
+			case "7": // Imperials
    		        jQuery("#objtype_customize").empty().html("<tr><td>Title*:<input type='text' name='ProfileCustomTitle' /></td></tr>");
 				jQuery("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
 				if(jQuery(".objtype").attr("id")==1){
