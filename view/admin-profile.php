@@ -355,8 +355,8 @@ if (isset($_POST['action'])) {
 							// Upload if it doesnt exist already
 							$path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
 							$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] ."_". RBAgency_Common::generate_random_string(6) . "." . $path_parts['extension']);
-							$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaURL = '" . $safeProfileMediaFilename . "'" or die(mysql_error());
-							$results=  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+							$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaURL = '%d2'";
+							$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID, $safeProfileMediaFilename),ARRAY_A);
 							$count =  $wpdb->num_rows;
 
 							if ($count < 1) {
@@ -457,14 +457,13 @@ if (isset($_POST['action'])) {
 
 				/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 				// Do we have a custom image yet? Lets just set the first one as primary.
-				$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaType = 'Image' AND ProfileMediaPrimary='1'";
-				$results=  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+				$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaType = 'Image' AND ProfileMediaPrimary='1'";
+				$results=  $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
 				$count =  $wpdb->num_rows;
 				if ($count < 1) {
 
-					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaType = 'Image' LIMIT 0, 1";
-					
-					$resultsNeedOne=  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaType = 'Image' LIMIT 0, 1";
+					$resultsNeedOne=  $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
 					$count =  $wpdb->num_rows;
 					foreach ($resultsNeedOne as $dataNeedOne) {
 						$resultsFoundOne = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaID = '" . $dataNeedOne['ProfileMediaID'] . "'");
@@ -527,9 +526,9 @@ if (isset($_POST['action'])) {
 			foreach ($_POST as $ProfileID) {
 
 				// Verify Record
-				$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  \"" . $ProfileID . "\"";
+				$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  '%d'";
 				
-				$resultsDelete=  $wpdb->get_results($wpdb->prepare($queryDelete),ARRAY_A);
+				$resultsDelete=  $wpdb->get_results($wpdb->prepare($queryDelete, $ProfileID),ARRAY_A);
 				
 
 				foreach ($resultsDelete as $dataDelete) {
@@ -585,8 +584,8 @@ elseif ($_GET['action'] == "deleteRecord") {
 
 	$ProfileID = $_GET['ProfileID'];
 	// Verify Record
-	$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  \"" . $ProfileID . "\"";
-	$resultsDelete=  $wpdb->get_results($wpdb->prepare($queryDelete),ARRAY_A);
+	$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  '%d'";
+	$resultsDelete=  $wpdb->get_results($wpdb->prepare($queryDelete, $ProfileID),ARRAY_A);
 	foreach ($resultsDelete as $dataDelete) {
 		$ProfileGallery = $dataDelete['ProfileGallery'];
 
@@ -717,7 +716,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID='$ProfileID'";
 	
-		$results=  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+		$results=  $wpdb->get_results($query,ARRAY_A);
 		$count  = $wpdb->num_rows;
 		foreach ($results as $data) {
 
@@ -935,7 +934,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$ProfileType = (strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
 
 							$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
-							$results3=  $wpdb->get_results($wpdb->prepare($query3),ARRAY_A);
+							$results3=  $wpdb->get_results($query3,ARRAY_A);
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
 							foreach ($results3 as $data3) {
@@ -1213,7 +1212,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							}
 
 							$query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
-							$results1=  $wpdb->get_results($wpdb->prepare($query1),ARRAY_A);
+							$results1=  $wpdb->get_results($query1,ARRAY_A);
 							$count1  = $wpdb->num_rows;
 							if ($count1 > 0) {
 								if (empty($GenderID) || ($GenderID < 1)) {
@@ -1284,8 +1283,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													$massmediaids = implode(",", $_GET['targetids']);
 													//get all the images
 
-													$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
-													$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm),ARRAY_A);
+													$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+													$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID),ARRAY_A);
 													$countImgConfirm = $wpdb->num_rows;
 													$mass_image_data = array();
 													foreach ($resultsImgConfirm as $dataImgConfirm) {
@@ -1311,8 +1310,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												$deleteTargetID = $_GET["targetid"];
 
 												// Verify Record
-												$queryImgConfirm = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaID =  \"" . $deleteTargetID . "\"";
-												$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm),ARRAY_A);
+												$queryImgConfirm = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d1' AND ProfileMediaID =  '%d2'";
+												$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID, $deleteTargetID),ARRAY_A);
 												$countImgConfirm = $wpdb->num_rows;
 												foreach ($resultsImgConfirm  as $dataImgConfirm) {
 
@@ -1343,7 +1342,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											$rb_agency_options_arr = get_option('rb_agency_options');
 											$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 											$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-											$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+											$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 											$countImg =$wpdb->num_rows;
 
 											foreach ($resultsImg as $dataImg) {
@@ -1437,8 +1436,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<?php
 							echo "      <p>" . __("The following files (pdf, audio file, etc.) are associated with this record", rb_agencyinteract_TEXTDOMAIN) . ".</p>\n";
 
-							$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType <> \"Image\"";
-							$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+							$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType <> \"Image\"";
+							$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
 							$countMedia = $wpdb->num_rows;
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
@@ -1906,7 +1905,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "                <option value=\"\">" . __("Any Category", rb_agency_TEXTDOMAIN) . "</option>";
 
 	$query = "SELECT DataTypeID, DataTypeTitle FROM " . table_agency_data_type . " ORDER BY DataTypeTitle ASC";
-	$results =$wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+	$results =$wpdb->get_results($query,ARRAY_A);
 	$count = $wpdb->num_rows;
 	foreach ($results as $data) {
 		echo "<option value=\"" . $data['DataTypeID'] . "\" " . selected($_GET['ProfileType'], $data["DataTypeID"]) . "\">" . $data['DataTypeTitle'] . "</option>\n";
@@ -1927,7 +1926,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "                <option value=\"\">" . __("Any Location", rb_agency_TEXTDOMAIN) . "</option>";
 
 	echo "<LI>".$query = "SELECT DISTINCT ProfileLocationCity, ProfileLocationState FROM " . table_agency_profile . " ORDER BY ProfileLocationState, ProfileLocationCity ASC";
-	$results =  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+	$results =  $wpdb->get_results($query,ARRAY_A);
 	$count = $wpdb->num_rows;
 	foreach ($results as $data) {
 		if (isset($data['ProfileLocationCity']) && !empty($data['ProfileLocationCity'])) {
@@ -1939,7 +1938,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "              <select name=\"ProfileGender\">\n";
 	echo "                  <option value=\"\">" . __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 	$query2 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ORDER BY GenderID";
-	$results2 =$wpdb->get_results($wpdb->prepare($query2),ARRAY_A);
+	$results2 =$wpdb->get_results($query2,ARRAY_A);
 	foreach ($results2 as  $dataGender) {
 		echo "<option value=\"" . $dataGender["GenderID"] . "\"" . selected($_GET["ProfileGender"], $dataGender["GenderID"], false) . ">" . $dataGender["GenderTitle"] . "</option>";
 	}
@@ -2044,9 +2043,8 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 			$new_title = "";
 			foreach($title as $t){
 				$id = (int)$t;
-				$get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
-							 " WHERE DataTypeID = " . $id;   
-				$get = $wpdb->get_row($wpdb->prepare($get_title),ARRAY_A,0 	 );
+				$get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type . " WHERE DataTypeID = %d";   
+				$get = $wpdb->get_row($wpdb->prepare($get_title, $id),ARRAY_A,0);
 				if ($wpdb->num_rows > 0 ){
 					$new_title .= "," . $get['DataTypeTitle']; 
 				}
@@ -2055,9 +2053,8 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		} else {
 				$new_title = "";
 				$id = (int)$data['ProfileType'];
-				$get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type .  
-							 " WHERE DataTypeID = " . $id;   
-				$get = $wpdb->get_row($wpdb->prepare($get_title),ARRAY_A,0 	 );
+				$get_title = "SELECT DataTypeTitle FROM " . table_agency_data_type . " WHERE DataTypeID = %d";   
+				$get = $wpdb->get_row($wpdb->prepare($get_title, $id),ARRAY_A,0);
 				if ($wpdb->num_rows > 0 ){
 					$new_title = $get['DataTypeTitle']; 
 				}
