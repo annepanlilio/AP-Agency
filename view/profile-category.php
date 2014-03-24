@@ -285,7 +285,7 @@ echo $rb_header = RBAgency_Common::rb_header();
 							<!-- 	<div id="emailbox" >
 									<form method="post" enctype="multipart/form-data" action="">
 										<input type="hidden" name="action" value="cartEmail" />	      
-										<div class="field"><label for="SearchMuxToName">Sender Name TESTERS:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" required/></div>
+										<div class="field"><label for="SearchMuxToName">Sender Name:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" required/></div>
 										<div class="field"><label for="SearchMuxToEmail">Sender Email:</label><br/><input type="email" id="SearchMuxToEmail" name="SearchMuxToEmail" value="" required/></div>
 										<div class="field"><label for="SearchMuxSubject">Subject:</label><br/><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="Casting Category" required></div>
 										<div class="field"><label for="SearchMuxMessage">Message to Admin:</label><br/>

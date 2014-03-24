@@ -1201,13 +1201,14 @@ elseif ($ConfigID == 14) {
 
 	/*
 	 * Register dummies to track
-	 */
+	 */  
 
+	   $arr_duplicates = array();
 		foreach($userProfileNames as $ProfileContact):
 			$ProfileContactDisplay = "";
 			$ProfileGallery = "";
 
-				if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+			if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContact[1] . " ". $ProfileContact[0];
 				} elseif ($rb_agency_option_profilenaming == 1) {
@@ -1218,6 +1219,21 @@ elseif ($ConfigID == 14) {
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileContactDisplay = "ID ". $ProfileID;
 				}
+
+
+                 array_push($arr_duplicates, $ProfileGalleryFixed);
+
+                 $arr = array_count_values($arr_duplicates);
+                 //print_r($arr);
+                  
+                  $file_rename_count = $arr[$ProfileGalleryFixed];
+ 
+                  if($file_rename_count > 1){
+                      $ProfileGallery = $ProfileGalleryFixed."-".$file_rename_count;
+                  }else{
+                       $ProfileGallery = $ProfileGalleryFixed;
+                  }
+
 			}
 
 			if (empty($ProfileGallery)) {  // Probably a new record... 
@@ -1319,7 +1335,21 @@ elseif ($ConfigID == 14) {
 					} elseif ($rb_agency_option_profilenaming == 3) {
 						$ProfileContactDisplay = "ID ". $ProfileID;
 					}
+
+					     array_push($arr_duplicates, $ProfileGalleryFixed);
+
+		                 $arr = array_count_values($arr_duplicates);
+		                 //print_r($arr);
+		                  
+		                  $file_rename_count = $arr[$ProfileGalleryFixed];
+		 
+		                  if($file_rename_count > 1){
+		                      $ProfileGallery = $ProfileGalleryFixed."-".$file_rename_count;
+		                  }else{
+		                       $ProfileGallery = $ProfileGalleryFixed;
+		                  }
 				}
+
 
 				if (empty($ProfileGallery)) {  // Probably a new record... 
 					$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay); 
