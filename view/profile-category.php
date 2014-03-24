@@ -263,10 +263,12 @@ echo $rb_header = RBAgency_Common::rb_header();
 			echo __("No Categories Found", rb_agency_TEXTDOMAIN);
 		}
 
-
+ 
 		/*
 		 * Email to admin
 		 */ 
+
+	
 		echo "				<div id=\"rbcasting-cart\">\n";
 		echo "					<div class=\"cb\"></div>\n"; ?>
 								<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
@@ -277,12 +279,13 @@ echo $rb_header = RBAgency_Common::rb_header();
 										$('#emailbox').toggle('slow'); 
 									});
 								});
-								</script>
+								</script> 
+		
 
-								<div id="emailbox" >
+							<!-- 	<div id="emailbox" >
 									<form method="post" enctype="multipart/form-data" action="">
 										<input type="hidden" name="action" value="cartEmail" />	      
-										<div class="field"><label for="SearchMuxToName">Sender Name:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" required/></div>
+										<div class="field"><label for="SearchMuxToName">Sender Name TESTERS:</label><br/><input type="text" id="SearchMuxToName" name="SearchMuxToName" value="" required/></div>
 										<div class="field"><label for="SearchMuxToEmail">Sender Email:</label><br/><input type="email" id="SearchMuxToEmail" name="SearchMuxToEmail" value="" required/></div>
 										<div class="field"><label for="SearchMuxSubject">Subject:</label><br/><input type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="Casting Category" required></div>
 										<div class="field"><label for="SearchMuxMessage">Message to Admin:</label><br/>
@@ -294,9 +297,9 @@ echo $rb_header = RBAgency_Common::rb_header();
 											<input type="submit" name="submit" value="Send Email" class="button-primary" /> 
 										</div>
 									</form>
-								</div>
+								</div> -->
 		<?php
-
+       
 		/*
 		 * Get Profile Results
 		 */ 
