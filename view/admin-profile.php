@@ -1861,7 +1861,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 						<?php
 
 							$query = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ";
-							$queryGenderResult=  $wpdb->get_results($wpdb->prepare($query ),ARRAY_A);
+							$queryGenderResult=  $wpdb->get_results($query,ARRAY_A);
 							$queryGenderCount  = $wpdb->num_rows;
 							echo "<p>";
 							foreach ($queryGenderResult as $fetchGender) {

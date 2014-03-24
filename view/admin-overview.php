@@ -25,11 +25,11 @@ get_currentuserinfo();
 						if ($user_level >= 7) {
 							echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", rb_agency_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", rb_agency_TEXTDOMAIN) . ".</li>";
 
-							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender);
+							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender, ARRAY_A);
 							$queryGenderCount = $wpdb->num_rows;
 
 							foreach($queryGenderResult as $fetchGender){
-								 echo "<li><a class=\"button-secondary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></li>\n";
+								echo "<li><a class=\"button-secondary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", rb_agency_TEXTDOMAIN) ."</a></li>\n";
 							}
 							if($queryGenderCount < 1){
 							echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", rb_agency_TEXTDOMAIN) ."</li>\n";
@@ -91,7 +91,7 @@ get_currentuserinfo();
 						if ($user_level >= 7) {
 							// Recently Updated
 							$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileDateUpdated FROM ". table_agency_profile ." ORDER BY ProfileDateUpdated DESC LIMIT 0,10";
-							$results=  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+							$results=  $wpdb->get_results($query, ARRAY_A);
 							$count = $wpdb->num_rows;
 							foreach ($results as $data ) { ?>
 								<li>
@@ -102,7 +102,6 @@ get_currentuserinfo();
 									<?php } ?>
 								</li><?php
 							}
-							mysql_free_result($results);
 							if ($count < 1) {
 								echo "". __("There are currently no profiles added", rb_agency_TEXTDOMAIN) . ".";
 							}
@@ -121,7 +120,7 @@ get_currentuserinfo();
 						if ($user_level >= 7) {
 							// Recently Viewed
 							$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileDateViewLast, ProfileStatHits FROM ". table_agency_profile ." ORDER BY ProfileDateViewLast DESC LIMIT 0,10";
-							$results=  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+							$results=  $wpdb->get_results($query, ARRAY_A);
 							$count = $wpdb->num_rows;
 							foreach ($results as $data ) { 
 								?>

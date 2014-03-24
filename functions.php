@@ -1,7 +1,8 @@
 <?php
-error_reporting(0);
 /*
  * Debug Mode
+error_reporting(1);
+ini_set('display_errors', 'On');
    //$RB_DEBUG_MODE = true;
  */
 
@@ -458,7 +459,7 @@ error_reporting(0);
 	 * @param string $timestamp (unix timestamp)
 	 * @param string $offset  (offset from server)
 	 */
-	function rb_agency_makeago($timestamp, $offset){
+	function rb_agency_makeago($timestamp, $offset = null){
 		// Ensure the Timestamp is not null
 		if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
 			// Offset 
@@ -2114,7 +2115,7 @@ function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelT
 	global $wpdb;
 	global $rb_agency_option_unittype;
 	
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"), $ProfileID);
 	foreach ($resultsCustom as $resultCustom) { 
 
 		if( $resultCustom->ProfileCustomID != 16 ):
@@ -3942,16 +3943,16 @@ function is_client_profiletype(){
 
 
 
-
-
-
-
 // Get State Name by State ID
-function get_state_by_id($stateId){
-$queryState = mysql_query("SELECT StateTitle FROM ".table_agency_data_state."  where StateID = ".$stateId." ");
-$userState = mysql_fetch_assoc($queryState);
-return $userState['StateTitle'];
+function get_state_by_id($StateID){
+	global $wpdb;
+
+	$results = $wpdb->get_row($wpdb->prepare("SELECT StateTitle FROM ".table_agency_data_state." WHERE StateID = %d", $StateID), ARRAY_A);
+	return $results['StateTitle'];
+
 }
+
+
 
 // Genrate query for gallary Order
 function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaType){
