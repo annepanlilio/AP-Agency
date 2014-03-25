@@ -222,7 +222,7 @@ class RBAgency {
 				add_action('plugin_action_links', array('RBAgency', 'menu_addlinkto_plugin'),10,2);
 
 				// Add Notification to Plugins Page
-				add_action('after_plugin_row_rb-agency/rb-agency.php', array('RBAgency', 'plugin_row'));
+				//add_action('after_plugin_row_rb-agency/rb-agency.php', array('RBAgency', 'plugin_row'));
 
 				// Register Settings
 				add_action('admin_init', array('RBAgency', 'do_register_settings') );
