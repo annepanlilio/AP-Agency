@@ -899,7 +899,14 @@ class RBAgency {
 
 		//Create Admin Menu
 		public static function menu_admin(){
-			add_menu_page( __("Agency", rb_agency_TEXTDOMAIN), __("Agency", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_menu", array('RBAgency', 'menu_dashboard'),"div");
+			add_menu_page( 
+				__("Agency", rb_agency_TEXTDOMAIN), 
+				__("Agency", rb_agency_TEXTDOMAIN), 
+				'manage_sites',
+				"rb_agency_menu", 
+				array('RBAgency', 'menu_dashboard'),
+				"div"
+				);
 
 				add_submenu_page("rb_agency_menu", __("Overview", rb_agency_TEXTDOMAIN), __("Overview", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_menu", array('RBAgency', 'menu_dashboard'));
 				add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
@@ -980,7 +987,7 @@ class RBAgency {
 			// Check Permissions
 			if ( !current_user_can('update_core') )
 				return;
-			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), 7, "rb_agency_settings", array('RBAgency', 'menu_settings'));
+			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), "manage_options", "rb_agency_settings", array('RBAgency', 'menu_settings'));
 		}
 
 		// Add Link to Settings Page
