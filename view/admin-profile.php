@@ -21,7 +21,7 @@ define("LabelSingular", "Profiles");
 	$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
 	$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
-	if (function_exists(rb_agencyinteract_approvemembers)) {
+	if (function_exists("rb_agencyinteract_approvemembers")) {
 		// Load Interact Settings
 		$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
 		$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
@@ -580,7 +580,7 @@ if (isset($_POST['action'])) {
 
 // *************************************************************************************************** //
 // Delete Single
-elseif ($_GET['action'] == "deleteRecord") {
+elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 
 	$ProfileID = $_GET['ProfileID'];
 	// Verify Record
@@ -622,7 +622,7 @@ elseif ($_GET['action'] == "deleteRecord") {
 
 // *************************************************************************************************** //
 // Show Edit Record
-elseif (($_GET['action'] == "editRecord") || ($_GET['action'] == "add")) {
+elseif ((isset($_GET['action']) && $_GET['action'] == "editRecord") || (isset($_GET['action']) && $_GET['action'] == "add")) {
 
 	$action = $_GET['action'];
 	$ProfileID = $_GET['ProfileID'];
@@ -730,7 +730,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileContactWebsite = stripslashes($data['ProfileContactWebsite']);
 			$ProfileContactLinkFacebook = stripslashes($data['ProfileContactLinkFacebook']);
 			$ProfileContactLinkTwitter = stripslashes($data['ProfileContactLinkTwitter']);
-			$ProfileContactLinkYouTube = stripslashes($data['ProfileContactLinkYouTube']);
+			$ProfileContactLinkYouTube = stripslashes($data['ProfileContactLinkYoutube']);
 			$ProfileContactLinkFlickr = stripslashes($data['ProfileContactLinkFlickr']);
 			$ProfileContactPhoneHome = stripslashes($data['ProfileContactPhoneHome']);
 			$ProfileContactPhoneCell = stripslashes($data['ProfileContactPhoneCell']);
@@ -931,7 +931,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <th scope=\"row\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
 							echo "      <td>\n";
 							echo "      <fieldset>\n";
-							$ProfileType = (strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
+							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
 
 							$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
 							$results3=  $wpdb->get_results($query3,ARRAY_A);
@@ -1009,7 +1009,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 							// Hidden Settings
-							if ($_GET["mode"] == "override") {
+							if (isset($_GET["mode"]) && $_GET["mode"] == "override") {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Date Updated", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
@@ -1278,7 +1278,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												echo "</script>\n";
 
 												//mass delte
-												if ($_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
+												if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
 													$massmediaids = '';
 													$massmediaids = implode(",", $_GET['targetids']);
 													//get all the images
@@ -1306,7 +1306,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												}
 
 											// Are we deleting?
-											if ($_GET["actionsub"] == "photodelete") {
+											if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "photodelete") {
 												$deleteTargetID = $_GET["targetid"];
 
 												// Verify Record
@@ -1434,11 +1434,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<div class="main">
 
 							<?php
-							echo "      <p>" . __("The following files (pdf, audio file, etc.) are associated with this record", rb_agencyinteract_TEXTDOMAIN) . ".</p>\n";
+							echo "      <p>" . __("The following files (pdf, audio file, etc.) are associated with this record", rb_agency_TEXTDOMAIN) . ".</p>\n";
 
 							$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType <> \"Image\"";
 							$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
 							$countMedia = $wpdb->num_rows;
+							$outVideoMedia = "";
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 									if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
@@ -1491,7 +1492,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo $outVideoMedia;
 
 							if ($countMedia < 1) {
-								echo "<div><em>" . __("There are no additional media linked", rb_agencyinteract_TEXTDOMAIN) . "</em></div>\n";
+								echo "<div><em>" . __("There are no additional media linked", rb_agency_TEXTDOMAIN) . "</em></div>\n";
 							}
 							?>
 							</div>
@@ -1686,6 +1687,10 @@ function rb_display_list() {
 		$sortDirection = "desc";
 		$dir = "asc";
 	}
+	  // Query 
+	  $query = "";
+	  $selectedNameFirst = "";
+	  $selectedNameLast =  "";
 
 	  // Filter
 	  $filter = "WHERE ";
@@ -1763,11 +1768,18 @@ function rb_display_list() {
 		
 		$items =$wpdb->num_rows; // number of total rows in the database
 	if ($items > 0) {
+		if(isset($_GET['page'])) {
+			$page = $_GET['page'];
+		}else{
+			$page = "";
+		}
 		$p = new rb_agency_pagination;
 		$p->items($items);
 		$p->limit(50); // Limit entries per page
-		$p->target("admin.php?page=" . $_GET['page'] . $query);
-		$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+		$p->target("admin.php?page=" . $page . $query);
+		if(isset($p->paging)){
+			$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+		}
 		$p->calculate(); // Calculates what to show
 		$p->parameterName('paging');
 		$p->adjacents(1); //No. of page away from the current page
@@ -1891,9 +1903,13 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	/*
 	 * Filtering Records
 	 */
+	$page_index = "";
+	if(isset($_GET['page_index'])){
+		$page_index = $_GET['page_index'];
+	}
 
 	echo "          <form style=\"display: inline;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
-	echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />\n";
+	echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $page_index  . "\" />\n";
 	echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
 	echo "              <input type=\"hidden\" name=\"type\" value=\"name\" />\n";
 	echo "              <p id=\"filter-profiles\">\n";
@@ -1946,7 +1962,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "              <span class=\"submit\"><input type=\"submit\" value=\"" . __("Filter", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" /></span>\n";
 	echo "          </p></form>\n";
 	echo "          <form style=\"display: inline; float: left; margin: 17px 5px 0px 0px;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
-	echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $_GET['page_index'] . "\" />  \n";
+	echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $page_index  . "\" />  \n";
 	echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
 	echo "              <input type=\"submit\" value=\"" . __("Clear Filters", rb_agency_TEXTDOMAIN) . "\" class=\"button-secondary\" />\n";
 	echo "          </form>\n";
@@ -2062,12 +2078,12 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 
 		$DataTypeTitle = $new_title;
 
-		$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaType = 'Image'";
-		$resultsImg=  $wpdb->get_results($wpdb->prepare($query),ARRAY_A);
+		$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image'";
+		$resultsImg=  $wpdb->get_results($wpdb->prepare($query,$ProfileID),ARRAY_A);
 		$profileImageCount = $wpdb->num_rows;
 
-		$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID = '" . $ProfileGender . "' ";
-		$fetchProfileGender =  $wpdb->get_row($wpdb->prepare($query),ARRAY_A,0);
+		$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID = '%s' ";
+		$fetchProfileGender =  $wpdb->get_row($wpdb->prepare($query,$ProfileGender),ARRAY_A,0);
 
 		$ProfileGender = $fetchProfileGender["GenderTitle"];
 
@@ -2080,7 +2096,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		echo "          " . $ProfileContactNameFirst . "\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&amp;action=editRecord&amp;ProfileID=" . $ProfileID . "\" title=\"" . __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"edit\"><a href=\"" . rb_agency_PROFILEDIR . $rb_agency_UPLOADDIR . $ProfileGallery . "/\" title=\"" . __("View", rb_agency_TEXTDOMAIN) . "\" target=\"_blank\">" . __("View", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+		echo "            <span class=\"edit\"><a href=\"" . rb_agency_PROFILEDIR .  $ProfileGallery . "/\" title=\"" . __("View", rb_agency_TEXTDOMAIN) . "\" target=\"_blank\">" . __("View", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
 		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=deleteRecord&ProfileID=" . $ProfileID . "\"  onclick=\"if ( confirm('" . __("You are about to delete the profile for ", rb_agency_TEXTDOMAIN) . " " . $ProfileContactNameFirst . " " . $ProfileContactNameLast . "? \'" . __("Cancel", rb_agency_TEXTDOMAIN) . "\' " . __("to stop", rb_agency_TEXTDOMAIN) . ", \'" . __("OK", rb_agency_TEXTDOMAIN) . "\' " . __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"" . __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";

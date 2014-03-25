@@ -75,6 +75,8 @@ class RBAgency_Common {
 		// Set Dictionary Size
 		$size = strlen( $chars );
 
+		$string = "";
+
 		// Loop
 		for( $i = 0; $i < $length; $i++ ) {
 			$string .= $chars[ rand( 0, $size - 1 ) ];

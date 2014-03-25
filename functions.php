@@ -1911,7 +1911,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			 
 			} elseif ($ProfileCustomType == 3) {  // Drop Down
 				
-				list($option1,$option2) = explode(":",$data3['ProfileCustomOptions']);	
+				list($option1,$option2) =  array_pad(explode(":",$data3['ProfileCustomOptions'], 2), -2, null);
 					
 				$data = explode("|",$option1);
 				$data2 = explode("|",$option2);

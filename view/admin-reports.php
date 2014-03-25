@@ -21,7 +21,7 @@ if ($ConfigID <> 0) { ?>
 
 if ($ConfigID == 0) {
 	
-	if (function_exists(rb_agencyinteract_approvemembers)) {
+	if (function_exists("rb_agencyinteract_approvemembers")) {
 		// RB Agency Interact Settings
 		echo "<div class=\"boxlinkgroup\">\n";
 		echo "  <h2>". __("Interactive Reporting", rb_agency_TEXTDOMAIN) . "</h2>\n";
@@ -1050,6 +1050,7 @@ elseif ($ConfigID == 80) {
 		if($_FILES['source_file']['type'] == 'application/octet-stream' || $_FILES['source_file']['type'] == 'application/vnd.ms-excel' || $_FILES['source_file']['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') /*CSV and Excel files*/
 		{
 			$return_result = $obj_csv->match_column_and_table(); /*Display colunm head*/
+
 			if( $return_result == 0)
 			{
 				$error_message = "Empty header!";
@@ -1066,7 +1067,7 @@ elseif ($ConfigID == 80) {
 			$form_display_flag = true;
 		}
 	}
-	else if($_POST['submit_importer_to_db'])
+	else if(isset($_POST['submit_importer_to_db']) && $_POST['submit_importer_to_db'])
 	{
 		$obj_csv->import_to_db();   /*Store profile data*/
 		$form_display_flag = true;
@@ -1727,6 +1728,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 			$t_file = date('d_M_Y_h_i_s');
 			$csv_file = fopen($target_path.$t_file.'(1).csv','w');
 			
+			
+
         
 			foreach ($sheetData as $key => $value) 
 			{
@@ -1742,8 +1745,29 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$handle = fopen($file_path ,"r");       
 		$header = fgetcsv($handle, 4096, ",");
 		$total_header = count($header);
+		$arr_headers = array();
+        
+        for($a=0; $a<=$total_header; $a++){
 		
-		$custom_header = $total_header - 17;//17 are the number of column for the personal profile table
+			$row = $objPHPExcel->getActiveSheet()->getRowIterator($a)->current();
+           
+			$cellIterator = $row->getCellIterator();
+			$cellIterator->setIterateOnlyExistingCells(false);
+
+			foreach ($cellIterator as $cell) {
+				$val = $cell->getValue();
+				
+				if(!empty($val) && count($arr_headers) < $total_header){
+				    array_push($arr_headers , str_replace(" ","_",$cell->getValue()));
+				}
+
+			}
+
+			
+		}
+		
+		//$custom_header = $total_header - 17;//17 are the number of column for the personal profile table
+		$custom_header = $total_header;
 		if( $custom_header <= 0 ) return 0; /*If no custom field found*/
 
 		/*Column head form*/
@@ -1751,14 +1775,15 @@ class RBAgencyCSVXLSImpoterPlugin {
 		echo "<h2>Import CSV</h2>";
 		echo "<form  method=\"post\" action=\"\">";
 		
-		echo '<input type="hidden" value ="'.$custom_header.'" name="custom_header">
-			  <input type="hidden" value ="'.$total_header.'" name="total_header">
-			  <input type="hidden" value ="'.$file_path.'" name="file_path">
-			  <input type="hidden" value ="'.$clone.'" name="clone">';
+		echo '<input type="hidden" value ="'.$custom_header.'" name="custom_header"/>
+			  <input type="hidden" value ="'.$total_header.'" name="total_header"/>
+			  <input type="hidden" value ="'.$file_path.'" name="file_path"/>
+			  <input type="hidden" value ="'.$clone.'" name="clone"/>
+			  <input type="hidden" value ="'.implode(",",$arr_headers).'" name="headers"/> ';
 		$default = 1;
 		$heads = 17;
 		$t_head = $custom_header;
-		$custom_fields = $wpdb->get_results($wpdb->prepare("SELECT ProfileCustomID,ProfileCustomTitle FROM ". table_agency_customfields." ORDER BY ProfileCustomID ASC"));
+		$custom_fields = $wpdb->get_results("SELECT ProfileCustomID,ProfileCustomTitle FROM ". table_agency_customfields." ORDER BY ProfileCustomID ASC");
 		echo "<table class=\"form-table\">";
 		echo "<tbody>";
 		for($i = 0; $i <= $t_head; $i++){
@@ -1797,91 +1822,192 @@ class RBAgencyCSVXLSImpoterPlugin {
 	 * @return void
 	 */
 	function import_to_db(){
+
+		global $wpdb;
+
 		$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
 		$c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";       
+	
+
+		$arr_profile_fields = array(
+				"ProfileContactDisplay",
+				"ProfileContactNameFirst",
+				"ProfileContactNameLast",
+				"ProfileGender",
+				"ProfileDateBirth",
+				"ProfileContactEmail",
+				"ProfileContactWebsite",
+				"ProfileContactPhoneHome",
+				"ProfileContactPhoneCell",
+				"ProfileContactPhoneWork",
+				"ProfileLocationStreet",
+				"ProfileLocationCity",
+				"ProfileLocationState",	
+				"ProfileLocationZip",
+				"ProfileLocationCountry",
+				"ProfileType",
+				"ProfileIsActive"
+		);
+
+		$custom_fields = $wpdb->get_results("SELECT ProfileCustomTitle FROM ". table_agency_customfields." ORDER BY ProfileCustomID ASC", ARRAY_A);
+		foreach ($custom_fields  as $key => $value) {
+			foreach( $value as $k => $v)
+			array_push($arr_profile_fields, str_replace(" ","_",$v));
+		}
+        
+		
+		$arr_import_headers = explode(",",$_REQUEST["headers"]);
+
+		// Check for invalid header profile field format
+		foreach($arr_import_headers as $pf){
+			 if(!in_array($pf,$arr_profile_fields)){
+			 	die("<br/><div class='wrap' style='color:#FF0000'>Invalid Column name Format: ".$pf."</div>");
+			 }
+		}
+	
+		
+		
+
 		set_time_limit(0);
 		$path_to_file = $_REQUEST['file_path'];
 		$handle = fopen($path_to_file ,"r");
 		fgets($handle);//read and ignore the first line
+		
+		$arr_import_data = array();
+		
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-		
-			$ctrl_start = 17;
-			$ctrl_end = $_REQUEST['total_header'];
-			$incre = 1;
-			global $wpdb;
-			if($data[3]!="" &&  $data[5]!=""){
-				$queryGenderResult = $wpdb->get_row("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='".$data[3]."'", ARRAY_A);
-				$ProfileContactDisplay = $wpdb->get_row("SELECT ProfileID FROM ".table_agency_profile." WHERE ProfileContactEmail ='".mysql_real_escape_string($data[5])."'", ARRAY_A);
-				if(!isset($ProfileContactDisplay['ProfileID']) ||  $ProfileContactDisplay['ProfileID'] ==""){
-						// parse profile type
-						if(strpos($data[15], "|") != -1){
-							$ex = explode(" | ",trim($data[15]));
-							$data[15] = trim(implode(",",$ex));
-						}
-						
-						// check if country and state are numeric probably code
-						// need to get ID's before inserting to DB
-						if(!is_numeric($data[14])){
-							$query ="SELECT CountryID FROM ". table_agency_data_country ." WHERE LOWER(CountryCode) = '" . strtolower(trim($data[14])) . "'";
-							$result = $wpdb->get_row($query);
-							if(count($result) > 0){
-								$data[14] = $result->CountryID;
-							} else {
-								// compare to title instead
-								$query ="SELECT CountryID FROM ". table_agency_data_country ." WHERE LOWER(CountryTitle) = '" . strtolower(trim($data[14])) . "'";
-								$result = $wpdb->get_row($query);
-								if(count($result) > 0){
-									$data[14] = $result->CountryID;
-								} 
-							}
-						}
-						if(!is_numeric($data[12])){
-							$query ="SELECT StateID FROM ". table_agency_data_state ." WHERE LOWER(StateCode) = '" . strtolower(trim($data[12])) . "'";
-							$result = $wpdb->get_row($query);
-							$data[12] = $result->StateID;
-							if(count($result) > 0){
-								$data[12] = $result->StateID;
-							} else {
-								// compare to title instead
-								$query ="SELECT StateID FROM ". table_agency_data_state ." WHERE LOWER(StateTitle) = '" . strtolower(trim($data[12])) . "'";
-								$result = $wpdb->get_row($query);
-								if(count($result) > 0){
-									$data[12] = $result->StateID;
-								} 
-							}
-						}
-
-						$add_to_p_table="INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ('$data[0]','$data[1]','$data[2]','".$queryGenderResult['GenderID']."','".date("Y-m-d",strtotime($data[4]))."','$data[5]','$data[6]','$data[7]','$data[8]','$data[9]','$data[10]','$data[11]','$data[12]','$data[13]','$data[14]','$data[15]','$data[16]')";
-						$wpdb->query($add_to_p_table) or die(mysql_error());
-
-						$last_inserted_mysql_id = $wpdb->insert_id ;
-						if($last_inserted_mysql_id){
-							while($ctrl_start < $ctrl_end){
-								$select_id =  mysql_real_escape_string($_REQUEST['select'.$incre]);
-								if(strpos($data[$ctrl_start], ' ft ') !== FALSE){
-									$cal_height = 0;
-									$height = explode(' ', $data[$ctrl_start]);
-									$cal_height = ($height[0] * 12) + $height[2];
-									$data[$ctrl_start]  = $cal_height;
-									
-								}
-								
-								$add_to_c_table="INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields)values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($data[$ctrl_start])."')";
-								$wpdb->query($add_to_c_table) or die(mysql_error());
-								$ctrl_start++;
-								$incre++;
-							
-							}
-						
-						}
-					 echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_mysql_id)."'>".$data[0]."</a> & Email:- ".$data[5]."  <b>Successfully Imported Records</b></li></ul></div>";
-				}else{
-					 echo "<div class='wrap' style='color:#FF0000'><ul><li> User Name:- ".$data[0]." & Email:- ".$data[5]."  <b>Successfully Not Imported. Email Already Used on site.</b></li></ul></div>";
+			  $arr = array();
+			      $a = 0;
+			 
+			 if(!empty($data[$a])){
+	 		     while($a< count($arr_import_headers)){
+								$arr[$arr_import_headers[$a]] = $data[$a];
+								$a++;
 				}
+				array_push($arr_import_data, $arr);
 			}
 		}
-		if($_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
+		
+
+		
+	
+		
+		foreach ($arr_import_data  as &$vv) {
+				
+	      
+	        
+										
+										  if(!isset($vv["ProfileContactEmail"])){
+										      	$domain_name =  preg_replace('/^www\./','',$_SERVER['SERVER_NAME']);
+
+										  		$vv["ProfileContactEmail"] = RBAgency_Common::generate_random_string(8)."@".$domain_name; 
+										  }
+
+										  if(empty($vv["ProfileContactDisplay"])){
+										  	  $vv["ProfileContactDisplay"] = $vv["ProfileContactNameFirst"]." ".$vv["ProfileContactNameLast"];
+										  }
+										
+									
+										
+											$queryGenderResult = $wpdb->get_row($wpdb->prepare("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='%s'",$vv["ProfileGender"]), ARRAY_A);
+											$ProfileContactDisplay = $wpdb->get_row($wpdb->prepare("SELECT ProfileID FROM ".table_agency_profile." WHERE ProfileContactEmail ='%s'",$vv["ProfileContactEmail"]), ARRAY_A);
+											if(!isset($ProfileContactDisplay['ProfileID']) ||  $ProfileContactDisplay['ProfileID'] ==""){
+													// parse profile type
+													if(strpos($vv["ProfileType"], "|") != -1){
+														$ex = explode(" | ",trim($vv["ProfileType"]));
+														$vv["ProfileType"] = trim(implode(",",$ex));
+													}
+													
+													// check if country and state are numeric probably code
+													// need to get ID's before inserting to DB
+													if(!is_numeric($vv["ProfileLocationCountry"])){
+														$query ="SELECT CountryID FROM ". table_agency_data_country ." WHERE LOWER(CountryCode) = '" . strtolower(trim($vv["ProfileLocationCountry"])) . "'";
+														$result = $wpdb->get_row($query);
+														if(count($result) > 0){
+															$vv["ProfileLocationCountry"] = $result->CountryID;
+														} else {
+															// compare to title instead
+															$query ="SELECT CountryID FROM ". table_agency_data_country ." WHERE LOWER(CountryTitle) = '" . strtolower(trim($vv["ProfileLocationCountry"])) . "'";
+															$result = $wpdb->get_row($query);
+															if(count($result) > 0){
+																$vv["ProfileLocationCountry"] = $result->CountryID;
+															} 
+														}
+													}
+													if(!is_numeric($vv["ProfileLocationState"])){
+														$query ="SELECT StateID FROM ". table_agency_data_state ." WHERE LOWER(StateCode) = '" . strtolower(trim($vv["ProfileLocationState"])) . "'";
+														$result = $wpdb->get_row($query);
+														if(count($result) > 0){
+															$vv["ProfileLocationState"] = $result->StateID;
+														} else {
+															// compare to title instead
+															$query ="SELECT StateID FROM ". table_agency_data_state ." WHERE LOWER(StateTitle) = '" . strtolower(trim($vv["ProfileLocationState"])) . "'";
+															$result = $wpdb->get_row($query);
+															if(count($result) > 0){
+																$vv["ProfileLocationState"] = $result->StateID;
+															} 
+														}
+													}
+
+													$p_table_fields = "";
+													$p_table_values = "";
+													$pos = 0;
+													foreach ($arr_import_headers as $key ) {
+													   if(substr($key, 0, 7) == "Profile"){
+															$p_table_fields  .= $key;
+															$p_table_values  .= "'".$vv[$key]."'";
+
+															if($key == "ProfileGender"){
+																 $vv["ProfileGender"] = $queryGenderResult['GenderID'];
+															}elseif ($key == "ProfileDateBirth") {
+																 $vv["ProfileDateBirth"] = date("Y-m-d",strtotime($vv["ProfileDateBirth"]));
+															}
+
+													   }
+													   $pos++;
+													   if($pos < count($arr_import_headers) -1){
+													   	   $p_table_fields  .= ",";
+													   	   $p_table_values  .= ",";
+													   }
+													}
+
+													
+
+													$add_to_p_table = "INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ($p_table_values)";
+													$wpdb->query($add_to_p_table) or die(mysql_error());
+													$last_inserted_mysql_id = $wpdb->insert_id ;
+													
+																			
+													if($last_inserted_mysql_id){
+														$pos = 0;
+														foreach ($arr_import_headers as $key ) {
+															   if(substr($key, 0, 7) != "Profile"){
+																	if(isset($_REQUEST['select'.$pos])){
+																	   $select_id =  mysql_real_escape_string($_REQUEST['select'.$pos]);
+																	   if(strpos($vv[$key], ' ft ') !== FALSE){
+																			$cal_height = 0;
+																			$height = explode(' ', $vv[$key]);
+																			$cal_height = ($height[0] * 12) + $height[2];
+																			$vv[$key]  = $cal_height;
+																			
+																		}
+																		
+																		$add_to_c_table="INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields)values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($vv[$key])."')";
+																		$wpdb->query($add_to_c_table) or die(mysql_error());
+																		$pos++;
+																	}
+																}
+														}
+													}
+													
+												 echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_mysql_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records</b></li></ul></div>";
+											}else{
+												 echo "<div class='wrap' style='color:#FF0000'><ul><li> User Name:- ".$vv["ProfileContactDisplay"]." & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Not Imported. Email Already Used on site.</b></li></ul></div>";
+											}
+			     }
+			
+		//if($_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
 
 	}
 	/**

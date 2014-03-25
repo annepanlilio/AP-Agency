@@ -902,7 +902,7 @@ class RBAgency {
 			add_menu_page( 
 				__("Agency", rb_agency_TEXTDOMAIN), 
 				__("Agency", rb_agency_TEXTDOMAIN), 
-				'manage_sites',
+				'manage_options',
 				"rb_agency_menu", 
 				array('RBAgency', 'menu_dashboard'),
 				"div"
