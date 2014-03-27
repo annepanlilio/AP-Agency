@@ -65,7 +65,7 @@ ini_set('display_errors', 'On');
 			if( !is_admin() ) {
 				
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('rb-agency/theme/style.css'));
+				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style.css'));
 				wp_enqueue_style( 'rbagency-style' );
 
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
@@ -79,7 +79,7 @@ ini_set('display_errors', 'On');
 		function rb_agency_insertscripts() {
 			if( !is_admin() ) {
 				if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
-					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );					
+					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
 				}
 			}
 		}
