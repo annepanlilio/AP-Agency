@@ -65,7 +65,7 @@ ini_set('display_errors', 'On');
 			if( !is_admin() ) {
 				
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('rb-agency/theme/style.css'));
+				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style.css'));
 				wp_enqueue_style( 'rbagency-style' );
 
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
