@@ -640,7 +640,7 @@ class RBAgency_Profile {
 					if (isset($_REQUEST['limit']) && !empty($_REQUEST['limit'])){
 						$filterArray['limit'] = $_REQUEST['limit'];
 					} else {
-						$filterArray['limit'] = 100;
+						$filterArray['limit'] = 1000;
 					}
 
 					// Records Per Page
@@ -1278,17 +1278,20 @@ class RBAgency_Profile {
 
 				$all_html .=  "<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
 				$all_html .= '<div id="profile-results-info">';
+				/*
 				if ($rb_agency_option_profilelist_favorite){ 
 					$all_html .= "<div class=\"profile-results-info-countpage\">\n";
 					$all_html .= $count;  // Echo out the list of paging. 
 					$all_html .= "</div>\n";
 				}
+				*/
 				if ($rb_agency_option_profilelist_count) {
 					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
 					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
 				}
-		/*		if (self::$castingcart){   //allow email to admin casting
+				/*		
+				if (self::$castingcart){   //allow email to admin casting
 					$all_html .= "<div>\n";
 					$all_html .= '	<a id="sendemail" href="javascript:;">Email to Admin</a>';
 					$all_html .= "</div>\n";
