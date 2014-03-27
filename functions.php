@@ -79,7 +79,7 @@ ini_set('display_errors', 'On');
 		function rb_agency_insertscripts() {
 			if( !is_admin() ) {
 				if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
-					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );					
+					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
 				}
 			}
 		}
