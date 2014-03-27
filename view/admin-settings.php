@@ -954,7 +954,7 @@ elseif ($ConfigID == 2) {
  */
 
 	// Get the file
-	$rb_agency_stylesheet = rb_agency_BASEREL ."theme/style.css";
+	$rb_agency_stylesheet = rb_agency_BASEREL ."style/style.css";
 
 
 	/*
