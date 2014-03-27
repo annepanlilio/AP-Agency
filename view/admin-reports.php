@@ -1747,23 +1747,39 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$total_header = count($header);
 		$arr_headers = array();
         
-        for($a=0; $a<=$total_header; $a++){
-		
-			$row = $objPHPExcel->getActiveSheet()->getRowIterator($a)->current();
-           
-			$cellIterator = $row->getCellIterator();
-			$cellIterator->setIterateOnlyExistingCells(false);
+        if( strtolower($get_ext) == 'xls' ){
+	        for($a=0; $a<=$total_header; $a++){
+			
+				$row = $objPHPExcel->getActiveSheet()->getRowIterator($a)->current();
+	           
+				$cellIterator = $row->getCellIterator();
+				$cellIterator->setIterateOnlyExistingCells(false);
 
-			foreach ($cellIterator as $cell) {
-				$val = $cell->getValue();
-				
-				if(!empty($val) && count($arr_headers) < $total_header){
-				    array_push($arr_headers , str_replace(" ","_",$cell->getValue()));
+				foreach ($cellIterator as $cell) {
+					$val = $cell->getValue();
+					
+					if(!empty($val) && count($arr_headers) < $total_header){
+					    array_push($arr_headers , str_replace(" ","_",$cell->getValue()));
+					}
+
 				}
 
+				
 			}
+		}elseif( strtolower($get_ext) == 'csv' ){
 
-			
+			 	while($column = fgetcsv($handle, 4096, ','))
+					{
+					    // This is a great trick, to get an associative row by combining the headrow with the content-rows.
+					    $column = array_combine($header, $column);
+                       
+					    foreach($column as $key => $val){
+						    if(!empty($key) && count($arr_headers) < $total_header){
+							    array_push($arr_headers , str_replace(" ","_",$key));
+							}
+						}
+					   
+					}
 		}
 		
 		//$custom_header = $total_header - 17;//17 are the number of column for the personal profile table
@@ -1786,14 +1802,16 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$custom_fields = $wpdb->get_results("SELECT ProfileCustomID,ProfileCustomTitle FROM ". table_agency_customfields." ORDER BY ProfileCustomID ASC");
 		echo "<table class=\"form-table\">";
 		echo "<tbody>";
-		for($i = 0; $i <= $t_head; $i++){
+		
+		/*for($i = 0; $i <= $t_head; $i++){
 			if(!empty($header[$heads]) && $header[$heads] != ''){
 				echo '<tr><th><label>'.$header[$heads].'</label></th>';
 				echo '<td><select name = "select'.$default.'" id="select'.$default.'">';
 				foreach ($custom_fields as $custom_fields_result) {
 					$custom_field_id = intval($custom_fields_result->ProfileCustomID);
 					$custom_field_title = $custom_fields_result->ProfileCustomTitle;
-					if($custom_field_id==$default){
+					//if($custom_field_id==$default){
+					if($custom_field_title == $header[$heads])
 						$is_default = ' selected="selected" ';
 					}
 					else{
@@ -1803,11 +1821,32 @@ class RBAgencyCSVXLSImpoterPlugin {
 				}
 				echo '</select>';
 				echo '</td></tr>';
+			}*/
+			$pos = 0;
+			foreach ($arr_headers as $key ) {
+				  if(substr($key, 0, 7) != "Profile"){
+						echo '<tr><th><label>'.str_replace("_"," ",$key).'</label></th>';	
+						echo '<td><select name = "select'.$pos.'">';
+						foreach ($custom_fields as $custom_fields_result) {
+							$custom_field_id = intval($custom_fields_result->ProfileCustomID);
+							$custom_field_title = $custom_fields_result->ProfileCustomTitle;
+							if($custom_field_title == str_replace("_"," ",$key)){
+								$is_default = ' selected="selected" ';
+							}
+							else{
+								$is_default =''; 
+							}
+							echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
+						}
+						echo '</select>';
+						echo '</td></tr>';	
+						$pos++;							
+				  }										
 			}
 			//$custom_header++;
 			$heads++;
 			$default++;
-		}
+	//	}
 		echo "<tbody>";
 		echo "<table>";
 		echo "<div style=\"clear:both\"></div>";
@@ -1890,7 +1929,6 @@ class RBAgencyCSVXLSImpoterPlugin {
 				array_push($arr_import_data, $arr);
 			}
 		}
-		
 
 		
 	
@@ -1962,34 +2000,37 @@ class RBAgencyCSVXLSImpoterPlugin {
 															
 															if($key == "ProfileGender"){
 																
-																 $vv["ProfileGender"] = $queryGenderResult['GenderID'];
+																 $vv["ProfileGender"] = !empty($queryGenderResult['GenderID'])?$queryGenderResult['GenderID']:0;
 																  $p_table_values  .= "".$vv[$key]."";
 															
 															}elseif ($key == "ProfileDateBirth") {
 															
-																 $vv["ProfileDateBirth"] = date("Y-m-d",strtotime($vv["ProfileDateBirth"]));
-																 $p_table_values  .= "'".$vv[$key]."'";
-														
+																 $vv["ProfileDateBirth"] = !empty($vv["ProfileDateBirth"]) ? date("Y-m-d",strtotime($vv["ProfileDateBirth"])):date("Y-m-d");
+																 $p_table_values  .= "'".addslashes($vv[$key])."'";
+																
 															}else{
 														
-																 $p_table_values  .= "'".$vv[$key]."'";
+																 $p_table_values  .= "'".addslashes($vv[$key])."'";
 														
 															}
 
+															if($pos < count($arr_import_headers)){
+														   	   $p_table_fields  .= ",";
+														   	   $p_table_values  .= ",";
+														   	}
+														    $pos++;
 													   }
-													   $pos++;
-													   if($pos < count($arr_import_headers) -1){
-													   	   $p_table_fields  .= ",";
-													   	   $p_table_values  .= ",";
-													   }
+													  
+													   
 													}
-
+													$p_table_fields = trim($p_table_fields, ","); 
+													$p_table_values = trim($p_table_values, ","); 
 
 													$add_to_p_table = "INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ($p_table_values)";
 													$wpdb->query($add_to_p_table) or die(mysql_error());
 													$last_inserted_mysql_id = $wpdb->insert_id ;
 													
-																			
+
 													if($last_inserted_mysql_id){
 														$pos = 0;
 														foreach ($arr_import_headers as $key ) {

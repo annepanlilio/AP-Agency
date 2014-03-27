@@ -1,7 +1,8 @@
 <?php
+error_reporting(0);
 /*
  * Debug Mode
-error_reporting(1);
+
 ini_set('display_errors', 'On');
    //$RB_DEBUG_MODE = true;
  */
