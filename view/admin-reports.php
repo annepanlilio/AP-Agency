@@ -1662,7 +1662,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 			$abs_path = realpath($abs_path);
 			if(empty($abs_path)){
 				$wpurl = get_bloginfo('wpurl');
-				$abs_path = str_replace($wpurl,ABSPATH,$src_file);
+				$abs_path = str_replace($wpurl,@ABSPATH,$src_file);
 				$abs_path = realpath($abs_path);            
 			}
 		}
@@ -1824,8 +1824,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 	function import_to_db(){
 
 		global $wpdb;
-
-		$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
+  	    $rb_agency_option_profilenaming = (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
+        
+         // We already created a dynamic profile fields validation
+		//$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
 		$c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";       
 	
 
@@ -1955,13 +1957,23 @@ class RBAgencyCSVXLSImpoterPlugin {
 													$pos = 0;
 													foreach ($arr_import_headers as $key ) {
 													   if(substr($key, 0, 7) == "Profile"){
+															
 															$p_table_fields  .= $key;
-															$p_table_values  .= "'".$vv[$key]."'";
-
+															
 															if($key == "ProfileGender"){
+																
 																 $vv["ProfileGender"] = $queryGenderResult['GenderID'];
+																  $p_table_values  .= "".$vv[$key]."";
+															
 															}elseif ($key == "ProfileDateBirth") {
+															
 																 $vv["ProfileDateBirth"] = date("Y-m-d",strtotime($vv["ProfileDateBirth"]));
+																 $p_table_values  .= "'".$vv[$key]."'";
+														
+															}else{
+														
+																 $p_table_values  .= "'".$vv[$key]."'";
+														
 															}
 
 													   }
@@ -1972,7 +1984,6 @@ class RBAgencyCSVXLSImpoterPlugin {
 													   }
 													}
 
-													
 
 													$add_to_p_table = "INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ($p_table_values)";
 													$wpdb->query($add_to_p_table) or die(mysql_error());
@@ -2001,13 +2012,35 @@ class RBAgencyCSVXLSImpoterPlugin {
 														}
 													}
 													
-												 echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_mysql_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records</b></li></ul></div>";
+											
+												 			$ProfileGalleryCurrent = generate_foldername($last_inserted_mysql_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
+			
+																
+																if(!empty($ProfileGallery)){
+																	if($ProfileGallery != $ProfileGalleryCurrent){
+																		// just rename the existing folder,
+																		rename(rb_agency_UPLOADPATH. $ProfileGallery."/", rb_agency_UPLOADPATH. $ProfileGalleryCurrent."/");
+																	}
+																} else {
+																	// actual folder creation
+																	$dirURL = rb_agency_UPLOADPATH. $ProfileGalleryCurrent;
+																	mkdir($dirURL, 0755); //700
+																	chmod($dirURL, 0777);
+																}
+
+																// Then Update our DB
+																$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryCurrent ."' WHERE ProfileID = \"". $last_inserted_mysql_id ."\"";
+																$renamed = $wpdb->query($rename);
+
+																echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_mysql_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records</b></li></ul></div>";
+											
+															
 											}else{
 												 echo "<div class='wrap' style='color:#FF0000'><ul><li> User Name:- ".$vv["ProfileContactDisplay"]." & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Not Imported. Email Already Used on site.</b></li></ul></div>";
 											}
 			     }
 			
-		//if($_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
+		if($_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
 
 	}
 	/**
