@@ -38,7 +38,7 @@ if (isset($_POST['action'])) {
 	 */
 
 	$ProfileID = $_POST['ProfileID'];
-	$ProfileUserLinked = $_POST['ProfileUserLinked'];
+	$ProfileUserLinked = isset($_POST['ProfileUserLinked'])?$_POST['ProfileUserLinked']:"";
 	$ProfileContactNameFirst = trim($_POST['ProfileContactNameFirst']);
 	$ProfileContactNameLast = trim($_POST['ProfileContactNameLast']);
 	$ProfileContactDisplay = trim($_POST['ProfileContactDisplay']);
@@ -48,7 +48,7 @@ if (isset($_POST['action'])) {
 		} elseif ($rb_agency_option_profilenaming == 1) {
 			// If John-D already exists, make John-D-1
 			for ($i = 'a', $j = 1; $j <= 26; $i++, $j++) {
-				if (in_array($i, $ar)){
+				if (isset($ar) && in_array($i, $ar)){
 					$ProfileContactDisplay = $ProfileContactNameFirst . " " . $i .'-'. $j;
 				} else {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " " . substr($ProfileContactNameLast, 0, 1);
@@ -73,39 +73,39 @@ if (isset($_POST['action'])) {
 		$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay);
 	}
 
-	$ProfileGender = $_POST['ProfileGender'];
-	$ProfileDateBirth = $_POST['ProfileDateBirth'];
-	$ProfileContactEmail = $_POST['ProfileContactEmail'];
-	$ProfileUsername = $_POST["ProfileUsername"];
-	$ProfilePassword = $_POST['ProfilePassword'];
-	$ProfileContactWebsite = $_POST['ProfileContactWebsite'];
-	$ProfileContactPhoneHome = $_POST['ProfileContactPhoneHome'];
-	$ProfileContactPhoneCell = $_POST['ProfileContactPhoneCell'];
-	$ProfileContactPhoneWork = $_POST['ProfileContactPhoneWork'];
-	$ProfileLocationStreet = $_POST['ProfileLocationStreet'];
-	$ProfileLocationCity = RBAgency_Common::format_propercase($_POST['ProfileLocationCity']);
-	$ProfileLocationState = strtoupper($_POST['ProfileLocationState']);
-	$ProfileLocationZip = $_POST['ProfileLocationZip'];
-	$ProfileLocationCountry = $_POST['ProfileLocationCountry'];
-	$ProfileLanguage = $_POST['ProfileLanguage'];
-	$ProfileDateUpdated = $_POST['ProfileDateUpdated'];
-	$ProfileDateViewLast = $_POST['ProfileDateViewLast'];
-	$ProfileType = $_POST['ProfileType'];
+	$ProfileGender = isset($_POST['ProfileGender'])?$_POST['ProfileGender']:"";
+	$ProfileDateBirth = isset($_POST['ProfileDateBirth'])?$_POST['ProfileDateBirth']:"";
+	$ProfileContactEmail = isset($_POST['ProfileContactEmail'])?$_POST['ProfileContactEmail']:"";
+	$ProfileUsername = isset($_POST["ProfileUsername"])?$_POST["ProfileUsername"]:"";
+	$ProfilePassword = isset($_POST['ProfilePassword'])?$_POST['ProfilePassword']:"";
+	$ProfileContactWebsite = isset($_POST['ProfileContactWebsite'])?$_POST['ProfileContactWebsite']:"";
+	$ProfileContactPhoneHome = isset($_POST['ProfileContactPhoneHome'])?$_POST['ProfileContactPhoneHome']:"";
+	$ProfileContactPhoneCell = isset($_POST['ProfileContactPhoneCell'])?$_POST['ProfileContactPhoneCell']:"";
+	$ProfileContactPhoneWork = isset($_POST['ProfileContactPhoneWork'])?$_POST['ProfileContactPhoneWork']:"";
+	$ProfileLocationStreet = isset($_POST['ProfileLocationStreet'])?$_POST['ProfileLocationStreet']:"";
+	$ProfileLocationCity = RBAgency_Common::format_propercase(isset($_POST['ProfileLocationCity'])?$_POST['ProfileLocationCity']:"");
+	$ProfileLocationState = strtoupper(isset($_POST['ProfileLocationState'])?$_POST['ProfileLocationState']:"");
+	$ProfileLocationZip = isset($_POST['ProfileLocationZip'])?$_POST['ProfileLocationZip']:"";
+	$ProfileLocationCountry = isset($_POST['ProfileLocationCountry'])?$_POST['ProfileLocationCountry']:"";
+	$ProfileLanguage = isset($_POST['ProfileLanguage'])?$_POST['ProfileLanguage']:"";
+	$ProfileDateUpdated = isset($_POST['ProfileDateUpdated'])?$_POST['ProfileDateUpdated']:"";
+	$ProfileDateViewLast = isset($_POST['ProfileDateViewLast'])?$_POST['ProfileDateViewLast']:"";
+	$ProfileType = isset($_POST['ProfileType'])?$_POST['ProfileType']:"";
 
 	if (is_array($ProfileType)) {
 		$ProfileType = implode(",", $ProfileType);
 	}
 
-	$ProfileIsActive = $_POST['ProfileIsActive']; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
-	$ProfileIsFeatured = $_POST['ProfileIsFeatured'];
-	$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
-	$ProfileStatHits = $_POST['ProfileStatHits'];
+	$ProfileIsActive = isset($_POST['ProfileIsActive'])?$_POST['ProfileIsActive']:""; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
+	$ProfileIsFeatured = isset($_POST['ProfileIsFeatured'])?$_POST['ProfileIsFeatured']:"";
+	$ProfileIsPromoted = isset($_POST['ProfileIsPromoted'])?$_POST['ProfileIsPromoted']:"";
+	$ProfileStatHits = isset($_POST['ProfileStatHits'])?$_POST['ProfileStatHits']:"";
 
 	// Get Primary Image
-	$ProfileMediaPrimaryID = $_POST['ProfileMediaPrimary'];
+	$ProfileMediaPrimaryID = isset($_POST['ProfileMediaPrimary'])?$_POST['ProfileMediaPrimary']:"";
 
 	// Notify User and Admin
-	$ProfileNotifyUser = $_POST["ProfileNotifyUser"];
+	$ProfileNotifyUser = isset($_POST["ProfileNotifyUser"])?$_POST["ProfileNotifyUser"]:"";
 
 	// Error checking
 
@@ -115,7 +115,7 @@ if (isset($_POST['action'])) {
 		$have_error = true;
 	}
 
-	if ($_GET["action"] == "add") {
+	if (isset($_GET["action"]) && $_GET["action"] == "add") {
 		$userdata = array(
 			'user_pass' => esc_attr($ProfilePassword),
 			'user_login' => esc_attr($ProfileUsername),
@@ -213,30 +213,30 @@ if (isset($_POST['action'])) {
 						   ProfileStatHits,
 						   ProfileDateViewLast)" .
 						"VALUES (
-							'" . $wpdb->escape($ProfileGallery) . "',
-							'" . $wpdb->escape($ProfileContactDisplay) . "',
-							'" . $wpdb->escape($new_user) . "',
-							'" . $wpdb->escape($ProfileContactNameFirst) . "',
-							'" . $wpdb->escape($ProfileContactNameLast) . "',
-							'" . $wpdb->escape($ProfileContactEmail) . "',
-							'" . $wpdb->escape($ProfileContactWebsite) . "',
-							'" . $wpdb->escape($ProfileGender) . "',
-							'" . $wpdb->escape($ProfileDateBirth) . "',
-							'" . $wpdb->escape($ProfileLocationStreet) . "',
-							'" . $wpdb->escape($ProfileLocationCity) . "',
-							'" . $wpdb->escape($ProfileLocationState) . "',
-							'" . $wpdb->escape($ProfileLocationZip) . "',
-							'" . $wpdb->escape($ProfileLocationCountry) . "',
-							'" . $wpdb->escape($ProfileContactPhoneHome) . "',
-							'" . $wpdb->escape($ProfileContactPhoneCell) . "',
-							'" . $wpdb->escape($ProfileContactPhoneWork) . "',
+							'" . esc_attr($ProfileGallery) . "',
+							'" . esc_attr($ProfileContactDisplay) . "',
+							'" . esc_attr($new_user) . "',
+							'" . esc_attr($ProfileContactNameFirst) . "',
+							'" . esc_attr($ProfileContactNameLast) . "',
+							'" . esc_attr($ProfileContactEmail) . "',
+							'" . esc_attr($ProfileContactWebsite) . "',
+							'" . esc_attr($ProfileGender) . "',
+							'" . esc_attr($ProfileDateBirth) . "',
+							'" . esc_attr($ProfileLocationStreet) . "',
+							'" . esc_attr($ProfileLocationCity) . "',
+							'" . esc_attr($ProfileLocationState) . "',
+							'" . esc_attr($ProfileLocationZip) . "',
+							'" . esc_attr($ProfileLocationCountry) . "',
+							'" . esc_attr($ProfileContactPhoneHome) . "',
+							'" . esc_attr($ProfileContactPhoneCell) . "',
+							'" . esc_attr($ProfileContactPhoneWork) . "',
 							now(),
 							'" . $ProfileType . "',
-							'" . $wpdb->escape($ProfileIsActive) . "',
-							'" . $wpdb->escape($ProfileIsFeatured) . "',
-							'" . $wpdb->escape($ProfileIsPromoted) . "',
-							'" . $wpdb->escape($ProfileStatHits) . "',
-							'" . $wpdb->escape($ProfileDateViewLast) . "'
+							'" . esc_attr($ProfileIsActive) . "',
+							'" . esc_attr($ProfileIsFeatured) . "',
+							'" . esc_attr($ProfileIsPromoted) . "',
+							'" . esc_attr($ProfileStatHits) . "',
+							'" . esc_attr($ProfileDateViewLast) . "'
 						)";
 					$results = $wpdb->query($insert) or die("Add Record: " . mysql_error());
 					$ProfileID = $wpdb->insert_id;
@@ -287,34 +287,34 @@ if (isset($_POST['action'])) {
 
 				// Update Record
 				$update = "UPDATE " . table_agency_profile . " SET 
-					ProfileGallery='" . $wpdb->escape($ProfileGallery) . "',
-					ProfileContactDisplay='" . $wpdb->escape($ProfileContactDisplay) . "',
-					ProfileContactNameFirst='" . $wpdb->escape($ProfileContactNameFirst) . "',
-					ProfileContactNameLast='" . $wpdb->escape($ProfileContactNameLast) . "',
-					ProfileContactEmail='" . $wpdb->escape($ProfileContactEmail) . "',
-					ProfileContactWebsite='" . $wpdb->escape($ProfileContactWebsite) . "',
-					ProfileContactPhoneHome='" . $wpdb->escape($ProfileContactPhoneHome) . "',
-					ProfileContactPhoneCell='" . $wpdb->escape($ProfileContactPhoneCell) . "',
-					ProfileContactPhoneWork='" . $wpdb->escape($ProfileContactPhoneWork) . "',
-					ProfileGender='" . $wpdb->escape($ProfileGender) . "',
-					ProfileGender='" . $wpdb->escape($ProfileGender) . "',
-					ProfileDateBirth ='" . $wpdb->escape($ProfileDateBirth) . "',
-					ProfileLocationStreet='" . $wpdb->escape($ProfileLocationStreet) . "',
-					ProfileLocationCity='" . $wpdb->escape($ProfileLocationCity) . "',
-					ProfileLocationState='" . $wpdb->escape($ProfileLocationState) . "',
-					ProfileLocationZip ='" . $wpdb->escape($ProfileLocationZip) . "',
-					ProfileLocationCountry='" . $wpdb->escape($ProfileLocationCountry) . "',
+					ProfileGallery='" . esc_attr($ProfileGallery) . "',
+					ProfileContactDisplay='" . esc_attr($ProfileContactDisplay) . "',
+					ProfileContactNameFirst='" . esc_attr($ProfileContactNameFirst) . "',
+					ProfileContactNameLast='" . esc_attr($ProfileContactNameLast) . "',
+					ProfileContactEmail='" . esc_attr($ProfileContactEmail) . "',
+					ProfileContactWebsite='" . esc_attr($ProfileContactWebsite) . "',
+					ProfileContactPhoneHome='" . esc_attr($ProfileContactPhoneHome) . "',
+					ProfileContactPhoneCell='" . esc_attr($ProfileContactPhoneCell) . "',
+					ProfileContactPhoneWork='" . esc_attr($ProfileContactPhoneWork) . "',
+					ProfileGender='" . esc_attr($ProfileGender) . "',
+					ProfileGender='" . esc_attr($ProfileGender) . "',
+					ProfileDateBirth ='" . esc_attr($ProfileDateBirth) . "',
+					ProfileLocationStreet='" . esc_attr($ProfileLocationStreet) . "',
+					ProfileLocationCity='" . esc_attr($ProfileLocationCity) . "',
+					ProfileLocationState='" . esc_attr($ProfileLocationState) . "',
+					ProfileLocationZip ='" . esc_attr($ProfileLocationZip) . "',
+					ProfileLocationCountry='" . esc_attr($ProfileLocationCountry) . "',
 					ProfileDateUpdated=now(),
 					ProfileType='" . $ProfileType . "',
-					ProfileIsActive='" . $wpdb->escape($ProfileIsActive) . "',
-					ProfileIsFeatured='" . $wpdb->escape($ProfileIsFeatured) . "',
-					ProfileIsPromoted='" . $wpdb->escape($ProfileIsPromoted) . "',
-					ProfileStatHits='" . $wpdb->escape($ProfileStatHits) . "'
+					ProfileIsActive='" . esc_attr($ProfileIsActive) . "',
+					ProfileIsFeatured='" . esc_attr($ProfileIsFeatured) . "',
+					ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
+					ProfileStatHits='" . esc_attr($ProfileStatHits) . "'
 					WHERE ProfileID=$ProfileID";
 				$results = $wpdb->query($update) or die(mysql_error());
 
-					update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_profiletype', $ProfileType);
-					update_usermeta($_REQUEST['wpuserid'], 'rb_agency_interact_pgender', esc_attr($ProfileGender));
+					update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
+					update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_pgender', esc_attr($ProfileGender));
 
 				if ($ProfileUserLinked > 0) {
 					/* Update WordPress user information. */
@@ -349,7 +349,7 @@ if (isset($_POST['action'])) {
 
 				while ($i <= 10) {
 
-					if ($_FILES['profileMedia' . $i]['tmp_name'] != "") {
+					if (isset($_FILES['profileMedia' . $i]['tmp_name']) && $_FILES['profileMedia' . $i]['tmp_name'] != "") {
 						$uploadMediaType = $_POST['profileMedia' . $i . 'Type'];
 						if ($have_error != true) {
 							// Upload if it doesnt exist already
@@ -457,12 +457,12 @@ if (isset($_POST['action'])) {
 
 				/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 				// Do we have a custom image yet? Lets just set the first one as primary.
-				$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaType = 'Image' AND ProfileMediaPrimary='1'";
-				$results=  $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
+				$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' AND ProfileMediaPrimary='1'";
+				$results=  $wpdb->get_results($wpdb->prepare($results, $ProfileID),ARRAY_A);
 				$count =  $wpdb->num_rows;
 				if ($count < 1) {
 
-					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaType = 'Image' LIMIT 0, 1";
+					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' LIMIT 0, 1";
 					$resultsNeedOne=  $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
 					$count =  $wpdb->num_rows;
 					foreach ($resultsNeedOne as $dataNeedOne) {
@@ -625,7 +625,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 elseif ((isset($_GET['action']) && $_GET['action'] == "editRecord") || (isset($_GET['action']) && $_GET['action'] == "add")) {
 
 	$action = $_GET['action'];
-	$ProfileID = $_GET['ProfileID'];
+	$ProfileID = isset($_GET['ProfileID'])?$_GET['ProfileID']:0;
 
 	rb_display_manage($ProfileID,$errorValidation);
 } else {
@@ -757,7 +757,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	} else {
 
 		// Set default values for new records
-		$ProfilesModelDate = $date;
+		$ProfilesModelDate = isset($date)?$date:"";
 		$ProfileType = 1;
 		$ProfileGender = "Unknown";
 		$ProfileIsActive = 1;
@@ -870,14 +870,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("First Name", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . $ProfileContactNameFirst . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . (isset($ProfileContactNameFirst)?$ProfileContactNameFirst:"") . "\" />\n";
 								if(isset($errorValidation['ProfileContactNameFirst'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactNameFirst']."</p>\n";} 
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Last Name", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . $ProfileContactNameLast . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . (isset($ProfileContactNameLast)?$ProfileContactNameLast:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
@@ -983,7 +983,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Promotion", rb_agency_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
-							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked($ProfileIsFeatured, 1, false) . " /> Featured<br />\n";
+							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked(isset($ProfileIsFeatured)?$ProfileIsFeatured:0, 1, false) . " /> Featured<br />\n";
 							echo "        </td>\n";
 							echo "    </tr>\n";
 							/*
@@ -1032,9 +1032,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\"></th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"hidden\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . $ProfileDateUpdated . "\" />\n";
-								echo "          <input type=\"hidden\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . $ProfileStatHits . "\" />\n";
-								echo "          <input type=\"hidden\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . $ProfileDateViewLast . "\" />\n";
+								echo "          <input type=\"hidden\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . (isset($ProfileDateUpdated)?$ProfileDateUpdated:"") . "\" />\n";
+								echo "          <input type=\"hidden\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . (isset($ProfileStatHits)?$ProfileStatHits:"") . "\" />\n";
+								echo "          <input type=\"hidden\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . (isset($ProfileDateViewLast)?$ProfileDateViewLast:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 							}
@@ -1058,30 +1058,30 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Birthdate", rb_agency_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . $ProfileDateBirth . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . (isset($ProfileDateBirth)?$ProfileDateBirth:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Email Address", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" />\n";
 								if(isset($errorValidation['ProfileContactEmail'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactEmail']."</p>\n";} 
-									echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . $ProfileContactEmail . "\" />\n";
+									echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" />\n";
 									echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Website", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . $ProfileContactWebsite . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . (isset($ProfileContactWebsite)?$ProfileContactWebsite:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Phone", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
 								echo "      <fieldset>\n";
-								echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . $ProfileContactPhoneHome . "\" /><br />\n";
-								echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . $ProfileContactPhoneCell . "\" /><br />\n";
-								echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . $ProfileContactPhoneWork . "\" /><br />\n";
+								echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . (isset($ProfileContactPhoneHome)?$ProfileContactPhoneHome:"") . "\" /><br />\n";
+								echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . (isset($ProfileContactPhoneCell)?$ProfileContactPhoneCell:"") . "\" /><br />\n";
+								echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . (isset($ProfileContactPhoneWork)?$ProfileContactPhoneWork:"") . "\" /><br />\n";
 								echo "      </fieldset>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
@@ -1126,13 +1126,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Street", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . $ProfileLocationStreet . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . (isset($ProfileLocationStreet)?$ProfileLocationStreet:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("City", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . $ProfileLocationCity . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . (isset($ProfileLocationCity)?$ProfileLocationCity:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
@@ -1140,7 +1140,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Zip", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . $ProfileLocationZip . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . (isset($ProfileLocationZip)?$ProfileLocationZip:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 

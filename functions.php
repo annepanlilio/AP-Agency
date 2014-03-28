@@ -1791,7 +1791,9 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 			while ( $p = mysql_fetch_array($result)){
 					$types = $p['ProfileCustomTypes'];
 			}
-			
+			if(!isset($ptype)){
+				$ptype = "";
+			}
 			$ptype = str_replace(' ','_',$ptype);
 			if($types != "" || $types != NULL){
 				if(strpos($types,",") > -1){
@@ -1853,10 +1855,10 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		/* Pull data from post so data will not lost @Satya 12/12/2013 */
 		if($ProfileCustomValue=="" && isset($_POST)){
 			$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ; 
-			If (is_array($_POST[$customindex])) {
+			if (isset($_POST[$customindex]) && is_array($_POST[$customindex])) {
 				$ProfileCustomValue = implode(",", $_POST[$customindex]);
 			}else{
-					$ProfileCustomValue = $_POST[$customindex] ;
+					$ProfileCustomValue = isset($_POST[$customindex])?$_POST[$customindex]:"";
 			}
 		}
 	
@@ -1913,7 +1915,16 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			 
 			} elseif ($ProfileCustomType == 3) {  // Drop Down
 				
-				list($option1,$option2) =  array_pad(explode(":",$data3['ProfileCustomOptions'], 2), -2, null);
+				$dropdown_arr = explode(":",$data3['ProfileCustomOptions']);
+				if(count($dropdown_arr) == 1){
+					list($option1) =  $dropdown_arr;
+					$option2 = "";
+				}elseif(count($dropdown_arr) == 2){
+					list($option1,$option2) =  $dropdown_arr;
+				}else{
+					$option1 = "";
+					$option2 = "";
+				}
 					
 				$data = explode("|",$option1);
 				$data2 = explode("|",$option2);

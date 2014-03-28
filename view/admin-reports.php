@@ -787,7 +787,7 @@ elseif ($ConfigID == 8) {
 		*/
 
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$results1 = $wpdb->get_results($query1, ARRAY_A);
 		$count1 = $wpdb->num_rows;
 
 
@@ -836,8 +836,8 @@ elseif ($ConfigID == 8) {
 
 			echo "<div style=\"padding:10px;border:1px solid #ccc;\">\n";
 			// Check for duplicate
-			$query_duplicate = "SELECT ProfileGallery, count(ProfileGallery) as cnt FROM ". table_agency_profile ." WHERE ProfileGallery='".$ProfileGalleryFixed."' GROUP BY ProfileGallery   HAVING cnt > 1";
-			$rs = $wpdb->get_results($wpdb->prepare($query_duplicate), ARRAY_A);
+			$query_duplicate = "SELECT ProfileGallery, count(ProfileGallery) as cnt FROM ". table_agency_profile ." WHERE ProfileGallery='%s' GROUP BY ProfileGallery   HAVING cnt > 1";
+			$rs = $wpdb->get_results($wpdb->prepare($query_duplicate,$ProfileGalleryFixed), ARRAY_A);
 			$count  = $wpdb->num_rows;
 
 			if($count > 0){

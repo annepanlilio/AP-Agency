@@ -223,7 +223,7 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_profilelist_perpage)) { $rb_agency_option_profilelist_perpage = "20"; }
 		$rb_agency_option_persearch = $rb_agency_options_arr['rb_agency_option_persearch'];
 			if (empty($rb_agency_option_persearch)) { $rb_agency_option_persearch = "100"; }
-		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
+		$rb_agency_option_showcontactpage = isset($rb_agency_options_arr['rb_agency_option_showcontactpage'])?$rb_agency_options_arr['rb_agency_option_showcontactpage']:0;
 			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "0"; }
 		$rb_agency_option_profilelist_favorite = $rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
 			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
@@ -275,7 +275,7 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Show Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_advertise'], 1,false)."/> Remove Updates on Dashboard<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> Remove Updates on Dashboard<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";		/*
 		 * Agency Internationalization
@@ -353,7 +353,7 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'], 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_bday'], 1,false)."/> ". __("Show Birthday With Months", rb_agency_TEXTDOMAIN) ."<br />\n";	
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'], 1,false)."/> ". __("Show Print and Download PDF Link", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_subscription'], 1,false)."/> ". __("Show Manage Your Subscription", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_subscription'])?$rb_agency_options_arr['rb_agency_option_profilelist_subscription']:"", 1,false)."/> ". __("Show Manage Your Subscription", rb_agency_TEXTDOMAIN) ."<br />\n";	
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> ". __("Show Social Buttons", rb_agency_TEXTDOMAIN) ."<br />\n";	
 				echo "   </td>\n";
 		echo " </tr>\n";
@@ -711,7 +711,7 @@ elseif ($ConfigID == 12) {
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agencyinteract_subscription_rates . " (SubscriptionRateTitle,SubscriptionRateType,SubscriptionRateText,SubscriptionRatePrice,SubscriptionRateTerm) VALUES ('" . $wpdb->escape($SubscriptionRateTitle) . "','" . $wpdb->escape($SubscriptionRateType) . "','" . $wpdb->escape($SubscriptionRateText) . "','" . $wpdb->escape($SubscriptionRatePrice) . "','" . $wpdb->escape($SubscriptionRateTerm) . "')";
+				$insert = "INSERT INTO " . table_agencyinteract_subscription_rates . " (SubscriptionRateTitle,SubscriptionRateType,SubscriptionRateText,SubscriptionRatePrice,SubscriptionRateTerm) VALUES ('" . esc_sql($SubscriptionRateTitle) . "','" . esc_sql($SubscriptionRateType) . "','" . esc_sql($SubscriptionRateText) . "','" . esc_sql($SubscriptionRatePrice) . "','" . esc_sql($SubscriptionRateTerm) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 				
@@ -726,11 +726,11 @@ elseif ($ConfigID == 12) {
 			} else {
 				$update = "UPDATE " . table_agencyinteract_subscription_rates . " 
 							SET 
-								SubscriptionRateTitle='" . $wpdb->escape($SubscriptionRateTitle) . "',
-								SubscriptionRateType='" . $wpdb->escape($SubscriptionRateType) . "',
-								SubscriptionRateText='" . $wpdb->escape($SubscriptionRateText) . "',
-								SubscriptionRatePrice='" . $wpdb->escape($SubscriptionRatePrice) . "',
-								SubscriptionRateTerm='" . $wpdb->escape($SubscriptionRateTerm) . "' 
+								SubscriptionRateTitle='" . esc_sql($SubscriptionRateTitle) . "',
+								SubscriptionRateType='" . esc_sql($SubscriptionRateType) . "',
+								SubscriptionRateText='" . esc_sql($SubscriptionRateText) . "',
+								SubscriptionRatePrice='" . esc_sql($SubscriptionRatePrice) . "',
+								SubscriptionRateTerm='" . esc_sql($SubscriptionRateTerm) . "' 
 							WHERE SubscriptionRateID='$SubscriptionRateID'";
 				$updated = $wpdb->query($update);
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
@@ -962,7 +962,7 @@ elseif ($ConfigID == 2) {
 	 */
 
 		// Update File
-		if ($_POST["action"] == "saveChanges") {
+		if (isset($_POST["action"]) && $_POST["action"] == "saveChanges") {
 			$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"w") or exit("<p>Unable to open file to write!  Please edit via FTP</p>");
 			$rb_agency_stylesheet_string = stripslashes($_POST["rb_agency_stylesheet_string"]);
 			fwrite($rb_agency_stylesheet_file,$rb_agency_stylesheet_string,strlen($rb_agency_stylesheet_string));
@@ -1007,7 +1007,7 @@ elseif ($ConfigID == 2) {
 	 */
 
 		// Override
-		if ($_GET["mode"] == "override") {
+		if (isset($_GET["mode"]) && $_GET["mode"] == "override") {
 			echo "<h1>OVERRIDE</h1>";
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			if ($rb_agency_options_arr['rb_agency_option_defaultcss']) {
@@ -1103,7 +1103,7 @@ elseif ($ConfigID == 3) {
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %1$s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_data_gender . " (GenderTitle) VALUES ('" . $wpdb->escape($GenderTitle) . "')";
+				$insert = "INSERT INTO " . table_agency_data_gender . " (GenderTitle) VALUES ('" . esc_sql($GenderTitle) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -1118,7 +1118,7 @@ elseif ($ConfigID == 3) {
 			} else {
 				$update = "UPDATE " . table_agency_data_gender . " 
 							SET 
-								GenderTitle='" . $wpdb->escape($GenderTitle) . "'
+								GenderTitle='" . esc_sql($GenderTitle) . "'
 							WHERE GenderID='$GenderID'";
 				$updated = $wpdb->query($update);
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
@@ -1335,7 +1335,7 @@ elseif ($ConfigID == 3) {
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag) VALUES ('" . $wpdb->escape($DataTypeTitle) . "','" . $wpdb->escape($DataTypeTag) . "')";
+				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag) VALUES ('" . esc_sql($DataTypeTitle) . "','" . esc_sql($DataTypeTag) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 				
@@ -1350,12 +1350,12 @@ elseif ($ConfigID == 3) {
 			} else {
 				$update = "UPDATE " . table_agency_data_type . " 
 							SET 
-								DataTypeTitle='" . $wpdb->escape($DataTypeTitle) . "',
-								DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' 
+								DataTypeTitle='" . esc_sql($DataTypeTitle) . "',
+								DataTypeTag='" . esc_sql($DataTypeTag) . "' 
 							WHERE DataTypeID='$DataTypeID'";
 				$updated = $wpdb->query($update);
 			
-				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".$wpdb->escape($DataTypeOldTitle)."', ProfileCustomTypes) > 0;";
+				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".esc_sql($DataTypeOldTitle)."', ProfileCustomTypes) > 0;";
 				$result =  mysql_query($update_customfields);
 				  $total = mysql_num_rows($result);
 
@@ -1366,7 +1366,7 @@ elseif ($ConfigID == 3) {
 				}
 				
 				echo "Updated $total custom fields assigned to this Profile Type<br/>";
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
 		break;
 		// Delete bulk
@@ -1392,31 +1392,31 @@ elseif ($ConfigID == 3) {
 		} // Switch
 		
   } // Action Post
-  elseif ($_GET['action'] == "deleteRecord") {
+  elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	
 	$DataTypeID = $_GET['DataTypeID'];
 	  if (is_numeric($DataTypeID)) {
 		// Verify Record
-		$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  \"". $DataTypeID ."\"";
-		$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+		$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  '%s'";
+		$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete,$DataTypeID), ARRAY_A);
 		foreach ($resultsDelete as $dataDelete) {
 		
 			// Remove Record
-			$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = \"". $DataTypeID ."\"";
-			$results = $wpdb->query($delete);
+			$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = '%s'";
+			$results = $wpdb->query($wpdb->prepare($delete,$DataTypeID));
 			
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['DataTypeTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 				
 		} // is there record?
 	  } // it was numeric
   }
-  elseif ($_GET['action'] == "editRecord") {
+  elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$DataTypeID = $_GET['DataTypeID'];
 		
 		if ( $DataTypeID > 0) {
-			$query = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeID='$DataTypeID'";
-			$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+			$query = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeID='%s'";
+			$results = $wpdb->get_results($wpdb->prepare($query,$DataTypeID), ARRAY_A);
 			$count = $wpdb->num_rows;
 			foreach ($results as $data) {
 				$DataTypeID		=$data['DataTypeID'];
@@ -1425,8 +1425,8 @@ elseif ($ConfigID == 3) {
 				$DataTypeTag	=$data['DataTypeTag'];
 			} 
 		
-			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3 class=\"title\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
+			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
 		}
   } else {
 		
@@ -1434,7 +1434,7 @@ elseif ($ConfigID == 3) {
 			$DataTypeTitle	="";
 			$DataTypeTag	="";
 			
-			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
+			echo "<h3>". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
   }
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
@@ -1513,7 +1513,7 @@ elseif ($ConfigID == 3) {
 		echo "<tbody>\n";
 	
 		$query = "SELECT * FROM ". table_agency_data_type ." ORDER BY $sort $dir";
-		$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		foreach ($results as $data) {
 			$DataTypeID	=$data['DataTypeID'];
@@ -1803,7 +1803,7 @@ elseif ($ConfigID == 5) {
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1,0, 0, 1, 0)");
 				}
 
-		 echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>Restored.</strong> successfully restored custom fields preset values!", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
+		 echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>Restored.</strong> successfully restored custom fields preset values!", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". (isset($lastid)?$lastid:0) ."\">") .".</a></p><p>".(isset($error)?$error:"")."</p></div>"); 
 
 	}
 		
@@ -1813,17 +1813,17 @@ elseif ($ConfigID == 5) {
 		$ProfileCustomID			= $_POST['ProfileCustomID'];
 		$ProfileCustomTitle			= $_POST['ProfileCustomTitle'];
 		$ProfileCustomType			= $_POST['ProfileCustomType'];
-		$ProfileCustomOptions 		= $_POST['ProfileCustomOptions'];
+		$ProfileCustomOptions 		= isset($_POST['ProfileCustomOptions'])?$_POST['ProfileCustomOptions']:"";
 		$ProfileCustomView 			= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
 		$ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
-		$ProfileCustomShowLogged  	= (int)$_POST['ProfileCustomShowLogged'];
+		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
 		$ProfileCustomShowRegistration= (int)$_POST['ProfileCustomShowRegistration'];
-		$ProfileCustomShowSearchSimple= (int)$_POST['ProfileCustomShowSearchSimple'];
-		$ProfileCustomShowAdmin   	= (int)$_POST['ProfileCustomShowAdmin'];
-		$ProfileCustomPrivacy   	= (int)$_POST['ProfileCustomPrivacy'];
+		$ProfileCustomShowSearchSimple= isset($_POST['ProfileCustomShowSearchSimple'])?(int)$_POST['ProfileCustomShowSearchSimple']:0;
+		$ProfileCustomShowAdmin   	= isset($_POST['ProfileCustomShowAdmin'])?(int)$_POST['ProfileCustomShowAdmin']:0;
+		$ProfileCustomPrivacy   	= isset($_POST['ProfileCustomPrivacy'])?(int)$_POST['ProfileCustomPrivacy']:0;
 
 		/*
 		 * Set profile types here
@@ -1864,7 +1864,7 @@ elseif ($ConfigID == 5) {
 						$option .= $val."|";
 					}
 				}
-				$label_option = "".$_POST["option_label"]."|".$option;  //
+				$label_option = "".(isset($_POST["option_label"])?$_POST["option_label"]:"")."|".$option;  //
 			}
 			if(!empty($_POST["option2"]) && isset($_POST["option2"])){
 				foreach($_POST["option2"] as $key2 => $val2){
@@ -1947,7 +1947,7 @@ elseif ($ConfigID == 5) {
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . $wpdb->escape($ProfileCustomTitle) . "','" . $wpdb->escape($ProfileCustomType) . "','" . $wpdb->escape($ProfileCustomOptions) . "','" . $wpdb->escape($ProfileCustomView) . "','" . $wpdb->escape($ProfileCustomOrder ) . "','" . $wpdb->escape($ProfileCustomShowGender ) . "','" . $wpdb->escape($ProfileCustomShowProfile ) . "','" . $wpdb->escape($ProfileCustomShowSearch) . "','" . $wpdb->escape($ProfileCustomShowLogged ) . "','" . $wpdb->escape($ProfileCustomShowAdmin) . "','" . $wpdb->escape($ProfileCustomShowRegistration). "','" . $wpdb->escape($ProfileCustomShowSearchSimple) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) . "','" . esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -1987,7 +1987,7 @@ elseif ($ConfigID == 5) {
 								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
 								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes) 
 								VALUES (" . $lastid . ",'" 
-										  . $wpdb->escape($ProfileCustomTitle) . "','" 
+										  . esc_sql($ProfileCustomTitle) . "','" 
 										  . $Types . "')";
 								
 								$results_client = mysql_query($insert_client) or die(mysql_error());
@@ -2021,18 +2021,18 @@ elseif ($ConfigID == 5) {
 			} else {
 				$update = "UPDATE " . table_agency_customfields . " 
 							SET 
-								ProfileCustomTitle='" . $wpdb->escape($ProfileCustomTitle) . "',
-								ProfileCustomType='" . $wpdb->escape($ProfileCustomType) . "',
-								ProfileCustomOptions='" . $wpdb->escape($ProfileCustomOptions) . "',
-								ProfileCustomView=" . $wpdb->escape($ProfileCustomView) . ", 
-								ProfileCustomOrder=" . $wpdb->escape($ProfileCustomOrder) . " ,
-								ProfileCustomShowGender=" . $wpdb->escape($ProfileCustomShowGender) . ",
-								ProfileCustomShowProfile=" . $wpdb->escape($ProfileCustomShowProfile) . " ,
-								ProfileCustomShowSearch=" . $wpdb->escape($ProfileCustomShowSearch) . " ,
-								ProfileCustomShowLogged=" . $wpdb->escape($ProfileCustomShowLogged) . " ,
-								ProfileCustomShowRegistration=" . $wpdb->escape($ProfileCustomShowRegistration) . " ,
-								ProfileCustomShowSearchSimple=" . $wpdb->escape($ProfileCustomShowSearchSimple) . " ,
-								ProfileCustomShowAdmin=" . $wpdb->escape($ProfileCustomShowAdmin) . " 
+								ProfileCustomTitle='" . esc_sql($ProfileCustomTitle) . "',
+								ProfileCustomType='" . esc_sql($ProfileCustomType) . "',
+								ProfileCustomOptions='" . esc_sql($ProfileCustomOptions) . "',
+								ProfileCustomView=" . esc_sql($ProfileCustomView) . ", 
+								ProfileCustomOrder=" . esc_sql($ProfileCustomOrder) . " ,
+								ProfileCustomShowGender=" . esc_sql($ProfileCustomShowGender) . ",
+								ProfileCustomShowProfile=" . esc_sql($ProfileCustomShowProfile) . " ,
+								ProfileCustomShowSearch=" . esc_sql($ProfileCustomShowSearch) . " ,
+								ProfileCustomShowLogged=" . esc_sql($ProfileCustomShowLogged) . " ,
+								ProfileCustomShowRegistration=" . esc_sql($ProfileCustomShowRegistration) . " ,
+								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
+								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = mysql_query($update) or die(mysql_error());
 
@@ -2075,7 +2075,7 @@ elseif ($ConfigID == 5) {
 								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
 								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes) 
 								VALUES (" . $ProfileCustomID . ",'" 
-										  . $wpdb->escape($ProfileCustomTitle) . "','" 
+										  . esc_sql($ProfileCustomTitle) . "','" 
 										  . $Types . "')";
 								$results_client = mysql_query($insert_client);
 							} else {
@@ -2098,8 +2098,8 @@ elseif ($ConfigID == 5) {
 				}
 
 
-				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
-						echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
+				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
+						echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
 						<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
 				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
 				 echo" <div class=\"inside\"> ";
@@ -2188,7 +2188,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			}
 		
-		echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>	
+		echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>	
 				<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
 		echo "<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
 		echo "<div class=\"inside\"> ";
@@ -2367,7 +2367,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						}
 						
 						$pos ++;			
-							$query2 = "SELECT * FROM ". table_agency_customfields_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".$ProfileID."";
+							$query2 = "SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".(isset($ProfileID)?$ProfileID:0)."";
 							$results2 = mysql_query($query2);
 									
 									  echo "<tr>
@@ -2544,7 +2544,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											<td style=\"width:40px;\">Title:</td>
 											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\" style=\"width:190px;\"/></td>
 										</tr>";
-											list($option1,$option2) = explode(":",$data1['ProfileCustomOptions']);	
+											@list($option1,$option2) = @explode(":",$data1['ProfileCustomOptions']);	
 											
 											$data1 = explode("|",$option1);
 											$data2 = explode("|",$option2);
@@ -2882,7 +2882,7 @@ echo "</div>";
 	
 	
 	// Edit Record
-	switch($_POST["action"]){
+	switch(@$_POST["action"]){
 	case "editRecord":
 		$wpdb->query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die("1".mysql_error());
 	  break;
@@ -2911,8 +2911,8 @@ echo "</div>";
 		 
 		 echo "  <h3 class=\"title\">". __("Edit Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
 		 
-		 $query = "SELECT * FROM ". table_agency_data_media ." WHERE MediaCategoryID='".$_GET["MediaCategoryID"]."'";
-		 $data = $wpdb->get_row($wpdb->prepare($query),ARRAY_A,0 );
+		 $query = "SELECT * FROM ". table_agency_data_media ." WHERE MediaCategoryID='%s'";
+		 $data = $wpdb->get_row($wpdb->prepare($query,$_GET["MediaCategoryID"]),ARRAY_A,0 );
 		 $count =$wpdb->num_rows;
 		
 		 echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ConfigID=6&MediaCategoryID=".$_GET["MediaCategoryID"]."\">\n";
@@ -2923,7 +2923,7 @@ echo "</div>";
 		
 		 echo "<table>";
 		 echo "<tr>";
-		 echo "<td>Title:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".$data["MediaCategoryTitle"]."\" style=\"width:500px;\" /></td>\n";
+		 echo "<td>Title:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".(isset($data["MediaCategoryTitle"])?$data["MediaCategoryTitle"]:"")."\" style=\"width:500px;\" /></td>\n";
 		 echo "</tr>";
 		 echo "<tr>";
 		 echo "<td>Gender:</td><td>\n";
@@ -2938,7 +2938,7 @@ echo "</div>";
 					echo "<br/>";
 		 echo "</td>";
 		 echo "</tr>";
-		 echo "<td>Order:</td><td><input type=\"text\" name=\"MediaCategoryOrder\" value=\"".(0+(int)$data["MediaCategoryOrder"])."\" /></td>\n";
+		 echo "<td>Order:</td><td><input type=\"text\" name=\"MediaCategoryOrder\" value=\"".(0+(isset($data["MediaCategoryOrder"])?$data["MediaCategoryOrder"]:0))."\" /></td>\n";
 		 echo "<tr>";
 		 echo "<td>";
 		 echo "<p class=\"submit\">\n";
@@ -3004,7 +3004,7 @@ echo "</div>";
 		echo "<tbody>\n";
 	
 		$query = "SELECT * FROM ". table_agency_data_media ." ORDER BY $sort $dir";
-		$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		foreach ($results as $data) {
 			$MediaCategoryID	=$data['MediaCategoryID'];
@@ -3013,11 +3013,11 @@ echo "</div>";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;MediaCategoryID=". $MediaCategoryID."&amp;ConfigID=6\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ", rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </th>\n";
-		 $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$data['MediaCategoryGender']."'"; 
-		 $fetchGender = $wpdb->get_row($wpdb->prepare( $queryGender),ARRAY_A,0 	 );
+		 $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s'"; 
+		 $fetchGender = $wpdb->get_row($wpdb->prepare( $queryGender,$data['MediaCategoryGender']),ARRAY_A,0 	 );
 		 $countGender = $wpdb->num_rows;
 		 if($countGender > 0){
 			echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
