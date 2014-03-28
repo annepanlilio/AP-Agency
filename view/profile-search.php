@@ -29,7 +29,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 		//  Must be logged as "Client" to view model list and profile information
 		($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
 
-				if ($_REQUEST["form_action"] == "search_profiles") {
+				if (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") {
 				echo "			<h1 class=\"entry-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
 				} else {
 					if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
@@ -54,7 +54,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 					//  echo $formatted = RBAgency_Profile::search_formatted($search_results);
 
 				} else {
-				if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' )
+				if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  isset($profilesearch_layout) && $profilesearch_layout == 'condensed' )
 					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' )){
 							// echo RBAgency_Profile::search_form("", "", 0);
 					}else{
@@ -66,7 +66,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 
 					//do not display on results
 				if(!isset($_POST['form_mode'])){
-					if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' )
+					if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  isset($profilesearch_layout) && $profilesearch_layout == 'condensed' )
 					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' )){
 						
 							echo RBAgency_Profile::search_form("", "", 0);

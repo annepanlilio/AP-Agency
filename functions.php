@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 /*
  * Debug Mode
 
@@ -787,7 +787,7 @@ ini_set('display_errors', 'On');
 		//$limit = " LIMIT 0,". $rb_agency_option_profilelist_perpage;
 		$dir = "asc";
 		// Should we override the privacy settings?
-		if(strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
+		if(isset($pageURL) && strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
 			$OverridePrivacy = 1;
 		}
 
@@ -806,7 +806,7 @@ ini_set('display_errors', 'On');
 				$paging = get_query_var('paging'); 
 			} else { 
 				preg_match('/[0-9]/', $_SERVER["REQUEST_URI"], $matches, PREG_OFFSET_CAPTURE);
-				if ($matches[0][1] > 0) {
+				if (@$matches[0][1] > 0) {
 					$paging = str_replace("/", "", substr($_SERVER["REQUEST_URI"], $matches[0][1]));
 				} else {
 					$paging = 1; 
@@ -936,10 +936,10 @@ ini_set('display_errors', 'On');
 					/*
 					 * Set Print / PDF in Settings
 					 */
-					if(get_query_var('target')!="results" && $rb_agency_option_profilelist_printpdf){// hide print and download PDF in Search result
+					if(get_query_var('target')!="results" && $rb_agency_option_profilelist_printpdf && isset($atts)){// hide print and download PDF in Search result
 						$links.='
 						<div class="rbprint-download">
-							<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/print/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/pdf/?gd='.$atts["gender"].'&ast='.$atts["age_start"].'&asp='.$atts["age_stop"].'&t='.$atts["type"].'">Download PDF</a>'.$addtionalLink.'
+							<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/print/?gd='.(!empty($atts["gender"])?$atts["gender"]:"").'&ast='.(!empty($atts["age_start"])?$atts["age_start"]:"").'&asp='.(!empty($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(!empty($atts["type"])?$atts["type"]:"").'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/pdf/?gd='.(isset($atts["gender"])?$atts["gender"]:"").'&ast='.(isset($atts["gender"])?$atts["age_start"]:"").'&asp='.(isset($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(isset($atts["type"])?$atts["type"]:"").'">Download PDF</a>'.(isset($addtionalLink)?$addtionalLink:"").'
 						</div><!-- .rbprint-download -->';
 					}
 
@@ -1092,10 +1092,10 @@ ini_set('display_errors', 'On');
 				// Execute the query showing casting cart
 				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 
-			} elseif ($_GET['t']=="casting"){
+			} elseif (isset($_GET['t']) && $_GET['t']=="casting"){
 				// TODO: Find ?????????????????????  Purpose?
 				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
-			} elseif ($fastload){
+			} elseif (isset($fastload)){
 				// Execute Query in slim down mode, only return name, face and link
 				$queryList = "
 					SELECT 
@@ -1295,8 +1295,9 @@ ini_set('display_errors', 'On');
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $profileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC LIMIT 0, 7 ";
 		$resultsImg = mysql_query($queryImg);
 		$countImg = mysql_num_rows($resultsImg);
+		$images = "";
 		while ($dataImg = mysql_fetch_array($resultsImg)) {//style=\"display:none\" 
-			$images.="<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/ext/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+			$images ."<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/ext/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 		}
 	return $images;
 	}
@@ -1605,7 +1606,7 @@ class rb_agency_pagination {
 			
 			// We are in Page		
 			preg_match('/[0-9]/', $this->target, $matches, PREG_OFFSET_CAPTURE);
-			if ($matches[0][1] > 0) {
+			if (@$matches[0][1] > 0) {
 				return substr($this->target, 0, $matches[0][1]) ."/$id/";
 			} else {
 				return "$this->target/$id/";
@@ -2021,7 +2022,7 @@ function rb_agency_getCountryTitle($country_id="",$contry_code = false){
 	
 	$return = "";
 	
-	if($country_code === true){
+	if(isset($country_code) && $country_code === true){
 		$query ="SELECT CountryCode FROM ". table_agency_data_country ." WHERE CountryID = " . $country_id;
 		$result = $wpdb->get_row($query);
 		$return = $result->CountryCode;
@@ -2053,11 +2054,11 @@ function rb_agency_getStateTitle($state_id="",$state_code = false){
 	$return = "";
 	
 	if($state_code === true){
-		$query ="SELECT StateCode FROM ". table_agency_data_state ." WHERE StateID = " . $state_id;
+		$query ="SELECT StateCode FROM ". table_agency_data_state ." WHERE StateID = " . (is_numeric($state_id)?$state_id:0);
 		$result = $wpdb->get_row($query);
-		$return = $result->StateCode;
+		$return = isset($result->StateCode)?$result->StateCode:"";
 	} else {
-		$query ="SELECT StateTitle FROM ". table_agency_data_state ." WHERE StateID = " . $state_id;
+		$query ="SELECT StateTitle FROM ". table_agency_data_state ." WHERE StateID = " . (is_numeric($state_id)?$state_id:0);
 		$result = $wpdb->get_row($query);
 		$return = $result->StateTitle;
 	}
@@ -2285,7 +2286,7 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 	global $rb_agency_option_unittype;
 	$html = "";
 	
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 	foreach ($resultsCustom as $resultCustom) {
 		if(!empty($resultCustom->ProfileCustomValue )){
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type

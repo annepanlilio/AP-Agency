@@ -1121,7 +1121,7 @@ elseif ($ConfigID == 3) {
 								GenderTitle='" . $wpdb->escape($GenderTitle) . "'
 							WHERE GenderID='$GenderID'";
 				$updated = $wpdb->query($update);
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
 		break;
 		// Delete bulk
@@ -1146,7 +1146,7 @@ elseif ($ConfigID == 3) {
 		} // Switch
 
 
-	} elseif ($_GET['action'] == "deleteRecord") {
+	} elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	// Delete Record
 
 		$GenderID = $_GET['GenderID'];
@@ -1168,21 +1168,21 @@ elseif ($ConfigID == 3) {
 	/*
 	 * Edit Record
 	 */
-	} elseif ($_GET['action'] == "editRecord") {
+	} elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$GenderID = $_GET['GenderID'];
 
 		if ( $GenderID > 0) {
-			$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID='$GenderID'";
-			$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+			$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID='%s'";
+			$results = $wpdb->get_results($wpdb->prepare($query,$GenderID), ARRAY_A);
 			$count = $wpdb->num_rows;
 			foreach ($results as $data) {
 				$GenderID =$data['GenderID'];
 				$GenderTitle =stripslashes($data['GenderTitle']);
 			}
 
-			echo "<h3 class=\"title\">". sprintf(__("Edit %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3 class=\"title\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
+			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
 		}
 
 	/*
@@ -1194,7 +1194,7 @@ elseif ($ConfigID == 3) {
 			$GenderTitle ="";
 			$GenderTag ="";
 
-			echo "<h3>". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
+			echo "<h3>". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
 	}
 
@@ -1270,7 +1270,7 @@ elseif ($ConfigID == 3) {
 	echo "<tbody>\n";
 
 	$query = "SELECT * FROM ". table_agency_data_gender ." ORDER BY $sort $dir";
-	$results =$wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+	$results =$wpdb->get_results($query, ARRAY_A);
 	$count = $wpdb->num_rows;
 	foreach ($results as $data) {
 			$GenderID	=$data['GenderID'];
@@ -1619,9 +1619,9 @@ if(isset($_POST["editaction"])){
 <div class="country_added">
 <div class="error"></div>
 <div class="country_txt"><span>Country Title</span></div>
-<div class="country_in"><input type="text" name="CountryTitle" id="CountryTitle" size="27" value="<?php echo $_POST["CountryTitle"];?>">
+<div class="country_in"><input type="text" name="CountryTitle" id="CountryTitle" size="27" value="<?php echo (isset($_POST["CountryTitle"])?$_POST["CountryTitle"]:"");?>">
 <div class="country_txt"><span>Country Code</span></div>
-<div class="country_in"><input type="text" name="CountryCode" id="CountryCode" size="27" value="<?php echo $_POST["CountryCode"];?>">
+<div class="country_in"><input type="text" name="CountryCode" id="CountryCode" size="27" value="<?php echo (isset($_POST["CountryCode"])?$_POST["CountryCode"]:"");?>">
 </div>
 <div class="country_ro"><input type="submit" class="button-primary" name="country_add" value="Add"></div>
 </div>
@@ -1708,13 +1708,13 @@ if(isset($_POST['state_add'])) {
 <div class="country_in"><select name="CountryID" ><option value="-1">Select Country</option><?php 
 foreach($myrows as $result) {
  ?>
-<option <?php if($_POST['CountryID']==$result->CountryID){?>selected="selected"<?php }?> value="<?php echo $result->CountryID; ?>"><?php echo $result->CountryTitle; ?></option>
+<option <?php if(isset($_POST['CountryID']) && $_POST['CountryID']==$result->CountryID){?>selected="selected"<?php }?> value="<?php echo (isset($result->CountryID)?$result->CountryID:""); ?>"><?php echo (isset($result->CountryTitle)?$result->CountryTitle:""); ?></option>
 <?php } ?>
 </select></div>
 <div class="country_txt" style="width:6%;"><span>State Name</span></div>
-<div class="country_in"><input type="text" name="StateTitle" value="<?php echo $_POST['StateTitle'];?>" size="27">
+<div class="country_in"><input type="text" name="StateTitle" value="<?php echo (isset($_POST['StateTitle'])?$_POST['StateTitle']:"");?>" size="27">
 <div class="country_txt" style="width:6%;"><span>Code</span></div>
-<div class="country_in"><input type="text" name="StateCode" value="<?php echo $_POST['StateCode'];?>" size="27">
+<div class="country_in"><input type="text" name="StateCode" value="<?php echo (isset($_POST['StateCode'])?$_POST['StateCode']:"");?>" size="27">
 </div>
 <div class="country_ro"><input type="submit" name="state_add" class="button-primary" value="Add"></div>
 </div>
@@ -2164,7 +2164,7 @@ elseif (isset($_GET["deleteRecord"])) {
 		} // is there record?
 	} // it was numeric
 }
-elseif ($_GET['action'] == "editRecord") {
+elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$ProfileCustomID = $_GET['ProfileCustomID'];
 		
@@ -2213,7 +2213,7 @@ elseif ($_GET['action'] == "editRecord") {
 			
 			echo "\n";
 		echo " 
-		<h3 style=\"width:430px;\">". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
+		<h3 style=\"width:430px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
 		<div class=\"postbox \"  style=\"width:430px;float:left;border:0px solid black;\">
 			 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>
 		<div class=\"inside\"> ";

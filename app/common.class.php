@@ -112,6 +112,19 @@ class RBAgency_Common {
 
 	}
 
+	/**
+     * Get Session and avoid undefined index
+     *
+     * @param string $string
+     */
+	static function session($string) {
+		if(isset($_SESSION[$string]) && !emptY($_SESSION[$string])){
+			return $_SESSION[$string];
+		}else{
+			return "";
+		}
+	}
+
 
 
 	/**

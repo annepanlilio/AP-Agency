@@ -123,6 +123,8 @@ class RBAgency_Casting {
 	 */
 
 		public static function cart_show(){
+			
+			global $wpdb;
 
 			if (isset($_SESSION['cartArray']) && !empty($_SESSION['cartArray'])) {
 
@@ -435,7 +437,7 @@ class RBAgency_Casting {
 
 		}*/
 
-			if($_GET["action"] == "massEmail"){
+			if(isset($_GET["action"]) && $_GET["action"] == "massEmail"){
 				echo RBAgency_Casting::cart_show();
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
