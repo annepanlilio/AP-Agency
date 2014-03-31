@@ -7,7 +7,7 @@ header("Cache-control: private"); //IE 6 Fix
 	global $user_ID; 
 	global $current_user;
 	get_currentuserinfo();
-	$CurrentUser = $current_user->id;
+	$CurrentUser = $current_user->ID;
 
 // Set Values
 $rb_agency_options_arr = get_option('rb_agency_options');
@@ -68,7 +68,6 @@ $profileURL = get_query_var('target'); //$_REQUEST["profile"];
 		$ProfileStatShoe		    =stripslashes($data['ProfileStatShoe']);
 		$ProfileStatDress			=stripslashes($data['ProfileStatDress']);
 		$ProfileUnion				=stripslashes($data['ProfileUnion']);
-		$ProfileExperience			=stripslashes($data['ProfileExperience']);
 		$ProfileDateUpdated			=stripslashes($data['ProfileDateUpdated']);
 		$ProfileIsActive			=stripslashes($data['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 		$ProfileStatHits			=stripslashes($data['ProfileStatHits']);

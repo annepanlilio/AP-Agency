@@ -1,5 +1,7 @@
 <?php 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 header("Cache-control: private"); //IE 6 Fix
 
 	/*
@@ -10,7 +12,7 @@ header("Cache-control: private"); //IE 6 Fix
 		global $user_ID; 
 		global $current_user;
 		get_currentuserinfo();
-		$CurrentUser = $current_user->id;
+		$CurrentUser = $current_user->ID;
 
 		// Get Target Profile ID
 		$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
@@ -22,38 +24,37 @@ header("Cache-control: private"); //IE 6 Fix
 	 */
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-		$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
-		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-		$rb_agency_option_showcontactpage = $rb_agency_options_arr['rb_agency_option_showcontactpage'];
-		$rb_agency_option_agency_urlcontact = $rb_agency_options_arr['rb_agency_option_agency_urlcontact'];
-		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
-		$rb_agency_option_profilelist_sidebar = $rb_agency_options_arr['rb_agency_option_profilelist_sidebar'];
 
-		// Layout Type
-		$rb_agency_option_layoutprofile = (int)$rb_agency_options_arr['rb_agency_option_layoutprofile'];
-			$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
+			$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_value_agencyname'])?$rb_agency_options_arr['rb_agency_value_agencyname']:get_bloginfo('name');
+			$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy'])?$rb_agency_options_arr['rb_agency_option_privacy']:0;
+			$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
+			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+			$rb_agency_option_profilelist_sidebar = isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0;
 
-		// Gallery Type
-		$rb_agency_option_gallerytype = (int)$rb_agency_options_arr['rb_agency_option_gallerytype'];
-			if ($rb_agency_option_gallerytype == 1) {
-				// Lightbox 2
-				$reltype = "data-lightbox=\"rbagency\"";
-				$reltarget = ""; // target=\"_blank\"
+			// Layout Type
+			$rb_agency_option_layoutprofile = isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0;
+				$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
 
-				wp_enqueue_script( 'lightbox2', plugins_url('/ext/lightbox2/js/lightbox-2.6.min.js', dirname(__FILE__)), array( 'jquery' ));
-				wp_register_style( 'lightbox2', plugins_url('/ext/lightbox2/css/lightbox.css', dirname(__FILE__)) );
-				wp_enqueue_style( 'lightbox2' );
+			// Gallery Type
+			$rb_agency_option_gallerytype = isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0;
+				if ($rb_agency_option_gallerytype == 1) {
+					// Lightbox 2
+					$reltype = "data-lightbox=\"rbagency\"";
+					$reltarget = ""; // target=\"_blank\"
 
-			} else {
-				// None
-				$reltype = "";
-				$reltarget = "";
-			}
+					wp_enqueue_script( 'lightbox2', plugins_url('/ext/lightbox2/js/lightbox-2.6.min.js', dirname(__FILE__)), array( 'jquery' ));
+					wp_register_style( 'lightbox2', plugins_url('/ext/lightbox2/css/lightbox.css', dirname(__FILE__)) );
+					wp_enqueue_style( 'lightbox2' );
 
-		// Gallery Order
-		$rb_agency_option_galleryorder = $rb_agency_options_arr['rb_agency_option_galleryorder'];
-			if ($rb_agency_option_galleryorder == 1) { $orderBy = "ProfileMediaID DESC, ProfileMediaPrimary DESC"; } else { $orderBy = "ProfileMediaID ASC, ProfileMediaPrimary DESC"; }
+				} else {
+					// None
+					$reltype = "";
+					$reltarget = "";
+				}
+
+			// Gallery Order
+			$rb_agency_option_galleryorder = isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
+				if ($rb_agency_option_galleryorder == 1) { $orderBy = "ProfileMediaID DESC, ProfileMediaPrimary DESC"; } else { $orderBy = "ProfileMediaID ASC, ProfileMediaPrimary DESC"; }
 
 
 	/*

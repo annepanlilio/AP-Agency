@@ -109,7 +109,7 @@ echo "								<span class=\"age\">". rb_agency_get_age($ProfileDateBirth) ."</sp
 echo "								from <span class=\"state\"> ".rb_agency_getStateTitle($ProfileLocationState,true)."</span>\n";
 								}
 echo "	      				</p>\n";
-echo "		  				<ul>\n";	
+echo "		  				<ul>\n";
 
 
 								$queryType = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID IN ($ProfileType) ORDER BY DataTypeTitle";
@@ -121,7 +121,6 @@ echo "		  				</ul>\n";
 
 							// Social Link
 							rb_agency_getSocialLinks();
-echo "		  				<p>". $ProfileExperience ."</p>\n";
 
 echo "	  				</div> <!-- #profile-info -->\n";
 echo "	  			</div> <!-- .rbcol-5 -->\n";
@@ -130,11 +129,6 @@ echo "	  			</div> <!-- .rbcol-5 -->\n";
 echo "			  	<div class=\"rbcol-3 rbcolumn\">\n";
 echo "			  		<div id=\"profile-actions\">\n";
 
-							//Contact Profile
-							if (isset($rb_agency_option_agency_urlcontact) && !empty($rb_agency_option_agency_urlcontact)) {
-echo "	      					<div id=\"profile-actions-contact\"><span><a href=\"". $rb_agency_option_agency_urlcontact ."\">". __("Contact", rb_agency_TEXTDOMAIN). " ". $ProfileClassification ."</a></span></div>\n";
-echo "							<li class=\"item contact\"></li>\n";
-							}
 
 echo "	      				<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong> Profile Views</p>\n";
 

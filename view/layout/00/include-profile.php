@@ -107,12 +107,6 @@ echo "				<div id=\"links\">\n";
 echo "				</div>\n";  // Close Links
 echo "			</div>\n";  // Close .rbcol-3
 
-echo "	  		<div class=\"rbcol-12 rbcolumn\">\n";
-echo "	  			<div id=\"experience\">\n";
-echo					$ProfileExperience;
-echo "	  			</div>\n"; // Close Experience
-echo "	  		</div>\n"; // Close .rbcol-12
-
 echo "		  	<div class=\"rbclear\"></div>\n"; // Clear All
 echo "  	</div>\n";  // Close Profile Zero
 echo "		<div class=\"rbclear\"></div>\n"; // Clear All

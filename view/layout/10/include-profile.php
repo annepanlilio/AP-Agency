@@ -130,9 +130,7 @@ echo "					<ul>\n";
 echo "					</ul>\n";
 echo "	  			</div>\n";  // #links
 
-echo "					<div id=\"experience\">\n";
-echo						$ProfileExperience;
-echo "					</div>\n"; // #experience
+
 echo "	  			</div>\n"; // #profile-info
 echo "	  		</div>\n";  // .rbcol-8
 

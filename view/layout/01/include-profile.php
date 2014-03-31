@@ -18,11 +18,17 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 $profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 $urlexploade = explode("/", $profileURLString);
-$subview=$urlexploade[1];
+
+if (isset($urlexploade[1])) {
+	$subview = $urlexploade[1];
+} else {
+	$subview = "";
+}
+
 
 # rb_agency_option_galleryorder
 $rb_agency_options_arr = get_option('rb_agency_options');
-$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+	$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 
 if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
 				<div class="allimages_div">
@@ -260,8 +266,8 @@ echo "			</div>\n"; // .rbcol-12
 echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
@@ -274,7 +280,7 @@ echo "				<div id=\"profile-info\">\n";
 echo "					<div id=\"stats\">\n";
 echo "						<ul>\n";
 								if (!empty($ProfileGender)) {
-									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
+									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=%d", $ProfileGender),ARRAY_A,0);
 									echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 								}
 
@@ -301,9 +307,7 @@ echo "						<ul>\n";
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 echo "						</ul>\n"; // Close Stats ul
 echo "					</div>\n"; // #stats
-echo "					<div id=\"experience\">\n";
-echo						$ProfileExperience;
-echo "					</div>\n"; // #experience
+
 echo "				</div>\n"; // #profile-info
 echo "			</div>\n";  // .rbcol-5
 
@@ -325,8 +329,8 @@ echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<div id=\"photos\">\n";
 	
 						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";

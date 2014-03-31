@@ -108,9 +108,6 @@ echo "					</div>\n";// .rbcol-6 ?>
 
 <?php
 //Experience
-echo "		  			<div id=\"experience\" class=\"rbcol-12 rbcolumn\">\n";
-echo						$ProfileExperience;
-echo "		  			</div>\n";
 echo "					<div class=\"rbclear\"></div>\n"; // Clear All					
 echo "				</div> <!-- #info -->\n";//End Info
 echo "			</div> <!-- #profile-l -->\n";

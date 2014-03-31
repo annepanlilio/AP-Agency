@@ -2198,7 +2198,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
 
 
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC", $ProfileID));
 	foreach ($resultsCustom as $resultCustom) {
 		// If a value exists...
 		if(!empty($resultCustom->ProfileCustomValue )){
@@ -2758,7 +2758,7 @@ function rb_agency_checkExecution() {
 function rb_agency_getSocialLinks(){
 
 	$rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
+		$rb_agency_option_showsocial = isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0;
 
 	if($rb_agency_option_showsocial){
 		echo "		<div class=\"social addthis_toolbox addthis_default_style\">\n";
@@ -3008,7 +3008,7 @@ function rb_display_profile_list(){
 		  $userlogin="";
 		  $userpass="";
 		  if($user_info){
-			  $user_info = unserialize($user_info);	
+			  $user_info = unserialize($user_info);
 			  $userlogin = $user_info[0];
 			  $userpass = $user_info[1];
 		  }

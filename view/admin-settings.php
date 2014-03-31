@@ -242,7 +242,11 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_formshow_gender)) { $rb_agency_option_formshow_gender = "1"; }
 		$rb_agency_option_formshow_age = $rb_agency_options_arr['rb_agency_option_formshow_age'];
 			if (empty($rb_agency_option_formshow_age)) { $rb_agency_option_formshow_age = "1"; }
-
+		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
+			if (empty($rb_agency_option_profilenaming)) { $rb_agency_option_profilenaming = "0"; }
+		//
+		$rb_agency_option_profilelist_sidebar = $rb_agency_options_arr['rb_agency_option_profilelist_sidebar'];
+			if (empty($rb_agency_option_profilelist_sidebar)) { $rb_agency_option_profilelist_sidebar = "0"; }
 
 
 	/*
@@ -483,12 +487,7 @@ elseif ($ConfigID == 1) {
 		echo " </tr>\n";*/
 		// comment by @Gaurav ends
 
-		/*####### HIDE THIS OPTION FOR THE MEAN TIME #### 
-		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Override Contact Page Path', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_urlcontact]\" value=\"". $rb_agency_options_arr['rb_agency_option_agency_urlcontact'] ."\" /></td>\n";
-		echo " </tr>\n";
-		################/*
+
 
 		/*############# hide Profile Custom Fields Options - FOR THE MEAN TIME######################
 		// Profile Custom Fields Options

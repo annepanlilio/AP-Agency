@@ -58,9 +58,7 @@ echo "	  					<ul>\n";
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 echo "	  					</ul>\n"; // Close Stats ul
 echo "	  				</div>\n"; // #stats
-echo "					<div id=\"experience\">\n";
-echo						$ProfileExperience;
-echo "					</div>\n"; // #experience
+
 echo "	  			</div>\n"; // #profile-info
 echo "	  		</div>\n";  // .rbcol-5
 
