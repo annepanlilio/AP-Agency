@@ -242,6 +242,8 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_formshow_gender)) { $rb_agency_option_formshow_gender = "1"; }
 		$rb_agency_option_formshow_age = $rb_agency_options_arr['rb_agency_option_formshow_age'];
 			if (empty($rb_agency_option_formshow_age)) { $rb_agency_option_formshow_age = "1"; }
+		$rb_agency_option_redirect_custom_login = isset($rb_agency_options_arr['rb_agency_option_redirect_custom_login'])?$rb_agency_options_arr['rb_agency_option_redirect_custom_login']:0;
+			if (empty($rb_agency_option_redirect_custom_login)) { $rb_agency_option_redirect_custom_login = "1"; }
 
 
 
@@ -478,6 +480,13 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 1,false)."/> ". __("No", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"2\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 2,false)."/> ". __("Yes (Allow users to perminently delete their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"3\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 3,false)."/> ". __("Archive Only (Allow users to hide their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Redirect Login', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_redirect_custom_login]\" value=\"0\" ".checked($rb_agency_options_arr['rb_agency_option_redirect_custom_login'], 0,false)."/> ". __("Redirect to /wp-admin/", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_redirect_custom_login]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_redirect_custom_login'], 1,false)."/> ". __("Redirect to /profile-login/", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
