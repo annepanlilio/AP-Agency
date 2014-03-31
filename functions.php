@@ -2545,7 +2545,9 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 	global $wpdb;
 	global $rb_agency_option_unittype;
 
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+	$echo = "";
+	$return = "";
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC", $ProfileID));
 
 	foreach ($resultsCustom as $resultCustom) {
 
@@ -2612,11 +2614,11 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
-			
+
+
 //****************************************************************************************************//
 
-	
-	
+
 /*/
 * ======================== Get ProfileID by UserLinkedID ===============
 * @Returns ProfileID

@@ -71,7 +71,7 @@ if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
 						<?php  
 						
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
@@ -183,9 +183,10 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 
 
 			<?php } else if($subview=="print-images") {  //show print options
-				 $queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-				$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+				$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 				$countImg  = $wpdb->num_rows;
+				$withSelected = 0;
 				foreach($resultsImg as $dataImg ){
 					if($_POST[$dataImg['ProfileMediaID']]==1){
 					$selected.="<input type='hidden' value='1' name='".$dataImg['ProfileMediaID']."'>";

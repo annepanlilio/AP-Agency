@@ -162,6 +162,8 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 			}
 			$resultsImg = mysql_query($queryImg);
 			$countImg = mysql_num_rows($resultsImg);
+			$imageCnt = "";
+			$logoMarginTop = "";
 			while ($dataImg = mysql_fetch_array($resultsImg)){$imageCnt++; $rowCount++;
 			  // if($_POST[$dataImg['ProfileMediaID']]==1){
 				// echo $dataImg['ProfileMediaID']."<br>";
