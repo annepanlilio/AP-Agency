@@ -213,7 +213,7 @@ class RBAgency_Casting {
 			$MassEmailBccEmail = $_POST["MassEmailBccEmail"];
 			
 			$SearchID				= time(U);
-			$SearchMuxHash			= rb_agency_random(8);
+			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 		
 			$SearchMuxToName		=$_POST["MassEmailRecipient"];
 			$SearchMuxToEmail		=$_POST["MassEmailRecipient"];
@@ -318,7 +318,7 @@ class RBAgency_Casting {
 			$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 		
 			$SearchID				= time(U);
-			$SearchMuxHash			= rb_agency_random(8);
+			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 		
 			$SearchMuxFromName		=$_POST["SearchMuxFromName"];
 			$SearchMuxFromEmail		=$_POST["SearchMuxFromEmail"];

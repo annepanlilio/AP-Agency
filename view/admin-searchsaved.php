@@ -50,7 +50,7 @@ $siteurl = get_option('siteurl');
 					$results = $wpdb->query($insert);
 					$lastid = $wpdb->insert_id;
 
-					echo '<div id="message" class="updated"><p>Search saved successfully! <a href="'. admin_url("admin.php?page=". $_GET['page']) .'&action=emailCompose&SearchID='. $lastid .'&SearchMuxHash='.rb_agency_random(8).'">Send Email</a></p></div>'; 
+					echo '<div id="message" class="updated"><p>Search saved successfully! <a href="'. admin_url("admin.php?page=". $_GET['page']) .'&action=emailCompose&SearchID='. $lastid .'&SearchMuxHash='.RBAgency_Common::generate_random_string(8).'">Send Email</a></p></div>'; 
 
 				} else {
 
@@ -410,7 +410,7 @@ $siteurl = get_option('siteurl');
 				<?php
 				if($count3<=0){
 				?>
-					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".rb_agency_random(8); ?>">Create Email</a> | </span>
+					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Create Email</a> | </span>
 				<?php
 				}else{
 				?>

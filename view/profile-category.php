@@ -164,7 +164,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 		
 	
 	$SearchID				= time(U);
-	$SearchMuxHash			= rb_agency_random(8);
+	$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 	$SearchMuxToName		=$_POST['SearchMuxToName'];
 	$SearchMuxToEmail		=get_option('admin_email');
 	

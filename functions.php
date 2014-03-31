@@ -419,13 +419,6 @@ ini_set('display_errors', 'On');
 		}
 	}
 
-	/**
-	 * Generate random number
-	 *
-	 */
-	function rb_agency_random() {
-		return preg_replace("/([0-9])/e","chr((\\1+112))",rand(100000,999999));
-	}
 
 	/**
 	 * Get users role
