@@ -33,11 +33,11 @@ class RBAgency_Profile {
 					$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
 
 					/* Search Form - Simple */
-					$rb_agency_option_formshow_location = $rb_agency_options_arr['rb_agency_option_formshow_location'];
-					$rb_agency_option_formshow_name = $rb_agency_options_arr['rb_agency_option_formshow_name'];
-					$rb_agency_option_formshow_type = $rb_agency_options_arr['rb_agency_option_formshow_type'];
-					$rb_agency_option_formshow_gender = $rb_agency_options_arr['rb_agency_option_formshow_gender'];
-					$rb_agency_option_formshow_age = $rb_agency_options_arr['rb_agency_option_formshow_age'];
+					$rb_agency_option_formshow_location = isset($rb_agency_options_arr['rb_agency_option_formshow_location'])?$rb_agency_options_arr['rb_agency_option_formshow_location']:1;
+					$rb_agency_option_formshow_name = isset($rb_agency_options_arr['rb_agency_option_formshow_name'])?$rb_agency_options_arr['rb_agency_option_formshow_name']:1;
+					$rb_agency_option_formshow_type = isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:1;
+					$rb_agency_option_formshow_gender = isset($rb_agency_options_arr['rb_agency_option_formshow_gender'])?$rb_agency_options_arr['rb_agency_option_formshow_gender']:1;
+					$rb_agency_option_formshow_age = isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:1;
 
 				// Which Type?
 				if ($type == 1) {
@@ -199,34 +199,34 @@ class RBAgency_Profile {
 						echo "				</div>\n";
 
 						echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\">\n";
-																		$location= site_url();
+												$location= site_url();
 						echo '					<input type="hidden" id="url" value="'.$location.'">';
 						echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
-																		$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
-																		$result_query_get = $wpdb->get_results($query_get);
 						echo "					<div>";
 						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>";
 						echo '							<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
-																		foreach($result_query_get as $r){
-																				$selected =$_SESSION["country"]==$r->CountryID?"selected=selected":"";
+														$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
+														$result_query_get = $wpdb->get_results($query_get);
+														foreach($result_query_get as $r){
+																$selected =$_SESSION["country"]==$r->CountryID?"selected=selected":"";
 						echo '							<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
-																		}
+														}
 						echo '						</select>';
 						echo "					</div>\n";
 						echo "				</div>\n";
 
-						echo "				<div class=\"rbfield rbselect rbsingle rb_state\" id=\"rb_state\"\n";
+						echo "				<div class=\"rbfield rbselect rbsingle rb_state\" id=\"rb_state\">\n";
 						echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
-																		//echo "					<input type=\"text\" id=\"state\" name=\"state\" value=\"".RBAgency_Common::session("state") ."\" />\n";
-																		$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
-																		$result_query_get = $wpdb->get_results($query_get);
+												//echo "	<input type=\"text\" id=\"state\" name=\"state\" value=\"".RBAgency_Common::session("state") ."\" />\n";
 						echo "					<div>";
 						echo '						<select name="state" id="state">';
 						echo '							<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
-																		foreach($result_query_get as $r){
-																				$selected =RBAgency_Common::session("state")==$r->StateID?"selected=selected":"";
-						echo '							<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
-																		}
+														$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
+														$result_query_get = $wpdb->get_results($query_get);
+														foreach($result_query_get as $r){
+															$selected =RBAgency_Common::session("state")==$r->StateID?"selected=selected":"";
+						echo '								<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
+														}
 						echo '						</select>';
 						echo "					</div>\n";
 						echo "				</div>\n";
@@ -1574,7 +1574,7 @@ class RBAgency_Profile {
 			$rb_agency_option_profilenaming				 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 			$rb_agency_option_profilelist_castingcart 	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
 			$rb_agency_option_profilelist_printpdf 	     = isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
-
+			$rb_agency_option_profilelist_thumbsslide	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
 			/* 
 			 * initialize html
 			 */
@@ -1587,10 +1587,11 @@ class RBAgency_Profile {
 			/* 
 			 * determine primary image
 			 */
+			$images = "";
 			$p_image = rb_get_primary_image($dataList["ProfileID"]); 
 			if ($p_image){ 
 				if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-					if($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']==1){  //show profile sub thumbs for thumb slide on hover
+					if($rb_agency_option_profilelist_thumbsslide==1){  //show profile sub thumbs for thumb slide on hover
 						$images=getAllImages($dataList["ProfileID"]);
 						$images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 					}
