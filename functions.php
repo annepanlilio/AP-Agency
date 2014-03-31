@@ -106,17 +106,17 @@ ini_set('display_errors', 'On');
 
 			// Create Dashboard Widgets
 			wp_add_dashboard_widget('rb_agency_dashboard_quicklinks', __("RB Agency Updates", rb_agency_TEXTDOMAIN), 'rb_agency_dashboard_quicklinks');
-		
+
 			// reorder the boxes - first save the left and right columns into variables
 			$left_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
 			$right_dashboard = $wp_meta_boxes['dashboard']['side']['core'];
-			
+
 			// take a copy of the new widget from the left column
 			$rb_agency_dashboard_merge_array = array("rb_agency_dashboard_quicklinks" => $left_dashboard["rb_agency_dashboard_quicklinks"]);
-			
+
 			unset($left_dashboard['rb_agency_dashboard_quicklinks']); // remove the new widget from the left column
 			$right_dashboard = array_merge($rb_agency_dashboard_merge_array, $right_dashboard); // use array_merge so that the new widget is pushed on to the beginning of the right column's array  
-			
+
 			// finally replace the left and right columns with the new reordered versions
 			$wp_meta_boxes['dashboard']['normal']['core'] = $left_dashboard; 
 			$wp_meta_boxes['dashboard']['side']['core'] = $right_dashboard;
@@ -691,7 +691,7 @@ ini_set('display_errors', 'On');
 
 		*/
 
-		// Set It Up	
+		// Set It Up
 		global $wp_rewrite;
 		extract(shortcode_atts(array(
 			"profilesearch_layout" => "advanced"
@@ -700,7 +700,7 @@ ini_set('display_errors', 'On');
 		// Query
 		$queryList = "SELECT dt.DataTypeID, dt.DataTypeTitle, dt.DataTypeTag, COUNT(profile.ProfileID) AS CategoryCount FROM ".table_agency_data_type." dt,".table_agency_profile." profile where dt.DataTypeID= profile.ProfileType and profile.ProfileIsActive = 1 group by dt.DataTypeID ORDER BY dt.DataTypeTitle ASC";
 		$resultsList = mysql_query($queryList);
-		$countList = mysql_num_rows($resultsList);			
+		$countList = mysql_num_rows($resultsList);
 
 		// Loop through Results
 		while ($dataList = mysql_fetch_array($resultsList)) {
