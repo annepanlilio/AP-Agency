@@ -22,7 +22,7 @@ echo "        <div id=\"rbsign-in\" class=\"inline-block\">\n";
 echo "          <h1>". __("Members Sign in", rb_agencyinteract_TEXTDOMAIN). "</h1>\n";
 
 	// Which Login Form should we send the user to?
-	if (is_plugin_active('rb-agency-interact/rb-agency-interact.php')) {
+	if(function_exists('rb_agency_interact_menu')){
 		$login_post_to = network_site_url("/"). "profile-login/";
 
 echo "          <form name=\"loginform\" id=\"login\" action=\"". $login_post_to ."\" method=\"post\">\n";

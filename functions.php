@@ -946,7 +946,7 @@ ini_set('display_errors', 'On');
 					/*
 					 * Favorite Settings
 					 */
-					if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+					if(function_exists('rb_agency_casting_menu')){
 						$links.='<div class="rbfavorites-castings">';
 
 						if(is_permitted("favorite") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites")) ){
@@ -3781,7 +3781,7 @@ function rb_agency_log(){
  * Add action hook if interact is inactive
  */
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
-if(!is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
+if(!function_exists('rb_agency_interact_menu')){
 	add_action('wp_ajax_rb_agency_log', 'rb_agency_log');
 	add_action('wp_ajax_nopriv_rb_agency_log', 'rb_agency_log');
 	add_action('wp_logout','redirect_to_home');

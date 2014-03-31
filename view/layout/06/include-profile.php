@@ -220,7 +220,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". __("Watch Demo Reel", rb_agency_TEXTDOMAIN)."</a></li>\n";
 								}
 							}
-							if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+							if(function_exists('rb_agency_casting_menu')){
 								echo rb_agency_get_new_miscellaneousLinks($ProfileID);
 							}			
 						echo "</ul>\n";?>                      

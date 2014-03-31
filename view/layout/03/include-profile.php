@@ -90,7 +90,7 @@ echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
 						 */
 						echo '<input type="hidden" id="aps12-id" value="'. $ProfileID .' - ' .rb_agency_get_current_userid().'">';
 						
-						if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+						if(function_exists('rb_agency_casting_menu')){
 							echo rb_agency_get_new_miscellaneousLinks($ProfileID);
 						} 
 echo '					<div id="resultsGoHereAddtoCart"></div>';
@@ -135,7 +135,7 @@ echo "	      				<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong>
 							// added this links to be positioned here in substitute
 							// for the favorited label
 echo '	      				<div id="profile-links">';
-								if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+							if(function_exists('rb_agency_casting_menu')){
 								echo rb_agency_get_new_miscellaneousLinks($ProfileID);
 							} 		
 echo '						</div>';

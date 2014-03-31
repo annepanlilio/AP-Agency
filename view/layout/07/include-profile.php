@@ -265,7 +265,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 												} else if(type == "casting") {
 													document.getElementById('mycart_add').style.display="none";	
 													document.getElementById('mycart_view').style.display="inline-block";											
-												}						
+												}
 											}
 										}
 						   }); // ajax submit
@@ -277,7 +277,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 		<div class="rbcol-12 rbcolumn">
 			<ul id="profile-links">
 					<?php  
-					if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+						if(function_exists('rb_agency_casting_menu')){
 							echo rb_agency_get_new_miscellaneousLinks($ProfileID);
 						} 
 					?>

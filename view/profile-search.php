@@ -87,7 +87,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 				echo "<h2>This is a restricted page. For Clients only.</h2>";
 			} else {
 				include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
-				if(is_plugin_active(ABSPATH . 'wp-content/plugins/rb-agency-interact/rb-agency-interact.php')){
+				if(function_exists('rb_agency_interact_menu')){
 					include("theme/include-login.php");
 				} else {
 					rb_loginform(rb_current_url());
