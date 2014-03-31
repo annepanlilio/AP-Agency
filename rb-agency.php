@@ -1061,9 +1061,9 @@ class RBAgency {
 			echo "<table>\n";
 			echo "	<tr><td>Type:</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
 					global $wpdb;
-					$profileDataTypes = mysql_query("SELECT * FROM ". table_agency_data_type ."");
+					$profileDataTypes = $wpdb->get_results("SELECT * FROM ". table_agency_data_type ."",ARRAY_A);
 					echo "<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) ."</option>\n";
-					while ($dataType = mysql_fetch_array($profileDataTypes)) {
+					foreach( $profileDataTypes as $dataType) {
 						if ($_SESSION['ProfileType']) {
 							if ($dataType["DataTypeID"] ==  $ProfileType) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 						} else { $selectedvalue = ""; }
@@ -1078,7 +1078,7 @@ class RBAgency {
 				
 				echo "<option value=\"\">All Gender</option>";
 				$queryShowGender = mysql_query($query);
-				while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+				foreach($queryShowGender as $dataShowGender){
 					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".$dataShowGender["GenderTitle"]."</option>";
 				}
 			echo "</select>";

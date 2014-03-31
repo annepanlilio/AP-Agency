@@ -143,12 +143,13 @@ class RBAgency_Profile {
 						echo "						<select name=\"profiletype\" id=\"type\">\n";               
 						echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
-														$results2 = mysql_query($query);
-														while ($dataType = mysql_fetch_array($results2)) {
+														$results2 = $wpdb->get_results($query,ARRAY_A);
+														foreach ($results2 as $key) {
+															 
 																if ($_SESSION['profiletype']) {
-																		if ($dataType["DataTypeID"] == RBAgency_Common::session('profiletype')) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
+																		if ($key["DataTypeID"] == RBAgency_Common::session('profiletype')) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 																} else { $selectedvalue = ""; }
-																echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ."</option>";
+																echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -164,9 +165,9 @@ class RBAgency_Profile {
 						echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 														// Pul Genders from Database
 														$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
-														$results2 = mysql_query($query2);
-														while ($dataGender = mysql_fetch_array($results2)) {
-																echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['gender'],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
+														$results2 = $wpdb->get_results($query,ARRAY_A);
+														foreach ($results2 as $key) {
+																echo "<option value=\"". $key["GenderID"] ."\"".selected($_SESSION['gender'],$key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -243,8 +244,8 @@ class RBAgency_Profile {
 
 				// Query Fields
 				$field_sql = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
-				$field_results = mysql_query($field_sql);
-				while ($data = mysql_fetch_array($field_results)) { 
+				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
+				foreach($field_results  as $data){
 
 					// Set Variables
 					$ProfileCustomID = $data['ProfileCustomID'];
@@ -934,8 +935,8 @@ class RBAgency_Profile {
 									} 
 								}
 
-								$q = mysql_query("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".substr($key,15)."' ");
-								$ProfileCustomType = mysql_fetch_assoc($q);
+								$q = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '%d' ",substr($key,15)),ARRAY_A);
+								$ProfileCustomType = current($q);
 
 								/*
 								 * Have created a holder $filter2 and
@@ -1048,7 +1049,7 @@ class RBAgency_Profile {
 									}
 								}
 
-								mysql_free_result($q);
+								//mysql_free_result($q);
 							} // if not empty
 						} // end if
 					} // end for each
@@ -1227,8 +1228,8 @@ class RBAgency_Profile {
 			 */
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_profilelist_sortby		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
-			$results = mysql_query($sql) or die(mysql_error());
-			$count = mysql_num_rows($results);
+			$results = $wpdb->get_results($sql,ARRAY_A) or die(mysql_error());
+			$count = count($results);
 			$profile_list = "";
 			$all_html = "";
 			
@@ -1259,7 +1260,7 @@ class RBAgency_Profile {
 			$all_html.='</div></div>';
 			$all_html .= "	<hr />";
 			if ($count > 0){
-				while ($profile = mysql_fetch_array($results)) {
+				foreach($results as $profile) {
 					$profile_list .= self::search_formatted($profile);
 				}
 
@@ -1348,8 +1349,8 @@ class RBAgency_Profile {
 				 * process query 
 				 */
 
-				$results = mysql_query($sql);
-				$count = mysql_num_rows($results);
+				$results = $wpdb->get_results($sql,ARRAY_A);
+				$count = count($results);
 
 				/* 
 				 * initialize html 
@@ -1359,7 +1360,7 @@ class RBAgency_Profile {
 				$displayHtml .=  "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
 
 				if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
-					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". $sessionString ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
+					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 				}
 				$displayHtml .=  "       <form method=\"get\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";
@@ -1388,7 +1389,7 @@ class RBAgency_Profile {
 				$displayHtml .=  "        </tfoot>\n";
 				$displayHtml .=  "        <tbody>\n";
 
-				while ($data = mysql_fetch_array($results)) {
+				foreach($results as $data){
 						$ProfileID = $data['ProfileID'];
 						$isInactive = '';
 						$isInactiveDisable = '';
@@ -1410,7 +1411,7 @@ class RBAgency_Profile {
 						$displayHtml .=  "                <div class=\"row-actions\">\n";
 						$displayHtml .=  "                    <span class=\"edit\"><a href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=editRecord&amp;ProfileID=". $ProfileID ."\" title=\"Edit this post\">Edit</a> | </span>\n";
 						if(isset($data['ProfileGallery'])){
-						$displayHtml .=  "                    <span class=\"review\"><a href=\"". rb_agency_PROFILEDIR . $rb_agency_UPLOADDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">View</a> | </span>\n";
+						$displayHtml .=  "                    <span class=\"review\"><a href=\"". rb_agency_PROFILEDIR . (isset($rb_agency_UPLOADDIR)?$rb_agency_UPLOADDIR:"") . $data['ProfileGallery'] ."/\" target=\"_blank\">View</a> | </span>\n";
 						}
 						$displayHtml .=  "                    <span class=\"delete\"><a class=\"submitdelete\" title=\"Remove this Profile\" href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=deleteRecord&amp;ProfileID=". $ProfileID ."\" onclick=\"if ( confirm('You are about to delete the model ". ucfirst($data['ProfileContactNameFirst']) ." ". ucfirst($data['ProfileContactNameLast']) ."') ) { return true;}return false;\">Delete</a></span>\n";
 						$displayHtml .=  "                </div>\n";
@@ -1506,7 +1507,6 @@ class RBAgency_Profile {
 
 				}
 
-				mysql_free_result($results);
 				if ($count < 1) {
 					if (isset($filter)) { 
 				$displayHtml .=  "        <tr>\n";

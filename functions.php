@@ -2034,13 +2034,13 @@ function rb_agency_getCountryTitle($country_id="",$contry_code = false){
 	$return = "";
 	
 	if(isset($country_code) && $country_code === true){
-		$query ="SELECT CountryCode FROM ". table_agency_data_country ." WHERE CountryID = " . $country_id;
+		$query ="SELECT CountryCode FROM ". table_agency_data_country ." WHERE CountryID = " . (is_numeric($country_id)?$country_id:0);
 		$result = $wpdb->get_row($query);
 		$return = $result->CountryCode;
 	} else {
-		$query ="SELECT CountryTitle FROM ". table_agency_data_country ." WHERE CountryID = " . $country_id;
+		$query ="SELECT CountryTitle FROM ". table_agency_data_country ." WHERE CountryID = " . (is_numeric($country_id)?$country_id:0);
 		$result = $wpdb->get_row($query);
-		$return = $result->CountryTitle;
+		$return = isset($result->CountryTitle)? $result->CountryTitle:"";
 	}
 
 	if(count($result) > 0){
@@ -2316,7 +2316,7 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 						$label = "(ft/in)";
 					}
 				}
-				$measurements_label = "<span class=\"label\">". $label ."</span>";
+				$measurements_label = "<span class=\"label\">". (isset($label)?$label:"") ."</span>";
 			} else {
 				$measurements_label = "";
 			}
@@ -2340,7 +2340,7 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 					}
 				}
 			  
-			} elseif ($resultCustom->ProfileCustomView == "2") {
+			} elseif (isset($resultCustom->ProfileCustomView) && $resultCustom->ProfileCustomView == "2") {
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
