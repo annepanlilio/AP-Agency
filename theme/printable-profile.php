@@ -2,6 +2,7 @@
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+global $wpdb;
 
 ?>
 <?php
@@ -160,11 +161,17 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
 			
 			}
+<<<<<<< HEAD
+			$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+			$countImg = count($resultsImg);
+			foreach($resultsImg as $dataImg){$imageCnt++; $rowCount++;
+=======
 			$resultsImg = mysql_query($queryImg);
 			$countImg = mysql_num_rows($resultsImg);
 			$imageCnt = "";
 			$logoMarginTop = "";
 			while ($dataImg = mysql_fetch_array($resultsImg)){$imageCnt++; $rowCount++;
+>>>>>>> 1d0b87902f702f44cf7fa816b94dd7bd1ab3e8c0
 			  // if($_POST[$dataImg['ProfileMediaID']]==1){
 				// echo $dataImg['ProfileMediaID']."<br>";
 				 if($imageCnt>1){$left='class="lefty"'; 

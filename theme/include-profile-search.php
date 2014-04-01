@@ -106,8 +106,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				        	<select name=\"ProfileType\" id=\"ProfileType\">\n";               
 		echo "								<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
-											$results2 = mysql_query($query);
-											while ($dataType = mysql_fetch_array($results2)) {
+											$results2 = $wpdb->get_results($query,ARRAY_A);
+											foreach($results2 as $dataType) {
 												if ($_SESSION['ProfileType']) {
 													if ($dataType["DataTypeID"] ==  $_SESSION['ProfileType']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 												} else { $selectedvalue = ""; }
@@ -120,8 +120,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				        <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
 		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
-											$results2 = mysql_query($query2);
-											while ($dataGender = mysql_fetch_array($results2)) {
+											$results2 = $wpdb->get_results($query2,ARRAY_A);
+											foreach($results2 as $dataGender) {
 												echo "<option value=\"". $dataGender["GenderID"] ."\"".selected($_SESSION['ProfileGender'],$dataGender["GenderID"],false).">". $dataGender["GenderTitle"] ."</option>";
 											}
 		echo "				        </select>\n";
@@ -174,8 +174,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "						<select name=\"ProfileType\" id=\"ProfileType\">\n";               
 		echo "								<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
 											$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
-											$results2 = mysql_query($query);
-											while ($dataType = mysql_fetch_array($results2)) {
+											$results2 = $wpdb->get_results($query,ARRAY_A);
+											foreach($results2 as $dataType) {
 												echo "<option value=\"". $dataType["DataTypeID"] ."\"".selected($_SESSION['ProfileType'],$dataType["DataTypeID"] ,false).">". $dataType["DataTypeTitle"] ."</option>";
 											}
 		echo "				        	</select>";
@@ -185,8 +185,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "				       <select name=\"ProfileGender\" id=\"ProfileGender\">\n";               
 		echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 											$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
-											$results2 = mysql_query($query2);
-											while ($dataGender = mysql_fetch_array($results2)) {
+											$results2 = $wpdb->get_results($query2,ARRAY_A);
+											foreach($results2 as $dataGender) {
 												if ($_SESSION['ProfileGender']) {
 													if ($dataGender["GenderTitle"] ==  $_SESSION['ProfileGender']) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 												} else { $selectedvalue = ""; }

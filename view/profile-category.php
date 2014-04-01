@@ -4,6 +4,7 @@
 
 session_start();
 header("Cache-control: private"); //IE 6 Fix
+global $wpdb;
 
 // Get Profile
 $ProfileType = get_query_var('target'); 
@@ -149,8 +150,8 @@ if (isset($ProfileType) && !empty($ProfileType)){
 	$DataTypeTitle = "";
 	$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeTag = '". $ProfileType ."'";
 
-	$results = mysql_query($query);
-	while ($data = mysql_fetch_array($results)) {
+	$results = $wpdb->get_results($query,ARRAY_A);
+	foreach ($results as $data) {
 		$DataTypeID = $data['DataTypeID'];
 		$DataTypeTitle = $data['DataTypeTitle'];
 		$filter .= " AND profile.ProfileType=". $DataTypeID ."";
@@ -248,9 +249,9 @@ echo $rb_header = RBAgency_Common::rb_header();
 					  FROM ".table_agency_data_type." dt,".table_agency_profile." profile 
 					  WHERE  FIND_IN_SET(dt.DataTypeID, profile.ProfileType) and profile.ProfileIsActive = 1 
 					  GROUP BY dt.DataTypeID ORDER BY dt.DataTypeTitle ASC";
-		$resultsList = mysql_query($queryList);
-		$countList = mysql_num_rows($resultsList);
-		while ($dataList = mysql_fetch_array($resultsList)) {
+		$resultsList = $wpdb->get_results($queryList,ARRAY_A);
+		$countList = count($resultsList);
+		foreach($resultsList as $dataList) {
 			echo "<div class=\"profile-category\">\n";
 			if ($DataTypeID == $dataList["DataTypeID"]) {
 				echo "  <div class=\"name\"><strong>". $dataList["DataTypeTitle"] ."</strong> <span class=\"count\">(". $dataList["CategoryCount"] .")</span></div>\n";

@@ -23,7 +23,7 @@ global $wpdb;
 		global $wpdb;
 		$debug = debug_backtrace();
 		if($wpdb->get_var("SHOW COLUMNS FROM ".trim($tbl)." LIKE '%".trim($column)."%' ") != trim($column)){
-			$result = mysql_query(" ALTER TABLE ".trim($tbl)." ADD ".trim($column)." ".$atts.";");// or die("rb_agency_addColumn()  - Adding column ".trim($column)." in line ".$debug["line"]." <br/> ".mysql_error());
+			$result = $wpdb->query(" ALTER TABLE ".trim($tbl)." ADD ".trim($column)." ".$atts.";");// or die("rb_agency_addColumn()  - Adding column ".trim($column)." in line ".$debug["line"]." <br/> ".mysql_error());
 			return $result;
 		}
 	}
@@ -40,8 +40,8 @@ global $wpdb;
 		$results = $wpdb->query("ALTER TABLE rb_agency_data_type ADD DataTypeTag VARCHAR(55)");
 		
 		$query = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM rb_agency_data_type";
-		$results = mysql_query($query) or die ( __("Cant load types", rb_agency_TEXTDOMAIN ));
-		while ($data = mysql_fetch_array($results)) {
+		$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Cant load types", rb_agency_TEXTDOMAIN ));
+		foreach ($results as $data) {
 			if (!isset($data['DataTypeTag']) || empty($data['DataTypeTag'])) {
 				$DataTypeTag = RBAgency_Common::Format_StripChars($data['DataTypeTitle']);
 				

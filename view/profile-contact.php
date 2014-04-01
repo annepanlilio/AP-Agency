@@ -23,9 +23,9 @@ $profileURL = get_query_var('target'); //$_REQUEST["profile"];
 
 
 	$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='$profileURL'";
-	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-	$count = mysql_num_rows($results);
-	while ($data = mysql_fetch_array($results)) {
+	$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+	$count = count($results);
+	foreach ($results as $data) {
 		$ProfileID					=$data['ProfileID'];
 		$ProfileUserLinked			=$data['ProfileUserLinked'];
 		$ProfileGallery				=stripslashes($data['ProfileGallery']);

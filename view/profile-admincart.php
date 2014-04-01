@@ -2,6 +2,7 @@
 
 session_start();
 echo $rb_header = RBAgency_Common::rb_header();
+global $wpdb;
 // Profile Class
 include(rb_agency_BASEREL ."app/profile.class.php");
 	$rb_agency_options_arr = get_option('rb_agency_options');
@@ -22,10 +23,10 @@ include(rb_agency_BASEREL ."app/profile.class.php");
 
 			// Get Casting Cart by Identifier
 			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
-			$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-			$count = mysql_num_rows($results);
+			$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			$count =  count($results);
 			// Get Casting Cart ID
-			while ($data = mysql_fetch_array($results)) {
+			foreach($results as $data) {
 				$castingcart_id = $data['SearchProfileID'];
 			}
 

@@ -1,5 +1,6 @@
 <?php 
 #This page that will generate HTML to feed on domPDF
+global $wpdb;
 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
@@ -258,9 +259,9 @@ if($_POST['print_option']==14){  // print for division
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
 			
 			}
-					$resultsImg = mysql_query($queryImg);
-					$countImg = mysql_num_rows($resultsImg);
-					while ($dataImg = mysql_fetch_array($resultsImg)){$totalCount++;
+					$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+					$countImg = count($resultsImg);
+					foreach($resultsImg as $dataImg){$totalCount++;
 				
 					if($printType!="Polaroid"){ 
 						 if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){

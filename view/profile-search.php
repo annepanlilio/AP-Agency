@@ -55,7 +55,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 
 				} else {
 				if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  isset($profilesearch_layout) && $profilesearch_layout == 'condensed' )
-					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' )){
+					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || isset($profilesearch_layout) &&  $profilesearch_layout == 'advanced' )){
 							// echo RBAgency_Profile::search_form("", "", 0);
 					}else{
 					echo "				<strong>". _e("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
@@ -67,7 +67,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 					//do not display on results
 				if(!isset($_POST['form_mode'])){
 					if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  isset($profilesearch_layout) && $profilesearch_layout == 'condensed' )
-					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' )){
+					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || isset($profilesearch_layout) &&  $profilesearch_layout == 'advanced' )){
 						
 							echo RBAgency_Profile::search_form("", "", 0);
 					}else{

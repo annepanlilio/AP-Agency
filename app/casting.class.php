@@ -133,9 +133,9 @@ class RBAgency_Casting {
 					$cartString = RBAgency_Common::clean_string($cartString);
 
 				// Show Cart  
-				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY profile.ProfileContactNameFirst ASC";
-				$results = mysql_query($query) or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", rb_agency_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-				$count = mysql_num_rows($results);
+				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY profile.ProfileContactNameFirst ASC";
+				$results = $wpdb->get_results($wpdb->prepare($query,$cartString),ARRAY_A) or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", rb_agency_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+				$count = count($results);
 				echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 				echo "<div style=\"float: right; width: 100px; \"><a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("Empty Cart", rb_agency_TEXTDOMAIN) ."</a></div>";
 				echo "<div style=\"float: left; line-height: 22px; font-family:Georgia; font-size:13px; font-style: italic; color: #777777; \">". __("Currently", rb_agency_TEXTDOMAIN) ." <strong>". $count ."</strong> ". __("in Cart", rb_agency_TEXTDOMAIN) ."</div>";
@@ -150,7 +150,7 @@ class RBAgency_Casting {
 					$cartAction = "cartRemove";
 				}
 				
-				while ($data = mysql_fetch_array($results)) {
+				foreach($results as $data) {
 					
 					$ProfileDateUpdated = $data['ProfileDateUpdated'];
 					echo "  <div style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 210px; margin: 6px; \">";
@@ -168,7 +168,6 @@ class RBAgency_Casting {
 					echo "    <div style=\"clear: both; \"></div>";
 					echo "  </div>";
 				}
-				mysql_free_result($results);
 				echo "  <div style=\"clear: both;\"></div>\n";
 				echo "</div>";
 				
@@ -228,7 +227,7 @@ class RBAgency_Casting {
 			$cartString = rb_agency_cleanString($cartString);
 			
 			global $wpdb;
-		$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die(mysql_error());
+		$wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('%s','%s')",$cartString,$SearchMuxSubject)) or die($wpdb->print_error());
 					
 		$lastid = $wpdb->insert_id;
 		
@@ -257,13 +256,13 @@ class RBAgency_Casting {
 
 			$profileimage = "";  
 			$profileimage .='<p><div style="width:550px;min-height: 170px;">';
-			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $lastid ."\"";
-			$qProfiles =  mysql_query($query);
-			$data = mysql_fetch_array($qProfiles);
-			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$data['SearchProfileID'].") ORDER BY ProfileContactNameFirst ASC";
-			$results = mysql_query($query);
-			$count = mysql_num_rows($results);
-			while ($data2 = mysql_fetch_array($results)) {
+			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
+			$qProfiles =  $wpdb->get_results($wpdb->prepare($query,$lastid ),ARRAY_A);
+			$data = current($qProfiles);
+			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
+			$results = $wpdb->get_results($wpdb->prepare($query,$data['SearchProfileID']),ARRAY_A);
+			$count = count($results);
+			foreach ($results as $data2) {
 				$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
 				$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
 				$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
@@ -334,7 +333,7 @@ class RBAgency_Casting {
 			$cartString = rb_agency_cleanString($cartString);
 			
 			global $wpdb;
-			$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die(mysql_error());
+			$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die($wpdb->print_error());
 					
 		$lastid = $wpdb->insert_id;
 		
@@ -362,13 +361,13 @@ class RBAgency_Casting {
 			$results = $wpdb->query($insert);  
 			$profileimage = "";  
 			$profileimage .='<p><div style="width:550px;min-height: 170px;">';
-			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $lastid ."\"";
-			$qProfiles =  mysql_query($query);
-			$data = mysql_fetch_array($qProfiles);
-			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$data['SearchProfileID'].") ORDER BY ProfileContactNameFirst ASC";
-			$results = mysql_query($query);
-			$count = mysql_num_rows($results);
-			while ($data2 = mysql_fetch_array($results)) {
+			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
+			$qProfiles =  $wpdb->get_results($wpdb->prepare($query,$lastid),ARRAY_A );
+			$data = count($qProfiles);
+			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
+			$results = $wpdb->get_results($wpdb->prepare($query,$data['SearchProfileID']),ARRAY_A);
+			$count = count($results);
+			foreach($results as $data2) {
 				$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
 				$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
 				$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
@@ -450,11 +449,11 @@ class RBAgency_Casting {
 				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 				// Search Results	
 				$query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
-				$results2 = mysql_query($query);
-				$count = mysql_num_rows($results2);
+				$results2 = $wpdb->get_results($query,ARRAY_A);
+				$count =count($results2);
 				$pos = 0;
 				$recipient = "";
-				while ($data = mysql_fetch_array($results2)) {
+				foreach($results2 as $data) {
 					$pos ++;
 					$ProfileID = $data['ProfileID'];
 					$recipient .=$data['ProfileContactEmail'];

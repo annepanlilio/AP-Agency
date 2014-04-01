@@ -2,6 +2,7 @@
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+global $wpdb;
 
 
 ?>
@@ -166,8 +167,8 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 			
 			// Show Cart
 			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media $filter ORDER BY ProfileContactNameFirst";
-			$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-			$count = mysql_num_rows($results);
+			$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			$count =  count($results);
 			if ($count < 1) {
 				echo "There are currently no profiles in the casting cart.";
 				$hasQuery = false;
@@ -181,8 +182,8 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 
 			// Show Cart
 			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY ProfileContactNameFirst ASC";
-			$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-			$count = mysql_num_rows($results);
+			$results = $wpdb->get_results($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			$count = count($results);
 			
 			if ($count < 1) {
 				echo "There are currently no profiles in the casting cart.";
@@ -195,7 +196,7 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 
 		if ($hasQuery) {
 			echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width: 887px; \" class=\"profile\">";
-			while ($data = mysql_fetch_array($results)) {
+			foreach($results as $data) {
 				if (1 == 1) {
 					echo "<div style=\"float: left; width: 420px; min-height: 220px; overflow: hidden; margin: 5px; padding: 5px; border: 1px solid #e1e1e1; \">";
 					echo " <div style=\"float: left; width: 150px; height: 180px; margin-right: 5px; overflow: hidden; \"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";

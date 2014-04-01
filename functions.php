@@ -692,11 +692,15 @@ ini_set('display_errors', 'On');
 
 		// Query
 		$queryList = "SELECT dt.DataTypeID, dt.DataTypeTitle, dt.DataTypeTag, COUNT(profile.ProfileID) AS CategoryCount FROM ".table_agency_data_type." dt,".table_agency_profile." profile where dt.DataTypeID= profile.ProfileType and profile.ProfileIsActive = 1 group by dt.DataTypeID ORDER BY dt.DataTypeTitle ASC";
+
+		$resultsList = $wpdb->get_results($queryList,ARRAY_A);
+		$countList = count($resultsList);			
+
 		$resultsList = mysql_query($queryList);
 		$countList = mysql_num_rows($resultsList);
 
 		// Loop through Results
-		while ($dataList = mysql_fetch_array($resultsList)) {
+		foreach ($resultsList as $dataList) {
 			echo "<div class=\"profile-category\">\n";
 			if ($DataTypeID == $dataList["DataTypeID"]) {
 				echo "  <div class=\"name\"><strong>". $dataList["DataTypeTitle"] ."</strong> <span class=\"count\">(". $dataList["CategoryCount"] .")</span></div>\n";
@@ -1014,7 +1018,7 @@ ini_set('display_errors', 'On');
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
-					$qItem = mysql_query("SELECT
+					$qItem = $wpdb->get_results("SELECT
 					profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , 
 					customfield_mux.*,  
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
@@ -1022,8 +1026,8 @@ ini_set('display_errors', 'On');
 					FROM ". table_agency_profile ." profile 
 					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
-					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
-					$items = mysql_num_rows($qItem); // number of total rows in the database
+					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."",ARRAY_A);
+					$items = count($qItem); // number of total rows in the database
 
 				if($items > 0) {
 					$p = new rb_agency_pagination;
@@ -1047,7 +1051,6 @@ ini_set('display_errors', 'On');
 				}
 				if(get_query_var('target')=="print"){$limit = "";} //to remove limit on print page
 				if(get_query_var('target')=="pdf"){$limit = "";} //to remove limit on pdf page
-				mysql_free_result($qItem);
 
 			}//if(get_query_var('target')!="print" 
 
@@ -1130,8 +1133,8 @@ ini_set('display_errors', 'On');
 			echo "sort".$sort;
 			echo "dir".$dir;
 			echo "limit".$limit;*/
-			$resultsList = mysql_query($queryList);
-			$countList = mysql_num_rows($resultsList);
+			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
+			$countList = count($resultsList);
 
 			$rb_user_isLogged = is_user_logged_in();
 
@@ -1145,7 +1148,7 @@ ini_set('display_errors', 'On');
 
 			$profileDisplay = 0;
 			$countFav = 0;
-			while ($dataList = mysql_fetch_assoc($resultsList)) {
+			foreach($resultsList as $dataList) {
 					
 				$profileDisplay++;
 				if ($profileDisplay == 1 ){
@@ -1285,11 +1288,11 @@ ini_set('display_errors', 'On');
 
 	//get profile images
 	function getAllImages($profileID){
-		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $profileID ."\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC LIMIT 0, 7 ";
-		$resultsImg = mysql_query($queryImg);
-		$countImg = mysql_num_rows($resultsImg);
+		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%d\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC LIMIT 0, 7 ";
+		$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg,$profileID),ARRAY_A);
+		$countImg = count($resultsImg);
 		$images = "";
-		while ($dataImg = mysql_fetch_array($resultsImg)) {//style=\"display:none\" 
+		foreach ($resultsImg as $dataImg) {//style=\"display:none\" 
 			$images ."<img  class=\"roll\" src=\"".rb_agency_BASEDIR."/ext/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 		}
 	return $images;
@@ -1332,9 +1335,9 @@ ini_set('display_errors', 'On');
 			 ORDER BY RAND() LIMIT 0,$count";
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
-		$resultsList = mysql_query($queryList);
-		$countList = mysql_num_rows($resultsList);
-		while ($dataList = mysql_fetch_array($resultsList)) {
+		$resultsList =$wpdb->get_results($queryList,ARRAY_A);
+		$countList = count($resultsList);
+		foreach($resultsList as $dataList) {
 			echo "<div class=\"rbprofile-list\">\n";
 			if (isset($dataList["ProfileMediaURL"]) ) { 
 			echo "  <div class=\"image\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
@@ -1727,10 +1730,10 @@ if ( !function_exists('retrieve_title') ) {
 				/* 
 		* return title
 		*/
-		$check_type = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = " . $id;
-		$check_query = mysql_query($check_type) OR die(mysql_error());
-		if(mysql_num_rows($check_query) > 0){
-			$fetch = mysql_fetch_assoc($check_query);
+		$check_type = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = %d";
+		$check_query = $wpdb->get_results($wpdb->prepare($check_type, $id),ARRAY_A) OR die($wpdb->print_error());
+		if(count($check_query) > 0){
+			$fetch = current($check_query);
 			return $fetch['DataTypeTitle'];
 		} else {
 			return false;
@@ -1745,8 +1748,8 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 	$all_permit = false; // set to false
 	
 	if($ProfileID != 0){
-		$query = mysql_query("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID);
-		$fetchID = mysql_fetch_assoc($query);
+		$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
+		$fetchID = current($query);
 		$ptype = $fetchID["ProfileType"];	
 		if(strpos($ptype,",") > -1){
 			$t = explode(",",$ptype);
@@ -1764,11 +1767,11 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 	}
 	
 	
-	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = ".$visibility."  ORDER BY ProfileCustomOrder";
-	$results3 = mysql_query($query3) or die(mysql_error());
+	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %s  ORDER BY ProfileCustomOrder";
+	$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A) or die($wpdb->print_error());
 	$count3 = 0;
 	
-	while ($data3 = mysql_fetch_assoc($results3)) {
+	foreach($results3 as $data3) {
 
 		   /*
 			* Get Profile Types to
@@ -1777,11 +1780,11 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 			$permit_type = false;
 			$PID = $data3['ProfileCustomID'];
 			$get_types = "SELECT ProfileCustomTypes FROM ". table_agency_customfields_types .
-						" WHERE ProfileCustomID = " . $PID;
+						" WHERE ProfileCustomID = %d";
 	
-			$result = mysql_query($get_types);
+			$result = $wpdb->get_results($wpdb->prepare($get_types, $PID),ARRAY_A);
 			$types = "";
-			while ( $p = mysql_fetch_array($result)){
+			foreach ($result as $p){
 					$types = $p['ProfileCustomTypes'];
 			}
 			if(!isset($ptype)){
@@ -1832,6 +1835,8 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 // Custom Fields TEMPLATE 
 function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
+	global $wpdb;
+
 	$rb_agency_options_arr 				= get_option('rb_agency_options');
 	$rb_agency_option_unittype  		= $rb_agency_options_arr['rb_agency_option_unittype'];
 	$rb_agency_option_profilenaming 	= (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
@@ -1839,8 +1844,8 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	
 	if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){ 
    
-		$subresult = mysql_query("SELECT ProfileID,ProfileCustomValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = '". $data3['ProfileCustomID'] ."' AND ProfileID = ". $ProfileID);
-		$row = @mysql_fetch_assoc($subresult);
+		$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = '%s' AND ProfileID = %d", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+		$row = current($subresult);
 		
 		$ProfileCustomValue = $row["ProfileCustomValue"];
 		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
@@ -2080,13 +2085,13 @@ function rb_agency_getStateTitle($state_id="",$state_code = false){
 *   @returns GenderTitle
 /*/   
 function rb_agency_getGenderTitle($ProfileGenderID){
- 
-	$query = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID='".$ProfileGenderID."'";
-	$results = mysql_query($query) or die(mysql_error());
-	$count = mysql_num_rows($results);
+    global $wpdb;
+	$query = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID='%s'";
+	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileGenderID),ARRAY_A) or die($wpdb->print_error());
+	$count = count($results);
 
 	if($count > 0){
-		$data = mysql_fetch_assoc($results);
+		$data = current($results);
 		return $data["GenderTitle"];
 	} else {
 		return 0;	 
@@ -2099,10 +2104,11 @@ function rb_agency_getGenderTitle($ProfileGenderID){
 *   @returns GenderTitle
 /*/
 function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
+    global $wpdb; 
 
-	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID ='".$ProfileCustomID."' AND ProfileCustomShowGender IN('".$ProfileGenderID."','') ";
-	$results = mysql_query($query) or die(mysql_error());
-	$count = mysql_num_rows($results);
+	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID ='%s' AND ProfileCustomShowGender IN('%s','') ";
+	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A) or die($wpdb->print_error());
+	$count = count($results);
 
 	if($count > 0){
 		return true;  
@@ -2191,7 +2197,9 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
 
 
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC", $ProfileID));
+
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID),ARRAY_A);
+
 	foreach ($resultsCustom as $resultCustom) {
 		// If a value exists...
 		if(!empty($resultCustom->ProfileCustomValue )){
@@ -2619,8 +2627,8 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 function rb_agency_getProfileIDByUserLinked($ProfileUserLinked){
   
 	if(!empty($ProfileUserLinked)){
-		$query = mysql_query("SELECT ProfileID,ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileUserLinked = ".$ProfileUserLinked." ");
-		$fetchID = mysql_fetch_assoc($query);
+		$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileUserLinked = %s",$ProfileUserLinked),ARRAY_A);
+		$fetchID = current($query);
 		return $fetchID["ProfileID"];
 	}
 }
@@ -2631,9 +2639,9 @@ function rb_agency_getProfileIDByUserLinked($ProfileUserLinked){
 /*/
 function rb_agency_getMediaCategories($GenderID){
 
-	$query = mysql_query("SELECT MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder FROM  ".table_agency_data_media." ORDER BY MediaCategoryOrder");
-	$count = mysql_num_rows($query);
-	while($f = mysql_fetch_assoc($query)){
+	$query = $wpdb->get_results("SELECT MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder FROM  ".table_agency_data_media." ORDER BY MediaCategoryOrder",ARRAY_A);
+	$count = count($query);
+	foreach($query as $f){
 		if($f["MediaCategoryGender"] == $GenderID || $f["MediaCategoryGender"] == 0){
 			echo "<option value=\"".$f["MediaCategoryTitle"]."\">".$f["MediaCategoryTitle"]."</option>";	 
 		}
@@ -2689,14 +2697,16 @@ add_action( 'after_setup_theme',"rb_agency_callafter_setup");
 * @Returns Check agency data
 /*/
 function rb_check_exists($data,$proerty,$type){
+
+	global $wpdb;
 	
 	$count = 0;
 	if($type == 'text'){
-		$query = mysql_query("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = '" . $data . "'");
-		$count = mysql_num_rows($query);
+		$query = $wpdb->get_results("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = '" . $data . "'",ARRAY_A);
+		$count = count($query);
 	} elseif($type == 'numeric'){
-		$query = mysql_query("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = " . $data );
-		$count = mysql_num_rows($query);
+		$query = $wpdb->get_results("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = " . $data ,ARRAY_A);
+		$count = count($query);
 	} 
 	if($count > 0) return true;
 	return false;	
@@ -2770,6 +2780,8 @@ function rb_agency_getSocialLinks(){
 //get previous and next profile link
 function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 
+	global $wpdb;
+
 	if($nextprev=="next") { $nPid=$pid+1; }
 	else { $nPid=$pid-1; }
 	
@@ -2796,8 +2808,8 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 	}
   
 	$sql.=" LIMIT 0,1 ";
-	$query = mysql_query($sql);
-	$fetch = mysql_fetch_assoc($query);  
+	$query = $wpdb->get_results($sql,ARRAY_A);
+	$fetch = current($query);  
   
 	if(empty($fetch["ProfileGallery"])){ //make sure it wont send empty url
 
@@ -2808,25 +2820,29 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 		}
 	  
 		$sql.=" LIMIT 0,1 ";
-		$query = mysql_query($sql);
-		$fetch = mysql_fetch_assoc($query);
+		$query = $wpdb->get_results($sql,ARRAY_A);
+		$fetch = current($query);
 	}
 		 
 	return  $fetch["ProfileGallery"];
 }
 
 function getExperience($pid){ 
-	$query = mysql_query("SELECT ProfileCustomValue FROM ".table_agency_customfield_mux." WHERE ProfileID = '".$pid."' AND ProfileCustomID ='16' ");
-	$fetch = mysql_fetch_assoc($query);
+	global $wpdb;
+
+	$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileCustomValue FROM ".table_agency_customfield_mux." WHERE ProfileID = '%s' AND ProfileCustomID ='16' ",$pid),ARRAY_A);
+	$fetch = current($query);
 	
 	
 	return  $fetch["ProfileCustomValue"];
 }
 
 function checkCart($currentUserID,$pid){
-	$query="SELECT * FROM  ".table_agency_castingcart." WHERE CastingCartProfileID='".$currentUserID."' AND CastingCartTalentID='".$pid."' ";
-	$results = mysql_query($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-	return mysql_num_rows($results);
+	global $wpdb;
+
+	$query="SELECT * FROM  ".table_agency_castingcart." WHERE CastingCartProfileID='%s' AND CastingCartTalentID='%s' ";
+	$results = $wpdb->get_results($wpdb->prepare($query,$currentUserID,$pid),ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+	return count($results);
 }
 
 /* function that lists users for generating login/password */
@@ -2906,7 +2922,7 @@ function rb_display_profile_list(){
 	 }
 		
 	//Paginate
-	$items = mysql_num_rows(mysql_query("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."")); // number of total rows in the database
+	$items = count($wpdb->get_results("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."",ARRAY_A)); // number of total rows in the database
 	if($items > 0) {
 		$p = new rb_agency_pagination;
 		$p->items($items);
@@ -2987,11 +3003,10 @@ function rb_display_profile_list(){
 			$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
 		}
 		
-
-		$results2 = mysql_query($query);
-		$count = mysql_num_rows($results2);
+		$results2 = $wpdb->get_results($query,ARRAY_A);
+		$count = count($results2);
 		$i = 0;
-		while ($data = mysql_fetch_array($results2)) {
+		foreach($results2 as $data) {
 
 		  $ProfileID = $data['ProfileID'];
 		  $ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
@@ -3030,7 +3045,6 @@ function rb_display_profile_list(){
 		  <?php
 		}
 
-		mysql_free_result($results2);
 		if ($count < 1) {
 		  if (isset($filter)) { 
 		?>
@@ -3506,22 +3520,22 @@ function featured_homepage(){
 				 AND profile.ProfileIsFeatured = 1  
 				 ORDER BY RAND() LIMIT 0,$count";						
 
-				$r = mysql_query($q);
+				$r = $wpdb->get_results($q,ARRAY_A);
 				
-				$countList = mysql_num_rows($r);
+				$countList = count($r);
 				
 				$array_data = array();
 				
-				while ($dataList = mysql_fetch_assoc($r)) {
+				foreach($r as $dataList) {
 					
 					/*
 					 * Get From Custom Fields
 					 * per profile
 					 */
 					$get_custom = 'SELECT * FROM ' . table_agency_customfield_mux .
-								  ' WHERE ProfileID = ' . $dataList["ProfileID"]; 
+								  ' WHERE ProfileID = %d'; 
 								  
-					$result = mysql_query($get_custom);
+					$result = $wpdb->get_results($wpdb->prepare($get_custom,$dataList["ProfileID"]),ARRAY_A);
 					
 					$desc_list = array('shoes', 'eyes', 'shoes', 'skin');
 					
@@ -3536,14 +3550,14 @@ function featured_homepage(){
 					
 					$name = ucfirst($dataList["ProfileContactNameFirst"]) ." ". strtoupper($dataList["ProfileContactNameLast"][0]); ;
 					
-					while ($custom = mysql_fetch_assoc($result)) {
+					foreach ($result as $custom) {
 						 
 						 $get_title = 'SELECT ProfileCustomTitle FROM ' . table_agency_customfields .
 						 ' WHERE ProfileCustomID = ' . $custom["ProfileCustomID"] ; 
 						 
-						 $result2 = mysql_query($get_title);
+						 $result2 = $wpdb->get_results($get_title,ARRAY_A);
 						 
-						 $custom2 = mysql_fetch_assoc($result2);
+						 $custom2 = current($result2);
 						 
 						 if(strtolower(RBAgency_Common::profile_meta_gendertitle($dataList['ProfileGender'])) == "male"){
 							 
@@ -3601,9 +3615,9 @@ function featured_homepage_profile($count){
 	 AND profile.ProfileIsFeatured = 1  
 	 ORDER BY RAND() LIMIT 0,".$count;						
 
-	$result = mysql_query($query);
+	$result = $wpdb->get_results($query,ARRAY_A);
 	$i=0;
-	while ($row = mysql_fetch_assoc($result)) {
+	foreach($result as $row) {
 		$dataList[$i] = $row ;
 		$i++;
 	}
@@ -3710,16 +3724,18 @@ function get_current_profile_info($data=NULL){
 * Get primary image for profiles
 */
 function rb_get_primary_image($PID){
+
+	global $wpdb;
 	
 	if(empty($PID) or is_null($PID)) return false;
 	
 	$get_image = "SELECT ProfileMediaURL FROM ". table_agency_profile_media .
 				 " WHERE ProfileID = " .$PID . " AND ProfileMediaPrimary = 1";
 	
-	$get_res = mysql_query($get_image);
+	$get_res = $wpdb->get_results($get_image,ARRAY_A);
 	
-	if(mysql_num_rows($get_res) > 0){
-		while($data = mysql_fetch_assoc($get_res)){
+	if(count($get_res) > 0){
+		foreach($get_res as $data){
 			return $data['ProfileMediaURL'];
 		}
 	}			
@@ -3913,16 +3929,17 @@ function is_permitted($type){
 function is_client_profiletype(){
 	
 	global $current_user;
-	
+	global $wpdb;
+
 	$query = "SELECT ProfileType FROM ". table_agency_profile ." WHERE ProfileUserLinked = ". rb_agency_get_current_userid();
-	$results = mysql_query($query);
+	$results = $wpdb->get_results($query,ARRAY_A);
 	
-	if(mysql_num_rows($results)){
-		$id = mysql_fetch_assoc($results);
+	if(count($results)){
+		$id = current($results);
 		$id = $id['ProfileType'];
 		$queryList = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = ". $id;
-		$resultsList = mysql_query($queryList);
-		while ($d = mysql_fetch_array($resultsList)) {
+		$resultsList = $wpdb->get_results($queryList,ARRAY_A);
+		foreach($resultsList as $d) {
 			if(strtolower($d["DataTypeTitle"]) == "client"){
 				return true;
 			}

@@ -8,9 +8,9 @@ Default Contact
 
 		// images
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-		$resultsImg = mysql_query($queryImg);
-		$countImg = mysql_num_rows($resultsImg);
-		while ($dataImg = mysql_fetch_array($resultsImg)) {
+		$resultsImg =$wpdb->get_results($queryImg,ARRAY_A);
+		$countImg = count($resultsImg);
+		foreach($resultsImg as $dataImg) {
 			echo "		<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 		}
 

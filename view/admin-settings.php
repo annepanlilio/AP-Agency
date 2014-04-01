@@ -720,8 +720,8 @@ elseif ($ConfigID == 12) {
 			  if (is_numeric($SubscriptionRateID)) {
 				// Verify Record
 				$queryDelete = "SELECT SubscriptionRateID, SubscriptionRateTitle FROM ". table_agencyinteract_subscription_rates ." WHERE SubscriptionRateID =  \"". $SubscriptionRateID ."\"";
-				$resultsDelete = mysql_query($queryDelete);
-				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
+				$resultsDelete = $wpdb->get_results($queryDelete,ARRAY_A);
+				foreach($resultsDelete as $dataDelete) {
 			
 					// Remove Record
 					$delete = "DELETE FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID = \"". $SubscriptionRateID ."\"";
@@ -1334,13 +1334,13 @@ elseif ($ConfigID == 3) {
 				$updated = $wpdb->query($update);
 			
 				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".esc_sql($DataTypeOldTitle)."', ProfileCustomTypes) > 0;";
-				$result =  mysql_query($update_customfields);
-				  $total = mysql_num_rows($result);
+				$result =  $wpdb->get_results($update_customfields,ARRAY_A);
+				  $total = count($result);
 
-				while($d = mysql_fetch_array($result)){
+				foreach($result as $d){
 					  $ptype = $d["ProfileCustomTypes"];
 					  $nptype = str_replace($DataTypeOldTitle, $DataTypeTitle, $ptype);
-				      mysql_query("UPDATE ". table_agency_customfields_types ."  SET ProfileCustomTypes='".$nptype."' WHERE ProfileCustomID='".$d["ProfileCustomID"]."'");
+				      $wpdb->query("UPDATE ". table_agency_customfields_types ."  SET ProfileCustomTypes='".$nptype."' WHERE ProfileCustomID='".$d["ProfileCustomID"]."'");
 				}
 				
 				echo "Updated $total custom fields assigned to this Profile Type<br/>";
@@ -1808,8 +1808,8 @@ elseif ($ConfigID == 5) {
 		 */
 
 		$get_types = "SELECT * FROM ". table_agency_data_type;
-		$result = mysql_query($get_types);
-		while ( $typ = mysql_fetch_array($result)){
+		$result = $wpdb->get_results($get_types,ARRAY_A);
+		foreach ($result as $typ){
 			$t = trim($typ['DataTypeTitle']);
 			$t = str_replace(' ', '_', $t);
 			$name = 'ProfileType' . $t; 
@@ -1941,9 +1941,9 @@ elseif ($ConfigID == 5) {
 				 */ 
 				$get_types = "SELECT * FROM ". table_agency_data_type;
 						
-				$result = mysql_query($get_types);
+				$result = $wpdb->get_results($get_types,ARRAY_A);
 						
-				while ( $typ = mysql_fetch_array($result)){
+				foreach($result as $typ){
 					$profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);
 					$profiletyp = str_replace(' ', '_', $profiletyp);
 					if($_POST[$profiletyp]) { $Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ; }
@@ -1956,9 +1956,9 @@ elseif ($ConfigID == 5) {
 							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types . 
 							" WHERE ProfileCustomID = " . $lastid; 
 
-							$check_results = mysql_query($check_sql);
+							$check_results = $wpdb->get_results($check_sql,ARRAY_A);
 
-							$count_check = mysql_num_rows($check_results);
+							$count_check = count($check_results);
 							
 							if($count_check == 0){
 								//create record in Custom Clients
@@ -1968,14 +1968,14 @@ elseif ($ConfigID == 5) {
 										  . esc_sql($ProfileCustomTitle) . "','" 
 										  . $Types . "')";
 								
-								$results_client = mysql_query($insert_client) or die(mysql_error());
+								$results_client = $wpdb->query($insert_client) or die($wpdb->print_error());
 							} else {
 								//update if already existing 
 								$update = "UPDATE " . table_agency_customfields_types . " 
 										  SET 
 										  ProfileCustomTypes='" . $Types . "' 
 										  WHERE ProfileCustomID = ".$lastid;
-								$updated = mysql_query($update) or die(mysql_error());
+								$updated = $wpdb->query($update) or die($wpdb->print_error());
 							}
 
 				}
@@ -2012,7 +2012,7 @@ elseif ($ConfigID == 5) {
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
 								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
-				$updated = mysql_query($update) or die(mysql_error());
+				$updated = $wpdb->query($update) or die($wpdb->print_error());
 
 				/*
 				 * Check if There is Custom client
@@ -2026,9 +2026,9 @@ elseif ($ConfigID == 5) {
 				 */ 
 				$get_types = "SELECT * FROM ". table_agency_data_type;
 
-				$result = mysql_query($get_types);
+				$result = $wpdb->get_results($get_types,ARRAY_A);
 
-				while ( $typ = mysql_fetch_array($result)){
+				while ( $result as $typ){
 					$t = 'ProfileType' . trim($typ['DataTypeTitle']);$t = str_replace(' ', '_', $t);
 					$n = trim($typ['DataTypeTitle']);
 					$n = str_replace(' ', '_', $n);
@@ -2046,8 +2046,8 @@ elseif ($ConfigID == 5) {
 
 							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types . 
 							" WHERE ProfileCustomID = " . $ProfileCustomID; 
-							$check_results = mysql_query($check_sql);
-							$count_check = mysql_num_rows($check_results);
+							$check_results = $wpdb->get_results($check_sql,ARRAY_A);
+							$count_check = count($check_results);
 							if($count_check <= 0){
 								//create record in Custom Clients
 								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
@@ -2055,14 +2055,14 @@ elseif ($ConfigID == 5) {
 								VALUES (" . $ProfileCustomID . ",'" 
 										  . esc_sql($ProfileCustomTitle) . "','" 
 										  . $Types . "')";
-								$results_client = mysql_query($insert_client);
+								$results_client = $wpdb->query($insert_client);
 							} else {
 								//update if already existing 
 								$update = "UPDATE " . table_agency_customfields_types . " 
 										  SET 
 										  ProfileCustomTypes='" . $Types . "' 
 										  WHERE ProfileCustomID = ".$ProfileCustomID;
-								$updated = mysql_query($update);
+								$updated = $wpdb->query($update);
 							}
 
 				} else {
@@ -2089,8 +2089,8 @@ elseif ($ConfigID == 5) {
 				if (is_numeric($ProfileCustomID)) {
 				// Verify Record
 				$queryDelete = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomID =  \"". $ProfileCustomID ."\"";
-				$resultsDelete = mysql_query($queryDelete);
-				while ($dataDelete = mysql_fetch_array($resultsDelete)) {
+				$resultsDelete = $wpdb->get_results($queryDelete,ARRAY_A);
+				while ($resultsDelete as $dataDelete) {
 
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_customfields . " WHERE ProfileCustomID = \"". $ProfileCustomID ."\"";
@@ -2099,7 +2099,7 @@ elseif ($ConfigID == 5) {
 					// Rmove from Custom Types
 					$delete_sql = "DELETE FROM " . table_agency_customfields_types . 
 					" WHERE ProfileCustomID='$ProfileCustomID'";
-					$deleted = mysql_query($delete_sql) or die(mysql_error());
+					$deleted = $wpdb->query($delete_sql) or die($wpdb->print_error());
 
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 
@@ -2121,8 +2121,8 @@ elseif (isset($_GET["deleteRecord"])) {
 	if (is_numeric($ProfileCustomID)) {
 		// Verify Record
 		$queryDelete = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomID =  \"". $ProfileCustomID ."\"";
-		$resultsDelete = mysql_query($queryDelete);
-		while ($dataDelete = mysql_fetch_array($resultsDelete)) {
+		$resultsDelete = $wpdb->get_results($queryDelete,ARRAY_A);
+		foreach($resultsDelete as $dataDelete) {
 	
 			// Remove Record
 			$delete = "DELETE FROM " . table_agency_customfields . " WHERE ProfileCustomID = \"". $ProfileCustomID ."\"";
@@ -2131,7 +2131,7 @@ elseif (isset($_GET["deleteRecord"])) {
 			// Rmove from Custom Types
 			$delete_sql = "DELETE FROM " . table_agency_customfields_types . 
 			" WHERE ProfileCustomID='$ProfileCustomID'";
-			$deleted = mysql_query($delete_sql) or die(mysql_error());
+			$deleted = $wpdb->query($delete_sql) or die($wpdb->print_error());
 			
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 			echo "<h3 style=\"width:430px;\">". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	
@@ -2148,9 +2148,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		
 		if ( $ProfileCustomID > 0) {
 			$query = "SELECT * FROM " . table_agency_customfields . " WHERE ProfileCustomID='$ProfileCustomID'";
-			$results = mysql_query($query) or die (__(mysql_error(), rb_agency_TEXTDOMAIN));
-			$count = mysql_num_rows($results);
-			while ($data = mysql_fetch_array($results)) {
+			$results = $wpdb->get_results($query,ARRAY_A) or die (__($wpdb->print_error(), rb_agency_TEXTDOMAIN));
+			$count = count($results);
+			foreach($results as $data) {
 				$ProfileCustomID			=	$data['ProfileCustomID'];
 				$ProfileCustomTitle			=	stripslashes($data['ProfileCustomTitle']);
 				$ProfileCustomType			=	$data['ProfileCustomType'];
@@ -2252,8 +2252,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 							echo "<select name=\"ProfileCustomShowGender\">";
 							echo "<option value=\"\">All Gender</option>";
-							$queryShowGender = mysql_query($query);
-								 while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+							$queryShowGender = $wpdb->get_results($query,ARRAY_A);
+								 foreach($queryShowGender as $dataShowGender){
 									 if(isset($data1["ProfileCustomShowGender"])){
 										echo "<option value=\"".$dataShowGender["GenderID"]."\" selected=\"selected\">".$dataShowGender["GenderTitle"]."</option>";
 									 }else{
@@ -2275,9 +2275,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						
 						$get_types = "SELECT * FROM ". table_agency_data_type;
 						
-						$result = mysql_query($get_types);
+						$result = $wpdb->get_results($get_types,ARRAY_A);
 						
-						while ( $typ = mysql_fetch_assoc($result)){
+						foreach( $result as $typ){
                                         $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));    
 										$checked = 'checked="checked"';                    
 										echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
@@ -2321,19 +2321,19 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		
 		}else{ //Edit/Update Field
 					$query1 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
-					$results1 = mysql_query($query1);
-					$count1 = mysql_num_rows($results1);
+					$results1 = $wpdb->get_results($query1,ARRAY_A);
+					$count1 = count($results1);
 					$pos = 0;
-					while ($data1 = mysql_fetch_array($results1)) {
+					foreach($results1 as $data1) {
 						
 					
 						//get record from Clients to edit
 						$select_sql = "Select  * FROM " . table_agency_customfields_types . 
 						" WHERE ProfileCustomID= " . $data1["ProfileCustomID"];
 						
-						$select_sql = mysql_query($select_sql) or die(mysql_error());
+						$select_sql = $wpdb->get_results($select_sql,ARRAY_A) or die($wpdb->print_error());
 						
-						$fetch_type = mysql_fetch_assoc($select_sql);
+						$fetch_type = current($select_sql);
 						
 						$array_type = explode(",",$fetch_type['ProfileCustomTypes']);
 						
@@ -2346,7 +2346,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						
 						$pos ++;			
 							$query2 = "SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".(isset($ProfileID)?$ProfileID:0)."";
-							$results2 = mysql_query($query2);
+							$results2 = $wpdb->get_results($query2,ARRAY_A);
 									
 									  echo "<tr>
 											<td>Type*:</td>
@@ -2405,8 +2405,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 													echo "<select name=\"ProfileCustomShowGender\">";
 													echo "<option value=\"\">All Gender</option>";
-													$queryShowGender = mysql_query($query);
-														 while($dataShowGender = mysql_fetch_assoc($queryShowGender)){
+													$queryShowGender = $wpdb->get_results($query,ARRAY_A);
+														 foreach($queryShowGender as $dataShowGender){
 															
 																echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data1["ProfileCustomShowGender"],$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
 															
@@ -2436,7 +2436,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 																						//get custom types
 																						$_sql = "SELECT ProfileCustomTypes FROM " . table_agency_customfields_types . 
 																							" WHERE ProfileCustomID = $ProfileCustomID";
-																						$x = $wpdb->get_row($_sql) or die(mysql_error());
+																						$x = $wpdb->get_row($_sql) or die($wpdb->print_error());
 
                                                                                         if(strpos($x->ProfileCustomTypes,",") > -1){
                                                                                                 $rTypes = explode(",",$x->ProfileCustomTypes);
@@ -2446,9 +2446,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
                                                                                         $get_types = "SELECT * FROM ". table_agency_data_type;
 
-                                                                                        $result = mysql_query($get_types);
+                                                                                        $result = $wpdb->get_results($get_types,ARRAY_A);
 
-                                                                                        while ( $typ = mysql_fetch_assoc($result)){
+                                                                                        foreach( $result as $typ){
                                                                                           $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));                        
                                                                                                                         $checked = '';
                                                                                                                         if(is_array($rTypes)){
@@ -2759,13 +2759,13 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				  ON a.ProfileCustomID = main.ProfileCustomID 
 				  ORDER BY $sort $dir";
 				 
-		$results = mysql_query($query) or die ( __(mysql_error(), rb_agency_TEXTDOMAIN ));
-		$count = mysql_num_rows($results);
+		$results = $wpdb->get_results($query,ARRAY_A) or die ( __($wpdb->print_error(), rb_agency_TEXTDOMAIN ));
+		$count = count($results);
 		   
 		 $rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 		
-		while ($data = mysql_fetch_array($results)) {
+		foreach ($results as $data) {
 			$ProfileCustomID	=$data['ProfileCustomID'];
 		echo "    <tr>\n";
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $ProfileCustomID ."\" name=\"". $ProfileCustomID ."\" value=\"". $ProfileCustomID ."\" /></th>\n";
@@ -2807,9 +2807,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		if($data['ProfileCustomType'] == 7 ) {echo " <td class=\"column\">".$measurements_label."</td>\n"; } else{ echo "        <td class=\"column\">".str_replace("|",",",$data['ProfileCustomOptions'])."</td>\n"; }
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) { echo "Public"; } elseif ($data['ProfileCustomView'] == 1) { echo "Private"; } elseif ($data['ProfileCustomView'] == 2) { echo "Custom"; } echo "</td>\n";
 		 echo "        <th class=\"column\">".$data['ProfileCustomOrder']."</th>\n";
-		 $queryGender = mysql_query("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender'].""); 
-		 $fetchGender = mysql_fetch_assoc($queryGender);
-		 $countGender = mysql_num_rows($queryGender);
+		 $queryGender = $wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender']."",ARRAY_A); 
+		 $fetchGender = current($queryGender);
+		 $countGender = count($queryGender);
 		 if($countGender > 0){
 			echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
 		 }else{

@@ -1025,6 +1025,7 @@ class RBAgency {
 		}
 
 		public static function shortcode_display_generator_form(){
+			global $wpdb;
 			// Use nonce for verification
 			echo '<input type="hidden" name="rb_agency_noncename" id="rb_agency_noncename" value="'. wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
 			echo "<div class=\"submitbox\" id=\"add_ticket_box\">";
@@ -1077,7 +1078,7 @@ class RBAgency {
 			$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 				
 				echo "<option value=\"\">All Gender</option>";
-				$queryShowGender = mysql_query($query);
+				$queryShowGender = $wpdb->get_results($query,ARRAY_A);
 				foreach($queryShowGender as $dataShowGender){
 					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".$dataShowGender["GenderTitle"]."</option>";
 				}

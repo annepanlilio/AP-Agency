@@ -1,15 +1,16 @@
  <?php
+ global $wpdb;
 $query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomOrder, ProfileCustomView, ProfileCustomShowGender, ProfileCustomShowProfile, ProfileCustomShowSearch, ProfileCustomShowLogged, ProfileCustomShowAdmin FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder ASC";
-					$results1 = mysql_query($query1);
-					$count1 = mysql_num_rows($results1);
+					$results1 = $wpdb->get_results($query1,ARRAY_A);
+					$count1 = count($results1);
 					$pos = 0;
 
 $query2 = "SELECT ProfileGender,ProfileUserLinked  FROM ".table_agency_profile." WHERE ProfileUserLinked = '".rb_agency_get_current_userid()."' ";
-					$results2 = mysql_query($query2);
-				      $dataList2 = mysql_fetch_assoc($results2); 
-					$count2 = mysql_num_rows($results2);
+					$results2 =  $wpdb->get_results($query2,ARRAY_A);
+				      $dataList2 = current($results2); 
+					$count2 = count($results2);
 					
-while ($data1 = mysql_fetch_array($results1)) { 
+foreach($results1 as $data1) { 
        
 	if($data1["ProfileCustomShowSearch"] == 1 || $data1["ProfileCustomShowProfile"] == 1  ){ // Show on Search Page or Profile Page
 
@@ -107,7 +108,6 @@ while ($data1 = mysql_fetch_array($results1)) {
 		
 }
 
-mysql_free_result($results1);
-mysql_free_result($results2);
+
 
 ?>
