@@ -10,22 +10,21 @@ define("LabelSingular", "Profiles");
 
 	$rb_agency_options_arr = get_option('rb_agency_options');
 
-	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-	$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
-	$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
+		$rb_agency_option_showsocial = isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0;
+		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
+		$rb_agency_option_agencyimagemaxheight = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxheight']:800;
+			if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
+				$rb_agency_option_agencyimagemaxheight = 800;
+			}
 
-	if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
-		$rb_agency_option_agencyimagemaxheight = 800;
-	}
+		$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
+		$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
 
-	$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
-	$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
-
-	if (function_exists("rb_agencyinteract_approvemembers")) {
-		// Load Interact Settings
-		$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
-		$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
-	}
+		if (function_exists("rb_agencyinteract_approvemembers")) {
+			// Load Interact Settings
+			$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
+			$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
+		}
 
 
 // *************************************************************************************************** //
@@ -2164,6 +2163,5 @@ function extractNumber(obj, decimalPlaces, allowNegative)
     echo "</script>";
 }
 
-echo "</div>\n";
 echo "</div>\n";
 ?>
