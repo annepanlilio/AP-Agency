@@ -2028,7 +2028,7 @@ elseif ($ConfigID == 5) {
 
 				$result = $wpdb->get_results($get_types,ARRAY_A);
 
-				while ( $result as $typ){
+				foreach ($result as $typ){
 					$t = 'ProfileType' . trim($typ['DataTypeTitle']);$t = str_replace(' ', '_', $t);
 					$n = trim($typ['DataTypeTitle']);
 					$n = str_replace(' ', '_', $n);
@@ -2090,7 +2090,7 @@ elseif ($ConfigID == 5) {
 				// Verify Record
 				$queryDelete = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomID =  \"". $ProfileCustomID ."\"";
 				$resultsDelete = $wpdb->get_results($queryDelete,ARRAY_A);
-				while ($resultsDelete as $dataDelete) {
+				foreach ($resultsDelete as $dataDelete) {
 
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_customfields . " WHERE ProfileCustomID = \"". $ProfileCustomID ."\"";
