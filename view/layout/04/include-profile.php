@@ -35,7 +35,7 @@ echo "	  			<h3>Statistics</h3>\n";
 echo "	  				<div class=\"stats\">\n";
 echo "	  					<ul>\n";
 								if (!empty($ProfileGender)) {
-									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
+									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
 									echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 								}
 
@@ -55,7 +55,7 @@ echo "	  			<div id=\"photos\">\n";
 						// images
 						
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 						  	if ($countImg > 1) { 

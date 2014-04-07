@@ -38,8 +38,8 @@ echo "  		<div class=\"rbcol-5 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 
 						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
@@ -54,7 +54,7 @@ echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 							// Image Slider
 							
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-							$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg  = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
 								if ($countImg > 1) { 
@@ -77,7 +77,7 @@ echo "	  					<div id=\"stats\">\n";
 	echo "	  					<ul>\n";
 
 									if (!empty($ProfileGender)) {
-										$fetchGenderData=  $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A);
+										$fetchGenderData=  $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A);
 										$count  = $wpdb->num_rows;
 										if($count > 0){
 												echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
@@ -92,8 +92,9 @@ echo "	  				</div>\n"; // .rbcol-6
 
 echo "					<div class=\"rbcol-6 rbcolumn\">\n";
 echo "						<div id=\"links\">\n";
+if(isset($AgencyName)){
 echo "							<h3>". $AgencyName ." ". $ProfileClassification ."</h3>\n";
-
+}
 					/*
 					 * Include Action Icons
 					 */

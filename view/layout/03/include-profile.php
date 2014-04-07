@@ -74,8 +74,8 @@ echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
 						echo "<div id=\"profile-picture\">\n";
 
 						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg,$ProfileID),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
@@ -113,7 +113,7 @@ echo "		  				<ul>\n";
 
 
 								$queryType = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID IN ($ProfileType) ORDER BY DataTypeTitle";
-								$resultsType=  $wpdb->get_results($wpdb->prepare($queryType ),ARRAY_A);
+								$resultsType=  $wpdb->get_results($queryType,ARRAY_A);
 								foreach($resultsType as $dataType ){
 									echo "<li>". $dataType["DataTypeTitle"] ."</li>";
 								}
@@ -156,7 +156,7 @@ echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><
 echo " 								</a>\n";
 echo " 							</div>\n";
 								    $queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-									$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+									$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 									$countImg  = $wpdb->num_rows;
 
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-photos\">\n";
@@ -216,7 +216,7 @@ echo " 						<div class=\"row-physical tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
 echo "								<ul>";
 										if (!empty($ProfileGender)) {
-											$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
+											$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
 											echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 										}
 
@@ -225,7 +225,7 @@ echo "								<ul>";
 										rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude);
 
 
-										if($rb_agency_option_showcontactpage==1){
+										if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 											echo "<li class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 										}
 echo "								</ul>";
@@ -236,7 +236,7 @@ echo " 						<div class=\"row-videos tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
 									//Video Slate
 									$queryMedia = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Slate");
-									$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+									$resultsMedia=  $wpdb->get_results($queryMedia,ARRAY_A);
 									$countMedia  = $wpdb->num_rows;
 
 									if ($countMedia > 0) {
@@ -248,7 +248,7 @@ echo " 							<div class=\"tab-panel\">\n";
 
 									//Video Monologue
 									$queryMedia = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Monologue");
-									$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+									$resultsMedia=  $wpdb->get_results($queryMedia,ARRAY_A);
 									$countMedia  = $wpdb->num_rows;
 									if ($countMedia > 0) {
 									  	foreach($resultsMedia as $dataMedia ){
@@ -259,7 +259,7 @@ echo " 							<div class=\"tab-panel\">\n";
 
 									//Demo Reel
 									$queryMedia = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
-									$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+									$resultsMedia=  $wpdb->get_results($queryMedia,ARRAY_A);
 									$countMedia  = $wpdb->num_rows;
 									if ($countMedia > 0) {
 									  	foreach($resultsMedia as $dataMedia ){
@@ -272,8 +272,8 @@ echo " 						</div>\n"; // twelve rbcolumn videos
 
 echo " 						<div class=\"row-experience tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
-									$query1 ="SELECT c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." ORDER BY c.ProfileCustomOrder DESC";
-									$results1=  $wpdb->get_results($wpdb->prepare($query1),ARRAY_A);
+									$query1 ="SELECT c.ProfileCustomID, c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d ORDER BY c.ProfileCustomOrder DESC";
+									$results1=  $wpdb->get_results($wpdb->prepare($query1, $ProfileID),ARRAY_A);
 									$count1  = $wpdb->num_rows;
 									foreach($results1 as $data1 ){
 										if ($data1['ProfileCustomTitle'] == "Experience"){
@@ -299,13 +299,19 @@ echo " 						</div>\n"; // Row booking
 echo "						<div class=\"row-downloads tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
 	echo "							<p>". __("The following files (pdf, audio file, etc.) are associated with this profile",
-						        	rb_agencyinteract_TEXTDOMAIN) .".</p>\n";
+						        	rb_agency_TEXTDOMAIN) .".</p>\n";
 					
 									$queryMedia = "SELECT * FROM ". table_agency_profile_media ." 
-									              WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType <> \"Image\"";
+									              WHERE ProfileID =  \"%s\" AND ProfileMediaType <> \"Image\"";
 									
-									$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+									$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia,$ProfileID),ARRAY_A);
 									$countImg  = $wpdb->num_rows;
+									$outLinkVoiceDemo = "";
+									$outLinkResume = "";
+									$outLinkHeadShot = "";
+									$outLinkComCard = "";
+									$outVideoMedia = "";
+									
 									foreach($resultsMedia as $dataMedia ){
 											
 										if ($dataMedia['ProfileMediaType'] == "Demo Reel" || 

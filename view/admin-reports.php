@@ -668,7 +668,7 @@ elseif ($ConfigID == 8) {
 	
 
 
-	if($_REQUEST['action'] == 'generate') {
+	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'generate') {
 
 		// LETS DO IT!
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
@@ -795,6 +795,8 @@ elseif ($ConfigID == 8) {
 		$pos = 0;
 		$pos_suggested = 0;
 		$arrayReservedFoldername = array();
+		$throw_error  = false;
+			
 		foreach ($results1 as $data1 ) {
 			$ProfileID				=$data1["ProfileID"];
 			$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
@@ -834,7 +836,6 @@ elseif ($ConfigID == 8) {
                   }
 
 
-			echo "<div style=\"padding:10px;border:1px solid #ccc;\">\n";
 			// Check for duplicate
 			$query_duplicate = "SELECT ProfileGallery, count(ProfileGallery) as cnt FROM ". table_agency_profile ." WHERE ProfileGallery='%s' GROUP BY ProfileGallery   HAVING cnt > 1";
 			$rs = $wpdb->get_results($wpdb->prepare($query_duplicate,$ProfileGalleryFixed), ARRAY_A);
@@ -850,20 +851,36 @@ elseif ($ConfigID == 8) {
 				echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
 
 			} elseif ($ProfileGallery == $ProfileGalleryFixed ) {
+				echo "<div style=\"padding:10px;border:1px solid #ccc;\">\n";
 				echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGalleryFixed ."/</span>\n";
+				echo "</div>\n";
 			}else{
 				  // Create Folders
+				 if(!empty($ProfileGallery)){
 					rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
 					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
 						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
 						$renamed = $wpdb->query($rename);
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					}
+				}else{
+					    // actual folder creation
+						$dirURL = rb_agency_UPLOADPATH. $ProfileGalleryFixed;
+						if (!is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) {
+							mkdir($dirURL, 0755); //700
+							chmod($dirURL, 0777);
+						}
+					    echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+			           $rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
+					   $renamed = $wpdb->query($rename);
+						
+				   
+				}
 
 					//echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  .  $ProfileGalleryFixed ."/</span>\n";
 			}
 			$pos++;
-			echo "</div>\n";
+		
 		}//endwhile
 			
 			

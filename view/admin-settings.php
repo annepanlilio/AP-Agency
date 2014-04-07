@@ -2835,7 +2835,6 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		 
 		echo "    </tr>\n";
 		}
-		mysql_free_result($results);
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";

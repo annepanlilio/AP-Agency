@@ -25,7 +25,7 @@ Large featured image and scrolling thumbnails
 // Donot Edit this this is for subview 
 $profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 $urlexploade = explode("/", $profileURLString);
-$subview=$urlexploade[1];
+$subview= isset($urlexploade[1])?$urlexploade[1]:"";
 if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 	include 'pdf-profile.php';
 	exit;
@@ -106,7 +106,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 						<ul>
 							<?php
 							if (!empty($ProfileGender)) {
-								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
+								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
 								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). ":</strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 							}									
 							if (!empty($ProfileStatHeight)) {
@@ -146,7 +146,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
 											
 										
-							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
 							
 								if ($countMedia > 0) {
@@ -158,9 +158,11 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CompCard");
 											
 										
-							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
+							$cpCount="";
 							if ($countMedia > 0) {
+								$cpCnt = 0;
 								foreach($resultsMedia as $dataMedia ){
 									$cpCnt++;  
 									if($cpCnt == "2"){$cpCount="2nd";}
@@ -172,7 +174,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							}
 							// Headshots
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
-							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
@@ -181,9 +183,11 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							}
 							//Voice Demo
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"VoiceDemo");
-							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
+							$vdCount = "";
 							if ($countMedia > 0) {
+								$vdCnt = 0;
 								foreach($resultsMedia as $dataMedia ){
 									$vdCnt++;
 									if($vdCnt == "2"){$vdCount="2nd";}
@@ -194,7 +198,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							}
 							//Video Slate
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Slate");
-							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
@@ -204,7 +208,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							}
 							//Video Monologue
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Monologue");
-							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
@@ -213,7 +217,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 							}
 							//Demo Reel
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
-							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
@@ -503,7 +507,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 						<ul class="slides">
 							<?php
 										$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-										$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
 										  	echo "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
@@ -515,7 +519,7 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 						<ul class="slides">
 							<?php
 										$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-										$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
 										  	echo "<li><figure style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" alt=\"". $ProfileContactDisplay ."\" ></figure></li>\n";

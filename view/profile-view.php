@@ -1,7 +1,7 @@
 <?php 
-if (session_status() == PHP_SESSION_NONE) {
+/*if (session_status() == PHP_SESSION_NONE) {
 	session_start();
-}
+}*/
 header("Cache-control: private"); //IE 6 Fix
 
 	/*

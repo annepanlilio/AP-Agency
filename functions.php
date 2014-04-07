@@ -1288,6 +1288,7 @@ ini_set('display_errors', 'On');
 
 	//get profile images
 	function getAllImages($profileID){
+		global $wpdb;
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%d\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC LIMIT 0, 7 ";
 		$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg,$profileID),ARRAY_A);
 		$countImg = count($resultsImg);
@@ -1311,6 +1312,7 @@ ini_set('display_errors', 'On');
 
 		// Set It Up	
 		global $wp_rewrite;
+		global $wpdb;
 		extract(shortcode_atts(array(
 				"type" => 0,
 				"count" => 1
@@ -1746,7 +1748,7 @@ if ( !function_exists('retrieve_title') ) {
 function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $ProfileGenderShow = false, $SearchMode = false){
 	
 	$all_permit = false; // set to false
-	
+	global $wpdb;
 	if($ProfileID != 0){
 		$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
 		$fetchID = current($query);
@@ -1767,8 +1769,8 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 	}
 	
 	
-	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %s  ORDER BY ProfileCustomOrder";
-	$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A) or die($wpdb->print_error());
+	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %d  ORDER BY ProfileCustomOrder DESC";
+	$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A);
 	$count3 = 0;
 	
 	foreach($results3 as $data3) {
@@ -2107,7 +2109,7 @@ function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
     global $wpdb; 
 
 	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID ='%s' AND ProfileCustomShowGender IN('%s','') ";
-	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A) or die($wpdb->print_error());
+	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A);
 	$count = count($results);
 
 	if($count > 0){
@@ -2384,7 +2386,7 @@ function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $ti
 	global $wpdb;
 	global $rb_agency_option_unittype;
 	
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue, c.ProfileCustomView FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 	foreach ($resultsCustom as $resultCustom) {
 		if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){
 			if(!empty($resultCustom->ProfileCustomValue )){
@@ -2625,7 +2627,7 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 * @Returns ProfileID
 /*/
 function rb_agency_getProfileIDByUserLinked($ProfileUserLinked){
-  
+    global $wpdb;
 	if(!empty($ProfileUserLinked)){
 		$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileUserLinked = %s",$ProfileUserLinked),ARRAY_A);
 		$fetchID = current($query);
@@ -2638,7 +2640,7 @@ function rb_agency_getProfileIDByUserLinked($ProfileUserLinked){
 * @Returns Media Categories
 /*/
 function rb_agency_getMediaCategories($GenderID){
-
+    global $wpdb;
 	$query = $wpdb->get_results("SELECT MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder FROM  ".table_agency_data_media." ORDER BY MediaCategoryOrder",ARRAY_A);
 	$count = count($query);
 	foreach($query as $f){
@@ -3982,10 +3984,11 @@ function get_state_by_id($StateID){
 // Genrate query for gallary Order
 function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaType){
 	$queryImg = ""; 
+	global $wpdb;
 	if($order){
-		 $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $profileID . "\" AND ProfileMediaType = \"" . $ProfileMediaType . "\" ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC";
+		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC", $profileID, $ProfileMediaType);
 	} else {
-		 $queryImg = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $profileID . "\" AND ProfileMediaType = \"" . $ProfileMediaType . "\" ORDER BY  ProfileMediaOrder ASC";
+		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ORDER BY  ProfileMediaOrder ASC", $profileID, $ProfileMediaType);
 	}
 	return $queryImg ;
 }

@@ -99,7 +99,7 @@ Custom Layout: Shake it like a polaroid picture
  // Social Link
 	 rb_agency_getSocialLinks();
  			if (!empty($ProfileGender)) {
-			$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
+			$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
 			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
 		}
 	
@@ -126,7 +126,7 @@ Custom Layout: Shake it like a polaroid picture
 		rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
 
-	          	if($rb_agency_option_showcontactpage==1){
+	          	if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 		    		echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
 			}
 	echo "					</div>\n";
@@ -151,7 +151,7 @@ Custom Layout: Shake it like a polaroid picture
 			// images
 		
 			$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-			$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+			$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 			$countImg  = $wpdb->num_rows;
 			foreach($resultsImg as $dataImg ){
 	echo "		  	<div class=\"content\">\n";

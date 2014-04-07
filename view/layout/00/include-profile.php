@@ -63,7 +63,7 @@ echo "					<h2>". $ProfileContactDisplay ."</h2>\n";
 echo "					<ul>\n";
 
 							if (!empty($ProfileGender)) {
-								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
+								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 );
 								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 							}
 							if (!empty($ProfileStatHeight)) {
@@ -87,7 +87,7 @@ echo "					<ul>\n";
 							// Insert Custom Fields
 							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
-							if($rb_agency_option_showcontactpage==1){
+							if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 								echo "<li   class=\"rel rb_contact\" id=\"rb_contact\">><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 							}
 echo "	  				</ul>\n"; // Close ul
