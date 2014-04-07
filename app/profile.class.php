@@ -1227,7 +1227,7 @@ class RBAgency_Profile {
 			 */
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_profilelist_sortby		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
-			$results = $wpdb->get_results($sql,ARRAY_A) or die($wpdb->print_error());
+			$results = $wpdb->get_results($sql,ARRAY_A);
 			$count = count($results);
 			$profile_list = "";
 			$all_html = "";

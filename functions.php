@@ -24,7 +24,11 @@ ini_set('display_errors', 'On');
 		function rb_agency_set_content_type($content_type){
 					return 'text/html';
 		}
-
+	// Remove header already sent
+	function rb_output_buffer() {
+		ob_start();
+	} // soi_output_buffer
+	add_action('init', 'rb_output_buffer');
 
 // *************************************************************************************************** //
 /*
@@ -2089,7 +2093,7 @@ function rb_agency_getStateTitle($state_id="",$state_code = false){
 function rb_agency_getGenderTitle($ProfileGenderID){
     global $wpdb;
 	$query = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID='%s'";
-	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileGenderID),ARRAY_A) or die($wpdb->print_error());
+	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileGenderID),ARRAY_A);
 	$count = count($results);
 
 	if($count > 0){

@@ -26,6 +26,7 @@ function is_chrome() {
 <?php //where we decide what print format will it be.
 	$chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;  //detect if CHROME
 	$showFooter = "";
+	$logoMarginTop = "";
 		
 	if($_POST['print_option']==1){
 		if($chrome){
@@ -142,6 +143,8 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 	}
 	$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 	$countImg = count($resultsImg);
+	$imageCnt = 0;
+	$rowCount = 0;
 	foreach($resultsImg as $dataImg){$imageCnt++; $rowCount++;
 		if($imageCnt>1){
 			$left='class="lefty"';
