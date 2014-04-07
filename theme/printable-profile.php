@@ -27,6 +27,10 @@ function is_chrome() {
 	$chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;  //detect if CHROME
 	$showFooter = "";
 	$logoMarginTop = "";
+	$toLandScape = "";
+	$imageLeft = "";
+	$isLeft = "";
+	$wrapperWidthHeight = "";
 		
 	if($_POST['print_option']==1){
 		if($chrome){
@@ -122,8 +126,8 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 ?>
 		<div id="model_info">
 			<h1><?php echo $ProfileContactDisplay; ?></h1>
-			<ul>
-			<?php echo rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,"dontecho");?>
+		   <ul>
+			<?php  rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender);?>
 			</ul>
 		</div>
 
