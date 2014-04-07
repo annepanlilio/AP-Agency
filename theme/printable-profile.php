@@ -5,7 +5,7 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 global $wpdb;
 
 function is_chrome() {
-	return(eregi("chrome", $_SERVER['HTTP_USER_AGENT']));
+	return strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,6 +25,8 @@ function is_chrome() {
 
 <?php //where we decide what print format will it be.
 	$chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;  //detect if CHROME
+	$showFooter = "";
+		
 	if($_POST['print_option']==1){
 		if($chrome){
 			$widthAndHeight='style="width:420px; height:550px;"';
@@ -131,9 +133,9 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 	else{
 		$printType="Image";
 	}
-
-	if(count($_POST['pdf_image_id'])>0) {
-		$pdf_image_id=$_POST['pdf_image_id'];
+    $pdf_image_id = "";
+	if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
+		$pdf_image_id = $_POST['pdf_image_id'];
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY $orderBy";
 	} else {
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
@@ -152,15 +154,14 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 		$timthumbHW=str_replace('px;"',"",$timthumbHW);
 
 		echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
-
-		if($rowCount == $showFooter){
+        if($rowCount == $showFooter){
 			$rowCount=0; //reset to loop another row 
-			echo '<br clear="all"><img style="width:347px; '.$logoMarginTop.'" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/theme/custom-layout6/images/address.jpg"><br clear="all">';
+			echo '<br clear="all"><img style="width:347px; '.$logoMarginTop.'" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg"><br clear="all">';
 		}
 	}
 
 	if($rowCount!=$showFooter AND $rowCount!="0"){
-		echo '<br clear="all"><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/theme/custom-layout6/images/address.jpg"><br clear="all">';
+		echo '<br clear="all"><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg"><br clear="all">';
 	}
 ?>
 </div>

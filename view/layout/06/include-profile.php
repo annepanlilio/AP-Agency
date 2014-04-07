@@ -380,8 +380,10 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 			<?php } else if ($subview=="print-polaroids"){  //show print options
 
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
-				$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 				$countImg  = $wpdb->num_rows;
+				$withSelected = 0;
+				$lasID = 0;
 				foreach($resultsImg as $dataImg ){
 					if($_POST[$dataImg['ProfileMediaID']]==1){
 						$selected.="<input type='hidden' value='1' name='".$dataImg['ProfileMediaID']."'>";
@@ -406,14 +408,14 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-four-per-page.png" alt="" />
+								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-four-per-page.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="12" name="print_option" /><h3>One Polaroid Per Page</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-one-per-page.png" alt="" />
+								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-one-per-page.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
@@ -455,14 +457,14 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1" name="print_option" checked="checked" /><h3>Print Large Photos</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-with-model-info.png" alt="" />
+								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3" name="print_option" /><h3>Print Medium Size Photos</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-with-model-info.png" alt="" />
+								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
@@ -470,14 +472,14 @@ if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1-1" name="print_option" /><h3>Print Large Photos Without Model Info</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-large-photo-without-model-info.png" alt="" />
+								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3-1" name="print_option" /><h3>Print Medium Size Photos Without Model Info</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/theme/custom-layout6/images/polariod-medium-photo-without-model-info.png" alt="" />
+								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
