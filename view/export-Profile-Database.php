@@ -1,9 +1,9 @@
 <?php
 ob_start();
 // Tap into WordPress Database
-include_once('../../../../wp-config.php');
-include_once('../../../../wp-load.php');
-include_once('../../../../wp-includes/wp-db.php');
+@include_once('../../../../wp-config.php');
+@include_once('../../../../wp-load.php');
+@include_once('../../../../wp-includes/wp-db.php');
 global $wpdb;
 
 	//$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder";
@@ -17,7 +17,8 @@ global $wpdb;
 	$custom_fields_title = array();
 	$custom_fields = $wpdb->get_results($query3,ARRAY_A);
 	foreach ($custom_fields as $key => $value) {
-		array_push($custom_fields_name, 'Client'.str_replace(' ', '', $value['ProfileCustomTitle']));
+		//array_push($custom_fields_name, 'Client'.str_replace(' ', '', $value['ProfileCustomTitle']));
+		array_push($custom_fields_name, $value['ProfileCustomTitle']);
 		array_push($custom_fields_id, $value['ProfileCustomID']);
 		array_push($custom_fields_title, $value['ProfileCustomTitle']);
 	}
