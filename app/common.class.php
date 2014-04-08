@@ -584,7 +584,7 @@ class RBAgency_Common {
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
-							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".get_bloginfo("url")."/".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
+							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/".rb_agency_TEXTDOMAIN."/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
 						}
 						?> <br clear="all" />
 						<input type="submit" value="Next, Select Print Format" />
@@ -600,11 +600,11 @@ class RBAgency_Common {
 						<?php  
 						
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							echo '<a class="allimages_print" href="'. rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery">';
-							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/".rb_agency_TEXTDOMAIN."/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 					}
 					?> <br clear="all" />
 
@@ -637,7 +637,7 @@ class RBAgency_Common {
 						}
 					</script>
 					<?php 
-					$queryImg = rb_agency_option_galleryorder_query($orderBy ,$ProfileID,"Polaroid");
+					$queryImg = rb_agency_option_galleryorder_query("ProfileMediaID" ,$ProfileID,"Polaroid");
 					$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 					$countImg  = $wpdb->num_rows;
 						
@@ -650,7 +650,7 @@ class RBAgency_Common {
 						<?php  
 						foreach($resultsImg as $dataImg ){
 							echo '<a href="'. rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
-							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/".rb_agency_TEXTDOMAIN."/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 						}
 						?> <br clear="all" />
 
@@ -690,14 +690,14 @@ class RBAgency_Common {
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-four-per-page.png" alt="" />
+								<img src="<?php echo get_bloginfo("url")?>/wp-content/plugins/<?php echo rb_agency_TEXTDOMAIN;?>/view/layout/06/images/polariod-four-per-page.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="12" name="print_option" /><h3>One Polaroid Per Page</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-one-per-page.png" alt="" />
+								<img src="<?php echo get_bloginfo("url")?>/wp-content/plugins/<?php echo rb_agency_TEXTDOMAIN;?>/view/layout/06/images/polariod-one-per-page.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
@@ -740,14 +740,14 @@ class RBAgency_Common {
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1" name="print_option" checked="checked" /><h3>Print Large Photos</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-with-model-info.png" alt="" />
+								<img src="/wp-content/plugins/<?php echo rb_agency_TEXTDOMAIN;?>/view/layout/06/images/polariod-large-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3" name="print_option" /><h3>Print Medium Size Photos</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-with-model-info.png" alt="" />
+								<img src="/wp-content/plugins/<?php echo rb_agency_TEXTDOMAIN;?>/view/layout/06/images/polariod-medium-photo-with-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
@@ -755,14 +755,14 @@ class RBAgency_Common {
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="1-1" name="print_option" /><h3>Print Large Photos Without Model Info</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-without-model-info.png" alt="" />
+								<img src="/wp-content/plugins/<?php echo rb_agency_TEXTDOMAIN;?>y/view/layout/06/images/polariod-large-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 
 						<div class="rbcol-6 rbcolumn">
 							<input type="radio" value="3-1" name="print_option" /><h3>Print Medium Size Photos Without Model Info</h3>
 							<div class="polaroid">
-								<img src="/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-without-model-info.png" alt="" />
+								<img src="/wp-content/plugins/<?php echo rb_agency_TEXTDOMAIN;?>y/view/layout/06/images/polariod-medium-photo-without-model-info.png" alt="" />
 							</div><!-- polariod -->
 						</div><!-- .six .rbcolumn -->
 

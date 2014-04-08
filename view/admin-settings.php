@@ -434,7 +434,7 @@ elseif ($ConfigID == 1) {
 			$x=6;
 			while($x<=15) {
 				if (file_exists(rb_agency_BASEREL .'view/layout/'. sprintf("%02s", $x) .'/include-profile.php')) {
-				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout". $x, rb_agency_TEXTDOMAIN). $x ."</option>\n";
+				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout ", rb_agency_TEXTDOMAIN). $x ."</option>\n";
 				}
 				$x++;
 			}
