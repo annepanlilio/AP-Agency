@@ -42,8 +42,6 @@ Large featured image and scrolling thumbnails
 	});
 </script>
 
-<link rel="stylesheet" type="text/css" media="all" href="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/custom-layout6/css/styles.css" />
-
 <div id="rbprofile" class="model-portfolio">
 
 	<div id="rblayout-six" class="rblayout">
