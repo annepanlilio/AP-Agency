@@ -683,4 +683,14 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.8");
 	}
 
+	if (substr(get_option('rb_agency_version'), 0, 5) == "2.0.8") {
+		// Add Column
+		rb_agency_addColumn( table_agency_data_media,"MediaCategoryFileType","VARCHAR(50)");
+		rb_agency_addColumn( table_agency_data_media,"MediaCategoryLinkType","VARCHAR(50)");
+
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.8.1");
+		
+	}
+
 ?>

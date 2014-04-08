@@ -38,11 +38,11 @@ echo "				<div id=\"photos\">\n";
 
 						# rb_agency_option_galleryorder
 						$rb_agency_options_arr = get_option('rb_agency_options');
-						$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+						$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder']) ? $rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 											
 										
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							if ($countImg > 1) { 

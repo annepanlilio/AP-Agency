@@ -3,7 +3,7 @@ global $wpdb, $user_level;
 
 // Get Unit Type
 $rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+	$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
 get_currentuserinfo(); 
 
 ?>

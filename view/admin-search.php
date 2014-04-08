@@ -14,9 +14,9 @@
 
 	// Define Options
 		$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
-		$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
-		$rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];
+		$rb_agency_option_unittype =  isset($rb_agency_options_arr['rb_agency_option_unittype']) ?$rb_agency_options_arr['rb_agency_option_unittype']:1;
+		$rb_agency_option_persearch = isset($rb_agency_options_arr['rb_agency_option_persearch'])?(int)$rb_agency_options_arr['rb_agency_option_persearch']:1;
+		$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?(int)$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
 		if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
 
 // *************************************************************************************************** //

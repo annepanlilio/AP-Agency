@@ -209,43 +209,43 @@ elseif ($ConfigID == 1) {
 		$rb_agency_options_arr = get_option('rb_agency_options');
 
 		// Set Default Values
-		$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+		$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_option_agencyname'])?$rb_agency_options_arr['rb_agency_option_agencyname']:0;
 			if (empty($rb_agency_value_agencyname)) { $rb_agency_value_agencyname = get_bloginfo('name'); }
-		$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
+		$rb_agency_value_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
 			if (empty($rb_agency_value_agencyemail)) { $rb_agency_value_agencyemail = get_bloginfo('admin_email'); }
-		$rb_agency_value_maxwidth = $rb_agency_options_arr['rb_agency_option_agencyimagemaxwidth'];
+		$rb_agency_value_maxwidth = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxwidth'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxwidth']:0;
 			if (empty($rb_agency_value_maxwidth)) { $rb_agency_value_maxwidth = "1000"; }
-		$rb_agency_value_maxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
+		$rb_agency_value_maxheight = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxheight']:0;
 			if (empty($rb_agency_value_maxheight)) { $rb_agency_value_maxheight = "800"; }
-		$rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
+		$rb_agency_option_locationcountry = isset($rb_agency_options_arr['rb_agency_option_locationcountry'])?$rb_agency_options_arr['rb_agency_option_locationcountry']:0;
 			if (empty($rb_agency_option_locationcountry)) { $rb_agency_option_locationcountry = "US"; }
-		$rb_agency_option_profilelist_perpage = $rb_agency_options_arr['rb_agency_option_profilelist_perpage'];
+		$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage'])?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
 			if (empty($rb_agency_option_profilelist_perpage)) { $rb_agency_option_profilelist_perpage = "20"; }
-		$rb_agency_option_persearch = $rb_agency_options_arr['rb_agency_option_persearch'];
+		$rb_agency_option_persearch = isset($rb_agency_options_arr['rb_agency_option_persearch'])?$rb_agency_options_arr['rb_agency_option_persearch']:0;
 			if (empty($rb_agency_option_persearch)) { $rb_agency_option_persearch = "100"; }
 		$rb_agency_option_showcontactpage = isset($rb_agency_options_arr['rb_agency_option_showcontactpage'])?$rb_agency_options_arr['rb_agency_option_showcontactpage']:0;
 			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "0"; }
-		$rb_agency_option_profilelist_favorite = $rb_agency_options_arr['rb_agency_option_profilelist_favorite'];
+		$rb_agency_option_profilelist_favorite = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
 			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
-		$rb_agency_option_profilelist_castingcart = $rb_agency_options_arr['rb_agency_option_profilelist_castingcart'];
+		$rb_agency_option_profilelist_castingcart = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
 			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }
-		$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
+		$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy'])?$rb_agency_options_arr['rb_agency_option_privacy']:0;
 			if (empty($rb_agency_option_privacy)) { $rb_agency_option_privacy = "0"; }
 		// Profile Search Options
-		$rb_agency_option_formshow_location = $rb_agency_options_arr['rb_agency_option_formshow_location'];
+		$rb_agency_option_formshow_location = isset($rb_agency_options_arr['rb_agency_option_formshow_location']) ?$rb_agency_options_arr['rb_agency_option_formshow_location']:0;
 			if (empty($rb_agency_option_formshow_location)) { $rb_agency_option_formshow_location = "1"; }
-		$rb_agency_option_formshow_name = $rb_agency_options_arr['rb_agency_option_formshow_name'];
+		$rb_agency_option_formshow_name = isset($rb_agency_options_arr['rb_agency_option_formshow_name']) ?$rb_agency_options_arr['rb_agency_option_formshow_name']:0;
 			if (empty($rb_agency_option_formshow_name)) { $rb_agency_option_formshow_name = "1"; }
-		$rb_agency_option_formshow_type = $rb_agency_options_arr['rb_agency_option_formshow_type'];
+		$rb_agency_option_formshow_type = isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0;
 			if (empty($rb_agency_option_formshow_type)) { $rb_agency_option_formshow_type = "1"; }
-		$rb_agency_option_formshow_gender = $rb_agency_options_arr['rb_agency_option_formshow_gender'];
+		$rb_agency_option_formshow_gender = isset($rb_agency_options_arr['rb_agency_option_formshow_gender']) ? $rb_agency_options_arr['rb_agency_option_formshow_gender']:0;
 			if (empty($rb_agency_option_formshow_gender)) { $rb_agency_option_formshow_gender = "1"; }
-		$rb_agency_option_formshow_age = $rb_agency_options_arr['rb_agency_option_formshow_age'];
+		$rb_agency_option_formshow_age = isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0;
 			if (empty($rb_agency_option_formshow_age)) { $rb_agency_option_formshow_age = "1"; }
-		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
+		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 			if (empty($rb_agency_option_profilenaming)) { $rb_agency_option_profilenaming = "0"; }
 		//
-		$rb_agency_option_profilelist_sidebar = $rb_agency_options_arr['rb_agency_option_profilelist_sidebar'];
+		$rb_agency_option_profilelist_sidebar = isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0;
 			if (empty($rb_agency_option_profilelist_sidebar)) { $rb_agency_option_profilelist_sidebar = "0"; }
 
 
@@ -268,11 +268,11 @@ elseif ($ConfigID == 1) {
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Path to Logo', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencylogo]\" value=\"". $rb_agency_options_arr['rb_agency_option_agencylogo'] ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencylogo]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Email Header', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyheader]\" value=\"". $rb_agency_options_arr['rb_agency_option_agencyheader'] ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyheader]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_agencyheader'])?$rb_agency_options_arr['rb_agency_option_agencyheader']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Show Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
@@ -301,31 +301,32 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Server Timezone', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_locationtimezone]\">\n";
-		echo "       <option value=\"+12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+12",false) ."> UTC+12</option>\n";
-		echo "       <option value=\"+11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+11",false) ."> UTC+11</option>\n";
-		echo "       <option value=\"+10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+10",false) ."> UTC+10</option>\n";
-		echo "       <option value=\"+9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+9",false) ."> UTC+9</option>\n";
-		echo "       <option value=\"+8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+8",false) ."> UTC+8</option>\n";
-		echo "       <option value=\"+7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+7",false) ."> UTC+7</option>\n";
-		echo "       <option value=\"+6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+6",false) ."> UTC+6</option>\n";
-		echo "       <option value=\"+5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+5",false) ."> UTC+5</option>\n";
-		echo "       <option value=\"+4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+4",false) ."> UTC+4</option>\n";
-		echo "       <option value=\"+3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+3",false) ."> UTC+3</option>\n";
-		echo "       <option value=\"+2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+2",false) ."> UTC+2</option>\n";
-		echo "       <option value=\"+1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "+1",false) ."> UTC+1</option>\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "0",false) ."> UTC 0</option>\n";
-		echo "       <option value=\"-1\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-1",false) ."> UTC-1</option>\n";
-		echo "       <option value=\"-2\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-2",false) ."> UTC-2</option>\n";
-		echo "       <option value=\"-3\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-3",false) ."> UTC-3</option>\n";
-		echo "       <option value=\"-4\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-4",false) ."> UTC-4</option>\n";
-		echo "       <option value=\"-5\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-5",false) ."> UTC-5</option>\n";
-		echo "       <option value=\"-6\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-6",false) ."> UTC-6</option>\n";
-		echo "       <option value=\"-7\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-7",false) ."> UTC-7</option>\n";
-		echo "       <option value=\"-8\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-8",false) ."> UTC-8</option>\n";
-		echo "       <option value=\"-9\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-9",false) ."> UTC-9</option>\n";
-		echo "       <option value=\"-10\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-10",false) ."> UTC-10</option>\n";
-		echo "       <option value=\"-11\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-11",false) ."> UTC-11</option>\n";
-		echo "       <option value=\"-12\" ". selected($rb_agency_options_arr['rb_agency_option_locationtimezone'], "-12",false) ."> UTC-12</option>\n";
+		  $rb_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
+		echo "       <option value=\"+12\" ". selected($rb_locationtimezone, "+12",false) ."> UTC+12</option>\n";
+		echo "       <option value=\"+11\" ". selected($rb_locationtimezone, "+11",false) ."> UTC+11</option>\n";
+		echo "       <option value=\"+10\" ". selected($rb_locationtimezone, "+10",false) ."> UTC+10</option>\n";
+		echo "       <option value=\"+9\" ". selected($rb_locationtimezone, "+9",false) ."> UTC+9</option>\n";
+		echo "       <option value=\"+8\" ". selected($rb_locationtimezone, "+8",false) ."> UTC+8</option>\n";
+		echo "       <option value=\"+7\" ". selected($rb_locationtimezone, "+7",false) ."> UTC+7</option>\n";
+		echo "       <option value=\"+6\" ". selected($rb_locationtimezone, "+6",false) ."> UTC+6</option>\n";
+		echo "       <option value=\"+5\" ". selected($rb_locationtimezone, "+5",false) ."> UTC+5</option>\n";
+		echo "       <option value=\"+4\" ". selected($rb_locationtimezone, "+4",false) ."> UTC+4</option>\n";
+		echo "       <option value=\"+3\" ". selected($rb_locationtimezone, "+3",false) ."> UTC+3</option>\n";
+		echo "       <option value=\"+2\" ". selected($rb_locationtimezone, "+2",false) ."> UTC+2</option>\n";
+		echo "       <option value=\"+1\" ". selected($rb_locationtimezone, "+1",false) ."> UTC+1</option>\n";
+		echo "       <option value=\"0\"  ". selected($rb_locationtimezone, "0",false) ."> UTC 0</option>\n";
+		echo "       <option value=\"-1\" ". selected($rb_locationtimezone, "-1",false) ."> UTC-1</option>\n";
+		echo "       <option value=\"-2\" ". selected($rb_locationtimezone, "-2",false) ."> UTC-2</option>\n";
+		echo "       <option value=\"-3\" ". selected($rb_locationtimezone, "-3",false) ."> UTC-3</option>\n";
+		echo "       <option value=\"-4\" ". selected($rb_locationtimezone, "-4",false) ."> UTC-4</option>\n";
+		echo "       <option value=\"-5\" ". selected($rb_locationtimezone, "-5",false) ."> UTC-5</option>\n";
+		echo "       <option value=\"-6\" ". selected($rb_locationtimezone, "-6",false) ."> UTC-6</option>\n";
+		echo "       <option value=\"-7\" ". selected($rb_locationtimezone, "-7",false) ."> UTC-7</option>\n";
+		echo "       <option value=\"-8\" ". selected($rb_locationtimezone, "-8",false) ."> UTC-8</option>\n";
+		echo "       <option value=\"-9\" ". selected($rb_locationtimezone, "-9",false) ."> UTC-9</option>\n";
+		echo "       <option value=\"-10\" ". selected($rb_locationtimezone, "-10",false) ."> UTC-10</option>\n";
+		echo "       <option value=\"-11\" ". selected($rb_locationtimezone, "-11",false) ."> UTC-11</option>\n";
+		echo "       <option value=\"-12\" ". selected($rb_locationtimezone, "-12",false) ."> UTC-12</option>\n";
 		echo "     </select> (<a href=\"http://www.worldtimezone.com/index24.php\" target=\"_blank\">Find</a>)\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -333,8 +334,8 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Unit Type', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_unittype]\">\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 1,false) ."> ". __("Imperial", rb_agency_TEXTDOMAIN) ." (ft/in/lb)</option>\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_unittype'], 0,false) ."> ". __("Metric", rb_agency_TEXTDOMAIN) ." (cm/kg)</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0, 1,false) ."> ". __("Imperial", rb_agency_TEXTDOMAIN) ." (ft/in/lb)</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0, 0,false) ."> ". __("Metric", rb_agency_TEXTDOMAIN) ." (cm/kg)</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -347,17 +348,17 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Display Options', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_count'], 1,false)."/> ". __("Show Model Count", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sortby'], 1,false)."/> ". __("Show Sort Options", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'], 1,false)."/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_favorite'], 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'], 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'], 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'], 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_bday'], 1,false)."/> ". __("Show Birthday With Months", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'], 1,false)."/> ". __("Show Print and Download PDF Link", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_count'])?$rb_agency_options_arr['rb_agency_option_profilelist_count']:0, 1,false)."/> ". __("Show Model Count", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0, 1,false)."/> ". __("Show Sort Options", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0, 1,false)."/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite'])?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0, 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0, 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0, 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'])?$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0, 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_bday'])?$rb_agency_options_arr['rb_agency_option_profilelist_bday']:0, 1,false)."/> ". __("Show Birthday With Months", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'])?$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0, 1,false)."/> ". __("Show Print and Download PDF Link", rb_agency_TEXTDOMAIN) ."<br />\n";	
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_subscription'])?$rb_agency_options_arr['rb_agency_option_profilelist_subscription']:"", 1,false)."/> ". __("Show Manage Your Subscription", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> ". __("Show Social Buttons", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0, 1,false)."/> ". __("Show Social Buttons", rb_agency_TEXTDOMAIN) ."<br />\n";	
 				echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -368,9 +369,9 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Profile List Style', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist]\">\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 0,false) ."> ". __("Name Over Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 1,false) ."> ". __("Name Under Image with Color", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist'], 2,false) ."> ". __("Name Under Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 0,false) ."> ". __("Name Over Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 1,false) ."> ". __("Name Under Image with Color", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 2,false) ."> ". __("Name Under Image", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -387,11 +388,11 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Search Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_name]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_name'], 1,false)."/> Show Name Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_type]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_type'], 1,false)."/> Show Type Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_location]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_location'], 1,false)."/> Show Location Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_gender]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_gender'], 1,false)."/> Show Gender Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_age]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_formshow_age'], 1,false)."/> Show Age Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_name]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_name'])?$rb_agency_options_arr['rb_agency_option_formshow_name']:0, 1,false)."/> Show Name Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_type]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0, 1,false)."/> Show Type Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_location]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_location'])?$rb_agency_options_arr['rb_agency_option_formshow_location']:0, 1,false)."/> Show Location Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_gender]\" value=\"1\" ".checked( isset($rb_agency_options_arr['rb_agency_option_formshow_gender'])?$rb_agency_options_arr['rb_agency_option_formshow_gender']:0, 1,false)."/> Show Gender Search Fields<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_age]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0, 1,false)."/> Show Age Search Fields<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		/*
@@ -411,12 +412,12 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Profile Name Format', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_profilenaming]\">\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 0,false) ."> ". __("First Last", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 1,false) ."> ". __("First L", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 4,false) ."> ". __("First", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 5,false) ."> ". __("Last", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 2,false) ."> ". __("Display Name", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_profilenaming'], 3,false) ."> ". __("Auto Generated Record ID", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 0,false) ."> ". __("First Last", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 1,false) ."> ". __("First L", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 4,false) ."> ". __("First", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 5,false) ."> ". __("Last", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 2,false) ."> ". __("Display Name", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 3,false) ."> ". __("Auto Generated Record ID", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -424,16 +425,16 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Profile Layout Style', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofile]\">\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 0,false) ."> ". __("Layout 00 - Profile View with Thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"4\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"5\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 0,false) ."> ". __("Layout 00 - Profile View with Thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
 			$x=6;
 			while($x<=15) {
 				if (file_exists(rb_agency_BASEREL .'view/layout/'. sprintf("%02s", $x) .'/include-profile.php')) {
-				echo "       <option value=\"". $x ."\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofile'], $x,false) ."> ". __("Layout". $k, rb_agency_TEXTDOMAIN). $x ."</option>\n";
+				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout". $x, rb_agency_TEXTDOMAIN). $x ."</option>\n";
 				}
 				$x++;
 			}
@@ -444,8 +445,8 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Image Gallery Type', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_gallerytype]\">\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 1,false) ."> ". __("Slimbox2", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_gallerytype'], 0,false) ."> ". __("No Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0, 1,false) ."> ". __("Slimbox2", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0, 0,false) ."> ". __("No Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -453,8 +454,8 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Image Gallery Sort Order', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_galleryorder]\">\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_options_arr['rb_agency_option_galleryorder'], 1,false) ."> ". __("Show most recently uploaded first", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_options_arr['rb_agency_option_galleryorder'], 0,false) ."> ". __("Show chronological order", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 1,false) ."> ". __("Show most recently uploaded first", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 0,false) ."> ". __("Show chronological order", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -2861,11 +2862,13 @@ echo "</div>";
 	// Edit Record
 	switch(@$_POST["action"]){
 	case "editRecord":
-		$wpdb->query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."' WHERE  MediaCategoryID ='".$_GET["MediaCategoryID"]."' ") or die("1".mysql_error());
+		$wpdb->query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."',MediaCategoryFileType = '".$_POST["MediaCategoryFileType"]."',MediaCategoryLinkType = '".$_POST["MediaCategoryLinkType"]."' WHERE  MediaCategoryID = ".$_GET["MediaCategoryID"]." ");
+	    	echo ("<div id=\"message\" class=\"updated\"><p>". __("<strong>Updated</strong> successfully!", rb_agency_TEXTDOMAIN)."</p></div>"); 
+			
 	  break;
 	// Add Record
 	case "addRecord":
-		 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."') ") or die("Error: ".mysql_error());
+		 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder,MediaCategoryLinkType,MediaCategoryFileType) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."','".$_POST["MediaCategoryLinkType"]."','".$_POST["MediaCategoryFileType"]."') ") or die("Error: ".mysql_error());
 	  break;
 	
 	}
@@ -2882,6 +2885,24 @@ echo "</div>";
 		 }
 		
 	}
+
+	$arr_media_category_fileType = array(
+			"jpg",
+			"png",
+			"pdf",
+			"doc",
+			"mp3",
+			"mp4",
+			"avi",
+			"wmv",
+			"3gp"
+		);
+    $arr_media_category_linkType = array(
+    	    "link",
+    	    "button",
+    	    "embed"
+     );
+
  echo "<div>\n";
 			// Add new Record
 		if(isset($_GET["action"]) =="editRecord"){
@@ -2900,16 +2921,43 @@ echo "</div>";
 		
 		 echo "<table>";
 		 echo "<tr>";
-		 echo "<td>Title:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".(isset($data["MediaCategoryTitle"])?$data["MediaCategoryTitle"]:"")."\" style=\"width:500px;\" /></td>\n";
+		 echo "<td>Label:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".(isset($data["MediaCategoryTitle"])?$data["MediaCategoryTitle"]:"")."\" style=\"width:500px;\" /></td>\n";
+		 echo "</tr>";
+         
+		 echo "<tr>";
+		 echo "<td>File Type:</td>";
+		 echo "<td>";
+		 echo "<select name='MediaCategoryFileType'>";
+		 echo "<option value=\"\">-Choose-</option>";
+		
+		 foreach ($arr_media_category_fileType as $key) {
+		 	 echo "<option value=\"".$key."\" ".selected($key,isset($data["MediaCategoryFileType"])?$data["MediaCategoryFileType"]:0).">".$key."</option>";
+		 }
+
+         echo "</select>";
+		 echo "</td>";
+		 echo "</tr>";
+
+		 echo "<tr>";
+		 echo "<td>Link Type:</td>";
+		 echo "<td>";
+		 echo "<select name='MediaCategoryLinkType'>";
+          echo "<option value=\"\">-Choose-</option>";
+		
+		 foreach ($arr_media_category_linkType as $key) {
+		 	 echo "<option value=\"".$key."\"  ".selected($key,isset($data["MediaCategoryLinkType"])?$data["MediaCategoryLinkType"]:0).">".$key."</option>";
+		 }
+		 echo "</select>";
+		 echo "</td>";
 		 echo "</tr>";
 		 echo "<tr>";
 		 echo "<td>Gender:</td><td>\n";
 		 $query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 					echo "<select name=\"MediaCategoryGender\">";
 					echo "<option value=\"\">All Gender</option>";
-					$queryShowGender = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+					$queryShowGender = $wpdb->get_results($query, ARRAY_A);
 					foreach( $queryShowGender as $dataShowGender ){
-						echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data["MediaCategoryGender"] ,$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
+						echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected(isset($data["MediaCategoryGender"])?$data["MediaCategoryGender"]:0 ,$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
 					}
 					echo "</select>";
 					echo "<br/>";
@@ -2963,9 +3011,11 @@ echo "</div>";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomOptions&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Order", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryFileType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("File Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryLinkType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Link Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryGender&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryOrder&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Order", rb_agency_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		
@@ -2973,6 +3023,8 @@ echo "</div>";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("File Type", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Link Type", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Order", rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
@@ -2993,7 +3045,10 @@ echo "</div>";
 		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ", rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </th>\n";
-		 $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s'"; 
+		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryFileType']) ."</th>\n";
+		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryLinkType']) ."</th>\n";
+	
+	     $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s'"; 
 		 $fetchGender = $wpdb->get_row($wpdb->prepare( $queryGender,$data['MediaCategoryGender']),ARRAY_A,0 	 );
 		 $countGender = $wpdb->num_rows;
 		 if($countGender > 0){

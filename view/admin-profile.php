@@ -17,8 +17,8 @@ define("LabelSingular", "Profiles");
 				$rb_agency_option_agencyimagemaxheight = 800;
 			}
 
-		$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
-		$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
+		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
+		$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int) $rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 
 		if (function_exists("rb_agencyinteract_approvemembers")) {
 			// Load Interact Settings
@@ -36,11 +36,11 @@ if (isset($_POST['action'])) {
 	 * Pull Post Values
 	 */
 
-	$ProfileID = $_POST['ProfileID'];
+	$ProfileID = isset($_POST['ProfileID'])?$_POST['ProfileID']:0;
 	$ProfileUserLinked = isset($_POST['ProfileUserLinked'])?$_POST['ProfileUserLinked']:"";
-	$ProfileContactNameFirst = trim($_POST['ProfileContactNameFirst']);
-	$ProfileContactNameLast = trim($_POST['ProfileContactNameLast']);
-	$ProfileContactDisplay = trim($_POST['ProfileContactDisplay']);
+	$ProfileContactNameFirst = isset($_POST['ProfileContactNameFirst']) ? trim($_POST['ProfileContactNameFirst']):"";
+	$ProfileContactNameLast = isset($_POST['ProfileContactNameLast']) ? trim($_POST['ProfileContactNameLast']):"";
+	$ProfileContactDisplay = isset($_POST['ProfileContactDisplay']) ? trim($_POST['ProfileContactDisplay']):"";
 	if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 		if ($rb_agency_option_profilenaming == 0) {
 			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
@@ -66,7 +66,7 @@ if (isset($_POST['action'])) {
 		}
 	}
 
-	$ProfileGallery = $_POST['ProfileGallery'];
+	$ProfileGallery = isset($_POST['ProfileGallery']) ? $_POST['ProfileGallery']:"";
 
 	if (empty($ProfileGallery)) {  // Probably a new record... 
 		$ProfileGallery = RBAgency_Common::format_stripchars($ProfileContactDisplay);
@@ -522,6 +522,7 @@ if (isset($_POST['action'])) {
 		// *************************************************************************************************** //
 		// Delete bulk
 		case 'deleteRecord':
+		    $profiles_count = 0;
 			foreach ($_POST as $ProfileID) {
 
 				// Verify Record
@@ -531,38 +532,37 @@ if (isset($_POST['action'])) {
 				
 
 				foreach ($resultsDelete as $dataDelete) {
+					$profiles_count++;
 					$ProfileGallery = $dataDelete['ProfileGallery'];
 
 					// Remove Profile
-					$delete = "DELETE FROM " . table_agency_profile . " WHERE ProfileID = \"" . $ProfileID . "\"";
-					$results = $wpdb->query($delete);
+					$delete = "DELETE FROM " . table_agency_profile . " WHERE ProfileID = \"%s\"";
+					$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
 					// Remove Media
-					$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = \"" . $ProfileID . "\"";
-					$results = $wpdb->query($delete);
+					$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = \"%s\"";
+					$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
 
-					if (isset($ProfileGallery)) {
-						// Remove Folder
-						$dir = rb_agency_UPLOADPATH . $ProfileGallery . "/";
-						$mydir = opendir($dir);
-						while (false !== ($file = readdir($mydir))) {
-							if ($file != "." && $file != "..") {
-								unlink($dir . $file) or DIE("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+						if (isset($ProfileGallery)) {
+							// Remove Folder
+							$dir = rb_agency_UPLOADPATH . $ProfileGallery . "/";
+							$mydir = opendir($dir);
+							while (false !== ($file = readdir($mydir))) {
+								if ($file != "." && $file != "..") {
+									unlink($dir . $file) or DIE("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+								}
 							}
+							// Remove Directory
+							if (is_dir($dir)) {
+								rmdir($dir) or DIE("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+							}
+							closedir($mydir);
+						} else {
+							echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", rb_agency_TEXTDOMAIN) . "</p></div>");
 						}
-						// Remove Directory
-						if (is_dir($dir)) {
-							rmdir($dir) or DIE("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
-						}
-						closedir($mydir);
-					} else {
-						echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", rb_agency_TEXTDOMAIN) . "</p></div>");
-					}
 
-					echo ('<div id="message" class="updated"><p>' . __("Profile deleted successfully!", rb_agency_TEXTDOMAIN) . '</p></div>');
-				} // is there record?
-				//---------- Delete users but re-assign to Admin User -------------//
+						//---------- Delete users but re-assign to Admin User -------------//
 				// Gimme an admin:
-				$AdminID = $wpdb->prepare("SELECT $wpdb->users.ID FROM $wpdb->users WHERE user_login = 'admin'");
+				$AdminID = $wpdb->prepare("SELECT $wpdb->users.ID FROM $wpdb->users WHERE user_login = '%s'","admin");
 				if ($AdminID > 0) {
 
 				} else {
@@ -570,9 +570,15 @@ if (isset($_POST['action'])) {
 				}
 				/// Now delete
 				wp_delete_user($dataDelete["ProfileUserLinked"], $AdminID);
+				} // is there record?
+			
+			}
+			if($profiles_count >  1){
+					echo ('<div id="message" class="updated"><p>' . __("$profiles_count Profiles deleted successfully!", rb_agency_TEXTDOMAIN) . '</p></div>');
+			}else{
+					echo ('<div id="message" class="updated"><p>' . __("Profile deleted successfully!", rb_agency_TEXTDOMAIN) . '</p></div>');
 			}
 			rb_display_list();
-			exit;
 			break;
 	}
 }
@@ -817,7 +823,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	<div id="welcome-panel" class="welcome-panel">
 		<div class="welcome-panel-content">
 			<?php if (!empty($ProfileID) && ($ProfileID > 0)) { ?>
-			<a class="button button-primary button-hero" style="float: right; margin-top: 0px;" href="<?php echo rb_agency_PROFILEDIR . $rb_agency_UPLOADDIR . $ProfileGallery; ?>" target="_blank">Preview Model</a>
+			<a class="button button-primary button-hero" style="float: right; margin-top: 0px;" href="<?php echo rb_agency_PROFILEDIR  . $ProfileGallery; ?>" target="_blank">Preview Model</a>
 			<?php } ?>
 			<h3><?php echo $caption_header; ?> <a class="button button-secondary" href="<?php echo admin_url("admin.php?page=" . $_GET['page']); ?>"><?php echo __("Back to " . LabelSingular . " List", rb_agency_TEXTDOMAIN); ?></a></h3>
 			<p class="about-description"><?php echo $caption_text; ?> <strong><?php echo __("Required fields are marked", rb_agency_TEXTDOMAIN); ?> *</strong></p>
@@ -1439,6 +1445,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
 							$countMedia = $wpdb->num_rows;
 							$outVideoMedia = "";
+							$outLinkVoiceDemo = "";
+							$outLinkResume = "";
+							$outLinkHeadShot = "";
+							$outLinkComCard = "";
+							$outCustomMediaLink = "";
+							
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 									if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
@@ -1660,7 +1672,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 function rb_display_list() {
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_option_locationtimezone = (int) $rb_agency_options_arr['rb_agency_option_locationtimezone'];
+	$rb_agency_option_locationtimezone = isset( $rb_agency_options_arr['rb_agency_option_locationtimezone'] )?(int) $rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 	echo "<div class=\"wrap\">\n";
 	// Include Admin Menu
 	include ("admin-include-menu.php");

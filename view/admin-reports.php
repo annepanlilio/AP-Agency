@@ -1118,7 +1118,7 @@ elseif ($ConfigID == 14) {
 		$trackDummies = array();
 		$sample_url = rb_agency_BASEPATH."view/samples"; // Samples' folder
 		$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_profilenaming = (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
+		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ? (int)$rb_agency_options_arr['rb_agency_option_profilenaming']:"";
 
 	/*
 	 * Sample Data Values
@@ -1301,7 +1301,6 @@ elseif ($ConfigID == 14) {
 		if(isset($_GET["settings-updated"]) && empty($rb_agency_dummy_options_installdummy)){
 			
 			echo "<h2>". __("Removing Dummy Profiles...", rb_agency_TEXTDOMAIN) . "</h2>\n";
-			echo "<br/>Succesfully removed...";
 			echo "<br/>";
 
 		
@@ -1341,14 +1340,16 @@ elseif ($ConfigID == 14) {
 							}
 
 				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
-				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = '".$gallery."' ";
-				$fID =  $wpdb->get_row($wpdb->prepare($getGallary), ARRAY_A);
-				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				$wpdb->query($pSql);// or die("2".mysql_error());
-				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '".$fID["ProfileID"]."' ";
-				$wpdb->query($pmSql);// or die("3".mysql_error());
+				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = %s ";
+				$fID =  $wpdb->get_row($wpdb->prepare($getGallary,$gallery), ARRAY_A);
+				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
+				$wpdb->query($wpdb->prepare($pSql,$fID["ProfileID"]));// or die("2".mysql_error());
+				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '%d' ";
+				$wpdb->query($wpdb->prepare($pmSql,$fID["ProfileID"]));// or die("3".mysql_error());
 				uninstall_dummy_profile($gallery);
 			}
+			echo "<br/>Succesfully removed...";
+			
 			
 		}
 		
@@ -1365,7 +1366,7 @@ elseif ($ConfigID == 14) {
 				$userCategory = "";
 				$userGender ="";
 				$queryGender = "SELECT * FROM ".table_agency_data_gender."  ";
-				$userGender = $wpdb->get_results($wpdb->prepare($queryGender), ARRAY_A);
+				$userGender = $wpdb->get_results($queryGender, ARRAY_A);
 				foreach ($userGender as $row ) {
 					if($ProfileContact[2]==$row['GenderTitle']){
 						$userGender["GenderID"]=$row['GenderID']; 
@@ -1374,7 +1375,7 @@ elseif ($ConfigID == 14) {
 				}
 
 				$queryCategory = "SELECT * FROM ".table_agency_data_type."  WHERE DataTypeID >= (SELECT FLOOR( MAX(DataTypeID) * RAND()) FROM ".table_agency_data_type." ) ORDER BY  RAND() LIMIT 1";
-				$userCategory = $wpdb->get_row($wpdb->prepare($queryCategory), ARRAY_A);
+				$userCategory = $wpdb->get_row($queryCategory, ARRAY_A);
 				
 
 				echo $ProfileContact[0]." ".$ProfileContact[1]."<br/>";
@@ -1417,10 +1418,10 @@ elseif ($ConfigID == 14) {
 
 				// Select city and state
 				$queryCountry = "SELECT * FROM ".table_agency_data_country." ORDER BY RAND( ) ASC LIMIT 1";
-				$userCountry =  $wpdb->get_row($wpdb->prepare($queryCountry), ARRAY_A);
+				$userCountry =  $wpdb->get_row($queryCountry, ARRAY_A);
 
-				$queryState = "SELECT * FROM ".table_agency_data_state."  where CountryID = ".$userCountry['CountryID']." ORDER BY RAND( ) ASC LIMIT 1";
-				$userState = $wpdb->get_row($wpdb->prepare($queryState), ARRAY_A);
+				$queryState = "SELECT * FROM ".table_agency_data_state."  where CountryID = %d ORDER BY RAND( ) ASC LIMIT 1";
+				$userState = $wpdb->get_row($wpdb->prepare($queryState,$userCountry['CountryID']), ARRAY_A);
 								
 				$insert = "INSERT INTO " . table_agency_profile . "(
 							ProfileGallery,
@@ -1466,7 +1467,7 @@ elseif ($ConfigID == 14) {
 				$ProfileID = $wpdb->insert_id;
 
 				// Inserting Custom Field 
-				$queryCustom = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_customfields." "), ARRAY_A); 
+				$queryCustom = $wpdb->get_results("SELECT * FROM ".table_agency_customfields." ", ARRAY_A); 
 				foreach ($queryCustom as $rowCustom) {
 					if($rowCustom['ProfileCustomType']==3){
 						 $customValueArray = explode("|", $rowCustom['ProfileCustomOptions']);
@@ -1509,13 +1510,13 @@ elseif ($ConfigID == 14) {
 						}
 					}
 					if($a<=3){
-						if($userMediaVideoType[$a]!=""){
+						if(isset($userMediaVideoType[$a]) && $userMediaVideoType[$a]!=""){
 							$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','". $userMediaVideoType[$a]."','".rb_agency_get_VideoFromObject($userMediaVideo[$randTo6]) ."','". rb_agency_get_VideoFromObject($userMediaVideo[$randTo6])  ."')");
 						}
 					}
 					if($a==1){
 
-						if ($ProfileContact[2]=='Male') {
+						if (isset($ProfileContact[2]) && $ProfileContact[2]=='Male') {
 						// Male
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)") or die(mysql_error());
@@ -1525,9 +1526,9 @@ elseif ($ConfigID == 14) {
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$randTo8]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)") or die(mysql_error());
 						}
-
+                          
 						// Any Gender
-						copy(rb_chmod_file_display($sample_url."/".$userMediaHeadshot[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
+						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Headshot','". $userMediaHeadshot[$rand]."','". $userMediaHeadshot[$rand] ."')");
 
 						copy(rb_chmod_file_display($sample_url."/".$userMediaVoicedemo[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaVoicedemo[0]);
@@ -1584,11 +1585,13 @@ function uninstall_dummy_profile($profile){
 	
 	
 	 $dir  = rb_agency_UPLOADPATH .$profile;  
-	 foreach (scandir($dir) as $item) {
-			if ($item == '.' || $item == '..') continue;
-			 unlink($dir.DIRECTORY_SEPARATOR.$item);
-	 }
-	 rmdir($dir);
+	 if(@scandir($dir)){
+		 foreach (scandir($dir) as $item) {
+				if ($item == '.' || $item == '..') continue;
+				 unlink($dir.DIRECTORY_SEPARATOR.$item);
+		 }
+		 rmdir($dir);
+	}
 }
 
 function uninstall_allprofile(){

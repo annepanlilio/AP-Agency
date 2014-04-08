@@ -30,7 +30,7 @@ class RBAgency_Profile {
 				global $wpdb;
 				$rb_agency_options_arr = get_option('rb_agency_options');
 					// What is the unit of measurement?
-					$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+					$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
 
 					/* Search Form - Simple */
 					$rb_agency_option_formshow_location = isset($rb_agency_options_arr['rb_agency_option_formshow_location'])?$rb_agency_options_arr['rb_agency_option_formshow_location']:1;
@@ -161,13 +161,14 @@ class RBAgency_Profile {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\">\n";
 						echo "					<label for=\"gender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
+						$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+						$results2 = $wpdb->get_results($query2,ARRAY_A);
 						echo "						<select name=\"gender\" id=\"gender\">\n";
 						echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 														// Pul Genders from Database
-														$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
-														$results2 = $wpdb->get_results($query,ARRAY_A);
 														foreach ($results2 as $key) {
-																echo "<option value=\"". $key["GenderID"] ."\"".selected($_SESSION['gender'],$key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
+															  if(isset($key["GenderID"]))
+																echo "<option value=\"". $key["GenderID"] ."\"".selected($_SESSION['gender'], $key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -764,7 +765,7 @@ class RBAgency_Profile {
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
 			// Time Zone
-			$rb_agency_option_locationtimezone = $rb_agency_options_arr['rb_agency_option_locationtimezone'];
+			$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
 
 			// Convert Input
 			if(is_array($atts)) {

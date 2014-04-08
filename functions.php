@@ -76,7 +76,7 @@ ini_set('display_errors', 'On');
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-formstyle' );
 
-			}
+
 		}
 
 		add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
@@ -85,6 +85,10 @@ ini_set('display_errors', 'On');
 			if( !is_admin() ) {
 				if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
 					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
+				}
+
+			
+
 				}
 			}
 		}
@@ -135,7 +139,7 @@ ini_set('display_errors', 'On');
 				echo $rb_agency_options_arr['dashboardQuickLinks'];
 			}
 			$rss = fetch_feed("http://rbplugin.com/category/wordpress/rbagency/feed/");
-
+            $num_items = 0;
 			// Checks that the object is created correctly 
 			if (!is_wp_error($rss)) { 
 
@@ -2200,7 +2204,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		// What is the unit of measurement?
-		$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:1;
 
 
 
