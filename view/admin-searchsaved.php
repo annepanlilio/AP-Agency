@@ -13,7 +13,7 @@ $siteurl = get_option('siteurl');
 		$rb_agency_option_agencyheader	= $rb_agency_options_arr['rb_agency_option_agencyheader'];
 
 	// Declare Hash
-	$SearchMuxHash			= $_GET["SearchMuxHash"]; // Set Hash
+	$SearchMuxHash			=  isset($_GET["SearchMuxHash"])?$_GET["SearchMuxHash"]:""; // Set Hash
 
 	if (isset($_POST['action'])) {
 
@@ -86,7 +86,7 @@ $siteurl = get_option('siteurl');
 		}
 
 
-	} elseif ($_GET['action'] == "deleteRecord") {
+	} elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	/* 
 	 * Delete Email
 	 */
@@ -103,9 +103,7 @@ $siteurl = get_option('siteurl');
 			$results = $wpdb->query($delete);
 			echo ('<div id="message" class="updated"><p>Record deleted successfully!</p></div>');
 		}
-
-
-	} elseif (($_GET['action'] == "emailCompose") && isset($_GET['SearchID'])) {
+    } elseif ((isset($_GET['action']) && $_GET['action'] == "emailCompose") && isset($_GET['SearchID'])) {
 	/* 
 	 * Compose Email
 	 */
@@ -170,6 +168,322 @@ $siteurl = get_option('siteurl');
 		</div>
 		<?php
 
+	}/*
+	 * Display Inform Talent
+	 */
+		elseif(isset($_GET["action"]) && $_GET['action'] == "informTalent"){
+      ?>
+    
+
+	<div style="clear:both"></div>
+
+		<div class="wrap" style="min-width: 1020px;">
+		 <div id="rb-overview-icon" class="icon32"></div>
+		 <h2>Casting Jobs</h2>
+
+      <?php 
+		echo "<style type=\"text/css\">\n
+				.castingtext label{
+					float: left;
+					margin-top: 5px;
+					margin-right: 20px;
+					width:140px;
+				}
+				.castingtext input[type=text], .castingtext textarea{
+					width:60%;
+				}
+				</style> ";
+				 echo "<div class=\"boxblock-container\" style=\"float: left; width: 39%;margin-right:60px\">";
+				 echo "<div class=\"boxblock\" style=\"width:500px; \">";
+				 echo "<h3>Submit Talent</h3>";
+				 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+				 echo "<form class=\"castingtext\" method=\"post\" action=\"\">";
+				   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"audition\">Audition</label>";
+						echo "<div><input type=\"text\" id=\"audition\" name=\"audition\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"role\">Role</label>";
+						echo "<div><input type=\"text\" id=\"role\" name=\"role\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"auditiondates\">Audition Dates</label>";
+						echo "<div><input type=\"text\" id=\"auditiondates\" name=\"auditiondates\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"auditionvenue\">Audition Venue</label>";
+						echo "<div><input type=\"text\" id=\"auditionvenue\" name=\"auditionvenue\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"auditiontime\">Audition Time</label>";
+						echo "<div><input type=\"text\" id=\"auditiontime\" name=\"auditiontime\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"auditionclothing\">Audition Clothing</label>";
+						echo "<div><input type=\"text\" id=\"auditionclothing\" name=\"auditionclothing\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"callback\">Call Back / Wardrobe</label>";
+						echo "<div><input type=\"text\" id=\"callback\" name=\"callback\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"script\">Script</label>";
+						echo "<div><input type=\"text\" id=\"script\" name=\"script\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"shortdate\">Shoot Date</label>";
+						echo "<div><input type=\"text\" id=\"shortdate\" name=\"shortdate\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"rolefee\">Role Fee($)</label>";
+						echo "<div><input type=\"text\" id=\"rolefee\" name=\"rolefee\" value=\"\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"comments\">Comments</label>";
+						echo "<div><textarea id=\"comments\" name=\"comments\"></textarea></div>";
+					echo "</div>";
+
+				  	
+				  	echo "<input type=\"submit\" value=\"Submit\" name=\"castingJob\" class=\"button-primary\" />";
+
+				  echo "</form>";
+				  echo "</div>";
+				  echo "</div>";
+				  echo "</div>";
+		?>
+        </div>		
+        <div style="float:left;width:50%;">
+	          		<h3 class="title">Recently Saved Jobs</h3>
+
+			<?php  
+			$sqldata = "";
+
+			if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
+				// Message of successful mail form mass email 
+				echo "<div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+			}
+
+			$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_option_locationtimezone = (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
+
+			// Sort By
+			$sort = "";
+			if (isset($_GET['sort']) && !empty($_GET['sort'])){
+				$sort = $_GET['sort'];
+			} else {
+				$sort = "search.SearchDate";
+			}
+
+			// Sort Order
+			$dir = "";
+			if (isset($_GET['dir']) && !empty($_GET['dir'])){
+				$dir = $_GET['dir'];
+				if ($dir == "desc" || !isset($dir) || empty($dir)){
+					$sortDirection = "desc";
+				} else {
+					$sortDirection = "desc";
+				}
+			} else {
+				$sortDirection = "desc";
+				$dir = "desc";
+			}
+
+			// Filter
+			$filter = "WHERE search.SearchID > 0 ";
+			if (isset($_GET['SearchTitle']) && !empty($_GET['SearchTitle'])){
+				$selectedTitle = $_GET['SearchTitle'];
+				$query .= "&SearchTitle=". $selectedTitle ."";
+				$filter .= " AND search.SearchTitle='". $selectedTitle ."'";
+			}
+
+			//Paginate
+			$sqldata  = "SELECT * FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
+			$results=  $wpdb->get_results($sqldata);
+			
+			$items =$wpdb->num_rows; // number of total rows in the database
+			if($items > 0) {
+
+				$p = new rb_agency_pagination;
+				$p->items($items);
+				$p->limit(50); // Limit entries per page
+				$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .$query);
+				$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+				$p->calculate(); // Calculates what to show
+				$p->parameterName('paging');
+				$p->adjacents(1); //No. of page away from the current page
+
+				if(!isset($_GET['paging'])) {
+					$p->page = 1;
+				} else {
+					$p->page = $_GET['paging'];
+				}
+
+				//Query for limit paging
+
+				$limit = "LIMIT " . ($p->page - 1) * $p->limit  . ", " . $p->limit;
+
+			} else {
+				$limit = "";
+			}
+
+			?>
+			<div class="tablenav">
+				<div class='tablenav-pages'>
+					<?php
+					if($items > 0) {
+						echo $p->show();  // Echo out the list of paging. 
+					}
+					?>
+				</div>
+			</div>
+
+			<table cellspacing="0" class="widefat fixed">
+				<thead>
+					<tr>
+						<td style="width: 360px;" nowrap="nowrap">
+							<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
+							 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
+							 Search by : 
+							 Title: <input type="text" name="SearchTitle" value="<?php echo isset($SearchTitle)?$SearchTitle:""; ?>" style="width: 100px;" />
+								<input type="submit" value="Filter" class="button-primary" />
+							</form>
+						</td>
+						<td style="width: 200px;" nowrap="nowrap">
+							<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
+							 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
+							 <input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
+							 <input type="submit" value="Clear Filters" class="button-secondary" />
+							</form>
+						</td>
+						<td>&nbsp;</td>
+					</tr>
+			</thead>
+			</table>
+
+			<form method="post" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">	
+			<table cellspacing="0" class="widefat fixed">
+			<thead>
+				<tr class="thead">
+					<th class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox"/></th>
+					<th class="column" scope="col" style="width:50px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=SearchID&dir=<?php echo $sortDirection; ?>">ID</a></th>
+					<th class="column" scope="col" style="width:200px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=SearchTitle&dir=<?php echo $sortDirection; ?>">Title</a></th>
+					<th class="column" scope="col" style="width:80px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=SearchDate&dir=<?php echo $sortDirection; ?>">Profiles</a></th>
+					<th class="column" scope="col">History (Sent/To/Link)</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr class="thead">
+					<th class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox"/></th>
+					<th class="column" scope="col">ID</th>
+					<th class="column" scope="col">Title</th>
+					<th class="column" scope="col">Profiles</th>
+					<th class="column" scope="col">History</th>
+				</tr>
+			</tfoot>
+			<tbody>
+
+			<?php
+
+			$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchDate FROM ". table_agency_searchsaved ." search ". $filter  ." ORDER BY $sort $dir $limit";
+			//$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchOptions, search.SearchDate FROM ". table_agency_searchsaved_mux ." searchsent LEFT JOIN ". table_agency_searchsaved ." search ON searchsent.SearchID = search.SearchID ". $filter  ." ORDER BY $sort $dir $limit";
+
+			$results2 = $wpdb->get_results($query2, ARRAY_A);
+			$count2 = $wpdb->num_rows;
+
+			foreach ($results2 as $data2) {
+				$SearchID = $data2['SearchID'];
+				$SearchTitle = stripslashes($data2['SearchTitle']);
+				$SearchProfileID = stripslashes($data2['SearchProfileID']);
+				$SearchDate = stripslashes($data2['SearchDate']);
+				$query3 = "SELECT SearchID,SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = %d";
+				$results3 = $wpdb->get_results($wpdb->prepare($query3, $SearchID), ARRAY_A);
+				$count3 = $wpdb->num_rows;
+
+			?>
+			<tr<?php echo $rowColor; ?>>
+				<th class="check-column" scope="row">
+					<input type="checkbox" value="<?php echo $SearchID; ?>" class="administrator" id="<?php echo $SearchID; ?>" name="<?php echo $SearchID; ?>"/>
+				</th>
+				<td>
+					<?php echo $SearchID; ?>
+				</td>
+				<td>
+					<?php echo $SearchTitle; ?>
+					<div class="row-actions">
+					<?php
+					if($count3<=0){
+					?>
+						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Create Email</a> | </span>
+					<?php
+					}else{
+					?>
+							<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Create Email</a> | </span>
+					<?php } ?>
+							<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
+					</div>
+				</td>
+				<td>
+					<?php  // echo $SearchProfileID; ?>
+				</td>
+				<td>
+					<?php
+					$pos = 0;
+					foreach ($results3 as $data3 ) {
+					$pos++;
+						 if($pos == 1){
+							echo "Link: <a href=\"". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/\" target=\"_blank\">". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/</a><br />\n";
+						}
+						echo "(". rb_agency_makeago(rb_agency_convertdatetime( $data3["SearchMuxSent"]), $rb_agency_option_locationtimezone) .") ";
+						echo "<strong>". $data3["SearchMuxToName"]."&lt;".$data3["SearchMuxToEmail"]."&gt;"."</strong> ";
+						echo "<br/>";
+					}
+					//mysql_free_result($results2);
+					if ($count3 < 1) {
+						echo "Not emailed yet\n";
+					}
+					?>
+				</td>
+			</tr>
+			<?php
+			}
+			//	mysql_free_result($results2);
+				if ($count2 < 1) {
+					if (isset($filter)) { 
+			?>
+			<tr>
+				<th class="check-column" scope="row"></th>
+				<td class="name column-name" colspan="3">
+					<p>No profiles found with this criteria.</p>
+				</td>
+			</tr>
+			<?php
+					} else {
+			?>
+			<tr>
+				<th class="check-column" scope="row"></th>
+				<td class="name column-name" colspan="3">
+					<p>There aren't any Profiles loaded yet!</p>
+				</td>
+			</tr>
+			<?php
+					}
+			?>
+			<?php } ?>
+			</tbody>
+		</table>
+		<div class="tablenav">
+			<div class='tablenav-pages'>
+				<?php 
+				if($items > 0) {
+					echo $p->show();  // Echo out the list of paging. 
+				}
+				?>
+			</div>
+		</div>
+	</div>
+
+		<?php 		  
+
 	} else {
 	/* 
 	 * View
@@ -184,7 +498,7 @@ $siteurl = get_option('siteurl');
 
 			<?php
 
-			if ($_GET["action"] == "searchSave") { // Add to Cart
+			if (isset($_GET["action"]) && $_GET["action"] == "searchSave") { // Add to Cart
 
 				// Set Casting Cart Session
 				if (isset($_SESSION['cartArray'])) {
@@ -202,7 +516,7 @@ $siteurl = get_option('siteurl');
 					   <tr valign="top">
 						   <th scope="row">Group Title:</th>
 						   <td>
-							   <input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo $CastingCompany; ?>" />
+							   <input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo isset($CastingCompany)?$CastingCompany:""; ?>" />
 						   </td>
 					   </tr>
 					   <tr valign="top">
@@ -211,8 +525,8 @@ $siteurl = get_option('siteurl');
 
 								<?php
 										   
-								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY ProfileContactNameFirst ASC";
-								$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
+								$results = $wpdb->get_results($wpdb->prepare($query,$cartString), ARRAY_A);
 
 								$count = $wpdb->num_rows;
 
@@ -247,13 +561,13 @@ $siteurl = get_option('siteurl');
 				}
 		   } // End Serach Save
 
-	} // End All
 
 	?>
   <div style="clear:both"></div>
 		<h3 class="title">Recently Saved Searches</h3>
 
-		<?php 
+		<?php  
+		$sqldata = "";
 
 		if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
 			// Message of successful mail form mass email 
@@ -294,7 +608,7 @@ $siteurl = get_option('siteurl');
 		}
 
 		//Paginate
-		$sqldata  == "SELECT * FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
+		$sqldata  = "SELECT * FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
 		$results=  $wpdb->get_results($sqldata);
 		
 		$items =$wpdb->num_rows; // number of total rows in the database
@@ -303,7 +617,7 @@ $siteurl = get_option('siteurl');
 			$p = new rb_agency_pagination;
 			$p->items($items);
 			$p->limit(50); // Limit entries per page
-			$p->target("admin.php?page=". $_GET['page'] .$query);
+			$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .$query);
 			$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
 			$p->calculate(); // Calculates what to show
 			$p->parameterName('paging');
@@ -339,15 +653,15 @@ $siteurl = get_option('siteurl');
 				<tr>
 					<td style="width: 360px;" nowrap="nowrap">
 						<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
-						 <input type='hidden' name='page_index' id='page_index' value='<?php echo $_GET['page_index']; ?>' />  
+						 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
 						 Search by : 
-						 Title: <input type="text" name="SearchTitle" value="<?php echo $SearchTitle; ?>" style="width: 100px;" />
+						 Title: <input type="text" name="SearchTitle" value="<?php echo isset($SearchTitle)?$SearchTitle:""; ?>" style="width: 100px;" />
 							<input type="submit" value="Filter" class="button-primary" />
 						</form>
 					</td>
 					<td style="width: 300px;" nowrap="nowrap">
 						<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
-						 <input type='hidden' name='page_index' id='page_index' value='<?php echo $_GET['page_index']; ?>' />  
+						 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
 						 <input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
 						 <input type="submit" value="Clear Filters" class="button-secondary" />
 						</form>
@@ -384,7 +698,7 @@ $siteurl = get_option('siteurl');
 		$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchDate FROM ". table_agency_searchsaved ." search ". $filter  ." ORDER BY $sort $dir $limit";
 		//$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchOptions, search.SearchDate FROM ". table_agency_searchsaved_mux ." searchsent LEFT JOIN ". table_agency_searchsaved ." search ON searchsent.SearchID = search.SearchID ". $filter  ." ORDER BY $sort $dir $limit";
 
-		$results2 = $wpdb->get_results($wpdb->prepare($query2), ARRAY_A);
+		$results2 = $wpdb->get_results($query2, ARRAY_A);
 		$count2 = $wpdb->num_rows;
 
 		foreach ($results2 as $data2) {
@@ -392,8 +706,8 @@ $siteurl = get_option('siteurl');
 			$SearchTitle = stripslashes($data2['SearchTitle']);
 			$SearchProfileID = stripslashes($data2['SearchProfileID']);
 			$SearchDate = stripslashes($data2['SearchDate']);
-			$query3 = "SELECT SearchID,SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = ". $SearchID;
-			$results3 = $wpdb->get_results($wpdb->prepare($query3), ARRAY_A);
+			$query3 = "SELECT SearchID,SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = %d";
+			$results3 = $wpdb->get_results($wpdb->prepare($query3, $SearchID), ARRAY_A);
 			$count3 = $wpdb->num_rows;
 
 		?>
@@ -443,7 +757,7 @@ $siteurl = get_option('siteurl');
 		</tr>
 		<?php
 		}
-			mysql_free_result($results2);
+		//	mysql_free_result($results2);
 			if ($count2 < 1) {
 				if (isset($filter)) { 
 		?>
@@ -483,3 +797,6 @@ $siteurl = get_option('siteurl');
 		<input type="submit" value="<?php echo __('Delete','rb_agency_profiles'); ?>" class="button-primary" name="submit" />		
 	</p>
 	</form>
+	<?php 
+	} // End All
+	?>

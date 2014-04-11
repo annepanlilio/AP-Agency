@@ -8,7 +8,7 @@ Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
 Version: 2.0.8
 */
-$rb_agency_VERSION = "2.0.8.1";
+$rb_agency_VERSION = "2.0.8.2";
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
@@ -144,8 +144,13 @@ See license.txt for full details.
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
+	// Casting
 	if (!defined("table_agency_castingcart"))
 		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
+	if (!defined("table_agency_castingcart_jobs"))
+		define("table_agency_castingcart_jobs", "{$wpdb->prefix}agency_castingcart_jobs");
+	if (!defined("table_agency_castingcart_availability"))
+		define("table_agency_castingcart_availability", "{$wpdb->prefix}agency_castingcart_availability");
 
 
 // *************************************************************************************************** //

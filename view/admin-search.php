@@ -98,7 +98,9 @@
 			// Send Email Form
 			echo "    </div><!-- .boxblock -->\n";
 		}
+  
 
+	 
 
 	/*
 	 * Display Search Form
@@ -116,5 +118,7 @@
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";
 			echo "    </div><!-- .boxblock-container -->\n";
+
+
 ?>
 </div>

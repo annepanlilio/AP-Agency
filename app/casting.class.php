@@ -14,8 +14,8 @@ class RBAgency_Casting {
 
 			// Protect and defend the cart string!
 				$cartString = "";
-				$action = $_GET["action"];
-				$actiontwo = $_GET["actiontwo"];
+				$action = isset($_GET["action"])? $_GET["action"]:"";
+				$actiontwo = isset($_GET["actiontwo"])?$_GET["actiontwo"]:"";
 
 
 				if ($action == "cartAdd" && !isset($_GET["actiontwo"])) {
@@ -67,8 +67,10 @@ class RBAgency_Casting {
 
 		public static function cart_process_add(){
 
-			// Get String
-			if(count($_GET["ProfileID"]) > 0) {
+			$cartString = "";
+
+        	// Get String
+			if(isset($_GET["ProfileID"]) && count($_GET["ProfileID"]) > 0) {
 				foreach($_GET["ProfileID"] as $value) {
 					$cartString .= $value .",";
 				}
@@ -129,17 +131,22 @@ class RBAgency_Casting {
 			if (isset($_SESSION['cartArray']) && !empty($_SESSION['cartArray'])) {
 
 				$cartArray = $_SESSION['cartArray'];
+
+				
+
 					$cartString = implode(",", array_unique($cartArray));
 					$cartString = RBAgency_Common::clean_string($cartString);
 
 				// Show Cart  
-				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY profile.ProfileContactNameFirst ASC";
-				$results = $wpdb->get_results($wpdb->prepare($query,$cartString),ARRAY_A) or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", rb_agency_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") ORDER BY profile.ProfileContactNameFirst ASC";
+				//$query = "SELECT profile.ProfileID, profile.ProfileGallery, profile.*, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID,  (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID IN(".$cartString.") AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile GROUP BY profile.ProfileID";
+					
+				$results = $wpdb->get_results($query,ARRAY_A);// or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", rb_agency_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 				$count = count($results);
 				echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 				echo "<div style=\"float: right; width: 100px; \"><a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("Empty Cart", rb_agency_TEXTDOMAIN) ."</a></div>";
 				echo "<div style=\"float: left; line-height: 22px; font-family:Georgia; font-size:13px; font-style: italic; color: #777777; \">". __("Currently", rb_agency_TEXTDOMAIN) ." <strong>". $count ."</strong> ". __("in Cart", rb_agency_TEXTDOMAIN) ."</div>";
-				echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; \" class=\"profile\">";
+				echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width:510px;\" class=\"profile\">";
 
 				if ($count == 1) {
 					$cartAction = "cartEmpty";
@@ -180,8 +187,13 @@ class RBAgency_Casting {
 				echo "      <a href=\"?page=rb_agency_search&action=massEmail#compose\" title=\"". __("Mass Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Mass Email", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
+				echo "      <a href=\"?page=rb_agency_searchsaved&action=informTalent\" title=\"". __("InformTalent", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Inform Talent", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "   </div>\n";
 				echo "</div>\n";
+				?>
+			
+
+				<?php 
 				} // Is Cart Empty 
 
 			} else {
@@ -429,6 +441,7 @@ class RBAgency_Casting {
 	 */
 
 		public static function cart_send_form(){
+			global $wpdb;
 		
 		/*if(isset($_POST["SendEmail"])){
 			// Process Form

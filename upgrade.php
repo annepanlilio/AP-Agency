@@ -692,5 +692,42 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.8.1");
 		
 	}
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.8.1") {
+		// Add Table
+		if ($wpdb->get_var("show tables like '".table_agency_castingcart_jobs."'") !=table_agency_castingcart_jobs) { 
+			$results = $wpdb->query("CREATE TABLE IF NOT EXISTS ".table_agency_castingcart_jobs ." (
+			CastingJobID INT(20) NOT NULL AUTO_INCREMENT,
+			CastingJobAudition VARCHAR(100) ,
+			CastingJobRole VARCHAR(100),
+			CastingJobAuditionDate VARCHAR(50),
+			CastingJobAuditionVenue VARCHAR(500),
+			CastingJobAuditionTime VARCHAR(100),
+			CastingJobClothing VARCHAR(600),
+			CastingJobRCallBackWardrobe VARCHAR(600),
+			CastingJobScript VARCHAR(600),
+			CastingJobShootDate VARCHAR(100),
+			CastingJobRoleFee VARCHAR(600),
+			CastingJobComments VARCHAR(1000),
+			CastingJobSelectedFor VARCHAR(100),
+			CastingJobDateCreated TIMESTAMP,
+			PRIMARY KEY (CastingJobID)
+			);") or mysql_error();
+		}
+
+		// Add Table
+		if ($wpdb->get_var("show tables like '".table_agency_castingcart_availability."'") !=table_agency_castingcart_availability) { 
+			$results = $wpdb->query("CREATE TABLE IF NOT EXISTS ".table_agency_castingcart_availability ." (
+			CastingAvailabilityID INT(20) NOT NULL AUTO_INCREMENT,
+			CastingAvailabilityProfileID INT(20) NOT NULL,
+			CastingAvailabilityStatus VARCHAR(255),
+			CastingAvailabilityDateCreated TIMESTAMP,
+			PRIMARY KEY (CastingAvailabilityID)
+			);") or mysql_error();
+		}
+
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.8.2");
+		
+	}
 
 ?>
