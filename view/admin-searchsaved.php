@@ -180,6 +180,45 @@ $siteurl = get_option('siteurl');
 		<div class="wrap" style="min-width: 1020px;">
 		 <div id="rb-overview-icon" class="icon32"></div>
 		 <h2>Casting Jobs</h2>
+		 <?php 
+
+			$CastingJobAudition = ""; 
+			$CastingJobRole = "";
+			$CastingJobAuditionDate = "";
+			$CastingJobAuditionVenue = "";
+			$CastingJobAuditionTime = "";
+			$CastingJobClothing = "";
+			$CastingJobRCallBackWardrobe = "";
+			$CastingJobScript = "";
+			$CastingJobShootDate = "";
+			$CastingJobRoleFee = "";
+			$CastingJobComments = "";
+			$CastingJobSelectedFor = "";
+			$CastingJobDateCreated = "";
+
+		   if(isset($_GET["CastingJobID"])){
+		 	
+		 	$sql =  "SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobID= %d ";
+		 	$data = $wpdb->get_results($wpdb->prepare($sql, $_GET["CastingJobID"]));
+		 	$data = current($data);
+ 
+		 	$CastingJobAudition = $data->CastingJobAudition; 
+			$CastingJobRole = $data->CastingJobRole;
+			$CastingJobAuditionDate = $data->CastingJobAuditionDate;
+			$CastingJobAuditionVenue = $data->CastingJobAuditionVenue;
+			$CastingJobAuditionTime = $data->CastingJobAuditionTime;
+			$CastingJobClothing = $data->CastingJobClothing;
+			$CastingJobRCallBackWardrobe = $data->CastingJobRCallBackWardrobe;
+			$CastingJobScript = $data->CastingJobScript;
+			$CastingJobShootDate = $data->CastingJobShootDate;
+			$CastingJobRoleFee = $data->CastingJobRoleFee;
+			$CastingJobComments = $data->CastingJobComments;
+			$CastingJobSelectedFor = $data->CastingJobSelectedFor;
+			$CastingJobDateCreated = $data->CastingJobDateCreated;
+		 }
+
+		 ?>
+
 
       <?php 
 		echo "<style type=\"text/css\">\n
@@ -200,55 +239,110 @@ $siteurl = get_option('siteurl');
 				 echo "<form class=\"castingtext\" method=\"post\" action=\"\">";
 				   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"audition\">Audition</label>";
-						echo "<div><input type=\"text\" id=\"audition\" name=\"audition\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"audition\" name=\"audition\" value=\"".$CastingJobAudition."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"role\">Role</label>";
-						echo "<div><input type=\"text\" id=\"role\" name=\"role\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"role\" name=\"role\" value=\"".$CastingJobRole."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"auditiondates\">Audition Dates</label>";
-						echo "<div><input type=\"text\" id=\"auditiondates\" name=\"auditiondates\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"auditiondates\" name=\"auditiondates\" value=\"".$CastingJobAuditionDate."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"auditionvenue\">Audition Venue</label>";
-						echo "<div><input type=\"text\" id=\"auditionvenue\" name=\"auditionvenue\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"auditionvenue\" name=\"auditionvenue\" value=\"".$CastingJobAuditionVenue."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"auditiontime\">Audition Time</label>";
-						echo "<div><input type=\"text\" id=\"auditiontime\" name=\"auditiontime\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"auditiontime\" name=\"auditiontime\" value=\"".$CastingJobAuditionTime."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"auditionclothing\">Audition Clothing</label>";
-						echo "<div><input type=\"text\" id=\"auditionclothing\" name=\"auditionclothing\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"auditionclothing\" name=\"auditionclothing\" value=\"".$CastingJobClothing."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"callback\">Call Back / Wardrobe</label>";
-						echo "<div><input type=\"text\" id=\"callback\" name=\"callback\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"callback\" name=\"callback\" value=\"".$CastingJobRCallBackWardrobe."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"script\">Script</label>";
-						echo "<div><input type=\"text\" id=\"script\" name=\"script\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"script\" name=\"script\" value=\"".$CastingJobScript."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"shortdate\">Shoot Date</label>";
-						echo "<div><input type=\"text\" id=\"shortdate\" name=\"shortdate\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"shortdate\" name=\"shortdate\" value=\"".$CastingJobShootDate."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"rolefee\">Role Fee($)</label>";
-						echo "<div><input type=\"text\" id=\"rolefee\" name=\"rolefee\" value=\"\"></div>";
+						echo "<div><input type=\"text\" id=\"rolefee\" name=\"rolefee\" value=\"".$CastingJobRoleFee."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"comments\">Comments</label>";
-						echo "<div><textarea id=\"comments\" name=\"comments\"></textarea></div>";
+						echo "<div><textarea id=\"comments\" name=\"comments\">".$CastingJobComments."</textarea></div>";
 					echo "</div>";
+                    if(isset($_GET["CastingJobID"])){
+                    	echo "<input type=\"checkbox\" name=\"resend\" value=\"1\"/> Resend Notifcation \n\n<br/><br/>";
+                    	echo "<input type=\"submit\" value=\"Save\" name=\"castingJob\" class=\"button-primary\" />";
+                    	echo "<a href=\"".admin_url("admin.php?page=". $_GET['page'])."&amp;action=informTalent\" class=\"button\">Cancel</a>";
 
+
+                    }else{
+                    	echo "<input type=\"submit\" value=\"Submit\" name=\"castingJob\" class=\"button-primary\" />";
+                    	echo "<a href=\"".admin_url("admin.php?page=rb_agency_search")."\" class=\"button\">Cancel</a>";
+
+
+                    }
 				  	
-				  	echo "<input type=\"submit\" value=\"Submit\" name=\"castingJob\" class=\"button-primary\" />";
-
+				  	
 				  echo "</form>";
 				  echo "</div>";
 				  echo "</div>";
+
+				// Set Casting Cart Session
+				if (isset($_SESSION['cartArray'])) {
+
+					$cartArray = $_SESSION['cartArray'];
+						 echo "<div class=\"boxblock-container\" style=\"float: left; width: 39%;\">";
+						 echo "<div class=\"boxblock\" style=\"width:500px; \">";
+						 echo "<h3>Talents Shortlist</h3>";
+						 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+						
+					?>
+					
+
+
+								<?php
+										   
+									$cartString = implode(",", array_unique($cartArray));
+									$cartString = RBAgency_Common::clean_string($cartString);
+
+								// Show Cart  
+								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") ORDER BY profile.ProfileContactNameFirst ASC";
+								$results = $wpdb->get_results($wpdb->prepare($query,$cartString), ARRAY_A);
+
+												$count = $wpdb->num_rows;
+
+								
+
+								foreach ($results as $data) {
+
+									echo " <div style=\"float: left; width: 80px; height: 100px; margin-right: 5px; overflow: hidden; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "<br /><a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\"><img style=\"width: 80px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></a></div>\n";
+
+								}
+
+								?>
+							
+
+					<?php
+			   } else {
+
+					echo "Session expired. Please search again.";
+
+				}  
+				    echo "<div style=\"clear:both;\"></div>";
+					echo "</div>";
+				    echo "</div>";
 				  echo "</div>";
 		?>
         </div>		
@@ -257,6 +351,7 @@ $siteurl = get_option('siteurl');
 
 			<?php  
 			$sqldata = "";
+			$query = "";
 
 			if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
 				// Message of successful mail form mass email 
@@ -271,7 +366,7 @@ $siteurl = get_option('siteurl');
 			if (isset($_GET['sort']) && !empty($_GET['sort'])){
 				$sort = $_GET['sort'];
 			} else {
-				$sort = "search.SearchDate";
+				$sort = "jobs.CastingJobDateCreated";
 			}
 
 			// Sort Order
@@ -289,15 +384,15 @@ $siteurl = get_option('siteurl');
 			}
 
 			// Filter
-			$filter = "WHERE search.SearchID > 0 ";
+			$filter = "WHERE jobs.CastingJobID > 0 ";
 			if (isset($_GET['SearchTitle']) && !empty($_GET['SearchTitle'])){
-				$selectedTitle = $_GET['SearchTitle'];
-				$query .= "&SearchTitle=". $selectedTitle ."";
-				$filter .= " AND search.SearchTitle='". $selectedTitle ."'";
+				$selectedTitle = isset($_GET['SearchTitle'])?$_GET['SearchTitle']:"";
+				$query .= "&CastingJobAudition=". $selectedTitle ."";
+				$filter .= " AND jobs.CastingJobAudition='". $selectedTitle ."'";
 			}
 
 			//Paginate
-			$sqldata  = "SELECT * FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
+			$sqldata  = "SELECT jobs.*,talents.* FROM ". table_agency_castingcart_jobs ." jobs LEFT JOIN ". table_agency_castingcart_availability ." talents ON jobs.CastingJobID = talents.CastingJobID ". $filter  .""; // number of total rows in the database
 			$results=  $wpdb->get_results($sqldata);
 			
 			$items =$wpdb->num_rows; // number of total rows in the database
@@ -307,7 +402,7 @@ $siteurl = get_option('siteurl');
 				$p->items($items);
 				$p->limit(50); // Limit entries per page
 				$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .$query);
-				$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+				@$p->currentPage(isset($_GET[$p->paging])?$_GET[$p->paging]:0); // Gets and validates the current page
 				$p->calculate(); // Calculates what to show
 				$p->parameterName('paging');
 				$p->adjacents(1); //No. of page away from the current page
@@ -327,25 +422,21 @@ $siteurl = get_option('siteurl');
 			}
 
 			?>
-			<div class="tablenav">
-				<div class='tablenav-pages'>
-					<?php
-					if($items > 0) {
-						echo $p->show();  // Echo out the list of paging. 
-					}
-					?>
-				</div>
-			</div>
+			
 
 			<table cellspacing="0" class="widefat fixed">
 				<thead>
 					<tr>
 						<td style="width: 360px;" nowrap="nowrap">
-							<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
+							<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=informTalent">
 							 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
 							 Search by : 
 							 Title: <input type="text" name="SearchTitle" value="<?php echo isset($SearchTitle)?$SearchTitle:""; ?>" style="width: 100px;" />
 								<input type="submit" value="Filter" class="button-primary" />
+								 <input type="hidden" name="action" value="informTalent"/>
+								  <input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
+							 
+							
 							</form>
 						</td>
 						<td style="width: 200px;" nowrap="nowrap">
@@ -353,6 +444,7 @@ $siteurl = get_option('siteurl');
 							 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
 							 <input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
 							 <input type="submit" value="Clear Filters" class="button-secondary" />
+							 <input type="hidden" name="action" value="informTalent"/>
 							</form>
 						</td>
 						<td>&nbsp;</td>
@@ -384,64 +476,37 @@ $siteurl = get_option('siteurl');
 
 			<?php
 
-			$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchDate FROM ". table_agency_searchsaved ." search ". $filter  ." ORDER BY $sort $dir $limit";
-			//$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchOptions, search.SearchDate FROM ". table_agency_searchsaved_mux ." searchsent LEFT JOIN ". table_agency_searchsaved ." search ON searchsent.SearchID = search.SearchID ". $filter  ." ORDER BY $sort $dir $limit";
-
+			$query2 = "SELECT jobs.* FROM ". table_agency_castingcart_jobs ." jobs ". $filter  ." ORDER BY $sort $dir $limit";
+		
 			$results2 = $wpdb->get_results($query2, ARRAY_A);
 			$count2 = $wpdb->num_rows;
 
 			foreach ($results2 as $data2) {
-				$SearchID = $data2['SearchID'];
-				$SearchTitle = stripslashes($data2['SearchTitle']);
-				$SearchProfileID = stripslashes($data2['SearchProfileID']);
-				$SearchDate = stripslashes($data2['SearchDate']);
-				$query3 = "SELECT SearchID,SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = %d";
-				$results3 = $wpdb->get_results($wpdb->prepare($query3, $SearchID), ARRAY_A);
-				$count3 = $wpdb->num_rows;
-
+				$CastingJobAudition = stripslashes($data2['CastingJobAudition']);
+				$CastingJobID = stripslashes($data2['CastingJobID']);
+				
 			?>
-			<tr<?php echo $rowColor; ?>>
+			<tr>
 				<th class="check-column" scope="row">
-					<input type="checkbox" value="<?php echo $SearchID; ?>" class="administrator" id="<?php echo $SearchID; ?>" name="<?php echo $SearchID; ?>"/>
+					<input type="checkbox" value="<?php echo $CastingJobID; ?>" class="administrator" id="<?php echo $CastingJobID; ?>" name="<?php echo $CastingJobID; ?>"/>
 				</th>
 				<td>
-					<?php echo $SearchID; ?>
+					<?php echo $CastingJobID; ?>
 				</td>
 				<td>
-					<?php echo $SearchTitle; ?>
+					<?php echo $CastingJobAudition; ?>
 					<div class="row-actions">
-					<?php
-					if($count3<=0){
-					?>
-						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Create Email</a> | </span>
-					<?php
-					}else{
-					?>
-							<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Create Email</a> | </span>
-					<?php } ?>
-							<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
+					
+							<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=informTalent&CastingJobID=<?php echo $CastingJobID; ?>">View</a> | </span>
+				
+							<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteCastingJob&amp;CastingJobID=<?php echo $CastingJobID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 					</div>
 				</td>
 				<td>
 					<?php  // echo $SearchProfileID; ?>
 				</td>
 				<td>
-					<?php
-					$pos = 0;
-					foreach ($results3 as $data3 ) {
-					$pos++;
-						 if($pos == 1){
-							echo "Link: <a href=\"". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/\" target=\"_blank\">". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/</a><br />\n";
-						}
-						echo "(". rb_agency_makeago(rb_agency_convertdatetime( $data3["SearchMuxSent"]), $rb_agency_option_locationtimezone) .") ";
-						echo "<strong>". $data3["SearchMuxToName"]."&lt;".$data3["SearchMuxToEmail"]."&gt;"."</strong> ";
-						echo "<br/>";
-					}
-					//mysql_free_result($results2);
-					if ($count3 < 1) {
-						echo "Not emailed yet\n";
-					}
-					?>
+					
 				</td>
 			</tr>
 			<?php
@@ -471,15 +536,16 @@ $siteurl = get_option('siteurl');
 			<?php } ?>
 			</tbody>
 		</table>
+		<?php if($items > 0) { ?>
 		<div class="tablenav">
 			<div class='tablenav-pages'>
 				<?php 
-				if($items > 0) {
+				
 					echo $p->show();  // Echo out the list of paging. 
-				}
 				?>
 			</div>
 		</div>
+		<?php } ?>
 	</div>
 
 		<?php 		  
