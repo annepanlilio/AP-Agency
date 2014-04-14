@@ -74,7 +74,8 @@
 
 			
       if(empty($has_submitted)){ // if not submitted
-          
+            /*var_dump($has_permission);
+            var_dump($data["ProfileID"])*/
 			 if( in_array($data["ProfileID"], $has_permission)){
 
 				

@@ -10,9 +10,9 @@ class RBAgency_CastingSMS{
 								<recipients>';
 								foreach($mobile as $number){
 									    $number = str_replace(' ', '', $number);
+									    $number = trim($number);
 										$number = preg_replace("/[^0-9,.]/", "", $number);
-										
-									$xml_data .= '<recipient>'.$number.'</recipient>';
+										$xml_data .= '<recipient>'.$number.'</recipient>';
 								}
 				$xml_data .= '</recipients>
 							</request>';
