@@ -252,7 +252,7 @@ $siteurl = get_option('siteurl');
 										array_push($arr_mobile_numbers, $mobile["ProfileContactPhoneCell"]);
 									}
 
-									RBAgency_CastingSMS::sendText($arr_mobile_numbers,get_bloginfo("wpurl")."/profile-casting/jobs/".$_GET["CastingJobHash"]);
+									RBAgency_CastingSMS::sendText($arr_mobile_numbers,get_bloginfo("wpurl")."/profile-casting/jobs/".$_POST["CastingJobHash"]);
 							  }
 											echo ('<div id="message" class="updated"><p>Updated successfully!</p></div>');
 	
@@ -275,6 +275,7 @@ $siteurl = get_option('siteurl');
 			$CastingJobSelectedFor = "";
 			$CastingJobDateCreated = "";
 			$CastingJobTalents = "";
+			$CastingJobHash = "";
 
 		   if(isset($_GET["CastingJobID"])){
 		 	
@@ -296,6 +297,7 @@ $siteurl = get_option('siteurl');
 			$CastingJobSelectedFor = $data->CastingJobSelectedFor;
 			$CastingJobDateCreated = $data->CastingJobDateCreated;
 			$CastingJobTalents = $data->CastingJobTalents;
+			$CastingJobHash = $data->CastingJobTalentsHash;
 		 }
          
 		 ?>
@@ -378,7 +380,8 @@ $siteurl = get_option('siteurl');
                     	echo "<input type=\"checkbox\" name=\"resend\" value=\"1\"/> Resend notifcation to selected talents \n\n<br/><br/>";
                     	echo "<input type=\"submit\" value=\"Save\" name=\"castingJob\" class=\"button-primary\" />";
                     	echo "<input type=\"hidden\" name=\"action2\" value=\"edit\"/>";
-                    	echo "<input type=\"hidden\" name=\"profileselected\" value=\"\"/>";
+                    	echo "<input type=\"hidden\" name=\"profileselected\" value=\"".$CastingJobTalents."\"/>";
+                    	echo "<input type=\"hidden\" name=\"CastingJobHash\" value=\"".$CastingJobHash."\"/>";
                     	echo "<a href=\"".admin_url("admin.php?page=". $_GET['page'])."&amp;action=informTalent\" class=\"button\">Cancel</a>";
 
 
@@ -513,7 +516,7 @@ $siteurl = get_option('siteurl');
 				}
 		?>
         </div>		
-        <div style="float:left;width:50%;">
+        <div style="float:left;width:50%;margin-left: 20px;">
 	          		<h3 class="title">Recently Saved Jobs</h3>
 
 			<?php  
@@ -619,7 +622,7 @@ $siteurl = get_option('siteurl');
 			</thead>
 			</table>
 
-			<form method="post" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">	
+			<form method="post" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>" style="width: 602px;">	
 			<table cellspacing="0" class="widefat fixed">
 			<thead>
 				<tr class="thead">

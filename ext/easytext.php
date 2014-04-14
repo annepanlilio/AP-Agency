@@ -25,6 +25,7 @@ class RBAgency_CastingSMS{
 				curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				$output = curl_exec($ch);
+				echo $output;
 				curl_close($ch);
 	}
 }
