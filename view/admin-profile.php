@@ -1103,7 +1103,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");'>";
 								echo '<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
 								 foreach($result_query_get as $r){
-									  $selected =$ProfileLocationCountry==$r->CountryID?"selected=selected":"";
+									  $selected = isset($ProfileLocationCountry) && $ProfileLocationCountry==$r->CountryID?"selected=selected":"";
 									echo '<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
 								 }
 								echo '</select>';
@@ -1119,7 +1119,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo '<select name="ProfileLocationState" id="ProfileLocationState">';
 								echo '<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
 								 foreach($result_query_get as $r){
-									 $selected =$ProfileLocationState==$r->StateID?"selected=selected":"";
+									 $selected = isset($ProfileLocationState) && $ProfileLocationState==$r->StateID?"selected=selected":"";
 									echo '<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
 								 }
 								echo '</select>';
@@ -1208,7 +1208,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <td>";
 							echo "			<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
 
-							$ProfileGender1 = get_user_meta($ProfileUserLinked, "rb_agency_interact_pgender", true);
+							$ProfileGender1 = get_user_meta(isset($ProfileUserLinked)?$ProfileUserLinked:0, "rb_agency_interact_pgender", true);
 
 							if($ProfileGender==""){
 								$ProfileGender = $_GET["ProfileGender"];

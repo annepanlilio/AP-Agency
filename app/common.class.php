@@ -73,13 +73,15 @@ class RBAgency_Common {
 		$random_string = "";
 
 		// Create Character Set if Not Provided
-		if (isset($valid_chars)) {
-		} else {
+		if (empty($valid_chars)){
 			$num_valid_chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		}
 
 		// count the number of chars in the valid chars string so we know how many choices we have
-		$num_valid_chars = strlen($valid_chars);
+		if(!empty($valid_chars))
+			$num_valid_chars = strlen($valid_chars);
+		else
+			$num_valid_chars = strlen($num_valid_chars);
 
 		// repeat the steps until we've created a string of the right length
 		for ($i = 0; $i < $length; $i++) {
@@ -88,7 +90,11 @@ class RBAgency_Common {
 
 			// take the random character out of the string of valid chars
 			// subtract 1 from $random_pick because strings are indexed starting at 0, and we started picking at 1
+			if($valid_chars)
 			$random_char = $valid_chars[$random_pick-1];
+		    else
+		    $random_char = $random_pick;
+
 
 			// add the randomly-chosen char onto the end of our string so far
 			$random_string .= $random_char;

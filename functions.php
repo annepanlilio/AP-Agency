@@ -219,6 +219,7 @@ ini_set('display_errors', 'On');
 			$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
 			$newrules['profile-category/(.*)'] = 'index.php?type=category&target=$matches[1]';
 			$newrules['profile-category'] = 'index.php?type=category&target=all';
+			$newrules['profile-casting/jobs/(.*)$'] = 'index.php?type=castingjobs&target=$matches[1]';
 			$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
 			$newrules['profile-casting'] = 'index.php?type=casting&target=casting';
 			$newrules['profile-print'] = 'index.php?type=print';
@@ -263,6 +264,10 @@ ini_set('display_errors', 'On');
 				} elseif (get_query_var( 'type' ) == "profilecastingcart") {
 				// Casting cart
 					return rb_agency_BASEREL . 'view/profile-admincart.php';
+
+				} elseif (get_query_var( 'type' ) == "castingjobs") {
+				// Casting cart
+					return rb_agency_BASEREL . 'view/profile-castingjobs.php';
 
 				} elseif (get_query_var( 'type' ) == "category") {
 				// Category View
