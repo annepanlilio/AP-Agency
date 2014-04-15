@@ -247,7 +247,14 @@ elseif ($ConfigID == 1) {
 		//
 		$rb_agency_option_profilelist_sidebar = isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0;
 			if (empty($rb_agency_option_profilelist_sidebar)) { $rb_agency_option_profilelist_sidebar = "0"; }
-
+		// EasyTxt
+		$rb_agency_value_easytxtkey = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtkey'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtkey']:0;
+			if (empty($rb_agency_value_easytxtkey)) { $rb_agency_value_easytxtkey = ""; }
+		$rb_agency_value_easytxtsecret = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtsecret'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtsecret']:0;
+			if (empty($rb_agency_value_easytxtsecret)) { $rb_agency_value_easytxtsecret = ""; }
+		$rb_agency_value_easytxturl = isset($rb_agency_options_arr['rb_agency_option_agency_easytxturl'])?$rb_agency_options_arr['rb_agency_option_agency_easytxturl']:0;
+			if (empty($rb_agency_value_easytxturl)) { $rb_agency_value_easytxturl = ""; }
+		
 
 	/*
 	 * Form
@@ -471,6 +478,31 @@ elseif ($ConfigID == 1) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 
+		/*
+		 * EasyText API
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('EasyTxt Integration', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('URL', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxturl]\" value=\"". $rb_agency_value_easytxturl ."\" style=\"width: 180px;\" />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('API Key', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtkey]\" value=\"". $rb_agency_value_easytxtkey ."\" style=\"width: 180px;\" />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('API Secret', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtsecret]\" value=\"". $rb_agency_value_easytxtsecret ."\" style=\"width: 180px;\" />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
 
 
 		//Commented by @Gaurav as We will be creating this as a separate plugin
@@ -531,25 +563,25 @@ elseif ($ConfigID == 11) {
 		settings_fields( 'rb-agencyinteract-settings-group' ); 
 		$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
 
-		$rb_agencyinteract_option_redirect_custom_login = $rb_agencyinteract_options_arr['rb_agency_option_redirect_custom_login'];
+		$rb_agencyinteract_option_redirect_custom_login = isset($rb_agencyinteract_options_arr['rb_agency_option_redirect_custom_login']) ?$rb_agencyinteract_options_arr['rb_agency_option_redirect_custom_login']:0;
 			if (empty($rb_agencyinteract_option_redirect_custom_login)) { $rb_agencyinteract_option_redirect_custom_login = "0"; }
 
 		echo "<table class=\"form-table\">\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Database Version', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"\" value=\"". rb_agencyinteract_VERSION ."\" disabled /></td>\n";
+		echo "   <td><input name=\"\" value=\"". rb_agency_interact_VERSION ."\" disabled /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Display', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_sidebar]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar'], 1,false)."/> ". __("Show Sidebar on Member Management/Login Pages", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_sidebar]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar']:0, 1,false)."/> ". __("Show Sidebar on Member Management/Login Pages", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">&nbsp;</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_toolbar]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_toolbar'], 1,false)."/> ". __("Hide Toolbar on All Pages", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_toolbar]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_toolbar'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_toolbar']:0, 1,false)."/> ". __("Hide Toolbar on All Pages", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -564,8 +596,8 @@ elseif ($ConfigID == 11) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Redirect for Login', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_redirect_custom_login]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_redirect_custom_login'], 0,false)."/> ". __("Do Not Override Login Screen", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_redirect_custom_login]\" value=\"0\" ".checked($rb_agency_options_arr['rb_agency_option_redirect_custom_login'], 1,false)."/> ". __("Redirect to /profile-login/", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_redirect_custom_login]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_redirect_custom_login'])?$rb_agency_options_arr['rb_agency_option_redirect_custom_login']:0, 0,false)."/> ". __("Do Not Override Login Screen", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_redirect_custom_login]\" value=\"0\" ".checked(isset($rb_agency_options_arr['rb_agency_option_redirect_custom_login'])?$rb_agency_options_arr['rb_agency_option_redirect_custom_login']:0, 1,false)."/> ". __("Redirect to /profile-login/", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -577,8 +609,8 @@ elseif ($ConfigID == 11) {
 		echo "   <th scope=\"row\">". __('Show User Registration when creating Profiles', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_useraccountcreation]\">\n";
-		echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'], 0,false) ."> ". __("Yes, show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'], 1,false) ."> ". __("No, do not show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 0,false) ."> ". __("Yes, show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 1,false) ."> ". __("No, do not show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -592,8 +624,8 @@ elseif ($ConfigID == 11) {
 		echo "   <th scope=\"row\">". __('Enable registration of Agent/Producer', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\">\n";
-		echo "       <option value=\"1\" ". ($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'] == 1 ? 'selected="selected"':'') ."> ". __("Show", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". ($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'] == 0 ? 'selected="selected"':'') ."> ". __("Hide", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". ((isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer']:0) == 1 ? 'selected="selected"':'') ."> ". __("Show", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". ((isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer']:0) == 0 ? 'selected="selected"':'') ."> ". __("Hide", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -601,9 +633,9 @@ elseif ($ConfigID == 11) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Delete Options', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 1,false)."/> ". __("No", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"2\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 2,false)."/> ". __("Yes (Allow users to perminently delete their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"3\" ".checked($rb_agency_options_arr['rb_agency_option_profiledeletion'], 3,false)."/> ". __("Archive Only (Allow users to hide their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profiledeletion'])?$rb_agency_options_arr['rb_agency_option_profiledeletion']:0, 1,false)."/> ". __("No", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"2\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profiledeletion'])?$rb_agency_options_arr['rb_agency_option_profiledeletion']:0, 2,false)."/> ". __("Yes (Allow users to perminently delete their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_profiledeletion]\" value=\"3\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profiledeletion'])?$rb_agency_options_arr['rb_agency_option_profiledeletion']:0, 3,false)."/> ". __("Archive Only (Allow users to hide their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -611,8 +643,8 @@ elseif ($ConfigID == 11) {
 		echo "   <th scope=\"row\">". __('Email Confirmation', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerconfirm]\">\n";
-		echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'], 0,false) ."> ". __("Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'], 1,false) ."> ". __("Password Self-Generated", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 0,false) ."> ". __("Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 1,false) ."> ". __("Password Self-Generated", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -632,20 +664,20 @@ elseif ($ConfigID == 11) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Notifications', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribeupsell]\" value=\"1\" "; checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell'], 1,false); echo "/> Display Upsell Messages for Subscription)<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribeupsell]\" value=\"1\" "; checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell']:"", 1,false); echo "/> Display Upsell Messages for Subscription)<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Embed Overview Page ID', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_overviewpagedetails]\" value=\"". $rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails'] ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_overviewpagedetails]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Embed Registration Page ID', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepagedetails]\" value=\"". $rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails'] ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepagedetails]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('PayPal Email Address', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepaypalemail]\" value=\"". $rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail'] ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepaypalemail]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo "</table>\n";
 		echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
