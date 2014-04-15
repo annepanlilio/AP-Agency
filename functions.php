@@ -736,7 +736,7 @@ ini_set('display_errors', 'On');
 	function rb_agency_profilelist($atts, $content = NULL) {
 
 			// Print or Export
-
+     global  $wpdb;
 			// Commented by Sunil to fix profile print/pdf issue
 		//	if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 				// Commented by Sunil to fix profile display issue
