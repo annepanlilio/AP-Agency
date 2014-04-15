@@ -340,11 +340,11 @@ class RBAgency_Profile {
 													if(!empty($value)) {
 														// Identify Existing Value
 														$isSelected = "";
-														if($_REQUEST["ProfileCustomID". $ProfileCustomID]==$value){
+														if($_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)){
 															$isSelected = "selected=\"selected\"";
-															echo "		<option value=\"".$value."\" ".$isSelected .">".$value."</option>";
+															echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>";
 														}else{
-															echo "		<option value=\"".$value."\" >".$value."</option>"; 
+															echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($value)."</option>"; 
 														}
 													}
 												}

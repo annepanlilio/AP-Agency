@@ -1949,12 +1949,11 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					foreach($data as $val1){
 						
 						if($val1 != end($data) && $val1 != $data[0]){
-						
-							if ($val1 == $ProfileCustomValue ) {
+							if (trim(stripslashes($val1),'"') == htmlentities(stripslashes($ProfileCustomValue)) ) {
 								$isSelected = "selected=\"selected\"";
-								echo "<option value=\"".$val1."\" ".$isSelected .">".$val1."</option>";
+								echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 							} else {
-								echo "<option value=\"".$val1."\" >".$val1."</option>";
+								echo "<option value=\"".trim(stripslashes($val1),'"')."\" >".stripslashes($val1)."</option>";
 							}					
 						}
 					}
@@ -1969,7 +1968,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						echo "<option value=\"\">--</option>";
 						foreach($data2 as $val2){
 								if($val2 != end($data2) && $val2 !=  $data2[0]){
-									echo "<option value=\"".$val2."\" ". selected($val2, $ProfileCustomValue) ." >".$val2."</option>";
+									echo "<option value=\"".$val2."\"". selected($val2, $ProfileCustomValue) ." >".stripslashes($val2)."</option>";
 								}
 							}
 						echo "</select>\n";

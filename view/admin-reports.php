@@ -1792,7 +1792,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 			 	while($column = fgetcsv($handle, 4096, ','))
 					{
 					    // This is a great trick, to get an associative row by combining the headrow with the content-rows.
-					    $column = array_combine($header, $column);
+					    $column = @array_combine($header, $column);
                        
 					    foreach($column as $key => $val){
 						    if(!empty($key) && count($arr_headers) < $total_header){
