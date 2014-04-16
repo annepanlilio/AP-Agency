@@ -2664,18 +2664,18 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											  $pos++;	
 											  echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
 											
-														 if($pos ==1){
-																	echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
-														 }
 											  echo "<br/>";	
 											   }
 												 
 											
 										 }
+
 													 echo "</td>";
 												 echo "</tr>";
+												 
 										   echo "<div id=\"addcheckbox_field_1\"></div>";
-										  
+										  	echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
+											
 											 
 								
 								
