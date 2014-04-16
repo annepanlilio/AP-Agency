@@ -216,7 +216,7 @@ $siteurl = get_option('siteurl');
 									foreach($results as $mobile){
 										array_push($arr_mobile_numbers, $mobile["ProfileContactPhoneCell"]);
 									}
-									RBAgency_CastingSMS::sendText($arr_mobile_numbers,get_bloginfo("wpurl")."/profile-casting/jobs/".$hash);
+									RBAgency_Casting::sendText($arr_mobile_numbers,get_bloginfo("wpurl")."/profile-casting/jobs/".$hash);
 
 											echo ('<div id="message" class="updated"><p>Added successfully!</p></div>');
 	
@@ -252,7 +252,7 @@ $siteurl = get_option('siteurl');
 										array_push($arr_mobile_numbers, $mobile["ProfileContactPhoneCell"]);
 									}
 
-									RBAgency_CastingSMS::sendText($arr_mobile_numbers,get_bloginfo("wpurl")."/profile-casting/jobs/".$_POST["CastingJobHash"]);
+									RBAgency_Casting::sendText($arr_mobile_numbers,get_bloginfo("wpurl")."/profile-casting/jobs/".$_POST["CastingJobHash"]);
 							  }
 											echo ('<div id="message" class="updated"><p>Updated successfully!</p></div>');
 	

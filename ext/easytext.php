@@ -18,7 +18,7 @@ class RBAgency_CastingSMS{
 							</request>';
 
 				$url = "http://YWxhbi5tb250ZWZpb3JlQGdtYWlsLmNvbQ==:d3Z2a3VhYmtt@scoutshonour.easytxt.co.nz/api2/xml/sms";
-
+					
 				$ch = curl_init($url);
 				curl_setopt($ch, CURLOPT_POST, 1);
 				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));

@@ -507,5 +507,34 @@ class RBAgency_Casting {
 
 		}
 
+		 function sendText($mobile, $link){
+			
+			    $rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_value_agency_easytxturl = isset($rb_agency_options_arr['rb_agency_option_agency_easytxturl'])?$rb_agency_options_arr['rb_agency_option_agency_easytxturl']:"";
+				$rb_agency_value_agency_easytxtkey = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtkey'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtkey']:"";
+				$rb_agency_value_agency_easytxtsecret = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtsecret'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtsecret']:"";
+				
+				$xml_data ='<request>
+								<content>[agency name] has put you forward for a Job. See the following link: '.$link.'</content>
+								<recipients>';
+								foreach($mobile as $number){
+									    $number = str_replace(' ', '', $number);
+									    $number = trim($number);
+										$number = preg_replace("/[^0-9,.]/", "", $number);
+										$xml_data .= '<recipient>'.$number.'</recipient>';
+								}
+				$xml_data .= '</recipients>
+							</request>';
+
+				$url = "http://".$rb_agency_value_agency_easytxtkey.":".$rb_agency_value_agency_easytxtsecret."@".$rb_agency_value_agency_easytxturl."/api2/xml/sms";
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/xml'));
+				curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$output = curl_exec($ch);
+				echo $output;
+				curl_close($ch);
+	}
 
 }
