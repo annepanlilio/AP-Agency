@@ -2120,11 +2120,10 @@ function rb_agency_getGenderTitle($ProfileGenderID){
 function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
     global $wpdb; 
 
-	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID ='%s' AND ProfileCustomShowGender IN('%s','') ";
+	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID ='%s' AND ProfileCustomShowGender IN(%s) ";
 	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A);
-	$count = count($results);
-
-	if($count > 0){
+	$count = $wpdb->num_rows;
+		if($count > 0){
 		return true;  
 	} else {
 		return false;
@@ -2208,15 +2207,15 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		// What is the unit of measurement?
-		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:1;
+		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:"";
 
+         
 
-
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID),ARRAY_A);
-
-	foreach ($resultsCustom as $resultCustom) {
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+   foreach ($resultsCustom as $resultCustom) {
 		// If a value exists...
-		if(!empty($resultCustom->ProfileCustomValue )){
+
+   		if(!empty($resultCustom->ProfileCustomValue )){
 
 			/*
 			TODO:  REMOVE
@@ -2244,9 +2243,8 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 
 			// Lets not do this...
 			*/
-			$measurements_label = "";
-
-
+			$measurements_label = ""; 
+			$label = "";
 			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 				if ($resultCustom->ProfileCustomType == 7){
 
@@ -2285,7 +2283,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
-			} elseif ($resultCustom->ProfileCustomView == "2") {  // TODO: Why is admin view showing? (Rob)
+			} elseif (isset($resultCustom->ProfileCustomView) && $resultCustom->ProfileCustomView == "0") {  // TODO: Why is admin view showing? (Rob)
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);

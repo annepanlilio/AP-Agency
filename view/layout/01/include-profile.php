@@ -303,9 +303,10 @@ echo "						<ul>\n";
 										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
 									}
 								}
-
-								// Insert Custom Fields
+                               // Insert Custom Fields
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+								
+
 echo "						</ul>\n"; // Close Stats ul
 echo "					</div>\n"; // #stats
 
