@@ -1821,9 +1821,9 @@ elseif ($ConfigID == 5) {
 	/* Initial Registration [RESPOND TO POST] ***********/ 
 	if ( isset($_POST['action']) ) {
 		
-		$ProfileCustomID			= $_POST['ProfileCustomID'];
-		$ProfileCustomTitle			= $_POST['ProfileCustomTitle'];
-		$ProfileCustomType			= $_POST['ProfileCustomType'];
+		$ProfileCustomID			= isset($_POST['ProfileCustomID'])?$_POST['ProfileCustomID']:"";
+		$ProfileCustomTitle			= isset($_POST['ProfileCustomTitle'])?$_POST['ProfileCustomTitle']:"";
+		$ProfileCustomType			= isset($_POST['ProfileCustomType']) ?$_POST['ProfileCustomType']:"";
 		$ProfileCustomOptions 		= isset($_POST['ProfileCustomOptions'])?$_POST['ProfileCustomOptions']:"";
 		$ProfileCustomView 			= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
@@ -1831,7 +1831,7 @@ elseif ($ConfigID == 5) {
 		$ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
-		$ProfileCustomShowRegistration= (int)$_POST['ProfileCustomShowRegistration'];
+		$ProfileCustomShowRegistration= isset($_POST['ProfileCustomShowRegistration'])?(int)$_POST['ProfileCustomShowRegistration']:0;
 		$ProfileCustomShowSearchSimple= isset($_POST['ProfileCustomShowSearchSimple'])?(int)$_POST['ProfileCustomShowSearchSimple']:0;
 		$ProfileCustomShowAdmin   	= isset($_POST['ProfileCustomShowAdmin'])?(int)$_POST['ProfileCustomShowAdmin']:0;
 		$ProfileCustomPrivacy   	= isset($_POST['ProfileCustomPrivacy'])?(int)$_POST['ProfileCustomPrivacy']:0;
@@ -2001,22 +2001,22 @@ elseif ($ConfigID == 5) {
 										  . esc_sql($ProfileCustomTitle) . "','" 
 										  . $Types . "')";
 								
-								$results_client = $wpdb->query($insert_client) or die($wpdb->print_error());
+								$results_client = $wpdb->query($insert_client);
 							} else {
 								//update if already existing 
 								$update = "UPDATE " . table_agency_customfields_types . " 
 										  SET 
 										  ProfileCustomTypes='" . $Types . "' 
 										  WHERE ProfileCustomID = ".$lastid;
-								$updated = $wpdb->query($update) or die($wpdb->print_error());
+								$updated = $wpdb->query($update);
 							}
 
 				}
 				
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%1$s <strong>added</strong> successfully! You may now %1$s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
-				echo "<h3 style=\"width:430px;\">". sprintf(__("Create New %1$s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
+				echo "<h3 style=\"width:430px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
-				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %1$s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";
 			}
 		break;
@@ -2045,7 +2045,7 @@ elseif ($ConfigID == 5) {
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
 								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
-				$updated = $wpdb->query($update) or die($wpdb->print_error());
+				$updated = $wpdb->query($update);
 
 				/*
 				 * Check if There is Custom client
@@ -2132,7 +2132,7 @@ elseif ($ConfigID == 5) {
 					// Rmove from Custom Types
 					$delete_sql = "DELETE FROM " . table_agency_customfields_types . 
 					" WHERE ProfileCustomID='$ProfileCustomID'";
-					$deleted = $wpdb->query($delete_sql) or die($wpdb->print_error());
+					$deleted = $wpdb->query($delete_sql);
 
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
 
@@ -2181,7 +2181,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		
 		if ( $ProfileCustomID > 0) {
 			$query = "SELECT * FROM " . table_agency_customfields . " WHERE ProfileCustomID='$ProfileCustomID'";
-			$results = $wpdb->get_results($query,ARRAY_A) or die (__($wpdb->print_error(), rb_agency_TEXTDOMAIN));
+			$results = $wpdb->get_results($query,ARRAY_A);
 			$count = count($results);
 			foreach($results as $data) {
 				$ProfileCustomID			=	$data['ProfileCustomID'];

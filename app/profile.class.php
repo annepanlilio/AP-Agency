@@ -377,7 +377,7 @@ class RBAgency_Profile {
 
 									if(isset($_SESSION["ProfileCustomID". $ProfileCustomID])){ 
 
-										$dataArr = explode(",",implode(",",explode("','",RBAgency_Common::session("ProfileCustomID". $ProfileCustomID))));
+										$dataArr = @explode(",",@implode(",",@explode("','",RBAgency_Common::session("ProfileCustomID". $ProfileCustomID))));
 										if(in_array($val,$dataArr,true)){
 											echo "<div><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
 											echo "<span> ". $val."</span></label></div>";
@@ -935,7 +935,7 @@ class RBAgency_Profile {
 										$val = array_shift(array_values($val));
 									} 
 								}
-
+								global $wpdb;
 								$q = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '%d' ",substr($key,15)),ARRAY_A);
 								$ProfileCustomType = current($q);
 
