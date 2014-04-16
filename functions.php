@@ -1214,8 +1214,8 @@ ini_set('display_errors', 'On');
 					
 					#dont need other image for hover if its for print or pdf download view and dont use timthubm
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-
-						if($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']==1){  //show profile sub thumbs for thumb slide on hover
+						$images = "";
+						if(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) && $rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'] ==1){  //show profile sub thumbs for thumb slide on hover
 							$images=getAllImages($dataList["ProfileID"]);
 							$images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 						}
