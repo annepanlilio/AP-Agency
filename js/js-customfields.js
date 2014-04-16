@@ -104,7 +104,7 @@ jQuery(document).ready(function(){
 					append_vals += "Values: <input type=\"text\" value=\""+v+"\" name=\"label[]\"/><br/>";
 				});
 
-				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1">'+append_vals+'</div><a href="javascript:void(0);" style="float:right;font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:250px;text-align:right;" onclick="add_more_checkbox_field(1);" >add more[+]</a>');
+				jQuery("#objtype_customize").append('<div id="addcheckbox_field_1">'+append_vals+'</div><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>');
 			break;  
 			case "6": // Radio button
 			   	    
@@ -221,13 +221,25 @@ function add_more_option_field2(objNum){
 }
 function add_more_checkbox_field(objNum){
 		
-	 var a = document.getElementById("addcheckbox_field_"+objNum);
-	 var b = a.innerHTML;
-	 a.innerHTML = b +  '<tr><td>'
+	 var d = "";
+	 jQuery("#addcheckbox_field_"+objNum+" input").each(function(i,d){
+	 	if(i==0){
+	 		 jQuery("#addcheckbox_field_"+objNum+"").empty();
+	 	}
+		d =  '<tr><td>'
+				 + '<tr>'
+				 + '<td align="right">Value:</td><td><input type="text" value="'+jQuery(this).val()+'" name="label[]"/></td>'
+				+ '</tr>'
+				+ '</td></tr><br/>';
+            jQuery("#addcheckbox_field_"+objNum+"").append(d);
+	  });
+	   d =   '<tr><td>'
 							 + '<tr>'
 							 + '<td align="right">Value:</td><td><input type="text" name="label[]"/></td>'
 							 + '</tr>'
 						 + '</td></tr><br/>';
+     jQuery("#addcheckbox_field_"+objNum+"").append(d);
+
 }
 function remove_more_option_field(objNum){
 	var parent = document.getElementById("objtype_customize");

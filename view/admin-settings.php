@@ -2474,7 +2474,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
                                                                                         if(strpos($x->ProfileCustomTypes,",") > -1){
                                                                                                 $rTypes = explode(",",$x->ProfileCustomTypes);
                                                                                         } else {
-                                                                                                $rTypes = $r->ProfileCustomTypes;
+                                                                                                $rTypes = $x->ProfileCustomTypes;
                                                                                         }	
 
                                                                                         $get_types = "SELECT * FROM ". table_agency_data_type;
