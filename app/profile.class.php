@@ -983,7 +983,7 @@ class RBAgency_Profile {
 										} else {
 											
 											$likequery = explode(",", $val);
-											$likedata4= "(ProfileCustomValue LIKE  '%".$val."%')";
+											$likedata4=  "";//(ProfileCustomValue LIKE  '%".$val."%')";
 											$likecounter = count($likequery);
 											$i=1; 
 
@@ -994,29 +994,38 @@ class RBAgency_Profile {
 											$likedata3 = "" ;
 
 											foreach($likequery as $like){
-
-												if($i != $likecounter){
-													if($like!="") {
-
-													$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-														$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') OR "  ;
-														$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-													}
-												} else {
-													if($like!=""){
-														$likedata.= " ProfileCustomValue ='".$like."' "  ;
-														$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') ";
-														$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-													}
-												}
 												$i++;
+												/*if(is_numeric($like)){
+													if($i != $likecounter){
+														$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+													}else{
+														$likedata.= " ProfileCustomValue ='".$like."'  "  ;
+												    }
+												}else{*/
+
+														if($i != $likecounter){
+															if($like!="") {
+
+																$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+																$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') OR "  ;
+																$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+															}
+														} else {
+															if($like!=""){
+																$likedata.= " ProfileCustomValue ='".$like."' "  ;
+																$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') ";
+																$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+															}
+														}
+												//}		
+												
 
 											}
 											//Commented to fix checkbox issue
 											//$val = substr($val, 0, -1);
-											$sr_data = $likedata . " OR " . $likedata2 . " OR " . $likedata3 ;
-											$filter2 .= "$open_st (".$sr_data.") AND ".$likedata4." $close_st";
-
+											$sr_data = $likedata . (!empty($likedata2)?" OR ".$likedata2:"") . (!empty($likedata3)?" OR ".$likedata3:"");
+											$filter2 .= "$open_st (".$sr_data.")  $close_st";
+										
 										}
 
 										$_SESSION[$key] = $val;
@@ -1088,6 +1097,7 @@ class RBAgency_Profile {
 				
 				self::search_generate_sqlorder($atts);
 				
+
 				return $filter;
 
 			} else {

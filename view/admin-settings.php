@@ -1872,7 +1872,7 @@ elseif ($ConfigID == 5) {
 			if(!empty($_POST["option"]) && isset($_POST["option"])){
 				foreach($_POST["option"] as $key => $val){
 					if(!empty($val)){
-						$option .= $val."|";
+						$option .= stripslashes($val)."|";
 					}
 				}
 				$label_option = "".(isset($_POST["option_label"])?$_POST["option_label"]:"")."|".$option;  //
@@ -1880,7 +1880,7 @@ elseif ($ConfigID == 5) {
 			if(!empty($_POST["option2"]) && isset($_POST["option2"])){
 				foreach($_POST["option2"] as $key2 => $val2){
 					if(!empty($val2)){
-						$option2 .= $val2."|";
+						$option2 .= stripslashes($val2)."|";
 					}
 				}
 				$label_option2 = ":".$_POST["option_label2"]."|".$option2;  //
@@ -1894,9 +1894,9 @@ elseif ($ConfigID == 5) {
 				if(!empty($_POST["label"]) && $_POST["label"] !=""  && !empty($val)){
 					$pos++;		
 					if($pos!= count($_POST["label"])){ 
-						$ProfileCustomOptions .= $val."|";
+						$ProfileCustomOptions .= stripslashes($val)."|";
 					}else{
-						$ProfileCustomOptions .= $val;
+						$ProfileCustomOptions .= stripslashes($val);
 					}
 				}
 			}
@@ -2187,7 +2187,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomID			=	$data['ProfileCustomID'];
 				$ProfileCustomTitle			=	stripslashes($data['ProfileCustomTitle']);
 				$ProfileCustomType			=	$data['ProfileCustomType'];
-				$ProfileCustomOptions		=	$data['ProfileCustomOptions'];
+				$ProfileCustomOptions		=	stripslashes($data['ProfileCustomOptions']);
 				$ProfileCustomView			=	$data['ProfileCustomView'];
 				$ProfileCustomOrder			=	$data['ProfileCustomOrder'];
 				$ProfileCustomShowGender	=	$data['ProfileCustomShowGender'];
@@ -2573,7 +2573,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													
 													if($val1 != end($data1) && $val1 != $data1[0]){
 													 $pos++;
-													 echo "<li>Option:<input type=\"text\"  value=\"".$val1."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></li>";
+													 echo "<li>Option:<input type=\"text\"  value=\"".htmlspecialchars($val1)."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></li>";
 													}
 												}
 											echo '</ul>'; 
@@ -2638,8 +2638,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														 ";
 										 foreach($array_customOptions_values as  $val){
 											  echo "<br/>";	
-											  echo" &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
-											 
+											  echo" &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" />";
 										 }
 										echo "<div id=\"addcheckbox_field_1\"></div>";
 										echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
