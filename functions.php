@@ -151,7 +151,7 @@ ini_set('display_errors', 'On');
 			}
 
 			echo "<div class=\"feed-searchsocial\">\n";
-			if ($maxitems == 0) {
+			if (isset($maxitems) && $maxitems == 0) {
 				echo "No Connection\n";
 			} else {
 

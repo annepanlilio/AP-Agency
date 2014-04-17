@@ -1477,7 +1477,7 @@ elseif ($ConfigID == 14) {
 					}elseif($rowCustom['ProfileCustomType']==4){
 						$customValue = "Dummy ".$rowCustom['ProfileCustomTitle']  ; 
 					}
-					$results =  $wpdb->query("INSERT INTO " . table_agency_customfield_mux . " ( ProfileCustomID, ProfileID, ProfileCustomValue) VALUES ('". $rowCustom['ProfileCustomID'] ."','". $ProfileID ."','". $customValue ."')");
+					$results =  $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " ( ProfileCustomID, ProfileID, ProfileCustomValue) VALUES (%s,%s,%s)",$rowCustom['ProfileCustomID'], $ProfileID ,$customValue));
 				}
 				
 
@@ -1754,7 +1754,7 @@ class RBAgencyCSVXLSImpoterPlugin {
         
 			foreach ($sheetData as $key => $value) 
 			{
-
+				if(!empty( $value ))
 				fputcsv($csv_file, $value);
 			}
 			fclose($csv_file);
@@ -1767,6 +1767,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$header = fgetcsv($handle, 4096, ",");
 		$total_header = count($header);
 		$arr_headers = array();
+		$arr_exists = array();
         
         if( strtolower($get_ext) == 'xls' ){
 	        for($a=0; $a<=$total_header; $a++){
@@ -1778,9 +1779,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 				foreach ($cellIterator as $cell) {
 					$val = $cell->getValue();
-					
-					if(!empty($val) && count($arr_headers) < $total_header){
-					    array_push($arr_headers , str_replace(" ","_",$cell->getValue()));
+					$value =  str_replace(" ","_",$cell->getValue());
+					if(!empty($val) && count($arr_headers) < $total_header && !in_array($val,$arr_exists)){
+						array_push($arr_exists,$value);
+					    array_push($arr_headers ,$value);
 					}
 
 				}
@@ -1795,14 +1797,17 @@ class RBAgencyCSVXLSImpoterPlugin {
 					    $column = @array_combine($header, $column);
                        
 					    foreach($column as $key => $val){
-						    if(!empty($key) && count($arr_headers) < $total_header){
-							    array_push($arr_headers , str_replace(" ","_",$key));
-							}
+						   $val =  str_replace(" ","_",$key);
+						if(!empty($val) && count($arr_headers) < $total_header && !in_array($val,$arr_exists)){
+							array_push($arr_exists,$val);
+						    array_push($arr_headers ,$val);
+						}
 						}
 					   
 					}
 		}
 		
+
 		//$custom_header = $total_header - 17;//17 are the number of column for the personal profile table
 		$custom_header = $total_header;
 		if( $custom_header <= 0 ) return 0; /*If no custom field found*/
@@ -2058,7 +2063,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 															   if(substr($key, 0, 7) != "Profile"){
 																	if(isset($_REQUEST['select'.$pos])){
 																	   $select_id =  mysql_real_escape_string($_REQUEST['select'.$pos]);
-																	   if(strpos($vv[$key], ' ft ') !== FALSE){
+																	   if(strpos(4, ' ft ') !== FALSE){
 																			$cal_height = 0;
 																			$height = explode(' ', $vv[$key]);
 																			$cal_height = ($height[0] * 12) + $height[2];
