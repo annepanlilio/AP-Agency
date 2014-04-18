@@ -517,13 +517,13 @@ if (isset($_POST['action'])) {
 			}
 
 				$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaPrimary = 1";
-				$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
+				$results = $wpdb->get_results($wpdb->prepare($query, $Profile),ARRAY_A);
 				$count =  $wpdb->num_rows;
 				if($count <= 0){
 					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID=%d";
-					$results = current($wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A));
-					$wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=".$ProfileID." ");
-				    $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".$ProfileID." AND ProfileMediaID=".$results["ProfileMediaID"]);
+					$results = current($wpdb->get_results($wpdb->prepare($query, $Profile),ARRAY_A));
+					$wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=".($Profile)." ");
+				    $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".($Profile)." AND ProfileMediaID=".(isset($results["ProfileMediaID"])?$results["ProfileMediaID"]:"0"));
 				}
 			rb_display_list();
 			exit;

@@ -15,13 +15,17 @@ global $wpdb;
 	$custom_fields_name = array();
 	$custom_fields_id = array();
 	$custom_fields_title = array();
+	$custom_fields_type = array();
 	$custom_fields = $wpdb->get_results($query3,ARRAY_A);
+	
 	foreach ($custom_fields as $key => $value) {
 		//array_push($custom_fields_name, 'Client'.str_replace(' ', '', $value['ProfileCustomTitle']));
 		array_push($custom_fields_name, $value['ProfileCustomTitle']);
 		array_push($custom_fields_id, $value['ProfileCustomID']);
 		array_push($custom_fields_title, $value['ProfileCustomTitle']);
+		array_push($custom_fields_type, $value['ProfileCustomType']);
 	}
+
 	if(isset($_POST)) {
 		if($_POST['file_type'] == 'csv') { 
 			$profile_data = $wpdb->get_results("SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM ". table_agency_profile, ARRAY_A);
@@ -33,23 +37,29 @@ global $wpdb;
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data_value['ProfileGender'], ARRAY_A);
 				$data_value['ProfileContactNameFirst'] = stripcslashes(stripcslashes($data_value['ProfileContactNameFirst']));
 				$data_value['ProfileContactNameLast'] = stripcslashes(stripcslashes($data_value['ProfileContactNameLast']));
-					$data_value['ProfileContactDisplay'] = stripcslashes(stripcslashes($data_value['ProfileContactDisplay']));
+			    $data_value['ProfileContactDisplay'] = stripcslashes(stripcslashes($data_value['ProfileContactDisplay']));
 				$data_value['ProfileGender'] = $gender['GenderTitle'];
 				$data_value['ProfileLocationCountry'] = rb_agency_getCountryTitle($data_value['ProfileLocationCountry'],true); // returns country code
 				$data_value['ProfileLocationState'] = rb_agency_getStateTitle($data_value['ProfileLocationState'],true); // returns state code
 				$data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
+				
 				$csv_output .= implode(',', $data_value);
-				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
+				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID']." ", ARRAY_A);
 				$temp_array = array();
 				$c_value_array = array(); 
-				foreach ($subresult as $sub_value) {
-					$ProfileCustomValue = ""  ;
-					if(trim($sub_value['ProfileCustomValue']) != ""){
-						$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
-					} else {
-						$ProfileCustomValue = "";
+
+				foreach ($subresult as $key => $sub_value) {
+					$wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomType IN(".$data_value['ProfileType'].")", ARRAY_A);
+				    $count = $wpdb->num_rows;
+				    if($count > 0){
+						$ProfileCustomValue = ""  ;
+						if(trim($sub_value['ProfileCustomValue']) != ""){
+							$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+						} else {
+							$ProfileCustomValue = "";
+						}
+						$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
 					}
-					$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
 				}
 
 				/*
@@ -129,13 +139,18 @@ global $wpdb;
 				$temp_array = array();
 
 				foreach ($subresult as $sub_value) {
-					if(trim($sub_value['ProfileCustomValue']) != ""){
-						$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
-					} else {
-						$ProfileCustomValue = "";
-					}
+					$wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomType IN(".$data['ProfileType'].")", ARRAY_A);
+				    $count = $wpdb->num_rows;
+				    if($count > 0){
+					
+						if(trim($sub_value['ProfileCustomValue']) != ""){
+							$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
+						} else {
+							$ProfileCustomValue = "";
+						}
 
-					$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
+						$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
+					}
 				}
 
 				/*

@@ -1,13 +1,13 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 /*
  * Debug Mode
 
-ini_set('display_errors', 'On');
-   //$RB_DEBUG_MODE = true;
+  //$RB_DEBUG_MODE = true;
  */
 
-
+ini_set('display_errors', 'On');
+ 
 /*
  * Set Sessions
  */
