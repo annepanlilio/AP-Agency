@@ -516,14 +516,14 @@ if (isset($_POST['action'])) {
 				echo ("<div id=\"message\" class=\"error\"><p>" . __("Error updating record, please ensure you have filled out all required fields.", rb_agency_TEXTDOMAIN) . "</p></div>");
 			}
 
-				$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaPrimary = 1";
+				$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaPrimary = 1";
 				$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
 				$count =  $wpdb->num_rows;
 				if($count <= 0){
 					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID=%d";
 					$results = current($wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A));
-					
-					$wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".$ProfileID." AND ProfileMediaID=".$results["ProfileMediaID"]);
+					$wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=".$ProfileID." ");
+				    $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".$ProfileID." AND ProfileMediaID=".$results["ProfileMediaID"]);
 				}
 			rb_display_list();
 			exit;

@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 /*
  * Debug Mode
 
@@ -1782,7 +1782,7 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 	}
 	
 	
-	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %d  ORDER BY ProfileCustomOrder DESC";
+	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %d  ORDER BY ProfileCustomOrder ASC";
 	$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A);
 	$count3 = 0;
 	
@@ -1949,7 +1949,8 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					foreach($data as $val1){
 						
 						if($val1 != end($data) && $val1 != $data[0]){
-							if (trim(stripslashes($val1),'"') == htmlentities(stripslashes($ProfileCustomValue)) ) {
+
+							if (trim(stripslashes($val1),'"') == stripslashes($ProfileCustomValue) ) {
 								$isSelected = "selected=\"selected\"";
 								echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 							} else {
@@ -1980,7 +1981,11 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 
 				foreach($array_customOptions_values as $val){
-					$xplode = explode(",",$ProfileCustomValue);
+					if(strpos($ProfileCustomValue, ",") !== false){
+						$xplode = explode(",",$ProfileCustomValue);
+					}elseif(strpos($ProfileCustomValue, "|") !== false){
+						$xplode = explode("|",$ProfileCustomValue);
+					}
 					if(!empty($val)){
 						echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
 						echo "". $val."</label><br />";                               

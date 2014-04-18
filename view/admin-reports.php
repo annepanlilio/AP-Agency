@@ -2033,6 +2033,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 															
 																 $vv["ProfileDateBirth"] = !empty($vv["ProfileDateBirth"]) ? date("Y-m-d",strtotime($vv["ProfileDateBirth"])):date("Y-m-d");
 																 $p_table_values  .= "'".addslashes($vv[$key])."'";
+
 																
 															}else{
 														

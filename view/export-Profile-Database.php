@@ -69,7 +69,11 @@ global $wpdb;
 						 	$c_value_array[$key]='';
 						}
 						elseif(!is_int($rawValue)){
-                             $c_value_array[$key] = $rawValue;
+							 if(strpos($rawValue, "'") !== false && strpos($rawValue, "and") === false){
+                         	     $c_value_array[$key] = str_replace('""',"\"",str_replace('\'"',"'",$rawValue.'"'));
+	                        }else{
+	                        	        $c_value_array[$key] = $rawValue;
+	                        }
 					    }else
 							$c_value_array[$key]=$feet."ft ".$inches."in";
 						}
@@ -151,7 +155,11 @@ global $wpdb;
 							$c_value_array[$key]='';
 						}
 						elseif(!is_int($rawValue)){
-                             $c_value_array[$key] = $rawValue;
+						  if(strpos($rawValue, "'") !== false && strpos($rawValue, "and") === false){
+                          	     $c_value_array[$key] = str_replace('""',"\"",str_replace('\'"',"'",$rawValue.'"'));
+	                     }else{
+								 $c_value_array[$key] = $rawValue;
+							}
 					    }
 						else
 							$c_value_array[$key]=$feet."ft ".$inches."in";
