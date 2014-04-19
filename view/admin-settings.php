@@ -2364,7 +2364,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						$select_sql = "Select  * FROM " . table_agency_customfields_types . 
 						" WHERE ProfileCustomID= " . $data1["ProfileCustomID"];
 						
-						$select_sql = $wpdb->get_results($select_sql,ARRAY_A) or die($wpdb->print_error());
+						$select_sql = $wpdb->get_results($select_sql,ARRAY_A);// or die($wpdb->print_error());
 						
 						$fetch_type = current($select_sql);
 						
@@ -2469,7 +2469,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 																						//get custom types
 																						$_sql = "SELECT ProfileCustomTypes FROM " . table_agency_customfields_types . 
 																							" WHERE ProfileCustomID = $ProfileCustomID";
-																						$x = $wpdb->get_row($_sql) or die($wpdb->print_error());
+																						$x = $wpdb->get_row($_sql);// or die($wpdb->print_error());
 
                                                                                         if(strpos($x->ProfileCustomTypes,",") > -1){
                                                                                                 $rTypes = explode(",",$x->ProfileCustomTypes);

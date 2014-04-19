@@ -187,7 +187,7 @@ elseif ($ConfigID == 1) {
 	$throw_error = false;
 	
 	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-	$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+	$results1 =$wpdb->get_results($query1, ARRAY_A);
 	$count1 =  $wpdb->num_rows;
 	foreach ($results1 as $data1) {
 		$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
@@ -216,9 +216,9 @@ elseif ($ConfigID == 2) {
 	$arrayProfilesMissingFolders = array();
 	$throw_error = false;
 
-	if($_REQUEST['action'] == 'generate') {
+	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'generate') {
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 		foreach ($results1 as $data1) {
 			$dirURL = rb_agency_UPLOADPATH. $data1['ProfileGallery'];
@@ -238,7 +238,7 @@ elseif ($ConfigID == 2) {
 	<?php
 
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 		foreach ($results1 as $data1) {
 			$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
@@ -316,7 +316,7 @@ elseif ($ConfigID == 53) {
 		 * generated total count for folders
 		 */
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 	
 		echo "<h3>". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</h3>\n";
@@ -374,7 +374,7 @@ elseif ($ConfigID == 3) {
 	global $wpdb;
 
 	$query3 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-	$results3 =$wpdb->get_results($wpdb->prepare($query3), ARRAY_A);
+	$results3 =$wpdb->get_results($query3, ARRAY_A);
 	$count3 =  $wpdb->num_rows;
 	
 	foreach ($results3 as $data3) {
@@ -396,8 +396,8 @@ elseif ($ConfigID == 3) {
 						$file_ext = rb_agency_filenameextension($new_file);
 						if ($file_ext == "jpg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
 						
-							$query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = \"". $new_file ."\"";
-							$results3a =$wpdb->get_results($wpdb->prepare($query3a), ARRAY_A);
+							$query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = %s";
+							$results3a =$wpdb->get_results($wpdb->prepare($query3a,$new_file), ARRAY_A);
 							$count3a =  $wpdb->num_rows;
 							if ($count3a < 1) {
 								if($_GET['action'] == "add") {
@@ -424,7 +424,7 @@ elseif ($ConfigID == 3) {
 	if ($count3 < 1) {
 		echo "There are currently no profile records.";
 	}
-	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=add'>Add All Pending Changes</a>";
+	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=add' class='button-primary'>Add All Pending Changes</a>";
 
 
 
@@ -436,8 +436,10 @@ elseif ($ConfigID == 4) {
 
 	$stepSize = 100;
 	$query4t = "SELECT ProfileID FROM ". table_agency_profile ."";
-	$results4t =$wpdb->get_results($wpdb->prepare($query4t), ARRAY_A);
+	$results4t =$wpdb->get_results($query4t, ARRAY_A);
+	$pageString = "";
 	$count4total =  $wpdb->num_rows;
+
 	if (isset($_GET['Step'])) { 
 		$currentPage = $_GET['Step']; 
 		$step = $currentPage * $stepSize;
@@ -450,13 +452,13 @@ elseif ($ConfigID == 4) {
 	  //echo "Total pages:" . $totalPages;
 	   if($totalPages >= 1) {
 		 for($i = 1; $i <= $totalPages; $i++) {
-		   $pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=4&Step={$i}$queryVars\">Page $i</a>";
+		   $pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=4&Step={$i}".(!empty($queryVars)?$queryVars:"")."\">Page $i</a>";
 		   $pageString .= $i != $totalPages ? " | " : "";
 		 }
 	   }
 	echo $pageString;
 
-	if($_POST['action'] == 'update')
+	if(isset($_POST['action']) && $_POST['action'] == 'update')
 	{
 	
 		extract($_POST);
@@ -477,23 +479,23 @@ elseif ($ConfigID == 4) {
 		<p>Select the checkbox for the model desired.</p>
 		<form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 			<?php
-			$query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT $step,$stepSize"; //LIMIT $step,100
-			$results4 =$wpdb->get_results($wpdb->prepare($query4), ARRAY_A);
+			$query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT %d,%d"; //LIMIT $step,100
+			$results4 =$wpdb->get_results($wpdb->prepare($query4,$step,$stepSize), ARRAY_A);
 			$count4 =$wpdb->num_rows;
 			foreach ($results4 as $data4)  {
 				$dirURL = rb_agency_UPLOADDIR . $data4['ProfileGallery'];
 				$profileID = $data4['ProfileID'];
 
-				$query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
-				$results4b = $wpdb->get_results($wpdb->prepare($query4b), ARRAY_A);
+				$query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
+				$results4b = $wpdb->get_results($wpdb->prepare($query4b,$profileID), ARRAY_A);
 				$count4b = $wpdb->num_rows;
 				//echo $query4b ."<br />". $count4b ."<hr />";
 				if ($count4b < 1) {
 
 					echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
 			
-					$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = $profileID AND ProfileMediaType = 'Image'";
-					$results4a = $wpdb->get_results($wpdb->prepare($query4), ARRAY_A);
+					$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image'";
+					$results4a = $wpdb->get_results($wpdb->prepare($query4a,$profileID), ARRAY_A);
 					$count4a = $wpdb->num_rows;
 					if ($count4a < 1) {
 						echo "This profile has no images loaded.";
@@ -527,7 +529,7 @@ elseif ($ConfigID == 5) {
 	global $wpdb;
 	
 	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
-	$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+	$results1 = $wpdb->get_results($query1, ARRAY_A);
 	$count1 = $wpdb->num_rows;
 
 	foreach ($results1 as $data1) {
@@ -559,7 +561,7 @@ elseif ($ConfigID == 6) {
 	
 	global $wpdb;
 	
-	if($_POST['action'] == 'update') {
+	if(isset($_POST['action']) && $_POST['action'] == 'update') {
 		extract($_POST);
 		foreach($_POST as $key=>$value) {
 			if ($key !== "action" && $key !== "Update") {
@@ -574,7 +576,7 @@ elseif ($ConfigID == 6) {
 	<?php
 	
 	$query6 = "SELECT * FROM ". table_agency_profile ." WHERE ProfileIsActive = '0' ORDER BY ProfileContactNameFirst";
-	$results6 = $wpdb->get_results($wpdb->prepare($query6), ARRAY_A);
+	$results6 = $wpdb->get_results($query6, ARRAY_A);
 	$count6 = $wpdb->num_rows;
 
 	foreach ($results6 as $data6) {
@@ -582,12 +584,13 @@ elseif ($ConfigID == 6) {
 	}
 	if ($count6 < 1) {
 		echo "There are currently no inactive profile records.";
-	}
+	}else{
 	?>
 	<input type="hidden" value="update" name="action" />
 	<input type="submit" value="Submit" class="button-primary" name="Update" />
 	</form>
 	<?php
+	}
 } // End 6
 
 
@@ -600,7 +603,7 @@ elseif ($ConfigID == 7) {
 	<h3>Remove Orphans from Database</h3>
 	<?php
 	$query7 = "SELECT ProfileID, ProfileGallery FROM ". table_agency_profile ."";
-	$results7 = $wpdb->get_results($wpdb->prepare($query7), ARRAY_A);
+	$results7 = $wpdb->get_results($query7, ARRAY_A);
 	$count7 = $wpdb->num_rows;
 
 	foreach ($results7 as $data7 ) {
@@ -917,8 +920,9 @@ elseif ($ConfigID == 13) {
 	/*********** Step Size *************************************/
 	$stepSize = 20;
 	$query4t = "SELECT ProfileID FROM ". table_agency_profile ."";
-	$results4t = $wpdb->get_results($wpdb->prepare($query4t), ARRAY_A);
+	$results4t = $wpdb->get_results($query4t, ARRAY_A);
 	$count4total =  $wpdb->num_rows;
+	$pageString = "";
 	
 	if (isset($_GET['Step'])) { 
 		$currentPage = $_GET['Step']; 
@@ -932,7 +936,7 @@ elseif ($ConfigID == 13) {
 		//echo "Total pages:" . $totalPages;
 		if($totalPages >= 1) {
 			for($i = 1; $i <= $totalPages; $i++) {
-				$pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=13&Step={$i}$queryVars\">Page $i</a>";
+				$pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=13&Step={$i}".(isset($queryVars)?$queryVars:"")."\">Page $i</a>";
 				$pageString .= $i != $totalPages ? " | " : "";
 			}
 		}
@@ -941,8 +945,8 @@ elseif ($ConfigID == 13) {
 
 	/*********** Query Database *************************************/
 	
-		$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileGallery FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT $step,$stepSize"; //LIMIT $step,100
-		$results =  $wpdb->get_results($wpdb->prepare($query), ARRAY_A); 
+		$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileGallery FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst LIMIT %d,%d"; //LIMIT $step,100
+		$results =  $wpdb->get_results($wpdb->prepare($query,$step,$stepSize), ARRAY_A); 
 		$count = $wpdb->num_rows;
 		foreach ($results as $data ) {
 			
@@ -952,8 +956,8 @@ elseif ($ConfigID == 13) {
 			$ProfileID = $data['ProfileID'];
 
 
-			$queryImg = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  $ProfileID AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC";
-			$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg), ARRAY_A); 
+			$queryImg = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC";
+			$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg,$ProfileID ), ARRAY_A); 
 			$countImg = $wpdb->num_rows;
 			echo "<div><strong>$countImg total</strong></div>\n";
 			foreach ($resultsImg as $dataImg ) {

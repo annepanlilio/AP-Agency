@@ -6,7 +6,7 @@
   //$RB_DEBUG_MODE = true;
  */
 
-ini_set('display_errors', 'On');
+//ini_set('display_errors', 'On');
  
 /*
  * Set Sessions
@@ -20,10 +20,10 @@ ini_set('display_errors', 'On');
 		}
 
 // Set Mail
-	add_filter('wp_mail_content_type','rb_agency_set_content_type');
+	/*add_filter('wp_mail_content_type','rb_agency_set_content_type');
 		function rb_agency_set_content_type($content_type){
 					return 'text/html';
-		}
+		}*/
 	// Remove header already sent
 	function rb_output_buffer() {
 		ob_start();
@@ -70,7 +70,7 @@ ini_set('display_errors', 'On');
 			if( !is_admin() ) {
 				
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style.css'));
+				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style_base.css'));
 				wp_enqueue_style( 'rbagency-style' );
 
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
@@ -1411,13 +1411,14 @@ ini_set('display_errors', 'On');
 		// Set It Up	
 		global $wp_rewrite;
 		extract(shortcode_atts(array(
-				"profilesearch_layout" => "advanced"
+				"profilesearch_layout" => "advanced",
+				"profilesearch_advanced_button" => false
 		), $atts));
 		
 		if ( ($rb_agency_option_privacy > 1 && is_user_logged_in()) || ($rb_agency_option_privacy < 2) ) {
 			$isSearchPage = 1;
 				if(!isset($_POST['form_mode'])){
-					echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout);
+					echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout,$profilesearch_advanced_button);
 				} else {
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
 						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
@@ -2988,6 +2989,8 @@ function rb_display_profile_list(){
 		echo "<form method=\"post\">";
 		echo  __("Search User", rb_agency_TEXTDOMAIN) ."\n";
 		echo "<input type=\"text\" value=\"".$_POST['search_profiles']."\" name=\"search_profiles\" id=\"search_profiles\" size=\"20\" >";
+		echo "<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/?srch=1'\" />";
+		
 		echo "<input type=\"submit\" value=\"Search\" name=\"search_submit\" id=\"search_submit\" class=\"button-primary\">";
 		echo "</form>";
 	}

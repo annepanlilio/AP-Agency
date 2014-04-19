@@ -21,7 +21,7 @@ class RBAgency_Profile {
 	 * Search Form
 	 * Process Search
 	 */
-		public static function search_form($atts ='', $args = '', $type = 0, $profilesearch_layout = ''){
+		public static function search_form($atts ='', $args = '', $type = 0, $profilesearch_layout = '', $profilesearch_advanced_button = false){
 
 			/*
 			* Setup Requirements
@@ -564,12 +564,16 @@ class RBAgency_Profile {
 				}
 
 				echo "				<div class=\"rbfield rbsubmit rbsingle\">";
-				echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='". $rb_agency_searchurl ."\" />";
+				echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\"  />"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 				echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
+				if($profilesearch_advanced_button == true){
+				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+				}
 				if ( (get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' ){
 				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
 				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" )  || $profilesearch_layout == 'advanced' ){
 				echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+				
 				}
 				echo "				</div>\n";
 				echo "			</form>\n";
@@ -1507,7 +1511,7 @@ class RBAgency_Profile {
 						$p_image = rb_get_primary_image($data["ProfileID"]); 
 
 						if ($p_image) {
-							$displayHtml .=  "				<div class=\"image\"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $p_image ."\" /></div>\n";
+							$displayHtml .=  "				<div class=\"image\" style=\"height:240px\"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $p_image ."\" /></div>\n";
 						} else {
 							$displayHtml .=  "				<div class=\"image no-image\">NO IMAGE</div>\n";
 						}

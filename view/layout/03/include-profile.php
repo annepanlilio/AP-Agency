@@ -222,8 +222,8 @@ echo "								<ul>";
 
 										// Insert Custom Fields
 										$title_to_exclude = array("Experience");
-										rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude);
-
+										//rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude);
+										rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
 										if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 											echo "<li class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";

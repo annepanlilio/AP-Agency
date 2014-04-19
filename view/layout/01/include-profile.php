@@ -326,7 +326,7 @@ echo "				<div id=\"links\">\n";
 
 echo "				</div>\n";  // #links
 echo "			</div>\n";  // .rbcol-8
-
+if(empty($subview)){
 echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<div id=\"photos\">\n";
 	
@@ -340,7 +340,7 @@ echo "				<div id=\"photos\">\n";
 						echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 echo "				</div>\n"; // #photos
 echo "			</div>\n"; // .rbcol-12
-
+}
 echo "			<div class=\"rbclear\"></div>\n"; // Clear All
 echo "		</div>\n";  // Close Profile Layout
 echo "	</div>\n";  // Close Profile
