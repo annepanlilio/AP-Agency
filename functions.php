@@ -156,12 +156,14 @@ ini_set('display_errors', 'On');
 			} else {
 
 				// Loop through each feed item and display each item as a hyperlink.
-				foreach ( $rss_items as $item ) {
-					echo "  <div class=\"blogpost\">\n";
-					echo "    <h4><a href='". $item->get_permalink() ."' title='Posted ". $item->get_date('j F Y | g:i a') ."' target=\"_blank\">". $item->get_title() ."</a></h4>\n";
-					echo "    <div class=\"description\">". $item->get_description() ."</div>\n";
-					echo "    <div class=\"clear\"></div>\n";
-					echo "  </div>\n";
+				if(isset( $rss_items )){
+					foreach ( $rss_items as $item ) {
+						echo "  <div class=\"blogpost\">\n";
+						echo "    <h4><a href='". $item->get_permalink() ."' title='Posted ". $item->get_date('j F Y | g:i a') ."' target=\"_blank\">". $item->get_title() ."</a></h4>\n";
+						echo "    <div class=\"description\">". $item->get_description() ."</div>\n";
+						echo "    <div class=\"clear\"></div>\n";
+						echo "  </div>\n";
+					}
 				}
 			}
 			echo "</div>\n";
@@ -1949,8 +1951,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					foreach($data as $val1){
 						
 						if($val1 != end($data) && $val1 != $data[0]){
-
-							if (trim(stripslashes($val1),'"') == stripslashes($ProfileCustomValue) ) {
+							if (stripslashes($val1) == stripslashes($ProfileCustomValue) ) {
 								$isSelected = "selected=\"selected\"";
 								echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 							} else {
@@ -1985,6 +1986,8 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						$xplode = explode(",",$ProfileCustomValue);
 					}elseif(strpos($ProfileCustomValue, "|") !== false){
 						$xplode = explode("|",$ProfileCustomValue);
+					}else{
+						$xplode = array($ProfileCustomValue);
 					}
 					if(!empty($val)){
 						echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";

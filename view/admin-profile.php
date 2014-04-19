@@ -261,7 +261,7 @@ if (isset($_POST['action'])) {
 							if (is_array($value)) {
 								$value = implode(",", $value);
 							}
-							$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . $value . "')";
+							$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
 							$results1 = $wpdb->query($insert1);
 						}
 					}
@@ -335,7 +335,7 @@ if (isset($_POST['action'])) {
 						if (is_array($value)) {
 							$value = implode(",", $value);
 						}
-						$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . $value . "')";
+						$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
 						$results1 = $wpdb->query($insert1);
 					}
 				}

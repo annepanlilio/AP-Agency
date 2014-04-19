@@ -49,17 +49,18 @@ global $wpdb;
 				$c_value_array = array(); 
 
 				foreach ($subresult as $key => $sub_value) {
-					$wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomType IN(".$data_value['ProfileType'].")", ARRAY_A);
-				    $count = $wpdb->num_rows;
-				    if($count > 0){
-						$ProfileCustomValue = ""  ;
+					// $wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomType IN(".$data_value['ProfileType'].")", ARRAY_A);
+				 //    $count = $wpdb->num_rows;
+				 //    if($count > 0){
+					// 	$ProfileCustomValue = ""  ;
 						if(trim($sub_value['ProfileCustomValue']) != ""){
 							$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
 						} else {
 							$ProfileCustomValue = "";
 						}
-						$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
-					}
+						$temp_array[$sub_value['ProfileCustomID']] = stripslashes($ProfileCustomValue);
+					
+					//}
 				}
 
 				/*
@@ -139,18 +140,18 @@ global $wpdb;
 				$temp_array = array();
 
 				foreach ($subresult as $sub_value) {
-					$wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomType IN(".$data['ProfileType'].")", ARRAY_A);
+				/*	$wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomType IN(".$data['ProfileType'].")", ARRAY_A);
 				    $count = $wpdb->num_rows;
 				    if($count > 0){
-					
+				*/	
 						if(trim($sub_value['ProfileCustomValue']) != ""){
 							$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
 						} else {
 							$ProfileCustomValue = "";
 						}
 
-						$temp_array[$sub_value['ProfileCustomID']] = $ProfileCustomValue; 
-					}
+						$temp_array[$sub_value['ProfileCustomID']] = stripslashes($ProfileCustomValue); 
+					//}
 				}
 
 				/*

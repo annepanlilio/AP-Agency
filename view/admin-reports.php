@@ -2072,7 +2072,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 																			
 																		}
 																		
-																		$add_to_c_table="INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields)values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($vv[$key])."')";
+																		$add_to_c_table="INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields) values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($vv[$key])."')";
 																		$wpdb->query($add_to_c_table) or die(mysql_error());
 																		$pos++;
 																	}
