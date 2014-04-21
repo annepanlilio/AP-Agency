@@ -690,8 +690,8 @@ global $wpdb;
 
 		// Updating version number!
 		update_option('rb_agency_version', "2.0.8.1");
-		
 	}
+
 	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.8.1") {
 		// Add Table
 		if ($wpdb->get_var("show tables like '".table_agency_castingcart_jobs."'") !=table_agency_castingcart_jobs) { 
@@ -727,38 +727,30 @@ global $wpdb;
 
 		// Updating version number!
 		update_option('rb_agency_version', "2.0.8.2");
-		
 	}
 
 	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.8.2") {
 
-      	rb_agency_addColumn( table_agency_castingcart_availability,"CastingJobID","INT(10) NOT NULL DEFAULT '0'");
+		rb_agency_addColumn( table_agency_castingcart_availability,"CastingJobID","INT(10) NOT NULL DEFAULT '0'");
 
 		// Updating version number!
 		update_option('rb_agency_version', "2.0.8.3");
-		
 	}
 
 	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.8.3") {
 
-      	rb_agency_addColumn( table_agency_castingcart_jobs,"CastingJobTalents","VARCHAR(500)");
-
-      	
+		rb_agency_addColumn( table_agency_castingcart_jobs,"CastingJobTalents","VARCHAR(500)");
 
 		// Updating version number!
-	    update_option('rb_agency_version', "2.0.9");
-		
+		update_option('rb_agency_version', "2.0.9");
 	}
 
 	if (substr(get_option('rb_agency_version'), 0, 5) == "2.0.9") {
 
-      	rb_agency_addColumn( table_agency_castingcart_jobs,"CastingJobTalentsHash","VARCHAR(10)");
-
-      	
+		rb_agency_addColumn( table_agency_castingcart_jobs,"CastingJobTalentsHash","VARCHAR(10)");
 
 		// Updating version number!
-	    update_option('rb_agency_version', "2.0.9.0");
-		
+		update_option('rb_agency_version', "2.0.9.1");
 	}
 
 
