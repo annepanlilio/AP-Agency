@@ -30,6 +30,96 @@ if (isset($urlexploade[1])) {
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 
+
+echo "	<div id=\"rbprofile\">\n";
+echo "		<div id=\"rblayout-one\" class=\"rblayout\">\n";
+echo "			<div class=\"rbcol-12 rbcolumn\">\n";
+echo "				<header class=\"entry-header\">";
+echo "					<h1 class=\"entry-title\">". $ProfileContactDisplay ."</h1>";
+echo "				</header>";
+echo "			</div>\n"; // .rbcol-12
+echo "			<div class=\"rbcol-4 rbcolumn\">\n";
+echo "				<div id=\"profile-picture\">\n";
+						// images
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
+							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+						}
+echo "				</div>\n"; // #profile-picture
+echo "			</div>\n"; // .rbcol-4
+
+echo "			<div class=\"rbcol-5 rbcolumn\">\n";
+echo "				<div id=\"profile-info\">\n";
+echo "					<div id=\"stats\">\n";
+echo "						<ul>\n";
+								if (!empty($ProfileGender)) {
+									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=%d", $ProfileGender),ARRAY_A,0);
+									echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+								}
+
+								
+								if (!empty($ProfileStatHeight)) {
+									if ($rb_agency_option_unittype == 0) { // Metric
+										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									} else { // Imperial
+										$heightraw = $ProfileStatHeight;
+										$heightfeet = floor($heightraw/12);
+										$heightinch = $heightraw - floor($heightfeet*12);
+										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									}
+								}
+								if (!empty($ProfileStatWeight)) {
+									if ($rb_agency_option_unittype == 0) { // Metric
+										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
+									} else { // Imperial
+										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
+									}
+								}
+                               // Insert Custom Fields
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+								
+
+echo "						</ul>\n"; // Close Stats ul
+echo "					</div>\n"; // #stats
+
+echo "				</div>\n"; // #profile-info
+echo "			</div>\n";  // .rbcol-5
+
+echo "			<div class=\"rbcol-3 rbcolumn\">\n";
+echo "				<div id=\"links\">\n";
+
+
+					/*
+					 * Include Action Icons
+					 */
+
+						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
+
+
+echo "				</div>\n";  // #links
+echo "			</div>\n";  // .rbcol-8
+if(empty($subview)){
+echo "			<div class=\"rbcol-12 rbcolumn\">\n";
+echo "				<div id=\"photos\">\n";
+	
+						// images
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						foreach($resultsImg as $dataImg ){
+							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+						}
+						echo "	<div class=\"rbclear\"></div>\n"; // Clear All
+echo "				</div>\n"; // #photos
+echo "			</div>\n"; // .rbcol-12
+}
+echo "			<div class=\"rbclear\"></div>\n"; // Clear All
+echo "		</div>\n";  // Close Profile Layout
+echo "	</div>\n";  // Close Profile
+echo "	<div class=\"rbclear\"></div>\n"; // Clear All
+
 if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
 				<div class="allimages_div">
 					<script>  //JS to higlight selected images 
@@ -256,93 +346,4 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 				</form>
 				
 			<?php }
-
-echo "	<div id=\"rbprofile\">\n";
-echo "		<div id=\"rblayout-one\" class=\"rblayout\">\n";
-echo "			<div class=\"rbcol-12 rbcolumn\">\n";
-echo "				<header class=\"entry-header\">";
-echo "					<h1 class=\"entry-title\">". $ProfileContactDisplay ."</h1>";
-echo "				</header>";
-echo "			</div>\n"; // .rbcol-12
-echo "			<div class=\"rbcol-4 rbcolumn\">\n";
-echo "				<div id=\"profile-picture\">\n";
-						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
-						$countImg  = $wpdb->num_rows;
-						foreach($resultsImg as $dataImg ){
-							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
-						}
-echo "				</div>\n"; // #profile-picture
-echo "			</div>\n"; // .rbcol-4
-
-echo "			<div class=\"rbcol-5 rbcolumn\">\n";
-echo "				<div id=\"profile-info\">\n";
-echo "					<div id=\"stats\">\n";
-echo "						<ul>\n";
-								if (!empty($ProfileGender)) {
-									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=%d", $ProfileGender),ARRAY_A,0);
-									echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
-								}
-
-								
-								if (!empty($ProfileStatHeight)) {
-									if ($rb_agency_option_unittype == 0) { // Metric
-										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
-									} else { // Imperial
-										$heightraw = $ProfileStatHeight;
-										$heightfeet = floor($heightraw/12);
-										$heightinch = $heightraw - floor($heightfeet*12);
-										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
-									}
-								}
-								if (!empty($ProfileStatWeight)) {
-									if ($rb_agency_option_unittype == 0) { // Metric
-										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
-									} else { // Imperial
-										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
-									}
-								}
-                               // Insert Custom Fields
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-								
-
-echo "						</ul>\n"; // Close Stats ul
-echo "					</div>\n"; // #stats
-
-echo "				</div>\n"; // #profile-info
-echo "			</div>\n";  // .rbcol-5
-
-echo "			<div class=\"rbcol-3 rbcolumn\">\n";
-echo "				<div id=\"links\">\n";
-
-
-					/*
-					 * Include Action Icons
-					 */
-
-						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
-
-
-echo "				</div>\n";  // #links
-echo "			</div>\n";  // .rbcol-8
-if(empty($subview)){
-echo "			<div class=\"rbcol-12 rbcolumn\">\n";
-echo "				<div id=\"photos\">\n";
-	
-						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
-						$countImg  = $wpdb->num_rows;
-						foreach($resultsImg as $dataImg ){
-							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
-						}
-						echo "	<div class=\"rbclear\"></div>\n"; // Clear All
-echo "				</div>\n"; // #photos
-echo "			</div>\n"; // .rbcol-12
-}
-echo "			<div class=\"rbclear\"></div>\n"; // Clear All
-echo "		</div>\n";  // Close Profile Layout
-echo "	</div>\n";  // Close Profile
-echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 ?>
