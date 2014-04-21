@@ -103,7 +103,7 @@ echo "					<ul>\n";
 								}
 							}
 
-						// Other Media Type not the default ones
+						/*// Other Media Type not the default ones
 							$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType NOT IN ('Image','Resume','Polaroid','CompCard','Comp Card','Headshot','VoiceDemo','Voice Demo','Video Slate','Video Monologue','Demo Reel')";
 							$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 							$countMedia = $wpdb->num_rows;
@@ -113,7 +113,8 @@ echo "					<ul>\n";
 										echo "<li class=\"item video custom\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">". $dataMedia['ProfileMediaType'] . "</a></li>\n";
 									}
 								}
-							}
+							}*/
+							rb_agency_showMediaCategories($ProfileID, $ProfileGallery);
 
 echo "					</ul>\n";
 

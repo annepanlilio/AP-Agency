@@ -414,14 +414,26 @@ if (isset($_POST['action'])) {
 										$errorValidation['profileMedia'] = "<b><i>Please upload jpeg or png files only</i></b><br />";
 										$have_error = true;
 									}
-								} else {
+								} 
+								// Custom Media Categories
+								else if (strpos($uploadMediaType,"rbcustommedia") !== false) {
 									// Add to database
-									if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
+									$custom_media_info = explode("_",$uploadMediaType);
+									$custom_media_title = $custom_media_info[1];
+									$custom_media_type = $custom_media_info[2];
+									$custom_media_extenstion = $custom_media_info[3];
+									
+									if($custom_media_extenstion == "doc"){
+										$custom_media_extenstion = "application/octet-stream";
+									}
+
+									if (strpos($_FILES['profileMedia' . $i]['type'],$custom_media_extenstion) !== false) {
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 									} else {
-										$errorValidation['profileMedia'] = "<b><i>" . __("Please upload jpeg or png files only", rb_agencyinteract_TEXTDOMAIN) . "</i></b><br />";
+										$errorValidation['profileMedia'] = "<b><i>Please upload ".$custom_media_extenstion." files only</i></b><br />";
 										$have_error = true;
+
 									}
 								}
 							} // End count
@@ -510,8 +522,13 @@ if (isset($_POST['action'])) {
 
 			
 				/* --------------------------------------------------------- CLEAN THIS UP -------------- */
-
-				echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! <a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "\">" . __("Continue editing the record", rb_agency_TEXTDOMAIN) . "?</a></p></div>");
+				if(!$have_error){
+						echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! <a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "\">" . __("Continue editing the record", rb_agency_TEXTDOMAIN) . "?</a></p></div>");
+				}else{
+					foreach($errorValidation as $Error => $error){
+						echo ("<div id=\"message\" class=\"error\"><p>" . __($error, rb_agency_TEXTDOMAIN) . "</p></div>");
+					}
+				}
 			} else {
 				echo ("<div id=\"message\" class=\"error\"><p>" . __("Error updating record, please ensure you have filled out all required fields.", rb_agency_TEXTDOMAIN) . "</p></div>");
 			}
@@ -1325,7 +1342,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												$deleteTargetID = $_GET["targetid"];
 
 												// Verify Record
-												$queryImgConfirm = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d1' AND ProfileMediaID =  '%d2'";
+												$queryImgConfirm = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaID =  '%d'";
 												$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID, $deleteTargetID),ARRAY_A);
 												$countImgConfirm = $wpdb->num_rows;
 												foreach ($resultsImgConfirm  as $dataImgConfirm) {
@@ -1479,8 +1496,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$outLinkHeadShot .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
 									$outLinkComCard .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
-								} else {
-									$outCustomMediaLink .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
+								} else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
+										 $custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
+									$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
+									 $custom_media_type = $custom_media_info[2];
+									   $custom_media_id = $custom_media_info[4];
+									             $query = current($wpdb->get_results("SELECT MediaCategoryTitle, MediaCategoryFileType FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
+									
+									$outCustomMediaLink .= "<span style=\"text-transform: capitalize !important;\">" .$query["MediaCategoryTitle"] . "(".$query["MediaCategoryFileType"]."): </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								}
 							}
 							echo '<div class="media-files">';

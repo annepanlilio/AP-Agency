@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 /*
  * Debug Mode
 
@@ -1749,7 +1749,7 @@ if ( !function_exists('retrieve_title') ) {
 		* return title
 		*/
 		$check_type = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = %d";
-		$check_query = $wpdb->get_results($wpdb->prepare($check_type, $id),ARRAY_A) OR die($wpdb->print_error());
+		$check_query = $wpdb->get_results($wpdb->prepare($check_type, $id),ARRAY_A);// OR die($wpdb->print_error());
 		if(count($check_query) > 0){
 			$fetch = current($check_query);
 			return $fetch['DataTypeTitle'];
@@ -2665,12 +2665,36 @@ function rb_agency_getProfileIDByUserLinked($ProfileUserLinked){
 /*/
 function rb_agency_getMediaCategories($GenderID){
     global $wpdb;
-	$query = $wpdb->get_results("SELECT MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder FROM  ".table_agency_data_media." ORDER BY MediaCategoryOrder",ARRAY_A);
+	$query = $wpdb->get_results("SELECT * FROM  ".table_agency_data_media." ORDER BY MediaCategoryOrder",ARRAY_A);
 	$count = count($query);
 	foreach($query as $f){
 		if($f["MediaCategoryGender"] == $GenderID || $f["MediaCategoryGender"] == 0){
-			echo "<option value=\"".$f["MediaCategoryTitle"]."\">".$f["MediaCategoryTitle"]."</option>";	 
+			echo "<option value=\"rbcustommedia_".str_replace(" ","-",strtolower($f["MediaCategoryTitle"]))."_".$f["MediaCategoryLinkType"]."_".$f["MediaCategoryFileType"]."_".$f["MediaCategoryID"]."\">".$f["MediaCategoryTitle"]."(".$f["MediaCategoryFileType"].")</option>";	 
 		}
+	}
+}
+/*/
+* ======================== Display Media Categories===============
+* @Returns Media Categories
+/*/
+function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
+     global $wpdb;
+		$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' ";
+	    $resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
+	    									
+	foreach ($resultsMedia  as $dataMedia) {
+					 if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
+									 $custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
+									$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
+									 $custom_media_type = $custom_media_info[2];
+									   $custom_media_id = $custom_media_info[4];
+									             $query = current($wpdb->get_results("SELECT MediaCategoryTitle FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
+									if($custom_media_type == "link"){
+										echo "<li class=\"item custom_media-link\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".$query["MediaCategoryTitle"]. "</a></li>\n";
+									}elseif($custom_media_type == "button"){
+											echo "<li class=\"item custom_media-button\"><a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".$query["MediaCategoryTitle"]. "</a></li>\n";
+									}
+					}
 	}
 }
 
