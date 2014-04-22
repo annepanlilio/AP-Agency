@@ -39,7 +39,8 @@ header("Cache-control: private"); //IE 6 Fix
 			$rb_agency_option_gallerytype = isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0;
 				if ($rb_agency_option_gallerytype == 1) {
 					// Lightbox 2
-					$reltype = "data-lightbox=\"rbagency\"";
+					//$reltype = "data-lightbox=\"rbagency\"";
+					$reltype = "rel=\"lightbox[rbagency]\"";
 					$reltarget = ""; // target=\"_blank\"
 
 					wp_enqueue_script( 'lightbox2', plugins_url('/ext/lightbox2/js/lightbox-2.6.min.js', dirname(__FILE__)), array( 'jquery' ));

@@ -2254,6 +2254,9 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 			*/
 			$measurements_label = ""; 
 			$label = "";
+			
+					$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
+				
 			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 				if ($resultCustom->ProfileCustomType == 7){
 
@@ -2273,7 +2276,6 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 						}
 					}
 					$measurements_label = "<span class=\"label\">". $label ."</span>";
-
 
 					if($resultCustom->ProfileCustomOptions == 3 && $rb_agency_option_unittype ==1){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
