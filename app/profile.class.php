@@ -38,6 +38,7 @@ class RBAgency_Profile {
 					$rb_agency_option_formshow_type = isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0;
 					$rb_agency_option_formshow_gender = isset($rb_agency_options_arr['rb_agency_option_formshow_gender'])?$rb_agency_options_arr['rb_agency_option_formshow_gender']:0;
 					$rb_agency_option_formshow_age = isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0;
+					$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
 
 				// Which Type?
 				if ($type == 1) {
@@ -132,6 +133,14 @@ class RBAgency_Profile {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\">\n";
 						echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".RBAgency_Common::session("namelast")."\" /></div>\n";
+						echo "				</div>\n";
+				}
+
+				if ( ($rb_agency_option_formshow_displayname > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
+				
+						echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\">\n";
+						echo "					<label for=\"displayname\">". __("Display Name", rb_agency_TEXTDOMAIN) ."</label>\n";
+						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".RBAgency_Common::session("displayname")."\" /></div>\n";
 						echo "				</div>\n";
 				}
 
@@ -689,6 +698,10 @@ class RBAgency_Profile {
 						}
 					}
 
+					if (isset($_REQUEST['displayname']) && !empty($_REQUEST['displayname'])){
+							$filterArray['displayname'] = $_REQUEST['displayname'];
+					}
+
 
 				/*
 				 * General
@@ -785,6 +798,7 @@ class RBAgency_Profile {
 					"id" => NULL,
 					"namefirst" => NULL,
 					"namelast" => NULL,
+					"displayname" => NULL,
 					// General
 					"profiletype" => NULL,
 					"gender" => NULL,
@@ -836,10 +850,17 @@ class RBAgency_Profile {
 					$filter .= " AND profile.ProfileContactNameFirst LIKE '". mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namefirst))))) ."%'";
 				}
 
+				
 				// Last Name
 				if (isset($namelast) && !empty($namelast)){
 					$filter .= " AND profile.ProfileContactNameLast LIKE '".  mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namelast))))) ."%'";
 				}
+
+				// Display Name
+				if (isset($displayname) && !empty($displayname)){
+					$filter .= " AND profile.ProfileContactDisplay LIKE '". mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($displayname))))) ."%'";
+				}
+
 
 				// Type
 				if (isset($profiletype) && !empty($profiletype)){
