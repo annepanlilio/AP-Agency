@@ -11,15 +11,18 @@
 			$CastingJobAuditionVenue = "-";
 			$CastingJobAuditionTime = "-";
 			$CastingJobClothing = "-";
-			$CastingJobRCallBackWardrobe = "-";
+			$CastingJobRCallBack = "-";
+			$CastingJobRWardrobe = "-";
 			$CastingJobScript = "-";
 			$CastingJobShootDate = "-";
+			$CastingJobShootLocation = "-";
+			$CastingJobShootLocationMap = "-";
 			$CastingJobRoleFee = "-";
 			$CastingJobComments = "-";
 			$CastingJobSelectedFor = "-";
 			$CastingJobDateCreated = "-";
 			$CastingJobTalents = "-";
-            
+		  
             $castingcartJobHash = get_query_var("target");
            
            if(isset($castingcartJobHash)){
@@ -28,21 +31,24 @@
 		 	$data = $wpdb->get_results($wpdb->prepare($sql, $castingcartJobHash));
 		 	$data = current($data);
 		   if(!empty($data)){
-           	    $CastingJobID = $data->CastingJobID;
-			 	$CastingJobAudition = $data->CastingJobAudition; 
-				$CastingJobRole = $data->CastingJobRole;
-				$CastingJobAuditionDate = $data->CastingJobAuditionDate;
-				$CastingJobAuditionVenue = $data->CastingJobAuditionVenue;
-				$CastingJobAuditionTime = $data->CastingJobAuditionTime;
-				$CastingJobClothing = $data->CastingJobClothing;
-				$CastingJobRCallBackWardrobe = $data->CastingJobRCallBackWardrobe;
-				$CastingJobScript = $data->CastingJobScript;
-				$CastingJobShootDate = $data->CastingJobShootDate;
-				$CastingJobRoleFee = $data->CastingJobRoleFee;
-				$CastingJobComments = $data->CastingJobComments;
-				$CastingJobSelectedFor = $data->CastingJobSelectedFor;
-				$CastingJobDateCreated = $data->CastingJobDateCreated;
-				$CastingJobTalents = $data->CastingJobTalents;
+		 	$CastingJobAudition = $data->CastingJobAudition; 
+			$CastingJobRole = $data->CastingJobRole;
+			$CastingJobAuditionDate = $data->CastingJobAuditionDate;
+			$CastingJobAuditionVenue = $data->CastingJobAuditionVenue;
+			$CastingJobAuditionTime = $data->CastingJobAuditionTime;
+			$CastingJobClothing = $data->CastingJobClothing;
+			$CastingJobRCallBack = $data->CastingJobRCallBack;
+			$CastingJobRWardrobe = $data->CastingJobWardrobe;
+			$CastingJobScript = $data->CastingJobScript;
+			$CastingJobShootDate = $data->CastingJobShootDate;
+			$CastingJobShootLocation = $data->CastingJobShootLocation;
+			$CastingJobShootLocationMap = $data->CastingJobShootLocationMap;
+			$CastingJobRoleFee = $data->CastingJobRoleFee;
+			$CastingJobComments = $data->CastingJobComments;
+			$CastingJobSelectedFor = $data->CastingJobSelectedFor;
+			$CastingJobDateCreated = $data->CastingJobDateCreated;
+			$CastingJobTalents = $data->CastingJobTalents;
+		
 		   }
 
 		 }
@@ -136,8 +142,13 @@
 		      	</tr>
 
 		      	<tr>
-		      	<td  style="text-align:right;padding-right:20px;">Call Back/Wardrobe</td>
-		      	<td><?php echo $CastingJobRCallBackWardrobe; ?></td>
+		      	<td  style="text-align:right;padding-right:20px;">Call Back</td>
+		      	<td><?php echo $CastingJobRCallBack; ?></td>
+		      	</tr>
+
+				<tr>
+		      	<td  style="text-align:right;padding-right:20px;">Wardrobe</td>
+		      	<td><?php echo $CastingJobRWardrobe; ?></td>
 		      	</tr>
 
 		      	<tr>
@@ -149,6 +160,22 @@
 		      	<td  style="text-align:right;padding-right:20px;">Shoot Date:</td>
 		      	<td><?php echo $CastingJobShootDate; ?></td>
 		      	</tr>
+		      	<?php 
+		      		$GoogleMapLocation = explode("data=", $CastingJobShootLocationMap);
+		      	?>
+		      	<tr>
+		      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Shoot Location:</td>
+		      	<td style="width:600px;">
+		      	 <?php echo $CastingJobShootLocation; ?>
+		      	  <br/>
+		      	 <?php if(!empty($GoogleMapLocation)){?>
+		      	 <strong>Shoot Location Map</strong>
+		      	  <?php echo do_shortcode("[map]".$CastingJobShootLocation."[/map]"); ?>
+		      	  <a href="<?php echo $CastingJobShootLocationMap;?>">View on Google Map</a>
+		      	 <?php }?>
+		      	</td>
+		      	</tr>
+		      	
 
 		      	<tr>
 		      	<td  style="text-align:right;padding-right:20px;">Role Fee($)</td>
