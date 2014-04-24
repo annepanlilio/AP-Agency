@@ -753,5 +753,24 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.9.1");
 	}
 
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.1") {
+
+		rb_agency_addColumn( table_agency_castingcart_jobs,"CastingJobWardrobe","VARCHAR(600)");
+		$wpdb->query("ALTER TABLE ".table_agency_castingcart_jobs." CHANGE CastingJobRCallBackWardrobe CastingJobRCallBack VARCHAR(600)");
+	
+
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.9.2");
+	}
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.2") {
+
+		rb_agency_addColumn( table_agency_castingcart_jobs,"CastingJobShootLocation","VARCHAR(600)");
+	    rb_agency_addColumn( table_agency_castingcart_jobs,"CastingJobShootLocationMap","VARCHAR(600)");
+				
+
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.9.3");
+	}
+
 
 ?>

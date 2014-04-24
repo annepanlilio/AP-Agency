@@ -207,7 +207,12 @@ $siteurl = get_option('siteurl');
 											'".esc_attr($_POST["selectedfor"])."',
 											'".date("Y-m-d h:i:s")."',
 											'".$cartString."',
-											'".$hash."'
+											'".$hash."',
+											'".esc_attr($_POST["wardrobe"])."',
+											'".esc_attr($_POST["shootlocation"])."',
+											'".esc_attr($_POST["shootlocationmap"])."'
+											
+											
 											)
 									";
 									$wpdb->query($sql);
@@ -233,9 +238,12 @@ $siteurl = get_option('siteurl');
 											CastingJobAuditionVenue = '".esc_attr($_POST["auditionvenue"])."',
 											CastingJobAuditionTime = '".esc_attr($_POST["auditiontime"])."',
 											CastingJobClothing = '".esc_attr($_POST["auditionclothing"])."',
-											CastingJobRCallBackWardrobe = '".esc_attr($_POST["callback"])."',
+											CastingJobRCallBack = '".esc_attr($_POST["callback"])."',
+											CastingJobWardrobe = '".esc_attr($_POST["wardrobe"])."',
 											CastingJobScript = '".esc_attr($_POST["script"])."',
 											CastingJobShootDate = '".esc_attr($_POST["shootdate"])."',
+											CastingJobShootLocation = '".esc_attr($_POST["shootlocation"])."',
+											CastingJobShootLocationMap = '".esc_attr($_POST["shootlocationmap"])."',
 											CastingJobRoleFee = '".esc_attr($_POST["rolefee"])."',
 											CastingJobComments = '".esc_attr($_POST["comments"])."',
 											CastingJobSelectedFor = '".esc_attr($_POST["selectedfor"])."'
@@ -267,9 +275,12 @@ $siteurl = get_option('siteurl');
 			$CastingJobAuditionVenue = "";
 			$CastingJobAuditionTime = "";
 			$CastingJobClothing = "";
-			$CastingJobRCallBackWardrobe = "";
+			$CastingJobRCallBack = "";
+			$CastingJobRWardrobe = "";
 			$CastingJobScript = "";
 			$CastingJobShootDate = "";
+			$CastingJobShootLocation = "";
+			$CastingJobShootLocationMap = "";
 			$CastingJobRoleFee = "";
 			$CastingJobComments = "";
 			$CastingJobSelectedFor = "";
@@ -289,9 +300,12 @@ $siteurl = get_option('siteurl');
 			$CastingJobAuditionVenue = $data->CastingJobAuditionVenue;
 			$CastingJobAuditionTime = $data->CastingJobAuditionTime;
 			$CastingJobClothing = $data->CastingJobClothing;
-			$CastingJobRCallBackWardrobe = $data->CastingJobRCallBackWardrobe;
+			$CastingJobRCallBack = $data->CastingJobRCallBack;
+			$CastingJobRWardrobe = $data->CastingJobWardrobe;
 			$CastingJobScript = $data->CastingJobScript;
 			$CastingJobShootDate = $data->CastingJobShootDate;
+			$CastingJobShootLocation = $data->CastingJobShootLocation;
+			$CastingJobShootLocationMap = $data->CastingJobShootLocationMap;
 			$CastingJobRoleFee = $data->CastingJobRoleFee;
 			$CastingJobComments = $data->CastingJobComments;
 			$CastingJobSelectedFor = $data->CastingJobSelectedFor;
@@ -349,16 +363,28 @@ $siteurl = get_option('siteurl');
 						echo "<div><input type=\"text\" id=\"auditionclothing\" name=\"auditionclothing\" value=\"".$CastingJobClothing."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
-						echo "<label for=\"callback\">Call Back / Wardrobe</label>";
-						echo "<div><input type=\"text\" id=\"callback\" name=\"callback\" value=\"".$CastingJobRCallBackWardrobe."\"></div>";
+						echo "<label for=\"callback\">Call Back</label>";
+						echo "<div><input type=\"text\" id=\"callback\" name=\"callback\" value=\"".$CastingJobRCallBack."\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"wardrobe\">Wardrobe</label>";
+						echo "<div><input type=\"text\" id=\"wardrobe\" name=\"wardrobe\" value=\"".$CastingJobRWardrobe."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"script\">Script</label>";
 						echo "<div><input type=\"text\" id=\"script\" name=\"script\" value=\"".$CastingJobScript."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
-						echo "<label for=\"shortdate\">Shoot Date</label>";
+						echo "<label for=\"shootdate\">Shoot Date</label>";
 						echo "<div><input type=\"text\" id=\"shootdate\" name=\"shootdate\" value=\"".$CastingJobShootDate."\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"shootlocation\">Shoot Location</label>";
+						echo "<div><input type=\"text\" id=\"shootlocation\" name=\"shootlocation\" value=\"".$CastingJobShootLocation."\"></div>";
+					echo "</div>";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"shootlocationmap\">Google Map URL</label>";
+						echo "<div><input type=\"text\" id=\"shootlocationmap\" name=\"shootlocationmap\" value=\"".$CastingJobShootLocationMap."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"rolefee\">Role Fee($)</label>";
@@ -375,14 +401,15 @@ $siteurl = get_option('siteurl');
 						echo "<option>Client to Confirm</option>";
 						echo "</select>";
 						echo "</div>";
-					echo "</div>";
+					echo "</div><br/><br/>";
                     if(isset($_GET["CastingJobID"])){
-                    	echo "<input type=\"checkbox\" name=\"resend\" value=\"1\"/> Resend notifcation to selected talents \n\n<br/><br/>";
                     	echo "<input type=\"submit\" value=\"Save\" name=\"castingJob\" class=\"button-primary\" />";
                     	echo "<input type=\"hidden\" name=\"action2\" value=\"edit\"/>";
                     	echo "<input type=\"hidden\" name=\"profileselected\" value=\"".$CastingJobTalents."\"/>";
                     	echo "<input type=\"hidden\" name=\"CastingJobHash\" value=\"".$CastingJobHash."\"/>";
-                    	echo "<a href=\"".admin_url("admin.php?page=". $_GET['page'])."&amp;action=informTalent\" class=\"button\">Cancel</a>";
+                    	echo "<a href=\"".admin_url("admin.php?page=". $_GET['page'])."&amp;action=informTalent\" class=\"button\">Cancel</a>\t";
+                    	echo "<input type=\"checkbox\" name=\"resend\" value=\"1\"/> &nbsp;Resend notifcation to selected talents \n\n";
+                    	
 
 
                     }else{
