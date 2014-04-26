@@ -171,7 +171,7 @@
 		      	 <?php if(!empty($GoogleMapLocation)){?>
 		      	 <strong>Shoot Location Map</strong>
 		      	  <?php echo do_shortcode("[map]".$CastingJobShootLocation."[/map]"); ?>
-		      	  <a href="<?php echo $CastingJobShootLocationMap;?>">View on Google Map</a>
+		      	  <a href="<?php echo $CastingJobShootLocationMap;?>" target="_blank">View on Google Map</a>
 		      	 <?php }?>
 		      	</td>
 		      	</tr>

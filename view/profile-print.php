@@ -180,11 +180,12 @@ global $wpdb;
 			$cartString = implode(",", $cartArray);
 			$hasQuery = true;
 
+
 			// Show Cart
 			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY ProfileContactNameFirst ASC";
-			$results = $wpdb->get_results($query) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 			$count = count($results);
-			
+
 			if ($count < 1) {
 				echo "There are currently no profiles in the casting cart.";
 				$hasQuery = false;
