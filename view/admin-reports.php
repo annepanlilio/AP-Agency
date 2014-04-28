@@ -1932,7 +1932,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 		// Check for invalid header profile field format
 		foreach($arr_import_headers as $pf){
 			 if(!in_array($pf,$arr_profile_fields)){
-			 	die("<br/><div class='wrap' style='color:#FF0000'>Invalid Column name Format: ".$pf."</div>");
+			 	unset($arr_profile_fields[$pf]);
+			 	//die("<br/><div class='wrap' style='color:#FF0000'>Invalid Column name Format: ".$pf."</div>");
 			 }
 		}
 	

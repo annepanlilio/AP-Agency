@@ -1930,7 +1930,6 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				}
 			 
 			} elseif ($ProfileCustomType == 3) {  // Drop Down
-				
 				$dropdown_arr = explode(":",$data3['ProfileCustomOptions']);
 				if(count($dropdown_arr) == 1){
 					list($option1) =  $dropdown_arr;
@@ -1952,7 +1951,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					foreach($data as $val1){
 						
 						if($val1 != end($data) && $val1 != $data[0]){
-							if (stripslashes($val1) == stripslashes($ProfileCustomValue) ) {
+							if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') ) {
 								$isSelected = "selected=\"selected\"";
 								echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 							} else {
