@@ -185,11 +185,16 @@ class RBAgency_Casting {
 				echo "   <div class=\"inner\">\n";
 				echo "      <a href=\"?page=rb_agency_searchsaved&action=searchSave\" title=\"". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Save Search & Email", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"?page=rb_agency_search&action=massEmail#compose\" title=\"". __("Mass Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Mass Email", rb_agency_TEXTDOMAIN) ."</a>\n";
-				echo "      <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
-				echo "      <a href=\"#\" onClick=\"window.open('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0','mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
+				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
+				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"?page=rb_agency_searchsaved&action=informTalent\" title=\"". __("InformTalent", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Inform Talent", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "   </div>\n";
 				echo "</div>\n";
+				echo "<script type=\"text/javascript\">\n";
+				echo "function openWindow(url){ \n";
+				echo " window.open(url,'mywindow'+Math.random(),'width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes');";
+				echo "}\n";
+				echo "</script>\n";
 				?>
 			
 
