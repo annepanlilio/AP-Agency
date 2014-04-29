@@ -181,6 +181,7 @@ $siteurl = get_option('siteurl');
 		<div class="wrap" style="min-width: 1020px;">
 		 <div id="rb-overview-icon" class="icon32"></div>
 		 <h2>Casting Jobs</h2>
+		
 		 <?php 
 		  if(isset($_POST["action2"]) && $_POST["action2"] =="add"){
           	   	if (isset($_SESSION['cartArray'])) {
@@ -269,55 +270,56 @@ $siteurl = get_option('siteurl');
           	       $wpdb->query("DELETE FROM ".table_agency_castingcart_jobs." WHERE CastingJobID = '".$_GET["removeCastingJobID"]."'");
           	       echo ('<div id="message" class="updated"><p>Deleted successfully!</p></div>');
           }
-			$CastingJobAudition = ""; 
-			$CastingJobRole = "";
-			$CastingJobAuditionDate = "";
-			$CastingJobAuditionVenue = "";
-			$CastingJobAuditionTime = "";
-			$CastingJobClothing = "";
-			$CastingJobRCallBack = "";
-			$CastingJobRWardrobe = "";
-			$CastingJobScript = "";
-			$CastingJobShootDate = "";
-			$CastingJobShootLocation = "";
-			$CastingJobShootLocationMap = "";
-			$CastingJobRoleFee = "";
-			$CastingJobComments = "";
-			$CastingJobSelectedFor = "";
-			$CastingJobDateCreated = "";
-			$CastingJobTalents = "";
-			$CastingJobHash = "";
+				$CastingJobAudition = ""; 
+				$CastingJobRole = "";
+				$CastingJobAuditionDate = "";
+				$CastingJobAuditionVenue = "";
+				$CastingJobAuditionTime = "";
+				$CastingJobClothing = "";
+				$CastingJobRCallBack = "";
+				$CastingJobRWardrobe = "";
+				$CastingJobScript = "";
+				$CastingJobShootDate = "";
+				$CastingJobShootLocation = "";
+				$CastingJobShootLocationMap = "";
+				$CastingJobRoleFee = "";
+				$CastingJobComments = "";
+				$CastingJobSelectedFor = "";
+				$CastingJobDateCreated = "";
+				$CastingJobTalents = "";
+				$CastingJobHash = "";
 
 		   if(isset($_GET["CastingJobID"])){
 		 	
-		 	$sql =  "SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobID= %d ";
-		 	$data = $wpdb->get_results($wpdb->prepare($sql, $_GET["CastingJobID"]));
-		 	$data = current($data);
- 
-		 	$CastingJobAudition = $data->CastingJobAudition; 
-			$CastingJobRole = $data->CastingJobRole;
-			$CastingJobAuditionDate = $data->CastingJobAuditionDate;
-			$CastingJobAuditionVenue = $data->CastingJobAuditionVenue;
-			$CastingJobAuditionTime = $data->CastingJobAuditionTime;
-			$CastingJobClothing = $data->CastingJobClothing;
-			$CastingJobRCallBack = $data->CastingJobRCallBack;
-			$CastingJobRWardrobe = $data->CastingJobWardrobe;
-			$CastingJobScript = $data->CastingJobScript;
-			$CastingJobShootDate = $data->CastingJobShootDate;
-			$CastingJobShootLocation = $data->CastingJobShootLocation;
-			$CastingJobShootLocationMap = $data->CastingJobShootLocationMap;
-			$CastingJobRoleFee = $data->CastingJobRoleFee;
-			$CastingJobComments = $data->CastingJobComments;
-			$CastingJobSelectedFor = $data->CastingJobSelectedFor;
-			$CastingJobDateCreated = $data->CastingJobDateCreated;
-			$CastingJobTalents = $data->CastingJobTalents;
-			$CastingJobHash = $data->CastingJobTalentsHash;
-		 }
+			 	$sql =  "SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobID= %d ";
+			 	$data = $wpdb->get_results($wpdb->prepare($sql, $_GET["CastingJobID"]));
+			 	$data = current($data);
+	 
+			 	$CastingJobAudition = $data->CastingJobAudition; 
+				$CastingJobRole = $data->CastingJobRole;
+				$CastingJobAuditionDate = $data->CastingJobAuditionDate;
+				$CastingJobAuditionVenue = $data->CastingJobAuditionVenue;
+				$CastingJobAuditionTime = $data->CastingJobAuditionTime;
+				$CastingJobClothing = $data->CastingJobClothing;
+				$CastingJobRCallBack = $data->CastingJobRCallBack;
+				$CastingJobRWardrobe = $data->CastingJobWardrobe;
+				$CastingJobScript = $data->CastingJobScript;
+				$CastingJobShootDate = $data->CastingJobShootDate;
+				$CastingJobShootLocation = $data->CastingJobShootLocation;
+				$CastingJobShootLocationMap = $data->CastingJobShootLocationMap;
+				$CastingJobRoleFee = $data->CastingJobRoleFee;
+				$CastingJobComments = $data->CastingJobComments;
+				$CastingJobSelectedFor = $data->CastingJobSelectedFor;
+				$CastingJobDateCreated = $data->CastingJobDateCreated;
+				$CastingJobTalents = $data->CastingJobTalents;
+				$CastingJobHash = $data->CastingJobTalentsHash;
+			 }
          
 		 ?>
 
 
       <?php 
+     
 		echo "<style type=\"text/css\">\n
 				.castingtext label{
 					float: left;
@@ -331,12 +333,16 @@ $siteurl = get_option('siteurl');
 				</style> ";
 				 echo "<div class=\"boxblock-container\" style=\"float: left; width: 39%;margin-right:60px\">";
 				 echo "<div class=\"boxblock\" style=\"width:500px; \">";
-				 if(isset($_GET["CastingJobID"])){
-					echo "<h3>Edit Talent Jobs</h3>";
-				 }else{
-				 	echo "<h3>Talent Jobs</h3>";
-				}
+				 
+						 if(isset($_GET["CastingJobID"])){
+							echo "<h3>Edit Talent Jobs</h3>";
+						 }else{
+						 	echo "<h3>Talent Jobs</h3>";
+						}
 				 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+				  if(empty( $_SESSION['cartArray'] )){
+			      	  echo "Casting cart is empty.";
+			      }else{
 				 echo "<form class=\"castingtext\" method=\"post\" action=\"\">";
 				   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"audition\">Audition</label>";
@@ -422,8 +428,11 @@ $siteurl = get_option('siteurl');
 				  	
 				  	
 				  echo "</form>";
+				  } // if casting cart is not empty
+				
 				  echo "</div>";
 				  echo "</div>";
+
                  
                  $cartArray = null;
 				// Set Casting Cart Session
@@ -433,11 +442,7 @@ $siteurl = get_option('siteurl');
 			     }elseif(isset($_GET["CastingJobID"])){
 			     	$cartArray = explode(",",$CastingJobTalents);
 				
-				} else{
-			    		echo "Session expired. Please search again.";
-
-
-			    }
+				} 
 			    ?>
                  <script type="text/javascript">
                  jQuery(document).ready(function(){
@@ -479,15 +484,14 @@ $siteurl = get_option('siteurl');
                  </script>
  
 			    <?php
-
-			    if(isset($cartArray )){
-
+                	if(!empty($_SESSION['cartArray'])){
 						 echo "<div id=\"shortlisted\" class=\"boxblock-container\" style=\"float: left; width: 39%;\">";
 						 echo "<div class=\"boxblock\" style=\"width:490px; \">";
 						 echo "<h3>Talents Shortlisted";
 						 echo "<span style=\"font-size:12px;float:right;\">".(isset($_GET["CastingJobID"])?"<input type=\"checkbox\" id=\"selectall\"/>Select all talents</span>":"")."</h3>";
 						 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
-						
+					
+
 					?>
 					
 
@@ -535,12 +539,13 @@ $siteurl = get_option('siteurl');
 							
 
 					<?php
-			  
-				    echo "<div style=\"clear:both;\"></div>";
+			  	  echo "<div style=\"clear:both;\"></div>";
 					echo "</div>";
 				    echo "</div>";
 				  echo "</div>";
-				}
+				  	} // end if cart is empty
+				  
+				
 		?>
         </div>		
         <div style="float:left;width:50%;margin-left: 20px;">

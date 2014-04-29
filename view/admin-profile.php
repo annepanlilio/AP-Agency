@@ -422,12 +422,20 @@ if (isset($_POST['action'])) {
 									$custom_media_title = $custom_media_info[1];
 									$custom_media_type = $custom_media_info[2];
 									$custom_media_extenstion = $custom_media_info[3];
+									$arr_extensions = array();
+
+									array_push($arr_extensions, $custom_media_extenstion);
 									
 									if($custom_media_extenstion == "doc"){
-										$custom_media_extenstion = "application/octet-stream";
+										array_push($arr_extensions,"application/octet-stream");
+									}elseif($custom_media_extenstion == "mp3"){
+										array_push($arr_extensions,"audio/mpeg");
+										array_push($arr_extensions,"audio/mp3");
+									}elseif($custom_media_extenstion == "pdf"){
+										array_push($arr_extensions,"application/pdf");
 									}
 
-									if (strpos($_FILES['profileMedia' . $i]['type'],$custom_media_extenstion) !== false) {
+									if (in_array($_FILES['profileMedia' . $i]['type'], $arr_extensions)) {
 										$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
 										move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], rb_agency_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 									} else {
