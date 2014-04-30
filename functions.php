@@ -2691,9 +2691,9 @@ function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
 									   $custom_media_id = $custom_media_info[4];
 									             $query = current($wpdb->get_results("SELECT MediaCategoryTitle FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
 									if($custom_media_type == "link"){
-										echo "<li class=\"item custom_media-link\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".$query["MediaCategoryTitle"]. "</a></li>\n";
+										echo "<li class=\"item custom_media-link\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
 									}elseif($custom_media_type == "button"){
-											echo "<li class=\"item custom_media-button\"><a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".$query["MediaCategoryTitle"]. "</a></li>\n";
+											echo "<li class=\"item custom_media-button\"><a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
 									}
 					}
 	}

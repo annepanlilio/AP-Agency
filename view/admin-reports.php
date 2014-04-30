@@ -83,6 +83,13 @@ if ($ConfigID == 0) {
 	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "\">". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
 	echo "      <p>". __("Check for any empty folders which do no have models assigned using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
+
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Profile Data Migration", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=83\" title=\"". __("Check for Profile Data Migration", rb_agency_TEXTDOMAIN) . "\">". __("Check for Profile Data Migration", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Search profile records for fields migration", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "    </div>\n";
+
 	echo "</div>\n";
 	echo "<hr />\n";
 
@@ -1560,6 +1567,140 @@ elseif ($ConfigID == 14) {
 
 
 } //END $ConfigID == 14
+elseif($ConfigID == '83'){
+	?>
+	<h3>Check for Profile Data migration errors</h3>
+
+	<?php 
+		$query1 = "SELECT * FROM ". table_agency_profile ."  ORDER BY ProfileContactNameFirst";
+		$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
+		$count1 = $wpdb->num_rows;
+		$arr_profiles = array();
+		$has_no_types = 0;
+	
+
+		foreach ($results1 as $data1) {
+			$ProfileID				=$data1["ProfileID"];
+			$ProfileContactNameFirst=$data1["ProfileContactNameFirst"];
+			$ProfileContactNameLast	=$data1["ProfileContactNameLast"];
+			$ProfileContactDisplay	=$data1["ProfileContactDisplay"];
+			$ProfileGallery			=$data1["ProfileGallery"];
+			$ProfileGender 			=$data1["ProfileGender"];
+			$ProfileType 			=$data1["ProfileType"];
+		
+				$get = $wpdb->get_results( "SELECT DataTypeTitle FROM " . table_agency_data_type . " WHERE DataTypeID IN(".(!empty($ProfileType)?$ProfileType:0).")",ARRAY_A);
+				$arr_data_type = array();
+
+				if ($wpdb->num_rows > 0 ){
+					foreach($get as $k){
+						array_push($arr_data_type,$k['DataTypeTitle']); 
+					}
+				}
+
+				$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID = '%s' ";
+				$fetchProfileGender =  $wpdb->get_row($wpdb->prepare($query,isset($ProfileGender)?$ProfileGender:0),ARRAY_A,0);
+				$ProfileGenderTitle = $fetchProfileGender["GenderTitle"];
+			
+			array_push($arr_profiles, array(
+				"fullname" => $ProfileContactNameFirst." ".$ProfileContactNameLast,
+				"datatype" => $arr_data_type,
+				"datatype_raw" => "",
+				"gender_raw" => "",
+				"gender"   => $ProfileGenderTitle,
+				"profileid" => $ProfileID
+
+			));	
+			if(empty($arr_data_type) || empty($ProfileGender)){
+				$has_no_types++;
+			}
+
+		}
+		if($has_no_types > 0){
+			if($has_no_types > 1){
+				echo "<strong>".$has_no_types." profiles have errors.</strong> <a class=\"button button-primary\" href=\"?page=rb_agency_reports&ConfigID=83&action=fix-profiles\">Fix all errors now</a>";
+			}else{
+				echo "<strong>".$has_no_types." profile has errors.</strong> <a class=\"button button-primary\" href=\"?page=rb_agency_reports&ConfigID=83&action=fix-profiles\">Fix all errors now</a>";
+			}
+		}else{
+			echo "No errors found!";
+		}
+		echo "<br/><br/>";
+		foreach ($arr_profiles as $key ) {
+			if(empty($key["datatype"]) || empty($key["gender"])){
+				echo "<div style=\"border:1px solid #ccc;width:80%;padding:10px;background:#FAFAFA\">";
+				echo "<strong style=\"text-transform:capitalize;\">".$key["fullname"]."</strong>";
+				echo !empty($key["gender"])?", ".$key["gender"]:"";
+				echo "<br/><br/>";
+				if(empty($key["datatype"])){
+					echo "<span style=\"color:rgb(250, 5, 5);background:#fff;padding:1px;border:1px solid #ccc;\">No <strong>profile types</strong> assigned</span>";
+				}
+				if(empty($key["gender"])){
+					echo "<span style=\"color:rgb(250, 5, 5);background:#fff;padding:1px;border:1px solid #ccc;\">No <strong>gender</strong> assigned</span>";
+				}
+				echo "<br/><br/>";
+				echo "<strong>Fixes Found based from old data:</strong><br/>";
+				$subresult = $wpdb->get_results($wpdb->prepare("SELECT cfields_mux.*, cfields.ProfileCustomShowGender, cfields.ProfileCustomType FROM ". table_agency_customfield_mux ." as cfields_mux INNER JOIN ".table_agency_customfields." as cfields WHERE cfields_mux.ProfileID = %d AND cfields_mux.ProfileCustomID = cfields.ProfileCustomID", $ProfileID),ARRAY_A);
+				$arr_gender = array();
+				$arr_ptypes = array();
+				$arr_data_type = array();
+				$arr_data_gender = array();
+
+				foreach($subresult as $s){
+					array_push($arr_gender, $s["ProfileCustomShowGender"]);
+					array_push($arr_ptypes, $s["ProfileCustomType"]);
+				}
+				
+				$gender = implode(",",array_unique($arr_gender));
+				$ptypes = implode(",",array_unique($arr_ptypes));
+
+				$get = $wpdb->get_results( "SELECT DataTypeTitle FROM " . table_agency_data_type . " WHERE DataTypeID IN(".(!empty($ptypes)?$ptypes:0).")",ARRAY_A);
+				
+				if ($wpdb->num_rows > 0 ){
+					foreach($get as $k){
+						array_push($arr_data_type,$k['DataTypeTitle']); 
+					}
+				}
+				$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID IN(".(isset($gender)?$gender:0).") ";
+				$fetchProfileGender  =   $wpdb->get_row($query,ARRAY_A,0);
+
+				$key["datatype_raw"] = (!empty($ptypes)?$ptypes:0);
+				$key["gender_raw"] = $fetchProfileGender["GenderID"];
+				
+				if ($wpdb->num_rows > 0 ){
+					
+						array_push($arr_data_gender,$fetchProfileGender["GenderTitle"]); 
+					
+				}
+				if(empty($key["gender"])){
+					echo "User must be ".$arr_data_gender[0];
+					echo "<br/>";
+				}
+				if(empty($key["datatype"])){
+					echo "Possible profile type(s): ".implode(",",$arr_data_type);
+				
+					echo "<br/>";
+				}
+				// Update Profiles Types and Gender
+				if(isset($_GET["action"]) && $_GET["action"] == "fix-profiles"){
+				   echo "<br/><strong>Fixed errors:</strong><br/><br/>";
+			   	   if(empty($key["gender"])){
+			   	   	$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$key["gender_raw"]."' WHERE ProfileID='".$key["profileid"]."'");
+    		        echo "<strong style=\"color:green;\">Succesfully assigned gender to profile.</strong><br/>";
+			   	   }
+			   	   if(empty($key["datatype"])){
+			   	   	  $wpdb->query("UPDATE ".table_agency_profile." SET ProfileType='".$key["datatype_raw"]."' WHERE ProfileID='".$key["profileid"]."'");
+			   	     echo "<strong style=\"color:green;\">Succesfully assigned profile type to profile.</strong><br/>";
+			   	   }
+			   	 
+			   	  
+			    }
+
+
+			echo "</div>";
+			}
+		}
+
+}
 elseif($ConfigID == '99'){
 	
         $active = get_option('active_plugins');
@@ -1576,6 +1717,7 @@ elseif($ConfigID == '99'){
 	}
 	
 }
+// End Config == 99
 
 
 

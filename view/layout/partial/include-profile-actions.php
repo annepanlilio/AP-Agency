@@ -20,7 +20,7 @@ echo "					<ul>\n";
 							$countImg  = $wpdb->num_rows;
 
 							if($countImg  > 0){
-								echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
+								echo "<li class=\"item printphotos\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
 							}
 
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");

@@ -324,7 +324,7 @@ if (isset($_POST['action'])) {
 					update_usermeta($ProfileUserLinked, 'user_email', esc_attr($ProfileContactEmail));
 				}
 
-				// Remove Old Custom Field Values
+				/*// Remove Old Custom Field Values
 				$delete1 = "DELETE FROM " . table_agency_customfield_mux . " WHERE ProfileID = \"" . $ProfileID . "\"";
 				$results1 = $wpdb->query($delete1);
 
@@ -338,7 +338,7 @@ if (isset($_POST['action'])) {
 						$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
 						$results1 = $wpdb->query($insert1);
 					}
-				}
+				}*/
 
 				// Check Directory - create directory if does not exist
 				$ProfileGallery = rb_agency_checkdir($ProfileGallery);
@@ -968,7 +968,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo " <tbody>\n";
 
 							echo "    <tr valign=\"top\">\n";
-							echo "      <th scope=\"row\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
+							echo "      <th scope=\"row\" data=\"this_".$ProfileType."\">" . __("Classification", rb_agency_TEXTDOMAIN) . "</th>\n";
 							echo "      <td>\n";
 							echo "      <fieldset>\n";
 							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
@@ -1511,7 +1511,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									   $custom_media_id = $custom_media_info[4];
 									             $query = current($wpdb->get_results("SELECT MediaCategoryTitle, MediaCategoryFileType FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
 									
-									$outCustomMediaLink .= "<span style=\"text-transform: capitalize !important;\">" .$query["MediaCategoryTitle"] . "(".$query["MediaCategoryFileType"]."): </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
+									$outCustomMediaLink .= "<span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) . "(".(isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."): </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								}
 							}
 							echo '<div class="media-files">';
