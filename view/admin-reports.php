@@ -1606,11 +1606,12 @@ elseif($ConfigID == '83'){
 				"datatype" => $arr_data_type,
 				"datatype_raw" => "",
 				"gender_raw" => "",
+				"contactdisplay" => $ProfileContactDisplay,
 				"gender"   => $ProfileGenderTitle,
 				"profileid" => $ProfileID
 
-			));	
-			if(empty($arr_data_type) || empty($ProfileGender)){
+			));	  
+			if(empty($arr_data_type) || empty($ProfileGender) || strpos($ProfileContactDisplay,"  ") !== false){
 				$has_no_types++;
 			}
 
@@ -1626,7 +1627,7 @@ elseif($ConfigID == '83'){
 		}
 		echo "<br/><br/>";
 		foreach ($arr_profiles as $key ) {
-			if(empty($key["datatype"]) || empty($key["gender"])){
+			if(empty($key["datatype"]) || empty($key["gender"]) || strpos($key["contactdisplay"],"  ") !== false){
 				echo "<div style=\"border:1px solid #ccc;width:80%;padding:10px;background:#FAFAFA\">";
 				echo "<strong style=\"text-transform:capitalize;\">".$key["fullname"]."</strong>";
 				echo !empty($key["gender"])?", ".$key["gender"]:"";
@@ -1637,8 +1638,14 @@ elseif($ConfigID == '83'){
 				if(empty($key["gender"])){
 					echo "<span style=\"color:rgb(250, 5, 5);background:#fff;padding:1px;border:1px solid #ccc;\">No <strong>gender</strong> assigned</span>";
 				}
+				if( strpos($key["contactdisplay"],"  ") !== false){
+				
+					echo "<span style=\"color:rgb(250, 5, 5);background:#fff;padding:1px;border:1px solid #ccc;\">Found double spacing in Contact Display</span>";
+				}
 				echo "<br/><br/>";
-				echo "<strong>Fixes Found based from old data:</strong><br/>";
+				if( strpos($key["contactdisplay"],"  ") !== true && empty($key["gender"]) || empty($key["datatype"])){
+					echo "<strong>Fixes Found based from old data:</strong><br/>";
+				}
 				$subresult = $wpdb->get_results($wpdb->prepare("SELECT cfields_mux.*, cfields.ProfileCustomShowGender, cfields.ProfileCustomType FROM ". table_agency_customfield_mux ." as cfields_mux INNER JOIN ".table_agency_customfields." as cfields WHERE cfields_mux.ProfileID = %d AND cfields_mux.ProfileCustomID = cfields.ProfileCustomID", $ProfileID),ARRAY_A);
 				$arr_gender = array();
 				$arr_ptypes = array();
@@ -1691,9 +1698,12 @@ elseif($ConfigID == '83'){
 			   	   	  $wpdb->query("UPDATE ".table_agency_profile." SET ProfileType='".$key["datatype_raw"]."' WHERE ProfileID='".$key["profileid"]."'");
 			   	     echo "<strong style=\"color:green;\">Succesfully assigned profile type to profile.</strong><br/>";
 			   	   }
-			   	 
-			   	  
-			    }
+			   	   if( strpos($key["contactdisplay"],"  ") !== false){
+				 	  $wpdb->query("UPDATE ".table_agency_profile." SET ProfileContactDisplay='".$key["fullname"]."' WHERE ProfileID='".$key["profileid"]."'");
+			   	     echo "<strong style=\"color:green;\">Removed double spacings from Contact Display.</strong><br/>";
+			   	   
+				   }
+				}
 
 
 			echo "</div>";
