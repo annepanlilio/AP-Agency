@@ -14,14 +14,14 @@ echo "					<ul>\n";
 						}
 
 						if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2){
-							
+						/*	
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg  = $wpdb->num_rows;
 
 							if($countImg  > 0){
 								echo "<li class=\"item printphotos\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
-							}
+							}*/
 
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
@@ -79,7 +79,7 @@ echo "					<ul>\n";
 							if ($countMedia > 0) {
 								foreach($resultsImg as $dataMedia ){
 									$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-									echo "<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\">Watch Video Slate</a></li>\n";
+									echo "<li class=\"item video slate\"><a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\">Watch Video Slate</a></li>\n";
 								}
 							}
 
@@ -89,7 +89,7 @@ echo "					<ul>\n";
 							$countMedia = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsImg as $dataMedia ){
-									echo "<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\">Watch Video Monologue</a></li>\n";
+									echo "<li class=\"item video monologue\"><a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\">Watch Video Monologue</a></li>\n";
 								}
 							}
 
@@ -99,7 +99,7 @@ echo "					<ul>\n";
 							$countMedia = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsImg as $dataMedia ){
-									echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\">Watch Demo Reel</a></li>\n";
+									echo "<li class=\"item video demoreel\"><a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\">Watch Demo Reel</a></li>\n";
 								}
 							}
 
