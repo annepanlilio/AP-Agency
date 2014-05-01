@@ -2351,8 +2351,11 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 	global $rb_agency_option_unittype;
 	$html = "";
 	
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+	//$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+	  $resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0  AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+  
 	foreach ($resultsCustom as $resultCustom) {
+
 		if(!empty($resultCustom->ProfileCustomValue )){
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 				if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
@@ -2382,15 +2385,15 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						$html .=  "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
+						$html .=  "<li class=\"options_3\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
 					} else {
-						$html .=  "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						$html .=  "<li class=\"options_3\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} else {
 					if ($resultCustom->ProfileCustomType == 4){
-						$html .=  "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
+						$html .=  "<li class=\"options_3\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
 					} else {
-						$html .=  "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
+						$html .=  "<li class=\"options_3\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
 			  
@@ -2398,14 +2401,26 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-						$html .=  "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
+						$html .=  "<li  class=\"options_2\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
 					} else {
-						$html .=  "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						$html .=  "<li  class=\"options_2\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} else {
-					$html .=  "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+					$html .=  "<li  class=\"options_2\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+				}
+			} elseif (isset($resultCustom->ProfileCustomView) && $resultCustom->ProfileCustomView == "0") {  // TODO: Why is admin view showing? (Rob)
+				if ($resultCustom->ProfileCustomType == 7){
+					if($resultCustom->ProfileCustomOptions == 3){
+						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+						$html .= "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet." ft ".$heightinch." in</li>\n";
+					} else {
+						$html .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+					}
+				} else {
+					$html .= "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 				}
 			}
+
 		}
 	}
 	
