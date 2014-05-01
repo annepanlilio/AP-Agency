@@ -126,7 +126,7 @@ if (isset($_POST['action'])) {
 
 		if(function_exists(rb_agencyinteract_approvemembers)){
 				if (empty($userdata['user_login'])) {
-					   $errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
+						$errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
 						$have_error = true;
 				}
 				if (username_exists($userdata['user_login'])) {
@@ -137,19 +137,22 @@ if (isset($_POST['action'])) {
 						$errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agencyinteract_TEXTDOMAIN);
 						$have_error = true;
 				}
-		}
-		if (!is_email($userdata['user_email'], true)) {
-			$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
-			$have_error = true;
-		}
-		if (email_exists($userdata['user_email'])) {
-			$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
-			$have_error = true;
-		} else {
-			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
-				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
-				$have_error = true;
-			}
+
+			// Validate Email
+				if (!is_email($userdata['user_email'], true)) {
+					$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", rb_agencyinteract_TEXTDOMAIN);
+					$have_error = true;
+				}
+				if (email_exists($userdata['user_email'])) {
+					$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+					$have_error = true;
+				} else {
+					if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
+						$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", rb_agencyinteract_TEXTDOMAIN);
+						$have_error = true;
+					}
+				}
+
 		}
 
 	}
