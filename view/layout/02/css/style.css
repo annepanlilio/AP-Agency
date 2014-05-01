@@ -184,3 +184,7 @@
   opacity:0.9;
   filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
 }
+#rblayout-two{ margin-top: 40px;}
+
+/*.lb-outerContainer{height: 600px !important;width: auto !important;}
+*/.lb-image{max-height: 600px !important; max-width:1000px !important;}

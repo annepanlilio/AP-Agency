@@ -43,9 +43,12 @@ header("Cache-control: private"); //IE 6 Fix
 					$reltype = "rel=\"lightbox[rbagency]\"";
 					$reltarget = ""; // target=\"_blank\"
 
-					wp_enqueue_script( 'lightbox2', plugins_url('/ext/lightbox2/js/lightbox-2.6.min.js', dirname(__FILE__)), array( 'jquery' ));
-					wp_register_style( 'lightbox2', plugins_url('/ext/lightbox2/css/lightbox.css', dirname(__FILE__)) );
-					wp_enqueue_style( 'lightbox2' );
+					if($rb_agency_option_layoutprofile != "09"){
+						wp_enqueue_script( 'lightbox2', plugins_url('/ext/lightbox2/js/lightbox-2.6.min.js', dirname(__FILE__)), array( 'jquery' ));
+					}
+						wp_register_style( 'lightbox2', plugins_url('/ext/lightbox2/css/lightbox.css', dirname(__FILE__)) );
+						wp_enqueue_style( 'lightbox2' );
+					
 
 				} else {
 					// None
