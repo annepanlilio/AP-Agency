@@ -86,7 +86,7 @@
 
 				
 			 ?>
-		     <form method="post" action="">
+		     <form method="post" action="" style="width: 900px;">
 			  <h2>You have been submitted for a job</h2>
 			  <strong>We are simply confirming that you are "Available" or "Not Available" for the job dates.</strong>
 			  <div style="clear:both;"></div>
@@ -165,12 +165,10 @@
 		      	?>
 		      	<tr>
 		      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Shoot Location:</td>
-		      	<td style="width:600px;">
-		      	 <?php echo $CastingJobShootLocation; ?>
-		      	  <br/>
+		      	<td style="width:600px;"><?php echo $CastingJobShootLocation; ?><br/>
 		      	 <?php if(!empty($GoogleMapLocation)){?>
 		      	 <strong>Shoot Location Map</strong>
-		      	  <?php echo do_shortcode("[map]".$CastingJobShootLocation."[/map]"); ?>
+		      	  <?php echo do_shortcode("[googleMap name='Shooting Location Map' width='600' height='300' directions_from='true']".$CastingJobShootLocation."[/googleMap]"); ?>
 		      	  <a href="<?php echo $CastingJobShootLocationMap;?>" target="_blank">View on Google Map</a>
 		      	 <?php }?>
 		      	</td>

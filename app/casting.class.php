@@ -520,7 +520,7 @@ class RBAgency_Casting {
 				$rb_agency_value_agency_easytxtsecret = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtsecret'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtsecret']:"";
 				
 				$xml_data ='<request>
-								<content>[agency name] has put you forward for a Job. See the following link: '.$link.'</content>
+								<content>'.bloginfo("name").' has put you forward for a Job. See the following link: '.$link.'</content>
 								<recipients>';
 								foreach($mobile as $number){
 									    $number = str_replace(' ', '', $number);

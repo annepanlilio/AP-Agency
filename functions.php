@@ -607,15 +607,41 @@ error_reporting(0);
 	 *
 	 * @param string $videoID
 	 */
-	function rb_agency_get_videothumbnail($videoID) {
-		$videoID = ltrim($videoID);
+	function rb_agency_get_videothumbnail($url) {
+	/*	$videoID = ltrim($videoID);
 		if (substr($videoID, 0, 23) == "http://www.youtube.com/") {
 			$videoID = rb_agency_get_VideoID($videoID);
 		} elseif (substr($videoID, 0, 7) == "<object") {
 			$videoID = rb_agency_get_VideoFromObject($videoID);
 		}
 		$rb_agency_get_videothumbnail = "<img src='http://img.youtube.com/vi/" . $videoID . "/default.jpg' />";
-		return $rb_agency_get_videothumbnail;
+		return $rb_agency_get_videothumbnail;*/
+
+		 $image_url = parse_url($url);
+	    if($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com'){
+	        $array = explode("&", $image_url['query']);
+	        return "<img src=\"http://img.youtube.com/vi/".substr($array[0], 2)."/default.jpg\"/>";
+	    } else if($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com'){
+	        $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".substr($image_url['path'], 1).".php"));
+	        return "<img src=\"".$hash[0]["thumbnail_medium"]."\" width=\"120\" height=\"90\"/>";
+	    }else{
+	    	return "<img src=\"".plugin_dir_url( __FILE__ )."/style/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+	    }
+	}
+	/**
+	 * Get Video Type
+	 *
+	 * @param string $url
+	 */
+	function rb_agency_get_videotype($url) {
+		$image_url = parse_url($url);
+		if($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com'){
+	       return "youtube";
+	    } else if($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com'){
+	        return "vimeo";
+	    }else{
+	    	return "other";
+	    }
 	}
 
 	/**
@@ -625,11 +651,16 @@ error_reporting(0);
 	 */
 	function rb_agency_get_VideoID($videoURL) {
 		if (substr($videoURL, 0, 23) == "http://www.youtube.com/") {
-			$videoURL = str_replace("http://www.youtube.com/v/", "", $videoURL);
-			$videoURL = str_replace("http://www.youtube.com/watch?v=", "", $videoURL);
-			$videoURL = str_replace("&feature=search", "", $videoURL);
-			$videoURL = str_replace("?fs=1&amp;hl=en_US", "", $videoURL);
-			$videoID = $videoURL; // substr($videoURL, 25, 15);
+				$image_url = parse_url($url);
+			    if($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com'){
+			        $array = explode("&", $image_url['query']);
+			        $videoID = "http://www.youtube.com/watch?v=".substr($array[0], 2);
+			    }
+				/*			$videoURL = str_replace("http://www.youtube.com/v/", "", $videoURL);
+							$videoURL = str_replace("http://www.youtube.com/watch?v=", "", $videoURL);
+							$videoURL = str_replace("&feature=search", "", $videoURL);
+							$videoURL = str_replace("?fs=1&amp;hl=en_US", "", $videoURL);*/
+			//$videoID = $videoURL; // substr($videoURL, 25, 15);
 		} else {
 			$videoID = $videoURL;
 		}
