@@ -1805,9 +1805,11 @@ function rb_display_list() {
 			if($ProfileGender)
 			  if(strpos($filter,'profile') > 0){
 					$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+
 			  } else {
 					$filter .= " profile.ProfileGender='".$ProfileGender."'";
 			  }
+
 		}
 
 		/*
@@ -1828,6 +1830,10 @@ function rb_display_list() {
 			$page = $_GET['page'];
 		}else{
 			$page = "";
+		}
+		if(isset($_GET["ProfileGender"]) && !empty($_GET['ProfileGender'])){
+			$ProfileGender = (int)$_GET['ProfileGender'];
+			 $query .= "&ProfileGender=".$ProfileGender;
 		}
 		$p = new rb_agency_pagination;
 		$p->items($items);
