@@ -1194,6 +1194,7 @@ error_reporting(0);
 
 			$profileDisplay = 0;
 			$countFav = 0;
+			$displayPaginationFooter = "";
 			foreach($resultsList as $dataList) {
 					
 				$profileDisplay++;
@@ -1212,7 +1213,8 @@ error_reporting(0);
 						if($items > 0) {
 							if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){ 
 								$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
-									echo $p->show();  // Echo out the list of paging. 
+									echo "<div class=\"rbpagination-top\">".$p->show()."</div>";  // Echo out the list of paging. 
+									$displayPaginationFooter = $p->show();
 								$displayHTML .= "    </div>\n";
 							}
 						}
@@ -1284,6 +1286,7 @@ error_reporting(0);
 
 			$displayHTML .= "  <div class=\"rbclear\"></div>\n";
 			$displayHTML .= "  </div><!-- #profile-list -->\n";
+
 		} // endif countlist
 
 		// There are no profiles returned.  Display empty message
@@ -1293,6 +1296,7 @@ error_reporting(0);
 		
 		// Close Formatting
 		$displayHTML .= "  <div class=\"rbclear\"></div>\n";
+		$displayHTML .= " <div class=\"rbpagination-bottom\">".$displayPaginationFooter."</div>";
 		$displayHTML .= "</div><!-- #profile-results -->\n";
 		
 		// Commented by Sunil to fix profile display issue
@@ -1624,7 +1628,7 @@ class rb_agency_pagination {
 	function show(){
 		if(!$this->calculate)
 			if($this->calculate())
-				echo "<div class=\"$this->className\">$this->pagination</div>\n";
+				return "<div class=\"$this->className\">$this->pagination</div>\n";
 	}
 
 	function getOutput(){
