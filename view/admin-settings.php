@@ -2640,11 +2640,12 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													  <tr>
 														  <td>&nbsp;</td>
 														   <td valign=\"top\">
+														   <ul>
 														 ";
 										 foreach($array_customOptions_values as  $val){
-											  echo "<br/>";	
-											  echo" &nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" />";
+											   echo" <li>Value:<input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
 										 }
+										echo "</ul>";
 										echo "<div id=\"addcheckbox_field_1\"></div>";
 										echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
 										echo " </td>";

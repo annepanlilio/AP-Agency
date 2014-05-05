@@ -596,6 +596,9 @@ class RBAgency_Profile {
 				echo "				jQuery('#gender').val('');\n";
 				echo "				jQuery('#datebirth_min').val('');\n";
 				echo "				jQuery('#datebirth_max').val('');\n";
+				echo "				jQuery('.rbcheckbox input[type=checkbox]').each(function(){";
+				echo "				jQuery(this).removeAttr('checked');";
+				echo "				});";
 				echo "			}\n";
 				echo "			</script>\n";
 				echo "		</div>\n";

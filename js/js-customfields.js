@@ -178,6 +178,9 @@ jQuery(document).ready(function(){
 		jQuery("a.del_opt").live('click',function(){
 			jQuery(this).parents("li").remove();
 		});	
+		jQuery("a.del_cboxopt").live('click',function(){
+			jQuery(this).parents("li").remove();
+		});	
 	 
 });
 

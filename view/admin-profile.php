@@ -431,6 +431,7 @@ if (isset($_POST['action'])) {
 									
 									if($custom_media_extenstion == "doc"){
 										array_push($arr_extensions,"application/octet-stream");
+										array_push($arr_extensions,"docx");
 									}elseif($custom_media_extenstion == "mp3"){
 										array_push($arr_extensions,"audio/mpeg");
 										array_push($arr_extensions,"audio/mp3");

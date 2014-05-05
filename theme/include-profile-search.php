@@ -42,7 +42,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	jQuery(document).ready(function(){
 		jQuery.fn.rset = function(){
 			jQuery(this).on("click",function(){
-			    var inputs = jQuery(".search-field").find("input[type=text]");
+			    var inputs = jQuery(".search-field").find("input");
 					for (var i = 0; i<inputs.length; i++) {
 						switch (inputs[i].type) {
 							case 'text':
@@ -149,6 +149,9 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "			$('ProfileContactNameLast').val('');";
 		echo "			$('ProfileDateBirth_min').val('');";
 		echo "			$('ProfileDateBirth_max').val('');";
+		echo "			$('.rbcheckbox input[type=checkbox]').each(function(){";
+		echo "			$(this).removeAttr('checked');";
+		echo "			});";
 		echo "        	}</script>";
 		echo "		</div>\n";
 		break;
