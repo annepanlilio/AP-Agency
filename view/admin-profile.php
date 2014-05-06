@@ -38,9 +38,9 @@ if (isset($_POST['action'])) {
 
 	$ProfileID = isset($_POST['ProfileID'])?$_POST['ProfileID']:0;
 	$ProfileUserLinked = isset($_POST['ProfileUserLinked'])?$_POST['ProfileUserLinked']:"";
-	$ProfileContactNameFirst = isset($_POST['ProfileContactNameFirst']) ? trim($_POST['ProfileContactNameFirst']):"";
-	$ProfileContactNameLast = isset($_POST['ProfileContactNameLast']) ? trim($_POST['ProfileContactNameLast']):"";
-	$ProfileContactDisplay = isset($_POST['ProfileContactDisplay']) ? trim($_POST['ProfileContactDisplay']):"";
+	$ProfileContactNameFirst = isset($_POST['ProfileContactNameFirst']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameFirst'])):"";
+	$ProfileContactNameLast = isset($_POST['ProfileContactNameLast']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameLast'])):"";
+	$ProfileContactDisplay = isset($_POST['ProfileContactDisplay']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactDisplay'])):"";
 	if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 		if ($rb_agency_option_profilenaming == 0) {
 			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
