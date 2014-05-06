@@ -269,9 +269,12 @@ function populateStates(countryId,stateId){
 			jQuery("#"+stateId).find("option:eq(0)").remove();
 		
 		});
-		}
+		
+	}else{
+		jQuery("#"+stateId).find("option:gt(0)").remove();
+			
 	}
-	
+ }	
 function saveCountry(){
 	var countryTitle=jQuery("#countryTitle").val();
 	var countryCode=jQuery("#countryCode").val();
