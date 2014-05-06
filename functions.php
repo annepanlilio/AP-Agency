@@ -2083,12 +2083,15 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 function rb_agency_getCountryTitle($country_id="",$contry_code = false){
 	
 	global $wpdb;
+	$rb_agency_options_arr 				= get_option('rb_agency_options');
+	$rb_agency_option_showcountrycode  		= $rb_agency_options_arr['rb_agency_option_showcountrycode'];
+	
 	
 	if(empty($country_id)) return false;
 	
 	$return = "";
 	
-	if(isset($country_code) && $country_code === true){
+	if($rb_agency_option_showcountrycode  == 1){
 		$query ="SELECT CountryCode FROM ". table_agency_data_country ." WHERE CountryID = " . (is_numeric($country_id)?$country_id:0);
 		$result = $wpdb->get_row($query);
 		$return = $result->CountryCode;
@@ -2114,12 +2117,15 @@ function rb_agency_getCountryTitle($country_id="",$contry_code = false){
 function rb_agency_getStateTitle($state_id="",$state_code = false){
 	
 	global $wpdb;
+		$rb_agency_options_arr 				= get_option('rb_agency_options');
+	$rb_agency_option_showstatecode  		= $rb_agency_options_arr['rb_agency_option_showstatecode'];
+
 	
 	if(empty($state_id)) return false;
 	
 	$return = "";
 	
-	if($state_code === true){
+	if($rb_agency_option_showstatecode  ==1){
 		$query ="SELECT StateCode FROM ". table_agency_data_state ." WHERE StateID = " . (is_numeric($state_id)?$state_id:0);
 		$result = $wpdb->get_row($query);
 		$return = isset($result->StateCode)?$result->StateCode:"";
