@@ -2415,8 +2415,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<tr>
 												<td valign=\"top\">Visibility*:</td>
 												<td style=\"font-size:13px;\">
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." /> <strong>". __("Public", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible on Profile & Search, Profile Management, Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')." /> <strong>". __("Private", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible in Profile Management & Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." /> <strong>". __("Public", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible on Registration, Profile Management, Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')." /> <strong>". __("Private", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible in Registration, Profile Management & Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
 								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')." /> <strong>". __("Restricted", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
 												</td>
 											
@@ -2431,11 +2431,11 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<tr>
 													<td valign=\"top\">Custom View*:</td>
 													<td style=\"font-size:13px;\">
-							IF PUBLIC:<br />
+							<!--IF PUBLIC:<br />-->
 							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1['ProfileCustomShowRegistration'] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form<br/>
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)<br/>  
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowSearchSimple"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)<br/>
-							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile View<br/>
 												</tr>
 
 												<tr>
