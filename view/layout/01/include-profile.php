@@ -29,7 +29,8 @@ if (isset($urlexploade[1])) {
 # rb_agency_option_galleryorder
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-
+$rb_agency_option_unittype  = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
+	
 if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
 				<div class="allimages_div">
 					<script>  //JS to higlight selected images 

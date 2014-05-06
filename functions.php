@@ -2336,7 +2336,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 				}
 			} elseif (isset($resultCustom->ProfileCustomView) && $resultCustom->ProfileCustomView == "0") {  // TODO: Why is admin view showing? (Rob)
 				if ($resultCustom->ProfileCustomType == 7){
-					if($resultCustom->ProfileCustomOptions == 3){
+					if($resultCustom->ProfileCustomOptions == 3 && $rb_agency_option_unittype ==1){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
 						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet." ft ".$heightinch." in</li>\n";
 					} else {

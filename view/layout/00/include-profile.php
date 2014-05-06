@@ -38,6 +38,8 @@ echo "				<div id=\"photos\">\n";
 
 						# rb_agency_option_galleryorder
 						$rb_agency_options_arr = get_option('rb_agency_options');
+						$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
+	
 						$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder']) ? $rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 											
