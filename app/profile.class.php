@@ -599,6 +599,7 @@ class RBAgency_Profile {
 				echo "				jQuery('.rbcheckbox input[type=checkbox]').each(function(){";
 				echo "				jQuery(this).removeAttr('checked');";
 				echo "				});";
+				echo "				jQuery('html, body').animate({ scrollTop: 0 }, 'slow');";
 				echo "			}\n";
 				echo "			</script>\n";
 				echo "		</div>\n";

@@ -152,6 +152,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		echo "			$('.rbcheckbox input[type=checkbox]').each(function(){";
 		echo "			$(this).removeAttr('checked');";
 		echo "			});";
+		echo "			$('html, body').animate({ scrollTop: 0 }, 'slow');";
 		echo "        	}</script>";
 		echo "		</div>\n";
 		break;
