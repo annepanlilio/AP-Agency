@@ -386,9 +386,9 @@ class RBAgency_Profile {
 
 									if(isset($_SESSION["ProfileCustomID". $ProfileCustomID])){ 
 
-										$dataArr = @explode(",",@implode(",",@explode("','",RBAgency_Common::session("ProfileCustomID". $ProfileCustomID))));
+										$dataArr = @explode(",",@implode(",",@explode("','",stripslashes(RBAgency_Common::session("ProfileCustomID". $ProfileCustomID)))));
 										if(in_array($val,$dataArr,true)){
-											echo "<div><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
+											echo "<div ><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
 											echo "<span> ". $val."</span></label></div>";
 										} else {
 											if($val !=""){
@@ -402,6 +402,7 @@ class RBAgency_Profile {
 											echo "<span> ". $val."</span></label></div>";
 										}
 									}
+									echo "<!--  data-debug=\"".$val."\"  data-session=".stripslashes(RBAgency_Common::session("ProfileCustomID". $ProfileCustomID))."-->";
 								}
 
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";
@@ -1005,9 +1006,9 @@ class RBAgency_Profile {
 									//Checkbox
 
 									if(!empty($val)){
-
+										$val = stripslashes($val);
 										if(strpos($val,",") === false){
-											$filter2 .= "$open_st ProfileCustomValue LIKE '%".$val."%' $close_st";
+											$filter2 .= $wpdb->prepare("$open_st ProfileCustomValue LIKE %s $close_st","%".$val."%");
 
 										} else {
 											
@@ -1026,24 +1027,28 @@ class RBAgency_Profile {
 												$i++;
 												/*if(is_numeric($like)){
 													if($i != $likecounter){
-														$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
+														$likedata.= $wpdb->prepare(" ProfileCustomValue = %s OR ",$like);
 													}else{
-														$likedata.= " ProfileCustomValue ='".$like."'  "  ;
+														$likedata.= $wpdb->prepare(" ProfileCustomValue = %s  ",$like);
 												    }
 												}else{*/
 
 														if($i != $likecounter){
 															if($like!="") {
 
-																$likedata.= " ProfileCustomValue ='".$like."' OR "  ;
-																$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') OR "  ;
-																$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+																$likedata.= $wpdb->prepare(" ProfileCustomValue = %s OR ",$like);
+																$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s OR ProfileCustomValue LIKE %s) OR ",",".$like."%","%".$like.",%");
+																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s) OR ","%,".$like."%,");
+															//	$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
+															
 															}
 														} else {
 															if($like!=""){
-																$likedata.= " ProfileCustomValue ='".$like."' "  ;
-																$likedata2.= " (ProfileCustomValue LIKE ',".$like."%' OR ProfileCustomValue LIKE '%".$like.",%') ";
-																$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+																$likedata.= $wpdb->prepare(" ProfileCustomValue = %s ",$like);
+																$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s OR ProfileCustomValue LIKE %s) ",",".$like."%","%".$like.",%");
+																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s ) ","%,".$like.",%");
+															//	$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
+															
 															}
 														}
 												//}		
@@ -1054,14 +1059,15 @@ class RBAgency_Profile {
 											//$val = substr($val, 0, -1);
 											$sr_data = $likedata . (!empty($likedata2)?" OR ".$likedata2:"") . (!empty($likedata3)?" OR ".$likedata3:"");
 											$filter2 .= "$open_st (".$sr_data.")  $close_st";
-										
+											
 										}
 
 										$_SESSION[$key] = $val;
 									} else {
 										$_SESSION[$key] = "";
 									}
-
+									
+									
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
 									//Radiobutton 
 									$val = implode("','",explode(",",$val));
