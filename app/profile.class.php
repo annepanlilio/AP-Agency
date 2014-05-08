@@ -247,13 +247,16 @@ class RBAgency_Profile {
 						echo "				</div>\n";
 				} // Show Location Search
 
-
+                 
 			/*
 			 * Custom Fields
 			 */
-
-				// Query Fields
-				$field_sql = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
+			// Query Fields
+				if(is_admin()){
+					$field_sql = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView <= 1 ORDER BY ProfileCustomOrder ASC";
+				}else{
+					$field_sql = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
+				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
 				foreach($field_results  as $data){
 
