@@ -559,6 +559,7 @@ class RBAgency_Profile {
 				}
 
 
+
 				/* status The “Status” field should not show up on front-end search.*/ 
 				if(isset($_REQUEST['page']) && $_REQUEST['page']=='rb_agency_search'){
 					echo "				<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
@@ -566,11 +567,11 @@ class RBAgency_Profile {
 					echo "						<div>";
 					echo "							<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
 					echo "								<option value=\"5\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"1\"". selected(RBAgency_Common::session("ProfileIsActive"), 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"4\"". selected(RBAgency_Common::session("ProfileIsActive"), 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"0\"". selected(RBAgency_Common::session("ProfileIsActive"), 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"2\"". selected(RBAgency_Common::session("ProfileIsActive"), 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"3\"". selected(RBAgency_Common::session("ProfileIsActive"), 3) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"1\"". selected(RBAgency_Common::session("isactive"), 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"4\"". selected(RBAgency_Common::session("isactive"), 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"0\"". selected(RBAgency_Common::session("isactive"), 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"2\"". selected(RBAgency_Common::session("isactive"), 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"3\"". selected(RBAgency_Common::session("isactive"), 3) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
 					echo "							</select>\n";
 					echo "						</div>\n";
 					echo "				</div>\n";
@@ -630,6 +631,7 @@ class RBAgency_Profile {
 					if (isset($value) && !empty($value)) {
 						$_SESSION[$key] = $value; //$$key = $value;
 					}
+
 				}
 
 			/*
@@ -1007,11 +1009,9 @@ class RBAgency_Profile {
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
 									//Checkbox
-
 									if(!empty($val)){
-										$val = stripslashes($val);
 										if(strpos($val,",") === false){
-											$filter2 .= $wpdb->prepare("$open_st ProfileCustomValue LIKE %s $close_st","%".$val."%");
+											$filter2 .= $wpdb->prepare("$open_st ProfileCustomValue LIKE %s ESCAPE '|' $close_st","%".$val."%");
 
 										} else {
 											
@@ -1040,16 +1040,16 @@ class RBAgency_Profile {
 															if($like!="") {
 
 																$likedata.= $wpdb->prepare(" ProfileCustomValue = %s OR ",$like);
-																$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s OR ProfileCustomValue LIKE %s) OR ",",".$like."%","%".$like.",%");
-																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s) OR ","%,".$like."%,");
+																//$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s) OR ","".$like."%","%".$like."%");
+																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s) OR ","%".$like."%");
 															//	$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
 															
 															}
 														} else {
 															if($like!=""){
 																$likedata.= $wpdb->prepare(" ProfileCustomValue = %s ",$like);
-																$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s OR ProfileCustomValue LIKE %s) ",",".$like."%","%".$like.",%");
-																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s ) ","%,".$like.",%");
+																//$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s OR ProfileCustomValue LIKE %s) ",",".$like."%","%".$like.",%");
+																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s ) ","%".$like."%");
 															//	$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
 															
 															}
@@ -1069,7 +1069,6 @@ class RBAgency_Profile {
 									} else {
 										$_SESSION[$key] = "";
 									}
-									
 									
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
 									//Radiobutton 
@@ -1253,7 +1252,7 @@ class RBAgency_Profile {
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
 
-			/*
+						/*
 			 * check if search is admin or public
 			 */
 			if(is_admin()){

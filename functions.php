@@ -1942,7 +1942,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				$isTextArea ="textarea-field"; 
 			}
 		echo "  <tr valign=\"top\" class=\"".$isTextArea."\">\n";
-		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
+		echo "    <th scope=\"row\"><div class=\"box\" data-raw=\"".$ProfileCustomValue."\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
 		echo "    <td>\n";		  
 		  
 			if ($ProfileCustomType == 1) { //TEXT
@@ -2025,7 +2025,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						$xplode = array($ProfileCustomValue);
 					}
 					if(!empty($val)){
-						echo "<label class=\"checkbox\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array($val,$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
+						echo "<label class=\"checkbox\" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
 						echo "". $val."</label><br />";                               
 					}
 				}
