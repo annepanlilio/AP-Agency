@@ -928,7 +928,7 @@ class RBAgency {
 			// RB Agency Casting
 			if(function_exists('rb_agency_casting_menu')){
 				// saved search for casting
-			    // add_submenu_page("rb_agency_menu", __("Approve Pending Clients", rb_agency_TEXTDOMAIN), __("Approve Clients", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
+			    add_submenu_page("rb_agency_menu", __("Approve Pending Clients", rb_agency_TEXTDOMAIN), __("Approve Clients", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
 
 				// saved search for casting
 				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 'manage_options',"rb_agency_casting_searchsaved", array('RBAgency', 'menu_casting_searchsaved'));
@@ -970,7 +970,7 @@ class RBAgency {
 
 		// Casting
 		public static function menu_casting_approveclients(){
-			echo "Coming Soon";
+			rb_agency_casting_approveclients();
 		}
 
 		public static function menu_casting_searchsaved(){

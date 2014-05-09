@@ -1153,7 +1153,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								$query_get ="SELECT * FROM `".table_agency_data_state."`" ;
+								$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID='".$ProfileLocationCountry."'" ;
 								$result_query_get = $wpdb->get_results($query_get);
 								echo '<select name="ProfileLocationState" id="ProfileLocationState">';
 								echo '<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
