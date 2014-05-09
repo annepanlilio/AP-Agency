@@ -990,8 +990,8 @@ class RBAgency_Profile {
 								  7 - Metrics/Imperials
 								 *********************/
 
-								$open_st = ' AND EXISTS (SELECT * FROM '. table_agency_customfield_mux . ' WHERE ' ;
-								$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID ) ';
+								$open_st = ' AND EXISTS(SELECT * FROM '. table_agency_customfield_mux . '  WHERE ' ;
+								$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID)  ';
 
 								if ($ProfileCustomType["ProfileCustomType"] == 1) {
 									// Text
@@ -1009,59 +1009,37 @@ class RBAgency_Profile {
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
 									//Checkbox
+									$val = stripslashes($val);
 									if(!empty($val)){
+									
 										if(strpos($val,",") === false){
-											$filter2 .= $wpdb->prepare("$open_st ProfileCustomValue LIKE %s ESCAPE '|' $close_st","%".$val."%");
-
+											$filter2 .= $open_st;
+											$val2 = $val;
+											$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 OR",$val2);
+											$val2 = addslashes(addslashes($val2));
+											$filter2 .= $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val2."%");
+											$filter2 .= $close_st;
 										} else {
 											
-											$likequery = explode(",", $val);
-											$likedata4=  "";//(ProfileCustomValue LIKE  '%".$val."%')";
+											$likequery = array_filter(explode(",", $val));
 											$likecounter = count($likequery);
 											$i=1; 
 
-											$likedata = "" ;
-
-											// for profiles with multiple values
-											$likedata2 = "" ;
-											$likedata3 = "" ;
-
 											foreach($likequery as $like){
 												$i++;
-												/*if(is_numeric($like)){
-													if($i != $likecounter){
-														$likedata.= $wpdb->prepare(" ProfileCustomValue = %s OR ",$like);
-													}else{
-														$likedata.= $wpdb->prepare(" ProfileCustomValue = %s  ",$like);
-												    }
-												}else{*/
-
-														if($i != $likecounter){
+											
 															if($like!="") {
-
-																$likedata.= $wpdb->prepare(" ProfileCustomValue = %s OR ",$like);
-																//$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s) OR ","".$like."%","%".$like."%");
-																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s) OR ","%".$like."%");
-															//	$likedata3.= " (ProfileCustomValue LIKE '%,".$like."%,' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') OR "  ;
-															
+																$val2 = addslashes(addslashes($like));
+																$sr_data .= $wpdb->prepare(" ProfileCustomValue LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),"%".$val2."%",$like);
+																
 															}
-														} else {
-															if($like!=""){
-																$likedata.= $wpdb->prepare(" ProfileCustomValue = %s ",$like);
-																//$likedata2.= $wpdb->prepare(" (ProfileCustomValue LIKE %s OR ProfileCustomValue LIKE %s) ",",".$like."%","%".$like.",%");
-																$likedata3.= $wpdb->prepare(" (ProfileCustomValue LIKE %s ) ","%".$like."%");
-															//	$likedata3.= " (ProfileCustomValue LIKE '%,".$like.",%' OR ProfileCustomValue NOT LIKE '%".$like."-%' OR ProfileCustomValue NOT LIKE '%".$like." Month%') "  ;
-															
-															}
-														}
-												//}		
-												
+														
 
 											}
 											//Commented to fix checkbox issue
-											//$val = substr($val, 0, -1);
-											$sr_data = $likedata . (!empty($likedata2)?" OR ".$likedata2:"") . (!empty($likedata3)?" OR ".$likedata3:"");
-											$filter2 .= "$open_st (".$sr_data.")  $close_st";
+											$filter2 .= "$open_st (".$sr_data.") $close_st";
+
+											
 											
 										}
 
@@ -1073,7 +1051,7 @@ class RBAgency_Profile {
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
 									//Radiobutton 
 									$val = implode("','",explode(",",$val));
-									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%')  $close_st";
 									$_SESSION[$key] = $val;
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 7) {
@@ -1107,9 +1085,10 @@ class RBAgency_Profile {
 					$filter .= $filter2;
 				}
 
+				
 			/**
 			 * Only Show from Casting Cart
-			 */
+			 
 
 				// Profile Search Saved 
 				if(isset($include) && !empty($include)){
@@ -1134,8 +1113,9 @@ class RBAgency_Profile {
 				
 				self::search_generate_sqlorder($atts);
 				
-
+			echo "<Br/>";
 				return $filter;
+
 
 			} else {
 				// Empty Search
