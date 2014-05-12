@@ -22,15 +22,18 @@
 			$CastingJobSelectedFor = "-";
 			$CastingJobDateCreated = "-";
 			$CastingJobTalents = "-";
+			$CastingJobID = "";
 		  
             $castingcartJobHash = get_query_var("target");
-           
+            $castingcartProfileHash = get_query_var("value");
+
+
            if(isset($castingcartJobHash)){
 		 	
 		 	$sql =  "SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobTalentsHash= %s ";
-		 	$data = $wpdb->get_results($wpdb->prepare($sql, $castingcartJobHash));
-		 	$data = current($data);
-		   if(!empty($data)){
+		 	$data = current($wpdb->get_results($wpdb->prepare($sql, $castingcartJobHash)));
+
+		 	if(!empty($data)){
 		 	$CastingJobAudition = $data->CastingJobAudition; 
 			$CastingJobRole = $data->CastingJobRole;
 			$CastingJobAuditionDate = $data->CastingJobAuditionDate;
@@ -48,22 +51,27 @@
 			$CastingJobSelectedFor = $data->CastingJobSelectedFor;
 			$CastingJobDateCreated = $data->CastingJobDateCreated;
 			$CastingJobTalents = $data->CastingJobTalents;
-		
+			$CastingJobID = $data->CastingJobID;
 		   }
 
 		 }
-	
+		
+
 	
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
+	  
+	 		$has_permission = explode(",",$CastingJobTalents);
 
+	 	    $profile_access_id = current($wpdb->get_results("SELECT * FROM ".table_agency_castingcart_profile_hash." WHERE CastingProfileHash = '".$castingcartProfileHash."' AND CastingProfileHashJobID ='".$castingcartJobHash."' ",ARRAY_A));
 
+	 	  
 
-		  
-	 $has_permission = explode(",",$CastingJobTalents);
+	 		$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID = %d ORDER BY profile.ProfileContactNameFirst ASC";
+			
+			 $data = current($wpdb->get_results($wpdb->prepare($query,$profile_access_id["CastingProfileHashProfileID"]), ARRAY_A));
 
-	 		$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileUserLinked = %d ORDER BY profile.ProfileContactNameFirst ASC";
-			 $data = current($wpdb->get_results($wpdb->prepare($query,$user_ID), ARRAY_A));
+			 
 
     	if(isset($_POST["action"]) && $_POST["action"] == "availability"){
 					  $query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
@@ -78,11 +86,11 @@
 		   		   $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$CastingJobID,$data["ProfileID"]));
 		    $has_submitted = $wpdb->num_rows;
 
-			
+		  
       if(empty($has_submitted)){ // if not submitted
             /*var_dump($has_permission);
             var_dump($data["ProfileID"])*/
-			 if( in_array($data["ProfileID"], $has_permission)){
+			 if( in_array($data["ProfileID"], $has_permission) || current_user_can( 'manage_options' )  ){
 
 				
 			 ?>

@@ -772,5 +772,22 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.9.3");
 	}
 
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.3") {
+
+		if ($wpdb->get_var("show tables like '".table_agency_castingcart_profile_hash."'") !=table_agency_castingcart_profile_hash) { 
+		// Casting Jobs > Invite Profile ID hash
+				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_castingcart_profile_hash." (
+					CastingProfileHashID BIGINT(20) NOT NULL AUTO_INCREMENT,
+					CastingProfileHashJobID VARCHAR(255),
+					CastingProfileHashProfileID VARCHAR(255),
+					CastingProfileHash VARCHAR(255),
+					PRIMARY KEY (CastingProfileHashID)
+					);";
+				$wpdb->query($sql) or mysql_error();
+		}
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.9.4");
+	}
+
 
 ?>

@@ -8,7 +8,7 @@ Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
 Version: 2.0.9.1
 */
-$rb_agency_VERSION = "2.0.9.3";
+$rb_agency_VERSION = "2.0.9.4";
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
@@ -151,6 +151,8 @@ See license.txt for full details.
 		define("table_agency_castingcart_jobs", "{$wpdb->prefix}agency_castingcart_jobs");
 	if (!defined("table_agency_castingcart_availability"))
 		define("table_agency_castingcart_availability", "{$wpdb->prefix}agency_castingcart_availability");
+	if (!defined("table_agency_castingcart_profile_hash"))
+		define("table_agency_castingcart_profile_hash", "{$wpdb->prefix}agency_castingcart_profile_hash");
 
 
 // *************************************************************************************************** //
@@ -777,6 +779,7 @@ class RBAgency {
 
 
 
+
 			/*
 			 * Flush rewrite rules
 			 */
@@ -935,6 +938,8 @@ class RBAgency {
 
 				// job postings
 				add_submenu_page("rb_agency_menu", __("Client Jobs", rb_agency_casting_TEXTDOMAIN), __("Client Jobs", rb_agency_casting_TEXTDOMAIN), 'manage_options',"rb_agency_casting_jobpostings", array('RBAgency', 'menu_casting_jobpostings'));
+				add_submenu_page("rb_agency_menu", __("Casting Jobs", rb_agency_TEXTDOMAIN), __("Casting Jobs", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_castingjobs", array('RBAgency', 'menu_castingjob'));
+
 			}
 
 				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_reports", array('RBAgency', 'menu_reports'));
@@ -960,6 +965,9 @@ class RBAgency {
 		}
 		public static function menu_settings(){
 			include_once('view/admin-settings.php');
+		}
+		public static function menu_castingjob(){
+			include_once('view/admin-castingjobs.php');
 		}
 
 		// Interact

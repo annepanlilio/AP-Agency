@@ -187,7 +187,7 @@ class RBAgency_Casting {
 				echo "      <a href=\"?page=rb_agency_search&action=massEmail#compose\" title=\"". __("Mass Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Mass Email", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
-				echo "      <a href=\"?page=rb_agency_searchsaved&action=informTalent\" title=\"". __("InformTalent", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Inform Talent", rb_agency_TEXTDOMAIN) ."</a>\n";
+				echo "      <a href=\"?page=rb_agency_castingjobs\" title=\"". __("Casting Jobs", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Casting Jobs", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "   </div>\n";
 				echo "</div>\n";
 				echo "<script type=\"text/javascript\">\n";
@@ -520,7 +520,7 @@ class RBAgency_Casting {
 				$rb_agency_value_agency_easytxtsecret = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtsecret'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtsecret']:"";
 				
 				$xml_data ='<request>
-								<content>'.bloginfo("name").' has put you forward for a Job. See the following link: '.$link.'</content>
+								<content>'.get_bloginfo("name").' has put you forward for a Job. See the following link: '.$link.'</content>
 								<recipients>';
 								foreach($mobile as $number){
 									    $number = str_replace(' ', '', $number);
@@ -540,6 +540,18 @@ class RBAgency_Casting {
 				$output = curl_exec($ch);
 				echo $output;
 				curl_close($ch);
+	}
+
+	function sendEmail($emails,$link){
+			// Mail it
+		    $headers[]  = 'MIME-Version: 1.0';
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+			$headers[]  = 'From: '. get_bloginfo("name") .' <'. get_bloginfo("email").'>' . "\r\n";
+				
+
+			$MassEmailMessage	= get_bloginfo("name")." has put you forward for a Job. See the following link: ".$link."";
+			$isSent = wp_mail($emails, get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
 	}
 
 }
