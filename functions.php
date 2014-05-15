@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 /*
  * Debug Mode
 
@@ -2083,7 +2083,7 @@ function rb_agency_getCountryTitle($country_id="",$contry_code = false){
 	
 	global $wpdb;
 	$rb_agency_options_arr 				= get_option('rb_agency_options');
-	$rb_agency_option_showcountrycode  		= $rb_agency_options_arr['rb_agency_option_showcountrycode'];
+	$rb_agency_option_showcountrycode  		= isset($rb_agency_options_arr['rb_agency_option_showcountrycode'])?$rb_agency_options_arr['rb_agency_option_showcountrycode']:0;
 	
 	
 	if(empty($country_id)) return false;

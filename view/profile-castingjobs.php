@@ -5,23 +5,23 @@
 // GET HEADER  
 	echo $rb_header = RBAgency_Common::rb_header();
 
-			$CastingJobAudition = "-"; 
-			$CastingJobRole = "-";
-			$CastingJobAuditionDate = "-";
-			$CastingJobAuditionVenue = "-";
-			$CastingJobAuditionTime = "-";
-			$CastingJobClothing = "-";
-			$CastingJobRCallBack = "-";
-			$CastingJobRWardrobe = "-";
-			$CastingJobScript = "-";
-			$CastingJobShootDate = "-";
-			$CastingJobShootLocation = "-";
-			$CastingJobShootLocationMap = "-";
-			$CastingJobRoleFee = "-";
-			$CastingJobComments = "-";
-			$CastingJobSelectedFor = "-";
-			$CastingJobDateCreated = "-";
-			$CastingJobTalents = "-";
+			$CastingJobAudition = ""; 
+			$CastingJobRole = "";
+			$CastingJobAuditionDate = "";
+			$CastingJobAuditionVenue = "";
+			$CastingJobAuditionTime = "";
+			$CastingJobClothing = "";
+			$CastingJobRCallBack = "";
+			$CastingJobRWardrobe = "";
+			$CastingJobScript = "";
+			$CastingJobShootDate = "";
+			$CastingJobShootLocation = "";
+			$CastingJobShootLocationMap = "";
+			$CastingJobRoleFee = "";
+			$CastingJobComments = "";
+			$CastingJobSelectedFor = "";
+			$CastingJobDateCreated = "";
+			$CastingJobTalents = "";
 			$CastingJobID = "";
 		  
             $castingcartJobHash = get_query_var("target");
@@ -74,8 +74,12 @@
 			 
 
     	if(isset($_POST["action"]) && $_POST["action"] == "availability"){
+    			    $availability = "available";
+    				if($_POST["availability"] == "No, not Available"){
+    					$availability = "notavailable";
+    				}
 					  $query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
-							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($_POST["availability"])."','".date("y-m-d h:i:s")."','".$CastingJobID."') AS tmp
+							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$CastingJobID."') AS tmp
 							WHERE NOT EXISTS (
 							    SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$CastingJobID."'
 							) LIMIT 1;"; 
@@ -107,100 +111,117 @@
 		        		No Image Available.
 		        <?php endif; ?>
 		        </div>
-		        <strong>Availability:</strong>
-		        <br/>
-		        <?php echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?>
-		         <br/>
-		         <select name="availability">
-		            <option value="">-</option>
-		         	<option value="available">Available</option>
-		         	<option value="notavailable">Not Available</option>
-		         </select>
+		        <h2><?php echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?></h2>	
+		        <table>	
+		          <?php if(!empty($CastingJobSelectedFor)):?>
+				    <tr>
+			      	<td style="text-align:right;padding-right:20px;">Selected for:</td>
+			      	<td><?php echo $CastingJobSelectedFor; ?></td>
+			      	</tr>
+			     <?php endif;?>  	      
+		        </table> 
 		     </div>    
 		      <table style="margin-top:20px;">
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Audition:</td>
-		      	<td><?php echo $CastingJobAudition; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Role:</td>
-		      	<td><?php echo $CastingJobRole; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Audition Dates:</td>
-		      	<td><?php echo $CastingJobAuditionDate; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Auditon Venue:</td>
-		      	<td><?php echo $CastingJobAuditionVenue; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Audition Time</td>
-		      	<td><?php echo $CastingJobAuditionTime; ?></td>
-		      	</tr>
-
-
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Audition Clothing:</td>
-		      	<td><?php echo $CastingJobClothing; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td  style="text-align:right;padding-right:20px;">Call Back</td>
-		      	<td><?php echo $CastingJobRCallBack; ?></td>
-		      	</tr>
-
-				<tr>
-		      	<td  style="text-align:right;padding-right:20px;">Wardrobe</td>
-		      	<td><?php echo $CastingJobRWardrobe; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Script:</td>
-		      	<td><?php echo $CastingJobScript; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td  style="text-align:right;padding-right:20px;">Shoot Date:</td>
-		      	<td><?php echo $CastingJobShootDate; ?></td>
-		      	</tr>
-		      	<?php 
-		      		$GoogleMapLocation = explode("data=", $CastingJobShootLocationMap);
-		      	?>
-		      	<tr>
-		      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Shoot Location:</td>
-		      	<td style="width:600px;"><?php echo $CastingJobShootLocation; ?><br/>
-		      	 <?php if(!empty($GoogleMapLocation)){?>
-		      	 <strong>Shoot Location Map</strong>
-		      	  <?php echo do_shortcode("[googleMap name='Shooting Location Map' width='600' height='300' directions_from='true']".$CastingJobShootLocation."[/googleMap]"); ?>
-		      	  <a href="<?php echo $CastingJobShootLocationMap;?>" target="_blank">View on Google Map</a>
-		      	 <?php }?>
-		      	</td>
-		      	</tr>
-		      	
-
-		      	<tr>
-		      	<td  style="text-align:right;padding-right:20px;">Role Fee($)</td>
-		      	<td><?php echo $CastingJobRoleFee; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td  style="text-align:right;padding-right:20px;">Comments</td>
-		      	<td><?php echo $CastingJobComments; ?></td>
-		      	</tr>
-
-		      	<tr>
-		      	<td style="text-align:right;padding-right:20px;">Selected for:</td>
-		      	<td><?php echo $CastingJobSelectedFor; ?></td>
-		      	</tr>
-
+		            <tr>
+		            <td>
+		      		<input type="submit" name="availability" value="Yes, Available" class="button-primary"/>
+		      		</td>
+		      		<td>
+		         	<input type="submit" name="availability" value="No, not Available" class="button-primary" />
+		         	</td>
+		         	</tr>
+		        <?php if(!empty( $CastingJobAudition )):?>
+			      	<tr>
+			      	<td style="text-align:right;padding-right:20px;">Audition:</td>
+			      	<td><?php echo $CastingJobAudition; ?></td>
+			      	</tr>
+		      	<?php endif;?>
+		      	<?php if(!empty( $CastingJobRole )):?>
+			      	<tr>
+			      	<td style="text-align:right;padding-right:20px;">Role:</td>
+			      	<td><?php echo $CastingJobRole; ?></td>
+			      	</tr>
+				<?php endif;?>
+		      	<?php if(!empty($CastingJobAuditionDate)):?>
+			      	<tr>
+			      	<td style="text-align:right;padding-right:20px;">Audition Dates:</td>
+			      	<td><?php echo $CastingJobAuditionDate; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobAuditionVenue)):?>
+			      	<tr>
+			      	<td style="text-align:right;padding-right:20px;">Auditon Venue:</td>
+			      	<td><?php echo $CastingJobAuditionVenue; ?></td>
+			      	</tr>
+			      <?php endif;?>
+			     <?php if(!empty($CastingJobAuditionTime)):?>
+				    <tr>
+			      	<td style="text-align:right;padding-right:20px;">Audition Time</td>
+			      	<td><?php echo $CastingJobAuditionTime; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobClothing)):?>
+					<tr>
+			      	<td style="text-align:right;padding-right:20px;">Audition Clothing:</td>
+			      	<td><?php echo $CastingJobClothing; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobRCallBack)):?>
+					<tr>
+			      	<td  style="text-align:right;padding-right:20px;">Call Back</td>
+			      	<td><?php echo $CastingJobRCallBack; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobRWardrobe)):?>
+			    	<tr>
+			      	<td  style="text-align:right;padding-right:20px;">Wardrobe</td>
+			      	<td><?php echo $CastingJobRWardrobe; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobScript)):?>
+				    <tr>
+			      	<td style="text-align:right;padding-right:20px;">Script:</td>
+			      	<td><?php echo $CastingJobScript; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobShootDate)):?>
+			    	<tr>
+			      	<td  style="text-align:right;padding-right:20px;">Shoot Date:</td>
+			      	<td><?php echo $CastingJobShootDate; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobShootLocation)){?>
+			      	<tr>
+			      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Shoot Location:</td>
+			      	<td style="width:600px;"><?php echo $CastingJobShootLocation; ?><br/>
+			      	 <?php if(!empty($CastingJobShootLocationMap)){?>
+					      	<?php 
+					      		$GoogleMapLocation = explode("data=", $CastingJobShootLocationMap);
+					      	?>
+				      	 <?php if(!empty($GoogleMapLocation)){?>
+					      	 <strong>Shoot Location Map</strong>
+					      	  <?php echo do_shortcode("[googleMap name='Shooting Location Map' width='600' height='300' directions_from='true']".$CastingJobShootLocation."[/googleMap]"); ?>
+					      	  <a href="<?php echo $CastingJobShootLocationMap;?>" target="_blank">View on Google Map</a>
+				      	 <?php }?>
+			      	 <?php }?>
+			      	</td>
+			      	</tr>
+			     <?php }?>
+			      <?php if(!empty($CastingJobRoleFee)):?>
+				    <tr>
+			      	<td  style="text-align:right;padding-right:20px;">Role Fee($)</td>
+			      	<td><?php echo $CastingJobRoleFee; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     <?php if(!empty($CastingJobComments)):?>
+			     	<tr>
+			      	<td  style="text-align:right;padding-right:20px;">Comments</td>
+			      	<td><?php echo $CastingJobComments; ?></td>
+			      	</tr>
+			     <?php endif;?>
+			   
 		      </table>
 		      <input type="hidden" name="action" value="availability">
-		      <input type="submit" name="submit" value="Submit" class="button-primary" style="float:right;" />
 		      </form>
 			 <?php 
 			}else{

@@ -145,7 +145,7 @@ class RBAgency_Profile {
 				}
 
 				// Show Profile Type
-				if ( ($rb_agency_option_formshow_type > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
+				if ( ($rb_agency_option_formshow_type > 0) || isset($search_layout) && $search_layout == "admin" || ( isset($search_layout) &&  $search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
 						echo "				<div class=\"rbfield rbselect rbsingle rb_profiletype\" id=\"rb_profiletype\">\n";
 						echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
@@ -166,7 +166,7 @@ class RBAgency_Profile {
 				}
 
 				// Show Profile Gender
-				if ( ($rb_agency_option_formshow_gender > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
+				if ( ($rb_agency_option_formshow_gender > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\">\n";
 						echo "					<label for=\"gender\">". __("Gender", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
@@ -185,7 +185,7 @@ class RBAgency_Profile {
 				}
 
 				// Show Profile Age
-				if ( ($rb_agency_option_formshow_age > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
+				if ( ($rb_agency_option_formshow_age > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
 						echo "				  <fieldset class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
 						echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 						echo "					<div>\n";
@@ -202,7 +202,7 @@ class RBAgency_Profile {
 				}
 
 				// Show Location Search
-				if ( ($rb_agency_option_formshow_location > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
+				if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\">\n";
 						echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".RBAgency_Common::session("city") ."\" /></div>\n";
@@ -405,7 +405,6 @@ class RBAgency_Profile {
 											echo "<span> ". $val."</span></label></div>";
 										}
 									}
-									echo "<!--  data-debug=\"".$val."\"  data-session=".stripslashes(RBAgency_Common::session("ProfileCustomID". $ProfileCustomID))."-->";
 								}
 
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";

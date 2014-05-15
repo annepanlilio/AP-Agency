@@ -30,6 +30,25 @@ $siteurl = get_option('siteurl');
 		 <h2>Casting Jobs</h2>
 		
 		 <?php 
+		 // Delete selected profiles
+		if(isset($_POST["action2"]) && $_POST["action2"] == "deleteprofile"){
+									  	$arr_selected_profile = array();
+									  	$data = current($wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobID= %d ", $_GET["CastingJobID"])));
+										$arr_profiles = explode(",",$data->CastingJobTalents);
+									  		
+										foreach($_POST as $key => $val ){
+									  		 if(strpos($key, "profiletalent") !== false){
+									  		 	  	array_push($arr_selected_profile, $val);
+													
+									  		 }
+									  	}
+									  	$new_set_profiles = implode(",",array_diff($arr_profiles,$arr_selected_profile));
+									  	$wpdb->query($wpdb->prepare("UPDATE ".table_agency_castingcart_jobs." SET CastingJobTalents=%s WHERE CastingJobID = %d", $new_set_profiles, $_GET["CastingJobID"]));
+	 
+									  	echo ('<div id="message" class="updated"><p>'.count($arr_selected_profile).(count($arr_selected_profile) <=1?" profile":" profiles").' removed successfully!</p></div>');
+		}
+
+
 		  if(isset($_POST["action2"]) && $_POST["action2"] =="add"){
           	   	if (isset($_SESSION['cartArray'])) {
 
@@ -124,18 +143,19 @@ $siteurl = get_option('siteurl');
 									$wpdb->query($sql);
 
                               if(isset($_POST["resend"])){
-									$results = $wpdb->get_results("SELECT ProfileContactPhoneCell,ProfileContactEmail FROM ".table_agency_profile." WHERE ProfileID IN(".$_POST["profileselected"].")",ARRAY_A);
+									$results = $wpdb->get_results("SELECT ProfileID,ProfileContactPhoneCell,ProfileContactEmail FROM ".table_agency_profile." WHERE ProfileID IN(".$_POST["profileselected"].")",ARRAY_A);
 									$arr_mobile_numbers = array();
 									$arr_email = array();
-									
+									$castingHash = current($wpdb->get_results("SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobID='".$_GET["CastingJobID"]."'"));
 									foreach($results as $mobile){
 										array_push($arr_mobile_numbers, $mobile["ProfileContactPhoneCell"]);
 										array_push($arr_email, $mobile["ProfileContactEmail"]);
+										$results = $wpdb->get_results($wpdb->prepare("SELECT * FROM  ".table_agency_castingcart_profile_hash." as a WHERE  a.CastingProfileHashJobID = %s",$castingHash->CastingJobTalentsHash));
+										RBAgency_Casting::sendText(array($mobile["ProfileContactPhoneCell"]),get_bloginfo("wpurl")."/profile-casting/jobs/".$castingHash->CastingJobTalentsHash."/".$results->CastingProfileHash);
+										RBAgency_Casting::sendEmail(array($mobile["ProfileContactEmail"]),get_bloginfo("wpurl")."/profile-casting/jobs/".$castingHash->CastingJobTalentsHash."/".$results->CastingProfileHash);
+									
 									}
-
-									RBAgency_Casting::sendText($arr_mobile_numbers,get_bloginfo("wpurl")."/profile-casting/jobs/".$_POST["CastingJobHash"]);
-									RBAgency_Casting::sendEmail($arr_email,get_bloginfo("wpurl")."/profile-casting/jobs/".$_POST["CastingJobHash"]);
-										
+	
 							  }
 											echo ('<div id="message" class="updated"><p>Updated successfully!</p></div>');
 	
@@ -281,14 +301,20 @@ $siteurl = get_option('siteurl');
 						echo "<option>Client to Confirm</option>";
 						echo "</select>";
 						echo "</div>";
+					echo "</div>";
+					 if(isset($_GET["CastingJobID"])){
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"comments\">&nbsp;</label>";
+						echo "<div>";
+						echo "<input type=\"checkbox\" name=\"resend\" value=\"1\"/> &nbsp;Resend notifcation to selected talents \n\n";
+					 	echo "</div>";
 					echo "</div><br/><br/>";
-                    if(isset($_GET["CastingJobID"])){
+                   
                     	echo "<input type=\"submit\" value=\"Save\" name=\"castingJob\" class=\"button-primary\" />";
                     	echo "<input type=\"hidden\" name=\"action2\" value=\"edit\"/>";
                     	echo "<input type=\"hidden\" name=\"profileselected\" value=\"".$CastingJobTalents."\"/>";
                     	echo "<input type=\"hidden\" name=\"CastingJobHash\" value=\"".$CastingJobHash."\"/>";
                     	echo "<a href=\"".admin_url("admin.php?page=". $_GET['page'])."\" class=\"button\">Cancel</a>\t";
-                    	echo "<input type=\"checkbox\" name=\"resend\" value=\"1\"/> &nbsp;Resend notifcation to selected talents \n\n";
                     	
 
 
@@ -324,7 +350,7 @@ $siteurl = get_option('siteurl');
 	                 	
 	                 jQuery("#selectall").click(function(){
 	                 	 var ischecked = jQuery(this).is(':checked');
-	                 	 	jQuery("#shortlisted input[name=profiletalent]").each(function(i,d){
+	                 	 	jQuery("form[name=formDeleteProfile] input").each(function(i,d){
 	                 			if(ischecked){
 	                 			 jQuery(this).removeAttr("checked");
 	                 			 jQuery(this).attr("checked",true);
@@ -354,6 +380,19 @@ $siteurl = get_option('siteurl');
 		                 		
 		                 		jQuery("input[name=profileselected]").val(arr.toString());
 		             });
+
+		              jQuery("#shortlisted input[name^=deleteprofiles]").click(function(){
+		              	    if(jQuery("#shortlisted input[name^=profiletalent]:checked").length > 0){
+			              		 if(confirm("Are you sure that you want to delete the selected profiles? Click 'Yes' to delete, 'Cancel' to exit.")){
+				            		jQuery("#shortlisted input[name^=profiletalent]:checked").each(function(){
+				            				jQuery("form[name=formDeleteProfile]").submit();
+				            		});
+				            	}
+				            }else{
+				            	alert("You must select a profile to delete");
+				            }
+
+		             });
 	               });
                  </script>
  
@@ -362,7 +401,7 @@ $siteurl = get_option('siteurl');
 						 echo "<div id=\"shortlisted\" class=\"boxblock-container\" style=\"float: left; width: 39%;\">";
 						 echo "<div class=\"boxblock\" style=\"width:490px; \">";
 						 echo "<h3>Talents Shortlisted";
-						 echo "<span style=\"font-size:12px;float:right;\">".(isset($_GET["CastingJobID"])?"<input type=\"checkbox\" id=\"selectall\"/>Select all talents</span>":"")."</h3>";
+						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\">".(isset($_GET["CastingJobID"])?"<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" /><input type=\"checkbox\" id=\"selectall\"/>Select all</span>":"")."</h3>";
 						 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
 					
 
@@ -376,16 +415,16 @@ $siteurl = get_option('siteurl');
 									$cartString = RBAgency_Common::clean_string($cartString);
 
 								// Show Cart  
-								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") ORDER BY profile.ProfileContactNameFirst ASC";
+								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".(!empty($cartString)?$cartString:0).") ORDER BY profile.ProfileContactNameFirst ASC";
 								$results = $wpdb->get_results($wpdb->prepare($query,$cartString), ARRAY_A);
 
-												$count = $wpdb->num_rows;
+								$count = $wpdb->num_rows;
 
-								
-
+				echo "<form method=\"post\" name=\"formDeleteProfile\" action=\"".admin_url("admin.php?page=rb_agency_castingjobs&action=informTalent&CastingJobID=".(!empty($_GET["CastingJobID"])?$_GET["CastingJobID"]:0))."\" >\n";								
+				echo "<input type=\"hidden\" name=\"action2\" value=\"deleteprofile\"/>";
 								foreach ($results as $data) {
-									echo "<div style=\"width: 48.5%;float:left\">";
-									echo "<div style=\"height: 200px; margin-right: 5px; overflow: hidden; \"><span style=\"text-align:center;background:#ccc;color:#000;font-weight:bold;width:100%;padding:10px;display:block;\">".(isset($_GET["CastingJobID"])?"<input type=\"checkbox\" name=\"profiletalent\" value=\"".$data["ProfileID"]."\"/>":""). stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</span><a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\"><img style=\"width: 100%; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></a>";
+									echo "<div style=\"width: 48.5%;float:left\" id=\"profile_".$data["ProfileID"]."\">";
+									echo "<div style=\"height: 200px; margin-right: 5px; overflow: hidden; \"><span style=\"text-align:center;background:#ccc;color:#000;font-weight:bold;width:100%;padding:10px;display:block;\">".(isset($_GET["CastingJobID"])?"<input type=\"checkbox\" name=\"profiletalent_".$data["ProfileID"]."\" value=\"".$data["ProfileID"]."\"/>":""). stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</span><a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\"><img style=\"width: 100%; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></a>";
 									echo "</div>\n";
 									if(isset($_GET["CastingJobID"])){
 										$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
@@ -408,9 +447,9 @@ $siteurl = get_option('siteurl');
 									
 
 								}
-
+				echo "</form>\n";
 								?>
-							
+						
 
 					<?php
 			  	  echo "<div style=\"clear:both;\"></div>";
@@ -442,7 +481,7 @@ $siteurl = get_option('siteurl');
 			if (isset($_GET['sort']) && !empty($_GET['sort'])){
 				$sort = $_GET['sort'];
 			} else {
-				$sort = "jobs.CastingJobDateCreated";
+				$sort = "jobs.CastingJobDateCreated ";
 			}
 
 			// Sort Order
@@ -450,9 +489,9 @@ $siteurl = get_option('siteurl');
 			if (isset($_GET['dir']) && !empty($_GET['dir'])){
 				$dir = $_GET['dir'];
 				if ($dir == "desc" || !isset($dir) || empty($dir)){
-					$sortDirection = "desc";
+					$sortDirection = "asc";
 				} else {
-					$sortDirection = "desc";
+					$sortDirection = "asc";
 				}
 			} else {
 				$sortDirection = "desc";
@@ -461,8 +500,8 @@ $siteurl = get_option('siteurl');
 
 			// Filter
 			$filter = "WHERE jobs.CastingJobID > 0 ";
-			if (isset($_GET['SearchTitle']) && !empty($_GET['SearchTitle'])){
-				$selectedTitle = isset($_GET['SearchTitle'])?$_GET['SearchTitle']:"";
+			if (isset($_GET['CastingJobAudition']) && !empty($_GET['CastingJobAudition'])){
+				$selectedTitle = isset($_GET['SearchTitle'])?$_GET['CastingJobAudition']:"";
 				$query .= "&CastingJobAudition=". $selectedTitle ."";
 				$filter .= " AND jobs.CastingJobAudition='". $selectedTitle ."'";
 			}
@@ -533,9 +572,9 @@ $siteurl = get_option('siteurl');
 			<thead>
 				<tr class="thead">
 					<th class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox"/></th>
-					<th class="column" scope="col" style="width:50px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=SearchID&dir=<?php echo $sortDirection; ?>">ID</a></th>
-					<th class="column" scope="col" style="width:200px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=SearchTitle&dir=<?php echo $sortDirection; ?>">Title</a></th>
-					<th class="column" scope="col" style="width:80px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=SearchDate&dir=<?php echo $sortDirection; ?>">Profiles</a></th>
+					<th class="column" scope="col" style="width:50px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=CastingJobID&dir=<?php echo $sortDirection; ?>">ID</a></th>
+					<th class="column" scope="col" style="width:200px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=CastingJobAudition&dir=<?php echo $sortDirection; ?>">Title</a></th>
+					<th class="column" scope="col" style="width:80px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=CastingJobDateCreated&dir=<?php echo $sortDirection; ?>">Profiles</a></th>
 					<th class="column" scope="col">Date Created</th>
 				</tr>
 			</thead>
