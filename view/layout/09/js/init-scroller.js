@@ -1,17 +1,19 @@
 // Load
 
-jQuery(window).load(function(){
+(function($){
+	$(document).ready(function (){
 
-	jQuery("#photo-scroller").mCustomScrollbar({
+		jQuery("#photo-scroller").mCustomScrollbar({
 
-		horizontalScroll:true,
+			horizontalScroll:true,
 
-		scrollButtons:{
+			scrollButtons:{
 
-			enable:true
+				enable:true
 
-		}
+			}
+
+		});
 
 	});
-
-});
+})(window.jQuery);

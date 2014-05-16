@@ -13,6 +13,27 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 
 /*
+ * Insert Script
+ */
+    wp_deregister_script( 'jquery-latest' ); 
+    wp_register_script( 'jquery-latest', "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
+	wp_enqueue_script( 'jquery-latest' );
+
+	wp_deregister_script( 'lightbox2' ); 
+	wp_enqueue_script( 'lightbox2-footer', plugins_url('/../../../ext/lightbox2/js/lightbox-2.6.min.js',__FILE__), array( 'jquery-latest' ));
+	wp_enqueue_script( 'lightbox2-footer' );
+
+	
+
+	wp_register_script( 'photo-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', __FILE__),'',1,true );
+	wp_enqueue_script( 'photo-scroller' );
+
+	wp_register_script( 'init-scroller', plugins_url('/js/init-scroller.js', __FILE__),'',1,true );
+	wp_enqueue_script( 'init-scroller' );
+
+
+
+/*
  * Layout 
  */
 
@@ -65,19 +86,24 @@ echo "	  					<ul>\n";
 									}
 								}
 
+								
 								// Insert Custom Fields
-								rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender);		  
-	
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);		  
+								
+
 echo "	  					</ul>\n";
 echo "	  				</div>\n";	
 
 echo "					<div id=\"links\">\n";
+	/*
+					 * Include Action Icons
+					 */
+
+						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
 
 echo "						<ul>\n";
-                                if(function_exists("rb_agency_get_miscellaneousLinks")){
-									// Other links - Favorite, Casting cart...
-									rb_agency_get_miscellaneousLinks($ProfileID);
-								}
+                                
+				
 								
 								// Is Logged?
 								if (is_user_logged_in()) { 
