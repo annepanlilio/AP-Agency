@@ -1,5 +1,5 @@
 <?php
-//error_reporting(0);
+error_reporting(0);
 /*
  * Debug Mode
 
@@ -621,8 +621,14 @@
 	        $array = explode("&", $image_url['query']);
 	        return "<img src=\"http://img.youtube.com/vi/".substr($array[0], 2)."/default.jpg\"/>";
 	    } else if($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com'){
-	        $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".substr($image_url['path'], 1).".php"));
-	        return "<img src=\"".$hash[0]["thumbnail_medium"]."\" width=\"120\" height=\"90\"/>";
+	    	$is_host_active = @file_get_contents("http://vimeo.com/api/v2/video/".substr($image_url['path'], 1).".php");
+	    	
+	    	if(!empty($is_host_active)){
+		        $hash = unserialize($is_host_active);
+		        return "<img src=\"".$hash[0]["thumbnail_medium"]."\" width=\"120\" height=\"90\"/>";
+		    }else{
+		   	 	return "<img src=\"".plugin_dir_url( __FILE__ )."/style/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+	        }
 	    }else{
 	    	return "<img src=\"".plugin_dir_url( __FILE__ )."/style/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
 	    }
@@ -2117,7 +2123,7 @@ function rb_agency_getStateTitle($state_id="",$state_code = false){
 	
 	global $wpdb;
 		$rb_agency_options_arr 				= get_option('rb_agency_options');
-	$rb_agency_option_showstatecode  		= $rb_agency_options_arr['rb_agency_option_showstatecode'];
+	$rb_agency_option_showstatecode  		= isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0;
 
 	
 	if(empty($state_id)) return false;
@@ -3761,7 +3767,7 @@ function rb_load_profile_pdf($row = 0, $logo = NULL){?>
 <!-- ajax submit login -->
 <script type="text/javascript">
 jQuery(document).ready(function(){
-	jQuery('#print_pr_pdf').on('click', function(){
+	jQuery('#print_pr_pdf').click(function(){
 		jQuery(this).text("PRINTING...");
 		jQuery.ajax({
 			type: 'POST',
@@ -3894,6 +3900,20 @@ function rb_agency_log(){
 	}
 	die();
 }
+/*
+ *	Rb Agency Search Profile via Ajax 
+ */
+function rb_agency_search_profile(){
+
+	global $wpdb;
+
+	$results = $wpdb->get_results("SELECT gender.*, media.ProfileMediaURL, profile.ProfileGallery,profile.ProfileDateBirth, profile.ProfileID, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileGender FROM ".table_agency_profile." as profile INNER JOIN ".table_agency_data_gender." as gender ON gender.GenderID = profile.ProfileGender INNER JOIN ".table_agency_profile_media." as media ON (media.ProfileID = profile.ProfileID AND media.ProfileMediaType = 'Image') GROUP BY ProfileID ORDER BY ProfileContactNameFirst",ARRAY_A);
+	echo json_encode($results);
+
+	die();
+}
+add_action('wp_ajax_rb_agency_search_profile', 'rb_agency_search_profile');
+add_action('wp_ajax_nopriv_rb_agency_search_profile', 'rb_agency_search_profile');
 /*
  * Add action hook if interact is inactive
  */

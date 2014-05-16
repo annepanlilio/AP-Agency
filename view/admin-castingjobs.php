@@ -48,6 +48,16 @@ $siteurl = get_option('siteurl');
 									  	echo ('<div id="message" class="updated"><p>'.count($arr_selected_profile).(count($arr_selected_profile) <=1?" profile":" profiles").' removed successfully!</p></div>');
 		}
 
+		// Add selected profiles
+		if(isset($_POST["addprofiles"])){
+										$data = current($wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobID= %d ", $_GET["CastingJobID"])));
+									  	$add_new_profiles = $data->CastingJobTalents.",".$_POST["addprofiles"];
+
+										$wpdb->query($wpdb->prepare("UPDATE ".table_agency_castingcart_jobs." SET CastingJobTalents=%s WHERE CastingJobID = %d", $add_new_profiles, $_GET["CastingJobID"]));
+	 
+									  	echo ('<div id="message" class="updated"><p>Added successfully!</p></div>');
+	
+		}
 
 		  if(isset($_POST["action2"]) && $_POST["action2"] =="add"){
           	   	if (isset($_SESSION['cartArray'])) {
@@ -112,7 +122,7 @@ $siteurl = get_option('siteurl');
 									
 									}
 
-										
+											 unset($_SESSION['cartArray']);
 											echo ('<div id="message" class="updated"><p>Added successfully!</p></div>');
 	
 				}else{
@@ -157,6 +167,7 @@ $siteurl = get_option('siteurl');
 									}
 	
 							  }
+							  unset($_SESSION['cartArray']);
 											echo ('<div id="message" class="updated"><p>Updated successfully!</p></div>');
 	
 
@@ -393,20 +404,199 @@ $siteurl = get_option('siteurl');
 				            }
 
 		             });
-	               });
+		             
+		            });
                  </script>
  
 			    <?php
-                	if(!empty($_SESSION['cartArray'])){
-						 echo "<div id=\"shortlisted\" class=\"boxblock-container\" style=\"float: left; width: 39%;\">";
+                		 echo "<div id=\"shortlisted\" class=\"boxblock-container\" style=\"float: left; width: 39%;\">";
 						 echo "<div class=\"boxblock\" style=\"width:490px; \">";
 						 echo "<h3>Talents Shortlisted";
-						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\">".(isset($_GET["CastingJobID"])?"<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" /><input type=\"checkbox\" id=\"selectall\"/>Select all</span>":"")."</h3>";
+						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\"><a  href=\"#TB_inline?width=600&height=550&inlineId=add-profiles\" class=\"thickbox button-primary\" title=\"Add profiles to '".$CastingJobAudition."' Job\">Add Profiles</a>".(isset($_GET["CastingJobID"])?"<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" /><input type=\"checkbox\" id=\"selectall\"/>Select all</span>":"")."</h3>";
 						 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
 					
 
 					?>
+					<?php add_thickbox(); ?>
+					<div id="add-profiles" style="display:none;">
+					<table>
+					<tr>
+					<td><label>First Name:</label> <input type="text" name="firstname"/></td>
+					<td><label>Last Name:</label> <input type="text" name="lastname"/></td>
+					</tr>
+					</table>    
+					<div class="results-info" style="width:80%;float:left;border:1px solid #fafafa;padding:5px;background:#ccc;">
+				       Loading...
+					</div>
+					<input type="submit" value="Add to Job" id="addtojob" class="button-primary" style="float:right" />
 					
+					<div id="profile-search-result">
+					    
+					 </div>
+					<style type="text/css">
+ 					.profile-search-list{
+ 						background:#FAFAFA;
+ 						width: 31.3%;
+ 						float:left;
+ 						margin:5px;
+ 						cursor: pointer;
+ 						border:1px solid #fff;
+ 					}
+ 					.profile-search-list.selected{
+ 						border:1px solid black;
+ 					}
+ 					</style>
+ 					
+					</div>
+					<script type="text/javascript">
+ 					jQuery(function(){
+ 						    var arr_profiles = [];
+ 						    var selected_info = "";
+ 						    var total_selected = 0;
+ 						    var arr_listed = Array();
+							
+							jQuery("form[name=formDeleteProfile] div[id^=profile-]").each(function(i,d){
+ 						    		  arr_listed[i] = jQuery(this).attr("id").split("profile-")[1];
+ 						    });
+
+ 							function get_profiles(){
+
+
+		 						jQuery.ajax({
+										type: 'POST',
+								   		dataType: 'json',
+								  		url: '<?php echo admin_url('admin-ajax.php'); ?>',
+								   		data: { 
+								  			'action': 'rb_agency_search_profile'
+								  		},
+								  		success: function(d){
+								  			var profileDisplay = "";
+								  			console.log(arr_listed);
+								  			jQuery.each(d,function(i,p){
+								  				if(jQuery.inArray(p.ProfileID+"",arr_listed) < 0){
+										  				
+										  				var fullname = p.ProfileContactNameFirst+" "+p.ProfileContactNameLast;
+										  				
+										  				if(fullname.length > 10) fullname = fullname.substring(0,15)+"[..]";
+										  				
+										  				profileDisplay = "<table class=\"profile-search-list\" id=\"profile-"+p.ProfileID+"\">"
+																		 +"<tr>"
+																		   +"<td style=\"width:40px;height:40pxbackground:#ccc;\">"+((p.ProfileMediaURL !="")?"<img src=\"<?php echo  get_bloginfo('url').'/wp-content/plugins/rb-agency/ext/timthumb.php?src='.rb_agency_UPLOADDIR;?>/"+p.ProfileGallery+"/"+p.ProfileMediaURL+"&w=40&h=40\" style=\"width:40px;height:40px;\"/>":"")+"</td>"
+																		   +"<td>"
+																		   +"<strong>"+fullname+"</strong>"
+																		   +"<br/>"
+																		   +"<span style=\"font-size: 11px;\">"+getAge(p.ProfileDateBirth)+","+p.GenderTitle+"</span>"
+																		   +"<br/>"
+																		   +"<a href=\"<?php echo get_bloginfo("wpurl");?>/profile/"+p.ProfileGallery+"/\" target=\"_blank\">View Profile</a>"
+																		   +"</td>"
+																		 +"</tr>"
+																		 +"</table>";
+										  				jQuery("#profile-search-result").append(profileDisplay);
+										  				arr_profiles.push({name:p.ProfileContactNameFirst.toLowerCase()+" "+p.ProfileContactNameLast.toLowerCase(),profileid:p.ProfileID});
+										  		
+										  		}
+								  			});
+											
+						 						jQuery("table[class^=profile-search-list]").click(function(){
+								 						jQuery(this).toggleClass("selected" );
+								 						 total_selected = 0;
+								 						jQuery("table.profile-search-list.selected").each(function(){
+								 							 total_selected++;
+								 							
+								 						});
+								 						jQuery(".selected-info").remove();
+									 					if(total_selected >0){
+									 						jQuery("#TB_ajaxWindowTitle").html(jQuery("#TB_ajaxWindowTitle").html()+"<span class=\"selected-info\"> - "+total_selected+" profiles selected.</span>");
+									 					}
+									 	
+								 				});
+								 				
+								 				jQuery(".results-info").html(arr_profiles.length+ " Profiles found. "+selected_info);
+								  			
+								  		},
+								  		error: function(e){
+								  			console.log(e);
+								  		}
+								});
+							}
+
+							get_profiles();
+
+							function getAge(dateString) 
+							{
+							    var today = new Date();
+							    var birthDate = new Date(dateString);
+							    var age = today.getFullYear() - birthDate.getFullYear();
+							    var m = today.getMonth() - birthDate.getMonth();
+							    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+							    {
+							        age--;
+							    }
+							    if(isNaN(age)){
+							    	age = "Not Set";
+							    	return age;
+							    }
+							    return age+"y/o";
+							}
+
+							  var fname = jQuery("div[id=add-profiles] input[name=firstname]");
+				              var lname = jQuery("div[id=add-profiles] input[name=lastname]");
+				              jQuery("#add-profiles input[name=firstname],#add-profiles input[name=lastname]").keyup(function(){
+				              	  var keyword = fname.val().toLowerCase()+ " " +lname.val().toLowerCase();
+				              	 
+				              	  var result = find(arr_profiles,keyword);
+				              	  
+				              	  if(result.length > 0){
+				              	  	jQuery("table[id^=profile-]").hide();
+				              	  	jQuery("table[id^=profile-][class=selected]").show();
+
+				              	  	jQuery.each(result,function(i,p){
+												jQuery("table[id^='profile-"+p.profileid+"']").show();
+
+									});
+									jQuery(".results-info").html("Search Result: "+result.length+" "+(result.length>1?"profiles":"profile")+" found. "+selected_info);
+				              	  }else{
+				              	  	jQuery(".results-info").html("'"+keyword+"' not found. "+selected_info);
+				              	  }
+				              	 
+				              });
+
+				              function find(arr,keyword) {
+								    var result = [];
+
+								   jQuery.each(arr,function(i,p){
+								   	    if (p.name.indexOf(keyword) >= 0) {
+								            result.push({profileid:p.profileid});
+								        }
+								    });
+
+								    return result;
+							}
+
+							jQuery("#addtojob").click(function(){
+								  var arr_profiles_selected = [];
+								  jQuery("table.profile-search-list.selected").each(function(){
+								  	var profiles = jQuery(this).attr("id").split("profile-")[1];
+								  		arr_profiles_selected.push(profiles);
+								  });
+								   jQuery("input[name=addprofiles]").val(arr_profiles_selected.join());
+								   window.parent.tb_remove();
+								   arr_profiles_selected = [];
+								   jQuery("form[name=formAddProfile]").submit();
+
+		
+							});
+
+							 						
+	 					
+	 				});
+ 					</script>
+ 				<?php 
+ 				echo "<form method=\"post\" name=\"formAddProfile\" action=\"".admin_url("admin.php?page=rb_agency_castingjobs&action=informTalent&CastingJobID=".(!empty($_GET["CastingJobID"])?$_GET["CastingJobID"]:0))."\" >\n";								
+				echo "<input type=\"hidden\" value=\"\" name=\"addprofiles\"/>";
+				echo "</form>";
+
+				?>
 
 
 								<?php
@@ -423,7 +613,7 @@ $siteurl = get_option('siteurl');
 				echo "<form method=\"post\" name=\"formDeleteProfile\" action=\"".admin_url("admin.php?page=rb_agency_castingjobs&action=informTalent&CastingJobID=".(!empty($_GET["CastingJobID"])?$_GET["CastingJobID"]:0))."\" >\n";								
 				echo "<input type=\"hidden\" name=\"action2\" value=\"deleteprofile\"/>";
 								foreach ($results as $data) {
-									echo "<div style=\"width: 48.5%;float:left\" id=\"profile_".$data["ProfileID"]."\">";
+									echo "<div style=\"width: 48.5%;float:left\" id=\"profile-".$data["ProfileID"]."\">";
 									echo "<div style=\"height: 200px; margin-right: 5px; overflow: hidden; \"><span style=\"text-align:center;background:#ccc;color:#000;font-weight:bold;width:100%;padding:10px;display:block;\">".(isset($_GET["CastingJobID"])?"<input type=\"checkbox\" name=\"profiletalent_".$data["ProfileID"]."\" value=\"".$data["ProfileID"]."\"/>":""). stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</span><a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\"><img style=\"width: 100%; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></a>";
 									echo "</div>\n";
 									if(isset($_GET["CastingJobID"])){
@@ -431,9 +621,9 @@ $siteurl = get_option('siteurl');
 										$prepared = $wpdb->prepare($query,$data["ProfileID"],$_GET["CastingJobID"]);
 										$availability = current($wpdb->get_results($prepared));
 										
-										$count = $wpdb->num_rows;
+										$count2 = $wpdb->num_rows;
 
-										if($count <= 0){
+										if($count2 <= 0){
 											echo "<span style=\"text-align:center;color:#5505FF;font-weight:bold;width:80%;padding:10px;display:block;\">Unconfirmed</span>\n";
 										}else{
 										   if($availability->status == "available"){
@@ -448,6 +638,10 @@ $siteurl = get_option('siteurl');
 
 								}
 				echo "</form>\n";
+
+				if($count <= 0){
+					echo "No profiles found.";
+				}
 								?>
 						
 
@@ -456,7 +650,6 @@ $siteurl = get_option('siteurl');
 					echo "</div>";
 				    echo "</div>";
 				  echo "</div>";
-				  	} // end if cart is empty
 				  
 				
 		?>
