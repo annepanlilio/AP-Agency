@@ -275,6 +275,17 @@ echo "				<div id=\"profile-picture\">\n";
 							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 echo "				</div>\n"; // #profile-picture
+echo "			    <div id=\"soundcloud\">";
+						$querySC = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"SoundCloud\" ORDER BY $orderBy";
+						$resultsSC=  $wpdb->get_results($wpdb->prepare($querySC, $ProfileID),ARRAY_A);
+						$countSC  = $wpdb->num_rows;
+						if($countSC > 0){
+							echo "<h3>SoundCloud</h3>";
+							foreach( $resultsSC as $dataSC ){
+								echo RBAgency_Common::rb_agency_embed_soundcloud($dataSC['ProfileMediaURL']);
+							}
+						}
+echo "				</div>";
 echo "			</div>\n"; // .rbcol-4
 
 echo "			<div class=\"rbcol-5 rbcolumn\">\n";
@@ -336,7 +347,7 @@ echo "				<div id=\"photos\">\n";
 						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 						echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 echo "				</div>\n"; // #photos
