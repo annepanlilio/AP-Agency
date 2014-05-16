@@ -207,12 +207,14 @@
 			      	</td>
 			      	</tr>
 			     <?php }?>
+
 			      <?php if(!empty($CastingJobRoleFee)):?>
 				    <tr>
 			      	<td  style="text-align:right;padding-right:20px;">Role Fee($)</td>
 			      	<td><?php echo $CastingJobRoleFee; ?></td>
 			      	</tr>
 			     <?php endif;?>
+			     
 			     <?php if(!empty($CastingJobComments)):?>
 			     	<tr>
 			      	<td  style="text-align:right;padding-right:20px;">Comments</td>

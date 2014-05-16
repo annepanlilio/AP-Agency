@@ -1490,6 +1490,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$outLinkHeadShot = "";
 							$outLinkComCard = "";
 							$outCustomMediaLink = "";
+							$outSoundCloud = "";
 							
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
@@ -1516,6 +1517,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									             $query = current($wpdb->get_results("SELECT MediaCategoryTitle, MediaCategoryFileType FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
 									
 									$outCustomMediaLink .= "<span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) . "(".(isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."): </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
+								}elseif ($dataMedia['ProfileMediaType'] == "SoundCloud") {
+									    $outSoundCloud .= "<div style=\"width:600px;float:left;padding:10px;\">";
+										$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></span> \n";
+										$outSoundCloud .= "<object height=\"81\" width=\"100%\">";
+										$outSoundCloud .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"></param>";
+										$outSoundCloud .=  "<param name=\"allowscriptaccess\" value=\"always\"></param>";
+										$outSoundCloud .=  "<embed";
+										$outSoundCloud .=  "src=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"";
+										$outSoundCloud .=  "allowscriptaccess=\"always\" height=\"81\"  type=\"application/x-shockwave-flash\" width=\"100%\">";
+										$outSoundCloud .=  "</embed>";
+										$outSoundCloud .=  "</object>";
+										$outSoundCloud .= "</div>";
+								
 								}
 							}
 							echo '<div class="media-files">';
@@ -1544,9 +1558,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo $outCustomMediaLink;
 								echo '</div>';
 								endif;
+							
 							echo '</div>';
-
-							echo $outVideoMedia;
+							if(!empty($outSoundCloud)):
+								 echo $outSoundCloud; 
+							endif;
+							if(!empty($outVideoMedia)):
+								 echo $outVideoMedia;
+							endif; 
 
 							if ($countMedia < 1) {
 								echo "<div><em>" . __("There are no additional media linked", rb_agency_TEXTDOMAIN) . "</em></div>\n";
@@ -1613,11 +1632,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											<select name=\"profileMediaV1Type\">
 												<option selected>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
 												<option>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
-												<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
+												<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option>
+												<option>" . __("SoundCloud", rb_agency_TEXTDOMAIN) . "</option>
+											</select>
 										</th>
 										<td>
 											<table>
-												<tr><td>Video URL: </td><td><input type='text' id='profileMediaV1' name='profileMediaV1'></td></tr>
+												<tr><td>Media URL: </td><td><input type='text' id='profileMediaV1' name='profileMediaV1'></td></tr>
 												<tr><td>Title: </td><td><input type='text' name='media1_title'></td></tr>
 												<tr><td>Caption </td><td><input type='text' name='media1_caption'></td></tr>
 												<!--<tr><td>Video Type </td><td><input type='radio' name='media1_vtype' value='youtube' checked>&nbsp; Youtube <br/>
@@ -1634,11 +1655,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											<select name=\"profileMediaV2Type\">
 												<option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
 												<option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
-												<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
+												<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option>
+												<option>" . __("SoundCloud", rb_agency_TEXTDOMAIN) . "</option>
+											</select>
+										
 										</th>	
 										<td>
 											<table>
-												<tr><td>Video URL: </td><td><input type='text' id='profileMediaV2' name='profileMediaV2'></td></tr>
+												<tr><td>Media URL: </td><td><input type='text' id='profileMediaV2' name='profileMediaV2'></td></tr>
 												<tr><td>Title: </td><td><input type='text' name='media2_title'></td></tr>
 												<tr><td>Caption</td><td><input type='text' name='media2_caption'></td></tr>
 												<!--<tr><td>Video Type</td><td><input type='radio' name='media2_vtype' value='youtube' checked>&nbsp; Youtube <br/>
@@ -1654,11 +1678,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											<select name=\"profileMediaV3Type\">
 												<option>" . __("Video Slate", rb_agency_TEXTDOMAIN) . "</option>
 												<option selected>" . __("Video Monologue", rb_agency_TEXTDOMAIN) . "</option>
-												<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option></select>
+												<option>" . __("Demo Reel", rb_agency_TEXTDOMAIN) . "</option>
+										   	    <option>" . __("SoundCloud", rb_agency_TEXTDOMAIN) . "</option>
+										   	</select>
+										
 										</th>
 										<td>
 											<table>
-												<tr><td>Video URL: </td><td><input type='text' id='profileMediaV3' name='profileMediaV3'></td></tr>
+												<tr><td>Media URL: </td><td><input type='text' id='profileMediaV3' name='profileMediaV3'></td></tr>
 												<tr><td>Title: </td><td><input type='text' name='media3_title'></td></tr>
 												<tr><td>Caption</td><td><input type='text' name='media3_caption'></td></tr>
 												<!--<tr><td>Video Type</td><td><input type='radio' name='media3_vtype' value='youtube' checked>&nbsp; Youtube <br/>
