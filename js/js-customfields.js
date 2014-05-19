@@ -38,11 +38,11 @@ jQuery(document).ready(function(){
 			dropdown_values.push(jQuery(this).val());
 		}
 	});
-	var OriginalProfileCustomTitle = jQuery("input[name=ProfileCustomTitle]").val();
+	var OriginalProfileCustomTitle = (jQuery("input[name=ProfileCustomTitle]").val()?jQuery("input[name=ProfileCustomTitle]").val():"");
 	
 	//Get objects by selected type
 	function getObj(type){
-	
+	        
 	      switch(type){
 			case "1": // Text
 			     return '<tr>'
@@ -65,6 +65,7 @@ jQuery(document).ready(function(){
 			break;  
 			case "3":  // Dropdown
 			    jQuery("#objtype_customize").empty();
+			    jQuery("#obj_edit").remove();
 
 				var appnd = '<div id="obj_edit" class="3">Title:<input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" style="width:190px;" type="text"><br><ul id="editfield_add_more_options_12"><li>Option:<input value="" name="option[]" type="text"><a href="javascript:;" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li></ul><br><a href="javascript:;" id="addmoreoption_12">add more option[+]</a><br><br><div class="ui-sortable" id="editfield_add_more_options_2"></div><br></div>';
 				jQuery(".inside form").find('.submit').before(appnd);
@@ -142,6 +143,17 @@ jQuery(document).ready(function(){
 				jQuery ("table tr[id=objtype_customize]").append("Option*:<input type=\"text\" name=\"multiple[]\"\/><a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;width:150px;\" onclick=\"add_more_option_field(1);\" >add more option[+]<\/a> ");	
 				jQuery ("table tr[id=objtype_customize]").append("<div id=\"addoptions_field_1\"></div></div>");
 				break;
+			case "9":  // Dropdown Multi-Select
+			    jQuery("#obj_edit").remove();
+
+				var appnd = '<div id="obj_edit" class="9">Title:<input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" style="width:190px;" type="text"><br><ul id="editfield_add_more_options_12"><li>Option:<input value="" name="option[]" type="text"><a href="javascript:;" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li></ul><br><a href="javascript:;" id="addmoreoption_12">add more option[+]</a><br><br><div class="ui-sortable" id="editfield_add_more_options_2"></div><br></div>';
+				jQuery(".inside form").find('.submit').before(appnd);
+				jQuery.each(dropdown_values,function(i,v){
+					jQuery( "#editfield_add_more_options_12" ).append('<li class="" style="">Option:<input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li>');
+				});
+				jQuery( "#editfield_add_more_options_12" ).sortable();
+				
+			break;  	
 			
 			default:
 			   return '';

@@ -1969,7 +1969,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $data3['ProfileCustomID']]."\" /><br />\n";
 				}
 			 
-			} elseif ($ProfileCustomType == 3) {  // Drop Down
+			} elseif ($ProfileCustomType == 3 || $ProfileCustomType == 9) {  // Drop Down || Multi-Select
 				$dropdown_arr = explode(":",$data3['ProfileCustomOptions']);
 				if(count($dropdown_arr) == 1){
 					list($option1) =  $dropdown_arr;
@@ -1981,17 +1981,19 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					$option2 = "";
 				}
 					
+
 				$data = explode("|",$option1);
 				$data2 = explode("|",$option2);
 				
+
 				echo "<label class=\"dropdown\">".$data[0]."</label>";
-				echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\">\n";
+				echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"").">\n";
 				echo "<option value=\"\">--</option>";
 					$pos = 0;
 					foreach($data as $val1){
 						
 						if($val1 != end($data) && $val1 != $data[0]){
-							if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') ) {
+							if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue))) {
 								$isSelected = "selected=\"selected\"";
 								echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 							} else {
