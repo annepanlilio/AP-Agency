@@ -194,16 +194,11 @@
 			      	<tr>
 			      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Shoot Location:</td>
 			      	<td style="width:600px;"><?php echo $CastingJobShootLocation; ?><br/>
-			      	 <?php if(!empty($CastingJobShootLocationMap)){?>
-					      	<?php 
-					      		$GoogleMapLocation = explode("data=", $CastingJobShootLocationMap);
-					      	?>
-				      	 <?php if(!empty($GoogleMapLocation)){?>
+			      	
 					      	 <strong>Shoot Location Map</strong>
-					      	  <?php echo do_shortcode("[googleMap name='Shooting Location Map' width='600' height='300' directions_from='true']".$CastingJobShootLocation."[/googleMap]"); ?>
+					      	  <?php echo do_shortcode("[pw_map address='". $CastingJobShootLocation."']"); ?>
 					      	  <a href="<?php echo $CastingJobShootLocationMap;?>" target="_blank">View on Google Map</a>
-				      	 <?php }?>
-			      	 <?php }?>
+				      
 			      	</td>
 			      	</tr>
 			     <?php }?>
