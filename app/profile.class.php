@@ -4,18 +4,14 @@ class RBAgency_Profile {
 	/*
 	 * Debug Options
 	 */
-
 		protected static $error_debug = false;
 		protected static $error_debug_query = false;
 		protected static $error_checking = array();
-
 	/*
 	 * Class Properties
 	 */
-
 		protected static $order_by ='';
 		protected static $castingcart = false;
-
 
 	/*
 	 * Search Form
@@ -340,11 +336,11 @@ class RBAgency_Profile {
 						/*
 						 * Dropdown
 						 */
-						} elseif($ProfileCustomType == 3) {
+						} elseif($ProfileCustomType == 3 || $ProfileCustomType == 9 ) {
 								echo "<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "	<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								echo "	<div>";
-								echo "		<select name=\"ProfileCustomID". $ProfileCustomID ."\">";
+								echo "		<select name=\"ProfileCustomID". $ProfileCustomID ."[]\" ".($ProfileCustomType == 9 ?"multiple":"").">";
 								echo "			<option value=\"\">--</option>";
 												$values = explode("|",$ProfileCustomOptions);
 												foreach($values as $value){
@@ -352,7 +348,7 @@ class RBAgency_Profile {
 													if(!empty($value)) {
 														// Identify Existing Value
 														$isSelected = "";
-														if($_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)){
+														if($_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
 															$isSelected = "selected=\"selected\"";
 															echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>";
 														}else{
@@ -997,9 +993,15 @@ class RBAgency_Profile {
 									$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
 									$_SESSION[$key] = $val;
 
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 3) {
+								} elseif ($ProfileCustomType["ProfileCustomType"] == 3 || $ProfileCustomType["ProfileCustomType"] == 9) {
 									// Dropdown
-									$filter2 .="$open_st ProfileCustomValue = '".$val."' $close_st";
+									if($ProfileCustomType["ProfileCustomType"] == 3 ){
+										$filter2 .="$open_st ProfileCustomValue = '".$val."' $close_st";
+
+									// Dropdown Multi-Select	
+									}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
+										$filter2 .="$open_st ProfileCustomValue IN('".$val."') $close_st";
+									}
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
 									// Textarea
@@ -1008,7 +1010,44 @@ class RBAgency_Profile {
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
 									//Checkbox
-									$val = stripslashes($val);
+
+										$val = stripslashes($val);
+									if(!empty($val)){
+									
+										if(strpos($val,",") === false){
+											$filter2 .= $open_st;
+											$val2 = $val;
+											$filter2 .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ",$val2);
+											$val2 = addslashes(addslashes($val2));
+											$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
+											$filter2 .= $close_st;
+
+										} else {
+											
+											$likequery = array_filter(explode(",", $val));
+											$likecounter = count($likequery);
+											$i=1; 
+						
+											foreach($likequery as $like){
+												$i++;
+											
+															if($like!="") {
+																$val2 = addslashes(addslashes($like));
+																$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+															}
+														
+
+											}
+											//Commented to fix checkbox issue
+											$filter2 .= "$open_st (".$sr_data.") $close_st";
+
+										}
+
+										$_SESSION[$key] = $val;
+									} else {
+										$_SESSION[$key] = "";
+									}
+									/*$val = stripslashes($val);
 									if(!empty($val)){
 									
 										if(strpos($val,",") === false){
@@ -1045,7 +1084,7 @@ class RBAgency_Profile {
 										$_SESSION[$key] = $val;
 									} else {
 										$_SESSION[$key] = "";
-									}
+									}*/
 									
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
 									//Radiobutton 
@@ -1087,9 +1126,8 @@ class RBAgency_Profile {
 				
 			/**
 			 * Only Show from Casting Cart
-			 
-
-				// Profile Search Saved 
+			 * Profile Search Saved 
+			 */
 				if(isset($include) && !empty($include)){
 					$filter .= " AND profile.ProfileID IN (".$include.") ";
 				}
@@ -1749,7 +1787,7 @@ class RBAgency_Profile {
 						echo "</div>";
 					}
 
-				} elseif ($ProfileCustomType == 3) { // SELECT
+				} elseif ($ProfileCustomType == 3 || $ProfileCustomType == 9) { // SELECT
 
 					list($option1,$option2) = explode(":",$data1['ProfileCustomOptions']);
 
@@ -1757,7 +1795,7 @@ class RBAgency_Profile {
 					$data2 = explode("|",$option2);
 
 					echo "<label>".$data[0]."</label>";
-					echo "<div><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">";
+					echo "<div><select name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" ".($ProfileCustomType == 9?"multiple":"").">";
 					echo "<option value=\"\">--</option>";
 
 						foreach($data as $val1){
@@ -1765,7 +1803,7 @@ class RBAgency_Profile {
 							if($val1 != end($data) && $val1 != $data[0]){
 
 								 $isSelected = "";
-								if($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]==$val1){
+								if($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]==$val1 || in_array(stripslashes($val1), explode(",",$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]))){
 									$isSelected = "selected=\"selected\"";
 									echo "<option value=\"".$val1."\" ".$isSelected .">".$val1."</option>";
 								} else {
