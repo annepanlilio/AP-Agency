@@ -38,21 +38,34 @@ $siteurl = get_option('siteurl');
 									  		
 										foreach($_POST as $key => $val ){
 									  		 if(strpos($key, "profiletalent") !== false){
+									  		 		$wpdb->query($wpdb->prepare("DELETE FROM ".table_agency_castingcart_profile_hash." WHERE CastingProfileHashProfileID = %s",$val));
+									  	
 									  		 	  	array_push($arr_selected_profile, $val);
 													
 									  		 }
 									  	}
 									  	$new_set_profiles = implode(",",array_diff($arr_profiles,$arr_selected_profile));
 									  	$wpdb->query($wpdb->prepare("UPDATE ".table_agency_casting_job." SET Job_Talents=%s WHERE Job_ID = %d", $new_set_profiles, $_GET["Job_ID"]));
-	 
-									  	echo ('<div id="message" class="updated"><p>'.count($arr_selected_profile).(count($arr_selected_profile) <=1?" profile":" profiles").' removed successfully!</p></div>');
+	 									echo ('<div id="message" class="updated"><p>'.count($arr_selected_profile).(count($arr_selected_profile) <=1?" profile":" profiles").' removed successfully!</p></div>');
 		}
 
 		// Add selected profiles
 		if(isset($_POST["addprofiles"])){
 										$data = current($wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_casting_job." WHERE Job_ID= %d ", $_GET["Job_ID"])));
 									  	$add_new_profiles = $data->Job_Talents.",".$_POST["addprofiles"];
+									  	$hash_profile_id = RBAgency_Common::generate_random_string(20,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+										$castingHash = current($wpdb->get_results("SELECT * FROM ".table_agency_casting_job." WHERE Job_ID='".$_GET["Job_ID"]."'"));
+									
+										$profiles = explode(",",$_POST["addprofiles"]);
 
+										foreach($profiles as $profileid){
+											$sql = "INSERT INTO ".table_agency_castingcart_profile_hash." VALUES(
+											'',
+											'".$castingHash->Job_Talents_Hash."',
+											'".$profileid."',
+											'".$hash_profile_id."')";
+											$wpdb->query($sql);
+										}
 										$wpdb->query($wpdb->prepare("UPDATE ".table_agency_casting_job." SET Job_Talents=%s WHERE Job_ID = %d", $add_new_profiles, $_GET["Job_ID"]));
 	 
 									  	echo ('<div id="message" class="updated"><p>Added successfully!</p></div>');
