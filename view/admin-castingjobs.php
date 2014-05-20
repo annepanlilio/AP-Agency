@@ -412,7 +412,10 @@ $siteurl = get_option('siteurl');
                 		 echo "<div id=\"shortlisted\" class=\"boxblock-container\" style=\"float: left; width: 39%;\">";
 						 echo "<div class=\"boxblock\" style=\"width:490px; \">";
 						 echo "<h3>Talents Shortlisted";
-						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\"><a  href=\"#TB_inline?width=600&height=550&inlineId=add-profiles\" class=\"thickbox button-primary\" title=\"Add profiles to '".$CastingJobAudition."' Job\">Add Profiles</a>".(isset($_GET["CastingJobID"])?"<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" /><input type=\"checkbox\" id=\"selectall\"/>Select all</span>":"")."</h3>";
+						 if(!empty( $_SESSION['cartArray'])): 
+						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\"><a  href=\"#TB_inline?width=600&height=550&inlineId=add-profiles\" class=\"thickbox button-primary\" title=\"Add profiles to '".$CastingJobAudition."' Job\">Add Profiles</a>".(isset($_GET["CastingJobID"])?"<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" /><input type=\"checkbox\" id=\"selectall\"/>Select all</span>":"");
+						 endif;
+						 echo "</h3>";
 						 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
 					
 
