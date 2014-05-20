@@ -3916,6 +3916,24 @@ function rb_agency_search_profile(){
 }
 add_action('wp_ajax_rb_agency_search_profile', 'rb_agency_search_profile');
 add_action('wp_ajax_nopriv_rb_agency_search_profile', 'rb_agency_search_profile');
+
+/*
+ *	Rb Agency Clear Search filter session via Ajax 
+ */
+function rb_agency_clear_casting_array(){
+	if (!session_id()) {
+				session_start();
+	}
+	 
+	 foreach($_SESSION as $key => $val){
+	     unset($_SESSION[$key]);
+	 }
+	die();
+}
+add_action('wp_ajax_rb_agency_clear_casting_array', 'rb_agency_clear_casting_array');
+add_action('wp_ajax_nopriv_rb_agency_clear_casting_array', 'rb_agency_clear_casting_array');
+
+
 /*
  * Add action hook if interact is inactive
  */

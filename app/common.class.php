@@ -182,7 +182,7 @@ class RBAgency_Common {
 	 * @param string $string
 	 */
 	static function session($string) {
-		if(isset($_SESSION[$string]) && !emptY($_SESSION[$string])){
+		if(isset($_SESSION[$string]) && !empty($_SESSION[$string])){
 			return $_SESSION[$string];
 		}else{
 			return "";
