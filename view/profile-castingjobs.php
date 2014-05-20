@@ -5,53 +5,50 @@
 // GET HEADER  
 	echo $rb_header = RBAgency_Common::rb_header();
 
-			$CastingJobAudition = ""; 
-			$CastingJobRole = "";
-			$CastingJobAuditionDate = "";
-			$CastingJobAuditionVenue = "";
-			$CastingJobAuditionTime = "";
-			$CastingJobClothing = "";
-			$CastingJobRCallBack = "";
-			$CastingJobRWardrobe = "";
-			$CastingJobScript = "";
-			$CastingJobShootDate = "";
-			$CastingJobShootLocation = "";
-			$CastingJobShootLocationMap = "";
-			$CastingJobRoleFee = "";
-			$CastingJobComments = "";
-			$CastingJobSelectedFor = "";
-			$CastingJobDateCreated = "";
-			$CastingJobTalents = "";
-			$CastingJobID = "";
+				$Job_ID = ""; 
+			 	$Job_Title = ""; 
+				$Job_Text = "";
+				$Job_Date_Start = "";
+				$Job_Date_End = "";
+				$Job_Location = "";
+				$Job_Region = "";
+				$Job_Offering = "";
+				$Job_Talents = "";
+				$Job_Visibility = "";
+				$Job_Criteria = "";
+				$Job_Type = "";
+				$Job_Talents_Hash = "";	
+				$Job_Audition_Date = "";
+				$Job_Audition_Venue = "";
+				$Job_Audition_Time = "";
 		  
-            $castingcartJobHash = get_query_var("target");
-            $castingcartProfileHash = get_query_var("value");
+	            $castingcartJobHash = get_query_var("target");
+	            $castingcartProfileHash = get_query_var("value");
 
 
            if(isset($castingcartJobHash)){
 		 	
-		 	$sql =  "SELECT * FROM ".table_agency_castingcart_jobs." WHERE CastingJobTalentsHash= %s ";
+		 	$sql =  "SELECT * FROM ".table_agency_casting_job." WHERE Job_Talents_Hash= %s ";
 		 	$data = current($wpdb->get_results($wpdb->prepare($sql, $castingcartJobHash)));
 
 		 	if(!empty($data)){
-		 	$CastingJobAudition = $data->CastingJobAudition; 
-			$CastingJobRole = $data->CastingJobRole;
-			$CastingJobAuditionDate = $data->CastingJobAuditionDate;
-			$CastingJobAuditionVenue = $data->CastingJobAuditionVenue;
-			$CastingJobAuditionTime = $data->CastingJobAuditionTime;
-			$CastingJobClothing = $data->CastingJobClothing;
-			$CastingJobRCallBack = $data->CastingJobRCallBack;
-			$CastingJobRWardrobe = $data->CastingJobWardrobe;
-			$CastingJobScript = $data->CastingJobScript;
-			$CastingJobShootDate = $data->CastingJobShootDate;
-			$CastingJobShootLocation = $data->CastingJobShootLocation;
-			$CastingJobShootLocationMap = $data->CastingJobShootLocationMap;
-			$CastingJobRoleFee = $data->CastingJobRoleFee;
-			$CastingJobComments = $data->CastingJobComments;
-			$CastingJobSelectedFor = $data->CastingJobSelectedFor;
-			$CastingJobDateCreated = $data->CastingJobDateCreated;
-			$CastingJobTalents = $data->CastingJobTalents;
-			$CastingJobID = $data->CastingJobID;
+		 		$Job_ID = $data->Job_ID; 
+			 	$Job_Title = $data->Job_Title; 
+				$Job_Text = $data->Job_Text;
+				$Job_Date_Start = $data->Job_Date_Start;
+				$Job_Date_End = $data->Job_Date_End;
+				$Job_Location = $data->Job_Location;
+				$Job_Region = $data->Job_Region;
+				$Job_Offering = $data->Job_Offering;
+				$Job_Talents = $data->Job_Talents;
+				$Job_Visibility = $data->Job_Visibility;
+				$Job_Criteria = $data->Job_Criteria;
+				$Job_Type = $data->Job_Type;
+				$Job_Talents_Hash = $data->Job_Talents_Hash;	
+				$Job_Audition_Date = $data->Job_Audition_Date;
+				$Job_Audition_Venue = $data->Job_Audition_Venue;
+				$Job_Audition_Time = $data->Job_Audition_Time;
+			
 		   }
 
 		 }
@@ -61,7 +58,7 @@
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	  
-	 		$has_permission = explode(",",$CastingJobTalents);
+	 		$has_permission = explode(",",$Job_Talents_Hash);
 
 	 	    $profile_access_id = current($wpdb->get_results("SELECT * FROM ".table_agency_castingcart_profile_hash." WHERE CastingProfileHash = '".$castingcartProfileHash."' AND CastingProfileHashJobID ='".$castingcartJobHash."' ",ARRAY_A));
 
@@ -79,15 +76,15 @@
     					$availability = "notavailable";
     				}
 					  $query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
-							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$CastingJobID."') AS tmp
+							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."') AS tmp
 							WHERE NOT EXISTS (
-							    SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$CastingJobID."'
+							    SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'
 							) LIMIT 1;"; 
 					   $wpdb->query($query);
 						   	       echo ('<div id="message" class="updated"><p>Submitted successfully!</p></div>');
 		       
 		}
-		   		   $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$CastingJobID,$data["ProfileID"]));
+		   		   $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$Job_ID,$data["ProfileID"]));
 		    $has_submitted = $wpdb->num_rows;
 
 		  
@@ -112,14 +109,7 @@
 		        <?php endif; ?>
 		        </div>
 		        <h2><?php echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?></h2>	
-		        <table>	
-		          <?php if(!empty($CastingJobSelectedFor)):?>
-				    <tr>
-			      	<td style="text-align:right;padding-right:20px;">Selected for:</td>
-			      	<td><?php echo $CastingJobSelectedFor; ?></td>
-			      	</tr>
-			     <?php endif;?>  	      
-		        </table> 
+		       
 		     </div>    
 		      <table style="margin-top:20px;">
 		            <tr>
@@ -130,90 +120,60 @@
 		         	<input type="submit" name="availability" value="No, not Available" class="button-primary" />
 		         	</td>
 		         	</tr>
-		        <?php if(!empty( $CastingJobAudition )):?>
+		        <?php if(!empty( $Job_Title )):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Audition:</td>
-			      	<td><?php echo $CastingJobAudition; ?></td>
+			      	<td style="text-align:right;padding-right:20px;">Job Title:</td>
+			      	<td><?php echo $Job_Title; ?></td>
 			      	</tr>
 		      	<?php endif;?>
-		      	<?php if(!empty( $CastingJobRole )):?>
+		      	<?php if(!empty( $Job_Type )):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Role:</td>
-			      	<td><?php echo $CastingJobRole; ?></td>
+			      	<td style="text-align:right;padding-right:20px;">Job Type:</td>
+			      	<td><?php echo $Job_Type; ?></td>
 			      	</tr>
 				<?php endif;?>
-		      	<?php if(!empty($CastingJobAuditionDate)):?>
+		      	<?php if(!empty($Job_Audition_Date)):?>
 			      	<tr>
 			      	<td style="text-align:right;padding-right:20px;">Audition Dates:</td>
-			      	<td><?php echo $CastingJobAuditionDate; ?></td>
+			      	<td><?php echo $Job_Audition_Date; ?></td>
 			      	</tr>
 			     <?php endif;?>
-			     <?php if(!empty($CastingJobAuditionVenue)):?>
+			     <?php if(!empty($Job_Audition_Venue)):?>
 			      	<tr>
 			      	<td style="text-align:right;padding-right:20px;">Auditon Venue:</td>
-			      	<td><?php echo $CastingJobAuditionVenue; ?></td>
+			      	<td><?php echo $Job_Audition_Venue; ?></td>
 			      	</tr>
 			      <?php endif;?>
-			     <?php if(!empty($CastingJobAuditionTime)):?>
+			     <?php if(!empty($Job_Audition_Time)):?>
 				    <tr>
 			      	<td style="text-align:right;padding-right:20px;">Audition Time</td>
-			      	<td><?php echo $CastingJobAuditionTime; ?></td>
+			      	<td><?php echo $Job_Audition_Time; ?></td>
 			      	</tr>
 			     <?php endif;?>
-			     <?php if(!empty($CastingJobClothing)):?>
-					<tr>
-			      	<td style="text-align:right;padding-right:20px;">Audition Clothing:</td>
-			      	<td><?php echo $CastingJobClothing; ?></td>
-			      	</tr>
-			     <?php endif;?>
-			     <?php if(!empty($CastingJobRCallBack)):?>
-					<tr>
-			      	<td  style="text-align:right;padding-right:20px;">Call Back</td>
-			      	<td><?php echo $CastingJobRCallBack; ?></td>
-			      	</tr>
-			     <?php endif;?>
-			     <?php if(!empty($CastingJobRWardrobe)):?>
-			    	<tr>
-			      	<td  style="text-align:right;padding-right:20px;">Wardrobe</td>
-			      	<td><?php echo $CastingJobRWardrobe; ?></td>
-			      	</tr>
-			     <?php endif;?>
-			     <?php if(!empty($CastingJobScript)):?>
-				    <tr>
-			      	<td style="text-align:right;padding-right:20px;">Script:</td>
-			      	<td><?php echo $CastingJobScript; ?></td>
-			      	</tr>
-			     <?php endif;?>
-			     <?php if(!empty($CastingJobShootDate)):?>
-			    	<tr>
-			      	<td  style="text-align:right;padding-right:20px;">Shoot Date:</td>
-			      	<td><?php echo $CastingJobShootDate; ?></td>
-			      	</tr>
-			     <?php endif;?>
-			     <?php if(!empty($CastingJobShootLocation)){?>
+			    
+			     <?php if(!empty($Job_Location)){?>
 			      	<tr>
-			      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Shoot Location:</td>
-			      	<td style="width:600px;"><?php echo $CastingJobShootLocation; ?><br/>
+			      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Location:</td>
+			      	<td style="width:600px;"><?php echo $Job_Location; ?><br/>
 			      	
-					      	 <strong>Shoot Location Map</strong>
-					      	  <?php echo do_shortcode("[pw_map address='". $CastingJobShootLocation."']"); ?>
-					      	  <a href="<?php echo $CastingJobShootLocationMap;?>" target="_blank">View on Google Map</a>
-				      
+					      	 <strong>Location Map</strong>
+					      	  <?php echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
+					      	
 			      	</td>
 			      	</tr>
 			     <?php }?>
 
-			      <?php if(!empty($CastingJobRoleFee)):?>
+			      <?php if(!empty($Job_Offering)):?>
 				    <tr>
 			      	<td  style="text-align:right;padding-right:20px;">Role Fee($)</td>
-			      	<td><?php echo $CastingJobRoleFee; ?></td>
+			      	<td><?php echo $Job_Offering; ?></td>
 			      	</tr>
 			     <?php endif;?>
 			     
-			     <?php if(!empty($CastingJobComments)):?>
+			     <?php if(!empty($Job_Text)):?>
 			     	<tr>
-			      	<td  style="text-align:right;padding-right:20px;">Comments</td>
-			      	<td><?php echo $CastingJobComments; ?></td>
+			      	<td  style="text-align:right;padding-right:20px;">Description</td>
+			      	<td><?php echo $Job_Text; ?></td>
 			      	</tr>
 			     <?php endif;?>
 			   
