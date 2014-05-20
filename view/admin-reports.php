@@ -1,9 +1,10 @@
 <div class="wrap">
 	<?php 
-	// Include Admin Menu
-	include ("admin-include-menu.php");
 
 	global $wpdb;
+
+	// Include Admin Menu
+	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
 
 	$arrayProfilesRenamedFolders = array();
 	$arraySuggestedFolderNames = array();

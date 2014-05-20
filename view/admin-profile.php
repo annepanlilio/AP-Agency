@@ -754,7 +754,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	// Add Header
 	echo "<div class=\"wrap\">\n";
 	// Include Admin Menu
-	include ("admin-include-menu.php");
+	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
 
 	if (!empty($ProfileID) && ($ProfileID > 0)) {
 
@@ -1748,7 +1748,7 @@ function rb_display_list() {
 	$rb_agency_option_locationtimezone = isset( $rb_agency_options_arr['rb_agency_option_locationtimezone'] )?(int) $rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 	echo "<div class=\"wrap\">\n";
 	// Include Admin Menu
-	include ("admin-include-menu.php");
+	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
 
 	// Sort By
 	$sort = "";

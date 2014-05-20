@@ -3,10 +3,10 @@
 class RBAgency_Common {
 
 	/**
-     * Show Header
-     *
-     * @return echo 
-     */
+	 * Show Header
+	 *
+	 * @return echo 
+	 */
 
 	static function rb_header() {
 
@@ -23,10 +23,56 @@ class RBAgency_Common {
 	}
 
 	/**
-     * Show Footer
-     *
-     * @return echo 
-     */
+	 * Encode JSON
+	 *
+	 * @return echo 
+	 */
+
+	public static function json_encode($value){
+		return json_encode($value);
+	}
+
+	/**
+	 * Decode JSON
+	 *
+	 * @return echo 
+	 */
+
+	public static function json_decode($str, $is_assoc=true){
+		return json_decode($str, $is_assoc);
+	}
+
+	/**
+	 * Get Base URL
+	 * Returns the url of the plugin's root folder
+	 *
+	 * @return echo 
+	 */
+
+	public static function get_base_url(){
+		$plugin = plugin_basename(__FILE__);
+		$plugin = substr($plugin, 0, strpos($plugin, "/"));
+		return plugins_url($plugin);
+	}
+
+	/**
+	 * Get Base Path
+	 * Returns the physical path of the plugin's root folder
+	 *
+	 * @return echo 
+	 */
+
+	public static function get_base_path(){
+		$folder = basename(dirname(__FILE__));
+		return WP_PLUGIN_DIR . "/" . $folder;
+	}
+
+
+	/**
+	 * Show Footer
+	 *
+	 * @return echo 
+	 */
 
 	static function rb_footer() {
 
@@ -43,10 +89,10 @@ class RBAgency_Common {
 	}
 
 	/**
-     * Clean String, remove extra quotes
-     *
-     * @param string $string
-     */
+	 * Clean String, remove extra quotes
+	 *
+	 * @param string $string
+	 */
 
 	static function clean_string($string) {
 
@@ -61,12 +107,12 @@ class RBAgency_Common {
 
 
 	/**
-     * Generate random string
-     *
-     * @param int $length
-     * @param str $valid_chars
-     * @return string
-     */
+	 * Generate random string
+	 *
+	 * @param int $length
+	 * @param str $valid_chars
+	 * @return string
+	 */
 
 	static function generate_random_string($length = 8, $valid_chars = "") {
 		// start with an empty random string
@@ -92,8 +138,8 @@ class RBAgency_Common {
 			// subtract 1 from $random_pick because strings are indexed starting at 0, and we started picking at 1
 			if($valid_chars)
 			$random_char = $valid_chars[$random_pick-1];
-		    else
-		    $random_char = $random_pick;
+			else
+			$random_char = $random_pick;
 
 
 			// add the randomly-chosen char onto the end of our string so far
@@ -107,11 +153,11 @@ class RBAgency_Common {
 
 
 	/**
-     * Generate random number
-     *
-     * @param int $length
-     * @return string
-     */
+	 * Generate random number
+	 *
+	 * @param int $length
+	 * @return string
+	 */
 
 	static function generate_random_numeric($length) {
 
@@ -131,10 +177,10 @@ class RBAgency_Common {
 	}
 
 	/**
-     * Get Session and avoid undefined index
-     *
-     * @param string $string
-     */
+	 * Get Session and avoid undefined index
+	 *
+	 * @param string $string
+	 */
 	static function session($string) {
 		if(isset($_SESSION[$string]) && !emptY($_SESSION[$string])){
 			return $_SESSION[$string];
@@ -146,20 +192,20 @@ class RBAgency_Common {
 
 
 	/**
-     * Collapse White Space
-     *
-     * @param string $string
-     */
+	 * Collapse White Space
+	 *
+	 * @param string $string
+	 */
 	static function format_whitespace($string) {
 		return preg_replace('/\s+/', ' ', $string);
 	}
 
 
 	/**
-     * Prepare string to be filename
-     *
-     * @param string $filename
-     */
+	 * Prepare string to be filename
+	 *
+	 * @param string $filename
+	 */
 	static function format_stripchars($filename) {
 		$filename = self::format_whitespace(trim($filename));
 		$filename = str_replace(' ', '-', $filename);
@@ -170,20 +216,20 @@ class RBAgency_Common {
 
 
 	/**
-     * Format a string in proper case.
-     *
-     * @param string $string
-     */
+	 * Format a string in proper case.
+	 *
+	 * @param string $string
+	 */
 	static function format_propercase($string) {
 		return ucwords(strtolower($string));
 	}
 
 	/**
-     * Get Gender Title
-     *
-     * @param int $ProfileGenderID
-     * @return str $GenderTitle
-     */
+	 * Get Gender Title
+	 *
+	 * @param int $ProfileGenderID
+	 * @return str $GenderTitle
+	 */
 
 	static function profile_meta_gendertitle($ProfileGenderID){
 
@@ -205,10 +251,10 @@ class RBAgency_Common {
 
 
 	/**
-     * Check if RB Agency Plugin Exists
-     *
-     * @return bool true
-     */
+	 * Check if RB Agency Plugin Exists
+	 *
+	 * @return bool true
+	 */
 
 	public static function rb_agency_exists(){
 
@@ -227,10 +273,10 @@ class RBAgency_Common {
 
 
 	/**
-     * Check if Plugin Exists
-     *
-     * @return bool true
-     */
+	 * Check if Plugin Exists
+	 *
+	 * @return bool true
+	 */
 
 	public static function rb_agency_interact_exists(){
 
@@ -251,10 +297,10 @@ class RBAgency_Common {
 
 
 	/**
-     * Check if RB Agency Casting Plugin Exists
-     *
-     * @return bool true
-     */
+	 * Check if RB Agency Casting Plugin Exists
+	 *
+	 * @return bool true
+	 */
 
 	public static function rb_agency_casting_exists(){
 
@@ -523,15 +569,15 @@ class RBAgency_Common {
 	/*
 	 *  Display: Print Profile
 	*/
-    
-    static function print_profile($ProfileID = null,$ProfileGallery = null, $ProfileContactDisplay = null){
+	
+	static function print_profile($ProfileID = null,$ProfileGallery = null, $ProfileContactDisplay = null){
 
-        global $wpdb;
-    	
-    	$rb_agency_options_arr = get_option('rb_agency_options');
+		global $wpdb;
+		
+		$rb_agency_options_arr = get_option('rb_agency_options');
 		$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
-    	$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
+		$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 		$urlexploade = explode("/", $profileURLString);
 		$subview= isset($urlexploade[1])?$urlexploade[1]:"";
 		
@@ -801,7 +847,7 @@ class RBAgency_Common {
 										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
-										  	echo "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+											echo "<li><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
 										}
 							?>
 						</ul>
@@ -813,7 +859,7 @@ class RBAgency_Common {
 										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
-										  	echo "<li><figure style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" alt=\"". $ProfileContactDisplay ."\" ></figure></li>\n";
+											echo "<li><figure style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" alt=\"". $ProfileContactDisplay ."\" ></figure></li>\n";
 										}
 							?>
 						</ul>
@@ -821,7 +867,7 @@ class RBAgency_Common {
 				</div><!-- #portfolio-slide -->
 			
 			<?php }
-    }
+	}
 
      /**
      * Display: Embed Soundcloud

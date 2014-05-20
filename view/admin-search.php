@@ -4,7 +4,7 @@
 	// Setup DB connection
 	global $wpdb;
 	// Include Admin Menu
-	include ("admin-include-menu.php"); 
+	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
 
 	// Profile Class
 	include(rb_agency_BASEREL ."app/profile.class.php");

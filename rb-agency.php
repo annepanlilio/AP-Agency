@@ -47,10 +47,11 @@ See license.txt for full details.
 
 	//If you hardcode a RB Agency License Key here, it will automatically populate on activation.
 	$rb_agency_LICENSE = "";
-	//-- OR ---//
-	//You can also add the RB Agency license key to your wp-config.php file to automatically populate on activation
-	//Add the code in the comment below to your wp-config.php to do so:
-	//define('RB_AGENCY_LICENSE','YOUR_KEY_GOES_HERE');
+	define('rb_agency_LICENSE', $rb_agency_LICENSE);
+
+	// Registration URL
+	if(!defined("RBPLUGIN_URL"))
+		define("RBPLUGIN_URL", "http://demo3.modelingagencysoftware.com");
 
 
 // *************************************************************************************************** //
@@ -61,6 +62,9 @@ See license.txt for full details.
 
 	// Version
 	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
+	// WordPress Version
+	define("rb_agency_VERSION_WP_MIN", '3.2');
+	define("rb_agency_VERSION_SUPPORTED", version_compare(get_bloginfo("version"), rb_agency_VERSION_WP_MIN, '>='));
 	// Paths
 	define("rb_agency_BASENAME", plugin_basename(__FILE__) );  // rb-agency/rb-agency.php
 	$rb_agency_WPURL = get_bloginfo("wpurl"); // http://domain.com/wordpress
@@ -490,11 +494,11 @@ class RBAgency {
 				dbDelta($sql);
 
 				// Populate Initial Values
-                                $data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
+								$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
 				if ( !$data_custom_exists ) {
 					// Assume the rest dont exist either
 					$arr_ = array('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking');
-                                        $wpdb->query("DELETE FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle IN ('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking')");
+										$wpdb->query("DELETE FROM " . table_agency_customfields_types . " WHERE ProfileCustomTitle IN ('Ethnicity', 'Skin Tone', 'Hair Color','Eye Color', 'Height', 'Weight', 'Shirt','Waist', 'Hips', 'Shoe Size', 'Suit','Inseam', 'Dress', 'Bust', 'Union', 'Experience','Language', 'Booking')");
 					$insert_arr = array();
 					for($count = 1; $count <= count($arr_); $count++){
 						$insert_arr[] = "(" .$count.",".$count.",'".$arr_[$count-1]."','Model,Talent')";
@@ -931,7 +935,7 @@ class RBAgency {
 			// RB Agency Casting
 			if(function_exists('rb_agency_casting_menu')){
 				// saved search for casting
-			    add_submenu_page("rb_agency_menu", __("Approve Pending Clients", rb_agency_TEXTDOMAIN), __("Approve Clients", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
+				add_submenu_page("rb_agency_menu", __("Approve Pending Clients", rb_agency_TEXTDOMAIN), __("Approve Clients", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
 
 				// saved search for casting
 				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 'manage_options',"rb_agency_casting_searchsaved", array('RBAgency', 'menu_casting_searchsaved'));

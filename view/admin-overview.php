@@ -10,7 +10,7 @@ get_currentuserinfo();
 <div class="wrap">
 	<?php 
 	// Include Admin Menu
-	include ("admin-include-menu.php"); ?>
+	include (rb_agency_BASEREL ."view/partial/admin-menu.php");  ?>
 
 	<div id="welcome-panel" class="welcome-panel">
 		<div class="welcome-panel-content">
@@ -52,6 +52,8 @@ get_currentuserinfo();
 		</div>
 	</div>
 </div>
+
+
 
 <div id="dashboard-widgets-wrap">
 	<div id="dashboard-widgets" class="metabox-holder columns-2">
@@ -148,5 +150,30 @@ get_currentuserinfo();
 		<div class="clear"></div>
 
 
+	</div>
+</div>
+
+
+
+<div class="wrap">
+	<div id="welcome-panel" class="welcome-panel">
+		<div class="welcome-panel-content">
+			<h1>Diagnostic Checks:</h1>
+
+			<div class="welcome-panel-column-container">
+				<div class="welcome-panel-column">
+
+				</div>
+
+				<div class="welcome-panel-column" style="margin-left: 50px;">
+					<h3><?php _e("Environment Check"); ?></h3>
+					<?php
+						// Include Admin Menu
+						include (rb_agency_BASEREL ."view/partial/admin-diagnostic.php"); 
+					?>
+				</div>
+
+			</div>
+		</div>
 	</div>
 </div>
