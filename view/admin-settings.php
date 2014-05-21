@@ -12,7 +12,7 @@ jQuery(document).ready(function(){
 global $wpdb;
 
 // Include Admin Menu
-	include (rb_agency_BASEREL ."view/admin-include-menu.php");
+	include (rb_agency_BASEREL ."view/partial/admin-menu.php");
 
 // Get Current Page
 	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ 
@@ -607,6 +607,13 @@ elseif ($ConfigID == 11) {
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_redirect_custom_login]\" value=\"0\" ".checked(isset($rb_agency_options_arr['rb_agency_option_redirect_custom_login'])?$rb_agency_options_arr['rb_agency_option_redirect_custom_login']:0, 1,false)."/> ". __("Redirect to /profile-login/", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Switch Sidebar', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_switch_sidebar]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_switch_sidebar'])?$rb_agency_options_arr['rb_agency_option_switch_sidebar']:0, 0,false)."/> ". __("Use default interact sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_switch_sidebar]\" value=\"0\" ".checked(isset($rb_agency_options_arr['rb_agency_option_switch_sidebar'])?$rb_agency_options_arr['rb_agency_option_switch_sidebar']:0, 1,false)."/> ". __("Use theme widget sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
 
 
 		echo " <tr valign=\"top\">\n";
@@ -659,8 +666,8 @@ elseif ($ConfigID == 11) {
 		echo "   <th scope=\"row\">". __('New Profile Approval', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agency_option_useraccountcreation]\">\n";
-		echo "       <option value=\"0\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 0,false) ."> ". __("Manually Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'], 1,false) ."> ". __("Automatically Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval']:"", 0,false) ."> ". __("Manually Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval']:"", 1,false) ."> ". __("Automatically Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
