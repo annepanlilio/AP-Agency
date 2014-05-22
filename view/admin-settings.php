@@ -785,7 +785,7 @@ elseif ($ConfigID == 12) {
 		} // Switch
 		
   } // Action Post
-  elseif ($_GET['action'] == "deleteRecord") {
+  elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	
 	$SubscriptionRateID = $_GET['SubscriptionRateID'];
 	  if (is_numeric($SubscriptionRateID)) {
@@ -803,7 +803,7 @@ elseif ($ConfigID == 12) {
 		} // is there record?
 	  } // it was numeric
   }
-  elseif ($_GET['action'] == "editRecord") {
+  elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$SubscriptionRateID = $_GET['SubscriptionRateID'];
 		
@@ -843,7 +843,7 @@ elseif ($ConfigID == 12) {
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
-	echo "        <td><input type=\"text\" id=\"SubscriptionRateTitle\" name=\"SubscriptionRateTitle\" value=\"". $SubscriptionRateTitle ."\" /></td>\n";
+	echo "        <td><input type=\"text\" id=\"SubscriptionRateTitle\" name=\"SubscriptionRateTitle\" value=\"". (isset($SubscriptionRateTitle)?$SubscriptionRateTitle:"") ."\" /></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Type", rb_agency_TEXTDOMAIN) ." *:</th>\n";
@@ -853,11 +853,11 @@ elseif ($ConfigID == 12) {
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Text", rb_agency_TEXTDOMAIN) ." *:</th>\n";
-	echo "        <td><textarea id=\"SubscriptionRateText\" name=\"SubscriptionRateText\">". $SubscriptionRateText ."</textarea></td>\n";
+	echo "        <td><textarea id=\"SubscriptionRateText\" name=\"SubscriptionRateText\">". (isset($SubscriptionRateText)?$SubscriptionRateText:"") ."</textarea></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Package Rate", rb_agency_TEXTDOMAIN) ." *:</th>\n";
-	echo "        <td><input type=\"text\" id=\"SubscriptionRatePrice\" name=\"SubscriptionRatePrice\" value=\"". $SubscriptionRatePrice ."\" /></td>\n";
+	echo "        <td><input type=\"text\" id=\"SubscriptionRatePrice\" name=\"SubscriptionRatePrice\" value=\"". (isset($SubscriptionRatePrice)?$SubscriptionRatePrice:"") ."\" /></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Subscription Duration", rb_agency_TEXTDOMAIN) ." *:</th>\n";
@@ -873,7 +873,7 @@ elseif ($ConfigID == 12) {
 	echo "    </tr>\n";
 	echo "  </tbody>\n";
 	echo "</table>\n";
-	if ( $SubscriptionRateID > 0) {
+	if ( isset($SubscriptionRateID) && $SubscriptionRateID > 0) {
 	echo "<p class=\"submit\">\n";
 	echo "     <input type=\"hidden\" name=\"SubscriptionRateID\" value=\"". $SubscriptionRateID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
@@ -937,7 +937,7 @@ elseif ($ConfigID == 12) {
 		echo "<tbody>\n";
 	
 		$query = "SELECT * FROM ". table_agencyinteract_subscription_rates ." ORDER BY $sort $dir";
-		$results =  $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+		$results =  $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		foreach ($results as $data) {
 				$SubscriptionRateID	=$data['SubscriptionRateID'];

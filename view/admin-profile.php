@@ -124,7 +124,7 @@ if (isset($_POST['action'])) {
 			'role' => get_option('default_role')
 		);
 
-		if(function_exists(rb_agencyinteract_approvemembers)){
+		if(function_exists("rb_agencyinteract_approvemembers")){
 				if (empty($userdata['user_login'])) {
 						$errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
 						$have_error = true;
@@ -181,7 +181,7 @@ if (isset($_POST['action'])) {
 
 				// Bug Free!
 				if ($have_error == false) {
-					if (function_exists(rb_agencyinteract_approvemembers)) {
+					if (function_exists("rb_agencyinteract_approvemembers")) {
 						$new_user = wp_insert_user($userdata);
 					}
 
@@ -217,7 +217,7 @@ if (isset($_POST['action'])) {
 						"VALUES (
 							'" . esc_attr($ProfileGallery) . "',
 							'" . esc_attr($ProfileContactDisplay) . "',
-							'" . esc_attr($new_user) . "',
+							'" . esc_attr(isset($new_user)?$new_user:"") . "',
 							'" . esc_attr($ProfileContactNameFirst) . "',
 							'" . esc_attr($ProfileContactNameLast) . "',
 							'" . esc_attr($ProfileContactEmail) . "',
@@ -246,7 +246,7 @@ if (isset($_POST['action'])) {
 
 					// Notify admin and user
 					if ($ProfileNotifyUser <> "yes" && function_exists(rb_agencyinteract_approvemembers)) {
-						wp_new_user_notification($new_user, $ProfilePassword);
+						wp_new_user_notification(isset($new_user)?$new_user:"", $ProfilePassword);
 					}
 					// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
 					if ($rb_agency_option_profilenaming == 3) {
@@ -890,7 +890,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "    <tr valign=\"top\">\n";
 									echo "      <th scope=\"row\">" . __("Display Name", rb_agency_TEXTDOMAIN) . "</th>\n";
 									echo "      <td>\n";
-									echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . $ProfileContactDisplay . "\" />\n";
+									echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . (isset($ProfileContactDisplay)?$ProfileContactDisplay:"") . "\" />\n";
 									if(isset($errorValidation['rb_agency_option_profilenaming'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['rb_agency_option_profilenaming']."</p>\n";} 
 									echo "      </td>\n";
 									echo "    </tr>\n";
@@ -1153,7 +1153,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("State", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID='".$ProfileLocationCountry."'" ;
+								$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID='".(isset($ProfileLocationCountry)?$ProfileLocationCountry:"")."'" ;
 								$result_query_get = $wpdb->get_results($query_get);
 								echo '<select name="ProfileLocationState" id="ProfileLocationState">';
 								echo '<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
