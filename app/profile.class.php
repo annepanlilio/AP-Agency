@@ -1026,9 +1026,10 @@ class RBAgency_Profile {
 												if(strpos($val,",") === false){
 													$filter2 .= $open_st;
 													$val2 = $val;
-													$filter2 .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ",$val2);
-													$val2 = addslashes(addslashes($val2));
+													$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s",$val2,"%".$val2."%");
+													/*$val2 = addslashes(addslashes($val2));
 													$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
+													*/
 													$filter2 .= $close_st;
 
 												} else {
@@ -1042,14 +1043,16 @@ class RBAgency_Profile {
 													
 																	if($like!="") {
 																		$val2 = addslashes(addslashes($like));
-																		$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+																		$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s)".(($i <= $likecounter)?" OR ":""),$like,"%".$like."%");
 																	}
-																
+																						//Commented to fix checkbox issue
+								
 
 													}
-													//Commented to fix checkbox issue
-													$filter2 .= "$open_st (".$sr_data.") $close_st";
 
+																		$filter2 .= "$open_st  ".$sr_data."  $close_st";
+
+					
 												}
 
 												$_SESSION[$key] = $val;
@@ -1174,8 +1177,11 @@ class RBAgency_Profile {
 					if(count($filterDropdown) > 0){
 						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 					}
-
+					
 					$filter .= $filter2;
+					$filter = str_replace(array("\n","\t","\r")," ", $filter);
+					$filter = str_replace(")(", ") AND (", $filter);
+				
 				}
 
 				
@@ -1204,8 +1210,7 @@ class RBAgency_Profile {
 				}
 				
 				self::search_generate_sqlorder($atts);
-				
-			echo "<Br/>";
+
 				return $filter;
 
 
