@@ -64,17 +64,21 @@ get_currentuserinfo();
 				<div id="dashboard_right_now" class="postbox">
 					<div class="handlediv" title="Click to toggle"><br></div>
 					<h3 class="hndle" ><span><?php echo __("Quick Search", rb_agency_TEXTDOMAIN ) ?></span></h3>
-					<div class="inside">
+					<div class="inside" style="padding: 15px;">
+					  <ul>
+					  <li>
 						<?php
 						if ($user_level >= 7) {
 							// Profile Class
 							include(rb_agency_BASEREL ."app/profile.class.php");
 
-							$form = RBAgency_Profile::search_form("", "", 0);
+							$form = RBAgency_Profile::search_form("", "", 1,'condensed');
 							echo $form;
 
 						} // Editor
 						?>
+					  </li>
+					</ul>
 					</div>
 				</div>
 
