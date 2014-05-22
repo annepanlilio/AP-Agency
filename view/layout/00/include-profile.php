@@ -18,7 +18,10 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Insert Scripts
  */
+	
 
+	wp_enqueue_script( 'jquery' );
+				
 	wp_register_script( 'isotope-jquery', plugins_url('/js/jquery.isotope.min.js', __FILE__), array(), false, false );
 	wp_enqueue_script( 'isotope-jquery' );
 
