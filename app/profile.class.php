@@ -40,8 +40,13 @@ class RBAgency_Profile {
 				if ($type == 1) {
 
 					// Admin Back-end 
-					$rb_agency_searchurl = admin_url("admin.php?page=". $_GET['page']);
-					$search_layout = "admin";
+					$rb_agency_searchurl = admin_url("admin.php?page=rb_agency_search");
+
+					if ($profilesearch_layout == 'condensed'){
+						$search_layout = "simple";
+					}else{
+						$search_layout = "admin";
+					}
 
 				} else {
 
@@ -1014,7 +1019,43 @@ class RBAgency_Profile {
 
 									// Dropdown Multi-Select	
 									}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
-										$filter2 .="$open_st ProfileCustomValue IN('".$val."') $close_st";
+										
+											$val = stripslashes($val);
+											if(!empty($val)){
+											
+												if(strpos($val,",") === false){
+													$filter2 .= $open_st;
+													$val2 = $val;
+													$filter2 .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ",$val2);
+													$val2 = addslashes(addslashes($val2));
+													$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
+													$filter2 .= $close_st;
+
+												} else {
+													
+													$likequery = array_filter(explode(",", $val));
+													$likecounter = count($likequery);
+													$i=1; 
+								
+													foreach($likequery as $like){
+														$i++;
+													
+																	if($like!="") {
+																		$val2 = addslashes(addslashes($like));
+																		$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+																	}
+																
+
+													}
+													//Commented to fix checkbox issue
+													$filter2 .= "$open_st (".$sr_data.") $close_st";
+
+												}
+
+												$_SESSION[$key] = $val;
+											} else {
+												$_SESSION[$key] = "";
+											}
 									}
 
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
@@ -1330,6 +1371,7 @@ class RBAgency_Profile {
 							<option value="1">Age</option>
 							<option value="2">Name</option>
 							<option value="3">Date Joined</option>
+							<option value="2">Display Name</option>
 						</select>
 						<select id="sort_option">
 							<option value="">Sort Options</option>
