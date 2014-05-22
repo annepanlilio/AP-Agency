@@ -631,14 +631,13 @@ $siteurl = get_option('siteurl');
 
 
 								<?php
-								$cartString = "";
-							   if(!empty($cartArray)){		   
+								 if(!empty($cartArray)){		   
 									$cartString = implode(",", array_unique($cartArray));
 									$cartString = RBAgency_Common::clean_string($cartString);
 							    }
 								// Show Cart  
-								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".(!empty($cartString)?$cartString:0).") ORDER BY profile.ProfileContactNameFirst ASC";
-								$results = $wpdb->get_results($wpdb->prepare($query,$cartString), ARRAY_A);
+								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY profile.ProfileContactNameFirst ASC";
+								$results = $wpdb->get_results($wpdb->prepare($query,(!empty($cartString)?$cartString:0)), ARRAY_A);
 
 								$count = $wpdb->num_rows;
 

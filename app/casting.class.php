@@ -512,7 +512,7 @@ class RBAgency_Casting {
 
 		}
 
-		 function sendText($mobile, $link){
+		public static  function sendText($mobile, $link){
 			
 			    $rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_value_agency_easytxturl = isset($rb_agency_options_arr['rb_agency_option_agency_easytxturl'])?$rb_agency_options_arr['rb_agency_option_agency_easytxturl']:"";
@@ -542,7 +542,7 @@ class RBAgency_Casting {
 				curl_close($ch);
 	}
 
-	function sendEmail($emails,$link){
+	public static function sendEmail($emails,$link){
 			// Mail it
 		    $headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
