@@ -1971,7 +1971,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 		/*Column head form*/
 		echo "<div class=\"wrap\">";
-		echo "<h2>Import CSV</h2>";
+		echo "<h2>Import ".strtoupper($get_ext)."</h2>";
 		echo "<form  method=\"post\" action=\"\">";
 		
 		echo '<input type="hidden" value ="'.$custom_header.'" name="custom_header"/>
