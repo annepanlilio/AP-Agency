@@ -68,9 +68,9 @@ header("Cache-control: private"); //IE 6 Fix
 		global $wpdb;
 
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
-		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", rb_agency_TEXTDOMAIN ));
 		$count = count($results);
-		foreach($results as $data) {
+	foreach($results as $data) {
 			$ProfileID					=$data['ProfileID'];
 			$ProfileUserLinked			=$data['ProfileUserLinked'];
 			$ProfileGallery				=stripslashes($data['ProfileGallery']);
@@ -110,6 +110,12 @@ header("Cache-control: private"); //IE 6 Fix
 			$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
 		}
 
+		 rb_agency_add_editlink($ProfileID);
+	
+		 function get_current_viewingID(){
+				global $ProfileID;
+				return $ProfileID;
+		 }
 	/*
 	 * Customize Page Title
 	 */
@@ -122,6 +128,7 @@ header("Cache-control: private"); //IE 6 Fix
 					return bloginfo('name') ." > ". $ProfileContactDisplay ."";
 				}
 		}
+	
 
 	/*
 	 * TODO: WHT IS THIS?
@@ -131,6 +138,7 @@ header("Cache-control: private"); //IE 6 Fix
 			include(rb_agency_BASEREL . 'theme/printable-profile.php');
 			exit;
 		}
+
 
 	/*
 	 * Create View

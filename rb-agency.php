@@ -148,15 +148,6 @@ See license.txt for full details.
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
-	// Casting
-	if (!defined("table_agency_castingcart"))
-		define("table_agency_castingcart", "{$wpdb->prefix}agency_castingcart");
-	if (!defined("table_agency_castingcart_jobs"))
-		define("table_agency_castingcart_jobs", "{$wpdb->prefix}agency_castingcart_jobs");
-	if (!defined("table_agency_castingcart_availability"))
-		define("table_agency_castingcart_availability", "{$wpdb->prefix}agency_castingcart_availability");
-	if (!defined("table_agency_castingcart_profile_hash"))
-		define("table_agency_castingcart_profile_hash", "{$wpdb->prefix}agency_castingcart_profile_hash");
 
 
 // *************************************************************************************************** //

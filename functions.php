@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+//error_reporting(0);
 /*
  * Debug Mode
 
@@ -617,10 +617,10 @@ error_reporting(0);
 		return $rb_agency_get_videothumbnail;*/
 
 		 $image_url = parse_url($url);
-	    if($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com'){
+	    if(isset($image_url['host']) && ($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com')){
 	        $array = explode("&", $image_url['query']);
 	        return "<img src=\"http://img.youtube.com/vi/".substr($array[0], 2)."/default.jpg\"/>";
-	    } else if($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com'){
+	    } else if(isset($image_url['host']) && ($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com')){
 	    	$is_host_active = @file_get_contents("http://vimeo.com/api/v2/video/".substr($image_url['path'], 1).".php");
 	    	
 	    	if(!empty($is_host_active)){
@@ -999,7 +999,7 @@ error_reporting(0);
 
 						if(is_permitted("favorite") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites")) ){
 							if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
-									$links.='<a href="'.get_bloginfo('siteurl').'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
+									$links.='<a href="'.get_site_url().'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
 							}
 						}
 
@@ -1007,7 +1007,7 @@ error_reporting(0);
 							if($_SERVER['REQUEST_URI']!="/profile-casting/"){
 								if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
 									if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
-									$links.='<a href="'.get_bloginfo('siteurl').'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
+									$links.='<a href="'.get_site_url().'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
 								}
 							}
 						}
@@ -2768,7 +2768,30 @@ function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
 					}
 	}
 }
+	/*
+	* Add admin tool > Edit Profile
+	*/
+	function rb_agency_add_editlink($profileID){
+		 			
+			if (current_user_can('level_10') && !is_admin()) {
+				
+				
+				function prepare_tool($wp_toolbar){
+					 $arr = array(
+						'id' => 'rb-agency-edit-profile',
+						'title' => 'Edit this Profile',
+						'href' => admin_url('admin.php?page=rb_agency_profiles&action=editRecord&ProfileID='.get_current_viewingID()),
+						'meta' => array('target' => 'rb-agency-edit-profile')
+					);
 
+					$wp_toolbar->add_node($arr);
+				}
+				add_action('admin_bar_menu',"prepare_tool",999,2);
+				
+
+			}
+		
+	}	
 /*/
 * ======================== Show/Hide Admin Toolbar===============
 * 
