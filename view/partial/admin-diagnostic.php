@@ -115,7 +115,7 @@
 					</td>
 					<td>
 						<?php
-							if(version_compare(rb_agency_VERSION, $version_info["version"], '>=')){
+							if(version_compare(rb_agency_VERSION, isset($version_info["version"])?$version_info["version"]:"", '>=')){
 								?>
 								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/>
 								<?php
