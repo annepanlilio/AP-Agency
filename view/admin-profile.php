@@ -20,7 +20,7 @@ define("LabelSingular", "Profiles");
 		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
 		$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int) $rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 
-		if (function_exists("rb_agencyinteract_approvemembers")) {
+		if (function_exists('rb_agency_interact_menu')) {
 			// Load Interact Settings
 			$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
 			$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
@@ -124,7 +124,7 @@ if (isset($_POST['action'])) {
 			'role' => get_option('default_role')
 		);
 
-		if(function_exists("rb_agencyinteract_approvemembers")){
+		if(function_exists('rb_agency_interact_menu')){
 				if (empty($userdata['user_login'])) {
 						$errorValidation['user_login'] = __("A username is required for registration.<br />", rb_agencyinteract_TEXTDOMAIN);
 						$have_error = true;
@@ -181,7 +181,7 @@ if (isset($_POST['action'])) {
 
 				// Bug Free!
 				if ($have_error == false) {
-					if (function_exists("rb_agencyinteract_approvemembers")) {
+					if (function_exists('rb_agency_interact_menu')) {
 						$new_user = wp_insert_user($userdata);
 					}
 
@@ -245,7 +245,7 @@ if (isset($_POST['action'])) {
 
 
 					// Notify admin and user
-					if ($ProfileNotifyUser <> "yes" && function_exists(rb_agencyinteract_approvemembers)) {
+					if ($ProfileNotifyUser <> "yes" && function_exists('rb_agency_interact_menu')) {
 						wp_new_user_notification(isset($new_user)?$new_user:"", $ProfilePassword);
 					}
 					// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
@@ -1031,7 +1031,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "        </td>\n";
 							echo "    </tr>\n";
 							/*
-							if (function_exists(rb_agencyinteract_approvemembers)) {
+							if (function_exists('rb_agency_interact_menu')) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Membership", rb_agency_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";

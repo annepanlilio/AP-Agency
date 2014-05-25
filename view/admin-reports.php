@@ -22,7 +22,7 @@ if ($ConfigID <> 0) { ?>
 
 if ($ConfigID == 0) {
 	
-	if (function_exists("rb_agencyinteract_approvemembers")) {
+	if (function_exists('rb_agency_interact_menu')) {
 		// RB Agency Interact Settings
 		echo "<div class=\"boxlinkgroup\">\n";
 		echo "  <h2>". __("Interactive Reporting", rb_agency_TEXTDOMAIN) . "</h2>\n";
