@@ -962,7 +962,7 @@ class RBAgency {
 			include_once('view/admin-settings.php');
 		}
 		public static function menu_castingjob(){
-			include_once('view/admin-castingjobs.php');
+			rb_agency_casting_jobs();
 		}
 
 		// Interact
