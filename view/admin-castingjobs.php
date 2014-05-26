@@ -399,7 +399,7 @@ wp_enqueue_style( 'timepicker-style' );
 						echo "<label for=\"Job_Audition_Venue\">Audition Venue</label>";
 						echo "<div><input type=\"text\" id=\"Job_Audition_Venue\" name=\"Job_Audition_Venue\" value=\"".$Job_Audition_Venue."\"></div>";
 					echo "</div>";
-	
+
 					 if(isset($_GET["Job_ID"])){
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"comments\">&nbsp;</label>";
@@ -525,12 +525,68 @@ wp_enqueue_style( 'timepicker-style' );
  
 			    <?php
 			     if(!empty( $_SESSION['cartArray']) || isset($_GET["Job_ID"])): 
-						
+						 echo "<div id=\"shortlisted\" class=\"boxblock-container\" >";
+						 echo "<div class=\"boxblock\">";
+						 echo "<h3>Client's Casting Cart</h3>";
+							 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+							 $casting_cart = $wpdb->get_results($wpdb->prepare("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingJobID = %d ",$_GET["Job_ID"]),ARRAY_A);
+							 // Show Cart  
+							 $arr_profiles = array();
+							 foreach ($casting_cart as $key) {
+							 	array_push($arr_profiles, $key["CastingCartTalentID"]);
+							 }
+	
+								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".(implode(",", $arr_profiles)).") ORDER BY profile.ProfileContactNameFirst ASC";
+								$results = $wpdb->get_results($query, ARRAY_A);
+
+												$count = $wpdb->num_rows;
+												foreach ($results as $data) {
+													echo "<div style=\"width: 16.6%;float:left\" id=\"profile-".$data["ProfileID"]."\">";
+													echo "<div style=\"height: 200px; margin-right: 5px; overflow: hidden; \"><span style=\"text-align:center;background:#ccc;color:#000;font-weight:bold;width:100%;padding:10px;display:block;\">".(isset($_GET["Job_ID"])?"<input type=\"checkbox\" name=\"profiletalent_".$data["ProfileID"]."\" value=\"".$data["ProfileID"]."\"/>":""). stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</span><a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\"><img style=\"width: 100%; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></a>";
+													echo "</div>\n";
+													if(isset($_GET["Job_ID"])){
+														$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+														$prepared = $wpdb->prepare($query,$data["ProfileID"],$_GET["Job_ID"]);
+														$availability = current($wpdb->get_results($prepared));
+														
+														$count2 = $wpdb->num_rows;
+
+														if($count2 <= 0){
+															echo "<span style=\"text-align:center;color:#5505FF;font-weight:bold;width:80%;padding:10px;display:block;\">Unconfirmed</span>\n";
+														}else{
+														   if($availability->status == "available"){
+														    echo "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
+															}else{
+															echo "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
+															}
+														}
+													}
+													echo "</div>\n";
+													
+
+												}
+								
+								if($count <= 0){
+									echo "No profiles found.";
+								}
+							
+							 echo "<div class=\"clear\"></div>";
+							 echo "</div>";
+						 echo "</div>";
+						 echo "</div>";
+
+
                 		 echo "<div id=\"shortlisted\" class=\"boxblock-container\" >";
 						 echo "<div class=\"boxblock\">";
-						 echo "<h3>Talents Shortlisted";
+						 echo "<h3>Talents Shortlisted by Admin";
 						 if(!empty( $_SESSION['cartArray']) || isset($_GET["Job_ID"])): 
-						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\"><a  href=\"#TB_inline?width=600&height=550&inlineId=add-profiles\" class=\"thickbox button-primary\" title=\"Add profiles to '".$Job_Title."' Job\">Add Profiles</a>".(isset($_GET["Job_ID"])?"<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" /><input type=\"checkbox\" id=\"selectall\"/>Select all</span>":"");
+						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\">";
+						 echo "<a  href=\"#TB_inline?width=600&height=550&inlineId=add-profiles\" class=\"thickbox button-primary\" title=\"Add profiles to '".$Job_Title."' Job\">Add Profiles</a>";
+						 if(isset($_GET["Job_ID"])){
+						 	echo "<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" />";
+						 	echo "<input type=\"submit\" name=\"addtocastingcart\" class=\"button-primary\" id=\"addtocastingcart\" value=\"Add to Client's Casting Cart\" />";
+						 	echo "<input type=\"checkbox\" id=\"selectall\"/>Select all</span>";
+						}
 						 endif;
 						 echo "</h3>";
 						 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
