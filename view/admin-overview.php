@@ -55,7 +55,7 @@ get_currentuserinfo();
 
 
 
-<div id="dashboard-widgets-wrap">
+<div id="dashboard-widgets-wrap" style="width: 100%;">
 	<div id="dashboard-widgets" class="metabox-holder columns-2">
 
 		<div id="postbox-container-1" class="postbox-container">
@@ -64,9 +64,9 @@ get_currentuserinfo();
 				<div id="dashboard_right_now" class="postbox">
 					<div class="handlediv" title="Click to toggle"><br></div>
 					<h3 class="hndle" ><span><?php echo __("Quick Search", rb_agency_TEXTDOMAIN ) ?></span></h3>
-					<div class="inside" style="padding: 15px;">
+					<div class="inside" style="padding: 35px;">
 					  <ul>
-					  <li>
+					  <li style="width:100%;">
 						<?php
 						if ($user_level >= 7) {
 							// Profile Class
