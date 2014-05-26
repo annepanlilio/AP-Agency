@@ -18,11 +18,11 @@ $siteurl = get_option('siteurl');
 
 	if (isset($_POST['action'])) {
 
-		$SearchID			=$_POST['SearchID'];
-		$SearchTitle		=$_POST['SearchTitle'];
-		$SearchType			=$_POST['SearchType'];
-		$SearchProfileID	=$_POST['SearchProfileID'];
-		$SearchOptions		=$_POST['SearchOptions'];
+		$SearchID			= isset($_POST['SearchID']) ? $_POST['SearchID']: "";
+		$SearchTitle		= isset($_POST['SearchTitle'])?$_POST['SearchTitle']:"";
+		$SearchType			= isset($_POST['SearchType'])?$_POST['SearchType']:"";
+		$SearchProfileID	= isset($_POST['SearchProfileID'])?$_POST['SearchProfileID']:"";
+		$SearchOptions		= isset($_POST['SearchOptions'])?$_POST['SearchOptions']:"";
 
 		// What is action?
 		$action = $_POST['action'];
@@ -42,10 +42,10 @@ $siteurl = get_option('siteurl');
 						SearchProfileID,
 						SearchOptions
 					)" . "VALUES (
-						'" . $wpdb->escape($SearchTitle) . "',
-						'" . $wpdb->escape($SearchType) . "',
-						'" . $wpdb->escape($SearchProfileID) . "',
-						'" . $wpdb->escape($SearchOptions) . "'
+						'" . esc_sql($SearchTitle) . "',
+						'" . esc_sql($SearchType) . "',
+						'" . esc_sql($SearchProfileID) . "',
+						'" . esc_sql($SearchOptions) . "'
 					)";
 
 					$results = $wpdb->query($insert);
@@ -140,14 +140,17 @@ $siteurl = get_option('siteurl');
 		<?php
 
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+	
 		/*
 		TODO: CLeanup
 		$SearchMuxHash = $dataSearchSavedMux["SearchMuxHash"];
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
 	  	*/
 		$data =  $wpdb->get_row($query);
-		$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$data['SearchProfileID'].") ORDER BY ProfileContactNameFirst ASC";
-		$results = $wpdb->get_results($wpdb->prepare($query), ARRAY_A);
+		$query ="SELECT * FROM ". table_agency_profile ." profile, "
+				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
+				.(isset($data->SearchProfileID)? $data->SearchProfileID:"''").") ORDER BY ProfileContactNameFirst ASC";
+		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 
 		 ?>
@@ -302,8 +305,8 @@ $siteurl = get_option('siteurl');
 			$p = new rb_agency_pagination;
 			$p->items($items);
 			$p->limit(50); // Limit entries per page
-			$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .$query);
-			$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+			$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .(isset($query)?$query:""));
+			$p->currentPage(isset($_GET[isset($p->paging)?$p->paging:0])?$_GET[$p->paging]:0); // Gets and validates the current page
 			$p->calculate(); // Calculates what to show
 			$p->parameterName('paging');
 			$p->adjacents(1); //No. of page away from the current page
@@ -396,7 +399,7 @@ $siteurl = get_option('siteurl');
 			$count3 = $wpdb->num_rows;
 
 		?>
-		<tr<?php echo $rowColor; ?>>
+		<tr<?php echo isset($rowColor)?$rowColor:""; ?>>
 			<th class="check-column" scope="row">
 				<input type="checkbox" value="<?php echo $SearchID; ?>" class="administrator" id="<?php echo $SearchID; ?>" name="<?php echo $SearchID; ?>"/>
 			</th>
