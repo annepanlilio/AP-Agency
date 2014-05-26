@@ -22,10 +22,23 @@ $siteurl = get_option('siteurl');
 		if(isset($_SESSION['cartArray']) || isset($_GET["action"]) && $_GET["action"] == "informTalent" || !isset($_GET["action"])){
      ?>
     
+<?php 
+
+wp_register_script('jquery_latest', 'http://code.jquery.com/jquery-1.11.0.min.js',false,1,true); 
+wp_enqueue_script('jquery_latest');
+wp_enqueue_script( 'jqueryui',  'http://code.jquery.com/ui/1.10.4/jquery-ui.js',false,1,true); 
+wp_register_script('jquery-timepicker',  plugins_url('../js/jquery-timepicker.js', __FILE__),false,1,true); 
+wp_enqueue_script('jquery-timepicker');
+wp_register_style( 'timepicker-style', plugins_url('../style/timepicker-addon.css', __FILE__) );
+wp_enqueue_style( 'timepicker-style' );
+
+	echo '<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">';
+	
+?>
 
 	<div style="clear:both"></div>
 
-		<div class="wrap" style="min-width: 1020px;">
+		<div class="wrap">
 		 <div id="rb-overview-icon" class="icon32"></div>
 		 <h2>Casting Jobs</h2>
 		
@@ -53,33 +66,36 @@ $siteurl = get_option('siteurl');
 		if(isset($_POST["addprofiles"])){
 										$data = current($wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_casting_job." WHERE Job_ID= %d ", $_GET["Job_ID"])));
 									  	$add_new_profiles = $data->Job_Talents.",".$_POST["addprofiles"];
-									  	$hash_profile_id = RBAgency_Common::generate_random_string(20,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-										$castingHash = current($wpdb->get_results("SELECT * FROM ".table_agency_casting_job." WHERE Job_ID='".$_GET["Job_ID"]."'"));
+									 	$castingHash = current($wpdb->get_results("SELECT * FROM ".table_agency_casting_job." WHERE Job_ID='".$_GET["Job_ID"]."'"));
 									
 										$profiles = $_POST["addprofiles"];
 										
 										if(strpos($profiles,",") !== false){
 											$profiles = explode(",",$profiles);
 											foreach($profiles as $profileid){
+												 	$hash_profile_id = RBAgency_Common::generate_random_string(20,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+									
 												$sql = "INSERT INTO ".table_agency_castingcart_profile_hash." VALUES(
 												'',
 												'".$castingHash->Job_Talents_Hash."',
 												'".$profileid."',
 												'".$hash_profile_id."')";
-												echo $sql;
 												$wpdb->query($sql);
+												
 											}
 										}else{
+											 	$hash_profile_id = RBAgency_Common::generate_random_string(20,"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+									
 											$sql = "INSERT INTO ".table_agency_castingcart_profile_hash." VALUES(
 												'',
 												'".$castingHash->Job_Talents_Hash."',
-												'".str_replace(",",$_POST["addprofiles"])."',
+												'".str_replace(",","",(isset($_POST["addprofiles"])?$_POST["addprofiles"]:""))."',
 												'".$hash_profile_id."')";
 												$wpdb->query($sql);
+												
 										}
-										$wpdb->query($wpdb->prepare("UPDATE ".table_agency_casting_job." SET Job_Talents=%s WHERE Job_ID = %d", $add_new_profiles, $_GET["Job_ID"]));
-	 
-									  	echo ('<div id="message" class="updated"><p>Added successfully!</p></div>');
+										$wpdb->query($wpdb->prepare("UPDATE ".table_agency_casting_job." SET Job_Talents=%s WHERE Job_ID = %d", implode(",",array_unique(explode(",",$add_new_profiles))), $_GET["Job_ID"]));
+	 									echo ('<div id="message" class="updated"><p>Added successfully!</p></div>');
 	
 		}
 
@@ -171,21 +187,20 @@ $siteurl = get_option('siteurl');
 												Job_Audition_Time = '".esc_attr($_POST["Job_Audition_Time"])."'
 											WHERE Job_ID = ".esc_attr($_GET["Job_ID"])."
 									";
-
+									
 									$wpdb->query($sql);
 
                               if(isset($_POST["resend"])){
-									$results = $wpdb->get_results("SELECT ProfileID,ProfileContactPhoneCell,ProfileContactEmail FROM ".table_agency_profile." WHERE ProfileID IN(". implode(",",array_filter(explode(",",$_POST["Job_Talents"]))).")",ARRAY_A);
+									$results = $wpdb->get_results("SELECT ProfileID,ProfileContactPhoneCell,ProfileContactEmail FROM ".table_agency_profile." WHERE ProfileID IN(". implode(",",array_filter(explode(",",$_POST["Job_Talents_Resend_To"]))).")",ARRAY_A);
 									$arr_mobile_numbers = array();
 									$arr_email = array();
 									$castingHash = current($wpdb->get_results("SELECT * FROM ".table_agency_casting_job." WHERE Job_ID='".$_GET["Job_ID"]."'"));
 									foreach($results as $mobile){
 										array_push($arr_mobile_numbers, $mobile["ProfileContactPhoneCell"]);
 										array_push($arr_email, $mobile["ProfileContactEmail"]);
-										$results = current($wpdb->get_results($wpdb->prepare("SELECT * FROM  ".table_agency_castingcart_profile_hash." as a WHERE  a.CastingProfileHashProfileID = %s",$mobile["ProfileID"])));
+										$results = current($wpdb->get_results($wpdb->prepare("SELECT * FROM  ".table_agency_castingcart_profile_hash." WHERE  CastingProfileHashProfileID = %s",$mobile["ProfileID"])));
 										RBAgency_Casting::sendText(array($mobile["ProfileContactPhoneCell"]),get_bloginfo("wpurl")."/profile-casting/jobs/".$castingHash->Job_Talents_Hash."/".$results->CastingProfileHash);
 										RBAgency_Casting::sendEmail(array($mobile["ProfileContactEmail"]),get_bloginfo("wpurl")."/profile-casting/jobs/".$castingHash->Job_Talents_Hash."/".$results->CastingProfileHash);
-									
 									}
 	
 							  }
@@ -217,11 +232,12 @@ $siteurl = get_option('siteurl');
 
 		   if(isset($_GET["Job_ID"])){
 		 	
-			 	$sql =  "SELECT * FROM ".table_agency_casting_job." WHERE Job_ID= %d ";
+			 	$sql =  "SELECT job.*, agency.* FROM ".table_agency_casting_job." as job INNER JOIN ".table_agency_casting." as agency ON job.Job_UserLinked = agency.CastingUserLinked WHERE Job_ID= %d ";
 			 	$data = $wpdb->get_results($wpdb->prepare($sql, $_GET["Job_ID"]));
 			 	$data = current($data);
 
 	 			$Job_ID = $data->Job_ID; 
+	 			$Job_AgencyName = $data->CastingContactCompany;
 			 	$Job_Title = $data->Job_Title; 
 				$Job_Text = $data->Job_Text;
 				$Job_Date_Start = $data->Job_Date_Start;
@@ -244,7 +260,7 @@ $siteurl = get_option('siteurl');
 
 
       <?php 
-     
+     if(isset($_GET["action2"]) && $_GET["action2"] == "addnew" || isset($_GET["Job_ID"])){
 		echo "<style type=\"text/css\">\n
 				.castingtext label{
 					float: left;
@@ -256,8 +272,9 @@ $siteurl = get_option('siteurl');
 					width:60%;
 				}
 				</style> ";
-				 echo "<div class=\"boxblock-container\" style=\"float: left; width: 39%;margin-right:60px\">";
-				 echo "<div class=\"boxblock\" style=\"width:500px; \">";
+
+				 echo "<div class=\"boxblock-container\">";
+				 echo "<div class=\"boxblock\" style=\"width:50%\" >";
 				 
 						 if(isset($_GET["Job_ID"])){
 							echo "<h3>Edit Talent Jobs</h3>";
@@ -265,17 +282,21 @@ $siteurl = get_option('siteurl');
 						 	echo "<h3>Talent Jobs</h3>";
 						}
 				 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
-				  if(empty( $_SESSION['cartArray'] ) && !isset($_GET["action"])){
+				  if(!isset($_GET["Job_ID"]) && (empty( $_SESSION['cartArray'] ) || !isset($_GET["action"]) )){
 			      	  echo "Casting cart is empty. Click <a href=\"?page=rb_agency_search\">here</a> to search and add profiles to casting jobs.";
 			      }else{
 				 echo "<form class=\"castingtext\" method=\"post\" action=\"\">";
 				   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<label for=\"Job_AgencyName\">Agency/Producer</label>";
+						echo "<div><input type=\"text\" disabled=\"disabled\" id=\"Job_AgencyName\" name=\"Job_AgencyName\" value=\"".$Job_AgencyName."\"></div>";
+					echo "</div>";
+					 echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Title\">Job Title</label>";
 						echo "<div><input type=\"text\" id=\"Job_Title\" name=\"Job_Title\" value=\"".$Job_Title."\"></div>";
 					echo "</div>";
 					 echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Text\">Description</label>";
-						echo "<div><input type=\"text\" id=\"Job_Title\" name=\"Job_Text\" value=\"".$Job_Text."\"></div>";
+						echo "<div><textarea id=\"Job_Title\" name=\"Job_Text\">".$Job_Text."</textarea></div>";
 					echo "</div>";
 					 echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Offering\">Offer</label>";
@@ -283,11 +304,11 @@ $siteurl = get_option('siteurl');
 					echo "</div>";
 					 echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Date_Start\">Job Date Start</label>";
-						echo "<div><input type=\"text\" id=\"Job_Date_Start\" name=\"Job_Date_Start\" value=\"".$Job_Date_Start."\"></div>";
+						echo "<div><input type=\"text\" class=\"datepicker\" id=\"Job_Date_Start\" name=\"Job_Date_Start\" value=\"".$Job_Date_Start."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Date_End\">Job Date End</label>";
-						echo "<div><input type=\"text\" id=\"Job_Date_End\" name=\"Job_Date_End\" value=\"".$Job_Date_End."\"></div>";
+						echo "<div><input type=\"text\" class=\"datepicker\" id=\"Job_Date_End\" name=\"Job_Date_End\" value=\"".$Job_Date_End."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Location\">Location</label>";
@@ -314,10 +335,6 @@ $siteurl = get_option('siteurl');
 						echo "</div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
-						echo "<label for=\"Job_Criteria\">Job Criteria</label>";
-						echo "<div><input type=\"text\" id=\"Job_Criteria\" name=\"Job_Criteria\" value=\"".$Job_Criteria."\"></div>";
-					echo "</div>";
-					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Visibility\">Job Visibility</label>";
 						echo "<div>";
 						echo "<select id='Job_Visibility' name='Job_Visibility'>
@@ -326,15 +343,57 @@ $siteurl = get_option('siteurl');
 									<option value='1' ".selected(isset($Job_Visibility)?$Job_Visibility:"","1",false).">Open to All</option>
 									<option value='2' ".selected(isset($Job_Visibility)?$Job_Visibility:"","2",false).">Matching Criteria</option>
 								</select>";
-						echo "</div>";
+						echo "&nbsp;<a title=\"Match Criteria\" href=\"#TB_inline?width=600&height=550&inlineId=add-criteria\" class=\"thickbox\"  id=\"job_criteria_field\" ".((isset($Job_Visibility) && $Job_Visibility == 2)?"":"style=\"display:none;\"").">Set Criteria</a>";
+					echo '<input type="hidden" name="Job_Criteria" value="" />';
+					echo '<div id="add-criteria" style="display:none;">';
+					echo '<script type="text/javascript">';
+					if(!empty($Job_Criteria)){
+						echo 'jQuery(function(){ jQuery("#criteria").html("Loading Criteria List");
+								
+								jQuery.ajax({
+										type: "POST",
+										url: "'. admin_url('admin-ajax.php') .'",
+										data: {
+											action: "load_criteria_fields",
+											value: "'.$Job_Criteria.'"
+										},
+										success: function (results) {
+											jQuery("#criteria").html(results);
+										},
+										error: function (err){
+											console.log(err);
+										}
+								}); });';
+					}else{
+							echo 'jQuery(function(){ jQuery("#criteria").html("Loading Criteria List");
+									jQuery.ajax({
+											type: "POST",
+											url: "'. admin_url('admin-ajax.php') .'",
+											data: {
+												action: "load_criteria_fields"
+											},
+											success: function (results) {
+												jQuery("#criteria").html(results);
+											},
+											error: function (err){
+												console.log(err);
+											}
+									}); 
+								});';
+					}
+					echo "</script>";
+					echo '<div id="criteria"></div>';
 					echo "</div>";
+					
+					echo "</div>";
+					
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Audition_Date\">Audition Date</label>";
-						echo "<div><input type=\"text\" id=\"Job_Audition_Date\" name=\"Job_Audition_Date\" value=\"".$Job_Audition_Date."\"></div>";
+						echo "<div><input type=\"text\"  class=\"datepicker\" id=\"Job_Audition_Date\" name=\"Job_Audition_Date\" value=\"".$Job_Audition_Date."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Audition_Time\">Audition Time</label>";
-						echo "<div><input type=\"text\" id=\"Job_Audition_Time\" name=\"Job_Audition_Time\" value=\"".$Job_Audition_Time."\"></div>";
+						echo "<div><input type=\"text\"  class=\"timepicker\" id=\"Job_Audition_Time\" name=\"Job_Audition_Time\" value=\"".$Job_Audition_Time."\"></div>";
 					echo "</div>";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 						echo "<label for=\"Job_Audition_Venue\">Audition Venue</label>";
@@ -353,6 +412,7 @@ $siteurl = get_option('siteurl');
                     	echo "<input type=\"hidden\" name=\"action2\" value=\"edit\"/>";
                     	echo "<input type=\"hidden\" name=\"Job_Talents\" value=\"".$Job_Talents."\"/>";
                     	echo "<input type=\"hidden\" name=\"Job_Talents_Hash\" value=\"".$Job_Talents_Hash."\"/>";
+                    	echo "<input type=\"hidden\" name=\"Job_Talents_Resend_To\" value=\"\"/>";
                     	echo "<a href=\"".admin_url("admin.php?page=". $_GET['page'])."\" class=\"button\">Cancel</a>\t";
                     	
 
@@ -367,8 +427,33 @@ $siteurl = get_option('siteurl');
 				  	
 				  	
 				  echo "</form>";
+				  echo "</div>";
 				  } // if casting cart is not empty
+					echo '<script type="text/javascript">
+							jQuery(document).ready(function(){
+								jQuery( ".datepicker" ).datepicker();
+								jQuery( ".datepicker" ).datepicker("option", "dateFormat", "yy-mm-dd");
+								jQuery("#Job_Date_Start").val("'.$Job_Date_Start.'");
+								jQuery("#Job_Date_End").val("'.$Job_Date_End.'");
+								jQuery("#Job_Audition_Date").val("'.$Job_Audition_Date.'");
+								
 				
+								jQuery("#Job_Visibility").change(function(){
+									if(jQuery(this).val() == 2){
+										jQuery("#job_criteria_field").show();
+									} else {
+										jQuery("#criteria").html("");
+										jQuery("#job_criteria_field").hide();
+										
+									}
+								});
+								jQuery(".timepicker").timepicker({
+									hourGrid: 4,
+									minuteGrid: 10,
+									timeFormat: "hh:mm tt"
+								});
+							});
+					  </script>';
 				  echo "</div>";
 				  echo "</div>";
 
@@ -389,7 +474,7 @@ $siteurl = get_option('siteurl');
 	                 	
 	                 jQuery("#selectall").click(function(){
 	                 	 var ischecked = jQuery(this).is(':checked');
-	                 	 	jQuery("form[name=formDeleteProfile] input").each(function(i,d){
+	                 	 	jQuery("form[name=formDeleteProfile] input[type=checkbox]").each(function(i,d){
 	                 			if(ischecked){
 	                 			 jQuery(this).removeAttr("checked");
 	                 			 jQuery(this).attr("checked",true);
@@ -401,6 +486,7 @@ $siteurl = get_option('siteurl');
 	                 			}
 	                 		});
 	                 		jQuery("input[name=profileselected]").val(arr.toString());
+	                 		jQuery("input[name=Job_Talents_Resend_To]").val(arr.toString());
 	                 });
 	                 Array.prototype.remove = function(value) {
 					  var idx = this.indexOf(value);
@@ -418,6 +504,7 @@ $siteurl = get_option('siteurl');
 		                 			}
 		                 		
 		                 		jQuery("input[name=profileselected]").val(arr.toString());
+		                 		jQuery("input[name=Job_Talents_Resend_To]").val(arr.toString());
 		             });
 
 		              jQuery("#shortlisted input[name^=deleteprofiles]").click(function(){
@@ -437,8 +524,10 @@ $siteurl = get_option('siteurl');
                  </script>
  
 			    <?php
-                		 echo "<div id=\"shortlisted\" class=\"boxblock-container\" style=\"float: left; width: 39%;\">";
-						 echo "<div class=\"boxblock\" style=\"width:490px; \">";
+			     if(!empty( $_SESSION['cartArray']) || isset($_GET["Job_ID"])): 
+						
+                		 echo "<div id=\"shortlisted\" class=\"boxblock-container\" >";
+						 echo "<div class=\"boxblock\">";
 						 echo "<h3>Talents Shortlisted";
 						 if(!empty( $_SESSION['cartArray']) || isset($_GET["Job_ID"])): 
 						 echo "<span style=\"font-size:12px;float:right;margin-top: -5px;\"><a  href=\"#TB_inline?width=600&height=550&inlineId=add-profiles\" class=\"thickbox button-primary\" title=\"Add profiles to '".$Job_Title."' Job\">Add Profiles</a>".(isset($_GET["Job_ID"])?"<input type=\"submit\" name=\"deleteprofiles\" class=\"button-primary\" id=\"deleteprofiles\" value=\"Remove selected\" /><input type=\"checkbox\" id=\"selectall\"/>Select all</span>":"");
@@ -636,15 +725,14 @@ $siteurl = get_option('siteurl');
 									$cartString = RBAgency_Common::clean_string($cartString);
 							    }
 								// Show Cart  
-								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY profile.ProfileContactNameFirst ASC";
-								$results = $wpdb->get_results($wpdb->prepare($query,(!empty($cartString)?$cartString:0)), ARRAY_A);
+								$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".(!empty($cartString)?$cartString:0).") ORDER BY profile.ProfileContactNameFirst ASC";
+								$results = $wpdb->get_results($query, ARRAY_A);
 
 								$count = $wpdb->num_rows;
-
 				echo "<form method=\"post\" name=\"formDeleteProfile\" action=\"".admin_url("admin.php?page=rb_agency_castingjobs&action=informTalent&Job_ID=".(!empty($_GET["Job_ID"])?$_GET["Job_ID"]:0))."\" >\n";								
 				echo "<input type=\"hidden\" name=\"action2\" value=\"deleteprofile\"/>";
 								foreach ($results as $data) {
-									echo "<div style=\"width: 48.5%;float:left\" id=\"profile-".$data["ProfileID"]."\">";
+									echo "<div style=\"width: 16.6%;float:left\" id=\"profile-".$data["ProfileID"]."\">";
 									echo "<div style=\"height: 200px; margin-right: 5px; overflow: hidden; \"><span style=\"text-align:center;background:#ccc;color:#000;font-weight:bold;width:100%;padding:10px;display:block;\">".(isset($_GET["Job_ID"])?"<input type=\"checkbox\" name=\"profiletalent_".$data["ProfileID"]."\" value=\"".$data["ProfileID"]."\"/>":""). stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</span><a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\"><img style=\"width: 100%; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></a>";
 									echo "</div>\n";
 									if(isset($_GET["Job_ID"])){
@@ -681,14 +769,14 @@ $siteurl = get_option('siteurl');
 					echo "</div>";
 				    echo "</div>";
 				  echo "</div>";
+				endif;
 				  
 				
 		?>
         </div>		
-        <div style="float:left;width:50%;margin-left: 20px;">
-	          		<h3 class="title">Recently Saved Jobs</h3>
-
-			<?php  
+        <div>
+     <?php } // end add/edit job?>
+	   	<?php  
 			$sqldata = "";
 			$query = "";
 
@@ -705,7 +793,7 @@ $siteurl = get_option('siteurl');
 			if (isset($_GET['sort']) && !empty($_GET['sort'])){
 				$sort = $_GET['sort'];
 			} else {
-				$sort = "jobs.Job_Date_Start ";
+				$sort = "jobs.Job_ID ";
 			}
 
 			// Sort Order
@@ -723,7 +811,7 @@ $siteurl = get_option('siteurl');
 			}
 
 			// Filter
-			$filter = "WHERE jobs.Job_ID > 0 ";
+			$filter = " WHERE jobs.Job_ID > 0  AND agency.CastingUserLinked = jobs.Job_UserLinked ";
 			if (isset($_GET['Job_Title']) && !empty($_GET['Job_Title'])){
 				$selectedTitle = isset($_GET['SearchTitle'])?$_GET['Job_Title']:"";
 				$query .= "&Job_Title". $selectedTitle ."";
@@ -731,7 +819,7 @@ $siteurl = get_option('siteurl');
 			}
 
 			//Paginate
-			$sqldata  = "SELECT jobs.*,talents.* FROM ". table_agency_casting_job ." jobs LEFT JOIN ". table_agency_castingcart_availability ." talents ON jobs.Job_ID = talents.CastingAvailabilityID ". $filter  .""; // number of total rows in the database
+			$sqldata  = "SELECT jobs.*,talents.* , agency.* FROM ". table_agency_casting_job ." jobs LEFT JOIN ". table_agency_castingcart_availability ." talents ON jobs.Job_ID = talents.CastingAvailabilityID LEFT JOIN ".table_agency_casting." as agency ON agency.CastingUserLinked = jobs.Job_UserLinked ". $filter  .""; // number of total rows in the database
 			$results=  $wpdb->get_results($sqldata);
 			
 			$items =$wpdb->num_rows; // number of total rows in the database
@@ -762,7 +850,9 @@ $siteurl = get_option('siteurl');
 
 			?>
 			
-
+ <?php if(empty($_GET["action2"]) && empty($_GET["Job_ID"])){?>
+ 	      <a href="<?php echo admin_url("admin.php?page=rb_agency_castingjobs&action=informTalent&action2=addnew") ?>" class="button-primary">Add New Job</a>
+		
 			<table cellspacing="0" class="widefat fixed">
 				<thead>
 					<tr>
@@ -791,14 +881,15 @@ $siteurl = get_option('siteurl');
 			</thead>
 			</table>
 
-			<form method="post" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>" style="width: 602px;">	
+			<form method="post" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">	
 			<table cellspacing="0" class="widefat fixed">
 			<thead>
 				<tr class="thead">
 					<th class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox"/></th>
 					<th class="column" scope="col" style="width:50px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=Job_ID&dir=<?php echo $sortDirection; ?>">ID</a></th>
-					<th class="column" scope="col" style="width:200px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=CastingJobAudition&dir=<?php echo $sortDirection; ?>">Title</a></th>
-					<th class="column" scope="col" style="width:80px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=CastingJobDateCreated&dir=<?php echo $sortDirection; ?>">Profiles</a></th>
+					<th class="column" scope="col" ><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=Job_Title&dir=<?php echo $sortDirection; ?>">Job Title</a></th>
+					<th class="column" scope="col" ><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=Job_UserLinked&dir=<?php echo $sortDirection; ?>">Agency/Producer</a></th>
+					<th class="column" scope="col" style="width:80px;"><a href="admin.php?page=<?php echo $_GET['page']; ?>&sort=Job_Date_Start&dir=<?php echo $sortDirection; ?>">Profiles</a></th>
 					<th class="column" scope="col">Date Created</th>
 				</tr>
 			</thead>
@@ -806,7 +897,8 @@ $siteurl = get_option('siteurl');
 				<tr class="thead">
 					<th class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox"/></th>
 					<th class="column" scope="col">ID</th>
-					<th class="column" scope="col">Title</th>
+					<th class="column" scope="col">Job Title</th>
+					<th class="column" scope="col">Agency/Producer</th>
 					<th class="column" scope="col">Profiles</th>
 					<th class="column" scope="col">Date Created</th>
 				</tr>
@@ -815,7 +907,7 @@ $siteurl = get_option('siteurl');
 
 			<?php
 
-			$query2 = "SELECT jobs.* FROM ". table_agency_casting_job ." jobs ". $filter  ." ORDER BY $sort $dir $limit";
+			$query2 = "SELECT jobs.*, agency.* FROM ". table_agency_casting_job ." jobs, ".table_agency_casting."  as agency". $filter  ." ORDER BY $sort $dir $limit";
 		
 			$results2 = $wpdb->get_results($query2, ARRAY_A);
 			$count2 = $wpdb->num_rows;
@@ -825,6 +917,7 @@ $siteurl = get_option('siteurl');
 				$Job_ID = stripslashes($data2['Job_ID']);
 				$Job_Talents = stripslashes($data2['Job_Talents']);
 				$Job_Talents = explode(",",str_replace("NULL","",$Job_Talents));
+				$Job_AgencyName = stripslashes($data2["CastingContactCompany"]);
 				
 			?>
 			<tr>
@@ -842,6 +935,9 @@ $siteurl = get_option('siteurl');
 				
 							<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=informTalent&amp;action2=deleteCastingJob&amp;removeJob_ID=<?php echo $Job_ID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 					</div>
+				</td>
+				<td>
+				  <?php echo $Job_AgencyName; ?>
 				</td>
 				<td>
 					<?php  echo count($Job_Talents); ?>
@@ -888,7 +984,8 @@ $siteurl = get_option('siteurl');
 		</div>
 		<?php } ?>
 	</div>
-
+	
 		<?php 		  
-
+		}
 	}
+	?>

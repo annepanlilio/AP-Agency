@@ -187,7 +187,7 @@ class RBAgency_Casting {
 				echo "      <a href=\"?page=rb_agency_search&action=massEmail#compose\" title=\"". __("Mass Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Mass Email", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
-				echo "      <a href=\"?page=rb_agency_castingjobs\" title=\"". __("Casting Jobs", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Casting Jobs", rb_agency_TEXTDOMAIN) ."</a>\n";
+				echo "      <a href=\"?page=rb_agency_castingjobs&action2=addnew&action=informTalent\" title=\"". __("Casting Jobs", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Casting Jobs", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "   </div>\n";
 				echo "</div>\n";
 				echo "<script type=\"text/javascript\">\n";
@@ -261,13 +261,13 @@ class RBAgency_Casting {
 				)" .
 				"VALUES
 				(
-				'" . $wpdb->escape($lastid) . "',
-				'" . $wpdb->escape($SearchMuxHash) . "',
-				'" . $wpdb->escape($SearchMuxToName) . "',
-				'" . $wpdb->escape($SearchMuxToEmail) . "',
-				'" . $wpdb->escape($SearchMuxSubject) . "',
-				'" . $wpdb->escape($SearchMuxMessage) . "',
-				'" . $wpdb->escape($SearchMuxCustomValue) ."'
+				'" . esc_sql($lastid) . "',
+				'" . esc_sql($SearchMuxHash) . "',
+				'" . esc_sql($SearchMuxToName) . "',
+				'" . esc_sql($SearchMuxToEmail) . "',
+				'" . esc_sql($SearchMuxSubject) . "',
+				'" . esc_sql($SearchMuxMessage) . "',
+				'" . esc_sql($SearchMuxCustomValue) ."'
 				)";
 			$results = $wpdb->query($insert);  
 
@@ -330,19 +330,19 @@ class RBAgency_Casting {
 			$isSent = false;
 			$email_error=  "" ; 
 			$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-			$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
+			$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_option_agencyname'])?$rb_agency_options_arr['rb_agency_option_agencyname']:"";
+			$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
 		
-			$SearchID				= time(U);
+			$SearchID				= @time(U);
 			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 		
-			$SearchMuxFromName		=$_POST["SearchMuxFromName"];
-			$SearchMuxFromEmail		=$_POST["SearchMuxFromEmail"];
-			$SearchMuxToName	=$_POST['SearchMuxToName'];
-			$SearchMuxToEmail		= $_POST['SearchMuxToEmail'];
-			$SearchMuxBccEmail		=$_POST['SearchMuxBccEmail'];
-			$SearchMuxSubject		= $_POST['SearchMuxSubject'];
-			$SearchMuxMessage		=$_POST['SearchMuxMessage'];
+			$SearchMuxFromName		= isset($_POST["SearchMuxFromName"])?$_POST["SearchMuxFromName"]:"";
+			$SearchMuxFromEmail		= isset($_POST["SearchMuxFromEmail"])?$_POST["SearchMuxFromEmail"]:"";
+			$SearchMuxToName		= isset($_POST['SearchMuxToName'])?$_POST['SearchMuxToName']:"";
+			$SearchMuxToEmail		= isset($_POST['SearchMuxToEmail'])?$_POST['SearchMuxToEmail']:"";
+			$SearchMuxBccEmail		= isset($_POST['SearchMuxBccEmail'])?$_POST['SearchMuxBccEmail']:"";
+			$SearchMuxSubject		= isset($_POST['SearchMuxSubject'])?$_POST['SearchMuxSubject']:"";
+			$SearchMuxMessage		= isset($_POST['SearchMuxMessage'])?$_POST['SearchMuxMessage']:"";
 			$SearchMuxCustomValue	='';
 			$cartArray = $_SESSION['cartArray'];
 			
@@ -367,13 +367,13 @@ class RBAgency_Casting {
 				)" .
 				"VALUES
 				(
-				'" . $wpdb->escape($lastid) . "',
-				'" . $wpdb->escape($SearchMuxHash) . "',
-				'" . $wpdb->escape($SearchMuxToName) . "',
-				'" . $wpdb->escape($SearchMuxToEmail) . "',
-				'" . $wpdb->escape($SearchMuxSubject) . "',
-				'" . $wpdb->escape($SearchMuxMessage) . "',
-				'" . $wpdb->escape($SearchMuxCustomValue) ."'
+				'" . esc_sql($lastid) . "',
+				'" . esc_sql($SearchMuxHash) . "',
+				'" . esc_sql($SearchMuxToName) . "',
+				'" . esc_sql($SearchMuxToEmail) . "',
+				'" . esc_sql($SearchMuxSubject) . "',
+				'" . esc_sql($SearchMuxMessage) . "',
+				'" . esc_sql($SearchMuxCustomValue) ."'
 				)";
 			$results = $wpdb->query($insert);  
 			$profileimage = "";  
