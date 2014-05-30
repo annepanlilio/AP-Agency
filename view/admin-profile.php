@@ -23,7 +23,7 @@ define("LabelSingular", "Profiles");
 		if (function_exists('rb_agency_interact_menu')) {
 			// Load Interact Settings
 			$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
-			$rb_agency_option_useraccountcreation = (int) $rb_agency_options_arr['rb_agency_option_useraccountcreation'];
+			$rb_agency_option_useraccountcreation = isset($rb_agency_options_arr['rb_agency_option_useraccountcreation']) ?(int) $rb_agency_options_arr['rb_agency_option_useraccountcreation']:0;
 		}
 
 
