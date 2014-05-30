@@ -1,6 +1,8 @@
 <?php 
 	global $user_ID; 
     global $wpdb;
+    	include (dirname(__FILE__) ."/../app/casting.class.php");
+ 
 
 // GET HEADER  
 	echo $rb_header = RBAgency_Common::rb_header();
@@ -48,7 +50,7 @@
 				$Job_Audition_Date = $data->Job_Audition_Date;
 				$Job_Audition_Venue = $data->Job_Audition_Venue;
 				$Job_Audition_Time = $data->Job_Audition_Time;
-			
+
 		   }
 
 		 }
@@ -69,16 +71,24 @@
 			
     	if(isset($_POST["action"]) && $_POST["action"] == "availability"){
     			    $availability = "available";
+    			    $Availability = "Available";
     				if($_POST["availability"] == "No, not Available"){
     					$availability = "notavailable";
+    					$Availability = "Not Available";
     				}
-					  $query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
+    				  $query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
 							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."') AS tmp
 							WHERE NOT EXISTS (
 							    SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'
 							) LIMIT 1;"; 
+					  
 					   $wpdb->query($query);
-						   	       echo ('<div id="message" class="updated"><p>Submitted successfully!</p></div>');
+
+					   $link = admin_url("admin.php?page=rb_agency_castinbjobs&action=informTalent&Job_ID=".$Job_ID);
+					   
+					   RBAgency_Casting::sendEmailCastingAvailability($data["ProfileContactDisplay"],$Availability,$Job_Title,$link);
+					
+					   echo ('<div id="message" class="updated"><p>Submitted successfully!</p></div>');
 		       
 		}
 		   		   $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$Job_ID,$data["ProfileID"]));
@@ -88,7 +98,7 @@
       if(empty($has_submitted)){ // if not submitted
             /*var_dump($has_permission);
             var_dump($data["ProfileID"])*/
-			 if( in_array($data["ProfileID"], $has_permission) || current_user_can( 'manage_options' )  ){
+			// if( in_array($data["ProfileID"], $has_permission) || current_user_can( 'manage_options' )  ){
 
 				
 			 ?>
@@ -158,17 +168,7 @@
 			      	</tr>
 			     <?php endif;?>
 			    
-			     <?php if(!empty($Job_Location)){?>
-			      	<tr>
-			      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Location:</td>
-			      	<td style="width:600px;"><?php echo $Job_Location; ?><br/>
-			      	
-					      	 <strong>Location Map</strong>
-					      	  <?php echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
-					      	
-			      	</td>
-			      	</tr>
-			     <?php }?>
+			    
 
 			      <?php if(!empty($Job_Offering)):?>
 				    <tr>
@@ -183,14 +183,26 @@
 			      	<td><?php echo $Job_Text; ?></td>
 			      	</tr>
 			     <?php endif;?>
+
+			      <?php if(!empty($Job_Location)){?>
+			      	<tr>
+			      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Location:</td>
+			      	<td style="width:600px;"><?php echo $Job_Location; ?><br/>
+			      	
+					      	 <strong>Location Map</strong>
+					      	  <?php echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
+					      	
+			      	</td>
+			      	</tr>
+			     <?php }?>
 			   
 		      </table>
 		      <input type="hidden" name="action" value="availability">
 		      </form>
 			 <?php 
-			}else{
+			/*}else{
 				echo "You're not allowed to view this Job.";
-			}
+			}*/
 
 		}else{
 			echo "You've submitted your availability.";
