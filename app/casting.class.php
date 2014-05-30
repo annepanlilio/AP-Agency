@@ -512,4 +512,19 @@ class RBAgency_Casting {
 
 		}
 
+		public static function sendEmailCastingAvailability($Talents_Display_Name,$Availability,$Job_Name,$link){
+			// Mail it
+		    $headers[]  = 'MIME-Version: 1.0';
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+
+			$headers[]  = 'From: '. get_bloginfo("name") .' <noreply@'.get_bloginfo("siteurl").'>' . "\r\n";
+				
+
+			$MassEmailMessage	= "Hi, \n\n".$Talents_Display_Name." has changed the job availability to \"".$Availability."\" for the job \"".$Job_Name."\"."
+								 . "\nClick here to review your casting cart: ".$link
+								 .  "\n\n-".get_bloginfo("name");
+			$isSent = wp_mail("champ.kazban25@gmail.com", get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
+			
+	}
+
 }
