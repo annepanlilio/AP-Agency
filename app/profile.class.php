@@ -423,7 +423,7 @@ class RBAgency_Profile {
 
 								foreach($array_customOptions_values as $val){
 
-									if(isset($_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]) &&RBAgency_Common::session("ProfileCustomID". $ProfileCustomID) !=""){ 
+									if(isset($_REQUEST["ProfileCustomID". (isset($data1['ProfileCustomID'])?$data1['ProfileCustomID']:0)]) &&RBAgency_Common::session("ProfileCustomID". $ProfileCustomID) !=""){ 
 
 										$dataArr = explode(",",implode(",",explode("','",RBAgency_Common::session("ProfileCustomID". $ProfileCustomID))));
 
@@ -1288,6 +1288,8 @@ class RBAgency_Profile {
 
 		public static function search_results($sql_where, $query_type = 0){
 
+			global $wpdb;
+
 			switch ($query_type) {
 
 				/* 
@@ -1313,10 +1315,13 @@ class RBAgency_Profile {
 					$user = get_userdata(rb_agency_get_current_userid());  
 
 					// check if user is admin, if yes this allow the admin to view other users cart 
-					if($user->user_level==10 AND get_query_var('target')!="casting") {
+					if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
 						$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
 					} else {
 						$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = ".rb_agency_get_current_userid();
+						if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
+							$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
+						}
 					}
 					// Execute the query showing casting cart
 					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
