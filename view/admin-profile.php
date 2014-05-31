@@ -563,54 +563,55 @@ if (isset($_POST['action'])) {
 		case 'deleteRecord':
 		    $profiles_count = 0;
 			foreach ($_POST as $ProfileID) {
+                
+                if(is_numeric($ProfileID)){
+						// Verify Record
+						$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  '%d'";
+						
+						$resultsDelete=  $wpdb->get_results($wpdb->prepare($queryDelete, $ProfileID),ARRAY_A);
+						
 
-				// Verify Record
-				$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  '%d'";
-				
-				$resultsDelete=  $wpdb->get_results($wpdb->prepare($queryDelete, $ProfileID),ARRAY_A);
-				
+						foreach ($resultsDelete as $dataDelete) {
+							$profiles_count++;
+							$ProfileGallery = $dataDelete['ProfileGallery'];
 
-				foreach ($resultsDelete as $dataDelete) {
-					$profiles_count++;
-					$ProfileGallery = $dataDelete['ProfileGallery'];
+							// Remove Profile
+							$delete = "DELETE FROM " . table_agency_profile . " WHERE ProfileID = %d ";
+							$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
+							// Remove Media
+							$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = %d ";
+							$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
 
-					// Remove Profile
-					$delete = "DELETE FROM " . table_agency_profile . " WHERE ProfileID = \"%s\"";
-					$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
-					// Remove Media
-					$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = \"%s\"";
-					$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
-
-						if (isset($ProfileGallery)) {
-							// Remove Folder
-							$dir = rb_agency_UPLOADPATH . $ProfileGallery . "/";
-							$mydir = opendir($dir);
-							while (false !== ($file = readdir($mydir))) {
-								if ($file != "." && $file != "..") {
-									unlink($dir . $file) or DIE("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+								if (isset($ProfileGallery)) {
+									// Remove Folder
+									$dir = rb_agency_UPLOADPATH . $ProfileGallery . "/";
+									$mydir = opendir($dir);
+									while (false !== ($file = readdir($mydir))) {
+										if ($file != "." && $file != "..") {
+											unlink($dir . $file); //) echo ("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+										}
+									}
+									// Remove Directory
+									if (is_dir($dir)) {
+										if(!rmdir($dir))  echo ("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+									}
+									closedir($mydir);
+								} else {
+									echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", rb_agency_TEXTDOMAIN) . "</p></div>");
 								}
-							}
-							// Remove Directory
-							if (is_dir($dir)) {
-								rmdir($dir) or DIE("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
-							}
-							closedir($mydir);
+
+								//---------- Delete users but re-assign to Admin User -------------//
+						// Gimme an admin:
+						$AdminID = $wpdb->prepare("SELECT $wpdb->users.ID FROM $wpdb->users WHERE user_login = %s","admin");
+						if ($AdminID > 0) {
+
 						} else {
-							echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", rb_agency_TEXTDOMAIN) . "</p></div>");
+							$AdminID = 1;
 						}
-
-						//---------- Delete users but re-assign to Admin User -------------//
-				// Gimme an admin:
-				$AdminID = $wpdb->prepare("SELECT $wpdb->users.ID FROM $wpdb->users WHERE user_login = '%s'","admin");
-				if ($AdminID > 0) {
-
-				} else {
-					$AdminID = 1;
-				}
-				/// Now delete
-				wp_delete_user($dataDelete["ProfileUserLinked"], $AdminID);
-				} // is there record?
-			
+						/// Now delete
+						wp_delete_user($dataDelete["ProfileUserLinked"], $AdminID);
+						} // is there record?
+				} // is numeric
 			}
 			if($profiles_count >  1){
 					echo ('<div id="message" class="updated"><p>' . __("$profiles_count Profiles deleted successfully!", rb_agency_TEXTDOMAIN) . '</p></div>');
