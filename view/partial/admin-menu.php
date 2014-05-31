@@ -14,9 +14,7 @@
 		if(get_option('rb_agency_version') <> rb_agency_VERSION) {
 		echo "Upgrade Needed";
 		}
-		// Are there errors?
-		settings_errors();
-
+		
 		if( isset( $_GET['page'] ) ) {  
 			$active_page = isset( $_GET['page'] ) ? $_GET['page'] : 'display_options';
 		} // end if  
@@ -44,3 +42,5 @@
 	echo "  </p>\n";
 	}
 	?>
+
+	<div class="clear"></div>
