@@ -114,11 +114,15 @@
 			echo "      <div class=\"inner\">\n";
 
 			return RBAgency_Profile::search_form("", "", 1);
-
+			
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";
 			echo "    </div><!-- .boxblock-container -->\n";
+			
+            
+					
 
 
 ?>
+
 </div>
