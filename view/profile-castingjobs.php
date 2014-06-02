@@ -110,7 +110,7 @@
 		     <div style="width:20%;float:left;margin-top:20px;margin-right:30px;padding-bottom:30px;">
 		        <div style="width:100%;height:220px;padding:10px;text-align:center;background:#ccc;overflow:hidden;">
 		        <?php if(!empty($data['ProfileMediaURL'])):?>
-		        <?php echo "<img style=\"width: 100%;height:99.9% \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" />"; ?>
+		        <?php echo "<img style=\"width: 100%;height:99.9% \" src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'] ."&w=180&h=220\" />"; ?>
 		        <?php else:?>
 		        		No Image Available.
 		        <?php endif; ?>
