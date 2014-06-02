@@ -588,12 +588,12 @@ if (isset($_POST['action'])) {
 									$mydir = opendir($dir);
 									while (false !== ($file = readdir($mydir))) {
 										if ($file != "." && $file != "..") {
-											unlink($dir . $file); //) echo ("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+											unlink($dir . $file) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
 										}
 									}
 									// Remove Directory
 									if (is_dir($dir)) {
-										if(!rmdir($dir))  echo ("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+										rmdir($dir) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
 									}
 									closedir($mydir);
 								} else {
