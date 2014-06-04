@@ -4169,4 +4169,22 @@ function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaTyp
 	return $queryImg ;
 }
 
+
+ // User group permission & redirect
+//add_filter('template_include',"rb_agency_interact_group_permission");
+function rb_agency_interact_group_permission(){
+	    /*	global $user_ID;
+	       if(is_user_logged_in()){
+	       	$arr_interact_pages = array(
+	       		  "profileoverview"
+	       	);
+	       	$type = get_query_var("type");
+		    	if(!empty($type) && !in_array($type,$arr_interact_pages) && !get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true)){
+			   	 return	wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
+			   }
+			}
+
+			return 0;*/
+			
+}
 ?>
