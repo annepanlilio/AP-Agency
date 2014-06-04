@@ -20,7 +20,8 @@
 				$Job_Criteria = "";
 				$Job_Type = "";
 				$Job_Talents_Hash = "";	
-				$Job_Audition_Date = "";
+				$Job_Audition_Date_Start = "";
+				$Job_Audition_Date_End = "";
 				$Job_Audition_Venue = "";
 				$Job_Audition_Time = "";
 		  
@@ -47,7 +48,8 @@
 				$Job_Criteria = $data->Job_Criteria;
 				$Job_Type = $data->Job_Type;
 				$Job_Talents_Hash = $data->Job_Talents_Hash;	
-				$Job_Audition_Date = $data->Job_Audition_Date;
+				$Job_Audition_Date_Start = $data->Job_Audition_Date_Start;
+				$Job_Audition_Date_End = $data->Job_Audition_Date_End;
 				$Job_Audition_Venue = $data->Job_Audition_Venue;
 				$Job_Audition_Time = $data->Job_Audition_Time;
 
@@ -149,10 +151,30 @@
 			      	</td>
 			      	</tr>
 				<?php endif;?>
-		      	<?php if(!empty($Job_Audition_Date)):?>
+		      	 <?php if(!empty($Job_Date_Start)):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Audition Dates:</td>
-			      	<td><?php echo $Job_Audition_Date; ?></td>
+			      	<td style="text-align:right;padding-right:20px;">Job Date Start:</td>
+			      	<td><?php echo date("M d, Y",strtotime($Job_Date_Start)); ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     	<?php if(!empty($Job_Date_End)):?>
+			      	<tr>
+			      	<td style="text-align:right;padding-right:20px;">Job Date End:</td>
+			      	<td><?php echo date("M d, Y",strtotime($Job_Date_End)); ?></td>
+			      	</tr>
+			     <?php endif;?>
+
+		      	
+		      	<?php if(!empty($Job_Audition_Date_Start)):?>
+			      	<tr>
+			      	<td style="text-align:right;padding-right:20px;">Audition Date Start:</td>
+			      	<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_Start)); ?></td>
+			      	</tr>
+			     <?php endif;?>
+			     	<?php if(!empty($Job_Audition_Date_End)):?>
+			      	<tr>
+			      	<td style="text-align:right;padding-right:20px;">Audition Date End:</td>
+			      	<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_End)); ?></td>
 			      	</tr>
 			     <?php endif;?>
 			     <?php if(!empty($Job_Audition_Venue)):?>
