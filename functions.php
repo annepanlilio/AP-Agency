@@ -233,6 +233,7 @@
 			$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
 
 			$newrules['profile-favorite'] = 'index.php?type=favorite';
+			$newrules['logout'] = 'index.php?type=rblogout';
 	
 			return $newrules + $rules;
 		}
@@ -293,6 +294,11 @@
 				} elseif (get_query_var( 'type' ) == "getstate") {
 				// TODO: What is this????
 					return rb_agency_BASEREL . '/view/partial/get-state.php'; 
+
+				} elseif (get_query_var( 'type' ) == "rblogout") {
+				// TODO: What is this????
+				    rb_logout_user();
+
 
 				}
 			}
@@ -4168,23 +4174,63 @@ function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaTyp
 	}
 	return $queryImg ;
 }
-
-
- // User group permission & redirect
-//add_filter('template_include',"rb_agency_interact_group_permission");
-function rb_agency_interact_group_permission(){
-	    /*	global $user_ID;
+	
+/*
+ * User group permission redirect
+ */
+function rb_agency_group_permission($group){
+		   global $user_ID;
 	       if(is_user_logged_in()){
-	       	$arr_interact_pages = array(
-	       		  "profileoverview"
-	       	);
-	       	$type = get_query_var("type");
-		    	if(!empty($type) && !in_array($type,$arr_interact_pages) && !get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true)){
-			   	 return	wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
-			   }
+	       
+				    $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
+				    if($group == "casting"){
+				       if(!empty($is_model)){
+						 wp_safe_redirect(get_bloginfo("url")."/profile-member/");
+					    }
+					}elseif($group == "models"){
+					   if(empty($is_model )){
+					   	 wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
+					   }
+					}
 			}
-
-			return 0;*/
-			
 }
+
+/*
+ * Custom logout link
+ */
+add_action('logout_url','rb_redirect_logout');
+function rb_redirect_logout(){
+    $logout_link =  get_bloginfo("url")."/logout/";
+    return $logout_link;
+}
+
+/*
+ * Set logout redirect per user group
+ */
+function rb_logout_user(){
+	 global $user_ID;
+	       if(is_user_logged_in()){
+	       
+				     $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
+				     
+
+				     if(current_user_can("manage_options")){
+
+				            wp_logout();
+				     
+				     		wp_safe_redirect(admin_url());
+				     }else{
+				     		 wp_logout();
+				     
+						   if(!empty($is_model )){
+						   	   wp_safe_redirect(get_bloginfo("url")."/profile-login/");
+						   }else{
+						   	  	 wp_safe_redirect(get_bloginfo("url")."/casting-login/");
+						   }
+					}
+					
+			}
+}
+
+
 ?>
