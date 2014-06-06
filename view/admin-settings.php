@@ -258,6 +258,15 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_value_easytxtsecret)) { $rb_agency_value_easytxtsecret = ""; }
 		$rb_agency_value_easytxturl = isset($rb_agency_options_arr['rb_agency_option_agency_easytxturl'])?$rb_agency_options_arr['rb_agency_option_agency_easytxturl']:0;
 			if (empty($rb_agency_value_easytxturl)) { $rb_agency_value_easytxturl = ""; }
+
+		// Terms of Conditions
+		$rb_agency_option_model_toc = isset($rb_agency_options_arr['rb_agency_option_agency_model_toc'])?$rb_agency_options_arr['rb_agency_option_agency_model_toc']:"";
+			if (empty($rb_agency_option_model_toc)) { $rb_agency_option_model_toc = "/models-terms-of-conditions"; }
+		$rb_agency_option_casting_toc = isset($rb_agency_options_arr['rb_agency_option_agency_casting_toc'])?$rb_agency_options_arr['rb_agency_option_agency_casting_toc']:"";
+			if (empty($rb_agency_option_casting_toc)) { $rb_agency_option_casting_toc = "/casting-terms-of-conditions"; }
+
+
+
 		
 
 	/*
@@ -291,7 +300,16 @@ elseif ($ConfigID == 1) {
 		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> Remove Updates on Dashboard<br />\n";
 		echo "   </td>\n";
-		echo " </tr>\n";		/*
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Models/Profiles Terms of Conditions Link', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_model_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_model_toc'])?$rb_agency_options_arr['rb_agency_option_model_toc']:$rb_agency_option_model_toc) ."\" /></td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Casting Terms of Conditions Link', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_casting_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_casting_toc'])?$rb_agency_options_arr['rb_agency_option_casting_toc']:$rb_agency_option_casting_toc) ."\" /></td>\n";
+		echo " </tr>\n";
+		/*
 		 * Agency Internationalization
 		 */
 		echo " <tr valign=\"top\">\n";
