@@ -1736,8 +1736,8 @@ class RBAgency_Profile {
 			$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
-              
-			if(function_exists("rb_agency_save_favorite_javascript")){
+            $displayActions = "";  
+			if(function_exists("rb_agency_save_favorite_javascript") && is_user_logged_in()){
 	            $displayActions = "<div class=\"rb_profile_tool\">";
 	            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>Favorite</span></a>&nbsp;";
 	            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>Casting Cart</span></a>";

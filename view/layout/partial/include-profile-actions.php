@@ -9,7 +9,7 @@
 
 echo "					<ul>\n";
 
-						if (is_plugin_active('rb-agency-casting/rb-agency-casting.php')) {
+						if (is_plugin_active('rb-agency-casting/rb-agency-casting.php') && is_user_logged_in()) {
 							echo rb_agency_get_new_miscellaneousLinks($ProfileID);
 						}
 
