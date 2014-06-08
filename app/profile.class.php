@@ -1331,11 +1331,13 @@ class RBAgency_Profile {
 							$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
 						}
 					}
+
 					// Execute the query showing casting cart
 					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 
 			}
 
+			
 			if(self::$error_debug || self::$error_debug_query){
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
@@ -1397,8 +1399,22 @@ class RBAgency_Profile {
 			$all_html.='</div></div>';
 			$all_html .= "	<hr />";
 			if ($count > 0){
+				
+				$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
+				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
+				
+				$arr_castingcart = array();
+				foreach ($castingcart_results as $key) {
+					array_push($arr_castingcart, $key->CastingCartTalentID);
+				}
+
+				$arr_favorites = array();
+				foreach ($favorites_results  as $key) {
+					array_push($arr_favorites, $key->SavedFavoriteTalentID);
+				}
+				
 				foreach($results as $profile) {
-					$profile_list .= self::search_formatted($profile);
+					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart);
 				}
 
 				if(self::$error_debug){
@@ -1694,7 +1710,7 @@ class RBAgency_Profile {
 		 * Format Profile
 		 * Create list from IDs
 		 */
-		public static function search_formatted($dataList){
+		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array()){
 
 			/* 
 			 * rb agency options
@@ -1720,7 +1736,13 @@ class RBAgency_Profile {
 			$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
-
+              
+			if(function_exists("rb_agency_save_favorite_javascript")){
+	            $displayActions = "<div class=\"rb_profile_tool\">";
+	            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>Favorite</span></a>&nbsp;";
+	            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>Casting Cart</span></a>";
+	            $displayActions .= "</div>";
+	        }
 			/* 
 			 * determine primary image
 			 */
@@ -1739,7 +1761,7 @@ class RBAgency_Profile {
 			} else {
 				$displayHTML .= "  <div class=\"image image-broken\" style='background:lightgray; color:white; font-size:20px; text-align:center; line-height:120px; vertical-align:bottom'>No Image</div>\n";
 			}
-
+           
 			/* 
 			 * determine profile details
 			 */
@@ -1750,8 +1772,10 @@ class RBAgency_Profile {
 				if($dataList["ProfileLocationState"]!=""){
 					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 				}
+				$displayHTML .=  $displayActions;
 				$displayHTML .= "</div>\n";
 			}
+			
 
 			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks")){
 				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
