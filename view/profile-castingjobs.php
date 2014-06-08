@@ -97,8 +97,7 @@
 		    $has_submitted = $wpdb->num_rows;
 
 		  
-      if(empty($has_submitted)){ // if not submitted
-            /*var_dump($has_permission);
+           /*var_dump($has_permission);
             var_dump($data["ProfileID"])*/
 			// if( in_array($data["ProfileID"], $has_permission) || current_user_can( 'manage_options' )  ){
 
@@ -121,7 +120,8 @@
 		       
 		     </div>    
 		      <table style="margin-top:20px;">
-		            <tr>
+		      <?php  if(empty($has_submitted)){ // if not submitted ?>
+      				<tr>
 		            <td>
 		      		<input type="submit" name="availability" value="Yes, Available" class="button-primary"/>
 		      		</td>
@@ -129,6 +129,30 @@
 		         	<input type="submit" name="availability" value="No, not Available" class="button-primary" />
 		         	</td>
 		         	</tr>
+		       <?php }else{ ?>
+		      		<tr>
+		            <td style="text-align:right;padding-right:20px;">
+		      			Availability
+		      		</td>
+		      		<td>
+		         	 <?php 
+						       $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+							$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
+						$availability = current($wpdb->get_results($prepared));
+						      $count2 = $wpdb->num_rows;
+							if($count2 <= 0){
+								echo "<span style=\"text-align:center;color:#5505FF;font-weight:bold;width:80%;padding:10px;display:block;\">Unconfirmed</span>\n";
+							}else{
+								if($availability->status == "available"){
+									echo "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
+								}else{
+									echo "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
+								}
+							}
+					?>
+		         	</td>
+		         	</tr>
+		       <?php } ?>
 		        <?php if(!empty( $Job_Title )):?>
 			      	<tr>
 			      	<td style="text-align:right;padding-right:20px;">Job Title:</td>
@@ -226,9 +250,7 @@
 				echo "You're not allowed to view this Job.";
 			}*/
 
-		}else{
-			echo "You've submitted your availability.";
-		}
+	
 	echo "  </div>\n";
 	echo "</div>\n";
 
