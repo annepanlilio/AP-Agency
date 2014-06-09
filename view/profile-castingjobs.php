@@ -70,20 +70,32 @@
 			
 			 $data = current($wpdb->get_results($wpdb->prepare($query,$profile_access_id["CastingProfileHashProfileID"]), ARRAY_A));
 
+			 	// Is submitted
+						     
+					
 			
     	if(isset($_POST["action"]) && $_POST["action"] == "availability"){
+    		  $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+							$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
+						$availability = current($wpdb->get_results($prepared));
+						      $count2 = $wpdb->num_rows;
+
     			    $availability = "available";
     			    $Availability = "Available";
     				if($_POST["availability"] == "No, not Available"){
     					$availability = "notavailable";
     					$Availability = "Not Available";
     				}
-    				  $query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
+    				if($count2 <= 0){
+    					    $query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
 							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."') AS tmp
 							WHERE NOT EXISTS (
 							    SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'
 							) LIMIT 1;"; 
-					  
+					 }else{
+					 	   $query = "UPDATE ".table_agency_castingcart_availability." SET CastingAvailabilityStatus = '".esc_attr($availability)."' WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'";
+					 }  
+
 					   $wpdb->query($query);
 
 					   $link = admin_url("admin.php?page=rb_agency_castinbjobs&action=informTalent&Job_ID=".$Job_ID);
@@ -96,15 +108,24 @@
 		   		   $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$Job_ID,$data["ProfileID"]));
 		    $has_submitted = $wpdb->num_rows;
 
-		  
-           /*var_dump($has_permission);
-            var_dump($data["ProfileID"])*/
-			// if( in_array($data["ProfileID"], $has_permission) || current_user_can( 'manage_options' )  ){
-
+		      $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+							$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
+						$availability = current($wpdb->get_results($prepared));
+						      $count2 = $wpdb->num_rows;
 				
 			 ?>
+			 <style type="text/css">
+               input[disabled=disabled]{
+               	 color: #B4AAAA;
+               }
+			 </style>
+			
 		     <form method="post" action="" style="width: 900px;">
-			  <h2>You have been submitted for a job</h2>
+		     <?php if($count2 > 0):?>
+			  <h2>You've submitted your availability.</h2>
+			<?php else: ?>
+			  <h2>You've been submitted for a job.</h2>
+			<?php endif;?>
 			  <strong>We are simply confirming that you are "Available" or "Not Available" for the job dates.</strong>
 			  <div style="clear:both;"></div>
 
@@ -120,39 +141,16 @@
 		       
 		     </div>    
 		      <table style="margin-top:20px;">
-		      <?php  if(empty($has_submitted)){ // if not submitted ?>
+		      
       				<tr>
 		            <td>
-		      		<input type="submit" name="availability" value="Yes, Available" class="button-primary"/>
+		      		<input type="submit" name="availability" <?php echo $availability->status == "available"?"disabled=\"disabled\"":"" ?> value="Yes, Available" class="button-primary"/>
 		      		</td>
 		      		<td>
-		         	<input type="submit" name="availability" value="No, not Available" class="button-primary" />
+		         	<input type="submit" name="availability"  <?php echo $availability->status != "available"?"disabled=\"disabled\"":"" ?>  value="No, not Available" class="button-primary" />
 		         	</td>
 		         	</tr>
-		       <?php }else{ ?>
-		      		<tr>
-		            <td style="text-align:right;padding-right:20px;">
-		      			Availability
-		      		</td>
-		      		<td>
-		         	 <?php 
-						       $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
-							$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
-						$availability = current($wpdb->get_results($prepared));
-						      $count2 = $wpdb->num_rows;
-							if($count2 <= 0){
-								echo "<span style=\"text-align:center;color:#5505FF;font-weight:bold;width:80%;padding:10px;display:block;\">Unconfirmed</span>\n";
-							}else{
-								if($availability->status == "available"){
-									echo "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
-								}else{
-									echo "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
-								}
-							}
-					?>
-		         	</td>
-		         	</tr>
-		       <?php } ?>
+
 		        <?php if(!empty( $Job_Title )):?>
 			      	<tr>
 			      	<td style="text-align:right;padding-right:20px;">Job Title:</td>
