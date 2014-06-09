@@ -187,9 +187,48 @@ class RBAgency_Casting {
 				echo "      <a href=\"?page=rb_agency_search&action=massEmail#compose\" title=\"". __("Mass Email", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Mass Email", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=1')\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "      <a href=\"#\" onClick=\"openWindow('". get_bloginfo("url") ."/profile-print/?action=castingCart&cD=0')\" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ." - ". __("Without Details", rb_agency_TEXTDOMAIN) ."</a>\n";
-				echo "      <a href=\"?page=rb_agency_castingjobs&action2=addnew&action=informTalent\" title=\"". __("Add to Casting Job", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Casting Jobs", rb_agency_TEXTDOMAIN) ."</a>\n";
+				echo "      <a href=\"?page=rb_agency_castingjobs&action2=addnew&action=informTalent\" title=\"". __("Create Casting Job", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Create Casting Job", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "   </div>\n";
 				echo "</div>\n";
+				$cartArray = isset($_SESSION['cartArray'])?$_SESSION['cartArray']:array();
+				$cartString = implode(",", array_unique($cartArray));
+				$cartString = RBAgency_Common::clean_string($cartString);
+						
+				 echo "<div class=\"boxblock-container\">";
+						 echo "<div class=\"boxblock\" style=\"width:100%\" >";
+						 
+									echo "<h3>Add to existing Job</h3>";
+								 
+							 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+			 				 echo "<form class=\"castingtext\" method=\"post\" action=\"?page=rb_agency_castingjobs&action=informTalent&Job_ID=\">";
+							   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+									echo "<div>";
+										echo "<select name=\"Job_ID\" style=\"width:80%;\">";
+										echo "<option value=\"\">- Select -</option>";
+										$castings = $wpdb->get_results("SELECT * FROM ".table_agency_casting_job." ORDER BY Job_ID DESC");
+										foreach ($castings as $key) {
+											echo "<option attrid=\"".$key->Job_ID."\" value=\"".$key->Job_ID."-".$key->Job_UserLinked."\">".$key->Job_Title."</option>";
+										}
+										echo "<select>";
+									    echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
+									echo "</div>";
+								echo "</div>";
+								echo "<script type=\"text/javascript\">";
+								echo "jQuery(function(){
+										 jQuery(\"select[name=Job_ID]\").change(function(){
+												var a = jQuery(\"select[name=Job_ID] option:selected\").attr('attrid');
+												if(a !== 'undefined'){
+													jQuery('.castingtext').attr('action',jQuery('.castingtext').attr('action')+a);
+												}
+										});
+								});";
+								echo "</script>";
+								echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
+							 echo "</form>";
+							echo "</div>";
+						echo "</div>";
+				echo "</div>";
+				echo "</div>";
 				echo "<script type=\"text/javascript\">\n";
 				echo "function openWindow(url){ \n";
 				echo " window.open(url,'mywindow'+Math.random(),'width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes');";
