@@ -1051,7 +1051,9 @@ class RBAgency_Profile {
 													
 																	if($like!="") {
 																		$val2 = addslashes(addslashes($like));
-																		$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s)".(($i <= $likecounter)?" OR ":""),$like,"%".$like."%");
+																	 	$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0)".(($i <= $likecounter)?" AND ":""),$like);
+																		//$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+															
 																	}
 																						//Commented to fix checkbox issue
 								
@@ -1060,7 +1062,6 @@ class RBAgency_Profile {
 
 																		$filter2 .= "$open_st  ".$sr_data."  $close_st";
 
-					
 												}
 
 												$_SESSION[$key] = $val;
@@ -1185,10 +1186,12 @@ class RBAgency_Profile {
 					if(count($filterDropdown) > 0){
 						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 					}
-					
+
+
 					$filter .= $filter2;
 					$filter = str_replace(array("\n","\t","\r")," ", $filter);
-					$filter = str_replace(")(", ") AND (", $filter);
+					$filter = str_replace(")(", ") OR (", $filter);
+
 				
 				}
 
@@ -1342,15 +1345,16 @@ class RBAgency_Profile {
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
-
-						/*
+			/*
 			 * check if search is admin or public
 			 */
 			if(is_admin()){
 				
 				return self::search_result_admin($sql);
 			} else {
+				
 				return self::search_result_public($sql);
+
 			}
 
 		}
@@ -1370,7 +1374,6 @@ class RBAgency_Profile {
 			$count = count($results);
 			$profile_list = "";
 			$all_html = "";
-			
 			$all_html.='<div id="rbfilter-sort">';
 			$all_html.='<div class="rbtotal-results">Total Results : '.$count.' </div>';
 			$all_html.='<div class="rbsort">';
