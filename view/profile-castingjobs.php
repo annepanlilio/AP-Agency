@@ -102,7 +102,7 @@
 					   
 					   RBAgency_Casting::sendEmailCastingAvailability($data["ProfileContactDisplay"],$Availability,$Job_Title,$link);
 					
-					   echo ('<div id="message" class="updated"><p>Submitted successfully!</p></div>');
+					   echo ('<div id="message" class="updated" style="width:50%;margin:auto;"><p>Submitted successfully!</p></div>');
 		       
 		}
 		   		   $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$Job_ID,$data["ProfileID"]));
@@ -118,9 +118,13 @@
                input[disabled=disabled]{
                	 color: #B4AAAA;
                }
+               .job-details td{
+               		border:1px solid #ccc;
+               		padding:10px;
+               }
 			 </style>
 			
-		     <form method="post" action="" style="width: 900px;">
+		     <form method="post" action="" style="width:100%;max-width:450px;">
 		     <?php if($count2 > 0):?>
 			  <h2>You've submitted your availability.</h2>
 			<?php else: ?>
@@ -129,37 +133,40 @@
 			  <strong>We are simply confirming that you are "Available" or "Not Available" for the job dates.</strong>
 			  <div style="clear:both;"></div>
 
-		     <div style="width:20%;float:left;margin-top:20px;margin-right:30px;padding-bottom:30px;">
-		        <div style="width:100%;height:220px;padding:10px;text-align:center;background:#ccc;overflow:hidden;">
-		        <?php if(!empty($data['ProfileMediaURL'])):?>
-		        <?php echo "<img style=\"width: 100%;height:99.9% \" src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'] ."&w=180&h=220\" />"; ?>
-		        <?php else:?>
-		        		No Image Available.
-		        <?php endif; ?>
-		        </div>
-		        <h2><?php echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?></h2>	
-		       
-		     </div>    
-		      <table style="margin-top:20px;">
-		      
+ 
+		      <table class="job-details" style="margin-top:20px;width:100%;">
+		            <tr>
+		              <td colspan="2">
+		              		        <div style="width:95%;height:220px;padding:10px;text-align:center;background:#ccc;overflow:hidden;">
+							        <?php if(!empty($data['ProfileMediaURL'])):?>
+							        <?php echo "<img style=\"width: 50%;height:99.9% \" src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'] ."&w=180&h=220\" />"; ?>
+							        <?php else:?>
+							        		No Image Available.
+							        <?php endif; ?>
+							        </div>
+							        <h2><?php echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?></h2>	
+							       
+							     
+				     </td>
+		     		</tr>
       				<tr>
-		            <td>
-		      		<input type="submit" name="availability" <?php echo $availability->status == "available"?"disabled=\"disabled\"":"" ?> value="Yes, Available" class="button-primary"/>
+		            <td style="text-align:right;padding-right:5px;">
+		      		<input type="submit" name="availability" <?php echo isset($availability->status) && $availability->status == "available"?"disabled=\"disabled\"":"" ?> value="Yes, Available" class="button-primary"/>
 		      		</td>
 		      		<td>
-		         	<input type="submit" name="availability"  <?php echo $availability->status != "available"?"disabled=\"disabled\"":"" ?>  value="No, not Available" class="button-primary" />
+		         	<input type="submit" name="availability"  <?php echo isset($availability->status) && $availability->status != "available"?"disabled=\"disabled\"":"" ?>  value="No, not Available" class="button-primary" />
 		         	</td>
 		         	</tr>
 
 		        <?php if(!empty( $Job_Title )):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Job Title:</td>
+			      	<td style="text-align:right;padding-right:5px;">Job Title:</td>
 			      	<td><?php echo $Job_Title; ?></td>
 			      	</tr>
 		      	<?php endif;?>
 		      	<?php if(!empty( $Job_Type )):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Job Type:</td>
+			      	<td style="text-align:right;padding-right:5px;">Job Type:</td>
 			      	<td>
 			      	<?php $get_job_type = $wpdb->get_results("SELECT * FROM " . table_agency_casting_job_type); // or die(mysql_error()
 									if(count($get_job_type)){
@@ -175,13 +182,13 @@
 				<?php endif;?>
 		      	 <?php if(!empty($Job_Date_Start)):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Job Date Start:</td>
+			      	<td style="text-align:right;padding-right:5px;">Job Date Start:</td>
 			      	<td><?php echo date("M d, Y",strtotime($Job_Date_Start)); ?></td>
 			      	</tr>
 			     <?php endif;?>
 			     	<?php if(!empty($Job_Date_End)):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Job Date End:</td>
+			      	<td style="text-align:right;padding-right:5px;">Job Date End:</td>
 			      	<td><?php echo date("M d, Y",strtotime($Job_Date_End)); ?></td>
 			      	</tr>
 			     <?php endif;?>
@@ -189,25 +196,25 @@
 		      	
 		      	<?php if(!empty($Job_Audition_Date_Start)):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Audition Date Start:</td>
+			      	<td style="text-align:right;padding-right:5px;">Audition Date Start:</td>
 			      	<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_Start)); ?></td>
 			      	</tr>
 			     <?php endif;?>
 			     	<?php if(!empty($Job_Audition_Date_End)):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Audition Date End:</td>
+			      	<td style="text-align:right;padding-right:5px;">Audition Date End:</td>
 			      	<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_End)); ?></td>
 			      	</tr>
 			     <?php endif;?>
 			     <?php if(!empty($Job_Audition_Venue)):?>
 			      	<tr>
-			      	<td style="text-align:right;padding-right:20px;">Auditon Venue:</td>
+			      	<td style="text-align:right;padding-right:5px;">Auditon Venue:</td>
 			      	<td><?php echo $Job_Audition_Venue; ?></td>
 			      	</tr>
 			      <?php endif;?>
 			     <?php if(!empty($Job_Audition_Time)):?>
 				    <tr>
-			      	<td style="text-align:right;padding-right:20px;">Audition Time</td>
+			      	<td style="text-align:right;padding-right:5px;">Audition Time</td>
 			      	<td><?php echo $Job_Audition_Time; ?></td>
 			      	</tr>
 			     <?php endif;?>
@@ -216,31 +223,28 @@
 
 			      <?php if(!empty($Job_Offering)):?>
 				    <tr>
-			      	<td  style="text-align:right;padding-right:20px;">Role Fee($)</td>
+			      	<td  style="text-align:right;padding-right:5px;">Role Fee($)</td>
 			      	<td><?php echo $Job_Offering; ?></td>
 			      	</tr>
 			     <?php endif;?>
 			     
 			     <?php if(!empty($Job_Text)):?>
 			     	<tr>
-			      	<td  style="text-align:right;padding-right:20px;">Description</td>
+			      	<td  style="text-align:right;padding-right:5px;">Description</td>
 			      	<td><?php echo $Job_Text; ?></td>
 			      	</tr>
 			     <?php endif;?>
-
-			      <?php if(!empty($Job_Location)){?>
-			      	<tr>
-			      	<td  style="text-align:right;padding-right:20px;vertical-align: top;">Location:</td>
-			      	<td style="width:600px;"><?php echo $Job_Location; ?><br/>
-			      	
-					      	 <strong>Location Map</strong>
-					      	  <?php echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
-					      	
-			      	</td>
-			      	</tr>
-			     <?php }?>
-			   
-		      </table>
+                  <tr>
+                     <td colspan="2" style="text-align:center;">
+                     	 <?php if(!empty($Job_Location)){?>
+					      	Location:<br/>
+					      	<?php echo $Job_Location; ?><br/>
+					        <?php echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
+						 <?php }?>
+				    </td>
+				  </tr>
+				</table>
+		    
 		      <input type="hidden" name="action" value="availability">
 		      </form>
 			 <?php 
