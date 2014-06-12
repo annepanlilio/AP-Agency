@@ -2183,14 +2183,15 @@ function rb_agency_getGenderTitle($ProfileGenderID){
 function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
     global $wpdb; 
 
-	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID ='%s' AND ProfileCustomShowGender IN(%s) ";
+	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s) ";
 	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A);
+	echo $wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID);
 	$count = $wpdb->num_rows;
 		if($count > 0){
 		return true;  
-	} else {
-		return false;
-	}
+		} else {
+			return false;
+		}
 	rb_agency_checkExecution();
 }
  
@@ -2272,12 +2273,11 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 		// What is the unit of measurement?
 		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:"";
 
-         
+        	
 
 	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
    foreach ($resultsCustom as $resultCustom) {
 		// If a value exists...
-
    		if(!empty($resultCustom->ProfileCustomValue )){
 
 			/*
@@ -2313,8 +2313,8 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 			if ($resultCustom->ProfileCustomType == 3 || $resultCustom->ProfileCustomType == 5 || $resultCustom->ProfileCustomType == 7  || $resultCustom->ProfileCustomType == 9){
 					$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
 			}
-		
-			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) ||  current_user_can( 'manage_options' )){
+			
+		//	if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) ||  current_user_can( 'manage_options' )){
 				if ($resultCustom->ProfileCustomType == 7){
 
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
@@ -2366,7 +2366,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
-			}
+			//}
 		}
 	}
 }
