@@ -20,7 +20,7 @@ global $wpdb;
 	
 	foreach ($custom_fields as $key => $value) {
 		//array_push($custom_fields_name, 'Client'.str_replace(' ', '', $value['ProfileCustomTitle']));
-		array_push($custom_fields_name, $value['ProfileCustomTitle']);
+		array_push($custom_fields_name, str_replace(",","||",$value['ProfileCustomTitle']));
 		array_push($custom_fields_id, $value['ProfileCustomID']);
 		array_push($custom_fields_title, $value['ProfileCustomTitle']);
 		array_push($custom_fields_type, $value['ProfileCustomType']);
