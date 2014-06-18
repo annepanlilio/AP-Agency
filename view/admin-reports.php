@@ -1937,6 +1937,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 				foreach ($cellIterator as $cell) {
 					$val = $cell->getValue();
 					$value =  str_replace(" ","_",$cell->getValue());
+					$value =  str_replace("||",",",$cell->getValue());
 					if(!empty($val) && count($arr_headers) < $total_header && !in_array($val,$arr_exists)){
 						array_push($arr_exists,$value);
 					    array_push($arr_headers ,$value);
@@ -1955,6 +1956,7 @@ class RBAgencyCSVXLSImpoterPlugin {
                        
 					    foreach($column as $key => $val){
 						   $val =  str_replace(" ","_",$key);
+						   $val =  str_replace("||",",",$key);
 						if(!empty($val) && count($arr_headers) < $total_header && !in_array($val,$arr_exists)){
 							array_push($arr_exists,$val);
 						    array_push($arr_headers ,$val);
