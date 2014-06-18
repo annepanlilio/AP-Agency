@@ -631,6 +631,7 @@ elseif ($ConfigID == 11) {
 		echo "   <td>\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_custom_login]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:"", 1,false)."/> ". __("Do Not Override Login Screen", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_custom_login]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:"", 0,false)."/> ". __("Redirect to /profile-login/", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_custom_login]\" value=\"2\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:"", 2,false)."/> ". __("Redirect to homepage", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -1868,7 +1869,7 @@ elseif ($ConfigID == 5) {
 		$ProfileCustomView 			= (int)$_POST['ProfileCustomView'];
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
-		$ProfileCustomShowProfile  	= (int)$_POST['ProfileCustomShowProfile'];
+		$ProfileCustomShowProfile  	= isset($_POST['ProfileCustomShowProfile'])?(int)$_POST['ProfileCustomShowProfile']:0;
 		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
 		$ProfileCustomShowRegistration= isset($_POST['ProfileCustomShowRegistration'])?(int)$_POST['ProfileCustomShowRegistration']:0;
