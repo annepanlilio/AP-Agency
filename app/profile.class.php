@@ -1326,18 +1326,22 @@ class RBAgency_Profile {
 					$user = get_userdata(rb_agency_get_current_userid());  
 
 					// check if user is admin, if yes this allow the admin to view other users cart 
-					if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
-						$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
-					} else {
-						$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = ".rb_agency_get_current_userid();
-						if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
-							$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
-						}
-					}
+					// if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
+					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
+					// } else {
+						if(current_user_can("manage_options")){
+							$sqlCasting_userID .= $wpdb->prepare("  cart.CastingJobID = %s",$_GET["Job_ID"]);
+						}else{
+							$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = ".rb_agency_get_current_userid();
+							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
+								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
+							}
+						}	
+						
+					//}
 
 					// Execute the query showing casting cart
 					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
-
 			}
 
 			
@@ -1504,7 +1508,6 @@ class RBAgency_Profile {
 				/* 
 				 * process query 
 				 */
-
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$count = count($results);
 

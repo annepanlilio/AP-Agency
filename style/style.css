@@ -470,10 +470,10 @@ background-size: 150px;
 display: block;
 }
 .rb_profile_tool  a {text-decoration: none;}
-.rb_profile_tool  a.inactive.favorite{ color:#ccc;font-size: 17px; }
-.rb_profile_tool  a.inactive.castingcart{ color:#ccc; }
-.rb_profile_tool  a.active.favorite,.rb_profile_tool  a.inactive.favorite:hover{ color:#DD1818;font-size: 17px; }
-.rb_profile_tool  a.active.castingcart,.rb_profile_tool  a.inactive.castingcart:hover{ color:#FFDA18; }
+.rb_profile_tool  a.active.favorite{ color:#ccc;font-size: 17px; }
+.rb_profile_tool  a.active.castingcart{ color:#ccc; }
+.rb_profile_tool  a.inactive.favorite,.rb_profile_tool  a.active.favorite:hover{ color:#DD1818;font-size: 17px; }
+.rb_profile_tool  a.inactive.castingcart,.rb_profile_tool  a.active.castingcart:hover{ color:#FFDA18; }
 .rb_profile_tool  a span{ font-size:11px;color:#000;}
  
 #profile-single-view.rb_profile_tool span{font-size:13px;}

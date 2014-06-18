@@ -515,7 +515,7 @@
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_bday']) && $rb_agency_options_arr['rb_agency_option_profilelist_bday'] == true) {
 			
-			list($Y,$m,$d) = explode("-",$p_strDate);
+			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
 			$localtime = getdate();
 			$today = $localtime['mday']."-".$localtime['mon']."-".$localtime['year'];
@@ -1870,19 +1870,17 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 
 			
 			if($permit_type || $all_permit){
-
-				if($ProfileGenderShow ==true){
-					if($data3["ProfileCustomShowGender"] == $ProfileGender && $count3 >=1 ){ // Depends on Current LoggedIn User's Gender
-						$count3++;
+                if($ProfileGenderShow ==true){
+					if($data3["ProfileCustomShowGender"] == $ProfileGender ){ // Depends on Current LoggedIn User's Gender
 						rb_custom_fields_template($visibility, $ProfileID, $data3);
 					} elseif(empty($data3["ProfileCustomShowGender"])) {
-						$count3++;
 						rb_custom_fields_template($visibility, $ProfileID, $data3);
 					}
 				} else {
-						$count3++;
 						rb_custom_fields_template($visibility, $ProfileID, $data3);
 				}
+				$count3++;
+						
 			}
 
 			// END Query2
@@ -1909,7 +1907,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	
 	if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){ 
    
-		$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = '%s' AND ProfileID = %d", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+		$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
 		$row = current($subresult);
 		
 		$ProfileCustomValue = $row["ProfileCustomValue"];
@@ -2185,7 +2183,6 @@ function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
 
 	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s) ";
 	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A);
-	echo $wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID);
 	$count = $wpdb->num_rows;
 		if($count > 0){
 		return true;  
@@ -3112,7 +3109,7 @@ function rb_display_profile_list(){
 		//Search profiles starts ..
 		echo "<form method=\"post\">";
 		echo  __("Search User", rb_agency_TEXTDOMAIN) ."\n";
-		echo "<input type=\"text\" value=\"".$_POST['search_profiles']."\" name=\"search_profiles\" id=\"search_profiles\" size=\"20\" >";
+		echo "<input type=\"text\" value=\"".(isset($_POST['search_profiles'])?$_POST['search_profiles']:"")."\" name=\"search_profiles\" id=\"search_profiles\" size=\"20\" >";
 		echo "<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/?srch=1'\" />";
 		
 		echo "<input type=\"submit\" value=\"Search\" name=\"search_submit\" id=\"search_submit\" class=\"button-primary\">";
@@ -3376,7 +3373,8 @@ function rb_display_profile_list(){
 				  profileid : pid,
 				  login : login,
 				  password : password,
-				  email : email
+				  email : email,
+				  generate_pass: true
 				},
 				success: function(data){
 				  if(data == 'SUCCESS'){
@@ -3479,17 +3477,21 @@ function register_and_send_email(){
 	$login = trim($_POST['login']);
 	$password = trim($_POST['password']);
 	$email = trim($_POST['email']);
+	$generate_pass = trim($_POST["generate_pass"]);
 
 	// getting required fileds from rb_agency_profile
 	$profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $profileid . "'" );
 
 	// creating new user
-	$user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
-	if ( !$user_id and email_exists($user_email) == false ) {
-		$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
-		$user_id = wp_create_user( $login, $random_password, $email ); 
-		if(is_numeric($user_id)){
-			wp_set_password( $password, $user_id );
+	$user_id = email_exists($email);
+	//if ( $user_id ) {
+		 //$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+		//$user_id = wp_create_user( $login, $random_password, $email ); 
+		if(!is_numeric($user_id)){
+			
+			$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+			$user_id = wp_create_user( $login, $random_password, $email ); 
+			wp_set_password( $password, $user_id );  
 
 			// updating some information we have in wp_users
 			$wpdb->update( 
@@ -3515,17 +3517,26 @@ function register_and_send_email(){
 				array( '%d' ),
 				array( '%d' )
 			);
-
+			add_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
 			send_email_lp($login, $password, $email);
 
 			echo 'SUCCESS';
 		} else {
-			echo $user_id->errors['existing_user_login'][0];
+			if($generate_pass){
+				      $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+				      update_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
+					  wp_set_password( $random_password, $user_id );
+					  send_email_lp($login, $random_password, $email);
+
+					echo 'SUCCESS';
+			}else{
+				echo $user_id->errors['existing_user_login'][0];
+			}
 		}
 
-	} else {
+	/*} else {
 		echo 'The user is already registrated!';
-	}
+	}*/
 	
 	die;
 }
@@ -3595,8 +3606,9 @@ function bulk_register_and_send_email(){
 
 function send_email_lp($login, $password, $email){
 	$admin_email = get_bloginfo('admin_email');
+	$site_name = get_bloginfo("name");
 
-	$headers = 'From: RB Agency <' . $admin_email . '>\r\n';
+	$headers = 'From: '.$site_name.' <' . $admin_email . '>\r\n';
 
 	$subject = 'Your new Login and Password';
 	
@@ -4179,11 +4191,14 @@ function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaTyp
  * User group permission redirect
  */
 function rb_agency_group_permission($group){
+
 		   global $user_ID;
-	       if(is_user_logged_in()){
+		   include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+	       if(is_user_logged_in() &&  !current_user_can("manage_options") && is_plugin_active("rb-agency-casting") ){
 	       
 				    $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
-				    if($group == "casting"){
+					if($group == "casting"){
 				       if(!empty($is_model)){
 						 wp_safe_redirect(get_bloginfo("url")."/profile-member/");
 					    }
@@ -4221,12 +4236,19 @@ function rb_logout_user(){
 				     		wp_safe_redirect(admin_url());
 				     }else{
 				     		 wp_logout();
-				     
+				       
+				       $rb_agency_interact_options_arr = get_option('rb_agencyinteract_options');
+					   $rb_agencyinteract_option_redirect_custom_login = (int)$rb_agency_interact_options_arr['rb_agencyinteract_option_redirect_custom_login'];
+					
+					   if($rb_agencyinteract_option_redirect_custom_login == 2){
+					   		 wp_safe_redirect(get_bloginfo("url"));
+					   }else{
 						   if(!empty($is_model )){
 						   	   wp_safe_redirect(get_bloginfo("url")."/profile-login/");
 						   }else{
 						   	  	 wp_safe_redirect(get_bloginfo("url")."/casting-login/");
 						   }
+						}
 					}
 					
 			}
