@@ -28,7 +28,7 @@ global $wpdb;
 
 	if(isset($_POST)) {
 		if($_POST['file_type'] == 'csv') { 
-			$profile_data = $wpdb->get_results("SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM ". table_agency_profile, ARRAY_A);
+			$profile_data = $wpdb->get_results("SELECT ProfileID, ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM ". table_agency_profile, ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst  FROM ". table_agency_profile, ARRAY_A);
 			$csv_output .= "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,";
 			$csv_output .= implode(',', $custom_fields_name);
@@ -44,7 +44,7 @@ global $wpdb;
 				$data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
 				
 				$csv_output .= implode(',', $data_value);
-				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID']." ", ARRAY_A);
+				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $data_value["ProfileID"]." ", ARRAY_A);
 				$temp_array = array();
 				$c_value_array = array(); 
 
@@ -107,7 +107,7 @@ global $wpdb;
 			require_once('../ext/PHPExcel/IOFactory.php');
 			$objPHPExcel = new PHPExcel();
 			$objPHPExcel->setActiveSheetIndex(0);
-			$rowNumber = 1;
+			$rowNumber = 0;
 			/*Getting headers*/
 			$headings = array();
             $headings = array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive');
@@ -119,13 +119,14 @@ global $wpdb;
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
 			/*Profile data*/
 			$row_data = array();
-			$row_data = $wpdb->get_results('SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile, ARRAY_A);
+			$row_data = $wpdb->get_results('SELECT ProfileID, ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile, ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
 
 			foreach ($row_data as $key => $data) 
 			{
 				$rowNumber++;
-				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
+				//$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
+				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $data['ProfileID'], ARRAY_A);
 
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
                 $data['ProfileContactNameFirst'] = stripcslashes(stripcslashes($data['ProfileContactNameFirst']));
@@ -162,7 +163,7 @@ global $wpdb;
 				}
 				
 				//Height conversion from inches to feet n inches
-				foreach($custom_fields_title as $key=>$title){
+				foreach($custom_fields_title as $key => $title){
 					if($title=="Height"){
 						$rawValue=$temp_array[$custom_fields_id[$key]];
 						$feet=intval($rawValue/12);
@@ -171,9 +172,9 @@ global $wpdb;
 							$c_value_array[$key]='';
 						}
 						elseif(!is_int($rawValue)){
-						  if(strpos($rawValue, "'") !== false && strpos($rawValue, "and") === false){
+						   if(strpos($rawValue, "'") !== false && strpos($rawValue, "and") === false){
                           	     $c_value_array[$key] = str_replace('""',"\"",str_replace('\'"',"'",$rawValue.'"'));
-	                     }else{
+	                        }else{
 								 $c_value_array[$key] = $rawValue;
 							}
 					    }
@@ -183,11 +184,13 @@ global $wpdb;
 						
 						}
                     }
-				
+                    $data = array_merge($data, $c_value_array);
+                    $objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
+			    }	
 
-				$data = array_merge($data, $c_value_array);
-				$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
-			}
+			 		
+			  
+				
 			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 			$objWriter->save(str_replace('.php', '.xls', __FILE__));
 			header("Pragma: public");
