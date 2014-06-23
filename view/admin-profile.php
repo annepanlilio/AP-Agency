@@ -242,6 +242,8 @@ if (isset($_POST['action'])) {
 						)";
 					$results = $wpdb->query($insert) or die("Add Record: " . mysql_error());
 					$ProfileID = $wpdb->insert_id;
+					add_user_meta( $ProfileID, 'rb_agency_interact_profiletype',true);
+					
 
 
 					// Notify admin and user
@@ -321,11 +323,14 @@ if (isset($_POST['action'])) {
 
 										if ($ProfileUserLinked > 0) {
 											/* Update WordPress user information. */
-											update_usermeta($ProfileUserLinked, 'first_name', esc_attr($ProfileContactNameFirst));
-											update_usermeta($ProfileUserLinked, 'last_name', esc_attr($ProfileContactNameLast));
-											update_usermeta($ProfileUserLinked, 'nickname', esc_attr($ProfileContactDisplay));
-											update_usermeta($ProfileUserLinked, 'display_name', esc_attr($ProfileContactDisplay));
-											update_usermeta($ProfileUserLinked, 'user_email', esc_attr($ProfileContactEmail));
+											update_user_meta($ProfileUserLinked, 'first_name', esc_attr($ProfileContactNameFirst));
+											update_user_meta($ProfileUserLinked, 'last_name', esc_attr($ProfileContactNameLast));
+											update_user_meta($ProfileUserLinked, 'nickname', esc_attr($ProfileContactDisplay));
+											update_user_meta($ProfileUserLinked, 'display_name', esc_attr($ProfileContactDisplay));
+											//update_usermeta($ProfileUserLinked, 'user_email', esc_attr($ProfileContactEmail));
+											wp_update_user( array( 'ID' => $ProfileUserLinked,  'user_email' => esc_attr($ProfileContactEmail) ) );
+											update_user_meta( $ProfileUserLinked, 'rb_agency_interact_profiletype',true);
+					
 										}
 
 										// Remove Old Custom Field Values
@@ -1729,6 +1734,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		echo "<p class=\"submit\">\n";
 		echo "" . __("Last updated on", rb_agency_TEXTDOMAIN) . ": " . $ProfileDateUpdated . "\n";
 		echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
+		echo "     <input type=\"hidden\" name=\"ProfileUserLinked\" value=\"" . $ProfileUserLinked. "\" />\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
 		echo "     <br /><br /><input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
