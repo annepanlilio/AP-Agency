@@ -253,7 +253,7 @@ if($_POST['print_option']==14){  // print for division
 					<h1 style="margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1>
 				
 					<ul>
-					'.rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,"dontecho").'
+					'.rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,false).'
 					</ul>
 				</div>'."\n";
 				
@@ -269,7 +269,7 @@ if($_POST['print_option']==14){  // print for division
 
 			if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
 				$pdf_image_id=$_POST['pdf_image_id'];
-				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY $orderBy";
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id)";
 
 			}
 			elseif(!empty($orderBy)) {
@@ -316,7 +316,7 @@ if($_POST['print_option']==14){  // print for division
 						 if($cnt==$col){ $allImages.="</tr></table>\n";
 						   if($cnt2==$perPage){
 							
-								  $allImages.='<br><br clear=""><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg">';
+								  $allImages.='<br><br clear=""><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg">';
 								  
 								  if($printType=="Polaroid" AND $excape!=1){$allImages.="<td></tr></table>"; $excape=1;}
 								  

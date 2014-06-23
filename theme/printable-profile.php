@@ -127,7 +127,7 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 		<div id="model_info">
 			<h1><?php echo $ProfileContactDisplay; ?></h1>
 		   <ul>
-			<?php  rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender);?>
+			<?php  rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);?>
 			</ul>
 		</div>
 
