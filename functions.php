@@ -3084,8 +3084,8 @@ function rb_display_profile_list(){
 		$p = new rb_agency_pagination;
 		$p->items($items);
 		$p->limit(50); // Limit entries per page
-		$p->target("admin.php?page=". $_GET['page'] . '&ConfigID=99' .$query);
-		$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+		$p->target("admin.php?page=". @$_GET['page'] . '&ConfigID=99' .@$query);
+		$p->currentPage(@$_GET[$p->paging]); // Gets and validates the current page
 		$p->calculate(); // Calculates what to show
 		$p->parameterName('paging');
 		$p->adjacents(1); //No. of page away from the current page
@@ -3357,7 +3357,9 @@ function rb_display_profile_list(){
 				var login = lp_arr[0];
 				var password = lp_arr[1];
 
-				$('#l_' + pid).val(login);
+				if($('#l_' + pid).val() ==""){
+					$('#l_' + pid).val(login);
+				}
 				$('#p_' + pid).val(password);
 				$('#em_' + pid).removeAttr('disabled');
 				$('#em_' + pid).bind('click', sendEmail);
@@ -3427,8 +3429,8 @@ function rb_display_profile_list(){
 					login : login,
 					password : password,
 					email : email
-				  };                         
-			  });
+				  };     
+			 });
 			   
 			  //console.log(usersLP);       
 			  $.ajax({
@@ -3436,7 +3438,8 @@ function rb_display_profile_list(){
 				type: 'post',
 				data: {
 				  action: 'send_bulk_mail',
-				  users_pl : usersLP
+				  users_pl : usersLP,
+				  generatepass: true
 				},
 				success: function(data){
 				  if(data == 'SUCCESS'){
@@ -3449,7 +3452,11 @@ function rb_display_profile_list(){
 				  else {
 					$('#ch_bulk').removeClass().addClass('error-profile');
 				  }
-				}
+				  console.log(data);
+				},
+				error: function(e){
+			  	console.log(e);
+			  }
 			  });
 			}
 		  }   
@@ -3572,15 +3579,17 @@ function bulk_register_and_send_email(){
 	
 	$users_lp = $_POST['users_pl'];
 	//echo '<pre>'; print_r($users_lp);
+	$generate_pass = $_POST["generatepass"];
 	
 	$success = FALSE;
+	$arr_email = array();
 	
 	foreach($users_lp as $user_lp){ 
-		$profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactEmail, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $user_lp['pid'] . "'");
+		$profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileUserLinked, ProfileContactEmail, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $user_lp['pid'] . "'");
 			
 			if(!email_exists($profile_row[0]->ProfileContactEmail)){
 			
-			$random_password = wp_generate_password( 8, true );
+			$random_password = $user_lp['password']; //wp_generate_password( 8, true );
 			$user_id = wp_create_user( $user_lp['login'], $random_password, $profile_row[0]->ProfileContactEmail ); 
 			wp_set_password( $random_password, $user_id );  
 
@@ -3598,7 +3607,7 @@ function bulk_register_and_send_email(){
 			update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
 			
 			// to store plain text login info
-			$user_info_arr = serialize(array($login,$password));
+			$user_info_arr = serialize(array($user_lp['login'],$random_password));
 			update_user_meta( $user_id, 'user_login_info', $user_info_arr);
 			
 			// linking the user ID with profile ID
@@ -3611,25 +3620,26 @@ function bulk_register_and_send_email(){
 			add_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
 			
 			// Link WP ID to a Talent Profile
-			$wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profileid));
+			$wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profile_row[0]->ProfileID));
 
 			send_email_lp($user_lp['login'], $random_password, $profile_row[0]->ProfileContactEmail);
+
+			 array_push($arr_email , $profile_row[0]->ProfileContactEmail);
 
 				$success = TRUE;
 		} else {
 			if($generate_pass){
-				      // creating new user
-					  $user_id = email_exists($profile_row[0]->ProfileContactEmail);
-					  $random_password = wp_generate_password( 8, true );
+				      $user_id = $profile_row[0]->ProfileUserLinked;
+					  $random_password = $user_lp['password']; //wp_generate_password( 8, true );
 				      update_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
-				      $user = get_userdata( $user_id );
-					  wp_set_password( $random_password, $user_id );
+				      wp_set_password( $random_password, $user_id );
 					  
 					  // Link WP ID to a Talent Profile
-					  $wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profileid));
+					  $wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profile_row[0]->ProfileID));
 
-					  send_email_lp($user->user_login, $random_password, $profile_row[0]->ProfileContactEmail);
-
+					  send_email_lp($user_lp['login'], $random_password, $profile_row[0]->ProfileContactEmail);
+					  array_push($arr_email , array("generate",$user_lp['login'], $random_password ,$profile_row[0]->ProfileContactEmail));
+					  //var_dump($arr_email);
 						$success = TRUE;
 			}else{
 				$success = FALSE; // $user_id->errors['existing_user_login'][0];
