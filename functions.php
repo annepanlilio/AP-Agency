@@ -2263,18 +2263,19 @@ function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelT
 * ======================== Get Custom Fields ===============
 * @Returns Custom Fields
 /*/
-function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
+function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = true) {
 
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		// What is the unit of measurement?
 		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:"";
 
-        	
+        	$display = "";
 
 	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
    foreach ($resultsCustom as $resultCustom) {
 		// If a value exists...
+
    		if(!empty($resultCustom->ProfileCustomValue )){
 
 			/*
@@ -2329,43 +2330,52 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender) {
 							$label = "(ft/in)";
 						}
 					}
-					$measurements_label = "<span class=\"label\">". $label ."</span>";
+					$measurements_label = "<span class=\"label options-".$resultCustom->ProfileCustomOptions."\">". $label ."</span>";
 
 					if($resultCustom->ProfileCustomOptions == 3){
-						if( $rb_agency_option_unittype == 0 ){
-									$heightraw = $resultCustom->ProfileCustomValue; 
-									$heightfeet = floor($heightraw * 2.48);
-									$resultCustom->ProfileCustomValue = $heightfeet;
-						}elseif( $rb_agency_option_unittype == 1 ){
+						/*if( $rb_agency_option_unittype == 0 ){
+									//$heightraw = $resultCustom->ProfileCustomValue; 
+									//$heightfeet = floor($heightraw * 2.48);
+									//$resultCustom->ProfileCustomValue = $heightraw;
+						}else*/
+
+						if( $rb_agency_option_unittype == 1 ){
 									$heightraw = $resultCustom->ProfileCustomValue; 
 									$heightfeet = floor($heightraw/12); 
 									$heightinch = $heightraw - floor($heightfeet*12);
 									$resultCustom->ProfileCustomValue =  $heightfeet." ft ".$heightinch." in ";
 						}
-						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>".$resultCustom->ProfileCustomValue."</li>\n";
+						$display .= "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>".$resultCustom->ProfileCustomValue."</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 2){ // kg
-						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 1){ 
-						if( $rb_agency_option_unittype == 0 ){//cm/in
+						if( $rb_agency_option_unittype == 1 ){//cm/in
 									$heightraw = $resultCustom->ProfileCustomValue; 
 									$heightfeet = $heightraw * 2.54;
 									$resultCustom->ProfileCustomValue = (int)$heightfeet;
 						}
 						
-						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} else {
-						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
+						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
 					}
 				} else {
 					if ($resultCustom->ProfileCustomType == 4){
-						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
+						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
 					} else {
-						echo "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
+						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
 			//}
+				
 		}
+
 	}
+				if($echo){
+					 echo $display;
+				}else{
+					return $display;
+				}
 }
 
 /*/
@@ -3074,7 +3084,7 @@ function rb_display_profile_list(){
 		$p = new rb_agency_pagination;
 		$p->items($items);
 		$p->limit(50); // Limit entries per page
-		$p->target("admin.php?page=". $_GET['page'] . '&ConfigID=99' . $query);
+		$p->target("admin.php?page=". $_GET['page'] . '&ConfigID=99' .$query);
 		$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
 		$p->calculate(); // Calculates what to show
 		$p->parameterName('paging');
@@ -3107,12 +3117,11 @@ function rb_display_profile_list(){
 	if($ConfigID == '99'){
 		
 		//Search profiles starts ..
-		echo "<form method=\"post\">";
+		echo "<form method=\"post\" action=\"\">";
 		echo  __("Search User", rb_agency_TEXTDOMAIN) ."\n";
 		echo "<input type=\"text\" value=\"".(isset($_POST['search_profiles'])?$_POST['search_profiles']:"")."\" name=\"search_profiles\" id=\"search_profiles\" size=\"20\" >";
-		echo "<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/?srch=1'\" />";
-		
 		echo "<input type=\"submit\" value=\"Search\" name=\"search_submit\" id=\"search_submit\" class=\"button-primary\">";
+		echo "<input type=\"submit\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"this.form.action='".get_bloginfo("wpurl")."/search/?srch=1'\" />";
 		echo "</form>";
 	}
 	echo "</div>\n";
@@ -3131,11 +3140,13 @@ function rb_display_profile_list(){
 			<tr class="thead">
 			  <th class="manage-column column-cb check-column" id="cb" scope="col"><input type="checkbox"/></th>
 			  <th style="width:50px;"><a href="<?php echo admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=99&sort=ProfileID&dir=". $sortDirection) ?>">ID</a></th>
-			  <th style="width:250px;"><a href="<?php echo admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=99&sort=ProfileContactNameFirst&dir=". $sortDirection) ?>">First Name</a></th>
-			  <th style="width:250px;"><a href="<?php echo admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=99&sort=ProfileContactNameLast&dir=". $sortDirection) ?>">Last Name</a></th>
-			  <th style="width:250px;"><a href="<?php echo admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=99&sort=ProfileGender&dir=". $sortDirection) ?>">Email Addresses</a></th>
+			  <th style="width:100%;"><a href="<?php echo admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=99&sort=ProfileContactNameFirst&dir=". $sortDirection) ?>">First Name</a></th>
+			  <th style="width:100%;"><a href="<?php echo admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=99&sort=ProfileContactNameLast&dir=". $sortDirection) ?>">Last Name</a></th>
+			  <th style="width:100%;"><a href="<?php echo admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=99&sort=ProfileGender&dir=". $sortDirection) ?>">Email Addresses</a></th>
 			  <th style="width:100px;"></th>
 			  <th style="width:100px;"></th>
+			  <th style="width:100px;"></th>
+			  
 			  <th></th>
 			</tr>
 		  </thead>
@@ -3163,13 +3174,12 @@ function rb_display_profile_list(){
 		  $ProfileContactEmail = RBAgency_Common::format_propercase(stripslashes($data['ProfileContactEmail']));
 		  
 		  //get wp user info
-		  $user_info = get_user_meta($data['ProfileUserLinked'],'user_login_info',true);
+		  $user_info = get_userdata($data['ProfileUserLinked']);
 		  $userlogin="";
 		  $userpass="";
 		  if($user_info){
-			  $user_info = unserialize($user_info);
-			  $userlogin = $user_info[0];
-			  $userpass = $user_info[1];
+			  $userlogin = $user_info->user_login;
+			//  $userpass = $user_info->user_pass;
 		  }
 		  $i++;
 		  if ($i % 2 == 0) {
@@ -3187,9 +3197,10 @@ function rb_display_profile_list(){
 			<td><a href="javascript:void(0)" class="email_lp button-primary" disabled="disabled" data-id="<?php echo $ProfileID ?>" id="em_<?php echo $ProfileID ?>" data-email="<?php echo $ProfileContactEmail ?>">Send Email</a></td>
 			<td>
 			  <div id="ch_<?php echo $ProfileID ?>"></div>
-			  <input id="l_<?php echo $ProfileID ?>" type="text" placeholder="Login" value="<?php echo (!empty($userlogin)) ? $userlogin : ""; ?>" /><br />
-			  <input id="p_<?php echo $ProfileID ?>" type="text" placeholder="Password" value="<?php echo (!empty($userpass)) ? $userpass : "";  ?>" />         
+			  <input id="l_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Login" value="<?php echo (!empty($userlogin)) ? $userlogin : ""; ?>" /><br />
+			  <input id="p_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Password" value="<?php echo (!empty($userpass)) ? $userpass : "";  ?>" />         
 			</td>
+			<td></td>
 		  </tr>
 		  <?php
 		}
@@ -3226,6 +3237,7 @@ function rb_display_profile_list(){
 			  <th class="column" scope="col">First Name</th>
 			  <th class="column" scope="col">Last Name</th>
 			  <th class="column" scope="col">Email Address</th>
+			  <th class="column" scope="col"></th>
 			  <th class="column" scope="col"></th>
 			  <th class="column" scope="col"></th>
 			  <th class="column" scope="col"></th>
@@ -3282,7 +3294,9 @@ function rb_display_profile_list(){
 			var login = lp_arr[0];
 			var password = lp_arr[1];
 			
-			$('#l_' + pid).val(login);
+			if($('#l_' + pid).val()==""){
+				$('#l_' + pid).val(login);
+			}
 			$('#p_' + pid).val(password);
 			$('#em_' + pid).removeAttr('disabled');
 			$('#em_' + pid).bind('click', sendEmail);
@@ -3482,16 +3496,93 @@ function register_and_send_email(){
 	// getting required fileds from rb_agency_profile
 	$profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $profileid . "'" );
 
-	// creating new user
-	$user_id = email_exists($email);
 	//if ( $user_id ) {
 		 //$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
 		//$user_id = wp_create_user( $login, $random_password, $email ); 
-		if(!is_numeric($user_id)){
+		if(!email_exists($email)){
 			
-			$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+			$random_password = $password; //wp_generate_password( 8, true );
 			$user_id = wp_create_user( $login, $random_password, $email ); 
-			wp_set_password( $password, $user_id );  
+			wp_set_password( $random_password, $user_id );  
+
+			// updating some information we have in wp_users
+			$wpdb->update( 
+					'wp_users', 
+					array( 'display_name' => $profile_row[0]->ProfileContactDisplay ), 
+					array( 'ID' => $user_id ), 
+					array( '%s' ), 
+					array( '%d' ) 
+			);
+
+			// inserting some information we have in wp_usermeta
+			update_user_meta( $user_id, 'first_name', $profile_row[0]->ProfileContactNameFirst );
+			update_user_meta( $user_id, 'last_name', $profile_row[0]->ProfileContactNameLast );
+			
+			// to store plain text login info
+			$user_info_arr = serialize(array($login,$random_password));
+			update_user_meta( $user_id, 'user_login_info', $user_info_arr);
+			
+			// linking the user ID with profile ID
+			$wpdb->update(table_agency_profile,
+				array( 'ProfileUserLinked' => $user_id ),
+				array( 'ProfileID' => $profile_row[0]->ProfileID ),
+				array( '%d' ),
+				array( '%d' )
+			);
+			add_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
+			
+			// Link WP ID to a Talent Profile
+			$wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profileid));
+
+			send_email_lp($login, $random_password, $email);
+
+			echo 'SUCCESS';
+		} else {
+			if($generate_pass){
+				      // creating new user
+					  $user_id = email_exists($email);
+					  $random_password = $password; //wp_generate_password( 8, true );
+					  add_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
+					  update_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
+				      $user = get_userdata( $user_id );
+					  wp_set_password( $random_password, $user_id );
+					  
+					  // Link WP ID to a Talent Profile
+					  $wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profileid));
+
+					  send_email_lp($user->user_login, $random_password, $email);
+
+					echo 'SUCCESS';
+			}else{
+				echo $user_id->errors['existing_user_login'][0];
+			}
+		}
+
+	/*} else {
+		echo 'The user is already registrated!';
+	}*/
+	
+	die;
+}
+
+add_action('wp_ajax_send_bulk_mail', 'bulk_register_and_send_email');
+
+function bulk_register_and_send_email(){
+	global $wpdb;
+	
+	$users_lp = $_POST['users_pl'];
+	//echo '<pre>'; print_r($users_lp);
+	
+	$success = FALSE;
+	
+	foreach($users_lp as $user_lp){ 
+		$profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactEmail, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $user_lp['pid'] . "'");
+			
+			if(!email_exists($profile_row[0]->ProfileContactEmail)){
+			
+			$random_password = wp_generate_password( 8, true );
+			$user_id = wp_create_user( $user_lp['login'], $random_password, $profile_row[0]->ProfileContactEmail ); 
+			wp_set_password( $random_password, $user_id );  
 
 			// updating some information we have in wp_users
 			$wpdb->update( 
@@ -3518,43 +3609,33 @@ function register_and_send_email(){
 				array( '%d' )
 			);
 			add_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
-			send_email_lp($login, $password, $email);
+			
+			// Link WP ID to a Talent Profile
+			$wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profileid));
 
-			echo 'SUCCESS';
+			send_email_lp($user_lp['login'], $random_password, $profile_row[0]->ProfileContactEmail);
+
+				$success = TRUE;
 		} else {
 			if($generate_pass){
-				      $random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
+				      // creating new user
+					  $user_id = email_exists($profile_row[0]->ProfileContactEmail);
+					  $random_password = wp_generate_password( 8, true );
 				      update_user_meta( $user_id, 'rb_agency_interact_profiletype',true);
+				      $user = get_userdata( $user_id );
 					  wp_set_password( $random_password, $user_id );
-					  send_email_lp($login, $random_password, $email);
+					  
+					  // Link WP ID to a Talent Profile
+					  $wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileUserLinked = %d WHERE ProfileID = %d", $user_id, $profileid));
 
-					echo 'SUCCESS';
+					  send_email_lp($user->user_login, $random_password, $profile_row[0]->ProfileContactEmail);
+
+						$success = TRUE;
 			}else{
-				echo $user_id->errors['existing_user_login'][0];
+				$success = FALSE; // $user_id->errors['existing_user_login'][0];
 			}
 		}
-
-	/*} else {
-		echo 'The user is already registrated!';
-	}*/
-	
-	die;
-}
-
-add_action('wp_ajax_send_bulk_mail', 'bulk_register_and_send_email');
-
-function bulk_register_and_send_email(){
-	global $wpdb;
-	
-	$users_lp = $_POST['users_pl'];
-	//echo '<pre>'; print_r($users_lp);
-	
-	$success = FALSE;
-	
-	foreach($users_lp as $user_lp){ 
-		$profile_row = $wpdb->get_results( "SELECT ProfileID, ProfileContactDisplay, ProfileContactNameFirst, ProfileContactNameLast FROM ". table_agency_profile ." WHERE ProfileID = '" . $user_lp['pid'] . "'");
-		
-		$user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
+/*		$user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
 		if ( !$user_id and email_exists($user_email) == false ) { 
 			$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
 			$user_id = wp_create_user( $user_lp['login'], $random_password, $user_lp['email'] ); 
@@ -3594,7 +3675,7 @@ function bulk_register_and_send_email(){
 			} else {
 				//print_r($user_id);
 			}
-		}        
+		}     */   
 	}
 	
 	if($success){
