@@ -14,7 +14,7 @@ $siteurl = get_option('siteurl');
 		$rb_agency_option_agencyheader	= $rb_agency_options_arr['rb_agency_option_agencyheader'];
 
 	// Declare Hash
-	$SearchMuxHash			=  isset($_GET["SearchMuxHash"])?$_GET["SearchMuxHash"]:""; // Set Hash
+	$SearchMuxHash			=  isset($_GET["SearchMuxHash"]) && !empty($_GET["SearchMuxHash"]) ?$_GET["SearchMuxHash"]:""; // Set Hash
 
 	if (isset($_POST['action'])) {
 

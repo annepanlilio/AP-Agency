@@ -98,7 +98,7 @@
 
 					   $wpdb->query($query);
 
-					   $link = admin_url("admin.php?page=rb_agency_castinbjobs&action=informTalent&Job_ID=".$Job_ID);
+					   $link = get_bloginfo("url")."/profile-casting/?Job_ID=".$Job_ID;
 					   
 					   RBAgency_Casting::sendEmailCastingAvailability($data["ProfileContactDisplay"],$Availability,$Job_Title,$link);
 					
