@@ -1301,6 +1301,8 @@ class RBAgency_Profile {
 
 			global $wpdb;
 
+			$sqlCasting_userID = "";
+
 			switch ($query_type) {
 
 				/* 
@@ -1330,7 +1332,7 @@ class RBAgency_Profile {
 					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
 					// } else {
 						if(current_user_can("manage_options")){
-							$sqlCasting_userID .= $wpdb->prepare("  cart.CastingCartTalentID = profile.ProfileID  AND cart.CastingJobID = %s",$_GET["Job_ID"]);
+							$sqlCasting_userID .= $wpdb->prepare("  cart.CastingCartTalentID = profile.ProfileID  AND cart.CastingJobID = %s",isset($_GET["Job_ID"])?$_GET["Job_ID"]:"");
 						}else{
 							$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = ".rb_agency_get_current_userid();
 							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
@@ -1742,10 +1744,14 @@ class RBAgency_Profile {
 			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
             $displayActions = "";  
-			if(function_exists("rb_agency_save_favorite_javascript") && is_user_logged_in()){
+			if(is_user_logged_in()){
 	            $displayActions = "<div class=\"rb_profile_tool\">";
-	            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>Favorite</span></a>&nbsp;";
-	            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>Casting Cart</span></a>";
+	            if($rb_agency_option_profilelist_favorite){
+		            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span>&nbsp;";
+		        }
+		        if($rb_agency_option_profilelist_castingcart){
+	           		 $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span>";
+	            }
 	            $displayActions .= "</div>";
 	        }
 			/* 
