@@ -1330,7 +1330,7 @@ class RBAgency_Profile {
 					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
 					// } else {
 						if(current_user_can("manage_options")){
-							$sqlCasting_userID .= $wpdb->prepare("  cart.CastingJobID = %s",$_GET["Job_ID"]);
+							$sqlCasting_userID .= $wpdb->prepare("  cart.CastingCartTalentID = profile.ProfileID  AND cart.CastingJobID = %s",$_GET["Job_ID"]);
 						}else{
 							$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = ".rb_agency_get_current_userid();
 							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
@@ -1341,10 +1341,9 @@ class RBAgency_Profile {
 					//}
 
 					// Execute the query showing casting cart
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
+					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart  WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 			}
 
-			
 			if(self::$error_debug || self::$error_debug_query){
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
@@ -1589,7 +1588,7 @@ class RBAgency_Profile {
 								$displayHtml .=  "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
 						}
 						if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
-								$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
+								$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_state_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</div>\n";
 						}
 						if (!empty($data['ProfileLocationCountry'])) {
 								$country = (rb_agency_getCountryTitle($data['ProfileLocationCountry']) != false) ? rb_agency_getCountryTitle($data['ProfileLocationCountry']):"";
