@@ -96,6 +96,16 @@
 					 	   $query = "UPDATE ".table_agency_castingcart_availability." SET CastingAvailabilityStatus = '".esc_attr($availability)."' WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'";
 					 }  
 
+					 if($availability == "available"){
+						$wpdb->get_results("SELECT * FROM ".table_agency_casting_job_application." WHERE Job_ID='".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."'");
+						$is_applied = $wpdb->num_rows;
+						if($is_applied <= 0){
+							$wpdb->query("INSERT INTO  " . table_agency_casting_job_application . " (Job_ID, Job_UserLinked) VALUES('".$Job_ID."','".$data["ProfileUserLinked"]."') ");		
+						}
+					}else{
+							$wpdb->query("DELETE FROM  " . table_agency_casting_job_application . " WHERE Job_ID = '".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."' ");		
+					}
+
 					   $wpdb->query($query);
 
 					   $link = get_bloginfo("url")."/profile-casting/?Job_ID=".$Job_ID;
