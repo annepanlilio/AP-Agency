@@ -905,40 +905,40 @@ class RBAgency {
 			add_menu_page( 
 				__("Agency", rb_agency_TEXTDOMAIN), 
 				__("Agency", rb_agency_TEXTDOMAIN), 
-				'manage_options',
+				'publish_pages',
 				"rb_agency_menu", 
 				array('RBAgency', 'menu_dashboard'),
 				"div"
 				);
 
-				add_submenu_page("rb_agency_menu", __("Overview", rb_agency_TEXTDOMAIN), __("Overview", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_menu", array('RBAgency', 'menu_dashboard'));
-				add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
+				add_submenu_page("rb_agency_menu", __("Overview", rb_agency_TEXTDOMAIN), __("Overview", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_menu", array('RBAgency', 'menu_dashboard'));
+				add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
 
 			// RB Agency Interact 
 			if(function_exists('rb_agency_interact_menu')){
 				// Menu Approve
-				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_interact_approvemembers", array('RBAgency', 'menu_interact_approvemembers'));
+				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_interact_approvemembers", array('RBAgency', 'menu_interact_approvemembers'));
 			}
 
-				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_search", array('RBAgency', 'menu_search'));
-				add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
+				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_search", array('RBAgency', 'menu_search'));
+				add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
 
 			// RB Agency Casting
 			if(function_exists('rb_agency_casting_menu')){
 				// saved search for casting
-				add_submenu_page("rb_agency_menu", __("Approve Pending Clients", rb_agency_TEXTDOMAIN), __("Approve Clients", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
+				add_submenu_page("rb_agency_menu", __("Approve Pending Clients", rb_agency_TEXTDOMAIN), __("Approve Clients", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
 
 				// saved search for casting
-				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 'manage_options',"rb_agency_casting_searchsaved", array('RBAgency', 'menu_casting_searchsaved'));
+				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 'publish_pages',"rb_agency_casting_searchsaved", array('RBAgency', 'menu_casting_searchsaved'));
 
 				// job postings
-				add_submenu_page("rb_agency_menu", __("Job Types", rb_agency_casting_TEXTDOMAIN), __("Job Types", rb_agency_casting_TEXTDOMAIN), 'manage_options',"rb_agency_casting_jobpostings", array('RBAgency', 'menu_casting_jobpostings'));
-				add_submenu_page("rb_agency_menu", __("Casting Jobs", rb_agency_TEXTDOMAIN), __("Casting Jobs", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_castingjobs", array('RBAgency', 'menu_castingjob'));
+				add_submenu_page("rb_agency_menu", __("Job Types", rb_agency_casting_TEXTDOMAIN), __("Job Types", rb_agency_casting_TEXTDOMAIN), 'publish_pages',"rb_agency_casting_jobpostings", array('RBAgency', 'menu_casting_jobpostings'));
+				add_submenu_page("rb_agency_menu", __("Casting Jobs", rb_agency_TEXTDOMAIN), __("Casting Jobs", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_castingjobs", array('RBAgency', 'menu_castingjob'));
 
 			}
 
-				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_reports", array('RBAgency', 'menu_reports'));
-				add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 'manage_options',"rb_agency_settings", array('RBAgency', 'menu_settings'));
+				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_reports", array('RBAgency', 'menu_reports'));
+				add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_settings", array('RBAgency', 'menu_settings'));
 
 		}
 
@@ -995,7 +995,7 @@ class RBAgency {
 			// Check Permissions
 			if ( !current_user_can('update_core') )
 				return;
-			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), "manage_options", "rb_agency_settings", array('RBAgency', 'menu_settings'));
+			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), "publish_pages", "rb_agency_settings", array('RBAgency', 'menu_settings'));
 		}
 
 		// Add Link to Settings Page

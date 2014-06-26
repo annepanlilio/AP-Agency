@@ -975,7 +975,7 @@
 			// All Public
 			($rb_agency_option_privacy == 0) ||
 			//admin users
-			(is_user_logged_in() && current_user_can( 'manage_options' )) ||
+			(is_user_logged_in() && current_user_can( 'publish_pages' )) ||
 			//  Must be logged as "Client" to view model list and profile information
 			($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) )
 			{
@@ -2312,7 +2312,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 					$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
 			}
 			
-		//	if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) ||  current_user_can( 'manage_options' )){
+		//	if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) ||  current_user_can( 'publish_pages' )){
 				if ($resultCustom->ProfileCustomType == 7){
 
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
@@ -4184,7 +4184,7 @@ function is_permitted($type){
 						   ($rb_agency_option_privacy == 0) ||
 							
 							//admin users
-							(current_user_can( 'manage_options' )) ||
+							(current_user_can( 'publish_pages' )) ||
 			 
 							//  Must be logged as "Client" to view model list and profile information
 							($rb_agency_option_privacy == 3 && is_client_profiletype()) ) {
@@ -4286,7 +4286,7 @@ function rb_agency_group_permission($group){
 		   global $user_ID;
 		   include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-	       if(is_user_logged_in() &&  !current_user_can("manage_options") && is_plugin_active("rb-agency-casting") ){
+	       if(is_user_logged_in() &&  !current_user_can("publish_pages") && is_plugin_active("rb-agency-casting") ){
 	       
 				    $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
 					if($group == "casting"){
@@ -4320,7 +4320,7 @@ function rb_logout_user(){
 				     $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
 				     
 
-				     if(current_user_can("manage_options")){
+				     if(current_user_can("publish_pages")){
 
 				            wp_logout();
 				     
@@ -4345,5 +4345,17 @@ function rb_logout_user(){
 			}
 }
 
+/*
+* Get RB ProfileID
+*/
+function rb_get_casting_profileid(){
+	 global $user_ID, $wpdb;
+     $data = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d ", $user_ID));
+     if($wpdb->num_rows > 0){
+	     return $data->CastingID;
+	 }else{
+	 	return false;
+	 }
+}	 
 
 ?>
