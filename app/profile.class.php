@@ -1331,17 +1331,24 @@ class RBAgency_Profile {
 					// if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
 					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
 					// } else {
-						if(current_user_can("manage_options")){
-							$sqlCasting_userID .= $wpdb->prepare("  cart.CastingCartTalentID = profile.ProfileID  AND cart.CastingJobID = %s",isset($_GET["Job_ID"])?$_GET["Job_ID"]:"");
-						}else{
-							$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = ".rb_agency_get_current_userid();
+						if(current_user_can("publish_pages")){
+							$sqlCasting_userID .= " cart.CastingCartTalentID = profile.ProfileID ";
 							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
 								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
+							}else{
+								$sqlCasting_userID .= " AND cart.CastingJobID IS NULL ";
+							}
+						}else{
+							$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID";
+							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
+								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
+								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
+							}else{
+								$sqlCasting_userID .= " AND cart.CastingJobID IS NULL ";
 							}
 						}	
 						
 					//}
-
 					// Execute the query showing casting cart
 					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart  WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 			}
@@ -1777,6 +1784,9 @@ class RBAgency_Profile {
 			 * determine profile details
 			 */
 			$displayHTML .= "  <div class=\"profile-info\">\n";
+			if(get_query_var('type') == "casting"){
+				$displayHTML .= "<input type=\"checkbox\" name=\"profileid\" value=\"".$dataList["ProfileID"]."\"/>";
+			}
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 			if ($rb_agency_option_profilelist_expanddetails) {
 				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
