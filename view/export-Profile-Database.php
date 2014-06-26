@@ -28,7 +28,7 @@ global $wpdb;
 
 	if(isset($_POST)) {
 		if($_POST['file_type'] == 'csv') { 
-			$profile_data = $wpdb->get_results("SELECT ProfileID, ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM ". table_agency_profile, ARRAY_A);
+			$profile_data = $wpdb->get_results("SELECT ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM ". table_agency_profile, ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst  FROM ". table_agency_profile, ARRAY_A);
 			$csv_output .= "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,";
 			$csv_output .= implode(',', $custom_fields_name);
@@ -44,7 +44,7 @@ global $wpdb;
 				$data_value['ProfileType'] = str_replace(","," | ",$data_value['ProfileType']);  
 				
 				$csv_output .= implode(',', $data_value);
-				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $data_value["ProfileID"]." ", ARRAY_A);
+				$subresult = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomValue FROM ". table_agency_customfield_mux ." WHERE ProfileID = ".  $profile_data_id[$key]['ProfileID']." ", ARRAY_A);
 				$temp_array = array();
 				$c_value_array = array(); 
 
@@ -107,32 +107,34 @@ global $wpdb;
 			require_once('../ext/PHPExcel/IOFactory.php');
 			$objPHPExcel = new PHPExcel();
 			$objPHPExcel->setActiveSheetIndex(0);
-			$rowNumber = 0;
+			$rowNumber = 1;
 			/*Getting headers*/
 			$headings = array();
             $headings = array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive');
             $head_count = count($headings);
             foreach ($custom_fields_name as $key => $value) {
-            	$headings[$head_count] = $value;
-            	$head_count++;
+            	if($value != "ProfileID"){
+	            	$headings[$head_count] = $value;
+	            	$head_count++;
+	            }
             }
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
 			/*Profile data*/
 			$row_data = array();
-			$row_data = $wpdb->get_results('SELECT ProfileID, ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile, ARRAY_A);
+			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile, ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
 
 			foreach ($row_data as $key => $data) 
 			{
 				$rowNumber++;
+
 				//$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
 				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $data['ProfileID'], ARRAY_A);
-
-				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = ".$data['ProfileGender'], ARRAY_A);
+				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = '".$data['ProfileGender']."'", ARRAY_A);
                 $data['ProfileContactNameFirst'] = stripcslashes(stripcslashes($data['ProfileContactNameFirst']));
 				$data['ProfileContactNameLast'] = stripcslashes(stripcslashes($data['ProfileContactNameLast']));
 				$data['ProfileContactDisplay'] = stripcslashes(stripcslashes($data['ProfileContactDisplay']));
-				$data['ProfileGender'] =$gender['GenderTitle'];
+				$data['ProfileGender'] = $gender['GenderTitle'];
 				$data['ProfileLocationCountry'] = rb_agency_getCountryTitle($data['ProfileLocationCountry'],true); // returns country code
 				$data['ProfileLocationState'] = rb_agency_getStateTitle($data['ProfileLocationState'],true); // returns state code
 				$data['ProfileType'] = str_replace(","," | ",$data['ProfileType']);
@@ -184,12 +186,14 @@ global $wpdb;
 						
 						}
                     }
-                    $data = array_merge($data, $c_value_array);
-                    $objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
-			    }	
 
-			 		
+                         $data = array_merge($data, $c_value_array);
+                         unset($data['ProfileID']);
+                      
+                        $objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);	
+	            }	
 			  
+
 				
 			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 			$objWriter->save(str_replace('.php', '.xls', __FILE__));
