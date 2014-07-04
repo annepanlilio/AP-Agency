@@ -1952,7 +1952,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				$isTextArea ="textarea-field"; 
 			}
 		echo "  <tr valign=\"top\" class=\"".$isTextArea."\">\n";
-		echo "    <th scope=\"row\"><div class=\"box\" data-raw=\"".$ProfileCustomValue."\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
+		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
 		echo "    <td>\n";		  
 		  
 			if ($ProfileCustomType == 1) { //TEXT
@@ -2023,7 +2023,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						echo "</select>\n";
 				}
 			} elseif ($ProfileCustomType == 4) {
-					echo "<textarea style=\"width: 100%; min-height: 300px;\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">". $ProfileCustomValue ."</textarea>";
+					echo "<textarea style=\"width: 100%; min-height: 300px;\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">". stripslashes($ProfileCustomValue) ."</textarea>";
 			} elseif ($ProfileCustomType == 5) {
 				echo "<fieldset>";
 				$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
