@@ -613,16 +613,16 @@ if (isset($_POST['action'])) {
 								}
 
 								//---------- Delete users but re-assign to Admin User -------------//
-						// Gimme an admin:
-						$AdminID = $wpdb->prepare("SELECT $wpdb->users.ID FROM $wpdb->users WHERE user_login = %s","admin");
-						if ($AdminID > 0) {
+								// Gimme an admin:
+								/*$AdminID = $wpdb->prepare("SELECT $wpdb->users.ID FROM $wpdb->users WHERE user_login = %s","admin");
+								if ($AdminID > 0) {
 
-						} else {
-							$AdminID = 1;
-						}
-						/// Now delete
-						wp_delete_user($dataDelete["ProfileUserLinked"], $AdminID);
-						} // is there record?
+								} else {
+									$AdminID = 1;
+								}*/
+								/// Now delete
+								wp_delete_user($dataDelete["ProfileUserLinked"]);
+						} // foreach || is there record?
 				} // is numeric
 			}
 			if($profiles_count >  1){
