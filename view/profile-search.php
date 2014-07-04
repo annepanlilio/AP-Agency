@@ -88,7 +88,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 			} else {
 				include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
 				if(function_exists('rb_agency_interact_menu')){
-					include("theme/include-login.php");
+					include(rb_agency_interact_BASEREL . "theme/include-login.php");
 				} else {
 					rb_loginform(rb_current_url());
 				}

@@ -879,10 +879,10 @@ class RBAgency_Common {
 		public static function rb_agency_embed_soundcloud($url){
 				$display = "";
 				$display .= "<object height=\"81\" width=\"100%\">";
-				$display .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".trim($url)."\"></param>";
+				$display .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".$url."\"></param>";
 				$display .=  "<param name=\"allowscriptaccess\" value=\"always\"></param>";
 				$display .=  "<embed";
-				$display .=  "src=\"http://player.soundcloud.com/player.swf?&url=".trim($url)."\"";
+				$display .=  "src=\"http://player.soundcloud.com/player.swf?&url=".$url."\" ";
 				$display .=  "allowscriptaccess=\"always\" height=\"81\"  type=\"application/x-shockwave-flash\" width=\"100%\">";
 				$display .=  "</embed>";
 				$display .=  "</object>";

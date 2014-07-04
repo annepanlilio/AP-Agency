@@ -1297,7 +1297,7 @@ class RBAgency_Profile {
 	 * Process Search and return Profile IDs
 	 */
 
-		public static function search_results($sql_where, $query_type = 0){
+		public static function search_results($sql_where, $query_type = 0, $castingcart = false){
 
 			global $wpdb;
 
@@ -1365,7 +1365,7 @@ class RBAgency_Profile {
 				return self::search_result_admin($sql);
 			} else {
 				
-				return self::search_result_public($sql);
+				return self::search_result_public($sql, $castingcart);
 
 			}
 
@@ -1374,7 +1374,7 @@ class RBAgency_Profile {
 	/* 
 	 * search for public 
 	 */
-		public static function search_result_public($sql){
+		public static function search_result_public($sql, $castingcart = ''){
 
 			global $wpdb;
 			/* 
@@ -1427,9 +1427,20 @@ class RBAgency_Profile {
 				foreach ($favorites_results  as $key) {
 					array_push($arr_favorites, $key->SavedFavoriteTalentID);
 				}
-				
 				foreach($results as $profile) {
-					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart);
+					$availability = '';
+				
+					if(!empty($castingcart) && isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
+						 $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+						$prepared = $wpdb->prepare($query,$profile["ProfileID"],$_GET["Job_ID"]);
+						$data = $wpdb->get_row($prepared);
+						$count2 = $wpdb->num_rows;
+						if($count2 >= 1){
+							$availability = $data->status;
+						}
+					}
+						
+					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart, $availability );
 				}
 
 				if(self::$error_debug){
@@ -1724,7 +1735,7 @@ class RBAgency_Profile {
 		 * Format Profile
 		 * Create list from IDs
 		 */
-		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array()){
+		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = ''){
 
 			/* 
 			 * rb agency options
@@ -1760,6 +1771,15 @@ class RBAgency_Profile {
 	           		 $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span>";
 	            }
 	            $displayActions .= "</div>";
+				
+				if(!empty($casting_availability)){
+						 if($casting_availability == 'available'){
+							 $displayActions .= "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
+						 }else{
+							 $displayActions .= "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
+						 }
+				}
+				
 	        }
 			/* 
 			 * determine primary image

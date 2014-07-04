@@ -118,7 +118,7 @@ echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<div id=\"photos\" class=\"lightbox-enabled\">\n";
 	                 if($subview == ""){
 						// images
-						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
+						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType IN(\"Image\",\"Headshot\")  AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
 						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){

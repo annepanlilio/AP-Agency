@@ -1519,7 +1519,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$outLinkResume .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
-									$outLinkHeadShot .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
+									$outLinkHeadShot .= "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=120&h=120\" /><br/><span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
 									$outLinkComCard .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								} else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
@@ -1556,21 +1556,21 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo $outLinkResume;
 								echo '</div>';
 							   endif;
-							   if(!empty($outLinkHeadShot)):
-								echo '<div class="media-file">';
-								echo $outLinkHeadShot;
-								echo '</div>';
-							   endif;
+							   
 							   if(!empty($outLinkComCard)):
 								echo '<div class="media-file">';
 								echo $outLinkComCard;
 								echo '</div>';
 							   endif;
 							   if(!empty($outCustomMediaLink)):
-								echo '<div class="media-file">';
 								echo $outCustomMediaLink;
-								echo '</div>';
 								endif;
+
+								if(!empty($outLinkHeadShot)):
+								echo '<div class="media-file" style="height: 100%;">';
+								echo $outLinkHeadShot;
+								echo '</div>';
+							   endif;
 							
 							echo '</div>';
 							if(!empty($outSoundCloud)):
@@ -1611,7 +1611,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if(isset($errorValidation['profileMedia'])){ echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['profileMedia']."</p>\n";} 
 								echo "<table class=\"rbform-table\">";
 								for ($i = 1; $i < 10; $i++) {
-									echo "<tr><th colspan=\"2\">Type:</th></tr><tr><td><select name=\"profileMedia" . $i . "Type\"><option value=\"Image\">Image</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>";
+									echo "<tr><th colspan=\"2\">Type:</th></tr><tr><td><select name=\"profileMedia" . $i . "Type\"><option value=\"\">--Please Select--</option><option value=\"Image\">Photo</option><option value=\"Headshot\">Headshot</option><option value=\"CompCard\">Comp Card</option><option value=\"Resume\">Resume</option><option value=\"VoiceDemo\">Voice Demo</option><option value=\"Polaroid\">Polaroid</option>";
 									rb_agency_getMediaCategories($ProfileGender);
 									echo"</select></td><td><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></td></tr>\n";
 								}
