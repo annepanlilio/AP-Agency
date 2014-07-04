@@ -8,7 +8,7 @@ Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
 Version: 2.0.9.4
 */
-$rb_agency_VERSION = "2.0.9.3";
+$rb_agency_VERSION = "2.0.9.4";
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
@@ -380,6 +380,8 @@ class RBAgency {
 					MediaCategoryTitle VARCHAR(255),
 					MediaCategoryGender VARCHAR(255),
 					MediaCategoryOrder VARCHAR(255),
+					MediaCategoryLinkType VARCHAR(255),
+					MediaCategoryFileType VARCHAR(255),
 					PRIMARY KEY (MediaCategoryID)
 					);";
 				dbDelta($sql);
@@ -934,6 +936,7 @@ class RBAgency {
 				// job postings
 				add_submenu_page("rb_agency_menu", __("Job Types", rb_agency_casting_TEXTDOMAIN), __("Job Types", rb_agency_casting_TEXTDOMAIN), 'publish_pages',"rb_agency_casting_jobpostings", array('RBAgency', 'menu_casting_jobpostings'));
 				add_submenu_page("rb_agency_menu", __("Casting Jobs", rb_agency_TEXTDOMAIN), __("Casting Jobs", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_castingjobs", array('RBAgency', 'menu_castingjob'));
+				add_submenu_page("rb_agency_menu", __("Casting Calendar", rb_agency_TEXTDOMAIN), __("Casting Calendar", rb_agency_TEXTDOMAIN), 'publish_pages',"rb_agency_castingcalendar", array('RBAgency', 'menu_castingcalendar'));
 
 			}
 
@@ -982,6 +985,9 @@ class RBAgency {
 
 		public static function menu_casting_jobpostings(){
 			rb_agency_casting_jobpostings();
+		}
+		public static function menu_castingcalendar(){
+			 rb_agency_casting_calendar();
 		}
 
 
