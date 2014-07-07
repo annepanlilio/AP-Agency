@@ -102,7 +102,7 @@
 			function form($instance) {
 				$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
 				$title = esc_attr($instance['title']);
-				$showlayout = esc_attr($instance['showlayout']);
+				$showlayout = isset($instance['showlayout']) ? esc_attr($instance['showlayout']):"";
 				?>
 					<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
 					<p><label for="<?php echo $this->get_field_id('showlayout'); ?>"><?php _e('Type:'); ?> <select id="<?php echo $this->get_field_id('showlayout'); ?>" name="<?php echo $this->get_field_name('showlayout'); ?>"><option value="advanced" <?php selected($showlayout, "advanced"); ?>>Advanced Search</option><option value="condensed" <?php selected($showlayout, "condensed"); ?>>Condensed Search</option></select></label></p>
