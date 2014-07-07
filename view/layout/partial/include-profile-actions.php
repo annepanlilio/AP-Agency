@@ -54,14 +54,14 @@ echo "					<ul>\n";
 							}
 
 						// Headshots
-							/*$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
+							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsImg as $dataMedia ){
 									echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Headshot</a></li>\n";
 								}
-							}*/
+							}
 
 						//Voice Demo
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"VoiceDemo");
