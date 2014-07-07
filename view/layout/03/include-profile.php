@@ -370,18 +370,26 @@ echo " 							<div class=\"tab-panel\">\n";
 								  	}
 
 									echo '<ul>';
-									echo '<li>';
-									echo $outLinkVoiceDemo;
-									echo '</li>';
-									echo '<li>';
-									echo $outLinkResume;
-									echo '</li>';
-									echo '<li>';
-									echo $outLinkHeadShot;
-									echo '</li>';
-									echo '<li>';
-									echo $outLinkComCard;
-									echo '</li>';
+									if(!empty($outLinkVoiceDemo)){
+										echo '<li>';
+										echo $outLinkVoiceDemo;
+										echo '</li>';
+									}
+									if(!empty($outLinkResume)){
+										echo '<li>';
+										echo $outLinkResume;
+										echo '</li>';
+									}
+									if(!empty($outLinkHeadShot)){
+										echo '<li>';
+										echo $outLinkHeadShot;
+										echo '</li>';
+									}
+									if(!empty($outLinkComCard)){
+										echo '<li>';
+										echo $outLinkComCard;
+										echo '</li>';
+									}
 									echo '</ul>';
 echo " 							</div>\n"; // .tab-panel
 echo " 						</div>\n"; // Download Tab
