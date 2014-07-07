@@ -1415,7 +1415,10 @@ class RBAgency_Profile {
 			$all_html .= "	<hr />";
 			if ($count > 0){
 				
-				$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
+				$castingcart_results = array();
+				if(defined("table_agency_castingcart")){
+					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
+				}
 				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
 				
 				$arr_castingcart = array();
