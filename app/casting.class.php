@@ -562,7 +562,7 @@ class RBAgency_Casting {
 			$MassEmailMessage	= "Hi, \n\n".$Talents_Display_Name." has changed the job availability to \"".$Availability."\" for the job \"".$Job_Name."\"."
 								 . "\nClick here to review your casting cart: ".$link
 								 .  "\n\n-".get_bloginfo("name");
-			$isSent = wp_mail("champ.kazban25@gmail.com", get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
+			$isSent = wp_mail(get_bloginfo('admin_email'), get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
 			
 	}
 
