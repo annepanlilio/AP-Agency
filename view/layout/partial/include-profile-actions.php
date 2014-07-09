@@ -59,7 +59,7 @@ echo "					<ul>\n";
 							$countMedia = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsImg as $dataMedia ){
-									echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Headshot</a></li>\n";
+									echo "<li class=\"item headshot\"><a href=\"".rb_agency_BASEDIR."ext/forcedownload.php?file=".  $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Headshot</a></li>\n";
 								}
 							}
 

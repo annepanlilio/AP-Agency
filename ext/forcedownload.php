@@ -1,9 +1,14 @@
 <?php
 if(isset($_GET['file'])){
     //Please give the Path like this
-    $file = $_GET['file'];
+    $dir = str_replace("ext","",dirname(__FILE__));
+    $dir = str_replace("rb-agency","",$dir);
+    $dir = str_replace("plugins","uploads\profile-media\\",$dir);
+    $dir = str_replace("//","",$dir);
+    $dir = str_replace("\\","/",$dir);
+    $file = $dir.$_GET['file'];
 
-    if (file_exists($file)) {
+   if (file_exists($file)) {
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename='.basename($file));
@@ -16,6 +21,8 @@ if(isset($_GET['file'])){
         flush();
         readfile($file);
         exit;
-    }
+   }
+   
+ 
 }
 ?>
