@@ -44,7 +44,7 @@ echo "					<ul>\n";
 							}
 
 						// Comp Card
-							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Comp Card");
+							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CompCard");
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia = $wpdb->num_rows;
 							if ($countMedia > 0) {
