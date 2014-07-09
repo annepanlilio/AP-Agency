@@ -35,6 +35,7 @@ body:after {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
+  max-width: inherit!important;
 }
 /* line 32, ../sass/lightbox.sass */
 .lightbox a img {
