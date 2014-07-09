@@ -24,6 +24,9 @@ echo "					<ul>\n";
 								
 							}
 
+						}
+						// Polaroid
+						
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg  = $wpdb->num_rows;
@@ -32,7 +35,6 @@ echo "					<ul>\n";
 								echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
 							    echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
 							}
-						}
 						// Resume
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
