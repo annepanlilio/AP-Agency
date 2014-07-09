@@ -99,6 +99,17 @@ echo "	  					<div id=\"stats\">\n";
 									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);    
 echo "	  						</ul>\n";
 echo "	  					</div>\n"; // #stats
+echo "			    <div id=\"soundcloud\">";
+						$querySC = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"SoundCloud\" ORDER BY $orderBy";
+						$resultsSC=  $wpdb->get_results($wpdb->prepare($querySC, $ProfileID),ARRAY_A);
+						$countSC  = $wpdb->num_rows;
+						if($countSC > 0){
+							echo "<h3>SoundCloud</h3>";
+							foreach( $resultsSC as $dataSC ){
+								echo RBAgency_Common::rb_agency_embed_soundcloud($dataSC['ProfileMediaURL']);
+							}
+						}
+echo "				</div>";
 echo "	  				</div>\n"; // .rbcol-6
 
 echo "					<div class=\"rbcol-6 rbcolumn\">\n";
