@@ -49,7 +49,7 @@ echo "					<ul>\n";
 							$countMedia = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsImg as $dataMedia ){
-									echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Comp Card</a></li>\n";
+									echo "<li class=\"item compcard\"><a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download Comp Card</a></li>\n";
 								}
 							}
 
