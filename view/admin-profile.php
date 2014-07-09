@@ -414,7 +414,7 @@ if (isset($_POST['action'])) {
 																$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSWord/RTF/Image files only",rb_agency_TEXTDOMAIN)."</i></b><br />";
 																$have_error = true;
 															}
-														} else if ($uploadMediaType == "Compcard") {
+														} else if ($uploadMediaType == "CompCard") {
 															// Add to database
 															if ($_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
 																$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
@@ -1521,12 +1521,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$outLinkResume .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 									$outLinkHeadShot .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=120\" /><br/><span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></div>\n";
-								} elseif ($dataMedia['ProfileMediaType'] == "Polaroid") {
-									$outLinkPolaroid .= "<div media-type=\"polaroid\" style=\"float: left; width: 120px; text-align: center; padding: 10px; \"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=120\" /><br/><span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></div>\n";
-								} elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
-									$outLinkComCard .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
-								} else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
-										 $custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
+								} elseif ($dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
+									$outLinkPolaroid .= "<div media-type=\"".$dataMedia['ProfileMediaType'] ."\" style=\"float: left; width: 120px; text-align: center; padding: 10px; \"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=120\" /><br/><span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></div>\n";
+								}else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
+									 $custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
 									$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
 									 $custom_media_type = $custom_media_info[2];
 									   $custom_media_id = $custom_media_info[4];
@@ -1565,6 +1563,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo $outLinkComCard;
 								echo '</div>';
 							   endif;
+
 							   if(!empty($outCustomMediaLink)):
 								echo $outCustomMediaLink;
 								endif;
