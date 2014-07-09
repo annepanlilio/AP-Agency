@@ -213,9 +213,8 @@ $siteurl = get_option('siteurl');
 
 								<?php
 										   
-								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
-								$results = $wpdb->get_results($wpdb->prepare($query,$cartString), ARRAY_A);
-
+								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") ORDER BY ProfileContactNameFirst ASC";
+								$results = $wpdb->get_results($query, ARRAY_A);
 								$count = $wpdb->num_rows;
 
 								
