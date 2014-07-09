@@ -218,7 +218,7 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 					<?php 
 					
 					$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
-					$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+					$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 					$countImg  = $wpdb->num_rows;
 						
 					 if($countImg>0){?>
@@ -240,7 +240,7 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 <?php } else if ($subview=="print-polaroids"){  //show print options
 
 				$queryImg = rb_agency_option_galleryorder_query($orderBy ,$ProfileID,"Polaroid");
-				$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 				$countImg  = $wpdb->num_rows;
 				foreach($resultsImg as $dataImg ){
 					if($_POST[$dataImg['ProfileMediaID']]==1){
