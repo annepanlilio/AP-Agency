@@ -1,6 +1,4 @@
 <?php
-
-session_start();
 echo $rb_header = RBAgency_Common::rb_header();
 global $wpdb;
 // Profile Class
