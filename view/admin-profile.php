@@ -1263,7 +1263,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$ProfileGender1 = get_user_meta(isset($ProfileUserLinked)?$ProfileUserLinked:0, "rb_agency_interact_pgender", true);
 
 							if($ProfileGender==""){
-								$ProfileGender = $_GET["ProfileGender"];
+								$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"";
 							}elseif($ProfileGender1!=""){
 								$ProfileGender =$ProfileGender1 ;
 							}
