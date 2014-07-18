@@ -4511,6 +4511,8 @@ function rb_redirect_logout(){
  */
 function rb_logout_user(){
 	 global $user_ID;
+	   include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
 	       if(is_user_logged_in()){
 	       
 				     $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
@@ -4530,11 +4532,16 @@ function rb_logout_user(){
 					   if($rb_agencyinteract_option_redirect_custom_login == 2){
 					   		 wp_safe_redirect(get_bloginfo("url"));
 					   }else{
-						   if(!empty($is_model )){
-						   	   wp_safe_redirect(get_bloginfo("url")."/profile-login/");
-						   }else{
-						   	  	 wp_safe_redirect(get_bloginfo("url")."/casting-login/");
-						   }
+						   	 if(is_plugin_active("rb-agency-casting")){
+							   if(!empty($is_model )){
+							   	     wp_safe_redirect(get_bloginfo("url")."/profile-login/");
+							   }else{
+							   	  	 wp_safe_redirect(get_bloginfo("url")."/casting-login/");
+							   }
+							}else{
+								 	wp_safe_redirect(get_bloginfo("url")."/profile-login/");
+							   
+							}
 						}
 					}
 					
