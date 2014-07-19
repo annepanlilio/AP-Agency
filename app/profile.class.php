@@ -1331,7 +1331,7 @@ class RBAgency_Profile {
 					// if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
 					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
 					// } else {
-						if(current_user_can("publish_pages")){
+						if(current_user_can("edit_posts")){
 							$sqlCasting_userID .= " cart.CastingCartTalentID = profile.ProfileID ";
 							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
 								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);

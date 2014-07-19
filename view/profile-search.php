@@ -24,7 +24,7 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 		($rb_agency_option_privacy == 0) ||
 
 		//admin users
-		(is_user_logged_in() && current_user_can( 'publish_pages' )) ||
+		(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 
 		//  Must be logged as "Client" to view model list and profile information
 		($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
