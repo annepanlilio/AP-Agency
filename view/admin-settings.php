@@ -633,6 +633,14 @@ elseif ($ConfigID == 11) {
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_custom_login]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:"", 0,false)."/> ". __("Redirect to /profile-login/", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_custom_login]\" value=\"2\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:"", 2,false)."/> ". __("Redirect to homepage", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Redirect first time users', rb_agency_interact_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time']:"", 1,false)."/> ". __("Redirect to /profile-member/account/", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time']:"", 0,false)."/> ". __("Redirect to custom( e.g. /welcome/ ):", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
+		echo "	   <input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url']:"")."\"/>	";
+		echo "   </td>\n";
+		echo " </tr>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Switch Sidebar', rb_agency_interact_TEXTDOMAIN) ."</th>\n";
@@ -641,6 +649,8 @@ elseif ($ConfigID == 11) {
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_switch_sidebar]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar']:"", 0,false)."/> ". __("Use theme widget sidebar", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+
+		
 
 
 		echo " <tr valign=\"top\">\n";
