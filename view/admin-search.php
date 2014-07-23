@@ -89,7 +89,7 @@
 	 * Display Cart
 	 */
 
-		if (isset($_SESSION['cartArray']) || isset($_GET["action"]) && $_GET["action"] == "cartAdd") {
+		if (isset($_SESSION['cartArray']) || isset($_GET["action"]) && $_GET["action"] == "cartAdd" && $_GET["action"] !== "massEmail") {
 
 			echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 			echo " <div class=\"boxblock\">\n";
