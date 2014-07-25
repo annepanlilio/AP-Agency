@@ -94,11 +94,17 @@ class RBAgency_Profile {
 							if(window.getComputedStyle){
 								var camel = function(a,b){return b.toUpperCase();}
 								st = window.getComputedStyle(el, null);
-								for(var s=0; s < st.length; s++){
-									var css_style = st[s];
-									var cml = css_style.replace(/\-([a-z])/, camel);
-									var vl = st.getPropertyValue(css_style);
-									returns[cml] = vl;
+								try{
+						
+									for(var s=0; s < st.length; s++){
+										var css_style = st[s];
+										var cml = css_style.replace(/\-([a-z])/, camel);
+										var vl = st.getPropertyValue(css_style);
+										returns[cml] = vl;
+									}
+									
+								}catch(e){
+
 								}
 								return returns;
 							}
@@ -1347,12 +1353,15 @@ class RBAgency_Profile {
 								}
 								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
 							}else{
-								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
-							
+								$uid = rb_agency_get_current_userid();
+								if($uid > 0){
+									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
+								}
 							}
 						}	
 						
 					//}
+
 					// Execute the query showing casting cart
 					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay,profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart  WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
 			}

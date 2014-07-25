@@ -64,11 +64,15 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 			if(window.getComputedStyle){
 				var camel = function(a,b){return b.toUpperCase();}
 				st = window.getComputedStyle(el, null);
-				for(var s=0; s < st.length; s++){
-					var css_style = st[s];
-					var cml = css_style.replace(/\-([a-z])/, camel);
-					var vl = st.getPropertyValue(css_style);
-					returns[cml] = vl;
+				try{
+					for(var s=0; s < st.length; s++){
+						var css_style = st[s];
+						var cml = css_style.replace(/\-([a-z])/, camel);
+						var vl = st.getPropertyValue(css_style);
+						returns[cml] = vl;
+					}
+				}catch(e){
+					
 				}
 				return returns;
 			}
