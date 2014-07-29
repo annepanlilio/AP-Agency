@@ -1516,11 +1516,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 									}
 			 					} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
-									$outLinkVoiceDemo .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
+									$outLinkVoiceDemo .= "<a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a><br /><span>" . $dataMedia['ProfileMediaType'] . ": </span><a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
-									$outLinkResume .= "<span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
+									$outLinkResume .= "<a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>" . $dataMedia['ProfileMediaType'] . ": </span><a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
-									$outLinkHeadShot .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=120\" /><br/><span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></div>\n";
+									$outLinkHeadShot .= "<div class=\"headshot\"><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=120&h=120\" /></a><br/><span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
 									$outLinkPolaroid .= "<div media-type=\"".$dataMedia['ProfileMediaType'] ."\" style=\"float: left; width: 120px; text-align: center; padding: 10px; \"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=120\" /><br/><span>" . $dataMedia['ProfileMediaType'] . ": </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></div>\n";
 								}else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
@@ -1548,18 +1548,18 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							}
 							echo '<div class="media-files">';
 							  if(!empty($outLinkVoiceDemo)):
-								echo '<div class="media-file">';
+								echo '<div class="media-file voice-demo">';
 								echo $outLinkVoiceDemo;
 								echo '</div>';
 							   endif;
 							   if(!empty($outLinkResume)):
-								echo '<div class="media-file">';
+								echo '<div class="media-file resume">';
 								echo $outLinkResume;
 								echo '</div>';
 							   endif;
 							   
 							   if(!empty($outLinkComCard)):
-								echo '<div class="media-file">';
+								echo '<div class="media-file com-card">';
 								echo $outLinkComCard;
 								echo '</div>';
 							   endif;
@@ -1569,13 +1569,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								endif;
 
 								if(!empty($outLinkHeadShot)):
-								echo '<div class="media-file" style="height: 100%;">';
+								echo '<div class="media-file headshots">';
 								echo $outLinkHeadShot;
 								echo '</div>';
 							   endif;
 
 							   if(!empty($outLinkPolaroid)):
-								echo '<div class="media-file" style="height: 100%;">';
+								echo '<div class="media-file polaroid">';
 								echo $outLinkPolaroid;
 								echo '</div>';
 							   endif;
