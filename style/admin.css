@@ -153,16 +153,12 @@ input.stubby { width: 80px; }
 .postbox .rbform-table td input[type=""] { width: 30%; }
 #dashboard_public_information td label.dropdown { display: none; }
 #dashboard_upload_images td input[type="file"] { width: 100%; }
-#dashboard_media .media-files .media-file { float: left; width: 120px; height: 142px; padding: 10px; margin: 0px 3px 5px 3px; background: #eee; border: 1px solid #ddd; }
+#dashboard_media .media-files .media-file { float: left; width: 120px; height: 150px; padding: 5px 10px; margin: 0px 3px 5px 3px; background: #eee; border: 1px solid #ddd; }
 #dashboard_media .media-files .media-file:hover { background: #ddd; }
-#dashboard_media .media-files .media-file span { font-weight: bold; }
-#dashboard_media .media-files .media-file a.delete-file { display: inline-block; text-indent: -50px; width: 19px; height: 17px; background-image: url(delete-file.jpg); background-repeat: no-repeat; vertical-align: top; margin-left: 5px; overflow: hidden; }
-#dashboard_media .media-files .media-file a.delete-file:hover { background-position: 0px -17px; }
-#dashboard_media .media-files .media-file a.link-icon { float: left; width: 120px; height: 120px; margin-bottom: 4px; background-position: center center; background-repeat: no-repeat; background-color: #fff; font-size: 0px; }
+#dashboard_media .media-files .media-file a.link-icon { float: left; width: 120px; height: 108px; margin-bottom: 4px; background-position: center center; background-repeat: no-repeat; background-color: #fff; font-size: 0px; }
 #dashboard_media .media-files .media-file.voice-demo a.link-icon { background-image: url(admin-mp3.png); }
 #dashboard_media .media-files .media-file.resume a.link-icon { background-image: url(admin-pdf.png); }
 #dashboard_media .media-files .media-file.headshots { width: auto; height: auto; overflow: hidden; padding: 10px 5px; }
-#dashboard_media .media-files .media-file.headshots .headshot { float: left; margin: 0px 5px; }
 input[type=checkbox], input[type=radio] { width: 12px!important; height: 15px!important; }
 input[type=radio]:checked:before { margin-bottom: 2px!important; }
 
