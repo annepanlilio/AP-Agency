@@ -101,17 +101,11 @@ echo "				</div>\n"; // #profile-info
 echo "			</div>\n";  // .rbcol-5
 
 echo "			<div class=\"rbcol-3 rbcolumn\">\n";
-echo "				<div id=\"links\">\n";
-
-
 					/*
 					 * Include Action Icons
 					 */
 
 						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
-
-
-echo "				</div>\n";  // #links
 echo "			</div>\n";  // .rbcol-8
 
 echo "			<div class=\"rbcol-12 rbcolumn\">\n";

@@ -106,11 +106,9 @@
 	padding: 3px;
 }
 
+
 /* Profile Results Casting */
-.favorite-casting {
-	padding: 5px;
-	overflow: hidden;
-}
+
 .favorite-casting .castingcart {
   float:right;
 }
@@ -348,6 +346,7 @@ img.fillheight {
 #profile-sidebar a:hover { color: #2F617F; }  
 #profile-sidebar ul { margin: 0; padding: 0; }
 #profile-sidebar ul li { list-style: none; }
+#profile-links a { text-decoration: none; }
 
 /* Profile View */
 #rbprofile #info-links h2 { padding: 15px 0px; margin: 15px 0px 0px 0px; font-size: initial; }
@@ -461,7 +460,6 @@ img.fillheight {
   .rbcolumn:before, .rbcolumn:after { content: ""; display: table; }
   .rbcolumn:after, { clear: both; }
 }
-
 
 #rbprofile-11 .image{
 width: 145px;
