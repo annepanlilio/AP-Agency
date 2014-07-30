@@ -23,7 +23,7 @@
 	clear: both;
 	width: 100%;
 	max-width: 500px;
-	padding: 10px 0px;	
+	padding: 5px 0px;	
 }
 .rbform.form-admin .rbfield {
 	max-width: 100%;
@@ -89,13 +89,21 @@
 	float: right;
 }
 .rbform .rbfield.rbsubmit {
+	padding: 15px 0px;
 	text-align: center;
+}
+.rbform .rbfield.rbsubmit input {
+	margin-bottom: 10px;
 }
 
 /* Widget RBForm */
 .widget .rbform .rbfield > label,
 .widget .rbform .rbfield > legend {
 	width: 40%;
+}
+.widget .rbform .rbfield > legend {
+	font-weight: normal;
+	color: inherit;
 }
 .widget .rbform .rbfield > div {
 	width: 60%;
