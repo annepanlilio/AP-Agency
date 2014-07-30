@@ -64,6 +64,7 @@
  */
 
 	add_action('wp_head', 'rb_agency_inserthead');
+
 		// Call Custom Code to put in header
 		function rb_agency_inserthead() {
 			// Ensure we are NOT in the admin section of wordpress
@@ -75,20 +76,15 @@
 
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-formstyle' );
+			}
 
+			add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
 
-		}
-
-		add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
-
-		function rb_agency_insertscripts() {
-			if( !is_admin() ) {
-				if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
-					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
-				}
-
-			
-
+			function rb_agency_insertscripts() {
+				if( !is_admin() ) {
+					if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
+						wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
+					}
 				}
 			}
 		}
@@ -2513,17 +2509,17 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1 || $resultCustom->ProfileCustomOptions == 3){
-							$label = "(cm)";
+							$label = "cm";
 						} elseif($resultCustom->ProfileCustomOptions == 2){
-							$label = "(kg)";
+							$label = "kg";
 						}
 					} elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
 						if($resultCustom->ProfileCustomOptions == 1){
-							$label = "(in)";
+							$label = "in";
 						} elseif($resultCustom->ProfileCustomOptions == 2){
-							$label = "(lbs)";
+							$label = "lbs";
 						} elseif($resultCustom->ProfileCustomOptions == 3){
-							$label = "(ft/in)";
+							$label = "ft/in";
 						}
 					}
 					$measurements_label = "<span class=\"label options-".$resultCustom->ProfileCustomOptions."\">". $label ."</span>";
@@ -2539,11 +2535,11 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 									$heightraw = $resultCustom->ProfileCustomValue; 
 									$heightfeet = floor($heightraw/12); 
 									$heightinch = $heightraw - floor($heightfeet*12);
-									$resultCustom->ProfileCustomValue =  $heightfeet." ft ".$heightinch." in ";
+									$resultCustom->ProfileCustomValue = $heightfeet." ft ".$heightinch." in ";
 						}
-						$display .= "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>".$resultCustom->ProfileCustomValue."</li>\n";
+						$display .= "<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue."</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 2){ // kg
-						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 1){ 
 						if( $rb_agency_option_unittype == 1 ){//cm/in
 									$heightraw = $resultCustom->ProfileCustomValue; 
@@ -2551,15 +2547,15 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 									$resultCustom->ProfileCustomValue = (int)$heightfeet;
 						}
 						
-						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} else {
-						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
 					}
 				} else {
 					if ($resultCustom->ProfileCustomType == 4){
-						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
 					} else {
-						$display .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
 			//}
@@ -2758,14 +2754,11 @@ function rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $Prof
 				
 				// Lets not do this...
 				$measurements_label = "";
-			 if ($resultCustom->ProfileCustomTitle == 'Experience(s)'){
-				if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
-					
+			 	if ($resultCustom->ProfileCustomTitle == 'Experience(s)'){
+					if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){					
 						echo "<li><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
-					
-				  
-				}  	
-			 }
+					}  	
+			 	}
 			}
 		}
 	} 
@@ -2814,17 +2807,17 @@ function rb_agency_getProfileCustomFieldsEcho($ProfileID, $ProfileGender,$exclud
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
 						$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-					   echo "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>".$heightfeet."ft ".$heightinch." in</span></li>\n";
+					   	echo "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>".$heightfeet."ft ".$heightinch." in</span></li>\n";
 					} else {
-						echo  "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
+						echo "<li><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
 					}
 				} else {
-				   if($echo!="dontecho"){  // so it wont exit if PDF generator request info
-						if($resultCustom->ProfileCustomTitle.$measurements_label=="Experience"){return "";}
-					
-					echo "<li id='". $resultCustom->ProfileCustomTitle .$measurements_label."'><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
-				}
-			  }
+				   	if($echo!="dontecho"){  // so it wont exit if PDF generator request info
+						if($resultCustom->ProfileCustomTitle.$measurements_label=="Experience"){return "";}					
+						echo "<li id='". $resultCustom->ProfileCustomTitle .$measurements_label."'><label>". $resultCustom->ProfileCustomTitle .$measurements_label."</label><span>". $resultCustom->ProfileCustomValue ."</span></li>\n";
+					}
+			  	}
+
 			} elseif ($resultCustom->ProfileCustomView == "2") {
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){
@@ -2851,76 +2844,72 @@ function rb_agency_getProfileCustomFieldsCustom($ProfileID, $ProfileGender,$echo
 	$return = "";
 	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue, c.ProfileCustomView FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC", $ProfileID),ARRAY_A);
     $total_rows = $wpdb->num_rows;
-   foreach ($resultsCustom as $resultCustom) {
-                  if(!empty($resultCustom["ProfileCustomValue"] )){
+   	foreach ($resultsCustom as $resultCustom) {
+      	if(!empty($resultCustom["ProfileCustomValue"] )){
 			       	 
-									if ($resultCustom["ProfileCustomType"] == 7) { //measurements field type
-										if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
-											if($resultCustom["ProfileCustomOptions"] == 1){
-												$label = "(cm)";
-											} elseif($resultCustom["ProfileCustomOptions"] == 2){
-												$label = "(kg)";
-											}
-										} elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
-
-											if($resultCustom["ProfileCustomOptions"] == 1){
-												$label = "(in)";
-											} elseif($resultCustom["ProfileCustomOptions"] == 2){
-												$label = "(lbs)";
-											} elseif($resultCustom["ProfileCustomOptions"] == 3){
-												$label = "(ft/in)";
-											}
-										}
-
-										$measurements_label = "<span class=\"label\">". $label ."</span>";
-
-									} else {
-										$measurements_label = "";
-									}
-
-									// Lets not do this...
-									$measurements_label = "";
-						           if (rb_agency_filterfieldGender($resultCustom["ProfileCustomID"], $ProfileGender)){
-										
-										if ($resultCustom["ProfileCustomType"] == 7){
-											if($resultCustom["ProfileCustomOptions"] == 3){
-												$heightraw = $resultCustom["ProfileCustomValue"]; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-												$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>".$heightfeet."ft ".$heightinch." in</span></li>\n";
-											} else {
-												$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
-											}
-										} else {
-											if($echo!="dontecho"){  // so it wont exit if PDF generator request info
-												if($resultCustom["ProfileCustomTitle"].$measurements_label=="Experience") { return ""; }
-											}
-											$return.="<li id='". $resultCustom["ProfileCustomTitle"] .$measurements_label."'><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
-										}
-
-									  
-									} elseif ($resultCustom["ProfileCustomView"] == "2") {
-										if ($resultCustom["ProfileCustomType"] == 7){
-											if($resultCustom["ProfileCustomOptions"] == 3){
-												$heightraw = $resultCustom["ProfileCustomValue"]; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-												$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>".$heightfeet."ft ".$heightinch." in</span></li>\n";
-											} else {
-												$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
-											}
-										} else {
-											$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
-										}
-									}
-								
-
+			if ($resultCustom["ProfileCustomType"] == 7) { //measurements field type
+				if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
+					if($resultCustom["ProfileCustomOptions"] == 1){
+						$label = "(cm)";
+					} elseif($resultCustom["ProfileCustomOptions"] == 2){
+						$label = "(kg)";
 					}
-									
-					
-	}	
-		if($echo=="dontecho"){return $return;}else{echo $return;}
+				} elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+
+					if($resultCustom["ProfileCustomOptions"] == 1){
+						$label = "(in)";
+					} elseif($resultCustom["ProfileCustomOptions"] == 2){
+						$label = "(lbs)";
+					} elseif($resultCustom["ProfileCustomOptions"] == 3){
+						$label = "(ft/in)";
+					}
+				}
+
+				$measurements_label = "<span class=\"label\">". $label ."</span>";
+
+			} else {
+				$measurements_label = "";
+			}
+
+			// Lets not do this...
+			$measurements_label = "";
+           	if (rb_agency_filterfieldGender($resultCustom["ProfileCustomID"], $ProfileGender)){
+				
+				if ($resultCustom["ProfileCustomType"] == 7){
+					if($resultCustom["ProfileCustomOptions"] == 3){
+						$heightraw = $resultCustom["ProfileCustomValue"]; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+						$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>".$heightfeet."ft ".$heightinch." in</span></li>\n";
+					} else {
+						$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
+					}
+				} else {
+					if($echo!="dontecho"){  // so it wont exit if PDF generator request info
+						if($resultCustom["ProfileCustomTitle"].$measurements_label=="Experience") { return ""; }
+					}
+					$return.="<li id='". $resultCustom["ProfileCustomTitle"] .$measurements_label."'><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
+				}
+			  
+			} elseif ($resultCustom["ProfileCustomView"] == "2") {
+				if ($resultCustom["ProfileCustomType"] == 7){
+					if($resultCustom["ProfileCustomOptions"] == 3){
+						$heightraw = $resultCustom["ProfileCustomValue"]; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+						$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>".$heightfeet."ft ".$heightinch." in</span></li>\n";
+					} else {
+						$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
+					}
+				} else {
+					$return.="<li><label>". $resultCustom["ProfileCustomTitle"] .$measurements_label."</label><span>". $resultCustom["ProfileCustomValue"] ."</span></li>\n";
+				}
+			}
+		}					
+	}
+
+	if($echo=="dontecho") { return $return; } else { echo $return; }
 								
 }
 
-		$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_option_profilelist_favorite = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
 
 
 //****************************************************************************************************//
@@ -2958,49 +2947,49 @@ function rb_agency_getMediaCategories($GenderID){
 * @Returns Media Categories
 /*/
 function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
-     global $wpdb;
-		$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' ";
-	    $resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
+    global $wpdb;
+	$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' ";
+	$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
 	    									
 	foreach ($resultsMedia  as $dataMedia) {
-					 if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
-									 $custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
-									$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
-									 $custom_media_type = $custom_media_info[2];
-									   $custom_media_id = $custom_media_info[4];
-									             $query = current($wpdb->get_results("SELECT MediaCategoryTitle FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
-									if($custom_media_type == "link"){
-										echo "<li class=\"item custom_media-link\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
-									}elseif($custom_media_type == "button"){
-											echo "<li class=\"item custom_media-button\"><a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
-									}
-					}
+	 	if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
+
+			$custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
+			$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
+			$custom_media_type = $custom_media_info[2];
+			$custom_media_id = $custom_media_info[4];
+			$query = current($wpdb->get_results("SELECT MediaCategoryTitle FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
+
+			if($custom_media_type == "link"){
+				echo "<li class=\"item custom_media-link\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
+			} elseif($custom_media_type == "button") {
+				echo "<li class=\"item custom_media-button\"><a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
+			}
+		}
 	}
 }
-	/*
-	* Add admin tool > Edit Profile
-	*/
-	function rb_agency_add_editlink($profileID){
-		 			
-			if (current_user_can('level_10') && !is_admin()) {
-				
-				
-				function prepare_tool($wp_toolbar){
-					 $arr = array(
-						'id' => 'rb-agency-edit-profile',
-						'title' => 'Edit this Profile',
-						'href' => admin_url('admin.php?page=rb_agency_profiles&action=editRecord&ProfileID='.get_current_viewingID()),
-						'meta' => array('target' => 'rb-agency-edit-profile')
-					);
 
-					$wp_toolbar->add_node($arr);
-				}
-				add_action('admin_bar_menu',"prepare_tool",999,2);
-				
-
-			}
+/*
+* Add admin tool > Edit Profile
+*/
+function rb_agency_add_editlink($profileID){
+	 			
+	if (current_user_can('level_10') && !is_admin()) {		
 		
+		function prepare_tool($wp_toolbar){
+			 $arr = array(
+				'id' => 'rb-agency-edit-profile',
+				'title' => 'Edit this Profile',
+				'href' => admin_url('admin.php?page=rb_agency_profiles&action=editRecord&ProfileID='.get_current_viewingID()),
+				'meta' => array('target' => 'rb-agency-edit-profile')
+			);
+
+			$wp_toolbar->add_node($arr);
+		}
+		add_action('admin_bar_menu',"prepare_tool",999,2);
 	}	
+}
+
 /*/
 * ======================== Show/Hide Admin Toolbar===============
 * 
@@ -3062,8 +3051,7 @@ function rb_check_exists($data,$proerty,$type){
 		$count = count($query);
 	} 
 	if($count > 0) return true;
-	return false;	
-
+	return false;
 }
 
 /*/
@@ -3119,14 +3107,14 @@ function rb_agency_getSocialLinks(){
 		$rb_agency_option_showsocial = isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0;
 
 	if($rb_agency_option_showsocial){
-		echo "		<div class=\"social addthis_toolbox addthis_default_style\">\n";
-		echo "			<a href=\"http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4c4d7ce67dde9ce7\" class=\"addthis_button_compact\">". __("Share", rb_agency_TEXTDOMAIN). "</a>\n";
-		echo "			<span class=\"addthis_separator\">|</span>\n";
-		echo "			<a class=\"addthis_button_facebook\"></a>\n";
-		echo "			<a class=\"addthis_button_myspace\"></a>\n";
-		echo "			<a class=\"addthis_button_google\"></a>\n";
-		echo "			<a class=\"addthis_button_twitter\"></a>\n";
-		echo "		</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
+		echo "	<div class=\"social addthis_toolbox addthis_default_style\">\n";
+		echo "		<a href=\"http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4c4d7ce67dde9ce7\" class=\"addthis_button_compact\">". __("Share", rb_agency_TEXTDOMAIN). "</a>\n";
+		echo "		<span class=\"addthis_separator\">|</span>\n";
+		echo "		<a class=\"addthis_button_facebook\"></a>\n";
+		echo "		<a class=\"addthis_button_myspace\"></a>\n";
+		echo "		<a class=\"addthis_button_google\"></a>\n";
+		echo "		<a class=\"addthis_button_twitter\"></a>\n";
+		echo "	</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
 	}
 }
 
@@ -3155,7 +3143,7 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 	
 	//end filter 
 	if($nextprev=="next"){ 
-			$sql.=" AND  ProfileGallery > '$ppage' ORDER BY ProfileContactNameFirst ASC"; // to get next record
+		$sql.=" AND  ProfileGallery > '$ppage' ORDER BY ProfileContactNameFirst ASC"; // to get next record
 	} else {
 		$sql.=" AND  ProfileGallery < '$ppage' ORDER BY ProfileContactNameFirst DESC"; // to get next
 	}
@@ -3166,9 +3154,9 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
   
 	if(empty($fetch["ProfileGallery"])){ //make sure it wont send empty url
 
-		if($nextprev=="next"){ 
+		if($nextprev=="next"){
 			$sql=$tempSql."  ORDER BY ProfileContactNameFirst ASC"; // to get next record
-		}else{
+		} else {
 			$sql=$tempSql."  ORDER BY ProfileContactNameFirst DESC"; // to get next
 		}
 	  
@@ -3181,11 +3169,11 @@ function linkPrevNext($ppage,$nextprev,$type="",$division=""){
 }
 
 function getExperience($pid){ 
+
 	global $wpdb;
 
 	$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileCustomValue FROM ".table_agency_customfield_mux." WHERE ProfileID = '%s' AND ProfileCustomID ='16' ",$pid),ARRAY_A);
-	$fetch = current($query);
-	
+	$fetch = current($query);	
 	
 	return  $fetch["ProfileCustomValue"];
 }
@@ -3234,35 +3222,35 @@ function rb_display_profile_list(){
 	$filter = "WHERE profile.ProfileIsActive IN (0,1,4) ";
 	if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
 		if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
-				$selectedNameFirst = $_GET['ProfileContactNameFirst'];
-				$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
-				$filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
+			$selectedNameFirst = $_GET['ProfileContactNameFirst'];
+			$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
+			$filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
 		}
 		if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
-				$selectedNameLast = $_GET['ProfileContactNameLast'];
-				$query .= "&ProfileContactNameLast=". $selectedNameLast ."";
-				$filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+			$selectedNameLast = $_GET['ProfileContactNameLast'];
+			$query .= "&ProfileContactNameLast=". $selectedNameLast ."";
+			$filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
 		}
 	}
 	if (isset($_GET['ProfileLocationCity']) && !empty($_GET['ProfileLocationCity'])){
-			$selectedCity = $_GET['ProfileLocationCity'];
-			$query .= "&ProfileLocationCity=". $selectedCity ."";
-			$filter .= " AND profile.ProfileLocationCity='". $selectedCity ."'";
+		$selectedCity = $_GET['ProfileLocationCity'];
+		$query .= "&ProfileLocationCity=". $selectedCity ."";
+		$filter .= " AND profile.ProfileLocationCity='". $selectedCity ."'";
 	}
 	if (isset($_GET['ProfileType']) && !empty($_GET['ProfileType'])){
-			$selectedType = $_GET['ProfileType'];
-			$query .= "&ProfileType=". $selectedType ."";
-			$filter .= " AND profiletype.DataTypeID='". $selectedType ."'";
+		$selectedType = $_GET['ProfileType'];
+		$query .= "&ProfileType=". $selectedType ."";
+		$filter .= " AND profiletype.DataTypeID='". $selectedType ."'";
 	}
 	if (isset($_GET['ProfileVisible']) && !empty($_GET['ProfileVisible'])){
-			$selectedVisible = $_GET['ProfileVisible'];
-			$query .= "&ProfileVisible=". $selectedVisible ."";
-			$filter .= " AND profile.ProfileIsActive='". $selectedVisible ."'";
+		$selectedVisible = $_GET['ProfileVisible'];
+		$query .= "&ProfileVisible=". $selectedVisible ."";
+		$filter .= " AND profile.ProfileIsActive='". $selectedVisible ."'";
 	}
 	if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
-			$ProfileGender = (int)$_GET['ProfileGender'];
-			if($ProfileGender)
-					$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
+		$ProfileGender = (int)$_GET['ProfileGender'];
+		if($ProfileGender)
+			$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
 	}
 	
 	
