@@ -474,12 +474,14 @@
 		if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
 			// Offset 
 			// TODO: Remove hard coded server time
-			$offset = $offset-5;
-
+			/*if(!isset($offset)){
+				$offset = $offset-5;
+			}*/
 			// Offset Math
 			$timezone_offset = (int)$offset;
-			$time_altered = time() -  $timezone_offset *60 *60;
-			$difference = $time_altered - $timestamp;
+			$time_altered =  strtotime("now") -  ($timezone_offset *60 *60);
+			$difference = $time_altered - (int)$timestamp;
+
 
 			// Prepare Text
 			// TODO: Add multi lingual
@@ -488,13 +490,14 @@
 
 			// Logic
 			for($j = 0; $difference >= $lengths[$j]; $j++)
-			$difference /= $lengths[$j];
-			$difference = round($difference);
-			if($difference != 1) $periods[$j].= "s";
-			$text = "$difference $periods[$j] ago";
-			if ($j > 10) { exit; }
-
-			return $text;
+				$difference /= $lengths[$j];
+				$difference = round($difference);
+				if($difference != 1) $periods[$j].= "s";
+				$text = "$difference $periods[$j] ago";
+				if ($j > 10) { exit; }
+			
+				return $text;
+			
 		} else {
 			// If timestamp is blank, return non value
 			return "--";
@@ -1388,6 +1391,22 @@
 
 			$rb_user_isLogged = is_user_logged_in();
 
+				$castingcart_results = array();
+				if(defined("table_agency_castingcart")){
+					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
+				}
+				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
+				
+				$arr_castingcart = array();
+				foreach ($castingcart_results as $key) {
+					array_push($arr_castingcart, $key->CastingCartTalentID);
+				}
+
+				$arr_favorites = array();
+				foreach ($favorites_results  as $key) {
+					array_push($arr_favorites, $key->SavedFavoriteTalentID);
+				}
+
 			// Get Naming Convention
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 
@@ -1471,18 +1490,30 @@
 				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 
 				if ($rb_agency_option_profilelist_expanddetails) {
-					$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
+					$displayHTML .= "     <div class=\"details\">";
+					$displayHTML .= " <span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
 					if($dataList["ProfileLocationState"]!=""){
 						$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 					} 
+						//echo "loaded: ".microtime()." ms";
+					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks")){
+						//Get Favorite & Casting Cart links
+						//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+						 $displayHTML .= "<div class=\"rb_profile_tool\">";
+				            if($rb_agency_option_profilelist_favorite){
+					            $displayHTML .=  "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span>&nbsp;";
+					        }
+					        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
+
+					        if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
+				           		 $displayHTML .=  "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span>";
+				            }
+				           $displayHTML .= "</div>";
+					}
 					$displayHTML .= "</div>\n";
 				}
 				
-				//echo "loaded: ".microtime()." ms";
-				if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks")){
-					//Get Favorite & Casting Cart links
-					$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-				}
+				
 
 				$displayHTML .=" </div> <!-- .profile-info --> \n";
 				$displayHTML .=" </div><!-- .rbprofile-list -->\n";
