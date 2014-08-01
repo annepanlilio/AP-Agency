@@ -14,21 +14,24 @@
 #profile-list {
 	font-size: 0;
 	margin-top: 30px;
-	text-align: center;
 }
 #profile-list .rbprofile-list {
-	width: 22%;
-	margin: 7px;
+	width: 33.33333333333333%;
+	padding: 7px;
 	font-size: 100%;
-	max-width: 150px;
-	min-width: 100px;
+	max-width: 200px;
+	min-width: 150px;
+	margin-bottom: 15px;
 	position: relative;
+	vertical-align: top;
 	display: inline-block;
+	box-sizing: border-box;
 }
 #profile-list .rbprofile-list .image {
 	width: 100%;
-	height: 200px;
+	height: 200px;	
 	overflow: hidden;
+	text-align: center;
 	position: relative;
 }
 #profile-list .rbprofile-list .image a {
@@ -65,14 +68,12 @@
 }
 #profile-list .rbprofile-list .profile-info .details {
 	font-size: 13px;
-	text-align: center;
 }
 #profile-list .rbprofile-list .profile-info h3.name {
 	margin: 0;
 	margin: 5px 0;
-	font-size: 14px;
+	font-size: 13px;
 	overflow: hidden;
-	text-align: center;
 	line-height: normal;	
 }
 #profile-list .rbprofile-list .profile-info h3.name a {
@@ -95,15 +96,47 @@
 	float: right;
 }
 
+/*  */
+#profile-results-info {
+	float: right;
+	padding: 5px 0px;
+}
+
 /* Pagination */
+.rbpagination-top {
+	margin-top: 15px;
+}
 .rbpagination { 
 	float: left;
 	clear: left;
 	font-size: 13px;
+	padding:2px 5px 0px 0px;
 }
 .rbpagination > span, .rbpagination > a { 
 	float: left;
-	padding: 3px;
+	padding: 3px;		
+	color: #989495;
+	background: #fff;
+	padding: 5px 15px;
+	text-align: center;	
+	text-decoration: none;
+	border: 1px solid #d8d8d8;	
+	box-shadow: 0px 1px 1px #d8d8d8;
+	border-right: none;
+}
+.rbpagination > span:last-child, .rbpagination > a:last-child {
+	border-right: 1px solid #d8d8d8;
+}
+.rbpagination > .pagedir:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
+.rbpagination > .pagedir:last-child {
+	border-top-right-radius: 2px;
+	border-bottom-right-radius: 2px;
+}
+.rbpagination > span.current, .rbpagination > a.current {
+	font-weight: bold;
 }
 
 
@@ -368,7 +401,6 @@ img.fillheight {
 #videos-carousel li{ height:100px; width:150px; float:left; margin-left:5px; display:inline;}
 #videos-carousel figure{ height:100%; width:100%;}
 
-
 /* Quick Search */
 #rbquick-search { overflow: hidden; padding: 30px 0; padding-top: 0; margin-top: 30px; }
 #rbquick-search h2 { margin-bottom: 15px; text-transform: uppercase; }
@@ -386,6 +418,7 @@ img.fillheight {
 #rbquick-search .rbsearch-form .search-field.multi legend,
 #rbquick-search .rbsearch-form .search-field.multi input { float: left; }
 #rbquick-search .rbsearch-form .search-field.multi input { width: 100px; }
+
 
 /** Sign In - Register **/
 #rbsignin-register { text-align: center; vertical-align: top; }
@@ -427,6 +460,16 @@ img.fillheight {
 	position:relative;
 	top:1px;
 }
+#profile-links { margin-top: 15px; }
+#profile-links a { display: block; border: 1px solid #ddd; border-top: none; padding: 5px 10px }
+#profile-links a:first-child { border-top-left-radius: 3px; border-top-right-radius: 3px; border-top: 1px solid #ddd; }
+#profile-links a:last-child { border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
+
+/* Button Group */
+.rbbtn-group { margin-bottom: 15px; }
+#profile-casting a,
+#profile-favorite a { width: 50%; text-align: center; font-size: 13px; border-right: 1px solid #ddd; width: 1%; display: table-cell; }
+#profile-favorite a:last-child { border-right: none; }
 
 .restricted h2{padding-left:17px;}
 
