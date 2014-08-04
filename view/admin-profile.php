@@ -26,6 +26,8 @@ define("LabelSingular", "Profiles");
 			$rb_agency_option_useraccountcreation = isset($rb_agency_options_arr['rb_agency_option_useraccountcreation']) ?(int) $rb_agency_options_arr['rb_agency_option_useraccountcreation']:0;
 		}
 
+		
+
 
 // *************************************************************************************************** //
 // Handle Post Actions
@@ -1766,6 +1768,8 @@ function rb_display_list() {
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_locationtimezone = isset( $rb_agency_options_arr['rb_agency_option_locationtimezone'] )?(int) $rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
+	$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?(int) $rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
+
 	echo "<div class=\"wrap\">\n";
 	// Include Admin Menu
 	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
@@ -2197,7 +2201,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 
 		$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID = '%s' ";
 		$fetchProfileGender =  $wpdb->get_row($wpdb->prepare($query,$ProfileGender),ARRAY_A,0);
-
+  
 		$ProfileGender = $fetchProfileGender["GenderTitle"];
 
 		echo "    <tr" . $rowColor . ">\n";
@@ -2205,14 +2209,24 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\"  data-name=\"".$ProfileContactNameFirst." ". $ProfileContactNameLast."\" class=\"administrator\" id=\"" . $ProfileID . "\" name=\"" . $ProfileID . "\"/>\n";
 		echo "        </th>\n";
 		echo "        <td class=\"ProfileID column-ProfileID\">" . $ProfileID . "</td>\n";
-		echo "        <td class=\"ProfileID column-ProfileContactDisplay\">" . $ProfileContactDisplay . "</td>\n";
+		if($rb_agency_option_formshow_displayname == 1){
+			echo "        <td class=\"ProfileID column-ProfileContactDisplay\">" . $ProfileContactDisplay;
+			echo "          <div class=\"row-actions\">\n";
+			echo "            <span class=\"edit\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&amp;action=editRecord&amp;ProfileID=" . $ProfileID . "\" title=\"" . __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+			echo "            <span class=\"edit\"><a href=\"" . rb_agency_PROFILEDIR .  $ProfileGallery . "/\" title=\"" . __("View", rb_agency_TEXTDOMAIN) . "\" target=\"_blank\">" . __("View", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+			echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=deleteRecord&ProfileID=" . $ProfileID . "\"  onclick=\"if ( confirm('" . __("You are about to delete the profile for ", rb_agency_TEXTDOMAIN) . " " . $ProfileContactNameFirst . " " . $ProfileContactNameLast . "? \'" . __("Cancel", rb_agency_TEXTDOMAIN) . "\' " . __("to stop", rb_agency_TEXTDOMAIN) . ", \'" . __("OK", rb_agency_TEXTDOMAIN) . "\' " . __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"" . __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+			echo "          </div>\n";
+			echo "	</td>\n";
+		}
 		echo "        <td class=\"ProfileContactNameFirst column-ProfileContactNameFirst\">\n";
 		echo "          " . $ProfileContactNameFirst . "\n";
-		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&amp;action=editRecord&amp;ProfileID=" . $ProfileID . "\" title=\"" . __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"edit\"><a href=\"" . rb_agency_PROFILEDIR .  $ProfileGallery . "/\" title=\"" . __("View", rb_agency_TEXTDOMAIN) . "\" target=\"_blank\">" . __("View", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=deleteRecord&ProfileID=" . $ProfileID . "\"  onclick=\"if ( confirm('" . __("You are about to delete the profile for ", rb_agency_TEXTDOMAIN) . " " . $ProfileContactNameFirst . " " . $ProfileContactNameLast . "? \'" . __("Cancel", rb_agency_TEXTDOMAIN) . "\' " . __("to stop", rb_agency_TEXTDOMAIN) . ", \'" . __("OK", rb_agency_TEXTDOMAIN) . "\' " . __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"" . __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
-		echo "          </div>\n";
+		if($rb_agency_option_formshow_displayname == 0){
+			echo "          <div class=\"row-actions\">\n";
+			echo "            <span class=\"edit\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&amp;action=editRecord&amp;ProfileID=" . $ProfileID . "\" title=\"" . __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+			echo "            <span class=\"edit\"><a href=\"" . rb_agency_PROFILEDIR .  $ProfileGallery . "/\" title=\"" . __("View", rb_agency_TEXTDOMAIN) . "\" target=\"_blank\">" . __("View", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
+			echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=deleteRecord&ProfileID=" . $ProfileID . "\"  onclick=\"if ( confirm('" . __("You are about to delete the profile for ", rb_agency_TEXTDOMAIN) . " " . $ProfileContactNameFirst . " " . $ProfileContactNameLast . "? \'" . __("Cancel", rb_agency_TEXTDOMAIN) . "\' " . __("to stop", rb_agency_TEXTDOMAIN) . ", \'" . __("OK", rb_agency_TEXTDOMAIN) . "\' " . __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"" . __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">" . __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+			echo "          </div>\n";
+		}
 		echo "        </td>\n";
 		echo "        <td class=\"ProfileContactNameLast column-ProfileContactNameLast\">" . $ProfileContactNameLast . "</td>\n";
 		echo "        <td class=\"ProfileGender column-ProfileGender\">" . $ProfileGender . "</td>\n";
