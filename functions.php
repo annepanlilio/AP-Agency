@@ -19,6 +19,7 @@
 			}
 		}
 
+
 // Set Mail
 	/*add_filter('wp_mail_content_type','rb_agency_set_content_type');
 		function rb_agency_set_content_type($content_type){
@@ -4579,5 +4580,6 @@ function rb_get_casting_profileid(){
 	 	return false;
 	 }
 }	 
+
 
 ?>

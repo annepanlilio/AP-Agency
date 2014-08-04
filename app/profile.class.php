@@ -1342,7 +1342,11 @@ class RBAgency_Profile {
 							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
 								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
 							}else{
-								$sqlCasting_userID .= " AND cart.CastingJobID IS NULL ";
+								//$sqlCasting_userID .= " AND cart.CastingCartTalentID <> '' AND cart.CastingCartTalentID IS NOT NULL ";
+								$uid = rb_agency_get_current_userid();
+								if($uid > 0){
+									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
+								}
 							}
 						}else{
 							$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID";

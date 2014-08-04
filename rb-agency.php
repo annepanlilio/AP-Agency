@@ -183,6 +183,14 @@ See license.txt for full details.
 	// Check server if software is most current version
 	add_action('init',  array('RBAgency', 'check_upgrade_available'));
 
+/*
+ * Edit posts capabilities bypass for twentytwelve themes 
+*/
+function twentyeleven_option_page_capability( $capability ) {
+    return 'edit_posts';
+}
+add_filter( 'option_page_capability_baw-settings-group', 'twentyeleven_option_page_capability' );
+
 
 // *************************************************************************************************** //
 
@@ -999,7 +1007,7 @@ class RBAgency {
 		// Add Menu Item to Settings Dropdown
 		public static function menu_addlinkto_settings() {
 			// Check Permissions
-			if ( !current_user_can('update_core') )
+			if ( !current_user_can('edit_posts') )
 				return;
 			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), "edit_posts", "rb_agency_settings", array('RBAgency', 'menu_settings'));
 		}
