@@ -521,18 +521,17 @@ if (isset($_POST['action'])) {
 											}
 
 										}
-										
 										asort($ProfileMediaOrder1);
 										$imedia=1; 
 										if(is_array($ProfileMediaOrder1) && count($ProfileMediaOrder1)){
 											foreach($ProfileMediaOrder1 as $key => $val){
-												$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$imedia."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
+												$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
 												 $imedia++; 
 											}
 										}
 										if(is_array($ProfileMediaOrder2) && count($ProfileMediaOrder2)){
 											foreach($ProfileMediaOrder2 as $key => $val){
-												 $results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$imedia."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
+												 $results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
 												 $imedia++; 
 											}
 										}
