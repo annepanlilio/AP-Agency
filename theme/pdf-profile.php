@@ -235,7 +235,7 @@ if($_POST['print_option']==14){  // print for division
 	 // $table.=' <div style="page-break-before:always" /></div><br><br><br>';
 	  $table.="</td></tr></table><table border='0'><tr>".$table2."</tr></table>-->";
 	  $table.='<div style="page-break-before:always" /></div><br><br><br>';
-	  $table.='<img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg">'."</td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
+	  $table.='<img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg">'."</td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
 	  $table = str_replace("src","",$table);
 	  $table = str_replace('<img ="','<img src="',$table);
 	  
@@ -316,7 +316,7 @@ if($_POST['print_option']==14){  // print for division
 						 if($cnt==$col){ $allImages.="</tr></table>\n";
 						   if($cnt2==$perPage){
 							
-								  $allImages.='<br><br clear=""><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg">';
+								  $allImages.='<br><br clear=""><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg">';
 								  
 								  if($printType=="Polaroid" AND $excape!=1){$allImages.="<td></tr></table>"; $excape=1;}
 								  
@@ -336,7 +336,7 @@ if($_POST['print_option']==14){  // print for division
 		$table.="</tr></table>\n";
 		
 		if($cnt2!=$perPage AND $cnt2!="0"){
-		$table.='<br clear="all"><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg">';
+		$table.='<br clear="all"><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg">';
 		}
 		if($printType=="Polaroid"){
 			$modelInfo="<table border='0' width='800'><tr><td width='180'>$modelInfo</td><td width='600'>$table";

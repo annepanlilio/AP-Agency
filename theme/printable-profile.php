@@ -163,12 +163,12 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 		echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
         if($rowCount == $showFooter){
 			$rowCount=0; //reset to loop another row 
-			echo '<br clear="all"><img style="width:347px; '.$logoMarginTop.'" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg"><br clear="all">';
+			echo '<br clear="all"><img style="width:347px; '.$logoMarginTop.'" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg"><br clear="all">';
 		}
 	}
 
 	if($rowCount!=$showFooter AND $rowCount!="0"){
-		echo '<br clear="all"><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/view/layout/06/images/address.jpg"><br clear="all">';
+		echo '<br clear="all"><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg"><br clear="all">';
 	}
 ?>
 </div>
