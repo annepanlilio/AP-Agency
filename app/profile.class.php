@@ -1811,12 +1811,12 @@ class RBAgency_Profile {
 			if(is_user_logged_in()){
 	            $displayActions = "<div class=\"rb_profile_tool\">";
 	            if($rb_agency_option_profilelist_favorite){
-		            $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span>&nbsp;";
+		            $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 		        }
 		        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
 
 		        if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
-	           		 $displayActions .= "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span>";
+	           		$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
 	            }
 	            $displayActions .= "</div>";
 				
@@ -1862,17 +1862,17 @@ class RBAgency_Profile {
 				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
 				if($dataList["ProfileLocationState"]!=""){
 					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
-				}
-				$displayHTML .=  $displayActions;
+				}				
 				$displayHTML .= "</div>\n";
+				$displayHTML .=  $displayActions;
 			}
 			
 
 			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks")){
 				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-			}
-			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
+			}			
 			$displayHTML .=" </div> <!-- .profile-info --> \n";
+			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
