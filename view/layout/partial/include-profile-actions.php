@@ -108,8 +108,8 @@ echo "<div id=\"profile-links\">\n";
 			}
 		}
 
-	/*// Other Media Type not the default ones
-		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType NOT IN ('Image','Resume','Polaroid','CompCard','Comp Card','Headshot','VoiceDemo','Voice Demo','Video Slate','Video Monologue','Demo Reel')";
+	// Other Media Type not the default ones
+		/*$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType NOT IN ('Image','Resume','Polaroid','CompCard','Comp Card','Headshot','VoiceDemo','Voice Demo','Video Slate','Video Monologue','Demo Reel')";
 		$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
@@ -119,7 +119,7 @@ echo "<div id=\"profile-links\">\n";
 				}
 			}
 		}*/
-		//rb_agency_showMediaCategories($ProfileID, $ProfileGallery);
+		rb_agency_showMediaCategories($ProfileID, $ProfileGallery);
 
 echo "	</div>\n";
 
