@@ -84,7 +84,7 @@ echo "<div id=\"profile-links\">\n";
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
 				$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Video Slate</a>\n";
+				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link slate\">Watch Video Slate</a>\n";
 			}
 		}
 
@@ -94,7 +94,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Video Monologue</a>\n";
+				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link monologue\">Watch Video Monologue</a>\n";
 			}
 		}
 
