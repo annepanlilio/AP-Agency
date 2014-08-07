@@ -1502,12 +1502,12 @@
 						//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 						 $displayHTML .= "<div class=\"rb_profile_tool\">";
 				            if($rb_agency_option_profilelist_favorite){
-					            $displayHTML .=  "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span>&nbsp;";
+					            $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 					        }
 					        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
 
 					        if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
-				           		 $displayHTML .=  "<a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span>";
+				           		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
 				            }
 				           $displayHTML .= "</div>";
 					}

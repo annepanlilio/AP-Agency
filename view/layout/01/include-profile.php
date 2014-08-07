@@ -117,7 +117,7 @@ echo "				<div id=\"photos\" class=\"lightbox-enabled\">\n";
 						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=109&h=150\" /></a>\n";
+								echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a>\n";
 						}
 					}
 						echo "	<div class=\"rbclear\"></div>\n"; // Clear All
