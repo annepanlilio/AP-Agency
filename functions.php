@@ -3922,7 +3922,7 @@ function send_email_lp($login, $password, $email){
 	
 	$message = read_email_content(true);
 	if($message == 'empty'){
-		$message = 'Hello, we generated new login and password for you at RB Agency\n\n[login]\n[password]\n\nYou can login [url]\n\nThanks.';
+		$message = "Hello, we generated new login and password for you at RB Agency\n\n[login]\n[password]\n\nYou can login [url]\n\nThanks.";
 	}
 
 	$message = str_replace('[login]', 'Login: <strong>' . $login . '</strong>', $message);
