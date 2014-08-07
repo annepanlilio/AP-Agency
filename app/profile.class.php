@@ -1563,7 +1563,7 @@ class RBAgency_Profile {
 				$displayHtml .=  "       <form method=\"get\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"action\" value=\"cartAdd\" />\n";
-				$displayHtml .=  "        <input type=\"hidden\" name=\"forceCart\" value=\"".RBAgency_Common::session('cartArray') ."\" />\n";
+				$displayHtml .=  "        <input type=\"hidden\" name=\"forceCart\" value=\"".(!is_array(RBAgency_Common::session('cartArray'))?RBAgency_Common::session('cartArray'):"") ."\" />\n";
 				$displayHtml .=  "        <table cellspacing=\"0\" class=\"widefat fixed\">\n";
 				$displayHtml .=  "        <thead>\n";
 				$displayHtml .=  "            <tr class=\"thead\">\n";
@@ -1725,6 +1725,14 @@ class RBAgency_Profile {
 				$displayHtml .=  "        </tbody>\n";
 				$displayHtml .=  "    </table>\n";
 				$displayHtml .=  "     <p>\n";
+				if(isset($_SESSION['cartArray'] )){
+
+					$cartProfiles = $_SESSION['cartArray'];
+					foreach ($cartProfiles as $key) {
+						$displayHtml .= "<input type=\"hidden\" name=\"ProfileID[]\" value=\"".$key."\"/> ";
+					}
+				}
+				
 				$displayHtml .=  "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
 				$displayHtml .=  "          <a href=\"#\" onClick=\"testPrint(1);\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "<script> function testPrint(type){
