@@ -33,8 +33,8 @@ echo "<div id=\"profile-links\">\n";
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
-		    echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
+			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link polaroid\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
+		    echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link polaroid\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
 		}
 		
 	// Resume
