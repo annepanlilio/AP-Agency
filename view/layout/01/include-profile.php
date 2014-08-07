@@ -232,7 +232,9 @@ elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
 				</div><!-- allimages_div-->
 
 <?php } else if ($subview=="print-polaroids"){  //show print options
-
+	if(isset($_POST["print_type"])){ ?>
+   <?php include_once(rb_agency_BASEREL."theme/pdf-profile.php"); ?>
+   <?php } 
 				$queryImg = rb_agency_option_galleryorder_query($orderBy ,$ProfileID,"Polaroid");
 				$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 				$countImg  = $wpdb->num_rows;

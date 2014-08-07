@@ -2405,7 +2405,7 @@ function rb_agency_getGenderTitle($ProfileGenderID){
 function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
     global $wpdb; 
 
-	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s) ";
+	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
 	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A);
 	$count = $wpdb->num_rows;
 		if($count > 0){
@@ -2536,7 +2536,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 					$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
 			}
 			
-		//	if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) ||  current_user_can( 'edit_posts' )){
+			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 				if ($resultCustom->ProfileCustomType == 7){
 
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
@@ -2575,7 +2575,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 					} elseif($resultCustom->ProfileCustomOptions == 1){ 
 						if( $rb_agency_option_unittype == 1 ){//cm/in
 									$heightraw = $resultCustom->ProfileCustomValue; 
-									$heightfeet = $heightraw * 2.54;
+									$heightfeet = $heightraw; // * 2.54;
 									$resultCustom->ProfileCustomValue = (int)$heightfeet;
 						}
 						
@@ -2590,7 +2590,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
-			//}
+			}
 				
 		}
 
@@ -4489,7 +4489,7 @@ function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaTyp
 	if($order){
 		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC", $profileID, $ProfileMediaType);
 	} else {
-		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ORDER BY  ProfileMediaOrder ASC", $profileID, $ProfileMediaType);
+		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC", $profileID, $ProfileMediaType);
 	}
 	return $queryImg ;
 }

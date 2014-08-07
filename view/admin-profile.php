@@ -445,6 +445,9 @@ if (isset($_POST['action'])) {
 																array_push($arr_extensions,"audio/mp3");
 															}elseif($custom_media_extenstion == "pdf"){
 																array_push($arr_extensions,"application/pdf");
+															}elseif($custom_media_extenstion == "jpg"){
+																array_push($arr_extensions,"image/jpeg");
+																array_push($arr_extensions,"jpeg");
 															}
 
 															if (in_array($_FILES['profileMedia' . $i]['type'], $arr_extensions)) {
@@ -514,9 +517,9 @@ if (isset($_POST['action'])) {
 												 $pieces = explode("_", $key);
 												if($pieces[1]>0){
 													if($val!=""){
-														$ProfileMediaOrder1[$pieces[1]] = (int) $val ; 
+														$ProfileMediaOrder1[(int)$pieces[1]] = (int) $val ; 
 													}else{
-														$ProfileMediaOrder2[$pieces[1]] = (int) $val ; 
+														$ProfileMediaOrder2[(int)$pieces[1]] = (int) $val ; 
 													}
 														
 												}
@@ -1521,7 +1524,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$outLinkResume .= $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
-									$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+									$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
 									$outLinkPolaroid .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=108\" /><br/><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								}else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) { 
