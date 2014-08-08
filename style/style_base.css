@@ -26,10 +26,11 @@
 	vertical-align: top;
 	display: inline-block;
 	box-sizing: border-box;
+	line-height: normal;
 }
 #profile-list .rbprofile-list .image {
 	width: 100%;
-	height: 200px;	
+	height: 230px;	
 	overflow: hidden;
 	text-align: center;
 	position: relative;
@@ -53,9 +54,8 @@
 	max-width: none!important;
 }
 #profile-list .rbprofile-list .image.image-broken {
-	height: 200px;
 	text-align: center;
-	line-height: 200px;
+	line-height: 230px;
 	background: #f8ced6;
 }
 #profile-list .rbprofile-list .image.image-broken a {
@@ -389,9 +389,10 @@ img.fillheight {
 #rbprofile #links ul li { padding: 7px; border-bottom: 1px solid #ddd; }
 #rbprofile #links ul li a { text-decoration: none; font-size: 13px; }
 #rbprofile #profile-picture { background: #e9e9e9; padding: 7px; float: left; }
-#rbprofile #profile-picture img { max-width: 100%; float: left; }
+#rbprofile #profile-picture img { width: 100%; max-width: 100%; float: left; }
 .rbcolumn .addthis_toolbox { margin-bottom: 15px; padding: 7px; background: #ddd; }
-.rblayout #photos .photo { vertical-align: top; }
+.rblayout .profile-photos { padding: 10px 0px 0px 10px; background: #e9e9e9; overflow: hidden; }
+.rblayout .profile-photos .photo { vertical-align: top; float: left; margin: 0px 10px 10px 0px; }
 
 #video_player {height:500px; width:66%;}
 #video_player .vids{height:500px; width:100%; display:none; position:absolute; z-index:0; top:0px; left:0px;}
@@ -465,6 +466,11 @@ img.fillheight {
 #profile-links a:first-child { border-top-left-radius: 3px; border-top-right-radius: 3px; border-top: 1px solid #ddd; }
 #profile-links a:last-child { border-bottom-left-radius: 3px; border-bottom-right-radius: 3px; }
 
+/* Print Profile Photos */
+#print-photos form .print-photo { float: left; margin: 0px 3px 7px 3px; border: 1px solid #ddd; }
+#print-photos form .print-photo .print-action { padding: 5px 3px; background: #eee; }
+#print-photos form > a img { float: left; margin: 0px 10px 10px 0px; }
+
 /* Button Group */
 .rbbtn-group { margin-bottom: 15px; }
 #profile-casting a,
@@ -497,7 +503,7 @@ img.fillheight {
  
   body { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; width: 100%; min-width: 0; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; }
   /* The Grid --- */
-  .rbcolumn { width: auto !important; float: none; margin-bottom: 30px; }
+  .rbcolumn { width: auto !important; float: none; margin-bottom: 30px; clear: both; }
   .rbcolumn:last-child { float: none; }
   [class*="rbcolumn"] + [class*="rbcolumn"]:last-child { float: none; }
   .rbcolumn:before, .rbcolumn:after { content: ""; display: table; }
@@ -510,6 +516,7 @@ height: 160px;
 background-size: 150px;
 display: block;
 }
+.rb_profile_tool { font-size: 13px; }
 .rb_profile_tool div.favorite { float: left; }
 .rb_profile_tool div.casting { float: right; padding-top: 5px; }
 .rb_profile_tool a { text-decoration: none; }
