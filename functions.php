@@ -4281,9 +4281,9 @@ function rb_agency_clear_casting_array(){
 				session_start();
 	}
 	 
-	 foreach($_SESSION as $key => $val){
+	/* foreach($_SESSION as $key => $val){
 	     unset($_SESSION[$key]);
-	 }
+	 }*/
 	die();
 }
 add_action('wp_ajax_rb_agency_clear_casting_array', 'rb_agency_clear_casting_array');
