@@ -2,8 +2,8 @@
 // *************************************************************************************************** //
 // Get Category
 
-session_start();
-header("Cache-control: private"); //IE 6 Fix
+/*session_start();
+header("Cache-control: private"); //IE 6 Fix*/
 global $wpdb;
 
 // Get Profile

@@ -2,7 +2,7 @@
 /*if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }*/
-header("Cache-control: private"); //IE 6 Fix
+//header("Cache-control: private"); //IE 6 Fix
 
 	/*
 	 * Get Target Details
