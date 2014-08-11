@@ -1303,7 +1303,7 @@ class RBAgency_Profile {
 	 * Process Search and return Profile IDs
 	 */
 
-		public static function search_results($sql_where, $query_type = 0, $castingcart = false){
+		public static function search_results($sql_where, $query_type = 0, $castingcart = false, $arr_query = array()){
 
 			global $wpdb;
 
@@ -1379,7 +1379,7 @@ class RBAgency_Profile {
 			 */
 			if(is_admin()){
 				
-				return self::search_result_admin($sql);
+				return self::search_result_admin($sql,$arr_query );
 			} else {
 				
 				return self::search_result_public($sql, $castingcart);
@@ -1532,7 +1532,7 @@ class RBAgency_Profile {
 		/* 
 		 * search for admin 
 		 */
-		public static function search_result_admin($sql){
+		public static function search_result_admin($sql, $arr_query  = array()){
 
 				global $wpdb;
 				/* 
@@ -1556,9 +1556,12 @@ class RBAgency_Profile {
 				$displayHtml = "";
 				$displayHtml .=  "  <div class=\"boxblock-holder\">\n";
 				$displayHtml .=  "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
-
-				if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
-					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
+				unset($arr_query["limit"]);
+				unset($arr_query["perpage"]);
+				
+				$query_built =  http_build_query($arr_query);
+               if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
+					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href='". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none&".$query_built."'><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 				}
 				$displayHtml .=  "       <form method=\"get\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";

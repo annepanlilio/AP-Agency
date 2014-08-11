@@ -1176,7 +1176,7 @@
 			($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) )
 			{
 
-				$atts["type"]="casting";
+				//$atts["type"]="casting";
 				/*$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';*/
 			}
 

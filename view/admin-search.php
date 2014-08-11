@@ -69,7 +69,7 @@
 				$search_array = RBAgency_Profile::search_process();
 				$search_array["limit"] = $rb_agency_option_persearch;
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-				echo RBAgency_Profile::search_results($search_sql_query, 0);
+				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
 				
 			echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
@@ -79,8 +79,16 @@
 	  * Display Search results without limit
 	  */
 	  if(isset($_GET["limit"]) && $_GET["limit"] == "none") {
-	  		$search_sql_query = " profile.ProfileID > 0 ";
-			echo RBAgency_Profile::search_results($search_sql_query, 0);
+	  		$search_array = array();
+	  		foreach($_GET as $key => $val){
+	  			$search_array[$key] = $val;
+	  		}
+	  		unset($search_array["rb_agency_search"]);
+	  		unset($search_array["limit"]);
+	  		//$search_sql_query = " profile.ProfileID > 0  ORDER BY profile.ProfileContactNameFirst asc";
+	  		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
+				
+	  		echo RBAgency_Profile::search_results($search_sql_query, 0);
 			
 	  }
 
