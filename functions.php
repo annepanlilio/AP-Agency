@@ -1212,7 +1212,7 @@
 							if($_SERVER['REQUEST_URI']!="/profile-casting/"){
 								if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
 									if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
-									$links.='<a href="'.get_site_url().'/profile-casting/">'.__("Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
+									$links.='<a href="'.get_site_url().'/profile-casting/">'.__("View Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
 								}
 							}
 						}
