@@ -180,7 +180,7 @@ class RBAgency_Profile {
 						$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 						$results2 = $wpdb->get_results($query2,ARRAY_A);
 						echo "						<select name=\"gender\" id=\"gender\">\n";
-						echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+						echo "							<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 														// Pul Genders from Database
 														foreach ($results2 as $key) {
 															  if(isset($key["GenderID"]))
@@ -193,8 +193,8 @@ class RBAgency_Profile {
 
 				// Show Profile Age
 				if ( ($rb_agency_option_formshow_age > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
-						echo "				  <fieldset class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
-						echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
+						echo "				  <div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
+						echo "					<legend for=\"datebirth_min datebirth_max\">". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
 						echo "					<div>\n";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
@@ -205,7 +205,7 @@ class RBAgency_Profile {
 						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".RBAgency_Common::session('datebirth_max') ."\" />\n";
 						echo "						</div>";
 						echo "					</div>";
-						echo "				  </fieldset>";
+						echo "				  </div>";
 				}
 
 				// Show Location Search
@@ -221,7 +221,7 @@ class RBAgency_Profile {
 						echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>";
-						echo '							<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
+						echo '							<option value="">'. __("Any Country", rb_agency_TEXTDOMAIN) .'</option>';
 														$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
 														$result_query_get = $wpdb->get_results($query_get);
 														foreach($result_query_get as $r){
@@ -237,7 +237,7 @@ class RBAgency_Profile {
 												//echo "	<input type=\"text\" id=\"state\" name=\"state\" value=\"".RBAgency_Common::session("state") ."\" />\n";
 						echo "					<div>";
 						echo '						<select name="state" id="state">';
-						echo '							<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
+						echo '							<option value="">'. __("Any State", rb_agency_TEXTDOMAIN) .'</option>';
 														$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
 														$result_query_get = $wpdb->get_results($query_get);
 														foreach($result_query_get as $r){
@@ -388,7 +388,7 @@ class RBAgency_Profile {
 						 * Checkbox
 						 */
 						} elseif($ProfileCustomType == 5) {
-								echo "<fieldset class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+								echo "<div class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
@@ -416,13 +416,13 @@ class RBAgency_Profile {
 
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";
 								echo "</div>";
-								echo "</fieldset>";
+								echo "</div>";
 
 						/*
 						 * Radio Button
 						 */
 						} elseif($ProfileCustomType == 6) {
-								echo "<fieldset class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+								echo "<div class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 								echo "<legend>". $ProfileCustomTitle ."</legend>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
@@ -451,13 +451,13 @@ class RBAgency_Profile {
 								}
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";	       
 								echo "</div>";
-								echo "</fieldset>";
+								echo "</div>";
 
 						/*
 						 * Metric
 						 */
 						} elseif($ProfileCustomType == 7) {
-								echo "<fieldset class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 
 								/*
 								 * Measurement Label
@@ -562,7 +562,7 @@ class RBAgency_Profile {
 										echo "</div>";
 									echo "</div>";
 								}
-							echo "</fieldset>";
+							echo "</div>";
 
 						} // End Type
 
