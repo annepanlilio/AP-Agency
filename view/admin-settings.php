@@ -656,12 +656,23 @@ elseif ($ConfigID == 11) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
 		echo " </tr>\n";
+			echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Email Confirmation', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerconfirm]\">\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 0,false) ."> ". __("Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 1,false) ."> ". __("Password Self-Generated", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 2,false) ."> ". __("Username & Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Show User Registration when creating Profiles', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_useraccountcreation]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 0,false) ."> ". __("Yes, show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 1,false) ."> ". __("No, do not show username and password fields", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 0,false) ."> ". __("Show Username field (if email confirmation is set to \"password auto-generated\")", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 1,false) ."> ". __("Show Username & Password fields (if email confirmation is set to \"password self-generated\")", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 2,false) ."> ". __("Do Not Show Username & Password fields (if email confirmation is set to \"username & password auto-generated\")", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -671,7 +682,7 @@ elseif ($ConfigID == 11) {
 		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1,false)."/> Users may register profiles (uncheck to prevent self registration)<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-		echo " <tr valign=\"top\">\n";
+		/*echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Enable registration of Agent/Producer', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\">\n";
@@ -680,7 +691,7 @@ elseif ($ConfigID == 11) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-
+*/
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Delete Options', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
@@ -690,15 +701,7 @@ elseif ($ConfigID == 11) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 
-		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Email Confirmation', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td>\n";
-		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerconfirm]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 0,false) ."> ". __("Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 1,false) ."> ". __("Password Self-Generated", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "     </select>\n";
-		echo "   </td>\n";
-		echo " </tr>\n";
+	
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('New Profile Approval', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
