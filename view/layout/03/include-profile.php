@@ -311,6 +311,7 @@ echo " 							<div class=\"tab-panel\">\n";
 									$outLinkHeadShot = "";
 									$outLinkComCard = "";
 									$outVideoMedia = "";
+									$outCustomMediaLink  = "";
 									
 									foreach($resultsMedia as $dataMedia ){
 											
@@ -337,35 +338,44 @@ echo " 							<div class=\"tab-panel\">\n";
 										
 										} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 										
-											$outLinkResume .= $dataMedia['ProfileMediaType'] 
+/*											$outLinkResume .= $dataMedia['ProfileMediaType'] 
 											.": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
+*/
+											$outLinkResume .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+			
 										
 										} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 										
-											$outLinkHeadShot .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
+											/*$outLinkHeadShot .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
 											rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
-											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
+											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
+											$outLinkHeadShot .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+			
 										
 										} elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
 										
-											$outLinkComCard .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
+											/*$outLinkComCard .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
 											rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
-											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
+											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
+											$outLinkComCard .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+			
 										
 										} else{
 										
-											$outCustomMediaLink .= $dataMedia['ProfileMediaType'] .": <a href=\"".
+											/*$outCustomMediaLink .= $dataMedia['ProfileMediaType'] .": <a href=\"".
 										 	rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 										 	"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
-										 	$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
+										 	$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
+											$outCustomMediaLink .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+			
 										}
 								  	}
 
@@ -388,6 +398,11 @@ echo " 							<div class=\"tab-panel\">\n";
 									if(!empty($outLinkComCard)){
 										echo '<li>';
 										echo $outLinkComCard;
+										echo '</li>';
+									}
+									if(!empty($outCustomMediaLink)){
+										echo '<li>';
+										echo $outCustomMediaLink;
 										echo '</li>';
 									}
 									echo '</ul>';
