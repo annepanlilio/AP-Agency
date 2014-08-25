@@ -661,9 +661,12 @@
 	 * @param string $videoURL
 	 */
 	function rb_agency_get_VideoID($videoURL) {
+		
+		$videoID = null;
+
 		if (substr($videoURL, 0, 23) == "http://www.youtube.com/") {
-				$image_url = parse_url($url);
-			    if($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com'){
+				$image_url = parse_url($videoURL);
+			    if(isset($image_url['host']) && $image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com'){
 			        $array = explode("&", $image_url['query']);
 			        $videoID = "http://www.youtube.com/watch?v=".substr($array[0], 2);
 			    }
