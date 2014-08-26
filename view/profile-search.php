@@ -1,7 +1,8 @@
 <?php
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
-
+$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:1000;
+				
 	// Call Header
 	echo $rb_header = RBAgency_Common::rb_header();
 
@@ -47,10 +48,11 @@ $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_priva
 					$search_array = RBAgency_Profile::search_process();
 
 					// Return SQL string based on fields
-					$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-
+					rb_agency_profilelist($search_array);
+					//$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
+					
 					// Process Form Submission
-					echo RBAgency_Profile::search_results($search_sql_query, 0);
+					//echo RBAgency_Profile::search_results($search_sql_query, 0);
 					//  echo $formatted = RBAgency_Profile::search_formatted($search_results);
 
 				} else {

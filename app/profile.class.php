@@ -1246,6 +1246,8 @@ class RBAgency_Profile {
 
 		public static function search_generate_sqlorder($atts){
 
+
+
 			$filter = "";
 
 			// Convert Input
@@ -1406,6 +1408,7 @@ class RBAgency_Profile {
 			$all_html.='<div id="rbfilter-sort">';
 			$all_html.='<div class="rbtotal-results">Total Results : '.$count.' </div>';
 			$all_html.='<div class="rbsort">';
+
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
@@ -1472,9 +1475,10 @@ class RBAgency_Profile {
 				 * rb agency options
 				 */
 				$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:0;
 				$rb_agency_option_profilelist_count  = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
 				$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-
+				
 				/* 
 				 * this is the upper header html of the profile list
 				 */
@@ -1489,6 +1493,8 @@ class RBAgency_Profile {
 				}
 				*/
 				if ($rb_agency_option_profilelist_count) {
+					$items = $count;
+					$countList = $items - $rb_agency_option_persearch;
 					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
 					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". (isset($countList)?$countList:0) ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
@@ -1500,15 +1506,17 @@ class RBAgency_Profile {
 					$all_html .= "</div>\n";
 				}*/
 				$all_html .= '</div>';
-
 				/* 
 				 * wrap profile listing
 				 */
 				$all_html .="<div id='profile-list'>".$profile_list."</div>";
+
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
+
+
 
 				return $all_html;
 

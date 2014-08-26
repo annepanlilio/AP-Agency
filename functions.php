@@ -1192,7 +1192,7 @@
 					if(get_query_var('target')!="results" && $rb_agency_option_profilelist_printpdf && isset($atts)){// hide print and download PDF in Search result
 						$links.='
 						<div class="rbprint-download">
-							<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/print/?gd='.(!empty($atts["gender"])?$atts["gender"]:"").'&ast='.(!empty($atts["age_start"])?$atts["age_start"]:"").'&asp='.(!empty($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(!empty($atts["type"])?$atts["type"]:"").'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/pdf/?gd='.(isset($atts["gender"])?$atts["gender"]:"").'&ast='.(isset($atts["gender"])?$atts["age_start"]:"").'&asp='.(isset($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(isset($atts["type"])?$atts["type"]:"").'">Download PDF</a>'.(isset($addtionalLink)?$addtionalLink:"").'
+							<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/print/?gd='.(isset($atts["gender"]) && !empty($atts["gender"])?$atts["gender"]:"").'&ast='.(isset($atts["age_start"]) && !empty($atts["age_start"])?$atts["age_start"]:"").'&asp='.(!empty($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(!empty($atts["type"])?$atts["type"]:"").'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/pdf/?gd='.(isset($atts["gender"])?$atts["gender"]:"").'&ast='.(isset($atts["age_start"])?$atts["age_start"]:"").'&asp='.(isset($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(isset($atts["type"])?$atts["type"]:"").'">Download PDF</a>'.(isset($addtionalLink)?$addtionalLink:"").'
 						</div><!-- .rbprint-download -->';
 					}
 
@@ -1272,6 +1272,9 @@
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
 
+			$build_query = http_build_query($atts);
+
+
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
@@ -1290,7 +1293,7 @@
 					$p = new rb_agency_pagination;
 					$p->items($items);
 					$p->limit($pagingperpage); // Limit entries per page
-					$p->target($_SERVER["REQUEST_URI"]);
+					$p->target($_SERVER["REQUEST_URI"],$build_query);
 					$p->currentPage($paging); // Gets and validates the current page
 					$p->calculate(); // Calculates what to show
 					$p->parameterName('paging');
@@ -1422,6 +1425,7 @@
 			$profileDisplay = 0;
 			$countFav = 0;
 			$displayPaginationFooter = "";
+
 			foreach($resultsList as $dataList) {
 					
 				$profileDisplay++;
@@ -1814,6 +1818,7 @@ class rb_agency_pagination {
 	var $total_pages = -1;//items
 	var $limit = NULL;
 	var $target = ""; 
+	var $uriExtend = "";
 	var $page = 1;
 	var $adjacents = 2;
 	var $showCounter = false;
@@ -1835,7 +1840,7 @@ class rb_agency_pagination {
 	function limit($value){$this->limit = (int) $value;}
 	
 	#Page to sent the page value
-	function target($value){$this->target = $value;}
+	function target($value, $uriExtend = ""){$this->target = $value; $this->uriExtend = $uriExtend;}
 	
 	#Current page
 	function currentPage($value){$this->page = (int) $value;}
@@ -1895,9 +1900,9 @@ class rb_agency_pagination {
 			// We are in Page		
 			preg_match('/[0-9]/', $this->target, $matches, PREG_OFFSET_CAPTURE);
 			if (@$matches[0][1] > 0) {
-				return substr($this->target, 0, $matches[0][1]) ."/$id/";
+				return substr($this->target, 0, $matches[0][1]) ."/$id/?$this->uriExtend";
 			} else {
-				return "$this->target/$id/";
+				return "$this->target/$id/?$this->uriExtend";
 			}
 			
 		} // End Admin/Page Toggle
