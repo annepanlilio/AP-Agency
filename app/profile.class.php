@@ -1494,7 +1494,7 @@ class RBAgency_Profile {
 				*/
 				if ($rb_agency_option_profilelist_count) {
 					$items = $count;
-					$countList = $items - $rb_agency_option_persearch;
+					$countList = $items;
 					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
 					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". (isset($countList)?$countList:0) ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
