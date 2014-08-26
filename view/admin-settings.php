@@ -713,6 +713,19 @@ elseif ($ConfigID == 11) {
 		echo " </tr>\n";
 
 		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Default State For Registered Users', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_default_registered_users]\">\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 1,false) ."> ". __("Active", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 4,false) ."> ". __("Active - Not Visible On Website", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 0,false) ."> ". __("Inactive", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 2,false) ."> ". __("Archive", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 3,false) ."> ". __("Pending Approval", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
+		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Membership Subscription', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
