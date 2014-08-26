@@ -981,7 +981,7 @@
 
 					// Loop through all attributes looking for custom
 					foreach ($atts as $key => $val) {
-						if (substr($key,0,15) == "profilecustomid") {
+						if (substr(strtolower($key),0,15) == "profilecustomid") {
 							
 						/*
 						 *  Check if this is array or not because sometimes $val is an array so
@@ -1006,7 +1006,8 @@
 											}
 										}
 									} else {
-										$val = array_shift(array_values($val));
+										$val = array_values($val);
+										$val = array_shift($val);
 									} 
 								}
 								global $wpdb;

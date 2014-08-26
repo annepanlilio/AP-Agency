@@ -45,10 +45,15 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 				if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
 
 					// Process Form Submission & catch variables
-					$search_array = RBAgency_Profile::search_process();
+					$search_array = array();
 
+					if(isset($_REQUEST)){
+						$search_array = array_filter($_REQUEST);
+					}
 					// Return SQL string based on fields
-					rb_agency_profilelist($search_array);
+					   unset($search_array["search_profiles"]);
+						rb_agency_profilelist($search_array);
+					
 					//$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 					
 					// Process Form Submission
@@ -60,7 +65,12 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || isset($profilesearch_layout) &&  $profilesearch_layout == 'advanced' )){
 							// echo RBAgency_Profile::search_form("", "", 0);
 					}else{
-					echo "				<strong>". _e("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
+						if(isset($_GET["form_mode"])){
+							$search_array = array_filter($_GET);
+							rb_agency_profilelist($search_array);
+						}else{
+						echo "				<strong>". _e("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
+						}
 					}
 				}
 				echo "			</div><!-- #profile-search-results -->\n"; // #profile-search-results
