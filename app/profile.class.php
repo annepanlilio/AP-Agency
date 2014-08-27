@@ -564,7 +564,30 @@ class RBAgency_Profile {
 								}
 							echo "</div>";
 
+						} 
+
+						/*
+						 * Date Between
+						 */
+						elseif($ProfileCustomType == 10) {
+
+								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+									echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+											echo "<div>";
+									
+										echo "<div>";
+										echo "		<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("From", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"\" /></div>";
+										echo "</div>";
+										echo "<div>";
+										echo "		<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("to", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"\" /></div>";
+										echo "</div>";
+											echo "</div>";
+								
+								echo "</div>";
 						} // End Type
+
 
 					}
 

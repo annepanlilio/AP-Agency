@@ -154,6 +154,16 @@ jQuery(document).ready(function(){
 				jQuery( "#editfield_add_more_options_12" ).sortable();
 				
 			break;  	
+
+			case "10": // Text
+			     return '<tr>'
+				          +'<td>'
+						     +'<tr>'
+						    	 +'<td align="right">Title*:</td> <td><input type="text" name="ProfileCustomTitle"/></td>'
+							 +'</tr>'
+						  +'</td>'
+					+'</tr>';
+			break;  
 			
 			default:
 			   return '';
