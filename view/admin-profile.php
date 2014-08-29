@@ -1247,26 +1247,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			<div id="postbox-container-2" class="postbox-container">
 				<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
-					<div id="dashboard_at_a_glance" class="postbox">
-						<div class="handlediv" title="Click to toggle"><br></div>
-						<h3 class="hndle"><span>At a Glance</span></h3>
-						<div class="inside">
-							<div class="main">
-
-
-								<ul>
-									<li class="post-count"><a href="edit.php?post_type=post">7 Posts</a></li>
-									<li class="page-count"><a href="edit.php?post_type=page">1 Page</a></li>
-									<li class="comment-count"><a href="edit-comments.php">17 Comments</a></li>
-									<li class="comment-mod-count"><a href="edit-comments.php?comment_status=moderated">15 in moderation</a></li>
-								</ul>
-								<p>WordPress 3.8.1 running <a href="themes.php">Twenty Eleven</a> theme.</p>
-
-
-							</div>
-						</div>
-					</div>
-
 					<div id="dashboard_public_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Public Information", rb_agency_TEXTDOMAIN); ?></span></h3>
@@ -1362,7 +1342,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 													$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
 													$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID),ARRAY_A);
-													$countImgConfirm = $wpdb->num_rows;
+													$countImgConfirm = $wpdb->num_roAws;
 													$mass_image_data = array();
 													foreach ($resultsImgConfirm as $dataImgConfirm) {
 														$mass_image_data[$dataImgConfirm['ProfileMediaID']] = $dataImgConfirm['ProfileMediaURL'];
