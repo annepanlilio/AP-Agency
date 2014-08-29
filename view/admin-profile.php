@@ -698,15 +698,31 @@ elseif ((isset($_GET['action']) && $_GET['action'] == "editRecord") || (isset($_
 // *************************************************************************************************** //
 // Manage Record
 function rb_display_manage($ProfileID, $errorValidation) {
+
 	global $wpdb;
+
 	$rb_agency_options_arr = get_option('rb_agency_options');
+
+	// Unit Type
 	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-	$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
+
+	// Social
+	if (isset($rb_agency_options_arr['rb_agency_option_showsocial'])) {
+		$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
+	} else {
+		$rb_agency_option_showsocial = false;
+	}
+
+	// Maximum Height
 	$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
 	if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
 		$rb_agency_option_agencyimagemaxheight = 800;
 	}
+
+	// Naming Convention
 	$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
+
+	// Default Country
 	$rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
 	?>
 	<script type="text/javascript">
