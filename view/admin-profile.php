@@ -2126,7 +2126,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "    <tr class=\"thead\">\n";
 	echo "        <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
 	echo "        <th class=\"column-ProfileID\" id=\"ProfileID\" scope=\"col\" style=\"width:50px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileID&dir=" . $sortDirection) . "\">ID</a></th>\n";
-	echo "        <th class=\"column-ProfileContactDisplay\" id=\"ProfileContactDisplay\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactDisplay&dir=" . $sortDirection) . "\">Display Name</a></th>\n";
+	//echo "        <th class=\"column-ProfileContactDisplay\" id=\"ProfileContactDisplay\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactDisplay&dir=" . $sortDirection) . "\">Display Name</a></th>\n";
 	echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst&dir=" . $sortDirection) . "\">First Name</a></th>\n";
 	echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast&dir=" . $sortDirection) . "\">Last Name</a></th>\n";
 	echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection) . "\">Gender</a></th>\n";
@@ -2143,7 +2143,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "    <tr class=\"thead\">\n";
 	echo "        <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
 	echo "        <th class=\"column\" scope=\"col\">ID</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Display Name</th>\n";
+	//echo "        <th class=\"column\" scope=\"col\">Display Name</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">First Name</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">Last Name</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">Gender</th>\n";
