@@ -993,7 +993,7 @@ class RBAgency_Profile {
 
 
 					// Loop through all attributes looking for custom
-					foreach ((!empty($_GET)?$_GET:$_POST) as $key => $val) {
+					foreach ((!empty($_POST)?$_POST:$_GET) as $key => $val) {
 						if (substr(strtolower($key),0,15) == "profilecustomid") {
 
 						/*
