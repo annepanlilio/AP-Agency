@@ -993,7 +993,7 @@ class RBAgency_Profile {
 
 					// Loop through all attributes looking for custom
 					foreach ($_POST as $key => $val) {
-						if (substr($key,0,15) == "ProfileCustomID") {
+						if (substr(strtolower($key),0,15) == "profilecustomid") {
 
 						/*
 						 *  Check if this is array or not because sometimes $val is an array so
@@ -1018,7 +1018,8 @@ class RBAgency_Profile {
 											}
 										}
 									} else {
-										$val = array_shift(array_values($val));
+										$val = array_values($val);
+										$val = array_shift($val);
 									} 
 								}
 								global $wpdb;

@@ -66,8 +66,15 @@
 
 		if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles"){
 			echo "<div id=\"profile-search-results\">\n";
-				$search_array = RBAgency_Profile::search_process();
-				$search_array["limit"] = $rb_agency_option_persearch;
+				//$search_array = RBAgency_Profile::search_process();
+				//$search_array["limit"] = $rb_agency_option_persearch;
+
+				if(isset($_REQUEST)){
+						$search_array = array_filter($_REQUEST);
+				}
+					// Return SQL string based on fields
+					   unset($search_array["search_profiles"]);
+	  		
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
 				
@@ -80,14 +87,11 @@
 	  */
 	  if(isset($_GET["limit"]) && $_GET["limit"] == "none") {
 	  		$search_array = array();
-	  		foreach($_GET as $key => $val){
-	  			$search_array[$key] = $val;
-	  		}
+	  		$search_array = array_filter($_GET);
+				
 	  		unset($search_array["rb_agency_search"]);
 	  		unset($search_array["limit"]);
-	  		//$search_sql_query = " profile.ProfileID > 0  ORDER BY profile.ProfileContactNameFirst asc";
 	  		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-				
 	  		echo RBAgency_Profile::search_results($search_sql_query, 0);
 			
 	  }
