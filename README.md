@@ -1,7 +1,7 @@
 # RB Agency
 Model and Talent Agency CRM management and scheduling tool.
 
-### Current Version 2.0.9.4
+### Current Version 2.1
 
 ## Installation
 
@@ -9,6 +9,14 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 
 ## Change Log
+
+### 2.1
+* New custom field "Date".  Ability to search & sort by Date
+* User settings enhancement
+* Search optimization & enhancement
+* PDF download bugfixes
+* Bulk password generator enhancement
+
 
 ### 2.0.9
 * Added override to be able to turn on-off redirect on login.  Agency > Settings > Interact Settings
