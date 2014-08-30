@@ -445,7 +445,7 @@ class RBAgency_Casting {
 					$headers[]  = 'From: '. $SearchMuxFromName .' <'. $SearchMuxFromEmail.'>' . "\r\n";
 				}
 			} else {
-					$headers[]  = 'From: RB Agency <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+					$headers[]  = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
 			}
 
 			//For Bcc emails
