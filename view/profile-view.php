@@ -151,9 +151,9 @@
 		if ($count > 0) {
 
 			// P R I V A C Y FILTER ====================================================
-			if ( ( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || 
-				( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) )
-				|| ($rb_agency_option_privacy == 0) ||
+			if ( ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) ||
+				( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || 
+				 ($rb_agency_option_privacy == 0) ||
 
 				//admin users
 				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
