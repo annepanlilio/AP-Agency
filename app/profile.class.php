@@ -195,7 +195,7 @@ class RBAgency_Profile {
 				// Show Profile Age
 				if ( ($rb_agency_option_formshow_age > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
 						echo "				  <div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
-						echo "					<legend for=\"datebirth_min datebirth_max\">". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
+						echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", rb_agency_TEXTDOMAIN) . "</label>";
 						echo "					<div>\n";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
@@ -390,7 +390,7 @@ class RBAgency_Profile {
 						 */
 						} elseif($ProfileCustomType == 5) {
 								echo "<div class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "<legend>". $ProfileCustomTitle ."</legend>";
+								echo "<label>". $ProfileCustomTitle ."</label>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 								foreach($array_customOptions_values as $val){
@@ -424,7 +424,7 @@ class RBAgency_Profile {
 						 */
 						} elseif($ProfileCustomType == 6) {
 								echo "<div class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "<legend>". $ProfileCustomTitle ."</legend>";
+								echo "<label>". $ProfileCustomTitle ."</label>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 
@@ -487,7 +487,7 @@ class RBAgency_Profile {
 										}
 									}
 
-									echo "<legend>". $ProfileCustomTitle . $measurements_label ."</legend>";
+									echo "<label>". $ProfileCustomTitle . $measurements_label ."</label>";
 
 								/*
 								 * Handle Array
@@ -991,8 +991,9 @@ class RBAgency_Profile {
 					$filterDropdown = array();
 					$filter2 = "";
 
+
 					// Loop through all attributes looking for custom
-					foreach ($_POST as $key => $val) {
+					foreach ((!empty($_GET)?$_GET:$_POST) as $key => $val) {
 						if (substr(strtolower($key),0,15) == "profilecustomid") {
 
 						/*
