@@ -151,7 +151,7 @@
 		if ($count > 0) {
 
 			// P R I V A C Y FILTER ====================================================
-			if ( ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) ||
+			if ( ( $rb_agency_option_privacy >= 1 && (isset($_SESSION['SearchMuxHash']) || strpos($_SERVER['HTTP_REFERER'],'client-view') > 0 )) ||
 				( $rb_agency_option_privacy >= 1 && is_user_logged_in() ) || 
 				 ($rb_agency_option_privacy == 0) ||
 
