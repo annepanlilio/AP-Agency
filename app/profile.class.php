@@ -239,12 +239,12 @@ class RBAgency_Profile {
 						echo "					<div>";
 						echo '						<select name="state" id="state">';
 						echo '							<option value="">'. __("Any State", rb_agency_TEXTDOMAIN) .'</option>';
-														$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
+														/*$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
 														$result_query_get = $wpdb->get_results($query_get);
 														foreach($result_query_get as $r){
 															$selected =RBAgency_Common::session("state")==$r->StateID?"selected=selected":"";
 						echo '								<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
-														}
+														}*/
 						echo '						</select>';
 						echo "					</div>\n";
 						echo "				</div>\n";
