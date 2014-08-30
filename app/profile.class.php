@@ -61,6 +61,7 @@ class RBAgency_Profile {
 				}
 
 
+
 			/*
 			* Display Form
 			*/
@@ -577,11 +578,11 @@ class RBAgency_Profile {
 									
 										echo "<div>";
 										echo "		<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("From", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"\" /></div>";
+										echo "		<div><input  id=\"rb_datepicker_from\" class=\"rb-datepicker\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"\" /></div>";
 										echo "</div>";
 										echo "<div>";
 										echo "		<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("to", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"\" /></div>";
+										echo "		<div><input  id=\"rb_datepicker_to\" class=\"rb-datepicker\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"\" /></div>";
 										echo "</div>";
 											echo "</div>";
 								
@@ -844,7 +845,6 @@ class RBAgency_Profile {
 
 			// Time Zone
 			$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
-
 			// Convert Input
 			if(is_array($atts)) {
 
@@ -1207,7 +1207,14 @@ class RBAgency_Profile {
 
 										$_SESSION[$key] = $val;
 									}
-								}
+								}elseif ($ProfileCustomType["ProfileCustomType"] == 10) {
+									// Date
+									list($from, $to) = explode(",", $val);
+
+									$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
+									$_SESSION[$key] = $val;
+
+								} 
 
 							} // if not empty
 						} // end if
@@ -1217,7 +1224,7 @@ class RBAgency_Profile {
 						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 					}
 
-
+					
 					$filter .= $filter2;
 					$filter = str_replace(array("\n","\t","\r")," ", $filter);
 					$filter = str_replace(")(", ") OR (", $filter);
@@ -1270,10 +1277,21 @@ class RBAgency_Profile {
 
 		public static function search_generate_sqlorder($atts){
 
-
-
 			$filter = "";
 
+			$rb_agency_options_arr = get_option("rb_agency_options");
+			// Sort by date 
+			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
+			
+			if($rb_agency_option_profilelist_sortbydate){
+				   $atts["sort"] = "cmux.ProfileCustomDateValue";
+			}
+
+			 $filter .= " GROUP BY profile.ProfileID";
+		
+
+
+			
 			// Convert Input
 			if(is_array($atts)) {
 
@@ -1292,12 +1310,14 @@ class RBAgency_Profile {
 					"page" => NULL
 				), $atts));
 
+
+
 			/*
 			 * ORDER BY
 			 */
 
 				if (isset($sort) && !empty($sort)){
-					$filter .= " ORDER BY $sort ";
+					$filter .= " ORDER BY $sort DESC ";
 				}
 
 			/*
@@ -1307,8 +1327,8 @@ class RBAgency_Profile {
 				if (isset($limit) && !empty($limit)){
 					$filter .= " LIMIT 0, $limit ";
 				}
-
-				// Debug
+          
+          		// Debug
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_generate_sqlorder',$filter);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
@@ -1341,7 +1361,7 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
-					$sql = "SELECT * FROM ". table_agency_profile ."  profile WHERE ". $sql_where . self::$order_by;
+					$sql = "SELECT profile.*, cmux.* FROM ". table_agency_profile ." as profile LEFT JOIN ".table_agency_customfield_mux." as cmux ON cmux.ProfileID = profile.ProfileID WHERE ". $sql_where . self::$order_by;
 					break;
 
 				/* 

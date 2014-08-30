@@ -268,7 +268,14 @@ if (isset($_POST['action'])) {
 							if (is_array($value)) {
 								$value = implode(",", $value);
 							}
-							$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+							$profilecustomfield_date = explode("_",$key);
+							
+							if(count($profilecustomfield_date) == 2){ // customfield date
+								$value = date("y-m-d h:i:s",strtotime($value));
+								$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+							}else{
+								$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+							}
 							$results1 = $wpdb->query($insert1);
 						}
 					}
@@ -346,7 +353,15 @@ if (isset($_POST['action'])) {
 												if (is_array($value)) {
 													$value = implode(",", $value);
 												}
-												$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+												
+												$profilecustomfield_date = explode("_",$key);
+												
+												if(count($profilecustomfield_date) == 2){ // customfield date
+													$value = date("y-m-d h:i:s",strtotime($value));
+													$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+												}else{
+													$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+												}
 												$results1 = $wpdb->query($insert1);
 											}
 										}

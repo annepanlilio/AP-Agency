@@ -705,6 +705,14 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.9.5");
 	}
 
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.5") {
+		// Add Column
+		rb_agency_addColumn( table_agency_customfield_mux,"ProfileCustomDateValue","DATE DEFAULT NULL");
+		
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.9.6");
+	}
+
 
 
 

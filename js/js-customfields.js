@@ -204,6 +204,7 @@ jQuery(document).ready(function(){
 			jQuery(this).parents("li").remove();
 		});	
 	 
+	 	
 });
 
 

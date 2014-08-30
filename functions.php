@@ -49,9 +49,49 @@
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-formstyle' );
 
+				wp_register_style( 'rbagency-datepicker', plugins_url('rb-agency/style/jquery-ui/jquery-ui.css'));
+				wp_enqueue_style( 'rbagency-datepicker' );
+
+				wp_register_style( 'rbagency-datepicker-theme', plugins_url('rb-agency/style/jquery-ui/jquery-ui.theme.min.css'));
+				wp_enqueue_style( 'rbagency-datepicker-theme' );
+
+
+				wp_enqueue_script( 'jquery-ui-datepicker' );
+
+				echo "<script type=\"text/javascript\">\n\n";
+				echo "jQuery(function(){\n\n";
+				echo "jQuery( \"input[id=rb_datepicker]\").datepicker({ dateFormat: \"yy-mm-dd\" }).val(jQuery( \"input[id=rb_datepicker]\").val());";
+				echo "});\n\n";
+				echo "</script>";
+
+				?>
+				<script type="text/javascript">
+				jQuery(function(){
+						jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
+							dateFormat: "yy-mm-dd",
+					        defaultDate: "+1w",
+					        changeMonth: true,
+					        numberOfMonths: 3,
+					        onSelect: function( selectedDate ) {
+					            if(this.id == 'input[id=rb_datepicker_from]'){
+					              var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
+					              var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
+					              var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
+					              jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
+					              jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
+					            }
+
+					        }
+						});
+				});
+				</script>
+
+				<?php
+
 				// Load Jquery if not registered
 				if ( ! wp_script_is( 'jquery', 'registered' ) )
 					wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
+					
 
 				// Load custom fields javascript
 				wp_enqueue_script( 'customfields', plugins_url('js/js-customfields.js', __FILE__) );
@@ -77,7 +117,41 @@
 
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
 				wp_enqueue_style( 'rbagency-formstyle' );
+
+				wp_register_style( 'rbagency-datepicker-theme', plugins_url('rb-agency/style/jquery-ui/jquery-ui.theme.min.css'));
+				wp_enqueue_style( 'rbagency-datepicker-theme' );
+
+				wp_register_style( 'rbagency-datepicker', plugins_url('rb-agency/style/jquery-ui/jquery-ui.min.css'));
+				wp_enqueue_style( 'rbagency-datepicker' );
+
+				wp_enqueue_script( 'jquery-ui-datepicker' );
+
 			}
+				?>
+				<script type="text/javascript">
+				jQuery(function(){
+						jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
+							dateFormat: "yy-mm-dd",
+					        defaultDate: "+1w",
+					        changeMonth: true,
+					        numberOfMonths: 3,
+					        onSelect: function( selectedDate ) {
+					            if(this.id == 'input[id=rb_datepicker_from]'){
+					              var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
+					              var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
+					              var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
+					              jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
+					              jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
+					            }
+
+					        }
+						});
+				});
+				</script>
+
+				<?php
+
+
 
 			add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
 
@@ -902,6 +976,9 @@
 		$State						= $profilestate;
 		$Zip						= $profilezip;
 
+		$displayHTML = "";
+		$displayPaginationFooter = "";
+
 		// Name
 		if(isset($_GET['filter'])){
 				$start = preg_replace('/[^A-Za-z]/','',$_GET['filter']);
@@ -1153,7 +1230,14 @@
 										}
 
 									}
-								}
+								}elseif ($ProfileCustomType["ProfileCustomType"] == 10) {
+									// Date
+									list($from, $to) = explode(",", $val);
+
+									$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
+									$_SESSION[$key] = $val;
+
+								} 
 
 							} // if not empty
 						} // end if
@@ -1162,7 +1246,6 @@
 					if(count($filterDropdown) > 0){
 						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 					}
-
 
 					$filter .= $filter2;
 					$filter = str_replace(array("\n","\t","\r")," ", $filter);
@@ -1375,10 +1458,26 @@
 					FROM ". table_agency_profile ." profile 
 						$filter  
 					GROUP BY profile.ProfileID 
-					ORDER BY $sort $dir $limit";
+					ORDER BY $sort $dir $limit #A";
 
 			} else {
 				// Execute Query   removed profile.*,
+
+				$rb_agency_options_arr = get_option("rb_agency_options");
+			// Sort by date 
+			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
+			
+			$sortby = "";
+
+			
+			if($rb_agency_option_profilelist_sortbydate){
+				$sortby = "cmux.ProfileCustomDateValue";
+				$dir = "DESC";
+			}else{
+				$sortby  = $sort;
+			}
+
+			
 				$queryList = "
 				SELECT 
 					profile.ProfileID,
@@ -1387,11 +1486,16 @@
 					profile.ProfileContactDisplay, 
 					profile.ProfileDateBirth, 
 					profile.ProfileDateCreated,
-					profile.ProfileLocationState
+					profile.ProfileLocationState,
+					cmux.*
 				FROM ". table_agency_profile ." profile 
+					LEFT JOIN
+					".table_agency_customfield_mux." cmux
+					ON
+					profile.ProfileID = cmux.ProfileID
 				$filter  
 				GROUP BY profile.ProfileID 
-				ORDER BY $sort $dir $limit";
+				ORDER BY $sortby $dir $limit #B";
 			}
 			// Query
 			/*echo "queryList".$queryList;
@@ -2145,12 +2249,14 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	
 	if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){ 
    
-		$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+		$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
 		$row = current($subresult);
 		
 		$ProfileCustomValue = $row["ProfileCustomValue"];
 		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 		$ProfileCustomType  = $data3['ProfileCustomType'];
+		$ProfileCustomDateValue = $row["ProfileCustomDateValue"];
+		
 		/* Pull data from post so data will not lost @Satya 12/12/2013 */
 		if($ProfileCustomValue=="" && isset($_POST)){
 			$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ; 
@@ -2322,6 +2428,11 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					  echo "  <input class='imperial_metrics' type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />
 							  <div class='error_msg' style='color:red; min-width:0px'></div>";
 				}						
+			} elseif ($ProfileCustomType == 10) { //Date
+				
+					echo "<input type=\"text\" id=\"rb_datepicker\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
+			
+
 			}									
 	} // End if Empty ProfileCustomID
 }
