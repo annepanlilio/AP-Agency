@@ -372,8 +372,8 @@ class RBAgency_Casting {
 			$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_option_agencyname'])?$rb_agency_options_arr['rb_agency_option_agencyname']:"";
 			$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
 		
-			$SearchID				= @time(U);
-			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
+			$SearchID			= isset($_GET['SearchID']) ? $_GET['SearchID']: "";
+		    $SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 		
 			$SearchMuxFromName		= isset($_POST["SearchMuxFromName"])?$_POST["SearchMuxFromName"]:"";
 			$SearchMuxFromEmail		= isset($_POST["SearchMuxFromEmail"])?$_POST["SearchMuxFromEmail"]:"";
@@ -389,9 +389,9 @@ class RBAgency_Casting {
 			$cartString = rb_agency_cleanString($cartString);
 			
 			global $wpdb;
-			$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die($wpdb->print_error());
+			//$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die($wpdb->print_error());
 					
-		$lastid = $wpdb->insert_id;
+		   //$lastid = $wpdb->insert_id;
 		
 		// Create Record
 		$insert = "INSERT INTO " . table_agency_searchsaved_mux ." 
@@ -406,7 +406,7 @@ class RBAgency_Casting {
 				)" .
 				"VALUES
 				(
-				'" . esc_sql($lastid) . "',
+				'" . esc_sql($SearchID) . "',
 				'" . esc_sql($SearchMuxHash) . "',
 				'" . esc_sql($SearchMuxToName) . "',
 				'" . esc_sql($SearchMuxToEmail) . "',
@@ -461,10 +461,10 @@ class RBAgency_Casting {
 			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
 
 			if($isSent){
-				if(!empty($FromEmail)){
+				if(!empty($SearchMuxFromEmail)){
 					$email_error .= "<div style=\"margin:15px;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
-					$email_error .= "Email successfully sent from <strong>". $FromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
+					$email_error .= "Email successfully sent from <strong>". $SearchMuxFromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
 					$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
 					$email_error .= "</div>";
 					$email_error .= "</div>";
