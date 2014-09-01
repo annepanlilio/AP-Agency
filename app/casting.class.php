@@ -373,8 +373,11 @@ class RBAgency_Casting {
 			$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
 		
 			$SearchID			= isset($_GET['SearchID']) ? $_GET['SearchID']: "";
-		    $SearchMuxHash			= RBAgency_Common::generate_random_string(8);
-		
+			if(!isset($_POST["resend"]) && empty($_POST["resend"])){
+			    $SearchMuxHash	= RBAgency_Common::generate_random_string(8);
+			}else{
+				$SearchMuxHash = isset($_GET["SearchMuxHash"])?$_GET["SearchMuxHash"]:"";
+			}
 			$SearchMuxFromName		= isset($_POST["SearchMuxFromName"])?$_POST["SearchMuxFromName"]:"";
 			$SearchMuxFromEmail		= isset($_POST["SearchMuxFromEmail"])?$_POST["SearchMuxFromEmail"]:"";
 			$SearchMuxToName		= isset($_POST['SearchMuxToName'])?$_POST['SearchMuxToName']:"";
@@ -392,47 +395,48 @@ class RBAgency_Casting {
 			//$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die($wpdb->print_error());
 					
 		   //$lastid = $wpdb->insert_id;
-		
-		// Create Record
-		$insert = "INSERT INTO " . table_agency_searchsaved_mux ." 
-				(
-				SearchID,
-				SearchMuxHash,
-				SearchMuxToName,
-				SearchMuxToEmail,
-				SearchMuxSubject,
-				SearchMuxMessage,
-				SearchMuxCustomValue
-				)" .
-				"VALUES
-				(
-				'" . esc_sql($SearchID) . "',
-				'" . esc_sql($SearchMuxHash) . "',
-				'" . esc_sql($SearchMuxToName) . "',
-				'" . esc_sql($SearchMuxToEmail) . "',
-				'" . esc_sql($SearchMuxSubject) . "',
-				'" . esc_sql($SearchMuxMessage) . "',
-				'" . esc_sql($SearchMuxCustomValue) ."'
-				)";
-			$results = $wpdb->query($insert);  
-			$profileimage = "";  
-			$profileimage .='<p><div style="width:550px;min-height: 170px;">';
-			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
-			$qProfiles =  $wpdb->get_results($wpdb->prepare($query,$lastid),ARRAY_A );
-			$data = count($qProfiles);
-			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
-			$results = $wpdb->get_results($wpdb->prepare($query,$data['SearchProfileID']),ARRAY_A);
-			$count = count($results);
-			foreach($results as $data2) {
-				$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
-				$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
-				$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
-				$profileimage .= "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-				$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
-				$profileimage .= "</div>\n";
-				$profileimage .= "</div>\n";
-			}
-			$profileimage .="</div></p>";
+		if(!isset($_GET["resend"])){
+						// Create Record
+						$insert = "INSERT INTO " . table_agency_searchsaved_mux ." 
+								(
+								SearchID,
+								SearchMuxHash,
+								SearchMuxToName,
+								SearchMuxToEmail,
+								SearchMuxSubject,
+								SearchMuxMessage,
+								SearchMuxCustomValue
+								)" .
+								"VALUES
+								(
+								'" . esc_sql($SearchID) . "',
+								'" . esc_sql($SearchMuxHash) . "',
+								'" . esc_sql($SearchMuxToName) . "',
+								'" . esc_sql($SearchMuxToEmail) . "',
+								'" . esc_sql($SearchMuxSubject) . "',
+								'" . esc_sql($SearchMuxMessage) . "',
+								'" . esc_sql($SearchMuxCustomValue) ."'
+								)";
+							$results = $wpdb->query($insert);  
+							$profileimage = "";  
+							$profileimage .='<p><div style="width:550px;min-height: 170px;">';
+							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
+							$qProfiles =  $wpdb->get_results($wpdb->prepare($query,$lastid),ARRAY_A );
+							$data = count($qProfiles);
+							$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
+							$results = $wpdb->get_results($wpdb->prepare($query,$data['SearchProfileID']),ARRAY_A);
+							$count = count($results);
+							foreach($results as $data2) {
+								$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
+								$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
+								$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+								$profileimage .= "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+								$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+								$profileimage .= "</div>\n";
+								$profileimage .= "</div>\n";
+							}
+							$profileimage .="</div></p>";
+			 } // end is not resend / is new
 
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
