@@ -70,7 +70,7 @@ $siteurl = get_option('siteurl');
 					}
 				}
 
-				echo ('<div id="message" class="updated"><p>Profile deleted successfully!</p></div>');
+				echo ('<div id="message" class="updated"><p>Profile deleted successfully!  <a href="'. admin_url("admin.php?page=". $_GET['page']) .'"> Go back to Saved Seach</a></p></div>');
 
 			break;
 
@@ -102,7 +102,7 @@ $siteurl = get_option('siteurl');
 			// Remove Casting
 			$delete = "DELETE FROM " . table_agency_searchsaved . " WHERE SearchID = \"". $SearchID ."\"";
 			$results = $wpdb->query($delete);
-			echo ('<div id="message" class="updated"><p>Record deleted successfully!</p></div>');
+			echo ('<div id="message" class="updated"><p>Record deleted successfully! <a href="'. admin_url("admin.php?page=". $_GET['page']) .'"> Go back to Saved Seach</a></p></p></div>');
 		}
     } elseif ((isset($_GET['action']) && $_GET['action'] == "emailCompose") && isset($_GET['SearchID'])) {
 	/* 
@@ -132,6 +132,9 @@ $siteurl = get_option('siteurl');
 		   <p class="submit">
 			   <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
 			   <input type="hidden" name="action" value="emailSend" />
+			   <?php if(isset($_GET["resend"])):?>
+			   <input type="hidden" name="resend" value="true" />
+			   <?php endif; ?>
 			   <input type="submit" name="submit" value="Send Email" class="button-primary" />
 		   </p>
 
@@ -393,9 +396,11 @@ $siteurl = get_option('siteurl');
 			$SearchTitle = stripslashes($data2['SearchTitle']);
 			$SearchProfileID = stripslashes($data2['SearchProfileID']);
 			$SearchDate = stripslashes($data2['SearchDate']);
+
 			$query3 = "SELECT SearchID,SearchMuxHash, SearchMuxToName, SearchMuxToEmail, SearchMuxSent FROM ". table_agency_searchsaved_mux ." WHERE SearchID = %d";
 			$results3 = $wpdb->get_results($wpdb->prepare($query3, $SearchID), ARRAY_A);
 			$count3 = $wpdb->num_rows;
+
 
 		?>
 		<tr<?php echo isset($rowColor)?$rowColor:""; ?>>
@@ -415,7 +420,7 @@ $siteurl = get_option('siteurl');
 				<?php
 				}else{
 				?>
-						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>">Create Email</a> | </span>
+						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>&SearchMuxHash=<?php echo $results3[0]['SearchMuxHash'];?>&resend=true">Create Email</a> | </span>
 				<?php } ?>
 						<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 				</div>
