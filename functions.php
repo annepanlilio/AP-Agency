@@ -3534,7 +3534,7 @@ function rb_display_profile_list(){
 			<td><?php echo $ProfileID ?></td>
 			<td><?php echo $ProfileContactNameFirst ?></td>
 			<td><?php echo $ProfileContactNameLast ?></td>
-			<td><?php echo $ProfileContactEmail ?></td>
+			<td style="text-transform: lowercase;"><?php echo $ProfileContactEmail ?></td>
 			<td><a href="javascript:void(0)" class="generate_lp button-secondary" data-id="<?php echo $ProfileID ?>" data-firstname="<?php echo $ProfileContactNameFirst ?>" data-lastname="<?php echo $ProfileContactNameLast ?>">Generate</a></td>
 			<td><a href="javascript:void(0)" class="email_lp button-primary" disabled="disabled" data-id="<?php echo $ProfileID ?>" id="em_<?php echo $ProfileID ?>" data-email="<?php echo $ProfileContactEmail ?>">Send Email</a></td>
 			<td>
