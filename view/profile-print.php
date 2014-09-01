@@ -204,7 +204,7 @@ global $wpdb;
 				$ii++;
 				
 				
-				echo "<td style=\" border: 1px solid #e1e1e1; \">";
+				echo "<td style=\" border: 1px solid #e1e1e1; vertical-align: top;\">";
 				if (1 == 1) {
 
 					echo "<div style=\"float: left; width: 420px; min-height: 220px; overflow: hidden; margin: 5px; padding:5px;  \">";
@@ -264,7 +264,7 @@ global $wpdb;
 						$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
 						foreach  ($resultsCustom as $resultCustom) {
 							if(!empty($resultCustom->ProfileCustomValue )){
-							echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+							echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
 							}
 						}
 
