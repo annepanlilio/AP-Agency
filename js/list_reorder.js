@@ -86,7 +86,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                  1 : 'A - Z',
                                  2 : 'Z - A'
                           };
-                    } else if(setting == 3 ){
+                    } else if(setting == 3 || setting == 5 ){
                           options = {
                                  1 : 'Ascending',
                                  2 : 'Descending'
@@ -119,6 +119,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 * calculate sorting type
                 */
                 prc.calculate_sortyp = function (t1, t2){
+
+                    console.log(t1+"="+t2);
+                        
                         
                         // 1 young to old
                         if(t1 == '1' && t2 == '1'){
@@ -149,7 +152,17 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         if(t1 == '2' && t2 == '2'){
                             return '6';
                         }
+
+                         // 3 due date descending
+                        if(t1 == '5' && t2 == '2'){
+                            return '7';
+                        }
                         
+                        // 4 due date ascending
+                        if(t1 == '5' && t2 == '1'){
+                            return '8';
+                        }
+
                         return "";
            		
 	        }
@@ -238,8 +251,28 @@ function manage_elem(typ1, main_elm, hidden_elm){
 				});
 				srt_arr.sort();
                                 srt_arr.reverse();
-                                
-                        } 
+
+               }else if (sort_typ == '7') {  // duedate sorting descending  
+                    jQuery("#hidden_div").find(".p_duedate").each(function(){
+                        srt_arr.push(jQuery(this).val());   
+                                            srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                    });
+                    srt_arr.sort();
+                                    srt_arr.reverse();
+                            
+                           
+                } else if (sort_typ == '8') {  // duedate sorting ascending   
+                    jQuery("#hidden_div").find(".p_duedate").each(function(){
+                                srt_arr.push(jQuery(this).val());   
+                                            srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                    });
+                    srt_arr.sort();
+                                    
+                          
+                }
+
+                console.log(sort_typ);
+                console.log(srt_arr);
                         
                         clone();
 		
@@ -254,7 +287,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                        counted = [];
                        
                        jQuery.each(srt_arr, function(index, value) {
-
+                             console.log("clone: "+sort_typ);
                                 if(sort_typ == '1'  || sort_typ == '5'){
                                         
                                         if(prc.check_instance_in_array(value)){
@@ -291,7 +324,32 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         }
 
 
-                                }					  					
+                                }else if(sort_typ == '5' ) {
+                                        if(prc.check_instance_in_array(value)){
+                                                var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
+                                                prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_duedate");
+                                                counted.push(value);
+                                            }
+                                        }
+
+
+                                }else if(sort_typ == '8' || sort_typ == '7'){
+                                        
+                                        if(prc.check_instance_in_array(value)){
+                                            var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
+                                            prc.clone_em(cloned);
+                                        } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_duedate");
+                                                counted.push(value);
+                                            }
+                                        }
+                                        
+                                }                                       
+					  					
 
                        });
                        

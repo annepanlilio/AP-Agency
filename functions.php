@@ -1253,6 +1253,12 @@
 
 				
 				}
+
+			$rb_agency_options_arr = get_option("rb_agency_options");
+			// Sort by date 
+			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
+			
+			
 		// Can we show the profiles?
 		// P R I V A C Y FILTER ====================================================
 		if ( (isset($OverridePrivacy)) || 
@@ -1271,6 +1277,7 @@
 				//$atts["type"]="casting";
 				/*$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';*/
 			}
+
 
 				// print, downloads links to be added on top of profile list
 				$links='<div class="rblinks">';
@@ -1327,8 +1334,11 @@
 							<option value="1">Age</option>
 							<option value="2">Name</option>
 							<option value="3">Date Joined</option>
-							<option value="2">Display Name</option>
-						</select>
+							<option value="2">Display Name</option>';
+						if($rb_agency_option_profilelist_sortbydate){	
+							$links.='<option value="5">Due Date</option>';
+						}
+				$links.='</select>
 						<select id="sort_option">
 							<option value="">Sort Options</option>
 						</select>
@@ -1463,10 +1473,6 @@
 			} else {
 				// Execute Query   removed profile.*,
 
-				$rb_agency_options_arr = get_option("rb_agency_options");
-			// Sort by date 
-			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
-			
 			$sortby = "";
 
 			
@@ -1487,7 +1493,15 @@
 					profile.ProfileDateBirth, 
 					profile.ProfileDateCreated,
 					profile.ProfileLocationState,
-					cmux.*
+					cmux.*,
+					 (SELECT cmux.ProfileCustomDateValue FROM ".
+								   			table_agency_customfield_mux." as cmux
+								   			WHERE 
+								   			cmux.ProfileID = profile.ProfileID
+								   			LIMIT 1
+					) 
+					AS
+					ProfileDueDate
 				FROM ". table_agency_profile ." profile 
 					LEFT JOIN
 					".table_agency_customfield_mux." cmux
@@ -1585,7 +1599,8 @@
 				$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">';
-
+				$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+        
 				if ($p_image){
 					
 					#dont need other image for hover if its for print or pdf download view and dont use timthubm

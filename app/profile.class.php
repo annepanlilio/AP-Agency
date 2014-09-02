@@ -573,7 +573,7 @@ class RBAgency_Profile {
 						elseif($ProfileCustomType == 10) {
 							     $from = "";
 							       $to = "";
-								list($from,$to) =  @explode(",",RBAgency_Common::session("ProfileCustomID".$ProfileCustomID));
+								@list($from,$to) =  @explode(",",RBAgency_Common::session("ProfileCustomID".$ProfileCustomID));
 									
 								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 									echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
@@ -1417,7 +1417,40 @@ class RBAgency_Profile {
 					//}
 
 					// Execute the query showing casting cart
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay,profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart  WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
+					$sql = "SELECT profile.ProfileID, 
+								   profile.ProfileGallery, 
+								   profile.ProfileContactDisplay,
+								   profile.ProfileContactNameFirst, 
+								   profile.ProfileContactNameLast, 
+								   profile.ProfileDateBirth, 
+								   profile.ProfileIsActive, 
+								   profile.ProfileLocationState, 
+								   profile.ProfileID as pID, 
+								   cart.CastingCartTalentID, 
+								   cart.CastingCartTalentID, 
+								   (SELECT media.ProfileMediaURL FROM ". 
+								   			table_agency_profile_media ." media 
+								   			WHERE 
+								   			profile.ProfileID = media.ProfileID 
+								   			AND 
+								   			media.ProfileMediaType = \"Image\" 
+								   			AND 
+								   			media.ProfileMediaPrimary = 1) 
+											AS 
+								   ProfileMediaURL,
+								   (SELECT cmux.ProfileCustomDateValue FROM ".
+								   			table_agency_customfield_mux." as cmux
+								   			WHERE 
+								   			cmux.ProfileID = profile.ProfileID
+								   			LIMIT 1
+								   			) 
+											AS
+									ProfileDueDate
+								   FROM ". table_agency_profile ." profile 
+								   INNER JOIN  ".table_agency_castingcart." cart  
+								   WHERE $sqlCasting_userID 
+								   AND ProfileIsActive = 1 
+								   GROUP BY profile.ProfileID";  
 			}
 
 			if(self::$error_debug || self::$error_debug_query){
@@ -1874,7 +1907,8 @@ class RBAgency_Profile {
 			$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
-            $displayActions = "";  
+            $displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+           $displayActions = "";  
 			if(is_user_logged_in()){
 	            $displayActions = "<div class=\"rb_profile_tool\">";
 	            if($rb_agency_option_profilelist_favorite){
