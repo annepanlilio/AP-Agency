@@ -54,12 +54,17 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 // array that holds associative sorting 
                 var srt_arr_assoc = new Array();
 
+                // is custom date pushed
+                var custom_date_pushed = false;
+                var custom_date_sorted = false;
+
+                var total_items = jQuery("input[name=rb_total_items]").val();
+
                 /* 
                 * start sorting
                 */
                 prc.start_sorting = function(typ2){
-                    
-                        sort_typ = prc.calculate_sortyp(typ1, typ2.val());
+                      sort_typ = prc.calculate_sortyp(typ1, typ2.val());
 			
                         if(sort_typ != ''){
 				prc.hide_elem(main_elm, prc.transfer_objects);
@@ -75,6 +80,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     opt_sort.html("");
 
                     var options;
+
+                    setting = setting.split("_")[0];
 
                     if(setting == 1) {
                           options = {
@@ -120,7 +127,11 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 */
                 prc.calculate_sortyp = function (t1, t2){
 
-                    console.log(t1+"="+t2);
+                        t1 = t1.split("_");
+                        t3 = t1[1];
+                        t4 = t1[2];
+                        t1 = t1[0];
+                        console.log(t1+"="+t2+"="+t3+"="+t4);
                         
                         
                         // 1 young to old
@@ -155,12 +166,12 @@ function manage_elem(typ1, main_elm, hidden_elm){
 
                          // 3 due date descending
                         if(t1 == '5' && t2 == '2'){
-                            return '7';
+                            return '7_'+t3+'_'+t4;
                         }
                         
                         // 4 due date ascending
                         if(t1 == '5' && t2 == '1'){
-                            return '8';
+                            return '8_'+t3+'_'+t4;
                         }
 
                         return "";
@@ -196,9 +207,14 @@ function manage_elem(typ1, main_elm, hidden_elm){
 				
                 prc.create_array_elm = function(hd_elm, clone){
 			
-			srt_arr = [];
+			            srt_arr = [];
+                        srt_arr.length = 0;
                         srt_arr_assoc = [];
                         main_elm.html('');
+
+                        console.log("split 0:"+sort_typ.split("_")[0]);
+                        console.log("split 1:"+sort_typ.split("_")[1]);
+                        console.log("split 2:"+sort_typ.split("_")[2]);
                         
                         // age sorting youngest to oldest   
 			if(sort_typ == '1') {
@@ -252,28 +268,31 @@ function manage_elem(typ1, main_elm, hidden_elm){
 				srt_arr.sort();
                                 srt_arr.reverse();
 
-               }else if (sort_typ == '7') {  // duedate sorting descending  
-                    jQuery("#hidden_div").find(".p_duedate").each(function(){
-                        srt_arr.push(jQuery(this).val());   
-                                            srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-                    });
-                    srt_arr.sort();
-                                    srt_arr.reverse();
-                            
-                           
-                } else if (sort_typ == '8') {  // duedate sorting ascending   
-                    jQuery("#hidden_div").find(".p_duedate").each(function(){
+               }else if (sort_typ.split("_")[0] == 7) {  // duedate sorting descending 
+                               
+                            jQuery("#hidden_div").find(".p_duedate#du"+sort_typ.split("_")[1]+"_"+sort_typ.split("_")[2]).each(function(){
                                 srt_arr.push(jQuery(this).val());   
-                                            srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-                    });
+                                                    srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                            });
+                       
+                    srt_arr.sort();
+                    srt_arr.reverse();
+                                   
+                } else if (sort_typ.split("_")[0] == 8) {  // duedate sorting ascending  
+                                
+                                jQuery("#hidden_div").find(".p_duedate#du"+sort_typ.split("_")[1]+"_"+sort_typ.split("_")[2]).each(function(){
+                           
+                                            srt_arr.push(jQuery(this).val());   
+                                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                                });
+                           
                     srt_arr.sort();
                                     
                           
                 }
-
-                console.log(sort_typ);
-                console.log(srt_arr);
-                        
+                   console.log(total_items);
+                   
+                        console.log(srt_arr);
                         clone();
 		
 		}
@@ -285,9 +304,15 @@ function manage_elem(typ1, main_elm, hidden_elm){
                        
                        var counted = new Array();
                        counted = [];
+                        var sort_typ_date = sort_typ.split("_")[1]; 
+                        var sort_typ_id = sort_typ.split("_")[2]; 
+                       
+                        var is_date_sorted = false;
+                         main_elm.empty();
                        
                        jQuery.each(srt_arr, function(index, value) {
-                             console.log("clone: "+sort_typ);
+                            
+                             sort_typ  = sort_typ.split("_")[0];
                                 if(sort_typ == '1'  || sort_typ == '5'){
                                         
                                         if(prc.check_instance_in_array(value)){
@@ -324,7 +349,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         }
 
 
-                                }else if(sort_typ == '5' ) {
+                                }/*else if(sort_typ == '5' ) {
                                         if(prc.check_instance_in_array(value)){
                                                 var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
                                                 prc.clone_em(cloned);
@@ -336,15 +361,16 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         }
 
 
-                                }else if(sort_typ == '8' || sort_typ == '7'){
-                                        
+                                }*/else if(sort_typ == '8' || sort_typ == '7'){
+                                    console.log(value);
+
                                         if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
-                                            prc.clone_em(cloned);
+                                            var cloned = jQuery("#hidden_div").find(".p_duedate#du"+sort_typ_date+"_"+sort_typ_id).parent();
+                                             prc.clone_em(cloned);
                                         } else {
-                                            if(prc.not_in_array(counted,value)){
-                                                prc.clone_em_all(value,"p_duedate");
-                                                counted.push(value);
+                                            if(prc.not_in_array(counted,value) ){
+                                                prc.clone_em_all(value,"p_duedate#du"+sort_typ_date+"_"+sort_typ_id);
+                                                counted.push(sort_typ_date);
                                             }
                                         }
                                         
@@ -352,8 +378,13 @@ function manage_elem(typ1, main_elm, hidden_elm){
 					  					
 
                        });
-                       
-                       main_elm.animate({opacity:1},1000,function(){hidden_elm.html('');});
+                           
+                       main_elm.animate({opacity:1},1000,function(){
+                        jQuery('#profile-list div[class*=rbprofile-list]').filter(':gt('+(total_items-1)+')').remove(); 
+                     
+                         hidden_elm.html('');
+                        });
+
                        
           	 }
 
@@ -361,7 +392,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 * check if there is more than one instance
                 */
                  prc.check_instance_in_array = function(vl){
-                        
+                        console.log("Srt assoc:");
+                        console.log(srt_arr_assoc);
+                        console.log("val: "+vl);
                         var count = 0;
                         for (var key in srt_arr_assoc) {
                             if (srt_arr_assoc.hasOwnProperty(key)) {
@@ -415,8 +448,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 * clone object
                 */
                  prc.clone_em_all = function(vl,cls){
-                         
-                     jQuery("#hidden_div").find("."+cls+"[value='"+vl+"']").each(function(){
+                      jQuery("#hidden_div").find("."+cls+"[value='"+vl+"']").each(function(){
                            var $cloned = jQuery(this).parent().clone();
                            main_elm.append($cloned);
                      });

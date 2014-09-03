@@ -1992,6 +1992,7 @@ class RBAgency_Profile {
 			$ProfileCustomTitle = $data1['ProfileCustomTitle'];
 			$ProfileCustomType = $data1['ProfileCustomType'];
 			$ProfileCustomValue = $data1['ProfileCustomValue'];
+			$ProfileCustomDateValue = $data1['ProfileCustomDateValue'];
 
 			if($ProfileCustomType!=4)	{
 
@@ -2218,7 +2219,16 @@ class RBAgency_Profile {
 							."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
 						}
 
-				}
+				} elseif ($ProfileCustomType == 10) { //Date
+				
+						echo "<input type=\"text\" id=\"rb_datepicker". $data1['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
+					    echo "<script type=\"text/javascript\">\n\n";
+					    echo "jQuery(function(){\n\n";
+					    echo "jQuery(\"input[name=ProfileCustomID". $data1['ProfileCustomID'] ."_date]\").val('". $ProfileCustomDateValue ."');\n\n";
+					   	echo "});\n\n";
+					    echo "</script>\n\n";
+
+				}		
 
 				/*
 				 * Close Div or FieldSet

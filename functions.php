@@ -129,6 +129,10 @@
 				?>
 				<script type="text/javascript">
 				jQuery(function(){
+						jQuery(".rb-datepicker").each(function(){
+							jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+						})
+					
 						jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
 							dateFormat: "yy-mm-dd",
 					        defaultDate: "+1w",
@@ -1335,7 +1339,12 @@
 							<option value="3">Date Joined</option>
 							<option value="2">Display Name</option>';
 						if($rb_agency_option_profilelist_sortbydate){	
-							$links.='<option value="5">Due Date</option>';
+							$results4 = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomTitle FROM ".table_agency_customfields." WHERE ProfileCustomType = 10");
+							$i = 0;
+							foreach($results4 as $key):
+								$i++;
+								$links.='<option value="5_'.$key->ProfileCustomID.'_'.$i.'">'.$key->ProfileCustomTitle.'</option>';
+							endforeach;
 						}
 				$links.='</select>
 						<select id="sort_option">
@@ -1492,15 +1501,7 @@
 					profile.ProfileDateBirth, 
 					profile.ProfileDateCreated,
 					profile.ProfileLocationState,
-					cmux.*,
-					 (SELECT cmux.ProfileCustomDateValue FROM ".
-								   			table_agency_customfield_mux." as cmux
-								   			WHERE 
-								   			cmux.ProfileID = profile.ProfileID
-								   			LIMIT 1
-					) 
-					AS
-					ProfileDueDate
+					cmux.*
 				FROM ". table_agency_profile ." profile 
 					LEFT JOIN
 					".table_agency_customfield_mux." cmux
@@ -1548,7 +1549,7 @@
 			$profileDisplay = 0;
 			$countFav = 0;
 			$displayPaginationFooter = "";
-
+			echo "<input type=\"hidden\" name=\"rb_total_items\" value=\"".$countList."\"/> ";
 			foreach($resultsList as $dataList) {
 					
 				$profileDisplay++;
@@ -1595,11 +1596,15 @@
 				/*
 				 * load sorting values
 				 */
-				$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
-				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
-				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">';
-				$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
-        
+				$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">'."\n\n";
+				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">'."\n\n";
+				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">'."\n\n";
+				$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID AND cmux.ProfileID = %d) WHERE cfield.ProfileCustomType = 10 ",$dataList["ProfileID"]),ARRAY_A);
+				$i = 0;
+				foreach ($resultsCmux as $key) {
+					$i++;
+					$displayHTML .= '<input id="du'.$key["ProfileCustomID"].'_'.$i.'" type="hidden" class="p_duedate" value="'.(isset($key["ProfileCustomDateValue"])?$key["ProfileCustomDateValue"]:"0000-00-00").'">'."\n\n";
+        		}
 				if ($p_image){
 					
 					#dont need other image for hover if its for print or pdf download view and dont use timthubm
@@ -2642,11 +2647,11 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 
 			$display = "";
 
-	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+	$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
    foreach ($resultsCustom as $resultCustom) {
 		// If a value exists...
 
-		if(!empty($resultCustom->ProfileCustomValue )){
+		if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
 
 			/*
 			TODO:  REMOVE
@@ -2715,9 +2720,9 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 									$heightinch = $heightraw - floor($heightfeet*12);
 									$resultCustom->ProfileCustomValue = $heightfeet." ft ".$heightinch." in ";
 						}
-						$display .= "<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue."</li>\n";
+						$display .= "<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_1_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue."</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 2){ // kg
-						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_2_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} elseif($resultCustom->ProfileCustomOptions == 1){ 
 						if( $rb_agency_option_unittype == 1 ){//cm/in
 									$heightraw = $resultCustom->ProfileCustomValue; 
@@ -2725,15 +2730,17 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 									$resultCustom->ProfileCustomValue = (int)$heightfeet;
 						}
 						
-						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_3_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 					} else {
-						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_4_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
 					}
 				} else {
 					if ($resultCustom->ProfileCustomType == 4){
-						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
+					}elseif ($resultCustom->ProfileCustomType == 10){
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</li>\n";
 					} else {
-						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
 				}
 			}
@@ -2759,11 +2766,11 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 	$html = "";
 	
 	//$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
-	  $resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0  AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+	  $resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, , cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0  AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
   
 	foreach ($resultsCustom as $resultCustom) {
 
-		if(!empty($resultCustom->ProfileCustomValue )){
+		if(!empty($resultCustom->ProfileCustomValue ) && !empty($resultCustom->ProfileCustomDateValue )){
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 				if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 					if($resultCustom->ProfileCustomOptions == 1){
@@ -2823,6 +2830,8 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 					} else {
 						$html .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
+				}elseif ($resultCustom->ProfileCustomType == 10){
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</li>\n";
 				} else {
 					$html .= "<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 				}
