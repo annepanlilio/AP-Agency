@@ -57,16 +57,15 @@
 
 
 				wp_enqueue_script( 'jquery-ui-datepicker' );
+					?>
+				
 
-				echo "<script type=\"text/javascript\">\n\n";
-				echo "jQuery(function(){\n\n";
-				echo "jQuery( \"input[id=rb_datepicker]\").datepicker({ dateFormat: \"yy-mm-dd\" }).val(jQuery( \"input[id=rb_datepicker]\").val());";
-				echo "});\n\n";
-				echo "</script>";
-
-				?>
+			
 				<script type="text/javascript">
 				jQuery(function(){
+						jQuery(".rb-datepicker").each(function(){
+							jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+						})
 						jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
 							dateFormat: "yy-mm-dd",
 					        defaultDate: "+1w",
@@ -2445,8 +2444,12 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 				}						
 			} elseif ($ProfileCustomType == 10) { //Date
 				
-					echo "<input type=\"text\" id=\"rb_datepicker\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
-			
+					echo "<input type=\"text\" id=\"rb_datepicker". $data3['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
+				    echo "<script type=\"text/javascript\">\n\n";
+				    echo "jQuery(function(){\n\n";
+				    echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". $ProfileCustomDateValue ."');\n\n";
+				   	echo "});\n\n";
+				    echo "</script>\n\n";
 
 			}									
 	} // End if Empty ProfileCustomID

@@ -343,7 +343,7 @@ class RBAgency_Casting {
 			
 			//For Bcc emails
 			if(!empty($MassEmailBccEmail)){
-				$bccMail = explode(",",$MassEmailBccEmail);
+				$bccMail = explode(";",$MassEmailBccEmail);
 				foreach($bccMail as $bcc){
 						$headers[] = 'Bcc: '.$bcc;
 				}
@@ -421,7 +421,7 @@ class RBAgency_Casting {
 							$profileimage = "";  
 							$profileimage .='<p><div style="width:550px;min-height: 170px;">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
-							$qProfiles =  $wpdb->get_results($wpdb->prepare($query,$lastid),ARRAY_A );
+							$qProfiles =  $wpdb->get_results($wpdb->prepare($query,$SearchID),ARRAY_A );
 							$data = count($qProfiles);
 							$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
 							$results = $wpdb->get_results($wpdb->prepare($query,$data['SearchProfileID']),ARRAY_A);
@@ -454,7 +454,7 @@ class RBAgency_Casting {
 
 			//For Bcc emails
 			if(!empty($SearchMuxBccEmail)){
-				$bccMail = explode(",",$SearchMuxBccEmail);
+				$bccMail = explode(";",$SearchMuxBccEmail);
 				foreach($bccMail as $bcc){
 						$headers[] = 'Bcc: '.$bcc;
 				}
