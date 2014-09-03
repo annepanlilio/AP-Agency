@@ -74,10 +74,10 @@
 				}
 					// Return SQL string based on fields
 					   unset($search_array["search_profiles"]);
-	  		
+
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
-				
+
 			echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
 		}
@@ -86,14 +86,13 @@
 	  * Display Search results without limit
 	  */
 	  if(isset($_GET["limit"]) && $_GET["limit"] == "none") {
-	  		$search_array = array();
-	  		$search_array = array_filter($_GET);
+			$search_array = array();
+			$search_array = array_filter($_GET);
 				
-	  		unset($search_array["rb_agency_search"]);
-	  		unset($search_array["limit"]);
-	  		$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-	  		echo RBAgency_Profile::search_results($search_sql_query, 0);
-			
+			unset($search_array["rb_agency_search"]);
+			unset($search_array["limit"]);
+			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
+			echo RBAgency_Profile::search_results($search_sql_query, 0);
 	  }
 
 
@@ -117,9 +116,7 @@
 			// Send Email Form
 			echo "    </div><!-- .boxblock -->\n";
 		}
-  
 
-	 
 
 	/*
 	 * Display Search Form
@@ -137,9 +134,6 @@
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";
 			echo "    </div><!-- .boxblock-container -->\n";
-			
-            
-					
 
 
 ?>
