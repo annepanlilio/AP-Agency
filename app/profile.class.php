@@ -1720,7 +1720,7 @@ class RBAgency_Profile {
 								$displayHtml .=  "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
 						}
 						if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
-								$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_state_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</div>\n";
+								$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_stateabv_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</div>\n";
 						}
 						if (!empty($data['ProfileLocationCountry'])) {
 								$country = (rb_agency_getCountryTitle($data['ProfileLocationCountry']) != false) ? rb_agency_getCountryTitle($data['ProfileLocationCountry']):"";

@@ -4636,6 +4636,14 @@ function get_state_by_id($StateID){
 
 }
 
+// Get State Abreviation by State ID
+function get_stateabv_by_id($StateID){
+	global $wpdb;
+
+	$results = $wpdb->get_row($wpdb->prepare("SELECT StateCode FROM ".table_agency_data_state." WHERE StateID = %d", $StateID), ARRAY_A);
+	return $results['StateCode'];
+
+}
 
 
 // Genrate query for gallary Order
