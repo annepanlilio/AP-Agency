@@ -35,15 +35,14 @@
 	// Check Database
 		$database = RBAgency_Diagnostic::has_database_permission();
 		echo $database;
-
-	// Check Folder
-		$folder = RBAgency_Diagnostic::check_upload_folder();
-		echo $folder;
 */
 
-?>
 
-			  <table class="form-table">
+?>
+		<div class="welcome-panel-column" style="width: 40%; ">
+			<h3><?php _e("WordPress Environment Check"); ?></h3>
+
+			  <table class="form-table" style="width: 100%">
 
 				<tr valign="top">
 				   <th scope="row"><label><?php _e("PHP Version", rb_agency_TEXTDOMAIN); ?></label></th>
@@ -108,6 +107,15 @@
 						?>
 					</td>
 				</tr>
+			</table>
+
+		</div>
+
+		<div class="welcome-panel-column" style="width: 50%; margin-left: 50px;">
+			<h3><?php _e("RB Agency Check"); ?></h3>
+
+			  <table class="form-table" >
+
 				 <tr valign="top">
 				   <th scope="row"><label><?php _e("RB Agency Version", rb_agency_VERSION_WP_MIN); ?></label></th>
 					<td class="installation_item_cell">
@@ -126,8 +134,58 @@
 						?>
 					</td>
 				</tr>
+				 <tr valign="top">
+				   <th scope="row"><label><?php _e("Folder is Writable", rb_agency_VERSION_WP_MIN); ?></label></th>
+					<td class="installation_item_cell">
+						<strong>Uploads Folder</strong>
+					</td>
+					<td>
+						<?php
+
+							// Check Folder
+								$folderWritable = RBAgency_Diagnostic::check_upload_folder();
+
+							if($folderWritable){
+								?><img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/><?php
+							}
+							else{
+								?>
+								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/remove.png"/>
+								<span class="installation_item_message"><?php echo __("Uploads folder is not writable! Contact your web host.", rb_agency_TEXTDOMAIN); ?></span>
+								<?php
+							}
+						?>
+					</td>
+				</tr>
+
+				 <tr valign="top">
+				   <th scope="row"><label><?php _e("Stylesheet Exists", rb_agency_VERSION_WP_MIN); ?></label></th>
+					<td class="installation_item_cell">
+						<strong>Styles.css</strong>
+					</td>
+					<td>
+						<?php
+
+							// Check Folder
+							$stylesheetExists = RBAgency_Diagnostic::check_stylesheet_exists();
+
+							if($stylesheetExists){
+								?><img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/><?php
+							}
+							else{
+								?>
+								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/remove.png"/>
+								<span class="installation_item_message"><?php echo __("File does not exist.  Go to <a href='admin.php?page=rb_agency_settings&ConfigID=2'>Agency > Settings > Styles</a> and initialize the file.", rb_agency_TEXTDOMAIN); ?></span>
+								<?php
+							}
+						?>
+					</td>
+				</tr>
+
+
 			</table>
-           
-			<?php 
+
+		</div>
+			<?php
 
 

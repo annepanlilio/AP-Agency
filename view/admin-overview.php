@@ -165,18 +165,10 @@ get_currentuserinfo();
 			<h1>Diagnostic Checks:</h1>
 
 			<div class="welcome-panel-column-container">
-				<div class="welcome-panel-column">
-
-				</div>
-
-				<div class="welcome-panel-column" style="margin-left: 50px;">
-					<h3><?php _e("Environment Check"); ?></h3>
-					<?php
-						// Include Admin Menu
-						include (rb_agency_BASEREL ."view/partial/admin-diagnostic.php"); 
-					?>
-				</div>
-
+				<?php
+					// Include Admin Menu
+					include (rb_agency_BASEREL ."view/partial/admin-diagnostic.php"); 
+				?>
 			</div>
 		</div>
 	</div>
