@@ -243,6 +243,9 @@ elseif ($ConfigID == 1) {
 		$rb_agency_option_formshow_age = isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0;
 			if (empty($rb_agency_option_formshow_age)) { $rb_agency_option_formshow_age = "1"; }
 
+		$rb_agency_option_image_compression = isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0;
+			if (empty($rb_agency_option_image_compression)) { $rb_agency_option_image_compression = 100; }
+
 		$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
 			if (empty($rb_agency_option_formshow_displayname)) { $rb_agency_option_formshow_displayname = "1"; }
 
@@ -267,10 +270,6 @@ elseif ($ConfigID == 1) {
 		//Sort by Date
 		$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_agency_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_agency_profilelist_sortbydate']:"";
 			if (empty($rb_agency_option_profilelist_sortbydate)) { $rb_agency_option_profilelist_sortbydate = 0; }
-
-
-
-		
 
 	/*
 	 * Form
@@ -438,16 +437,46 @@ elseif ($ConfigID == 1) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 		/*
+		 * Image Handling
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Image Handling', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Resize Images', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+				 _e('Maximum Width', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" /><br />\n";
+				 _e('Maximum Height', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Image Compression', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_image_compression]\">\n";
+		echo "       <option value=\"100\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 100,false) ."> ". __("Maximum Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"85\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 85,false) ."> ". __("Very High Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"70\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 70,false) ."> ". __("High Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"55\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 55,false) ."> ". __("Medium Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"40\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 40,false) ."> ". __("Low Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
+		/*
 		 * Profile View
 		 */
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile View Options', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Resize Images', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td>";
-				 _e('Maximum Width', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" />\n";
-				 _e('Maximum Height', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
+		echo "   <th scope=\"row\">". __('Privacy Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_privacy]\">\n";
+		echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged as "Client" to view model list and profile information', rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -498,17 +527,6 @@ elseif ($ConfigID == 1) {
 		echo "     <select name=\"rb_agency_options[rb_agency_option_galleryorder]\">\n";
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 1,false) ."> ". __("Show most recently uploaded first", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 0,false) ."> ". __("Show chronological order", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "     </select>\n";
-		echo "   </td>\n";
-		echo " </tr>\n";
-		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Privacy Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "   <td>\n";
-		echo "     <select name=\"rb_agency_options[rb_agency_option_privacy]\">\n";
-		echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged as "Client" to view model list and profile information', rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";

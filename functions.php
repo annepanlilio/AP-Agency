@@ -1855,10 +1855,13 @@ class rb_agency_image {
 		}
 	}
 
-	function save($filename, $image_type=IMAGETYPE_JPEG, $compression=75, $permissions=NULL) {
+	function save($filename, $image_type=IMAGETYPE_JPEG, $compression = 100, $permissions=NULL) {
 
-	if( $image_type == IMAGETYPE_JPEG ) {
-		imagejpeg($this->image,$filename,$compression);
+		$rb_agency_options_arr = get_option('rb_agency_options');
+			$compression = isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:100;
+
+		if( $image_type == IMAGETYPE_JPEG ) {
+			imagejpeg($this->image,$filename,$compression);
 		} elseif( $image_type == IMAGETYPE_GIF ) {
 
 			imagegif($this->image,$filename);
@@ -1918,7 +1921,7 @@ class rb_agency_image {
 		$new_image = imagecreatetruecolor($width, $height);
 		imagecopyresampled($new_image, $this->image, 0, 0, 0, 0, $width, $height, $this->getWidth(), $this->getHeight());
 		$this->image = $new_image;
-	}      
+	}
 
 	function orientation() {
 		if ($this->getWidth() == $this->getHeight()) {
