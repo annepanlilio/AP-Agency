@@ -33,6 +33,8 @@ jQuery(document).ready(function(){
                 }                            
 
 	});
+
+
 	
 });
 
@@ -54,23 +56,38 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 // array that holds associative sorting 
                 var srt_arr_assoc = new Array();
 
+                var srt_arr_original = [];
+
                 // is custom date pushed
                 var custom_date_pushed = false;
                 var custom_date_sorted = false;
 
+               
                 var total_items = jQuery("input[name=rb_total_items]").val();
 
+               
                 /* 
                 * start sorting
                 */
                 prc.start_sorting = function(typ2){
+
+                   
+                          jQuery('#profile-list div[class*=rbprofile-list]').each(function(){
+                             if(custom_date_pushed == false){
+                                 srt_arr_original.push(jQuery(this).attr("id").split("-")[1]);
+                                             custom_date_pushed = true;
+                              }
+                                            
+                         }); 
+                      
                       sort_typ = prc.calculate_sortyp(typ1, typ2.val());
+			             
+                           console.log(srt_arr_original);
+                      if(sort_typ != ''){
+				        prc.hide_elem(main_elm, prc.transfer_objects);
+			         }
 			
-                        if(sort_typ != ''){
-				prc.hide_elem(main_elm, prc.transfer_objects);
-			}
-			
-	        }
+	            }
 
                 /*
                  * update sorting options    
