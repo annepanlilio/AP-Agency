@@ -267,7 +267,6 @@ class RBAgency_Casting {
 			$MassEmailRecipient = $_POST["MassEmailRecipient"];
 			$MassEmailBccEmail = $_POST["MassEmailBccEmail"];
 			
-			$SearchID				= time(U);
 			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 		
 			$SearchMuxToName		=$_POST["MassEmailRecipient"];
@@ -519,7 +518,7 @@ class RBAgency_Casting {
 					$ProfileID = $data['ProfileID'];
 					$recipient .=$data['ProfileContactEmail'];
 					if($count != $pos){
-						$recipient .= ",";
+						$recipient .= ";";
 					}
 
 				}
