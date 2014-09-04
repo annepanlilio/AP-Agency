@@ -95,8 +95,8 @@ $siteurl = get_option('siteurl');
 		$SearchID = $_GET['SearchID'];
 
 		// Verify Record
-		$queryDelete = "SELECT * FROM ". table_agency_searchsaved ." WHERE SearchID =  \"". $SearchID ."\"";
-		$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+		$queryDelete = "SELECT * FROM ". table_agency_searchsaved ." WHERE SearchID =  %d";
+		$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete,$SearchID ), ARRAY_A);
 
 		foreach ($resultsDelete as $dataDelete) {
 			// Remove Casting
