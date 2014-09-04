@@ -4102,6 +4102,19 @@ function write_email_content(){
 
 add_action('wp_ajax_read_email_cnt', 'read_email_content');
 
+
+function get_state_ajax(){
+	    global $wpdb;
+		$states = array();
+		$country = $_POST['country'];
+		$query_get ="SELECT * FROM ".table_agency_data_state." WHERE CountryID='".$country."'";
+		$result_query_get = $wpdb->get_results($query_get);
+		echo json_encode($result_query_get);
+		die;
+}
+add_action('wp_ajax_get_state_ajax', 'get_state_ajax');
+
+
 function read_email_content($ret = false){ 
 	if($ret){
 		return $email_message = get_option( 'rb_email_content', 'empty' );
