@@ -311,7 +311,6 @@ if (isset($_POST['action'])) {
 											ProfileContactPhoneCell='" . esc_attr($ProfileContactPhoneCell) . "',
 											ProfileContactPhoneWork='" . esc_attr($ProfileContactPhoneWork) . "',
 											ProfileGender='" . esc_attr($ProfileGender) . "',
-											ProfileGender='" . esc_attr($ProfileGender) . "',
 											ProfileDateBirth ='" . esc_attr($ProfileDateBirth) . "',
 											ProfileLocationStreet='" . esc_attr($ProfileLocationStreet) . "',
 											ProfileLocationCity='" . esc_attr($ProfileLocationCity) . "',
