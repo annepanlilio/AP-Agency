@@ -331,7 +331,7 @@ class RBAgency_Casting {
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
-			$headers[] = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_value_agencyemail .'>';
+			$headers[] = 'From: "'.$rb_agency_value_agencyname.'" <'. $rb_agency_value_agencyemail .'>';
 
 			/*if(!empty($expMail)){
 				$expMail = explode(",",$MassEmailRecipient);
@@ -445,10 +445,10 @@ class RBAgency_Casting {
 				if ( !is_email($SearchMuxFromEmail, true)) {
 					$email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
 				} else {
-					$headers[]  = 'From: '. $SearchMuxFromName .' <'. $SearchMuxFromEmail.'>' . "\r\n";
+					$headers[]  = 'From: "'. $SearchMuxFromName .'" <'. $SearchMuxFromEmail.'>' . "\r\n";
 				}
 			} else {
-					$headers[]  = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+					$headers[]  = 'From: "'.$rb_agency_value_agencyname.'" <'. $rb_agency_option_agencyemail .'>' . "\r\n";
 			}
 
 			//For Bcc emails
