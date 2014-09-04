@@ -121,6 +121,7 @@
 	/*
 	 * Display Search Form
 	 */
+	if (isset($_GET["action"]) && $_GET["action"] !== "massEmail") {
 
 		// Search Form
 
@@ -134,7 +135,7 @@
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";
 			echo "    </div><!-- .boxblock-container -->\n";
-
+	}
 
 ?>
 
