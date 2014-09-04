@@ -2222,9 +2222,9 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		$ProfileGender = $fetchProfileGender["GenderTitle"];
 
 		echo "    <tr" . $rowColor . ">\n";
-		echo "        <th class=\"check-column\" scope=\"row\">\n";
+		echo "        <td class=\"check-column\" scope=\"row\">\n";
 		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\"  data-name=\"".$ProfileContactNameFirst." ". $ProfileContactNameLast."\" class=\"administrator\" id=\"" . $ProfileID . "\" name=\"" . $ProfileID . "\"/>\n";
-		echo "        </th>\n";
+		echo "        </td>\n";
 		echo "        <td class=\"ProfileID column-ProfileID\">" . $ProfileID . "</td>\n";
 		if($rb_agency_option_formshow_displayname == 1){
 			echo "        <td class=\"ProfileID column-ProfileContactDisplay\">" . $ProfileContactDisplay;
