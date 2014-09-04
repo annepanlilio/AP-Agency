@@ -580,6 +580,9 @@
 	function rb_agency_get_age($p_strDate) {
 	//Get Age Option if it should display with months included
 		$rb_agency_options_arr = get_option('rb_agency_options');
+		if(empty($p_strDate) || $p_strDate == "0000-00-00"){
+			return "";
+		}
 		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_bday']) && $rb_agency_options_arr['rb_agency_option_profilelist_bday'] == true) {
 
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
@@ -1627,24 +1630,28 @@
 				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 
 				if ($rb_agency_option_profilelist_expanddetails) {
+					$age = rb_agency_get_age($dataList["ProfileDateBirth"]);
 					$displayHTML .= "     <div class=\"details\">";
-					$displayHTML .= " <span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
+					$displayHTML .= " <span class=\"details-age\">". $age ."</span>";
 					if($dataList["ProfileLocationState"]!=""){
-						$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
+						$displayHTML .= (!empty($age)?"<span class=\"divider\">, </span>":"")."<span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 					} 
 						//echo "loaded: ".microtime()." ms";
 					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks")){
 						//Get Favorite & Casting Cart links
 						//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 						 $displayHTML .= "<div class=\"rb_profile_tool\">";
-							if($rb_agency_option_profilelist_favorite){
-								$displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
-							}
-							$p_image = rb_get_primary_image($dataList["ProfileID"]); 
+							           if($rb_agency_option_profilelist_favorite){
+					            $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+					        	//    $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</a></span></div>";
+					        
+					        }
+					        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
 
-							if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
-								$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
-							}
+					        if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
+				           	 	$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+				            	//	$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\">".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</a></span></div>";
+				            }
 						   $displayHTML .= "</div>";
 					}
 					$displayHTML .= "</div>\n";
