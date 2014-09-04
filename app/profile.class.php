@@ -576,17 +576,16 @@ class RBAgency_Profile {
 								@list($from,$to) =  @explode(",",RBAgency_Common::session("ProfileCustomID".$ProfileCustomID));
 									
 								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-									echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+									echo "<label>". $ProfileCustomTitle ."</label>";
 											echo "<div>";
-									
-										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("From", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input  id=\"rb_datepicker_from\" class=\"rb-datepicker\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$from."\" /></div>";
-										echo "</div>";
-										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("to", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input  id=\"rb_datepicker_to\" class=\"rb-datepicker\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$to."\" /></div>";
-										echo "</div>";
+													echo "<div>";
+													echo "		<label for=\"ProfileCustomLabel_min\" >". __("From", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+													echo "		<input  id=\"rb_datepicker_from\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$from."\" />";
+													echo "</div>";
+													echo "<div>";
+													echo "		<label for=\"ProfileCustomLabel_max\" >". __("to", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+													echo "		<input  id=\"rb_datepicker_to\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$to."\" />";
+													echo "</div>";
 											echo "</div>";
 								
 								echo "</div>";
