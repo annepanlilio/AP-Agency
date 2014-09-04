@@ -2738,7 +2738,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 					if ($resultCustom->ProfileCustomType == 4){
 						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
 					}elseif ($resultCustom->ProfileCustomType == 10){
-						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</li>\n";
+						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</li>\n";
 					} else {
 						$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
 					}
