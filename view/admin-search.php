@@ -121,7 +121,7 @@
 	/*
 	 * Display Search Form
 	 */
-	if (isset($_GET["action"]) && $_GET["action"] !== "massEmail") {
+	if (isset($_SESSION['cartArray'])  || @$_GET["action"] !== "massEmail") {
 
 		// Search Form
 
