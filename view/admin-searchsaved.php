@@ -195,9 +195,11 @@ $siteurl = get_option('siteurl');
 
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);
+
+		$profile_list  = (isset($data->SearchProfileID)? implode(",",array_unique(explode(",",$data->SearchProfileID))):"''");
 		$query ="SELECT * FROM ". table_agency_profile ." profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND profile.ProfileID IN ("
-				.(isset($data->SearchProfileID)? $data->SearchProfileID:"''").") ORDER BY ProfileContactNameFirst ASC";
+				.$profile_list.") GROUP BY profile.ProfileID ORDER BY ProfileContactNameFirst ASC ";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 
@@ -507,7 +509,7 @@ $siteurl = get_option('siteurl');
 				</div>
 			</td>
 			<td>
-			    <?php $profiles_count = explode(",",$data2["SearchProfileID"]); ?>
+			    <?php $profiles_count = array_unique(explode(",",$data2["SearchProfileID"])); ?>
 				<?php  echo count($profiles_count); ?>
 			</td>
 			<td>
