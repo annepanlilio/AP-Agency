@@ -2285,6 +2285,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 		$ProfileCustomType  = $data3['ProfileCustomType'];
 		$ProfileCustomDateValue = $row["ProfileCustomDateValue"];
+		$ProfileCustomValue = $row["ProfileCustomValue"];
 		
 		/* Pull data from post so data will not lost @Satya 12/12/2013 */
 		if($ProfileCustomValue=="" && isset($_POST)){
@@ -2324,7 +2325,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			if($ProfileCustomType == 4){
 				$isTextArea ="textarea-field"; 
 			}
-		echo "  <tr valign=\"top\" class=\"".$isTextArea."\">\n";
+		echo "  <tr valign=\"top\" data-val=\"".$ProfileCustomValue."\" class=\"".$isTextArea."\">\n";
 		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
 		echo "    <td>\n";		  
 		  
