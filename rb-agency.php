@@ -480,6 +480,7 @@ class RBAgency {
 					ProfileCustomID BIGINT(20) NOT NULL DEFAULT '0',
 					ProfileID BIGINT(20) NOT NULL DEFAULT '0',
 					ProfileCustomValue TEXT,
+					ProfileCustomDateValue Date,
 					PRIMARY KEY (ProfileCustomMuxID)
 					);";
 				dbDelta($sql);
