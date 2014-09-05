@@ -175,6 +175,83 @@ $siteurl = get_option('siteurl');
 		</div>
 		<?php
 
+	}elseif ((isset($_GET['action']) && $_GET['action'] == "edit") && isset($_GET['SearchID'])) {
+	?>
+	<div style="clear:both"></div>
+	<div class="wrap" style="min-width: 1020px;">
+		 <div id="rb-overview-icon" class="icon32"></div>
+		 <h2>Profile Search &raquo; Edit</h2>
+		 
+	   <?php
+
+		 if(isset($_POST["SearchTitle"])){
+		 	if(!empty($_POST["SearchTitle"])){
+		 	   $wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",$_POST["SearchTitle"],$_GET["SearchID"]));
+		 		echo "Updated successfully!";
+		 	}else{
+		 		echo "Title field is required.";
+		 	}
+		 }
+
+		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+		$data =  $wpdb->get_row($query);
+		$query ="SELECT * FROM ". table_agency_profile ." profile, "
+				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND profile.ProfileID IN ("
+				.(isset($data->SearchProfileID)? $data->SearchProfileID:"''").") ORDER BY ProfileContactNameFirst ASC";
+		$results = $wpdb->get_results($query, ARRAY_A);
+		$count = $wpdb->num_rows;
+
+		 ?>
+		
+		<form method="post" action="">
+		 Title: <input type="text" name="SearchTitle" value="<?php echo $data->SearchTitle;?>" style="width:50%" />
+		 <input type="button" class="button button-primary" value="Save"/>
+         </form>
+         <hr/>
+       <div style="padding:10px;">
+			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
+			<div style="float:right">
+			<input type="checkbox" id="selectall" name="selectall">Select all |
+			<input type="submit" class="button button-primary" value="Remove"/>
+			<input type="submit" class="button button-primary" value="Add profiles"/>
+			</div>
+				<div style="border-top:1px solid #ccc;margin-top:20px;margin-bottom:10px;">
+					<?php
+					foreach ($results as $data2 ) {
+					echo " <div style=\"background:black; color:white;float: left; max-width: 300px; height: 250px; margin: 2px; overflow:hidden;  \">";
+					echo " <div style=\"margin:10px;max-width:350px; max-height:300px; \">";
+					echo "<input type=\"checkbox\" name=\"ProfileID\" value=\"".$data2['ProfileID']."\"/>";
+					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+					echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&h=200\" /></a>";
+					echo "</div>\n";
+					echo "</div>\n";
+					}
+					?>
+				</div>
+		</div>
+		</div> 
+		<script type="text/javascript">
+		jQuery(function(){
+			 var arr = [];
+			 jQuery("#selectall").change(function(){
+	                 		var ischecked = jQuery(this).is(':checked');
+	                 		jQuery("input[type=checkbox]").each(function(){
+	                 			if(ischecked){
+	                 			 jQuery(this).removeAttr("checked");
+	                 			 jQuery(this).prop("checked",true);
+	                 			 arr.push(jQuery(this).val());
+	                 			}else{
+	                 		     jQuery(this).prop("checked",true);
+	                 		     jQuery(this).removeAttr("checked");
+	                 			 arr = [];
+								}
+							});
+	                 		
+	         });
+		});
+     </script>
+	<?php 
 	}else {
 	/* 
 	 * View
@@ -416,17 +493,22 @@ $siteurl = get_option('siteurl');
 				<?php
 				if($count3<=0){
 				?>
+					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
+				
 					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Create Email</a> | </span>
 				<?php
 				}else{
 				?>
+						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
+				
 						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>&SearchMuxHash=<?php echo $results3[0]['SearchMuxHash'];?>&resend=true">Create Email</a> | </span>
 				<?php } ?>
 						<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 				</div>
 			</td>
 			<td>
-				<?php  // echo $SearchProfileID; ?>
+			    <?php $profiles_count = explode(",",$data2["SearchProfileID"]); ?>
+				<?php  echo count($profiles_count); ?>
 			</td>
 			<td>
 				<?php

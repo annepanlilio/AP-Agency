@@ -2277,11 +2277,9 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	$rb_agency_option_locationtimezone 	= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
 	
 	if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){ 
-   
-		$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+    	$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
 		$row = current($subresult);
 		
-		$ProfileCustomValue = $row["ProfileCustomValue"];
 		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 		$ProfileCustomType  = $data3['ProfileCustomType'];
 		$ProfileCustomDateValue = $row["ProfileCustomDateValue"];
