@@ -183,7 +183,7 @@ $siteurl = get_option('siteurl');
 		 <h2>Profile Search &raquo; Edit</h2>
 		 
 	   <?php
-
+	    // Save Search title
 		 if(isset($_POST["SearchTitle"])){
 		 	if(!empty($_POST["SearchTitle"])){
 		 	   $wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",$_POST["SearchTitle"],$_GET["SearchID"]));
@@ -191,6 +191,31 @@ $siteurl = get_option('siteurl');
 		 	}else{
 		 		echo "Title field is required.";
 		 	}
+		 }
+		 //Remove profiles
+		 if(isset($_POST["ProfileID"])){
+		 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+				$data =  $wpdb->get_row($query);
+
+				$old_arr = array_unique(explode(",", $data->SearchProfileID));
+				$new_arr = $_POST["ProfileID"];
+
+				$final_arr = array_diff($old_arr,$new_arr);
+                $wpdb->query("UPDATE ".table_agency_searchsaved." SET SearchProfileID = \"".implode(",", $final_arr)."\" WHERE SearchID = ".$_GET["SearchID"]);
+		 	    echo "Removed successfully.";
+		 }
+
+		 //Remove profiles
+		 if(isset($_POST["SearchID"]) && isset($_POST["addprofiles"])){
+		 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+				$data =  $wpdb->get_row($query);
+
+				$old_arr = array_unique(explode(",", $data->SearchProfileID));
+				$new_arr = array_unique(explode(",", $_POST["addprofiles"]));
+
+				$final_arr = array_unique(array_merge($old_arr,$new_arr));
+                $wpdb->query("UPDATE ".table_agency_searchsaved." SET SearchProfileID = \"".implode(",", $final_arr)."\" WHERE SearchID = ".$_GET["SearchID"]);
+		 	    echo "Updated successfully.";
 		 }
 
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
@@ -214,15 +239,16 @@ $siteurl = get_option('siteurl');
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
 			<div style="float:right">
 			<input type="checkbox" id="selectall" name="selectall">Select all |
-			<input type="submit" class="button button-primary" value="Remove"/>
-			<input type="submit" class="button button-primary" value="Add profiles"/>
-			</div>
+			<input type="submit" class="button button-primary" onclick="javascript: return confirm('Are you sure to remove selected profile(s)?')? document.removeForm.submit(): false;" value="Remove"/>
+			<a href="<?php echo admin_url("admin.php?page=rb_agency_search");?>" class="button button-primary">Add profiles</a>
+       		</div>
+			<form method="post" action="" name="removeForm">
 				<div style="border-top:1px solid #ccc;margin-top:20px;margin-bottom:10px;">
 					<?php
 					foreach ($results as $data2 ) {
-					echo " <div style=\"background:black; color:white;float: left; max-width: 300px; height: 250px; margin: 2px; overflow:hidden;  \">";
+					echo " <div style=\"background:black; color:white;float: left; max-width: 133px; height: 250px; margin: 2px; overflow:hidden;  \">";
 					echo " <div style=\"margin:10px;max-width:350px; max-height:300px; \">";
-					echo "<input type=\"checkbox\" name=\"ProfileID\" value=\"".$data2['ProfileID']."\"/>";
+					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
 					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 					echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&h=200\" /></a>";
@@ -231,6 +257,8 @@ $siteurl = get_option('siteurl');
 					}
 					?>
 				</div>
+			</form>
+			
 		</div>
 		</div> 
 		<script type="text/javascript">
@@ -238,7 +266,7 @@ $siteurl = get_option('siteurl');
 			 var arr = [];
 			 jQuery("#selectall").change(function(){
 	                 		var ischecked = jQuery(this).is(':checked');
-	                 		jQuery("input[type=checkbox]").each(function(){
+	                 		jQuery("input[type=checkbox][id=ProfileID]").each(function(){
 	                 			if(ischecked){
 	                 			 jQuery(this).removeAttr("checked");
 	                 			 jQuery(this).prop("checked",true);

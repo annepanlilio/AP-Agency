@@ -218,7 +218,39 @@ class RBAgency_Casting {
 										 jQuery(\"select[name=Job_ID]\").change(function(){
 												var a = jQuery(\"select[name=Job_ID] option:selected\").attr('attrid');
 												if(a !== 'undefined'){
-													jQuery('.castingtext').attr('action',jQuery('.castingtext').attr('action')+a);
+													jQuery('.castingtext').attr('action','?page=rb_agency_castingjobs&action=informTalent&Job_ID='+a);
+												}
+										});
+								});";
+								echo "</script>";
+								echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
+							 echo "</form>";
+							echo "</div>";
+						echo "</div>";
+						 echo "<div class=\"boxblock\" style=\"width:100%\" >";
+						 
+									echo "<h3>Add to saved search</h3>";
+								 
+							 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+			 				 echo "<form class=\"savedsearchtext\" method=\"post\" action=\"?page=rb_agency_searchsaved&action=edit&SearchID=\">";
+							   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+									echo "<div>";
+										echo "<select name=\"SearchID\" style=\"width:80%;\">";
+										echo "<option value=\"\">- Select -</option>";
+										$castings = $wpdb->get_results("SELECT * FROM ".table_agency_searchsaved." ORDER BY  SearchID DESC");
+										foreach ($castings as $key) {
+											echo "<option attrid=\"".$key->SearchID."\" value=\"".$key->SearchID."\">".$key->SearchTitle."</option>";
+										}
+										echo "<select>";
+									    echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
+									echo "</div>";
+								echo "</div>";
+								echo "<script type=\"text/javascript\">";
+								echo "jQuery(function(){
+										 jQuery(\"select[name=SearchID]\").change(function(){
+												var a = jQuery(\"select[name=SearchID] option:selected\").attr('attrid');
+												if(a !== 'undefined'){
+													jQuery('.savedsearchtext').attr('action','?page=rb_agency_searchsaved&action=edit&SearchID='+a);
 												}
 										});
 								});";
