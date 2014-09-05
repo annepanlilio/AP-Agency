@@ -251,7 +251,7 @@ $siteurl = get_option('siteurl');
 					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
 					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-					echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&h=200\" /></a>";
+					echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=113&h=170\" /></a>";
 					echo "</div>\n";
 					echo "</div>\n";
 					}
@@ -404,11 +404,11 @@ $siteurl = get_option('siteurl');
 			$filter .= " AND search.SearchTitle='". $selectedTitle ."'";
 		}
 
+
 		//Paginate
-		$sqldata  = "SELECT * FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
-		$results=  $wpdb->get_results($sqldata);
-		
-		$items =$wpdb->num_rows; // number of total rows in the database
+		$sqldata  = "SELECT count(*) as num_itms FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
+		$results =  $wpdb->get_row($sqldata);
+		$items =$results->num_itms; // number of total rows in the database
 		if($items > 0) {
 
 			$p = new rb_agency_pagination;
@@ -433,7 +433,6 @@ $siteurl = get_option('siteurl');
 		} else {
 			$limit = "";
 		}
-
 		?>
 		<div class="tablenav">
 			<div class='tablenav-pages'>
