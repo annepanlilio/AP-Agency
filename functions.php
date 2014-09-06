@@ -581,7 +581,7 @@
 	//Get Age Option if it should display with months included
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		if(empty($p_strDate) || $p_strDate == "0000-00-00"){
-			return "";
+			return 0;
 		}
 		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_bday']) && $rb_agency_options_arr['rb_agency_option_profilelist_bday'] == true) {
 

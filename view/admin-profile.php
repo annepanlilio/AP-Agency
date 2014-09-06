@@ -1149,7 +1149,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Birthdate", rb_agency_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . (isset($ProfileDateBirth)?$ProfileDateBirth:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . (isset($ProfileDateBirth) && $ProfileDateBirth !== "0000-00-00"?$ProfileDateBirth:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";

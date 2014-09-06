@@ -1728,7 +1728,7 @@ class RBAgency_Profile {
 						if (!empty($data['ProfileDateBirth'])) {
 								$displayHtml .=  "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
 						}
-						if (!empty($data['ProfileDateBirth'])) {
+						if (!empty($data['ProfileDateBirth']) && $data['ProfileDateBirth'] !== "0000-00-00") {
 								$displayHtml .=  "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
 						}
 						if (!empty($data['ProfileContactWebsite'])) {
