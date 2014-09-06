@@ -2,7 +2,6 @@
 // JavaScript Document
 var _arrayImages = new Array();
 	var _mouseOver = "";
-	$(document).ready(function(){
 		$("#profile-list div.image").hover(function(){
 				var _id = $(this).find("img:first").attr("id");
 				_arrayImages.length = 0;
@@ -10,14 +9,14 @@ var _arrayImages = new Array();
 				$(this).find(".roll").each(function(){
 					_arrayImages[_arrayImages.length] = $(this).attr("src");
 				});
-				_mouseOver = setInterval("showImages('"+_id+"')",200);
+				_mouseOver = setInterval(showImages(_id),200);
 			},
 			function(){
 				clearInterval(_mouseOver);
 				var _id = $(this).find("img:first").attr("id");
 				$("#"+ _id).attr("src", _arrayImages[0]);
 		});
-	});
+	
 	var i=0;
 	function showImages(_id)
 	{
