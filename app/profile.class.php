@@ -1740,20 +1740,7 @@ class RBAgency_Profile {
 						if (!empty($data['ProfileContactPhoneCell'])) {
 								$displayHtml .=  "<div><strong>". __("Phone Cell", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
 						}
-						if (!empty($data['ProfileType'])) {
-								if(strpos($data['ProfileType'],",") > -1){
-										$t = explode(",",$data['ProfileType']);
-										$ptype = "";
-										$ptyp = array();
-										foreach($t as $val){
-												$ptyp[] = retrieve_title($val);
-										}
-										$ptype = implode(",",$ptyp);
-								} else {
-										$ptype = retrieve_title($data['ProfileType']);
-								}
-								$displayHtml .= "<div><strong>". __("Profile Type", rb_agency_TEXTDOMAIN) .":</strong> ".$ptype."</div>\n";
-						}
+						
 						if (!empty($data['ProfileContactPhoneWork'])) {
 								$displayHtml .=  "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 						}
@@ -1774,6 +1761,20 @@ class RBAgency_Profile {
 							$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</li>\n";
 						}else{
 							$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";
+						}
+						if (!empty($data['ProfileType'])) {
+								if(strpos($data['ProfileType'],",") > -1){
+										$t = explode(",",$data['ProfileType']);
+										$ptype = "";
+										$ptyp = array();
+										foreach($t as $val){
+												$ptyp[] = retrieve_title($val);
+										}
+										$ptype = implode(",",$ptyp);
+								} else {
+										$ptype = retrieve_title($data['ProfileType']);
+								}
+								$displayHtml .= "<li><strong>". __("Profile Type", rb_agency_TEXTDOMAIN) .":</strong> ".$ptype."</li>\n";
 						}
 
 						$displayHtml .= rb_agency_getProfileCustomFields_admin($ProfileID ,$data['ProfileGender']);
