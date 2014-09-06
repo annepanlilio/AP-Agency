@@ -82,7 +82,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                       
                       sort_typ = prc.calculate_sortyp(typ1, typ2.val());
 			             
-                           console.log(srt_arr_original);
+                           //console.log(srt_arr_original);
                       if(sort_typ != ''){
 				        prc.hide_elem(main_elm, prc.transfer_objects);
 			         }
@@ -182,13 +182,23 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         }
 
                          // 3 due date descending
-                        if(t1 == '5' && t2 == '2'){
+                        /*if(t1 == '5' && t2 == '2'){
                             return '7_'+t3+'_'+t4;
+                        }*/
+                        
+                        // 4 due date ascending
+                        /*if(t1 == '5' && t2 == '1'){
+                            return '8_'+t3+'_'+t4;
+                        }*/
+
+                         // 3 due date descending
+                        if(t1 == '5' && t2 == '2'){
+                            return '9';
                         }
                         
                         // 4 due date ascending
                         if(t1 == '5' && t2 == '1'){
-                            return '8_'+t3+'_'+t4;
+                            return '10';
                         }
 
                         return "";
@@ -229,10 +239,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         srt_arr_assoc = [];
                         main_elm.html('');
 
-                        console.log("split 0:"+sort_typ.split("_")[0]);
-                        console.log("split 1:"+sort_typ.split("_")[1]);
-                        console.log("split 2:"+sort_typ.split("_")[2]);
-                        
+                        //console.log("split 0:"+sort_typ.split("_")[0]);
+                        //console.log("split 1:"+sort_typ.split("_")[1]);
+                        //console.log("split 2:"+sort_typ.split("_")[2]);
                         // age sorting youngest to oldest   
 			if(sort_typ == '1') {
 				jQuery("#hidden_div").find(".p_birth").each(function(){
@@ -306,10 +315,27 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     srt_arr.sort();
                                     
                           
-                }
-                   console.log(total_items);
+                } else if (sort_typ == '9') {
+					jQuery("#hidden_div").find(".p_duedate").each(function(){
+						srt_arr.push(jQuery(this).val());	
+	                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+					});
+					srt_arr.sort();
+	                                srt_arr.reverse();
+	                        
+	                        // member registered sorting ascending   
+				} else if (sort_typ == '10') {
+					jQuery("#hidden_div").find(".p_duedate").each(function(){
+	                			srt_arr.push(jQuery(this).val());	
+	                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+					});
+					srt_arr.sort();
+	                                
+	                        // age sorting oldest to youngest 
+				}
+                   //console.log(total_items);
                    
-                        console.log(srt_arr);
+                        //console.log(srt_arr);
                         clone();
 		
 		}
@@ -366,21 +392,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         }
 
 
-                                }/*else if(sort_typ == '5' ) {
-                                        if(prc.check_instance_in_array(value)){
-                                                var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
-                                                prc.clone_em(cloned);
-                                       } else {
-                                            if(prc.not_in_array(counted,value)){
-                                                prc.clone_em_all(value,"p_duedate");
-                                                counted.push(value);
-                                            }
-                                        }
-
-
-                                }*/else if(sort_typ == '8' || sort_typ == '7'){
-                                    console.log(value);
-
+                                }else if(sort_typ == '8' || sort_typ == '7'){
+                                   
                                         if(prc.check_instance_in_array(value)){
                                             var cloned = jQuery("#hidden_div").find(".p_duedate#du"+sort_typ_date+"_"+sort_typ_id).parent();
                                              prc.clone_em(cloned);
@@ -391,8 +404,21 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                             }
                                         }
                                         
-                                }                                       
+                                }else if(sort_typ == '9' || sort_typ == '10' ) {
+                                	    if(prc.check_instance_in_array(value)){
+                                                var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
+                                                prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_duedate");
+                                                counted.push(value);
+                                            }
+                                        }
+
+
+                                }                                     
 					  					
+                                 //console.log(value);
 
                        });
                            
@@ -409,9 +435,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 * check if there is more than one instance
                 */
                  prc.check_instance_in_array = function(vl){
-                        console.log("Srt assoc:");
-                        console.log(srt_arr_assoc);
-                        console.log("val: "+vl);
+                        //console.log("Srt assoc:");
+                        //console.log(srt_arr_assoc);
+                        //console.log("val: "+vl);
                         var count = 0;
                         for (var key in srt_arr_assoc) {
                             if (srt_arr_assoc.hasOwnProperty(key)) {

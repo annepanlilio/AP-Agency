@@ -1342,11 +1342,13 @@
 							<option value="3">Date Joined</option>
 							<option value="2">Display Name</option>';
 						if($rb_agency_option_profilelist_sortbydate){	
-							$results4 = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomTitle FROM ".table_agency_customfields." WHERE ProfileCustomType = 10");
+							$results4 = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomTitle FROM ".table_agency_customfields." WHERE ProfileCustomType = 10  AND ProfileCustomTitle = 'Due Date' ");
 							$i = 0;
 							foreach($results4 as $key):
 								$i++;
-								$links.='<option value="5_'.$key->ProfileCustomID.'_'.$i.'">'.$key->ProfileCustomTitle.'</option>';
+								//$links.='<option value="5_'.$key->ProfileCustomID.'_'.$i.'">'.$key->ProfileCustomTitle.'</option>';
+								$links.='<option value="5">'.$key->ProfileCustomTitle.'</option>';
+						
 							endforeach;
 						}
 				$links.='</select>
@@ -1515,7 +1517,7 @@
 				ORDER BY $sortby $dir $limit #B";
 			}
 
-			
+
 			// Query
 			/*echo "queryList".$queryList;
 			echo "<br /><br />";
@@ -1604,11 +1606,11 @@
 				$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">'."\n\n";
 				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">'."\n\n";
 				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">'."\n\n";
-				$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID AND cmux.ProfileID = %d) WHERE cfield.ProfileCustomType = 10 ",$dataList["ProfileID"]),ARRAY_A);
+				$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID  AND cmux.ProfileID = %d) WHERE cfield.ProfileCustomType = 10 AND cfield.ProfileCustomTitle = 'Due Date' ",$dataList["ProfileID"]),ARRAY_A);
 				$i = 0;
 				foreach ($resultsCmux as $key) {
 					$i++;
-					$displayHTML .= '<input id="du'.$key["ProfileCustomID"].'_'.$i.'" type="hidden" class="p_duedate" value="'.(isset($key["ProfileCustomDateValue"])?$key["ProfileCustomDateValue"]:"0000-00-00").'">'."\n\n";
+					$displayHTML .= '<input id="du'.$key["ProfileCustomID"].'_'.$i.'" type="hidden" class="p_duedate" value="'.(isset($key["ProfileCustomDateValue"])?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00")).'-'.$key["ProfileID"].'">'."\n\n";
         		}
 				if ($p_image){
 					
