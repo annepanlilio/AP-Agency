@@ -2804,6 +2804,8 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 
 			// Lets not do this...
 			$measurements_label = "";
+
+			$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
 		 
 			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 				if ($resultCustom->ProfileCustomType == 7){
