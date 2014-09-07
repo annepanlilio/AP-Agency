@@ -220,6 +220,8 @@ echo $rb_header = RBAgency_Common::rb_header();
 	($rb_agency_options_arr['rb_agency_option_privacy']==1) ||
 	// Model list public. Must be logged to view profile information
 	($rb_agency_options_arr['rb_agency_option_privacy']==0) ||
+	//admin users
+	(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 	// Model list public. Must be logged to view profile information
 	($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
 	{
