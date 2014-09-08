@@ -16,6 +16,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 * Search optimization & enhancement
 * PDF download bugfixes
 * Bulk password generator enhancement
+* Change image shown in casting cart (other than default)
 
 
 ### 2.0.9
