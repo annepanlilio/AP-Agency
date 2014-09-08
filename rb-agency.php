@@ -533,6 +533,7 @@ class RBAgency {
 					SearchMuxSubject VARCHAR(255),
 					SearchMuxMessage TEXT,
 					SearchMuxCustomValue VARCHAR(255),
+					SearchMuxCustomThumbnail VARCHAR(200),
 					SearchMuxSent TIMESTAMP DEFAULT NOW(),
 					PRIMARY KEY (SearchMuxID)
 					);";
