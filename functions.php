@@ -4385,8 +4385,20 @@ function rb_get_primary_image($PID){
 	
 	if(empty($PID) or is_null($PID)) return false;
 	
-	$get_image = "SELECT ProfileMediaURL FROM ". table_agency_profile_media .
-				 " WHERE ProfileID = " .$PID . " AND ProfileMediaPrimary = 1";
+	if(isset($_SESSION["profilephotos_view"])){
+		$arr_thumbnail = (array)unserialize($_SESSION["profilephotos_view"]);
+		if(isset($arr_thumbnail[$PID])){
+			$get_image = "SELECT ProfileMediaURL FROM ". table_agency_profile_media .
+					 " WHERE ProfileID = " .$PID . " AND ProfileMediaID =".$arr_thumbnail[$PID];
+		}else{
+			$get_image = "SELECT ProfileMediaURL FROM ". table_agency_profile_media .
+					 " WHERE ProfileID = " .$PID . " AND ProfileMediaPrimary = 1";
+		}
+	
+	}else{
+		$get_image = "SELECT ProfileMediaURL FROM ". table_agency_profile_media .
+					 " WHERE ProfileID = " .$PID . " AND ProfileMediaPrimary = 1";
+	}
 	
 	$get_res = $wpdb->get_results($get_image,ARRAY_A);
 	
@@ -4456,6 +4468,44 @@ function rb_agency_search_profile(){
 }
 add_action('wp_ajax_rb_agency_search_profile', 'rb_agency_search_profile');
 add_action('wp_ajax_nopriv_rb_agency_search_profile', 'rb_agency_search_profile');
+/*
+ *	Rb Agency Get Profile Photos via Ajax 
+ */
+function rb_agency_profile_photos(){
+
+	global $wpdb;
+
+	$results = $wpdb->get_results($wpdb->prepare("SELECT media.* FROM  ".table_agency_profile_media." as media WHERE media.ProfileMediaType = 'Image' AND  media.ProfileID = %s",$_POST["profileID"]),ARRAY_A);
+	echo json_encode($results);
+
+	die();
+}
+add_action('wp_ajax_rb_agency_profile_photos', 'rb_agency_profile_photos');
+add_action('wp_ajax_nopriv_rb_agency_profile_photos', 'rb_agency_profile_photos');
+/*
+ *	Rb Agency Save Profile Photos via Ajax 
+ */
+function rb_agency_save_profile_photos(){
+
+	global $wpdb;
+    if(!isset($_SESSION["profilephotos"])){
+		$_SESSION["profilephotos"] = serialize(array_filter($_POST["profilephotos"]));
+	}else {
+		$thumbs = array();
+
+		foreach ((array)unserialize($_SESSION["profilephotos"]) as $key => $value) {
+			$thumbs[$key] = $value;
+		}
+		foreach ((array)unserialize(serialize(array_filter($_POST["profilephotos"]))) as $key => $value) {
+			$thumbs[$key] = $value;
+		}
+		$_SESSION["profilephotos"] = serialize($thumbs);
+	}
+	die();
+
+}
+add_action('wp_ajax_rb_agency_save_profile_photos', 'rb_agency_save_profile_photos');
+add_action('wp_ajax_nopriv_rb_agency_save_profile_photos', 'rb_agency_save_profile_photos');
 
 /*
  *	Rb Agency Clear Search filter session via Ajax 

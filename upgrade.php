@@ -713,6 +713,14 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.9.6");
 	}
 
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.6") {
+		// Add Column
+		rb_agency_addColumn( table_agency_searchsaved_mux,"SearchMuxCustomThumbnail","VARCHAR(100)");
+		
+		// Updating version number!
+		update_option('rb_agency_version', "2.0.9.7");
+	}
+
 
 
 

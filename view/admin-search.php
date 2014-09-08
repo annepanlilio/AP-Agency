@@ -54,12 +54,12 @@
 				$isSent = RBAgency_Casting::cart_send_process();
 		}
 
+		if(isset($_GET["action"]) && $_GET["action"] == "massEmail") {
 		// TODO::>> ??????
 		$cartHTML= RBAgency_Casting::cart_send_form();
 		if($cartHTML!=1)
 			echo $cartHTML;	// search result
-
-
+		}
 	/*
 	 * Display Search Results
 	 */

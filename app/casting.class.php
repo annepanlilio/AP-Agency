@@ -156,13 +156,22 @@ class RBAgency_Casting {
 				} else {
 					$cartAction = "cartRemove";
 				}
-				
+					$arr_thumbnail = "";
+					if(isset($_SESSION["profilephotos"]))
+					$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
 				foreach($results as $data) {
 					
+
 					$ProfileDateUpdated = $data['ProfileDateUpdated'];
 					echo "  <div style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 210px; margin: 6px; \">";
 					echo "    <div style=\"text-align: center; \"><h3>". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h3></div>"; 
-					echo "    <div style=\"float: left; width: 100px; height: 100px; overflow: hidden; margin-top: 2px; \"><img style=\"width: 100px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></div>\n";
+					echo "    <div style=\"float: left; width: 100px; height: 100px; overflow: hidden; margin-top: 2px; \">";
+					if(isset($arr_thumbnail[$data["ProfileID"]])){
+						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
+						echo "<img class=\"img-".$data['ProfileID']."\" style=\"width: 100px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
+					}else{
+						echo "<img class=\"img-".$data['ProfileID']."\" style=\"width: 100px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></div>\n";
+					}
 					echo "    <div style=\"float: left; width: 100px; height: 100px; overflow: scroll-y; margin-left: 10px; line-height: 11px; font-size: 9px; \">\n";
 
 					if (!empty($data['ProfileDateBirth'])) {
@@ -173,10 +182,78 @@ class RBAgency_Casting {
 					echo "    </div>";
 					echo "    <div style=\"position: absolute; z-index: 20; top: 120px; left: 200px; width: 20px; height: 20px; overflow: hidden; \"><a href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\"><img src=\"". rb_agency_BASEDIR ."style/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", rb_agency_TEXTDOMAIN) ."\" /></a></div>";
 					echo "    <div style=\"clear: both; \"></div>";
+					echo "	  <a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a>";
+					echo " 	  <input type=\"hidden\" id=\"thumbnail-".$data['ProfileID']."\"  name=\"thumbnail[".$data['ProfileID']."]\" value=\"\"/>";
 					echo "  </div>";
 				}
 				echo "  <div style=\"clear: both;\"></div>\n";
 				echo "</div>";
+
+				add_thickbox();
+
+				echo "<div id=\"profilephotos\" class=\"boxblock-container\" >";
+				echo "<div class=\"boxblock\">";
+				echo "</div>";
+				echo "</div>";
+
+				?>
+				<script type="text/javascript">
+
+					jQuery(document).ready(function(){
+						
+						var arr_thumbnails = [];
+
+							jQuery('a[class^=thickbox]').on('click', function(){
+								var id = jQuery(this).attr("id");
+								var profile_gallery = "<?php echo get_bloginfo('url').'/wp-content/plugins/rb-agency/ext/timthumb.php?src='.rb_agency_UPLOADDIR;?>"+jQuery(this).attr("attr-gallery")+"/";
+											jQuery("#profilephotos").empty().html("<center>Loading photos...</center>");
+											jQuery.ajax({
+												type: 'POST',
+												dataType: 'json',
+												url: '<?php echo admin_url('admin-ajax.php'); ?>',
+												data: { 
+													'action': 'rb_agency_profile_photos', 
+													'profileID': id, 
+												},
+												success: function(data){
+													jQuery("#TB_ajaxContent").empty();
+													for (var i = data.length - 1; i >= 0; i--) {
+														jQuery("#TB_ajaxContent").append("<div class=\"\" style=\"width:120px;height:120px;float:left;margin:5px;padding:5px; border:1px solid #ccc;\"><img src=\""+profile_gallery+data[i].ProfileMediaURL+"&h=120&w=120\" style=\"z-index: -33;float: left;\"/><input style=\"float: left;margin-top: -20px;margin-left: 5px;z-index: 12;\" type=\"radio\" name=\"photo\" value=\""+data[i].ProfileID+"\" attr-media-id=\""+data[i].ProfileMediaID+"\" attr-media=\""+data[i].ProfileMediaURL+"\"/></div>");
+													};
+													if(data.length <= 0){
+														jQuery("#TB_ajaxContent").html("<center>No photos found.</center>");
+													}
+													jQuery("input[name=photo]").on("click",function(){
+															jQuery("img[class=img-"+id).attr("src",profile_gallery+jQuery(this).attr("attr-media"));
+															jQuery("input[id^=thumbnail-"+id+"]").val(id+":"+jQuery(this).attr("attr-media-id"));
+															arr_thumbnails[id] = jQuery(this).attr("attr-media-id");
+															jQuery.ajax({
+																type: 'POST',
+																url: '<?php echo admin_url('admin-ajax.php'); ?>',
+																data: { 
+																	'action': 'rb_agency_save_profile_photos', 
+																	'profilephotos': arr_thumbnails, 
+																},
+																success: function(data){
+																	console.log(data);
+
+																}
+															});
+															tb_remove();
+															jQuery("#TB_ajaxContent").empty();
+															
+													});
+
+
+												}
+											});
+							});
+						});
+				</script>
+				<?php 
+				
+				 
+				
 				
 				if (($cartAction == "cartEmpty") || ($cartAction == "cartRemove")) {
 				echo "<a name=\"compose\">&nbsp;</a>"; 
@@ -312,7 +389,8 @@ class RBAgency_Casting {
 			
 			$cartString = implode(",", array_unique($cartArray));
 			$cartString = rb_agency_cleanString($cartString);
-			
+			$cartProfileMedia = isset($_SESSION["profilephotos"]) ? serialize($_SESSION["profilephotos"]):"";
+
 			global $wpdb;
 		$wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('%s','%s')",$cartString,$SearchMuxSubject)) or die($wpdb->print_error());
 					
@@ -327,7 +405,8 @@ class RBAgency_Casting {
 				SearchMuxToEmail,
 				SearchMuxSubject,
 				SearchMuxMessage,
-				SearchMuxCustomValue
+				SearchMuxCustomValue,
+				SearchMuxCustomThumbnail
 				)" .
 				"VALUES
 				(
@@ -337,7 +416,8 @@ class RBAgency_Casting {
 				'" . esc_sql($SearchMuxToEmail) . "',
 				'" . esc_sql($SearchMuxSubject) . "',
 				'" . esc_sql($SearchMuxMessage) . "',
-				'" . esc_sql($SearchMuxCustomValue) ."'
+				'" . esc_sql($SearchMuxCustomValue) ."',
+				'" . $cartProfileMedia ."'
 				)";
 			$results = $wpdb->query($insert);  
 
@@ -421,6 +501,8 @@ class RBAgency_Casting {
 			
 			$cartString = implode(",", array_unique($cartArray));
 			$cartString = rb_agency_cleanString($cartString);
+			$cartProfileMedia = isset($_SESSION["profilephotos"]) ? serialize($_SESSION["profilephotos"]):"";
+
 			
 			global $wpdb;
 			//$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die($wpdb->print_error());
@@ -436,7 +518,8 @@ class RBAgency_Casting {
 								SearchMuxToEmail,
 								SearchMuxSubject,
 								SearchMuxMessage,
-								SearchMuxCustomValue
+								SearchMuxCustomValue,
+								SearchMuxCustomThumbnail
 								)" .
 								"VALUES
 								(
@@ -446,7 +529,8 @@ class RBAgency_Casting {
 								'" . esc_sql($SearchMuxToEmail) . "',
 								'" . esc_sql($SearchMuxSubject) . "',
 								'" . esc_sql($SearchMuxMessage) . "',
-								'" . esc_sql($SearchMuxCustomValue) ."'
+								'" . esc_sql($SearchMuxCustomValue) ."',
+								'" . $cartProfileMedia . "'
 								)";
 							$results = $wpdb->query($insert);  
 							$profileimage = "";  
@@ -457,12 +541,19 @@ class RBAgency_Casting {
 							$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
 							$results = $wpdb->get_results($wpdb->prepare($query,$data['SearchProfileID']),ARRAY_A);
 							$count = count($results);
+							$arr_thumbnail = (array)unserialize($cartProfileMedia);
+		
 							foreach($results as $data2) {
 								$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
 								$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
 								$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 								$profileimage .= "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-								$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+								if(isset($arr_thumbnail[$data2["ProfileID"]])){
+									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
+								}else{
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+								}
 								$profileimage .= "</div>\n";
 								$profileimage .= "</div>\n";
 							}
@@ -529,7 +620,7 @@ class RBAgency_Casting {
 		}*/
 
 			if(isset($_GET["action"]) && $_GET["action"] == "massEmail"){
-				echo RBAgency_Casting::cart_show();
+				//echo RBAgency_Casting::cart_show();
 				// Filter Models Already in Cart
 				if (isset($_SESSION['cartArray'])) {
 					$cartArray = $_SESSION['cartArray'];

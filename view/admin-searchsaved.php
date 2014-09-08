@@ -142,7 +142,7 @@ $siteurl = get_option('siteurl');
 		</div>
 		<?php
 
-		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 	
 		/*
 		TODO: CLeanup
@@ -155,7 +155,7 @@ $siteurl = get_option('siteurl');
 				.(isset($data->SearchProfileID)? $data->SearchProfileID:"''").") ORDER BY ProfileContactNameFirst ASC";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
-
+		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
 		 ?>
 		<div style="padding:10px;max-width:580px;float:left;">
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
@@ -166,7 +166,12 @@ $siteurl = get_option('siteurl');
 					echo " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
 					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-					echo "<img style=\"max-width:130px; max-height:150px; \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+					if(isset($arr_thumbnail[$data2["ProfileID"]])){
+									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
+					}else{
+						echo "<img style=\"max-width:130px; max-height:150px; \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+					}
 					echo "</div>\n";
 					echo "</div>\n";
 					}
@@ -218,7 +223,7 @@ $siteurl = get_option('siteurl');
 		 	    echo "Updated successfully.";
 		 }
 
-		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);
 
 		$profile_list  = (isset($data->SearchProfileID)? implode(",",array_unique(explode(",",$data->SearchProfileID))):"''");
@@ -227,7 +232,7 @@ $siteurl = get_option('siteurl');
 				.$profile_list.") GROUP BY profile.ProfileID ORDER BY ProfileContactNameFirst ASC ";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
-
+		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
 		 ?>
 		
 		<form method="post" action="">
@@ -251,7 +256,12 @@ $siteurl = get_option('siteurl');
 					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
 					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-					echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=113&h=170\" /></a>";
+					if(isset($arr_thumbnail[$data2["ProfileID"]])){
+									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
+					}else{
+						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=113&h=170\" /></a>";
+					}
 					echo "</div>\n";
 					echo "</div>\n";
 					}
