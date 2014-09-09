@@ -4669,23 +4669,23 @@ function is_client_profiletype(){
 	$query = "SELECT ProfileType FROM ". table_agency_profile ." WHERE ProfileUserLinked = ". rb_agency_get_current_userid();
 	$results = $wpdb->get_results($query,ARRAY_A);
 	
-	if(count($results)){
-		$id = current($results);
+	if(count($results) > 0){
+		/*$id = current($results);
 		$id = $id['ProfileType'];
 		$queryList = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = ". $id;
 		$resultsList = $wpdb->get_results($queryList,ARRAY_A);
 		foreach($resultsList as $d) {
 			if(strtolower($d["DataTypeTitle"]) == "client"){
-				return true;
+				return false;
 			}
-		}	
+		}	*/
 		/*
 		 * lets check postmeta field
 		 */
-		$check_type = get_user_meta($current_user->ID, 'rb_agency_interact_clientdata', true);
-		if($check_type != ""){
-		   return true;
-		} 
+		//$check_type = get_user_meta($current_user->ID, 'rb_agency_interact_clientdata', true);
+		//if($check_type != ""){
+		   return false;
+		//} 
 	} 
 	/*
 	 * lets check postmeta field
@@ -4693,11 +4693,11 @@ function is_client_profiletype(){
 	else {
 		$check_type = get_user_meta($current_user->ID, 'rb_agency_interact_clientdata', true);
 		if($check_type != ""){
-		   return true;
+		   return false;
 		} 	
 	}	
 	
-	return false;
+	return true;
 }
 
 

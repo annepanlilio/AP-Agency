@@ -27,7 +27,7 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 		//admin users
 		(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 
-		//  Must be logged as "Client" to view model list and profile information
+		//  Must be logged in as Casting Agent to View Profiles
 		($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
 
 				if (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") {
@@ -96,7 +96,7 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 	} else {
 
 			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
-				echo "<h2>This is a restricted page. For Clients only.</h2>";
+					echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login or register</a>.</h2>";
 			} else {
 				include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
 				if(function_exists('rb_agency_interact_menu')){

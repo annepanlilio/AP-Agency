@@ -152,7 +152,7 @@
 				return $output_string;
 				}else{
 					echo "	<div class='restricted'>\n";
-					echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
+					echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login or register</a>.</h2>";
 					echo "  </div><!-- #content -->\n";
 				}
 
@@ -182,7 +182,7 @@
 
 				}else{
 					echo "	<div class='restricted'>\n";
-					echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
+					echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login or register</a>.</h2>";
 					echo "  </div><!-- #content -->\n";
 				}
 

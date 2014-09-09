@@ -144,7 +144,7 @@ class RBAgency_Profile {
 						echo "				</div>\n";
 				}
 
-				if ( ($rb_agency_option_formshow_displayname > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
+				if ( ($rb_agency_option_formshow_displayname > 0) || (isset($search_layout) && $search_layout == "admin") || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
 				
 						echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\">\n";
 						echo "					<label for=\"displayname\">". __("Display Name", rb_agency_TEXTDOMAIN) ."</label>\n";
