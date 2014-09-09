@@ -155,8 +155,14 @@ $siteurl = get_option('siteurl');
 				.(isset($data->SearchProfileID)? $data->SearchProfileID:"''").") ORDER BY ProfileContactNameFirst ASC";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
-		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
-		 ?>
+		
+		if(empty($data->SearchMuxCustomThumbnail)){
+			$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
+		}else{
+			$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
+		}
+		?>
+		
 		<div style="padding:10px;max-width:580px;float:left;">
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
 				<div style="height:550px; width:580px; overflow-y:scroll;">
@@ -337,11 +343,22 @@ $siteurl = get_option('siteurl');
 								$results = $wpdb->get_results($query, ARRAY_A);
 								$count = $wpdb->num_rows;
 
-								
-
+								$arr_thumbnail = "";
+								if(isset($_SESSION["profilephotos"]))
+								$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
+						
 								foreach ($results as $data) {
 
-									echo " <div style=\"float: left; width: 80px; height: 100px; margin-right: 5px; overflow: hidden; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "<br /><a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\"><img style=\"width: 80px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></a></div>\n";
+									echo " <div style=\"float: left; width: 80px; height: 100px; margin-right: 5px; overflow: hidden; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "<br />";
+									echo "<a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">";
+									if(isset($arr_thumbnail[$data["ProfileID"]])){
+										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
+										echo "<img  style=\"width: 80px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" />\n";
+									}else{
+									echo "<img style=\"width: 80px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" />";
+									}
+									echo "</a>";
+									echo "</div>\n";
 
 								}
 

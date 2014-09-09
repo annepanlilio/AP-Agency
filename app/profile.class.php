@@ -910,18 +910,18 @@ class RBAgency_Profile {
 
 				// First Name
 				if (isset($namefirst) && !empty($namefirst)){
-					$filter .= " AND profile.ProfileContactNameFirst LIKE '". mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namefirst))))) ."%'";
+					$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
 				}
 
 				
 				// Last Name
 				if (isset($namelast) && !empty($namelast)){
-					$filter .= " AND profile.ProfileContactNameLast LIKE '".  mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namelast))))) ."%'";
+					$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
 				}
 
 				// Display Name
 				if (isset($displayname) && !empty($displayname)){
-					$filter .= " AND profile.ProfileContactDisplay LIKE '". mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($displayname))))) ."%'";
+					$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
 				}
 
 
