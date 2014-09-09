@@ -159,7 +159,7 @@
 				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 
 				//  Must be logged as "Client" to view model list and profile information
-				($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype() ) ) {
+				($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype() || ($ProfileUserLinked == $CurrentUser)  ) ) {
 
 				// Ok, but whats the status of the profile?
 				if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
