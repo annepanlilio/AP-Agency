@@ -21,15 +21,12 @@ include(rb_agency_BASEREL ."app/profile.class.php");
 
 			// Get Casting Cart by Identifier
 			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
-			$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
-			$count =  count($results);
+			$data = $wpdb->get_row($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			$count =  $wpdb->num_rows;
 			// Get Casting Cart ID
-			foreach($results as $data) {
-				$castingcart_id = $data['SearchProfileID'];
-				$_SESSION["profilephotos_view"] = $data["SearchMuxCustomThumbnail"];
-			}
-
-			// Return Search
+			$castingcart_id = $data['SearchProfileID'];
+			$arr = (array)unserialize($data["SearchMuxCustomThumbnail"]);
+			$_SESSION["profilephotos_view"] = $arr[0];
 		
 			$search_array = array("perpage" => 9999, "include" => $castingcart_id);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
