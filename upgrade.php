@@ -23,7 +23,7 @@ global $wpdb;
 		global $wpdb;
 		$debug = debug_backtrace();
 		if($wpdb->get_var("SHOW COLUMNS FROM ".trim($tbl)." LIKE '%".trim($column)."%' ") != trim($column)){
-			$result = $wpdb->query(" ALTER TABLE ".trim($tbl)." ADD ".trim($column)." ".$atts.";");// or die("rb_agency_addColumn()  - Adding column ".trim($column)." in line ".$debug["line"]." <br/> ".mysql_error());
+			$result = $wpdb->query(" ALTER TABLE ".trim($tbl)." ADD ".trim($column)." ".$atts.";");
 			return $result;
 		}
 	}
@@ -205,28 +205,27 @@ global $wpdb;
 		}
 
 		//Fix Custom Fields compatibility. 1.8 to 1.9.1
-		$q2 = mysql_query("SELECT * FROM rb_agency_customfields ");
-		while($fetchData = mysql_fetch_assoc($q2)):
+		$results = $wpdb->get_results("SELECT * FROM rb_agency_customfields ",ARRAY_A);
+		foreach($results as $fetchData){
 			if($fetchData["ProfileCustomType"] == 0){
-				mysql_query("UPDATE rb_agency_customfields SET  ProfileCustomType = 1 WHERE ProfileCustomType = 0 ") or die(mysql_error());
+				$wpdb->query("UPDATE rb_agency_customfields SET  ProfileCustomType = 1 WHERE ProfileCustomType = 0 ");
 			}
 			if($fetchData["ProfileCustomType"] == 3){
-				mysql_query("UPDATE rb_agency_customfields SET  ProfileCustomOptions = '"."|".$fetchData["ProfileCustomOptions"]."' WHERE ProfileCustomID = ".$fetchData["ProfileCustomID"]."") or die(mysql_error());
+				$wpdb->query("UPDATE rb_agency_customfields SET  ProfileCustomOptions = '"."|".$fetchData["ProfileCustomOptions"]."' WHERE ProfileCustomID = ".$fetchData["ProfileCustomID"]."");
 			}
-		endwhile;
+		}
 
 		// Fix Gender compatibility
 		if ($wpdb->get_var("show tables like 'rb_agency_profile'") != "rb_agency_profile") { 
-			$q3 = mysql_query("SELECT ProfileID, ProfileGender FROM rb_agency_profile ") or die(mysql_error());
+			$results = $wpdb->get_results("SELECT ProfileID, ProfileGender FROM rb_agency_profile ",ARRAY_A);
 		
-			while($fetchData = mysql_fetch_assoc($q3)):
-				$queryGender = mysql_query("SELECT GenderID, GenderTitle FROM rb_agency_data_gender WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die(mysql_error());
-				$fetchGender = mysql_fetch_assoc($queryGender);
-				$count = mysql_num_rows($queryGender);
+			foreach($results as $fetchData):
+				$fetchGender = $wpdb->get_row("SELECT GenderID, GenderTitle FROM rb_agency_data_gender WHERE  GenderTitle='".$fetchData["ProfileGender"]."'");
+				$count = $wpdb->num_rows;
 				if($count > 0){
 					$wpdb->query("UPDATE rb_agency_profile SET ProfileGender='".$fetchGender["GenderID"]."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
 				}
-			endwhile;
+			endforeach;
 		}
 
 		// Updating version number!
@@ -237,25 +236,24 @@ global $wpdb;
 	if (get_option('rb_agency_version')== "1.9.1") {
 
 		// Fix Gender compatibility
-		$q4 = mysql_query("SELECT ProfileID, ProfileGender FROM rb_agency_profile ") or die("1".mysql_error());
-		while($fetchData = mysql_fetch_assoc($q4)):
+		$q4 =$wpdb->get_results("SELECT ProfileID, ProfileGender FROM rb_agency_profile ",ARRAY_A);
+		foreach($q4 as $fetchData):
 
-			$queryGender = mysql_query("SELECT GenderID, GenderTitle FROM rb_agency_data_gender WHERE  GenderTitle='".$fetchData["ProfileGender"]."'")  or die("2".mysql_error());
-			$fetchGender = mysql_fetch_assoc($queryGender);
-			$count = mysql_num_rows($queryGender);
+			$fetchGender = $wpdb->get_row("SELECT GenderID, GenderTitle FROM rb_agency_data_gender WHERE  GenderTitle='".$fetchData["ProfileGender"]."'",ARRAY_A);
+			$count = $wpdb->num_rows;
 			if($count > 0){
-				mysql_query("UPDATE rb_agency_profile SET ProfileGender='".(0 + (int)$fetchGender["GenderID"])."' WHERE ProfileID='".$fetchData["ProfileID"]."'")  or die("4".mysql_error());
+				$wpdb->query("UPDATE rb_agency_profile SET ProfileGender='".(0 + (int)$fetchGender["GenderID"])."' WHERE ProfileID='".$fetchData["ProfileID"]."'");
 			}
 
-		endwhile;
+		endforeach;
 		// Updating version number!
 		update_option('rb_agency_version', "1.9.1.1");
 	}
 
 	// Upgrade from 1.9.1.1
 	if (get_option('rb_agency_version') == "1.9.1.1") {	
-		$resultsProfile = mysql_query("SELECT * FROM rb_agency_profile");
-		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
+		$resultsProfile =  $wpdb->get_results("SELECT * FROM rb_agency_profile",ARRAY_A);
+		foreach($resultsProfile as $f_Profile){
 			$ProfileID = $f_Profile["ProfileID"];
 			$ProfileGender = $f_Profile["ProfileGender"];
 
@@ -281,7 +279,7 @@ global $wpdb;
 						SELECT ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
 						FROM rb_agency_customfields
 						WHERE ProfileCustomTitle ='". $migrate_data."'";
-				 mysql_query($query) or die(mysql_error());
+				 $wpdb->query($query);
 			endforeach;
 		}// end while data fetch
 
@@ -310,8 +308,8 @@ global $wpdb;
 		/**
 		 *  Update custom fields
 		 */
-		$resultsProfile = mysql_query("SELECT * FROM rb_agency_profile"); // Get all profiles
-		while($f_Profile = mysql_fetch_assoc($resultsProfile)){
+		$resultsProfile = $wpdb->get_results("SELECT * FROM rb_agency_profile",ARRAY_A); // Get all profiles
+		foreach($resultsProfile as $f_Profile){
 
 			$ProfileID = $f_Profile["ProfileID"];   // set the profile id
 
@@ -333,24 +331,15 @@ global $wpdb;
 				// old column   to  custom fields 
 			foreach($arr_profile_features as $oldColumn => $migrate_data):
 
-				$qCustomFieldID = mysql_query("SELECT ProfileCustomID,ProfileCustomTitle FROM rb_agency_customfields WHERE ProfileCustomTitle = '".$migrate_data."'");	
-				$count = mysql_num_rows($qCustomFieldID);
+				$qCustomFieldID = $wpdb->get_row("SELECT ProfileCustomID,ProfileCustomTitle FROM rb_agency_customfields WHERE ProfileCustomTitle = '".$migrate_data."'",ARRAY_A);	
+				$count = $wpdb->num_rows;
 				if($count > 0){
-					$fCustomFieldID = mysql_fetch_assoc($qCustomFieldID);
+					$fCustomFieldID = $qCustomFieldID;
 					if (isset($f_Profile[$oldColumn])) {
 						$query1 ="UPDATE rb_agency_customfield_mux SET  ProfileCustomValue = '". $f_Profile[$oldColumn] ."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."' AND ProfileID = '".$ProfileID ."'";
-						$q1 =  mysql_query($query1) or die(mysql_error());
-						//mysql_free_result($q1);
+						$q1 = $wpdb->query($query1) ;
 					}
-				} /*else{
-					$query ="INSERT INTO " . table_agency_customfield_mux. "(ProfileCustomID,ProfileID,ProfileCustomValue)
-					   SELECT  ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
-					   FROM   " . table_agency_customfields . "  
-					   WHERE ProfileCustomTitle ='". $migrate_data."'";
-					 $q2 = mysql_query($query) or die(mysql_error());
-					 mysql_free_result($q2);
-				}*/
-				mysql_free_result($qCustomFieldID);
+				} 
 			endforeach;
 		}// end while data fetch
 			

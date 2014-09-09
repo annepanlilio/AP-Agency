@@ -834,9 +834,6 @@
 		$resultsList = $wpdb->get_results($queryList,ARRAY_A);
 		$countList = count($resultsList);
 
-		$resultsList = mysql_query($queryList);
-		$countList = mysql_num_rows($resultsList);
-
 		// Loop through Results
 		foreach ($resultsList as $dataList) {
 			echo "<div class=\"profile-category\">\n";
