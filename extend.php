@@ -151,9 +151,13 @@
 				ob_end_clean();
 				return $output_string;
 				}else{
-					echo "	<div class='restricted'>\n";
-					echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login or register</a>.</h2>";
-					echo "  </div><!-- #content -->\n";
+					if(is_user_logged_in()){
+						rb_get_profiletype();
+					}else{
+						echo "	<div class='restricted'>\n";
+						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
+						echo "  </div><!-- #content -->\n";
+					}
 				}
 
 			}
@@ -181,9 +185,13 @@
 					return $output_string;
 
 				}else{
-					echo "	<div class='restricted'>\n";
-					echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login or register</a>.</h2>";
-					echo "  </div><!-- #content -->\n";
+					if(is_user_logged_in()){
+						rb_get_profiletype();
+					}else{
+						echo "	<div class='restricted'>\n";
+						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
+						echo "  </div><!-- #content -->\n";
+					}
 				}
 
 			}

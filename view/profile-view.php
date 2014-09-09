@@ -174,8 +174,14 @@
 				}
 			} else {
 			    if($rb_agency_option_privacy == 3 ){ // if casting only
-			    		echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login or register</a>.</h2>";
-				 }else{
+			    	if(is_user_logged_in()){
+						rb_get_profiletype();
+					}else{
+						echo "	<div class='restricted'>\n";
+						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
+						echo "  </div><!-- #content -->\n";
+					}
+			    }else{
 					// hold last model requested as session so we can return them where we found them 
 					$ProfileLastViewed = get_query_var('profile');
 					$profileviewed = get_query_var('target');

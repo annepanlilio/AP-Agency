@@ -96,7 +96,13 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 	} else {
 
 			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
-					echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login or register</a>.</h2>";
+					if(is_user_logged_in()){
+						rb_get_profiletype();
+					}else{
+						echo "	<div class='restricted'>\n";
+						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
+						echo "  </div><!-- #content -->\n";
+					}
 			} else {
 				include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
 				if(function_exists('rb_agency_interact_menu')){
