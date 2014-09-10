@@ -95,7 +95,7 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 
 	} else {
 
-			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
+			if($rb_agency_option_privacy == 3 ){
 					if(is_user_logged_in()){
 						rb_get_profiletype();
 					}else{
