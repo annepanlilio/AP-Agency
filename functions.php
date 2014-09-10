@@ -317,10 +317,22 @@
 		function rb_agency_query_vars( $query_vars ) {
 			$query_vars[] = 'type';
 			$query_vars[] = 'target';
-			$query_vars[] = 'paging';
 			$query_vars[] = 'value';
 			$query_vars[] = 'country';
-
+			// pagination
+			$query_vars[] = 'paging';
+		
+			return $query_vars;
+		}
+	// Get Veriables through filter
+	add_filter( 'query_vars', 'rb_agency_filter_query_vars', 10, 1  );
+		function rb_agency_filter_query_vars( $query_vars ) {
+			$query_vars[] = 'paging';
+			$query_vars[] = 'gender';
+			$query_vars[] = 'age_start';
+			$query_vars[] = 'age_stop';
+			
+			
 			return $query_vars;
 		}
 
@@ -855,7 +867,7 @@
 	 *
 	 * @param array $atts 
 	 */
-	function rb_agency_profilelist($atts, $content = NULL) {
+	function rb_agency_profilelist($atts, $content = NULL, $is_shortcode = false) {
 
 		// Print or Export
 		global  $wpdb;
@@ -1381,8 +1393,10 @@
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
 
-			$build_query = http_build_query($atts);
-
+			$build_query ="";
+			if(!isset($is_shortcode)){
+				$build_query = http_build_query($atts);
+			}
 
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 

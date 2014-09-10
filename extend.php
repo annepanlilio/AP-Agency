@@ -146,7 +146,7 @@
 				{
 
 				ob_start();
-				rb_agency_profilelist($atts);
+				rb_agency_profilelist($atts, NULL, true);
 				$output_string=ob_get_contents();;
 				ob_end_clean();
 				return $output_string;
