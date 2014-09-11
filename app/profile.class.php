@@ -680,13 +680,13 @@ class RBAgency_Profile {
 				foreach ($_REQUEST as $key => $value) {
 					// Clear old values
 					unset($_SESSION[$key]);
-					
 					// Set the new value
 					if (isset($value) && !empty($value)) {
 						$_SESSION[$key] = $value; //$$key = $value;
 					}
 
 				}
+
 
 			/*
 			 * Create Array
@@ -706,7 +706,7 @@ class RBAgency_Profile {
 					if (isset($_REQUEST['sort']) && !empty($_REQUEST['sort'])){
 						$filterArray['sort'] = $_REQUEST['sort'];
 					} else {
-						$filterArray['sort'] = "profile.ProfileContactNameFirst";
+						$filterArray['sort'] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 					}
 
 					// Sort Order
@@ -842,13 +842,26 @@ class RBAgency_Profile {
 	 * Process values into SQL string holding WHERE clause
 	 */
 		public static function search_generate_sqlwhere($atts = null, $exclude = null){
-
+          global $wpdb;
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
 			// Time Zone
 			$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
 			// Convert Input
 			if(is_array($atts)) {
+
+
+				// Convert Requests to Sessions
+				foreach ($atts as $key => $value) {
+					// Clear old values
+					unset($_SESSION[$key]);
+					// Set the new value
+					if (isset($value) && !empty($value)) {
+						$_SESSION[$key] = $value; //$$key = $value;
+					}
+
+				}
+
 
 			/*
 			 * Get Search Chriteria
@@ -910,18 +923,18 @@ class RBAgency_Profile {
 
 				// First Name
 				if (isset($namefirst) && !empty($namefirst)){
-					$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
+					$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
 				}
 
 				
 				// Last Name
 				if (isset($namelast) && !empty($namelast)){
-					$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
+					$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", '%'.str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
 				}
 
 				// Display Name
 				if (isset($displayname) && !empty($displayname)){
-					$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
+					$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
 				}
 
 
@@ -1261,8 +1274,8 @@ class RBAgency_Profile {
 				}
 				
 				self::search_generate_sqlorder($atts);
-
-				return $filter;
+              
+              return $filter;
 
 
 			} else {
@@ -1285,9 +1298,16 @@ class RBAgency_Profile {
 			$rb_agency_options_arr = get_option("rb_agency_options");
 			// Sort by date 
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
-			
+			$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
+				
 			if($rb_agency_option_profilelist_sortbydate){
 				   $atts["sort"] = "cmux.ProfileCustomDateValue";
+			}elseif(!isset($atts["sort"])){
+				   $atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
+			}
+
+			if(!isset($_GET["limit"]) && isset($_GET["page"]) && $_GET["page"] == "rb_agency_search"){
+				   $atts["limit"] = $rb_agency_option_persearch;
 			}
 
 			 $filter .= " GROUP BY profile.ProfileID";
@@ -1320,7 +1340,7 @@ class RBAgency_Profile {
 			 */
 
 				if (isset($sort) && !empty($sort)){
-					$filter .= " ORDER BY $sort DESC ";
+					$filter .= " ORDER BY $sort $dir ";
 				}
 
 			/*
@@ -1364,9 +1384,10 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
-					$sql = "SELECT profile.*, cmux.* FROM ". table_agency_profile ." as profile LEFT JOIN ".table_agency_customfield_mux." as cmux ON cmux.ProfileID = profile.ProfileID WHERE ". $sql_where . self::$order_by;
+					$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
 					break;
 
+				
 				/* 
 				 * query for favorites
 				 */
@@ -1381,7 +1402,6 @@ class RBAgency_Profile {
 				case 2:
 					// Get User ID
 					$user = get_userdata(rb_agency_get_current_userid());  
-
 					// check if user is admin, if yes this allow the admin to view other users cart 
 					// if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
 					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
@@ -1450,12 +1470,16 @@ class RBAgency_Profile {
 								   WHERE $sqlCasting_userID 
 								   AND ProfileIsActive = 1 
 								   GROUP BY profile.ProfileID";  
+
+						break;
 			}
+
 
 			if(self::$error_debug || self::$error_debug_query){
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
+			
 			/*
 			 * check if search is admin or public
 			 */
@@ -1646,12 +1670,13 @@ class RBAgency_Profile {
 				$displayHtml .=  "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
 				unset($arr_query["limit"]);
 				unset($arr_query["perpage"]);
+
 				
 				$query_built =  http_build_query($arr_query);
                if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
 					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href='". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none&".$query_built."'><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 				}
-				$displayHtml .=  "       <form method=\"get\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
+				$displayHtml .=  "       <form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"action\" value=\"cartAdd\" />\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"forceCart\" value=\"".(!is_array(RBAgency_Common::session('cartArray'))?RBAgency_Common::session('cartArray'):"") ."\" />\n";
@@ -1745,7 +1770,7 @@ class RBAgency_Profile {
 								$displayHtml .=  "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 						}
 
-						$resultsCustomPrivate =  $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue, c.ProfileCustomOrder FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
+						$resultsCustomPrivate =  $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue, c.ProfileCustomOrder FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". (isset($ProfileID)?$ProfileID:'""') ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
 						if (count($resultsCustomPrivate) > 0){
 							foreach ($resultsCustomPrivate as $resultCustomPrivate) {
 								$displayHtml .=  "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";

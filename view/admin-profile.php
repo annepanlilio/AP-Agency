@@ -1793,7 +1793,7 @@ function rb_display_list() {
 	if (isset($_GET['sort']) && !empty($_GET['sort'])) {
 		$sort = $_GET['sort'];
 	} else {
-		$sort = "profile.ProfileContactNameFirst";
+		$sort = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 	}
 
 	// Sort Order
@@ -2134,8 +2134,8 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	if($rb_agency_option_formshow_displayname == 1){
 	echo "        <th class=\"column-ProfileContactDisplay\" id=\"ProfileContactDisplay\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactDisplay&dir=" . $sortDirection."&".$build_query) . "\">Display Name</a></th>\n";
 	}
-	echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst&dir=" . $sortDirection."&".$build_query) . "\">First Name</a></th>\n";
-	echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast&dir=" . $sortDirection."&".$build_query) . "\">Last Name</a></th>\n";
+	echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst,ProfileContactNameLast&dir=" . $sortDirection."&".$build_query) . "\">First Name</a></th>\n";
+	echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast,ProfileContactNameFirst&dir=" . $sortDirection."&".$build_query) . "\">Last Name</a></th>\n";
 	echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection."&".$build_query) . "\">Gender</a></th>\n";
 	echo "        <th class=\"column-ProfilesProfileDate\" id=\"ProfilesProfileDate\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileDateBirth&dir=" . $sortDirection."&".$build_query) . "\">Age</a></th>\n";
 	echo "        <th class=\"column-ProfileLocationCity\" id=\"ProfileLocationCity\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationCity&dir=" . $sortDirection."&".$build_query) . "\">City</a></th>\n";

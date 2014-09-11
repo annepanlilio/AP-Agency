@@ -28,8 +28,7 @@
 	/*
 	 * Add to Cart
 	 */
-
-		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
+		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd'  ) {
 			// Process Cart
 			$cart = RBAgency_Casting::cart_process();
 		}
@@ -39,7 +38,7 @@
 	 * Empty Cart
 	 */
 
-		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
+		if(isset($_GET["action"]) && $_GET['action'] == 'cartEmpty' ) {
 			// Empty Cart
 			unset($_SESSION['cartArray']);
 		}
@@ -69,12 +68,10 @@
 				//$search_array = RBAgency_Profile::search_process();
 				//$search_array["limit"] = $rb_agency_option_persearch;
 
-				if(isset($_REQUEST)){
-						$search_array = array_filter($_REQUEST);
+				if(isset($_POST)){
+						$search_array = array_filter($_POST);
 				}
 					// Return SQL string based on fields
-					   unset($search_array["search_profiles"]);
-
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
 
@@ -100,7 +97,7 @@
 	 * Display Cart
 	 */
 
-		if (isset($_SESSION['cartArray']) || isset($_GET["action"]) && $_GET["action"] == "cartAdd" && $_GET["action"] !== "massEmail") {
+		if (isset($_SESSION['cartArray']) || isset($_POST["action"]) && $_POST["action"] == "cartAdd" && $_POST["action"] !== "massEmail") {
 
 			echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 			echo " <div class=\"boxblock\">\n";

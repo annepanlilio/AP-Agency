@@ -14,11 +14,11 @@ class RBAgency_Casting {
 
 			// Protect and defend the cart string!
 				$cartString = "";
-				$action = isset($_GET["action"])? $_GET["action"]:"";
-				$actiontwo = isset($_GET["actiontwo"])?$_GET["actiontwo"]:"";
+				$action = isset($_REQUEST["action"])? $_REQUEST["action"]:$_GET["action"];
+				$actiontwo = isset($_REQUEST["actiontwo"])?$_REQUEST["actiontwo"]:"";
 
 
-				if ($action == "cartAdd" && !isset($_GET["actiontwo"])) {
+				if ($action == "cartAdd" && !isset($_REQUEST["actiontwo"])) {
 					// Add to Cart
 					$response = self::cart_process_add();
 
@@ -70,15 +70,15 @@ class RBAgency_Casting {
 			$cartString = "";
 
         	// Get String
-			if(isset($_GET["ProfileID"]) && count($_GET["ProfileID"]) > 0) {
-				foreach($_GET["ProfileID"] as $value) {
+			if(isset($_REQUEST["ProfileID"]) && count($_REQUEST["ProfileID"]) > 0) {
+				foreach($_REQUEST["ProfileID"] as $value) {
 					$cartString .= $value .",";
 				}
 			}
 
+
 			// Clean It!
 			$cartString = RBAgency_Common::clean_string($cartString);
-
 			// Add to Session
 			if (isset($_SESSION['cartArray'])) {
 				$cartArray = $_SESSION['cartArray'];
