@@ -1878,7 +1878,7 @@ elseif ($ConfigID == 5) {
 				//delete initial values ProfileCustomID 1 to 18
 				$presets = "'ethnicity','skin tone','hair color','eye color','height','weight','shirt','waist','hips','shoe size','suit','inseam','dress','bust','union','experience','language','booking'";	
 				$delete = "DELETE FROM " . table_agency_customfields . " WHERE LOWER(ProfileCustomTitle) IN(".$presets.")";
-				mysql_query($delete) or die(mysql_error());
+				$wpdb->query($delete);
 				//repopulate
 				$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
 				if ( !$data_custom_exists ) {
@@ -3000,7 +3000,7 @@ echo "</div>";
 	  break;
 	// Add Record
 	case "addRecord":
-		 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder,MediaCategoryLinkType,MediaCategoryFileType) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."','".$_POST["MediaCategoryLinkType"]."','".$_POST["MediaCategoryFileType"]."') ") or die("Error: ".mysql_error());
+		 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder,MediaCategoryLinkType,MediaCategoryFileType) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."','".$_POST["MediaCategoryLinkType"]."','".$_POST["MediaCategoryFileType"]."') ");
 	  break;
 	
 	}

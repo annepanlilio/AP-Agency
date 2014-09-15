@@ -178,7 +178,7 @@
 			      	<tr>
 			      	<td style="text-align:right;padding-right:5px;">Job Type:</td>
 			      	<td>
-			      	<?php $get_job_type = $wpdb->get_results("SELECT * FROM " . table_agency_casting_job_type); // or die(mysql_error()
+			      	<?php $get_job_type = $wpdb->get_results("SELECT * FROM " . table_agency_casting_job_type);
 									if(count($get_job_type)){
 										foreach($get_job_type as $jtype){
 											if($jtype->Job_Type_ID == $Job_Type){

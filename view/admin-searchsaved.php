@@ -578,7 +578,7 @@ $siteurl = get_option('siteurl');
 					echo "<strong>". $data3["SearchMuxToName"]."&lt;".$data3["SearchMuxToEmail"]."&gt;"."</strong> ";
 					echo "<br/>";
 				}
-				//mysql_free_result($results2);
+				
 				if ($count3 < 1) {
 					echo "Not emailed yet\n";
 				}
@@ -587,7 +587,6 @@ $siteurl = get_option('siteurl');
 		</tr>
 		<?php
 		}
-		//	mysql_free_result($results2);
 			if ($count2 < 1) {
 				if (isset($filter)) { 
 		?>

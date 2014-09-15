@@ -1355,9 +1355,9 @@ elseif ($ConfigID == 14) {
 				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = %s ";
 				$fID =  $wpdb->get_row($wpdb->prepare($getGallary,$gallery), ARRAY_A);
 				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
-				$wpdb->query($wpdb->prepare($pSql,$fID["ProfileID"]));// or die("2".mysql_error());
+				$wpdb->query($wpdb->prepare($pSql,$fID["ProfileID"]));
 				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '%d' ";
-				$wpdb->query($wpdb->prepare($pmSql,$fID["ProfileID"]));// or die("3".mysql_error());
+				$wpdb->query($wpdb->prepare($pmSql,$fID["ProfileID"]));
 				uninstall_dummy_profile($gallery);
 			}
 			echo "<br/>Succesfully removed...";
@@ -1475,7 +1475,7 @@ elseif ($ConfigID == 14) {
 							'http://wwww.modelingagencysoftware.com'
 						);"; 
 				
-				$results = $wpdb->query($insert) or die(mysql_error());
+				$results = $wpdb->query($insert);
 				$ProfileID = $wpdb->insert_id;
 
 				// Inserting Custom Field 
@@ -1531,12 +1531,12 @@ elseif ($ConfigID == 14) {
 						if (isset($ProfileContact[2]) && $ProfileContact[2]=='Male') {
 						// Male
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
-						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)") or die(mysql_error());
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)");
 						
 						} else {
 						// Female
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$randTo8]);
-						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)") or die(mysql_error());
+						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)");
 						}
                           
 						// Any Gender
@@ -2214,16 +2214,16 @@ class RBAgencyCSVXLSImpoterPlugin {
 													$p_table_values = trim($p_table_values, ","); 
 
 													$add_to_p_table = "INSERT INTO ". table_agency_profile ." ($p_table_fields) VALUES ($p_table_values)";
-													$wpdb->query($add_to_p_table) or die(mysql_error());
-													$last_inserted_mysql_id = $wpdb->insert_id ;
+													$wpdb->query($add_to_p_table);
+													$last_inserted_id = $wpdb->insert_id ;
 													
 
-													if($last_inserted_mysql_id){
+													if($last_inserted_id){
 														$pos = 0;
 														foreach ($arr_import_headers as $key ) {
 															   if(substr($key, 0, 7) != "Profile"){
 																	if(isset($_REQUEST['select'.$pos])){
-																	   $select_id =  mysql_real_escape_string($_REQUEST['select'.$pos]);
+																	   $select_id = esc_html($_REQUEST['select'.$pos]);
 																	   if(strpos(4, ' ft ') !== FALSE){
 																			$cal_height = 0;
 																			$height = explode(' ', $vv[$key]);
@@ -2232,8 +2232,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 																			
 																		}
 																		
-																		$add_to_c_table="INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields) values('".$select_id."','".$last_inserted_mysql_id."','".mysql_real_escape_string($vv[$key])."')";
-																		$wpdb->query($add_to_c_table) or die(mysql_error());
+																		$add_to_c_table = $wpdb->prepare("INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields) values(%d,%d,%s)",$select_id,$last_inserted_id,$vv[$key]);
+																		$wpdb->query($add_to_c_table);
 																		$pos++;
 																	}
 																}
@@ -2241,7 +2241,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 													}
 													
 											
-												 			$ProfileGalleryCurrent = generate_foldername($last_inserted_mysql_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
+												 			$ProfileGalleryCurrent = generate_foldername($last_inserted_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
 			
 																
 																if(!empty($ProfileGallery)){
@@ -2257,10 +2257,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 																}
 
 																// Then Update our DB
-																$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryCurrent ."' WHERE ProfileID = \"". $last_inserted_mysql_id ."\"";
+																$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryCurrent ."' WHERE ProfileID = \"". $last_inserted_id ."\"";
 																$renamed = $wpdb->query($rename);
 
-																echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_mysql_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records</b></li></ul></div>";
+																echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records</b></li></ul></div>";
 											
 															
 											}else{

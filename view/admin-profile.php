@@ -241,7 +241,7 @@ if (isset($_POST['action'])) {
 							'" . esc_attr($ProfileStatHits) . "',
 							'" . esc_attr($ProfileDateViewLast) . "'
 						)";
-					$results = $wpdb->query($insert) or die("Add Record: " . mysql_error());
+					$results = $wpdb->query($insert);
 					$ProfileID = $wpdb->insert_id;
 					add_user_meta( $ProfileID, 'rb_agency_interact_profiletype',true);
 					
@@ -271,9 +271,9 @@ if (isset($_POST['action'])) {
 							
 							if(count($profilecustomfield_date) == 2){ // customfield date
 								$value = date("y-m-d h:i:s",strtotime($value));
-								$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+								$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue) VALUES (%d,%d,%s)", $ProfileID , $ProfileCustomID, $value);
 							}else{
-								$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+								$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue) VALUES (%d,%d,%s)", $ProfileID , $ProfileCustomID, $value);
 							}
 							$results1 = $wpdb->query($insert1);
 						}
@@ -323,8 +323,8 @@ if (isset($_POST['action'])) {
 											ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
 											ProfileStatHits='" . esc_attr($ProfileStatHits) . "'
 											WHERE ProfileID=$ProfileID";
-										$results = $wpdb->query($update) or die(mysql_error());
-
+										$results = $wpdb->query($update);
+										
 											update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
 											update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_pgender', esc_attr($ProfileGender));
 
@@ -356,9 +356,9 @@ if (isset($_POST['action'])) {
 												
 												if(count($profilecustomfield_date) == 2){ // customfield date
 													$value = date("y-m-d h:i:s",strtotime($value));
-													$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+													$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
 												}else{
-													$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+													$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
 												}
 												$results1 = $wpdb->query($insert1);
 											}
