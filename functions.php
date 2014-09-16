@@ -900,6 +900,14 @@
 		global $wp_rewrite;
 		$cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
 
+
+		// Paginate
+		$build_query ="";
+		if(!$is_shortcode){
+		
+				$build_query = http_build_query($atts);
+		}
+
 		// Exctract from Shortcode
 		extract(shortcode_atts(array(
 			"profileid" => NULL,
@@ -1395,10 +1403,7 @@
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
 
-			$build_query ="";
-			if(!isset($is_shortcode)){
-				$build_query = http_build_query($atts);
-			}
+
 
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
