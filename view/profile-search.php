@@ -50,9 +50,14 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 					if(isset($_REQUEST)){
 						$search_array = array_filter($_REQUEST);
 					}
+
 					// Return SQL string based on fields
 					   unset($search_array["search_profiles"]);
-						rb_agency_profilelist($search_array);
+					   $search_array["profilecontactnamefirst"] = $search_array["namefirst"];
+					   $search_array["profilecontactnamelast"] = $search_array["namelast"];
+					   unset($search_array["namefirst"]);
+					   unset($search_array["namelast"]);
+					   rb_agency_profilelist($search_array);
 					
 					//$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 					

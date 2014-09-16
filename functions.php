@@ -1001,12 +1001,12 @@
 		}else{
 			if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
 				$ProfileContactNameFirst = $ProfileContactNameFirst;
-				$filter .= " AND profile.ProfileContactNameFirst LIKE '". $ProfileContactNameFirst ."%'";
+				$filter .= " AND profile.ProfileContactNameFirst LIKE '%". $ProfileContactNameFirst ."%'";
 			}
 		}
 		if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
 			$ProfileContactNameLast = $ProfileContactNameLast;
-			$filter .= " AND profile.ProfileContactNameLast LIKE '". $ProfileContactNameLast ."%'";
+			$filter .= " AND profile.ProfileContactNameLast LIKE '%". $ProfileContactNameLast ."%'";
 		}
 
 		// Type
@@ -1064,7 +1064,7 @@
 			$filter .= " AND profile.ProfileLocationZip = '". ucfirst($Zip) ."'";
 		}
 
-				
+        		
 		// Set CustomFields search
 				if(isset($atts) && !empty($atts)){
 
@@ -1528,7 +1528,6 @@
 				ORDER BY $sortby $dir $limit #B";
 			}
 
-
 			// Query
 			/*echo "queryList".$queryList;
 			echo "<br /><br />";
@@ -1561,7 +1560,7 @@
 
 			if($countList > 0){
 
-			# this will replace the timthumb function as it is not working properly all the time.	
+           # this will replace the timthumb function as it is not working properly all the time.	
 			$displayHTML ="	<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
 
 			$profileDisplay = 0;
