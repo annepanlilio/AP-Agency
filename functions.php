@@ -128,6 +128,9 @@
 			}
 				?>
 				<script type="text/javascript">
+				var rb_ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+				</script>
+				<script type="text/javascript">
 				jQuery(function(){
 						jQuery(".rb-datepicker").each(function(){
 							jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
@@ -1272,7 +1275,6 @@
 			$rb_agency_options_arr = get_option("rb_agency_options");
 			// Sort by date 
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
-			
 			
 		// Can we show the profiles?
 		// P R I V A C Y FILTER ====================================================

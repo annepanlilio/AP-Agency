@@ -55,8 +55,9 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 					   unset($search_array["search_profiles"]);
 					   $search_array["profilecontactnamefirst"] = $search_array["namefirst"];
 					   $search_array["profilecontactnamelast"] = $search_array["namelast"];
-					   unset($search_array["namefirst"]);
-					   unset($search_array["namelast"]);
+					   $search_array["profilecity"] = $search_array["city"];
+					   $search_array["profilestate"] = $search_array["state"];
+					   $search_array["profilezip"] = $search_array["zip"];
 					   rb_agency_profilelist($search_array);
 					
 					//$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
