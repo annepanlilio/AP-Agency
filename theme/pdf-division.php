@@ -140,7 +140,7 @@ else{$divisionName="Models";}
 
 //$paperDef="10x16"; // PDF ppaer size
 //$divisionName=str_replace("-","_",$ProfileType);
-$htmlFile="DirectBooking-".$divisionName."-".date("ymd")."-".rand(100,200).".html"; 
+$htmlFile="DirectBooking-".$divisionName."-".date("Ymd")."-".rand(100,200).".html"; 
 //$pdfFile=str_replace(".html",".pdf",$htmlFile);
 $pdfFile=str_replace(" ","_",$htmlFile).$fileFormat.".pdf";
 $pdfFile=str_replace(".html","",$pdfFile);
