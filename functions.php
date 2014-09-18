@@ -4907,7 +4907,7 @@ function rb_get_casting_profileid(){
  */
 function rb_get_profile_link_label(){
 	$rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_option_profilemedia_links = $rb_agency_options_arr["rb_agency_option_profilemedia_links"];
+	$rb_agency_option_profilemedia_links = isset($rb_agency_options_arr["rb_agency_option_profilemedia_links"])?$rb_agency_options_arr["rb_agency_option_profilemedia_links"]:2;
 
 	if($rb_agency_option_profilemedia_links == 2){
 		return __("View", rb_agency_TEXTDOMAIN);
@@ -4919,12 +4919,16 @@ function rb_get_profile_link_label(){
 /*
  * Get Profile Media Open type
  */
-function rb_get_profilemedia_link_opentype($url){
+function rb_get_profilemedia_link_opentype($url,$is_docs = false){
 	$rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_option_profilemedia_links = $rb_agency_options_arr["rb_agency_option_profilemedia_links"];
+	$rb_agency_option_profilemedia_links = isset($rb_agency_options_arr["rb_agency_option_profilemedia_links"])?$rb_agency_options_arr["rb_agency_option_profilemedia_links"]:2;
 
 	if($rb_agency_option_profilemedia_links == 2){
-		return " href=\"javascript:;\" onclick=\"window.open('".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+		if($is_docs){
+			return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+		}else{
+			return " href=\"javascript:;\" onclick=\"window.open('".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+		}
 	}elseif($rb_agency_option_profilemedia_links == 3){
 		return " href=\"".rb_agency_BASEDIR."ext/forcedownload.php?file=".$url."\" ";
 	}
