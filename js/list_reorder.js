@@ -19,13 +19,15 @@ jQuery(document).ready(function(){
                 var manage = new manage_elem(jQuery("#sort_by").val(),
                                             jQuery("#profile-list"),
                                             jQuery("#hidden_div"));
+                   manage.current_custom_date_id(jQuery("#sort_by").val());
+                
 
                 if(jQuery(this).attr('id') == 'sort_by'){
                         
                         manage.update_option_fields(jQuery(this).val(),
                                                     jQuery("#sort_option"),
                                                     manage.start_sorting);
-                
+                     
                 } else {
                         
                         manage.start_sorting(jQuery(this)); 
@@ -58,6 +60,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
 
                 var srt_arr_original = [];
 
+                var current_custom_date_id = 0;
+
                 // is custom date pushed
                 var custom_date_pushed = false;
                 var custom_date_sorted = false;
@@ -65,7 +69,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                
                 var total_items = jQuery("input[name=rb_total_items]").val();
 
-               
+               prc.current_custom_date_id = function(id){
+                  current_custom_date_id = id;
+               }
                 /* 
                 * start sorting
                 */
@@ -82,7 +88,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                       
                       sort_typ = prc.calculate_sortyp(typ1, typ2.val());
 			             
-                           //console.log(srt_arr_original);
+                           ////console.log(srt_arr_original);
                       if(sort_typ != ''){
 				        prc.hide_elem(main_elm, prc.transfer_objects);
 			         }
@@ -110,8 +116,13 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                  1 : 'A - Z',
                                  2 : 'Z - A'
                           };
-                    } else if(setting == 3 || setting == 5 ){
+                    } else if(setting == 3 ){
                           options = {
+                                 1 : 'Ascending',
+                                 2 : 'Descending'
+                          };
+                    } else if(setting > 3){ // custom date
+                         options = {
                                  1 : 'Ascending',
                                  2 : 'Descending'
                           };
@@ -148,7 +159,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         t3 = t1[1];
                         t4 = t1[2];
                         t1 = t1[0];
-                        console.log(t1+"="+t2+"="+t3+"="+t4);
+                        //console.log(t1+"="+t2+"="+t3+"="+t4);
                         
                         
                         // 1 young to old
@@ -192,13 +203,20 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         }*/
 
                          // 3 due date descending
-                        if(t1 == '5' && t2 == '2'){
+                       /* if(t1 == '5' && t2 == '2'){
                             return '9';
-                        }
+                        }*/
                         
                         // 4 due date ascending
-                        if(t1 == '5' && t2 == '1'){
+                        /*if(t1 == '5' && t2 == '1'){
                             return '10';
+                        }*/
+
+                        if(t1 > 5 && t2 == '1'){
+                            return '11';
+                        }
+                        if(t1 > 5 && t2 == '2'){
+                            return '12';
                         }
 
                         return "";
@@ -239,9 +257,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         srt_arr_assoc = [];
                         main_elm.html('');
 
-                        //console.log("split 0:"+sort_typ.split("_")[0]);
-                        //console.log("split 1:"+sort_typ.split("_")[1]);
-                        //console.log("split 2:"+sort_typ.split("_")[2]);
+                        ////console.log("split 0:"+sort_typ.split("_")[0]);
+                        ////console.log("split 1:"+sort_typ.split("_")[1]);
+                        ////console.log("split 2:"+sort_typ.split("_")[2]);
                         // age sorting youngest to oldest   
 			if(sort_typ == '1') {
 				jQuery("#hidden_div").find(".p_birth").each(function(){
@@ -332,10 +350,30 @@ function manage_elem(typ1, main_elm, hidden_elm){
 					srt_arr.sort();
 	                                
 	                        // age sorting oldest to youngest 
-				}
-                   //console.log(total_items);
+				// Custom Date
+                } else if (sort_typ == '11') {
+                    jQuery("#hidden_div").find("#"+current_custom_date_id+".p_customdate").each(function(){
+                                srt_arr.push(jQuery(this).val());   
+                                            srt_arr_assoc[jQuery(this).attr('data-custom-date')] = jQuery(this).val();
+                    });
+                    srt_arr.sort();
+                                    
+                            // age sorting oldest to youngest 
+                } else if (sort_typ == '12') {
                    
-                        //console.log(srt_arr);
+                    jQuery("#hidden_div").find("#"+current_custom_date_id+".p_customdate").each(function(){
+                                 srt_arr.push(jQuery(this).val());   
+                                 
+                                            srt_arr_assoc[jQuery(this).attr('data-custom-date')] = jQuery(this).val();
+                    });
+                    srt_arr.sort();
+                    srt_arr.reverse();
+                                         
+                            // age sorting oldest to youngest 
+                }
+                   ////console.log(total_items);
+                   
+                        ////console.log(srt_arr);
                         clone();
 		
 		}
@@ -352,7 +390,6 @@ function manage_elem(typ1, main_elm, hidden_elm){
                        
                         var is_date_sorted = false;
                          main_elm.empty();
-                       
                        jQuery.each(srt_arr, function(index, value) {
                             
                              sort_typ  = sort_typ.split("_")[0];
@@ -416,9 +453,22 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         }
 
 
+                                }else if(sort_typ == '11' || sort_typ == '12' ) {
+                                       if(prc.check_instance_in_array(value)){
+                                                var cloned = jQuery("#hidden_div").find(".p_customdate[value='"+value+"'][id='"+current_custom_date_id+"']").parent();
+                                                prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_customdate#"+current_custom_date_id);
+                                                counted.push(value);
+                                            }
+                                        }
+                                        //console.log(".p_customdate[value='"+value+"'][id='"+current_custom_date_id+"']");
+
+
                                 }                                     
 					  					
-                                 //console.log(value);
+                                 ////console.log(value);
 
                        });
                            
@@ -435,9 +485,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 * check if there is more than one instance
                 */
                  prc.check_instance_in_array = function(vl){
-                        //console.log("Srt assoc:");
-                        //console.log(srt_arr_assoc);
-                        //console.log("val: "+vl);
+                        ////console.log("Srt assoc:");
+                        ////console.log(srt_arr_assoc);
+                        ////console.log("val: "+vl);
                         var count = 0;
                         for (var key in srt_arr_assoc) {
                             if (srt_arr_assoc.hasOwnProperty(key)) {

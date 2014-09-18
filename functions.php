@@ -1367,13 +1367,12 @@
 							<option value="3">Date Joined</option>
 							<option value="2">Display Name</option>';
 						if($rb_agency_option_profilelist_sortbydate){	
-							$results4 = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomTitle FROM ".table_agency_customfields." WHERE ProfileCustomType = 10  AND ProfileCustomTitle = 'Due Date' ");
+							$results4 = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomTitle FROM ".table_agency_customfields." WHERE ProfileCustomType = 10  ");
 							$i = 0;
 							foreach($results4 as $key):
 								$i++;
 								//$links.='<option value="5_'.$key->ProfileCustomID.'_'.$i.'">'.$key->ProfileCustomTitle.'</option>';
-								$links.='<option value="5">'.$key->ProfileCustomTitle.'</option>';
-						
+										$links.='<option value="'.$key->ProfileCustomID.'">'.$key->ProfileCustomTitle.'</option>';
 							endforeach;
 						}
 				$links.='</select>
@@ -1629,11 +1628,11 @@
 				$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">'."\n\n";
 				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">'."\n\n";
 				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">'."\n\n";
-				$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID  AND cmux.ProfileID = %d) WHERE cfield.ProfileCustomType = 10 AND cfield.ProfileCustomTitle = 'Due Date' ",$dataList["ProfileID"]),ARRAY_A);
+				$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID  AND cmux.ProfileID = %d) WHERE cfield.ProfileCustomType = 10  ",$dataList["ProfileID"]),ARRAY_A);
 				$i = 0;
 				foreach ($resultsCmux as $key) {
 					$i++;
-					$displayHTML .= '<input id="du'.$key["ProfileCustomID"].'_'.$i.'" type="hidden" class="p_duedate" value="'.(isset($key["ProfileCustomDateValue"])?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00")).'-'.$key["ProfileID"].'">'."\n\n";
+					  $displayHTML .= '<input id="'.$key["ProfileCustomID"].'" data-custom-date="du'.$key["ProfileCustomID"].$dataList["ProfileID"].'" type="hidden" class="p_customdate" value="'.(isset($key["ProfileCustomDateValue"])?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00"))."\"/>\n\n";
         		}
 				if ($p_image){
 					
@@ -3215,9 +3214,11 @@ function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
 			$query = current($wpdb->get_results("SELECT MediaCategoryTitle FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
 
 			if($custom_media_type == "link"){
-				echo "<li class=\"item custom_media-link\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
+				  //<li class=\"item custom_media-link\"></li>
+				echo "<a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			} elseif($custom_media_type == "button") {
-				echo "<li class=\"item custom_media-button\"><a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a></li>\n";
+				  //<li class=\"item custom_media-button\"></li>
+				echo "<a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}else{
 				echo "<a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\"> View ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}
