@@ -937,7 +937,8 @@
 			"getprofile_saved" => NULL,
 			"profilecity" => NULL,
 			"profilestate" => NULL,
-			"profilezip" => NULL
+			"profilezip" => NULL,
+			"displayname" => NULL
 		), $atts));
 
 		// Filter It
@@ -984,6 +985,7 @@
 		$ProfileID 					= $profileid;
 		$ProfileContactNameFirst	= $profilecontactnamefirst;
 		$ProfileContactNameLast    	= $profilecontactnamelast;
+		$ProfileContactDisplay	    = $displayname;
 		$ProfileLocationCity		= $profilelocationcity;
 		$ProfileType				= $profiletype;
 		$ProfileIsActive			= $profileisactive;
@@ -1019,6 +1021,10 @@
 			$ProfileContactNameLast = $ProfileContactNameLast;
 			$filter .= " AND profile.ProfileContactNameLast LIKE '%". $ProfileContactNameLast ."%'";
 		}
+		if (isset($ProfileContactDisplay) && !empty($ProfileContactDisplay)){
+			$ProfileContactDisplay = $ProfileContactDisplay;
+			$filter .= " AND profile.ProfileContactDisplay LIKE '%". $ProfileContactDisplay ."%'";
+		}
 
 		// Type
 		if (isset($ProfileType) && !empty($ProfileType)){
@@ -1041,22 +1047,22 @@
 		}
 
 		// Age
-		$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
-		if (isset($ProfileDateBirth_min) && !empty($ProfileDateBirth_min)){
-			$selectedYearMin = date('Y-m-d', strtotime('-'. $ProfileDateBirth_min .' year'. $date));
-			$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
-		}
-		if (isset($ProfileDateBirth_max) && !empty($ProfileDateBirth_max)){
-			$selectedYearMax = date('Y-m-d', strtotime('-'. $ProfileDateBirth_max - 1 .' year'. $date));
-			$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
-		}
+		
+			$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
+			if (isset($ProfileDateBirth_min) && !empty($ProfileDateBirth_min)){
+				$selectedYearMin = date('Y-m-d', strtotime('-'. $ProfileDateBirth_min .' year'. $date));
+				$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
+			}
+			if (isset($ProfileDateBirth_max) && !empty($ProfileDateBirth_max)){
+				$selectedYearMax = date('Y-m-d', strtotime('-'. $ProfileDateBirth_max - 1 .' year'. $date));
+				$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
+			}
 		if (isset($ProfileIsFeatured)){
 			$filter .= " AND profile.ProfileIsFeatured = '1' ";
 		}
 		if (isset($ProfileIsPromoted)){
 			$filter .= " AND profile.ProfileIsPromoted = '1' ";
 		}
-
 		// City
 		if (isset($City) && !empty($City)){
 			$City = $City;

@@ -58,6 +58,8 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 					   $search_array["profilecity"] = $search_array["city"];
 					   $search_array["profilestate"] = $search_array["state"];
 					   $search_array["profilezip"] = $search_array["zip"];
+					   $search_array["age_start"] = $search_array["datebirth_min"];
+					   $search_array["age_stop"] = $search_array["datebirth_max"];
 
 					   rb_agency_profilelist($search_array);
 					
