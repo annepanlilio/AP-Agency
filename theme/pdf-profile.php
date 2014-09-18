@@ -253,7 +253,7 @@ if($_POST['print_option']==14){  // print for division
 					<h1 style="margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1>
 				
 					<ul>
-					'.rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,false).'
+					'.rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,false,true).'
 					</ul>
 				</div>'."\n";
 				
@@ -377,8 +377,8 @@ elseif($_POST['print_option']=="11"){$format="-Polaroids-4perpage-with-Info-";}
 elseif($_POST['print_option']=="12"){$format="-Polaroids-1perpage-with-Info-";}
 else{$format="";}
 
-//$blog_title = strtolower(str_replace(" ","_",get_bloginfo('name')));
-//$pdfFile="$blog_title-".str_replace(" ","-",$ProfileContactDisplay).$format.date("ymd").".pdf";
+//*$blog_title = strtolower(str_replace(" ","_",get_bloginfo('name')));
+//*$pdfFile="$blog_title-".str_replace(" ","-",$ProfileContactDisplay).$format.date("ymd").".pdf";
 
 $pdfFile=strtolower(str_replace(" ","-",$ProfileContactDisplay)).".pdf";
 
@@ -386,15 +386,15 @@ $pdfFile=strtolower(str_replace(" ","-",$ProfileContactDisplay)).".pdf";
 $toRedirect=rb_agency_BASEDIR."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
 $path="wp-content/plugins/rb-agency/ext/dompdf/htmls/";
 
-//include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
+//*include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
 $fp=fopen($path.$htmlFile,"w");
 fwrite($fp,$header);
-//fwrite($fp,$border);
-//fwrite($fp,$modelInfo);
-//fwrite($fp,$allImages);
+//*fwrite($fp,$border);
+//*fwrite($fp,$modelInfo);
+//*fwrite($fp,$allImages);
 fwrite($fp,$table);
 fwrite($fp,$footer);
 fclose($fp);
 
-//die($toRedirect);
+//*die($toRedirect);
 wp_redirect($toRedirect); exit;

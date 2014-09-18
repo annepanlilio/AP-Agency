@@ -2694,7 +2694,7 @@ function rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender, $LabelT
 * ======================== Get Custom Fields ===============
 * @Returns Custom Fields
 /*/
-function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = true) {
+function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = true, $is_print = false) {
 
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
@@ -2743,7 +2743,7 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 					$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
 			}
 			
-			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
+			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) || $is_print){
 				if ($resultCustom->ProfileCustomType == 7){
 
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
