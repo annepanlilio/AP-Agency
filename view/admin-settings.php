@@ -531,6 +531,16 @@ elseif ($ConfigID == 1) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profile Media Links', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_profilemedia_links]\">\n";
+		//echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 1,false) ."> ". __("Open in a new tab", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 2,false) ."> ". __("Open in a new window", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 3,false) ."> ". __("Force Download", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
 
 		/*
 		 * EasyText API

@@ -43,7 +43,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download Resume</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ." class=\"profile-link\">".rb_get_profile_link_label()." Resume</a>\n";
 			}
 		}
 
@@ -53,7 +53,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download Comp Card</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Comp Card</a>\n";
 			}
 		}
 
@@ -63,7 +63,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"".rb_agency_BASEDIR."ext/forcedownload.php?file=".  $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download Headshot</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Headshot</a>\n";
 			}
 		}
 
@@ -73,7 +73,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Listen to Voice Demo</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Voice Demo</a>\n";
 			}
 		}
 

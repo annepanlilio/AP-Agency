@@ -3215,12 +3215,12 @@ function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
 
 			if($custom_media_type == "link"){
 				  //<li class=\"item custom_media-link\"></li>
-				echo "<a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
+				echo "<a  ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\"> ".rb_get_profile_link_label().(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			} elseif($custom_media_type == "button") {
 				  //<li class=\"item custom_media-button\"></li>
-				echo "<a  class=\"button button-primary\" target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
+				echo "<a  class=\"button button-primary\"  ".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label().(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}else{
-				echo "<a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\"  style=\"text-transform: capitalize !important;\"> View ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
+				echo "<a target=\"_blank\"".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] )."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}
 		}
 	}
@@ -4902,5 +4902,31 @@ function rb_get_casting_profileid(){
 	 }
 }	 
 
+/*
+ * Get Profile media Link Label 
+ */
+function rb_get_profile_link_label(){
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_option_profilemedia_links = $rb_agency_options_arr["rb_agency_option_profilemedia_links"];
 
+	if($rb_agency_option_profilemedia_links == 2){
+		return __("View", rb_agency_TEXTDOMAIN);
+	}elseif($rb_agency_option_profilemedia_links == 3){
+		return __("Download", rb_agency_TEXTDOMAIN);
+	}
+}
+
+/*
+ * Get Profile Media Open type
+ */
+function rb_get_profilemedia_link_opentype($url){
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_option_profilemedia_links = $rb_agency_options_arr["rb_agency_option_profilemedia_links"];
+
+	if($rb_agency_option_profilemedia_links == 2){
+		return " href=\"javascript:;\" onclick=\"window.open('".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+	}elseif($rb_agency_option_profilemedia_links == 3){
+		return " href=\"".rb_agency_BASEDIR."ext/forcedownload.php?file=".$url."\" ";
+	}
+}
 ?>
