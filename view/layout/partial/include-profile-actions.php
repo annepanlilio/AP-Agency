@@ -73,7 +73,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Voice Demo</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">Listen to Voice Demo</a>\n";
 			}
 		}
 

@@ -1367,11 +1367,10 @@
 							<option value="3">Date Joined</option>
 							<option value="2">Display Name</option>';
 						if($rb_agency_option_profilelist_sortbydate){	
-							$results4 = $wpdb->get_results("SELECT ProfileCustomID, ProfileCustomTitle FROM ".table_agency_customfields." WHERE ProfileCustomType = 10  ");
+							$results4 = $wpdb->get_results("SELECT cu.ProfileCustomID, cu.ProfileCustomTitle FROM ".table_agency_customfields." as cu WHERE cu.ProfileCustomType = 10  ");
 							$i = 0;
 							foreach($results4 as $key):
 								$i++;
-								//$links.='<option value="5_'.$key->ProfileCustomID.'_'.$i.'">'.$key->ProfileCustomTitle.'</option>';
 										$links.='<option value="'.$key->ProfileCustomID.'">'.$key->ProfileCustomTitle.'</option>';
 							endforeach;
 						}
