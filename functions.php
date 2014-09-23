@@ -941,6 +941,11 @@
 			"displayname" => NULL
 		), $atts));
 
+		foreach ($atts as $key => $value) {
+		      unset($_SESSION[$key]);
+		      $_SESSION[$key] = $value;
+		}
+
 		// Filter It
 		$sort = "profile.ProfileContactDisplay";
 
