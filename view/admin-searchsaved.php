@@ -156,7 +156,7 @@ $siteurl = get_option('siteurl');
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		
-		if(empty($data->SearchMuxCustomThumbnail)){
+		if(empty($data->SearchMuxCustomThumbnail) && isset($_SESSION["profilephotos"])){
 			$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
 		}else{
 			$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
