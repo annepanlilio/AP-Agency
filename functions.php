@@ -1636,7 +1636,7 @@
 				$i = 0;
 				foreach ($resultsCmux as $key) {
 					$i++;
-					  $displayHTML .= '<input id="'.$key["ProfileCustomID"].'" data-custom-date="du'.$key["ProfileCustomID"].$dataList["ProfileID"].'" type="hidden" class="p_customdate" value="'.(isset($key["ProfileCustomDateValue"])?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00"))."\"/>\n\n";
+					  $displayHTML .= '<input id="'.$key["ProfileCustomID"].'" data-custom-date="du'.$key["ProfileCustomID"].$dataList["ProfileID"].'" type="hidden" class="p_customdate" value="'.(isset($key["ProfileCustomDateValue"]) && $key["ProfileCustomDateValue"]!=="1970-01-01"  && $key["ProfileCustomDateValue"]!=="0000-00-00"?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00"))."\"/>\n\n";
         		}
 				if ($p_image){
 					
@@ -2341,7 +2341,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		
 		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 		$ProfileCustomType  = $data3['ProfileCustomType'];
-		$ProfileCustomDateValue = $row["ProfileCustomDateValue"];
+		$ProfileCustomDateValue =  ($row["ProfileCustomDateValue"]!=="1970-01-01"  && $row["ProfileCustomDateValue"]!=="0000-00-00")?$row["ProfileCustomDateValue"]:"";
 		$ProfileCustomValue = $row["ProfileCustomValue"];
 		
 		/* Pull data from post so data will not lost @Satya 12/12/2013 */
@@ -2717,7 +2717,8 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 		// If a value exists...
 
 		if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
-
+                
+                $resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
 			/*
 			TODO:  REMOVE
 			// Create Label for Measurement
@@ -2836,6 +2837,9 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 	foreach ($resultsCustom as $resultCustom) {
 
 		if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
+
+			      $resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
+			
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 				if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 					if($resultCustom->ProfileCustomOptions == 1){
