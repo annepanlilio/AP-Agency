@@ -2716,10 +2716,9 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
    foreach ($resultsCustom as $resultCustom) {
 		// If a value exists...
 
-		if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
+		if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")){
                 
-                $resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
-			/*
+          	/*
 			TODO:  REMOVE
 			// Create Label for Measurement
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
