@@ -1588,6 +1588,13 @@ class RBAgency_Profile {
 				 */
 
 				$all_html .=  "<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
+				if ($rb_agency_option_profilelist_count) {
+					$items = $count;
+					$countList = $items;
+					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
+					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". (isset($countList)?$countList:0) ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
+					$all_html .= "</div>\n";
+				}
 				$all_html .= '<div id="profile-results-info">';
 				/*
 				if ($rb_agency_option_profilelist_favorite){ 
@@ -1596,13 +1603,7 @@ class RBAgency_Profile {
 					$all_html .= "</div>\n";
 				}
 				*/
-				if ($rb_agency_option_profilelist_count) {
-					$items = $count;
-					$countList = $items;
-					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
-					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". (isset($countList)?$countList:0) ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
-					$all_html .= "</div>\n";
-				}
+				
 				/*		
 				if (self::$castingcart){   //allow email to admin casting
 					$all_html .= "<div>\n";
@@ -1969,9 +1970,9 @@ class RBAgency_Profile {
 						$images=getAllImages($dataList["ProfileID"]);
 						$images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 					}
-					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=180)\"></a>".$images."</div>\n";
+					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url()\"><img src='". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=180'/></a>".$images."</div>\n";
 				} else {
-					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=180)\"></a>".$images."</div>\n";
+					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url()\"><img src='". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=180'/></a>".$images."</div>\n";
 				}
 			} else {
 				$displayHTML .= "  <div class=\"image image-broken\" style='background:lightgray; color:white; font-size:20px; text-align:center; line-height:120px; vertical-align:bottom'>No Image</div>\n";
@@ -1988,7 +1989,7 @@ class RBAgency_Profile {
 			}
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 			if ($rb_agency_option_profilelist_expanddetails) {
-				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
+				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
 				if($dataList["ProfileLocationState"]!=""){
 					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 				}				
