@@ -530,3 +530,21 @@ display: block;
 #profile-list .rbprofile-list .profile-info h3.name a:visited{
 	color:#21759b;
 }
+
+.rb_profile_tool div.favorite {
+text-align: center;
+background: #E6E2FA;
+margin-bottom: 2px;
+}
+.rb_profile_tool a.inactive.favorite, .rb_profile_tool a.active.favorite:hover {
+color: #DD1818;
+font-size: 12px;
+}
+.rb_profile_tool div.casting {
+background: #E6E2FA;
+text-align: center;
+}
+.rb_profile_tool a.inactive.castingcart, .rb_profile_tool a.active.castingcart:hover {
+color: #FFDA18;
+font-size: 12px;
+}
