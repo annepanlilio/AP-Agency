@@ -70,6 +70,9 @@ echo "			<div class=\"rbcol-5 rbcolumn\">\n";
 echo "				<div id=\"profile-info\">\n";
 echo "					<div id=\"stats\">\n";
 echo "						<ul>\n";
+								if(!empty($ProfileAge)){
+									echo "<li class=\"rb_gender\" id=\"rb_age\"><strong>". __("Age", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($ProfileAge, rb_agency_TEXTDOMAIN). "</li>\n";
+								}
 
 								if(!empty($ProfileGender)){
 									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=%d", $ProfileGender),ARRAY_A,0);
