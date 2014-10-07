@@ -595,10 +595,14 @@
 	function rb_agency_get_age($p_strDate) {
 	//Get Age Option if it should display with months included
 		$rb_agency_options_arr = get_option('rb_agency_options');
+		$detail_year = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
+		$detail_month = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
+		$detail_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
+		
 		if(empty($p_strDate) || $p_strDate == "0000-00-00"){
 			return 0;
 		}
-		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_bday']) && $rb_agency_options_arr['rb_agency_option_profilelist_bday'] == true) {
+		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) {
 
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
@@ -610,6 +614,7 @@
 			$today_d = $today_a[0];$today_m = $today_a[1];$today_y = $today_a[2];
 			$years = $today_y - $dob_y;
 			$months = $today_m - $dob_m;
+			$days = $today_d - $dob_d;
 
 			if ($today_m.$today_d < $dob_m.$dob_d) {
 				$years--;
@@ -617,6 +622,9 @@
 			}
 			if ($today_d < $dob_d) {
 				$months--;
+			}
+			if($days < 0){
+				$days = 30+ $today_d - $days;
 			}
 
 			$firstMonths=array(1,3,5,7,8,10,12);
@@ -636,23 +644,35 @@
 					array_push($thirdMonths, 0);
 				}
 			}
+            $label_y = "";
+            $label_m = "";
+            $label_d = "";
 
-			if($months >= 12){
+			if($months >= 12 && $detail_month == 1){
 				$months = $months - 12;
 				$years++;
 			}
-			if($years == 0){
-				$years = "";
-			} else {
-				$years = $years . " yr(s) ";
+			if($detail_year == 1){
+				if($years == 0){
+					$years = "";
+				} else {
+					
+						$label_y = $years . " yr(s) ";
+				}
 			}
-			if($months == 0){
-				$months = "";
-			} else {
-				$months = $months . " mo(s) ";
+			if($detail_month == 1){
+				
+				if($months == 0){
+					$label_m = "";
+				} else {
+					$label_m = $months . " mo(s) ";
+				}
+			}
+			if($detail_day == 1){
+				$label_d = $days." day(s) ";
 			}
 
-			return  $years . $months;
+			return  $label_y . $label_m.$label_d;
 
 		// Or just do it the old way
 		} else {
@@ -1294,7 +1314,9 @@
 			$rb_agency_options_arr = get_option("rb_agency_options");
 			// Sort by date 
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
-			
+			// state
+			$detail_state 		     = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
+		
 		// Can we show the profiles?
 		// P R I V A C Y FILTER ====================================================
 		if ( (isset($OverridePrivacy)) || 
@@ -1665,7 +1687,7 @@
 					if($age > 0){
 						$displayHTML .= " <span class=\"details-age\">". $age ."</span>";
 					}
-					if($dataList["ProfileLocationState"]!=""){
+					if($dataList["ProfileLocationState"]!="" && $detail_state == 1){
 						$displayHTML .= (($age>0)?"<span class=\"divider\">, </span>":"")."<span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 					} 
 						//echo "loaded: ".microtime()." ms";

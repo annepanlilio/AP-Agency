@@ -1899,7 +1899,8 @@ class RBAgency_Profile {
 			$rb_agency_option_profilenaming				 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 			$rb_agency_option_profilelist_printpdf 	     = isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
 			$rb_agency_option_profilelist_thumbsslide	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
-			
+			$rb_agency_option_detail_state 				 = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
+		
 			$ProfileContactNameFirst = $dataList["ProfileContactNameFirst"];
 			$ProfileContactNameLast = $dataList["ProfileContactNameLast"];
 				if ($rb_agency_option_profilenaming == 0) {
@@ -1990,7 +1991,7 @@ class RBAgency_Profile {
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 			if ($rb_agency_option_profilelist_expanddetails) {
 				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
-				if($dataList["ProfileLocationState"]!=""){
+				if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
 					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 				}				
 				$displayHTML .= "</div>\n";
