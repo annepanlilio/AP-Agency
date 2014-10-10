@@ -295,6 +295,9 @@ global $wpdb;
 			
 		}
 		?>
+		<center>
+		<img style="width:347px;" src="<?php echo get_bloginfo("url")?>/wp-content/plugins/rb-agency/style/address.jpg"/>
+		</center>
 		<p style="text-align: center;">Property of <?php echo $rb_agency_option_agencyname; ?>.  All rights reserved.</p>
 	</div>
 </body>

@@ -60,8 +60,9 @@ if(!empty($type)){$type=' type="'.$type.'"';}
 	 }
 	
 	   
-	   $footerBlock="<img style='margin-top:60px;width:320px; height:67px;' src='".$rb_agency_option_agencylogo."'>";
-	   
+	  // $footerBlock="<img style='margin-top:60px;width:320px; height:67px;' src='".$rb_agency_option_agencylogo."'>";
+	   $footerBlock.='<img style="margin-top:60px;width:320px; height:67px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg">';
+	 
 		$perRow=5;
 		$perPage=10;
 	   $result = "<table border='0'><tr>";
