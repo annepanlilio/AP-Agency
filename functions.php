@@ -961,9 +961,12 @@
 			"displayname" => NULL
 		), $atts));
 
-		foreach ($atts as $key => $value) {
-		      unset($_SESSION[$key]);
-		      $_SESSION[$key] = $value;
+		if(isset($atts) && is_array($atts)){
+
+			foreach ($atts as $key => $value) {
+			      unset($_SESSION[$key]);
+			      $_SESSION[$key] = $value;
+			}
 		}
 
 		// Filter It
