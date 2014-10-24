@@ -12,24 +12,28 @@
  * Set Sessions
  */
 
+  if(!function_exists("rb_agency_init_sessions")){
 	add_action('init', 'rb_agency_init_sessions');
 		function rb_agency_init_sessions() {
 			if (!session_id()) {
 				session_start();
 			}
 		}
-
+   }
 
 // Set Mail
 	/*add_filter('wp_mail_content_type','rb_agency_set_content_type');
 		function rb_agency_set_content_type($content_type){
 					return 'text/html';
 		}*/
+if(!function_exists("rb_output_buffer")){
+
 	// Remove header already sent
 	function rb_output_buffer() {
 		ob_start();
 	} // soi_output_buffer
 	add_action('init', 'rb_output_buffer');
+}
 
 // *************************************************************************************************** //
 /*
@@ -111,7 +115,7 @@
 			if( !is_admin() ) {
 				
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style.css'));
+				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style.css'),array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-style' );
 
 				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
@@ -1930,6 +1934,7 @@
 
 // *************************************************************************************************** //
 // Image Resizing 
+if (!class_exists('rb_agency_image')) {	
 class rb_agency_image {
  
 	var $image;
@@ -2029,6 +2034,7 @@ class rb_agency_image {
 		}
 	}
 
+}
 }
 
 /*
@@ -2407,7 +2413,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			if($ProfileCustomType == 4){
 				$isTextArea ="textarea-field"; 
 			}
-		echo "  <tr valign=\"top\" data-val=\"".$ProfileCustomValue."\" class=\"".$isTextArea."\">\n";
+		echo "  <tr valign=\"top rbfunc\" data-val=\"".$ProfileCustomValue."\" class=\"".$isTextArea."\">\n";
 		echo "    <th scope=\"row\"><div class=\"box\">". $data3['ProfileCustomTitle'].$measurements_label."</div></th>\n"; 
 		echo "    <td>\n";		  
 		  
@@ -2888,8 +2894,16 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 			// Lets not do this...
 			$measurements_label = "";
 
-			$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
+			if(strpos(strtolower($resultCustom->ProfileCustomTitle),"height") !== false){
+						if(strpos($resultCustom->ProfileCustomValue, "'") !== false &&  strpos($resultCustom->ProfileCustomValue," ") !== false ){
+										$resultCustom->ProfileCustomValue =  stripslashes($resultCustom->ProfileCustomValue)."\"";
+						}else{
+							$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
 		 
+						}
+			}
+
+			
 			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender)){
 				if ($resultCustom->ProfileCustomType == 7){
 					if($resultCustom->ProfileCustomOptions == 3){

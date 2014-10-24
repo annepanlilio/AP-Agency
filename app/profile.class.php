@@ -254,8 +254,9 @@ class RBAgency_Profile {
 						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".RBAgency_Common::session("zip") ."\" /></div>\n";
 						echo "				</div>\n";
 				} // Show Location Search
-
-                 
+            ?>
+                 <!--rb plugin profile.class -->
+			<?php 
 			/*
 			 * Custom Fields
 			 */
@@ -360,11 +361,22 @@ class RBAgency_Profile {
 													if(!empty($value)) {
 														// Identify Existing Value
 														$isSelected = "";
-														if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
-															$isSelected = "selected=\"selected\"";
-															echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>";
+														if(strpos(strtolower($ProfileCustomTitle),"height") === false){
+															if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
+																$isSelected = "selected=\"selected\"";
+																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>";
+															}else{
+																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($value)."</option>"; 
+															}
 														}else{
-															echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($value)."</option>"; 
+															$label = $value;
+															$value = str_replace('"',"",$value);
+															if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
+																$isSelected = "selected=\"selected\"";
+																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($label)."</option>";
+															}else{
+																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($label)."</option>"; 
+															}
 														}
 													}
 												}
@@ -1069,8 +1081,8 @@ class RBAgency_Profile {
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 3 || $ProfileCustomType["ProfileCustomType"] == 9) {
 									// Dropdown
 									if($ProfileCustomType["ProfileCustomType"] == 3 ){
-										$filter2 .="$open_st ProfileCustomValue = '".$val."' $close_st";
 
+										$filter2 .="$open_st ProfileCustomValue = '".addslashes($val)."' $close_st";
 									// Dropdown Multi-Select	
 									}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
 										
@@ -1774,7 +1786,14 @@ class RBAgency_Profile {
 						$resultsCustomPrivate =  $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue, c.ProfileCustomOrder FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". (isset($ProfileID)?$ProfileID:'""') ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
 						if (count($resultsCustomPrivate) > 0){
 							foreach ($resultsCustomPrivate as $resultCustomPrivate) {
-								$displayHtml .=  "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";
+								if(strpos(strtolower($resultCustomPrivate->ProfileCustomTitle),"height") !== false){
+									if(strpos($resultCustomPrivate->ProfileCustomValue, "'") !== false ||  strpos($resultCustomPrivate->ProfileCustomValue," ") !== false ){
+										$resultCustomPrivate->ProfileCustomValue =  $resultCustomPrivate->ProfileCustomValue."\"";
+									}
+									$displayHtml .=  "<div dtype='height-custom'><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";
+								}else{
+									$displayHtml .=  "<div dtype='rb-cfield'><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";
+								}
 							}
 						}
 
