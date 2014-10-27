@@ -2,15 +2,19 @@
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
 $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:1000;
-				
+$rb_agency_option_form_sidebar = isset($rb_agency_options_arr['rb_agency_option_form_sidebar'])?$rb_agency_options_arr['rb_agency_option_form_sidebar']:0;
+						
 	// Call Header
 	echo $rb_header = RBAgency_Common::rb_header();
 
 	// Profile Class
 	include(rb_agency_BASEREL ."app/profile.class.php");
+    $add_sidebar = false;
+    if($rb_agency_option_form_sidebar == 1){
+    	$add_sidebar = true;
+    }
 
-
-	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
+	echo "<div id=\"primary\" class=\"".($add_sidebar?"site-content":primary_class())."\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	echo "		<div id=\"profile-search\">\n";
 
@@ -53,13 +57,13 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 
 					// Return SQL string based on fields
 					   unset($search_array["search_profiles"]);
-					   $search_array["profilecontactnamefirst"] = $search_array["namefirst"];
-					   $search_array["profilecontactnamelast"] = $search_array["namelast"];
-					   $search_array["profilecity"] = $search_array["city"];
-					   $search_array["profilestate"] = $search_array["state"];
-					   $search_array["profilezip"] = $search_array["zip"];
-					   $search_array["age_start"] = $search_array["datebirth_min"];
-					   $search_array["age_stop"] = $search_array["datebirth_max"];
+					   $search_array["profilecontactnamefirst"] = isset($search_array["namefirst"])?$search_array["namefirst"]:"";
+					   $search_array["profilecontactnamelast"] = isset($search_array["namelast"])?$search_array["namelast"]:"";
+					   $search_array["profilecity"] = isset($search_array["city"])?$search_array["city"]:"";
+					   $search_array["profilestate"] = isset($search_array["state"])?$search_array["state"]:"";
+					   $search_array["profilezip"] = isset($search_array["zip"])?$search_array["zip"]:"";
+					   $search_array["age_start"] = isset($search_array["datebirth_min"])?$search_array["datebirth_min"]:"";
+					   $search_array["age_stop"] = isset($search_array["datebirth_max"])?$search_array["datebirth_max"]:"";
 
 					   rb_agency_profilelist($search_array);
 					
@@ -126,6 +130,13 @@ $rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_pe
 	echo "		</div><!-- #profile-search -->\n"; // #profile-search
 	echo "	</div><!-- #content -->\n"; // #content
 	echo "</div><!-- #primary -->\n"; // #primary
+    if($add_sidebar){
+	echo "<div id=\"secondary\" class=\"widget-area\">\n";
+	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
+	echo RBAgency_Profile::search_form("", "", 0);
+	echo "	</div><!-- #content -->\n"; // #content
+	echo "</div><!-- #secondary -->\n"; // #secondary
+	}
 
 	// Call Footer
 	echo $rb_footer = RBAgency_Common::rb_footer();
