@@ -4979,4 +4979,12 @@ function rb_get_profilemedia_link_opentype($url,$is_docs = false){
 		return " href=\"".rb_agency_BASEDIR."ext/forcedownload.php?file=".$url."\" ";
 	}
 }
+
+/*
+* Mail Character encoding
+*/
+/*add_filter( 'wp_mail_charset', 'rb_change_mail_charset' );
+function rb_change_mail_charset( $charset ) {
+	return 'UTF-32';
+}*/
 ?>
