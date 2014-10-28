@@ -4228,6 +4228,8 @@ function get_state_ajax(){
 		die;
 }
 add_action('wp_ajax_get_state_ajax', 'get_state_ajax');
+add_action('wp_ajax_nopriv_get_state_ajax', 'get_state_ajax');
+
 
 
 function read_email_content($ret = false){ 
