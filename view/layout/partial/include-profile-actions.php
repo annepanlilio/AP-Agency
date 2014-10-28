@@ -6,8 +6,16 @@
 // Social Link
 echo "<div id=\"profile-social\">";
 	rb_agency_getSocialLinks();
-echo "</div>";
 
+echo "</div>";
+echo "<div id=\"profile-casting-link\">";
+	if(is_user_logged_in()){
+	       
+				if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
+	       		   $disp .= "<a href=\"".  get_bloginfo("wpurl") ."/casting-dashboard/\" rel=\"nofollow\" title=\"View Favorites\" class=\"btn btn-primary\">Go Back to My Account</a>";
+				}
+	       	}
+echo "</div>";
 echo "<div id=\"profile-actions\">";
 	if (is_plugin_active('rb-agency-casting/rb-agency-casting.php') && is_user_logged_in()) {
 		echo rb_agency_get_new_miscellaneousLinks($ProfileID);
