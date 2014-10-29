@@ -80,14 +80,7 @@ echo "						<ul>\n";
 								}
 								
 								if(!empty($ProfileStatHeight)){
-									if ($rb_agency_option_unittype == 0){ // Metric
-										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
-									} else { // Imperial
-										$heightraw = $ProfileStatHeight;
-										$heightfeet = floor($heightraw/12);
-										$heightinch = $heightraw - floor($heightfeet*12);
-										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
-									}
+										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ".rb_get_height($ProfileStatHeight)."</li>\n";
 								}
 
 								if(!empty($ProfileStatWeight)){
