@@ -125,7 +125,8 @@ global $wpdb;
 
 						if($cfield["ProfileCustomType"] == 10){
 								$ProfileCustomValue = $sub_value['ProfileCustomDateValue'];
-							
+						}elseif($cfield["ProfileCustomType"] == 7){
+								$ProfileCustomValue = rb_get_imperial_metrics($sub_value['ProfileCustomValue'],$cfield['ProfileCustomOptions']);
 						}elseif(empty($sub_value['ProfileCustomDateValue'])){
 							if(trim($sub_value['ProfileCustomValue']) != ""){
 								$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
@@ -146,8 +147,8 @@ global $wpdb;
 				}
 				
 				//Height conversion from inches to feet n inches
-				foreach($custom_fields_title as $key => $title){
-					if($title=="Height"){
+				//foreach($custom_fields_title as $key => $title){
+					/*if($title=="Height"){
 						$rawValue=$temp_array[$custom_fields_id[$key]];
 						$feet=intval($rawValue/12);
 						$inches=intval($rawValue%12);
@@ -166,7 +167,7 @@ global $wpdb;
 							
 						
 						}
-                    }
+                    }*/
 
                          $data = array_merge($data, $c_value_array);
                          unset($data['ProfileID']);

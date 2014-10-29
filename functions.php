@@ -5015,7 +5015,8 @@ function rb_get_imperial_metrics($value,$sub_unit = 1,$label = true){
 			}
 		}elseif($sub_unit == 2){ // lb 
            return $value.($label?" "._("lb",rb_agency_TEXTDOMAIN):"");
-		}									
+		}	
+		return $value;								
 	}
 									
 }
