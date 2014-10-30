@@ -57,9 +57,12 @@ global $wpdb;
 				//$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
 				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $data['ProfileID'], ARRAY_A);
 				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = '".$data['ProfileGender']."'", ARRAY_A);
+                $ProfileGender = $data['ProfileGender'];
+
                 $data['ProfileContactNameFirst'] = stripcslashes(stripcslashes($data['ProfileContactNameFirst']));
 				$data['ProfileContactNameLast'] = stripcslashes(stripcslashes($data['ProfileContactNameLast']));
 				$data['ProfileContactDisplay'] = stripcslashes(stripcslashes($data['ProfileContactDisplay']));
+
 				$data['ProfileGender'] = $gender['GenderTitle'];
 				$data['ProfileLocationCountry'] = rb_agency_getCountryTitle($data['ProfileLocationCountry'],true); // returns country code
 				$data['ProfileLocationState'] = rb_agency_getStateTitle($data['ProfileLocationState'],true); // returns state code
@@ -69,7 +72,7 @@ global $wpdb;
 				$temp_array = array();
 
 				$ProfileID = $data['ProfileID'];
-
+				
 				$all_permit = false; // set to false
 				if($ProfileID != 0){
 					$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
@@ -117,8 +120,8 @@ global $wpdb;
 								}
 								  
 
-			
-					if($permit_type || $all_permit){
+			 //$data3["ProfileCustomShowGender"] == $ProfileGender 
+					if(rb_agency_filterfieldGender($PID, $ProfileGender,false)  && $permit_type || $all_permit){
 						$cfield = $wpdb->get_row("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".$sub_value["ProfileCustomID"]."'", ARRAY_A);
 				    
 						$ProfileCustomValue = "";

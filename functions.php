@@ -2649,10 +2649,14 @@ function rb_agency_getGenderTitle($ProfileGenderID){
 *   ================ Filters custom fields to show based on assigned gender ===================
 *   @returns GenderTitle
 /*/
-function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
+function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID, $Privacy = true){
 	global $wpdb; 
-
-	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
+    
+    if($Privacy){
+    	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
+	}else{
+    	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
+	 }
 	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A);
 	$count = $wpdb->num_rows;
 		if($count > 0){
@@ -2662,6 +2666,8 @@ function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID){
 		}
 	rb_agency_checkExecution();
 }
+
+
  
 /*/
 * ======================== Get New Custom Fields ===============
