@@ -2521,9 +2521,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					if($rb_agency_option_unittype == 1){
 						// 
 						echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">\n";
-						if (empty($ProfileCustomValue)) {
-							echo "  <option value=\"\">--</option>\n";
-						}
+						echo "  <option value=\"\">--</option>\n";
 						// 
 						$i=12;
 						$heightraw = 0;
@@ -3414,6 +3412,16 @@ function rb_agency_getSocialLinks(){
 		echo "		<a class=\"addthis_button_google\"></a>\n";
 		echo "		<a class=\"addthis_button_twitter\"></a>\n";
 		echo "	</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
+	}
+
+	global $user_ID;
+	
+	// Check if user is registered as Model/Talent
+    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_profile." WHERE ProfileUserLinked = %d  ",$user_ID));
+    $is_model_or_talent = $wpdb->num_rows;
+
+	if($is_model_or_talent > 0){
+		echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/profile-member/\">Go Back to My Dashboard</a></div>";
 	}
 }
 
