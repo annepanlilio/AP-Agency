@@ -3414,7 +3414,7 @@ function rb_agency_getSocialLinks(){
 		echo "	</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
 	}
 
-	global $user_ID;
+	global $user_ID, $wpdb;
 	
 	// Check if user is registered as Model/Talent
     $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_profile." WHERE ProfileUserLinked = %d  ",$user_ID));
