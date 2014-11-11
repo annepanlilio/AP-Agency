@@ -130,7 +130,9 @@ $rb_agency_option_form_sidebar = isset($rb_agency_options_arr['rb_agency_option_
 	echo "		</div><!-- #profile-search -->\n"; // #profile-search
 	echo "	</div><!-- #content -->\n"; // #content
 	echo "</div><!-- #primary -->\n"; // #primary
-    if($add_sidebar){
+	$type = get_query_var( 'type' );
+					
+    if($add_sidebar && !in_array($type, array("search-advanced","search-basic")) ){
 	echo "<div id=\"secondary\" class=\"widget-area\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	echo RBAgency_Profile::search_form("", "", 0);

@@ -139,23 +139,24 @@ if(!function_exists("rb_output_buffer")){
 						jQuery(".rb-datepicker").each(function(){
 							jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
 						})
-					
-						jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
-							dateFormat: "yy-mm-dd",
-					        defaultDate: "+1w",
-					        changeMonth: true,
-					        numberOfMonths: 3,
-					        onSelect: function( selectedDate ) {
-					            if(this.id == 'input[id=rb_datepicker_from]'){
-					              var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
-					              var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
-					              var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
-					              jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
-					              jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
-					            }
+					    if(jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").length){
+							jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
+								dateFormat: "yy-mm-dd",
+						        defaultDate: "+1w",
+						        changeMonth: true,
+						        numberOfMonths: 3,
+						        onSelect: function( selectedDate ) {
+						            if(this.id == 'input[id=rb_datepicker_from]'){
+						              var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
+						              var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
+						              var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
+						              jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
+						              jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
+						            }
 
-					        }
-						});
+						        }
+							});
+						}
 				});
 				</script>
 
@@ -1697,19 +1698,27 @@ if(!function_exists("rb_output_buffer")){
 					if($dataList["ProfileLocationState"]!="" && $detail_state == 1){
 						$displayHTML .= (($age>0)?"<span class=\"divider\">, </span>":"")."<span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 					} 
+
+						global $wpdb;
+						    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
+						    $is_model_or_talent = $wpdb->num_rows;
+
 						//echo "loaded: ".microtime()." ms";
-					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks")){
-						//Get Favorite & Casting Cart links
+					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
+
+						
+				    
+    		        	//Get Favorite & Casting Cart links
 						//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 						 $displayHTML .= "<div class=\"rb_profile_tool\">";
-							           if($rb_agency_option_profilelist_favorite){
+							           if($rb_agency_option_profilelist_favorite  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
 					             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 					        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
 					        
 					        }
 					        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
 
-					        if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
+					        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
 				           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
 				            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
 				            }
@@ -1902,13 +1911,18 @@ if(!function_exists("rb_output_buffer")){
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
 		
+		
 		// Set It Up	
 		global $wp_rewrite;
 		extract(shortcode_atts(array(
 				"profilesearch_layout" => "advanced",
-				"profilesearch_advanced_button" => false
+				"profilesearch_advanced_button" => false,
+				"is_widget" => false,
 		), $atts));
 
+				
+					
+		
 		if (  // Public
 				 ($rb_agency_option_privacy == 0) ||
 
@@ -1918,7 +1932,22 @@ if(!function_exists("rb_output_buffer")){
 				($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()  )
 		    ) {
 
-			$isSearchPage = 1;
+			if($is_widget){
+			    $isSearchPage = 1;
+				if(!isset($_POST['form_mode'])){
+					$type = get_query_var( 'type' );
+					if(!in_array($type, array("search-advanced","search-basic")) ) { 
+						echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout,$profilesearch_advanced_button);
+					}
+				} else {
+					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
+						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+					}
+				}
+			}else{
+				 $isSearchPage = 1;
 				if(!isset($_POST['form_mode'])){
 					echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout,$profilesearch_advanced_button);
 				} else {
@@ -1928,6 +1957,7 @@ if(!function_exists("rb_output_buffer")){
 						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					}
 				}
+			}
 		}
 	}
 
@@ -3414,15 +3444,7 @@ function rb_agency_getSocialLinks(){
 		echo "	</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
 	}
 
-	global $user_ID, $wpdb;
-	
-	// Check if user is registered as Model/Talent
-    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_profile." WHERE ProfileUserLinked = %d  ",$user_ID));
-    $is_model_or_talent = $wpdb->num_rows;
 
-	if($is_model_or_talent > 0){
-		echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/profile-member/\">Go Back to My Dashboard</a></div>";
-	}
 }
 
 //get previous and next profile link

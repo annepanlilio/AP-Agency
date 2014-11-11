@@ -136,11 +136,11 @@ class RBAgency_Profile {
 				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\">\n";
 						echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".RBAgency_Common::session("namefirst") ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".@$_REQUEST["namefirst"] ."\" /></div>\n";
 						echo "				</div>\n";
 						echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\">\n";
 						echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".RBAgency_Common::session("namelast")."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".@$_REQUEST["namelast"]."\" /></div>\n";
 						echo "				</div>\n";
 				}
 
@@ -148,7 +148,7 @@ class RBAgency_Profile {
 				
 						echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\">\n";
 						echo "					<label for=\"displayname\">". __("Display Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".RBAgency_Common::session("displayname")."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".@$_REQUEST["displayname"]."\" /></div>\n";
 						echo "				</div>\n";
 				}
 
@@ -163,8 +163,8 @@ class RBAgency_Profile {
 														$results2 = $wpdb->get_results($query,ARRAY_A);
 														foreach ($results2 as $key) {
 															 
-																if (isset($_SESSION['profiletype']) && $_SESSION['profiletype']) {
-																		if ($key["DataTypeID"] == RBAgency_Common::session('profiletype')) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
+																if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
+																		if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 																} else { $selectedvalue = ""; }
 																echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>";
 														}
@@ -185,7 +185,7 @@ class RBAgency_Profile {
 														// Pul Genders from Database
 														foreach ($results2 as $key) {
 															  if(isset($key["GenderID"]))
-																echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_SESSION['gender'])?$_SESSION['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
+																echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -199,11 +199,11 @@ class RBAgency_Profile {
 						echo "					<div>\n";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".RBAgency_Common::session('datebirth_min') ."\" />\n";
+						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".@$_REQUEST['datebirth_min'] ."\" />\n";
 						echo "						</div>";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".RBAgency_Common::session('datebirth_max') ."\" />\n";
+						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".@$_REQUEST['datebirth_max'] ."\" />\n";
 						echo "						</div>";
 						echo "					</div>";
 						echo "				  </div>";
@@ -213,7 +213,7 @@ class RBAgency_Profile {
 				if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\">\n";
 						echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".RBAgency_Common::session("city") ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".@$_REQUEST["city"]."\" /></div>\n";
 						echo "				</div>\n";
 
 						echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\">\n";
@@ -226,7 +226,7 @@ class RBAgency_Profile {
 														$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
 														$result_query_get = $wpdb->get_results($query_get);
 														foreach($result_query_get as $r){
-																$selected = isset($_SESSION["country"]) && $_SESSION["country"] ==$r->CountryID?"selected=selected":"";
+																$selected = isset($_REQUEST["country"]) && $_REQUEST["country"] ==$r->CountryID?"selected=selected":"";
 						echo '							<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
 														}
 						echo '						</select>';
@@ -251,7 +251,7 @@ class RBAgency_Profile {
 
 						echo "				<div class=\"rbfield rbtext rbsingle rb_zip\" id=\"rb_zip\">\n";
 						echo "					<label for=\"zip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".RBAgency_Common::session("zip") ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".$_REQUEST["zip"] ."\" /></div>\n";
 						echo "				</div>\n";
 				} // Show Location Search
             ?>
@@ -640,6 +640,16 @@ class RBAgency_Profile {
 					
 					}
 				echo "				</div>\n";
+				global $user_ID, $wpdb;
+	
+				// Check if user is registered as Model/Talent
+			    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
+			    $is_model_or_talent = $wpdb->num_rows;
+
+				if($is_model_or_talent > 0){
+					echo "<div class=\"rbclear\"></div>";
+					echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">Go Back to My Dashboard</a></div>";
+				}
 				echo "			</form>\n";
 
 				echo "			<script>\n";
@@ -671,6 +681,8 @@ class RBAgency_Profile {
 					echo "									jQuery('html, body').animate({ scrollTop: 0 }, 'slow'); \n";
 					echo "			}\n";
 				echo "			</script>\n";
+
+
 				echo "		</div>\n";
 				
 								
@@ -693,7 +705,7 @@ class RBAgency_Profile {
 					// Clear old values
 					unset($_SESSION[$key]);
 					// Set the new value
-					if (isset($value) && !empty($value)) {
+					if (isset($value)) {
 						$_SESSION[$key] = $value; //$$key = $value;
 					}
 
@@ -2017,11 +2029,16 @@ class RBAgency_Profile {
 				$displayHTML .=  $displayActions;
 			}
 			
+			// Check if user is registered as Model/Talent
+		    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
+		    $is_model_or_talent = $wpdb->num_rows;
 
-			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks")){
+		    $disp = "";		
+		
+   			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks") && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
 				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 			}			
-			$displayHTML .=" </div> <!-- .profile-info --> \n";
+			$displayHTML .=" </div> <!-- .profile-info - profile-class--> \n";
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
