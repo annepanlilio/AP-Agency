@@ -82,8 +82,9 @@
 					if ( empty( $showlayout ) ) { $showlayout = "condensed"; };
 						
 				if (function_exists('rb_agency_profilesearch')) { 
-					$atts = array('profilesearch_layout' => $showlayout);
-					rb_agency_profilesearch($atts);
+					$atts = array('profilesearch_layout' => $showlayout,"is_widget"=> true);
+							rb_agency_profilesearch($atts);
+
 				} else {
 					echo "Invalid Function";
 				}
@@ -165,7 +166,9 @@
 	/*
 	 * Profile Search
 	 */
+	
 		add_shortcode("profile_search","rb_agency_shortcode_profilesearch");
+	
 			function rb_agency_shortcode_profilesearch($atts, $content = null){
 
 				$rb_agency_options_arr = get_option('rb_agency_options');
@@ -179,7 +182,8 @@
 				($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
 				{
 					ob_start();
-					rb_agency_profilesearch($atts);
+					$type = get_query_var( 'type' );
+						rb_agency_profilesearch($atts);
 					$output_string=ob_get_contents();;
 					ob_end_clean();
 					return $output_string;
