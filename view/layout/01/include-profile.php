@@ -71,23 +71,23 @@ echo "				<div id=\"profile-info\">\n";
 echo "					<div id=\"stats\">\n";
 echo "						<ul>\n";
 								if(!empty($ProfileAge)){
-									echo "<li class=\"rb_gender\" id=\"rb_age\"><strong>". __("Age", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($ProfileAge, rb_agency_TEXTDOMAIN). "</li>\n";
+									echo "<li class=\"rb_gender\" id=\"rb_age\"><strong>". __("Age", rb_agency_TEXTDOMAIN). "<span>:</span></strong> ". __($ProfileAge, rb_agency_TEXTDOMAIN). "</li>\n";
 								}
 
 								if(!empty($ProfileGender)){
 									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=%d", $ProfileGender),ARRAY_A,0);
-									echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+									echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span>:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
 								}
 								
 								if(!empty($ProfileStatHeight)){
-										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ".rb_get_height($ProfileStatHeight)."</li>\n";
+										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span>:</span></strong> ".rb_get_height($ProfileStatHeight)."</li>\n";
 								}
 
 								if(!empty($ProfileStatWeight)){
 									if ($rb_agency_option_unittype == 0){ // Metric
-										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
+										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span>:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
 									} else { // Imperial
-										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
+										echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span>:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
 									}
 								}
 
