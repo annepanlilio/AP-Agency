@@ -2035,11 +2035,12 @@ class RBAgency_Profile {
 		    $is_model_or_talent = $wpdb->num_rows;
 
 		    $disp = "";		
-		
-   			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks") && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
+			$type = get_query_var('type');
+   			if( is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks") && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
+				if($type !== "profilecastingcart")
 				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 			}			
-			$displayHTML .=" </div> <!-- .profile-info - profile-class--> \n";
+			$displayHTML .=" </div> <!-- .profile-info - profile-class ".$type." --> \n";
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
