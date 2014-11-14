@@ -36,7 +36,7 @@ echo "<div id=\"profile-links\">\n";
 		}
 	}
 // Polaroid	
-	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2){
+	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 3){
 	
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
