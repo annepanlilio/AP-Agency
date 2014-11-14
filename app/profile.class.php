@@ -1968,7 +1968,11 @@ class RBAgency_Profile {
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
             $displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
            $displayActions = "";  
-			if(is_user_logged_in()){
+           $type = get_query_var('type');  
+			
+			if(is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
+
+
 	            $displayActions = "<div class=\"rb_profile_tool\">";
 	            if($rb_agency_option_profilelist_favorite){
 		              //  $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
@@ -2035,12 +2039,13 @@ class RBAgency_Profile {
 		    $is_model_or_talent = $wpdb->num_rows;
 
 		    $disp = "";		
-			$type = get_query_var('type');
-   			if( is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks") && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
-				if($type !== "profilecastingcart")
-				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+
+   			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks") && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
+					$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+
 			}			
-			$displayHTML .=" </div> <!-- .profile-info - profile-class ".$type." --> \n";
+			
+			$displayHTML .=" </div> <!-- .profile-info - profile-class \"".strpos($type,"profilecastingcart")."\" == \"profilecastingcart\" --> \n";
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
