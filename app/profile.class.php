@@ -1452,7 +1452,7 @@ class RBAgency_Profile {
 							}else{
 								$uid = rb_agency_get_current_userid();
 								if($uid > 0){
-									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
+									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d  AND cart.CastingJobID <= 0 ",rb_agency_get_current_userid());
 								}
 							}
 						}	
@@ -1581,9 +1581,13 @@ class RBAgency_Profile {
 				foreach($results as $profile) {
 					$availability = '';
 				
-					if(!empty($castingcart) && isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
-						 $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
-						$prepared = $wpdb->prepare($query,$profile["ProfileID"],$_GET["Job_ID"]);
+					if(!empty($castingcart)){
+						if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
+							 $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+							$prepared = $wpdb->prepare($query,$profile["ProfileID"],$_GET["Job_ID"]);
+						
+						}
+
 						$data = $wpdb->get_row($prepared);
 						$count2 = $wpdb->num_rows;
 						if($count2 >= 1){
@@ -1736,9 +1740,16 @@ class RBAgency_Profile {
 							$isInactive = 'style="background: #FFEBE8"';
 							$isInactiveDisable = "disabled=\"disabled\"";
 						}
+						$p_image = rb_get_primary_image($data["ProfileID"]); 
+						$checkboxDisable ="";
+						if(empty($p_image)){
+							$checkboxDisable = "data-disabled=\"true\"";
+						}else{
+							$checkboxDisable ="";
+						}
 						$displayHtml .=  "        <tr ". $isInactive.">\n";
 						$displayHtml .=  "            <th class=\"check-column\" scope=\"row\" >\n";
-						$displayHtml .=  "                <input type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
+						$displayHtml .=  "                <input ".$checkboxDisable." type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
 						$displayHtml .=  "            </th>\n";
 						$displayHtml .=  "            <td class=\"ProfileID column-ProfileID\">". $ProfileID ."</td>\n";
 						$displayHtml .=  "            <td class=\"ProfileContact column-ProfileContact\">\n";
@@ -1841,8 +1852,7 @@ class RBAgency_Profile {
 						$displayHtml .=  "            </td>\n";
 						$displayHtml .=  "            <td class=\"ProfileImage column-ProfileImage\">\n";
 
-						$p_image = rb_get_primary_image($data["ProfileID"]); 
-
+						
 						if ($p_image) {
 							$displayHtml .=  "				<div class=\"image\" style=\"height:240px\"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $p_image ."\" /></div>\n";
 						} else {
@@ -1881,8 +1891,29 @@ class RBAgency_Profile {
 						$displayHtml .= "<input type=\"hidden\" name=\"ProfileID[]\" value=\"".$key."\"/> ";
 					}
 				}
+				?>
+				<script type="text/javascript">
+							function checkCastingCart(){
+									var no_image = jQuery("input[data-disabled]:checked").length;
+									var selected = jQuery("input:checked").length;
+									
+									if(selected <= 0){
+										 alert("Please select profiles that you want to add to casting cart")
+										return false;
+									}else{
+										if(no_image > 0){
+											alert("Profiles without photo cannot be added to casting cart. Please unselect to continue or try another search.");
+											return false;
+										}
+										return true;
+									}
+									return false;
+							}
 				
-				$displayHtml .=  "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
+				</script>
+
+				<?php
+				$displayHtml .=  "      	<input type=\"submit\" onClick=\"return checkCastingCart();\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
 				$displayHtml .=  "          <a href=\"#\" onClick=\"testPrint(1);\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "<script> function testPrint(type){
 
