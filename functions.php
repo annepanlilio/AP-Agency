@@ -3285,10 +3285,10 @@ function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
 
 			if($custom_media_type == "link"){
 				  //<li class=\"item custom_media-link\"></li>
-				echo "<a  ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\"> ".rb_get_profile_link_label().(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
+				echo "<a  ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\"> ".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			} elseif($custom_media_type == "button") {
 				  //<li class=\"item custom_media-button\"></li>
-				echo "<a  class=\"button button-primary\"  ".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label().(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
+				echo "<a  class=\"button button-primary\"  ".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}else{
 				echo "<a target=\"_blank\"".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] )."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}
@@ -5050,7 +5050,7 @@ function rb_get_imperial_metrics($value,$sub_unit = 1,$label = true){
 				return $value.($label? " ". __("in", rb_agency_TEXTDOMAIN):"");
 			}
 		}elseif($sub_unit == 2){ // lb 
-           return $value.($label?" "._("lb",rb_agency_TEXTDOMAIN):"");
+           return $value.($label?" ".__("lb",rb_agency_TEXTDOMAIN):"");
 		}	
 		return $value;								
 	}
