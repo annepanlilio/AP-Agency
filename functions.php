@@ -2322,9 +2322,13 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 		$all_permit = true;
 	}
 	
-	
-	$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %d  ORDER BY ProfileCustomOrder ASC";
-	$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A);
+	if(is_admin()){
+		$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView IN(0,2)  ORDER BY ProfileCustomOrder ASC";
+		$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A);
+	}else{
+		$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %d  ORDER BY ProfileCustomOrder ASC";
+		$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A);
+	}
 	$count3 = 0;
 	
 	foreach($results3 as $data3) {
