@@ -2077,6 +2077,7 @@ class RBAgency_Profile {
 			}			
 			
 			$displayHTML .=" </div> <!-- .profile-info - profile-class \"".strpos($type,"profilecastingcart")."\" == \"profilecastingcart\" --> \n";
+		
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
