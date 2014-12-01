@@ -1725,6 +1725,29 @@ if(!function_exists("rb_output_buffer")){
 						   $displayHTML .= "</div>";
 					}
 					$displayHTML .= "</div>\n";
+				}else{
+					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
+						$displayHTML .= "     <div class=\"details\">";
+					
+						
+				    
+    		        		//Get Favorite & Casting Cart links
+							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+						     $displayHTML .= "<div class=\"rb_profile_tool\">";
+							if($rb_agency_option_profilelist_favorite  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
+					             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+					        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
+					        }
+					        
+					        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
+
+					        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
+				           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+				            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
+				            }
+						   $displayHTML .= "</div>";
+						   $displayHTML .= "</div>\n";
+					}
 				}
 				
 				

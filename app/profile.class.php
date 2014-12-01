@@ -2062,8 +2062,8 @@ class RBAgency_Profile {
 					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 				}				
 				$displayHTML .= "</div>\n";
-				$displayHTML .=  $displayActions;
 			}
+				$displayHTML .=  $displayActions;
 			
 			// Check if user is registered as Model/Talent
 		    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
