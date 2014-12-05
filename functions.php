@@ -3316,7 +3316,7 @@ function rb_agency_showMediaCategories($ProfileID, $ProfileGallery){
 				echo "<a  ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\"> ".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			} elseif($custom_media_type == "button") {
 				  //<li class=\"item custom_media-button\"></li>
-				echo "<a  class=\"button button-primary\"  ".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
+				echo "<a  class=\"rb_button\"  ".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}else{
 				echo "<a target=\"_blank\"".rb_get_profilemedia_link_opentype( $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] )."  style=\"text-transform: capitalize !important;\">".rb_get_profile_link_label()." ".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title). "</a>\n";
 			}
@@ -5027,9 +5027,9 @@ function rb_get_profilemedia_link_opentype($url,$is_docs = false){
 
 	if($rb_agency_option_profilemedia_links == 2){
 		if($is_docs){
-			return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+			return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".get_bloginfo("url")."/".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 		}else{
-			return " href=\"javascript:;\" onclick=\"window.open('".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+			return " href=\"javascript:;\" onclick=\"window.open('".get_bloginfo("url")."/".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 		}
 	}elseif($rb_agency_option_profilemedia_links == 3){
 		return " href=\"".rb_agency_BASEDIR."ext/forcedownload.php?file=".$url."\" ";

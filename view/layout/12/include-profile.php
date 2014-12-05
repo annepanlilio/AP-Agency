@@ -65,8 +65,12 @@ echo "	  		</div>\n";  // .rbcol-5
 echo "			<div class=\"rbcol-3 rbcolumn\">\n";
 echo "	  			<div id=\"links\">\n";
 echo "					<ul>\n";
-						
-						// Resume
+					/*
+					 * Include Action Icons
+					 */
+						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
+
+/*						// Resume
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
 							$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
@@ -156,7 +160,7 @@ echo "					<ul>\n";
 						    echo "<li class=\"item resume\"><a class='rb_button' href=\"".get_bloginfo('wpurl')."/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
 						    echo "<li class=\"item resume\"><a class='rb_button' href=\"".get_bloginfo('wpurl')."/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
 						
-							
+							*/
 echo "					</ul>\n";
 echo "	  			</div>\n";  // #links
 echo "	  		</div>\n";  // .rbcol-8
