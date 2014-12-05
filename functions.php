@@ -605,9 +605,9 @@ if(!function_exists("rb_output_buffer")){
 		$detail_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
 		
 		if(empty($p_strDate) || $p_strDate == "0000-00-00"){
-			return 0;
+			return '';
 		}
-		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) {
+		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true || is_admin()) {
 
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
@@ -1587,7 +1587,7 @@ if(!function_exists("rb_output_buffer")){
 
 				$castingcart_results = array();
 				if(defined("table_agency_castingcart")){
-					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
+					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'  AND CastingJobID <= 0");
 				}
 				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
 				
@@ -1711,7 +1711,7 @@ if(!function_exists("rb_output_buffer")){
     		        	//Get Favorite & Casting Cart links
 						//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 						 $displayHTML .= "<div class=\"rb_profile_tool\">";
-							           if($rb_agency_option_profilelist_favorite  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
+							if($rb_agency_option_profilelist_favorite   && !empty($p_image) && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
 					             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 					        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
 					        
@@ -1734,7 +1734,7 @@ if(!function_exists("rb_output_buffer")){
     		        		//Get Favorite & Casting Cart links
 							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 						     $displayHTML .= "<div class=\"rb_profile_tool\">";
-							if($rb_agency_option_profilelist_favorite  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
+							if($rb_agency_option_profilelist_favorite && !empty($p_image)   && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
 					             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 					        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
 					        }
