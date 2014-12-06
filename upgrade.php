@@ -710,11 +710,10 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.9.7");
 	}
 
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.7") {
+		update_option('rb_agency_version', "2.1");
+	}
 
-
-
-
-	
 
 
 ?>
