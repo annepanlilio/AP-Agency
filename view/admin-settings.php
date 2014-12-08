@@ -306,7 +306,7 @@ elseif ($ConfigID == 1) {
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencylogo]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Email Header', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Header Email', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyheader]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_agencyheader'])?$rb_agency_options_arr['rb_agency_option_agencyheader']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -2394,11 +2394,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						<tr>
 							<td valign=\"top\">Custom Views:</td>
 							<td style=\"font-size:13px;\">
-							IF PUBLIC:<br />
 							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" /> Show on Registration Form<br/>
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)<br/>  
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)<br/>
-							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile<br/>
+							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager<br/>
 							</td>
 						</tr>
 
@@ -2550,7 +2549,6 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<tr>
 													<td valign=\"top\">Custom View*:</td>
 													<td style=\"font-size:13px;\">
-							<!--IF PUBLIC:<br />-->
 							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1['ProfileCustomShowRegistration'] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form<br/>
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)<br/>  
 							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowSearchSimple"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)<br/>
