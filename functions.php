@@ -1343,8 +1343,9 @@ if(!function_exists("rb_output_buffer")){
 				//$atts["type"]="casting";
 				/*$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';*/
 			}
+			$links = "";
 
-
+			if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
 				// print, downloads links to be added on top of profile list
 				$links='<div class="rblinks">';
 
@@ -1382,6 +1383,7 @@ if(!function_exists("rb_output_buffer")){
 					}
 
 				$links.='</div><!-- .rbfavorites-castings -->';
+			}
 
 			/*
 			 *  sorting options is activated if set on in admin/settings
@@ -1668,7 +1670,7 @@ if(!function_exists("rb_output_buffer")){
 					$i++;
 					  $displayHTML .= '<input id="'.$key["ProfileCustomID"].'" data-custom-date="du'.$key["ProfileCustomID"].$dataList["ProfileID"].'" type="hidden" class="p_customdate" value="'.(isset($key["ProfileCustomDateValue"]) && $key["ProfileCustomDateValue"]!=="1970-01-01"  && $key["ProfileCustomDateValue"]!=="0000-00-00"?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00"))."\"/>\n\n";
         		}
-				if ($p_image){
+				if (!empty($p_image)){
 					
 					#dont need other image for hover if its for print or pdf download view and dont use timthubm
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
@@ -1689,62 +1691,59 @@ if(!function_exists("rb_output_buffer")){
 				$displayHTML .= "  <div class=\"profile-info\">\n";
 				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 
-				if ($rb_agency_option_profilelist_expanddetails) {
-					$age = rb_agency_get_age($dataList["ProfileDateBirth"]);
-					$displayHTML .= "     <div class=\"details\">";
-					if($age > 0){
-						$displayHTML .= " <span class=\"details-age\">". $age ."</span>";
-					}
-					if($dataList["ProfileLocationState"]!="" && $detail_state == 1){
-						$displayHTML .= (($age>0)?"<span class=\"divider\">, </span>":"")."<span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
-					} 
-
-						global $wpdb;
-						    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
-						    $is_model_or_talent = $wpdb->num_rows;
-
-						//echo "loaded: ".microtime()." ms";
-					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
-
+				if (isset($rb_agency_option_profilelist_expanddetails) && $rb_agency_option_profilelist_expanddetails > 1) {
+					
+						$age = rb_agency_get_age($dataList["ProfileDateBirth"]);
 						
-				    
-    		        	//Get Favorite & Casting Cart links
-						//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-						 $displayHTML .= "<div class=\"rb_profile_tool\">";
-							if($rb_agency_option_profilelist_favorite   && !empty($p_image) && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
-					             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
-					        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
-					        
-					        }
-					        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
+						$displayHTML .= "     <div class=\"details rb-expanded\">";
+						if($age > 0){
+							$displayHTML .= " <span class=\"details-age\">". $age ."</span>";
+						}
+						if($dataList["ProfileLocationState"]!="" && $detail_state == 1){
+							$displayHTML .= (($age>0)?"<span class=\"divider\">, </span>":"")."<span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
+						} 
 
-					        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
-				           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
-				            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
-				            }
-						   $displayHTML .= "</div>";
-					}
-					$displayHTML .= "</div>\n";
+							global $wpdb;
+							    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
+							    $is_model_or_talent = $wpdb->num_rows;
+
+							//echo "loaded: ".microtime()." ms";
+						if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
+				        	//Get Favorite & Casting Cart links
+							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+							 $displayHTML .= "<div class=\"rb_profile_tool\">";
+
+								if($rb_agency_option_profilelist_favorite   && !empty($p_image) && (rb_get_casting_profileid() > 0  || current_user_can("manage_options") )){
+						             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+						        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
+						        
+						        }
+						        
+						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && (rb_get_casting_profileid() > 0 || current_user_can("manage_options") )){
+					           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+					            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
+					            }
+							   $displayHTML .= "</div>";
+						}
+						$displayHTML .= "</div>\n";
 				}else{
 					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
-						$displayHTML .= "     <div class=\"details\">";
-					
-						
-				    
-    		        		//Get Favorite & Casting Cart links
+							$displayHTML .= "     <div class=\"details  rb-expanded-second\">";
+				    		//Get Favorite & Casting Cart links
 							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-						     $displayHTML .= "<div class=\"rb_profile_tool\">";
-							if($rb_agency_option_profilelist_favorite && !empty($p_image)   && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
-					             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
-					        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
-					        }
-					        
-					        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
+							  $p_image = rb_get_primary_image($dataList["ProfileID"]); 
 
-					        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($is_model_or_talent > 0 || current_user_can("manage_options") )){
-				           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
-				            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
-				            }
+						    $displayHTML .= "<div class=\"rb_profile_tool $p_image\">";
+								if($rb_agency_option_profilelist_favorite && !empty($p_image)   && (rb_get_casting_profileid() > 0 ||  current_user_can("manage_options") )){
+						             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+						        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
+						        }
+						        
+						      
+						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && (rb_get_casting_profileid() > 0  || current_user_can("manage_options") )){
+					           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+					            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
+					            }
 						   $displayHTML .= "</div>";
 						   $displayHTML .= "</div>\n";
 					}
