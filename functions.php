@@ -604,12 +604,9 @@ if(!function_exists("rb_output_buffer")){
 		$detail_month = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
 		$detail_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
 		
-		if(empty($p_strDate) || $p_strDate == "0000-00-00"){
-			return '';
-		}
-		if (isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true || is_admin()) {
-
-			@list($Y,$m,$d) = @explode("-",$p_strDate);
+		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
+            
+            @list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
 			$localtime = getdate();
 			$today = $localtime['mday']."-".$localtime['mon']."-".$localtime['year'];
@@ -657,7 +654,7 @@ if(!function_exists("rb_output_buffer")){
 				$months = $months - 12;
 				$years++;
 			}
-			if($detail_year == 1){
+			if($detail_year == 1 || is_admin()){
 				if($years == 0){
 					$years = "";
 				} else {
@@ -665,7 +662,7 @@ if(!function_exists("rb_output_buffer")){
 						$label_y = $years . " yr(s) ";
 				}
 			}
-			if($detail_month == 1){
+			if($detail_month == 1|| is_admin()){
 				
 				if($months == 0){
 					$label_m = "";
@@ -673,7 +670,7 @@ if(!function_exists("rb_output_buffer")){
 					$label_m = $months . " mo(s) ";
 				}
 			}
-			if($detail_day == 1){
+			if($detail_day == 1|| is_admin()){
 				$label_d = $days." day(s) ";
 			}
 
@@ -684,6 +681,11 @@ if(!function_exists("rb_output_buffer")){
 			list($Y,$m,$d) = explode("-",$p_strDate);
 			return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
 		}
+
+		if(empty($p_strDate) || $p_strDate == "0000-00-00"){
+			return '-';
+		}
+	
 
 	}
 
@@ -1691,7 +1693,7 @@ if(!function_exists("rb_output_buffer")){
 				$displayHTML .= "  <div class=\"profile-info\">\n";
 				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
 
-				if (isset($rb_agency_option_profilelist_expanddetails) && $rb_agency_option_profilelist_expanddetails > 1) {
+				if ($rb_agency_option_profilelist_expanddetails) {
 					
 						$age = rb_agency_get_age($dataList["ProfileDateBirth"]);
 						
