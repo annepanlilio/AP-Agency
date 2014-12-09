@@ -316,6 +316,8 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> Remove Updates on Dashboard<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		
+		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Send email to Models/Talents', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
@@ -323,14 +325,23 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_allowsendemail]\" value=\"2\" ".checked(isset($rb_agency_options_arr['rb_agency_option_allowsendemail'])?$rb_agency_options_arr['rb_agency_option_allowsendemail']:0, 2,false)."/> only admin can send Job invites<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		}
+		if ( is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) {
+		
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Models/Profiles Terms of Conditions Link', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_model_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_model_toc'])?$rb_agency_options_arr['rb_agency_option_model_toc']:$rb_agency_option_model_toc) ."\" /></td>\n";
 		echo " </tr>\n";
+		}
+		
+		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
+		
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Casting Terms of Conditions Link', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_casting_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_casting_toc'])?$rb_agency_options_arr['rb_agency_option_casting_toc']:$rb_agency_option_casting_toc) ."\" /></td>\n";
 		echo " </tr>\n";
+		
+		}
 		/*
 		 * Agency Internationalization
 		 */
@@ -408,9 +419,16 @@ elseif ($ConfigID == 1) {
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_day]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0, 1,false)."/> ". __("Show Age(Day)", rb_agency_TEXTDOMAIN) ."<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_state]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0, 1,false)."/> ". __("State", rb_agency_TEXTDOMAIN) ."<br />\n";
 		
+		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite'])?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0, 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
+		}
+		
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0, 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		
+		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0, 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
+		}
+		
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'])?$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0, 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_bday'])?$rb_agency_options_arr['rb_agency_option_profilelist_bday']:0, 1,false)."/> ". __("Show Birthday With Months", rb_agency_TEXTDOMAIN) ."<br />\n";	
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'])?$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0, 1,false)."/> ". __("Show Print and Download PDF Link", rb_agency_TEXTDOMAIN) ."<br />\n";	
@@ -523,7 +541,7 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		/*echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
 			$x=6;
 			while($x<=15) {
@@ -531,7 +549,7 @@ elseif ($ConfigID == 1) {
 				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout ", rb_agency_TEXTDOMAIN). $x ."</option>\n";
 				}
 				$x++;
-			}
+			}*/
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -1905,6 +1923,20 @@ elseif ($ConfigID == 5) {
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 	
+	?>
+
+      <style type="text/css">
+        .widefat td{
+        	vertical-align: top !important;
+        }
+        ul#editfield_add_more_options_1 li {
+			border-left: 1px dotted #ccc;
+			padding-left: 10px;
+			border-bottom: 1px solid #F1F1F1;
+		}
+      </style>
+  
+	<?php
 	//restore preset
 	if(isset($_GET['restore']) && ($_GET['restore'] == 'RestorePreset')){
 				//delete initial values ProfileCustomID 1 to 18
@@ -2072,8 +2104,8 @@ elseif ($ConfigID == 5) {
 		case 'addRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-				echo "<h3 style=\"width:430px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
-				echo " <div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+				echo " <div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";	
 			} else {
@@ -2135,8 +2167,8 @@ elseif ($ConfigID == 5) {
 				}
 				
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
-				echo "<h3 style=\"width:430px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
-				echo " <div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+				echo " <div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";
 			}
@@ -2146,8 +2178,8 @@ elseif ($ConfigID == 5) {
 		case 'editRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-				 echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
-						<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+				 echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
+						<div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
 				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
 				 echo" <div class=\"inside\"> ";
 			} else {
@@ -2231,8 +2263,8 @@ elseif ($ConfigID == 5) {
 
 
 				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
-						echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
-						<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+						echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
+						<div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
 				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
 				 echo" <div class=\"inside\"> ";
 			}
@@ -2260,8 +2292,8 @@ elseif ($ConfigID == 5) {
 				} // while
 			  } // it was numeric
 			} // for each
-					echo "<h3 style=\"width:430px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
-					echo " <div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+					echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+					echo " <div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
 					echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
 					echo " <div class=\"inside\"> ";
 		break;
@@ -2288,8 +2320,8 @@ elseif (isset($_GET["deleteRecord"])) {
 			$deleted = $wpdb->query($delete_sql) or die($wpdb->print_error());
 			
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-			echo "<h3 style=\"width:430px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	
-			<div class=\"postbox \"  style=\"width:430px;float:left;border:0px solid black;\">
+			echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	
+			<div class=\"postbox \"  style=\"width:350px;float:left;border:0px solid black;\">
 			<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>
 			<div class=\"inside\"> ";
 
@@ -2320,8 +2352,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			}
 		
-		echo "<h3 style=\"width:430px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>	
-				<div class=\"postbox\"  style=\"width:430px;float:left;border:0px solid black;\">";
+		echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>	
+				<div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
 		echo "<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
 		echo "<div class=\"inside\"> ";
 
@@ -2345,8 +2377,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			
 			echo "\n";
 		echo " 
-		<h3 style=\"width:430px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
-		<div class=\"postbox \"  style=\"width:430px;float:left;border:0px solid black;\">
+		<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
+		<div class=\"postbox \"  style=\"width:350px;float:left;border:0px solid black;\">
 			 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>
 		<div class=\"inside\"> ";
 	}
@@ -2697,7 +2729,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													
 													if($val1 != end($data1) && $val1 != $data1[0]){
 													 $pos++;
-													 echo "<li>Option:<input type=\"text\"  value=\"".htmlspecialchars($val1)."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></li>";
+													 echo "<li style=\"cursor:pointer\">Option:<input type=\"text\"  value=\"".htmlspecialchars($val1)."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></li>";
 													}
 												}
 											echo '</ul>'; 
@@ -2710,8 +2742,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												echo "Labe:<input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/>";
 											
 												$pos2 = 0;
-											foreach($data2 as $val2){
-												  
+											echo '<ul id="editfield_add_more_options_1">';
+											
+											    foreach($data2 as $val2){
+												    echo "<li  style=\"cursor:pointer\">";
 													if($val2 != end($data2) && $val2 !=  $data2[0]){
 														 $pos2++;
 													 echo "Option:<input type=\"text\" value=\"".$val2."\"  name=\"option2[]\"/>";
@@ -2724,9 +2758,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													   }	
 													   echo "<br/>";
 													}
+													echo '</li>'; 
+											
 												}
+												echo '</ul>'; 
+											
 												
 											}
+											
 											echo "<div  id=\"editfield_add_more_options_2\"></div><br/>";
 											echo "</td>";
 									echo "</tr>";		
@@ -2969,14 +3008,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			 }
 		if($data['ProfileCustomType'] == 7 ) {echo " <td class=\"column\">".$measurements_label."</td>\n"; } else{ echo "        <td class=\"column\">".str_replace("|",",",$data['ProfileCustomOptions'])."</td>\n"; }
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) { echo "Public"; } elseif ($data['ProfileCustomView'] == 1) { echo "Private"; } elseif ($data['ProfileCustomView'] == 2) { echo "Custom"; } echo "</td>\n";
-		 echo "        <th class=\"column\">".$data['ProfileCustomOrder']."</th>\n";
+		 echo "        <td class=\"column\">".$data['ProfileCustomOrder']."</td>\n";
 		 $queryGender = $wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender']."",ARRAY_A); 
 		 $fetchGender = current($queryGender);
 		 $countGender = count($queryGender);
 		 if($countGender > 0){
-			echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
+			echo "        <td class=\"column\">".$fetchGender["GenderTitle"]."</td>\n";
 		 }else{
-			echo "        <th class=\"column\">All Gender</th>\n";
+			echo "        <td class=\"column\">All Gender</td>\n";
 		 }
 
 		 $custom_views="";
