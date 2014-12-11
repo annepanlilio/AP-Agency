@@ -497,7 +497,7 @@ class RBAgency_Casting {
 			$SearchMuxSubject		= isset($_POST['SearchMuxSubject'])?$_POST['SearchMuxSubject']:"";
 			$SearchMuxMessage		= isset($_POST['SearchMuxMessage'])?$_POST['SearchMuxMessage']:"";
 			$SearchMuxCustomValue	='';
-			$cartArray = $_SESSION['cartArray'];
+			$cartArray = isset($_SESSION['cartArray'])?$_SESSION['cartArray']:array();
 			
 			$cartString = implode(",", array_unique($cartArray));
 			$cartString = rb_agency_cleanString($cartString);
@@ -565,7 +565,7 @@ class RBAgency_Casting {
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			if(!empty($SearchMuxFromEmail)){
-				if ( !is_email($SearchMuxFromEmail, true)) {
+				if ( !email_exists($SearchMuxFromEmail)) {
 					$email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
 				} else {
 					$headers[]  = 'From: "'. $SearchMuxFromName .'" <'. $SearchMuxFromEmail.'>' . "\r\n";
@@ -584,25 +584,27 @@ class RBAgency_Casting {
 			$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
-			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, $SearchMuxMessage, $headers);
+			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, stripcslashes($SearchMuxMessage), $headers);
 
-			if($isSent){
+			//if($isSent){
 				if(!empty($SearchMuxFromEmail)){
-					$email_error .= "<div style=\"margin:15px;\">";
+					$email_error .= "<div style=\"margin:15px;white-space: pre;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
 					$email_error .= "Email successfully sent from <strong>". $SearchMuxFromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-					$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
+					$email_error .= "Message sent: <p>". stripcslashes(make_clickable($SearchMuxMessage)) ."</p>";
 					$email_error .= "</div>";
 					$email_error .= "</div>";
 				} else {
-					$email_error .= "<div style=\"margin:15px;\">";
+					$email_error .= "<div style=\"margin:15px;white-space: pre;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
 					$email_error .= "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-					$email_error .= "Message sent: <p>". make_clickable($SearchMuxMessage) ."</p>";
+					$email_error .= "Message sent: <p>". stripcslashes(make_clickable($SearchMuxMessage)) ."</p>";
 					$email_error .= "</div>";
 					$email_error .= "</div>";
 				}
-			}
+			/*}else{
+				$email_error .= "Error sending email.";
+			}*/
 			return $email_error ;
 		}
 
