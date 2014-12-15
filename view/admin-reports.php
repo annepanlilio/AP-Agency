@@ -2224,7 +2224,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 															   if(substr($key, 0, 7) != "Profile"){
 																	if(isset($_REQUEST['select'.$pos])){
 																	   $select_id = esc_html($_REQUEST['select'.$pos]);
-																	   if(strpos(4, ' ft ') !== FALSE){
+																	   if(strpos($vv[$key], ' ft ') !== FALSE){
 																			$cal_height = 0;
 																			$height = explode(' ', $vv[$key]);
 																			$cal_height = ($height[0] * 12) + $height[2];
