@@ -2596,10 +2596,15 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 						echo " </select>\n";
 					} else {
 					// 
+					preg_match_all('/(\d+(\.\d+)?)/',$ProfileCustomValue, $matches);
+					$ProfileCustomValue = $matches[0][0];
 					echo "  <input type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
 					}
 				} else {
 					  //validate for float type.
+					preg_match_all('/(\d+(\.\d+)?)/',$ProfileCustomValue, $matches);
+					$ProfileCustomValue = $matches[0][0];
+					
 					  echo "  <input class='imperial_metrics' type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />
 							  <div class='error_msg' style='color:red; min-width:0px'></div>";
 				}						
@@ -2842,10 +2847,14 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 			$label = "";
 			
 					$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
-			if ($resultCustom->ProfileCustomType == 3 || $resultCustom->ProfileCustomType == 5 || $resultCustom->ProfileCustomType == 7  || $resultCustom->ProfileCustomType == 9){
+			if ($resultCustom->ProfileCustomType == 3 || $resultCustom->ProfileCustomType == 7  || $resultCustom->ProfileCustomType == 9){
 					$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
 			}
 			
+			if( $resultCustom->ProfileCustomType == 5){
+						$resultCustom->ProfileCustomValue =  implode(", ",explode("|",$resultCustom->ProfileCustomValue));
+			
+			}
 			if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) || $is_print){
 				if ($resultCustom->ProfileCustomType == 7){
 
@@ -2864,6 +2873,10 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 							$label = "ft/in";
 						}
 					}
+
+					preg_match_all('/(\d+(\.\d+)?)/',$resultCustom->ProfileCustomValue, $matches);
+					$resultCustom->ProfileCustomValue = $matches[0][0];
+					
 					$measurements_label = "<span class=\"label options-".$resultCustom->ProfileCustomOptions."\">". $label ."</span>";
 
 					/*if($resultCustom->ProfileCustomOptions == 3){
