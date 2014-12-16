@@ -2134,11 +2134,13 @@ class RBAgencyCSVXLSImpoterPlugin {
 										  	  $vv["ProfileContactDisplay"] = $vv["ProfileContactNameFirst"]." ".$vv["ProfileContactNameLast"];
 										  }
 										
+				
 									
 										
 											$queryGenderResult = $wpdb->get_row($wpdb->prepare("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='%s'",$vv["ProfileGender"]), ARRAY_A);
 											$ProfileContactDisplay = $wpdb->get_row($wpdb->prepare("SELECT ProfileID FROM ".table_agency_profile." WHERE ProfileContactEmail ='%s'",$vv["ProfileContactEmail"]), ARRAY_A);
-											if(!isset($ProfileContactDisplay['ProfileID']) ||  $ProfileContactDisplay['ProfileID'] ==""){
+											
+											if((isset($ProfileContactDisplay['ProfileID']) && ! is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' )) || (!email_exists($vv["ProfileContactEmail"]) && is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) ){
 													// parse profile type
 													if(strpos($vv["ProfileType"], "|") != -1){
 														$ex = explode(" | ",trim($vv["ProfileType"]));
@@ -2206,9 +2208,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 														   	   $p_table_values  .= ",";
 														   	}
 														    $pos++;
-													   }
-													  
-													   
+													    }
 													}
 													$p_table_fields = trim($p_table_fields, ","); 
 													$p_table_values = trim($p_table_values, ","); 
