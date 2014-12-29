@@ -142,7 +142,7 @@
 	 * Notify for under development layouts
 	 */	
 	$arr_under_dev = array("04","05");
-	$arr_custom_layout = array("06","07","08","09","10","11","12");
+	$arr_custom_layout = array("06","07","08","09","10","11");
 		 
 		
 
