@@ -1570,7 +1570,7 @@ class RBAgency_Profile {
 			if ($count > 0){
 				
 				$castingcart_results = array();
-				if(defined("table_agency_castingcart")){
+				if(function_exists("rb_agency_get_miscellaneousLinks")){
 					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
 				}
 				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
@@ -1972,7 +1972,9 @@ class RBAgency_Profile {
 		
 			$ProfileContactNameFirst = $dataList["ProfileContactNameFirst"];
 			$ProfileContactNameLast = $dataList["ProfileContactNameLast"];
-				if ($rb_agency_option_profilenaming == 0) {
+
+
+				/*if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					// If John-D already exists, make John-D-1
@@ -1992,7 +1994,21 @@ class RBAgency_Profile {
 					$ProfileContactDisplay = $ProfileContactNameLast;
 				}else{
 					$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
-				}
+				}*/
+
+                            if ($rb_agency_option_profilenaming == 0) {
+								$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+							} elseif ($rb_agency_option_profilenaming == 1) {
+								$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+							} elseif ($rb_agency_option_profilenaming == 2) {
+								$ProfileContactDisplay = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 3) {
+								$ProfileContactDisplay = "ID ". $ProfileID;
+							} elseif ($rb_agency_option_profilenaming == 4) {
+								$ProfileContactDisplay = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 5) {
+								$ProfileContactDisplay = $ProfileContactNameLast;
+							}
 			
 
 			/* 
@@ -2071,18 +2087,19 @@ class RBAgency_Profile {
 			}
 				$displayHTML .=  $displayActions;
 			
-			// Check if user is registered as Model/Talent
-		    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
-		    $is_model_or_talent = $wpdb->num_rows;
+			if(function_exists("rb_agency_get_miscellaneousLinks")){
+					// Check if user is registered as Model/Talent
+				    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
+				    $is_model_or_talent = $wpdb->num_rows;
 
-		    $disp = "";		
+					$disp = "";		
 
-   			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks") && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
-					$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+		   			if(is_user_logged_in() && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
+							$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 
-			}			
-			
-			$displayHTML .=" </div> <!-- .profile-info - profile-class \"".strpos($type,"profilecastingcart")."\" == \"profilecastingcart\" --> \n";
+					}			
+			}
+			$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
 		
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			if(self::$error_debug){		

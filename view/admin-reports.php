@@ -697,7 +697,7 @@ elseif ($ConfigID == 8) {
 			$ProfileGallery			=$data1["ProfileGallery"];
 			
 
-				if ($rb_agency_option_profilenaming == 0) {
+		/*		if ($rb_agency_option_profilenaming == 0) {
 					$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
@@ -706,10 +706,27 @@ elseif ($ConfigID == 8) {
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileGalleryFixed = "ID ";
 				}
+*/
+				$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+							if ($rb_agency_option_profilenaming == 0) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+							} elseif ($rb_agency_option_profilenaming == 1) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+							} elseif ($rb_agency_option_profilenaming == 2) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 3) {
+								$ProfileGalleryFixed = "ID ". $ProfileID;
+							} elseif ($rb_agency_option_profilenaming == 4) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 5) {
+								$ProfileGalleryFixed = $ProfileContactNameLast;
+							}
+			
+
 				$ProfileGalleryFixed = RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
 			
 			  if(in_array($ProfileGallery,$arrayReservedFoldername)){
-				$ProfileGalleryFixed = rb_agency_set_directory($ProfileGalleryFixed);
+				$ProfileGalleryFixed =rb_agency_set_directory($ProfileGalleryFixed);
 				$arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
 			 }
 				
@@ -817,7 +834,7 @@ elseif ($ConfigID == 8) {
 			$arrayAllFolderNames[$pos] = $ProfileGallery;
 			$pos++; // array position start = 0	
 			
-			if ($rb_agency_option_profilenaming == 0) {
+/*			if ($rb_agency_option_profilenaming == 0) {
 				$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 			} elseif ($rb_agency_option_profilenaming == 1) {
 				$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
@@ -825,7 +842,24 @@ elseif ($ConfigID == 8) {
 				$ProfileGalleryFixed = $ProfileContactDisplay;
 			} elseif ($rb_agency_option_profilenaming == 3) {
 				$ProfileGalleryFixed = "ID ". $ProfileID;
-			}
+			}*/
+
+				$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+							if ($rb_agency_option_profilenaming == 0) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+							} elseif ($rb_agency_option_profilenaming == 1) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+							} elseif ($rb_agency_option_profilenaming == 2) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 3) {
+								$ProfileGalleryFixed = "ID ". $ProfileID;
+							} elseif ($rb_agency_option_profilenaming == 4) {
+								$ProfileGalleryFixed = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 5) {
+								$ProfileGalleryFixed = $ProfileContactNameLast;
+							}
+			
+			$ProfileContactDisplay = $ProfileGalleryFixed;
 			$ProfileGalleryFixed = RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
 		
 			if(in_array($ProfileGallery,$arrayReservedFoldername)){
@@ -870,7 +904,7 @@ elseif ($ConfigID == 8) {
 				 if(!empty($ProfileGallery)){
 					rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
 					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
-						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
+						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."', ProfileContactDisplay = '".$ProfileContactDisplay ."' WHERE ProfileID = \"". $ProfileID ."\"";
 						$renamed = $wpdb->query($rename);
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					}
@@ -882,7 +916,7 @@ elseif ($ConfigID == 8) {
 							chmod($dirURL, 0777);
 						}
 					    echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-			           $rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
+			           $rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."', ProfileContactDisplay = '".$ProfileContactDisplay ."' WHERE ProfileID = \"". $ProfileID ."\"";
 					   $renamed = $wpdb->query($rename);
 						
 				   
@@ -2140,7 +2174,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 											$queryGenderResult = $wpdb->get_row($wpdb->prepare("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='%s'",$vv["ProfileGender"]), ARRAY_A);
 											$ProfileContactDisplay = $wpdb->get_row($wpdb->prepare("SELECT ProfileID FROM ".table_agency_profile." WHERE ProfileContactEmail ='%s'",$vv["ProfileContactEmail"]), ARRAY_A);
 											
-											if((isset($ProfileContactDisplay['ProfileID']) && ! is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' )) || (!email_exists($vv["ProfileContactEmail"]) && is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) ){
+											if(( ! is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' )) || (!email_exists($vv["ProfileContactEmail"]) && is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) ){
 													// parse profile type
 													if(strpos($vv["ProfileType"], "|") != -1){
 														$ex = explode(" | ",trim($vv["ProfileType"]));

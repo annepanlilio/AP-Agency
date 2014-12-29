@@ -614,18 +614,18 @@ if (isset($_POST['action'])) {
 								if (isset($ProfileGallery)) {
 									// Remove Folder
 									$dir = rb_agency_UPLOADPATH . $ProfileGallery . "/";
-									$mydir = opendir($dir);
-									while (false !== ($file = readdir($mydir))) {
+									$mydir = @opendir($dir);
+									while (false !== ($file = @readdir($mydir))) {
 										if ($file != "." && $file != "..") {
-											if(is_file($dir . $file))
-											unlink($dir . $file) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing file:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+											if(@is_file($dir . $file))
+											@unlink($dir . $file) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing file:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
 										}
 									}
 									// Remove Directory
-									if (is_dir($dir)) {
-										rmdir($dir) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing directory:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+									if (@is_dir($dir)) {
+										@rmdir($dir) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing directory:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
 									}
-									closedir($mydir);
+									@closedir($mydir);
 								} else {
 									echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", rb_agency_TEXTDOMAIN) . "</p></div>");
 								}
