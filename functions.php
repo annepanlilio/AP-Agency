@@ -5041,7 +5041,7 @@ function rb_get_profilemedia_link_opentype($url,$is_docs = false){
 
 	if($rb_agency_option_profilemedia_links == 2){
 		if($is_docs){
-			return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".get_bloginfo("url")."/".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+			return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 		}else{
 			return " href=\"javascript:;\" onclick=\"window.open('".rb_agency_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 		}
