@@ -1126,6 +1126,9 @@ if(!function_exists("rb_output_buffer")){
 					$filterDropdown = array();
 					$filter2 = "";
 
+					global $wpdb;
+					$qcfields = $wpdb->get_results("SELECT * FROM ". table_agency_customfields ." ",ARRAY_A);
+								
 					// Loop through all attributes looking for custom
 					foreach ($atts as $key => $val) {
 						if (substr(strtolower($key),0,15) == "profilecustomid") {
@@ -1157,10 +1160,14 @@ if(!function_exists("rb_output_buffer")){
 										$val = array_shift($val);
 									} 
 								}
-								global $wpdb;
-								$q = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '%d' ",substr($key,15)),ARRAY_A);
-								$ProfileCustomType = current($q);
+								$ProfileCustomType = array();
+								foreach ($qcfields as $kfield) {
+									if(substr($key,15) == $kfield["ProfileCustomID"]){
+										$ProfileCustomType = $kfield;
+									}
 
+								}
+								
 								/*
 								 * Have created a holder $filter2 and
 								 * create its own filter here and change
@@ -1347,7 +1354,7 @@ if(!function_exists("rb_output_buffer")){
 			}
 			$links = "";
 
-			if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
+			if($rb_get_casting_profileid > 0 && !current_user_can("manage_options")){
 				// print, downloads links to be added on top of profile list
 				$links='<div class="rblinks">';
 
@@ -1460,7 +1467,7 @@ if(!function_exists("rb_output_buffer")){
 					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."",ARRAY_A);
-					$items = count($qItem); // number of total rows in the database
+					$items = $wpdb->num_rows; // number of total rows in the database
 
 				if($items > 0) {
 					$p = new rb_agency_pagination;
@@ -1590,11 +1597,12 @@ if(!function_exists("rb_output_buffer")){
 			$rb_user_isLogged = is_user_logged_in();
 
 				$castingcart_results = array();
-				if(defined("table_agency_castingcart")){
+				if($rb_agency_option_profilelist_castingcart){
 					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'  AND CastingJobID <= 0");
 				}
-				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
-				
+				if($rb_agency_option_profilelist_favorite){
+					$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
+				}
 				$arr_castingcart = array();
 				foreach ($castingcart_results as $key) {
 					array_push($arr_castingcart, $key->CastingCartTalentID);
@@ -1617,7 +1625,7 @@ if(!function_exists("rb_output_buffer")){
 			$countFav = 0;
 			$displayPaginationFooter = "";
 			$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID) WHERE cfield.ProfileCustomType = %d  ",10),ARRAY_A);
-				
+			$rb_get_casting_profileid = rb_get_casting_profileid();
 			echo "<input type=\"hidden\" name=\"rb_total_items\" value=\"".$countList."\"/> ";
 			foreach($resultsList as $dataList) {
 					
@@ -1708,9 +1716,9 @@ if(!function_exists("rb_output_buffer")){
 							$displayHTML .= (($age>0)?"<span class=\"divider\">, </span>":"")."<span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 						} 
 
-							global $wpdb;
-							    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
-							    $is_model_or_talent = $wpdb->num_rows;
+							//global $wpdb;
+							 //   $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
+							  //  $is_model_or_talent = $wpdb->num_rows;
 
 							//echo "loaded: ".microtime()." ms";
 						if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
@@ -1718,13 +1726,13 @@ if(!function_exists("rb_output_buffer")){
 							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 							 $displayHTML .= "<div class=\"rb_profile_tool\">";
 
-								if($rb_agency_option_profilelist_favorite   && !empty($p_image) && (rb_get_casting_profileid() > 0  || current_user_can("manage_options") )){
+								if($rb_agency_option_profilelist_favorite   && !empty($p_image) && ($rb_get_casting_profileid> 0  || current_user_can("manage_options") )){
 						             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 						        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
 						        
 						        }
 						        
-						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && (rb_get_casting_profileid() > 0 || current_user_can("manage_options") )){
+						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($rb_get_casting_profileid > 0 || current_user_can("manage_options") )){
 					           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
 					            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
 					            }
@@ -1739,13 +1747,13 @@ if(!function_exists("rb_output_buffer")){
 							  $p_image = rb_get_primary_image($dataList["ProfileID"]); 
 
 						    $displayHTML .= "<div class=\"rb_profile_tool $p_image\">";
-								if($rb_agency_option_profilelist_favorite && !empty($p_image)   && (rb_get_casting_profileid() > 0 ||  current_user_can("manage_options") )){
+								if($rb_agency_option_profilelist_favorite && !empty($p_image)   && ($rb_get_casting_profileid > 0 ||  current_user_can("manage_options") )){
 						             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 						        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
 						        }
 						        
 						      
-						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && (rb_get_casting_profileid() > 0  || current_user_can("manage_options") )){
+						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($rb_get_casting_profileid > 0  || current_user_can("manage_options") )){
 					           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
 					            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
 					            }
