@@ -1585,7 +1585,7 @@ if(!function_exists("rb_output_buffer")){
 			echo "dir".$dir;
 			echo "limit".$limit;*/
 			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
-			$countList = count($resultsList);
+			$countList = $wpdb->num_rows;
 
 			$rb_user_isLogged = is_user_logged_in();
 
@@ -1616,6 +1616,8 @@ if(!function_exists("rb_output_buffer")){
 			$profileDisplay = 0;
 			$countFav = 0;
 			$displayPaginationFooter = "";
+			$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID) WHERE cfield.ProfileCustomType = %d  ",10),ARRAY_A);
+				
 			echo "<input type=\"hidden\" name=\"rb_total_items\" value=\"".$countList."\"/> ";
 			foreach($resultsList as $dataList) {
 					
@@ -1666,11 +1668,12 @@ if(!function_exists("rb_output_buffer")){
 				$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">'."\n\n";
 				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">'."\n\n";
 				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">'."\n\n";
-				$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID  AND cmux.ProfileID = %d) WHERE cfield.ProfileCustomType = 10  ",$dataList["ProfileID"]),ARRAY_A);
 				$i = 0;
 				foreach ($resultsCmux as $key) {
-					$i++;
-					  $displayHTML .= '<input id="'.$key["ProfileCustomID"].'" data-custom-date="du'.$key["ProfileCustomID"].$dataList["ProfileID"].'" type="hidden" class="p_customdate" value="'.(isset($key["ProfileCustomDateValue"]) && $key["ProfileCustomDateValue"]!=="1970-01-01"  && $key["ProfileCustomDateValue"]!=="0000-00-00"?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00"))."\"/>\n\n";
+					if($key["ProfileID"] ==$dataList["ProfileID"]){
+						$i++;
+					    $displayHTML .= '<input id="'.$key["ProfileCustomID"].'" data-custom-date="du'.$key["ProfileCustomID"].$dataList["ProfileID"].'" type="hidden" class="p_customdate" value="'.(isset($key["ProfileCustomDateValue"]) && $key["ProfileCustomDateValue"]!=="1970-01-01"  && $key["ProfileCustomDateValue"]!=="0000-00-00"?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00"))."\"/>\n\n";
+        			}
         		}
 				if (!empty($p_image)){
 					
