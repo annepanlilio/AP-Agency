@@ -421,7 +421,7 @@ elseif ($ConfigID == 3) {
 									   	if (in_array($new_file,$arr_media)) {
 												if($_GET['action'] == "add") {
 												   $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $data3['ProfileID'] ."','Image','". $data3['ProfileContactNameFirst'] ."-". $new_file ."','". $new_file ."')");
-												$actionText = " and <span style=\"color: green;\">added to database</span>";
+													$actionText = " and <span style=\"color: green;\">added to database</span>";
 												} else {
 												$actionText = " and <strong>PENDING ADDITION TO DATABASE</strong>";
 												}
