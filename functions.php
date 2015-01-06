@@ -4938,15 +4938,16 @@ function rb_agency_group_permission($group){
 
 		   global $user_ID;
 		   include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
-		   if(is_user_logged_in() &&  !current_user_can("edit_posts") && is_plugin_active("rb-agency-casting") ){
+		   $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
+					
+		   if(is_user_logged_in() /* &&  !current_user_can("edit_posts") && is_plugin_active("rb-agency-casting") */){
 		   
-					$is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
-					if($group == "casting"){
+					if($group == "casting"){ //if we are in a casting page while using a model/talent profile, redirect to profile member paage
+					
 					   if(!empty($is_model)){
 						 wp_safe_redirect(get_bloginfo("url")."/profile-member/");
 						}
-					}elseif($group == "models"){
+					}elseif($group == "models"){ //if casting is accessing model/talent page, redirect back to casting dashboard
 					   if(empty($is_model )){
 						 wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
 					   }
