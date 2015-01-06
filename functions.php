@@ -1458,16 +1458,15 @@ if(!function_exists("rb_output_buffer")){
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
-					$qItem = $wpdb->get_results("SELECT
-					profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID , 
-					customfield_mux.*,  
+					$qItem = $wpdb->get_var("SELECT
+						COUNT(profile.*)
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
 					AS ProfileMediaURL 
 					FROM ". table_agency_profile ." profile 
 					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."",ARRAY_A);
-					$items = $wpdb->num_rows; // number of total rows in the database
+					$items = $qItem; // number of total rows in the database
 
 				if($items > 0) {
 					$p = new rb_agency_pagination;
@@ -4580,12 +4579,12 @@ function rb_get_primary_image($PID){
 					 " WHERE ProfileID = " .$PID . " AND ProfileMediaPrimary = 1";
 	}
 	
-	$get_res = $wpdb->get_results($get_image,ARRAY_A);
+	$get_res = $wpdb->get_row($get_image,ARRAY_A);
 	
-	if(count($get_res) > 0){
-		foreach($get_res as $data){
-			return $data['ProfileMediaURL'];
-		}
+	if($wpdb->num_rows > 0){
+		//foreach($get_res as $data){
+			return $get_res['ProfileMediaURL'];
+		//}
 	}			
 	
 	return false;
