@@ -384,7 +384,16 @@ elseif ($ConfigID == 3) {
 	$query3 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst";
 	$results3 =$wpdb->get_results($query3, ARRAY_A);
 	$count3 =  $wpdb->num_rows;
-	
+
+	$query3a = "SELECT * FROM ". table_agency_profile_media ."";
+	$results3a = $wpdb->get_results($query3a, ARRAY_A);
+    $arr_media = array();
+	foreach($results3a as $media){
+		if (!empty($media["ProfileMediaURL"])) {
+			array_push($arr_media, $media["ProfileMediaURL"]);
+		}
+	}
+							
 	foreach ($results3 as $data3) {
 		$dirURL = rb_agency_UPLOADPATH . $data3['ProfileGallery'];
 		if (is_dir($dirURL)) {  // Does folder exist?
@@ -402,24 +411,29 @@ elseif ($ConfigID == 3) {
 						rename($dirURL ."/". $file, $dirURL ."/". $new_file);
 						
 						$file_ext = rb_agency_filenameextension($new_file);
-						if ($file_ext == "jpg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
+						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
 						
-							$query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = %s";
+						/*	$query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = %s";
 							$results3a =$wpdb->get_results($wpdb->prepare($query3a,$new_file), ARRAY_A);
 							$count3a =  $wpdb->num_rows;
-							if ($count3a < 1) {
-								if($_GET['action'] == "add") {
-								$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $data3['ProfileID'] ."','Image','". $data3['ProfileContactNameFirst'] ."-". $new_file ."','". $new_file ."')");
-								$actionText = " and <span style=\"color: green;\">added to database</span>";
-								} else {
-								$actionText = " and <strong>PENDING ADDITION TO DATABASE</strong>";
-								}
-							} else {
-								$actionText = " and exists in database";
-							}
+						*/
+									   	
+									   	if (in_array($new_file,$arr_media)) {
+												if($_GET['action'] == "add") {
+												   $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $data3['ProfileID'] ."','Image','". $data3['ProfileContactNameFirst'] ."-". $new_file ."','". $new_file ."')");
+												$actionText = " and <span style=\"color: green;\">added to database</span>";
+												} else {
+												$actionText = " and <strong>PENDING ADDITION TO DATABASE</strong>";
+												}
+										} else {
+												$actionText = " and exists in database";
+										}
+
+							
 						} else {
 								$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
 						}
+
 
 					echo "<div style=\"border-color: #E6DB55;\">File: ". $file ." has been renamed <strong>". $new_file ."</strong>". $actionText ."</div>\n";
 					}
