@@ -2358,7 +2358,7 @@ function rb_custom_fields($visibility = 0, $ProfileID = 0, $ProfileGender, $Prof
 	
 	if(is_admin() && $visibility == 1 && $_GET["page"] == "rb_agency_profiles"){
 		$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView IN(1,2)  ORDER BY ProfileCustomOrder ASC";
-		$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A);
+		$results3 = $wpdb->get_results($query3,ARRAY_A);
 	}else{
 		$query3 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = %d  ORDER BY ProfileCustomOrder ASC";
 		$results3 = $wpdb->get_results($wpdb->prepare($query3,$visibility),ARRAY_A);
@@ -2431,9 +2431,9 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	global $wpdb;
 
 	$rb_agency_options_arr 				= get_option('rb_agency_options');
-	$rb_agency_option_unittype  		= $rb_agency_options_arr['rb_agency_option_unittype'];
-	$rb_agency_option_profilenaming 	= (int)$rb_agency_options_arr['rb_agency_option_profilenaming'];
-	$rb_agency_option_locationtimezone 	= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
+	$rb_agency_option_unittype  		= isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
+	$rb_agency_option_profilenaming 	= isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int)$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+	$rb_agency_option_locationtimezone 	= isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 	
 	if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){ 
     	$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
@@ -2457,7 +2457,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			// SET Label for Measurements
 			// Imperial(in/lb), Metrics(ft/kg)
 			$rb_agency_options_arr = get_option('rb_agency_options');
-			 $rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
+			 $rb_agency_option_unittype  = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
 			 $measurements_label = "";
 			if ($ProfileCustomType == 7) { //measurements field type
 				if ($rb_agency_option_unittype ==0) { // 0 = Metrics(cm/kg)
@@ -2607,13 +2607,13 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 					} else {
 					// 
 					preg_match_all('/(\d+(\.\d+)?)/',$ProfileCustomValue, $matches);
-					$ProfileCustomValue = $matches[0][0];
+					$ProfileCustomValue = isset($matches[0][0])?$matches[0][0]:"";
 					echo "  <input type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
 					}
 				} else {
 					  //validate for float type.
 					preg_match_all('/(\d+(\.\d+)?)/',$ProfileCustomValue, $matches);
-					$ProfileCustomValue = $matches[0][0];
+					$ProfileCustomValue = isset($matches[0][0])?$matches[0][0]:"";
 					
 					  echo "  <input class='imperial_metrics' type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />
 							  <div class='error_msg' style='color:red; min-width:0px'></div>";

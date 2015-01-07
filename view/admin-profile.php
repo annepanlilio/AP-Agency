@@ -134,7 +134,7 @@ if (isset($_POST['action'])) {
 						$errorValidation['user_login'] = __("Sorry, that username already exists!<br />", rb_agency_TEXTDOMAIN);
 						$have_error = true;
 				}
-				if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
+				if (isset($userdata['user_password']) && !$userdata['user_password'] && count($userdata['user_password']) > 5) {
 						$errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agency_TEXTDOMAIN);
 						$have_error = true;
 				}
@@ -558,19 +558,20 @@ if (isset($_POST['action'])) {
 									
 										/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 										if(!$have_error){
-												echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! <a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "\">" . __("Continue editing the record", rb_agency_TEXTDOMAIN) . "?</a></p></div>");
+												echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! </a></p></div>");
 										}else{
 											foreach($errorValidation as $Error => $error){
 												echo ("<div id=\"message\" class=\"error\"><p>" . __($error, rb_agency_TEXTDOMAIN) . "</p></div>");
 											}
 										}
+												
 			 	
 			} else {
 				echo ("<div id=\"message\" class=\"error\"><p>" . __("Error updating record, please ensure you have filled out all required fields.", rb_agency_TEXTDOMAIN) . "</p></div>");
 			
 			}
 
-			if($have_error == false){
+			if($have_error == false && isset($_GET["action"]) && $_GET["action"] !="editRecord"){
 					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaPrimary = 1";
 					$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
 					$count =  $wpdb->num_rows;
@@ -580,10 +581,10 @@ if (isset($_POST['action'])) {
 						$wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=".($ProfileID)." ");
 					    $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".($ProfileID)." AND ProfileMediaID=".(isset($results["ProfileMediaID"])?$results["ProfileMediaID"]:"0"));
 					}
-					rb_display_list();
-			}else{
-					rb_display_manage($ProfileID,$errorValidation);
+				
+					
 			}
+			rb_display_manage($ProfileID,$errorValidation);
 			exit;
 			break;
 
@@ -718,7 +719,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	$rb_agency_options_arr = get_option('rb_agency_options');
 
 	// Unit Type
-	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
+	$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
 
 	// Social
 	if (isset($rb_agency_options_arr['rb_agency_option_showsocial'])) {
@@ -728,16 +729,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	}
 
 	// Maximum Height
-	$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
+	$rb_agency_option_agencyimagemaxheight = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxheight']:0;
 	if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
 		$rb_agency_option_agencyimagemaxheight = 800;
 	}
 
 	// Naming Convention
-	$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
+	$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 
 	// Default Country
-	$rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
+	$rb_agency_option_locationcountry = isset($rb_agency_options_arr['rb_agency_option_locationcountry'])?$rb_agency_options_arr['rb_agency_option_locationcountry']:0;
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
@@ -903,7 +904,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	if ($_GET["action"] == "add") {
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $_GET["ProfileGender"] . "\">\n";
 	} else {
-		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
+		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=".$_GET["ProfileID"]."\">\n";
 	}
 ?>
 	<div id="welcome-panel" class="welcome-panel">
@@ -1411,7 +1412,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											# rb_agency_option_galleryorder
 											# 1 - recent 0 - chronological
 											$rb_agency_options_arr = get_option('rb_agency_options');
-											$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+											$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 											$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 											$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 											$countImg =$wpdb->num_rows;
