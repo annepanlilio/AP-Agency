@@ -516,14 +516,14 @@ elseif ($ConfigID == 4) {
 
 					echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
 			
-					$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image'";
+					$query4a = "SELECT DISTINCT ProfileMediaURL FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image'";
 					$results4a = $wpdb->get_results($wpdb->prepare($query4a,$profileID), ARRAY_A);
 					$count4a = $wpdb->num_rows;
 					if ($count4a < 1) {
 						echo "This profile has no images loaded.";
 					} else {
 						foreach ($results4a as $data4a) {
-							echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". $dirURL ."/". $data4a['ProfileMediaURL'] ."\" style=\"width: 150px;\" /></div>\n";
+							echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". $dirURL."/". $data4a['ProfileMediaURL'] ."&w=150&h=150\"  style=\"width: 150px;\" /></div>\n";
 						}
 						echo "<div style=\"clear: both;\"></div>\n";
 					}
