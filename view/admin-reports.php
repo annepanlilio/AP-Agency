@@ -398,6 +398,8 @@ elseif ($ConfigID == 3) {
 		$dirURL = rb_agency_UPLOADPATH . $data3['ProfileGallery'];
 		if (is_dir($dirURL)) {  // Does folder exist?
 			echo "<div style=\"background-color: lightYellow; \">\n<h3>". $data3['ProfileContactNameFirst'] ." ". $data3['ProfileContactNameLast'] ."</h3>\n";
+			echo "<strong>Directory: ".$dirURL."</strong>";
+			echo "<br/>";
 			if ($handle = opendir($dirURL)) {  //  Open seasame 
 				while (false !== ($file = readdir($handle))) {
 					if (strtolower($file) == "thumbs.db"  || strtolower($file) == "thumbsdb.jpg" || strtolower($file) == "thumbsdbjpg.jpg" || strtolower($file) == "thumbsdbjpgjpg.jpg") {
@@ -407,7 +409,7 @@ elseif ($ConfigID == 3) {
 						  echo ("Deleted $file");
 						}
 					} elseif ($file != "." && $file != "..") {
-						$new_file = RBAgency_Common::format_stripchars($file);
+						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file));
 						rename($dirURL ."/". $file, $dirURL ."/". $new_file);
 						
 						$file_ext = rb_agency_filenameextension($new_file);
@@ -418,10 +420,10 @@ elseif ($ConfigID == 3) {
 							$count3a =  $wpdb->num_rows;
 						*/
 									   	
-									   	if (in_array($new_file,$arr_media)) {
+									   	if (!in_array($new_file,$arr_media,true)) {
 												if($_GET['action'] == "add") {
-												   $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $data3['ProfileID'] ."','Image','". $data3['ProfileContactNameFirst'] ."-". $new_file ."','". $new_file ."')");
-													$actionText = " and <span style=\"color: green;\">added to database</span>";
+												   $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+													$actionText = " and <span style=\"color: green;\">added to database</span> ";
 												} else {
 												$actionText = " and <strong>PENDING ADDITION TO DATABASE</strong>";
 												}
@@ -516,7 +518,7 @@ elseif ($ConfigID == 4) {
 
 					echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
 			
-					$query4a = "SELECT DISTINCT ProfileMediaURL FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image'";
+					$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image' GROUP BY(ProfileMediaURL)";
 					$results4a = $wpdb->get_results($wpdb->prepare($query4a,$profileID), ARRAY_A);
 					$count4a = $wpdb->num_rows;
 					if ($count4a < 1) {
