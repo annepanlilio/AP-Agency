@@ -407,7 +407,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         
                                 } else if(sort_typ == '2'  || sort_typ == '6') {
                                         if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_name[value='"+value+"']").parent();
+                                            var cloned = jQuery("#hidden_div").find(".p_name[value=\""+value+"\"]").parent();
                                             prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
