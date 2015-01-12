@@ -1596,21 +1596,25 @@ if(!function_exists("rb_output_buffer")){
 			$rb_user_isLogged = is_user_logged_in();
 
 				$castingcart_results = array();
+				$arr_castingcart = array();
+				$arr_favorites = array();
+				
+				
 				if($rb_agency_option_profilelist_castingcart){
 					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'  AND CastingJobID <= 0");
+					foreach ($castingcart_results as $key) {
+						array_push($arr_castingcart, $key->CastingCartTalentID);
+					}
+
 				}
 				if($rb_agency_option_profilelist_favorite){
 					$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
+					foreach ($favorites_results  as $key) {
+						array_push($arr_favorites, $key->SavedFavoriteTalentID);
+					}
 				}
-				$arr_castingcart = array();
-				foreach ($castingcart_results as $key) {
-					array_push($arr_castingcart, $key->CastingCartTalentID);
-				}
-
-				$arr_favorites = array();
-				foreach ($favorites_results  as $key) {
-					array_push($arr_favorites, $key->SavedFavoriteTalentID);
-				}
+				
+				
 
 			// Get Naming Convention
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
