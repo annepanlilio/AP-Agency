@@ -194,7 +194,7 @@ elseif ($ConfigID == 1) {
 	global $wpdb;
 	$throw_error = false;
 	
-	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 	$results1 =$wpdb->get_results($query1, ARRAY_A);
 	$count1 =  $wpdb->num_rows;
 	foreach ($results1 as $data1) {
@@ -225,7 +225,7 @@ elseif ($ConfigID == 2) {
 	$throw_error = false;
 
 	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'generate') {
-		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 		foreach ($results1 as $data1) {
@@ -245,7 +245,7 @@ elseif ($ConfigID == 2) {
 	<p>This will determine if a profiles profile exists.  Green profiles indicate that the model has a folder linked correctly where red profiles indicate that a model does not yet have a folder created for them yet.  NOTE: That spelling errors could make it seem that a folder does not exist, please check the report above to find folders with no profile assigned which may need to be renamed.</p>
 	<?php
 
-		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 		foreach ($results1 as $data1) {
@@ -288,7 +288,7 @@ elseif ($ConfigID == 53) {
 	$throw_error = false;
 
 	if($_REQUEST['action'] == 'generate') {
-		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 		foreach ($results1 as $data1) {
@@ -323,7 +323,7 @@ elseif ($ConfigID == 53) {
 		 * Place sql here to get
 		 * generated total count for folders
 		 */
-		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 	
@@ -381,7 +381,7 @@ elseif ($ConfigID == 3) {
 	<?php
 	global $wpdb;
 
-	$query3 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+	$query3 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 	$results3 =$wpdb->get_results($query3, ARRAY_A);
 	$count3 =  $wpdb->num_rows;
 
@@ -459,7 +459,7 @@ elseif ($ConfigID == 4) {
 	global $wpdb;
 
 	$stepSize = 100;
-	$query4t = "SELECT ProfileID FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+	$query4t = "SELECT ProfileID FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 	$results4t =$wpdb->get_results($query4t, ARRAY_A);
 	$pageString = "";
 	$count4total =  $wpdb->num_rows;
@@ -503,7 +503,7 @@ elseif ($ConfigID == 4) {
 		<p>Select the checkbox for the model desired.</p>
 		<form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 			<?php
-			$query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast LIMIT %d,%d"; //LIMIT $step,100
+			$query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC LIMIT %d,%d"; //LIMIT $step,100
 			$results4 =$wpdb->get_results($wpdb->prepare($query4,$step,$stepSize), ARRAY_A);
 			$count4 =$wpdb->num_rows;
 			foreach ($results4 as $data4)  {
@@ -552,7 +552,7 @@ elseif ($ConfigID == 5) {
 	<?php
 	global $wpdb;
 	
-	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+	$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 	$results1 = $wpdb->get_results($query1, ARRAY_A);
 	$count1 = $wpdb->num_rows;
 
@@ -599,7 +599,7 @@ elseif ($ConfigID == 6) {
 	<form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 	<?php
 	
-	$query6 = "SELECT * FROM ". table_agency_profile ." WHERE ProfileIsActive = '0' ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+	$query6 = "SELECT * FROM ". table_agency_profile ." WHERE ProfileIsActive = '0' ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 	$results6 = $wpdb->get_results($query6, ARRAY_A);
 	$count6 = $wpdb->num_rows;
 
@@ -698,7 +698,7 @@ elseif ($ConfigID == 8) {
 	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'generate') {
 
 		// LETS DO IT!
-		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
 		$count1 = $wpdb->num_rows;
 		$arrayReservedFoldername = array();
@@ -830,7 +830,7 @@ elseif ($ConfigID == 8) {
 		}
 		*/
 
-		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 = $wpdb->get_results($query1, ARRAY_A);
 		$count1 = $wpdb->num_rows;
 
@@ -1623,7 +1623,7 @@ elseif($ConfigID == '83'){
 	<h3>Check for Profile Data migration errors</h3>
 
 	<?php 
-		$query1 = "SELECT * FROM ". table_agency_profile ."  ORDER BY ProfileContactNameFirst,ProfileContactNameLast";
+		$query1 = "SELECT * FROM ". table_agency_profile ."  ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 = $wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
 		$count1 = $wpdb->num_rows;
 		$arr_profiles = array();
@@ -2101,7 +2101,7 @@ class RBAgencyCSVXLSImpoterPlugin {
   	    $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int)$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
         
          // We already created a dynamic profile fields validation
-		//$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
+		//$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast DESC,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
 		$c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";       
 	
 
