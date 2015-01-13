@@ -1454,26 +1454,54 @@ if(!function_exists("rb_output_buffer")){
 			echo "<div class=\"rbclear\"></div>\n";
 			echo "$links<div id=\"profile-results\">\n";
 
-
+			$limit = (isset($limit) ? $limit : "");
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
-					/*$qItem = $wpdb->get_results("SELECT
-						profile.*,
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
-					AS ProfileMediaURL 
+					/*$qItem = $wpdb->get_var("SELECT
+						COUNT(profile.ProfileID)
 					FROM ". table_agency_profile ." profile 
 					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
-					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."",ARRAY_A);
-					$items = $wpdb->num_rows; // number of total rows in the database*/
-					$qItem = $wpdb->get_var("SELECT
+					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");*/
+
+					//$items = $qItem; // number of total rows in the database
+					/*$qItem = $wpdb->get_var("SELECT
 						COUNT(profile.ProfileID) 
 					FROM ". table_agency_profile ." profile 
 					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
-					$items = $qItem; // number of total rows in the database
+					*/
+					
+					$qItem = $wpdb->get_results("SELECT 
+										profile.ProfileID,
+										profile.ProfileGallery,
+										profile.ProfileContactDisplay, 
+										profile.ProfileDateBirth, 
+										profile.ProfileDateCreated,
+										profile.ProfileLocationState,
+										cmux.ProfileCustomValue,
+										cmux.ProfileID,
+										cmux.ProfileCustomDateValue,
+										cmux.ProfileCustomID,
+										media.ProfileMediaURL 
+										
+									FROM ". table_agency_profile ." profile 
+										LEFT JOIN
+										".table_agency_customfield_mux." cmux
+										ON
+										profile.ProfileID = cmux.ProfileID
+										LEFT JOIN 
+										". table_agency_profile_media ." media
+										ON
+										(profile.ProfileID = media.ProfileID 
+											AND media.ProfileMediaType='Image' 
+											AND media.ProfileMediaPrimary = 1)
+									$filter  
+									GROUP BY profile.ProfileID 
+									ORDER BY $sort $dir $limit #A");
+					$items = count($qItem); // number of total rows in the database
 					
 
 				if($items > 0) {
@@ -1584,13 +1612,13 @@ if(!function_exists("rb_output_buffer")){
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
 					AS ProfileMediaURL 
 					
-				FROM ". table_agency_profile ." profile 
-					LEFT JOIN
-					".table_agency_customfield_mux." cmux
-					ON
-					profile.ProfileID = cmux.ProfileID
-				$filter  
-				GROUP BY profile.ProfileID 
+					FROM ". table_agency_profile ." profile 
+						LEFT JOIN
+						".table_agency_customfield_mux." cmux
+						ON
+						profile.ProfileID = cmux.ProfileID
+					$filter  
+					GROUP BY profile.ProfileID 
 				ORDER BY $sortby $dir $limit #B";*/
 
 				$queryList = "
@@ -1624,18 +1652,11 @@ if(!function_exists("rb_output_buffer")){
 				ORDER BY $sortby $dir $limit #B";
 			}
 
-			// Query
-			/*echo "queryList".$queryList;
-			echo "<br /><br />";
-			echo "sort".$sort;
-			echo "dir".$dir;
-			echo "limit".$limit;*/
-			/*echo $queryList;
-			die(1);
-			*/		
+			
+
 			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
 			$countList = $wpdb->num_rows;
-			
+
 			$rb_user_isLogged = is_user_logged_in();
 
 				$castingcart_results = array();
