@@ -1333,7 +1333,8 @@ if(!function_exists("rb_output_buffer")){
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
 			// state
 			$detail_state 		     = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
-		
+			
+			$rb_get_casting_profileid = rb_get_casting_profileid();
 		// Can we show the profiles?
 		// P R I V A C Y FILTER ====================================================
 		if ( (isset($OverridePrivacy)) || 
@@ -1579,7 +1580,10 @@ if(!function_exists("rb_output_buffer")){
 					profile.ProfileDateBirth, 
 					profile.ProfileDateCreated,
 					profile.ProfileLocationState,
-					cmux.*
+					cmux.*,
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
+					AS ProfileMediaURL 
+					
 				FROM ". table_agency_profile ." profile 
 					LEFT JOIN
 					".table_agency_customfield_mux." cmux
@@ -1677,7 +1681,7 @@ if(!function_exists("rb_output_buffer")){
 				}
 				$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
 				
-				$p_image = rb_get_primary_image($dataList["ProfileID"]); 
+				$p_image = $dataList["ProfileMediaURL"]; //rb_get_primary_image($dataList["ProfileID"]); 
 
 				/*
 				 * load sorting values
@@ -1753,7 +1757,7 @@ if(!function_exists("rb_output_buffer")){
 							$displayHTML .= "     <div class=\"details  rb-expanded-second\">";
 				    		//Get Favorite & Casting Cart links
 							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-							  $p_image = rb_get_primary_image($dataList["ProfileID"]); 
+							  $p_image = $dataList["ProfileMediaURL"]; //rb_get_primary_image($dataList["ProfileID"]); 
 
 						    $displayHTML .= "<div class=\"rb_profile_tool $p_image\">";
 								if($rb_agency_option_profilelist_favorite && !empty($p_image)   && ($rb_get_casting_profileid > 0 ||  current_user_can("manage_options") )){
@@ -5032,7 +5036,7 @@ function rb_logout_user(){
 */
 function rb_get_casting_profileid(){
 	 global $user_ID, $wpdb;
-	 $data = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d ", $user_ID));
+	 $data = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_castingcart." WHERE CastingUserLinked = %d ", $user_ID));
 	 if($wpdb->num_rows > 0){
 		 return $data->CastingID;
 	 }else{
