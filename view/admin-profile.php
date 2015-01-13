@@ -1355,7 +1355,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													$massmediaids = implode(",", $_GET['targetids']);
 													//get all the images
 
-													$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+													$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image' ";
 													$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID),ARRAY_A);
 													$countImgConfirm = $wpdb->num_roAws;
 													$mass_image_data = array();
@@ -1364,7 +1364,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													}
 													//delete all the images from database
 													$massmediaids = implode(",", array_keys($mass_image_data));
-													$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+													$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image' ";
 													$resultsMassImageDelete = $wpdb->query($queryMassImageDelete);
 													//delete images on the disk
 													$dirURL = rb_agency_UPLOADPATH . $ProfileGallery;
@@ -2247,7 +2247,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 
 		$DataTypeTitle = $new_title;
 
-		$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image'";
+		$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' GROUP BY(ProfileMediaURL)";
 		$resultsImg=  $wpdb->get_results($wpdb->prepare($query,$ProfileID),ARRAY_A);
 		$profileImageCount = $wpdb->num_rows;
 
