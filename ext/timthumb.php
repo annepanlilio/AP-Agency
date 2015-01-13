@@ -1080,7 +1080,10 @@ class timthumb {
 		}
 	}
 	protected function openImage($mimeType, $src){
-		switch ($mimeType) {
+		ini_set('memory_limit', -1);
+		 $size = getimagesize($src);
+   
+		switch ($size["mime"]) {
 			case 'image/jpeg':
 				$image = imagecreatefromjpeg ($src);
 				break;
@@ -1094,7 +1097,9 @@ class timthumb {
 				break;
 			
 			default:
-				$this->error("Unrecognised mimeType");
+			     $image = false;
+			     break;
+				//$this->error("Unrecognised mimeType");
 		}
 
 		return $image;
