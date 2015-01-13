@@ -1457,7 +1457,7 @@ if(!function_exists("rb_output_buffer")){
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
-					$qItem = $wpdb->get_results("SELECT
+					/*$qItem = $wpdb->get_results("SELECT
 						profile.*,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
 					AS ProfileMediaURL 
@@ -1465,7 +1465,14 @@ if(!function_exists("rb_output_buffer")){
 					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."",ARRAY_A);
-					$items = $wpdb->num_rows; // number of total rows in the database
+					$items = $wpdb->num_rows; // number of total rows in the database*/
+					$qItem = $wpdb->get_var("SELECT
+						COUNT(profile.ProfileID) 
+					FROM ". table_agency_profile ." profile 
+					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
+					ON profile.ProfileID = customfield_mux.ProfileID  
+					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
+					$items = $qItem; // number of total rows in the database
 					
 				if($items > 0) {
 					$p = new rb_agency_pagination;
