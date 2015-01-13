@@ -1475,6 +1475,7 @@ if(!function_exists("rb_output_buffer")){
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
 					$items = $qItem; // number of total rows in the database
 					
+
 				if($items > 0) {
 					$p = new rb_agency_pagination;
 					$p->items($items);
@@ -1571,10 +1572,9 @@ if(!function_exists("rb_output_buffer")){
 			}
 
 			
-				$queryList = "
+				/*$queryList = "
 				SELECT 
 					profile.ProfileID,
-					profile.ProfileID as pID, 
 					profile.ProfileGallery,
 					profile.ProfileContactDisplay, 
 					profile.ProfileDateBirth, 
@@ -1591,6 +1591,36 @@ if(!function_exists("rb_output_buffer")){
 					profile.ProfileID = cmux.ProfileID
 				$filter  
 				GROUP BY profile.ProfileID 
+				ORDER BY $sortby $dir $limit #B";*/
+
+				$queryList = "
+				SELECT 
+					profile.ProfileID,
+					profile.ProfileGallery,
+					profile.ProfileContactDisplay, 
+					profile.ProfileDateBirth, 
+					profile.ProfileDateCreated,
+					profile.ProfileLocationState,
+					cmux.ProfileCustomValue,
+					cmux.ProfileID,
+					cmux.ProfileCustomDateValue,
+					cmux.ProfileCustomID,
+					media.ProfileMediaURL 
+					
+				FROM ". table_agency_profile ." profile 
+					LEFT JOIN
+					".table_agency_customfield_mux." cmux
+					ON
+					profile.ProfileID = cmux.ProfileID
+					LEFT JOIN 
+					". table_agency_profile_media ." media
+					ON
+					(profile.ProfileID = media.ProfileID 
+						AND media.ProfileMediaType='Image' 
+						AND media.ProfileMediaPrimary = 1)
+					
+				$filter  
+				GROUP BY profile.ProfileID 
 				ORDER BY $sortby $dir $limit #B";
 			}
 
@@ -1600,9 +1630,12 @@ if(!function_exists("rb_output_buffer")){
 			echo "sort".$sort;
 			echo "dir".$dir;
 			echo "limit".$limit;*/
+			/*echo $queryList;
+			die(1);
+			*/		
 			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
 			$countList = $wpdb->num_rows;
-
+			
 			$rb_user_isLogged = is_user_logged_in();
 
 				$castingcart_results = array();
@@ -1701,10 +1734,10 @@ if(!function_exists("rb_output_buffer")){
 					#dont need other image for hover if its for print or pdf download view and dont use timthubm
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 						$images = "";
-						if(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) && $rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'] ==1){  //show profile sub thumbs for thumb slide on hover
+						/*if(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) && $rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'] ==1){  //show profile sub thumbs for thumb slide on hover
 							$images=getAllImages($dataList["ProfileID"]);
 							$images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
-						}
+						}*/
 						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image."&w=175&h=260)\"></a>".$images."</div>\n";
 					} else {
 						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image."&w=175&h=260)\"></a>".$images."</div>\n";
@@ -4949,9 +4982,9 @@ function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaTyp
 	$queryImg = ""; 
 	global $wpdb;
 	if($order){
-		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC", $profileID, $ProfileMediaType);
+		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC ", $profileID, $ProfileMediaType);
 	} else {
-		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC", $profileID, $ProfileMediaType);
+		 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" GROUP BY(ProfileMediaURL) ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC ", $profileID, $ProfileMediaType);
 	}
 	return $queryImg ;
 }
@@ -5035,6 +5068,8 @@ function rb_logout_user(){
 * Get RB ProfileID
 */
 function rb_get_casting_profileid(){
+	 if(!defined("table_agency_castingcart"))
+	 	  return false;
 	 global $user_ID, $wpdb;
 	 $data = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_castingcart." WHERE CastingUserLinked = %d ", $user_ID));
 	 if($wpdb->num_rows > 0){
