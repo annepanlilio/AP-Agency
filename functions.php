@@ -1454,20 +1454,19 @@ if(!function_exists("rb_output_buffer")){
 			echo "$links<div id=\"profile-results\">\n";
 
 
-
 			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
 
 				/*********** Paginate **************/
-					$qItem = $wpdb->get_var("SELECT
-						COUNT(profile.*)
+					$qItem = $wpdb->get_results("SELECT
+						profile.*,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
 					AS ProfileMediaURL 
 					FROM ". table_agency_profile ." profile 
 					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
 					ON profile.ProfileID = customfield_mux.ProfileID  
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."",ARRAY_A);
-					$items = $qItem; // number of total rows in the database
-
+					$items = $wpdb->num_rows; // number of total rows in the database
+					
 				if($items > 0) {
 					$p = new rb_agency_pagination;
 					$p->items($items);
@@ -1491,7 +1490,7 @@ if(!function_exists("rb_output_buffer")){
 				if(get_query_var('target')=="print"){$limit = "";} //to remove limit on print page
 				if(get_query_var('target')=="pdf"){$limit = "";} //to remove limit on pdf page
 
-			}//if(get_query_var('target')!="print" 
+			}//if(get_query_var('target')!="print"
 
 			/*
 			 * check permissions
@@ -3648,7 +3647,8 @@ function rb_display_profile_list(){
 	 }
 		
 	//Paginate
-	$items = count($wpdb->get_results("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."",ARRAY_A)); // number of total rows in the database
+	$wpdb->get_results("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."",ARRAY_A); // number of total rows in the database
+	$items = $wpdb->num_rows;
 	if($items > 0) {
 		$p = new rb_agency_pagination;
 		$p->items($items);
@@ -3733,7 +3733,7 @@ function rb_display_profile_list(){
 		}
 		
 		$results2 = $wpdb->get_results($query,ARRAY_A);
-		$count = count($results2);
+		$count = $wpdb->num_rows;
 		$i = 0;
 		foreach($results2 as $data) {
 
