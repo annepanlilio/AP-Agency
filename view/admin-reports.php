@@ -400,54 +400,12 @@ elseif ($ConfigID == 3) {
 			echo "<div style=\"background-color: lightYellow; \">\n<h3>". $data3['ProfileContactNameFirst'] ." ". $data3['ProfileContactNameLast'] ."</h3>\n";
 			echo "<strong>Directory: ".$dirURL."</strong>";
 			echo "<br/>";
-			if ($handle = opendir($dirURL)) {  //  Open seasame 
-				while (false !== ($file = readdir($handle))) {
-					if (strtolower($file) == "thumbs.db"  || strtolower($file) == "thumbsdb.jpg" || strtolower($file) == "thumbsdbjpg.jpg" || strtolower($file) == "thumbsdbjpgjpg.jpg") {
-						if (!unlink($dirURL ."/". $file)) {
-						  echo ("Error deleting $file");
-						} else {
-						  echo ("Deleted $file");
-						}
-					} elseif ($file != "." && $file != "..") {
-						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file));
-						rename($dirURL ."/". $file, $dirURL ."/". $new_file);
-						
-						$file_ext = rb_agency_filenameextension($new_file);
-						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
-						
-						/*	
-						    $query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = %s";
-							$results3a =$wpdb->get_results($wpdb->prepare($query3a,$new_file), ARRAY_A);
-							$count3a =  $wpdb->num_rows;
-						*/
-									   	
-									   	if (!in_array($new_file,$arr_media,true)) {
-												if($_GET['action'] == "add") {
-												    $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
-													$actionText = " and <span style=\"color: green;\">added to database</span> ";
-												} else {
-													$actionText = " and <strong>PENDING ADDITION TO DATABASE</strong>";
-												}
-										} else {
-												$actionText = " and exists in database";
-										}
-
-							
-						} else {
-								$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
-						}
-
-
-					echo "<div style=\"border-color: #E6DB55;\">File: ". $file ." has been renamed <strong>". $new_file ."</strong>". $actionText ."</div>\n";
-					}
-				}
-				closedir($handle);
 
 				$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID=".$data3["ProfileID"];
 				$results4a = $wpdb->get_results($query4a, ARRAY_A);
 				foreach ($results4a as $key) {
-					if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true)){
-							if(!file_exists($dirURL."/".$key["ProfileMediaURL"])){
+					if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true) || empty($key["ProfileMediaURL"]) ){
+							if(!file_exists($dirURL."/".$key["ProfileMediaURL"]) || empty($key["ProfileMediaURL"])){
 								if($_GET['action'] == "remove"){
 									$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileMediaID=".$key["ProfileMediaID"]);
 									echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span style=\"color:green;\">has been removed from the database</span>.</div>\n";
@@ -458,6 +416,51 @@ elseif ($ConfigID == 3) {
 					}
 					
 				}
+			if ($handle = opendir($dirURL) ) {  //  Open seasame 
+				while (false !== ($file = readdir($handle))) {
+					if (strtolower($file) == "thumbs.db"  || strtolower($file) == "thumbsdb.jpg" || strtolower($file) == "thumbsdbjpg.jpg" || strtolower($file) == "thumbsdbjpgjpg.jpg") {
+						if (!unlink($dirURL ."/". $file)) {
+						  echo ("Error deleting $file");
+						} else {
+						  echo ("Deleted $file");
+						}
+					} elseif ($file != "." && $file != "..") {
+						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file));
+						echo "<div style=\"border-color: #E6DB55;\">";
+						echo "File: ". $file ."";
+						// no need to rename if the file exist with the new filename
+						$has_rename = false;
+						if(file_exists($dirURL ."/".$new_file) && strpos($new_file , $data3["ProfileID"]) === false){
+								$new_file =  $data3["ProfileID"]."-".$new_file;
+								rename($dirURL ."/". $file, $dirURL ."/".$new_file);
+								echo " has been renamed <strong>". $new_file ."</strong>";
+								$has_rename = true;
+						}
+						$file_ext = rb_agency_filenameextension($file);
+						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
+						
+									   	
+									   	if (!in_array($new_file,$arr_media,true)) {
+												if($_GET['action'] == "add") {
+												    $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+													$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+												} else {
+													$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+												}
+										} else {
+												$actionText = ($has_rename?"and":"")." exists in database";
+										}
+
+							
+						} else {
+								$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
+						}
+								echo $actionText ."</div>\n";
+
+					}
+				}
+				closedir($handle);
+
    
 			}
 			echo "</div>\n";
