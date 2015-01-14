@@ -415,17 +415,18 @@ elseif ($ConfigID == 3) {
 						$file_ext = rb_agency_filenameextension($new_file);
 						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
 						
-						/*	$query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = %s";
+						/*	
+						    $query3a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileMediaURL = %s";
 							$results3a =$wpdb->get_results($wpdb->prepare($query3a,$new_file), ARRAY_A);
 							$count3a =  $wpdb->num_rows;
 						*/
 									   	
 									   	if (!in_array($new_file,$arr_media,true)) {
 												if($_GET['action'] == "add") {
-												   $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+												    $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
 													$actionText = " and <span style=\"color: green;\">added to database</span> ";
 												} else {
-												$actionText = " and <strong>PENDING ADDITION TO DATABASE</strong>";
+													$actionText = " and <strong>PENDING ADDITION TO DATABASE</strong>";
 												}
 										} else {
 												$actionText = " and exists in database";
@@ -441,6 +442,23 @@ elseif ($ConfigID == 3) {
 					}
 				}
 				closedir($handle);
+
+				$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID=".$data3["ProfileID"];
+				$results4a = $wpdb->get_results($query4a, ARRAY_A);
+				foreach ($results4a as $key) {
+					if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true)){
+							if(!file_exists($dirURL."/".$key["ProfileMediaURL"])){
+								if($_GET['action'] == "remove"){
+									$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileMediaID=".$key["ProfileMediaID"]);
+									echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span style=\"color:green;\">has been removed from the database</span>.</div>\n";
+								}else{
+									echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is mssing in the directory.</div>\n";
+								}
+							}
+					}
+					
+				}
+   
 			}
 			echo "</div>\n";
 		}
@@ -449,6 +467,7 @@ elseif ($ConfigID == 3) {
 		echo "There are currently no profile records.";
 	}
 	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=add' class='button-primary'>Add All Pending Changes</a>";
+    echo "<a href='?page=rb_agency_reports&ConfigID=3&action=remove' class='button-primary'>Remove All Missing Files</a>";
 
 
 
