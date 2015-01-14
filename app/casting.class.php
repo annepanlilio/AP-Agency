@@ -584,7 +584,7 @@ class RBAgency_Casting {
 			$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
-			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject, stripcslashes($SearchMuxMessage), $headers);
+			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  make_clickable(stripcslashes($SearchMuxMessage)), $headers);
 
 			//if($isSent){
 				if(!empty($SearchMuxFromEmail)){
