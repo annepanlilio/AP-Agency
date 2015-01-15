@@ -1089,7 +1089,7 @@ class RBAgency {
 			echo "	<tr><td>Type:</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
 					global $wpdb;
 					$profileDataTypes = $wpdb->get_results("SELECT * FROM ". table_agency_data_type ."",ARRAY_A);
-					echo "<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) ."</option>\n";
+					echo "<option value=\"\">". __("Any", rb_agency_TEXTDOMAIN) ."</option>\n";
 					foreach( $profileDataTypes as $dataType) {
 						if (isset($_SESSION['ProfileType'])) {
 							if ($dataType["DataTypeID"] ==  $ProfileType) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 

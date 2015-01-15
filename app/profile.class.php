@@ -159,7 +159,7 @@ class RBAgency_Profile {
 						echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"profiletype\" id=\"type\">\n";               
-						echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
+						echo "							<option value=\"\">". __("Any", rb_agency_TEXTDOMAIN) . "</option>";
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 														$results2 = $wpdb->get_results($query,ARRAY_A);
 														foreach ($results2 as $key) {
