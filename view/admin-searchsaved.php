@@ -372,7 +372,6 @@ $siteurl = get_option('siteurl');
 					   </tbody>
 				   </table>
 				   <p class="submit">
-					Click Save to get the email code<br />
 					   <input type="hidden" name="action" value="addRecord" />
 					   <input type="submit" name="Submit" value="Save Search" class="button-primary" />
 				   </p>
