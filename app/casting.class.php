@@ -134,7 +134,7 @@ class RBAgency_Casting {
 
 				
 
-					$cartString = implode(",", array_unique($cartArray));
+					$cartString = implode(",", array_filter(array_unique($cartArray)));
 					$cartString = RBAgency_Common::clean_string($cartString);
 
 				// Show Cart  

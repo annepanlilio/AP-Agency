@@ -149,10 +149,12 @@ $siteurl = get_option('siteurl');
 		$SearchMuxHash = $dataSearchSavedMux["SearchMuxHash"];
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
 	  	*/
-		$data =  $wpdb->get_row($query);
+	  	$data =  $wpdb->get_row($query);
+	  	$profile_list = implode(",",array_unique(array_filter(explode(",",$data->SearchProfileID))));
+		
 		$query ="SELECT * FROM ". table_agency_profile ." profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
-				.(isset($data->SearchProfileID)? $data->SearchProfileID:"''").") ORDER BY ProfileContactNameFirst ASC";
+				.(isset($profile_list)? $profile_list:"''").") ORDER BY ProfileContactNameFirst ASC";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		
@@ -232,10 +234,10 @@ $siteurl = get_option('siteurl');
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);
 
-		$profile_list  = (isset($data->SearchProfileID)? implode(",",array_unique(explode(",",$data->SearchProfileID))):"''");
+		$profile_list  = (isset($data->SearchProfileID)? implode(",",array_filter( array_unique( explode(",",$data->SearchProfileID) ) ) ):"''");
 		$query ="SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND profile.ProfileID IN ("
-				.$profile_list."0)  GROUP BY(profile.ProfileID) ";
+				.$profile_list.")  GROUP BY(profile.ProfileID) ";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
@@ -563,7 +565,7 @@ $siteurl = get_option('siteurl');
 				</div>
 			</td>
 			<td>
-			    <?php $profiles_count = array_unique(explode(",",$data2["SearchProfileID"])); ?>
+			    <?php $profiles_count = array_unique(array_filter(explode(",",$data2["SearchProfileID"]))); ?>
 				<?php  echo count($profiles_count); ?>
 			</td>
 			<td>
