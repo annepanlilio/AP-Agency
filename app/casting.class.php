@@ -387,11 +387,14 @@ class RBAgency_Casting {
 			$SearchMuxCustomValue	='';
 			$cartArray = $_SESSION['cartArray'];
 			
-			$cartString = implode(",", array_unique($cartArray));
+			$cartString = implode(",", array_filter(array_unique($cartArray)));
 			$cartString = rb_agency_cleanString($cartString);
 			$cartProfileMedia = isset($_SESSION["profilephotos"]) ? serialize($_SESSION["profilephotos"]):"";
 
 			global $wpdb;
+
+		if(!isset($_GET["SearchID"])){
+
 		$wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('%s','%s')",$cartString,$SearchMuxSubject)) or die($wpdb->print_error());
 					
 		$lastid = $wpdb->insert_id;
@@ -426,7 +429,7 @@ class RBAgency_Casting {
 							$profileimage .='<p><div style="width:550px;min-height: 170px;">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
 							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
-							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".implode(",",array_filter(array_unique(explode(",",$data['SearchProfileID'])))).") GROUP BY(profile.ProfileID)";
+							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY(profile.ProfileID)";
 							$results = $wpdb->get_results($query,ARRAY_A);
 							$count = count($results);
 							$arr_thumbnail = (array)unserialize($cartProfileMedia);
@@ -445,6 +448,7 @@ class RBAgency_Casting {
 								$profileimage .= "</div>\n";
 							}
 							$profileimage .="</div></p>";
+		}
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -474,6 +478,7 @@ class RBAgency_Casting {
 				window.location="<?php echo $url;?>";
 			</script>
 			<?php 
+			exit;
 			}
 			 return $isSent;
 
@@ -680,8 +685,11 @@ class RBAgency_Casting {
 				echo "          <br/>";
 			/*	echo "          <strong>Message:</strong><br/>     <textarea name=\"MassEmailMessage\"  style=\"width:100%;height:300px;\">this message was sent to you by ".$rb_agency_value_agencyname." ".network_site_url( '/' )."</textarea>";*/
 				//Adding Wp editor
-				$content = "Add Message Here<br />Click the following link (or copy and paste it into your browser):<br />
-[link-place-holder]<br /><br />This message was sent to you by:<br />[site-title]<br />[site-url]";
+				$content = "";
+				if(!isset($_GET["SearchID"])){
+								$content = "Add Message Here<br />Click the following link (or copy and paste it into your browser):<br />
+				[link-place-holder]<br /><br />This message was sent to you by:<br />[site-title]<br />[site-url]";
+				}
 				$editor_id = 'MassEmailMessage';
 				wp_editor( $content, $editor_id,array("wpautop"=>false,"tinymce"=>true) );
 				
