@@ -24,6 +24,7 @@ $siteurl = get_option('siteurl');
 		$SearchProfileID	= isset($_POST['SearchProfileID'])?$_POST['SearchProfileID']:"";
 		$SearchOptions		= isset($_POST['SearchOptions'])?$_POST['SearchOptions']:"";
 
+		$SearchProfileID = implode(",", array_unique(array_filter(explode(",",$SearchProfileID))));
 		// What is action?
 		$action = $_POST['action'];
 
@@ -320,7 +321,7 @@ $siteurl = get_option('siteurl');
 				if (isset($_SESSION['cartArray'])) {
 
 					$cartArray = $_SESSION['cartArray'];
-					$cartString = ltrim(implode(",", array_unique($cartArray)),",");
+					$cartString = implode(",", array_filter(array_unique($cartArray)));
 
 					?>
 					<h3 class="title">Save Search and Email</h3>
