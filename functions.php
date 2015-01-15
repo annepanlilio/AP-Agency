@@ -5180,4 +5180,17 @@ function rb_get_imperial_metrics($value,$sub_unit = 1,$label = true){
 	}
 									
 }
+
+/*
+ * Change email headers
+*/
+
+function rb_fromname($email){
+	$rb_agency_options = get_option('rb_agency_options');
+    $rb_blogname = get_option('blogname');
+    $wpfrom = !empty($rb_agency_options["rb_agency_option_agencyheader"])?$rb_agency_options["rb_agency_option_agencyheader"]:$rb_blogname;
+    return $wpfrom;
+}
+
+add_filter('wp_mail_from_name', 'rb_fromname');
 ?>
