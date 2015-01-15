@@ -643,7 +643,7 @@ class RBAgency_Casting {
 				$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 				// Search Results	
-				if($_GET["action"] != "massEmail"){
+				if($_GET["action"] == "massEmail" && !isset($_GET["SearchID"])){
 					$query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
 					$results2 = $wpdb->get_results($query,ARRAY_A);
 					$count =count($results2);
