@@ -1415,7 +1415,7 @@ class RBAgency_Profile {
 				 */
 				case 0:
 					$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
-					break;
+				break;
 
 				
 				/* 
@@ -1501,6 +1501,15 @@ class RBAgency_Profile {
 								   AND ProfileIsActive = 1 
 								   GROUP BY profile.ProfileID";  
 
+				break;
+
+						/*
+						 * Casting query
+						*/
+						case 3:
+							$sql ="SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
+									. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND ".$sql_where."  GROUP BY(profile.ProfileID) ";
+								
 						break;
 			}
 

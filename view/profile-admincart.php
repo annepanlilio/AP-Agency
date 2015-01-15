@@ -24,15 +24,15 @@ include(rb_agency_BASEREL ."app/profile.class.php");
 			$data = $wpdb->get_row($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
 			$count =  $wpdb->num_rows;
 			// Get Casting Cart ID
-			$castingcart_id = $data['SearchProfileID'];
+			$castingcart_id = implode(",",array_unique(array_filter(explode(",",$data['SearchProfileID']))));
 			$arr = (array)unserialize($data["SearchMuxCustomThumbnail"]);
-			$_SESSION["profilephotos_view"] = $arr[0];
+			$_SESSION["profilephotos_view"] = array_filter(array_unique($arr[0]));
 		
 			$search_array = array("perpage" => 9999, "include" => $castingcart_id);
-			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-			
-			// Process Form Submission
-			echo $search_results = RBAgency_Profile::search_results($search_sql_query, 0);
+			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere(array_filter(array_unique($search_array)));
+		   
+		   // Process Form Submission
+			echo $search_results = RBAgency_Profile::search_results($search_sql_query, 3);
 			
 		  // echo  $formatted = RBAgency_Profile::search_formatted($search_array);
 

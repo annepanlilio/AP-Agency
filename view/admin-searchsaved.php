@@ -233,9 +233,9 @@ $siteurl = get_option('siteurl');
 		$data =  $wpdb->get_row($query);
 
 		$profile_list  = (isset($data->SearchProfileID)? implode(",",array_unique(explode(",",$data->SearchProfileID))):"''");
-		$query ="SELECT * FROM ". table_agency_profile ." profile, "
+		$query ="SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND profile.ProfileID IN ("
-				.$profile_list.") GROUP BY profile.ProfileID ORDER BY ProfileContactNameFirst ASC ";
+				.$profile_list."0)  GROUP BY(profile.ProfileID) ";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
