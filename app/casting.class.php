@@ -533,43 +533,42 @@ class RBAgency_Casting {
 								'" . $cartProfileMedia . "'
 								)";
 							$results = $wpdb->query($insert);  
+							
+			 } // end is not resend / is new
+
 							$profileimage = "";  
 							$profileimage .='<p><div style="width:550px;min-height: 170px;">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
-							$qProfiles =  $wpdb->get_results($wpdb->prepare($query,$SearchID),ARRAY_A );
-							$data = count($qProfiles);
-							$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (%s) ORDER BY ProfileContactNameFirst ASC";
-							$results = $wpdb->get_results($wpdb->prepare($query,$data['SearchProfileID']),ARRAY_A);
+							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
+							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".implode(",",array_filter(array_unique(explode(",",$data['SearchProfileID'])))).") GROUP BY(profile.ProfileID)";
+							$results = $wpdb->get_results($query,ARRAY_A);
 							$count = count($results);
 							$arr_thumbnail = (array)unserialize($cartProfileMedia);
-		
 							foreach($results as $data2) {
-								$profileimage .= " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
-								$profileimage .= " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
+								$profileimage .= "<div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
+								$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
 								$profileimage .= stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 								$profileimage .= "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
 								}else{
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
 								}
 								$profileimage .= "</div>\n";
 								$profileimage .= "</div>\n";
 							}
 							$profileimage .="</div></p>";
-			 } // end is not resend / is new
-
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			if(!empty($SearchMuxFromEmail)){
-				if ( !email_exists($SearchMuxFromEmail)) {
+				/*if ( !email_exists($SearchMuxFromEmail)) {
 					$email_error ="<div style='font-weight:bold; padding:5px; color:red'>From Email was invalid. Email was not sent.</div>";
-				} else {
+				} else {*/
 					$headers[]  = 'From: "'. $SearchMuxFromName .'" <'. $SearchMuxFromEmail.'>' . "\r\n";
-				}
+				//}
 			} else {
 					$headers[]  = 'From: "'.$rb_agency_value_agencyname.'" <'. $rb_agency_option_agencyemail .'>' . "\r\n";
 			}
@@ -584,6 +583,7 @@ class RBAgency_Casting {
 			$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
+			$SearchMuxMessage = $SearchMuxMessage;
 			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  make_clickable(stripcslashes($SearchMuxMessage)), $headers);
 
 			//if($isSent){

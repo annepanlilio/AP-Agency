@@ -113,7 +113,9 @@ $siteurl = get_option('siteurl');
 		$SearchID = $_GET['SearchID'];
 
 		$dataSearchSavedMux = $wpdb->get_row("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ", ARRAY_A ,0);
-
+		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+		$data =  $wpdb->get_row($query);
+	  	
 		?>
 		<div style="width:500px; float:left;">
 		 <h2><?php echo __("Search Saved", rb_agency_TEXTDOMAIN); ?></h2>
@@ -126,7 +128,7 @@ $siteurl = get_option('siteurl');
 		   
 		   <div><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
 		   
-		   <div><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart" /></div>
+		   <div><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
 		   <div><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
 			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){ echo @$dataSearchSavedMux["SearchMuxMessage"];}else{echo @"Click the following link (or copy and paste it into your browser): [link-place-holder]";} ?></textarea>
 			</div>
@@ -143,15 +145,7 @@ $siteurl = get_option('siteurl');
 		</div>
 		<?php
 
-		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
-	
-		/*
-		TODO: CLeanup
-		$SearchMuxHash = $dataSearchSavedMux["SearchMuxHash"];
-		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
-	  	*/
-	  	$data =  $wpdb->get_row($query);
-	  	$profile_list = implode(",",array_unique(array_filter(explode(",",$data->SearchProfileID))));
+		$profile_list = implode(",",array_unique(array_filter(explode(",",$data->SearchProfileID))));
 		
 		$query ="SELECT * FROM ". table_agency_profile ." profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
@@ -553,13 +547,13 @@ $siteurl = get_option('siteurl');
 				?>
 					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
 				
-					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Create Email</a> | </span>
+					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Email Client</a> | </span>
 				<?php
 				}else{
 				?>
 						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
 				
-						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>&SearchMuxHash=<?php echo $results3[0]['SearchMuxHash'];?>&resend=true">Create Email</a> | </span>
+						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>&SearchMuxHash=<?php echo $results3[0]['SearchMuxHash'];?>&resend=true">Email Client</a> | </span>
 				<?php } ?>
 						<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 				</div>
