@@ -2012,6 +2012,8 @@ if(!function_exists("rb_output_buffer")){
 		
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
+		$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
+
 		
 		
 		// Set It Up	
@@ -2041,22 +2043,24 @@ if(!function_exists("rb_output_buffer")){
 					if(!in_array($type, array("search-advanced","search-basic")) ) { 
 						echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout,$profilesearch_advanced_button);
 					}
-				} else {
+				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
+					 
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
 					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					}
 				}
 			}else{
 				 $isSearchPage = 1;
 				if(!isset($_POST['form_mode'])){
 					echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout,$profilesearch_advanced_button);
-				} else {
+				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
+					
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search rb-s2\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
 					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-						echo "					<input type=\"button\" name=\"back_search\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search rb-s2\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					}
 				}
 			}
