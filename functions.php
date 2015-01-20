@@ -1355,7 +1355,7 @@ if(!function_exists("rb_output_buffer")){
 			}
 			$links = "";
 
-			if($rb_get_casting_profileid > 0 && !current_user_can("manage_options")){
+			if( !current_user_can("manage_options")){
 				// print, downloads links to be added on top of profile list
 				$links='<div class="rblinks">';
 
@@ -1372,7 +1372,7 @@ if(!function_exists("rb_output_buffer")){
 					/*
 					 * Favorite Settings
 					 */
-					if(function_exists('rb_agency_casting_menu')){
+					if(function_exists('rb_agency_casting_menu') && $rb_get_casting_profileid > 0 ){
 						$links.='<div class="rbfavorites-castings">';
 
 						if(is_permitted("favorite") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites")) ){
