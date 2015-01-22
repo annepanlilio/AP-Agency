@@ -1002,7 +1002,7 @@ if(!function_exists("rb_output_buffer")){
 				$paging = get_query_var('paging'); 
 			} else { 
 				preg_match('/[0-9]/', $_SERVER["REQUEST_URI"], $matches, PREG_OFFSET_CAPTURE);
-				if (@$matches[0][1] > 0) {
+				if (isset($matches[0][1]) && $matches[0][1] > 0) {
 					$paging = str_replace("/", "", substr($_SERVER["REQUEST_URI"], $matches[0][1]));
 				} else {
 					$paging = 1; 
@@ -2264,7 +2264,7 @@ class rb_agency_pagination {
 			
 			// We are in Page		
 			preg_match('/[0-9]/', $this->target, $matches, PREG_OFFSET_CAPTURE);
-			if (@$matches[0][1] > 0) {
+			if (isset($matches[0][1]) && $matches[0][1] > 0) {
 				return substr($this->target, 0, $matches[0][1]) ."/$id/?$this->uriExtend";
 			} else {
 				return "$this->target/$id/?$this->uriExtend";

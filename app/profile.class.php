@@ -138,11 +138,11 @@ class RBAgency_Profile {
 				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\">\n";
 						echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".@$_REQUEST["namefirst"] ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?$_REQUEST["namefirst"]:"")."\" /></div>\n";
 						echo "				</div>\n";
 						echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\">\n";
 						echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".@$_REQUEST["namelast"]."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?$_REQUEST["namelast"]:"")."\" /></div>\n";
 						echo "				</div>\n";
 				}
 
@@ -150,7 +150,7 @@ class RBAgency_Profile {
 				
 						echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\">\n";
 						echo "					<label for=\"displayname\">". __("Display Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".@$_REQUEST["displayname"]."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?$_REQUEST["displayname"]:"")."\" /></div>\n";
 						echo "				</div>\n";
 				}
 
@@ -201,11 +201,11 @@ class RBAgency_Profile {
 						echo "					<div>\n";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".@$_REQUEST['datebirth_min'] ."\" />\n";
+						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".(isset($_REQUEST['datebirth_min'])?$_REQUEST['datebirth_min']:"") ."\" />\n";
 						echo "						</div>";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".@$_REQUEST['datebirth_max'] ."\" />\n";
+						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".(isset($_REQUEST['datebirth_max'])?$_REQUEST['datebirth_max']:"") ."\" />\n";
 						echo "						</div>";
 						echo "					</div>";
 						echo "				  </div>";
@@ -215,7 +215,7 @@ class RBAgency_Profile {
 				if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\">\n";
 						echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".@$_REQUEST["city"]."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".(isset($_REQUEST["city"])?$_REQUEST["city"]:"")."\" /></div>\n";
 						echo "				</div>\n";
 
 						echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\">\n";
@@ -253,7 +253,7 @@ class RBAgency_Profile {
 
 						echo "				<div class=\"rbfield rbtext rbsingle rb_zip\" id=\"rb_zip\">\n";
 						echo "					<label for=\"zip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".$_REQUEST["zip"] ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".(isset($_REQUEST["zip"])?$_REQUEST["zip"]:"") ."\" /></div>\n";
 						echo "				</div>\n";
 				} // Show Location Search
             ?>
@@ -592,7 +592,7 @@ class RBAgency_Profile {
 						elseif($ProfileCustomType == 10) {
 							     $from = "";
 							       $to = "";
-								@list($from,$to) = @$_POST["ProfileCustomID".$ProfileCustomID]; // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
+								@list($from,$to) = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:["",""]; // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 									
 								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 									echo "<label>". $ProfileCustomTitle ."</label>";

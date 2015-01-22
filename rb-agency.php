@@ -148,6 +148,10 @@ See license.txt for full details.
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
+	// Casting
+	if (!defined("table_agency_casting"))
+		define("table_agency_casting", "{$wpdb->prefix}agency_casting");
+	
 
 
 // *************************************************************************************************** //
@@ -891,7 +895,7 @@ class RBAgency {
 				if(get_option("rb_agency_version") <> rb_agency_VERSION){
 					require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/upgrade.php");
 				} else {
-					// Namaste, version is number is correct
+					// Namaste, version number is correct
 				}
 			}
 		}
