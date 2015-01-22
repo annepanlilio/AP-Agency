@@ -154,6 +154,16 @@ jQuery(document).ready(function(){
 				jQuery( "#editfield_add_more_options_12" ).sortable();
 				
 			break;  	
+
+			case "10": // Text
+			     return '<tr>'
+				          +'<td>'
+						     +'<tr>'
+						    	 +'<td align="right">Title*:</td> <td><input type="text" name="ProfileCustomTitle"/></td>'
+							 +'</tr>'
+						  +'</td>'
+					+'</tr>';
+			break;  
 			
 			default:
 			   return '';
@@ -194,6 +204,7 @@ jQuery(document).ready(function(){
 			jQuery(this).parents("li").remove();
 		});	
 	 
+	 	
 });
 
 
@@ -273,13 +284,22 @@ function populateStates(countryId,stateId){
 			jQuery("#"+stateId).show();
 			jQuery("#"+stateId).find("option:gt(0)").remove();
 			jQuery("#"+stateId).find("option:first").text("Loading...");
-			jQuery.getJSON(url+"/get-state/"+ jQuery("#"+countryId).val(), function (data) {
-			jQuery("<option/>").attr("value", "").text("Select State").appendTo(jQuery("#"+stateId));	
-                        for (var i = 0; i < data.length; i++) {
-				jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#"+stateId));
+		jQuery.ajax({
+			type:'POST',
+			dataType : "json",
+	        data:{action:"get_state_ajax",country:jQuery("#"+countryId).val()},
+			url:ajaxurl,
+			success:function(data) {		
+				jQuery("<option/>").attr("value", "").text("Select State").appendTo(jQuery("#"+stateId));	
+	                        for (var i = 0; i < data.length; i++) {
+								jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#"+stateId));
+							}
+				jQuery("#"+stateId).find("option:eq(0)").remove();
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
 			}
-			jQuery("#"+stateId).find("option:eq(0)").remove();
-		
 		});
 		
 	}else{

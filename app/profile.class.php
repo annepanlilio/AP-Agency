@@ -35,6 +35,7 @@ class RBAgency_Profile {
 					$rb_agency_option_formshow_gender = isset($rb_agency_options_arr['rb_agency_option_formshow_gender'])?$rb_agency_options_arr['rb_agency_option_formshow_gender']:0;
 					$rb_agency_option_formshow_age = isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0;
 					$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
+					$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
 
 				// Which Type?
 				if ($type == 1) {
@@ -61,6 +62,7 @@ class RBAgency_Profile {
 				}
 
 
+
 			/*
 			* Display Form
 			*/
@@ -71,13 +73,14 @@ class RBAgency_Profile {
 				jQuery(document).ready(function(){
 					jQuery.fn.rset = function(){
 						jQuery(this).on("click",function(){
-							var inputs = jQuery(".rbfield").find("input[type=text]");
+							var inputs = jQuery(".rbfield").find("input");
 								for (var i = 0; i < inputs.length; i++) {
 									switch (inputs[i].type) {
 										case 'text':
 											inputs[i].value = '';
 											break;
 										case 'radio':
+										    inputs[i].checked = false;
 										case 'checkbox':
 											inputs[i].checked = false;
 									}
@@ -135,19 +138,19 @@ class RBAgency_Profile {
 				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\">\n";
 						echo "					<label for=\"namefirst\">". __("First Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".RBAgency_Common::session("namefirst") ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".@$_REQUEST["namefirst"] ."\" /></div>\n";
 						echo "				</div>\n";
 						echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\">\n";
 						echo "					<label for=\"namelast\">". __("Last Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".RBAgency_Common::session("namelast")."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".@$_REQUEST["namelast"]."\" /></div>\n";
 						echo "				</div>\n";
 				}
 
-				if ( ($rb_agency_option_formshow_displayname > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
+				if ( ($rb_agency_option_formshow_displayname > 0) || (isset($search_layout) && $search_layout == "admin") || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
 				
 						echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\">\n";
 						echo "					<label for=\"displayname\">". __("Display Name", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".RBAgency_Common::session("displayname")."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".@$_REQUEST["displayname"]."\" /></div>\n";
 						echo "				</div>\n";
 				}
 
@@ -157,13 +160,13 @@ class RBAgency_Profile {
 						echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"profiletype\" id=\"type\">\n";               
-						echo "							<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) . "</option>";
+						echo "							<option value=\"\">". __("Any", rb_agency_TEXTDOMAIN) . "</option>";
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 														$results2 = $wpdb->get_results($query,ARRAY_A);
 														foreach ($results2 as $key) {
 															 
-																if (isset($_SESSION['profiletype']) && $_SESSION['profiletype']) {
-																		if ($key["DataTypeID"] == RBAgency_Common::session('profiletype')) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
+																if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
+																		if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 																} else { $selectedvalue = ""; }
 																echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>";
 														}
@@ -180,11 +183,11 @@ class RBAgency_Profile {
 						$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 						$results2 = $wpdb->get_results($query2,ARRAY_A);
 						echo "						<select name=\"gender\" id=\"gender\">\n";
-						echo "							<option value=\"\">". __("All Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
+						echo "							<option value=\"\">". __("Any Gender", rb_agency_TEXTDOMAIN) . "</option>\n";
 														// Pul Genders from Database
 														foreach ($results2 as $key) {
 															  if(isset($key["GenderID"]))
-																echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_SESSION['gender'])?$_SESSION['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
+																echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -193,26 +196,26 @@ class RBAgency_Profile {
 
 				// Show Profile Age
 				if ( ($rb_agency_option_formshow_age > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
-						echo "				  <fieldset class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
-						echo "					<legend>". __("Age", rb_agency_TEXTDOMAIN) . "</legend>";
+						echo "				  <div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
+						echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", rb_agency_TEXTDOMAIN) . "</label>";
 						echo "					<div>\n";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".RBAgency_Common::session('datebirth_min') ."\" />\n";
+						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".@$_REQUEST['datebirth_min'] ."\" />\n";
 						echo "						</div>";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".RBAgency_Common::session('datebirth_max') ."\" />\n";
+						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".@$_REQUEST['datebirth_max'] ."\" />\n";
 						echo "						</div>";
 						echo "					</div>";
-						echo "				  </fieldset>";
+						echo "				  </div>";
 				}
 
 				// Show Location Search
 				if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
 						echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\">\n";
 						echo "					<label for=\"city\">". __("City", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".RBAgency_Common::session("city") ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".@$_REQUEST["city"]."\" /></div>\n";
 						echo "				</div>\n";
 
 						echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\">\n";
@@ -221,11 +224,11 @@ class RBAgency_Profile {
 						echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>";
-						echo '							<option value="">'. __("Select country", rb_agency_TEXTDOMAIN) .'</option>';
+						echo '							<option value="">'. __("Any Country", rb_agency_TEXTDOMAIN) .'</option>';
 														$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
 														$result_query_get = $wpdb->get_results($query_get);
 														foreach($result_query_get as $r){
-																$selected = isset($_SESSION["country"]) && $_SESSION["country"] ==$r->CountryID?"selected=selected":"";
+																$selected = isset($_REQUEST["country"]) && $_REQUEST["country"] ==$r->CountryID?"selected=selected":"";
 						echo '							<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
 														}
 						echo '						</select>';
@@ -237,11 +240,11 @@ class RBAgency_Profile {
 												//echo "	<input type=\"text\" id=\"state\" name=\"state\" value=\"".RBAgency_Common::session("state") ."\" />\n";
 						echo "					<div>";
 						echo '						<select name="state" id="state">';
-						echo '							<option value="">'. __("Select state", rb_agency_TEXTDOMAIN) .'</option>';
-														$query_get ="SELECT * FROM `".table_agency_data_state."` ORDER BY StateTitle ASC" ;
-														$result_query_get = $wpdb->get_results($query_get);
+						echo '							<option value="">'. __("Any State", rb_agency_TEXTDOMAIN) .'</option>';
+														$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID = %d ORDER BY StateTitle ASC" ;
+														$result_query_get = $wpdb->get_results($wpdb->prepare($query_get,(isset($_REQUEST["country"])?$_REQUEST["country"]:0)));
 														foreach($result_query_get as $r){
-															$selected =RBAgency_Common::session("state")==$r->StateID?"selected=selected":"";
+															$selected = isset($_REQUEST["state"]) && $_REQUEST["state"] == $r->StateID?"selected=selected":"";
 						echo '								<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
 														}
 						echo '						</select>';
@@ -250,11 +253,12 @@ class RBAgency_Profile {
 
 						echo "				<div class=\"rbfield rbtext rbsingle rb_zip\" id=\"rb_zip\">\n";
 						echo "					<label for=\"zip\">". __("Zip", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".RBAgency_Common::session("zip") ."\" /></div>\n";
+						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".$_REQUEST["zip"] ."\" /></div>\n";
 						echo "				</div>\n";
 				} // Show Location Search
-
-                 
+            ?>
+                 <!--rb plugin profile.class -->
+			<?php 
 			/*
 			 * Custom Fields
 			 */
@@ -303,7 +307,7 @@ class RBAgency_Profile {
 								//Commentd to fix language value populate
 								//echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
 								echo "<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".
-								RBAgency_Common::session("ProfileCustomID".$ProfileCustomID)."\" /></div>";
+								@$_POST["ProfileCustomID".$ProfileCustomID]."\" /></div>";
 								echo "</div>";
 
 						/*
@@ -316,29 +320,32 @@ class RBAgency_Profile {
 									$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($ProfileCustomOptions,"}"),"{"));
 									list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
 										//print_r($_SESSION["ProfileCustomID".$ProfileCustomID]);
-									if(is_array($_SESSION["ProfileCustomID".$ProfileCustomID])){
-										$_SESSION["ProfileCustomID".$ProfileCustomID]=@implode(",",RBAgency_Common::session("ProfileCustomID".$ProfileCustomID));
-										list($min_val2,$max_val2) =  @explode(",",RBAgency_Common::session("ProfileCustomID".$ProfileCustomID));
-									} else {
-										list($min_val2,$max_val2) =  @explode(",",$_SESSION["ProfileCustomID".$ProfileCustomID]);
-									}
 
+										
+									if(is_array($_POST["ProfileCustomID".$ProfileCustomID])){
+										$_POST["ProfileCustomID".$ProfileCustomID] = @implode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
+										list($min_val2,$max_val2) =  @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
+									} else {
+										list($min_val2,$max_val2) =  @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
+									}
 									if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
 										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+
+										echo "		<label for=\"ProfileCustomLabel_min first\" style=\"text-align:right;\">". __("Min ", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>";
 										echo "</div>";
 										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+										echo "		<label for=\"ProfileCustomLabel_max first\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>";
 										echo "</div>";
 									} else {
 										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+											
+										echo "		<label for=\"ProfileCustomLabel_min second\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$min_val2."\" /></div>";
 										echo "</div>";
 										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_max\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+										echo "		<label for=\"ProfileCustomLabel_max second\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val2."\" /></div>";
 										echo "</div>";
 									}
@@ -359,11 +366,22 @@ class RBAgency_Profile {
 													if(!empty($value)) {
 														// Identify Existing Value
 														$isSelected = "";
-														if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
-															$isSelected = "selected=\"selected\"";
-															echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>";
+														if(strpos(strtolower($ProfileCustomTitle),"height") === false){
+															if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
+																$isSelected = "selected=\"selected\"";
+																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>";
+															}else{
+																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($value)."</option>"; 
+															}
 														}else{
-															echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($value)."</option>"; 
+															$label = $value;
+															$value = str_replace('"',"",$value);
+															if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
+																$isSelected = "selected=\"selected\"";
+																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($label)."</option>";
+															}else{
+																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($label)."</option>"; 
+															}
 														}
 													}
 												}
@@ -388,15 +406,16 @@ class RBAgency_Profile {
 						 * Checkbox
 						 */
 						} elseif($ProfileCustomType == 5) {
-								echo "<fieldset class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "<legend>". $ProfileCustomTitle ."</legend>";
+								echo "<div class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+								echo "<label>". $ProfileCustomTitle ."</label>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 								foreach($array_customOptions_values as $val){
 
-									if(isset($_SESSION["ProfileCustomID". $ProfileCustomID])){ 
+									if(isset($_POST["ProfileCustomID". $ProfileCustomID])){ 
 
-										$dataArr = @explode(",",@implode(",",@explode("','",stripslashes(RBAgency_Common::session("ProfileCustomID". $ProfileCustomID)))));
+										//$dataArr = @explode(",",@implode(",",@explode("','",stripslashes(@$_POST["ProfileCustomID". $ProfileCustomID]))));
+										$dataArr = @$_POST["ProfileCustomID". $ProfileCustomID];
 										if(in_array($val,$dataArr,true)){
 											echo "<div ><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
 											echo "<span> ". $val."</span></label></div>";
@@ -416,24 +435,25 @@ class RBAgency_Profile {
 
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";
 								echo "</div>";
-								echo "</fieldset>";
+								echo "</div>";
 
 						/*
 						 * Radio Button
 						 */
 						} elseif($ProfileCustomType == 6) {
-								echo "<fieldset class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "<legend>". $ProfileCustomTitle ."</legend>";
+								echo "<div class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+								echo "<label>". $ProfileCustomTitle ."</label>";
 								echo "<div>";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 
 								foreach($array_customOptions_values as $val){
 
-									if(isset($_REQUEST["ProfileCustomID". (isset($data1['ProfileCustomID'])?$data1['ProfileCustomID']:0)]) &&RBAgency_Common::session("ProfileCustomID". $ProfileCustomID) !=""){ 
+									if(isset($_POST["ProfileCustomID". $ProfileCustomID]) && $_POST["ProfileCustomID". $ProfileCustomID] !=""){ 
 
-										$dataArr = explode(",",implode(",",explode("','",RBAgency_Common::session("ProfileCustomID". $ProfileCustomID))));
-
-										if(in_array($val,$dataArr) && $val !=""){
+										//$dataArr = explode(",",implode(",",explode("','",@$_POST["ProfileCustomID". $ProfileCustomID])));
+										$dataArr = @$_POST["ProfileCustomID". $ProfileCustomID];
+										
+										if(in_array($val,$dataArr,true) && $val !=""){
 											echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
 											echo "<span> ". $val."</span></label></div>";
 										}else{
@@ -451,13 +471,13 @@ class RBAgency_Profile {
 								}
 								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";	       
 								echo "</div>";
-								echo "</fieldset>";
+								echo "</div>";
 
 						/*
 						 * Metric
 						 */
 						} elseif($ProfileCustomType == 7) {
-								echo "<fieldset class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
 
 								/*
 								 * Measurement Label
@@ -486,19 +506,19 @@ class RBAgency_Profile {
 										}
 									}
 
-									echo "<legend>". $ProfileCustomTitle . $measurements_label ."</legend>";
+									echo "<label>". $ProfileCustomTitle . $measurements_label ."</label>";
 
 								/*
 								 * Handle Array
 								 */
 
 								// Is Array?
-								if(isset($_SESSION["ProfileCustomID".$ProfileCustomID]) && is_array($_SESSION["ProfileCustomID".$ProfileCustomID])){
-									$_SESSION["ProfileCustomID".$ProfileCustomID] = @implode(",",RBAgency_Common::session("ProfileCustomID".$ProfileCustomID));
+								if(isset($_POST["ProfileCustomID".$ProfileCustomID]) && is_array($_POST["ProfileCustomID".$ProfileCustomID])){
+									$_POST["ProfileCustomID".$ProfileCustomID] = @implode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 								}
 
 								// List
-								$list_value = RBAgency_Common::session("ProfileCustomID".$ProfileCustomID);
+								$list_value = @$_POST["ProfileCustomID".$ProfileCustomID];
 								@list($min_val,$max_val) =  @explode(",",$list_value);
 
 								// Is Height and is Imperial
@@ -520,7 +540,7 @@ class RBAgency_Profile {
 												$heightraw = $i;
 												$heightfeet = floor($heightraw/12);
 												$heightinch = $heightraw - floor($heightfeet*12);
-												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue)?$ProfileCustomValue:"", $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue) && !empty($ProfileCustomValue)?$ProfileCustomValue:$min_val, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
 												$i++;
 											}
 										echo " </select>";
@@ -541,7 +561,7 @@ class RBAgency_Profile {
 												$heightraw = $i;
 												$heightfeet = floor($heightraw/12);
 												$heightinch = $heightraw - floor($heightfeet*12);
-												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue)?$ProfileCustomValue:"", $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue) && !empty($ProfileCustomValue)?$ProfileCustomValue:$max_val, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
 												$i++;
 											}
 										echo " </select>\n";
@@ -551,20 +571,45 @@ class RBAgency_Profile {
 									echo "<div>";
 										// for other search
 										echo "<div>";
-										echo "<label for=\"ProfileCustomID".$ProfileCustomID."_min\">Min</label><input value=\""
+										echo "<label for=\"ProfileCustomID".$ProfileCustomID."_min first\">Min</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
 										.$ProfileCustomID."[]\" />";
 										echo "</div>";
 
 										echo "<div><label for=\"ProfileCustomID".(isset($data1['ProfileCustomID'])?$data1['ProfileCustomID']:"")
-										."_max\">Max</label><input value=\"".(isset($max_val)?$max_val:"") ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" />";
+										."_max second\">Max</label><input value=\"".(isset($max_val)?$max_val:"") ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" />";
 										echo "</div>";
 									echo "</div>";
 								}
-							echo "</fieldset>";
+							echo "</div>";
 
+						} 
+
+						/*
+						 * Date Between
+						 */
+						elseif($ProfileCustomType == 10) {
+							     $from = "";
+							       $to = "";
+								@list($from,$to) = @$_POST["ProfileCustomID".$ProfileCustomID]; // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
+									
+								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+									echo "<label>". $ProfileCustomTitle ."</label>";
+											echo "<div>";
+													echo "<div>";
+													echo "		<label for=\"ProfileCustomLabel_min\" >". __("From", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+													echo "		<input  id=\"rb_datepicker_from\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$from."\" />";
+													echo "</div>";
+													echo "<div>";
+													echo "		<label for=\"ProfileCustomLabel_max\" >". __("to", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+													echo "		<input  id=\"rb_datepicker_to\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$to."\" />";
+													echo "</div>";
+											echo "</div>";
+								
+								echo "</div>";
 						} // End Type
+
 
 					}
 
@@ -579,29 +624,39 @@ class RBAgency_Profile {
 					echo "						<div>";
 					echo "							<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
 					echo "								<option value=\"5\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"1\"". selected(RBAgency_Common::session("isactive"), 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"4\"". selected(RBAgency_Common::session("isactive"), 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"0\"". selected(RBAgency_Common::session("isactive"), 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"2\"". selected(RBAgency_Common::session("isactive"), 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"3\"". selected(RBAgency_Common::session("isactive"), 3) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"1\"". selected(@$_POST["isactive"], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"4\"". selected(@$_POST["isactive"], 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"0\"". selected(@$_POST["isactive"], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"2\"". selected(@$_POST["isactive"], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "								<option value=\"3\"". selected(@$_POST["isactive"], 3) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
 					echo "							</select>\n";
 					echo "						</div>\n";
 					echo "				</div>\n";
 				}
 
-				echo "				<div class=\"rbfield rbsubmit rbsingle\">";
+				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">";
 					echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\"  />"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
-					if($profilesearch_advanced_button == true){
-					echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					}
-					if ( (get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  $profilesearch_layout == 'condensed' ){
+					//if(/*$profilesearch_advanced_button == true */$rb_agency_option_formhide_advancedsearch_button  == 1){
+					//echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+					//}
+					if ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
 					echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
 					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" )  || $profilesearch_layout == 'advanced' ){
 					echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					
 					}
 				echo "				</div>\n";
+				global $user_ID, $wpdb;
+	
+				// Check if user is registered as Model/Talent
+			    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
+			    $is_model_or_talent = $wpdb->num_rows;
+
+				if($is_model_or_talent > 0){
+					echo "<div class=\"rbclear\"></div>";
+					echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">Go Back to My Dashboard</a></div>";
+				}
 				echo "			</form>\n";
 
 				echo "			<script>\n";
@@ -633,6 +688,8 @@ class RBAgency_Profile {
 					echo "									jQuery('html, body').animate({ scrollTop: 0 }, 'slow'); \n";
 					echo "			}\n";
 				echo "			</script>\n";
+
+
 				echo "		</div>\n";
 				
 								
@@ -654,13 +711,13 @@ class RBAgency_Profile {
 				foreach ($_REQUEST as $key => $value) {
 					// Clear old values
 					unset($_SESSION[$key]);
-					
 					// Set the new value
-					if (isset($value) && !empty($value)) {
+					if (isset($value)) {
 						$_SESSION[$key] = $value; //$$key = $value;
 					}
 
 				}
+
 
 			/*
 			 * Create Array
@@ -680,7 +737,7 @@ class RBAgency_Profile {
 					if (isset($_REQUEST['sort']) && !empty($_REQUEST['sort'])){
 						$filterArray['sort'] = $_REQUEST['sort'];
 					} else {
-						$filterArray['sort'] = "profile.ProfileContactNameFirst";
+						$filterArray['sort'] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 					}
 
 					// Sort Order
@@ -816,14 +873,26 @@ class RBAgency_Profile {
 	 * Process values into SQL string holding WHERE clause
 	 */
 		public static function search_generate_sqlwhere($atts = null, $exclude = null){
-
+          global $wpdb;
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
 			// Time Zone
 			$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
-
 			// Convert Input
 			if(is_array($atts)) {
+
+
+				// Convert Requests to Sessions
+				foreach ($atts as $key => $value) {
+					// Clear old values
+					unset($_SESSION[$key]);
+					// Set the new value
+					if (isset($value) && !empty($value)) {
+						$_SESSION[$key] = $value; //$$key = $value;
+					}
+
+				}
+
 
 			/*
 			 * Get Search Chriteria
@@ -885,18 +954,18 @@ class RBAgency_Profile {
 
 				// First Name
 				if (isset($namefirst) && !empty($namefirst)){
-					$filter .= " AND profile.ProfileContactNameFirst LIKE '". mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namefirst))))) ."%'";
+					$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
 				}
 
 				
 				// Last Name
 				if (isset($namelast) && !empty($namelast)){
-					$filter .= " AND profile.ProfileContactNameLast LIKE '".  mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($namelast))))) ."%'";
+					$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", '%'.str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
 				}
 
 				// Display Name
 				if (isset($displayname) && !empty($displayname)){
-					$filter .= " AND profile.ProfileContactDisplay LIKE '". mysql_real_escape_string(str_replace('"','\"',(str_replace("'","\'",($displayname))))) ."%'";
+					$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
 				}
 
 
@@ -968,9 +1037,10 @@ class RBAgency_Profile {
 					$filterDropdown = array();
 					$filter2 = "";
 
+
 					// Loop through all attributes looking for custom
-					foreach ($_POST as $key => $val) {
-						if (substr($key,0,15) == "ProfileCustomID") {
+					foreach ((!empty($_POST)?$_POST:$_GET) as $key => $val) {
+						if (substr(strtolower($key),0,15) == "profilecustomid") {
 
 						/*
 						 *  Check if this is array or not because sometimes $val is an array so
@@ -995,7 +1065,8 @@ class RBAgency_Profile {
 											}
 										}
 									} else {
-										$val = array_shift(array_values($val));
+										$val = array_values($val);
+										$val = array_shift($val);
 									} 
 								}
 								global $wpdb;
@@ -1029,8 +1100,8 @@ class RBAgency_Profile {
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 3 || $ProfileCustomType["ProfileCustomType"] == 9) {
 									// Dropdown
 									if($ProfileCustomType["ProfileCustomType"] == 3 ){
-										$filter2 .="$open_st ProfileCustomValue = '".$val."' $close_st";
 
+										$filter2 .="$open_st ProfileCustomValue = '".addslashes($val)."' $close_st";
 									// Dropdown Multi-Select	
 									}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
 										
@@ -1183,7 +1254,14 @@ class RBAgency_Profile {
 
 										$_SESSION[$key] = $val;
 									}
-								}
+								}elseif ($ProfileCustomType["ProfileCustomType"] == 10) {
+									// Date
+									list($from, $to) = explode(",", $val);
+
+									$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
+									$_SESSION[$key] = $val;
+
+								} 
 
 							} // if not empty
 						} // end if
@@ -1193,7 +1271,7 @@ class RBAgency_Profile {
 						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 					}
 
-
+					
 					$filter .= $filter2;
 					$filter = str_replace(array("\n","\t","\r")," ", $filter);
 					$filter = str_replace(")(", ") OR (", $filter);
@@ -1227,8 +1305,8 @@ class RBAgency_Profile {
 				}
 				
 				self::search_generate_sqlorder($atts);
-
-				return $filter;
+              
+              return $filter;
 
 
 			} else {
@@ -1248,6 +1326,26 @@ class RBAgency_Profile {
 
 			$filter = "";
 
+			$rb_agency_options_arr = get_option("rb_agency_options");
+			// Sort by date 
+			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
+			$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
+				
+			if($rb_agency_option_profilelist_sortbydate){
+				   $atts["sort"] = "cmux.ProfileCustomDateValue";
+			}elseif(!isset($atts["sort"])){
+				   $atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
+			}
+
+			if(!isset($_GET["limit"]) && isset($_GET["page"]) && $_GET["page"] == "rb_agency_search"){
+				   $atts["limit"] = $rb_agency_option_persearch;
+			}
+
+			 $filter .= " GROUP BY profile.ProfileID";
+		
+
+
+			
 			// Convert Input
 			if(is_array($atts)) {
 
@@ -1266,12 +1364,14 @@ class RBAgency_Profile {
 					"page" => NULL
 				), $atts));
 
+
+
 			/*
 			 * ORDER BY
 			 */
 
 				if (isset($sort) && !empty($sort)){
-					$filter .= " ORDER BY $sort ";
+					$filter .= " ORDER BY $sort $dir ";
 				}
 
 			/*
@@ -1281,8 +1381,8 @@ class RBAgency_Profile {
 				if (isset($limit) && !empty($limit)){
 					$filter .= " LIMIT 0, $limit ";
 				}
-
-				// Debug
+          
+          		// Debug
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_generate_sqlorder',$filter);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
@@ -1303,7 +1403,7 @@ class RBAgency_Profile {
 	 * Process Search and return Profile IDs
 	 */
 
-		public static function search_results($sql_where, $query_type = 0, $castingcart = false){
+		public static function search_results($sql_where, $query_type = 0, $castingcart = false, $arr_query = array()){
 
 			global $wpdb;
 
@@ -1315,15 +1415,16 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
-					$sql = "SELECT * FROM ". table_agency_profile ."  profile WHERE ". $sql_where . self::$order_by;
-					break;
+					$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
+				break;
 
+				
 				/* 
 				 * query for favorites
 				 */
 				 case 1:
 					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID"  . self::$order_by;
+					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 					break;
 
 				/* 
@@ -1332,7 +1433,6 @@ class RBAgency_Profile {
 				case 2:
 					// Get User ID
 					$user = get_userdata(rb_agency_get_current_userid());  
-
 					// check if user is admin, if yes this allow the admin to view other users cart 
 					// if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
 					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
@@ -1359,7 +1459,7 @@ class RBAgency_Profile {
 							}else{
 								$uid = rb_agency_get_current_userid();
 								if($uid > 0){
-									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
+									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d  AND cart.CastingJobID <= 0 ",rb_agency_get_current_userid());
 								}
 							}
 						}	
@@ -1367,19 +1467,65 @@ class RBAgency_Profile {
 					//}
 
 					// Execute the query showing casting cart
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay,profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart  WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
+					$sql = "SELECT profile.ProfileID, 
+								   profile.ProfileGallery, 
+								   profile.ProfileContactDisplay,
+								   profile.ProfileContactNameFirst, 
+								   profile.ProfileContactNameLast, 
+								   profile.ProfileDateBirth, 
+								   profile.ProfileIsActive, 
+								   profile.ProfileLocationState, 
+								   profile.ProfileID as pID, 
+								   cart.CastingCartTalentID, 
+								   cart.CastingCartTalentID, 
+								   (SELECT media.ProfileMediaURL FROM ". 
+								   			table_agency_profile_media ." media 
+								   			WHERE 
+								   			profile.ProfileID = media.ProfileID 
+								   			AND 
+								   			media.ProfileMediaType = \"Image\" 
+								   			AND 
+								   			media.ProfileMediaPrimary = 1) 
+											AS 
+								   ProfileMediaURL,
+								   (SELECT cmux.ProfileCustomDateValue FROM ".
+								   			table_agency_customfield_mux." as cmux
+								   			WHERE 
+								   			cmux.ProfileID = profile.ProfileID
+								   			LIMIT 1
+								   			) 
+											AS
+									ProfileDueDate
+								   FROM ". table_agency_profile ." profile 
+								   INNER JOIN  ".table_agency_castingcart." cart  
+								   WHERE $sqlCasting_userID 
+								   AND ProfileIsActive = 1 
+								   GROUP BY profile.ProfileID";  
+
+				break;
+
+						/*
+						 * Casting query
+						*/
+						case 3:
+							$sql ="SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
+									. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND ".$sql_where."  GROUP BY(profile.ProfileID) ";
+								
+						break;
 			}
+
 
 			if(self::$error_debug || self::$error_debug_query){
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
+			
 			/*
 			 * check if search is admin or public
 			 */
 			if(is_admin()){
 				
-				return self::search_result_admin($sql);
+				return self::search_result_admin($sql,$arr_query );
 			} else {
 				
 				return self::search_result_public($sql, $castingcart);
@@ -1406,6 +1552,7 @@ class RBAgency_Profile {
 			$all_html.='<div id="rbfilter-sort">';
 			$all_html.='<div class="rbtotal-results">Total Results : '.$count.' </div>';
 			$all_html.='<div class="rbsort">';
+
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
@@ -1433,7 +1580,7 @@ class RBAgency_Profile {
 			if ($count > 0){
 				
 				$castingcart_results = array();
-				if(defined("table_agency_castingcart")){
+				if(function_exists("rb_agency_get_miscellaneousLinks")){
 					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
 				}
 				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
@@ -1450,9 +1597,13 @@ class RBAgency_Profile {
 				foreach($results as $profile) {
 					$availability = '';
 				
-					if(!empty($castingcart) && isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
-						 $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
-						$prepared = $wpdb->prepare($query,$profile["ProfileID"],$_GET["Job_ID"]);
+					if(!empty($castingcart)){
+						if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
+							 $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+							$prepared = $wpdb->prepare($query,$profile["ProfileID"],$_GET["Job_ID"]);
+						
+						}
+
 						$data = $wpdb->get_row($prepared);
 						$count2 = $wpdb->num_rows;
 						if($count2 >= 1){
@@ -1472,14 +1623,22 @@ class RBAgency_Profile {
 				 * rb agency options
 				 */
 				$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:0;
 				$rb_agency_option_profilelist_count  = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
 				$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-
+				
 				/* 
 				 * this is the upper header html of the profile list
 				 */
 
 				$all_html .=  "<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
+				if ($rb_agency_option_profilelist_count) {
+					$items = $count;
+					$countList = $items;
+					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
+					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". (isset($countList)?$countList:0) ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
+					$all_html .= "</div>\n";
+				}
 				$all_html .= '<div id="profile-results-info">';
 				/*
 				if ($rb_agency_option_profilelist_favorite){ 
@@ -1488,11 +1647,7 @@ class RBAgency_Profile {
 					$all_html .= "</div>\n";
 				}
 				*/
-				if ($rb_agency_option_profilelist_count) {
-					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
-					$all_html .=  __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". (isset($countList)?$countList:0) ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
-					$all_html .= "</div>\n";
-				}
+				
 				/*		
 				if (self::$castingcart){   //allow email to admin casting
 					$all_html .= "<div>\n";
@@ -1500,15 +1655,17 @@ class RBAgency_Profile {
 					$all_html .= "</div>\n";
 				}*/
 				$all_html .= '</div>';
-
 				/* 
 				 * wrap profile listing
 				 */
 				$all_html .="<div id='profile-list'>".$profile_list."</div>";
+
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
+
+
 
 				return $all_html;
 
@@ -1532,7 +1689,7 @@ class RBAgency_Profile {
 		/* 
 		 * search for admin 
 		 */
-		public static function search_result_admin($sql){
+		public static function search_result_admin($sql, $arr_query  = array()){
 
 				global $wpdb;
 				/* 
@@ -1556,11 +1713,15 @@ class RBAgency_Profile {
 				$displayHtml = "";
 				$displayHtml .=  "  <div class=\"boxblock-holder\">\n";
 				$displayHtml .=  "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
+				unset($arr_query["limit"]);
+				unset($arr_query["perpage"]);
 
-				if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
-					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href=". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
+				
+				$query_built =  http_build_query($arr_query);
+               if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
+					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href='". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none&".$query_built."'><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 				}
-				$displayHtml .=  "       <form method=\"get\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
+				$displayHtml .=  "       <form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"action\" value=\"cartAdd\" />\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"forceCart\" value=\"".(!is_array(RBAgency_Common::session('cartArray'))?RBAgency_Common::session('cartArray'):"") ."\" />\n";
@@ -1595,9 +1756,16 @@ class RBAgency_Profile {
 							$isInactive = 'style="background: #FFEBE8"';
 							$isInactiveDisable = "disabled=\"disabled\"";
 						}
+						$p_image = rb_get_primary_image($data["ProfileID"]); 
+						$checkboxDisable ="";
+						if(empty($p_image)){
+							$checkboxDisable = "data-disabled=\"true\"";
+						}else{
+							$checkboxDisable ="";
+						}
 						$displayHtml .=  "        <tr ". $isInactive.">\n";
 						$displayHtml .=  "            <th class=\"check-column\" scope=\"row\" >\n";
-						$displayHtml .=  "                <input type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
+						$displayHtml .=  "                <input ".$checkboxDisable." type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
 						$displayHtml .=  "            </th>\n";
 						$displayHtml .=  "            <td class=\"ProfileID column-ProfileID\">". $ProfileID ."</td>\n";
 						$displayHtml .=  "            <td class=\"ProfileContact column-ProfileContact\">\n";
@@ -1628,7 +1796,7 @@ class RBAgency_Profile {
 								$displayHtml .=  "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
 						}
 						if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
-								$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_state_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</div>\n";
+								$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_stateabv_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</div>\n";
 						}
 						if (!empty($data['ProfileLocationCountry'])) {
 								$country = (rb_agency_getCountryTitle($data['ProfileLocationCountry']) != false) ? rb_agency_getCountryTitle($data['ProfileLocationCountry']):"";
@@ -1637,7 +1805,7 @@ class RBAgency_Profile {
 						if (!empty($data['ProfileDateBirth'])) {
 								$displayHtml .=  "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
 						}
-						if (!empty($data['ProfileDateBirth'])) {
+						if (!empty($data['ProfileDateBirth']) && $data['ProfileDateBirth'] !== "0000-00-00") {
 								$displayHtml .=  "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
 						}
 						if (!empty($data['ProfileContactWebsite'])) {
@@ -1649,28 +1817,22 @@ class RBAgency_Profile {
 						if (!empty($data['ProfileContactPhoneCell'])) {
 								$displayHtml .=  "<div><strong>". __("Phone Cell", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
 						}
-						if (!empty($data['ProfileType'])) {
-								if(strpos($data['ProfileType'],",") > -1){
-										$t = explode(",",$data['ProfileType']);
-										$ptype = "";
-										$ptyp = array();
-										foreach($t as $val){
-												$ptyp[] = retrieve_title($val);
-										}
-										$ptype = implode(",",$ptyp);
-								} else {
-										$ptype = retrieve_title($data['ProfileType']);
-								}
-								$displayHtml .= "<div><strong>". __("Profile Type", rb_agency_TEXTDOMAIN) .":</strong> ".$ptype."</div>\n";
-						}
+						
 						if (!empty($data['ProfileContactPhoneWork'])) {
 								$displayHtml .=  "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 						}
 
-						$resultsCustomPrivate =  $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". $ProfileID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC");
+						$resultsCustomPrivate =  $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue, c.ProfileCustomOrder FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". (isset($ProfileID)?$ProfileID:'""') ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
 						if (count($resultsCustomPrivate) > 0){
 							foreach ($resultsCustomPrivate as $resultCustomPrivate) {
-								$displayHtml .=  "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
+								if(strpos(strtolower($resultCustomPrivate->ProfileCustomTitle),"height") !== false){
+									if(strpos($resultCustomPrivate->ProfileCustomValue, "'") !== false ||  strpos($resultCustomPrivate->ProfileCustomValue," ") !== false ){
+										$resultCustomPrivate->ProfileCustomValue =  $resultCustomPrivate->ProfileCustomValue."\"";
+									}
+									$displayHtml .=  "<div dtype='height-custom'><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";
+								}else{
+									$displayHtml .=  "<div dtype='rb-cfield'><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";
+								}
 							}
 						}
 
@@ -1684,6 +1846,20 @@ class RBAgency_Profile {
 						}else{
 							$displayHtml .=  "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN) .":</strong> --</li>\n";
 						}
+						if (!empty($data['ProfileType'])) {
+								if(strpos($data['ProfileType'],",") > -1){
+										$t = explode(",",$data['ProfileType']);
+										$ptype = "";
+										$ptyp = array();
+										foreach($t as $val){
+												$ptyp[] = retrieve_title($val);
+										}
+										$ptype = implode(",",$ptyp);
+								} else {
+										$ptype = retrieve_title($data['ProfileType']);
+								}
+								$displayHtml .= "<li><strong>". __("Profile Type", rb_agency_TEXTDOMAIN) .":</strong> ".$ptype."</li>\n";
+						}
 
 						$displayHtml .= rb_agency_getProfileCustomFields_admin($ProfileID ,$data['ProfileGender']);
 
@@ -1692,8 +1868,7 @@ class RBAgency_Profile {
 						$displayHtml .=  "            </td>\n";
 						$displayHtml .=  "            <td class=\"ProfileImage column-ProfileImage\">\n";
 
-						$p_image = rb_get_primary_image($data["ProfileID"]); 
-
+						
 						if ($p_image) {
 							$displayHtml .=  "				<div class=\"image\" style=\"height:240px\"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $p_image ."\" /></div>\n";
 						} else {
@@ -1732,8 +1907,29 @@ class RBAgency_Profile {
 						$displayHtml .= "<input type=\"hidden\" name=\"ProfileID[]\" value=\"".$key."\"/> ";
 					}
 				}
+				?>
+				<script type="text/javascript">
+							function checkCastingCart(){
+									var no_image = jQuery("input[data-disabled]:checked").length;
+									var selected = jQuery("input:checked").length;
+									
+									if(selected <= 0){
+										 alert("Please select profiles that you want to add to casting cart")
+										return false;
+									}else{
+										if(no_image > 0){
+											alert("Profiles without photo cannot be added to casting cart. Please unselect to continue or try another search.");
+											return false;
+										}
+										return true;
+									}
+									return false;
+							}
 				
-				$displayHtml .=  "      	<input type=\"submit\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
+				</script>
+
+				<?php
+				$displayHtml .=  "      	<input type=\"submit\" onClick=\"return checkCastingCart();\" name=\"CastingCart\" value=\"". __('Add to Casting Cart','rb_agency_search') ."\" class=\"button-primary\" />\n";
 				$displayHtml .=  "          <a href=\"#\" onClick=\"testPrint(1);\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", rb_agency_TEXTDOMAIN) ."</a>\n";
 				echo "<script> function testPrint(type){
 
@@ -1765,6 +1961,7 @@ class RBAgency_Profile {
 		 */
 		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = ''){
 
+				global $wpdb;
 			/* 
 			 * rb agency options
 			 */
@@ -1781,10 +1978,13 @@ class RBAgency_Profile {
 			$rb_agency_option_profilenaming				 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 			$rb_agency_option_profilelist_printpdf 	     = isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
 			$rb_agency_option_profilelist_thumbsslide	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
-			
+			$rb_agency_option_detail_state 				 = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
+		
 			$ProfileContactNameFirst = $dataList["ProfileContactNameFirst"];
 			$ProfileContactNameLast = $dataList["ProfileContactNameLast"];
-				if ($rb_agency_option_profilenaming == 0) {
+
+
+				/*if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					// If John-D already exists, make John-D-1
@@ -1804,7 +2004,21 @@ class RBAgency_Profile {
 					$ProfileContactDisplay = $ProfileContactNameLast;
 				}else{
 					$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
-				}
+				}*/
+
+                            if ($rb_agency_option_profilenaming == 0) {
+								$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+							} elseif ($rb_agency_option_profilenaming == 1) {
+								$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+							} elseif ($rb_agency_option_profilenaming == 2) {
+								$ProfileContactDisplay = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 3) {
+								$ProfileContactDisplay = "ID ". $ProfileID;
+							} elseif ($rb_agency_option_profilenaming == 4) {
+								$ProfileContactDisplay = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 5) {
+								$ProfileContactDisplay = $ProfileContactNameLast;
+							}
 			
 
 			/* 
@@ -1815,16 +2029,24 @@ class RBAgency_Profile {
 			$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
-            $displayActions = "";  
-			if(is_user_logged_in()){
+            $displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+           $displayActions = "";  
+           $type = get_query_var('type');  
+			
+			if(is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
+
+
 	            $displayActions = "<div class=\"rb_profile_tool\">";
 	            if($rb_agency_option_profilelist_favorite){
-		            $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+		              //  $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+		        	    $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\">".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</a></div>";
+		        
 		        }
 		        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
 
 		        if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
-	           		$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+	           		   //$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+	            		$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\">".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</a></div>";
 	            }
 	            $displayActions .= "</div>";
 				
@@ -1848,9 +2070,9 @@ class RBAgency_Profile {
 						$images=getAllImages($dataList["ProfileID"]);
 						$images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 					}
-					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image.")\"></a>".$images."</div>\n";
+					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url()\"><img src='". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=180&h=230'/></a>".$images."</div>\n";
 				} else {
-					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image.")\"></a>".$images."</div>\n";
+					$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url()\"><img src='". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=180&h=230'/></a>".$images."</div>\n";
 				}
 			} else {
 				$displayHTML .= "  <div class=\"image image-broken\" style='background:lightgray; color:white; font-size:20px; text-align:center; line-height:120px; vertical-align:bottom'>No Image</div>\n";
@@ -1867,19 +2089,28 @@ class RBAgency_Profile {
 			}
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 			if ($rb_agency_option_profilelist_expanddetails) {
-				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
-				if($dataList["ProfileLocationState"]!=""){
+				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
+				if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
 					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 				}				
 				$displayHTML .= "</div>\n";
-				$displayHTML .=  $displayActions;
 			}
+				$displayHTML .=  $displayActions;
 			
+			if(function_exists("rb_agency_get_miscellaneousLinks")){
+					// Check if user is registered as Model/Talent
+				    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
+				    $is_model_or_talent = $wpdb->num_rows;
 
-			if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks")){
-				$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-			}			
-			$displayHTML .=" </div> <!-- .profile-info --> \n";
+					$disp = "";		
+
+		   			if(is_user_logged_in() && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
+							$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+
+					}			
+			}
+			$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
+		
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 			if(self::$error_debug){		
 				self::$error_checking[] = array('search_formatted',$displayHTML);
@@ -1899,6 +2130,7 @@ class RBAgency_Profile {
 			$ProfileCustomTitle = $data1['ProfileCustomTitle'];
 			$ProfileCustomType = $data1['ProfileCustomType'];
 			$ProfileCustomValue = $data1['ProfileCustomValue'];
+			$ProfileCustomDateValue = $data1['ProfileCustomDateValue'];
 
 			if($ProfileCustomType!=4)	{
 
@@ -1965,20 +2197,20 @@ class RBAgency_Profile {
 
 					if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
 						echo "<div>";
-						echo "	<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+						echo "	<label for=\"ProfileCustomLabel_min first\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 						echo "	<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>";
 						echo "</div>";
 						echo "<div>";
-						echo "	<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+						echo "	<label for=\"ProfileCustomLabel_min first\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 						echo "	<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>";
 						echo "</div>";
 					} else {
 						echo "<div>";
-						echo "	<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+						echo "	<label for=\"ProfileCustomLabel_min second\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 						echo "	<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>";
 						echo "</div>";
 						echo "<div>";
-						echo "	<label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
+						echo "	<label for=\"ProfileCustomLabel_min second\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
 						echo "	<div><input type=\"text\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" value=\"".$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']]."\" /></div>";
 						echo "</div>";
 					}
@@ -2070,7 +2302,7 @@ class RBAgency_Profile {
 				} elseif ($ProfileCustomType == 7) {
 
 
-					list($min_val,$max_val) =  @explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
+					list($min_val,$max_val) =  isset($_POST["ProfileCustomID".$data1['ProfileCustomID']])?$_POST["ProfileCustomID".$data1['ProfileCustomID']]:@explode(",",$_SESSION["ProfileCustomID".$data1['ProfileCustomID']]);
 
 						if($data1['ProfileCustomTitle']=="Height" && $rb_agency_option_unittype == 1 && $data1['ProfileCustomOptions']==3){
 
@@ -2112,20 +2344,28 @@ class RBAgency_Profile {
 							echo " </select></div>\n";
 
 						} else {
-
 							// for other search
 							echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-							."_min\">Min</label><input value=\""
+							."_min third\">Min</label><input value=\""
 							.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 							."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
 							.$data1['ProfileCustomID']."[]\" /></div>";
 
 							echo "<div><label for=\"ProfileCustomID".$data1['ProfileCustomID']
-							."_max\">Max</label><input value=\"".$max_val
+							."_max third\">Max</label><input value=\"".$max_val
 							."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$data1['ProfileCustomID']."[]\" /></div>";
 						}
 
-				}
+				} elseif ($ProfileCustomType == 10) { //Date
+				
+						echo "<input type=\"text\" id=\"rb_datepicker". $data1['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
+					    echo "<script type=\"text/javascript\">\n\n";
+					    echo "jQuery(function(){\n\n";
+					    echo "jQuery(\"input[name=ProfileCustomID". $data1['ProfileCustomID'] ."_date]\").val('". $ProfileCustomDateValue ."');\n\n";
+					   	echo "});\n\n";
+					    echo "</script>\n\n";
+
+				}		
 
 				/*
 				 * Close Div or FieldSet

@@ -28,8 +28,7 @@
 	/*
 	 * Add to Cart
 	 */
-
-		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd' ) {
+		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartAdd'  ) {
 			// Process Cart
 			$cart = RBAgency_Casting::cart_process();
 		}
@@ -39,7 +38,7 @@
 	 * Empty Cart
 	 */
 
-		if(isset($_REQUEST["action"]) && $_REQUEST['action'] == 'cartEmpty' ) {
+		if(isset($_GET["action"]) && $_GET['action'] == 'cartEmpty' ) {
 			// Empty Cart
 			unset($_SESSION['cartArray']);
 		}
@@ -54,23 +53,28 @@
 				$isSent = RBAgency_Casting::cart_send_process();
 		}
 
+		if(isset($_GET["action"]) && $_GET["action"] == "massEmail") {
 		// TODO::>> ??????
 		$cartHTML= RBAgency_Casting::cart_send_form();
 		if($cartHTML!=1)
 			echo $cartHTML;	// search result
-
-
+		}
 	/*
 	 * Display Search Results
 	 */
 
 		if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles"){
 			echo "<div id=\"profile-search-results\">\n";
-				$search_array = RBAgency_Profile::search_process();
-				$search_array["limit"] = $rb_agency_option_persearch;
+				//$search_array = RBAgency_Profile::search_process();
+				//$search_array["limit"] = $rb_agency_option_persearch;
+
+				if(isset($_POST)){
+						$search_array = array_filter($_POST);
+				}
+					// Return SQL string based on fields
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-				echo RBAgency_Profile::search_results($search_sql_query, 0);
-				
+				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
+				echo "<div style=\"clear:both;\"></div>";
 			echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
 		}
@@ -79,9 +83,13 @@
 	  * Display Search results without limit
 	  */
 	  if(isset($_GET["limit"]) && $_GET["limit"] == "none") {
-	  		$search_sql_query = " profile.ProfileID > 0 ";
+			$search_array = array();
+			$search_array = array_filter($_GET);
+				
+			unset($search_array["rb_agency_search"]);
+			unset($search_array["limit"]);
+			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 			echo RBAgency_Profile::search_results($search_sql_query, 0);
-			
 	  }
 
 
@@ -89,7 +97,7 @@
 	 * Display Cart
 	 */
 
-		if (isset($_SESSION['cartArray']) || isset($_GET["action"]) && $_GET["action"] == "cartAdd" && $_GET["action"] !== "massEmail") {
+		if (isset($_SESSION['cartArray']) || isset($_POST["action"]) && $_POST["action"] == "cartAdd" && $_POST["action"] !== "massEmail") {
 
 			echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 			echo " <div class=\"boxblock\">\n";
@@ -105,13 +113,12 @@
 			// Send Email Form
 			echo "    </div><!-- .boxblock -->\n";
 		}
-  
 
-	 
 
 	/*
 	 * Display Search Form
 	 */
+	if (isset($_SESSION['cartArray'])  || @$_GET["action"] !== "massEmail") {
 
 		// Search Form
 
@@ -125,10 +132,7 @@
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";
 			echo "    </div><!-- .boxblock-container -->\n";
-			
-            
-					
-
+	}
 
 ?>
 

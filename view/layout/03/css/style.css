@@ -1,3 +1,41 @@
 /* Profile Extended Layout (include-profile-layout3.php) */
 
 #tab-panels .tab { display: block; clear: both; padding: 15px; overflow: hidden; background: #fff; margin-bottom: 15px; }
+
+
+/*** added css for assessment - kat ***/
+#rbprofile #rb-tabs .subMenuTabText {
+	float: left;
+	padding: .7em;
+	margin-top: 3em;
+	background: #efefef;
+	border: 1px solid #e3e3e3;
+}
+
+#rbprofile .subMenuTabText:hover {
+	text-decoration: underline;
+}
+
+#rbprofile .photo {
+	margin-right: 10px !important;
+}
+
+#rbprofile .photo a {
+	border: 6px solid #e3e3e3;
+	width: 150px !important;
+	height: 220px !important;
+}
+
+#rbprofile .video-container {
+	width: 150px;
+	text-align: center;
+}
+
+#rbprofile [class*="rbcolumn"] + [class*="rbcolumn"]:last-child {
+	float: left !important;
+}
+
+#rbprofile .row-physical .tab-panel ul li {
+border-bottom: 1px solid #F8F8F8 !important;
+padding: 5px !important;
+}

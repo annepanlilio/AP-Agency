@@ -84,15 +84,47 @@ echo $raw_response;
 	 */
 
 		//Tests if the upload folder is writable and displays an error message if not
-			public static function check_upload_folder(){
+		public static function check_upload_folder(){
 			//check if upload folder is writable
 			$folder = rb_agency_UPLOADPATH;
 			if(empty($folder)) {
-				echo "<div class='error'>Upload folder is not writable. Export and file upload features will not be functional.</div>";
+				return false; //echo "<div class='error'>Upload folder is not writable. Export and file upload features will not be functional.</div>";
 			} else {
-				echo "<div class='success'>Upload folder is writable.</div>";
+				return true; //echo "<div class='success'>Upload folder is writable.</div>";
 			}
 		}
+
+
+	/*
+	 * Stylesheet Exists
+	 */
+
+		public static function check_stylesheet_exists(){
+			// Get the file
+			$rb_agency_stylesheet = rb_agency_BASEREL ."style/style.css";
+
+			if (file_exists($rb_agency_stylesheet)) {
+				return true; 
+				// "<div id=\"message\" class=\"updated\"><p>Style last updated on " . date ("F d Y H:i:s.", filemtime($rb_agency_stylesheet)) .".</p></div>";
+			} else {
+				//$rb_agency_stylesheet = rb_agency_BASEREL ."style/style_base.css";
+				//echo "<div id=\"message\" class=\"error\"><p>Stylesheet not setup, please click <strong>Save Changes</strong> below to initialize.</p></div>";
+				return false; 
+			}
+		}
+
+	/*
+	 * Stylesheet Writeable
+	 */
+/*
+		// Update File
+		if (isset($_POST["action"]) && $_POST["action"] == "saveChanges") {
+			$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"w") or exit("<p>Unable to open file to write!  Please edit via FTP</p>");
+			$rb_agency_stylesheet_string = stripslashes($_POST["rb_agency_stylesheet_string"]);
+			fwrite($rb_agency_stylesheet_file,$rb_agency_stylesheet_string,strlen($rb_agency_stylesheet_string));
+		}
+*/
+
 
 }
 ?>

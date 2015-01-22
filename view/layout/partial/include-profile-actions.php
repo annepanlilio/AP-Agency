@@ -6,8 +6,16 @@
 // Social Link
 echo "<div id=\"profile-social\">";
 	rb_agency_getSocialLinks();
-echo "</div>";
 
+echo "</div>";
+echo "<div id=\"profile-casting-link\">";
+	if(is_user_logged_in()){
+	       
+				if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
+	       		   $disp .= "<a href=\"".  get_bloginfo("wpurl") ."/casting-dashboard/\" rel=\"nofollow\" title=\"View Favorites\" class=\"btn btn-primary\">Go Back to My Account</a>";
+				}
+	       	}
+echo "</div>";
 echo "<div id=\"profile-actions\">";
 	if (is_plugin_active('rb-agency-casting/rb-agency-casting.php') && is_user_logged_in()) {
 		echo rb_agency_get_new_miscellaneousLinks($ProfileID);
@@ -16,6 +24,7 @@ echo "</div>";
 
 
 echo "<div id=\"profile-links\">\n";
+		
 	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2){
 		
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
@@ -26,24 +35,26 @@ echo "<div id=\"profile-links\">\n";
 			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\" class=\"profile-link\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28			
 		}
 	}
-
-	// Polaroid	
+// Polaroid	
+	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 3){
+	
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link polaroid\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		    echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link polaroid\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
+			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link polaroid\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		}
-		
+	}
+
 	// Resume
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
 		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download Resume</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".rb_get_profile_link_label()." Resume</a>\n";
 			}
 		}
 
@@ -53,7 +64,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download Comp Card</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Comp Card</a>\n";
 			}
 		}
 
@@ -63,7 +74,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"".rb_agency_BASEDIR."ext/forcedownload.php?file=".  $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download Headshot</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Headshot</a>\n";
 			}
 		}
 
@@ -73,7 +84,7 @@ echo "<div id=\"profile-links\">\n";
 		$countMedia = $wpdb->num_rows;
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Listen to Voice Demo</a>\n";
+				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">Listen to Voice Demo</a>\n";
 			}
 		}
 

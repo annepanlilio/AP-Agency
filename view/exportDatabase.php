@@ -10,18 +10,19 @@ global $wpdb;
 // Get Going
  if ( is_user_logged_in() ) {
 	  if ( is_super_admin() ) {
-	$result = mysql_query("SHOW COLUMNS FROM  ".$wpdb->prefix."agency_profile");
+	$result = $wpdb->get_results("SHOW COLUMNS FROM  ".$wpdb->prefix."agency_profile",ARRAY_A);
 	$i = 0;
-	if (mysql_num_rows($result) > 0) {
-	  while ($row = mysql_fetch_assoc($result)) {
+	$total_rows = $result->num_rows;
+	if ($total_rows > 0) {
+	 foreach($result as $row){
 		$csv_output .= $row['Field'].", ";
 		$i++;
 	  }
 	}
 	$csv_output .= "\n";
 	
-	$values = mysql_query("SELECT * FROM ".$wpdb->prefix."agency_profile");
-	while ($rowr = mysql_fetch_assoc($values)) {
+	$values = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."agency_profile");
+	foreach($values as $rowr) {
 		foreach ($rowr as $key=>$val) {
 			if($key=="ProfileStatHeight"){
 				$rawValue=$val;

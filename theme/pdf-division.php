@@ -3,7 +3,7 @@
 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-$rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/style/address.jpg";
 
 $header='
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -60,8 +60,9 @@ if(!empty($type)){$type=' type="'.$type.'"';}
 	 }
 	
 	   
-	   $footerBlock="<img style='margin-top:60px;width:320px; height:67px;' src='".$rb_agency_option_agencylogo."'>";
-	   
+	  // $footerBlock="<img style='margin-top:60px;width:320px; height:67px;' src='".$rb_agency_option_agencylogo."'>";
+	   $footerBlock.='<img style="margin-top:60px;width:320px; height:67px;" src="'.$rb_agency_option_agencylogo.'">';
+	 
 		$perRow=5;
 		$perPage=10;
 	   $result = "<table border='0'><tr>";
@@ -135,12 +136,12 @@ elseif($ageStart==13 AND $ageStop==18 AND $division==1){$divisionName="Teen-Boys
 elseif($ageStart==13 AND $ageStop==18 AND $division==2){$divisionName="Teen-Girls";}
 elseif($ageStart==18 AND $ageStop==99 AND $division==1){$divisionName="Men";}
 elseif($ageStart==18 AND $ageStop==99 AND $division==2){$divisionName="Women";}
-else{$divisionName="";}
+else{$divisionName="Models";}
 
 
 //$paperDef="10x16"; // PDF ppaer size
 //$divisionName=str_replace("-","_",$ProfileType);
-$htmlFile="DirectBooking-".$divisionName."-".date("ymd").".html"; 
+$htmlFile="DirectBooking-".$divisionName."-".date("Ymd")."-".rand(100,200).".html"; 
 //$pdfFile=str_replace(".html",".pdf",$htmlFile);
 $pdfFile=str_replace(" ","_",$htmlFile).$fileFormat.".pdf";
 $pdfFile=str_replace(".html","",$pdfFile);

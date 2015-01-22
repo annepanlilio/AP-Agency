@@ -6,9 +6,9 @@ Plugin URI: http://rbplugin.com/wordpress/model-talent-agency-software/
 Description: With this plugin you can easily manage models profiles and information.
 Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
-Version: 2.0.9.4
+Version: 2.1
 */
-$rb_agency_VERSION = "2.0.9.5";
+$rb_agency_VERSION = "2.1";
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
@@ -472,6 +472,8 @@ class RBAgency {
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(16, 'Experience', 	4, '', 0, 13, 0, 1, 1,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1,0, 0, 1, 0)");
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(19, 'Date', 	    10, '', 0, 0, 0, 1, 1,0, 0, 1, 0)");
+				
 					}
 
 				// Setup > Custom Field Types > Mux Values
@@ -480,6 +482,7 @@ class RBAgency {
 					ProfileCustomID BIGINT(20) NOT NULL DEFAULT '0',
 					ProfileID BIGINT(20) NOT NULL DEFAULT '0',
 					ProfileCustomValue TEXT,
+					ProfileCustomDateValue Date,
 					PRIMARY KEY (ProfileCustomMuxID)
 					);";
 				dbDelta($sql);
@@ -530,6 +533,7 @@ class RBAgency {
 					SearchMuxSubject VARCHAR(255),
 					SearchMuxMessage TEXT,
 					SearchMuxCustomValue VARCHAR(255),
+					SearchMuxCustomThumbnail VARCHAR(200),
 					SearchMuxSent TIMESTAMP DEFAULT NOW(),
 					PRIMARY KEY (SearchMuxID)
 					);";
@@ -1085,7 +1089,7 @@ class RBAgency {
 			echo "	<tr><td>Type:</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
 					global $wpdb;
 					$profileDataTypes = $wpdb->get_results("SELECT * FROM ". table_agency_data_type ."",ARRAY_A);
-					echo "<option value=\"\">". __("Any Profile Type", rb_agency_TEXTDOMAIN) ."</option>\n";
+					echo "<option value=\"\">". __("Any", rb_agency_TEXTDOMAIN) ."</option>\n";
 					foreach( $profileDataTypes as $dataType) {
 						if (isset($_SESSION['ProfileType'])) {
 							if ($dataType["DataTypeID"] ==  $ProfileType) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 

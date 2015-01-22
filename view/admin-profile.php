@@ -26,8 +26,7 @@ define("LabelSingular", "Profiles");
 			$rb_agency_option_useraccountcreation = isset($rb_agency_options_arr['rb_agency_option_useraccountcreation']) ?(int) $rb_agency_options_arr['rb_agency_option_useraccountcreation']:0;
 		}
 
-		
-
+ 
 
 // *************************************************************************************************** //
 // Handle Post Actions
@@ -135,7 +134,7 @@ if (isset($_POST['action'])) {
 						$errorValidation['user_login'] = __("Sorry, that username already exists!<br />", rb_agency_TEXTDOMAIN);
 						$have_error = true;
 				}
-				if (!$userdata['user_password'] && count($userdata['user_password']) > 5) {
+				if (isset($userdata['user_password']) && !$userdata['user_password'] && count($userdata['user_password']) > 5) {
 						$errorValidation['user_password']= __("A password is required for registration and must have 6 characters.<br />", rb_agency_TEXTDOMAIN);
 						$have_error = true;
 				}
@@ -242,7 +241,7 @@ if (isset($_POST['action'])) {
 							'" . esc_attr($ProfileStatHits) . "',
 							'" . esc_attr($ProfileDateViewLast) . "'
 						)";
-					$results = $wpdb->query($insert) or die("Add Record: " . mysql_error());
+					$results = $wpdb->query($insert);
 					$ProfileID = $wpdb->insert_id;
 					add_user_meta( $ProfileID, 'rb_agency_interact_profiletype',true);
 					
@@ -268,7 +267,14 @@ if (isset($_POST['action'])) {
 							if (is_array($value)) {
 								$value = implode(",", $value);
 							}
-							$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+							$profilecustomfield_date = explode("_",$key);
+							
+							if(count($profilecustomfield_date) == 2){ // customfield date
+								$value = date("y-m-d h:i:s",strtotime($value));
+								$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue) VALUES (%d,%d,%s)", $ProfileID , $ProfileCustomID, $value);
+							}else{
+								$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue) VALUES (%d,%d,%s)", $ProfileID , $ProfileCustomID, $value);
+							}
 							$results1 = $wpdb->query($insert1);
 						}
 					}
@@ -304,7 +310,6 @@ if (isset($_POST['action'])) {
 											ProfileContactPhoneCell='" . esc_attr($ProfileContactPhoneCell) . "',
 											ProfileContactPhoneWork='" . esc_attr($ProfileContactPhoneWork) . "',
 											ProfileGender='" . esc_attr($ProfileGender) . "',
-											ProfileGender='" . esc_attr($ProfileGender) . "',
 											ProfileDateBirth ='" . esc_attr($ProfileDateBirth) . "',
 											ProfileLocationStreet='" . esc_attr($ProfileLocationStreet) . "',
 											ProfileLocationCity='" . esc_attr($ProfileLocationCity) . "',
@@ -318,8 +323,8 @@ if (isset($_POST['action'])) {
 											ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
 											ProfileStatHits='" . esc_attr($ProfileStatHits) . "'
 											WHERE ProfileID=$ProfileID";
-										$results = $wpdb->query($update) or die(mysql_error());
-
+										$results = $wpdb->query($update);
+										
 											update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
 											update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_pgender', esc_attr($ProfileGender));
 
@@ -341,12 +346,20 @@ if (isset($_POST['action'])) {
 
 										// Add New Custom Field Values
 										foreach ($_POST as $key => $value) {
-											if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value) | $value == 0)) {
+											if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value) || $value == 0)) {
 												$ProfileCustomID = substr($key, 15);
 												if (is_array($value)) {
 													$value = implode(",", $value);
 												}
-												$insert1 = "INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . "VALUES ('" . $ProfileID . "','" . $ProfileCustomID . "','" . mysql_real_escape_string($value) . "')";
+												
+												$profilecustomfield_date = explode("_",$key);
+												
+												if(count($profilecustomfield_date) == 2){ // customfield date
+													$value = date("y-m-d h:i:s",strtotime($value));
+													$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
+												}else{
+													$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
+												}
 												$results1 = $wpdb->query($insert1);
 											}
 										}
@@ -545,19 +558,20 @@ if (isset($_POST['action'])) {
 									
 										/* --------------------------------------------------------- CLEAN THIS UP -------------- */
 										if(!$have_error){
-												echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! <a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "\">" . __("Continue editing the record", rb_agency_TEXTDOMAIN) . "?</a></p></div>");
+												echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", rb_agency_TEXTDOMAIN) . "! </a></p></div>");
 										}else{
 											foreach($errorValidation as $Error => $error){
 												echo ("<div id=\"message\" class=\"error\"><p>" . __($error, rb_agency_TEXTDOMAIN) . "</p></div>");
 											}
 										}
+												
 			 	
 			} else {
 				echo ("<div id=\"message\" class=\"error\"><p>" . __("Error updating record, please ensure you have filled out all required fields.", rb_agency_TEXTDOMAIN) . "</p></div>");
 			
 			}
 
-			if($have_error == false){
+			if($have_error == false && isset($_GET["action"]) && $_GET["action"] !="editRecord"){
 					$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaPrimary = 1";
 					$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
 					$count =  $wpdb->num_rows;
@@ -567,10 +581,10 @@ if (isset($_POST['action'])) {
 						$wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=".($ProfileID)." ");
 					    $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".($ProfileID)." AND ProfileMediaID=".(isset($results["ProfileMediaID"])?$results["ProfileMediaID"]:"0"));
 					}
-					rb_display_list();
-			}else{
-					rb_display_manage($ProfileID,$errorValidation);
+				
+					
 			}
+			rb_display_manage($ProfileID,$errorValidation);
 			exit;
 			break;
 
@@ -601,17 +615,18 @@ if (isset($_POST['action'])) {
 								if (isset($ProfileGallery)) {
 									// Remove Folder
 									$dir = rb_agency_UPLOADPATH . $ProfileGallery . "/";
-									$mydir = opendir($dir);
-									while (false !== ($file = readdir($mydir))) {
+									$mydir = @opendir($dir);
+									while (false !== ($file = @readdir($mydir))) {
 										if ($file != "." && $file != "..") {
-											unlink($dir . $file) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+											if(@is_file($dir . $file))
+											@unlink($dir . $file) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing file:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
 										}
 									}
 									// Remove Directory
-									if (is_dir($dir)) {
-										rmdir($dir) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
+									if (@is_dir($dir)) {
+										@rmdir($dir) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing directory:", rb_agency_TEXTDOMAIN) . $dir . $file . "</p></div>");
 									}
-									closedir($mydir);
+									@closedir($mydir);
 								} else {
 									echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", rb_agency_TEXTDOMAIN) . "</p></div>");
 								}
@@ -698,16 +713,32 @@ elseif ((isset($_GET['action']) && $_GET['action'] == "editRecord") || (isset($_
 // *************************************************************************************************** //
 // Manage Record
 function rb_display_manage($ProfileID, $errorValidation) {
+
 	global $wpdb;
+
 	$rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_option_unittype = $rb_agency_options_arr['rb_agency_option_unittype'];
-	$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
-	$rb_agency_option_agencyimagemaxheight = $rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'];
+
+	// Unit Type
+	$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
+
+	// Social
+	if (isset($rb_agency_options_arr['rb_agency_option_showsocial'])) {
+		$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
+	} else {
+		$rb_agency_option_showsocial = false;
+	}
+
+	// Maximum Height
+	$rb_agency_option_agencyimagemaxheight = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxheight']:0;
 	if (empty($rb_agency_option_agencyimagemaxheight) || $rb_agency_option_agencyimagemaxheight < 500) {
 		$rb_agency_option_agencyimagemaxheight = 800;
 	}
-	$rb_agency_option_profilenaming = (int) $rb_agency_options_arr['rb_agency_option_profilenaming'];
-	$rb_agency_option_locationcountry = $rb_agency_options_arr['rb_agency_option_locationcountry'];
+
+	// Naming Convention
+	$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+
+	// Default Country
+	$rb_agency_option_locationcountry = isset($rb_agency_options_arr['rb_agency_option_locationcountry'])?$rb_agency_options_arr['rb_agency_option_locationcountry']:0;
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
@@ -873,7 +904,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	if ($_GET["action"] == "add") {
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $_GET["ProfileGender"] . "\">\n";
 	} else {
-		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
+		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=".$_GET["ProfileID"]."\">\n";
 	}
 ?>
 	<div id="welcome-panel" class="welcome-panel">
@@ -1119,7 +1150,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Birthdate", rb_agency_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . (isset($ProfileDateBirth)?$ProfileDateBirth:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . (isset($ProfileDateBirth) && $ProfileDateBirth !== "0000-00-00"?$ProfileDateBirth:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
@@ -1231,26 +1262,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			<div id="postbox-container-2" class="postbox-container">
 				<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
-					<div id="dashboard_at_a_glance" class="postbox">
-						<div class="handlediv" title="Click to toggle"><br></div>
-						<h3 class="hndle"><span>At a Glance</span></h3>
-						<div class="inside">
-							<div class="main">
-
-
-								<ul>
-									<li class="post-count"><a href="edit.php?post_type=post">7 Posts</a></li>
-									<li class="page-count"><a href="edit.php?post_type=page">1 Page</a></li>
-									<li class="comment-count"><a href="edit-comments.php">17 Comments</a></li>
-									<li class="comment-mod-count"><a href="edit-comments.php?comment_status=moderated">15 in moderation</a></li>
-								</ul>
-								<p>WordPress 3.8.1 running <a href="themes.php">Twenty Eleven</a> theme.</p>
-
-
-							</div>
-						</div>
-					</div>
-
 					<div id="dashboard_public_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Public Information", rb_agency_TEXTDOMAIN); ?></span></h3>
@@ -1344,16 +1355,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													$massmediaids = implode(",", $_GET['targetids']);
 													//get all the images
 
-													$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+													$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image' ";
 													$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID),ARRAY_A);
-													$countImgConfirm = $wpdb->num_rows;
+													$countImgConfirm = $wpdb->num_roAws;
 													$mass_image_data = array();
 													foreach ($resultsImgConfirm as $dataImgConfirm) {
 														$mass_image_data[$dataImgConfirm['ProfileMediaID']] = $dataImgConfirm['ProfileMediaURL'];
 													}
 													//delete all the images from database
 													$massmediaids = implode(",", array_keys($mass_image_data));
-													$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+													$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image' ";
 													$resultsMassImageDelete = $wpdb->query($queryMassImageDelete);
 													//delete images on the disk
 													$dirURL = rb_agency_UPLOADPATH . $ProfileGallery;
@@ -1401,7 +1412,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											# rb_agency_option_galleryorder
 											# 1 - recent 0 - chronological
 											$rb_agency_options_arr = get_option('rb_agency_options');
-											$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+											$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 											$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 											$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 											$countImg =$wpdb->num_rows;
@@ -1513,16 +1524,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 									if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
-										$outVideoMedia .= "<div class=\"media-file\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\">".ucfirst($dataMedia['ProfileVideoType'])." Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
+										$outVideoMedia .= "<div class=\"media-file voice-demo\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\">".ucfirst($dataMedia['ProfileVideoType'])." Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 									}elseif($dataMedia['ProfileVideoType'] == "vimeo"){
 											$outVideoMedia .=  "<div class=\"media-file\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\">".ucfirst($dataMedia['ProfileVideoType'])." Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 									}else{
 											$outVideoMedia .=  "<div class=\"media-file\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"Watch Video\" target=\"_blank\">Watch Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 									}
 			 					} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
-									$outLinkVoiceDemo .= "<span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]\n";
+									$outLinkVoiceDemo .= "<div class=\"media-file resume\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
-									$outLinkResume .= $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]\n";
+									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 									$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
@@ -1534,7 +1545,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									   $custom_media_id = $custom_media_info[4];
 									             $query = current($wpdb->get_results("SELECT MediaCategoryTitle, MediaCategoryFileType FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
 									
-									$outCustomMediaLink .= "<span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) . "(".(isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."): </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" . $dataMedia['ProfileMediaTitle'] . "</a> <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>\n";
+									$outCustomMediaLink .= "<div class=\"media-file\"><span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) ." </span> <a href=\"" . rb_agency_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" class=\"custom_media-box-a\" target=\"_blank\"><div class=\"custom_media-box\"><span>" .  (isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."</span></div></a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								}elseif ($dataMedia['ProfileMediaType'] == "SoundCloud") {
 									    $outSoundCloud .= "<div style=\"width:600px;float:left;padding:10px;\">";
 										$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></span> \n";
@@ -1550,17 +1561,39 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								
 								}
 							}
+							?>
+							<style type="text/css">
+							.custom_media-box{
+								height: 108px;
+								background: #FFF;
+								text-align: center;
+								}
+							.custom_media-box span {
+								display: block;
+								background: #A5A4A4;
+								width: 34px;
+								text-align: center;
+								border-radius: 5px;
+								height: 26px;
+								padding-top: 10px;
+								margin-top: 38px;
+								float: left;
+								margin-left: 43px;
+							}
+							.custom_media-box-a {
+								color: #FFF !important;
+								text-transform: uppercase;
+								font-size: 9px;
+							}
+							</style>
+							<?php 
 							echo '<div class="media-files">';
 							  	if(!empty($outLinkVoiceDemo)):
-									echo '<div class="media-file voice-demo">';
 									echo $outLinkVoiceDemo;
-									echo '</div>';
-							   	endif;
+								 	endif;
 							   	if(!empty($outLinkResume)):
-									echo '<div class="media-file resume">';
 									echo $outLinkResume;
-									echo '</div>';
-							   	endif;
+								endif;
 							   
 								if(!empty($outLinkComCard)):
 									echo '<div class="media-file com-card">';
@@ -1773,6 +1806,8 @@ function rb_display_list() {
 	$rb_agency_option_locationtimezone = isset( $rb_agency_options_arr['rb_agency_option_locationtimezone'] )?(int) $rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 	$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?(int) $rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
 
+
+
 	echo "<div class=\"wrap\">\n";
 	// Include Admin Menu
 	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
@@ -1782,7 +1817,7 @@ function rb_display_list() {
 	if (isset($_GET['sort']) && !empty($_GET['sort'])) {
 		$sort = $_GET['sort'];
 	} else {
-		$sort = "profile.ProfileContactNameFirst";
+		$sort = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 	}
 
 	// Sort Order
@@ -1878,7 +1913,15 @@ function rb_display_list() {
 	//Paginate
 		$sqldata = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "" ;
 		$results=  $wpdb->get_results($sqldata);
-		
+
+		$to_paginate = $_GET;
+		$to_paginate = array_unique($to_paginate);
+	    unset($to_paginate["page"]);
+	    if(!empty($dir)){
+		    unset($to_paginate["dir"]);
+		}
+		$build_query = http_build_query($to_paginate);
+
 		$items =$wpdb->num_rows; // number of total rows in the database
 	if ($items > 0) {
 		if(isset($_GET['page'])) {
@@ -1893,7 +1936,7 @@ function rb_display_list() {
 		$p = new rb_agency_pagination;
 		$p->items($items);
 		$p->limit(50); // Limit entries per page
-		$p->target("admin.php?page=" . $page . $query);
+		$p->target("admin.php?page=" . $page . $query."&".$build_query);
 		if(isset($p->paging)){
 			$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
 		}
@@ -2104,19 +2147,23 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "  </div>\n";
 	echo "</div>\n";
 
+
+	
 	echo "<form method=\"post\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
 	echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 	echo " <thead>\n";
 	echo "    <tr class=\"thead\">\n";
 	echo "        <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-	echo "        <th class=\"column-ProfileID\" id=\"ProfileID\" scope=\"col\" style=\"width:50px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileID&dir=" . $sortDirection) . "\">ID</a></th>\n";
-	echo "        <th class=\"column-ProfileContactDisplay\" id=\"ProfileContactDisplay\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactDisplay&dir=" . $sortDirection) . "\">Display Name</a></th>\n";
-	echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst&dir=" . $sortDirection) . "\">First Name</a></th>\n";
-	echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast&dir=" . $sortDirection) . "\">Last Name</a></th>\n";
-	echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection) . "\">Gender</a></th>\n";
-	echo "        <th class=\"column-ProfilesProfileDate\" id=\"ProfilesProfileDate\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileDateBirth&dir=" . $sortDirection) . "\">Age</a></th>\n";
-	echo "        <th class=\"column-ProfileLocationCity\" id=\"ProfileLocationCity\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationCity&dir=" . $sortDirection) . "\">City</a></th>\n";
-	echo "        <th class=\"column-ProfileLocationState\" id=\"ProfileLocationState\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationState&dir=" . $sortDirection) . "\">State</a></th>\n";
+	echo "        <th class=\"column-ProfileID\" id=\"ProfileID\" scope=\"col\" style=\"width:50px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileID&dir=" . $sortDirection."&".$build_query) . "\">ID</a></th>\n";
+	if($rb_agency_option_formshow_displayname == 1){
+	echo "        <th class=\"column-ProfileContactDisplay\" id=\"ProfileContactDisplay\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactDisplay&dir=" . $sortDirection."&".$build_query) . "\">Display Name</a></th>\n";
+	}
+	echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst,ProfileContactNameLast&dir=" . $sortDirection."&".$build_query) . "\">First Name</a></th>\n";
+	echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast,ProfileContactNameFirst&dir=" . $sortDirection."&".$build_query) . "\">Last Name</a></th>\n";
+	echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection."&".$build_query) . "\">Gender</a></th>\n";
+	echo "        <th class=\"column-ProfilesProfileDate\" id=\"ProfilesProfileDate\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileDateBirth&dir=" . $sortDirection."&".$build_query) . "\">Age</a></th>\n";
+	echo "        <th class=\"column-ProfileLocationCity\" id=\"ProfileLocationCity\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationCity&dir=" . $sortDirection."&".$build_query) . "\">City</a></th>\n";
+	echo "        <th class=\"column-ProfileLocationState\" id=\"ProfileLocationState\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationState&dir=" . $sortDirection."&".$build_query) . "\">State</a></th>\n";
 	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Category</th>\n";
 	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Images</th>\n";
 	echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\">Views</th>\n";
@@ -2127,7 +2174,9 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "    <tr class=\"thead\">\n";
 	echo "        <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
 	echo "        <th class=\"column\" scope=\"col\">ID</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Display Name</th>\n";
+	if($rb_agency_option_formshow_displayname == 1){
+		echo "        <th class=\"column\" scope=\"col\">Display Name</th>\n";
+	}
 	echo "        <th class=\"column\" scope=\"col\">First Name</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">Last Name</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">Gender</th>\n";
@@ -2198,7 +2247,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 
 		$DataTypeTitle = $new_title;
 
-		$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image'";
+		$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' GROUP BY(ProfileMediaURL)";
 		$resultsImg=  $wpdb->get_results($wpdb->prepare($query,$ProfileID),ARRAY_A);
 		$profileImageCount = $wpdb->num_rows;
 
@@ -2208,9 +2257,9 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		$ProfileGender = $fetchProfileGender["GenderTitle"];
 
 		echo "    <tr" . $rowColor . ">\n";
-		echo "        <th class=\"check-column\" scope=\"row\">\n";
+		echo "        <td class=\"check-column\" scope=\"row\">\n";
 		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\"  data-name=\"".$ProfileContactNameFirst." ". $ProfileContactNameLast."\" class=\"administrator\" id=\"" . $ProfileID . "\" name=\"" . $ProfileID . "\"/>\n";
-		echo "        </th>\n";
+		echo "        </td>\n";
 		echo "        <td class=\"ProfileID column-ProfileID\">" . $ProfileID . "</td>\n";
 		if($rb_agency_option_formshow_displayname == 1){
 			echo "        <td class=\"ProfileID column-ProfileContactDisplay\">" . $ProfileContactDisplay;

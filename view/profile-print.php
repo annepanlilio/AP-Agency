@@ -1,7 +1,7 @@
 <?php 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-$rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/style/address.jpg";
 global $wpdb;
 
 
@@ -194,56 +194,64 @@ global $wpdb;
 			echo "<p>Nothing to display.  <a href=\"javascript:window.opener='x';window.close();\">Close</a></div></p>";
 			$hasQuery = false;
 		}
-
+		echo "<table>";
+		echo "<tr>";
+				
 		if ($hasQuery) {
-			echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width: 887px; \" class=\"profile\">";
+			echo "<div style=\"clear: both;width: 887px; \" class=\"profile\">";
+			$ii = 0;
 			foreach($results as $data) {
+				$ii++;
+				
+				
+				echo "<td style=\" border: 1px solid #e1e1e1; vertical-align: top;\">";
 				if (1 == 1) {
-					echo "<div style=\"float: left; width: 420px; min-height: 220px; overflow: hidden; margin: 5px; padding: 5px; border: 1px solid #e1e1e1; \">";
+
+					echo "<div style=\"float: left; width: 420px; min-height: 220px; overflow: hidden; margin: 5px; padding:5px;  \">";
 					echo " <div style=\"float: left; width: 150px; height: 180px; margin-right: 5px; overflow: hidden; \"><img style=\"width: 150px; \" src=\"". rb_agency_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
 					echo " <div style=\"float: left; width: 230px; padding: 15px; \">";
 
 					if ($_GET['cD'] == "1") {
 						$ProfileID = $data['ProfileID'];
 						echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
-// Hide private information from print
-/*
-						if (!empty($data['ProfileContactEmail'])) {
-							echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
-						}
-						
-						if (!empty($data['ProfileLocationStreet'])) {
-							echo "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
-						}
-						if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
-							echo "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
-						}
-						if (!empty($data['ProfileLocationCountry'])) {
-							echo "<div><strong>". __("Country", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileLocationCountry'] ."</div>\n";
-						}
-						if (!empty($data['ProfileDateBirth'])) {
-							echo "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
-						}
-						if (!empty($data['ProfileDateBirth'])) {
-							echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
-						}
-						if (!empty($data['ProfileContactWebsite'])) {
-							echo "<div><strong>". __("Website", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
-						}
-						if (!empty($data['ProfileContactPhoneHome'])) {
-							echo "<div><strong>". __("Phone Home", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
-						}
-						if (!empty($data['ProfileContactPhoneCell'])) {
-							echo "<div><strong>". __("Phone Cell", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
-						}
-						if (!empty($data['ProfileContactPhoneWork'])) {
-							echo "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
-						}
-*/
-						$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
-						foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
-							echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
-						}
+						// Hide private information from print
+							/*
+							if (!empty($data['ProfileContactEmail'])) {
+								echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
+							}
+							
+							if (!empty($data['ProfileLocationStreet'])) {
+								echo "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
+							}
+							if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
+								echo "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
+							}
+							if (!empty($data['ProfileLocationCountry'])) {
+								echo "<div><strong>". __("Country", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileLocationCountry'] ."</div>\n";
+							}
+							if (!empty($data['ProfileDateBirth'])) {
+								echo "<div><strong>". __("Age", rb_agency_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
+							}
+							if (!empty($data['ProfileDateBirth'])) {
+								echo "<div><strong>". __("Birthdate", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
+							}
+							if (!empty($data['ProfileContactWebsite'])) {
+								echo "<div><strong>". __("Website", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
+							}
+							if (!empty($data['ProfileContactPhoneHome'])) {
+								echo "<div><strong>". __("Phone Home", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
+							}
+							if (!empty($data['ProfileContactPhoneCell'])) {
+								echo "<div><strong>". __("Phone Cell", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
+							}
+							if (!empty($data['ProfileContactPhoneWork'])) {
+								echo "<div><strong>". __("Phone Work", rb_agency_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
+							}
+							*/
+						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
+						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
+						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
+						//}
 
 						if (!empty($data['ProfileGender'])) {
 							if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
@@ -253,10 +261,14 @@ global $wpdb;
 							}
 						}
 
-						$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
+						$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue,cx.ProfileCustomDateValue, c.ProfileCustomType FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
 						foreach  ($resultsCustom as $resultCustom) {
-							if(!empty($resultCustom->ProfileCustomValue )){
-							echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustom->ProfileCustomValue ."</div>\n";
+							if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
+								if($resultCustom->ProfileCustomType == 10){
+									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
+								}else{
+									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
+								}
 							}
 						}
 
@@ -269,14 +281,23 @@ global $wpdb;
 					echo " </div>";
 					echo "</div>";
 				} // elseif (layout style is another value......) {
+				echo "</td>";
+				
+				if( $ii % 2==0){
+					echo "</tr>";
+				}
 
-			// }
 			}
-			//mysql_free_result($results);
 			echo "<div style=\"clear: both;\"></div>";
 			echo "</div>";
+			echo "</tr>";
+		echo "</table>";	
+			
 		}
 		?>
+		<center>
+		<img style="width:347px;" src="<?php echo $rb_agency_option_agencylogo;?>"/>
+		</center>
 		<p style="text-align: center;">Property of <?php echo $rb_agency_option_agencyname; ?>.  All rights reserved.</p>
 	</div>
 </body>

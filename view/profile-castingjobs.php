@@ -64,7 +64,7 @@
 	  
 	 		$has_permission = explode(",",$Job_Talents_Hash);
 
-	 	    $profile_access_id = current($wpdb->get_results("SELECT * FROM ".table_agency_castingcart_profile_hash." WHERE CastingProfileHash = '".$castingcartProfileHash."' AND CastingProfileHashJobID ='".$castingcartJobHash."' ",ARRAY_A));
+	 	    $profile_access_id = $wpdb->get_row("SELECT * FROM ".table_agency_castingcart_profile_hash." WHERE CastingProfileHash = '".$castingcartProfileHash."' # AND CastingProfileHashJobID ='".$castingcartJobHash."' ",ARRAY_A);
 
 	 	    $query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID = %d ORDER BY profile.ProfileContactNameFirst ASC";
 			
@@ -178,7 +178,7 @@
 			      	<tr>
 			      	<td style="text-align:right;padding-right:5px;">Job Type:</td>
 			      	<td>
-			      	<?php $get_job_type = $wpdb->get_results("SELECT * FROM " . table_agency_casting_job_type); // or die(mysql_error()
+			      	<?php $get_job_type = $wpdb->get_results("SELECT * FROM " . table_agency_casting_job_type);
 									if(count($get_job_type)){
 										foreach($get_job_type as $jtype){
 											if($jtype->Job_Type_ID == $Job_Type){

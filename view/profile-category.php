@@ -2,8 +2,8 @@
 // *************************************************************************************************** //
 // Get Category
 
-session_start();
-header("Cache-control: private"); //IE 6 Fix
+/*session_start();
+header("Cache-control: private"); //IE 6 Fix*/
 global $wpdb;
 
 // Get Profile
@@ -220,6 +220,8 @@ echo $rb_header = RBAgency_Common::rb_header();
 	($rb_agency_options_arr['rb_agency_option_privacy']==1) ||
 	// Model list public. Must be logged to view profile information
 	($rb_agency_options_arr['rb_agency_option_privacy']==0) ||
+	//admin users
+	(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 	// Model list public. Must be logged to view profile information
 	($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
 	{
@@ -316,9 +318,13 @@ echo $rb_header = RBAgency_Common::rb_header();
 		echo "<div class=\"cb\"></div>\n";
 		
 		}else{
-			echo "	<div>\n";
-			echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
-			echo "  </div><!-- #content -->\n";
+			if(is_user_logged_in()){
+						rb_get_profiletype();
+			}else{
+						echo "	<div class='restricted'>\n";
+						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
+						echo "  </div><!-- #content -->\n";
+			}
 			
 		}
 		

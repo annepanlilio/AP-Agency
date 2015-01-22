@@ -25,7 +25,7 @@
 					if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
 				$count = $instance['count'];
 					if ( empty( $count ) ) { $count = 1; };
-					
+
 				if (function_exists('rb_agency_profilefeatured')) { 
 					$atts = array('count' => $count);
 					rb_agency_profilefeatured($atts); 
@@ -82,8 +82,9 @@
 					if ( empty( $showlayout ) ) { $showlayout = "condensed"; };
 						
 				if (function_exists('rb_agency_profilesearch')) { 
-					$atts = array('profilesearch_layout' => $showlayout);
-					rb_agency_profilesearch($atts);
+					$atts = array('profilesearch_layout' => $showlayout,"is_widget"=> true);
+							rb_agency_profilesearch($atts);
+
 				} else {
 					echo "Invalid Function";
 				}
@@ -139,19 +140,25 @@
 				($rb_agency_options_arr['rb_agency_option_privacy']==1) ||
 				// Model list public. Must be logged to view profile information
 				($rb_agency_options_arr['rb_agency_option_privacy']==0) ||
+				//admin users
+				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 				// Model list public. Must be logged to view profile information
 				($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
 				{
 
 				ob_start();
-				rb_agency_profilelist($atts);
+				rb_agency_profilelist($atts, NULL, true);
 				$output_string=ob_get_contents();;
 				ob_end_clean();
 				return $output_string;
 				}else{
-					echo "	<div class='restricted'>\n";
-					echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
-					echo "  </div><!-- #content -->\n";
+					if(is_user_logged_in()){
+						rb_get_profiletype();
+					}else{
+						echo "	<div class='restricted'>\n";
+						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
+						echo "  </div><!-- #content -->\n";
+					}
 				}
 
 			}
@@ -159,9 +166,11 @@
 	/*
 	 * Profile Search
 	 */
+	
 		add_shortcode("profile_search","rb_agency_shortcode_profilesearch");
+	
 			function rb_agency_shortcode_profilesearch($atts, $content = null){
-				
+
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				// Can we show the pages?
 				if((is_user_logged_in() && $rb_agency_options_arr['rb_agency_option_privacy']==2)||
@@ -173,15 +182,20 @@
 				($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
 				{
 					ob_start();
-					rb_agency_profilesearch($atts);
+					$type = get_query_var( 'type' );
+						rb_agency_profilesearch($atts);
 					$output_string=ob_get_contents();;
 					ob_end_clean();
 					return $output_string;
 
 				}else{
-					echo "	<div class='restricted'>\n";
-					echo "<h2>Page Restricted, Please <a href='".network_site_url()."/profile-login/'>login or register</a></h2>";
-					echo "  </div><!-- #content -->\n";
+					if(is_user_logged_in()){
+						rb_get_profiletype();
+					}else{
+						echo "	<div class='restricted'>\n";
+						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
+						echo "  </div><!-- #content -->\n";
+					}
 				}
 
 			}
@@ -197,11 +211,11 @@
 		/*
 		 * just not to get the tooltip error
 		 */
-		 $rb_agency_options_arr = get_option('rb_agency_options');
-		 if($rb_agency_options_arr == ""){
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		if($rb_agency_options_arr == ""){
 				 $rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
 				 update_option('rb_agency_options',$rb_agency_options_arr);
-		 }
+		}
 
 		if( $rb_agency_options_arr != "" || is_array($rb_agency_options_arr)){
 			$rb_agency_options_showtooltip = $rb_agency_options_arr["rb_agency_options_showtooltip"];
@@ -215,7 +229,7 @@
 					?>
 					<script type="text/javascript">
 					jQuery(document).ready( function($) {
-						
+
 					var options = {"content":"<h3>RB Agency Plugin</h3><p>Thanks for installing RB Plugin, we hope you find it useful.  Lets <a href=\'<?php echo admin_url("admin.php?page=rb_agency_settings&ConfigID=1"); ?>\'>check your settings</a> before we get started.</p>","position":{"edge":"left","align":"center"}};
 					if ( ! options )
 						return;
@@ -229,8 +243,8 @@
 						<?php } elseif(isset($_GET["page"])=="rb_agency_menu" && isset($_GET["page"]) !="rb_agency_settings") { ?>
 						$('#toplevel_page_rb_agency_menu li a').each(function(){
 							if($(this).text() == "Settings"){
-							   $(this).fadeOut().pointer( options ).pointer("open").fadeIn();
-							   $(this).css("background","#EAF2FA");
+								$(this).fadeOut().pointer( options ).pointer("open").fadeIn();
+								$(this).css("background","#EAF2FA");
 							}
 						});
 						<?php } ?>

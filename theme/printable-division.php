@@ -22,6 +22,9 @@ $rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylo
 	  $model_info_width="width:410px;";
 	  $ul_css="width:70%;";
 	  $toLandScape='@page{size: landscape;margin: 2cm;}';
+
+	  $wrapperWidthHeight = "";
+	  $targetwidth = "";
 ?>
 <style>
 <?php echo $toLandScape;?>
@@ -124,6 +127,8 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 			   
 				$perRow=5;
 				$perPage=10;
+				$loopcntR = 0;
+				$loopcntP = 0;
 			   $result = "<table border='0'><tr>";
 				foreach ($array_info as $key => $value) {
 					$value=trim($value);
@@ -162,8 +167,8 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 						$height = floor($scaleY2);
 						$fScaleToTargetWidth = false;
 					}
-					$targetleft = floor((targetwidth - result.width) / 2);
-					$targettop = floor((targetheight - result.height) / 2);			
+					$targetleft = floor(($targetwidth - $width) / 2);
+					$targettop = floor(($targetheight - $height) / 2);			
 					
 					if(!empty($value)){
 						 $loopcntR++;

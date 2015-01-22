@@ -129,7 +129,7 @@ echo "						<ul>\n";
 										<?php
 											echo "<li id=\"casting_cart_li\" class=\"add to cart\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\">". __("+ Shortlist", rb_agency_TEXTDOMAIN). "</a></li>\n";
 										} else {
-											echo "<li class=\"add to cart\">". __("", rb_agency_TEXTDOMAIN);
+											echo "<li class=\"add to cart\">";
 											echo " <a href=\"".get_bloginfo('url')."/profile-casting/\">". __("View Shortlist", rb_agency_TEXTDOMAIN)."</a></li>\n";
 										}
 									}	//end if(checkCart(rb_agency_get_current_userid() ?>
