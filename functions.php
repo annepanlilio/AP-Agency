@@ -1251,9 +1251,9 @@
 
 				// Dropdown
 				$links.='<div style="float:left; width:100%">';
-				$links.='<div class="rbsort">';
+				$links.='<div class="rbfilter-letter">';
 				foreach (range('A', 'Z') as $letter) {
-					$links.='<a href="?filter='.$letter.'" style="width:10px; height:8px; border-right:1px solid #333; margin:2px; padding-right:4px">'.$letter.'</a>';
+					$links.='<a href="?filter='.$letter.'">'.$letter.'</a>';
 				}
 				$links.='</div>';
 				$links.='</div>';
