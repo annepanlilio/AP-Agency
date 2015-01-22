@@ -650,6 +650,7 @@ class RBAgency_Profile {
 				global $user_ID, $wpdb;
 	
 				// Check if user is registered as Model/Talent
+				// TODO: may not be Casting Agency Client
 			    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
 			    $is_model_or_talent = $wpdb->num_rows;
 
