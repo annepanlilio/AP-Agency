@@ -9,6 +9,7 @@
 	line-height: 20px;
 	overflow: hidden;
 }
+.rbagency-search .entry-title { margin-bottom: 30px; }
 
 /* Profile Results */
 #profile-list {
@@ -82,6 +83,11 @@
 	display: inline-block;
 }
 
+/* Featured Profile Widget */
+#profile-featured {
+	text-align: center;
+}
+
 /* RBLinks */
 .rblinks {
 	clear: both;
@@ -101,6 +107,19 @@
 	float: right;
 	padding: 5px 0px;
 }
+.rbsort select {
+	margin-left: 5px;
+	border-radius: 3px;
+}
+.rbfilter-letter {	
+	margin-top: 15px;	
+	padding: 5px 10px;
+	border-radius: 3px;
+	background: #eee;
+}
+.rbfilter-letter a {
+	padding: 5px;
+}
 
 /* Pagination */
 .rbpagination-top {
@@ -114,29 +133,28 @@
 }
 .rbpagination > span, .rbpagination > a { 
 	float: left;
-	padding: 3px;		
-	color: #989495;
-	background: #fff;
-	padding: 5px 15px;
-	text-align: center;	
+	height: 30px;
+	padding: 0 15px;
+	line-height: 30px;
+	text-align: center;
 	text-decoration: none;
-	border: 1px solid #d8d8d8;	
-	box-shadow: 0px 1px 1px #d8d8d8;
-	border-right: none;
-}
-.rbpagination > span:last-child, .rbpagination > a:last-child {
-	border-right: 1px solid #d8d8d8;
+	color: #666;
+	background: #ddd;
 }
 .rbpagination > .pagedir:first-child {
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 }
 .rbpagination > .pagedir:last-child {
-	border-top-right-radius: 2px;
-	border-bottom-right-radius: 2px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
 }
-.rbpagination > span.current, .rbpagination > a.current {
+.rbpagination > span.current {
 	font-weight: bold;
+	background: #eee;
+}
+.rbpagination > span:hover, .rbpagination > a:hover {
+	background: #eee;	
 }
 
 
