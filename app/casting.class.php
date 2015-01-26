@@ -372,18 +372,20 @@ class RBAgency_Casting {
 
 
 			$MassEmailSubject = $_POST["MassEmailSubject"];
-			$MassEmailMessage = $_POST["MassEmailMessage"];
+			$MassEmailMessage = preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\\\- \t\n\r\0\x0B]/u','',$_POST["MassEmailMessage"]);
+			$MassEmailMessage = preg_replace('/\n(\s*\n)+/', '</p><p>', $MassEmailMessage);
 			$MassEmailRecipient = $_POST["MassEmailRecipient"];
 			$MassEmailBccEmail = $_POST["MassEmailBccEmail"];
 			
 			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 		
-			$SearchMuxToName		=$_POST["MassEmailRecipient"];
-			$SearchMuxToEmail		=$_POST["MassEmailRecipient"];
+			$SearchMuxToName		= $_POST["MassEmailRecipient"];
+			$SearchMuxToEmail		= $_POST["MassEmailRecipient"];
 			
-			$SearchMuxEmailToBcc	=$_POST['MassEmailBccEmail'];
+			$SearchMuxEmailToBcc	= $_POST['MassEmailBccEmail'];
 			$SearchMuxSubject		= $_POST['MassEmailSubject'];
-			$SearchMuxMessage		=$_POST['MassEmailMessage'];
+			$SearchMuxMessage		= isset($_POST['SearchMuxMessage'])?preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\/\- \s\t\n\r\0\x0B]/u','',$_POST['SearchMuxMessage']):"";
+			$SearchMuxMessage 		= preg_replace('/\n(\s*\n)+/', '</p><p>', $SearchMuxMessage);
 			$SearchMuxCustomValue	='';
 			$cartArray = $_SESSION['cartArray'];
 			
@@ -505,7 +507,8 @@ class RBAgency_Casting {
 			$SearchMuxToEmail		= isset($_POST['SearchMuxToEmail'])?$_POST['SearchMuxToEmail']:"";
 			$SearchMuxBccEmail		= isset($_POST['SearchMuxBccEmail'])?$_POST['SearchMuxBccEmail']:"";
 			$SearchMuxSubject		= isset($_POST['SearchMuxSubject'])?$_POST['SearchMuxSubject']:"";
-			$SearchMuxMessage		= isset($_POST['SearchMuxMessage'])?$_POST['SearchMuxMessage']:"";
+			$SearchMuxMessage		= isset($_POST['SearchMuxMessage'])?preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\/\- \s\t\n\r\0\x0B]/u','',$_POST['SearchMuxMessage']):"";
+			$SearchMuxMessage 		= preg_replace('/\n(\s*\n)+/', '</p><p>', $SearchMuxMessage);
 			$SearchMuxCustomValue	='';
 			$cartArray = isset($_SESSION['cartArray'])?$_SESSION['cartArray']:array();
 			
