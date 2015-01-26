@@ -148,9 +148,6 @@ See license.txt for full details.
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
-	// Casting
-	if (!defined("table_agency_casting"))
-		define("table_agency_casting", "{$wpdb->prefix}agency_casting");
 	
 
 

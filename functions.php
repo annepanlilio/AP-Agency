@@ -5093,10 +5093,10 @@ function rb_logout_user(){
 * Get RB ProfileID
 */
 function rb_get_casting_profileid(){
-	 if(!defined("table_agency_castingcart"))
+	 if(!defined("table_agency_casting"))
 	 	  return false;
 	 global $user_ID, $wpdb;
-	 $data = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_castingcart." WHERE CastingUserLinked = %d ", $user_ID));
+	 $data = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d ", $user_ID));
 	 if($wpdb->num_rows > 0){
 		 return $data->CastingID;
 	 }else{
