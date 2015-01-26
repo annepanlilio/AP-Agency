@@ -47,7 +47,7 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 
 				echo "			<div id=\"profile-search-results\">\n";
 
-				if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") {
+				if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles" || (isset($_GET["form_action"]) && $_GET["form_action"] == "search_profiles")) {
 
 					// Process Form Submission & catch variables
 					$search_array = array();
