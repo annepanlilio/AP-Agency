@@ -1584,7 +1584,7 @@ if(!function_exists("rb_output_buffer")){
 					FROM ". table_agency_profile ." profile 
 						$filter  
 					GROUP BY profile.ProfileID 
-					ORDER BY $sort $dir $limit #A";
+					ORDER BY $sort $dir $limit #AA";
 
 			} else {
 				// Execute Query   removed profile.*,

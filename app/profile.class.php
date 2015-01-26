@@ -517,7 +517,7 @@ class RBAgency_Profile {
 								}
 
 								// List
-								$list_value = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:"";
+								$list_value = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:",";
 								@list($min_val,$max_val) =  @explode(",",$list_value);
 
 								// Is Height and is Imperial
