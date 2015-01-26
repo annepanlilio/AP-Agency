@@ -306,8 +306,7 @@ class RBAgency_Profile {
 								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
 								//Commentd to fix language value populate
 								//echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
-								echo "<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".
-								@$_POST["ProfileCustomID".$ProfileCustomID]."\" /></div>";
+								echo "<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".(isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:"")."\" /></div>";
 								echo "</div>";
 
 						/*
@@ -518,7 +517,7 @@ class RBAgency_Profile {
 								}
 
 								// List
-								$list_value = @$_POST["ProfileCustomID".$ProfileCustomID];
+								$list_value = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:"";
 								@list($min_val,$max_val) =  @explode(",",$list_value);
 
 								// Is Height and is Imperial
