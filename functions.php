@@ -5032,7 +5032,7 @@ function rb_agency_group_permission($group){
 						}
 					}elseif($group == "models"){ //if casting is accessing model/talent page, redirect back to casting dashboard
 					   if(empty($is_model )){
-						 wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
+						// wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
 					   }
 					}
 			}
