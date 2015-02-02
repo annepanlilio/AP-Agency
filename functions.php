@@ -1653,7 +1653,7 @@ if(!function_exists("rb_output_buffer")){
 
 			
 
-			$resultsList = array(); //$wpdb->get_results($queryList,ARRAY_A);
+			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
 			$countList = $wpdb->num_rows;
 
 			$rb_user_isLogged = is_user_logged_in();
