@@ -7,6 +7,7 @@ class RBAgency_Profile {
 		protected static $error_debug = false;
 		protected static $error_debug_query = false;
 		protected static $error_checking = array();
+
 	/*
 	 * Class Properties
 	 */
@@ -54,13 +55,12 @@ class RBAgency_Profile {
 					// Front Back-end
 					$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
 					if ( (get_query_var("type") == "search-basic") || ($profilesearch_layout == 'condensed') ){
-							$search_layout = "simple";
+						$search_layout = "simple";
 					} elseif ( (get_query_var("type") == "search-advanced") || ($profilesearch_layout == 'advanced') ){
-							$search_layout = "full";
+						$search_layout = "full";
 					}
 
 				}
-
 
 
 			/*
@@ -98,14 +98,12 @@ class RBAgency_Profile {
 								var camel = function(a,b){return b.toUpperCase();}
 								st = window.getComputedStyle(el, null);
 								try{
-						
 									for(var s=0; s < st.length; s++){
 										var css_style = st[s];
 										var cml = css_style.replace(/\-([a-z])/, camel);
 										var vl = st.getPropertyValue(css_style);
 										returns[cml] = vl;
 									}
-									
 								}catch(e){
 
 								}
@@ -256,23 +254,24 @@ class RBAgency_Profile {
 						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".(isset($_REQUEST["zip"])?$_REQUEST["zip"]:"") ."\" /></div>\n";
 						echo "				</div>\n";
 				} // Show Location Search
-			?>
-				 <!--rb plugin profile.class -->
-			<?php 
+				echo "<!--rb plugin profile.class -->\n";
+
+
 			/*
 			 * Custom Fields
 			 */
+
 			// Query Fields
 				if(is_admin()){
 					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
 									FROM ". table_agency_customfields ." WHERE ProfileCustomView <= 1 ORDER BY ProfileCustomOrder ASC";
-				}else{
+				} else {
 					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
 									FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
-				foreach($field_results  as $data){
 
+				foreach($field_results  as $data){
 					// Set Variables
 					$ProfileCustomID = $data['ProfileCustomID'];
 					$ProfileCustomTitle = $data['ProfileCustomTitle'];
@@ -611,14 +610,11 @@ class RBAgency_Profile {
 								echo "</div>";
 						} // End Type
 
-
 					}
 
 				}
 
-
-
-				/* status The “Status” field should not show up on front-end search.*/ 
+				/* status The “Status” field should not show up on front-end search. */ 
 				if(isset($_REQUEST['page']) && $_REQUEST['page']=='rb_agency_search'){
 					echo "				<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
 					echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
@@ -1106,10 +1102,10 @@ class RBAgency_Profile {
 										$filter2 .="$open_st ProfileCustomValue = '".addslashes($val)."' $close_st";
 									// Dropdown Multi-Select	
 									}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
-										
+
 											$val = stripslashes($val);
 											if(!empty($val)){
-											
+
 												if(strpos($val,",") === false){
 													$filter2 .= $open_st;
 													$val2 = $val;
@@ -1120,7 +1116,7 @@ class RBAgency_Profile {
 													$filter2 .= $close_st;
 
 												} else {
-													
+
 													$likequery = array_filter(explode(",", $val));
 													$likecounter = count($likequery);
 													$i=1; 
@@ -1509,10 +1505,11 @@ class RBAgency_Profile {
 			/*
 			 * check if search is admin or public
 			 */
+			echo $sql;
 			if(is_admin()){
-				return self::search_result_admin($sql,$arr_query );
+				// TODO: Restore // return self::search_result_admin($sql,$arr_query );
 			} else {
-				return self::search_result_public($sql, $castingcart);
+				// TODO: Restore // return self::search_result_public($sql, $castingcart);
 			}
 
 		}
@@ -1527,7 +1524,7 @@ class RBAgency_Profile {
 			 * format profile list per profile
 			 */
 			$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_option_profilelist_sortby		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
+			$rb_agency_option_profilelist_sortby = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
 			$results = $wpdb->get_results($sql,ARRAY_A);
 			$count = count($results);
 			$profile_list = "";
