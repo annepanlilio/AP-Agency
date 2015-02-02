@@ -158,7 +158,7 @@ class RBAgency_Profile {
 						echo "					<label for=\"type\">". __("Type", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
 						echo "						<select name=\"profiletype\" id=\"type\">\n";               
-						echo "							<option value=\"\">". __("Any", rb_agency_TEXTDOMAIN) . "</option>";
+						echo "							<option value=\"\">". __("Any", rb_agency_TEXTDOMAIN) . "</option>\n";
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 														$results2 = $wpdb->get_results($query,ARRAY_A);
 														foreach ($results2 as $key) {
@@ -166,7 +166,7 @@ class RBAgency_Profile {
 																if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
 																		if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 																} else { $selectedvalue = ""; }
-																echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>";
+																echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>\n";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -185,7 +185,7 @@ class RBAgency_Profile {
 														// Pul Genders from Database
 														foreach ($results2 as $key) {
 															  if(isset($key["GenderID"]))
-																echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>";
+																echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>\n";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -194,19 +194,19 @@ class RBAgency_Profile {
 
 				// Show Profile Age
 				if ( ($rb_agency_option_formshow_age > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
-						echo "				  <div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">";
-						echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", rb_agency_TEXTDOMAIN) . "</label>";
+						echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">\n";
+						echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>\n";
 						echo "						<div>\n";
-						echo "							<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>";
+						echo "							<label for=\"datebirth_min\">". __("Min", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".(isset($_REQUEST['datebirth_min'])?$_REQUEST['datebirth_min']:"") ."\" />\n";
 						echo "						</div>";
 						echo "						<div>\n";
 						echo "							<label for=\"datebirth_max\">". __("Max", rb_agency_TEXTDOMAIN) . "</label>\n";
 						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".(isset($_REQUEST['datebirth_max'])?$_REQUEST['datebirth_max']:"") ."\" />\n";
-						echo "						</div>";
-						echo "					</div>";
-						echo "				  </div>";
+						echo "						</div>\n";
+						echo "					</div>\n";
+						echo "				</div>\n";
 				}
 
 				// Show Location Search
@@ -218,24 +218,23 @@ class RBAgency_Profile {
 
 						echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\">\n";
 												$location= site_url();
-						echo '					<input type="hidden" id="url" value="'.$location.'">';
+						echo "					<input type=\"hidden\" id=\"url\" value=\"". $location ."\">\n";
 						echo "					<label for=\"country\">". __("Country", rb_agency_TEXTDOMAIN) ."</label>\n";
-						echo "					<div>";
-						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>";
-						echo '							<option value="">'. __("Any Country", rb_agency_TEXTDOMAIN) .'</option>';
+						echo "					<div>\n";
+						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>\n";
+						echo "							<option value=\"\">". __("Any Country", rb_agency_TEXTDOMAIN) ."</option>\n";
 														$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
 														$result_query_get = $wpdb->get_results($query_get);
 														foreach($result_query_get as $r){
 																$selected = isset($_REQUEST["country"]) && $_REQUEST["country"] ==$r->CountryID?"selected=selected":"";
-						echo '							<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
+						echo "							<option ". $selected ." value=\".$r->CountryID.\">". $r->CountryTitle ."</option>\n";
 														}
-						echo '						</select>';
+						echo "						</select>\n";
 						echo "					</div>\n";
 						echo "				</div>\n";
 
 						echo "				<div class=\"rbfield rbselect rbsingle rb_state\" id=\"rb_state\">\n";
 						echo "					<label for=\"state\">". __("State", rb_agency_TEXTDOMAIN) ."</label>\n";
-												//echo "	<input type=\"text\" id=\"state\" name=\"state\" value=\"".RBAgency_Common::session("state") ."\" />\n";
 						echo "					<div>";
 						echo '						<select name="state" id="state">';
 						echo '							<option value="">'. __("Any State", rb_agency_TEXTDOMAIN) .'</option>';
@@ -243,9 +242,9 @@ class RBAgency_Profile {
 														$result_query_get = $wpdb->get_results($wpdb->prepare($query_get,(isset($_REQUEST["country"])?$_REQUEST["country"]:0)));
 														foreach($result_query_get as $r){
 															$selected = isset($_REQUEST["state"]) && $_REQUEST["state"] == $r->StateID?"selected=selected":"";
-						echo '								<option '.$selected.' value='.$r->StateID.' >'.$r->StateTitle.'</option>';
+						echo "								<option ". $selected ." value=\".$r->StateID.\">". $r->StateTitle ."</option>\n";
 														}
-						echo '						</select>';
+						echo "						</select>\n";
 						echo "					</div>\n";
 						echo "				</div>\n";
 
@@ -254,7 +253,6 @@ class RBAgency_Profile {
 						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".(isset($_REQUEST["zip"])?$_REQUEST["zip"]:"") ."\" /></div>\n";
 						echo "				</div>\n";
 				} // Show Location Search
-				echo "<!--rb plugin profile.class -->\n";
 
 
 			/*
@@ -303,25 +301,21 @@ class RBAgency_Profile {
 						 */
 
 						if($ProfileCustomType == 1) {
-								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-								//Commentd to fix language value populate
-								//echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".$_SESSION["ProfileCustomID". $data1['ProfileCustomID']]."\" />";
+								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>\n";
 								echo "<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".(isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:"")."\" /></div>";
-								echo "</div>";
+								echo "</div>\n";
 
 						/*
 						 * Min Max
 						 */
 						} elseif($ProfileCustomType == 2) {
 
-								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-									echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
+								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+									echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>\n";
 									$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($ProfileCustomOptions,"}"),"{"));
 									list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
-										//print_r($_SESSION["ProfileCustomID".$ProfileCustomID]);
 
-										
 									if(is_array($_POST["ProfileCustomID".$ProfileCustomID])){
 										$_POST["ProfileCustomID".$ProfileCustomID] = @implode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 										list($min_val2,$max_val2) =  @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
@@ -329,37 +323,35 @@ class RBAgency_Profile {
 										list($min_val2,$max_val2) =  @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 									}
 									if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
-										echo "<div>";
-
-										echo "		<label for=\"ProfileCustomLabel_min first\" style=\"text-align:right;\">". __("Min ", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>";
-										echo "</div>";
-										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_max first\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>";
-										echo "</div>";
+										echo "<div>\n";
+										echo "		<label for=\"ProfileCustomLabel_min first\" style=\"text-align:right;\">". __("Min ", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>\n";
+										echo "</div>\n";
+										echo "<div>\n";
+										echo "		<label for=\"ProfileCustomLabel_max first\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
+										echo "</div>\n";
 									} else {
-										echo "<div>";
-											
-										echo "		<label for=\"ProfileCustomLabel_min second\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$min_val2."\" /></div>";
-										echo "</div>";
-										echo "<div>";
-										echo "		<label for=\"ProfileCustomLabel_max second\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val2."\" /></div>";
-										echo "</div>";
+										echo "<div>\n";
+										echo "		<label for=\"ProfileCustomLabel_min second\" style=\"text-align:right;\">". __("Min", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$min_val2."\" /></div>\n";
+										echo "</div>\n";
+										echo "<div>\n";
+										echo "		<label for=\"ProfileCustomLabel_max second\" style=\"text-align:right;\">". __("Max", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$max_val2."\" /></div>\n";
+										echo "</div>\n";
 									}
-								echo "</div>";
+								echo "</div>\n";
 
 						/*
 						 * Dropdown
 						 */
 						} elseif($ProfileCustomType == 3 || $ProfileCustomType == 9 ) {
-								echo "<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "	<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-								echo "	<div>";
-								echo "		<select name=\"ProfileCustomID". $ProfileCustomID ."[]\" ".($ProfileCustomType == 9 ?"multiple":"").">";
-								echo "			<option value=\"\">--</option>";
+								echo "<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+								echo "	<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>\n";
+								echo "	<div>\n";
+								echo "		<select name=\"ProfileCustomID". $ProfileCustomID ."[]\" ".($ProfileCustomType == 9 ?"multiple":"").">\n";
+								echo "			<option value=\"\">--</option>\n";
 												$values = explode("|",$ProfileCustomOptions);
 												foreach($values as $value){
 													// Validate Value
@@ -369,25 +361,25 @@ class RBAgency_Profile {
 														if(strpos(strtolower($ProfileCustomTitle),"height") === false){
 															if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
 																$isSelected = "selected=\"selected\"";
-																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>";
+																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($value)."</option>\n";
 															}else{
-																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($value)."</option>"; 
+																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($value)."</option>\n";
 															}
 														}else{
 															$label = $value;
 															$value = str_replace('"',"",$value);
 															if(isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && $_REQUEST["ProfileCustomID". $ProfileCustomID]==stripslashes($value)  || isset($_REQUEST["ProfileCustomID". $ProfileCustomID]) && in_array(stripslashes($value), $_REQUEST["ProfileCustomID".$ProfileCustomID])){
 																$isSelected = "selected=\"selected\"";
-																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($label)."</option>";
+																echo "		<option value=\"".stripslashes($value)."\" ".$isSelected .">".stripslashes($label)."</option>\n";
 															}else{
-																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($label)."</option>"; 
+																echo "		<option value=\"".stripslashes($value)."\" >".stripslashes($label)."</option>\n";
 															}
 														}
 													}
 												}
-								echo "		</select>";
-								echo "	</div>";
-								echo "</div>";
+								echo "		</select>\n";
+								echo "	</div>\n";
+								echo "</div>\n";
 
 
 						/*
@@ -396,19 +388,19 @@ class RBAgency_Profile {
 						} elseif($ProfileCustomType == 4) {
 							/*
 							TODO: Should we search text inside of text area?
-											echo "<div class=\"rbfield rbsingle\">";
-											echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>";
-											echo "<textarea name=\"ProfileCustomID". $ProfileCustomID ."\">". $_REQUEST["ProfileCustomID". $ProfileCustomID] ."</textarea>";
-											echo "</div>";
+											echo "<div class=\"rbfield rbsingle\">\n";
+											echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>\n";
+											echo "<textarea name=\"ProfileCustomID". $ProfileCustomID ."\">". $_REQUEST["ProfileCustomID". $ProfileCustomID] ."</textarea>\n";
+											echo "</div>\n";
 							*/
 
 						/*
 						 * Checkbox
 						 */
 						} elseif($ProfileCustomType == 5) {
-								echo "<div class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "<label>". $ProfileCustomTitle ."</label>";
-								echo "<div>";
+								echo "<div class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+								echo "<label>". $ProfileCustomTitle ."</label>\n";
+								echo "<div>\n";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 								foreach($array_customOptions_values as $val){
 
@@ -417,33 +409,33 @@ class RBAgency_Profile {
 										//$dataArr = @explode(",",@implode(",",@explode("','",stripslashes(@$_POST["ProfileCustomID". $ProfileCustomID]))));
 										$dataArr = @$_POST["ProfileCustomID". $ProfileCustomID];
 										if(in_array($val,$dataArr,true)){
-											echo "<div ><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span> ". $val."</span></label></div>";
+											echo "<div ><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
+											echo "<span> ". $val."</span></label></div>\n";
 										} else {
 											if($val !=""){
-												echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-												echo "<span> ". $val."</span></label></div>";
+												echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
+												echo "<span> ". $val."</span></label></div>\n";
 											}
 										}
 									} else {
 										if($val !=""){
-											echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span> ". $val."</span></label></div>";
+											echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
+											echo "<span> ". $val."</span></label></div>\n";
 										}
 									}
 								}
 
-								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";
-								echo "</div>";
-								echo "</div>";
+								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>\n";
+								echo "</div>\n";
+								echo "</div>\n";
 
 						/*
 						 * Radio Button
 						 */
 						} elseif($ProfileCustomType == 6) {
-								echo "<div class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-								echo "<label>". $ProfileCustomTitle ."</label>";
-								echo "<div>";
+								echo "<div class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+								echo "<label>". $ProfileCustomTitle ."</label>\n";
+								echo "<div>\n";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 
 								foreach($array_customOptions_values as $val){
@@ -454,30 +446,30 @@ class RBAgency_Profile {
 										$dataArr = @$_POST["ProfileCustomID". $ProfileCustomID];
 										
 										if(in_array($val,$dataArr,true) && $val !=""){
-											echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span> ". $val."</span></label></div>";
+											echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
+											echo "<span> ". $val."</span></label></div>\n";
 										}else{
 											if($val !=""){
-												echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-												echo "<span> ". $val."</span></label></div>";
+												echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
+												echo "<span> ". $val."</span></label></div>\n";
 											}
 										}
 									} else {
 										if($val !=""){
-											echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />";
-											echo "<span> ". $val."</span></label></div>";
+											echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
+											echo "<span> ". $val."</span></label></div>\n";
 										}
 									}
 								}
-								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>";	       
-								echo "</div>";
-								echo "</div>";
+								echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $ProfileCustomID ."[]\"/>\n";
+								echo "</div>\n";
+								echo "</div>\n";
 
 						/*
 						 * Metric
 						 */
 						} elseif($ProfileCustomType == 7) {
-								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
+								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
 
 								/*
 								 * Measurement Label
@@ -506,7 +498,7 @@ class RBAgency_Profile {
 										}
 									}
 
-									echo "<label>". $ProfileCustomTitle . $measurements_label ."</label>";
+									echo "<label>". $ProfileCustomTitle . $measurements_label ."</label>\n";
 
 								/*
 								 * Handle Array
@@ -524,9 +516,9 @@ class RBAgency_Profile {
 								// Is Height and is Imperial
 								if($ProfileCustomTitle=="Height" && $rb_agency_option_unittype == 1 && $data['ProfileCustomOptions']==3){
 
-									echo "<div>";
-										echo "<div>";
-										echo "<label>Min</label>";
+									echo "<div>\n";
+										echo "<div>\n";
+										echo "<label>Min</label>\n";
 										echo "<select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
 										if (empty($ProfileCustomValue)) {
 											echo "  <option value=\"\">--</option>\n";
@@ -543,11 +535,11 @@ class RBAgency_Profile {
 												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue) && !empty($ProfileCustomValue)?$ProfileCustomValue:$min_val, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
 												$i++;
 											}
-										echo " </select>";
+										echo " </select>\n";
 										echo "</div>\n";
 
-										echo "<div>";
-										echo "<label>Max</label>";
+										echo "<div>\n";
+										echo "<label>Max</label>\n";
 										echo "<select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
 											if (empty($ProfileCustomValue)) {
 												echo "  <option value=\"\">--</option>\n";
@@ -566,23 +558,23 @@ class RBAgency_Profile {
 											}
 										echo " </select>\n";
 										echo "</div>\n";
-									echo "</div>";
+									echo "</div>\n";
 								} else {
-									echo "<div>";
+									echo "<div>\n";
 										// for other search
-										echo "<div>";
+										echo "<div>\n";
 										echo "<label for=\"ProfileCustomID".$ProfileCustomID."_min first\">Min</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
-										.$ProfileCustomID."[]\" />";
-										echo "</div>";
+										.$ProfileCustomID."[]\" />\n";
+										echo "</div>\n";
 
 										echo "<div><label for=\"ProfileCustomID".(isset($data1['ProfileCustomID'])?$data1['ProfileCustomID']:"")
-										."_max second\">Max</label><input value=\"".(isset($max_val)?$max_val:"") ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" />";
-										echo "</div>";
-									echo "</div>";
+										."_max second\">Max</label><input value=\"".(isset($max_val)?$max_val:"") ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" />\n";
+										echo "</div>\n";
+									echo "</div>\n";
 								}
-							echo "</div>";
+							echo "</div>\n";
 
 						} 
 
@@ -590,24 +582,23 @@ class RBAgency_Profile {
 						 * Date Between
 						 */
 						elseif($ProfileCustomType == 10) {
-								 $from = "";
-								   $to = "";
+								$from = "";
+								$to = "";
 								@list($from,$to) = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:["",""]; // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
-									
-								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
-									echo "<label>". $ProfileCustomTitle ."</label>";
-											echo "<div>";
-													echo "<div>";
-													echo "		<label for=\"ProfileCustomLabel_min\" >". __("From", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-													echo "		<input  id=\"rb_datepicker_from\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$from."\" />";
-													echo "</div>";
-													echo "<div>";
-													echo "		<label for=\"ProfileCustomLabel_max\" >". __("to", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>";
-													echo "		<input  id=\"rb_datepicker_to\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$to."\" />";
-													echo "</div>";
-											echo "</div>";
-								
-								echo "</div>";
+
+								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+									echo "<label>". $ProfileCustomTitle ."</label>\n";
+									echo "<div>\n";
+											echo "<div>\n";
+											echo "		<label for=\"ProfileCustomLabel_min\" >". __("From", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+											echo "		<input  id=\"rb_datepicker_from\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$from."\" />\n";
+											echo "</div>\n";
+											echo "<div>\n";
+											echo "		<label for=\"ProfileCustomLabel_max\" >". __("to", rb_agency_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+											echo "		<input  id=\"rb_datepicker_to\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$to."\" />\n";
+											echo "</div>\n";
+									echo "</div>\n";
+								echo "</div>\n";
 						} // End Type
 
 					}
@@ -616,29 +607,29 @@ class RBAgency_Profile {
 
 				/* status The “Status” field should not show up on front-end search. */ 
 				if(isset($_REQUEST['page']) && $_REQUEST['page']=='rb_agency_search'){
-					echo "				<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
-					echo "					<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
-					echo "						<div>";
-					echo "							<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
-					echo "								<option value=\"5\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"1\"". selected(@$_POST["isactive"], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"4\"". selected(@$_POST["isactive"], 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"0\"". selected(@$_POST["isactive"], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"2\"". selected(@$_POST["isactive"], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "								<option value=\"3\"". selected(@$_POST["isactive"], 3) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
-					echo "							</select>\n";
-					echo "						</div>\n";
-					echo "				</div>\n";
+					echo "			<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+					echo "				<label for=\"state\">". __("Status", rb_agency_TEXTDOMAIN) ."</label>\n";
+					echo "					<div>\n";
+					echo "						<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
+					echo "							<option value=\"5\">". __("Any Status", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"1\"". selected(@$_POST["isactive"], 1) .">". __("Active", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"4\"". selected(@$_POST["isactive"], 4) .">". __("Active - Not Visible on Front End", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"0\"". selected(@$_POST["isactive"], 0) .">". __("Inactive", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"2\"". selected(@$_POST["isactive"], 2) .">". __("Archived", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"3\"". selected(@$_POST["isactive"], 3) .">". __("Pending Approval", rb_agency_TEXTDOMAIN) . "</option>\n";
+					echo "						</select>\n";
+					echo "					</div>\n";
+					echo "			</div>\n";
 				}
 
-				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">";
-					echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\"  />"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
-					echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
+				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">\n";
+					echo "				<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\"  />\n"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
+					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
 
 					if ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' ){
-					echo "					<a href=\"". get_bloginfo("wpurl") ."/search-basic/\">". __("Go to Basic Search", rb_agency_TEXTDOMAIN) . "</a>";
+					echo "				<a href=\"". get_bloginfo("wpurl") ."/search-basic/\">". __("Go to Basic Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 					} else {
-					echo "					<a href=\"". get_bloginfo("wpurl") ."/search-advanced/\">". __("Go to Advanced Search", rb_agency_TEXTDOMAIN) . "</a>";
+					echo "				<a href=\"". get_bloginfo("wpurl") ."/search-advanced/\">". __("Go to Advanced Search", rb_agency_TEXTDOMAIN) . "</a>\n";
 					}
 				echo "				</div>\n";
 				global $user_ID, $wpdb;
@@ -650,8 +641,8 @@ class RBAgency_Profile {
 					$is_model_or_talent = $wpdb->num_rows;
 				}
 				if($is_model_or_talent > 0){
-					echo "<div class=\"rbclear\"></div>";
-					echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">Go Back to My Dashboard</a></div>";
+					echo "<div class=\"rbclear\"></div>\n";
+					echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">Go Back to My Dashboard</a></div>\n";
 				}
 				echo "			</form>\n";
 
@@ -1559,8 +1550,8 @@ class RBAgency_Profile {
 			$profile_list = "";
 			$all_html = "";
 			$all_html.='<div id="rbfilter-sort">';
-			$all_html.='<div class="rbtotal-results">Total Results : '.$count.' </div>';
-			$all_html.='<div class="rbsort">';
+			$all_html.='	<div class="rbtotal-results">Total Results : '.$count.' </div>';
+			$all_html.='	<div class="rbsort">';
 
 			/*
 			 *  sorting options is activated if set on in admin/settings
@@ -1584,8 +1575,9 @@ class RBAgency_Profile {
 							<option value="">Sort Options</option>
 						</select>';
 			}
-			$all_html.='</div></div>';
-			$all_html .= "	<hr />";
+			$all_html.="	</div>/n";
+			$all_html.="</div>/n";
+			$all_html.= "<hr />/n";
 			if ($count > 0){
 
 				$castingcart_results = array();

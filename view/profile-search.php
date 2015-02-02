@@ -35,67 +35,36 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 		//  Must be logged in as Casting Agent to View Profiles
 		($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
 
-				if (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") {
+			if (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") {
 				echo "			<h1 class=\"entry-title\">". __("Search Results", rb_agency_TEXTDOMAIN) ."</h1>\n";
-				} else {
-					if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-							echo "	<h1 class=\"entry-title\">". __("Basic Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
-					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-							echo "	<h1 class=\"entry-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
-					}
+			} else {
+				if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
+						echo "	<h1 class=\"entry-title\">". __("Basic Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
+				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+						echo "	<h1 class=\"entry-title\">". __("Advanced Search", rb_agency_TEXTDOMAIN) ."</h1>\n";
 				}
+			}
 
-				echo "			<div id=\"profile-search-results\">\n";
+			echo "			<div id=\"profile-search-results\">\n";
 
-				if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles" || (isset($_GET["form_action"]) && $_GET["form_action"] == "search_profiles")) {
+			if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles" || (isset($_GET["form_action"]) && $_GET["form_action"] == "search_profiles")) {
 
-					if(isset($_POST)){
-						$search_array = array_filter($_POST);
-					}
+				if(isset($_POST)){
+					$search_array = array_filter($_POST);
+				}
 
 					// Return SQL string based on fields
 					$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 
 					// Conduct Search
 					echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
-/*
 
-					// Process Form Submission & catch variables
-					$search_array = array();
-
-					if(isset($_REQUEST)){
-						$search_array = array_filter($_REQUEST);
-					}
-
-					// Return SQL string based on fields
-					   unset($search_array["search_profiles"]);
-					   $search_array["profilecontactnamefirst"] = isset($search_array["namefirst"])?$search_array["namefirst"]:"";
-					   $search_array["profilecontactnamelast"] = isset($search_array["namelast"])?$search_array["namelast"]:"";
-					   $search_array["profilecity"] = isset($search_array["city"])?$search_array["city"]:"";
-					   $search_array["profilestate"] = isset($search_array["state"])?$search_array["state"]:"";
-					   $search_array["profilezip"] = isset($search_array["zip"])?$search_array["zip"]:"";
-					   $search_array["age_start"] = isset($search_array["datebirth_min"])?$search_array["datebirth_min"]:"";
-					   $search_array["age_stop"] = isset($search_array["datebirth_max"])?$search_array["datebirth_max"]:"";
-
-					   rb_agency_profilelist($search_array);
-					
-					//$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-					
-					// Process Form Submission
-					//echo RBAgency_Profile::search_results($search_sql_query, 0);
-					//  echo $formatted = RBAgency_Profile::search_formatted($search_results);
-*/
 				} else {
 				if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  isset($profilesearch_layout) && $profilesearch_layout == 'condensed' )
 					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || isset($profilesearch_layout) &&  $profilesearch_layout == 'advanced' )){
 							// echo RBAgency_Profile::search_form("", "", 0);
-					}else{
-						if(isset($_GET["form_mode"])){
-							$search_array = array_filter($_GET);
-							rb_agency_profilelist($search_array);
-						}else{
-						echo "				<strong>". _e("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
-						}
+					} else {
+						echo "<strong>". _e("No search chriteria selected, please initiate your search.", rb_agency_TEXTDOMAIN) ."</strong>";
 					}
 				}
 				echo "			</div><!-- #profile-search-results -->\n"; // #profile-search-results
@@ -107,7 +76,7 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || isset($profilesearch_layout) &&  $profilesearch_layout == 'advanced' )){
 
 						// Show Search Form
-							echo RBAgency_Profile::search_form("", "", 0);
+						echo RBAgency_Profile::search_form("", "", 0);
 
 					}elseif($rb_agency_option_formhide_advancedsearch_button  == 0 ){
 							echo "	<input type=\"button\" name=\"back_search\" value=\"". __("Go to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
