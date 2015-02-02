@@ -1474,35 +1474,30 @@ if(!function_exists("rb_output_buffer")){
 					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
 					*/
 					
-					$qItem = $wpdb->get_results("SELECT 
-										profile.ProfileID,
-										profile.ProfileGallery,
-										profile.ProfileContactDisplay, 
-										profile.ProfileDateBirth, 
-										profile.ProfileDateCreated,
-										profile.ProfileLocationState,
-										cmux.ProfileCustomValue,
-										cmux.ProfileID,
-										cmux.ProfileCustomDateValue,
-										cmux.ProfileCustomID,
-										media.ProfileMediaURL 
-										
-									FROM ". table_agency_profile ." profile 
-										LEFT JOIN
-										".table_agency_customfield_mux." cmux
-										ON
-										profile.ProfileID = cmux.ProfileID
-										LEFT JOIN 
-										". table_agency_profile_media ." media
-										ON
-										(profile.ProfileID = media.ProfileID 
-											AND media.ProfileMediaType='Image' 
-											AND media.ProfileMediaPrimary = 1)
-									$filter  
-									GROUP BY profile.ProfileID 
-									ORDER BY $sort $dir $limit #A");
-					$items = count($qItem); // number of total rows in the database
-					
+					$query_pagination = "SELECT count(profile.ProfileID) FROM ". table_agency_profile ." profile 
+										        		LEFT JOIN 
+													    ". table_agency_profile_media ." sub_m
+														ON
+														(
+														 	 sub_m.ProfileID = profile.ProfileID 
+															AND 
+															 sub_m.ProfileMediaType='Image' 
+															AND 
+															 sub_m.ProfileMediaPrimary = 1
+														)
+														
+														INNER JOIN 
+														".table_agency_customfield_mux." cmux
+														ON
+														 (cmux.ProfileID = profile.ProfileID)
+												$filter LIMIT 1";
+
+					$qItem = $wpdb->get_var($query_pagination);
+					$items = $wpdb->num_rows; // number of total rows in the database
+                 // var_dump($items);
+                  //var_dump($qItem);
+                  //$wpdb->show_errors();
+                  //$wpdb->print_error();
 
 				if($items > 0) {
 					$p = new rb_agency_pagination;
@@ -1636,16 +1631,20 @@ if(!function_exists("rb_output_buffer")){
 					media.ProfileMediaURL 
 					
 				FROM ". table_agency_profile ." profile 
-					LEFT JOIN
-					".table_agency_customfield_mux." cmux
-					ON
-					profile.ProfileID = cmux.ProfileID
 					LEFT JOIN 
-					". table_agency_profile_media ." media
-					ON
-					(profile.ProfileID = media.ProfileID 
-						AND media.ProfileMediaType='Image' 
-						AND media.ProfileMediaPrimary = 1)
+						". table_agency_profile_media ." media
+							ON
+								(
+								    media.ProfileID = profile.ProfileID 
+									AND 
+									media.ProfileMediaType='Image' 
+									AND 
+									media.ProfileMediaPrimary = 1
+								)
+														
+								INNER JOIN ".table_agency_customfield_mux." cmux
+								ON
+								(cmux.ProfileID = profile.ProfileID)
 					
 				$filter  
 				GROUP BY profile.ProfileID 
@@ -1654,7 +1653,7 @@ if(!function_exists("rb_output_buffer")){
 
 			
 
-			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
+			$resultsList = array(); //$wpdb->get_results($queryList,ARRAY_A);
 			$countList = $wpdb->num_rows;
 
 			$rb_user_isLogged = is_user_logged_in();
@@ -2759,7 +2758,7 @@ function rb_agency_getStateTitle($state_id="",$state_code = false){
 	} else {
 		$query ="SELECT StateTitle FROM ". table_agency_data_state ." WHERE StateID = " . (is_numeric($state_id)?$state_id:0);
 		$result = $wpdb->get_row($query);
-		$return = $result->StateTitle;
+		$return = isset($result->StateTitle)?$result->StateTitle:"";
 	}
 
 	if(count($result) > 0){
