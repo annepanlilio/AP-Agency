@@ -1397,7 +1397,7 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
-<<<<<<< HEAD
+
 					//$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
 					$sql = "SELECT 
 					profile.ProfileID,
@@ -1422,11 +1422,10 @@ class RBAgency_Profile {
 						)
 					".self::$order_by."	";
 
-||||||| merged common ancestors
-					$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
-=======
-					$sql = "SELECT profile.*, cmux.* FROM ". table_agency_profile ." as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
->>>>>>> origin/master
+					//$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
+
+					//$sql = "SELECT profile.*, cmux.* FROM ". table_agency_profile ." as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
+
 				break;
 
 				
