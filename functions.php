@@ -1490,10 +1490,12 @@ if(!function_exists("rb_output_buffer")){
 														".table_agency_customfield_mux." cmux
 														ON
 														 (cmux.ProfileID = profile.ProfileID)
-												$filter LIMIT 1";
+												$filter 
+												GROUP BY profile.ProfileID
+												LIMIT 1";
 
 					$qItem = $wpdb->get_var($query_pagination);
-					$items = $wpdb->num_rows; // number of total rows in the database
+					$items = $qItem; // number of total rows in the database
                  // var_dump($items);
                   //var_dump($qItem);
                   //$wpdb->show_errors();
