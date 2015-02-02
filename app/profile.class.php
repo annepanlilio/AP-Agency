@@ -634,14 +634,11 @@ class RBAgency_Profile {
 				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">";
 					echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\"  />"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
-					//if(/*$profilesearch_advanced_button == true */$rb_agency_option_formhide_advancedsearch_button  == 1){
-					//echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					//}
-					if ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
-					echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" )  || $profilesearch_layout == 'advanced' ){
-					echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
-					
+
+					if ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' ){
+					echo "					<a href=\"". get_bloginfo("wpurl") ."/search-basic/\">". __("Go to Basic Search", rb_agency_TEXTDOMAIN) . "</a>";
+					} else {
+					echo "					<a href=\"". get_bloginfo("wpurl") ."/search-advanced/\">". __("Go to Advanced Search", rb_agency_TEXTDOMAIN) . "</a>";
 					}
 				echo "				</div>\n";
 				global $user_ID, $wpdb;
