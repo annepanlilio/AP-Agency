@@ -69,11 +69,15 @@
 				//$search_array["limit"] = $rb_agency_option_persearch;
 
 				if(isset($_POST)){
-						$search_array = array_filter($_POST);
+					$search_array = array_filter($_POST);
 				}
-					// Return SQL string based on fields
+
+				// Return SQL string based on fields
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
+
+				// Conduct Search
 				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
+
 				echo "<div style=\"clear:both;\"></div>";
 			echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
