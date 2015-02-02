@@ -79,18 +79,21 @@
 
 		}
 
-	 /*
-	  * Display Search results without limit
-	  */
-	  if(isset($_GET["limit"]) && $_GET["limit"] == "none") {
+
+	/*
+	 * Display Search results without limit
+	 */
+
+		if(isset($_GET["limit"]) && $_GET["limit"] == "none") {
 			$search_array = array();
 			$search_array = array_filter($_GET);
-				
+
 			unset($search_array["rb_agency_search"]);
 			unset($search_array["limit"]);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-			echo RBAgency_Profile::search_results($search_sql_query, 0);
-	  }
+echo $search_sql_query;
+			//echo RBAgency_Profile::search_results($search_sql_query, 0);
+		}
 
 
 	/*

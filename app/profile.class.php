@@ -80,7 +80,7 @@ class RBAgency_Profile {
 											inputs[i].value = '';
 											break;
 										case 'radio':
-										    inputs[i].checked = false;
+											inputs[i].checked = false;
 										case 'checkbox':
 											inputs[i].checked = false;
 									}
@@ -256,8 +256,8 @@ class RBAgency_Profile {
 						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".(isset($_REQUEST["zip"])?$_REQUEST["zip"]:"") ."\" /></div>\n";
 						echo "				</div>\n";
 				} // Show Location Search
-            ?>
-                 <!--rb plugin profile.class -->
+			?>
+				 <!--rb plugin profile.class -->
 			<?php 
 			/*
 			 * Custom Fields
@@ -589,8 +589,8 @@ class RBAgency_Profile {
 						 * Date Between
 						 */
 						elseif($ProfileCustomType == 10) {
-							     $from = "";
-							       $to = "";
+								 $from = "";
+								   $to = "";
 								@list($from,$to) = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:["",""]; // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 									
 								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">";
@@ -647,12 +647,12 @@ class RBAgency_Profile {
 					}
 				echo "				</div>\n";
 				global $user_ID, $wpdb;
-	
+
 				// Check if user is registered as Model/Talent
-				 $is_model_or_talent = 0; 
+				$is_model_or_talent = 0; 
 				if(class_exists('RBAgencyCasting')){
-				    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
-				    $is_model_or_talent = $wpdb->num_rows;
+					$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
+					$is_model_or_talent = $wpdb->num_rows;
 				}
 				if($is_model_or_talent > 0){
 					echo "<div class=\"rbclear\"></div>";
@@ -692,8 +692,7 @@ class RBAgency_Profile {
 
 
 				echo "		</div>\n";
-				
-								
+
 		}
 
 
@@ -874,7 +873,7 @@ class RBAgency_Profile {
 	 * Process values into SQL string holding WHERE clause
 	 */
 		public static function search_generate_sqlwhere($atts = null, $exclude = null){
-          global $wpdb;
+			global $wpdb;
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
 			// Time Zone
@@ -1123,22 +1122,19 @@ class RBAgency_Profile {
 													$likequery = array_filter(explode(",", $val));
 													$likecounter = count($likequery);
 													$i=1; 
-								
+
 													foreach($likequery as $like){
 														$i++;
-													
-																	if($like!="") {
-																		$val2 = addslashes(addslashes($like));
-																	 	$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0)".(($i <= $likecounter)?" AND ":""),$like);
-																		//$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
-															
-																	}
-																						//Commented to fix checkbox issue
-								
 
+														if($like!="") {
+															$val2 = addslashes(addslashes($like));
+															$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0)".(($i <= $likecounter)?" AND ":""),$like);
+															//$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+														}
+														//Commented to fix checkbox issue
 													}
 
-																		$filter2 .= "$open_st  ".$sr_data."  $close_st";
+													$filter2 .= "$open_st  ".$sr_data."  $close_st";
 
 												}
 
@@ -1158,7 +1154,7 @@ class RBAgency_Profile {
 
 										$val = stripslashes($val);
 									if(!empty($val)){
-									
+
 										if(strpos($val,",") === false){
 											$filter2 .= $open_st;
 											$val2 = $val;
@@ -1168,19 +1164,18 @@ class RBAgency_Profile {
 											$filter2 .= $close_st;
 
 										} else {
-											
+
 											$likequery = array_filter(explode(",", $val));
 											$likecounter = count($likequery);
 											$i=1; 
-						
+
 											foreach($likequery as $like){
 												$i++;
-											
-															if($like!="") {
-																$val2 = addslashes(addslashes($like));
-																$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
-															}
-														
+
+												if($like!="") {
+													$val2 = addslashes(addslashes($like));
+													$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+												}
 
 											}
 											//Commented to fix checkbox issue
@@ -1203,20 +1198,18 @@ class RBAgency_Profile {
 											$filter2 .= $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val2."%");
 											$filter2 .= $close_st;
 										} else {
-											
+
 											$likequery = array_filter(explode(",", $val));
 											$likecounter = count($likequery);
 											$i=1; 
 
 											foreach($likequery as $like){
 												$i++;
-											
-															if($like!="") {
-																$val2 = addslashes(addslashes($like));
-																$sr_data .= $wpdb->prepare(" ProfileCustomValue LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),"%".$val2."%",$like);
-																
-															}
-														
+
+												if($like!="") {
+													$val2 = addslashes(addslashes($like));
+													$sr_data .= $wpdb->prepare(" ProfileCustomValue LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),"%".$val2."%",$like);
+												}
 
 											}
 											//Commented to fix checkbox issue
@@ -1230,7 +1223,7 @@ class RBAgency_Profile {
 									} else {
 										$_SESSION[$key] = "";
 									}*/
-									
+
 								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
 									//Radiobutton 
 									$val = implode("','",explode(",",$val));
@@ -1272,15 +1265,12 @@ class RBAgency_Profile {
 						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 					}
 
-					
 					$filter .= $filter2;
 					$filter = str_replace(array("\n","\t","\r")," ", $filter);
 					$filter = str_replace(")(", ") OR (", $filter);
 
-				
 				}
 
-				
 			/**
 			 * Only Show from Casting Cart
 			 * Profile Search Saved 
@@ -1304,10 +1294,10 @@ class RBAgency_Profile {
 					self::$error_checking[] = array('search_generate_sqlwhere',$filter);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
-				
+
 				self::search_generate_sqlorder($atts);
-              
-              return $filter;
+
+				return $filter;
 
 
 			} else {
@@ -1333,20 +1323,18 @@ class RBAgency_Profile {
 			$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
 				
 			if($rb_agency_option_profilelist_sortbydate){
-				   $atts["sort"] = "cmux.ProfileCustomDateValue";
-			}elseif(!isset($atts["sort"])){
-				   $atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
+				$atts["sort"] = "cmux.ProfileCustomDateValue";
+			} elseif(!isset($atts["sort"])){
+				$atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 			}
 
 			if(!isset($_GET["limit"]) && isset($_GET["page"]) && $_GET["page"] == "rb_agency_search"){
-				   $atts["limit"] = $rb_agency_option_persearch;
+				$atts["limit"] = $rb_agency_option_persearch;
 			}
 
-			 $filter .= " GROUP BY profile.ProfileID";
-		
+			$filter .= " GROUP BY profile.ProfileID";
 
 
-			
 			// Convert Input
 			if(is_array($atts)) {
 
@@ -1365,8 +1353,6 @@ class RBAgency_Profile {
 					"page" => NULL
 				), $atts));
 
-
-
 			/*
 			 * ORDER BY
 			 */
@@ -1382,8 +1368,8 @@ class RBAgency_Profile {
 				if (isset($limit) && !empty($limit)){
 					$filter .= " LIMIT 0, $limit ";
 				}
-          
-          		// Debug
+
+				// Debug
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_generate_sqlorder',$filter);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
@@ -1463,45 +1449,44 @@ class RBAgency_Profile {
 									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d  AND cart.CastingJobID <= 0 ",rb_agency_get_current_userid());
 								}
 							}
-						}	
-						
+						}
 					//}
 
 					// Execute the query showing casting cart
-					$sql = "SELECT profile.ProfileID, 
-								   profile.ProfileGallery, 
-								   profile.ProfileContactDisplay,
-								   profile.ProfileContactNameFirst, 
-								   profile.ProfileContactNameLast, 
-								   profile.ProfileDateBirth, 
-								   profile.ProfileIsActive, 
-								   profile.ProfileLocationState, 
-								   profile.ProfileID as pID, 
-								   cart.CastingCartTalentID, 
-								   cart.CastingCartTalentID, 
-								   (SELECT media.ProfileMediaURL FROM ". 
-								   			table_agency_profile_media ." media 
-								   			WHERE 
-								   			profile.ProfileID = media.ProfileID 
-								   			AND 
-								   			media.ProfileMediaType = \"Image\" 
-								   			AND 
-								   			media.ProfileMediaPrimary = 1) 
-											AS 
-								   ProfileMediaURL,
-								   (SELECT cmux.ProfileCustomDateValue FROM ".
-								   			table_agency_customfield_mux." as cmux
-								   			WHERE 
-								   			cmux.ProfileID = profile.ProfileID
-								   			LIMIT 1
-								   			) 
+					$sql = "SELECT profile.ProfileID,
+								profile.ProfileGallery,
+								profile.ProfileContactDisplay,
+								profile.ProfileContactNameFirst,
+								profile.ProfileContactNameLast,
+								profile.ProfileDateBirth,
+								profile.ProfileIsActive,
+								profile.ProfileLocationState,
+								profile.ProfileID as pID,
+								cart.CastingCartTalentID,
+								cart.CastingCartTalentID,
+								(SELECT media.ProfileMediaURL FROM ".
+											table_agency_profile_media ." media
+											WHERE
+											profile.ProfileID = media.ProfileID
+											AND
+											media.ProfileMediaType = \"Image\"
+											AND
+											media.ProfileMediaPrimary = 1)
+											AS
+								ProfileMediaURL,
+								(SELECT cmux.ProfileCustomDateValue FROM ".
+											table_agency_customfield_mux." as cmux
+											WHERE
+											cmux.ProfileID = profile.ProfileID
+											LIMIT 1
+											)
 											AS
 									ProfileDueDate
-								   FROM ". table_agency_profile ." profile 
-								   INNER JOIN  ".table_agency_castingcart." cart  
-								   WHERE $sqlCasting_userID 
-								   AND ProfileIsActive = 1 
-								   GROUP BY profile.ProfileID";  
+								FROM ". table_agency_profile ." profile
+								INNER JOIN  ".table_agency_castingcart." cart
+								WHERE $sqlCasting_userID
+								AND ProfileIsActive = 1
+								GROUP BY profile.ProfileID";
 
 				break;
 
@@ -1509,28 +1494,23 @@ class RBAgency_Profile {
 						 * Casting query
 						*/
 						case 3:
-							$sql ="SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
+							$sql = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
 									. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND ".$sql_where."  GROUP BY(profile.ProfileID) ";
-								
 						break;
 			}
-
 
 			if(self::$error_debug || self::$error_debug_query){
 				self::$error_checking[] = array('-MAIN_QUERY-',$sql);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
-			
+
 			/*
 			 * check if search is admin or public
 			 */
 			if(is_admin()){
-				
 				return self::search_result_admin($sql,$arr_query );
 			} else {
-				
 				return self::search_result_public($sql, $castingcart);
-
 			}
 
 		}
@@ -1579,13 +1559,13 @@ class RBAgency_Profile {
 			$all_html.='</div></div>';
 			$all_html .= "	<hr />";
 			if ($count > 0){
-				
+
 				$castingcart_results = array();
 				if(function_exists("rb_agency_get_miscellaneousLinks")){
 					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
 				}
 				$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
-				
+
 				$arr_castingcart = array();
 				foreach ($castingcart_results as $key) {
 					array_push($arr_castingcart, $key->CastingCartTalentID);
@@ -1597,12 +1577,11 @@ class RBAgency_Profile {
 				}
 				foreach($results as $profile) {
 					$availability = '';
-				
+
 					if(!empty($castingcart)){
 						if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
-							 $query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+							$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
 							$prepared = $wpdb->prepare($query,$profile["ProfileID"],$_GET["Job_ID"]);
-						
 						}
 
 						$data = $wpdb->get_row($prepared);
@@ -1611,7 +1590,7 @@ class RBAgency_Profile {
 							$availability = $data->status;
 						}
 					}
-						
+
 					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart, $availability );
 				}
 
@@ -1648,8 +1627,8 @@ class RBAgency_Profile {
 					$all_html .= "</div>\n";
 				}
 				*/
-				
-				/*		
+
+				/*
 				if (self::$castingcart){   //allow email to admin casting
 					$all_html .= "<div>\n";
 					$all_html .= '	<a id="sendemail" href="javascript:;">Email to Admin</a>';
@@ -1717,9 +1696,8 @@ class RBAgency_Profile {
 				unset($arr_query["limit"]);
 				unset($arr_query["perpage"]);
 
-				
 				$query_built =  http_build_query($arr_query);
-               if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
+				if (($count > ($rb_agency_option_persearch -1)) && (!isset($_GET['limit']) && empty($_GET['limit']))) {
 					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href='". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none&".$query_built."'><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
 				}
 				$displayHtml .=  "       <form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
@@ -1926,7 +1904,7 @@ class RBAgency_Profile {
 									}
 									return false;
 							}
-				
+
 				</script>
 
 				<?php
@@ -1962,7 +1940,8 @@ class RBAgency_Profile {
 		 */
 		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = ''){
 
-				global $wpdb;
+			global $wpdb;
+
 			/* 
 			 * rb agency options
 			 */
@@ -1980,7 +1959,7 @@ class RBAgency_Profile {
 			$rb_agency_option_profilelist_printpdf 	     = isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
 			$rb_agency_option_profilelist_thumbsslide	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
 			$rb_agency_option_detail_state 				 = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
-		
+
 			$ProfileContactNameFirst = $dataList["ProfileContactNameFirst"];
 			$ProfileContactNameLast = $dataList["ProfileContactNameLast"];
 
@@ -2007,20 +1986,20 @@ class RBAgency_Profile {
 					$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
 				}*/
 
-                            if ($rb_agency_option_profilenaming == 0) {
-								$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
-							} elseif ($rb_agency_option_profilenaming == 1) {
-								$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
-							} elseif ($rb_agency_option_profilenaming == 2) {
-								$ProfileContactDisplay = $ProfileContactNameFirst;
-							} elseif ($rb_agency_option_profilenaming == 3) {
-								$ProfileContactDisplay = "ID ". $ProfileID;
-							} elseif ($rb_agency_option_profilenaming == 4) {
-								$ProfileContactDisplay = $ProfileContactNameFirst;
-							} elseif ($rb_agency_option_profilenaming == 5) {
-								$ProfileContactDisplay = $ProfileContactNameLast;
-							}
-			
+				if ($rb_agency_option_profilenaming == 0) {
+					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+				} elseif ($rb_agency_option_profilenaming == 1) {
+					$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+				} elseif ($rb_agency_option_profilenaming == 2) {
+					$ProfileContactDisplay = $ProfileContactNameFirst;
+				} elseif ($rb_agency_option_profilenaming == 3) {
+					$ProfileContactDisplay = "ID ". $ProfileID;
+				} elseif ($rb_agency_option_profilenaming == 4) {
+					$ProfileContactDisplay = $ProfileContactNameFirst;
+				} elseif ($rb_agency_option_profilenaming == 5) {
+					$ProfileContactDisplay = $ProfileContactNameLast;
+				}
+
 
 			/* 
 			 * initialize html
@@ -2030,36 +2009,34 @@ class RBAgency_Profile {
 			$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
-            $displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
-           $displayActions = "";  
-           $type = get_query_var('type');  
-			
+			$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+			$displayActions = "";  
+			$type = get_query_var('type');  
+
 			if(is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
 
 
-	            $displayActions = "<div class=\"rb_profile_tool\">";
-	            if($rb_agency_option_profilelist_favorite){
-		              //  $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
-		        	    $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\">".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</a></div>";
-		        
-		        }
-		        $p_image = rb_get_primary_image($dataList["ProfileID"]); 
-
-		        if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
-	           		   //$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
-	            		$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\">".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</a></div>";
-	            }
-	            $displayActions .= "</div>";
-				
-				if(!empty($casting_availability)){
-						 if($casting_availability == 'available'){
-							 $displayActions .= "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
-						 }else{
-							 $displayActions .= "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
-						 }
+				$displayActions = "<div class=\"rb_profile_tool\">";
+				if($rb_agency_option_profilelist_favorite){
+					//  $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+					$displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\">".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</a></div>";
 				}
-				
-	        }
+				$p_image = rb_get_primary_image($dataList["ProfileID"]); 
+
+				if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
+					//$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+					$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\">".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</a></div>";
+				}
+				$displayActions .= "</div>";
+
+				if(!empty($casting_availability)){
+					if($casting_availability == 'available'){
+						$displayActions .= "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
+					}else{
+						$displayActions .= "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
+					}
+				}
+			}
 			/* 
 			 * determine primary image
 			 */
@@ -2078,13 +2055,13 @@ class RBAgency_Profile {
 			} else {
 				$displayHTML .= "  <div class=\"image image-broken\" style='background:lightgray; color:white; font-size:20px; text-align:center; line-height:120px; vertical-align:bottom'>No Image</div>\n";
 			}
-           
+
 			/* 
 			 * determine profile details
 			 */
 			$displayHTML .= "  <div class=\"profile-info\">\n";
 			$uid = rb_agency_get_current_userid();
-								
+
 			if(get_query_var('type') == "casting" && $uid > 0){
 				$displayHTML .= "<input type=\"checkbox\" name=\"profileid\" value=\"".$dataList["ProfileID"]."\"/>";
 			}
@@ -2093,27 +2070,27 @@ class RBAgency_Profile {
 				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
 				if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
 					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
-				}				
+				}
 				$displayHTML .= "</div>\n";
 			}
 				$displayHTML .=  $displayActions;
-			
+
 			if(function_exists("rb_agency_get_miscellaneousLinks")){
-					// Check if user is registered as Model/Talent
-				    $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
-				    $is_model_or_talent = $wpdb->num_rows;
+				// Check if user is registered as Model/Talent
+				$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
+				$is_model_or_talent = $wpdb->num_rows;
 
-					$disp = "";		
+				$disp = "";
 
-		   			if(is_user_logged_in() && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
-							$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+				if(is_user_logged_in() && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
+						$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 
-					}			
+				}
 			}
 			$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
-		
+
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
-			if(self::$error_debug){		
+			if(self::$error_debug){
 				self::$error_checking[] = array('search_formatted',$displayHTML);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
@@ -2246,7 +2223,7 @@ class RBAgency_Profile {
 				} elseif ($ProfileCustomType == 4) {
 					echo "<div><textarea name=\"ProfileCustomID". $data1['ProfileCustomID'] ."\">". $_REQUEST["ProfileCustomID". $data1['ProfileCustomID']] ."</textarea></div>";
 				} elseif ($ProfileCustomType == 5) {
-                      echo "<div>";
+					  echo "<div>";
 					$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 
 						foreach($array_customOptions_values as $val){
@@ -2271,9 +2248,9 @@ class RBAgency_Profile {
 						}
 
 					echo "<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\"/>";
-					 echo "</div>";				   
+					echo "</div>";
 				}elseif ($ProfileCustomType == 6) {
-					 echo "<div>";
+					echo "<div>";
 					$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 
 					foreach($array_customOptions_values as $val) {
@@ -2358,15 +2335,15 @@ class RBAgency_Profile {
 						}
 
 				} elseif ($ProfileCustomType == 10) { //Date
-				
-						echo "<input type=\"text\" id=\"rb_datepicker". $data1['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
-					    echo "<script type=\"text/javascript\">\n\n";
-					    echo "jQuery(function(){\n\n";
-					    echo "jQuery(\"input[name=ProfileCustomID". $data1['ProfileCustomID'] ."_date]\").val('". $ProfileCustomDateValue ."');\n\n";
-					   	echo "});\n\n";
-					    echo "</script>\n\n";
 
-				}		
+						echo "<input type=\"text\" id=\"rb_datepicker". $data1['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data1['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
+						echo "<script type=\"text/javascript\">\n\n";
+						echo "jQuery(function(){\n\n";
+						echo "jQuery(\"input[name=ProfileCustomID". $data1['ProfileCustomID'] ."_date]\").val('". $ProfileCustomDateValue ."');\n\n";
+						echo "});\n\n";
+						echo "</script>\n\n";
+
+				}
 
 				/*
 				 * Close Div or FieldSet
@@ -2375,7 +2352,7 @@ class RBAgency_Profile {
 					echo "</fieldset>";
 				} else {
 					echo "</div>";
-					
+
 				}
 			}
 
