@@ -634,14 +634,11 @@ class RBAgency_Profile {
 				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">";
 					echo "					<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\"  />"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "					<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />";
-					//if(/*$profilesearch_advanced_button == true */$rb_agency_option_formhide_advancedsearch_button  == 1){
-					//echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					//}
-					if ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
-					echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" )  || $profilesearch_layout == 'advanced' ){
-					echo "					<input type=\"button\" name=\"advanced_search\" value=\"". __("Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
-					
+
+					if ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' ){
+					echo "					<a href=\"". get_bloginfo("wpurl") ."/search-basic/\">". __("Go to Basic Search", rb_agency_TEXTDOMAIN) . "</a>";
+					} else {
+					echo "					<a href=\"". get_bloginfo("wpurl") ."/search-advanced/\">". __("Go to Advanced Search", rb_agency_TEXTDOMAIN) . "</a>";
 					}
 				echo "				</div>\n";
 				global $user_ID, $wpdb;
@@ -1400,6 +1397,7 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
+<<<<<<< HEAD
 					//$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
 					$sql = "SELECT 
 					profile.ProfileID,
@@ -1424,6 +1422,11 @@ class RBAgency_Profile {
 						)
 					".self::$order_by."	";
 
+||||||| merged common ancestors
+					$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
+=======
+					$sql = "SELECT profile.*, cmux.* FROM ". table_agency_profile ." as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
+>>>>>>> origin/master
 				break;
 
 				
@@ -1534,9 +1537,9 @@ class RBAgency_Profile {
 
 			var_dump($profiles);
 			if(is_admin()){
-				// TODO: Restore // return self::search_result_admin($sql,$arr_query );
+				return self::search_result_admin($sql,$arr_query );
 			} else {
-				// TODO: Restore // return self::search_result_public($sql, $castingcart);
+				return self::search_result_public($sql, $castingcart);
 			}
 
 		}
