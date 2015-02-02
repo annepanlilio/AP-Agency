@@ -264,9 +264,11 @@ class RBAgency_Profile {
 			 */
 			// Query Fields
 				if(is_admin()){
-					$field_sql = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView <= 1 ORDER BY ProfileCustomOrder ASC";
+					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
+									FROM ". table_agency_customfields ." WHERE ProfileCustomView <= 1 ORDER BY ProfileCustomOrder ASC";
 				}else{
-					$field_sql = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
+					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
+									FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
 				foreach($field_results  as $data){
@@ -651,7 +653,7 @@ class RBAgency_Profile {
 				// Check if user is registered as Model/Talent
 				$is_model_or_talent = 0; 
 				if(class_exists('RBAgencyCasting')){
-					$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
+					$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
 					$is_model_or_talent = $wpdb->num_rows;
 				}
 				if($is_model_or_talent > 0){

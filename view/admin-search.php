@@ -91,8 +91,7 @@
 			unset($search_array["rb_agency_search"]);
 			unset($search_array["limit"]);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-echo $search_sql_query;
-			//echo RBAgency_Profile::search_results($search_sql_query, 0);
+			echo RBAgency_Profile::search_results($search_sql_query, 0);
 		}
 
 
