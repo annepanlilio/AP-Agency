@@ -1475,7 +1475,7 @@ if(!function_exists("rb_output_buffer")){
 					*/
 					
 					$query_pagination = "SELECT count(profile.ProfileID) FROM ". table_agency_profile ." profile 
-										        		LEFT JOIN 
+										        		INNER JOIN 
 													    ". table_agency_profile_media ." sub_m
 														ON
 														(
@@ -1492,11 +1492,11 @@ if(!function_exists("rb_output_buffer")){
 														 (cmux.ProfileID = profile.ProfileID)
 												$filter 
 												GROUP BY profile.ProfileID
-												LIMIT 1";
-
+												";
+												//echo $query_pagination;
 					$qItem = $wpdb->get_var($query_pagination);
 					$items = $qItem; // number of total rows in the database
-                 // var_dump($items);
+                  //var_dump($items);
                   //var_dump($qItem);
                   //$wpdb->show_errors();
                   //$wpdb->print_error();
