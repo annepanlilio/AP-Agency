@@ -1507,9 +1507,9 @@ class RBAgency_Profile {
 			 */
 			echo $sql;
 			if(is_admin()){
-				// TODO: Restore // return self::search_result_admin($sql,$arr_query );
+				return self::search_result_admin($sql,$arr_query );
 			} else {
-				// TODO: Restore // return self::search_result_public($sql, $castingcart);
+				return self::search_result_public($sql, $castingcart);
 			}
 
 		}
