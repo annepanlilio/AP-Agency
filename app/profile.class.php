@@ -1400,7 +1400,30 @@ class RBAgency_Profile {
 				 * standard query
 				 */
 				case 0:
-					$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
+					//$sql = "SELECT profile.*, cmux.* FROM ( SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameLast DESC) as profile INNER JOIN ".table_agency_customfield_mux." as cmux ON profile.ProfileID = cmux.ProfileID WHERE ". $sql_where . self::$order_by;
+					$sql = "SELECT 
+					profile.ProfileID,
+					profile.ProfileGallery,
+					profile.ProfileContactDisplay, 
+					profile.ProfileDateBirth, 
+					profile.ProfileDateCreated,
+					profile.ProfileLocationState,
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) 
+					AS ProfileMediaURL 
+					
+					FROM ". table_agency_profile ." profile 
+						WHERE 
+						EXISTS(
+							SELECT count(cmux.ProfileCustomMuxID)  FROM 	
+							".table_agency_customfield_mux." cmux
+							WHERE profile.ProfileID = cmux.ProfileID
+							AND ". $sql_where ."
+							GROUP BY cmux.ProfileCustomMuxID
+							LIMIT 1
+				
+						)
+					".self::$order_by."	";
+
 				break;
 
 				
@@ -1505,7 +1528,11 @@ class RBAgency_Profile {
 			/*
 			 * check if search is admin or public
 			 */
-			echo $sql;
+			$profiles = $wpdb->get_results($sql);
+			$wpdb->show_errors();
+			$wpdb->print_error();
+
+			var_dump($profiles);
 			if(is_admin()){
 				// TODO: Restore // return self::search_result_admin($sql,$arr_query );
 			} else {
