@@ -1331,7 +1331,6 @@ class RBAgency_Profile {
 
 				// Exctract from Shortcode
 				extract(shortcode_atts(array(
-
 					// Handling
 					"sort" => NULL,
 					"dir" => NULL,
@@ -1400,25 +1399,28 @@ class RBAgency_Profile {
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) 
 					AS ProfileMediaURL 
 
-					FROM ". table_agency_profile ." profile 
-						WHERE 
-						EXISTS(
-							SELECT count(cmux.ProfileCustomMuxID)  FROM
-							".table_agency_customfield_mux." cmux
-							WHERE profile.ProfileID = cmux.ProfileID
-							AND ". $sql_where ."
-							GROUP BY cmux.ProfileCustomMuxID
-							LIMIT 1
-						)
-					". self::$order_by. "";
+					FROM ". table_agency_profile ." profile ";
+
+					// Check if there are any arguments
+					if (strlen($sql_where) > 28) {
+					$sql .= "WHERE 
+							EXISTS(
+								SELECT count(cmux.ProfileCustomMuxID)  FROM
+								".table_agency_customfield_mux." cmux
+								WHERE profile.ProfileID = cmux.ProfileID
+								AND ". $sql_where ."
+								GROUP BY cmux.ProfileCustomMuxID
+								LIMIT 1
+							)";
+					}
+					$sql .= self::$order_by;
 
 				break;
 
-				
 				/* 
 				 * query for favorites
 				 */
-				 case 1:
+				case 1:
 					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
 					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 					break;
@@ -1520,7 +1522,6 @@ class RBAgency_Profile {
 			$wpdb->show_errors();
 			$wpdb->print_error();
 
-			var_dump($profiles);
 			if(is_admin()){
 				return self::search_result_admin($sql,$arr_query );
 			} else {
