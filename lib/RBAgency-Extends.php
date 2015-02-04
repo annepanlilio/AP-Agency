@@ -23,13 +23,14 @@ class RBAgency_Extends {
 			// Assign Widgets
 			add_action( 'widgets_init', create_function('', 'return register_widget("profile_search_widget_construct");') );
 			add_action( 'widgets_init', create_function('', 'return register_widget("profile_featured_widget_construct");') );
+
 		}
+
+
 
 	// *************************************************************************************************** //
 	// * SHORTCODES 
 	// *************************************************************************************************** //
-
-
 
 	/*
 	 * Profile List
@@ -241,7 +242,7 @@ class profile_search_widget_construct extends WP_Widget {
 		<?php 
 	}
 
-} // RBAgency_Extends_Widget_Search
+} // profile_search_widget_construct
 
 
 
@@ -250,96 +251,55 @@ class profile_search_widget_construct extends WP_Widget {
  * Widget: View featured profiles, option to show one or several randomly
  */
 
-	class profile_featured_widget_construct extends WP_Widget {
-		// Setup
-		function profile_featured_widget_construct() {
-			$widget_ops = array('classname' => 'rb_agency_widget_showsearch', 'description' => __("Displays profile search fields", rb_agency_TEXTDOMAIN) );
-			$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Search", rb_agency_TEXTDOMAIN), $widget_ops);
-		}
-		// What Displays
-		function widget($args, $instance) {
-			extract($args, EXTR_SKIP);
-			echo $before_widget;
+class profile_featured_widget_construct extends WP_Widget {
+
+	// Setup
+	function profile_featured_widget_construct() {
+		$widget_ops = array('classname' => 'rb_agency_widget_showsearch', 'description' => __("Displays profile search fields", rb_agency_TEXTDOMAIN) );
+		$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Featured", rb_agency_TEXTDOMAIN), $widget_ops);
+	}
+
+	// What Displays
+	function widget($args, $instance) {
+
+		// Get Settings from Widget
+		extract($args, EXTR_SKIP);
 			$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
 				if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
-			$showlayout = $instance['showlayout'];
-				if ( empty( $showlayout ) ) { $showlayout = "condensed"; };
-					
-			if (function_exists('rb_agency_profilesearch')) { 
-				$atts = array('profilesearch_layout' => $showlayout,"is_widget"=> true);
-						rb_agency_profilesearch($atts);
-			} else {
-				echo "Invalid Function";
-			}
-			echo $after_widget;
-		}
-		// Update
-		function update($new_instance, $old_instance) {
-			$instance = $old_instance;
-			$instance['title'] = strip_tags($new_instance['title']);
-			$instance['showlayout'] = strip_tags($new_instance['showlayout']);
-			return $instance;
-		}
-		// Form
-		function form($instance) {
-			$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-			$title = esc_attr($instance['title']);
-			$showlayout = isset($instance['showlayout']) ? esc_attr($instance['showlayout']):"";
-			?>
-				<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-				<p><label for="<?php echo $this->get_field_id('showlayout'); ?>"><?php _e('Type:'); ?> <select id="<?php echo $this->get_field_id('showlayout'); ?>" name="<?php echo $this->get_field_name('showlayout'); ?>"><option value="advanced" <?php selected($showlayout, "advanced"); ?>>Advanced Search</option><option value="condensed" <?php selected($showlayout, "condensed"); ?>>Condensed Search</option></select></label></p>
-			<?php 
-		}
-	} // class
-
-/*
- * Search Profiles
- * Widget: Search
- */
-
-	class profile_featured_widget extends WP_Widget {
-
-		// Setup
-		function profile_featured_widget() {
-			$widget_ops = array('classname' => 'rb_agency_widget', 'description' => __("Displays profile search fields", rb_agency_TEXTDOMAIN) );
-			$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Featured", rb_agency_TEXTDOMAIN), $widget_ops);
-		}
-
-		// What Displays
-		function widget($args, $instance) {
-			extract($args, EXTR_SKIP);
-			echo $before_widget;
-			$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-				if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
+			$type = empty($instance['type']) ? ' ' : apply_filters('widget_title', $instance['type']);
+				if ( !empty( $type ) ) { echo $before_title . $type . $after_title; };
 			$count = $instance['count'];
 				if ( empty( $count ) ) { $count = 1; };
 
-			if (function_exists('rb_agency_profilefeatured')) { 
-				$atts = array('count' => $count);
-				rb_agency_profilefeatured($atts); 
-			} else {
-				echo "Invalid Function.";
-			}
-			echo $after_widget;
-		}
 
-		// Update
-		function update($new_instance, $old_instance) {
-			$instance = $old_instance;
-			$instance['title'] = strip_tags($new_instance['title']);
-			$instance['count'] = strip_tags($new_instance['count']);
-			return $instance;
+		echo $before_widget;
+		if (function_exists('rb_agency_profilesearch')) { 
+			$atts = array('profilesearch_layout' => $showlayout,"is_widget"=> true);
+			echo RBAgency_Profile::view_featured($atts);
+		} else {
+			echo "Invalid Function";
 		}
+		echo $after_widget;
+	}
 
-		// Form
-		function form($instance) {
-			$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-			$title = esc_attr($instance['title']);
-			$count = esc_attr($instance['count']);
-			?>
-				<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-				<p><label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Number Shown:'); ?> <input id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" /></label></p>
-			<?php 
-		}
+	// Update
+	function update($new_instance, $old_instance) {
+		$instance = $old_instance;
+		$instance['title'] = strip_tags($new_instance['title']);
+		$instance['type'] = strip_tags($new_instance['type']);
+		$instance['count'] = strip_tags($new_instance['count']);
+		return $instance;
+	}
 
-	} // RBAgency_Extends_Widget_Profile_Featured
+	// Form
+	function form($instance) {
+		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
+		$title = esc_attr($instance['title']);
+		$showlayout = isset($instance['showlayout']) ? esc_attr($instance['showlayout']):"";
+		?>
+			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
+			<p><label for="<?php echo $this->get_field_id('type'); ?>"><?php _e('Type:'); ?> <select id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>"><option value="0" <?php selected($showlayout, 0); ?>>All Profiles</option><option value="1" <?php selected($showlayout, 1); ?>>Featured Profiles Only</option></select></label></p>
+			<p><label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Count:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" /></label></p>
+		<?php 
+	}
+} // class profile_featured_widget_construct

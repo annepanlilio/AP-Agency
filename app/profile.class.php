@@ -2381,6 +2381,97 @@ class RBAgency_Profile {
 	/*********************************************************************************/
 
 
+	function view_featured($atts, $content = NULL) {
+		/*
+		if (function_exists('rb_agency_profilefeatured')) { 
+			$atts = array('count' => 8, 'type' => 0);
+			rb_agency_profilefeatured($atts); }
+		*/
+		// Set It Up	
+		global $wp_rewrite;
+		global $wpdb;
+
+		extract(shortcode_atts(array(
+				"type" => 0,
+				"count" => 1
+		), $atts));
+
+		if ($type == 1) { // Featured
+			$sqlWhere = " AND profile.ProfileIsPromoted=1";
+		}
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
+		if ( //Must be logged to view model list and profile information
+		($rb_agency_option_privacy == 2 && is_user_logged_in()) || 
+		// Model list public. Must be logged to view profile information
+		($rb_agency_option_privacy == 1 && is_user_logged_in()) ||
+		// All Public
+		($rb_agency_option_privacy == 0) ||
+		//admin users
+		(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
+		//  Must be logged in as Casting Agent to View Profiles
+		($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
+				echo "<div id=\"profile-featured\">\n";
+				/*
+				 * Execute Query
+				 */
+					$queryList = "SELECT profile.*,
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
+					 WHERE profile.ProfileID = media.ProfileID 
+					 AND media.ProfileMediaType = \"Image\" 
+					 AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL 
+					 FROM ". table_agency_profile ." profile 
+					 WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."
+					 AND profile.ProfileIsFeatured = 1  
+					 ORDER BY RAND() LIMIT 0,$count";
+				$resultsList =$wpdb->get_results($queryList,ARRAY_A);
+				$countList = count($resultsList);
+				foreach($resultsList as $dataList) {
+					echo "<div class=\"rbprofile-list\">\n";
+					if (isset($dataList["ProfileMediaURL"]) ) { 
+					echo "  <div class=\"image\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
+					} else {
+					echo "  <div class=\"image image-broken\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
+					}
+					echo "<div class=\"profile-info\">";
+							$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+							if ($rb_agency_option_profilenaming == 0) {
+								$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". $dataList["ProfileContactNameLast"];
+							} elseif ($rb_agency_option_profilenaming == 1) {
+								$ProfileContactDisplay = $dataList["ProfileContactNameFirst"] . " ". substr($dataList["ProfileContactNameLast"], 0, 1);
+							} elseif ($rb_agency_option_profilenaming == 2) {
+								$ProfileContactDisplay = $dataList["ProfileContactNameFirst"];
+							} elseif ($rb_agency_option_profilenaming == 3) {
+								$ProfileContactDisplay = "ID ". $ProfileID;
+							} elseif ($rb_agency_option_profilenaming == 4) {
+								$ProfileContactDisplay = $ProfileContactNameFirst;
+							} elseif ($rb_agency_option_profilenaming == 5) {
+								$ProfileContactDisplay = $ProfileContactNameLast;
+							}
+					echo "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". $ProfileContactDisplay ."</a></h3>\n";
+					if (isset($rb_agency_option_profilelist_expanddetails)) {
+						echo "<div class=\"details\"><span class=\"details-age\">". rb_agency_get_age($dataList["ProfileDateBirth"]) ."</span>";
+						if($dataList["ProfileLocationState"]!=""){
+							echo "<span class=\"divider\">, </span><span class=\"details-state\">". $dataList["ProfileLocationState"] ."</span>";
+						} 
+						echo "</div>\n";
+					}
+					if(is_user_logged_in() && function_exists("rb_agency_get_miscellaneousLinks")){
+						// Add Favorite and Casting Cart links		
+						rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
+					}
+					echo "  </div><!-- .profile-info -->\n";
+					echo "</div><!-- .rbprofile-list -->\n";
+				}
+				if ($countList < 1) {
+					echo __("No Featured Profiles", rb_agency_TEXTDOMAIN);
+				}
+				echo "  <div style=\"clear: both; \"></div>\n";
+				echo "</div><!-- #profile-featured -->\n";
+			}
+	}
+
+
 
 	/**
 	 * List Categories
