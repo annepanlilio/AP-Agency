@@ -207,11 +207,6 @@ if(isset($_POST["action"]) && $_POST["action"] == "sendEmailCastingCart"){
 
 echo $rb_header = RBAgency_Common::rb_header(); 
 
-
-
-	// Profile Class
-	include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
-
 	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	// Can we show the pages?

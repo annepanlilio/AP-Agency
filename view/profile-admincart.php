@@ -1,8 +1,7 @@
 <?php
 echo $rb_header = RBAgency_Common::rb_header();
 global $wpdb;
-// Profile Class
-include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
+
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 

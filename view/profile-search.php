@@ -8,8 +8,6 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 	// Call Header
 	echo $rb_header = RBAgency_Common::rb_header();
 
-	// Profile Class
-	include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
 	$add_sidebar = false;
 	if($rb_agency_option_form_sidebar == 1){
 		$add_sidebar = true;

@@ -6,9 +6,6 @@
 	// Include Admin Menu
 	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php"); 
 
-	// Profile Class
-	include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
-
 	// Casting Class
 	include(RBAGENCY_PLUGIN_DIR ."app/casting.class.php");
 
@@ -133,7 +130,7 @@
 			echo "      <h3>". __("Advance Search", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 			echo "      <div class=\"inner\">\n";
 
-			return RBAgency_Profile::search_form("", "", 1);
+			return RBAgency_Profile::search_form("", "", "advanced");
 			
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";

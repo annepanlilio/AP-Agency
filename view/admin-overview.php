@@ -69,10 +69,8 @@ get_currentuserinfo();
 					  <li style="width:100%;">
 						<?php
 						if ($user_level >= 7) {
-							// Profile Class
-							include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
 
-							$form = RBAgency_Profile::search_form("", "", 1,'condensed');
+							$form = RBAgency_Profile::search_form("", "", 1);
 							echo $form;
 
 						} // Editor
