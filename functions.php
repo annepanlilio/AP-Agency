@@ -614,8 +614,11 @@ if(!function_exists("rb_output_buffer")){
 		$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg,$profileID),ARRAY_A);
 		$countImg = count($resultsImg);
 		$images = "";
-		foreach ($resultsImg as $dataImg) {//style=\"display:none\" 
-			$images ."<img  class=\"roll\" src=\"".RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src={PHOTO_PATH}". $dataImg['ProfileMediaURL'] ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+		foreach ($resultsImg as $dataImg) {//style=\"display:none\"
+			// Fix Spaces
+			$img_src = str_replace(array("%20", "+", " "), "%2B", $dataImg['ProfileMediaURL']);
+
+			$images ."<img  class=\"roll\" src=\"".RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src={PHOTO_PATH}". $img_src ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 		}
 	return $images;
 	}

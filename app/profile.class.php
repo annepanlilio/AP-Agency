@@ -1752,7 +1752,8 @@ class RBAgency_Profile {
 						$isInactive = 'style="background: #FFEBE8"';
 						$isInactiveDisable = "disabled=\"disabled\"";
 					}
-					$p_image = rb_get_primary_image($data["ProfileID"]); 
+					$p_image = str_replace(array("%20", "+", " "), "%2B", rb_get_primary_image($dataList["ProfileID"]));
+
 					$checkboxDisable ="";
 					if(empty($p_image)){
 						$checkboxDisable = "data-disabled=\"true\"";
