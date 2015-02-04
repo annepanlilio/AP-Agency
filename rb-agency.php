@@ -8,7 +8,7 @@ Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
 Version: 2.2
 */
-$rb_agency_VERSION = "2.2";
+$RBAGENCY_VERSION = "2.2";
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
@@ -20,13 +20,8 @@ See license.txt for full details.
 
 // *************************************************************************************************** //
 
-/*
- * Initialize
- */
-
 	// Start Session
 	if (!session_id()) session_start();
-
 
 /*
  * Security
@@ -51,7 +46,7 @@ See license.txt for full details.
 
 	// Registration URL
 	if(!defined("RBPLUGIN_URL"))
-		define("RBPLUGIN_URL", "http://demo3.modelingagencysoftware.com");
+		define("RBPLUGIN_URL", "http://rbplugin.com");
 
 
 // *************************************************************************************************** //
@@ -60,22 +55,44 @@ See license.txt for full details.
  * Declare Global Constants
  */
 
-	// Version
-	define("rb_agency_VERSION", $rb_agency_VERSION); // e.g. 1.0
+	// RB Agency Version
+	define("RBAGENCY_VERSION", $RBAGENCY_VERSION); // e.g. 1.0
+
 	// WordPress Version
-	define("rb_agency_VERSION_WP_MIN", '3.2');
-	define("rb_agency_VERSION_SUPPORTED", version_compare(get_bloginfo("version"), rb_agency_VERSION_WP_MIN, '>='));
-	// Paths
-	define("rb_agency_BASENAME", plugin_basename(__FILE__) );  // rb-agency/rb-agency.php
-	$rb_agency_WPURL = get_bloginfo("wpurl"); // http://domain.com/wordpress
-	$rb_agency_WPUPLOADARRAY = wp_upload_dir(); // Array  $rb_agency_WPUPLOADARRAY['baseurl'] $rb_agency_WPUPLOADARRAY['basedir']
-	define("rb_agency_BASEDIR", plugin_dir_url( __FILE__ ) );
-	define("rb_agency_BASEREL", plugin_dir_path( __FILE__ ) );
-	define("rb_agency_BASEPATH", rb_agency_BASEREL );
-	define("rb_agency_UPLOADREL", str_replace(get_bloginfo('url'), '', $rb_agency_WPUPLOADARRAY['baseurl']) ."/profile-media/" );  // /wordpress/wp-content/uploads/profile-media/
-	define("rb_agency_UPLOADDIR", $rb_agency_WPUPLOADARRAY['baseurl'] ."/profile-media/" );  // http://domain.com/wordpress/wp-content/uploads/profile-media/
-	define("rb_agency_UPLOADPATH", $rb_agency_WPUPLOADARRAY['basedir'] ."/profile-media/" ); // /home/content/99/6048999/html/domain.com/wordpress/wp-content/uploads/profile-media/
-	define("rb_agency_TEXTDOMAIN", basename(dirname( __FILE__ )) ); //   rb-agency
+	if (!defined('RBAGENCY_VERSION_WP_MIN') )
+		define('RBAGENCY_VERSION_WP_MIN', '3.2');
+		define('RBAGENCY_VERSION_SUPPORTED', version_compare(get_bloginfo("version"), RBAGENCY_VERSION_WP_MIN, '>=') );
+
+	// Active Theme Path
+	if (!defined('RBAGENCY_THEME_DIR')) // httdocs/domain/wp-content/themes/twentythirteen
+		define('RBAGENCY_THEME_DIR', ABSPATH . 'wp-content/themes/' . get_template());
+
+	// RB Agency Plugin Path
+	if (!defined('RBAGENCY_PLUGIN_NAME')) // rb-agency
+		define('RBAGENCY_PLUGIN_NAME', strtolower(trim(dirname(plugin_basename(__FILE__)), '/')));
+
+	if (!defined('RBAGENCY_PLUGIN_DIR')) // httdocs/domain/wp-content/plugins/rb-agency/
+		define('RBAGENCY_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . RBAGENCY_PLUGIN_NAME . '/');
+
+	if (!defined('RBAGENCY_PLUGIN_URL')) // http://localhost/wp-content/plugins/rb-agency/
+		define('RBAGENCY_PLUGIN_URL', WP_PLUGIN_URL . '/' . RBAGENCY_PLUGIN_NAME . '/');
+
+	// Upload Directory
+	$upload_dir = wp_upload_dir();
+
+	if (!defined('RBAGENCY_UPLOADREL')) // /wp-content/uploads/profile-media/
+		define("RBAGENCY_UPLOADREL", str_replace(get_bloginfo('url'), '', $upload_dir['baseurl']) ."/profile-media/" );
+
+	if (!defined('RBAGENCY_UPLOADDIR')) // http://domain.com/wp-content/uploads/profile-media/
+		define("RBAGENCY_UPLOADDIR", $upload_dir['baseurl'] ."/profile-media/" );
+
+	if (!defined('RBAGENCY_UPLOADPATH')) // /httdocs/wordpress/wp-content/uploads/profile-media/
+		define("RBAGENCY_UPLOADPATH", $upload_dir['basedir'] ."/profile-media/" );
+
+	// Define Text Domain
+	if (!defined('RBAGENCY_TEXTDOMAIN')) // rb-agency
+		define('RBAGENCY_TEXTDOMAIN', RBAGENCY_PLUGIN_NAME ); // 
+
 
 	// Check for WPMU installation
 	if (!defined ('IS_WPMU')){
@@ -159,20 +176,20 @@ See license.txt for full details.
  */
 
 	// Functions
-	include_once(rb_agency_BASEREL ."functions.php");
+	include_once(RBAGENCY_PLUGIN_DIR ."functions.php");
 
 	// Profile Class
-	include_once(rb_agency_BASEREL ."app/profile.class.php");
+	include_once(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
 
 	// Common Functions
-	include_once(rb_agency_BASEREL ."app/common.class.php");
+	include_once(RBAGENCY_PLUGIN_DIR ."app/common.class.php");
 
 	// Widgets & Shortcodes
-	include_once( rb_agency_BASEREL .'lib/RBAgency-Extends.php');
+	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Extends.php');
 		add_action( 'init', array('RBAgency_Extends', 'init'), 0, 1 );
 
 	// Now Call the Lanuage
-	define("rb_agency_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
+	define("RBAGENCY_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
 
 
 // *************************************************************************************************** //
@@ -216,7 +233,7 @@ class RBAgency {
 			 */
 
 				// Identify Folder for PO files
-				load_plugin_textdomain( rb_agency_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' );
+				load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' );
 
 
 			/*
@@ -274,9 +291,9 @@ class RBAgency {
 			 */
 
 				// Create Upload Directory
-				if (!is_dir(rb_agency_UPLOADPATH)) {
-					@mkdir(rb_agency_UPLOADPATH, 0755);
-					@chmod(rb_agency_UPLOADPATH, 0777);
+				if (!is_dir(RBAGENCY_UPLOADPATH)) {
+					@mkdir(RBAGENCY_UPLOADPATH, 0755);
+					@chmod(RBAGENCY_UPLOADPATH, 0777);
 				}
 
 
@@ -862,7 +879,7 @@ class RBAgency {
 			*/
 
 			// Redirect back to Plugins
-			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", rb_agency_TEXTDOMAIN) ."</p><h1>". __("please uninstall on plugins page.", rb_agency_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", rb_agency_TEXTDOMAIN) ."</a></h1></div>";
+			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", RBAGENCY_TEXTDOMAIN) ."</p><h1>". __("please uninstall on plugins page.", RBAGENCY_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", RBAGENCY_TEXTDOMAIN) ."</a></h1></div>";
 			die;
 
 		}
@@ -890,10 +907,10 @@ class RBAgency {
 
 			// Hold the version in a seprate option
 			if(!get_option("rb_agency_version")) {
-				update_option("rb_agency_version", rb_agency_VERSION);
+				update_option("rb_agency_version", RBAGENCY_VERSION);
 			} else {
 				// Version Exists, but is it out of date?
-				if(get_option("rb_agency_version") <> rb_agency_VERSION){
+				if(get_option("rb_agency_version") <> RBAGENCY_VERSION){
 					require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/upgrade.php");
 				} else {
 					// Namaste, version number is correct
@@ -922,43 +939,43 @@ class RBAgency {
 		//Create Admin Menu
 		public static function menu_admin(){
 			add_menu_page( 
-				__("Agency", rb_agency_TEXTDOMAIN), 
-				__("Agency", rb_agency_TEXTDOMAIN), 
+				__("Agency", RBAGENCY_TEXTDOMAIN), 
+				__("Agency", RBAGENCY_TEXTDOMAIN), 
 				'edit_posts',
 				"rb_agency_menu", 
 				array('RBAgency', 'menu_dashboard'),
 				"div"
 				);
 
-				add_submenu_page("rb_agency_menu", __("Overview", rb_agency_TEXTDOMAIN), __("Overview", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_menu", array('RBAgency', 'menu_dashboard'));
-				add_submenu_page("rb_agency_menu", __("Manage Profiles", rb_agency_TEXTDOMAIN), __("Manage Profiles", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
+				add_submenu_page("rb_agency_menu", __("Overview", RBAGENCY_TEXTDOMAIN), __("Overview", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_menu", array('RBAgency', 'menu_dashboard'));
+				add_submenu_page("rb_agency_menu", __("Manage Profiles", RBAGENCY_TEXTDOMAIN), __("Manage Profiles", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_profiles", array('RBAgency', 'menu_profiles'));
 
 			// RB Agency Interact 
 			if(function_exists('rb_agency_interact_menu')){
 				// Menu Approve
-				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", rb_agency_TEXTDOMAIN), __("Approve Profiles", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_interact_approvemembers", array('RBAgency', 'menu_interact_approvemembers'));
+				add_submenu_page("rb_agency_menu", __("Approve Pending Profiles", RBAGENCY_TEXTDOMAIN), __("Approve Profiles", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_interact_approvemembers", array('RBAgency', 'menu_interact_approvemembers'));
 			}
 
-				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", rb_agency_TEXTDOMAIN), __("Search Profiles", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_search", array('RBAgency', 'menu_search'));
-				add_submenu_page("rb_agency_menu", __("Saved Searches", rb_agency_TEXTDOMAIN), __("Saved Searches", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
+				add_submenu_page("rb_agency_menu", __("Search &amp; Send Profiles", RBAGENCY_TEXTDOMAIN), __("Search Profiles", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_search", array('RBAgency', 'menu_search'));
+				add_submenu_page("rb_agency_menu", __("Saved Searches", RBAGENCY_TEXTDOMAIN), __("Saved Searches", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_searchsaved", array('RBAgency', 'menu_searchsaved'));
 
 			// RB Agency Casting
 			if(function_exists('rb_agency_casting_menu')){
 				// saved search for casting
-				add_submenu_page("rb_agency_menu", __("Approve Pending Clients", rb_agency_TEXTDOMAIN), __("Approve Clients", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
+				add_submenu_page("rb_agency_menu", __("Approve Pending Clients", RBAGENCY_TEXTDOMAIN), __("Approve Clients", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_approveclients", array('RBAgency', 'menu_casting_approveclients'));
 
 				// saved search for casting
 				add_submenu_page("rb_agency_menu", __("Client Activity", rb_agency_casting_TEXTDOMAIN), __("Client Searches", rb_agency_casting_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_searchsaved", array('RBAgency', 'menu_casting_searchsaved'));
 
 				// job postings
 				add_submenu_page("rb_agency_menu", __("Job Types", rb_agency_casting_TEXTDOMAIN), __("Job Types", rb_agency_casting_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_jobpostings", array('RBAgency', 'menu_casting_jobpostings'));
-				add_submenu_page("rb_agency_menu", __("Casting Jobs", rb_agency_TEXTDOMAIN), __("Casting Jobs", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_castingjobs", array('RBAgency', 'menu_castingjob'));
-				add_submenu_page("rb_agency_menu", __("Casting Calendar", rb_agency_TEXTDOMAIN), __("Casting Calendar", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_castingcalendar", array('RBAgency', 'menu_castingcalendar'));
+				add_submenu_page("rb_agency_menu", __("Casting Jobs", RBAGENCY_TEXTDOMAIN), __("Casting Jobs", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_castingjobs", array('RBAgency', 'menu_castingjob'));
+				add_submenu_page("rb_agency_menu", __("Casting Calendar", RBAGENCY_TEXTDOMAIN), __("Casting Calendar", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_castingcalendar", array('RBAgency', 'menu_castingcalendar'));
 
 			}
 
-				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), __("Tools &amp; Reports", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_reports", array('RBAgency', 'menu_reports'));
-				add_submenu_page("rb_agency_menu", __("Edit Settings", rb_agency_TEXTDOMAIN), __("Settings", rb_agency_TEXTDOMAIN), 'edit_posts',"rb_agency_settings", array('RBAgency', 'menu_settings'));
+				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", RBAGENCY_TEXTDOMAIN), __("Tools &amp; Reports", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_reports", array('RBAgency', 'menu_reports'));
+				add_submenu_page("rb_agency_menu", __("Edit Settings", RBAGENCY_TEXTDOMAIN), __("Settings", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_settings", array('RBAgency', 'menu_settings'));
 
 		}
 
@@ -1018,7 +1035,7 @@ class RBAgency {
 			// Check Permissions
 			if ( !current_user_can('edit_posts') )
 				return;
-			$pagehook = add_options_page( __("RB Agency", rb_agency_TEXTDOMAIN), __("RB Agency", rb_agency_TEXTDOMAIN), "edit_posts", "rb_agency_settings", array('RBAgency', 'menu_settings'));
+			$pagehook = add_options_page( __("RB Agency", RBAGENCY_TEXTDOMAIN), __("RB Agency", RBAGENCY_TEXTDOMAIN), "edit_posts", "rb_agency_settings", array('RBAgency', 'menu_settings'));
 		}
 
 		// Add Link to Settings Page
@@ -1050,8 +1067,8 @@ class RBAgency {
 
 		public static function shortcode_display_generator(){
 
-			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', rb_agency_TEXTDOMAIN), array('RBAgency', 'shortcode_display_generator_form'), 'post', 'advanced' );
-			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', rb_agency_TEXTDOMAIN), array('RBAgency', 'shortcode_display_generator_form'), 'page', 'advanced' );
+			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', RBAGENCY_TEXTDOMAIN), array('RBAgency', 'shortcode_display_generator_form'), 'post', 'advanced' );
+			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', RBAGENCY_TEXTDOMAIN), array('RBAgency', 'shortcode_display_generator_form'), 'page', 'advanced' );
 
 		}
 
@@ -1094,17 +1111,17 @@ class RBAgency {
 			echo "	<tr><td>Type:</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
 					global $wpdb;
 					$profileDataTypes = $wpdb->get_results("SELECT * FROM ". table_agency_data_type ."",ARRAY_A);
-					echo "<option value=\"\">". __("Any", rb_agency_TEXTDOMAIN) ."</option>\n";
+					echo "<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 					foreach( $profileDataTypes as $dataType) {
 						if (isset($_SESSION['ProfileType'])) {
 							if ($dataType["DataTypeID"] ==  $ProfileType) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
 						} else { $selectedvalue = ""; }
-						echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ." ". __("Only", rb_agency_TEXTDOMAIN) ."</option>";
+						echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ." ". __("Only", RBAGENCY_TEXTDOMAIN) ."</option>";
 					}
 					echo "</select></td></tr>\n";
-			echo "	<tr><td>". __("Starting Age", rb_agency_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_start\" name=\"rb_agency_age_start\" value=\"18\" /></td></tr>\n";
-			echo "	<tr><td>". __("Ending Age", rb_agency_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_stop\" name=\"rb_agency_age_stop\" value=\"99\" /></td></tr>\n";
-			echo "	<tr><td>". __("Gender", rb_agency_TEXTDOMAIN) .":</td><td>";
+			echo "	<tr><td>". __("Starting Age", RBAGENCY_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_start\" name=\"rb_agency_age_start\" value=\"18\" /></td></tr>\n";
+			echo "	<tr><td>". __("Ending Age", RBAGENCY_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_stop\" name=\"rb_agency_age_stop\" value=\"99\" /></td></tr>\n";
+			echo "	<tr><td>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</td><td>";
 			echo "<select id=\"rb_agency_gender\" name=\"rb_agency_gender\">";
 			$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 				
@@ -1117,8 +1134,8 @@ class RBAgency {
 			echo "</td></tr>\n";
 			
 			echo "</table>\n";
-			echo "<p><input type=\"button\" onclick=\"create_profile_grid()\" value=\"". __("Insert Profile Grid", rb_agency_TEXTDOMAIN) ."\" /></p>\n";
-			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", rb_agency_TEXTDOMAIN) ."\" /></p>\n";
+			echo "<p><input type=\"button\" onclick=\"create_profile_grid()\" value=\"". __("Insert Profile Grid", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
+			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
 			echo "</div>\n";
 		}
 

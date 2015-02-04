@@ -11,7 +11,7 @@
 	</h2>
 	<?php 
 		// Just a backup check if version numbers are off
-		if(get_option('rb_agency_version') <> rb_agency_VERSION) {
+		if(get_option('rb_agency_version') <> RBAGENCY_VERSION) {
 		echo "Upgrade Needed";
 		}
 		
@@ -31,14 +31,14 @@
 	<?php
 	if ($active_page == 'rb_agency_settings'){
 	echo "  <p>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=0\">". __("Overview", rb_agency_TEXTDOMAIN) . "</a> | \n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\">". __("Configuration", rb_agency_TEXTDOMAIN) . "</a> | \n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\">". __("Style", rb_agency_TEXTDOMAIN) . "</a> | \n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a> | \n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\">". __("Profile Types", rb_agency_TEXTDOMAIN) . "</a> | \n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a> | \n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\">". __("Media Categories", rb_agency_TEXTDOMAIN) . "</a> | \n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Manage Locations", rb_agency_TEXTDOMAIN) . "</a> \n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=0\">". __("Overview", RBAGENCY_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\">". __("Configuration", RBAGENCY_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\">". __("Style", RBAGENCY_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\">". __("Gender", RBAGENCY_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\">". __("Profile Types", RBAGENCY_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\">". __("Custom Fields", RBAGENCY_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\">". __("Media Categories", RBAGENCY_TEXTDOMAIN) . "</a> | \n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\">". __("Manage Locations", RBAGENCY_TEXTDOMAIN) . "</a> \n";
 	echo "  </p>\n";
 	}
 	?>

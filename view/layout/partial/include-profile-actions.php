@@ -32,7 +32,7 @@ echo "<div id=\"profile-links\">\n";
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\" class=\"profile-link\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28			
+			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\" class=\"profile-link\">". __("Print Photos", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28			
 		}
 	}
 // Polaroid	
@@ -43,8 +43,8 @@ echo "<div id=\"profile-links\">\n";
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-		    echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link polaroid\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
-			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link polaroid\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
+		    echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link polaroid\">". __("View Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
+			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link polaroid\">". __("Print Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		}
 	}
 
@@ -126,7 +126,7 @@ echo "<div id=\"profile-links\">\n";
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
 				if (!empty($dataMedia['ProfileMediaType']) && isset($dataMedia['ProfileMediaType'])) {
-					echo "<li class=\"item video custom\"><a target=\"_blank\" href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">". $dataMedia['ProfileMediaType'] . "</a></li>\n";
+					echo "<li class=\"item video custom\"><a target=\"_blank\" href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">". $dataMedia['ProfileMediaType'] . "</a></li>\n";
 				}
 			}
 		}*/
@@ -139,7 +139,7 @@ echo "	</div>\n";
 
 	//Contact Profile
 	if($rb_agency_option_showcontactpage==1){
-		echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\" class=\"rb_button\">Click Here</a></div>\n";
+		echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\" class=\"rb_button\">Click Here</a></div>\n";
 	}
  */
 

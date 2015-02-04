@@ -4,13 +4,13 @@
 	// Setup DB connection
 	global $wpdb;
 	// Include Admin Menu
-	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
+	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php"); 
 
 	// Profile Class
-	include(rb_agency_BASEREL ."app/profile.class.php");
+	include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
 
 	// Casting Class
-	include(rb_agency_BASEREL ."app/casting.class.php");
+	include(RBAGENCY_PLUGIN_DIR ."app/casting.class.php");
 
 	// Define Options
 		$rb_agency_options_arr = get_option('rb_agency_options');
@@ -107,7 +107,7 @@
 
 			echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 			echo " <div class=\"boxblock\">\n";
-			echo "   <h2>". __("Casting Cart", rb_agency_TEXTDOMAIN) ."</h2>\n";
+			echo "   <h2>". __("Casting Cart", RBAGENCY_TEXTDOMAIN) ."</h2>\n";
 			echo "   <div class=\"inner\">\n";
 
 			// Show Cart
@@ -130,7 +130,7 @@
 
 			echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
 			echo "     <div class=\"boxblock\">\n";
-			echo "      <h3>". __("Advance Search", rb_agency_TEXTDOMAIN) ."</h3>\n";
+			echo "      <h3>". __("Advance Search", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 			echo "      <div class=\"inner\">\n";
 
 			return RBAgency_Profile::search_form("", "", 1);

@@ -59,7 +59,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				 $resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);			
 						$countImg =$wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-						  	echo "<div class=\"page\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
+						  	echo "<div class=\"page\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
 						}
 				?>
 		    </div><!-- .rbcol-12 -->

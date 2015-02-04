@@ -11,7 +11,7 @@ Default Contact
 		$resultsImg =$wpdb->get_results($queryImg,ARRAY_A);
 		$countImg = count($resultsImg);
 		foreach($resultsImg as $dataImg) {
-			echo "		<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+			echo "		<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 		}
 
 	echo "	</div> <!-- #profile-picture -->\n";
@@ -24,7 +24,7 @@ Default Contact
 			echo "	});\n";
 			echo "</script>\n";
 
-	echo "	  	<form method=\"post\" action=\"". $rb_agency_WPURL ."/profile/". $profileURL ."/contact/\">\n";
+	echo "	  	<form method=\"post\" action=\"". get_bloginfo("wpurl") ."/profile/". $profileURL ."/contact/\">\n";
 	echo "	  	  <div><span>Your Name</span><input name=\"contact-your-name\" /></div>\n";
 	echo "	  	  <div><span>Your Email</span><input name=\"contact-your-email\" /></div>\n";
 	echo "	  	  <div><span>Date</span><input name=\"contact-your-date\" class=\"rbdatepicker\" /></div>\n";

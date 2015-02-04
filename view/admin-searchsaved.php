@@ -2,8 +2,8 @@
 
 $siteurl = get_option('siteurl');
 	// Casting Class
-	include(rb_agency_BASEREL ."app/casting.class.php");
-	include(rb_agency_BASEREL ."ext/easytext.php");
+	include(RBAGENCY_PLUGIN_DIR ."app/casting.class.php");
+	include(RBAGENCY_PLUGIN_DIR ."ext/easytext.php");
 
 	global $wpdb;
 
@@ -118,7 +118,7 @@ $siteurl = get_option('siteurl');
 	  	
 		?>
 		<div style="width:500px; float:left;">
-		 <h2><?php echo __("Search Saved", rb_agency_TEXTDOMAIN); ?></h2>
+		 <h2><?php echo __("Search Saved", RBAGENCY_TEXTDOMAIN); ?></h2>
 		  <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
 		   <input type="hidden" name="action" value="cartEmail" />
 		   <div><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
@@ -171,9 +171,9 @@ $siteurl = get_option('siteurl');
 					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
+						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
 					}else{
-						echo "<img style=\"max-width:130px; max-height:150px; \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+						echo "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
 					}
 					echo "</div>\n";
 					echo "</div>\n";
@@ -261,9 +261,9 @@ $siteurl = get_option('siteurl');
 					echo "<br /><a href=\"". rb_agency_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". rb_agency_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
+						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
 					}else{
-						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=113&h=170\" /></a>";
+						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=113&h=170\" /></a>";
 					}
 					echo "</div>\n";
 					echo "</div>\n";
@@ -350,9 +350,9 @@ $siteurl = get_option('siteurl');
 									echo "<a href=\"". rb_agency_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">";
 									if(isset($arr_thumbnail[$data["ProfileID"]])){
 										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
-										echo "<img  style=\"width: 80px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" />\n";
+										echo "<img  style=\"width: 80px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" />\n";
 									}else{
-									echo "<img style=\"width: 80px; \" src=\"". rb_agency_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" />";
+									echo "<img style=\"width: 80px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" />";
 									}
 									echo "</a>";
 									echo "</div>\n";

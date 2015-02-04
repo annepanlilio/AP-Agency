@@ -68,7 +68,7 @@
 		global $wpdb;
 
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
-		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", rb_agency_TEXTDOMAIN ));
+		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", RBAGENCY_TEXTDOMAIN ));
 		$count = count($results);
 	foreach($results as $data) {
 			$ProfileID					=$data['ProfileID'];
@@ -135,7 +135,7 @@
 	 */
 		// GET HEADER  
 		if(isset($_POST['print_all_images']) && $_POST['print_all_images']!=""){
-			include(rb_agency_BASEREL . 'theme/printable-profile.php');
+			include(RBAGENCY_PLUGIN_DIR . 'theme/printable-profile.php');
 			exit;
 		}
 	/*
@@ -199,7 +199,7 @@
 						echo " 	</div>\n";
 					
 		 			}else{
-						include (rb_agency_BASEREL .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
+						include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 					}
 
 				} elseif(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
@@ -209,11 +209,11 @@
 					}elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
 						 	  echo "Please contact RB Plugin Support for custom layouts.";
 		 			}else{
-						include (rb_agency_BASEREL .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
+						include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 					}
 				} else {
 					// Dont show it
-					echo "". __("Inactive Profile", rb_agency_TEXTDOMAIN) ."\n";
+					echo "". __("Inactive Profile", RBAGENCY_TEXTDOMAIN) ."\n";
 				}
 			} else {
 			    if($rb_agency_option_privacy == 3 ){ // if casting only
@@ -229,13 +229,13 @@
 					$ProfileLastViewed = get_query_var('profile');
 					$profileviewed = get_query_var('target');
 					$_SESSION['ProfileLastViewed'] = $profileviewed;
-					include(rb_agency_BASEREL .'theme/include-login.php');
+					include(RBAGENCY_PLUGIN_DIR .'theme/include-login.php');
 				}
 			}
 
 		} else {
 			// There is no record found.
-			echo "". __("Profile not found", rb_agency_TEXTDOMAIN) ."\n";
+			echo "". __("Profile not found", RBAGENCY_TEXTDOMAIN) ."\n";
 		}
 
 		echo "  </div>\n";

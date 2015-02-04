@@ -2,7 +2,7 @@
 echo $rb_header = RBAgency_Common::rb_header();
 global $wpdb;
 // Profile Class
-include(rb_agency_BASEREL ."app/profile.class.php");
+include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
 	$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = $rb_agency_options_arr['rb_agency_option_profilenaming'];
 
@@ -21,7 +21,7 @@ include(rb_agency_BASEREL ."app/profile.class.php");
 
 			// Get Casting Cart by Identifier
 			$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE searchsent.SearchMuxHash = \"". $SearchMuxHash ."\"";
-			$data = $wpdb->get_row($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+			$data = $wpdb->get_row($query,ARRAY_A) or die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
 			$count =  $wpdb->num_rows;
 			// Get Casting Cart ID
 			$castingcart_id = implode(",",array_unique(array_filter(explode(",",$data['SearchProfileID']))));
@@ -41,7 +41,7 @@ include(rb_agency_BASEREL ."app/profile.class.php");
 
 		}
 		if (empty($SearchMuxHash) || ($count == 0)) {
-			echo "<strong>". __("No search results found.  Please check link again.", rb_agency_TEXTDOMAIN) ."</strong>";
+			echo "<strong>". __("No search results found.  Please check link again.", RBAGENCY_TEXTDOMAIN) ."</strong>";
 		}
 
 		echo "  <div style=\"clear: both;\"></div>";

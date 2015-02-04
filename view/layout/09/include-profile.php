@@ -59,9 +59,9 @@ echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							if ($countImg > 1) { 
-									echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a>\n";
+									echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a>\n";
 								} else {
-									echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+									echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 								}
 							}
 echo "					</div><!-- .scroller -->";
@@ -82,7 +82,7 @@ echo "	  					<ul>\n";
 									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
 									$count = $wpdb->num_rows;
 									if($count > 0){
-										echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+										echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 									}
 								}
 
@@ -127,15 +127,15 @@ echo "						<ul>\n";
 												}						
 											</script>
 										<?php
-											echo "<li id=\"casting_cart_li\" class=\"add to cart\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\">". __("+ Shortlist", rb_agency_TEXTDOMAIN). "</a></li>\n";
+											echo "<li id=\"casting_cart_li\" class=\"add to cart\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\">". __("+ Shortlist", RBAGENCY_TEXTDOMAIN). "</a></li>\n";
 										} else {
 											echo "<li class=\"add to cart\">";
-											echo " <a href=\"".get_bloginfo('url')."/profile-casting/\">". __("View Shortlist", rb_agency_TEXTDOMAIN)."</a></li>\n";
+											echo " <a href=\"".get_bloginfo('url')."/profile-casting/\">". __("View Shortlist", RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 										}
 									}	//end if(checkCart(rb_agency_get_current_userid() ?>
 
 									<li id="resultsGoHereAddtoCart"></li>
-									<li id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Shortlist", rb_agency_TEXTDOMAIN);?></a></li>
+									<li id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Shortlist", RBAGENCY_TEXTDOMAIN);?></a></li>
 								<?php
 								}
 								//Demo Reel
@@ -158,12 +158,12 @@ echo "						<ul>\n";
 								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
 									foreach($resultsMedia as $dataMedia ){
-										echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume PDF</a></li>\n";
+										echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume PDF</a></li>\n";
 									}
 								}							
 								//Contact Profile
 								if($rb_agency_option_showcontactpage==1){
-									echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
+									echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
 								}
 echo "						</ul>\n";	
 echo "					</div>\n";// Links

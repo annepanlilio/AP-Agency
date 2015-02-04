@@ -23,7 +23,7 @@ $profileURL = get_query_var('target'); //$_REQUEST["profile"];
 
 
 	$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='$profileURL'";
-	$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", rb_agency_TEXTDOMAIN ));
+	$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
 	$count = count($results);
 	foreach ($results as $data) {
 		$ProfileID					=$data['ProfileID'];
@@ -147,8 +147,8 @@ if ($_POST["contact-action"] == "contact") {
 
 			wp_enqueue_script('jquery');
 			wp_enqueue_script('jquery-ui-core');
-			wp_enqueue_script('jquery-ui-datepicker', rb_agency_BASEDIR .'/js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core') );
-			//wp_enqueue_style('jquery.ui.theme', rb_agency_BASEDIR .'/js/jquery-ui-1.8.12.custom.css');
+			wp_enqueue_script('jquery-ui-datepicker', RBAGENCY_PLUGIN_URL .'/js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core') );
+			//wp_enqueue_style('jquery.ui.theme', RBAGENCY_PLUGIN_URL .'/js/jquery-ui-1.8.12.custom.css');
 		}
 
 	add_action('wp_footer', 'rb_agency_wp_footer');
@@ -191,7 +191,7 @@ if ($_POST["contact-action"] == "contact") {
 			  	}
 			 	
 		  	} else {
-				echo "". __("Inactive Profile", rb_agency_TEXTDOMAIN) ."\n";
+				echo "". __("Inactive Profile", RBAGENCY_TEXTDOMAIN) ."\n";
 		  	}
 		} else {
 			// hold last model requested as session so we can return them where we found them 
@@ -201,7 +201,7 @@ if ($_POST["contact-action"] == "contact") {
 		}
 	} else {
 		// There is no record found.
-		echo "". __("Invalid Profile", rb_agency_TEXTDOMAIN) ."\n";
+		echo "". __("Invalid Profile", RBAGENCY_TEXTDOMAIN) ."\n";
 	}
 	echo "  </div>\n";
 	echo "</div>\n";

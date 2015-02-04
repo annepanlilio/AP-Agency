@@ -4,7 +4,7 @@
 	global $wpdb;
 
 	// Include Admin Menu
-	include (rb_agency_BASEREL ."view/partial/admin-menu.php"); 
+	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php"); 
 
 	$arrayProfilesRenamedFolders = array();
 	$arraySuggestedFolderNames = array();
@@ -25,13 +25,13 @@ if ($ConfigID == 0) {
 	if (function_exists('rb_agency_interact_menu')) {
 		// RB Agency Interact Settings
 		echo "<div class=\"boxlinkgroup\">\n";
-		echo "  <h2>". __("Interactive Reporting", rb_agency_TEXTDOMAIN) . "</h2>\n";
-		echo "  <p>". __("Run reports on membership and other usage.", rb_agency_TEXTDOMAIN) . "</p>\n";
+		echo "  <h2>". __("Interactive Reporting", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+		echo "  <p>". __("Run reports on membership and other usage.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 
 		echo "    <div class=\"boxlink\">\n";
-		echo "      <h3>". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</h3>\n";
-		echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Recent Payments", rb_agency_TEXTDOMAIN) . "\">". __("Recent Payments", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-		echo "      <p>". __("Payments and membership renewals", rb_agency_TEXTDOMAIN) . "</p>\n";
+		echo "      <h3>". __("Recent Payments", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+		echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Recent Payments", RBAGENCY_TEXTDOMAIN) . "\">". __("Recent Payments", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+		echo "      <p>". __("Payments and membership renewals", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 		echo "    </div>\n";
 	echo "</div>\n";
 	echo "<hr />\n";
@@ -39,56 +39,56 @@ if ($ConfigID == 0) {
 
 	//
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Initial Setup", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("If you are doing the initial instal of RB Agency you this section will help you get your data inplace", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Initial Setup", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("If you are doing the initial instal of RB Agency you this section will help you get your data inplace", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "</div>\n";
 	echo "<hr />\n";
 
 	//
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Data Integrity", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("Once your data is in place use the tools below to check your records", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Data Integrity", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("Once your data is in place use the tools below to check your records", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Export Data", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=12\" title=\"". __("Export Data", rb_agency_TEXTDOMAIN) . "\">". __("Export Data", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Export databases", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Export Data", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=12\" title=\"". __("Export Data", RBAGENCY_TEXTDOMAIN) . "\">". __("Export Data", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Export databases", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "\">". __("Check for Abnormalities", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Search profile records for fields which seem invalid", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Check for Abnormalities", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Check for Abnormalities", RBAGENCY_TEXTDOMAIN) . "\">". __("Check for Abnormalities", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Search profile records for fields which seem invalid", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Rename Profile Folder Names", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\" title=\"". __("Rename Folders", rb_agency_TEXTDOMAIN) . "\">". __("Rename Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("If you created model profiles while under \"First Last\" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Rename Profile Folder Names", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=8\" title=\"". __("Rename Folders", RBAGENCY_TEXTDOMAIN) . "\">". __("Rename Folders", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("If you created model profiles while under \"First Last\" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Resize Photos", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=13\" title=\"". __("Resize Photos", rb_agency_TEXTDOMAIN) . "\">". __("Resize Photos", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Ensure files are not larger than approved size", rb_agency_TEXTDOMAIN) . ". (<a href=\"?page=rb_agency_settings&ConfigID=1\" title=\"". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "\">". __("Configure Sizes", rb_agency_TEXTDOMAIN) . "</a>)</p>\n";
+	echo "      <h3>". __("Resize Photos", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=13\" title=\"". __("Resize Photos", RBAGENCY_TEXTDOMAIN) . "\">". __("Resize Photos", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Ensure files are not larger than approved size", RBAGENCY_TEXTDOMAIN) . ". (<a href=\"?page=rb_agency_settings&ConfigID=1\" title=\"". __("Configure Sizes", RBAGENCY_TEXTDOMAIN) . "\">". __("Configure Sizes", RBAGENCY_TEXTDOMAIN) . "</a>)</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Orphaned Profile Images", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\" title=\"". __("Remove Orphan Images From Database", rb_agency_TEXTDOMAIN) . "\">". __("Remove Orphan Images From Database", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Orphaned Profile Images", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\" title=\"". __("Remove Orphan Images From Database", RBAGENCY_TEXTDOMAIN) . "\">". __("Remove Orphan Images From Database", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("FTP Blank Folder Check", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "\">". __("Scan for Orphan Folders", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Check for any empty folders which do no have models assigned using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("FTP Blank Folder Check", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Scan for Orphan Folders", RBAGENCY_TEXTDOMAIN) . "\">". __("Scan for Orphan Folders", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Check for any empty folders which do no have models assigned using this tool", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Profile Data Migration", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=83\" title=\"". __("Check for Profile Data Migration", rb_agency_TEXTDOMAIN) . "\">". __("Check for Profile Data Migration", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Search profile records for fields migration", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Profile Data Migration", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=83\" title=\"". __("Check for Profile Data Migration", RBAGENCY_TEXTDOMAIN) . "\">". __("Check for Profile Data Migration", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Search profile records for fields migration", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "</div>\n";
@@ -96,88 +96,88 @@ if ($ConfigID == 0) {
 
 	//
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Profile Management", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("The following reports will help you manage your profile information", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Profile Management", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("The following reports will help you manage your profile information", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Inactive Users", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\" title=\"". __("Check Inactive Users", rb_agency_TEXTDOMAIN) . "\">". __("Check Inactive Users", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Find profiles who are currently set as inactive.  Use this tool to set multiple users to active", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Inactive Users", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\" title=\"". __("Check Inactive Users", RBAGENCY_TEXTDOMAIN) . "\">". __("Check Inactive Users", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Find profiles who are currently set as inactive.  Use this tool to set multiple users to active", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Profile Search", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=rb_agency_search\" title=\"". __("Profile Search", rb_agency_TEXTDOMAIN) . "\">". __("Profile Search", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("You may search for profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Profile Search", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=rb_agency_search\" title=\"". __("Profile Search", RBAGENCY_TEXTDOMAIN) . "\">". __("Profile Search", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("You may search for profiles by using this tool", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Dummy Profiles with Sample Media", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=14\" title=\"". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "\">". __("Generate Dummy Profiles with Media Content", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("You may add dummy profiles by using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Dummy Profiles with Sample Media", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=14\" title=\"". __("Generate Dummy Profiles with Media Content", RBAGENCY_TEXTDOMAIN) . "\">". __("Generate Dummy Profiles with Media Content", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("You may add dummy profiles by using this tool", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 	echo "    </div>\n";
 
         echo "<hr />\n";
 
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Importing Records", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("The following tools will help import records.  DO NOT USE THESE TOOLS IF YOU ALREADY HAVE DATA LOADED", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Importing Records", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("The following tools will help import records.  DO NOT USE THESE TOOLS IF YOU ALREADY HAVE DATA LOADED", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 1", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=81\" title=\"". __("Export Now", rb_agency_TEXTDOMAIN) . "\">". __("Export Now", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Download this template and load your profile data into this file to import into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 1", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=81\" title=\"". __("Export Now", RBAGENCY_TEXTDOMAIN) . "\">". __("Export Now", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Download this template and load your profile data into this file to import into the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 	
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 2", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=80\" title=\"". __("Import Data", rb_agency_TEXTDOMAIN) . "\">". __("Import Data", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Upload the model profiles into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 2", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=80\" title=\"". __("Import Data", RBAGENCY_TEXTDOMAIN) . "\">". __("Import Data", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Upload the model profiles into the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 /*
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 1", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=51\" title=\"". __("Download Excel Template", rb_agency_TEXTDOMAIN) . "\">". __("Download Excel Template", rb_agency_TEXTDOMAIN) . "</span><br />\n";
-	echo "      <p>". __("Download this template and load your profile data into this file to import into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 1", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=51\" title=\"". __("Download Excel Template", RBAGENCY_TEXTDOMAIN) . "\">". __("Download Excel Template", RBAGENCY_TEXTDOMAIN) . "</span><br />\n";
+	echo "      <p>". __("Download this template and load your profile data into this file to import into the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 2", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=52\" title=\"". __("Upload to Database", rb_agency_TEXTDOMAIN) . "\">". __("Upload to Database", rb_agency_TEXTDOMAIN) . "</span><br />\n";
-	echo "      <p>". __("Upload the model profiles into the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 2", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <span class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=52\" title=\"". __("Upload to Database", RBAGENCY_TEXTDOMAIN) . "\">". __("Upload to Database", RBAGENCY_TEXTDOMAIN) . "</span><br />\n";
+	echo "      <p>". __("Upload the model profiles into the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 */
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 3", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=53\" title=\"". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "\">". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Check that all profiles have folder names generated.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 3", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=53\" title=\"". __("Generate folder names for profiles", RBAGENCY_TEXTDOMAIN) . "\">". __("Generate folder names for profiles", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Check that all profiles have folder names generated.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 4", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\" title=\"". __("Create folders for all profiles", rb_agency_TEXTDOMAIN) . "\">". __("Create folders for all profiles", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Check that all profiles have folders created on the server.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 4", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\" title=\"". __("Create folders for all profiles", RBAGENCY_TEXTDOMAIN) . "\">". __("Create folders for all profiles", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Check that all profiles have folders created on the server.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 5", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Scan Folders for Images", rb_agency_TEXTDOMAIN) . "\">". __("Scan Folders for Images", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("First upload images directly to folders via FTP then use this tool to sync the images to the database.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 5", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Scan Folders for Images", RBAGENCY_TEXTDOMAIN) . "\">". __("Scan Folders for Images", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("First upload images directly to folders via FTP then use this tool to sync the images to the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Step 6", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\" title=\"". __("Set Primary Profile Image", rb_agency_TEXTDOMAIN) . "\">". __("Set Primary Profile Image", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Identify which image is the primary image for each profile.", rb_agency_TEXTDOMAIN) . ".</p>\n";
+	echo "      <h3>". __("Step 6", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\" title=\"". __("Set Primary Profile Image", RBAGENCY_TEXTDOMAIN) . "\">". __("Set Primary Profile Image", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Identify which image is the primary image for each profile.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
         $active = get_option('active_plugins');
 	foreach($active as $act){
 		if(preg_match('/rb-agency-interact\.php/',$act)){
 			echo "    <div class=\"boxlink\">\n";
-                	echo "      <h3>". __("Step 7", rb_agency_TEXTDOMAIN) . "</h3>\n";
-			echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-			echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", rb_agency_TEXTDOMAIN) . ".</p>\n";
+                	echo "      <h3>". __("Step 7", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+			echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", RBAGENCY_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+			echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 			echo "    </div>\n";
 		}
 	}
@@ -198,11 +198,11 @@ elseif ($ConfigID == 1) {
 	$results1 =$wpdb->get_results($query1, ARRAY_A);
 	$count1 =  $wpdb->num_rows;
 	foreach ($results1 as $data1) {
-		$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
+		$dirURL = RBAGENCY_UPLOADPATH . $data1['ProfileGallery'];
 		echo $dirURL;
 		echo "<div>\n";
 		if (is_dir($dirURL)) {
-			//echo "  <span style='width: 240px; color: green;'>" . rb_agency_UPLOADDIR  . $dirURL . "/</span>\n";
+			//echo "  <span style='width: 240px; color: green;'>" . RBAGENCY_UPLOADDIR  . $dirURL . "/</span>\n";
 		} else {
 			$throw_error = true;
 			echo "  <span style='width: 240px; color: red;'>". $dirURL ."/</span>\n";
@@ -229,7 +229,7 @@ elseif ($ConfigID == 2) {
 		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 		foreach ($results1 as $data1) {
-			$dirURL = rb_agency_UPLOADPATH. $data1['ProfileGallery'];
+			$dirURL = RBAGENCY_UPLOADPATH. $data1['ProfileGallery'];
 			if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
 			} else {
 				// Create Folders
@@ -249,7 +249,7 @@ elseif ($ConfigID == 2) {
 		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 		foreach ($results1 as $data1) {
-			$dirURL = rb_agency_UPLOADPATH . $data1['ProfileGallery'];
+			$dirURL = RBAGENCY_UPLOADPATH . $data1['ProfileGallery'];
 			echo "<div>\n";
 			if (isset($data1['ProfileGallery']) && !empty($data1['ProfileGallery']) && is_dir($dirURL)) {
 				echo "  <span style='width: 240px; color: green;'>". $dirURL ."/</span>\n";
@@ -302,11 +302,11 @@ elseif ($ConfigID == 53) {
 			if(!empty($ProfileGallery)){
 				if($ProfileGallery != $ProfileGalleryCurrent){
 					// just rename the existing folder,
-					rename(rb_agency_UPLOADPATH. $ProfileGallery."/", rb_agency_UPLOADPATH. $ProfileGalleryCurrent."/");
+					rename(RBAGENCY_UPLOADPATH. $ProfileGallery."/", RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent."/");
 				}
 			} else {
 				// actual folder creation
-				$dirURL = rb_agency_UPLOADPATH. $ProfileGalleryCurrent;
+				$dirURL = RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent;
 				mkdir($dirURL, 0755); //700
 				chmod($dirURL, 0777);
 			}
@@ -327,9 +327,9 @@ elseif ($ConfigID == 53) {
 		$results1 =$wpdb->get_results($query1, ARRAY_A);
 		$count1 =  $wpdb->num_rows;
 	
-		echo "<h3>". __("Generate folder names for profiles", rb_agency_TEXTDOMAIN) . "</h3>\n";
-		echo "<p>". __("Check that all profiles have folder names generated.", rb_agency_TEXTDOMAIN) . "</p>\n";
-		echo "<p>". __("Total Number of Folders Created: <strong>".$count1."</strong>", rb_agency_TEXTDOMAIN) . "</p>\n";
+		echo "<h3>". __("Generate folder names for profiles", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+		echo "<p>". __("Check that all profiles have folder names generated.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
+		echo "<p>". __("Total Number of Folders Created: <strong>".$count1."</strong>", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 
 			foreach ($results1 as $data1) {
 				$ProfileGallery = $data1['ProfileGallery'];
@@ -395,7 +395,7 @@ elseif ($ConfigID == 3) {
 	}
 							
 	foreach ($results3 as $data3) {
-		$dirURL = rb_agency_UPLOADPATH . $data3['ProfileGallery'];
+		$dirURL = RBAGENCY_UPLOADPATH . $data3['ProfileGallery'];
 		if (is_dir($dirURL)) {  // Does folder exist?
 			echo "<div style=\"background-color: lightYellow; \">\n<h3>". $data3['ProfileContactNameFirst'] ." ". $data3['ProfileContactNameLast'] ."</h3>\n";
 			echo "<strong>Directory: ".$dirURL."</strong>";
@@ -529,7 +529,7 @@ elseif ($ConfigID == 4) {
 			$results4 =$wpdb->get_results($wpdb->prepare($query4,$step,$stepSize), ARRAY_A);
 			$count4 =$wpdb->num_rows;
 			foreach ($results4 as $data4)  {
-				$dirURL = rb_agency_UPLOADDIR . $data4['ProfileGallery'];
+				$dirURL = RBAGENCY_UPLOADDIR . $data4['ProfileGallery'];
 				$profileID = $data4['ProfileID'];
 
 				$query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
@@ -654,7 +654,7 @@ elseif ($ConfigID == 7) {
 
 	foreach ($results7 as $data7 ) {
 		$ProfileID = $data7['ProfileID'];
-		$dirURL = rb_agency_UPLOADPATH . $data7['ProfileGallery'];
+		$dirURL = RBAGENCY_UPLOADPATH . $data7['ProfileGallery'];
 		if (is_dir(".." . $dirURL)) {  // Does folder exist?
 			echo "<div style=\"background-color: lightYellow; margin: 10px; \">\n";
 			if ($handle = opendir(".." . $dirURL)) {  //  Open seasame 
@@ -663,7 +663,7 @@ elseif ($ConfigID == 7) {
 				$results7a = $wpdb->get_results($wpdb->prepare($query7a), ARRAY_A);
 				$count7a = $wpdb->num_rows;
 				foreach ($results7a as $data7a) {
-					$fileCheck = rb_agency_UPLOADPATH . $data7['ProfileGallery'] ."/". $data7a['ProfileMediaURL'];
+					$fileCheck = RBAGENCY_UPLOADPATH . $data7['ProfileGallery'] ."/". $data7a['ProfileMediaURL'];
 					if (file_exists($fileCheck)) {
 					echo "<div style=\"color: green;\">". $fileCheck ."</div>\n";
 					} else {
@@ -796,14 +796,14 @@ elseif ($ConfigID == 8) {
 			/*if ($ProfileGallery == $ProfileGalleryFixed) {
 			} else {*/
 				// Folder Exist?
-				if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
+				if (is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed)) {
 					$finished = false;                       // we're not finished yet (we just started)
 					while ( ! $finished ):                   // while not finished
 						$ProfileGalleryFixed = $ProfileGalleryFixed .$ProfileID;   // output folder name
-						if ( ! is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ):        // if folder DOES NOT exist...
-							rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
+						if ( ! is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed) ):        // if folder DOES NOT exist...
+							rename(RBAGENCY_UPLOADPATH ."/". $ProfileGallery, RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed);
 
-							if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed)) {
+							if (is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed)) {
 								$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
 								$renamed = $wpdb->query($rename);
 								echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
@@ -818,8 +818,8 @@ elseif ($ConfigID == 8) {
 				} else {
 					
 					// Create Folders
-					rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
-					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
+					rename(RBAGENCY_UPLOADPATH ."/". $ProfileGallery, RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed);
+					if (is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
 						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
 						$renamed = $wpdb->query($rename);
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
@@ -837,11 +837,11 @@ elseif ($ConfigID == 8) {
 	
 		/*
 		echo "<br />";
-		var_dump(is_dir(rb_agency_UPLOADPATH . "/john-doe/"));
+		var_dump(is_dir(RBAGENCY_UPLOADPATH . "/john-doe/"));
 		echo "<br />";
-		echo rb_agency_UPLOADREL;
+		echo RBAGENCY_UPLOADREL;
 		// Open a known directory, and proceed to read its contents
-		$dir = rb_agency_UPLOADPATH;
+		$dir = RBAGENCY_UPLOADPATH;
 		if (is_dir($dir)) {
 			if ($dh = opendir($dir)) {
 				while (($file = readdir($dh)) !== false) {
@@ -929,27 +929,27 @@ elseif ($ConfigID == 8) {
 				// Add Profiles to Array to Create later
 				$throw_error = true;
 				//$ProfileGalleryFixed =  rb_agency_set_directory($ProfileGalleryFixed);
-				echo "  <span style='width: 240px; color: red;'>". rb_agency_UPLOADDIR  . $ProfileGallery ."/</span>\n";
+				echo "  <span style='width: 240px; color: red;'>". RBAGENCY_UPLOADDIR  . $ProfileGallery ."/</span>\n";
 				echo "  <strong>Profile <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=". $data1['ProfileID'] ."'>". $data1['ProfileContactNameFirst'] ." ". $data1['ProfileContactNameLast'] ."</a></strong>\n";
 				echo "  Should be renamed to /<span style='width: 240px; color: red;'>". $ProfileGalleryFixed ."/</span>\n";
 
 			} elseif ($ProfileGallery == $ProfileGalleryFixed ) {
 				echo "<div style=\"padding:10px;border:1px solid #ccc;\">\n";
-				echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  . $ProfileGalleryFixed ."/</span>\n";
+				echo "  <span style='width: 240px; color: green;'>". RBAGENCY_UPLOADDIR  . $ProfileGalleryFixed ."/</span>\n";
 				echo "</div>\n";
 			}else{
 				  // Create Folders
 				 if(!empty($ProfileGallery)){
-					rename(rb_agency_UPLOADPATH ."/". $ProfileGallery, rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed);
-					if (is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
+					rename(RBAGENCY_UPLOADPATH ."/". $ProfileGallery, RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed);
+					if (is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed) ) { // if folder DOES NOT exist...
 						$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."', ProfileContactDisplay = '".$ProfileContactDisplay ."' WHERE ProfileID = \"". $ProfileID ."\"";
 						$renamed = $wpdb->query($rename);
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					}
 				}else{
 					    // actual folder creation
-						$dirURL = rb_agency_UPLOADPATH. $ProfileGalleryFixed;
-						if (!is_dir(rb_agency_UPLOADPATH ."/". $ProfileGalleryFixed) ) {
+						$dirURL = RBAGENCY_UPLOADPATH. $ProfileGalleryFixed;
+						if (!is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed) ) {
 							mkdir($dirURL, 0755); //700
 							chmod($dirURL, 0777);
 						}
@@ -960,7 +960,7 @@ elseif ($ConfigID == 8) {
 				   
 				}
 
-					//echo "  <span style='width: 240px; color: green;'>". rb_agency_UPLOADDIR  .  $ProfileGalleryFixed ."/</span>\n";
+					//echo "  <span style='width: 240px; color: green;'>". RBAGENCY_UPLOADDIR  .  $ProfileGalleryFixed ."/</span>\n";
 			}
 			$pos++;
 		
@@ -988,7 +988,7 @@ elseif ($ConfigID == 13) {
 // *************************************************************************************************** //
 // Manage Settings
 
-	echo "<h2>". __("Resize Images", rb_agency_TEXTDOMAIN) . "</h2>\n";
+	echo "<h2>". __("Resize Images", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 	
 	/*********** Max Size *************************************/
 	$rb_agency_options_arr = get_option('rb_agency_options');
@@ -1041,7 +1041,7 @@ elseif ($ConfigID == 13) {
 			$countImg = $wpdb->num_rows;
 			echo "<div><strong>$countImg total</strong></div>\n";
 			foreach ($resultsImg as $dataImg ) {
-				$filename = rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+				$filename = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
 				
 				$image = new rb_agency_image();
 				$image->load($filename);
@@ -1051,13 +1051,13 @@ elseif ($ConfigID == 13) {
 					if ($image->getWidth() > $rb_agency_option_agencyimagemaxwidth) {
 						$image->resizeToWidth($rb_agency_option_agencyimagemaxwidth);
 						echo "RESIZED LANDSCAPE<br />\n";
-						$image->save(rb_agency_UPLOADPATH . $ProfileGallery ."/". $dataImg['ProfileMediaURL']);
+						$image->save(RBAGENCY_UPLOADPATH . $ProfileGallery ."/". $dataImg['ProfileMediaURL']);
 					}
 				} else {
 					if ($image->getHeight() > $rb_agency_option_agencyimagemaxheight) {
 						$image->resizeToHeight($rb_agency_option_agencyimagemaxheight);
 						echo "RESIZED PORTRAIT<br />\n";
-						$image->save(rb_agency_UPLOADPATH . $ProfileGallery ."/". $dataImg['ProfileMediaURL']);
+						$image->save(RBAGENCY_UPLOADPATH . $ProfileGallery ."/". $dataImg['ProfileMediaURL']);
 					}
 				}
 				echo "  <img src=\"". $filename ."\" style=\"width: 100px; z-index: 1; \" />\n";
@@ -1078,20 +1078,20 @@ elseif ($ConfigID == 12) {
 // *************************************************************************************************** //
 // Manage Settings
 		echo '<br /><br /><br />';
-		echo "<form action=\"".rb_agency_BASEDIR."view/exportDatabase.php\" method=\"post\">";
-		echo '<input type="submit" class="button-primary" value='. __('"Export Database"', rb_agency_TEXTDOMAIN).'>';
+		echo "<form action=\"".RBAGENCY_PLUGIN_URL."view/exportDatabase.php\" method=\"post\">";
+		echo '<input type="submit" class="button-primary" value='. __('"Export Database"', RBAGENCY_TEXTDOMAIN).'>';
 		echo '</form>';
 
-		/*echo "<h2>". __("Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
+		/*echo "<h2>". __("Export Database", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 		
-			echo "<a href=\"". rb_agency_BASEDIR ."view/exportDatabase.php\">Export Database</a>\n";
+			echo "<a href=\"". RBAGENCY_PLUGIN_URL ."view/exportDatabase.php\">Export Database</a>\n";
 		*/
 }
 elseif ($ConfigID == 81) 
 {
-	echo "<h2>". __(" Export Database", rb_agency_TEXTDOMAIN) . "</h2>\n";
+	echo "<h2>". __(" Export Database", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 	
-	echo " <form action=\"".rb_agency_BASEDIR."view/export-Profile-Database.php\" method=\"post\">";
+	echo " <form action=\"".RBAGENCY_PLUGIN_URL."view/export-Profile-Database.php\" method=\"post\">";
 	echo "      <select name=\"file_type\" required>";
 	echo "          <option value=\"\">Select file format</option>";
 	echo "          <option value=\"xls\">XLS</option>";
@@ -1176,7 +1176,7 @@ elseif ($ConfigID == 80) {
 	
 	if( $form_display_flag == true )
 	{
-		echo "<h2>". __("Import CSV / XLS", rb_agency_TEXTDOMAIN) . "</h2>\n";
+		echo "<h2>". __("Import CSV / XLS", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 		
 		/*File error message*/
 		echo "<span class=\"error-message\">$error_message</span> <br>";
@@ -1200,7 +1200,7 @@ elseif ($ConfigID == 80) {
 elseif ($ConfigID == 14) {
 
 		$trackDummies = array();
-		$sample_url = rb_agency_BASEPATH."view/samples"; // Samples' folder
+		$sample_url = RBAGENCY_PLUGIN_DIR."view/samples"; // Samples' folder
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ? (int)$rb_agency_options_arr['rb_agency_option_profilenaming']:"";
 
@@ -1318,7 +1318,7 @@ elseif ($ConfigID == 14) {
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					$ProfileContactDisplay = $ProfileContact[1] . " ". substr($ProfileContact[0], 0, 1);
 				} elseif ($rb_agency_option_profilenaming == 2) {
-					$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+					$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 					$have_error = true;
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileContactDisplay = "ID ". $ProfileID;
@@ -1384,7 +1384,7 @@ elseif ($ConfigID == 14) {
 
 		if(isset($_GET["settings-updated"]) && empty($rb_agency_dummy_options_installdummy)){
 			
-			echo "<h2>". __("Removing Dummy Profiles...", rb_agency_TEXTDOMAIN) . "</h2>\n";
+			echo "<h2>". __("Removing Dummy Profiles...", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 			echo "<br/>";
 
 		
@@ -1400,7 +1400,7 @@ elseif ($ConfigID == 14) {
 								} elseif ($rb_agency_option_profilenaming == 1) {
 									$ProfileContactDisplay = $ProfileContact[0] . " ". substr($ProfileContact[1], 0, 1);
 								} elseif ($rb_agency_option_profilenaming == 2) {
-									$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+									$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 									$have_error = true;
 								} elseif ($rb_agency_option_profilenaming == 3) {
 									$ProfileContactDisplay = "ID ". $ProfileID;
@@ -1439,7 +1439,7 @@ elseif ($ConfigID == 14) {
 		
 		
 		if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdummy)){	
-			echo "<h2>". __("Installing Dummies...", rb_agency_TEXTDOMAIN) . "</h2>\n";
+			echo "<h2>". __("Installing Dummies...", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 			echo "<br/>";  
 			echo "Succesfully created ".count($userProfileNames)." dummy profiles..<br/>";
 
@@ -1470,7 +1470,7 @@ elseif ($ConfigID == 14) {
 					} elseif ($rb_agency_option_profilenaming == 1) {
 						$ProfileContactDisplay = $ProfileContact[0] . " ". substr($ProfileContact[1], 0, 1);
 					} elseif ($rb_agency_option_profilenaming == 2) {
-						$error .= "<b><i>". __(LabelSingular ." must have a display name identified", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+						$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 						$have_error = true;
 					} elseif ($rb_agency_option_profilenaming == 3) {
 						$ProfileContactDisplay = "ID ". $ProfileID;
@@ -1577,16 +1577,16 @@ elseif ($ConfigID == 14) {
 					// Copy images
 					if($a<=3){
 						if ($ProfileContact[2]=='Male') {
-							if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a]))){
-								echo $sample_url."/".$userMediaImagesM[$a]."<br/>".rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a];
+							if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$a]),rb_chmod_file_display(RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a]))){
+								echo $sample_url."/".$userMediaImagesM[$a]."<br/>".RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$a];
 								echo "<br/>";
 								die("Failed to Copy files... <br/>".phpinfo());
 							}
 							$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$a] ."','". $userMediaImagesM[$a] ."')");
 
 						} else {
-							if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$a]),rb_chmod_file_display(rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$a]))){
-								echo $sample_url."/".$userMediaImagesF[$a]."<br/>".rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$a];
+							if(!copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$a]),rb_chmod_file_display(RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$a]))){
+								echo $sample_url."/".$userMediaImagesF[$a]."<br/>".RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$a];
 								echo "<br/>";
 								die("Failed to Copy files... <br/>".phpinfo());
 							}
@@ -1602,26 +1602,26 @@ elseif ($ConfigID == 14) {
 
 						if (isset($ProfileContact[2]) && $ProfileContact[2]=='Male') {
 						// Male
-						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
+						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesM[$randTo8]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesM[$randTo8]."','". $userMediaImagesM[$randTo8] ."',1)");
 						
 						} else {
 						// Female
-						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$randTo8]);
+						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$randTo8]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$randTo8]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)");
 						}
                           
 						// Any Gender
-						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
+						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Headshot','". $userMediaHeadshot[$rand]."','". $userMediaHeadshot[$rand] ."')");
 
-						copy(rb_chmod_file_display($sample_url."/".$userMediaVoicedemo[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaVoicedemo[0]);
+						copy(rb_chmod_file_display($sample_url."/".$userMediaVoicedemo[0]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaVoicedemo[0]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','VoiceDemo','". $userMediaVoicedemo[0] ."','".  $userMediaVoicedemo[0] ."')");
 
-						copy(rb_chmod_file_display($sample_url."/".$userMediaCompcard[0]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaCompcard[0]);
+						copy(rb_chmod_file_display($sample_url."/".$userMediaCompcard[0]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaCompcard[0]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','CompCard','".$userMediaCompcard[0] ."','". $userMediaCompcard[0]."')");
 
-						copy(rb_chmod_file_display($sample_url."/".$userMediaResume[$rand]),rb_agency_UPLOADPATH . $ProfileGallery ."/".$userMediaResume[$rand]);
+						copy(rb_chmod_file_display($sample_url."/".$userMediaResume[$rand]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaResume[$rand]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Resume','". $userMediaResume[$rand]."','".$userMediaResume[$rand]."')");
 
 					}
@@ -1790,13 +1790,13 @@ elseif($ConfigID == '99'){
 	$found = false;
 	foreach($active as $act){
 		if(preg_match('/rb-agency-interact\.php/',$act)){
-			echo "<h2>". __("Generate Login / Passwords", rb_agency_TEXTDOMAIN) . "</h2>\n";
+			echo "<h2>". __("Generate Login / Passwords", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 			rb_display_profile_list();
 			$found = true;
 		}
 	}
 	if(!$found){
-		echo "<h3>". __("Activate/Install Rb Agency Interact plugin to use this feature", rb_agency_TEXTDOMAIN) . "</h3>\n";
+		echo "<h3>". __("Activate/Install Rb Agency Interact plugin to use this feature", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
 	}
 	
 }
@@ -1813,7 +1813,7 @@ elseif($ConfigID == '99'){
 function uninstall_dummy_profile($profile){
 	
 	
-	 $dir  = rb_agency_UPLOADPATH .$profile;  
+	 $dir  = RBAGENCY_UPLOADPATH .$profile;  
 	 if(@scandir($dir)){
 		 foreach (scandir($dir) as $item) {
 				if ($item == '.' || $item == '..') continue;
@@ -1827,7 +1827,7 @@ function uninstall_allprofile(){
 	  global $wpdb;
 	  $wpdb->query("TRUNCATE TABLE ".table_agency_profile ."");
 	  $wpdb->query("TRUNCATE TABLE ".table_agency_profile_media ."");
-	 $dir  = rb_agency_UPLOADPATH."/";  
+	 $dir  = RBAGENCY_UPLOADPATH."/";  
 	 foreach (scandir($dir) as $item) {
 			if ($item == '.' || $item == '..') continue;
 			 unlink($dir.DIRECTORY_SEPARATOR.$item);
@@ -1843,7 +1843,7 @@ function rb_agency_just_checkdir($ProfileGallery){
 	while ( ! $finished ):                   // while not finished
 	 $pos++;
 	  $NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
-	  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
+	  if ( ! is_dir(RBAGENCY_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
 		  if(($pos-1) <=0){
 			$ProfileGallery = $ProfileGallery;  // Set it to the new  thing
 		}else{
@@ -1867,7 +1867,7 @@ function rb_agency_set_directory($ProfileGallery){
 				while ( ! $finished ):                   // while not finished
 				 $pos++;
 				  $NewProfileGallery = $ProfileGallery ."-".$pos;   // output folder name
-				  if ( ! is_dir(rb_agency_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
+				  if ( ! is_dir(RBAGENCY_UPLOADPATH . $NewProfileGallery) ):        // if folder DOES NOT exist...
 					  if(($pos-1) <=0){
 						$ProfileGallery = $ProfileGallery;  // Set it to the new  thing
 					}else{
@@ -2319,11 +2319,11 @@ class RBAgencyCSVXLSImpoterPlugin {
 																if(!empty($ProfileGallery)){
 																	if($ProfileGallery != $ProfileGalleryCurrent){
 																		// just rename the existing folder,
-																		rename(rb_agency_UPLOADPATH. $ProfileGallery."/", rb_agency_UPLOADPATH. $ProfileGalleryCurrent."/");
+																		rename(RBAGENCY_UPLOADPATH. $ProfileGallery."/", RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent."/");
 																	}
 																} else {
 																	// actual folder creation
-																	$dirURL = rb_agency_UPLOADPATH. $ProfileGalleryCurrent;
+																	$dirURL = RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent;
 																	mkdir($dirURL, 0755); //700
 																	chmod($dirURL, 0777);
 																}

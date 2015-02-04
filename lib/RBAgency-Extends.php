@@ -142,9 +142,9 @@ class RBAgency_Extends {
 					}
 				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
 					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					}
 				}
 
@@ -194,8 +194,8 @@ class profile_search_widget_construct extends WP_Widget {
 
 	// Setup
 	function profile_search_widget_construct() {
-		$widget_ops = array('classname' => 'rb_agency_widget', 'description' => __("Displays profile search fields", rb_agency_TEXTDOMAIN) );
-		$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Search", rb_agency_TEXTDOMAIN), $widget_ops);
+		$widget_ops = array('classname' => 'rb_agency_widget', 'description' => __("Displays profile search fields", RBAGENCY_TEXTDOMAIN) );
+		$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Search", RBAGENCY_TEXTDOMAIN), $widget_ops);
 	}
 
 	// What Displays
@@ -255,8 +255,8 @@ class profile_featured_widget_construct extends WP_Widget {
 
 	// Setup
 	function profile_featured_widget_construct() {
-		$widget_ops = array('classname' => 'rb_agency_widget_showsearch', 'description' => __("Displays profile search fields", rb_agency_TEXTDOMAIN) );
-		$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Featured", rb_agency_TEXTDOMAIN), $widget_ops);
+		$widget_ops = array('classname' => 'rb_agency_widget_showsearch', 'description' => __("Displays profile search fields", RBAGENCY_TEXTDOMAIN) );
+		$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Featured", RBAGENCY_TEXTDOMAIN), $widget_ops);
 	}
 
 	// What Displays

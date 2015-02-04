@@ -12,7 +12,7 @@ jQuery(document).ready(function(){
 global $wpdb;
 
 // Include Admin Menu
-	include (rb_agency_BASEREL ."view/partial/admin-menu.php");
+	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php");
 
 // Get Current Page
 	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ 
@@ -97,15 +97,15 @@ if ($ConfigID == 0) {
 		<div class="welcome-panel-content">
 			<div class="welcome-panel-column-container">
 				<div class="welcome-panel-column">
-					<h3><?php echo __("Configuration", rb_agency_TEXTDOMAIN ) ?>:</h3>
+					<h3><?php echo __("Configuration", RBAGENCY_TEXTDOMAIN ) ?>:</h3>
 					<ul>
-						<li><a href="?page=<?php echo $_GET["page"]; ?>&ConfigID=1"><strong><?php _e("Settings", rb_agency_TEXTDOMAIN); ?></strong></a> - <?php _e("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN); ?></li>
-						<li><a href="?page=<?php echo $_GET["page"]; ?>&ConfigID=2"><strong><?php _e("Style", rb_agency_TEXTDOMAIN); ?></strong></a> - <?php _e("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN); ?></li>
+						<li><a href="?page=<?php echo $_GET["page"]; ?>&ConfigID=1"><strong><?php _e("Settings", RBAGENCY_TEXTDOMAIN); ?></strong></a> - <?php _e("Access this area to manage all of the core settings including layout types, privacy settings and more", RBAGENCY_TEXTDOMAIN); ?></li>
+						<li><a href="?page=<?php echo $_GET["page"]; ?>&ConfigID=2"><strong><?php _e("Style", RBAGENCY_TEXTDOMAIN); ?></strong></a> - <?php _e("Access this area to manage all of the core settings including layout types, privacy settings and more", RBAGENCY_TEXTDOMAIN); ?></li>
 					</ul>
 				</div>
 
 				<div class="welcome-panel-column" style="margin-left: 50px;">
-					<h3><?php echo __("Diagnostics", rb_agency_TEXTDOMAIN ) ?>:</h3>
+					<h3><?php echo __("Diagnostics", RBAGENCY_TEXTDOMAIN ) ?>:</h3>
 						<?php
 						//echo "No Diagnostic has been run.  Please run now.";
 						// Diagnostic Tests
@@ -129,17 +129,17 @@ if ($ConfigID == 0) {
 
 	// Core Settings
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Configuration", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("The following settings modify the core RB Agency settings.", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Configuration", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("The following settings modify the core RB Agency settings.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Features", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Settings", rb_agency_TEXTDOMAIN) . "\">". __("Settings", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Features", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=1\" title=\"". __("Settings", RBAGENCY_TEXTDOMAIN) . "\">". __("Settings", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Style", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\" title=\"". __("Style", rb_agency_TEXTDOMAIN) . "\">". __("Style", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Manage the stylesheet (CSS) controlling the category and profile layouts", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Style", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=2\" title=\"". __("Style", RBAGENCY_TEXTDOMAIN) . "\">". __("Style", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage the stylesheet (CSS) controlling the category and profile layouts", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "</div>\n";
 	echo "<hr />\n";
@@ -147,18 +147,18 @@ if ($ConfigID == 0) {
 	if(function_exists('rb_agency_interact_menu')){
 	// RB Agency Interact Settings
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("These settings modify the behavior of the RB Agency Interactive plugin.", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Interactive Settings", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("These settings modify the behavior of the RB Agency Interactive plugin.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "\">". __("Settings", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Interactive Settings", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=11\" title=\"". __("Interactive Settings", RBAGENCY_TEXTDOMAIN) . "\">". __("Settings", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Access this area to manage all of the core settings including layout types, privacy settings and more", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=12\" title=\"". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "\">". __("Subscription Rates", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Manage the subscription rate tiers and descriptions", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Subscription Rates", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=12\" title=\"". __("Subscription Rates", RBAGENCY_TEXTDOMAIN) . "\">". __("Subscription Rates", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage the subscription rate tiers and descriptions", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 
 	echo "</div>\n";
@@ -166,42 +166,42 @@ if ($ConfigID == 0) {
 	}
 	// Drop Down Fields
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Customize Profile Fields", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("You have full control over all drop downs and ability to add new custom fields of your own.", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Customize Profile Fields", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("You have full control over all drop downs and ability to add new custom fields of your own.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\" title=\"". __("Profile Categories", rb_agency_TEXTDOMAIN) . "\">". __("Profile Categories", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Choose custom category types to classify profiles", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Profile Categories", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=4\" title=\"". __("Profile Categories", RBAGENCY_TEXTDOMAIN) . "\">". __("Profile Categories", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Choose custom category types to classify profiles", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Custom Fields", rb_agency_TEXTDOMAIN) . "\">". __("Custom Fields", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Add public and private custom fields", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Custom Fields", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=5\" title=\"". __("Custom Fields", RBAGENCY_TEXTDOMAIN) . "\">". __("Custom Fields", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Add public and private custom fields", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Gender", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Gender", rb_agency_TEXTDOMAIN) . "\">". __("Gender", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Manage preset Gender choices", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Gender", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Gender", RBAGENCY_TEXTDOMAIN) . "\">". __("Gender", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage preset Gender choices", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Media Categories", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\" title=\"". __("Media Categories", rb_agency_TEXTDOMAIN) . "\">". __("Media Categories", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Manage your media categories", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Media Categories", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=6\" title=\"". __("Media Categories", RBAGENCY_TEXTDOMAIN) . "\">". __("Media Categories", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage your media categories", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <h3>". __("Locations", rb_agency_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\" title=\"". __("Locations", rb_agency_TEXTDOMAIN) . "\">". __("Locations", rb_agency_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("Manage your Locations", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "      <h3>". __("Locations", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=7\" title=\"". __("Locations", RBAGENCY_TEXTDOMAIN) . "\">". __("Locations", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Manage your Locations", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    </div>\n";
 	echo "</div>\n";
 	echo "<hr />\n";
 
 	// Uninstall
 	echo "<div class=\"boxlinkgroup\">\n";
-	echo "  <h2>". __("Uninstall", rb_agency_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("Uninstall RB Agency software and completely remove all data", rb_agency_TEXTDOMAIN) . "</p>\n";
+	echo "  <h2>". __("Uninstall", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("Uninstall RB Agency software and completely remove all data", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    <div class=\"boxlink\">\n";
-	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Uninstall", rb_agency_TEXTDOMAIN) . "\">". __("Uninstall", rb_agency_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <a class=\"button-secondary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Uninstall", RBAGENCY_TEXTDOMAIN) . "\">". __("Uninstall", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
 	echo "    </div>\n";
 	echo "</div>\n";
 
@@ -292,26 +292,26 @@ elseif ($ConfigID == 1) {
 		settings_fields( 'rb-agency-settings-group' ); 
 		echo "<table class=\"form-table\">\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Website Details', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Website Details', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Agency Name', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <th scope=\"row\">". __('Agency Name', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyname]\" value=\"". $rb_agency_value_agencyname ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Agency Email', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <th scope=\"row\">". __('Agency Email', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyemail]\" value=\"". $rb_agency_value_agencyemail ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Path to Logo', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Path to Logo', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencylogo]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Header Email', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Header Email', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agencyheader]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_agencyheader'])?$rb_agency_options_arr['rb_agency_option_agencyheader']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Show Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Show Fields', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> Remove Updates on Dashboard<br />\n";
@@ -320,7 +320,7 @@ elseif ($ConfigID == 1) {
 		
 		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Send email to Models/Talents', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Send email to Models/Talents', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_allowsendemail]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_allowsendemail'])?$rb_agency_options_arr['rb_agency_option_allowsendemail']:0, 1,false)."/> allow casting agent to contact talent directly<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_allowsendemail]\" value=\"2\" ".checked(isset($rb_agency_options_arr['rb_agency_option_allowsendemail'])?$rb_agency_options_arr['rb_agency_option_allowsendemail']:0, 2,false)."/> only admin can send Job invites<br />\n";
@@ -330,7 +330,7 @@ elseif ($ConfigID == 1) {
 		if ( is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) {
 		
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Models/Profiles Terms of Conditions Link', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Models/Profiles Terms of Conditions Link', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_model_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_model_toc'])?$rb_agency_options_arr['rb_agency_option_model_toc']:$rb_agency_option_model_toc) ."\" /></td>\n";
 		echo " </tr>\n";
 		}
@@ -338,7 +338,7 @@ elseif ($ConfigID == 1) {
 		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
 		
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Casting Terms of Conditions Link', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Casting Terms of Conditions Link', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_casting_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_casting_toc'])?$rb_agency_options_arr['rb_agency_option_casting_toc']:$rb_agency_option_casting_toc) ."\" /></td>\n";
 		echo " </tr>\n";
 		
@@ -347,10 +347,10 @@ elseif ($ConfigID == 1) {
 		 * Agency Internationalization
 		 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Internationalization', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Internationalization', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Default Country', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Default Country', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_locationcountry]\">\n";
 					$country_array = RBAgency_Common::data_country();
@@ -361,7 +361,7 @@ elseif ($ConfigID == 1) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Server Timezone', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Server Timezone', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_locationtimezone]\">\n";
 		  $rb_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
@@ -394,11 +394,11 @@ elseif ($ConfigID == 1) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Unit Type', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Unit Type', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_unittype]\">\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0, 1,false) ."> ". __("Imperial", rb_agency_TEXTDOMAIN) ." (ft/in/lb)</option>\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0, 0,false) ."> ". __("Metric", rb_agency_TEXTDOMAIN) ." (cm/kg)</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0, 1,false) ."> ". __("Imperial", RBAGENCY_TEXTDOMAIN) ." (ft/in/lb)</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0, 0,false) ."> ". __("Metric", RBAGENCY_TEXTDOMAIN) ." (cm/kg)</option>\n";
 		echo "     </select>\n";
 		echo "    <input type=\"hidden\" name=\"rb_agency_options[rb_agency_option_old_unittype]\" value=\"".(isset($rb_agency_options_arr['rb_agency_option_old_unittype']) && $rb_agency_options_arr['rb_agency_option_old_unittype']==$rb_agency_options_arr['rb_agency_option_unittype']?$rb_agency_options_arr['rb_agency_option_old_unittype']:$rb_agency_options_arr['rb_agency_option_unittype'])."\" />";
 		echo "   </td>\n";
@@ -407,50 +407,50 @@ elseif ($ConfigID == 1) {
 		 * Profile Display
 		 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile List Options', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile List Options', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Display Options', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Display Options', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_count'])?$rb_agency_options_arr['rb_agency_option_profilelist_count']:0, 1,false)."/> ". __("Show Model Count", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0, 1,false)."/> ". __("Show Sort Options", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0, 1,false)."/> ". __("Expanded Model Details", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_year]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0, 1,false)."/> ". __("Show Age(Year)", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_month]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0, 1,false)."/> ". __("Show Age(Month)", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_day]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0, 1,false)."/> ". __("Show Age(Day)", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_state]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0, 1,false)."/> ". __("State", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_count'])?$rb_agency_options_arr['rb_agency_option_profilelist_count']:0, 1,false)."/> ". __("Show Model Count", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0, 1,false)."/> ". __("Show Sort Options", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0, 1,false)."/> ". __("Expanded Model Details", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_year]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0, 1,false)."/> ". __("Show Age(Year)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_month]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0, 1,false)."/> ". __("Show Age(Month)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_day]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0, 1,false)."/> ". __("Show Age(Day)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_state]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0, 1,false)."/> ". __("State", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		
 		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite'])?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0, 1,false)."/> ". __("Enable Model Favorites", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite'])?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0, 1,false)."/> ". __("Enable Model Favorites", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		}
 		
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0, 1,false)."/> ". __("Show Sidebar", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0, 1,false)."/> ". __("Show Sidebar", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		
 		if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0, 1,false)."/> ". __("Show Casting Cart", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0, 1,false)."/> ". __("Show Casting Cart", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		}
 		
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'])?$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0, 1,false)."/> ". __("Show Thumbs Slide", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_bday'])?$rb_agency_options_arr['rb_agency_option_profilelist_bday']:0, 1,false)."/> ". __("Show Birthday With Months", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'])?$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0, 1,false)."/> ". __("Show Print and Download PDF Link", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_subscription'])?$rb_agency_options_arr['rb_agency_option_profilelist_subscription']:"", 1,false)."/> ". __("Show Manage Your Subscription", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0, 1,false)."/> ". __("Show Social Buttons", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showcountrycode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showcountrycode'])?$rb_agency_options_arr['rb_agency_option_showcountrycode']:0, 1,false)."/> ". __("Show Country as Code", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showstatecode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0, 1,false)."/> ". __("Show as State Code", rb_agency_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortbydate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']:0, 1,false)."/> ". __("Sort by Date", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'])?$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0, 1,false)."/> ". __("Show Thumbs Slide", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_bday'])?$rb_agency_options_arr['rb_agency_option_profilelist_bday']:0, 1,false)."/> ". __("Show Birthday With Months", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'])?$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0, 1,false)."/> ". __("Show Print and Download PDF Link", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_subscription'])?$rb_agency_options_arr['rb_agency_option_profilelist_subscription']:"", 1,false)."/> ". __("Show Manage Your Subscription", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0, 1,false)."/> ". __("Show Social Buttons", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showcountrycode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showcountrycode'])?$rb_agency_options_arr['rb_agency_option_showcountrycode']:0, 1,false)."/> ". __("Show Country as Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showstatecode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0, 1,false)."/> ". __("Show as State Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortbydate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']:0, 1,false)."/> ". __("Sort by Date", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
 				echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Profiles Per Page', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Profiles Per Page', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_profilelist_perpage]\" value=\"". $rb_agency_option_profilelist_perpage ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Profile List Style', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Profile List Style', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 0,false) ."> ". __("Name Over Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 1,false) ."> ". __("Name Under Image with Color", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 2,false) ."> ". __("Name Under Image", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 0,false) ."> ". __("Name Over Image", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 1,false) ."> ". __("Name Under Image with Color", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0, 2,false) ."> ". __("Name Under Image", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -458,14 +458,14 @@ elseif ($ConfigID == 1) {
 		 * Profile Search
 		 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile Search Options', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile Search Options', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Maximum Records Returned', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Maximum Records Returned', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_persearch]\" value=\"". $rb_agency_option_persearch ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Search Fields', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Search Fields', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_name]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_name'])?$rb_agency_options_arr['rb_agency_option_formshow_name']:0, 1,false)."/> Show Name Search Fields<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_type]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0, 1,false)."/> Show Type Search Fields<br />\n";
@@ -483,24 +483,24 @@ elseif ($ConfigID == 1) {
 		 * Image Handling
 		 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Image Handling', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Image Handling', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Resize Images', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Resize Images', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
-				 _e('Maximum Width', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" /><br />\n";
-				 _e('Maximum Height', rb_agency_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
+				 _e('Maximum Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" /><br />\n";
+				 _e('Maximum Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Image Compression', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Image Compression', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_image_compression]\">\n";
-		echo "       <option value=\"100\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 100,false) ."> ". __("Maximum Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"85\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 85,false) ."> ". __("Very High Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"70\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 70,false) ."> ". __("High Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"55\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 55,false) ."> ". __("Medium Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"40\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 40,false) ."> ". __("Low Quality", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"100\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 100,false) ."> ". __("Maximum Quality", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"85\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 85,false) ."> ". __("Very High Quality", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"70\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 70,false) ."> ". __("High Quality", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"55\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 55,false) ."> ". __("Medium Quality", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"40\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 40,false) ."> ". __("Low Quality", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -509,46 +509,46 @@ elseif ($ConfigID == 1) {
 		 * Profile View
 		 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile View Options', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Profile View Options', RBAGENCY_TEXTDOMAIN) ."</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Privacy Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Privacy Settings', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_privacy]\">\n";
-		echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged in as Casting Agent to View Profiles', rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged in as Casting Agent to View Profiles', RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Profile Name Format', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Profile Name Format', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_profilenaming]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 0,false) ."> ". __("First Last", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 1,false) ."> ". __("First L", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 4,false) ."> ". __("First", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 5,false) ."> ". __("Last", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 2,false) ."> ". __("Display Name", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 3,false) ."> ". __("Auto Generated Record ID", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 0,false) ."> ". __("First Last", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 1,false) ."> ". __("First L", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 4,false) ."> ". __("First", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 5,false) ."> ". __("Last", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 2,false) ."> ". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0, 3,false) ."> ". __("Auto Generated Record ID", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Profile Layout Style', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Profile Layout Style', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofile]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 0,false) ."> ". __("Layout 00 - Profile View with Thumbnails", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 3,false) ."> ". __("Layout 03 - Extended Profile View", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 0,false) ."> ". __("Layout 00 - Profile View with Thumbnails", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 1,false) ."> ". __("Layout 01 - Profile View with Thumbnails and Primary Image", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 3,false) ."> ". __("Layout 03 - Extended Profile View", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 			$x=6;
 			while($x<=15) {
-				if (file_exists(rb_agency_BASEREL .'view/layout/'. sprintf("%02s", $x) .'/include-profile.php')) {
-				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout ", rb_agency_TEXTDOMAIN). $x ."</option>\n";
+				if (file_exists(RBAGENCY_PLUGIN_DIR .'view/layout/'. sprintf("%02s", $x) .'/include-profile.php')) {
+				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout ", RBAGENCY_TEXTDOMAIN). $x ."</option>\n";
 				}
 				$x++;
 			}
@@ -556,30 +556,30 @@ elseif ($ConfigID == 1) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Image Gallery Type', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Image Gallery Type', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_gallerytype]\">\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0, 1,false) ."> ". __("Slimbox2", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0, 0,false) ."> ". __("No Gallery", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0, 1,false) ."> ". __("Slimbox2", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0, 0,false) ."> ". __("No Gallery", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Image Gallery Sort Order', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Image Gallery Sort Order', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_galleryorder]\">\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 1,false) ."> ". __("Show most recently uploaded first", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 0,false) ."> ". __("Show chronological order", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 1,false) ."> ". __("Show most recently uploaded first", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 0,false) ."> ". __("Show chronological order", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Profile Media Links', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Profile Media Links', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_profilemedia_links]\">\n";
-		//echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 1,false) ."> ". __("Open in a new tab", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 2,false) ."> ". __("Open in a new window", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 3,false) ."> ". __("Force Download", rb_agency_TEXTDOMAIN) ."</option>\n";
+		//echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 1,false) ."> ". __("Open in a new tab", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 2,false) ."> ". __("Open in a new window", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 3,false) ."> ". __("Force Download", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -588,22 +588,22 @@ elseif ($ConfigID == 1) {
 		 * EasyText API
 		 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('EasyTxt Integration', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('EasyTxt Integration', RBAGENCY_TEXTDOMAIN) ."</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('URL', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('URL', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
 				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxturl]\" value=\"". $rb_agency_value_easytxturl ."\" style=\"width: 180px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('API Key', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('API Key', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
 				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtkey]\" value=\"". $rb_agency_value_easytxtkey ."\" style=\"width: 180px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('API Secret', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('API Secret', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
 				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtsecret]\" value=\"". $rb_agency_value_easytxtsecret ."\" style=\"width: 180px;\" />\n";
 		echo "   </td>\n";
@@ -614,10 +614,10 @@ elseif ($ConfigID == 1) {
 		//Commented by @Gaurav as We will be creating this as a separate plugin
 		// Member Contact form link
 		/*echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Contact Options', rb_agency_TEXTDOMAIN) ."</h3></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Contact Options', RBAGENCY_TEXTDOMAIN) ."</h3></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Contact Page Settings', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Contact Page Settings', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"2\" ".checked($rb_agency_option_showcontactpage, 2,false)."/>Disable Contact<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_showcontactpage]\" value=\"1\" ".checked($rb_agency_option_showcontactpage, 1,false)."/>Email to both the model and the site owner<br />\n";
@@ -631,15 +631,15 @@ elseif ($ConfigID == 1) {
 		/*############# hide Profile Custom Fields Options - FOR THE MEAN TIME######################
 		// Profile Custom Fields Options
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Profile Custom Fields Options', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Show Custom Fields on', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Show Custom Fields on', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_profilepage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_profilepage'], 1,false)."/> ". __("Profile Page", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_searchpage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_searchpage'], 1,false)."/> ". __("Search Results Page", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_all]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_all'], 1,false)."/> ". __("User must be Logged In to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1,false)."/> ". __("User must be an Admin to see It", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_profilepage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_profilepage'], 1,false)."/> ". __("Profile Page", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_searchpage]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_searchpage'], 1,false)."/> ". __("Search Results Page", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_all]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_all'], 1,false)."/> ". __("User must be Logged In to see It", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_customfield_loggedin_admin]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_customfield_loggedin_admin'], 1,false)."/> ". __("User must be an Admin to see It", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -669,26 +669,26 @@ elseif ($ConfigID == 11) {
 	
 
 
-	echo "<h3>". __("Interactive Settings", rb_agency_TEXTDOMAIN) . "</h3>\n";
+	echo "<h3>". __("Interactive Settings", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
 		echo "<form method=\"post\" action=\"options.php\">\n";
 		settings_fields( 'rb-agencyinteract-settings-group' ); 
 		
 		echo "<table class=\"form-table\">\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Database Version', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Database Version', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"\" value=\"". rb_agency_interact_VERSION ."\" disabled /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Display', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Display', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_sidebar]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar']:0, 1,false)."/> ". __("Show Sidebar on Member Management/Login Pages", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_sidebar]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_sidebar']:0, 1,false)."/> ". __("Show Sidebar on Member Management/Login Pages", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">&nbsp;</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_toolbar]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_toolbar'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_toolbar']:0, 1,false)."/> ". __("Hide Toolbar on All Pages", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profilemanage_toolbar]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_toolbar'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_profilemanage_toolbar']:0, 1,false)."/> ". __("Hide Toolbar on All Pages", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -698,10 +698,10 @@ elseif ($ConfigID == 11) {
 		 * Interact Settings
 		 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Login Settings', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Login Settings', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Redirect for Login', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Redirect for Login', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_custom_login]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:"", 1,false)."/> ". __("Do Not Override Login Screen", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_custom_login]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:"", 0,false)."/> ". __("Redirect to /profile-login/", rb_agency_interact_TEXTDOMAIN) ."<br />\n";
@@ -728,96 +728,96 @@ elseif ($ConfigID == 11) {
 
 
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
 		echo " </tr>\n";
 			echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Email Confirmation', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Email Confirmation', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerconfirm]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 0,false) ."> ". __("Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 1,false) ."> ". __("Password Self-Generated", rb_agency_TEXTDOMAIN) ."</option>\n";
-		//echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 2,false) ."> ". __("Username & Password Auto-Generated (sent via email)", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 0,false) ."> ". __("Password Auto-Generated (sent via email)", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 1,false) ."> ". __("Password Self-Generated", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		//echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerconfirm']:"", 2,false) ."> ". __("Username & Password Auto-Generated (sent via email)", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Show User Registration when creating Profiles', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Show User Registration when creating Profiles', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_useraccountcreation]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 0,false) ."> ". __("Show Username field (if email confirmation is set to \"password auto-generated\")", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 1,false) ."> ". __("Show Username & Password fields (if email confirmation is set to \"password self-generated\")", rb_agency_TEXTDOMAIN) ."</option>\n";
-		//echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 2,false) ."> ". __("Do Not Show Username & Password fields (if email confirmation is set to \"username & password auto-generated\")", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 0,false) ."> ". __("Show Username field (if email confirmation is set to \"password auto-generated\")", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 1,false) ."> ". __("Show Username & Password fields (if email confirmation is set to \"password self-generated\")", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		//echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_useraccountcreation']:0, 2,false) ."> ". __("Do Not Show Username & Password fields (if email confirmation is set to \"username & password auto-generated\")", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('New Profile Registration', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('New Profile Registration', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1,false)."/> Users may register profiles (uncheck to prevent self registration)<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		/*echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Enable registration of Agent/Producer', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Enable registration of Agent/Producer', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallowAgentProducer]\">\n";
-		echo "       <option value=\"1\" ". ((isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer']:0) == 1 ? 'selected="selected"':'') ."> ". __("Show", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". ((isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer']:0) == 0 ? 'selected="selected"':'') ."> ". __("Hide", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". ((isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer']:0) == 1 ? 'selected="selected"':'') ."> ". __("Show", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". ((isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallowAgentProducer']:0) == 0 ? 'selected="selected"':'') ."> ". __("Hide", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Delete Options', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Delete Options', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 1,false)."/> ". __("No", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"2\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 2,false)."/> ". __("Yes (Allow users to perminently delete their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"3\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 3,false)."/> ". __("Archive Only (Allow users to hide their profile)", rb_agency_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 1,false)."/> ". __("No", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"2\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 2,false)."/> ". __("Yes (Allow users to perminently delete their profile)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"3\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 3,false)."/> ". __("Archive Only (Allow users to hide their profile)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
 	
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('New Profile Approval', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('New Profile Approval', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerapproval]\">\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval']:"", 0,false) ."> ". __("Manually Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval']:"", 1,false) ."> ". __("Automatically Approved", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval']:"", 0,false) ."> ". __("Manually Approved", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerapproval']:"", 1,false) ."> ". __("Automatically Approved", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Default State For Registered Users', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Default State For Registered Users', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_option_default_registered_users]\">\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 1,false) ."> ". __("Active", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"4\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 4,false) ."> ". __("Active - Not Visible On Website", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 0,false) ."> ". __("Inactive", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 2,false) ."> ". __("Archive", rb_agency_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 3,false) ."> ". __("Pending Approval", rb_agency_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 1,false) ."> ". __("Active", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"4\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 4,false) ."> ". __("Active - Not Visible On Website", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 0,false) ."> ". __("Inactive", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 2,false) ."> ". __("Archive", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_default_registered_users']:"", 3,false) ."> ". __("Pending Approval", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Membership Subscription', rb_agency_TEXTDOMAIN); echo "</h3></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Membership Subscription', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Notifications', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Notifications', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribeupsell]\" value=\"1\" "; checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell']:"", 1,false); echo "/> Display Upsell Messages for Subscription)<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Embed Overview Page ID', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Embed Overview Page ID', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_overviewpagedetails]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Embed Registration Page ID', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Embed Registration Page ID', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepagedetails]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('PayPal Email Address', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('PayPal Email Address', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepaypalemail]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo "</table>\n";
@@ -836,8 +836,8 @@ elseif ($ConfigID == 12) {
 
 
 	/** Identify Labels **/
-	define("LabelPlural", __("Subscription Tiers", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Subscription Tier", rb_agency_TEXTDOMAIN));
+	define("LabelPlural", __("Subscription Tiers", RBAGENCY_TEXTDOMAIN));
+	define("LabelSingular", __("Subscription Tier", RBAGENCY_TEXTDOMAIN));
   /* Initial Registration [RESPOND TO POST] ***********/ 
   if ( isset($_POST['action']) ) {
 		$SubscriptionRateID 	= $_POST['SubscriptionRateID'];
@@ -850,7 +850,7 @@ elseif ($ConfigID == 12) {
 		$error = "";
 		$have_error = false;
 		if(trim($SubscriptionRateTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
 		$action = $_POST['action'];
@@ -859,7 +859,7 @@ elseif ($ConfigID == 12) {
 		// Add
 		case 'addRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
 		
 				// Create Record
@@ -867,14 +867,14 @@ elseif ($ConfigID == 12) {
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 				
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 			}
 		break;
 	
 		// Manage
 		case 'editRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
 				$update = "UPDATE " . table_agencyinteract_subscription_rates . " 
 							SET 
@@ -885,7 +885,7 @@ elseif ($ConfigID == 12) {
 								SubscriptionRateTerm='" . esc_sql($SubscriptionRateTerm) . "' 
 							WHERE SubscriptionRateID='$SubscriptionRateID'";
 				$updated = $wpdb->query($update);
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
 		break;
 		// Delete bulk
@@ -901,7 +901,7 @@ elseif ($ConfigID == 12) {
 					$delete = "DELETE FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID = \"". $SubscriptionRateID ."\"";
 					$results = $wpdb->query($delete);
 					
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['SubscriptionRateTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['SubscriptionRateTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 						
 				} // while
 			  } // it was numeric
@@ -924,7 +924,7 @@ elseif ($ConfigID == 12) {
 			$delete = "DELETE FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID = \"". $SubscriptionRateID ."\"";
 			$results = $wpdb->query($delete);
 			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['SubscriptionRateTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['SubscriptionRateTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 				
 		} // is there record?
 	  } // it was numeric
@@ -946,8 +946,8 @@ elseif ($ConfigID == 12) {
 				$SubscriptionRateTerm	=$data['SubscriptionRateTerm'];
 			} 
 		
-			echo "<h3 class=\"title\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3 class=\"title\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>\n";
+			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
 	
 		} else {
 		
@@ -959,8 +959,8 @@ elseif ($ConfigID == 12) {
 			$SubscriptionRateTerm	= 1;
 			
 			
-			echo "<h3>". sprintf(__("Create New  %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
-			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3>". sprintf(__("Create New  %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
+			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
 		} // Has Subscription rate or not
   } // Edit record
 		
@@ -968,25 +968,25 @@ elseif ($ConfigID == 12) {
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
+	echo "        <th scope=\"row\">". __("Title", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 	echo "        <td><input type=\"text\" id=\"SubscriptionRateTitle\" name=\"SubscriptionRateTitle\" value=\"". (isset($SubscriptionRateTitle)?$SubscriptionRateTitle:"") ."\" /></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Type", rb_agency_TEXTDOMAIN) ." *:</th>\n";
+	echo "        <th scope=\"row\">". __("Type", RBAGENCY_TEXTDOMAIN) ." *:</th>\n";
 	echo "        <td><select id=\"SubscriptionRateType\" name=\"SubscriptionRateType\">\n";
 	echo "			  <option value=\"0\"". selected(0, $SubscriptionRateType) .">Standard</option>\n";
 	echo "          </select></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Text", rb_agency_TEXTDOMAIN) ." *:</th>\n";
+	echo "        <th scope=\"row\">". __("Text", RBAGENCY_TEXTDOMAIN) ." *:</th>\n";
 	echo "        <td><textarea id=\"SubscriptionRateText\" name=\"SubscriptionRateText\">". (isset($SubscriptionRateText)?$SubscriptionRateText:"") ."</textarea></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Package Rate", rb_agency_TEXTDOMAIN) ." *:</th>\n";
+	echo "        <th scope=\"row\">". __("Package Rate", RBAGENCY_TEXTDOMAIN) ." *:</th>\n";
 	echo "        <td><input type=\"text\" id=\"SubscriptionRatePrice\" name=\"SubscriptionRatePrice\" value=\"". (isset($SubscriptionRatePrice)?$SubscriptionRatePrice:"") ."\" /></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Subscription Duration", rb_agency_TEXTDOMAIN) ." *:</th>\n";
+	echo "        <th scope=\"row\">". __("Subscription Duration", RBAGENCY_TEXTDOMAIN) ." *:</th>\n";
 	echo "        <td><select id=\"SubscriptionRateTerm\" name=\"SubscriptionRateTerm\">\n";
 	echo "			  <option value=\"1\"". selected(1, $SubscriptionRateTerm) .">1 Month</option>\n";
 	echo "			  <option value=\"2\"". selected(2, $SubscriptionRateTerm) .">2 Months</option>\n";
@@ -1004,18 +1004,18 @@ elseif ($ConfigID == 12) {
 	echo "     <input type=\"hidden\" name=\"SubscriptionRateID\" value=\"". $SubscriptionRateID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} else {
 	echo "<p class=\"submit\">\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} 
 	echo "</form>\n";
 	
-	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
+	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 	
 		/******** Sort Order ************/
 		$sort = "";
@@ -1045,19 +1045,19 @@ elseif ($ConfigID == 12) {
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRateTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRateType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRatePrice&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Rate/Term", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRateText&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Text", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRateTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRateType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Type", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRatePrice&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Rate/Term", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=SubscriptionRateText&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Text", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		echo "<tfoot>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Type", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Rate/Term", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Price", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Type", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Rate/Term", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Price", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
@@ -1071,8 +1071,8 @@ elseif ($ConfigID == 12) {
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $SubscriptionRateID ."\" name=\"". $SubscriptionRateID ."\" value=\"". $SubscriptionRateID ."\" /></th>\n";
 		echo "        <td class=\"column\">". stripslashes($data['SubscriptionRateTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;SubscriptionRateID=". $SubscriptionRateID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;SubscriptionRateID=". $SubscriptionRateID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;SubscriptionRateID=". $SubscriptionRateID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;SubscriptionRateID=". $SubscriptionRateID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
 		echo "        <td class=\"column\">"; if ($data['SubscriptionRateType'] == 0) { echo "Standard"; } echo "</td>\n";
@@ -1083,14 +1083,14 @@ elseif ($ConfigID == 12) {
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"5\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
+		echo "        <td class=\"column\" colspan=\"5\"><p>". __("There aren't any records loaded yet", RBAGENCY_TEXTDOMAIN) . "!</p></td>\n";
 		echo "    </tr>\n";
 		}
 		echo "</tbody>\n";
 		echo "</table>\n";
 		echo "<p class=\"submit\">\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
 		
 		echo "</form>\n";
@@ -1106,7 +1106,7 @@ elseif ($ConfigID == 2) {
  */
 
 	// Get the file
-	$rb_agency_stylesheet = rb_agency_BASEREL ."style/style.css";
+	$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."style/style.css";
 
 
 	/*
@@ -1130,7 +1130,7 @@ elseif ($ConfigID == 2) {
 			echo "<div id=\"message\" class=\"updated\"><p>Style last updated on " . date ("F d Y H:i:s.", filemtime($rb_agency_stylesheet)) .".</p></div>";
 
 		} else { // File Does Not Exist
-			$rb_agency_stylesheet = rb_agency_BASEREL ."style/style_base.css";
+			$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."style/style_base.css";
 			echo "<div id=\"message\" class=\"error\"><p>Stylesheet not setup, please click <strong>Save Changes</strong> below to initialize.</p></div>";
 		}
 
@@ -1172,7 +1172,7 @@ elseif ($ConfigID == 2) {
 	echo "		<table class=\"form-table\">\n";
 	echo "		<tbody>\n";
 	echo "		 <tr valign=\"top\">\n";
-	echo "		   <th scope=\"row\">". __('Stylesheet', rb_agency_TEXTDOMAIN); echo "</th>\n";
+	echo "		   <th scope=\"row\">". __('Stylesheet', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
 	echo "		   <td><textarea name=\"rb_agency_stylesheet_string\" style=\"width: 100%; height: 300px;\" />". $rb_agency_stylesheet_string ."</textarea></td>\n";
 	echo "		 </tr>\n";
 	echo "		</table>\n";
@@ -1200,14 +1200,14 @@ elseif ($ConfigID == 2) {
 		settings_fields( 'rb-agency-settings-layout-group' ); 
 		echo "<table class=\"form-table\">\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Extra HTML', rb_agency_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Extra HTML', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Header', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <th scope=\"row\">". __('Header', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
 		echo "   <td><textarea name=\"rb_agency_layout_options[rb_agency_option_styleheader]\">". $rb_agency_value_styleheader ."</textarea></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Footer', rb_agency_TEXTDOMAIN); echo "</th>\n";
+		echo "   <th scope=\"row\">". __('Footer', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
 		echo "   <td><textarea name=\"rb_agency_layout_options[rb_agency_option_stylefooter]\">". $rb_agency_value_stylefooter ."</textarea></td>\n";
 		echo " </tr>\n";
 		echo "</table>\n";
@@ -1227,8 +1227,8 @@ elseif ($ConfigID == 3) {
  */
 
 	// Identify Labels
-	define("LabelPlural", __("Gender Types", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Gender Type", rb_agency_TEXTDOMAIN));
+	define("LabelPlural", __("Gender Types", RBAGENCY_TEXTDOMAIN));
+	define("LabelSingular", __("Gender Type", RBAGENCY_TEXTDOMAIN));
 
 	/*
 	 * Save Record
@@ -1242,7 +1242,7 @@ elseif ($ConfigID == 3) {
 		$error = "";
 		$have_error = false;
 		if(trim($GenderTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
 
@@ -1252,28 +1252,28 @@ elseif ($ConfigID == 3) {
 		// Add
 		case 'addRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
 				// Create Record
 				$insert = "INSERT INTO " . table_agency_data_gender . " (GenderTitle) VALUES ('" . esc_sql($GenderTitle) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 			}
 		break;
 
 		// Manage
 		case 'editRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
 				$update = "UPDATE " . table_agency_data_gender . " 
 							SET 
 								GenderTitle='" . esc_sql($GenderTitle) . "'
 							WHERE GenderID='$GenderID'";
 				$updated = $wpdb->query($update);
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
 		break;
 		// Delete bulk
@@ -1288,7 +1288,7 @@ elseif ($ConfigID == 3) {
 					$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
 					$results = $wpdb->query($delete);
 					
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 						
 				} // while
 			  } // it was numeric
@@ -1312,7 +1312,7 @@ elseif ($ConfigID == 3) {
 				$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
 				$results = $wpdb->query($delete);
 				
-				echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+				echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 					
 			} // is there record?
 		} // it was numeric
@@ -1333,8 +1333,8 @@ elseif ($ConfigID == 3) {
 				$GenderTitle =stripslashes($data['GenderTitle']);
 			}
 
-			echo "<h3 class=\"title\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3 class=\"title\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>\n";
+			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
 		}
 
 	/*
@@ -1346,8 +1346,8 @@ elseif ($ConfigID == 3) {
 			$GenderTitle ="";
 			$GenderTag ="";
 
-			echo "<h3>". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
-			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3>". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
+			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
 	}
 
 
@@ -1359,7 +1359,7 @@ elseif ($ConfigID == 3) {
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
+	echo "        <th scope=\"row\">". __("Title", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 	echo "        <td><input type=\"text\" id=\"GenderTitle\" name=\"GenderTitle\" value=\"". $GenderTitle ."\" /></td>\n";
 	echo "    </tr>\n";
 	echo "  </tbody>\n";
@@ -1369,18 +1369,18 @@ elseif ($ConfigID == 3) {
 	echo "     <input type=\"hidden\" name=\"GenderID\" value=\"". $GenderID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} else {
 	echo "<p class=\"submit\">\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} 
 	echo "</form>\n";
 	
-	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
+	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 
 	/******** Sort Order ************/
 	$sort = "";
@@ -1410,13 +1410,13 @@ elseif ($ConfigID == 3) {
 	echo "<thead>\n";
 	echo "    <tr class=\"thead\">\n";
 	echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-	echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=GenderTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+	echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=GenderTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 	echo "    </tr>\n";
 	echo "</thead>\n";
 	echo "<tfoot>\n";
 	echo "    <tr class=\"thead\">\n";
 	echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-	echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 	echo "    </tr>\n";
 	echo "</tfoot>\n";
 	echo "<tbody>\n";
@@ -1432,8 +1432,8 @@ elseif ($ConfigID == 3) {
 	echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $GenderID ."\" name=\"". $GenderID ."\" value=\"". $GenderID ."\" /></th>\n";
 	echo "        <td class=\"column\">". stripslashes($data['GenderTitle']) ."\n";
 	echo "          <div class=\"row-actions\">\n";
-	echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-	echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+	echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+	echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 	echo "          </div>\n";
 	echo "        </td>\n";
 	echo "    </tr>\n";
@@ -1441,7 +1441,7 @@ elseif ($ConfigID == 3) {
 	if ($count < 1) {
 	echo "    <tr>\n";
 	echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-	echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
+	echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", RBAGENCY_TEXTDOMAIN) . "!</p></td>\n";
 	echo "    </tr>\n";
 	}
 	echo "</tbody>\n";
@@ -1449,7 +1449,7 @@ elseif ($ConfigID == 3) {
 	echo "<p class=\"submit\">\n";
 	echo "    <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-	echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+	echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	
 	echo "</form>\n";
@@ -1460,8 +1460,8 @@ elseif ($ConfigID == 3) {
 // *************************************************************************************************** //
 // Setup Profile Categories	
 	/** Identify Labels **/
-	define("LabelPlural", __("Profile Types", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Profile Type", rb_agency_TEXTDOMAIN));
+	define("LabelPlural", __("Profile Types", RBAGENCY_TEXTDOMAIN));
+	define("LabelSingular", __("Profile Type", RBAGENCY_TEXTDOMAIN));
   /* Initial Registration [RESPOND TO POST] ***********/ 
   if ( isset($_POST['action']) ) {
 	
@@ -1474,7 +1474,7 @@ elseif ($ConfigID == 3) {
 		$error = "";
 		$have_error = false;
 		if(trim($DataTypeTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
 		$action = $_POST['action'];
@@ -1483,7 +1483,7 @@ elseif ($ConfigID == 3) {
 		// Add
 		case 'addRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
 		
 				// Create Record
@@ -1491,14 +1491,14 @@ elseif ($ConfigID == 3) {
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 				
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 			}
 		break;
 	
 		// Manage
 		case 'editRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
 				$update = "UPDATE " . table_agency_data_type . " 
 							SET 
@@ -1518,7 +1518,7 @@ elseif ($ConfigID == 3) {
 				}
 				
 				echo "Updated $total custom fields assigned to this Profile Type<br/>";
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
 		break;
 		// Delete bulk
@@ -1534,7 +1534,7 @@ elseif ($ConfigID == 3) {
 					$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = \"". $DataTypeID ."\"";
 					$results = $wpdb->query($delete);
 					
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['DataTypeTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['DataTypeTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 						
 				} // while
 			  } // it was numeric
@@ -1557,7 +1557,7 @@ elseif ($ConfigID == 3) {
 			$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = '%s'";
 			$results = $wpdb->query($wpdb->prepare($delete,$DataTypeID));
 			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['DataTypeTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['DataTypeTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 				
 		} // is there record?
 	  } // it was numeric
@@ -1577,8 +1577,8 @@ elseif ($ConfigID == 3) {
 				$DataTypeTag	=$data['DataTypeTag'];
 			} 
 		
-			echo "<h3 class=\"title\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>\n";
-			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3 class=\"title\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>\n";
+			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
 		}
   } else {
 		
@@ -1586,19 +1586,19 @@ elseif ($ConfigID == 3) {
 			$DataTypeTitle	="";
 			$DataTypeTag	="";
 			
-			echo "<h3>". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
-			echo "<p>". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></p>\n";
+			echo "<h3>". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
+			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
   }
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Title", rb_agency_TEXTDOMAIN) .":</th>\n";
+	echo "        <th scope=\"row\">". __("Title", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 	echo "        <td><input type=\"text\" id=\"DataTypeTitle\" name=\"DataTypeTitle\" value=\"". $DataTypeTitle ."\" /></td>\n";
 	echo "    </tr>\n";
 	if ( $DataTypeID > 0) {
 	echo "    <tr valign=\"top\">\n";
-	echo "        <th scope=\"row\">". __("Slug", rb_agency_TEXTDOMAIN) .":</th>\n";
+	echo "        <th scope=\"row\">". __("Slug", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 	echo "        <td><input type=\"text\" id=\"DataTypeTag\" name=\"DataTypeTag\" value=\"". $DataTypeTag ."\" /></td>\n";
 	echo "    </tr>\n";
 	} 
@@ -1610,18 +1610,18 @@ elseif ($ConfigID == 3) {
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
 	echo "     <input type=\"hidden\" name=\"oldTitle\" value=\"".$DataTypeTitle."\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} else {
 	echo "<p class=\"submit\">\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} 
 	echo "</form>\n";
 	
-	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
+	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 	
 		/******** Sort Order ************/
 		$sort = "";
@@ -1651,15 +1651,15 @@ elseif ($ConfigID == 3) {
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=DataTypeTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=DataTypeTag&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Slug", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=DataTypeTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=DataTypeTag&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Slug", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		echo "<tfoot>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Slug", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Slug", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
@@ -1673,8 +1673,8 @@ elseif ($ConfigID == 3) {
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $DataTypeID ."\" name=\"". $DataTypeID ."\" value=\"". $DataTypeID ."\" /></th>\n";
 		echo "        <td class=\"column\">". stripslashes($data['DataTypeTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
 		echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
@@ -1683,7 +1683,7 @@ elseif ($ConfigID == 3) {
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
+		echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", RBAGENCY_TEXTDOMAIN) . "!</p></td>\n";
 		echo "    </tr>\n";
 		}
 		echo "</tbody>\n";
@@ -1691,7 +1691,7 @@ elseif ($ConfigID == 3) {
 		echo "<p class=\"submit\">\n";
 		echo "    <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
 		
 		echo "</form>\n";
@@ -1701,7 +1701,7 @@ elseif ($ConfigID == 7){
 
 global $wpdb;
 echo "<div class=\"wrap\">\n";
-echo "  <h3 class=\"title\">". __("Define Country", rb_agency_TEXTDOMAIN) ."</h3>\n";
+echo "  <h3 class=\"title\">". __("Define Country", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 if(isset($_POST['country_add'])) {
 	$CountryTitle  = $_POST['CountryTitle'];
 	$CountryCode  = $_POST['CountryCode'];
@@ -1709,16 +1709,16 @@ if(isset($_POST['country_add'])) {
 	$error = "";
 	$have_error = false;
 	if(trim($CountryTitle) == ""){
-		$error .= "<b><i>". __("Country title is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$error .= "<b><i>". __("Country title is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 		$have_error = true;
 	}
 	if(trim($CountryCode) == ""){
-		$error .= "<b><i>". __("Country code is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$error .= "<b><i>". __("Country code is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 		$have_error = true;
 	}
 	
 	if($have_error){
-		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating country, please ensure you have filled out all required fields", 		rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating country, please ensure you have filled out all required fields", 		RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 	} 
 	else{				
 		
@@ -1795,9 +1795,9 @@ echo '<div class="msg"></div>';
 $location=admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7";
 echo '<input type="hidden" name="url" id="url" value='.$location.'/>';
 echo '<table><tr>';
-echo '<th>'.__("Country Title", rb_agency_TEXTDOMAIN).'</th>';
-echo '<th>'.__("Country Code", rb_agency_TEXTDOMAIN).'</th>';
-echo '<th>'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Country Title", RBAGENCY_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Country Code", RBAGENCY_TEXTDOMAIN).'</th>';
+echo '<th>'.__("Action", RBAGENCY_TEXTDOMAIN).'</th>';
 
 echo '</tr>';
 $myrows = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country." ORDER BY CountryTitle ASC" );
@@ -1808,12 +1808,12 @@ echo '<td class="countryTitle" >'.$result->CountryTitle.'</td>';
 echo '<td class="countryCode">'.$result->CountryCode.'</td>';
 echo '<td>'.__('<a id="country'.$result->CountryID.'" class='.$location.' href="javascript:void(0)" onclick="editCountry(this.id);">Edit&nbsp;</a>'.
 '<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delcountry=".$result->CountryID.'" 
-onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
+onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', RBAGENCY_TEXTDOMAIN).'</td>';
 echo '</tr>';
 }
 echo '</table>';
 
-echo "  <h3 class=\"title\">". __("Insert State", rb_agency_TEXTDOMAIN) ."</h3>\n";
+echo "  <h3 class=\"title\">". __("Insert State", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 if(isset($_POST['state_add'])) {
 	$CountryID  = $_POST['CountryID'];
 	$StateTitle  = $_POST['StateTitle'];
@@ -1823,20 +1823,20 @@ if(isset($_POST['state_add'])) {
 	$error = "";
 	$have_error = false;
 	if(trim($CountryID) == "-1"){
-		$error .= "<b><i>". __("Please select country", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$error .= "<b><i>". __("Please select country", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 		$have_error = true;
 	}
 	if(trim($StateTitle) == ""){
-		$error .= "<b><i>". __("State title is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$error .= "<b><i>". __("State title is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 		$have_error = true;
 	}
 	if(trim($StateCode) == ""){
-		$error .= "<b><i>". __("State code is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+		$error .= "<b><i>". __("State code is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 		$have_error = true;
 	}
 	
 	if($have_error){
-		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating state, please ensure you have filled out all required fields", 		rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating state, please ensure you have filled out all required fields", 		RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 	} 
 	else{				
 		$wpdb->insert( 
@@ -1891,9 +1891,9 @@ $getCountry = $wpdb->get_results( "SELECT * FROM ".table_agency_data_country." O
 foreach($getCountry as $countryRs) {
 	echo '<tr><td><h3>'.$countryRs->CountryTitle.'</h3></td></tr>';
 	echo '<tr>';
-	echo '<th style="text-align:left;">'.__("State Title", rb_agency_TEXTDOMAIN).'</th>';
-	echo '<th style="text-align:left;">'.__("State Code", rb_agency_TEXTDOMAIN).'</th>';
-	echo '<th style="text-align:left;">'.__("Action", rb_agency_TEXTDOMAIN).'</th>';
+	echo '<th style="text-align:left;">'.__("State Title", RBAGENCY_TEXTDOMAIN).'</th>';
+	echo '<th style="text-align:left;">'.__("State Code", RBAGENCY_TEXTDOMAIN).'</th>';
+	echo '<th style="text-align:left;">'.__("Action", RBAGENCY_TEXTDOMAIN).'</th>';
 	echo '</tr>';
 	echo '<tr>';
 	$getStates = $wpdb->get_results( "SELECT * FROM ".table_agency_data_state." WHERE CountryID='$countryRs->CountryID' ORDER BY StateTitle ASC" );
@@ -1902,7 +1902,7 @@ foreach($getCountry as $countryRs) {
 		echo '<td class="StateCode">'.$result->StateCode.'</td>';
 		echo '<td>'.__('<a id="state'.$result->StateID.'" class='.$location.' href="javascript:void(0)" onclick="editState(this.id);">Edit&nbsp;</a>'.
 		'<a href="'.admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7&delstate=".$result->StateID.'" 
-		onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', rb_agency_TEXTDOMAIN).'</td>';
+		onclick="javascript: return confirm(\'Are you sure?\')">|&nbsp;Delete</a>', RBAGENCY_TEXTDOMAIN).'</td>';
 		echo '</tr>';
 	}
 }
@@ -1920,8 +1920,8 @@ echo '</table>';
 
 elseif ($ConfigID == 5) {
 	/** Identify Labels **/
-	define("LabelPlural", __("Custom Fields", rb_agency_TEXTDOMAIN));
-	define("LabelSingular", __("Custom Field", rb_agency_TEXTDOMAIN));
+	define("LabelPlural", __("Custom Fields", RBAGENCY_TEXTDOMAIN));
+	define("LabelSingular", __("Custom Field", RBAGENCY_TEXTDOMAIN));
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 	
@@ -1969,7 +1969,7 @@ elseif ($ConfigID == 5) {
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1,0, 0, 1, 0)");
 				}
 
-		 echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>Restored.</strong> successfully restored custom fields preset values!", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". (isset($lastid)?$lastid:0) ."\">") .".</a></p><p>".(isset($error)?$error:"")."</p></div>"); 
+		 echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>Restored.</strong> successfully restored custom fields preset values!", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". (isset($lastid)?$lastid:0) ."\">") .".</a></p><p>".(isset($error)?$error:"")."</p></div>"); 
 
 	}
 		
@@ -2096,7 +2096,7 @@ elseif ($ConfigID == 5) {
 	
 		$have_error = false;
 		if(trim($ProfileCustomTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", rb_agency_TEXTDOMAIN) . ".</i></b><br>";
+			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
 		$action = $_POST['action'];
@@ -2105,10 +2105,10 @@ elseif ($ConfigID == 5) {
 		// Add
 		case 'addRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
-				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";	
 			} else {
 		
@@ -2168,10 +2168,10 @@ elseif ($ConfigID == 5) {
 
 				}
 				
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", rb_agency_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
-				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
-				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";
 			}
 		break;
@@ -2179,10 +2179,10 @@ elseif ($ConfigID == 5) {
 		// Manage
 		case 'editRecord':
 			if($have_error){
-				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", rb_agency_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-				 echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."</h3>
+				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
+				 echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>
 						<div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
-				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
+				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
 				 echo" <div class=\"inside\"> ";
 			} else {
 				$update = "UPDATE " . table_agency_customfields . " 
@@ -2264,10 +2264,10 @@ elseif ($ConfigID == 5) {
 				}
 
 
-				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", rb_agency_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
-						echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
+				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
+						echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
 						<div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
-				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
+				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
 				 echo" <div class=\"inside\"> ";
 			}
 		break;
@@ -2289,14 +2289,14 @@ elseif ($ConfigID == 5) {
 					" WHERE ProfileCustomID='$ProfileCustomID'";
 					$deleted = $wpdb->query($delete_sql);
 
-					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
+					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 
 				} // while
 			  } // it was numeric
 			} // for each
-					echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+					echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 					echo " <div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
-					echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>";
+					echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 					echo " <div class=\"inside\"> ";
 		break;
 
@@ -2321,10 +2321,10 @@ elseif (isset($_GET["deleteRecord"])) {
 			" WHERE ProfileCustomID='$ProfileCustomID'";
 			$deleted = $wpdb->query($delete_sql) or die($wpdb->print_error());
 			
-			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", rb_agency_TEXTDOMAIN) ."!</p></div>\n";
-			echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	
+			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
+			echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	
 			<div class=\"postbox \"  style=\"width:350px;float:left;border:0px solid black;\">
-			<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", rb_agency_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN)." *</strong></span></h3>
+			<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>
 			<div class=\"inside\"> ";
 
 		} // is there record?
@@ -2354,9 +2354,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			}
 		
-		echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>	
+		echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>	
 				<div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
-		echo "<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>";
+		echo "<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
 		echo "<div class=\"inside\"> ";
 
 		}
@@ -2379,9 +2379,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			
 			echo "\n";
 		echo " 
-		<h3 style=\"width:350px;\">". sprintf(__("Create New %s", rb_agency_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
+		<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
 		<div class=\"postbox \"  style=\"width:350px;float:left;border:0px solid black;\">
-			 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", rb_agency_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", rb_agency_TEXTDOMAIN) ." *</strong></span></h3>
+			 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>
 		<div class=\"inside\"> ";
 	}
 	if(isset($_GET["action"]) == "editRecord"){
@@ -2420,9 +2420,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						<tr>
 							<td valign=\"top\">Visibility*:</td>
 							<td style=\"font-size:13px;\">
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" /> <strong>". __("Public", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible on Profile & Search, Profile Management, Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" /> <strong>". __("Private", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible in Profile Management & Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" /> <strong>". __("Restricted", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" /> <strong>". __("Public", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Visible on Profile & Search, Profile Management, Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" /> <strong>". __("Private", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Visible in Profile Management & Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" /> <strong>". __("Restricted", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
 							</td>
 						</tr>
 						<tr>
@@ -2567,9 +2567,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<tr>
 												<td valign=\"top\">Visibility*:</td>
 												<td style=\"font-size:13px;\">
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." /> <strong>". __("Public", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible on Registration, Profile Management, Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')." /> <strong>". __("Private", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Visible in Registration, Profile Management & Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')." /> <strong>". __("Restricted", rb_agency_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", rb_agency_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" ". ($data1["ProfileCustomView"] == 0 ? 'checked=\"checked\"':'')." /> <strong>". __("Public", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Visible on Registration, Profile Management, Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')." /> <strong>". __("Private", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Visible in Registration, Profile Management & Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
+								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')." /> <strong>". __("Restricted", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
 												</td>
 											
 												<td style=\"font-size:13px;\">
@@ -2884,13 +2884,13 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			echo "     <input type=\"hidden\" name=\"ProfileCustomID\" value=\"". $ProfileCustomID ."\" />\n";
 			echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 			echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-			echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+			echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 			echo "</p>\n";
 			} else {
 			echo "<p class=\"submit\">\n";
 			echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 			echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-			echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", rb_agency_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+			echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 			echo "</p>\n";
 			} 
 			echo "</form>\n";
@@ -2901,7 +2901,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 <div class="all-custom_fields" style="width:700px;float:left;border:0px solid black;margin-left:15px;">
 	<?php
 	
-	echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
+	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 	
 		/******** Sort Order ************/
 		$sort = "";
@@ -2931,27 +2931,27 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomOptions&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Options", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Visibility", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Custom Order", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Custom View", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Profile Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Type", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomOptions&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Options", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Visibility", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Custom Order", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Custom View", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=ProfileCustomView&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Profile Type", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		echo "<tfoot>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Type", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Options", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Visibility", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Custom Order", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Custom View", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Profile Type", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Type", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Options", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Visibility", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Custom Order", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Gender", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Custom View", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Profile Type", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
@@ -2963,7 +2963,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				  ON a.ProfileCustomID = main.ProfileCustomID 
 				  ORDER BY $sort $dir";
 				 
-		$results = $wpdb->get_results($query,ARRAY_A) or die ( __($wpdb->print_error(), rb_agency_TEXTDOMAIN ));
+		$results = $wpdb->get_results($query,ARRAY_A) or die ( __($wpdb->print_error(), RBAGENCY_TEXTDOMAIN ));
 		$count = count($results);
 		   
 		 $rb_agency_options_arr = get_option('rb_agency_options');
@@ -2975,8 +2975,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $ProfileCustomID ."\" name=\"". $ProfileCustomID ."\" value=\"". $ProfileCustomID ."\" /></th>\n";
 		echo "        <td class=\"column\">". stripslashes($data['ProfileCustomTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
 		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1 ){ echo "Text"; } elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; }elseif ($data['ProfileCustomType'] == 9) { echo "Dropdown(Multi-Select)"; }  elseif ($data['ProfileCustomType'] == 7) { if($rb_agency_options_arr['rb_agency_option_unittype']==1){ if($data['ProfileCustomOptions']==1){echo "Imperial(in)";}elseif($data['ProfileCustomOptions']==2){echo "Imperial(lb)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } else{ if($data['ProfileCustomOptions']==2){echo "Metric(cm)";}elseif($data['ProfileCustomOptions']==2){echo "Metric(kg)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } }elseif ($data['ProfileCustomType'] == 10 ){ echo "Date"; }  echo "</td>\n";
@@ -3042,14 +3042,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"5\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
+		echo "        <td class=\"column\" colspan=\"5\"><p>". __("There aren't any records loaded yet", RBAGENCY_TEXTDOMAIN) . "!</p></td>\n";
 		echo "    </tr>\n";
 		}
 		echo "</tbody>\n";
 		echo "</table>\n";
 		echo "<p class=\"submit\">\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
 		
 		echo "</form>\n";
@@ -3066,7 +3066,7 @@ echo "</div>";
 	switch(@$_POST["action"]){
 	case "editRecord":
 		$wpdb->query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."',MediaCategoryFileType = '".$_POST["MediaCategoryFileType"]."',MediaCategoryLinkType = '".$_POST["MediaCategoryLinkType"]."' WHERE  MediaCategoryID = ".$_GET["MediaCategoryID"]." ");
-	    	echo ("<div id=\"message\" class=\"updated\"><p>". __("<strong>Updated</strong> successfully!", rb_agency_TEXTDOMAIN)."</p></div>"); 
+	    	echo ("<div id=\"message\" class=\"updated\"><p>". __("<strong>Updated</strong> successfully!", RBAGENCY_TEXTDOMAIN)."</p></div>"); 
 			
 	  break;
 	// Add Record
@@ -3110,7 +3110,7 @@ echo "</div>";
 			// Add new Record
 		if(isset($_GET["action"]) =="editRecord"){
 		 
-		 echo "  <h3 class=\"title\">". __("Edit Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
+		 echo "  <h3 class=\"title\">". __("Edit Record", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 		 
 		 $query = "SELECT * FROM ". table_agency_data_media ." WHERE MediaCategoryID='%s'";
 		 $data = $wpdb->get_row($wpdb->prepare($query,$_GET["MediaCategoryID"]),ARRAY_A,0 );
@@ -3118,7 +3118,7 @@ echo "</div>";
 		
 		 echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ConfigID=6&MediaCategoryID=".$_GET["MediaCategoryID"]."\">\n";
 		}else{
-			 echo "  <h3 class=\"title\">". __("Add New Record", rb_agency_TEXTDOMAIN) ."</h3>\n";
+			 echo "  <h3 class=\"title\">". __("Add New Record", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 		  echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=6\">\n";
 		}
 		
@@ -3177,14 +3177,14 @@ echo "</div>";
 			echo "    <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 			 
 		 }
-		 echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Submit", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		 echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Submit", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		 echo "</p>\n";
 		 echo "</td>";
 		 echo "<tr>";
 		 echo "<table>";
 		 echo "</form>\n";
 		 // All Records
-		 echo "  <h3 class=\"title\">". __("All Records", rb_agency_TEXTDOMAIN) ."</h3>\n";
+		 echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 			
 				/******** Sort Order ************/
 				$sort = "";
@@ -3214,22 +3214,22 @@ echo "</div>";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryFileType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("File Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryLinkType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Link Type", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryGender&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", rb_agency_TEXTDOMAIN) ."</a></th>\n";
-		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryOrder&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Order", rb_agency_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryFileType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("File Type", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryLinkType&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Link Type", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryGender&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Gender", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryOrder&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Order", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		
 		echo "<tfoot>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Title", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("File Type", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Link Type", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Gender", rb_agency_TEXTDOMAIN) ."</th>\n";
-		echo "        <th class=\"column\" scope=\"col\">". __("Order", rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("File Type", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Link Type", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Gender", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Order", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		
@@ -3244,8 +3244,8 @@ echo "</div>";
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $MediaCategoryID ."\" name=\"MediaCategoryID[]\" value=\"". $MediaCategoryID ."\" /></th>\n";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;MediaCategoryID=". $MediaCategoryID."&amp;ConfigID=6\" title=\"". __("Edit this Record", rb_agency_TEXTDOMAIN) . "\">". __("Edit", rb_agency_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ", rb_agency_TEXTDOMAIN) . ".\'". __("Cancel", rb_agency_TEXTDOMAIN) . "\' ". __("to stop", rb_agency_TEXTDOMAIN) . ", \'". __("OK", rb_agency_TEXTDOMAIN) . "\' ". __("to delete", rb_agency_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", rb_agency_TEXTDOMAIN) . "\">". __("Delete", rb_agency_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;MediaCategoryID=". $MediaCategoryID."&amp;ConfigID=6\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ", RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </th>\n";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryFileType']) ."</th>\n";
@@ -3266,14 +3266,14 @@ echo "</div>";
 		if ($count < 1) {
 		echo "    <tr>\n";
 		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
-		echo "        <td class=\"column\" colspan=\"5\"><p>". __("There aren't any records loaded yet", rb_agency_TEXTDOMAIN) . "!</p></td>\n";
+		echo "        <td class=\"column\" colspan=\"5\"><p>". __("There aren't any records loaded yet", RBAGENCY_TEXTDOMAIN) . "!</p></td>\n";
 		echo "    </tr>\n";
 		}
 		echo "</tbody>\n";
 		echo "</table>\n";
 		echo "<p class=\"submit\">\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
 		
 		echo "</form>\n";

@@ -99,23 +99,23 @@ Large featured image and scrolling thumbnails
 							<?php
 							if (!empty($ProfileGender)) {
 								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
-								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). ":</strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). ":</strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 							}									
 							if (!empty($ProfileStatHeight)) {
 								if ($rb_agency_option_unittype == 0) { // Metric
-									echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
 								} else { // Imperial
 									$heightraw = $ProfileStatHeight;
 									$heightfeet = floor($heightraw/12);
 									$heightinch = $heightraw - floor($heightfeet*12);
-									echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", RBAGENCY_TEXTDOMAIN). " ". $heightinch ." ". __("in", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
 								}
 							}
 							if (!empty($ProfileStatWeight)) {
 								if ($rb_agency_option_unittype == 0) { // Metric
-									echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
+									echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", RBAGENCY_TEXTDOMAIN). "</li>\n";
 								} else { // Imperial
-									echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
+									echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", RBAGENCY_TEXTDOMAIN). "</li>\n";
 								}
 							}
 									
@@ -128,11 +128,11 @@ Large featured image and scrolling thumbnails
 
 						<?php
 						echo "<ul>\n";
-							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\">". __("Print Photos", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
-							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
-							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
-							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/\">". __("View Slideshow", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
-							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/lightbox/\">". __("View in Lightbox", rb_agency_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\">". __("Print Photos", RBAGENCY_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\">". __("Print Polaroids", RBAGENCY_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-28
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\">". __("View Polaroids", RBAGENCY_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-30
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/\">". __("View Slideshow", RBAGENCY_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
+							echo "<li class=\"item resume\"><a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/lightbox/\">". __("View in Lightbox", RBAGENCY_TEXTDOMAIN)."</a></li>\n"; //MODS 2012-11-29
 
 							// Resume
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
@@ -143,7 +143,7 @@ Large featured image and scrolling thumbnails
 							
 								if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item resume\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume</a></li>\n";
+									echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume</a></li>\n";
 								}
 							}
 							// Comp Card
@@ -161,7 +161,7 @@ Large featured image and scrolling thumbnails
 									elseif($cpCnt == "3"){$cpCount="3rd";}
 									else{$cpCount="";}
 
-									echo "<li class=\"item compcard\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download $cpCount Comp Card</a></li>\n";
+									echo "<li class=\"item compcard\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download $cpCount Comp Card</a></li>\n";
 								}
 							}
 							// Headshots
@@ -170,7 +170,7 @@ Large featured image and scrolling thumbnails
 							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item headshot\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">". __("Download Headshot", rb_agency_TEXTDOMAIN)."</a></li>\n";
+									echo "<li class=\"item headshot\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">". __("Download Headshot", RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 								}
 							}
 							//Voice Demo
@@ -185,7 +185,7 @@ Large featured image and scrolling thumbnails
 									if($vdCnt == "2"){$vdCount="2nd";}
 									elseif($vdCnt == "3"){$vdCount="3rd";}
 									else{$vdCount="";}
-									echo "<li class=\"item voice\"><a target='_blank' href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Listen to $vdCount Voice Demo</a></li>\n";
+									echo "<li class=\"item voice\"><a target='_blank' href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Listen to $vdCount Voice Demo</a></li>\n";
 								}
 							}
 							//Video Slate
@@ -195,7 +195,7 @@ Large featured image and scrolling thumbnails
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
 									$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-									echo "<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". __("Watch Video Slate", rb_agency_TEXTDOMAIN)."</a></li>\n";
+									echo "<li class=\"item video slate\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". __("Watch Video Slate", RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 								}
 							}
 							//Video Monologue
@@ -213,7 +213,7 @@ Large featured image and scrolling thumbnails
 							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
-										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". __("Watch Demo Reel", rb_agency_TEXTDOMAIN)."</a></li>\n";
+										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">". __("Watch Demo Reel", RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 								}
 							}
 							if(function_exists('rb_agency_casting_menu')){
@@ -224,7 +224,7 @@ Large featured image and scrolling thumbnails
 					</div> <!-- .model-links -->
 
 					<div id="resultsGoHereAddtoCart"></div>
-	            	<div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", rb_agency_TEXTDOMAIN);?></a></div>
+	            	<div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", RBAGENCY_TEXTDOMAIN);?></a></div>
 					<?php
 					//decides what division URL should be
 					$age = floor( (strtotime(date('Y-m-d')) - strtotime($ProfileDateBirth)) / 31556926);	 //calculate age
@@ -238,9 +238,9 @@ Large featured image and scrolling thumbnails
 					?>
 					<div id="model-nav">
 						<ul>
-							<li class="prev"><a href="<?php  get_bloginfo("url");?>/profile/<?php echo linkPrevNext($ProfileGallery,"previous",$ProfileGender,$divisionDir);?>/" title=""><?php echo __("Previous", rb_agency_TEXTDOMAIN)?></a> </li>
-							<li class="back"><a href="<?php  get_bloginfo("url");?>/divisions<?php echo $divisionDir;?>" title=""><?php echo __("Back to", rb_agency_TEXTDOMAIN)?><br />Division</a></li>
-							<li class="next"><a href="<?php  get_bloginfo("url");?>/profile/<?php echo linkPrevNext($ProfileGallery,"next",$ProfileGender,$divisionDir);?>/" title=""><?php echo __("Next", rb_agency_TEXTDOMAIN)?></a>  </li>
+							<li class="prev"><a href="<?php  get_bloginfo("url");?>/profile/<?php echo linkPrevNext($ProfileGallery,"previous",$ProfileGender,$divisionDir);?>/" title=""><?php echo __("Previous", RBAGENCY_TEXTDOMAIN)?></a> </li>
+							<li class="back"><a href="<?php  get_bloginfo("url");?>/divisions<?php echo $divisionDir;?>" title=""><?php echo __("Back to", RBAGENCY_TEXTDOMAIN)?><br />Division</a></li>
+							<li class="next"><a href="<?php  get_bloginfo("url");?>/profile/<?php echo linkPrevNext($ProfileGallery,"next",$ProfileGender,$divisionDir);?>/" title=""><?php echo __("Next", RBAGENCY_TEXTDOMAIN)?></a>  </li>
 						</ul>
 					</div>
 				</div> <!-- #profile-info -->

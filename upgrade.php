@@ -4,9 +4,9 @@ global $wpdb;
 /**
  * Ensure directories are setup
  */
-	if (!is_dir(rb_agency_UPLOADPATH)) {
-		mkdir(rb_agency_UPLOADPATH, 0755);
-		chmod(rb_agency_UPLOADPATH, 0777);
+	if (!is_dir(RBAGENCY_UPLOADPATH)) {
+		mkdir(RBAGENCY_UPLOADPATH, 0755);
+		chmod(RBAGENCY_UPLOADPATH, 0777);
 	}
 
 /*
@@ -40,7 +40,7 @@ global $wpdb;
 		$results = $wpdb->query("ALTER TABLE rb_agency_data_type ADD DataTypeTag VARCHAR(55)");
 		
 		$query = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM rb_agency_data_type";
-		$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Cant load types", rb_agency_TEXTDOMAIN ));
+		$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Cant load types", RBAGENCY_TEXTDOMAIN ));
 		foreach ($results as $data) {
 			if (!isset($data['DataTypeTag']) || empty($data['DataTypeTag'])) {
 				$DataTypeTag = RBAgency_Common::Format_StripChars($data['DataTypeTitle']);

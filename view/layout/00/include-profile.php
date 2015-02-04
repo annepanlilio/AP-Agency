@@ -60,9 +60,9 @@ echo "				<div id=\"photos\">\n";
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							if ($countImg > 1) { 
-								echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
+								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
 							} else {
-								echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
+								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
 							}
 						}
 
@@ -78,23 +78,23 @@ echo "					<ul>\n";
 
 							if (!empty($ProfileGender)) {
 								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 );
-								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span >:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 							}
 							if (!empty($ProfileStatHeight)) {
 								if ($rb_agency_option_unittype == 0) { // Metric
-									echo "<li  class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									echo "<li  class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
 								} else { // Imperial
 									$heightraw = $ProfileStatHeight;
 									$heightfeet = floor($heightraw/12);
 									$heightinch = $heightraw - floor($heightfeet*12);
-									echo "<li  class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span >:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+									echo "<li  class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". $heightfeet ." ". __("ft", RBAGENCY_TEXTDOMAIN). " ". $heightinch ." ". __("in", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
 								}
 							}
 							if (!empty($ProfileStatWeight)) {
 								if ($rb_agency_option_unittype == 0) { // Metric
-									echo "<li   class=\"rb_weight\" id=\"rb_weight\">><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
+									echo "<li   class=\"rb_weight\" id=\"rb_weight\">><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileStatWeight ." ". __("kg", RBAGENCY_TEXTDOMAIN). "</li>\n";
 								} else { // Imperial
-									echo "<li   class=\"rb_weight\" id=\"rb_weight\">><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
+									echo "<li   class=\"rb_weight\" id=\"rb_weight\">><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileStatWeight ." ". __("lb", RBAGENCY_TEXTDOMAIN). "</li>\n";
 								}
 							}
 
@@ -102,7 +102,7 @@ echo "					<ul>\n";
 							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
 							if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
-								echo "<li   class=\"rel rb_contact\" id=\"rb_contact\">><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span>:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
+								echo "<li   class=\"rel rb_contact\" id=\"rb_contact\">><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 							}
 echo "	  				</ul>\n"; // Close ul
 echo "	  			</div>\n"; // Close Stats
@@ -132,7 +132,7 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
-									echo "<div class=\"photo\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
+									echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
 							}
 
 echo "					</div>\n"; // #photos						
@@ -170,7 +170,7 @@ echo "					</div>\n"; // #photos
 								}
 							</script>
 
-							<p class="allimages_text"><?php echo __("Please select photos to print. Maximum is 100 photos only", rb_agency_TEXTDOMAIN)?><br /></p><br />
+							<p class="allimages_text"><?php echo __("Please select photos to print. Maximum is 100 photos only", RBAGENCY_TEXTDOMAIN)?><br /></p><br />
 							<form action="../print-images/" method="post" id="allimageform" onsubmit="return validateAllImageForm()">
 								<input type="hidden" id="selected_image" name="selected_image" />
 
@@ -182,7 +182,7 @@ echo "					</div>\n"; // #photos
 								foreach($resultsImg as $dataImg ){
 									echo '<div class="photo print-photo">';
 									echo '	<a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
-									echo "	<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" alt=\"". $ProfileContactDisplay ."\" /></a>";
+									echo "	<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" alt=\"". $ProfileContactDisplay ."\" /></a>";
 									echo "	<div class=\"print-action\"><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
 									echo "</div>";
 								}
@@ -233,8 +233,8 @@ echo "					</div>\n"; // #photos
 								<?php  
 								foreach($resultsImg as $dataImg ){
 									echo '<div class="photo">';
-									echo '	<a href="'. rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
-									echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+									echo '	<a href="'. RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
+									echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 									echo '</div>';
 								}
 								?> <br clear="all" />
@@ -255,7 +255,7 @@ echo "					</div>\n"; // #photos
 					} else if ($subview == "print-polaroids"){  //show print options
 
 						if(isset($_POST["print_type"])){
-							include_once(rb_agency_BASEREL."theme/pdf-profile.php");
+							include_once(RBAGENCY_PLUGIN_DIR."theme/pdf-profile.php");
 						}
 
 						$queryImg = rb_agency_option_galleryorder_query($orderBy ,$ProfileID,"Polaroid");
@@ -312,7 +312,7 @@ echo "					</div>\n"; // #photos
 					} else if($subview == "print-pdf"){
 
 						if(isset($_POST["print_type"])){
-							include_once(rb_agency_BASEREL."theme/pdf-profile.php");
+							include_once(RBAGENCY_PLUGIN_DIR."theme/pdf-profile.php");
 						} 
 
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");

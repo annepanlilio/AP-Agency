@@ -15,7 +15,7 @@ if($ProfileType=="print"){  // print by custom
 	$ageStart=$_GET['ast'];
 	$ageStop=$_GET['asp'];
 	$type=$_GET['t'];
-	 include(rb_agency_BASEREL ."theme/printable-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/printable-division.php"); 
 	 die();
 }
 
@@ -25,7 +25,7 @@ if($ProfileType=="pdf"){  // print by custom
 	$ageStart=$_GET['ast'];
 	$ageStop=$_GET['asp'];
 	$type=$_GET['t'];
-	 include(rb_agency_BASEREL ."theme/pdf-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/pdf-division.php"); 
 	 die();
 }
 
@@ -34,7 +34,7 @@ if($ProfileType=="women-print"){  //request to print women division page
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/printable-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/printable-division.php"); 
 	 die();
 }
 
@@ -44,7 +44,7 @@ if($ProfileType=="women-pdf"){  //request to PDF women division page
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/pdf-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/pdf-division.php"); 
 	 die();
 }
 
@@ -54,7 +54,7 @@ if($ProfileType=="men-print"){  //request to print men division page
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/printable-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/printable-division.php"); 
 	 die();
 }
 
@@ -63,7 +63,7 @@ if($ProfileType=="men-pdf"){  //request to PDF men division page
 	$ageStart="18";
 	$ageStop="99";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/pdf-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/pdf-division.php"); 
 	 die();
 }
 
@@ -73,7 +73,7 @@ if($ProfileType=="teen-boys-print"){  //request to print men division page
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/printable-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/printable-division.php"); 
 	 die();
 }
 
@@ -82,7 +82,7 @@ if($ProfileType=="teen-boys-pdf"){  //request to PDF men division page
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/pdf-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/pdf-division.php"); 
 	 die();
 }
 
@@ -92,7 +92,7 @@ if($ProfileType=="teen-girls-print"){  //request to print men division page
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/printable-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/printable-division.php"); 
 	 die();
 }
 
@@ -101,7 +101,7 @@ if($ProfileType=="teen-girls-pdf"){  //request to PDF men division page
 	$ageStart="13";
 	$ageStop="18";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/pdf-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/pdf-division.php"); 
 	 die();
 }
 
@@ -111,7 +111,7 @@ if($ProfileType=="boys-print"){  //request to print men division page
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/printable-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/printable-division.php"); 
 	 die();
 }
 
@@ -120,7 +120,7 @@ if($ProfileType=="boys-pdf"){  //request to PDF men division page
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
-	 include(rb_agency_BASEREL ."theme/pdf-division.php"); 
+	 include(RBAGENCY_PLUGIN_DIR ."theme/pdf-division.php"); 
 	 die();
 }
 
@@ -130,7 +130,7 @@ if($ProfileType=="girls-print"){  //request to print men division page
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
-	include(rb_agency_BASEREL ."theme/printable-division.php"); 
+	include(RBAGENCY_PLUGIN_DIR ."theme/printable-division.php"); 
 	 die();
 }
 
@@ -139,7 +139,7 @@ if($ProfileType=="girls-pdf"){  //request to PDF men division page
 	$ageStart="1";
 	$ageStop="12";
 	$type="1";
-	include(rb_agency_BASEREL ."theme/pdf-division.php"); 
+	include(RBAGENCY_PLUGIN_DIR ."theme/pdf-division.php"); 
 	 die();
 }
 
@@ -210,7 +210,7 @@ echo $rb_header = RBAgency_Common::rb_header();
 
 
 	// Profile Class
-	include(rb_agency_BASEREL ."app/profile.class.php");
+	include(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
 
 	echo "<div id=\"primary\" class=\"".primary_class()." column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
@@ -229,7 +229,7 @@ echo $rb_header = RBAgency_Common::rb_header();
 		echo "<div id=\"profile-category\">\n";
 
 		echo "	<h1 class=\"profile-category-title entry-title\">\n";
-		echo "	". __("Directory", rb_agency_TEXTDOMAIN) ." ";
+		echo "	". __("Directory", RBAGENCY_TEXTDOMAIN) ." ";
 				if ($DataTypeTitle) { echo " > ". $DataTypeTitle; }
 		echo "	</h1>\n";
 
@@ -263,7 +263,7 @@ echo $rb_header = RBAgency_Common::rb_header();
 			echo "</div>\n";
 		}
 		if ($countList < 1) {
-			echo __("No Categories Found", rb_agency_TEXTDOMAIN);
+			echo __("No Categories Found", RBAGENCY_TEXTDOMAIN);
 		}
 
  

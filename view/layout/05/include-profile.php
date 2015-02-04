@@ -100,24 +100,24 @@ Custom Layout: Shake it like a polaroid picture
 	 rb_agency_getSocialLinks();
  			if (!empty($ProfileGender)) {
 			$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
-			echo "<div><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</div>\n";
+			echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</div>\n";
 		}
 	
 		if (!empty($ProfileStatHeight)) {
 			if ($rb_agency_option_unittype == 0) { // Metric
-				echo "<div class=\"rel\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</div>\n";
+				echo "<div class=\"rel\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</div>\n";
 			} else { // Imperial
 				$heightraw = $ProfileStatHeight;
 				$heightfeet = floor($heightraw/12);
 				$heightinch = $heightraw - floor($heightfeet*12);
-				echo "<div class=\"rel\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</div>\n";
+				echo "<div class=\"rel\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", RBAGENCY_TEXTDOMAIN). " ". $heightinch ." ". __("in", RBAGENCY_TEXTDOMAIN). "" ."</div>\n";
 			}
 		}
 		if (!empty($ProfileStatWeight)) {
 			if ($rb_agency_option_unittype == 0) { // Metric
-				echo "<div class=\"rel\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</div>\n";
+				echo "<div class=\"rel\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", RBAGENCY_TEXTDOMAIN). "</div>\n";
 			} else { // Imperial
-				echo "<div class=\"rel\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</div>\n";
+				echo "<div class=\"rel\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", RBAGENCY_TEXTDOMAIN). "</div>\n";
 			}
 		}
 		
@@ -127,7 +127,7 @@ Custom Layout: Shake it like a polaroid picture
 
 
 	          	if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
-		    		echo "<div class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
+		    		echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
 			}
 	echo "					</div>\n";
 	echo "				</div>\n";	
@@ -155,7 +155,7 @@ Custom Layout: Shake it like a polaroid picture
 			$countImg  = $wpdb->num_rows;
 			foreach($resultsImg as $dataImg ){
 	echo "		  	<div class=\"content\">\n";
-	echo "		  		<img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" />\n";
+	echo "		  		<img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" />\n";
 	echo "		  		<span>". $ProfileContactDisplay ."</span>\n";
 	echo "		  	</div>\n";
 			}

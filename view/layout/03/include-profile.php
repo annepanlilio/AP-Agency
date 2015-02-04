@@ -78,7 +78,7 @@ echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
 						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg,$ProfileID),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-							echo "<a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
 
 						echo "</div> <!-- #profile-picture -->\n";
@@ -204,9 +204,9 @@ echo " 							<div class=\"tab-panel\">\n";
 									// images
 								   foreach($resultsImg as $dataImg ){
 									  	if ($countImg > 1) { 
-											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
+											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
 									  	} else {
-											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
+											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
 									  	}
 									}
 echo " 							</div>\n"; // .tab-panel
@@ -217,7 +217,7 @@ echo " 							<div class=\"tab-panel\">\n";
 echo "								<ul>";
 										if (!empty($ProfileGender)) {
 											$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
-											echo "<li><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], rb_agency_TEXTDOMAIN). "</li>\n";
+											echo "<li><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 										}
 
 										// Insert Custom Fields
@@ -226,7 +226,7 @@ echo "								<ul>";
 										rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
 										if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
-											echo "<li class=\"rel\"><strong>". __("Contact: ", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
+											echo "<li class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 										}
 echo "								</ul>";
 echo " 							</div>\n"; // .tab-panel
@@ -329,7 +329,7 @@ echo " 						</div>\n"; // Row booking
 echo "						<div class=\"row-downloads tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
 	echo "							<p>". __("The following files (pdf, audio file, etc.) are associated with this profile",
-						        	rb_agency_TEXTDOMAIN) .".</p>\n";
+						        	RBAGENCY_TEXTDOMAIN) .".</p>\n";
 					
 									$queryMedia = "SELECT * FROM ". table_agency_profile_media ." 
 									              WHERE ProfileID =  \"%s\" AND ProfileMediaType <> \"Image\"";
@@ -361,7 +361,7 @@ echo " 							<div class=\"tab-panel\">\n";
 										} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 											
 											$outLinkVoiceDemo .= $dataMedia['ProfileMediaType'] .
-											": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+											": <a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] 
 											."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
@@ -369,42 +369,42 @@ echo " 							<div class=\"tab-panel\">\n";
 										} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 										
 /*											$outLinkResume .= $dataMedia['ProfileMediaType'] 
-											.": <a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+											.": <a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
 */
-											$outLinkResume .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+											$outLinkResume .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
 			
 										
 										} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 										
 											/*$outLinkHeadShot .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
-											rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+											RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
-											$outLinkHeadShot .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+											$outLinkHeadShot .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
 			
 										
 										} elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
 										
 											/*$outLinkComCard .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
-											rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+											RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
-											$outLinkComCard .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+											$outLinkComCard .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
 			
 										
 										} else{
 										
 											/*$outCustomMediaLink .= $dataMedia['ProfileMediaType'] .": <a href=\"".
-										 	rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+										 	RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 										 	"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 										 	$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
-											$outCustomMediaLink .= "<a href=\"". rb_agency_BASEDIR."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+											$outCustomMediaLink .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
 			
 										}
 								  	}

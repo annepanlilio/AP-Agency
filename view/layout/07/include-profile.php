@@ -30,23 +30,23 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						<?php
 						if (!empty($ProfileGender)) {
 							$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
-	                        echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", rb_agency_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
+	                        echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
 						}								
 						if (!empty($ProfileStatHeight)) {
 							if ($rb_agency_option_unittype == 0) { // Metric
-								echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+								echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
 							} else { // Imperial
 								$heightraw = $ProfileStatHeight;
 								$heightfeet = floor($heightraw/12);
 								$heightinch = $heightraw - floor($heightfeet*12);
-								echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", rb_agency_TEXTDOMAIN). " ". $heightinch ." ". __("in", rb_agency_TEXTDOMAIN). "" ."</li>\n";
+								echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", RBAGENCY_TEXTDOMAIN). " ". $heightinch ." ". __("in", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
 							}
 						}
 						if (!empty($ProfileStatWeight)) {
 							if ($rb_agency_option_unittype == 0) { // Metric
-								echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", rb_agency_TEXTDOMAIN). "</li>\n";
+								echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("kg", RBAGENCY_TEXTDOMAIN). "</li>\n";
 							} else { // Imperial
-								echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", rb_agency_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", rb_agency_TEXTDOMAIN). "</li>\n";
+								echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", RBAGENCY_TEXTDOMAIN). "</li>\n";
 							}
 						}
 								
@@ -80,7 +80,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 													echo "<li>";
 											   } 
 
-												echo "<figure class=\"multi\"><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
+												echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
 
 											   $open++;
 											   if($open == 3){
@@ -91,9 +91,9 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 									   } else {
 				                              
 											   if($dataImg['ProfileMediaPrimary']==1){
-													$ProfileMediaPrimary= 	"<li><figure><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
+													$ProfileMediaPrimary= 	"<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
 												} else {
-													$ProfileMediaSecondry .= "<li><figure><a href=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
+													$ProfileMediaSecondry .= "<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
 												}
 												echo $ProfileMediaPrimary; 
 												echo $ProfileMediaSecondry; 
@@ -327,7 +327,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 														  echo "<li><figure class=\"multi\">";
 													} 
 									
-														echo "<span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span>";
+														echo "<span style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span>";
 									
 													$open++;
 													if($open == 3){
@@ -338,9 +338,9 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 									} else {
 									
 													if($dataImg['ProfileMediaPrimary']==1){
-																$ProfileMediaPrimary= 	"<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
+																$ProfileMediaPrimary= 	"<li><figure><span style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
 														} else {
-																$ProfileMediaSecondry .= "<li><figure><span style=\"background-image: url(". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
+																$ProfileMediaSecondry .= "<li><figure><span style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" title=\"". $ProfileContactDisplay ."\" ></span></figure></li>\n";
 														}
 														echo $ProfileMediaPrimary; 
 														echo $ProfileMediaSecondry; 
@@ -402,7 +402,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				if ($countHeadshot > 0) {
 				  	foreach($resultsHeadshot as $dataHeadshot ){
 						$profileHeadshotUrl = $dataHeadshot['ProfileMediaURL'];
-						echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
+						echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
 					}
 				}
 
@@ -411,7 +411,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				if ($countVoiceDemo > 0) {
 				  	foreach($resultsVoiceDemo as $dataVoiceDemo ){
 						$profileVoiceDemo = $dataVoiceDemo['ProfileMediaURL'];
-							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
+							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
 						}
 				}
 				//CompCard
@@ -419,7 +419,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				if ($countCompCard > 0) {
 				  	foreach($resultsCompCard as $dataCompCard ){
 						$profileCompCardUrl = $dataCompCard['ProfileMediaURL'];
-							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
+							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
 						}
 				}
 				//Resume
@@ -427,7 +427,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				if ($countResume > 0) {
 				  	foreach($resultsResume as $dataResume ){
 						$profileResumeUrl = $dataResume['ProfileMediaURL'];
-							echo "<li><a target='_blank' href=".rb_agency_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
+							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
 						}
 				}
 				 ?>

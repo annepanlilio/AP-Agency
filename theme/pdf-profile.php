@@ -296,22 +296,22 @@ if($_POST['print_option']==14){  // print for division
 						   $cnt++;
 						   $cnt2++;
 						   
-					// $allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></td>\n";
+					// $allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></td>\n";
 					//style="width:450px; height:650px;"
 					$timthumbHW=str_replace('style="width:',"&w=",$widthAndHeight);
 					$timthumbHW=str_replace('px; height:',"&h=",$timthumbHW);
 					$timthumbHW=str_replace('px;"',"",$timthumbHW);
 					$timthumbHW=str_replace('px"',"",$timthumbHW);
 				
-			//	$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
+			//	$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
 				
-					$allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src='".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."' alt='' class='allimages_thumbs' /></td>\n";
+					$allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src='".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."' alt='' class='allimages_thumbs' /></td>\n";
 					
 				
 
 
 					
-					 //src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\"
+					 //src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\"
 						
 						 if($cnt==$col){ $allImages.="</tr></table>\n";
 						   if($cnt2==$perPage){
@@ -383,7 +383,7 @@ else{$format="";}
 $pdfFile=strtolower(str_replace(" ","-",$ProfileContactDisplay)).".pdf";
 
 
-$toRedirect=rb_agency_BASEDIR."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
+$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
 $path="wp-content/plugins/rb-agency/ext/dompdf/htmls/";
 
 //*include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
