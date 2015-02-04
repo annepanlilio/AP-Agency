@@ -1524,14 +1524,6 @@ class RBAgency_Profile {
 			/*
 			 * Check if search is Admin or Public
 			 */
-<<<<<<< Updated upstream
-			if(self::$error_debug || self::$error_debug_query){
-				$profiles = $wpdb->get_results($sql);
-				$wpdb->show_errors();
-				$wpdb->print_error();
-			}
-=======
->>>>>>> Stashed changes
 
 				if(is_admin()){
 					return self::search_result_admin($sql,$arr_query );
