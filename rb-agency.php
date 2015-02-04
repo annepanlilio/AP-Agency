@@ -6,9 +6,9 @@ Plugin URI: http://rbplugin.com/wordpress/model-talent-agency-software/
 Description: With this plugin you can easily manage models profiles and information.
 Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
-Version: 2.1
+Version: 2.2
 */
-$rb_agency_VERSION = "2.1";
+$rb_agency_VERSION = "2.2";
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
@@ -151,21 +151,25 @@ See license.txt for full details.
 	
 
 
+
 // *************************************************************************************************** //
 
-
 /*
- * Call Function and Language
+ * Initialize
  */
 
 	// Functions
-	require_once(rb_agency_BASEREL ."functions.php");
+	include_once(rb_agency_BASEREL ."functions.php");
+
+	// Profile Class
+	include_once(rb_agency_BASEREL ."app/profile.class.php");
 
 	// Common Functions
-	require_once(rb_agency_BASEREL ."app/common.class.php");
+	include_once(rb_agency_BASEREL ."app/common.class.php");
 
 	// Widgets & Shortcodes
-	require_once(rb_agency_BASEREL ."extend.php");
+	include_once( rb_agency_BASEREL .'lib/RBAgency-Extends.php');
+		add_action( 'init', array('RBAgency_Extends', 'init'), 0, 1 );
 
 	// Now Call the Lanuage
 	define("rb_agency_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/

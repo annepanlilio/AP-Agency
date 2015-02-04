@@ -72,19 +72,19 @@ if(!function_exists("rb_output_buffer")){
 						})
 						jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
 							dateFormat: "yy-mm-dd",
-					        defaultDate: "+1w",
-					        changeMonth: true,
-					        numberOfMonths: 3,
-					        onSelect: function( selectedDate ) {
-					            if(this.id == 'input[id=rb_datepicker_from]'){
-					              var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
-					              var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
-					              var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
-					              jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
-					              jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
-					            }
+							defaultDate: "+1w",
+							changeMonth: true,
+							numberOfMonths: 3,
+							onSelect: function( selectedDate ) {
+								if(this.id == 'input[id=rb_datepicker_from]'){
+								  var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
+								  var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
+								  var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
+								  jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
+								  jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
+								}
 
-					        }
+							}
 						});
 				});
 				</script>
@@ -139,22 +139,22 @@ if(!function_exists("rb_output_buffer")){
 						jQuery(".rb-datepicker").each(function(){
 							jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
 						})
-					    if(jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").length){
+						if(jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").length){
 							jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
 								dateFormat: "yy-mm-dd",
-						        defaultDate: "+1w",
-						        changeMonth: true,
-						        numberOfMonths: 3,
-						        onSelect: function( selectedDate ) {
-						            if(this.id == 'input[id=rb_datepicker_from]'){
-						              var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
-						              var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
-						              var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
-						              jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
-						              jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
-						            }
+								defaultDate: "+1w",
+								changeMonth: true,
+								numberOfMonths: 3,
+								onSelect: function( selectedDate ) {
+									if(this.id == 'input[id=rb_datepicker_from]'){
+									  var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
+									  var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
+									  var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
+									  jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
+									  jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
+									}
 
-						        }
+								}
 							});
 						}
 				});
@@ -605,8 +605,8 @@ if(!function_exists("rb_output_buffer")){
 		$detail_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
 		
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
-            
-            @list($Y,$m,$d) = @explode("-",$p_strDate);
+			
+			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
 			$localtime = getdate();
 			$today = $localtime['mday']."-".$localtime['mon']."-".$localtime['year'];
@@ -646,9 +646,9 @@ if(!function_exists("rb_output_buffer")){
 					array_push($thirdMonths, 0);
 				}
 			}
-            $label_y = "";
-            $label_m = "";
-            $label_d = "";
+			$label_y = "";
+			$label_m = "";
+			$label_d = "";
 
 			if($months >= 12 && $detail_month == 1){
 				$months = $months - 12;
@@ -849,1042 +849,6 @@ if(!function_exists("rb_output_buffer")){
 		return RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
 	}
 
-	/**
-	 * List Categories
-	 *
-	 * @param array $atts 
-	 */
-	function rb_agency_categorylist($atts, $content = NULL) {
-		/*
-		EXAMPLE USAGE: 
-
-		if (function_exists('rb_agency_categorylist')) { 
-			$atts = array('profilesearch_layout' => 'advanced');
-			rb_agency_categorylist($atts); }
-
-		*/
-
-		// Set It Up
-		global $wp_rewrite;
-		extract(shortcode_atts(array(
-			"profilesearch_layout" => "advanced"
-		), $atts));
-
-		// Query
-		$queryList = "SELECT dt.DataTypeID, dt.DataTypeTitle, dt.DataTypeTag, COUNT(profile.ProfileID) AS CategoryCount FROM ".table_agency_data_type." dt,".table_agency_profile." profile where dt.DataTypeID= profile.ProfileType and profile.ProfileIsActive = 1 group by dt.DataTypeID ORDER BY dt.DataTypeTitle ASC";
-
-		$resultsList = $wpdb->get_results($queryList,ARRAY_A);
-		$countList = count($resultsList);
-
-		// Loop through Results
-		foreach ($resultsList as $dataList) {
-			echo "<div class=\"profile-category\">\n";
-			if ($DataTypeID == $dataList["DataTypeID"]) {
-				echo "  <div class=\"name\"><strong>". $dataList["DataTypeTitle"] ."</strong> <span class=\"count\">(". $dataList["CategoryCount"] .")</span></div>\n";
-			} else {
-				echo "  <div class=\"name\"><a href=\"/profile-category/". $dataList["DataTypeTag"] ."/\">". $dataList["DataTypeTitle"] ."</a> <span class=\"count\">(". $dataList["CategoryCount"] .")</span></div>\n";
-			}
-			echo "</div>\n";
-		}
-		if ($countList < 1) {
-			echo __("No Categories Found", rb_agency_TEXTDOMAIN);
-		}
-	}
-
-
-	/**
-	 * List Profiles
-	 *
-	 * @param array $atts 
-	 */
-	function rb_agency_profilelist($atts, $content = NULL, $is_shortcode = false) {
-
-		// Print or Export
-		global  $wpdb;
-
-		// TODO: Cleanup
-// Commented by Sunil to fix profile print/pdf issue
-//	if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-// Commented by Sunil to fix profile display issue
-//if (isset($profilecastingcart)){   //to tell prrint and pdf generators its for casting cart and new link
-
-
-		// Get Preferences
-		$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_privacy					 = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
-		$rb_agency_option_profilelist_count			 = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
-		$rb_agency_option_profilelist_perpage		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
-		$rb_agency_option_profilelist_sortby		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
-		$rb_agency_option_layoutprofilelist		 	 = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
-		$rb_agency_option_profilelist_expanddetails	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
-		$rb_agency_option_locationtimezone 			 = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
-		$rb_agency_option_profilelist_favorite		 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-		$rb_agency_option_profilenaming				 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-		$rb_agency_option_profilelist_castingcart 	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
-		$rb_agency_option_profilelist_printpdf 	     = isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
-
-		// Set It Up	
-		global $wp_rewrite;
-		$cusFields = array("Suit","Bust","Shirt","Dress");  //for custom fields min and max
-
-
-		// Paginate
-		$build_query ="";
-		if(!$is_shortcode){
-		
-				$build_query = http_build_query($atts);
-		}
-
-		// Exctract from Shortcode
-		extract(shortcode_atts(array(
-			"profileid" => NULL,
-			"profilecontactnamefirst" => NULL,
-			"profilecontactnamelast" => NULL,
-			"profilelocationcity" => NULL,
-			"profiletype" => NULL,
-			"type" => NULL,
-			"profileisactive" => NULL,
-			"profilegender" => NULL,
-			"gender" => NULL,
-			"profilestatheight_min" => NULL,
-			"profilestatheight_max" => NULL,
-			"profilestatweight_min" => NULL,
-			"profilestatweight_max" => NULL,
-			"profiledatebirth_min" => NULL,
-			"age_start" => NULL,
-			"profiledatebirth_max" => NULL,
-			"age_stop" => NULL,
-			"featured" => NULL,
-			"stars" => NULL,
-			"paging" => NULL,
-			"pagingperpage" => NULL,
-			"override_privacy" => NULL,
-			"profilefavorite" => NULL,
-			"profilecastingcart" => NULL,
-			"getprofile_saved" => NULL,
-			"profilecity" => NULL,
-			"profilestate" => NULL,
-			"profilezip" => NULL,
-			"displayname" => NULL
-		), $atts));
-
-		if(isset($atts) && is_array($atts)){
-
-			foreach ($atts as $key => $value) {
-			      unset($_SESSION[$key]);
-			      $_SESSION[$key] = $value;
-			}
-		}
-
-		// Filter It
-		$sort = "profile.ProfileContactDisplay";
-
-		// Default Direction
-		$dir = "asc";
-
-		// Should we override the privacy settings?
-		if(isset($pageURL) && strpos($pageURL,'client-view') > 0 && (get_query_var('type') == "profilesecure")){
-			$OverridePrivacy = 1;
-		}
-
-		// Option to show all profiles
-		if (isset($OverridePrivacy)) {
-			// If sent link, show both hidden and visible
-			$filter = "WHERE profile.ProfileIsActive IN (1, 4)";
-		} else {
-			$filter = "WHERE profile.ProfileIsActive = 1";
-		}
-
-		// Pagination
-		if (!isset($paging) || empty($paging)) {
-			$paging = 1; 
-			if (get_query_var('paging')) {
-				$paging = get_query_var('paging'); 
-			} else { 
-				preg_match('/[0-9]/', $_SERVER["REQUEST_URI"], $matches, PREG_OFFSET_CAPTURE);
-				if (isset($matches[0][1]) && $matches[0][1] > 0) {
-					$paging = str_replace("/", "", substr($_SERVER["REQUEST_URI"], $matches[0][1]));
-				} else {
-					$paging = 1; 
-				}
-			}
-		}
-		if (!isset($pagingperpage) || empty($pagingperpage)) { $pagingperpage = $rb_agency_option_profilelist_perpage; }
-		if($pagingperpage=="0"){$pagingperpage="10";}//make it a default value
-
-		// Legacy Field Names
-		if (isset($type) && !empty($type)){ $profiletype = $type; }
-		if (isset($gender) && !empty($gender)){  $profilegender = $gender; }
-		if (isset($age_start) && !empty($age_start)){ $profiledatebirth_min = $age_start; }
-		if (isset($age_stop) && !empty($age_stop)){ $profiledatebirth_max = $age_stop; }
-		$ProfileID 					= $profileid;
-		$ProfileContactNameFirst	= $profilecontactnamefirst;
-		$ProfileContactNameLast    	= $profilecontactnamelast;
-		$ProfileContactDisplay	    = $displayname;
-		$ProfileLocationCity		= $profilelocationcity;
-		$ProfileType				= $profiletype;
-		$ProfileIsActive			= $profileisactive;
-		$ProfileGender    			= $profilegender;
-		$ProfileStatHeight_min		= $profilestatheight_min;
-		$ProfileStatHeight_max		= $profilestatheight_max;
-		$ProfileStatWeight_min		= $profilestatheight_min;
-		$ProfileStatWeight_max		= $profilestatheight_max;
-		$ProfileDateBirth_min		= $profiledatebirth_min;
-		$ProfileDateBirth_max		= $profiledatebirth_max;
-		$ProfileIsFeatured			= $featured;
-		$ProfileIsPromoted			= $stars;
-		$OverridePrivacy			= $override_privacy;
-		$GetProfileSaved			= $getprofile_saved;
-		$City						= $profilecity;
-		$State						= $profilestate;
-		$Zip						= $profilezip;
-
-		$displayHTML = "";
-		$displayPaginationFooter = "";
-
-		// Name
-		if(isset($_GET['filter'])){
-				$start = preg_replace('/[^A-Za-z]/','',$_GET['filter']);
-				$filter .= " AND profile.ProfileContactNameFirst LIKE '". $start ."%'";
-		}else{
-			if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
-				$ProfileContactNameFirst = $ProfileContactNameFirst;
-				$filter .= " AND profile.ProfileContactNameFirst LIKE '%". $ProfileContactNameFirst ."%'";
-			}
-		}
-		if (isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
-			$ProfileContactNameLast = $ProfileContactNameLast;
-			$filter .= " AND profile.ProfileContactNameLast LIKE '%". $ProfileContactNameLast ."%'";
-		}
-		if (isset($ProfileContactDisplay) && !empty($ProfileContactDisplay)){
-			$ProfileContactDisplay = $ProfileContactDisplay;
-			$filter .= " AND profile.ProfileContactDisplay LIKE '%". $ProfileContactDisplay ."%'";
-		}
-
-		// Type
-		if (isset($ProfileType) && !empty($ProfileType)){
-			$ProfileType = $ProfileType;
-			$filter .= " AND FIND_IN_SET(". $ProfileType .", profile.ProfileType) ";
-		} else {
-			$ProfileType = "";
-		}
-
-		// Profile Search Saved 
-		if(isset($GetProfileSaved) && !empty($GetProfileSaved)){
-			$filter .= " AND profile.ProfileID IN(".$GetProfileSaved.") ";
-		}
-
-		// Gender
-		if (isset($ProfileGender) && !empty($ProfileGender)){
-			$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
-		} else {
-			$ProfileGender = "";
-		}
-
-		// Age
-		
-			$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
-			if (isset($ProfileDateBirth_min) && !empty($ProfileDateBirth_min)){
-				$selectedYearMin = date('Y-m-d', strtotime('-'. $ProfileDateBirth_min .' year'. $date));
-				$filter .= " AND profile.ProfileDateBirth <= '$selectedYearMin'";
-			}
-			if (isset($ProfileDateBirth_max) && !empty($ProfileDateBirth_max)){
-				$selectedYearMax = date('Y-m-d', strtotime('-'. $ProfileDateBirth_max - 1 .' year'. $date));
-				$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
-			}
-		if (isset($ProfileIsFeatured)){
-			$filter .= " AND profile.ProfileIsFeatured = '1' ";
-		}
-		if (isset($ProfileIsPromoted)){
-			$filter .= " AND profile.ProfileIsPromoted = '1' ";
-		}
-		// City
-		if (isset($City) && !empty($City)){
-			$City = $City;
-			$filter .= " AND profile.ProfileLocationCity = '". ucfirst($City) ."'";
-		}
-
-		// State
-		if (isset($State) && !empty($State)){
-			$State = $State;
-			$filter .= " AND profile.ProfileLocationState = '". ucfirst($State) ."'";
-		}
-
-		// Zip
-		if (isset($Zip) && !empty($Zip)){
-			$Zip = $Zip;
-			$filter .= " AND profile.ProfileLocationZip = '". ucfirst($Zip) ."'";
-		}
-
-        		
-		// Set CustomFields search
-				if(isset($atts) && !empty($atts)){
-
-				/*
-				 *  Custom Fields
-				 */
-					$filterDropdown = array();
-					$filter2 = "";
-
-					global $wpdb;
-					$qcfields = $wpdb->get_results("SELECT * FROM ". table_agency_customfields ." ",ARRAY_A);
-								
-					// Loop through all attributes looking for custom
-					foreach ($atts as $key => $val) {
-						if (substr(strtolower($key),0,15) == "profilecustomid") {
-							
-						/*
-						 *  Check if this is array or not because sometimes $val is an array so
-						 *  array_filter is not applicable
-						 */
-							if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
-
-								/*
-								 * Id like to chop this one out and extract
-								 * the array values from here and make it a string with "," or
-								 * pass the rbsingle value back $val
-								 */
-								if(is_array($val)){
-									if(count(array_filter($val)) > 1) {
-										$ct =1;
-										foreach($val as $v){
-											if($ct == 1){
-												$val = $v;
-												$ct++;
-											} else {
-												$val = $val .",".$v;
-											}
-										}
-									} else {
-										$val = array_values($val);
-										$val = array_shift($val);
-									} 
-								}
-								$ProfileCustomType = array();
-								foreach ($qcfields as $kfield) {
-									if(substr($key,15) == $kfield["ProfileCustomID"]){
-										$ProfileCustomType = $kfield;
-									}
-
-								}
-								
-								/*
-								 * Have created a holder $filter2 and
-								 * create its own filter here and change
-								 * AND should be OR
-								 */
-
-								/******************
-								  1 - Text
-								  2 - Min-Max > Removed
-								  3 - Dropdown
-								  4 - Textbox
-								  5 - Checkbox
-								  6 - Radiobutton
-								  7 - Metrics/Imperials
-								 *********************/
-
-								$open_st = ' AND EXISTS(SELECT * FROM '. table_agency_customfield_mux . '  WHERE ' ;
-								$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID)  ';
-
-								if ($ProfileCustomType["ProfileCustomType"] == 1) {
-									// Text
-									$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
-								
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 3 || $ProfileCustomType["ProfileCustomType"] == 9) {
-									// Dropdown
-									if($ProfileCustomType["ProfileCustomType"] == 3 ){
-										$filter2 .="$open_st ProfileCustomValue = '".$val."' $close_st";
-
-									// Dropdown Multi-Select	
-									}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
-										
-											$val = stripslashes($val);
-											if(!empty($val)){
-											
-												if(strpos($val,",") === false){
-													$filter2 .= $open_st;
-													$val2 = $val;
-													$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s",$val2,"%".$val2."%");
-													/*
-
-													$val2 = addslashes(addslashes($val2));
-													$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
-													*/
-													$filter2 .= $close_st;
-
-												} else {
-													
-													$likequery = array_filter(explode(",", $val));
-													$likecounter = count($likequery);
-													$i=1; 
-								
-													foreach($likequery as $like){
-														$i++;
-													
-																	if($like!="") {
-																		$val2 = addslashes(addslashes($like));
-																		$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0)".(($i <= $likecounter)?" AND ":""),$like);
-																		//$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
-															
-																	}
-																						//Commented to fix checkbox issue
-								
-
-													}
-
-																		$filter2 .= "$open_st  ".$sr_data."  $close_st";
-
-												}
-
-											} 
-									}
-
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
-									// Textarea
-									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
-								
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
-									//Checkbox
-
-										$val = stripslashes($val);
-									if(!empty($val)){
-									
-										if(strpos($val,",") === false){
-											$filter2 .= $open_st;
-											$val2 = $val;
-											$filter2 .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ",$val2);
-											$val2 = addslashes(addslashes($val2));
-											$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
-											$filter2 .= $close_st;
-
-										} else {
-											
-											$likequery = array_filter(explode(",", $val));
-											$likecounter = count($likequery);
-											$i=1; 
-						
-											foreach($likequery as $like){
-												$i++;
-											
-															if($like!="") {
-																$val2 = addslashes(addslashes($like));
-																$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
-															}
-														
-
-											}
-											//Commented to fix checkbox issue
-											$filter2 .= "$open_st (".$sr_data.") $close_st";
-
-										}
-
-									} else {
-									}
-									
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
-									//Radiobutton 
-									$val = implode("','",explode(",",$val));
-									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%')  $close_st";
-								
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 7) {
-									//Measurements 
-									list($Min_val,$Max_val) = explode(",",$val);
-									if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
-										if(!is_numeric($Min_val)){
-											$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
-										} else {
-											$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
-										}
-
-										if(!is_numeric($Max_val)){
-											$filter2 .= "  ProfileCustomValue <= '".$Max_val."' $close_st";
-										} else {
-											$filter2 .= "  ProfileCustomValue <= ".$Max_val." $close_st";
-										}
-
-									}
-								}elseif ($ProfileCustomType["ProfileCustomType"] == 10) {
-									// Date
-									list($from, $to) = explode(",", $val);
-
-									$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
-									$_SESSION[$key] = $val;
-
-								} 
-
-							} // if not empty
-						} // end if
-					} // end for each
-
-					if(count($filterDropdown) > 0){
-						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
-					}
-
-					$filter .= $filter2;
-					$filter = str_replace(array("\n","\t","\r")," ", $filter);
-					$filter = str_replace(")(", ") OR (", $filter);
-
-				
-				}
-
-			$rb_agency_options_arr = get_option("rb_agency_options");
-			// Sort by date 
-			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
-			// state
-			$detail_state 		     = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
-			
-			$rb_get_casting_profileid = rb_get_casting_profileid();
-		// Can we show the profiles?
-		// P R I V A C Y FILTER ====================================================
-		if ( (isset($OverridePrivacy)) || 
-			//Must be logged to view model list and profile information
-			($rb_agency_option_privacy == 2 && is_user_logged_in()) || 
-			// Model list public. Must be logged to view profile information
-			($rb_agency_option_privacy == 1 && is_user_logged_in()) ||
-			// All Public
-			($rb_agency_option_privacy == 0) ||
-			//admin users
-			(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
-			//  Must be logged as "Client" to view model list and profile information
-			($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) )
-			{
-
-				//$atts["type"]="casting";
-				/*$addtionalLink='&nbsp;|&nbsp;<a id="sendemail" href="javascript:">Email to Admin</a>';*/
-			}
-			$links = "";
-
-			if( !current_user_can("manage_options")){
-				// print, downloads links to be added on top of profile list
-				$links='<div class="rblinks">';
-
-					/*
-					 * Set Print / PDF in Settings
-					 */
-					if(get_query_var('target')!="results" && $rb_agency_option_profilelist_printpdf && isset($atts)){// hide print and download PDF in Search result
-						$links.='
-						<div class="rbprint-download">
-							<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/print/?gd='.(isset($atts["gender"]) && !empty($atts["gender"])?$atts["gender"]:"").'&ast='.(isset($atts["age_start"]) && !empty($atts["age_start"])?$atts["age_start"]:"").'&asp='.(!empty($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(!empty($atts["type"])?$atts["type"]:"").'">Print</a></a>&nbsp;|&nbsp;<a target="_blank" href="'.get_bloginfo('wpurl').'/profile-category/pdf/?gd='.(isset($atts["gender"])?$atts["gender"]:"").'&ast='.(isset($atts["age_start"])?$atts["age_start"]:"").'&asp='.(isset($atts["age_stop"])?$atts["age_stop"]:"").'&t='.(isset($atts["type"])?$atts["type"]:"").'">Download PDF</a>'.(isset($addtionalLink)?$addtionalLink:"").'
-						</div><!-- .rbprint-download -->';
-					}
-
-					/*
-					 * Favorite Settings
-					 */
-					if(function_exists('rb_agency_casting_menu') && $rb_get_casting_profileid > 0 ){
-						$links.='<div class="rbfavorites-castings">';
-
-						if(is_permitted("favorite") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites")) ){
-							if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){
-									$links.='<a href="'.get_site_url().'/profile-favorite/">'.__("View Favorites", rb_agency_TEXTDOMAIN).'</a>';
-							}
-						}
-
-						if(is_permitted("casting") && (!rb_is_page("rb_casting") && !rb_is_page("rb_favorites"))){
-							if($_SERVER['REQUEST_URI']!="/profile-casting/"){
-								if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']==1){
-									if($rb_agency_options_arr['rb_agency_option_profilelist_favorite']==1){$links.='&nbsp;|&nbsp;';}
-									$links.='<a href="'.get_site_url().'/profile-casting/">'.__("View Casting Cart", rb_agency_TEXTDOMAIN).'</a>';
-								}
-							}
-						}
-						$links.='</div><!-- .rbfavorites-castings -->';
-					}
-
-				$links.='</div><!-- .rbfavorites-castings -->';
-			}
-
-			/*
-			 *  sorting options is activated if set on in admin/settings
-			 */
-			if($rb_agency_option_profilelist_sortby){
-
-				// Enqueue our js script
-				wp_enqueue_script( 'list_reorder', plugins_url('rb-agency/js/list_reorder.js'),array('jquery'));
-
-				// Dropdown
-				$links.='<div id="rbfilter-sort">';
-				$links.='<div class="rbsort">
-						<label>Sort By: </label>
-						<select id="sort_by">
-							<option value="">Sort List</option>
-							<option value="1">Age</option>
-							<option value="2">Name</option>
-							<option value="3">Date Joined</option>
-							<option value="2">Display Name</option>';
-						if($rb_agency_option_profilelist_sortbydate){	
-							$results4 = $wpdb->get_results("SELECT cu.ProfileCustomID, cu.ProfileCustomTitle FROM ".table_agency_customfields." as cu WHERE cu.ProfileCustomType = 10  ");
-							$i = 0;
-							foreach($results4 as $key):
-								$i++;
-										$links.='<option value="'.$key->ProfileCustomID.'">'.$key->ProfileCustomTitle.'</option>';
-							endforeach;
-						}
-				$links.='</select>
-						<select id="sort_option">
-							<option value="">Sort Options</option>
-						</select>
-						</div>';
-				$links.='</div>';
-			}
-
-			/*
-			 *  if featured is set
-			 */
-			if (isset($ProfileIsFeatured)){
-
-				// Dropdown
-				$links.='<div style="float:left; width:100%">';
-				$links.='<div class="rbfilter-letter">';
-				foreach (range('A', 'Z') as $letter) {
-					$links.='<a href="?filter='.$letter.'">'.$letter.'</a>';
-				}
-				$links.='</div>';
-				$links.='</div>';
-				$links.='<p></p>';
-
-			}
-
-			//remove  if its just for client view of listing via casting email
-			if(get_query_var('type')=="profilesecure"){ $links="";}
-
-			if(get_query_var('type')=="favorite"){ $links="";} // we dont need print and download pdf in favorites page
-
-			echo "<div class=\"rbclear\"></div>\n";
-			echo "$links<div id=\"profile-results\">\n";
-
-			$limit = (isset($limit) ? $limit : "");
-			if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){ //if its printing or PDF no need for pagination belo
-
-				/*********** Paginate **************/
-					/*$qItem = $wpdb->get_var("SELECT
-						COUNT(profile.ProfileID)
-					FROM ". table_agency_profile ." profile 
-					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
-					ON profile.ProfileID = customfield_mux.ProfileID  
-					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");*/
-
-					//$items = $qItem; // number of total rows in the database
-					/*$qItem = $wpdb->get_var("SELECT
-						COUNT(profile.ProfileID) 
-					FROM ". table_agency_profile ." profile 
-					LEFT JOIN ". table_agency_customfield_mux ."  AS customfield_mux 
-					ON profile.ProfileID = customfield_mux.ProfileID  
-					$filter  GROUP BY profile.ProfileID ORDER BY $sort $dir  ".(isset($limit) ? $limit : "")."");
-					*/
-					
-					$query_pagination = "SELECT count(profile.ProfileID) FROM ". table_agency_profile ." profile 
-										        		INNER JOIN 
-													    ". table_agency_profile_media ." sub_m
-														ON
-														(
-														 	 sub_m.ProfileID = profile.ProfileID 
-															AND 
-															 sub_m.ProfileMediaType='Image' 
-															AND 
-															 sub_m.ProfileMediaPrimary = 1
-														)
-														
-														INNER JOIN 
-														".table_agency_customfield_mux." cmux
-														ON
-														 (cmux.ProfileID = profile.ProfileID)
-												$filter 
-												GROUP BY profile.ProfileID
-												";
-												//echo $query_pagination;
-					$qItem = $wpdb->get_var($query_pagination);
-					$items = $qItem; // number of total rows in the database
-                  //var_dump($items);
-                  //var_dump($qItem);
-                  //$wpdb->show_errors();
-                  //$wpdb->print_error();
-
-				if($items > 0) {
-					$p = new rb_agency_pagination;
-					$p->items($items);
-					$p->limit($pagingperpage); // Limit entries per page
-					$p->target($_SERVER["REQUEST_URI"],$build_query);
-					$p->currentPage($paging); // Gets and validates the current page
-					$p->calculate(); // Calculates what to show
-					$p->parameterName('paging');
-					$p->adjacents(1); //No. of page away from the current page
-					
-					if(!isset($paging)) {
-						$p->page = 1;
-					} else {
-						$p->page = $paging;
-					}
-					//Query for limit paging
-					$limit = "LIMIT " . ($p->page - 1) * $p->limit  . ", " . $p->limit;
-				} else {
-					$limit = "";
-				}
-				if(get_query_var('target')=="print"){$limit = "";} //to remove limit on print page
-				if(get_query_var('target')=="pdf"){$limit = "";} //to remove limit on pdf page
-
-			}//if(get_query_var('target')!="print"
-
-			/*
-			 * check permissions
-			 */
-			$sqlFavorite_userID='';
-			$sqlCasting_userID='';
-			if(is_permitted('casting')){
-				// Casting Cart 
-				$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID   AND cart.CastingCartProfileID = '".rb_agency_get_current_userid()."'  ";
-			} 
-			if(is_permitted('favorite')){
-				// Display Favorites 
-				$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-			} 
-
-			/*
-			 * Execute the Query
-			 */
-			if (isset($profilefavorite) && !empty($profilefavorite)){
-				// Execute query showing favorites
-				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
-			} elseif (isset($profilecastingcart) && !empty($profilecastingcart)){
-				// There is a Casting Cart ID present
-
-				// Get User ID
-				$user = get_userdata(rb_agency_get_current_userid());  
-
-				// check if user is admin, if yes this allow the admin to view other users cart 
-				if($user->user_level==10 AND get_query_var('target')!="casting") {
-					$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
-				}
-
-				// Execute the query showing casting cart
-				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
-
-			} elseif (isset($_GET['t']) && $_GET['t']=="casting"){
-				// TODO: Find ?????????????????????  Purpose?
-				$queryList = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID, cart.CastingCartTalentID, cart.CastingCartTalentID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_castingcart." cart WHERE  $sqlCasting_userID AND ProfileIsActive = 1 GROUP BY profile.ProfileID";  
-			} elseif (isset($fastload)){
-				// Execute Query in slim down mode, only return name, face and link
-				$queryList = "
-					SELECT 
-						profile.ProfileID,
-						profile.ProfileID as pID, 
-						profile.ProfileGallery,
-						profile.ProfileContactDisplay, 
-						(   SELECT media.ProfileMediaURL 
-							FROM ". table_agency_profile_media ." media 
-							WHERE profile.ProfileID = media.ProfileID 
-								AND media.ProfileMediaType = \"Image\" 
-								AND media.ProfileMediaPrimary = 1
-						) 
-						AS ProfileMediaURL 
-					FROM ". table_agency_profile ." profile 
-						$filter  
-					GROUP BY profile.ProfileID 
-					ORDER BY $sort $dir $limit #AA";
-
-			} else {
-				// Execute Query   removed profile.*,
-
-			$sortby = "";
-
-			
-			if($rb_agency_option_profilelist_sortbydate){
-				$sortby = "cmux.ProfileCustomDateValue";
-				$dir = "DESC";
-			}else{
-				$sortby  = $sort;
-			}
-
-			
-				/*$queryList = "
-				SELECT 
-					profile.ProfileID,
-					profile.ProfileGallery,
-					profile.ProfileContactDisplay, 
-					profile.ProfileDateBirth, 
-					profile.ProfileDateCreated,
-					profile.ProfileLocationState,
-					cmux.*,
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1) 
-					AS ProfileMediaURL 
-					
-					FROM ". table_agency_profile ." profile 
-						LEFT JOIN
-						".table_agency_customfield_mux." cmux
-						ON
-						profile.ProfileID = cmux.ProfileID
-					$filter  
-					GROUP BY profile.ProfileID 
-				ORDER BY $sortby $dir $limit #B";*/
-
-				$queryList = "
-				SELECT 
-					profile.ProfileID,
-					profile.ProfileGallery,
-					profile.ProfileContactDisplay, 
-					profile.ProfileDateBirth, 
-					profile.ProfileDateCreated,
-					profile.ProfileLocationState,
-					cmux.ProfileCustomValue,
-					cmux.ProfileID,
-					cmux.ProfileCustomDateValue,
-					cmux.ProfileCustomID,
-					media.ProfileMediaURL 
-					
-				FROM ". table_agency_profile ." profile 
-					LEFT JOIN 
-						". table_agency_profile_media ." media
-							ON
-								(
-								    media.ProfileID = profile.ProfileID 
-									AND 
-									media.ProfileMediaType='Image' 
-									AND 
-									media.ProfileMediaPrimary = 1
-								)
-														
-								INNER JOIN ".table_agency_customfield_mux." cmux
-								ON
-								(cmux.ProfileID = profile.ProfileID)
-					
-				$filter  
-				GROUP BY profile.ProfileID 
-				ORDER BY $sortby $dir $limit #B";
-			}
-
-			
-
-			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
-			$countList = $wpdb->num_rows;
-
-			$rb_user_isLogged = is_user_logged_in();
-
-				$castingcart_results = array();
-				$arr_castingcart = array();
-				$arr_favorites = array();
-				
-				
-				if($rb_agency_option_profilelist_castingcart){
-					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'  AND CastingJobID <= 0");
-					foreach ($castingcart_results as $key) {
-						array_push($arr_castingcart, $key->CastingCartTalentID);
-					}
-
-				}
-				if($rb_agency_option_profilelist_favorite){
-					$favorites_results = $wpdb->get_results("SELECT SavedFavoriteTalentID FROM ".table_agency_savedfavorite." WHERE SavedFavoriteProfileID = '".rb_agency_get_current_userid()."'");
-					foreach ($favorites_results  as $key) {
-						array_push($arr_favorites, $key->SavedFavoriteTalentID);
-					}
-				}
-				
-				
-
-			// Get Naming Convention
-			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-
-			if($countList > 0){
-
-           # this will replace the timthumb function as it is not working properly all the time.	
-			$displayHTML ="	<script type='text/javascript' src='".rb_agency_BASEDIR."js/resize.js'></script>";
-
-			$profileDisplay = 0;
-			$countFav = 0;
-			$displayPaginationFooter = "";
-			$resultsCmux = $wpdb->get_results($wpdb->prepare("SELECT cmux.*, cfield.* FROM ".table_agency_customfields." cfield LEFT JOIN ".table_agency_customfield_mux." cmux ON (cmux.ProfileCustomID = cfield.ProfileCustomID) WHERE cfield.ProfileCustomType = %d  ",10),ARRAY_A);
-			$rb_get_casting_profileid = rb_get_casting_profileid();
-			echo "<input type=\"hidden\" name=\"rb_total_items\" value=\"".$countList."\"/> ";
-			foreach($resultsList as $dataList) {
-					
-				$profileDisplay++;
-				if ($profileDisplay == 1 ){
-
-					/*********** Show Count/Pages **************/
-					 $displayHTML .= "  <div id=\"profile-results-info\">\n";
-						
-						# Temporarily removed this as required
-						#if(count($dataList) > 0){
-						#	$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
-						#		echo "<strong>Item on this list: ".count($countList)."</strong>";
-						#	$displayHTML .="    </div>\n";
-						#}
-
-						if($items > 0) {
-							if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){ 
-								$displayHTML .="    <div class=\"profile-results-info-countpage\">\n";
-									echo "<div class=\"rbpagination-top\">".$p->show()."</div>";  // Echo out the list of paging. 
-									$displayPaginationFooter = $p->show();
-								$displayHTML .= "    </div>\n";
-							}
-						}
-
-						if ($rb_agency_option_profilelist_count) {
-							if ((!isset($profilefavorite) && empty($profilefavorite)) && (!isset($profilecastingcart) && empty($profilecastingcart))){  
-								$displayHTML .= "    <div id=\"profile-results-info-countrecord\">\n";
-								$displayHTML .="    	". __("Displaying", rb_agency_TEXTDOMAIN) ." <strong>". $countList ."</strong> ". __("of", rb_agency_TEXTDOMAIN) ." ". $items ." ". __(" records", rb_agency_TEXTDOMAIN) ."\n";
-								$displayHTML .="    </div>\n";
-							}
-						}
-
-					$displayHTML.="  </div><!-- #profile-results-info -->\n";
-					$displayHTML.="  <div class=\"rbclear\"></div>\n";
-				}
-				
-				if($profileDisplay == 1){
-					$displayHTML.="  <div id=\"profile-list\">\n";
-				}
-				$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
-				
-				$p_image = $dataList["ProfileMediaURL"]; //rb_get_primary_image($dataList["ProfileID"]); 
-
-				/*
-				 * load sorting values
-				 */
-				$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">'."\n\n";
-				$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">'."\n\n";
-				$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.$dataList["ProfileDateCreated"].'">'."\n\n";
-				$i = 0;
-				foreach ($resultsCmux as $key) {
-					if($key["ProfileID"] ==$dataList["ProfileID"]){
-						$i++;
-					    $displayHTML .= '<input id="'.$key["ProfileCustomID"].'" data-custom-date="du'.$key["ProfileCustomID"].$dataList["ProfileID"].'" type="hidden" class="p_customdate" value="'.(isset($key["ProfileCustomDateValue"]) && $key["ProfileCustomDateValue"]!=="1970-01-01"  && $key["ProfileCustomDateValue"]!=="0000-00-00"?strtotime($key["ProfileCustomDateValue"]):strtotime("1970-00-00"))."\"/>\n\n";
-        			}
-        		}
-				if (!empty($p_image)){
-					
-					#dont need other image for hover if its for print or pdf download view and dont use timthubm
-					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-						$images = "";
-						/*if(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) && $rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'] ==1){  //show profile sub thumbs for thumb slide on hover
-							$images=getAllImages($dataList["ProfileID"]);
-							$images=str_replace("{PHOTO_PATH}",rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
-						}*/
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image."&w=175&h=260)\"></a>".$images."</div>\n";
-					} else {
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" style=\"background-image: url(".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".rb_agency_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $p_image."&w=175&h=260)\"></a>".$images."</div>\n";
-					}
-
-				} else {
-					$displayHTML .= "  <div class=\"image image-broken\" style='background:lightgray; color:white; font-size:20px; text-align:center; line-height:120px; vertical-align:bottom'>No Image</div>\n";
-				}
-
-				$displayHTML .= "  <div class=\"profile-info\">\n";
-				$displayHTML .= "     <h3 class=\"name\"><a href=\"". rb_agency_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($dataList["ProfileContactDisplay"]) ."</a></h3>\n";
-
-				if ($rb_agency_option_profilelist_expanddetails) {
-					
-						$age = rb_agency_get_age($dataList["ProfileDateBirth"]);
-						
-						$displayHTML .= "     <div class=\"details rb-expanded\">";
-						if($age > 0){
-							$displayHTML .= " <span class=\"details-age\">". $age ."</span>";
-						}
-						if($dataList["ProfileLocationState"]!="" && $detail_state == 1){
-							$displayHTML .= (($age>0)?"<span class=\"divider\">, </span>":"")."<span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
-						} 
-
-							//global $wpdb;
-							 //   $profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
-							  //  $is_model_or_talent = $wpdb->num_rows;
-
-							//echo "loaded: ".microtime()." ms";
-						if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
-				        	//Get Favorite & Casting Cart links
-							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-							 $displayHTML .= "<div class=\"rb_profile_tool\">";
-
-								if($rb_agency_option_profilelist_favorite   && !empty($p_image) && ($rb_get_casting_profileid> 0  || current_user_can("manage_options") )){
-						             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
-						        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
-						        
-						        }
-						        
-						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($rb_get_casting_profileid > 0 || current_user_can("manage_options") )){
-					           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
-					            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
-					            }
-							   $displayHTML .= "</div>";
-						}
-						$displayHTML .= "</div>\n";
-				}else{
-					if($rb_user_isLogged && function_exists("rb_agency_get_miscellaneousLinks") ){
-							$displayHTML .= "     <div class=\"details  rb-expanded-second\">";
-				    		//Get Favorite & Casting Cart links
-							//$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-							  $p_image = $dataList["ProfileMediaURL"]; //rb_get_primary_image($dataList["ProfileID"]); 
-
-						    $displayHTML .= "<div class=\"rb_profile_tool $p_image\">";
-								if($rb_agency_option_profilelist_favorite && !empty($p_image)   && ($rb_get_casting_profileid > 0 ||  current_user_can("manage_options") )){
-						             // $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
-						        	  $displayHTML .=  "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
-						        }
-						        
-						      
-						        if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && ($rb_get_casting_profileid > 0  || current_user_can("manage_options") )){
-					           	 	 //$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
-					            		$displayHTML .=  "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
-					            }
-						   $displayHTML .= "</div>";
-						   $displayHTML .= "</div>\n";
-					}
-				}
-				
-				
-
-				$displayHTML .=" </div> <!-- .profile-info --> \n";
-				$displayHTML .=" </div><!-- .rbprofile-list -->\n";
-			} // endwhile datalist
-
-			$displayHTML .= "  <div class=\"rbclear\"></div>\n";
-			$displayHTML .= "  </div><!-- #profile-list -->\n";
-
-		} // endif countlist
-
-		// There are no profiles returned.  Display empty message
-		if ($countList < 1) {
-			$displayHTML .= __("No Profiles Found", rb_agency_TEXTDOMAIN);
-		}
-		
-		// Close Formatting
-		$displayHTML .= "  <div class=\"rbclear\"></div>\n";
-		$displayHTML .= " <div class=\"rbpagination-bottom\">".$displayPaginationFooter."</div>";
-		$displayHTML .= "</div><!-- #profile-results -->\n";
-		
-		// Commented by Sunil to fix profile display issue
-//		} else {
-//			if($rb_agency_option_privacy == 3 && is_user_logged_in() && !is_client_profiletype()){
-//				echo "<h2>This is a restricted page. For Clients only.</h2>";
-//			} else {
-//				// Show Login Form
-//				include("theme/include-login.php");
-//			}
-//		}
-
-		echo  $displayHTML;
-
-		// debug mode
-		//  rb_agency_checkExecution();
-		//add the thumbs slides on hover of profile listing
-		echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/thumbslide.js\"></script>\n"; 
-		echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/textscroller.js\"></script>\n"; 
-		echo "<script type=\"text/javascript\" src=\"". rb_agency_BASEDIR ."js/image-resize.js\"></script>\n";
-
-		//load javascript for add to casting cart	
-		if(get_query_var('target')!="print" AND get_query_var('target')!="pdf" AND get_query_var('type')!="profilesecure" AND !isset($profilecastingcart)){
-			echo'	<script>
-						function addtoCart(pid){
-							var qString = \'usage=addtocart&pid=\' +pid;
-							var apid = "addtocart"+pid;
-							$.post(\''.rb_agency_BASEDIR.'theme/sub_db_handler.php\', qString, processResponseAddtoCart);
-							//document.getElementById(pid).style.display="none";
-							// document.getElementById(apid).style.backgroundPosition="0 -134px;";
-							}
-						function processResponseAddtoCart(data) {
-						}
-					</script>';
-		} //end if(get_query_var
-	}
 
 
 
@@ -2005,68 +969,6 @@ if(!function_exists("rb_output_buffer")){
 			}
 	}
 
-	// Profile Search
-	function rb_agency_profilesearch($atts, $content = NULL){
-
-		// Profile Class
-		include_once(rb_agency_BASEREL ."app/profile.class.php");
-		
-		$rb_agency_options_arr = get_option('rb_agency_options');
-		$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
-		$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
-
-		
-		
-		// Set It Up	
-		global $wp_rewrite;
-		extract(shortcode_atts(array(
-				"profilesearch_layout" => "advanced",
-				"profilesearch_advanced_button" => false,
-				"is_widget" => false,
-		), $atts));
-
-				
-					
-		
-		if (  // Public
-				 ($rb_agency_option_privacy == 0) ||
-
-				//admin users
-				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
-				//  Must be logged as "Client" to view model list and profile information
-				($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()  )
-		    ) {
-
-			if($is_widget){
-			    $isSearchPage = 1;
-				if(!isset($_POST['form_mode'])){
-					$type = get_query_var( 'type' );
-					if(!in_array($type, array("search-advanced","search-basic")) ) { 
-						echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout,$profilesearch_advanced_button);
-					}
-				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
-					 
-					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
-					}
-				}
-			}else{
-				 $isSearchPage = 1;
-				if(!isset($_POST['form_mode'])){
-					echo RBAgency_Profile::search_form("", "", 0,$profilesearch_layout,$profilesearch_advanced_button);
-				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
-					
-					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s2\" value=\"". __("Go Back to Advanced Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s2\" value=\"". __("Go Back to Basic Search", rb_agency_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
-					}
-				}
-			}
-		}
-	}
 
 
 // *************************************************************************************************** //
@@ -2509,7 +1411,7 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 	$rb_agency_option_locationtimezone 	= isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 	
 	if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){ 
-    	$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+		$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
 		$row = current($subresult);
 		
 		$ProfileCustomTitle = $data3['ProfileCustomTitle'];
@@ -2694,11 +1596,11 @@ function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 			} elseif ($ProfileCustomType == 10) { //Date
 				
 					echo "<input type=\"text\" id=\"rb_datepicker". $data3['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
-				    echo "<script type=\"text/javascript\">\n\n";
-				    echo "jQuery(function(){\n\n";
-				    echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". $ProfileCustomDateValue ."');\n\n";
-				   	echo "});\n\n";
-				    echo "</script>\n\n";
+					echo "<script type=\"text/javascript\">\n\n";
+					echo "jQuery(function(){\n\n";
+					echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". $ProfileCustomDateValue ."');\n\n";
+					echo "});\n\n";
+					echo "</script>\n\n";
 
 			}									
 	} // End if Empty ProfileCustomID
@@ -2796,11 +1698,11 @@ function rb_agency_getGenderTitle($ProfileGenderID){
 /*/
 function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID, $Privacy = true){
 	global $wpdb; 
-    
-    if($Privacy){
-    	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
+	
+	if($Privacy){
+		$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
 	}else{
-    	$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
+		$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
 	 }
 	$results = $wpdb->get_results($wpdb->prepare($query,$ProfileCustomID,$ProfileGenderID),ARRAY_A);
 	$count = $wpdb->num_rows;
@@ -2899,8 +1801,8 @@ function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = tr
 		// If a value exists...
 
 		if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")){
-                
-          	/*
+				
+			/*
 			TODO:  REMOVE
 			// Create Label for Measurement
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
@@ -3017,7 +1919,7 @@ function rb_agency_getProfileCustomFields_admin($ProfileID, $ProfileGender) {
 
 		if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
 
-			      $resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
+				  $resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
 			
 			if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 				if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
@@ -4371,7 +3273,7 @@ add_action('wp_ajax_read_email_cnt', 'read_email_content');
 
 
 function get_state_ajax(){
-	    global $wpdb;
+		global $wpdb;
 		$states = array();
 		$country = $_POST['country'];
 		$query_get ="SELECT * FROM ".table_agency_data_state." WHERE CountryID='".$country."'";
@@ -4741,7 +3643,7 @@ add_action('wp_ajax_nopriv_rb_agency_profile_photos', 'rb_agency_profile_photos'
 function rb_agency_save_profile_photos(){
 
 	global $wpdb;
-    if(!isset($_SESSION["profilephotos"])){
+	if(!isset($_SESSION["profilephotos"])){
 		$_SESSION["profilephotos"] = serialize(array_filter($_POST["profilephotos"]));
 	}else {
 		$thumbs = array();
@@ -5095,7 +3997,7 @@ function rb_logout_user(){
 */
 function rb_get_casting_profileid(){
 	 if(!defined("table_agency_casting"))
-	 	  return false;
+		  return false;
 	 global $user_ID, $wpdb;
 	 $data = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d ", $user_ID));
 	 if($wpdb->num_rows > 0){
@@ -5152,7 +4054,7 @@ function rb_change_mail_charset( $charset ) {
 
 function rb_get_imperial_metrics($value,$sub_unit = 1,$label = true){
 	$rb_agency_options_arr = get_option('rb_agency_options');
-    $rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
+	$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
 	$rb_agency_option_old_unittype = isset($rb_agency_options_arr['rb_agency_option_old_unittype'])?$rb_agency_options_arr['rb_agency_option_old_unittype']:0;
 	
 	if ($rb_agency_option_unittype == 0){ // Metric
@@ -5179,7 +4081,7 @@ function rb_get_imperial_metrics($value,$sub_unit = 1,$label = true){
 				return $value.($label? " ". __("in", rb_agency_TEXTDOMAIN):"");
 			}
 		}elseif($sub_unit == 2){ // lb 
-           return $value.($label?" ".__("lb",rb_agency_TEXTDOMAIN):"");
+		   return $value.($label?" ".__("lb",rb_agency_TEXTDOMAIN):"");
 		}	
 		return $value;								
 	}
@@ -5192,9 +4094,9 @@ function rb_get_imperial_metrics($value,$sub_unit = 1,$label = true){
 
 function rb_fromname($email){
 	$rb_agency_options = get_option('rb_agency_options');
-    $rb_blogname = get_option('blogname');
-    $wpfrom = !empty($rb_agency_options["rb_agency_option_agencyheader"])?$rb_agency_options["rb_agency_option_agencyheader"]:$rb_blogname;
-    return $wpfrom;
+	$rb_blogname = get_option('blogname');
+	$wpfrom = !empty($rb_agency_options["rb_agency_option_agencyheader"])?$rb_agency_options["rb_agency_option_agencyheader"]:$rb_blogname;
+	return $wpfrom;
 }
 
 add_filter('wp_mail_from_name', 'rb_fromname');
