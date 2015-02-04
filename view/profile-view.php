@@ -70,7 +70,7 @@
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", RBAGENCY_TEXTDOMAIN ));
 		$count = count($results);
-	foreach($results as $data) {
+		foreach($results as $data) {
 			$ProfileID					=$data['ProfileID'];
 			$ProfileUserLinked			=$data['ProfileUserLinked'];
 			$ProfileGallery				=stripslashes($data['ProfileGallery']);
@@ -105,17 +105,17 @@
 			$ProfileIsActive			=stripslashes($data['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 			$ProfileStatHits			=stripslashes($data['ProfileStatHits']);
 			$ProfileDateViewLast		=stripslashes($data['ProfileDateViewLast']);
-			
+
 			// Update Stats
 			$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
 		}
 
-		 rb_agency_add_editlink($ProfileID);
-	
-		 function get_current_viewingID(){
-				global $ProfileID;
-				return $ProfileID;
-		 }
+		RBAgency_Admin::link_profile_edit($ProfileID);
+
+		function get_current_viewingID(){
+			global $ProfileID;
+			return $ProfileID;
+		}
 	/*
 	 * Customize Page Title
 	 */

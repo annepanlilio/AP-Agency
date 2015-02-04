@@ -3292,7 +3292,7 @@ elseif ($ConfigID == 99) {
 
 	if ($_REQUEST['action'] == "uninstall") {
 		echo "	<h3>Uninstalling...</h3>\n";
-		return RBAgency::uninstall();
+		return RBAgency_Admin::uninstall();
 	} else {
 		// Show Confirmation
 		echo "	<h3>Uninstall</h3>\n";

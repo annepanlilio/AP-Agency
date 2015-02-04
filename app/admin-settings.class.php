@@ -119,7 +119,7 @@ class RBAgency_AdminSettings {
 
 			if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 				if($_REQUEST['action'] == 'douninstall') {
-					return RBAgency::Uninstall();
+					return RBAgency_Admin::Uninstall();
 				}
 			}
 
