@@ -21,8 +21,11 @@ class RBAgency_Extends {
 			add_shortcode( 'category_list', array("RBAgency_Extends","category_list_shortcode") );
 
 			// Assign Widgets
-			add_action( 'widgets_init', create_function('', 'return register_widget("profile_search_widget_construct");') );
-			add_action( 'widgets_init', create_function('', 'return register_widget("profile_featured_widget_construct");') );
+			add_action( 'widgets_init', 'RBAgency_Extends_Widgets' );
+				function RBAgency_Extends_Widgets() {
+					register_widget( 'profile_search_widget' );
+					register_widget( 'profile_featured_widget' );
+				}
 
 		}
 
@@ -180,7 +183,6 @@ class RBAgency_Extends {
 			return $output_string;
 		}
 
-
 } // End class RBAgency_Extends
 
 
@@ -190,78 +192,34 @@ class RBAgency_Extends {
 
 
 
-class profile_search_widget_construct extends WP_Widget {
-
-	// Setup
-	function profile_search_widget_construct() {
-		$widget_ops = array('classname' => 'rb_agency_widget', 'description' => __("Displays profile search fields", RBAGENCY_TEXTDOMAIN) );
-		$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Search", RBAGENCY_TEXTDOMAIN), $widget_ops);
-	}
-
-	// What Displays
-	function widget($args, $instance) {
-
-		// Get Options
-		$rb_agency_options_arr = get_option('rb_agency_options');
-			$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
-			$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
-
-		// Get Settings from Widget
-		extract($args, EXTR_SKIP);
-			$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-				if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
-			$showlayout = $instance['showlayout'];
-				if ( empty( $showlayout ) ) { $showlayout = "condensed"; };
-
-		// Output Widget
-		echo $before_widget;
-		if (class_exists('RBAgency_Profile')) { 
-			echo RBAgency_Profile::search_form("", "", 0, $showlayout, $rb_agency_option_formhide_advancedsearch_button);
-		} else {
-			echo "Invalid Function";
-		}
-		echo $after_widget;
-	}
-
-	// Update
-	function update($new_instance, $old_instance) {
-		$instance = $old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);
-		$instance['showlayout'] = strip_tags($new_instance['showlayout']);
-		return $instance;
-	}
-
-	// Form
-	function form($instance) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-		$title = esc_attr($instance['title']);
-		$showlayout = isset($instance['showlayout']) ? esc_attr($instance['showlayout']):"";
-		?>
-		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-		<p><label for="<?php echo $this->get_field_id('showlayout'); ?>"><?php _e('Type:'); ?> <select id="<?php echo $this->get_field_id('showlayout'); ?>" name="<?php echo $this->get_field_name('showlayout'); ?>"><option value="advanced" <?php selected($showlayout, "advanced"); ?>>Advanced Search</option><option value="condensed" <?php selected($showlayout, "condensed"); ?>>Condensed Search</option></select></label></p>
-		<?php 
-	}
-
-} // profile_search_widget_construct
-
-
 
 /*
  * Featured Profiles
  * Widget: View featured profiles, option to show one or several randomly
  */
+class profile_featured_widget extends WP_Widget {
 
-class profile_featured_widget_construct extends WP_Widget {
 
-	// Setup
-	function profile_featured_widget_construct() {
-		$widget_ops = array('classname' => 'rb_agency_widget_showsearch', 'description' => __("Displays profile search fields", RBAGENCY_TEXTDOMAIN) );
-		$this->WP_Widget('rb_agency_widget_showsearch', __("RB Agency : Featured", RBAGENCY_TEXTDOMAIN), $widget_ops);
+	/*
+	 * Register widget with WordPress.
+	 */
+	function __construct() {
+		parent::__construct(
+			'rbagency_widget_featured', // Base ID
+			__( 'RB Agency: Featured', RBAGENCY_TEXTDOMAIN ), // Name
+			array( 'description' => __( 'Displays featured profiles', RBAGENCY_TEXTDOMAIN ), 'classname' => 'rbagency_widget') // Args
+		);
 	}
 
-	// What Displays
-	function widget($args, $instance) {
-
+	/**
+	 * Front-end display of widget.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
 		// Get Settings from Widget
 		extract($args, EXTR_SKIP);
 			$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
@@ -271,35 +229,144 @@ class profile_featured_widget_construct extends WP_Widget {
 			$count = $instance['count'];
 				if ( empty( $count ) ) { $count = 1; };
 
-
 		echo $before_widget;
-		if (function_exists('rb_agency_profilesearch')) { 
-			$atts = array('profilesearch_layout' => $showlayout,"is_widget"=> true);
+		if (class_exists('RBAgency_Profile')) { 
+			$atts = array('type' => $type,"count"=> $count);
 			echo RBAgency_Profile::view_featured($atts);
 		} else {
-			echo "Invalid Function";
+			echo "Invalid Widget (Featured)";
 		}
 		echo $after_widget;
 	}
 
-	// Update
-	function update($new_instance, $old_instance) {
-		$instance = $old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);
-		$instance['type'] = strip_tags($new_instance['type']);
-		$instance['count'] = strip_tags($new_instance['count']);
-		return $instance;
+	/**
+	 * Back-end widget form.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Search Form', 'text_domain' );
+		$type = esc_attr($instance['type']);
+		$count = ! empty( $instance['count'] ) ? $instance['count'] : 1;
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('type'); ?>"><?php _e('Type:'); ?></label>
+			<select id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
+				<option value="0" <?php selected($showlayout, 0); ?>>All Profiles</option>
+				<option value="1" <?php selected($showlayout, 1); ?>>Featured Profiles Only</option>
+			</select>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'count' ); ?>"><?php _e( 'Count:' ); ?></label> 
+			<input class="widefat" id="<?php echo $this->get_field_id( 'count' ); ?>" name="<?php echo $this->get_field_name( 'count' ); ?>" type="text" value="<?php echo esc_attr( $count ); ?>">
+		</p>
+		<?php 
 	}
 
-	// Form
-	function form($instance) {
-		$instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-		$title = esc_attr($instance['title']);
-		$showlayout = isset($instance['showlayout']) ? esc_attr($instance['showlayout']):"";
+	/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['type'] = ( ! empty( $new_instance['type'] ) ) ? strip_tags( $new_instance['type'] ) : '';
+		$instance['count'] = ( ! empty( $new_instance['count'] ) ) ? strip_tags( $new_instance['count'] ) : '';
+
+		return $instance;
+	}
+} // class profile_featured_widget_construct
+
+
+/*
+ * Featured Profiles
+ * Widget: View featured profiles, option to show one or several randomly
+ */
+class profile_search_widget extends WP_Widget {
+
+
+	/*
+	 * Register widget with WordPress.
+	 */
+	function __construct() {
+		parent::__construct(
+			'rbagency_widget_searchform', // Base ID
+			__( 'RB Agency: Search Form', RBAGENCY_TEXTDOMAIN ), // Name
+			array( 'description' => __( 'Displays profile profiles', RBAGENCY_TEXTDOMAIN ), 'classname' => 'rbagency_widget') // Args
+		);
+	}
+
+	/**
+	 * Front-end display of widget.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
+
+		// Get Options
+		$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
+			$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
+
+		echo $args['before_widget'];
+		if ( ! empty( $instance['title'] ) ) {
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+		}
+		// Show Search Form
+		if (class_exists('RBAgency_Profile')) { 
+			echo RBAgency_Profile::search_form("", "", 1, $rb_agency_option_formhide_advancedsearch_button);
+		} else {
+			echo "Invalid Function (Profile Search)";
+		}
+		echo $args['after_widget'];
+	}
+
+	/**
+	 * Back-end widget form.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Featured Profiles', 'text_domain' );
 		?>
-			<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('type'); ?>"><?php _e('Type:'); ?> <select id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>"><option value="0" <?php selected($showlayout, 0); ?>>All Profiles</option><option value="1" <?php selected($showlayout, 1); ?>>Featured Profiles Only</option></select></label></p>
-			<p><label for="<?php echo $this->get_field_id('count'); ?>"><?php _e('Count:'); ?> <input class="widefat" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>" type="text" value="<?php echo $count; ?>" /></label></p>
+		<p>
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
 		<?php 
+	}
+
+	/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+		return $instance;
 	}
 } // class profile_featured_widget_construct

@@ -653,132 +653,6 @@ class RBAgency_Init {
 		}
 
 
-	/*
-	 * Flush Rewrite Rules
-	 * Remember to flush_rules() when adding rules
-	 */
-
-		public static function flush_rules(){
-
-			global $wp_rewrite;
-			$wp_rewrite->flush_rules();
-
-		}
-
-
-	/*
-	 * Update Needed
-	 * Is this an updated version of the software and needs database upgrade?
-	 */
-
-		public static function check_update_needed(){
-
-			// Hold the version in a seprate option
-			if(!get_option("rb_agency_version")) {
-				update_option("rb_agency_version", RBAGENCY_VERSION);
-			} else {
-				// Version Exists, but is it out of date?
-				if(get_option("rb_agency_version") <> RBAGENCY_VERSION){
-					require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/upgrade.php");
-				} else {
-					// Namaste, version number is correct
-				}
-			}
-		}
-
-
-	/*
-	 * Upgrade Check
-	 * Is there a newer version of the software available to upgrade to?
-	 */
-
-		public static function check_upgrade_available(){
-			//if(!class_exists("RBAgency_Update"))
-				//require_once("update.php");
-
-			//return RBAgency_Update::check_version($update_plugins_option, true);
-		}
-
-
-	/*
-	 * Shortcode Generator
-	 * Add Custom Meta Box to Posts / Pages
-	 */
-
-		public static function shortcode_display_generator(){
-
-			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', RBAGENCY_TEXTDOMAIN), array('RBAgency_Admin', 'shortcode_display_generator_form'), 'post', 'advanced' );
-			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', RBAGENCY_TEXTDOMAIN), array('RBAgency_Admin', 'shortcode_display_generator_form'), 'page', 'advanced' );
-
-		}
-
-		public static function shortcode_display_generator_form(){
-			global $wpdb;
-			// Use nonce for verification
-			echo '<input type="hidden" name="rb_agency_noncename" id="rb_agency_noncename" value="'. wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
-			echo "<div class=\"submitbox\" id=\"add_ticket_box\">";
-			?><script type="text/javascript">
-				function create_profile_grid(){
-
-					var $rbagency = jQuery.noConflict();
-					str='';
-
-					gender=$rbagency('#rb_agency_gender').val();
-					if(gender!=''&& gender!='')
-					str+=' gender="'+gender+'"';
-
-					age_start=$rbagency('#rb_agency_age_start').val();
-					if(age_start!=''&& age_start!='')
-					str+=' age_start="'+age_start+'"';
-
-					age_stop=$rbagency('#rb_agency_age_stop').val();
-					if(age_stop!=''&& age_stop!='')
-					str+=' age_stop="'+age_stop+'"';
-
-					type=$rbagency('#rb_agency_type').val();
-					if(type!='')
-					str+=' type="'+type+'"';
-
-					send_to_editor('[profile_list'+str+']');return;
-				}
-
-				function create_profile_search(){
-					send_to_editor('[profile_search]');return;
-				}
-			</script>
-			<?php
-			echo "<table>\n";
-			echo "	<tr><td>Type:</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
-					global $wpdb;
-					$profileDataTypes = $wpdb->get_results("SELECT * FROM ". table_agency_data_type ."",ARRAY_A);
-					echo "<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-					foreach( $profileDataTypes as $dataType) {
-						if (isset($_SESSION['ProfileType'])) {
-							if ($dataType["DataTypeID"] ==  $ProfileType) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
-						} else { $selectedvalue = ""; }
-						echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ." ". __("Only", RBAGENCY_TEXTDOMAIN) ."</option>";
-					}
-					echo "</select></td></tr>\n";
-			echo "	<tr><td>". __("Starting Age", RBAGENCY_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_start\" name=\"rb_agency_age_start\" value=\"18\" /></td></tr>\n";
-			echo "	<tr><td>". __("Ending Age", RBAGENCY_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_stop\" name=\"rb_agency_age_stop\" value=\"99\" /></td></tr>\n";
-			echo "	<tr><td>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</td><td>";
-			echo "<select id=\"rb_agency_gender\" name=\"rb_agency_gender\">";
-			$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
-				
-				echo "<option value=\"\">All Gender</option>";
-				$queryShowGender = $wpdb->get_results($query,ARRAY_A);
-				foreach($queryShowGender as $dataShowGender){
-					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".$dataShowGender["GenderTitle"]."</option>";
-				}
-			echo "</select>";
-			echo "</td></tr>\n";
-			
-			echo "</table>\n";
-			echo "<p><input type=\"button\" onclick=\"create_profile_grid()\" value=\"". __("Insert Profile Grid", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
-			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
-			echo "</div>\n";
-		}
-
 
 	/*
 	 * Register Settings
@@ -801,22 +675,108 @@ class RBAgency_Init {
 		public static function get_key(){
 			return get_option("rb_agency_license");
 		}
-/*
-		//Displays message on Plugin's page
-		public static function plugin_row($plugin_name){
 
-			$key = RBAgency_Admin::get_key();
-			$version_info = GFCommon::get_version_info();
 
-			if(!$version_info["is_valid_key"]){
 
-				$plugin_name = "rb-agency/rb-agency.php";
+	// *************************************************************************************************** //
 
-				$new_version = version_compare(GFCommon::$version, $version_info["version"], '<') ? __('There is a new version of Gravity Forms available.', 'gravityforms') .' <a class="thickbox" title="Gravity Forms" href="plugin-install.php?tab=plugin-information&plugin=gravityforms&TB_iframe=true&width=640&height=808">'. sprintf(__('View version %s Details', 'gravityforms'), $version_info["version"]) . '</a>. ' : '';
-				echo '</tr><tr class="plugin-update-tr"><td colspan="3" class="plugin-update"><div class="update-message">' . $new_version . __('<a href="admin.php?page=gf_settings">Register</a> your copy of Gravity Forms to receive access to automatic upgrades and support. Need a license key? <a href="http://www.gravityforms.com">Purchase one now</a>.', 'gravityforms') . '</div></td>';
+
+	/*
+	 * Flush Rewrite Rules
+	 * Remember to flush_rules() when adding rules
+	 */
+
+		public static function flush_rules(){
+
+			global $wp_rewrite;
+			$wp_rewrite->flush_rules();
+
+		}
+
+
+	// *************************************************************************************************** //
+
+
+	/*
+	 * Update Needed
+	 * Is this an updated version of the software and needs database upgrade?
+	 */
+
+		public static function update_check(){
+
+			// Hold the version in a seprate option
+			if(!get_option("rb_agency_version")) {
+				update_option("rb_agency_version", RBAGENCY_VERSION);
+			} else {
+				// Version Exists, but is it out of date?
+				if(get_option("rb_agency_version") <> RBAGENCY_VERSION){
+					require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/upgrade.php");
+				} else {
+					// Namaste, version number is correct
+				}
 			}
 		}
-*/
+
+
+	/*
+	 * Upgrade Check
+	 * Is there a newer version of the software available to upgrade to?
+	 */
+
+		public static function upgrade_check(){
+			// TODO:
+			//if(!class_exists("RBAgency_Update"))
+				//require_once("update.php");
+
+			//return RBAgency_Update::check_version($update_plugins_option, true);
+		}
+
+
+	// *************************************************************************************************** //
+
+
+	/*
+	 * Diagnostics
+	 */
+
+		// Check Setup
+		public static function setup_check(){
+			// Get Options
+			$options = get_option('arez_options'); // TODO
+
+			// Check if missing permalinks
+			if ( isset($options['authorized']) &&  ! $options['authorized'] ) {
+				// Hide if on Settings Page
+				if ( (isset($_GET["page"]) && $_GET["page"] == 'arez') || (isset($_GET["page"]) && $_GET["page"] == 'arez-settings') ) {
+				} else {
+				echo '<div class="updated"><p>ActivityRez Plugin ready for setup.  <a href="'. admin_url("admin.php?page=arez") .'">Click here to get started</a>.</p></div>';
+				}
+			}
+
+		}
+
+		// Check Permalinks
+		public static function permalinks_check(){
+			// Check if missing permalinks
+			if ( ! get_option('permalink_structure') ) {
+				// Check if we are already on settings page
+				if ( get_option( 'rbagency_permalinkignore' ) !== true ) {
+					// Hide if on Settings Page
+					if (isset($_GET["page"]) && $_GET["page"] == 'arez-settings') {
+					} else {
+					echo '<div class="error"><p>WARNING: Your permalinks are not set.  <a href="'. admin_url("admin.php?page=arez-settings") .'">Click here to resolve</a>.</p><span class="dismiss"><a href="'. admin_url("admin.php?page=arez-settings&action=permalink-dismiss") .'">Dismiss</a></div>';
+					}
+				}
+			}
+
+		}
+
+		// Check Permalinks
+		public static function permalinks_change(){
+			global $wp_rewrite;
+			$wp_rewrite->set_permalink_structure('/%category%/%postname%/');
+			$wp_rewrite->flush_rules();
+		}
 
 
 }

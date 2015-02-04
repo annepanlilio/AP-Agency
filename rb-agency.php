@@ -149,7 +149,7 @@ See license.txt for full details.
 	//include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Init.php');
 		//add_action( 'init', array('RBAgency_Init', 'init'), 0, 1 );
 
-	// Functions
+	// TODO: Sort Functions
 	include_once(RBAGENCY_PLUGIN_DIR ."functions.php");
 
 	// Profile Class
@@ -160,6 +160,11 @@ See license.txt for full details.
 
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Admin.php');
 		add_action( 'init', array('RBAgency_Admin', 'init'), 0, 1 );
+		// Check if version number changed and upgrade required
+		add_action('init',  array('RBAgency_Init', 'update_check'));
+
+		// Check server if software is most current version
+		add_action('init',  array('RBAgency_Init', 'upgrade_check'));
 
 	// Widgets & Shortcodes
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Extends.php');
@@ -189,23 +194,10 @@ add_filter( 'option_page_capability_baw-settings-group', 'twentyeleven_option_pa
 				load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' );
 
 
-
-/*
- * RB Agency Core Class
- */
-
-class RBAgency {
-
-
-
-
-}
-
-
 // *************************************************************************************************** //
 
 /*
- * Plugin Actions
+ * Hooks
  */
 
 	// Activate Plugin
@@ -217,8 +209,6 @@ class RBAgency {
 	// Uninstall Plugin
 	register_uninstall_hook(__FILE__, array('RBAgency_Admin', 'uninstall'));
 
-// *************************************************************************************************** //
-
 
 
 // *************************************************************************************************** //
@@ -227,17 +217,14 @@ class RBAgency {
  * Diagnostics
  */
 
-
-		// Check if version number changed and upgrade required
-		add_action('init',  array('RBAgency_Admin', 'check_update_needed'));
-		// Check server if software is most current version
-		add_action('init',  array('RBAgency_Admin', 'check_upgrade_available'));
+	// Check Permalinks
+	add_action('admin_notices', array('RBAgency_Init', 'setup_check') );
+	add_action('admin_notices', array('RBAgency_Init', 'permalinks_check') );
 
 
-/*
- * Set Dependencies
- */
 
+
+	// Set Dependencies
 	// Requires 2.8 or more
 	if ( ! isset($GLOBALS['wp_version']) || version_compare($GLOBALS['wp_version'], '3.2', '<=') ) { // if less than 2.8
 		echo "<div class=\"error\" style=\"margin-top:30px;\"><p>This plugin requires WordPress version 3.2 or newer.</p></div>";

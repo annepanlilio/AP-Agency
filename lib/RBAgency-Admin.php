@@ -1,4 +1,3 @@
-
 <?php
 
 /*
@@ -328,6 +327,87 @@ class RBAgency_Admin {
 			}
 		}
 
+
+
+
+	/*
+	 * Shortcode Generator
+	 * Add Custom Meta Box to Posts / Pages
+	 */
+
+		public static function shortcode_display_generator(){
+
+			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', RBAGENCY_TEXTDOMAIN), array('RBAgency_Admin', 'shortcode_display_generator_form'), 'post', 'advanced' );
+			add_meta_box( 'rb_agency_sectionid', __( 'Insert Profile Grid', RBAGENCY_TEXTDOMAIN), array('RBAgency_Admin', 'shortcode_display_generator_form'), 'page', 'advanced' );
+
+		}
+
+		public static function shortcode_display_generator_form(){
+			global $wpdb;
+			// Use nonce for verification
+			echo '<input type="hidden" name="rb_agency_noncename" id="rb_agency_noncename" value="'. wp_create_nonce( plugin_basename(__FILE__) ) . '" />';
+			echo "<div class=\"submitbox\" id=\"add_ticket_box\">";
+			?><script type="text/javascript">
+				function create_profile_grid(){
+
+					var $rbagency = jQuery.noConflict();
+					str='';
+
+					gender=$rbagency('#rb_agency_gender').val();
+					if(gender!=''&& gender!='')
+					str+=' gender="'+gender+'"';
+
+					age_start=$rbagency('#rb_agency_age_start').val();
+					if(age_start!=''&& age_start!='')
+					str+=' age_start="'+age_start+'"';
+
+					age_stop=$rbagency('#rb_agency_age_stop').val();
+					if(age_stop!=''&& age_stop!='')
+					str+=' age_stop="'+age_stop+'"';
+
+					type=$rbagency('#rb_agency_type').val();
+					if(type!='')
+					str+=' type="'+type+'"';
+
+					send_to_editor('[profile_list'+str+']');return;
+				}
+
+				function create_profile_search(){
+					send_to_editor('[profile_search]');return;
+				}
+			</script>
+			<?php
+			echo "<table>\n";
+			echo "	<tr><td>Type:</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
+					global $wpdb;
+					$profileDataTypes = $wpdb->get_results("SELECT * FROM ". table_agency_data_type ."",ARRAY_A);
+					echo "<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+					foreach( $profileDataTypes as $dataType) {
+						if (isset($_SESSION['ProfileType'])) {
+							if ($dataType["DataTypeID"] ==  $ProfileType) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
+						} else { $selectedvalue = ""; }
+						echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ." ". __("Only", RBAGENCY_TEXTDOMAIN) ."</option>";
+					}
+					echo "</select></td></tr>\n";
+			echo "	<tr><td>". __("Starting Age", RBAGENCY_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_start\" name=\"rb_agency_age_start\" value=\"18\" /></td></tr>\n";
+			echo "	<tr><td>". __("Ending Age", RBAGENCY_TEXTDOMAIN) .":</td><td><input type=\"text\" id=\"rb_agency_age_stop\" name=\"rb_agency_age_stop\" value=\"99\" /></td></tr>\n";
+			echo "	<tr><td>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</td><td>";
+			echo "<select id=\"rb_agency_gender\" name=\"rb_agency_gender\">";
+			$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+				
+				echo "<option value=\"\">All Gender</option>";
+				$queryShowGender = $wpdb->get_results($query,ARRAY_A);
+				foreach($queryShowGender as $dataShowGender){
+					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".$dataShowGender["GenderTitle"]."</option>";
+				}
+			echo "</select>";
+			echo "</td></tr>\n";
+			
+			echo "</table>\n";
+			echo "<p><input type=\"button\" onclick=\"create_profile_grid()\" value=\"". __("Insert Profile Grid", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
+			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
+			echo "</div>\n";
+		}
 
 
 // TODO: Include Dasboard in Class

@@ -2381,7 +2381,7 @@ class RBAgency_Profile {
 	/*********************************************************************************/
 
 
-	function view_featured($atts, $content = NULL) {
+	public static function view_featured($atts, $content = NULL) {
 		/*
 		if (function_exists('rb_agency_profilefeatured')) { 
 			$atts = array('count' => 8, 'type' => 0);
@@ -2478,7 +2478,7 @@ class RBAgency_Profile {
 	 *
 	 * @param array $atts 
 	 */
-	function view_categories($atts, $content = NULL) {
+	public static function view_categories($atts, $content = NULL) {
 		/*
 		EXAMPLE USAGE: 
 		if (function_exists( array($RBAgency_Profile, 'view_categories') ) ) { 
