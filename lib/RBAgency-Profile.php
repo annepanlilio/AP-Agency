@@ -1391,14 +1391,20 @@ class RBAgency_Profile {
 			 * Standard Query (Public Front-End)
 			 */
 				case 0:
-
+// TODO: Tighten for admin only
 					$sql = "SELECT 
 					profile.ProfileID,
 					profile.ProfileGallery,
-					profile.ProfileContactDisplay, 
+					profile.ProfileContactDisplay,
+					profile.ProfileContactNameFirst,
+					profile.ProfileContactNameLast,
 					profile.ProfileDateBirth, 
 					profile.ProfileDateCreated,
+					profile.ProfileLocationStreet, 
+					profile.ProfileLocationCity,
 					profile.ProfileLocationState,
+					profile.ProfileLocationCountry,
+					profile.ProfileIsActive,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) 
 					AS ProfileMediaURL 
 
@@ -1758,7 +1764,7 @@ class RBAgency_Profile {
 						$isInactive = 'style="background: #FFEBE8"';
 						$isInactiveDisable = "disabled=\"disabled\"";
 					}
-					$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
+					$p_image = str_replace(" ", "%20", rb_get_primary_image($data["ProfileID"]));
 
 					$checkboxDisable ="";
 					if(empty($p_image)){

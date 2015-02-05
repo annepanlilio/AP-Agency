@@ -937,7 +937,7 @@ elseif ($ConfigID == 12) {
 			$query = "SELECT * FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID='$SubscriptionRateID'";
 			$results =  $wpdb->get_results($wpdb->prepare($query ), ARRAY_A);
 			$count =  $wpdb->num_rows;
-		 	foreach($results as $data ) {
+			foreach($results as $data ) {
 				$SubscriptionRateID		=$data['SubscriptionRateID'];
 				$SubscriptionRateTitle	=stripslashes($data['SubscriptionRateTitle']);
 				$SubscriptionRateType	=$data['SubscriptionRateType'];
@@ -1514,7 +1514,7 @@ elseif ($ConfigID == 3) {
 				foreach($result as $d){
 					  $ptype = $d["ProfileCustomTypes"];
 					  $nptype = str_replace($DataTypeOldTitle, $DataTypeTitle, $ptype);
-				      $wpdb->query("UPDATE ". table_agency_customfields_types ."  SET ProfileCustomTypes='".$nptype."' WHERE ProfileCustomID='".$d["ProfileCustomID"]."'");
+					  $wpdb->query("UPDATE ". table_agency_customfields_types ."  SET ProfileCustomTypes='".$nptype."' WHERE ProfileCustomID='".$d["ProfileCustomID"]."'");
 				}
 				
 				echo "Updated $total custom fields assigned to this Profile Type<br/>";
@@ -1927,16 +1927,16 @@ elseif ($ConfigID == 5) {
 	
 	?>
 
-      <style type="text/css">
-        .widefat td{
-        	vertical-align: top !important;
-        }
-        ul#editfield_add_more_options_1 li {
+	  <style type="text/css">
+		.widefat td{
+			vertical-align: top !important;
+		}
+		ul#editfield_add_more_options_1 li {
 			border-left: 1px dotted #ccc;
 			padding-left: 10px;
 			border-bottom: 1px solid #F1F1F1;
 		}
-      </style>
+	  </style>
   
 	<?php
 	//restore preset
@@ -2467,7 +2467,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						$result = $wpdb->get_results($get_types,ARRAY_A);
 						
 						foreach( $result as $typ){
-                                        $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));    
+										$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));    
 										$checked = 'checked="checked"';                    
 										echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
 											 $checked . '  />&nbsp;'.
@@ -2618,10 +2618,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													<td valign=\"top\">Profile Type:</td>
 													<td style=\"font-size:13px;\"> ";
 											
-                                                                                        /*
-                                                                                        * get the proper fields on
-                                                                                        * profile types here
-                                                                                        */
+																						/*
+																						* get the proper fields on
+																						* profile types here
+																						*/
 																						$ProfileCustomID = $_GET['ProfileCustomID'];
 																						
 																						//get custom types
@@ -2629,34 +2629,34 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 																							" WHERE ProfileCustomID = $ProfileCustomID";
 																						$x = $wpdb->get_row($_sql);// or die($wpdb->print_error());
 
-                                                                                        if(strpos($x->ProfileCustomTypes,",") > -1){
-                                                                                                $rTypes = explode(",",$x->ProfileCustomTypes);
-                                                                                        } else {
-                                                                                                $rTypes = $x->ProfileCustomTypes;
-                                                                                        }	
+																						if(strpos($x->ProfileCustomTypes,",") > -1){
+																								$rTypes = explode(",",$x->ProfileCustomTypes);
+																						} else {
+																								$rTypes = $x->ProfileCustomTypes;
+																						}	
 
-                                                                                        $get_types = "SELECT * FROM ". table_agency_data_type;
+																						$get_types = "SELECT * FROM ". table_agency_data_type;
 
-                                                                                        $result = $wpdb->get_results($get_types,ARRAY_A);
+																						$result = $wpdb->get_results($get_types,ARRAY_A);
 
-                                                                                        foreach( $result as $typ){
-                                                                                          $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));                        
-                                                                                                                        $checked = '';
-                                                                                                                        if(is_array($rTypes)){
-                                                                                                                                if(in_array($t,$rTypes)){
-                                                                                                                                        $checked = 'checked="checked"';
-                                                                                                                                }
-                                                                                                                        } else {
-                                                                                                                                if($t == $rTypes){
-                                                                                                                                        $checked = 'checked="checked"';
-                                                                                                                                }
-                                                                                                                        }
+																						foreach( $result as $typ){
+																						  $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));                        
+																														$checked = '';
+																														if(is_array($rTypes)){
+																																if(in_array($t,$rTypes)){
+																																		$checked = 'checked="checked"';
+																																}
+																														} else {
+																																if($t == $rTypes){
+																																		$checked = 'checked="checked"';
+																																}
+																														}
 
-                                                                                                                        echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
-                                                                                                                                $checked . '  />&nbsp;'.
-                                                                                                                                trim($typ['DataTypeTitle'])
-                                                                                                                                .'&nbsp;<br/>';
-                                                                                        } 
+																														echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
+																																$checked . '  />&nbsp;'.
+																																trim($typ['DataTypeTitle'])
+																																.'&nbsp;<br/>';
+																						} 
 													
 											echo "	</td>
 													<td style=\"font-size:13px;\">
@@ -2746,8 +2746,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												$pos2 = 0;
 											echo '<ul id="editfield_add_more_options_1">';
 											
-											    foreach($data2 as $val2){
-												    echo "<li  style=\"cursor:pointer\">";
+												foreach($data2 as $val2){
+													echo "<li  style=\"cursor:pointer\">";
 													if($val2 != end($data2) && $val2 !=  $data2[0]){
 														 $pos2++;
 													 echo "Option:<input type=\"text\" value=\"".$val2."\"  name=\"option2[]\"/>";
@@ -2840,7 +2840,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												 echo "</tr>";
 												 
 										   echo "<div id=\"addcheckbox_field_1\"></div>";
-										  	echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
+											echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
 											
 											 
 								
@@ -3059,34 +3059,30 @@ echo "</div>";
 
 
 } elseif ($ConfigID == 6){
-	
-	
-	
+	if (isset($_POST["action"])) {
 	// Edit Record
-	switch(@$_POST["action"]){
-	case "editRecord":
-		$wpdb->query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."',MediaCategoryFileType = '".$_POST["MediaCategoryFileType"]."',MediaCategoryLinkType = '".$_POST["MediaCategoryLinkType"]."' WHERE  MediaCategoryID = ".$_GET["MediaCategoryID"]." ");
-	    	echo ("<div id=\"message\" class=\"updated\"><p>". __("<strong>Updated</strong> successfully!", RBAGENCY_TEXTDOMAIN)."</p></div>"); 
-			
-	  break;
-	// Add Record
-	case "addRecord":
-		 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder,MediaCategoryLinkType,MediaCategoryFileType) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."','".$_POST["MediaCategoryLinkType"]."','".$_POST["MediaCategoryFileType"]."') ");
-	  break;
-	
+		switch(@$_POST["action"]){
+		case "editRecord":
+			$wpdb->query("UPDATE ".table_agency_data_media." SET MediaCategoryTitle = '".$_POST["MediaCategoryTitle"]."',MediaCategoryGender = '".$_POST["MediaCategoryGender"]."',MediaCategoryOrder = '".$_POST["MediaCategoryOrder"]."',MediaCategoryFileType = '".$_POST["MediaCategoryFileType"]."',MediaCategoryLinkType = '".$_POST["MediaCategoryLinkType"]."' WHERE  MediaCategoryID = ".$_GET["MediaCategoryID"]." ");
+				echo ("<div id=\"message\" class=\"updated\"><p>". __("<strong>Updated</strong> successfully!", RBAGENCY_TEXTDOMAIN)."</p></div>"); 
+			break;
+		// Add Record
+		case "addRecord":
+			 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder,MediaCategoryLinkType,MediaCategoryFileType) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."','".$_POST["MediaCategoryLinkType"]."','".$_POST["MediaCategoryFileType"]."') ");
+			break;
+		}
 	}
+
 	// Delete Record
 	if(isset($_POST["action"])=="deleteRecord"  || isset($_GET["deleteRecord"])){
-		
-		 if(isset($_GET["deleteRecord"])){
-				 $wpdb->query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
-		 }
-		 if(isset($_POST["MediaCategoryID"])){
-			 foreach($_POST["MediaCategoryID"] as $id){
+		if(isset($_GET["deleteRecord"])){
+			$wpdb->query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$_GET["MediaCategoryID"]."'");
+		}
+		if(isset($_POST["MediaCategoryID"])){
+			foreach($_POST["MediaCategoryID"] as $id){
 				$wpdb->query("DELETE FROM ". table_agency_data_media ." WHERE MediaCategoryID = '".$id."'");
-			 }
-		 }
-		
+			}
+		}
 	}
 
 	$arr_media_category_fileType = array(
@@ -3100,11 +3096,11 @@ echo "</div>";
 			"wmv",
 			"3gp"
 		);
-    $arr_media_category_linkType = array(
-    	    "link",
-    	    "button",
-    	    "embed"
-     );
+	$arr_media_category_linkType = array(
+			"link",
+			"button",
+			"embed"
+	 );
 
  echo "<div>\n";
 			// Add new Record
@@ -3126,7 +3122,7 @@ echo "</div>";
 		 echo "<tr>";
 		 echo "<td>Label:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".(isset($data["MediaCategoryTitle"])?$data["MediaCategoryTitle"]:"")."\" style=\"width:500px;\" /></td>\n";
 		 echo "</tr>";
-         
+		 
 		 echo "<tr>";
 		 echo "<td>File Type:</td>";
 		 echo "<td>";
@@ -3134,10 +3130,10 @@ echo "</div>";
 		 echo "<option value=\"\">-Choose-</option>";
 		
 		 foreach ($arr_media_category_fileType as $key) {
-		 	 echo "<option value=\"".$key."\" ".selected($key,isset($data["MediaCategoryFileType"])?$data["MediaCategoryFileType"]:0).">".$key."</option>";
+			 echo "<option value=\"".$key."\" ".selected($key,isset($data["MediaCategoryFileType"])?$data["MediaCategoryFileType"]:0).">".$key."</option>";
 		 }
 
-         echo "</select>";
+		 echo "</select>";
 		 echo "</td>";
 		 echo "</tr>";
 
@@ -3145,10 +3141,10 @@ echo "</div>";
 		 echo "<td>Link Type:</td>";
 		 echo "<td>";
 		 echo "<select name='MediaCategoryLinkType'>";
-          echo "<option value=\"\">-Choose-</option>";
+		  echo "<option value=\"\">-Choose-</option>";
 		
 		 foreach ($arr_media_category_linkType as $key) {
-		 	 echo "<option value=\"".$key."\"  ".selected($key,isset($data["MediaCategoryLinkType"])?$data["MediaCategoryLinkType"]:0).">".$key."</option>";
+			 echo "<option value=\"".$key."\"  ".selected($key,isset($data["MediaCategoryLinkType"])?$data["MediaCategoryLinkType"]:0).">".$key."</option>";
 		 }
 		 echo "</select>";
 		 echo "</td>";
@@ -3251,7 +3247,7 @@ echo "</div>";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryFileType']) ."</th>\n";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryLinkType']) ."</th>\n";
 	
-	     $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s'"; 
+		 $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s'"; 
 		 $fetchGender = $wpdb->get_row($wpdb->prepare( $queryGender,$data['MediaCategoryGender']),ARRAY_A,0 	 );
 		 $countGender = $wpdb->num_rows;
 		 if($countGender > 0){
