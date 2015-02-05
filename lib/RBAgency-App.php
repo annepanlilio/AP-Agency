@@ -52,7 +52,7 @@ class RBAgency_App {
 				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'assets/jquery-ui/jquery-ui.theme.min.css');
 				wp_enqueue_style( 'rbagency-datepicker-theme' );
 
-				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'rb-agency/style/jquery-ui/jquery-ui.min.css');
+				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/jquery-ui/jquery-ui.min.css');
 				wp_enqueue_style( 'rbagency-datepicker' );
 
 			}
