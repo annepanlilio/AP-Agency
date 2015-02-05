@@ -613,13 +613,18 @@ class RBAgency_Profile {
 					echo "			<div class=\"rbfield rbselect rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
 					echo "				<label for=\"state\">". __("Status", RBAGENCY_TEXTDOMAIN) ."</label>\n";
 					echo "					<div>\n";
-					echo "						<select name=\"isactive\" id=\"ProfileIsActive\">\n";               
+					echo "						<select name=\"isactive\" id=\"ProfileIsActive\">\n";
+													if (isset($_REQUEST['isactive'])) {
+														$isactive = $_REQUEST['isactive'];
+													} else {
+														$isactive = 5;
+													}
 					echo "							<option value=\"5\">". __("Any Status", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-					echo "							<option value=\"1\"". selected(@$_POST["isactive"], 1) .">". __("Active", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-					echo "							<option value=\"4\"". selected(@$_POST["isactive"], 4) .">". __("Active - Not Visible on Front End", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-					echo "							<option value=\"0\"". selected(@$_POST["isactive"], 0) .">". __("Inactive", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-					echo "							<option value=\"2\"". selected(@$_POST["isactive"], 2) .">". __("Archived", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-					echo "							<option value=\"3\"". selected(@$_POST["isactive"], 3) .">". __("Pending Approval", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"1\"". selected($isactive, 1) .">". __("Active", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"4\"". selected($isactive, 4) .">". __("Active - Not Visible on Front End", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"0\"". selected($isactive, 0) .">". __("Inactive", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"2\"". selected($isactive, 2) .">". __("Archived", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+					echo "							<option value=\"3\"". selected($isactive, 3) .">". __("Pending Approval", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 					echo "						</select>\n";
 					echo "					</div>\n";
 					echo "			</div>\n";
@@ -1391,17 +1396,11 @@ class RBAgency_Profile {
 			 * Standard Query (Public Front-End)
 			 */
 				case 0:
-// TODO: Tighten for admin only
 					$sql = "SELECT 
 					profile.ProfileID,
 					profile.ProfileGallery,
 					profile.ProfileContactDisplay,
-					profile.ProfileContactNameFirst,
-					profile.ProfileContactNameLast,
-					profile.ProfileDateBirth, 
 					profile.ProfileDateCreated,
-					profile.ProfileLocationStreet, 
-					profile.ProfileLocationCity,
 					profile.ProfileLocationState,
 					profile.ProfileLocationCountry,
 					profile.ProfileIsActive,
@@ -1427,11 +1426,43 @@ class RBAgency_Profile {
 					break;
 
 			/* 
-			 * Query Casting Agent Favorites
+			 * Admin Query (Back-End)
 			 */
 				case 1:
-					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+					$sql = "SELECT 
+					profile.ProfileID,
+					profile.ProfileGallery,
+					profile.ProfileContactDisplay,
+					profile.ProfileContactNameFirst,
+					profile.ProfileContactNameLast,
+					profile.ProfileDateBirth, 
+					profile.ProfileDateCreated,
+					profile.ProfileLocationStreet, 
+					profile.ProfileLocationCity,
+					profile.ProfileLocationState,
+					profile.ProfileLocationZip,
+					profile.ProfileLocationCountry,
+					profile.ProfileGender,
+					profile.ProfileIsActive,
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) 
+					AS ProfileMediaURL 
+
+					FROM ". table_agency_profile ." profile ";
+
+					// Check if there are any arguments
+					if (strlen($sql_where) > 28) {
+					$sql .= "WHERE 
+							EXISTS(
+								SELECT count(cmux.ProfileCustomMuxID)  FROM
+								".table_agency_customfield_mux." cmux
+								WHERE profile.ProfileID = cmux.ProfileID
+								AND ". $sql_where ."
+								GROUP BY cmux.ProfileCustomMuxID
+								LIMIT 1
+							)";
+					}
+					$sql .= self::$order_by;
+
 					break;
 
 			/* 
@@ -1516,6 +1547,14 @@ class RBAgency_Profile {
 				case 3:
 					$sql = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
 							. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND ".$sql_where."  GROUP BY(profile.ProfileID) ";
+					break;
+
+			/* 
+			 * Query Casting Agent Favorites
+			 */
+				case 4:
+					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
+					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 					break;
 			}
 
