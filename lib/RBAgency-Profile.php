@@ -1564,7 +1564,7 @@ class RBAgency_Profile {
 				if($rb_agency_option_profilelist_sortby && !self::$castingcart && !strpos($_SERVER['REQUEST_URI'],'profile-favorite') > -1){
 
 					// Enqueue our js script
-					wp_enqueue_script( 'list_reorder', plugins_url('rb-agency/js/list_reorder.js'),array('jquery'));
+					wp_enqueue_script( 'list_reorder', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array('jquery'));
 
 					// Dropdown
 					
@@ -1636,7 +1636,7 @@ class RBAgency_Profile {
 			 * this is the upper header html of the profile list
 			 */
 
-				$all_html .=  "<script type='text/javascript' src='".RBAGENCY_PLUGIN_URL."js/resize.js'></script>";
+				$all_html .=  "<script type='text/javascript' src='". RBAGENCY_PLUGIN_URL ."assets/js/resize.js'></script>";
 				if ($rb_agency_option_profilelist_count) {
 					$items = $count;
 					$countList = $items;

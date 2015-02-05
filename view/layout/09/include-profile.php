@@ -8,29 +8,26 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Insert Javascript into Head
  */
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/09/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
 
 /*
  * Insert Script
  */
-    wp_deregister_script( 'jquery-latest' ); 
-    wp_register_script( 'jquery-latest', "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
+	wp_deregister_script( 'jquery-latest' ); 
+	wp_register_script( 'jquery-latest', "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
 	wp_enqueue_script( 'jquery-latest' );
 
 	wp_deregister_script( 'lightbox2' ); 
-	wp_enqueue_script( 'lightbox2-footer', plugins_url('/../../../ext/lightbox2/js/lightbox-2.6.min.js',__FILE__), array( 'jquery-latest' ));
+	wp_enqueue_script( 'lightbox2-footer', RBAGENCY_PLUGIN_URL .'ext/lightbox2/js/lightbox-2.6.min.js', array( 'jquery-latest' ));
 	wp_enqueue_script( 'lightbox2-footer' );
 
-	
-
-	wp_register_script( 'photo-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', __FILE__),'',1,true );
+	wp_register_script( 'photo-scroller', RBAGENCY_PLUGIN_URL .'view/layout/09/js/jquery.mCustomScrollbar.concat.min.js', '', 1, true );
 	wp_enqueue_script( 'photo-scroller' );
 
-	wp_register_script( 'init-scroller', plugins_url('/js/init-scroller.js', __FILE__),'',1,true );
+	wp_register_script( 'init-scroller', RBAGENCY_PLUGIN_URL .'view/layout/09/js/init-scroller.js', '', 1, true );
 	wp_enqueue_script( 'init-scroller' );
-
 
 
 /*
@@ -102,7 +99,7 @@ echo "					<div id=\"links\">\n";
 						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
 
 echo "						<ul>\n";
-                                
+								
 				
 								
 								// Is Logged?

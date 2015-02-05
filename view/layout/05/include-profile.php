@@ -8,7 +8,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Insert Javascript into Head
  */
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/05/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
 

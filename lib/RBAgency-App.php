@@ -110,7 +110,7 @@ class RBAgency_App {
 		public static function rb_agency_insertscripts() {
 			if( !is_admin() ) {
 				if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
-					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
+					wp_enqueue_script( 'customfields-search', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
 				}
 			}
 		}

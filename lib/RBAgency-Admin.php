@@ -261,16 +261,16 @@ class RBAgency_Admin {
 			if( is_admin() ) {
 
 				// Get Custom Admin Styles
-				wp_register_style( 'rbagencyadmin', RBAGENCY_PLUGIN_URL .'/style/admin.css' );
+				wp_register_style( 'rbagencyadmin', RBAGENCY_PLUGIN_URL .'assets/css/admin/admin.css' );
 				wp_enqueue_style( 'rbagencyadmin' );
 
-				wp_register_style( 'rbagency-formstyle', RBAGENCY_PLUGIN_URL .'/style/forms.css' );
+				wp_register_style( 'rbagency-formstyle', RBAGENCY_PLUGIN_URL .'assets/css/admin/forms.css' );
 				wp_enqueue_style( 'rbagency-formstyle' );
 
-				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'/style/jquery-ui/jquery-ui.css' );
+				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/css/admin/jquery-ui/jquery-ui.css' );
 				wp_enqueue_style( 'rbagency-datepicker' );
 
-				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'/style/jquery-ui/jquery-ui.theme.min.css' );
+				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'assets/css/admin/jquery-ui/jquery-ui.theme.min.css' );
 				wp_enqueue_style( 'rbagency-datepicker-theme' );
 
 			}
@@ -317,7 +317,7 @@ class RBAgency_Admin {
 					wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
 
 				// Load custom fields javascript
-				wp_enqueue_script( 'customfields', plugins_url('js/js-customfields.js', __FILE__) );
+				wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
 
 			}
 		}

@@ -9,28 +9,27 @@ Text:   Flipbook
  * Insert Style
  */
 
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/08/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
-	wp_register_style( 'rblayout-style-custom', plugins_url('/css/booklet.css', __FILE__) );
+	wp_register_style( 'rblayout-style-custom', RBAGENCY_PLUGIN_URL .'view/layout/08/css/booklet.css' );
 	wp_enqueue_style( 'rblayout-style-custom' );
 
 /*
  * Insert Scripts
  */
 
-	wp_enqueue_script( 'photo-booklet-ui', plugins_url('/js/booklet-jquery-ui.min.js', __FILE__) );
+	wp_enqueue_script( 'photo-booklet-ui', RBAGENCY_PLUGIN_URL .'assets/js/booklet-jquery-ui.min.js' );
 	wp_enqueue_script( 'photo-booklet-ui' );
 
-	wp_enqueue_script( 'photo-booklet-easing', plugins_url('/js/booklet-jquery.easing.1.3.js', __FILE__) );
+	wp_enqueue_script( 'photo-booklet-easing', RBAGENCY_PLUGIN_URL .'assets/js/booklet-jquery.easing.1.3.js' );
 	wp_enqueue_script( 'photo-booklet-easing' );
 
-	wp_enqueue_script( 'photo-booklet', plugins_url('/js/booklet.min.js', __FILE__) );
+	wp_enqueue_script( 'photo-booklet', RBAGENCY_PLUGIN_URL .'view/layout/08/js/booklet.min.js' );
 	wp_enqueue_script( 'photo-booklet' );
 
-	wp_enqueue_script( 'init-booklet', plugins_url('/js/booklet.init.js', __FILE__) );
+	wp_enqueue_script( 'init-booklet', RBAGENCY_PLUGIN_URL .'view/layout/08/js/booklet.init.js' );
 	wp_enqueue_script( 'init-booklet' );
-
 
 
 /*
@@ -56,7 +55,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 	            <?php
 
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-				 $resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);			
+				 $resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 						$countImg =$wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 						  	echo "<div class=\"page\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";

@@ -9,24 +9,25 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
  * Insert Style
  */
 
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/00/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
-	wp_register_style( 'rblayout-style-custom', plugins_url('/css/isotope.css', __FILE__) );
+	wp_register_style( 'rblayout-style-custom', RBAGENCY_PLUGIN_URL .'view/layout/00/css/isotope.css' );
 	wp_enqueue_style( 'rblayout-style-custom' );
 
 /*
  * Insert Scripts
  */
-	
 
 	wp_enqueue_script( 'jquery' );
-				
-	wp_register_script( 'isotope-jquery', plugins_url('/js/jquery.isotope.min.js', __FILE__), array(), false, false );
+
+	wp_register_script( 'isotope-jquery', RBAGENCY_PLUGIN_URL .'view/layout/00/js/jquery.isotope.min.js', array(), false, false );
 	wp_enqueue_script( 'isotope-jquery' );
 
-	wp_register_script( 'isotope-init', plugins_url('/js/init-isotope.js', __FILE__), false, false );
+	wp_register_script( 'isotope-init', RBAGENCY_PLUGIN_URL .'view/layout/00/js/init-isotope.js', false, false );
 	wp_enqueue_script( 'isotope-init' );
+
+
 
 $profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 $urlexploade = explode("/", $profileURLString);

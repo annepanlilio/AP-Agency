@@ -8,7 +8,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Insert Javascript into Head
  */
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/07/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
 
@@ -30,8 +30,8 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						<?php
 						if (!empty($ProfileGender)) {
 							$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	 );
-	                        echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
-						}								
+							echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
+						}
 						if (!empty($ProfileStatHeight)) {
 							if ($rb_agency_option_unittype == 0) { // Metric
 								echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
@@ -49,7 +49,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 								echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", RBAGENCY_TEXTDOMAIN). "</li>\n";
 							}
 						}
-								
+
 						// Insert Custom Fields
 						rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender); ?>
 					</ul>
@@ -76,7 +76,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 									   // option for two images
 									   if($option_two_image){	
 											   if($open==1){
-												    $close = false;
+													$close = false;
 													echo "<li>";
 											   } 
 
@@ -89,7 +89,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 												  echo "</li>\n";	
 											   }	
 									   } else {
-				                              
+											  
 											   if($dataImg['ProfileMediaPrimary']==1){
 													$ProfileMediaPrimary= 	"<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
 												} else {
@@ -204,7 +204,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 									yPlayer<?php echo $x;?>.pauseVideo();
 							  <?php } ?>	
 						
-					  		  var _next = "#" + jQuery(this).attr("class");
+							  var _next = "#" + jQuery(this).attr("class");
 							  var _curr = jQuery("#video_player").find(".act_vids");
 							  _curr.removeClass("act_vids");
 								  _curr.addClass("vids");	
@@ -213,7 +213,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						  });
 						  
 						  jQuery("#vid_changer").width(jQuery("#video_player").width()+"px");
-						  	
+							
 						 
 						
 						jQuery("a.showSingle1").click(function(){
@@ -245,7 +245,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						});	
 
 						function ajax_submit(Obj,type){
-						    if(type == "favorite"){
+							if(type == "favorite"){
 								var action_function = "rb_agency_save_favorite";
 							} else if(type == "casting"){
 								var action_function = "rb_agency_save_castingcart";
@@ -253,14 +253,14 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 							
 							jQuery.ajax({type: 'POST',url: '<?php echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
 										 data: {action: action_function,  'talentID': <?php echo $ProfileID ?>},
-									  	success: function(results) {  
+										success: function(results) {  
 											if(results=='error'){ 
 												alert("Error in query. Try again"); 
 											}else if(results==-1){ 
 												alert("You're not signed in");
 											} else { 
 												if(type == "favorite"){
-										        	document.getElementById('myfav_add').style.display="none";	
+													document.getElementById('myfav_add').style.display="none";	
 													document.getElementById('myfav_view').style.display="inline-block";					  
 												} else if(type == "casting") {
 													document.getElementById('mycart_add').style.display="none";	
@@ -285,7 +285,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					<li><a href="javascript:;" class="showSingle1" >Pictures</a></li>
 					<li><a href="javascript:;" class="showSingle2" >Experience</a></li>
 					<li><a href="javascript:;" class="showSingle3" >Videos</a></li>
-                      <?php
+					  <?php
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
 				$countHeadshot = $wpdb->num_rows;
 
@@ -300,8 +300,8 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
 				
 				if($countHeadshot>0 || $countVoiceDemo>0 || $countCompCard>0 || $countResume>0 ){?>
-                    <li><a href="javascript:;" class="showSingle4" >Media</a></li>
-                    
+					<li><a href="javascript:;" class="showSingle4" >Media</a></li>
+					
 					<?php }
 					echo '<li id="resultsGoHereAddtoCart"></li>';?>				
 			</ul>
@@ -364,7 +364,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 					$countMedia = $wpdb->num_rows;
 					if ($countMedia > 0) {
-					  	foreach($resultsMedia as $dataMedia ){
+						foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 							echo "<li class='v_slate'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Slate'></span></li>";
 						}
@@ -375,7 +375,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 					$countMedia = $wpdb->num_rows;
 					if ($countMedia > 0) {
-					   	foreach($resultsMedia as $dataMedia ){
+						foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 								echo "<li class='v_mono'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Monologue'></span></li>";
 							}
@@ -385,7 +385,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 					$countMedia =  $wpdb->num_rows;
 					if ($countMedia > 0) {
-					  	 	foreach($resultsMedia as $dataMedia ){
+							foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 								echo "<li class='d_reel'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Demo Reel'></span></li>";
 							}
@@ -394,13 +394,13 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				</ul>
 			</div>
 		</div>
-        <div class="rbcol-12 rbcolumn rbtab-content targetmedia" style="display:none"  >
+		<div class="rbcol-12 rbcolumn rbtab-content targetmedia" style="display:none"  >
 			<ul id="media-tab">
 				<?php
 				//Headshot
 				
 				if ($countHeadshot > 0) {
-				  	foreach($resultsHeadshot as $dataHeadshot ){
+					foreach($resultsHeadshot as $dataHeadshot ){
 						$profileHeadshotUrl = $dataHeadshot['ProfileMediaURL'];
 						echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
 					}
@@ -409,7 +409,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				//VoiceDemo
 				
 				if ($countVoiceDemo > 0) {
-				  	foreach($resultsVoiceDemo as $dataVoiceDemo ){
+					foreach($resultsVoiceDemo as $dataVoiceDemo ){
 						$profileVoiceDemo = $dataVoiceDemo['ProfileMediaURL'];
 							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
 						}
@@ -417,7 +417,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				//CompCard
 				
 				if ($countCompCard > 0) {
-				  	foreach($resultsCompCard as $dataCompCard ){
+					foreach($resultsCompCard as $dataCompCard ){
 						$profileCompCardUrl = $dataCompCard['ProfileMediaURL'];
 							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
 						}
@@ -425,7 +425,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				//Resume
 				
 				if ($countResume > 0) {
-				  	foreach($resultsResume as $dataResume ){
+					foreach($resultsResume as $dataResume ){
 						$profileResumeUrl = $dataResume['ProfileMediaURL'];
 							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
 						}
@@ -433,7 +433,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				 ?>
 			</ul>
 		</div>
-        
+		
 
 		<div class="rbcol-12 rbcolumn  rbtab-content targetexperience" style="display:none">
 			<div id="experience">

@@ -8,14 +8,14 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Insert Stylesheet
  */
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/03/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
 /*
  * Insert Script
  */
 
-	wp_register_script( 'layout-tab', plugins_url('/js/layout-tab.js', __FILE__) );
+	wp_register_script( 'layout-tab', RBAGENCY_PLUGIN_URL .'view/layout/03/js/layout-tab.js' );
 	wp_enqueue_script( 'layout-tab' );
 
 /*

@@ -8,7 +8,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Insert Javascript into Head
  */
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/06/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
 
@@ -42,13 +42,12 @@ Large featured image and scrolling thumbnails
 	});
 </script>
 
-<link rel="stylesheet" type="text/css" media="all" href="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/custom-layout6/css/styles.css" />
 
 <div id="rbprofile" class="model-portfolio">
 
 	<div id="rblayout-six" class="rblayout">
 		<div class="rbcol-12 rbcolumn">
-			<header class="entry-header">				
+			<header class="entry-header">
 				<div id="profile-filter">
 					<div class="filters">
 						<div>

@@ -8,7 +8,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 /*
  * Insert Javascript into Head
  */
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/04/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
 
@@ -48,7 +48,7 @@ echo "	  				</div>\n"; // Close Stats
 echo "				</div><!-- #profile-info -->\n";
 echo "			</div><!-- .rbcol-4 -->\n";
 
-echo "			<div class=\"rbcol-8 rbcolumn\">\n";	
+echo "			<div class=\"rbcol-8 rbcolumn\">\n";
 echo "	  			<h3>". __("Call", RBAGENCY_TEXTDOMAIN). ": <span>". $ProfileContactPhoneWork ."</span></h3>\n";
 echo "	  			<div id=\"photos\">\n";
 	

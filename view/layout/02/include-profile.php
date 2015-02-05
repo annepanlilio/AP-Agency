@@ -9,17 +9,17 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
  * Insert Style
  */
 
-	wp_register_style( 'rblayout-style', plugins_url('/css/style.css', __FILE__) );
+	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/02/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
 /*
  * Insert Script
  */
 
-	wp_register_script( 'photo-scroller', plugins_url('/js/jquery.mCustomScrollbar.concat.min.js', __FILE__) );
+	wp_register_script( 'photo-scroller', RBAGENCY_PLUGIN_URL .'view/layout/02/js/jquery.mCustomScrollbar.concat.min.js' );
 	wp_enqueue_script( 'photo-scroller' );
 
-	wp_register_script( 'init-scroller', plugins_url('/js/init-scroller.js', __FILE__) );
+	wp_register_script( 'init-scroller', RBAGENCY_PLUGIN_URL .'view/layout/02/js/init-scroller.js' );
 	wp_enqueue_script( 'init-scroller' );
 
 
