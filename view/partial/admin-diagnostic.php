@@ -52,15 +52,10 @@
 					<td>
 						<?php
 							if(version_compare(phpversion(), '5.0.0', '>')){
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/>
-								<?php
-							}
-							else{
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/remove.png"/>
-								<span class="installation_item_message"><?php _e("RB Agency requires PHP 5 or above.", RBAGENCY_TEXTDOMAIN); ?></span>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/checked.png\"/>";
+							} else{
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\"/>";
+								echo "<span class=\"installation_item_message\">". __("RB Agency requires PHP 5 or above.", RBAGENCY_TEXTDOMAIN) ."</span>";
 							}
 						?>
 					</td>
@@ -73,15 +68,11 @@
 					<td>
 						<?php
 							if(version_compare($wpdb->db_version(), '5.0.0', '>')){
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/checked.png\"/>";
 							}
 							else{
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/remove.png"/>
-								<span class="installation_item_message"><?php _e("RB Agency requires MySQL 5 or above.", RBAGENCY_TEXTDOMAIN); ?></span>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\"/>";
+								echo "<span class=\"installation_item_message\">". __("RB Agency requires MySQL 5 or above.", RBAGENCY_TEXTDOMAIN) ."</span>";
 							}
 						?>
 					</td>
@@ -94,15 +85,11 @@
 					<td>
 						<?php
 							if(version_compare(get_bloginfo("version"), '3.0', '>')){
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/checked.png\"/>";
 							}
 							else{
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/remove.png"/>
-								<span class="installation_item_message"><?php printf(__("RB Agency requires WordPress v%s or greater. You must upgrade WordPress in order to use this version of Gravity Forms.", RBAGENCY_TEXTDOMAIN), RBAGENCY_VERSION_WP_MIN); ?></span>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\"/>";
+								echo "<span class=\"installation_item_message\">". printf(__("RB Agency requires WordPress v%s or greater.", RBAGENCY_TEXTDOMAIN), RBAGENCY_VERSION_WP_MIN) ."</span>";
 							}
 						?>
 					</td>
@@ -124,9 +111,7 @@
 					<td>
 						<?php
 							if(version_compare(RBAGENCY_VERSION, isset($version_info["version"])?$version_info["version"]:"", '>=')){
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/checked.png\"/>";
 							}
 							else{
 								echo sprintf(__("New version %s available. Automatic upgrade available on the %splugins page%s", RBAGENCY_TEXTDOMAIN), $version_info["version"], '<a href="plugins.php">', '</a>');
@@ -143,16 +128,14 @@
 						<?php
 
 							// Check Folder
-								$folderWritable = RBAgency_Diagnostic::check_upload_folder();
+							$folderWritable = RBAgency_Diagnostic::check_upload_folder();
 
 							if($folderWritable){
-								?><img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/><?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/checked.png\"/>";
 							}
 							else{
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/remove.png"/>
-								<span class="installation_item_message"><?php echo __("Uploads folder is not writable! Contact your web host.", RBAGENCY_TEXTDOMAIN); ?></span>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\"/>";
+								echo "<span class=\"installation_item_message\">". __("Uploads folder is not writable! Contact your web host.", RBAGENCY_TEXTDOMAIN) ."</span>";
 							}
 						?>
 					</td>
@@ -170,13 +153,11 @@
 							$stylesheetExists = RBAgency_Diagnostic::check_stylesheet_exists();
 
 							if($stylesheetExists){
-								?><img src="<?php echo RBAgency_Common::get_base_url() ?>/style/checked.png"/><?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/checked.png\"/>";
 							}
 							else{
-								?>
-								<img src="<?php echo RBAgency_Common::get_base_url() ?>/style/remove.png"/>
-								<span class="installation_item_message"><?php echo __("File does not exist.  Go to <a href='admin.php?page=rb_agency_settings&ConfigID=2'>Agency > Settings > Styles</a> and initialize the file.", RBAGENCY_TEXTDOMAIN); ?></span>
-								<?php
+								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\"/>";
+								echo "<span class=\"installation_item_message\">". __("File does not exist.  Go to <a href='admin.php?page=rb_agency_settings&ConfigID=2'>Agency > Settings > Styles</a> and initialize the file.", RBAGENCY_TEXTDOMAIN) ."</span>";
 							}
 						?>
 					</td>
