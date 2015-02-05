@@ -1,7 +1,7 @@
 <?php 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-$rb_agency_option_agencylogo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
 global $wpdb;
 
 function is_chrome() {
@@ -163,12 +163,12 @@ ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 		echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
         if($rowCount == $showFooter){
 			$rowCount=0; //reset to loop another row 
-			echo '<br clear="all"><img style="width:347px; '.$logoMarginTop.'" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg"><br clear="all">';
+			echo '<br clear="all"><img style="width:347px; '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'\"><br clear=\"all\">';
 		}
 	}
 
 	if($rowCount!=$showFooter AND $rowCount!="0"){
-		echo '<br clear="all"><img style="width:347px;" src="'.get_bloginfo("url").'/wp-content/plugins/rb-agency/style/address.jpg"><br clear="all">';
+		echo '<br clear="all"><img style="width:347px;" src="'.$rb_agency_option_agencylogo."\"><br clear=\"all\">";
 	}
 ?>
 </div>
