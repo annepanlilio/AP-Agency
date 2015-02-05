@@ -505,10 +505,10 @@ if(!function_exists("rb_output_buffer")){
 				$hash = unserialize($is_host_active);
 				return "<img src=\"".$hash[0]["thumbnail_medium"]."\" width=\"120\" height=\"90\"/>";
 			}else{
-				return "<img src=\"".plugin_dir_url( __FILE__ )."/style/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+				return "<img src=\"". RBAGENCY_PLUGIN_DIR ."assets/img/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
 			}
 		}else{
-			return "<img src=\"".plugin_dir_url( __FILE__ )."/style/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+			return "<img src=\"". RBAGENCY_PLUGIN_DIR ."assets/img/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
 		}
 	}
 

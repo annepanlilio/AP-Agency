@@ -75,7 +75,7 @@
 	margin: 5px 0;
 	font-size: 13px;
 	overflow: hidden;
-	line-height: normal;	
+	line-height: normal;
 }
 #profile-list .rbprofile-list .profile-info h3.name a {
 	white-space: nowrap;
@@ -154,7 +154,7 @@
 	background: #eee;
 }
 .rbpagination > span:hover, .rbpagination > a:hover {
-	background: #eee;	
+	background: #eee;
 }
 
 
@@ -182,7 +182,7 @@
   width: 13px;
   height: 12px;
   display: inline-block;
-  background: url(../style/icon-sprite.png) no-repeat;  
+  background: url(../style/icon-sprite.png) no-repeat;
 }
 .favorite-casting .favorite a.save_favorite {
 	background-position: 0 -48px;
