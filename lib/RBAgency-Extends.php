@@ -204,14 +204,15 @@ class profile_featured_widget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		// Get Settings from Widget
 		extract($args, EXTR_SKIP);
-			$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-				if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
-			$type = empty($instance['type']) ? ' ' : apply_filters('widget_title', $instance['type']);
-				if ( !empty( $type ) ) { echo $before_title . $type . $after_title; };
+			$type = $instance['type'];
+				if ( empty( $type ) ) { $type = 1; };
 			$count = $instance['count'];
 				if ( empty( $count ) ) { $count = 1; };
 
 		echo $before_widget;
+		if ( ! empty( $instance['title'] ) ) {
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+		}
 		if (class_exists('RBAgency_Profile')) { 
 			$atts = array('type' => $type,"count"=> $count);
 			echo RBAgency_Profile::view_featured($atts);
