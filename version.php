@@ -23,7 +23,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if(function_exists('rb_agency_interact_menu')){
 		$xml .= "<interact>\n";
 		$xml .= "	<version>";
-		$xml .= "		". get_option("rb_agency_interact_version") ."\n";
+		$xml .= "		". get_option("RBAGENCY_interact_VERSION") ."\n";
 		$xml .= "	</version>\n";
 		$xml .= "</interact>\n";
 	} else {
@@ -40,7 +40,7 @@ include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if(function_exists('rb_agency_casting_menu')){
 		$xml .= "<casting>\n";
 		$xml .= "	<version>\n";
-		$xml .= "		". get_option("rb_agency_casting_version") ."\n";
+		$xml .= "		". get_option("RBAGENCY_casting_VERSION") ."\n";
 		$xml .= "	</version>\n";
 		$xml .= "</casting>\n";
 	} else {

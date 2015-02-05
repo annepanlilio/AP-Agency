@@ -1758,7 +1758,7 @@ class RBAgency_Profile {
 						$isInactive = 'style="background: #FFEBE8"';
 						$isInactiveDisable = "disabled=\"disabled\"";
 					}
-					$p_image = str_replace(array("%20", "+", " "), "%2B", rb_get_primary_image($dataList["ProfileID"]));
+					$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 
 					$checkboxDisable ="";
 					if(empty($p_image)){
@@ -2045,7 +2045,7 @@ class RBAgency_Profile {
 					//  $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 					$displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\">".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</a></div>";
 				}
-				$p_image = rb_get_primary_image($dataList["ProfileID"]); 
+				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 
 				if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
 					//$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
@@ -2065,7 +2065,7 @@ class RBAgency_Profile {
 			 * determine primary image
 			 */
 			$images = "";
-			$p_image = rb_get_primary_image($dataList["ProfileID"]);
+			$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 			if ($p_image){
 				if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 					if($rb_agency_option_profilelist_thumbsslide==1){  //show profile sub thumbs for thumb slide on hover
