@@ -39,12 +39,14 @@ if(!function_exists("rb_output_buffer")){
 // *************************************************************************************************** //
 /*
  * Add Rewrite Rules based on Path
+ * 
  */
-	add_filter('init','rbflush_rules');
+    // Todo: Remove lines below. Causes permalink incompatibility with other plugins such as woocommerce
+	/*add_filter('init','rbflush_rules');
 	function rbflush_rules() {
 		global $wp_rewrite;
 		$wp_rewrite->flush_rules();
-	}
+	}*/
 		
 	add_filter('rewrite_rules_array','rb_agency_rewriteRules');
 		// Adding a new rule
