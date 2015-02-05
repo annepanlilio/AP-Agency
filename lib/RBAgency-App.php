@@ -18,11 +18,12 @@ class RBAgency_App {
 
 			// Ensure we are NOT in the admin section of wordpress
 			if( !is_admin() ) {
+				
 				// Add Styles to Admin Head Section 
 				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_style') );
 
 				// Add Scripts to Admin Head Section 
-				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_scripts'), 0 );
+				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_scripts') );
 
 				// Apply Body Class
 				add_filter( 'body_class', array('RBAgency_App', 'rb_agency_insertbodyclass') );
@@ -43,7 +44,6 @@ class RBAgency_App {
 			if( !is_admin() ) {
 
 				// Get Custom Styles
-				wp_enqueue_script("jquery");
 				
 				wp_register_style( 'rbagency-style', RBAGENCY_PLUGIN_URL .'assets/css/style.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-style' );
@@ -66,6 +66,9 @@ class RBAgency_App {
 			// Ensure we are in the admin section of wordpress
 			if( !is_admin() ) {
 
+				// Add Jquery script 
+				wp_enqueue_script( 'jquery-core' );
+				
 				wp_enqueue_script( 'jquery-ui-datepicker' );
 
 			}
