@@ -1,7 +1,7 @@
 <?php
 
 /*
- * ActivityRezWB_Admin Class
+ * RBAgency_Admin Class
  *
  * These are administrative specific functions
  */
@@ -48,12 +48,7 @@ class RBAgency_Admin {
 				// Add Notification to Plugins Page
 				//add_action('after_plugin_row_rb-agency/rb-agency.php', array('RBAgency_Admin', 'plugin_row'));
 
-				// Register Settings
-				add_action('admin_init', array('RBAgency_Admin', 'do_register_settings'));
-
 			}
-
-			// TODO: Register Settings
 
 		}
 
