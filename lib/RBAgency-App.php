@@ -49,10 +49,10 @@ class RBAgency_App {
 				wp_register_style( 'rbagency-formstyle',RBAGENCY_PLUGIN_URL .'assets/css/forms.css' );
 				wp_enqueue_style( 'rbagency-formstyle' );
 
-				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'assets/jquery-ui/jquery-ui.theme.min.css');
+				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.theme.min.css');
 				wp_enqueue_style( 'rbagency-datepicker-theme' );
 
-				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/jquery-ui/jquery-ui.min.css');
+				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.min.css');
 				wp_enqueue_style( 'rbagency-datepicker' );
 
 			}
