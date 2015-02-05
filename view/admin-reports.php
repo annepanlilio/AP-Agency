@@ -1200,7 +1200,7 @@ elseif ($ConfigID == 80) {
 elseif ($ConfigID == 14) {
 
 		$trackDummies = array();
-		$sample_url = RBAGENCY_PLUGIN_DIR."view/samples"; // Samples' folder
+		$sample_url = RBAGENCY_PLUGIN_DIR."assets/demo-data"; // Samples' folder
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ? (int)$rb_agency_options_arr['rb_agency_option_profilenaming']:"";
 
