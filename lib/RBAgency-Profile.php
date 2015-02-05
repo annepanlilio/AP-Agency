@@ -1400,6 +1400,7 @@ class RBAgency_Profile {
 					profile.ProfileID,
 					profile.ProfileGallery,
 					profile.ProfileContactDisplay,
+					profile.ProfileDateBirth,
 					profile.ProfileDateCreated,
 					profile.ProfileLocationState,
 					profile.ProfileLocationCountry,
