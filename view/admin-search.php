@@ -66,14 +66,30 @@
 				//$search_array["limit"] = $rb_agency_option_persearch;
 
 				if(isset($_POST)){
-					$search_array = array_filter($_POST);
+					foreach($_POST as $key=>$value) {
+						if ( is_array($value) && !empty($value) ){
+								unset( $_POST[$key] );
+						} else {
+							if ( !isset($value) || empty ($value) ){
+								unset( $_POST[$key] );
+							}
+						}
+					}
+
+					// Check something was entered in the form
+					if (count($_POST) > 4) {
+						$search_array = array_filter($_POST);
+
+						// Return SQL string based on fields
+						$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
+
+						// Conduct Search
+						echo RBAgency_Profile::search_results($search_sql_query, 1, false, $search_array);
+
+					} else {
+						echo "<h2>Please try again</h2><strong>". __("Please enter at least one value to search.", RBAGENCY_TEXTDOMAIN) ."</strong>\n";
+					}
 				}
-
-				// Return SQL string based on fields
-				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-
-				// Conduct Search
-				echo RBAgency_Profile::search_results($search_sql_query, 1, false, $search_array);
 
 				echo "<div style=\"clear:both;\"></div>";
 			echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
@@ -121,13 +137,14 @@
 	/*
 	 * Display Search Form
 	 */
-	if (isset($_SESSION['cartArray'])  || @$_GET["action"] !== "massEmail") {
+	if (isset($_REQUEST["action"]) && @$_REQUEST["action"] !== "massEmail" ) {
+	} else {
 
 		// Search Form
 
 			echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
 			echo "     <div class=\"boxblock\">\n";
-			echo "      <h3>". __("Advance Search", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
+			echo "      <h3>". __("Advanced Search", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 			echo "      <div class=\"inner\">\n";
 
 			return RBAgency_Profile::search_form('', '', 1, 1);
