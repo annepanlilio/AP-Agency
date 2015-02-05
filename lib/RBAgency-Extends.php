@@ -35,26 +35,6 @@ class RBAgency_Extends {
 	// * SHORTCODES 
 	// *************************************************************************************************** //
 
-	/*
-	 * Profile List
-	 * Shortcode:  [profile_list]
-	 */
-		public static function get_activity($atts, $content = null){
-
-			ob_start();
-
-
-
-
-
-			$output_string  = ob_get_contents();
-			ob_end_clean();
-
-			return $output_string;
-		}
-
-
-
 
 	/*
 	 * Profile List
@@ -247,8 +227,8 @@ class profile_featured_widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Search Form', 'text_domain' );
-		$type = esc_attr($instance['type']);
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+		$type = ! empty( $instance['type'] ) ? $instance['type'] : 0;
 		$count = ! empty( $instance['count'] ) ? $instance['count'] : 1;
 		?>
 		<p>
@@ -258,8 +238,8 @@ class profile_featured_widget extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id('type'); ?>"><?php _e('Type:'); ?></label>
 			<select id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
-				<option value="0" <?php selected($showlayout, 0); ?>>All Profiles</option>
-				<option value="1" <?php selected($showlayout, 1); ?>>Featured Profiles Only</option>
+				<option value="0" <?php selected($type, 0); ?>>All Profiles</option>
+				<option value="1" <?php selected($type, 1); ?>>Featured Profiles Only</option>
 			</select>
 		</p>
 		<p>
@@ -317,6 +297,7 @@ class profile_search_widget extends WP_Widget {
 	 * @param array $instance Saved values from database.
 	 */
 	public function widget( $args, $instance ) {
+		$type = ! empty( $instance['type'] ) ? $instance['type'] : 0;
 
 		// Get Options
 		$rb_agency_options_arr = get_option('rb_agency_options');
@@ -329,7 +310,7 @@ class profile_search_widget extends WP_Widget {
 		}
 		// Show Search Form
 		if (class_exists('RBAgency_Profile')) { 
-			echo RBAgency_Profile::search_form("", "", 1, $rb_agency_option_formhide_advancedsearch_button);
+			echo RBAgency_Profile::search_form("", "", $type, $type, $rb_agency_option_formhide_advancedsearch_button);
 		} else {
 			echo "Invalid Function (Profile Search)";
 		}
@@ -344,11 +325,19 @@ class profile_search_widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : __( 'Featured Profiles', 'text_domain' );
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : '';
+		$type = ! empty( $instance['type'] ) ? $instance['type'] : 0;
 		?>
 		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('type'); ?>"><?php _e('Type:'); ?></label>
+			<select id="<?php echo $this->get_field_id('type'); ?>" name="<?php echo $this->get_field_name('type'); ?>">
+				<option value="0" <?php selected($type, 0); ?>>Simple</option>
+				<option value="1" <?php selected($type, 1); ?>>Advanced</option>
+			</select>
 		</p>
 		<?php 
 	}
@@ -366,6 +355,7 @@ class profile_search_widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['type'] = ( ! empty( $new_instance['type'] ) ) ? strip_tags( $new_instance['type'] ) : '';
 
 		return $instance;
 	}

@@ -1,16 +1,47 @@
+<?php
 
-// *************************************************************************************************** //
 /*
- * Header for Public facing Pages
+ * RBAgency_App Class
+ *
+ * These are public facing functions
  */
 
-	add_action('wp_head', 'rb_agency_inserthead');
+class RBAgency_App {
 
-		// Call Custom Code to put in header
-		function rb_agency_inserthead() {
+	// *************************************************************************************************** //
+
+	/*
+	 * Initialize
+	 */
+
+		public static function init(){
+
 			// Ensure we are NOT in the admin section of wordpress
 			if( !is_admin() ) {
-				
+				// Add Styles to Admin Head Section 
+				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_style') );
+
+				// Add Scripts to Admin Head Section 
+				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_scripts'), 0 );
+
+				// Apply Body Class
+				add_filter( 'body_class', array('RBAgency_App', 'rb_agency_insertbodyclass') );
+			}
+
+		}
+
+	// *************************************************************************************************** //
+
+	/*
+	 * Define Public Styles
+	 */
+
+		// Get Public Styles
+		public static function rbagency_head_style() {
+
+			// Ensure we are in the admin section of wordpress
+			if( !is_admin() ) {
+
 				// Get Custom Styles
 				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style.css'),array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-style' );
@@ -23,6 +54,15 @@
 
 				wp_register_style( 'rbagency-datepicker', plugins_url('rb-agency/style/jquery-ui/jquery-ui.min.css'));
 				wp_enqueue_style( 'rbagency-datepicker' );
+
+			}
+		}
+
+		// Get Public Scripts
+		public static function rbagency_head_scripts() {
+
+			// Ensure we are in the admin section of wordpress
+			if( !is_admin() ) {
 
 				wp_enqueue_script( 'jquery-ui-datepicker' );
 
@@ -56,53 +96,50 @@
 						}
 				});
 				</script>
-
 				<?php
 
 
+				// TODO: Check Validity
+				add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
 
-			add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
+		}
 
-			function rb_agency_insertscripts() {
-				if( !is_admin() ) {
-					if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
-						wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
-					}
+
+
+		// TODO: Check Validity
+		public static function rb_agency_insertscripts() {
+			if( !is_admin() ) {
+				if(get_query_var('type') == "search-basic" || get_query_var('type') == "search-badvanced" ){
+					wp_enqueue_script( 'customfields-search', plugins_url('js/js-customfields.js', __FILE__) );
 				}
 			}
 		}
 
 
+	// *************************************************************************************************** //
 
+	/*
+	 * Add Custom Classes to <body>
+	 */
 
+		// Add CSS Class based on URL
+		public static function rb_agency_insertbodyclass($classes) {
+			// Remove Blog
+			if (rb_is_page("rb_profile")) {
+				$classes[] = 'rbagency-profile';
+			} elseif (rb_is_page("rb_category")) {
+				$classes[] = 'rbagency-category';
+			} elseif (rb_is_page("rb_register")) {
+				$classes[] = 'rbagency-register';
+			} elseif (rb_is_page("rb_search")) {
+				$classes[] = 'rbagency-search';
+			} elseif (rb_is_page("rb_print")) {
+				$classes[] = 'rbagency-print';
+			} else {
+				$classes[] = 'rbagency';
+			}
+			return $classes;
+		}
 
-
-
-
-
-
-		// *************************************************************************************************** //
-		/*
-		 * Add Custom Classes to <body>
-		 */
-
-			add_filter("body_class", "rb_agency_insertbodyclass");
-				// Add CSS Class based on URL
-				function rb_agency_insertbodyclass($classes) {
-					// Remove Blog
-					if (rb_is_page("rb_profile")) {
-						$classes[] = 'rbagency-profile';
-					} elseif (rb_is_page("rb_category")) {
-						$classes[] = 'rbagency-category';
-					} elseif (rb_is_page("rb_register")) {
-						$classes[] = 'rbagency-register';
-					} elseif (rb_is_page("rb_search")) {
-						$classes[] = 'rbagency-search';
-					} elseif (rb_is_page("rb_print")) {
-						$classes[] = 'rbagency-print';
-					} else {
-						$classes[] = 'rbagency';
-					}
-					return $classes;
-				}
-
+}
+?>

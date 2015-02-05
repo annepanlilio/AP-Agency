@@ -136,39 +136,41 @@ See license.txt for full details.
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
 
-	// TODO ???
-	//define("RBAGENCY_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
-
-
 // *************************************************************************************************** //
 
 /*
  * Initialize
  */
 
-	//include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Init.php');
-		//add_action( 'init', array('RBAgency_Init', 'init'), 0, 1 );
-
 	// TODO: Sort Functions
 	include_once(RBAGENCY_PLUGIN_DIR ."functions.php");
+		define("RBAGENCY_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
+
+	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Init.php');
+		add_action( 'init', array('RBAgency_Init', 'init'), 0, 1 );
 
 	// Profile Class
-	include_once(RBAGENCY_PLUGIN_DIR ."app/profile.class.php");
+	include_once(RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Profile.php');
 
 	// Common Functions
 	include_once(RBAGENCY_PLUGIN_DIR ."app/common.class.php");
 
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Admin.php');
 		add_action( 'init', array('RBAgency_Admin', 'init'), 0, 1 );
-		// Check if version number changed and upgrade required
-		add_action('init',  array('RBAgency_Init', 'update_check'));
-
-		// Check server if software is most current version
-		add_action('init',  array('RBAgency_Init', 'upgrade_check'));
+		add_action('init',  array('RBAgency_Init', 'update_check')); // Check if version number changed and upgrade required
+		add_action('init',  array('RBAgency_Init', 'upgrade_check')); // Check server if software is most current version
 
 	// Widgets & Shortcodes
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Extends.php');
 		add_action( 'init', array('RBAgency_Extends', 'init'), 0, 1 );
+
+	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-App.php');
+		add_action( 'init', array('RBAgency_App', 'init'), 0, 1 );
+
+
+
+
+
 
 
 // *************************************************************************************************** //

@@ -22,9 +22,10 @@ class RBAgency_Init {
 			 */
 
 				// Identify Folder for PO files
-				load_plugin_textdomain( ACTIVITYREZWB_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/assets/languages/' );
+				load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/assets/languages/' );
 
-
+				// Register Settings
+				add_action('admin_init', array('RBAgency_Init', 'do_register_settings'));
 
 		}
 
@@ -710,7 +711,7 @@ class RBAgency_Init {
 			} else {
 				// Version Exists, but is it out of date?
 				if(get_option("rb_agency_version") <> RBAGENCY_VERSION){
-					require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/upgrade.php");
+					include_once(RBAGENCY_PLUGIN_DIR .'/upgrade.php');
 				} else {
 					// Namaste, version number is correct
 				}
