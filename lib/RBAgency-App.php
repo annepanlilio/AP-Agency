@@ -43,6 +43,8 @@ class RBAgency_App {
 			if( !is_admin() ) {
 
 				// Get Custom Styles
+				wp_enqueue_script("jquery");
+				
 				wp_register_style( 'rbagency-style', RBAGENCY_PLUGIN_URL .'assets/css/style.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-style' );
 
