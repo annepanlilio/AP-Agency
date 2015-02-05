@@ -13,6 +13,13 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 		$add_sidebar = true;
 	}
 
+	if (get_query_var("type") == "search-advanced") {
+		$type = 1;
+	} else {
+		$type = 0;
+	}
+
+
 	echo "<div id=\"primary\" class=\"".($add_sidebar?"site-content":primary_class())."\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	echo "		<div id=\"profile-search\">\n";
@@ -27,21 +34,29 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 		// All Public
 		($rb_agency_option_privacy == 0) ||
 
-		//admin users
+		// Admin Users
 		(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 
 		//  Must be logged in as Casting Agent to View Profiles
 		($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()) ) {
 
+		/*
+		 * Set Title
+		 */
+
 			if (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") {
 				echo "			<h1 class=\"entry-title\">". __("Search Results", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
 			} else {
-				if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
+				if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == 0 ) ){
 						echo "	<h1 class=\"entry-title\">". __("Basic Search", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
-				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == 1 ) ){
 						echo "	<h1 class=\"entry-title\">". __("Advanced Search", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
 				}
 			}
+
+		/*
+		 * IF: Search Results
+		 */
 
 			echo "	<div id=\"profile-search-results\">\n";
 
@@ -58,31 +73,18 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
 
 			} else {
-				if (((get_query_var("type") == "search-basic")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ||  isset($profilesearch_layout) && $profilesearch_layout == 'condensed' )
-					|| ((get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || isset($profilesearch_layout) &&  $profilesearch_layout == 'advanced' )){
-						// echo RBAgency_Profile::search_form("", "", 0);
-				} else {
-					echo "<strong>". _e("No search chriteria selected, please initiate your search.", RBAGENCY_TEXTDOMAIN) ."</strong>";
-				}
+				echo "<strong>". _e("No search chriteria selected, please initiate your search.", RBAGENCY_TEXTDOMAIN) ."</strong>";
 			}
 			echo "	</div><!-- #profile-search-results -->\n"; // #profile-search-results
 			echo "	<hr />";
 
+		/*
+		 * Search Form
+		 */
 
 			// // Show Search Form
 			if (!isset($_POST['form_mode'])) {
-					echo RBAgency_Profile::search_form("", "", 0);
-			}
-
-			// Show a link to go back
-			if (isset($_POST['form_mode']) && $rb_agency_option_formhide_advancedsearch_button  == 0 ) {
-				if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) || (isset($profilesearch_layout) && $profilesearch_layout == 'condensed') ) {
-					// Basic Search
-					echo "	<input type=\"button\" name=\"back_search\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || (isset($profilesearch_layout) &&  $profilesearch_layout == 'advanced') ) {
-					// Advanced Search
-					echo "	<input type=\"button\" name=\"back_search\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-				}
+					echo RBAgency_Profile::search_form('', '', $type, 0);
 			}
 
 	} else {
@@ -109,12 +111,12 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 	echo "		</div><!-- #profile-search -->\n"; // #profile-search
 	echo "	</div><!-- #content -->\n"; // #content
 	echo "</div><!-- #primary -->\n"; // #primary
-	$type = get_query_var( 'type' );
-					
-	if($add_sidebar && !in_array($type, array("search-advanced","search-basic")) ){
+
+
+	if($add_sidebar){
 	echo "<div id=\"secondary\" class=\"widget-area\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
-	echo RBAgency_Profile::search_form("", "", 0);
+	echo RBAgency_Profile::search_form('', '', $type, 0);
 	echo "	</div><!-- #content -->\n"; // #content
 	echo "</div><!-- #secondary -->\n"; // #secondary
 	}

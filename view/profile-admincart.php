@@ -26,17 +26,14 @@ global $wpdb;
 			$castingcart_id = implode(",",array_unique(array_filter(explode(",",$data['SearchProfileID']))));
 			$arr = (array)unserialize($data["SearchMuxCustomThumbnail"]);
 			$_SESSION["profilephotos_view"] = is_array($arr[0])?array_filter(array_unique($arr[0])):"";
-		
+
 			$search_array = array("perpage" => 9999, "include" => $castingcart_id);
 			$search_sql_query = RBAgency_Profile::search_generate_sqlwhere(array_filter(array_unique($search_array)));
-		   
-		   // Process Form Submission
+
+			// Process Form Submission
 			echo $search_results = RBAgency_Profile::search_results($search_sql_query, 3);
 			
-		  // echo  $formatted = RBAgency_Profile::search_formatted($search_array);
-
-
-
+			// echo  $formatted = RBAgency_Profile::search_formatted($search_array);
 
 		}
 		if (empty($SearchMuxHash) || ($count == 0)) {

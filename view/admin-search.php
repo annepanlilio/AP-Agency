@@ -130,7 +130,7 @@
 			echo "      <h3>". __("Advance Search", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 			echo "      <div class=\"inner\">\n";
 
-			return RBAgency_Profile::search_form("", "", "advanced");
+			return RBAgency_Profile::search_form('', '', 1, 1);
 			
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";

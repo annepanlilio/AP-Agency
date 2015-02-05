@@ -70,7 +70,7 @@ get_currentuserinfo();
 						<?php
 						if ($user_level >= 7) {
 
-							$form = RBAgency_Profile::search_form("", "", 1);
+							$form = RBAgency_Profile::search_form('', '', 0, 1);
 							echo $form;
 
 						} // Editor

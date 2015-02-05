@@ -14,11 +14,16 @@ class RBAgency_Profile {
 		protected static $order_by ='';
 		protected static $castingcart = false;
 
-	/*
+	/**
 	 * Search Form
 	 * Process Search
+	 *
+	 * @param array $atts		Search form attributes
+	 * @param array $args		Search form arguments
+	 * @param array $type		Which layout type? (0: Simple, 1: Advanced)
+	 * @param array $location	Where is it located? (0: Public, 1: Admin, 2)
 	 */
-		public static function search_form($atts ='', $args = '', $type = 'simple', $profilesearch_layout = '', $profilesearch_advanced_button = false){
+		public static function search_form($atts ='', $args = '', $type = 0, $location = 0){
 
 			/*
 			* Setup Requirements
@@ -34,30 +39,32 @@ class RBAgency_Profile {
 					$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
 					$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
 
-				// Which Type?
-				if ($type == 'simple' || $type == 0) {
 
-					// Admin Back-end 
-					$rb_agency_searchurl = admin_url("admin.php?page=rb_agency_search");
+				// Which Target Location?
+				if ($location == 0) {
 
-					if ($profilesearch_layout == 'condensed'){
+					// Public Facing
+					$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
+
+					if ($type == 0) {
 						$search_layout = "simple";
-					}else{
-						$search_layout = "admin";
+					} else {
+						$search_layout = "full";
 					}
 
 				} else {
 
-					// Front Back-end
-					$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
-					if ( (get_query_var("type") == "search-basic") || ($profilesearch_layout == 'condensed') ){
+					// Admin Back-end 
+					$rb_agency_searchurl = admin_url("admin.php?page=rb_agency_search");
+
+					if ($type == 0) {
 						$search_layout = "simple";
-					} elseif ( (get_query_var("type") == "search-advanced") || ($profilesearch_layout == 'advanced') ){
-						$search_layout = "full";
+					} else {
+						$search_layout = "admin";
 					}
 
 				}
-				// TODO: Add Widget Type
+
 
 
 			/*
@@ -127,7 +134,7 @@ class RBAgency_Profile {
 				echo "	<div id=\"profile-search-form-condensed\" class=\"rbform form-". (isset($search_layout)?$search_layout:"") ."\">\n";
 				echo "		<form method=\"post\" enctype=\"multipart/form-data\" action=\"". (isset($rb_agency_searchurl)?$rb_agency_searchurl:"") ."\">\n";
 				echo "			<input type=\"hidden\" name=\"form_action\" value=\"search_profiles\" />\n";
-				echo "			<input type=\"hidden\" name=\"form_mode\" value=\"". (isset($search_layout)?$search_layout:"") ."\" />\n";
+				echo "			<input type=\"hidden\" name=\"form_mode\" value=\"". (isset($type)?$type:0) ."\" />\n";
 
 				// Show Profile Name
 				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
@@ -142,7 +149,6 @@ class RBAgency_Profile {
 				}
 
 				if ( ($rb_agency_option_formshow_displayname > 0) || (isset($search_layout) && $search_layout == "admin") || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
-				
 						echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\">\n";
 						echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
 						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?$_REQUEST["displayname"]:"")."\" /></div>\n";
@@ -623,7 +629,7 @@ class RBAgency_Profile {
 					echo "				<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\"  />\n"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
 
-					if ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) || $profilesearch_layout == 'advanced' ){
+					if ($type == 1) {
 					echo "				<a href=\"". get_bloginfo("wpurl") ."/search-basic/\">". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "</a>\n";
 					} else {
 					echo "				<a href=\"". get_bloginfo("wpurl") ."/search-advanced/\">". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "</a>\n";

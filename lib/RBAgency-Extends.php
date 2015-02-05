@@ -97,8 +97,7 @@ class RBAgency_Extends {
 
 			// Get Shortcode Attributes
 			extract(shortcode_atts(array(
-				"type" => "simple",
-				"count" => 1
+				"type" => 0
 			), $atts));
 
 			ob_start();
@@ -107,6 +106,12 @@ class RBAgency_Extends {
 				$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
 				$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
 
+			// Handle Legacy
+			if ($type == "simple" || $type == "basic" ) {
+				$type = 0;
+			} elseif ($type == "advanced" || $type == "admin" ) {
+				$type = 1;
+			}
 
 			if (  // Public
 				($rb_agency_option_privacy == 0) ||
@@ -119,15 +124,12 @@ class RBAgency_Extends {
 				// Select Type
 				$isSearchPage = 1;
 				if(!isset($_POST['form_mode'])){
-					$type = get_query_var( 'type' );
-					if(!in_array($type, array("search-advanced","search-basic")) ) { 
-						echo RBAgency_Profile::search_form("", "", $type, $rb_agency_option_formhide_advancedsearch_button);
-					}
+					echo RBAgency_Profile::search_form('', '', $type, 0);
 				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+						echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
 					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-						echo "					<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+						echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
 					}
 				}
 
@@ -310,7 +312,7 @@ class profile_search_widget extends WP_Widget {
 		}
 		// Show Search Form
 		if (class_exists('RBAgency_Profile')) { 
-			echo RBAgency_Profile::search_form("", "", $type, $type, $rb_agency_option_formhide_advancedsearch_button);
+			echo RBAgency_Profile::search_form('', '', $type, 0);
 		} else {
 			echo "Invalid Function (Profile Search)";
 		}

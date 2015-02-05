@@ -100,7 +100,7 @@ class RBAgency_App {
 
 
 				// TODO: Check Validity
-				add_action('wp_enqueue_scripts', 'rb_agency_insertscripts');
+				add_action('wp_enqueue_scripts', array('RBAgency_App', 'rb_agency_insertscripts') );
 
 		}
 
