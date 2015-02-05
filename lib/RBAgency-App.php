@@ -43,13 +43,13 @@ class RBAgency_App {
 			if( !is_admin() ) {
 
 				// Get Custom Styles
-				wp_register_style( 'rbagency-style', plugins_url('rb-agency/style/style.css'),array(), strtotime("now"));
+				wp_register_style( 'rbagency-style', RBAGENCY_PLUGIN_URL .'assets/css/style.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-style' );
 
-				wp_register_style( 'rbagency-formstyle', plugins_url('rb-agency/style/forms.css'));
+				wp_register_style( 'rbagency-formstyle',RBAGENCY_PLUGIN_URL .'assets/css/forms.css' );
 				wp_enqueue_style( 'rbagency-formstyle' );
 
-				wp_register_style( 'rbagency-datepicker-theme', plugins_url('rb-agency/style/jquery-ui/jquery-ui.theme.min.css'));
+				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'assets/jquery-ui/jquery-ui.theme.min.css'));
 				wp_enqueue_style( 'rbagency-datepicker-theme' );
 
 				wp_register_style( 'rbagency-datepicker', plugins_url('rb-agency/style/jquery-ui/jquery-ui.min.css'));

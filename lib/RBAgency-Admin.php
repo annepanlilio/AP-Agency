@@ -261,16 +261,16 @@ class RBAgency_Admin {
 			if( is_admin() ) {
 
 				// Get Custom Admin Styles
-				wp_register_style( 'rbagencyadmin', RBAGENCY_PLUGIN_URL .'assets/css/admin/admin.css' );
+				wp_register_style( 'rbagencyadmin', RBAGENCY_PLUGIN_URL .'assets/css/admin.css' );
 				wp_enqueue_style( 'rbagencyadmin' );
 
-				wp_register_style( 'rbagency-formstyle', RBAGENCY_PLUGIN_URL .'assets/css/admin/forms.css' );
+				wp_register_style( 'rbagency-formstyle', RBAGENCY_PLUGIN_URL .'assets/css/forms.css' );
 				wp_enqueue_style( 'rbagency-formstyle' );
 
-				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/css/admin/jquery-ui/jquery-ui.css' );
+				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.css' );
 				wp_enqueue_style( 'rbagency-datepicker' );
 
-				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'assets/css/admin/jquery-ui/jquery-ui.theme.min.css' );
+				wp_register_style( 'rbagency-datepicker-theme', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.theme.min.css' );
 				wp_enqueue_style( 'rbagency-datepicker-theme' );
 
 			}
