@@ -156,8 +156,8 @@ input.stubby { width: 80px; }
 #dashboard_media .media-files .media-file { float: left; width: 120px; height: 150px; padding: 5px 10px; margin: 0px 3px 5px 3px; background: #eee; border: 1px solid #ddd; }
 #dashboard_media .media-files .media-file:hover { background: #ddd; }
 #dashboard_media .media-files .media-file a.link-icon { float: left; width: 120px; height: 108px; margin-bottom: 4px; background-position: center center; background-repeat: no-repeat; background-color: #fff; font-size: 0px; }
-#dashboard_media .media-files .media-file.voice-demo a.link-icon { background-image: url(admin-mp3.png); }
-#dashboard_media .media-files .media-file.resume a.link-icon { background-image: url(admin-pdf.png); }
+#dashboard_media .media-files .media-file.voice-demo a.link-icon { background-image: url(../img/admin-mp3.png); }
+#dashboard_media .media-files .media-file.resume a.link-icon { background-image: url(../img/admin-pdf.png); }
 #dashboard_media .media-files .media-file.headshots { width: auto; height: auto; overflow: hidden; padding: 10px 5px; }
 input[type=checkbox], input[type=radio] { width: 12px!important; height: 15px!important; }
 input[type=radio]:checked:before { margin-bottom: 2px!important; }
