@@ -13,7 +13,7 @@ class RBAgency_Profile {
 	 */
 		protected static $order_by ='';
 		protected static $castingcart = false;
-
+	
 	/**
 	 * Search Form
 	 * Process Search
@@ -1316,7 +1316,7 @@ class RBAgency_Profile {
 			// Sort by date 
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
 			$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
-				
+			
 			if($rb_agency_option_profilelist_sortbydate){
 				$atts["sort"] = "cmux.ProfileCustomDateValue";
 			} elseif(!isset($atts["sort"])){
@@ -1405,22 +1405,27 @@ class RBAgency_Profile {
 					profile.ProfileLocationState,
 					profile.ProfileLocationCountry,
 					profile.ProfileIsActive,
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) 
-					AS ProfileMediaURL 
-
-					FROM ". table_agency_profile ." profile ";
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL,
+					cmux.ProfileCustomDateValue
+					FROM 
+					". table_agency_profile ." profile 
+					INNER JOIN 
+					". table_agency_customfield_mux." cmux
+					ON 
+					profile.ProfileID = cmux.ProfileID
+					 ";
 
 					// Check if there are any arguments
 					if (strlen($sql_where) > 28) {
 					$sql .= "WHERE 
-							EXISTS(
+							 EXISTS(
 								SELECT count(cmux.ProfileCustomMuxID)  FROM
 								".table_agency_customfield_mux." cmux
 								WHERE profile.ProfileID = cmux.ProfileID
 								AND ". $sql_where ."
 								GROUP BY cmux.ProfileCustomMuxID
-								LIMIT 1
-							)";
+								LIMIT 1)
+							";
 					}
 					$sql .= self::$order_by;
 
@@ -1562,8 +1567,7 @@ class RBAgency_Profile {
 			/*
 			 * Execute Query
 			 */
-				$profiles = $wpdb->get_results($sql);
-
+				
 				// Show Errors?
 				if(self::$error_debug || self::$error_debug_query){
 					self::$error_checking[] = array('-MAIN_QUERY-',$sql);
