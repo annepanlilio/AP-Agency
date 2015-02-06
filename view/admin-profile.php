@@ -479,7 +479,6 @@ if (isset($_POST['action'])) {
 										} // endwhile           
 										// Upload Videos to Database
 														if (isset($_POST['profileMediaV1']) && !empty($_POST['profileMediaV1'])) {
-															;
 															$profileMediaType = $_POST['profileMediaV1Type'];
 															$profileMediaTitle = $_POST['media1_title'] ."<br>". $_POST['media1_caption'];
 															$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV1']);
@@ -585,7 +584,6 @@ if (isset($_POST['action'])) {
 					
 			}
 			rb_display_manage($ProfileID,$errorValidation);
-			exit;
 			break;
 
 		// *************************************************************************************************** //
