@@ -1817,6 +1817,7 @@ function uninstall_dummy_profile($profile){
 	 if(@scandir($dir)){
 		 foreach (scandir($dir) as $item) {
 				if ($item == '.' || $item == '..') continue;
+				if(file_exists($dir.DIRECTORY_SEPARATOR.$item))
 				 unlink($dir.DIRECTORY_SEPARATOR.$item);
 		 }
 		 rmdir($dir);
@@ -1830,6 +1831,8 @@ function uninstall_allprofile(){
 	 $dir  = RBAGENCY_UPLOADPATH."/";  
 	 foreach (scandir($dir) as $item) {
 			if ($item == '.' || $item == '..') continue;
+			if(file_exists($dir.DIRECTORY_SEPARATOR.$item))
+				
 			 unlink($dir.DIRECTORY_SEPARATOR.$item);
 	 }
 	
