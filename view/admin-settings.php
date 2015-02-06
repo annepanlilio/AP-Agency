@@ -1304,13 +1304,13 @@ elseif ($ConfigID == 3) {
 		$GenderID = $_GET['GenderID'];
 		if (is_numeric($GenderID)) {
 			// Verify Record
-			$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
-			$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+			$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  %d ";
+			$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete, $GenderID ), ARRAY_A);
 			foreach ($resultsDelete as $dataDelete) {
 			
 				// Remove Record
-				$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
-				$results = $wpdb->query($delete);
+				$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = %d";
+				$results = $wpdb->query($wpdb->prepare($delete,$GenderID));
 				
 				echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 					
