@@ -20,7 +20,7 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 	}
 
 
-	echo "<div id=\"primary\" class=\"".($add_sidebar?"site-content":primary_class())."\">\n";
+	echo "<div id=\"primary\" class=\"".(!$add_sidebar?"site-content":primary_class())."\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	echo "		<div id=\"profile-search\">\n";
 
@@ -96,12 +96,11 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 		/*
 		 * Search Form
 		 */
-
 			// // Show Search Form
-			if (!isset($_POST['form_mode'])) {
+			if (!isset($_POST['form_mode']) && !isset($_GET["form_action"])) {
 					echo RBAgency_Profile::search_form('', '', $type, 0);
 			}
-
+		
 	} else {
 
 			if($rb_agency_option_privacy == 3 ){
@@ -128,7 +127,7 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 	echo "</div><!-- #primary -->\n"; // #primary
 
 
-	if($add_sidebar){
+	if($add_sidebar && !in_array(get_query_var("type"),array("search-basic","search-advanced"))){
 	echo "<div id=\"secondary\" class=\"widget-area\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	echo RBAgency_Profile::search_form('', '', $type, 0);
