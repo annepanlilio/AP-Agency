@@ -436,7 +436,7 @@ elseif ($ConfigID == 3) {
 								echo " has been renamed <strong>". $new_file ."</strong>";
 								$has_rename = true;
 						}
-						$file_ext = rb_agency_filenameextension($file);
+						$file_ext = strtolower(rb_agency_filenameextension($file));
 						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
 						
 									   	
