@@ -893,6 +893,9 @@ class RBAgency_Profile {
 			/*
 			 * Get Search Chriteria
 			 */
+			$atts["profiletype"] = $atts["type"];
+			$atts["age_min"] = $atts["age_start"];
+			$atts["age_max"] = $atts["age_stop"];
 
 				// Exctract from Shortcode
 				extract(shortcode_atts(array(
@@ -1385,7 +1388,7 @@ class RBAgency_Profile {
 	 * Process Search and return Profile IDs
 	 */
 
-		public static function search_results($sql_where, $query_type = 0, $castingcart = false, $arr_query = array()){
+		public static function search_results($sql_where, $query_type = 0, $castingcart = false, $arr_query = array(),$shortcode = false){
 
 			global $wpdb;
 
@@ -1593,7 +1596,7 @@ class RBAgency_Profile {
 				if(is_admin()){
 					return self::search_result_admin($sql,$arr_query );
 				} else {
-					return self::search_result_public($sql, $castingcart);
+					return self::search_result_public($sql, $castingcart,$shortcode);
 				}
 
 		}
@@ -1601,7 +1604,7 @@ class RBAgency_Profile {
 	/* 
 	 * Results for Public (Front-End)
 	 */
-		public static function search_result_public($sql, $castingcart = ''){
+		public static function search_result_public($sql, $castingcart = '',$shortcode = false){
 			global $wpdb;
 
 			/* 
@@ -1616,25 +1619,26 @@ class RBAgency_Profile {
 				$all_html.='<div id="rbfilter-sort">';
 				$paginate = new RBAgency_Pagination;
 				$items = $wpdb->num_rows;
-				
-				$page = get_query_var("paging");
-				$offset = $page <= 1?0:($page - 1)*(int)$rb_agency_option_persearch;
-				$sql .= " LIMIT {$offset},{$rb_agency_option_persearch}";
-				
-				$results = $wpdb->get_results($sql,ARRAY_A);
-				$count = $wpdb->num_rows;
-				
-				unset($_REQUEST["search_profiles"]); //unset unwanted variable
-				$query = RBAgency_Common::http_build_query($_REQUEST);
-				$paging = get_query_var("paging");
-				$target = $query;
-				$paginate->items($items);
-				$paginate->limit($rb_agency_option_persearch);
-				$paginate->target($_SERVER["REQUEST_URI"],$target);
-				$paginate->currentPage(isset($paging)?$paging:1);
-				echo $paginate->show();
-			
-				$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
+				$count = $items;
+				if(!$shortcode){ // Don't paginate in shortcode
+					$page = get_query_var("paging");
+					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
+					$sql .= " LIMIT {$offset},{$rb_agency_option_persearch}";
+					
+					$results = $wpdb->get_results($sql,ARRAY_A);
+					$count = $wpdb->num_rows;
+					
+					unset($_REQUEST["search_profiles"]); //unset unwanted variable
+					$query = RBAgency_Common::http_build_query($_REQUEST);
+					$paging = get_query_var("paging");
+					$target = $query;
+					$paginate->items($items);
+					$paginate->limit($rb_agency_option_persearch);
+					$paginate->target($_SERVER["REQUEST_URI"],$target);
+					$paginate->currentPage(!empty($paging)?$paging:1);
+					echo $paginate->show();
+					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
+				}
 				$all_html.='	<div class="rbsort">';
 				
 			/*

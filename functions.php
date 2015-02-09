@@ -46,8 +46,8 @@ if(!function_exists("rb_output_buffer")){
 	function rbflush_rules() {
 		global $wp_rewrite;
 		$wp_rewrite->flush_rules();
-	}*/
-		
+	}
+		*/
 	add_filter('rewrite_rules_array','rb_agency_rewriteRules');
 		// Adding a new rule
 		function rb_agency_rewriteRules($rules) {
@@ -69,7 +69,7 @@ if(!function_exists("rb_output_buffer")){
 			$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
 			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
 			$newrules['get-state/(.*)$'] = 'index.php?type=getstate&country=$matches[1]';
-
+			
 			$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
 
 			$newrules['profile-favorite'] = 'index.php?type=favorite';
