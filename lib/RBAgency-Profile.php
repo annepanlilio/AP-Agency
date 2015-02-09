@@ -1620,31 +1620,14 @@ class RBAgency_Profile {
 				$paginate = new RBAgency_Pagination;
 				$items = $wpdb->num_rows;
 				$count = $items;
-				if(!$shortcode){ // Don't paginate in shortcode
-					$page = get_query_var("paging");
-					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
-					$sql .= " LIMIT {$offset},{$rb_agency_option_persearch}";
-					
-					$results = $wpdb->get_results($sql,ARRAY_A);
-					$count = $wpdb->num_rows;
-					
-					unset($_REQUEST["search_profiles"]); //unset unwanted variable
-					$query = RBAgency_Common::http_build_query($_REQUEST);
-					$paging = get_query_var("paging");
-					$target = $query;
-					$paginate->items($items);
-					$paginate->limit($rb_agency_option_persearch);
-					$paginate->target($_SERVER["REQUEST_URI"],$target);
-					$paginate->currentPage(!empty($paging)?$paging:1);
-					echo $paginate->show();
-					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
-				}
+
 				$all_html.='	<div class="rbsort">';
 				
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
-				if($rb_agency_option_profilelist_sortby && !self::$castingcart && !strpos($_SERVER['REQUEST_URI'],'profile-favorite') > -1){
+			
+				if($rb_agency_option_profilelist_sortby && empty($castingcart) && strpos($_SERVER['REQUEST_URI'],'profile-favorite') <= -1){
 
 					// Enqueue our js script
 					wp_enqueue_script( 'list_reorder', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array('jquery'));
@@ -1666,6 +1649,26 @@ class RBAgency_Profile {
 				$all_html.="	</div>";
 				$all_html.="</div>";
 				$all_html.= "<hr />";
+				
+				if(!$shortcode){ // Don't paginate in shortcode
+					$page = get_query_var("paging");
+					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
+					$sql .= " LIMIT {$offset},{$rb_agency_option_persearch}";
+					
+					$results = $wpdb->get_results($sql,ARRAY_A);
+					$count = $wpdb->num_rows;
+					
+					unset($_REQUEST["search_profiles"]); //unset unwanted variable
+					$query = RBAgency_Common::http_build_query($_REQUEST);
+					$paging = get_query_var("paging");
+					$target = $query;
+					$paginate->items($items);
+					$paginate->limit($rb_agency_option_persearch);
+					$paginate->target($_SERVER["REQUEST_URI"],$target);
+					$paginate->currentPage(!empty($paging)?$paging:1);
+					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
+				}
+				
 				if ($count > 0){
 
 				$castingcart_results = array();
@@ -1725,6 +1728,7 @@ class RBAgency_Profile {
 					$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong>". (isset($count)?$count:0) ."</strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
 				}
+				
 				$all_html .= '<div id="profile-results-info">';
 				/*
 				if ($rb_agency_option_profilelist_favorite){ 
@@ -1741,11 +1745,17 @@ class RBAgency_Profile {
 					$all_html .= "</div>\n";
 				}*/
 				$all_html .= '</div>';
+
 			/* 
 			 * wrap profile listing
 			 */
+				if(!$shortcode){
+					$all_html .= $paginate->show();
+				}
 				$all_html .="<div id='profile-list'>".$profile_list."</div>";
-
+				if(!$shortcode){
+					$all_html .= $paginate->show();
+				}
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";

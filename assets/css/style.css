@@ -126,8 +126,8 @@
 	margin-top: 15px;
 }
 .rbpagination { 
-	float: left;
-	clear: left;
+	/*float: left;
+	clear: left;*/
 	font-size: 13px;
 	padding:2px 5px 0px 0px;
 }
