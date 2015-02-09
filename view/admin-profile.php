@@ -1931,7 +1931,7 @@ function rb_display_list() {
 			$ProfileGender = (int)$_GET['ProfileGender'];
 			 $query .= "&ProfileGender=".$ProfileGender;
 		}
-		$p = new rb_agency_pagination;
+		$p = new RBAgency_Pagination;
 		$p->items($items);
 		$p->limit(50); // Limit entries per page
 		$p->target("admin.php?page=" . $page . $query."&".$build_query);

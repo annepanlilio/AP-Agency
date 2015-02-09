@@ -2319,7 +2319,7 @@ function rb_display_profile_list(){
 	$wpdb->get_results("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."",ARRAY_A); // number of total rows in the database
 	$items = $wpdb->num_rows;
 	if($items > 0) {
-		$p = new rb_agency_pagination;
+		$p = new RBAgency_Pagination;
 		$p->items($items);
 		$p->limit(50); // Limit entries per page
 		$p->target("admin.php?page=". @$_GET['page'] . '&ConfigID=99' .@$query);

@@ -1451,10 +1451,14 @@ class RBAgency_Profile {
 					profile.ProfileLocationCountry,
 					profile.ProfileGender,
 					profile.ProfileIsActive,
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) 
-					AS ProfileMediaURL 
-
-					FROM ". table_agency_profile ." profile ";
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL,
+					cmux.ProfileCustomDateValue
+					FROM 
+					". table_agency_profile ." profile 
+					INNER JOIN 
+					". table_agency_customfield_mux." cmux
+					ON 
+					profile.ProfileID = cmux.ProfileID ";
 
 					// Check if there are any arguments
 					if (strlen($sql_where) > 28) {

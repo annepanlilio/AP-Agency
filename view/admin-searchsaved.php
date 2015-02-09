@@ -434,7 +434,7 @@ $siteurl = get_option('siteurl');
 		$items =$results->num_itms; // number of total rows in the database
 		if($items > 0) {
 
-			$p = new rb_agency_pagination;
+			$p = new RBAgency_Pagination;
 			$p->items($items);
 			$p->limit(50); // Limit entries per page
 			$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .(isset($query)?$query:""));
