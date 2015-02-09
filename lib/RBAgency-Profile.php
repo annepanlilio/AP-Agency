@@ -1428,6 +1428,8 @@ class RBAgency_Profile {
 								AND ". $sql_where ."
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1)
+							AND 
+							profile.ProfileIsActive = 1
 							";
 					}
 					$sql .= self::$order_by;
