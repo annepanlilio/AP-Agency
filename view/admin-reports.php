@@ -393,7 +393,7 @@ elseif ($ConfigID == 3) {
 			array_push($arr_media, $media["ProfileMediaURL"]);
 		}
 	}
-							
+
 	foreach ($results3 as $data3) {
 		$dirURL = RBAGENCY_UPLOADPATH . $data3['ProfileGallery'];
 		if (is_dir($dirURL)) {  // Does folder exist?
@@ -414,7 +414,6 @@ elseif ($ConfigID == 3) {
 								}
 							}
 					}
-					
 				}
 			if ($handle = opendir($dirURL) ) {  //  Open seasame 
 				while (false !== ($file = readdir($handle))) {
@@ -438,30 +437,24 @@ elseif ($ConfigID == 3) {
 						}
 						$file_ext = strtolower(rb_agency_filenameextension($file));
 						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
-						
-									   	
-									   	if (!in_array($new_file,$arr_media,true)) {
-												if($_GET['action'] == "add") {
-												    $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
-													$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
-												} else {
-													$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
-												}
-										} else {
-												$actionText = ($has_rename?"and":"")." exists in database";
-										}
-
-							
+							if (!in_array($new_file,$arr_media,true)) {
+									if($_GET['action'] == "add") {
+									    $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+										$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+									} else {
+										$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+									}
+							} else {
+									$actionText = ($has_rename?"and":"")." exists in database";
+							}
 						} else {
 								$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
 						}
 								echo $actionText ."</div>\n";
-
 					}
 				}
 				closedir($handle);
 
-   
 			}
 			echo "</div>\n";
 		}
