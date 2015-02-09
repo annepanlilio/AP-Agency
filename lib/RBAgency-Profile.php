@@ -587,7 +587,7 @@ class RBAgency_Profile {
 						elseif($ProfileCustomType == 10) {
 								$from = "";
 								$to = "";
-								@list($from,$to) = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:["",""]; // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
+								@list($from,$to) = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:array("",""); // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 
 								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
 									echo "<label>". $ProfileCustomTitle ."</label>\n";
