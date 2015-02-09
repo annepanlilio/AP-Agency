@@ -1401,6 +1401,8 @@ class RBAgency_Profile {
 					profile.ProfileID,
 					profile.ProfileGallery,
 					profile.ProfileContactDisplay,
+					profile.ProfileContactNameFirst,
+					profile.ProfileContactNameLast,
 					profile.ProfileDateBirth,
 					profile.ProfileDateCreated,
 					profile.ProfileLocationState,
@@ -2096,7 +2098,6 @@ class RBAgency_Profile {
 				} elseif ($rb_agency_option_profilenaming == 5) {
 					$ProfileContactDisplay = $ProfileContactNameLast;
 				}
-
 
 			/* 
 			 * initialize html
