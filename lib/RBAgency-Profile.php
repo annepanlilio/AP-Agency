@@ -13,6 +13,7 @@ class RBAgency_Profile {
 	 */
 		protected static $order_by ='';
 		protected static $castingcart = false;
+		protected static $paging = 1;
 	
 	/**
 	 * Search Form
@@ -1600,14 +1601,34 @@ class RBAgency_Profile {
 			 */
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_option_profilelist_sortby = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
+				$rb_agency_option_persearch = isset($rb_agency_options_arr["rb_agency_option_persearch"])?$rb_agency_options_arr["rb_agency_option_persearch"]:10;
 				$results = $wpdb->get_results($sql,ARRAY_A);
-				$count = count($results);
 				$profile_list = "";
 				$all_html = "";
 				$all_html.='<div id="rbfilter-sort">';
-				$all_html.='	<div class="rbtotal-results">Total Results : '.$count.' </div>';
+				$paginate = new RBAgency_Pagination;
+				$items = $wpdb->num_rows;
+				
+				$page = get_query_var("paging");
+				$offset = $page <= 1?0:($page - 1)*(int)$rb_agency_option_persearch;
+				$sql .= " LIMIT {$offset},{$rb_agency_option_persearch}";
+				
+				$results = $wpdb->get_results($sql,ARRAY_A);
+				$count = $wpdb->num_rows;
+				
+				unset($_REQUEST["search_profiles"]); //unset unwanted variable
+				$query = RBAgency_Common::http_build_query($_REQUEST);
+				$paging = get_query_var("paging");
+				$target = $query;
+				$paginate->items($items);
+				$paginate->limit($rb_agency_option_persearch);
+				$paginate->target($_SERVER["REQUEST_URI"],$target);
+				$paginate->currentPage(isset($paging)?$paging:1);
+				echo $paginate->show();
+			
+				$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
 				$all_html.='	<div class="rbsort">';
-
+				
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
@@ -1688,10 +1709,8 @@ class RBAgency_Profile {
 
 				$all_html .=  "<script type='text/javascript' src='". RBAGENCY_PLUGIN_URL ."assets/js/resize.js'></script>";
 				if ($rb_agency_option_profilelist_count) {
-					$items = $count;
-					$countList = $items;
 					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
-					$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong>". (isset($countList)?$countList:0) ."</strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
+					$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong>". (isset($count)?$count:0) ."</strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
 				}
 				$all_html .= '<div id="profile-results-info">';

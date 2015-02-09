@@ -63,19 +63,19 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 			if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles" || (isset($_GET["form_action"]) && $_GET["form_action"] == "search_profiles")) {
 
 				// Filter Post
-				foreach($_POST as $key=>$value) {
+				foreach($_REQUEST as $key=>$value) {
 					if ( is_array($value) && !empty($value) ){
-							unset( $_POST[$key] );
+							unset( $_REQUEST[$key] );
 					} else {
 						if ( !isset($value) || empty ($value) ){
-							unset( $_POST[$key] );
+							unset( $_REQUEST[$key] );
 						}
 					}
 				}
 
 				// Check something was entered in the form
-				if (count($_POST) > 2) {
-					$search_array = array_filter($_POST);
+				if (count($_REQUEST) > 1) {
+					$search_array = array_filter($_REQUEST);
 
 					// Return SQL string based on fields
 					$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);

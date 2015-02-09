@@ -42,7 +42,7 @@ if(!function_exists("rb_output_buffer")){
  * 
  */
     // Todo: Remove lines below. Causes permalink incompatibility with other plugins such as woocommerce
-	/*add_filter('init','rbflush_rules');
+/*	add_filter('init','rbflush_rules');
 	function rbflush_rules() {
 		global $wp_rewrite;
 		$wp_rewrite->flush_rules();
@@ -55,6 +55,7 @@ if(!function_exists("rb_output_buffer")){
 			$newrules['profile-search'] = 'index.php?type=search-basic'; // Cannot remove this route.
 			$newrules['search-basic'] = 'index.php?type=search-basic';
 			$newrules['search-advanced'] = 'index.php?type=search-advanced';
+			$newrules['search-results/(.*)$'] = 'index.php?type=search-result&paging=$matches[1]';
 			$newrules['search-results'] = 'index.php?type=search-result';
 			$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
 			$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
@@ -840,7 +841,7 @@ class rb_agency_image {
  * Pagination
  **************************************************************************************************/
 
-class rb_agency_pagination {
+class RBAgency_Pagination {
 
 	/*Default values*/
 	var $total_pages = -1;//items

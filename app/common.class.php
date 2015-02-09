@@ -892,6 +892,13 @@ class RBAgency_Common {
 				return $display;
 
 		}
+	/**
+	* Converts array to http uri
+	*/		
+		public static function http_build_query($query_data){
+				$query_data = http_build_query(array_filter($query_data));
+				return $query_data;
+		}
 
 }
 
