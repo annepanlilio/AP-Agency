@@ -2173,7 +2173,7 @@ class RBAgency_Profile {
 			if ($rb_agency_option_profilelist_expanddetails) {
 				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
 				if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
-					$displayHTML .= "<span class=\"divider\">, </span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
+					$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"])>0?",":" ")."</span><span class=\"details-state\">". rb_agency_getStateTitle($dataList["ProfileLocationState"],true) ."</span>";
 				}
 				$displayHTML .= "</div>\n";
 			}
