@@ -514,10 +514,10 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Privacy Settings', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_privacy]\">\n";
-		echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		//echo "       <option value=\"2\" ". selected($rb_agency_option_privacy, 2,false) ."> ". __("Must be logged to view model list and profile information", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"1\" ". selected($rb_agency_option_privacy, 1,false) ."> ". __("Model list public. Must be logged to view profile information", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"0\" ". selected($rb_agency_option_privacy, 0,false) ."> ". __("Model list and profile information public", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged in as Casting Agent to View Profiles', RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected($rb_agency_option_privacy, 3,false) ."> ". __('Must be logged in as Casting Agent to view model list, profile information, and search forms.', RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
