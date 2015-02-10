@@ -208,12 +208,16 @@ class RBAgency_Common {
 	 *
 	 * @param string $filename
 	 */
-	static function format_stripchars($filename) {
+	static function format_stripchars($filename,$tolower = true) {
 		$filename = self::format_whitespace(trim($filename));
 		$filename = str_replace(' ', '-', $filename);
 		$filename = preg_replace('/[^a-z0-9-.]/i','',$filename);
 		$filename = str_replace('--', '-', $filename);
-		return strtolower($filename);
+		if($tolower){
+			return strtolower($filename);
+		}else{
+			return $filename;
+		}
 	}
 
 

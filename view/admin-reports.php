@@ -424,7 +424,7 @@ elseif ($ConfigID == 3) {
 						  echo ("Deleted $file");
 						}
 					} elseif ($file != "." && $file != "..") {
-						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file));
+						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file,false));
 						echo "<div style=\"border-color: #E6DB55;\">";
 						echo "File: ". $file ."";
 						// no need to rename if the file exist with the new filename
