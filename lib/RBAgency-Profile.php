@@ -636,9 +636,9 @@ class RBAgency_Profile {
 					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
 
 					if ($type == 1) {
-					echo "				<a href=\"". get_bloginfo("wpurl") ."/search-basic/\">". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "</a>\n";
+					echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
 					} else {
-					echo "				<a href=\"". get_bloginfo("wpurl") ."/search-advanced/\">". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "</a>\n";
+					echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-advanced/'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
 					}
 				echo "				</div>\n";
 				global $user_ID, $wpdb;
