@@ -108,7 +108,7 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 					rb_get_profiletype();
 				}else{
 					echo "	<div class='restricted'>\n";
-					if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
+					if ( class_exists("RBAgencyCasting") ) {
 						echo "<h2>Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login or register</a>.</h2>";
 					}else{
 						echo "<h2>Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.</h2>";
@@ -116,11 +116,12 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 					echo "	</div><!-- .restricted -->\n";
 				}
 			} else {
-				include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
 				if(function_exists('rb_agency_interact_menu')){
-					include(rb_agency_interact_BASEREL . "theme/include-login.php");
+					include(RBAGENCY_interact_BASEREL . "theme/include-login.php");
+
 				} else {
 					rb_loginform(rb_current_url());
+					
 				}
 			}
 
