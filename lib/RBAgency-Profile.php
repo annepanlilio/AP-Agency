@@ -637,7 +637,7 @@ class RBAgency_Profile {
 
 					if ($type == 1) {
 					echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
-					} else {
+					} elseif($rb_agency_option_formhide_advancedsearch_button != 1) {
 					echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-advanced/'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
 					}
 				echo "				</div>\n";

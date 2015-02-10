@@ -132,7 +132,7 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 	echo "</div><!-- #primary -->\n"; // #primary
 
 
-	if($add_sidebar && !in_array(get_query_var("type"),array("search-basic","search-advanced"))){
+	if($add_sidebar && !in_array(get_query_var("type"),array("search-basic","search-advanced","search-result"))){
 	echo "<div id=\"secondary\" class=\"widget-area\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	echo RBAgency_Profile::search_form('', '', $type, 0);
