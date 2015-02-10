@@ -47,7 +47,8 @@ class RBAgency_Admin {
 
 				// Add Notification to Plugins Page
 				//add_action('after_plugin_row_rb-agency/rb-agency.php', array('RBAgency_Admin', 'plugin_row'));
-
+				// Flash rules to apply RB Agency newrules
+				rbflush_rules();
 			}
 
 		}
