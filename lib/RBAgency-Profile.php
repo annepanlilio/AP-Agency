@@ -1649,9 +1649,14 @@ class RBAgency_Profile {
 				$all_html.="	</div>";
 				$all_html.="</div>";
 				$all_html.= "<hr />";
-				
-				if(!$shortcode){ // Don't paginate in shortcode
-					$page = get_query_var("paging");
+				// RB Agency default paging variables
+				$page = get_query_var("paging");
+				$paging = get_query_var("paging");
+					
+				if($shortcode){ // Wordpress default paging variables
+					$page = get_query_var("page");
+					$paging = get_query_var("page");
+				}
 					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
 					$sql .= " LIMIT {$offset},{$rb_agency_option_persearch}";
 					
@@ -1660,14 +1665,13 @@ class RBAgency_Profile {
 					
 					unset($_REQUEST["search_profiles"]); //unset unwanted variable
 					$query = RBAgency_Common::http_build_query($_REQUEST);
-					$paging = get_query_var("paging");
 					$target = $query;
 					$paginate->items($items);
 					$paginate->limit($rb_agency_option_persearch);
 					$paginate->target($_SERVER["REQUEST_URI"],$target);
 					$paginate->currentPage(!empty($paging)?$paging:1);
 					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
-				}
+				//}
 				
 				if ($count > 0){
 
@@ -1749,13 +1753,13 @@ class RBAgency_Profile {
 			/* 
 			 * wrap profile listing
 			 */
-				if(!$shortcode){
+				//if(!$shortcode){
 					$all_html .= $paginate->show();
-				}
+				//}
 				$all_html .="<div id='profile-list'>".$profile_list."</div>";
-				if(!$shortcode){
+				//if(!$shortcode){
 					$all_html .= $paginate->show();
-				}
+				//}
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
