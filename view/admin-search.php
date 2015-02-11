@@ -77,7 +77,7 @@
 					}
 
 					// Check something was entered in the form
-					if (count($_POST) > 4) {
+					if (count($_POST) > 1) {
 						$search_array = array_filter($_POST);
 
 						// Return SQL string based on fields
