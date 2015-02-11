@@ -82,7 +82,7 @@
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
 				} elseif ($rb_agency_option_profilenaming == 3) {
-					$ProfileContactDisplay = "ID ". $ProfileID;
+					$ProfileContactDisplay = "ID-". $ProfileID;
 				} elseif ($rb_agency_option_profilenaming == 4) {
 					$ProfileContactDisplay = $ProfileContactNameFirst;
 				} elseif ($rb_agency_option_profilenaming == 5) {

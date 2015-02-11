@@ -2081,7 +2081,7 @@ class RBAgency_Profile {
 			// TODO: Check Logic
 			$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "";
 			$ProfileContactNameLast = isset($dataList["ProfileContactNameLast"]) ? $dataList["ProfileContactNameLast"]: "";
-
+			$ProfileID = $dataList["ProfileID"];
 
 				/*if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
@@ -2112,7 +2112,7 @@ class RBAgency_Profile {
 				} elseif ($rb_agency_option_profilenaming == 2) {
 					$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
 				} elseif ($rb_agency_option_profilenaming == 3) {
-					$ProfileContactDisplay = "ID ". $ProfileID;
+					$ProfileContactDisplay = "ID-". $ProfileID;
 				} elseif ($rb_agency_option_profilenaming == 4) {
 					$ProfileContactDisplay = $ProfileContactNameFirst;
 				} elseif ($rb_agency_option_profilenaming == 5) {
