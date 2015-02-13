@@ -590,16 +590,16 @@ class RBAgency_Profile {
 								$to = "";
 								@list($from,$to) = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:array("",""); // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 
-								echo "<div class=\"rbfield rbselect rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+								echo "<div class=\"rbfield rbselect rbmulti rbdate profilecustomid_". $ProfileCustomID ."\" data-id=\"". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
 									echo "<label>". $ProfileCustomTitle ."</label>\n";
 									echo "<div>\n";
 											echo "<div>\n";
 											echo "		<label for=\"ProfileCustomLabel_min\" >". __("From", RBAGENCY_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-											echo "		<input  id=\"rb_datepicker_from\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$from."\" />\n";
+											echo "		<input  id=\"rb_datepicker_from\" class=\"rb-datepicker stubby profilecustomid_". $ProfileCustomID ."_from\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$from."\" />\n";
 											echo "</div>\n";
 											echo "<div>\n";
 											echo "		<label for=\"ProfileCustomLabel_max\" >". __("to", RBAGENCY_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
-											echo "		<input  id=\"rb_datepicker_to\" class=\"rb-datepicker stubby\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$to."\" />\n";
+											echo "		<input  id=\"rb_datepicker_to\" class=\"rb-datepicker stubby profilecustomid_". $ProfileCustomID ."_to\" type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"".$to."\" />\n";
 											echo "</div>\n";
 									echo "</div>\n";
 								echo "</div>\n";

@@ -398,10 +398,34 @@ jQuery("#"+aId).parent('td').find('a').hide();
 }
 
 jQuery(function(){
-						jQuery(".rb-datepicker").each(function(){
-							jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
-						})
-						if(jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").length){
+					jQuery('.rbdate').each(function(){
+						var id = jQuery(this).data("id");
+						
+						var from = jQuery(".profilecustomid_"+id+"_from");
+						var to = jQuery(".profilecustomid_"+id+"_to");
+						
+						from.datepicker(
+							{
+								numberOfMonths: 2, 
+								dateFormat: "yy-mm-dd",
+								onSelect: function(selected){
+									 to.datepicker("option","minDate", selected);
+								} 
+							}).val(from.val());
+						to.datepicker(
+							{
+								numberOfMonths: 2, 
+								dateFormat: "yy-mm-dd",
+								onSelect: function(selected){
+									 from.datepicker("option","maxDate", selected);
+								}  
+							}).val(to.val());
+						
+					});
+						/*jQuery(".rb-datepicker").each(function(){
+							jQuery(this).datepicker({numberOfMonths: 2, dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+						})*/
+						/*if(jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").length){
 							jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
 								dateFormat: "yy-mm-dd",
 								defaultDate: "+1w",
@@ -418,5 +442,5 @@ jQuery(function(){
 
 								}
 							});
-						}
+						}*/
 });
