@@ -187,20 +187,20 @@ jQuery(document).ready(function(){
 		 
      }
 	
-		jQuery("#addmoreoption_1").live('click',function(){
+		jQuery("#addmoreoption_1").on('click',function(){
 			jQuery("#editfield_add_more_options_1").append("<li>Option:<input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
 		});
-		jQuery("#addmoreoption_2").live('click',function(){
+		jQuery("#addmoreoption_2").on('click',function(){
 			jQuery("#editfield_add_more_options_2").append("<li>Option:<input type=\"text\" name=\"option2[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
 		}); 
-		jQuery("#addmoreoption_12").live('click',function(){
+		jQuery("#addmoreoption_12").on('click',function(){
 			jQuery("#editfield_add_more_options_12").append("<li>Option:<input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
 		});
 
-		jQuery("a.del_opt").live('click',function(){
+		jQuery("a.del_opt").on('click',function(){
 			jQuery(this).parents("li").remove();
 		});	
-		jQuery("a.del_cboxopt").live('click',function(){
+		jQuery("a.del_cboxopt").on('click',function(){
 			jQuery(this).parents("li").remove();
 		});	
 	 
@@ -397,3 +397,26 @@ jQuery("#"+aId).parent('td').prepend('<input type="hidden" id="stateId" value='+
 jQuery("#"+aId).parent('td').find('a').hide();
 }
 
+jQuery(function(){
+						jQuery(".rb-datepicker").each(function(){
+							jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+						})
+						if(jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").length){
+							jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
+								dateFormat: "yy-mm-dd",
+								defaultDate: "+1w",
+								changeMonth: true,
+								numberOfMonths: 3,
+								onSelect: function( selectedDate ) {
+									if(this.id == 'input[id=rb_datepicker_from]'){
+									  var dateMin = jQuery('input[id=rb_datepicker_from]').datepicker("getDate");
+									  var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
+									  var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
+									  jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
+									  jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
+									}
+
+								}
+							});
+						}
+});
