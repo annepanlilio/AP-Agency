@@ -288,7 +288,7 @@ function populateStates(countryId,stateId){
 			type:'POST',
 			dataType : "json",
 	        data:{action:"get_state_ajax",country:jQuery("#"+countryId).val()},
-			url:ajaxurl,
+			url:rb_ajaxurl,
 			success:function(data) {		
 				jQuery("<option/>").attr("value", "").text("Select State").appendTo(jQuery("#"+stateId));	
 	                        for (var i = 0; i < data.length; i++) {
