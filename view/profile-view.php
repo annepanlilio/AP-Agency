@@ -149,10 +149,8 @@
 		$arr_under_dev = array("04","05");
 		$arr_custom_layout = array("06","07","08","09","10","11","12");
 	}else{
-		$arr_under_dev = array("04","05");
-		$arr_custom_layout = array("06","07","08","09","10","11","12");
-	
-		if(in_array($rb_agency_option_layoutprofile, $arr_under_dev) || in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
+		$arr_custom_pop_layout = array("04","05","06","07","08","09","10","11","12");
+		if(in_array($rb_agency_option_layoutprofile, $arr_custom_pop_layout)){
 			echo "<a href='#data' id='rbinline'></a>";
 			echo "<div style=\"display:none\"><div id=\"data\"><div style='padding: 130px 30px;text-align: center;font-size: 21px;'>This is a Custom Layout. Please contact RB Plugin Support for quote &amp; integration</div></div></div>";
 		}
