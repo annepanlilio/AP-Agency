@@ -72,9 +72,9 @@ $rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr[
 						}
 					}
 				}
-
+				$is_paging = get_query_var("page") ? get_query_var("page"):get_query_var("paging");
 				// Check something was entered in the form
-				if (count($_REQUEST) > 1) {
+				if (count($_REQUEST) > 1 || $is_paging) {
 					$search_array = array_filter($_REQUEST);
 
 					// Return SQL string based on fields
