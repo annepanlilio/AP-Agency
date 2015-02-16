@@ -1295,7 +1295,7 @@ class RBAgency_Profile {
 				}
 
 				self::search_generate_sqlorder($atts);
-
+				
 				return $filter;
 
 
@@ -1422,7 +1422,7 @@ class RBAgency_Profile {
 					 ";
 
 					// Check if there are any arguments
-					if (strlen($sql_where) > 28) {
+					if (strlen($sql_where) > 25) {
 					$sql .= "WHERE 
 							 EXISTS(
 								SELECT count(cmux.ProfileCustomMuxID)  FROM
@@ -1468,7 +1468,7 @@ class RBAgency_Profile {
 					profile.ProfileID = cmux.ProfileID ";
 
 					// Check if there are any arguments
-					if (strlen($sql_where) > 28) {
+					if (strlen($sql_where) > 25) {
 					$sql .= "WHERE 
 							EXISTS(
 								SELECT count(cmux.ProfileCustomMuxID)  FROM
@@ -1588,7 +1588,7 @@ class RBAgency_Profile {
 					$wpdb->show_errors();
 					$wpdb->print_error();
 				}
-
+				
 			/*
 			 * Check if search is Admin or Public
 			 */

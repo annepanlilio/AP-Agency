@@ -64,21 +64,21 @@
 			echo "<div id=\"profile-search-results\">\n";
 				//$search_array = RBAgency_Profile::search_process();
 				//$search_array["limit"] = $rb_agency_option_persearch;
-
-				if(isset($_POST)){
 					foreach($_POST as $key=>$value) {
-						if ( is_array($value) && !empty($value) ){
-								unset( $_POST[$key] );
-						} else {
-							if ( !isset($value) || empty ($value) ){
-								unset( $_POST[$key] );
+						if($key !="isactive"){
+							if ( is_array($value) && !empty($value) ){
+									unset( $_POST[$key] );
+							} else {
+								if ( !isset($value) || empty ($value) ){
+									unset( $_POST[$key] );
+								}
 							}
 						}
 					}
 
 					// Check something was entered in the form
 					if (count($_POST) > 1) {
-						$search_array = array_filter($_POST);
+						$search_array = $_POST;
 
 						// Return SQL string based on fields
 						$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
@@ -89,8 +89,7 @@
 					} else {
 						echo "<h2>Please try again</h2><strong>". __("Please enter at least one value to search.", RBAGENCY_TEXTDOMAIN) ."</strong>\n";
 					}
-				}
-
+				
 				echo "<div style=\"clear:both;\"></div>";
 			echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
