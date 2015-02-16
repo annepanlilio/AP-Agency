@@ -315,17 +315,20 @@ class profile_search_widget extends WP_Widget {
 			$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
 			$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
 
-		echo $args['before_widget'];
-		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+		if ( $rb_agency_option_privacy == 0) {
+				
+			echo $args['before_widget'];
+			if ( ! empty( $instance['title'] ) ) {
+				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+			}
+			// Show Search Form
+			if (class_exists('RBAgency_Profile')) { 
+				echo RBAgency_Profile::search_form('', '', $type, 0);
+			} else {
+				echo "Invalid Function (Profile Search)";
+			}
+			echo $args['after_widget'];
 		}
-		// Show Search Form
-		if (class_exists('RBAgency_Profile')) { 
-			echo RBAgency_Profile::search_form('', '', $type, 0);
-		} else {
-			echo "Invalid Function (Profile Search)";
-		}
-		echo $args['after_widget'];
 	}
 
 	/**
