@@ -22,7 +22,7 @@ get_currentuserinfo();
 					<h4><?php echo __("Quick Links", RBAGENCY_TEXTDOMAIN ) ?></h4>
 					<ul>
 						<?php
-						if ($user_level >= 7) {
+						if (current_user_can("manage_options") == 7) {
 							echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
 
 							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender, ARRAY_A);
@@ -68,7 +68,7 @@ get_currentuserinfo();
 					  <ul>
 					  <li style="width:100%;">
 						<?php
-						if ($user_level >= 7) {
+						if (current_user_can("manage_options") == 7) {
 
 							$form = RBAgency_Profile::search_form('', '', 0, 1);
 							echo $form;
@@ -92,7 +92,7 @@ get_currentuserinfo();
 					<div class="inside">
 						<ul>
 						<?php
-						if ($user_level >= 7) {
+						if (current_user_can("manage_options") == 7) {
 							// Recently Updated
 							$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileDateUpdated FROM ". table_agency_profile ." ORDER BY ProfileDateUpdated DESC LIMIT 0,10";
 							$results=  $wpdb->get_results($query, ARRAY_A);
@@ -121,7 +121,7 @@ get_currentuserinfo();
 					<div class="inside">
 						<ul>
 						<?php
-						if ($user_level >= 7) {
+						if (current_user_can("manage_options") == 7) {
 							// Recently Viewed
 							$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileDateViewLast, ProfileStatHits FROM ". table_agency_profile ." ORDER BY ProfileDateViewLast DESC LIMIT 0,10";
 							$results=  $wpdb->get_results($query, ARRAY_A);
