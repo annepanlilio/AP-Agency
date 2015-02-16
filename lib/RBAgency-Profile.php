@@ -1613,6 +1613,7 @@ class RBAgency_Profile {
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_option_profilelist_sortby = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
 				$rb_agency_option_persearch = isset($rb_agency_options_arr["rb_agency_option_persearch"])?$rb_agency_options_arr["rb_agency_option_persearch"]:10;
+				$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr["rb_agency_option_profilelist_perpage"])?$rb_agency_options_arr["rb_agency_option_profilelist_perpage"]:15;
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$profile_list = "";
 				$all_html = "";
@@ -1660,13 +1661,17 @@ class RBAgency_Profile {
 				// RB Agency default paging variables
 				$page = get_query_var("paging");
 				$paging = get_query_var("paging");
-					
+				$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
+				$limit = (int)$rb_agency_option_persearch;
+				
 				if($shortcode){ // Wordpress default paging variables
 					$page = get_query_var("page");
 					$paging = get_query_var("page");
+					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_profilelist_perpage;
+					$limit = (int)$rb_agency_option_profilelist_perpage;
+				
 				}
-					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
-					$sql .= " LIMIT {$offset},{$rb_agency_option_persearch}";
+					$sql .= " LIMIT {$offset},{$limit}";
 					
 					$results = $wpdb->get_results($sql,ARRAY_A);
 					$count = $wpdb->num_rows;
@@ -1675,11 +1680,10 @@ class RBAgency_Profile {
 					$query = RBAgency_Common::http_build_query($_REQUEST);
 					$target = $query;
 					$paginate->items($items);
-					$paginate->limit($rb_agency_option_persearch);
+					$paginate->limit($limit);
 					$paginate->target($_SERVER["REQUEST_URI"],$target);
 					$paginate->currentPage(!empty($paging)?$paging:1);
 					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
-				//}
 				
 				if ($count > 0){
 
