@@ -1650,7 +1650,7 @@ class RBAgency_Profile {
 				$all_html.="	</div>";
 				$type = get_query_var('type');  
 
-			if(is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1){
+			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1){
 
 				$all_html.="<div class=\"rb-cart-links\">";
 				$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> |";
