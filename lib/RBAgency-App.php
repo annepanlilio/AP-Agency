@@ -73,7 +73,7 @@ class RBAgency_App {
 			if( !is_admin() ) {
 
 				// Add Jquery script 
-				wp_enqueue_script( 'jquery-core' );
+				//wp_enqueue_script( 'jquery-core' );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'jquery-ui-datepicker' );
 
