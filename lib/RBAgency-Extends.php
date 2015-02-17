@@ -315,7 +315,7 @@ class profile_search_widget extends WP_Widget {
 			$rb_agency_option_privacy  = $rb_agency_options_arr['rb_agency_option_privacy'];
 			$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
 
-		if ( $rb_agency_option_privacy == 0) {
+		if ( $rb_agency_option_privacy == 0 || is_user_logged_in()) {
 				
 			echo $args['before_widget'];
 			if ( ! empty( $instance['title'] ) ) {
