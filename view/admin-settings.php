@@ -6,6 +6,11 @@ jQuery(document).ready(function(){
 	jQuery( "#editfield_add_more_options_2" ).sortable();
 });
 </script>
+<style type="text/css">
+	#wpfooter{
+		position: relative !important;
+	}
+</style>
 <?php
 
 global $wpdb;
@@ -284,6 +289,8 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_profilelist_sortbydate)) { $rb_agency_option_profilelist_sortbydate = 0; }
 		// Hide advanced search button
 		$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
+		
+		$rb_agency_option_inactive_profile_on_update = isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])? $rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0;
 	/*
 	 * Form
 	 */
@@ -314,6 +321,13 @@ elseif ($ConfigID == 1) {
 		echo "   <td>\n";
 		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> Remove Updates on Dashboard<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Default Profile Status', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_inactive_profile_on_update]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])?$rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0, 1,false)."/> Change the status to \"pending approval\" whenever a profile is updated<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		

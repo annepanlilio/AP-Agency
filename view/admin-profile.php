@@ -26,6 +26,9 @@ define("LabelSingular", "Profiles");
 			$rb_agency_option_useraccountcreation = isset($rb_agency_options_arr['rb_agency_option_useraccountcreation']) ?(int) $rb_agency_options_arr['rb_agency_option_useraccountcreation']:0;
 		}
 
+		$rb_agency_option_inactive_profile_on_update = isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])? $rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0;
+	
+
  
 
 // *************************************************************************************************** //
@@ -298,6 +301,9 @@ if (isset($_POST['action'])) {
 			if (!empty($ProfileContactNameFirst) && !empty($ProfileID)) {
                 
                if($have_error == false){    
+               	        if($rb_agency_option_inactive_profile_on_update == 1){
+               	        	$ProfileIsActive = 3;
+               	        }
 										// Update Record
 										$update = "UPDATE " . table_agency_profile . " SET 
 											ProfileGallery='" . esc_attr($ProfileGallery) . "',
