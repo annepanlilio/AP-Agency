@@ -2143,7 +2143,7 @@ class RBAgency_Profile {
 			$displayActions = "";  
 			$type = get_query_var('type');  
 
-			if(is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
+			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
 
 
 				$displayActions = "<div class=\"rb_profile_tool\">";
