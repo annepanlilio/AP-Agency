@@ -1683,8 +1683,9 @@ class RBAgency_Profile {
 					$paginate->limit($limit);
 					$paginate->target($_SERVER["REQUEST_URI"],$target);
 					$paginate->currentPage(!empty($paging)?$paging:1);
-					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
-				
+					if(!in_array(get_query_var("type"), array("favorite","casting"))){
+						$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
+					}
 				if ($count > 0){
 
 				$castingcart_results = array();
@@ -1741,7 +1742,7 @@ class RBAgency_Profile {
 				$all_html .=  "<script type='text/javascript' src='". RBAGENCY_PLUGIN_URL ."assets/js/resize.js'></script>";
 				if ($rb_agency_option_profilelist_count) {
 					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
-					$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong>". (isset($count)?$count:0) ."</strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." ". (isset($items)?$items:0) ." ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
+					$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong><span class='count-display'>". (isset($count)?$count:0) ."</span></strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." <span class='items-display'>". (isset($items)?$items:0) ."</span> ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
 				}
 				
@@ -2147,13 +2148,13 @@ class RBAgency_Profile {
 
 
 				$displayActions = "<div class=\"rb_profile_tool\">";
-				if($rb_agency_option_profilelist_favorite){
+				if($rb_agency_option_profilelist_favorite && $type != "casting"){
 					//  $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
 					$displayActions .= "<div id=\"profile-favorite\" class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
 				}
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 
-				if($rb_agency_option_profilelist_castingcart && !empty($p_image) ){
+				if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
 					//$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
 					$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
 				}
