@@ -890,414 +890,413 @@ class RBAgency_Profile {
 				}
 
 
-			/*
-			 * Get Search Chriteria
-			 */
-			$atts["profiletype"] = $atts["type"];
-			$atts["age_min"] = $atts["age_start"];
-			$atts["age_max"] = $atts["age_stop"];
+				/*
+				 * Get Search Chriteria
+				 */
 
-				// Exctract from Shortcode
-				extract(shortcode_atts(array(
+					// TODO: Check
+					$atts["profiletype"] = $atts["type"];
+					$atts["age_min"] = $atts["age_start"];
+					$atts["age_max"] = $atts["age_stop"];
 
-					// Specific
-					"id" => NULL,
-					"namefirst" => NULL,
-					"namelast" => NULL,
-					"displayname" => NULL,
-					// General
-					"profiletype" => NULL,
-					"gender" => NULL,
-					"datebirth_min" => NULL,
-					"datebirth_max" => NULL,
-					"age_min" => NULL,
-					"age_max" => NULL,
-					// Location
-					"city" => NULL,
-					"state" => NULL,
-					"zip" => NULL,
-					"country" => NULL,
-					// Casting Cart
-					"include" => NULL,
-					// Distinction
-					"promoted" => NULL,
-					"featured" => NULL,
-					"isactive" => NULL,
-					
-					"profilecasting" => NULL,
-					"stars" => NULL,
-					"favorite" => NULL,
-					"override_privacy" => NULL
-				), $atts));
+					// Exctract from Shortcode
+					extract(shortcode_atts(array(
 
-			/*
-			 * WHERE
-			 */
-
-				// Option to show all profiles
-				if (isset($override_privacy) && !empty($override_privacy)) {
-					// If sent link, show both hidden and visible
-					$filter = "profile.ProfileIsActive IN (1, 4)";
-				} else {
-					if ($isactive == 5) {
-						// Just ignore.  Need a value to show all
-						$filter = "profile.ProfileID > 0 ";
-					} elseif (isset($isactive) && $isactive != ''){
-						// Show the specified value
-						$filter = "profile.ProfileIsActive = " . $isactive;
-					} else {
-						// Default to active profiles
-						$filter = "profile.ProfileIsActive = 1 ";
-					}
-				}
-
-				// First Name
-				if (isset($namefirst) && !empty($namefirst)){
-					$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
-				}
-
-				
-				// Last Name
-				if (isset($namelast) && !empty($namelast)){
-					$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", '%'.str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
-				}
-
-				// Display Name
-				if (isset($displayname) && !empty($displayname)){
-					$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
-				}
-
-
-				// Type
-				if (isset($profiletype) && !empty($profiletype)){
-					$filter .= " AND FIND_IN_SET('". $profiletype ."', profile.ProfileType) ";
-				}
-
-				// Gender
-				if (isset($gender) && !empty($gender)){
-					$filter .= " AND profile.ProfileGender='".$gender."'";
-				}
-
-				// casting
-				if (isset($profilecasting) && $profilecasting){
-					self::$castingcart = true;
-				}
-
-				// Age
-				$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
-				/* 
-				$timezone_offset = -10; // Hawaii Time
-				$dateInMonth = gmdate('d', time() + $timezone_offset *60 *60);
-				$format = 'Y-m-d';
-				$date = gmdate($format, time() + $timezone_offset *60 *60);
-				*/
-				if (isset($datebirth_min) && !empty($datebirth_min)){
-					$minyear = date('Y-m-d', strtotime('-'. $datebirth_min .' year'. $date));
-					$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
-				}
-				if (isset($datebirth_max) && !empty($datebirth_max)){
-					$maxyear = date('Y-m-d', strtotime('-'. $datebirth_max - 1 .' year'. $date));
-					$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
-				}
-
-				// City
-				if (isset($city) && !empty($city)){
-					$filter .= " AND profile.ProfileLocationCity = '". ucfirst($city) ."'";
-				}
-
-				// State
-				if (isset($state) && !empty($state)){
-					$filter .= " AND profile.ProfileLocationState = '". ucfirst($state) ."'";
-				}
-
-				// Zip
-				if (isset($zip) && !empty($zip)){
-					$filter .= " AND profile.ProfileLocationZip = '". ucfirst($zip) ."'";
-				}
-
-				// Country
-				if (isset($country) && !empty($country)){
-					$filter .= " AND profile.ProfileLocationCountry = '". ucfirst($country) ."'";
-				}
-
-				if (isset($featured)){
-					$filter .= " AND profile.ProfileIsFeatured = '1' ";
-				}
-				if (isset($promoted)){
-					$filter .= " AND profile.ProfileIsPromoted = '1' ";
-				}
-
-				// Set CustomFields search
-				if(isset($atts) && !empty($atts)){
+						// Specific
+						"id" => NULL,
+						"namefirst" => NULL,
+						"namelast" => NULL,
+						"displayname" => NULL,
+						// General
+						"profiletype" => NULL,
+						"gender" => NULL,
+						"datebirth_min" => NULL,
+						"datebirth_max" => NULL,
+						"age_min" => NULL,
+						"age_max" => NULL,
+						// Location
+						"city" => NULL,
+						"state" => NULL,
+						"zip" => NULL,
+						"country" => NULL,
+						// Casting Cart
+						"include" => NULL,
+						// Distinction
+						"promoted" => NULL,
+						"featured" => NULL,
+						"isactive" => NULL,
+						
+						"profilecasting" => NULL,
+						"stars" => NULL,
+						"favorite" => NULL,
+						"override_privacy" => NULL
+					), $atts));
 
 				/*
-				 *  Custom Fields
+				 * WHERE
 				 */
-					$filterDropdown = array();
-					$filter2 = "";
 
-
-					// Loop through all attributes looking for custom
-					foreach ((!empty($_POST)?$_POST:$_GET) as $key => $val) {
-						if (substr(strtolower($key),0,15) == "profilecustomid") {
-
-						/*
-						 *  Check if this is array or not because sometimes $val is an array so
-						 *  array_filter is not applicable
-						 */
-							if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
-
-								/*
-								 * Id like to chop this one out and extract
-								 * the array values from here and make it a string with "," or
-								 * pass the rbsingle value back $val
-								 */
-								if(is_array($val)){
-									if(count(array_filter($val)) > 1) {
-										$ct =1;
-										foreach($val as $v){
-											if($ct == 1){
-												$val = $v;
-												$ct++;
-											} else {
-												$val = $val .",".$v;
-											}
-										}
-									} else {
-										$val = array_values($val);
-										$val = array_shift($val);
-									} 
-								}
-								global $wpdb;
-								$q = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '%d' ",substr($key,15)),ARRAY_A);
-								$ProfileCustomType = current($q);
-
-								/*
-								 * Have created a holder $filter2 and
-								 * create its own filter here and change
-								 * AND should be OR
-								 */
-
-								/******************
-								  1 - Text
-								  2 - Min-Max > Removed
-								  3 - Dropdown
-								  4 - Textbox
-								  5 - Checkbox
-								  6 - Radiobutton
-								  7 - Metrics/Imperials
-								 *********************/
-
-								$open_st = ' AND EXISTS(SELECT * FROM '. table_agency_customfield_mux . '  WHERE ' ;
-								$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID)  ';
-
-								if ($ProfileCustomType["ProfileCustomType"] == 1) {
-									// Text
-									$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
-									$_SESSION[$key] = $val;
-
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 3 || $ProfileCustomType["ProfileCustomType"] == 9) {
-									// Dropdown
-									if($ProfileCustomType["ProfileCustomType"] == 3 ){
-
-										$filter2 .="$open_st ProfileCustomValue = '".addslashes($val)."' $close_st";
-									// Dropdown Multi-Select	
-									}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
-
-											$val = stripslashes($val);
-											if(!empty($val)){
-
-												if(strpos($val,",") === false){
-													$filter2 .= $open_st;
-													$val2 = $val;
-													$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s",$val2,"%".$val2."%");
-													/*$val2 = addslashes(addslashes($val2));
-													$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
-													*/
-													$filter2 .= $close_st;
-
-												} else {
-
-													$likequery = array_filter(explode(",", $val));
-													$likecounter = count($likequery);
-													$i=1; 
-
-													foreach($likequery as $like){
-														$i++;
-
-														if($like!="") {
-															$val2 = addslashes(addslashes($like));
-															$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0)".(($i <= $likecounter)?" AND ":""),$like);
-															//$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
-														}
-														//Commented to fix checkbox issue
-													}
-
-													$filter2 .= "$open_st  ".$sr_data."  $close_st";
-
-												}
-
-												$_SESSION[$key] = $val;
-											} else {
-												$_SESSION[$key] = "";
-											}
-									}
-
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
-									// Textarea
-									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
-									$_SESSION[$key] = $val;
-
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
-									//Checkbox
-
-										$val = stripslashes($val);
-									if(!empty($val)){
-
-										if(strpos($val,",") === false){
-											$filter2 .= $open_st;
-											$val2 = $val;
-											$filter2 .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ",$val2);
-											$val2 = addslashes(addslashes($val2));
-											$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
-											$filter2 .= $close_st;
-
-										} else {
-
-											$likequery = array_filter(explode(",", $val));
-											$likecounter = count($likequery);
-											$i=1; 
-
-											foreach($likequery as $like){
-												$i++;
-
-												if($like!="") {
-													$val2 = addslashes(addslashes($like));
-													$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
-												}
-
-											}
-											//Commented to fix checkbox issue
-											$filter2 .= "$open_st (".$sr_data.") $close_st";
-
-										}
-
-										$_SESSION[$key] = $val;
-									} else {
-										$_SESSION[$key] = "";
-									}
-									/*$val = stripslashes($val);
-									if(!empty($val)){
-									
-										if(strpos($val,",") === false){
-											$filter2 .= $open_st;
-											$val2 = $val;
-											$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 OR",$val2);
-											$val2 = addslashes(addslashes($val2));
-											$filter2 .= $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val2."%");
-											$filter2 .= $close_st;
-										} else {
-
-											$likequery = array_filter(explode(",", $val));
-											$likecounter = count($likequery);
-											$i=1; 
-
-											foreach($likequery as $like){
-												$i++;
-
-												if($like!="") {
-													$val2 = addslashes(addslashes($like));
-													$sr_data .= $wpdb->prepare(" ProfileCustomValue LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),"%".$val2."%",$like);
-												}
-
-											}
-											//Commented to fix checkbox issue
-											$filter2 .= "$open_st (".$sr_data.") $close_st";
-
-											
-											
-										}
-
-										$_SESSION[$key] = $val;
-									} else {
-										$_SESSION[$key] = "";
-									}*/
-
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
-									//Radiobutton 
-									$val = implode("','",explode(",",$val));
-									$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%')  $close_st";
-									$_SESSION[$key] = $val;
-
-								} elseif ($ProfileCustomType["ProfileCustomType"] == 7) {
-									//Measurements 
-									list($Min_val,$Max_val) = explode(",",$val);
-									if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
-										if(!is_numeric($Min_val)){
-											$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
-										} else {
-											$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
-										}
-
-										if(!is_numeric($Max_val)){
-											$filter2 .= "  ProfileCustomValue <= '".$Max_val."' $close_st";
-										} else {
-											$filter2 .= "  ProfileCustomValue <= ".$Max_val." $close_st";
-										}
-
-										$_SESSION[$key] = $val;
-									}
-								}elseif ($ProfileCustomType["ProfileCustomType"] == 10) {
-									// Date
-									list($from, $to) = explode(",", $val);
-
-									$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
-									$_SESSION[$key] = $val;
-
-								} 
-
-							} // if not empty
-						} // end if
-					} // end for each
-
-					if(count($filterDropdown) > 0){
-						$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
+					// Option to show all profiles
+					if (isset($override_privacy) && !empty($override_privacy)) {
+						// If sent link, show both hidden and visible
+						$filter = "profile.ProfileIsActive IN (1, 4)";
+					} else {
+						if ($isactive == 5) {
+							// Just ignore.  Need a value to show all
+							$filter = "profile.ProfileID > 0 ";
+						} elseif (isset($isactive) && $isactive != ''){
+							// Show the specified value
+							$filter = "profile.ProfileIsActive = " . $isactive;
+						} else {
+							// Default to active profiles
+							$filter = "profile.ProfileIsActive = 1 ";
+						}
 					}
 
-					$filter .= $filter2;
-					$filter = str_replace(array("\n","\t","\r")," ", $filter);
-					$filter = str_replace(")(", ") OR (", $filter);
+					// First Name
+					if (isset($namefirst) && !empty($namefirst)){
+						$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
+					}
 
-				}
+					// Last Name
+					if (isset($namelast) && !empty($namelast)){
+						$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", '%'.str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
+					}
 
-			/**
-			 * Only Show from Casting Cart
-			 * Profile Search Saved 
-			 */
-				if(isset($include) && !empty($include)){
-					$filter .= " AND profile.ProfileID IN (".$include.") ";
-				}
+					// Display Name
+					if (isset($displayname) && !empty($displayname)){
+						$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
+					}
 
-			/**
-			 * Filter Models Already in Cart
-			 */
+					// Type
+					if (isset($profiletype) && !empty($profiletype)){
+						$filter .= " AND FIND_IN_SET('". $profiletype ."', profile.ProfileType) ";
+					}
 
-				// Pull Profiles in Cart
-				if (isset($exclude) && !empty($exclude)) {
-					//$cartString = implode(",", $exclude);
-					$filter .= " AND profile.ProfileID NOT IN (". $exclude .")";
-				}
+					// Gender
+					if (isset($gender) && !empty($gender)){
+						$filter .= " AND profile.ProfileGender='".$gender."'";
+					}
 
-				// Debug
-				if(self::$error_debug){
-					self::$error_checking[] = array('search_generate_sqlwhere',$filter);
-					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
-				}
+					// casting
+					if (isset($profilecasting) && $profilecasting){
+						self::$castingcart = true;
+					}
 
-				self::search_generate_sqlorder($atts);
-				
-				return $filter;
+					// Age
+					$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
+					/* 
+					$timezone_offset = -10; // Hawaii Time
+					$dateInMonth = gmdate('d', time() + $timezone_offset *60 *60);
+					$format = 'Y-m-d';
+					$date = gmdate($format, time() + $timezone_offset *60 *60);
+					*/
+					if (isset($datebirth_min) && !empty($datebirth_min)){
+						$minyear = date('Y-m-d', strtotime('-'. $datebirth_min .' year'. $date));
+						$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
+					}
+					if (isset($datebirth_max) && !empty($datebirth_max)){
+						$maxyear = date('Y-m-d', strtotime('-'. $datebirth_max - 1 .' year'. $date));
+						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
+					}
 
+					// City
+					if (isset($city) && !empty($city)){
+						$filter .= " AND profile.ProfileLocationCity = '". ucfirst($city) ."'";
+					}
+
+					// State
+					if (isset($state) && !empty($state)){
+						$filter .= " AND profile.ProfileLocationState = '". ucfirst($state) ."'";
+					}
+
+					// Zip
+					if (isset($zip) && !empty($zip)){
+						$filter .= " AND profile.ProfileLocationZip = '". ucfirst($zip) ."'";
+					}
+
+					// Country
+					if (isset($country) && !empty($country)){
+						$filter .= " AND profile.ProfileLocationCountry = '". ucfirst($country) ."'";
+					}
+
+					if (isset($featured)){
+						$filter .= " AND profile.ProfileIsFeatured = '1' ";
+					}
+					if (isset($promoted)){
+						$filter .= " AND profile.ProfileIsPromoted = '1' ";
+					}
+
+					// Set CustomFields search
+					if(isset($atts) && !empty($atts)){
+
+					/*
+					 *  Custom Fields
+					 */
+						$filterDropdown = array();
+						$filter2 = "";
+
+
+						// Loop through all attributes looking for custom
+						foreach ((!empty($_POST)?$_POST:$_GET) as $key => $val) {
+							if (substr(strtolower($key),0,15) == "profilecustomid") {
+
+							/*
+							 *  Check if this is array or not because sometimes $val is an array so
+							 *  array_filter is not applicable
+							 */
+								if ((!empty($val) AND !is_array($val)) OR (is_array($val) AND count(array_filter($val)) > 0)) {
+
+									/*
+									 * Id like to chop this one out and extract
+									 * the array values from here and make it a string with "," or
+									 * pass the rbsingle value back $val
+									 */
+									if(is_array($val)){
+										if(count(array_filter($val)) > 1) {
+											$ct =1;
+											foreach($val as $v){
+												if($ct == 1){
+													$val = $v;
+													$ct++;
+												} else {
+													$val = $val .",".$v;
+												}
+											}
+										} else {
+											$val = array_values($val);
+											$val = array_shift($val);
+										} 
+									}
+									global $wpdb;
+									$q = $wpdb->get_results($wpdb->prepare("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '%d' ",substr($key,15)),ARRAY_A);
+									$ProfileCustomType = current($q);
+
+									/*
+									 * Have created a holder $filter2 and
+									 * create its own filter here and change
+									 * AND should be OR
+									 */
+
+									/******************
+									  1 - Text
+									  2 - Min-Max > Removed
+									  3 - Dropdown
+									  4 - Textbox
+									  5 - Checkbox
+									  6 - Radiobutton
+									  7 - Metrics/Imperials
+									 *********************/
+
+									$open_st = ' AND EXISTS(SELECT * FROM '. table_agency_customfield_mux . '  WHERE ' ;
+									$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID)  ';
+
+									if ($ProfileCustomType["ProfileCustomType"] == 1) {
+										// Text
+										$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
+										$_SESSION[$key] = $val;
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 3 || $ProfileCustomType["ProfileCustomType"] == 9) {
+										// Dropdown
+										if($ProfileCustomType["ProfileCustomType"] == 3 ){
+
+											$filter2 .="$open_st ProfileCustomValue = '".addslashes($val)."' $close_st";
+										// Dropdown Multi-Select	
+										}elseif($ProfileCustomType["ProfileCustomType"] == 9 ){
+
+												$val = stripslashes($val);
+												if(!empty($val)){
+
+													if(strpos($val,",") === false){
+														$filter2 .= $open_st;
+														$val2 = $val;
+														$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s",$val2,"%".$val2."%");
+														/*$val2 = addslashes(addslashes($val2));
+														$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
+														*/
+														$filter2 .= $close_st;
+
+													} else {
+
+														$likequery = array_filter(explode(",", $val));
+														$likecounter = count($likequery);
+														$i=1; 
+
+														foreach($likequery as $like){
+															$i++;
+
+															if($like!="") {
+																$val2 = addslashes(addslashes($like));
+																$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0)".(($i <= $likecounter)?" AND ":""),$like);
+																//$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+															}
+															//Commented to fix checkbox issue
+														}
+
+														$filter2 .= "$open_st  ".$sr_data."  $close_st";
+
+													}
+
+													$_SESSION[$key] = $val;
+												} else {
+													$_SESSION[$key] = "";
+												}
+										}
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
+										// Textarea
+										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+										$_SESSION[$key] = $val;
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
+										//Checkbox
+
+											$val = stripslashes($val);
+										if(!empty($val)){
+
+											if(strpos($val,",") === false){
+												$filter2 .= $open_st;
+												$val2 = $val;
+												$filter2 .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ",$val2);
+												$val2 = addslashes(addslashes($val2));
+												$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
+												$filter2 .= $close_st;
+
+											} else {
+
+												$likequery = array_filter(explode(",", $val));
+												$likecounter = count($likequery);
+												$i=1; 
+
+												foreach($likequery as $like){
+													$i++;
+
+													if($like!="") {
+														$val2 = addslashes(addslashes($like));
+														$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
+													}
+
+												}
+												//Commented to fix checkbox issue
+												$filter2 .= "$open_st (".$sr_data.") $close_st";
+
+											}
+
+											$_SESSION[$key] = $val;
+										} else {
+											$_SESSION[$key] = "";
+										}
+										/*$val = stripslashes($val);
+										if(!empty($val)){
+										
+											if(strpos($val,",") === false){
+												$filter2 .= $open_st;
+												$val2 = $val;
+												$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 OR",$val2);
+												$val2 = addslashes(addslashes($val2));
+												$filter2 .= $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val2."%");
+												$filter2 .= $close_st;
+											} else {
+
+												$likequery = array_filter(explode(",", $val));
+												$likecounter = count($likequery);
+												$i=1; 
+
+												foreach($likequery as $like){
+													$i++;
+
+													if($like!="") {
+														$val2 = addslashes(addslashes($like));
+														$sr_data .= $wpdb->prepare(" ProfileCustomValue LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),"%".$val2."%",$like);
+													}
+
+												}
+												//Commented to fix checkbox issue
+												$filter2 .= "$open_st (".$sr_data.") $close_st";
+
+												
+												
+											}
+
+											$_SESSION[$key] = $val;
+										} else {
+											$_SESSION[$key] = "";
+										}*/
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
+										//Radiobutton 
+										$val = implode("','",explode(",",$val));
+										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%')  $close_st";
+										$_SESSION[$key] = $val;
+
+									} elseif ($ProfileCustomType["ProfileCustomType"] == 7) {
+										//Measurements 
+										list($Min_val,$Max_val) = explode(",",$val);
+										if( (isset($Min_val) && !empty($Min_val)) && (isset($Max_val) && !empty($Max_val)) ) {
+											if(!is_numeric($Min_val)){
+												$filter2 .= "$open_st ProfileCustomValue >= '".$Min_val."' AND";
+											} else {
+												$filter2 .= "$open_st ProfileCustomValue >= ".$Min_val." AND";
+											}
+
+											if(!is_numeric($Max_val)){
+												$filter2 .= "  ProfileCustomValue <= '".$Max_val."' $close_st";
+											} else {
+												$filter2 .= "  ProfileCustomValue <= ".$Max_val." $close_st";
+											}
+
+											$_SESSION[$key] = $val;
+										}
+									}elseif ($ProfileCustomType["ProfileCustomType"] == 10) {
+										// Date
+										list($from, $to) = explode(",", $val);
+
+										$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
+										$_SESSION[$key] = $val;
+
+									} 
+
+								} // if not empty
+							} // end if
+						} // end for each
+
+						if(count($filterDropdown) > 0){
+							$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
+						}
+
+						$filter .= $filter2;
+						$filter = str_replace(array("\n","\t","\r")," ", $filter);
+						$filter = str_replace(")(", ") OR (", $filter);
+
+					}
+
+				/**
+				 * Only Show from Casting Cart
+				 * Profile Search Saved 
+				 */
+					if(isset($include) && !empty($include)){
+						$filter .= " AND profile.ProfileID IN (".$include.") ";
+					}
+
+				/**
+				 * Filter Models Already in Cart
+				 */
+
+					// Pull Profiles in Cart
+					if (isset($exclude) && !empty($exclude)) {
+						//$cartString = implode(",", $exclude);
+						$filter .= " AND profile.ProfileID NOT IN (". $exclude .")";
+					}
+
+					// Debug
+					if(self::$error_debug){
+						self::$error_checking[] = array('search_generate_sqlwhere',$filter);
+						echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
+					}
+
+					self::search_generate_sqlorder($atts);
+
+					return $filter;
 
 			} else {
 				// Empty Search
