@@ -116,46 +116,37 @@
 			global $ProfileID;
 			return $ProfileID;
 		}
-	/*
-	 * Customize Page Title
-	 */
 
-		// Change Title
-		if(!function_exists("rb_agency_override_title")){
-			add_filter('wp_title', 'rb_agency_override_title', 10, 2);
-				function rb_agency_override_title(){
-					global $ProfileContactDisplay;
-					return bloginfo('name') ." > ". $ProfileContactDisplay ."";
-				}
-		}
-	
+
+
 
 	/*
-	 * TODO: WHT IS THIS?
+	 * TODO: WHAT IS THIS?
 	 */
 		// GET HEADER  
 		if(isset($_POST['print_all_images']) && $_POST['print_all_images']!=""){
 			include(RBAGENCY_PLUGIN_DIR . 'theme/printable-profile.php');
 			exit;
 		}
+
 	/*
 	 * Notify for under development layouts
-	 */	
-	$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com');
-	$arr_under_dev = array();
-	$arr_custom_layout = array();
+	 */
+		$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com');
+		$arr_under_dev = array();
+		$arr_custom_layout = array();
 
-	if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
-		$arr_under_dev = array("04","05");
-		$arr_custom_layout = array("06","07","08","09","10","11","12");
-	}else{
-		$arr_custom_pop_layout = array("04","05","06","07","08","09","10","11","12");
-		if(in_array($rb_agency_option_layoutprofile, $arr_custom_pop_layout)){
-			echo "<a href='#data' id='rbinline'></a>";
-			echo "<div style=\"display:none\"><div id=\"data\"><div style='padding: 130px 30px;text-align: center;font-size: 21px;'>This is a Custom Layout. Please contact RB Plugin Support for quote &amp; integration</div></div></div>";
+		if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
+			$arr_under_dev = array("04","05");
+			$arr_custom_layout = array("06","07","08","09","10","11","12");
+		}else{
+			$arr_custom_pop_layout = array("04","05","06","07","08","09","10","11","12");
+			if(in_array($rb_agency_option_layoutprofile, $arr_custom_pop_layout)){
+				echo "<a href='#data' id='rbinline'></a>";
+				echo "<div style=\"display:none\"><div id=\"data\"><div style='padding: 130px 30px;text-align: center;font-size: 21px;'>This is a Custom Layout. Please contact RB Plugin Support for quote &amp; integration</div></div></div>";
+			}
 		}
-	}		
-		
+
 
 	/*
 	 * Create View
