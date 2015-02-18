@@ -1298,7 +1298,7 @@ class RBAgency_Profile {
 						echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 					}
 
-					self::search_generate_sqlorder($atts);
+					self::search_generate_sqlorder($atts,$filter2);
 
 					// Store SQL and Custom Fields SQL 
 					$filter_array = array(
@@ -1321,7 +1321,7 @@ class RBAgency_Profile {
 	 * Process values into SQL string holding ORDER clause
 	 */
 
-		public static function search_generate_sqlorder($atts){
+		public static function search_generate_sqlorder($atts, $filter2 = ""){
 
 			$filter = "";
 
@@ -1330,7 +1330,7 @@ class RBAgency_Profile {
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
 			$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
 			
-			if($rb_agency_option_profilelist_sortbydate){
+			if($rb_agency_option_profilelist_sortbydate && !empty($filter2)){
 				$atts["sort"] = "cmux.ProfileCustomDateValue";
 			} elseif(!isset($atts["sort"])){
 				$atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
