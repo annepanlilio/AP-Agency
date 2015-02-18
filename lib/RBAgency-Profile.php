@@ -1035,9 +1035,8 @@ class RBAgency_Profile {
 						$filterDropdown = array();
 						$filter2 = "";
 
-
 						// Loop through all attributes looking for custom
-						foreach ((!empty($_POST)?$_POST:$_GET) as $key => $val) {
+						foreach ($_REQUEST as $key => $val) { //!empty($_POST)?$_POST:$_GET)
 							if (substr(strtolower($key),0,15) == "profilecustomid") {
 
 							/*
@@ -1087,7 +1086,7 @@ class RBAgency_Profile {
 									  7 - Metrics/Imperials
 									 *********************/
 
-									$open_st = ' AND EXISTS(SELECT * FROM '. table_agency_customfield_mux . '  WHERE ' ;
+									$open_st = ' AND EXISTS (SELECT DISTINCT(ProfileCustomMuxID) FROM '. table_agency_customfield_mux . ' WHERE ' ;
 									$close_st = ' AND ProfileCustomID = '.substr($key,15).' AND ProfileID = profile.ProfileID)  ';
 
 									if ($ProfileCustomType["ProfileCustomType"] == 1) {
@@ -1149,8 +1148,9 @@ class RBAgency_Profile {
 
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
 										//Checkbox
-
-											$val = stripslashes($val);
+										/*
+										TODO:??? WTH?
+										$val = stripslashes($val);
 										if(!empty($val)){
 
 											if(strpos($val,",") === false){
@@ -1184,17 +1184,22 @@ class RBAgency_Profile {
 											$_SESSION[$key] = $val;
 										} else {
 											$_SESSION[$key] = "";
-										}
-										/*$val = stripslashes($val);
+										}*/
+
+
+										$val = stripslashes($val);
 										if(!empty($val)){
-										
+
+											// Is there a single value?
 											if(strpos($val,",") === false){
 												$filter2 .= $open_st;
 												$val2 = $val;
-												$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 OR",$val2);
-												$val2 = addslashes(addslashes($val2));
+												//$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 OR",$val2);
+												//$val2 = addslashes(addslashes($val2));
 												$filter2 .= $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val2."%");
 												$filter2 .= $close_st;
+
+											// Are there multiple values?
 											} else {
 
 												$likequery = array_filter(explode(",", $val));
@@ -1220,7 +1225,7 @@ class RBAgency_Profile {
 											$_SESSION[$key] = $val;
 										} else {
 											$_SESSION[$key] = "";
-										}*/
+										}
 
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
 										//Radiobutton 
@@ -1262,6 +1267,7 @@ class RBAgency_Profile {
 						if(count($filterDropdown) > 0){
 							$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 						}
+
 
 						// Clean
 						$filter2 = str_replace(array("\n","\t","\r")," ", $filter2);
@@ -1476,6 +1482,12 @@ class RBAgency_Profile {
 
 					// Do we need the custom fields table?
 					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
+						$sql .= " FROM ". table_agency_profile ." profile 
+							WHERE ". $sql_where_array['standard'] ."
+								". $sql_where_array['custom'] ."
+							";
+
+						/*  TODO: ProfileCustomDateValue  <-- do we need this?
 						$sql .= ", cmux.ProfileCustomDateValue 
 							FROM ". table_agency_profile ." profile 
 							LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
@@ -1487,7 +1499,11 @@ class RBAgency_Profile {
 								". $sql_where_array['custom'] ."
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1)
-							";
+							"; */
+
+
+
+
 					} else {
 						$sql .= "FROM ". table_agency_profile ." profile 
 							WHERE ". $sql_where_array['standard'] ." ";
