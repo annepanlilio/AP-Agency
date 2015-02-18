@@ -1185,19 +1185,14 @@ class RBAgency_Profile {
 										} else {
 											$_SESSION[$key] = "";
 										}*/
-
+										$open_st = "AND profile.ProfileID IN (SELECT DISTINCT(ProfileID) FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = ".substr($key,15)." AND ";
+										$close_st = ")";
 
 										$val = stripslashes($val);
 										if(!empty($val)){
-
 											// Is there a single value?
 											if(strpos($val,",") === false){
-												$filter2 .= $open_st;
-												$val2 = $val;
-												//$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 OR",$val2);
-												//$val2 = addslashes(addslashes($val2));
-												$filter2 .= $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val2."%");
-												$filter2 .= $close_st;
+												$filter2 .= $open_st . $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val."%") . $close_st;
 
 											// Are there multiple values?
 											} else {
