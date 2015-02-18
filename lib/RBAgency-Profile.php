@@ -1264,7 +1264,11 @@ class RBAgency_Profile {
 							$filter2 .="$open_st ProfileCustomValue IN ('".implode("','",$filterDropdown)."') $close_st";
 						}
 
-						$filter .= $filter2;
+						// Clean
+						$filter2 = str_replace(array("\n","\t","\r")," ", $filter2);
+						$filter2 = str_replace(")(", ") OR (", $filter2);
+
+						// Clean
 						$filter = str_replace(array("\n","\t","\r")," ", $filter);
 						$filter = str_replace(")(", ") OR (", $filter);
 
@@ -1296,7 +1300,13 @@ class RBAgency_Profile {
 
 					self::search_generate_sqlorder($atts);
 
-					return $filter;
+					// Store SQL and Custom Fields SQL 
+					$filter_array = array(
+						"standard" => $filter,
+						"custom" => $filter2,
+					);
+
+					return $filter_array;
 
 			} else {
 				// Empty Search
@@ -1387,14 +1397,23 @@ class RBAgency_Profile {
 	 * Process Search and return Profile IDs
 	 */
 
-		public static function search_results($sql_where, $query_type = 0, $castingcart = false, $arr_query = array(),$shortcode = false){
+		public static function search_results($sql_where_array, $query_type = 0, $castingcart = false, $arr_query = array(),$shortcode = false){
 
 			global $wpdb;
+
+			if (self::$error_debug_query){
+				echo $sql_where_array['standard'];
+				echo "<hr />";
+				echo $sql_where_array['custom'];
+				echo "<hr />";
+			}
+
+			// Merge them
+			$sql_where = $sql_where_array['standard'] ." ". $sql_where_array['custom'];
 
 			$sqlCasting_userID = "";
 
 			switch ($query_type) {
-
 			/* 
 			 * Standard Query (Public Front-End)
 			 */
@@ -1410,28 +1429,25 @@ class RBAgency_Profile {
 					profile.ProfileLocationState,
 					profile.ProfileLocationCountry,
 					profile.ProfileIsActive,
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL,
-					cmux.ProfileCustomDateValue
-					FROM 
-					". table_agency_profile ." profile 
-					INNER JOIN 
-					". table_agency_customfield_mux." cmux
-					ON 
-					profile.ProfileID = cmux.ProfileID
-					 ";
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
+
+					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
+					$sql .= ", cmux.ProfileCustomDateValue ";
+					}
+
+					$sql .= "FROM ". table_agency_profile ." profile 
+					LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
+					WHERE ". $sql_where_array['standard'] ." ";
 
 					// Check if there are any arguments
-					if (strlen($sql_where) > 25) {
-					$sql .= "WHERE 
-							 EXISTS(
+					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
+					$sql .= "AND EXISTS (
 								SELECT count(cmux.ProfileCustomMuxID)  FROM
 								".table_agency_customfield_mux." cmux
 								WHERE profile.ProfileID = cmux.ProfileID
-								AND ". $sql_where ."
+								". $sql_where_array['custom'] ."
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1)
-							AND 
-							profile.ProfileIsActive = 1
 							";
 					}
 					$sql .= self::$order_by;
@@ -1457,23 +1473,25 @@ class RBAgency_Profile {
 					profile.ProfileLocationCountry,
 					profile.ProfileGender,
 					profile.ProfileIsActive,
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL,
-					cmux.ProfileCustomDateValue
-					FROM 
-					". table_agency_profile ." profile 
-					INNER JOIN 
-					". table_agency_customfield_mux." cmux
-					ON 
-					profile.ProfileID = cmux.ProfileID ";
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
+
+					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
+					$sql .= ", cmux.ProfileCustomDateValue ";
+					}
+
+					$sql .= "FROM ". table_agency_profile ." profile 
+					LEFT JOIN ". table_agency_customfield_mux." cmux
+						ON profile.ProfileID = cmux.ProfileID
+					WHERE ". $sql_where_array['standard'] ." ";
 
 					// Check if there are any arguments
-					if (strlen($sql_where) > 25) {
+					if ( isset($sql_where_array['custom']) ) {
 					$sql .= "WHERE 
 							EXISTS(
 								SELECT count(cmux.ProfileCustomMuxID)  FROM
 								".table_agency_customfield_mux." cmux
 								WHERE profile.ProfileID = cmux.ProfileID
-								AND ". $sql_where ."
+								AND ". $sql_where_array['custom'] ."
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1
 							)";
@@ -1553,7 +1571,6 @@ class RBAgency_Profile {
 								FROM ". table_agency_profile ." profile
 								INNER JOIN  ".table_agency_castingcart." cart
 								WHERE $sqlCasting_userID
-								AND ProfileIsActive = 1
 								GROUP BY profile.ProfileID";
 
 					break;
@@ -1563,7 +1580,7 @@ class RBAgency_Profile {
 			 */
 				case 3:
 					$sql = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
-							. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND ".$sql_where."  GROUP BY(profile.ProfileID) ";
+							. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND ".$sql_where_array['standard']."  GROUP BY(profile.ProfileID) ";
 					break;
 
 			/* 
@@ -1571,14 +1588,14 @@ class RBAgency_Profile {
 			 */
 				case 4:
 					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where_array['standard'] . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 					break;
 			}
 
 			/*
 			 * Execute Query
 			 */
-				
+
 				// Show Errors?
 				if(self::$error_debug || self::$error_debug_query){
 					self::$error_checking[] = array('-MAIN_QUERY-',$sql);
@@ -1586,12 +1603,13 @@ class RBAgency_Profile {
 
 					$wpdb->show_errors();
 					$wpdb->print_error();
+
+					echo "<hr><div style='color: red;'>". $sql ."</div>";
 				}
-				
+
 			/*
 			 * Check if search is Admin or Public
 			 */
-
 				if(is_admin()){
 					return self::search_result_admin($sql,$arr_query );
 				} else {
