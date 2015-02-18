@@ -894,7 +894,7 @@ class RBAgency_Profile {
 				 */
 
 					// TODO: Check
-					$atts["profiletype"] = $atts["profiletype"];
+					$atts["profiletype"] = isset($atts["profiletype"])?$atts["profiletype"]:""; // Why? - Champ
 					$atts["age_min"] = $atts["age_start"];
 					$atts["age_max"] = $atts["age_stop"];
 
