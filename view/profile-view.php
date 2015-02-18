@@ -117,6 +117,40 @@
 			return $ProfileID;
 		}
 
+	/*
+	 * Customize Page Title
+	 */
+		// Override Title?
+		if ( ! function_exists('rb_agency_override_title') ) {
+
+			// title tag implementation with backward compatibility
+			if ( ! function_exists( '_wp_render_title_tag' ) ) {
+
+				add_filter('wp_title', 'rb_agency_override_title', 10, 2);
+					function rb_agency_override_title(){
+						global $ProfileContactDisplay;
+						return bloginfo('name') ." : ". $ProfileContactDisplay;
+					}
+
+			} else { // WordPress 4.1 or greater
+
+				// enabling theme support for title tag
+				add_action( 'after_setup_theme', 'theme_slug_setup' );
+					function theme_slug_setup() {
+						add_theme_support( 'title-tag' );
+					}
+
+				add_filter( 'wp_title', 'custom_titles', 10, 2 );
+					function custom_titles( $title, $sep ) {
+						global $ProfileContactDisplay;
+
+							$title = $title ." $sep ". $ProfileContactDisplay;
+
+						return $title;
+					}
+			}
+
+		}
 
 
 
