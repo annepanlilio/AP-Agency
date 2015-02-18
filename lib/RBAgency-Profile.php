@@ -932,6 +932,7 @@ class RBAgency_Profile {
 						"override_privacy" => NULL
 					), $atts));
 
+
 				/*
 				 * WHERE
 				 */
@@ -1431,17 +1432,13 @@ class RBAgency_Profile {
 					profile.ProfileIsActive,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
 
+					// Do we need the custom fields table?
 					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
-					$sql .= ", cmux.ProfileCustomDateValue ";
-					}
-
-					$sql .= "FROM ". table_agency_profile ." profile 
-					LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
-					WHERE ". $sql_where_array['standard'] ." ";
-
-					// Check if there are any arguments
-					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
-					$sql .= "AND EXISTS (
+						$sql .= ", cmux.ProfileCustomDateValue 
+							FROM ". table_agency_profile ." profile 
+							LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
+							WHERE ". $sql_where_array['standard'] ."
+								AND EXISTS (
 								SELECT count(cmux.ProfileCustomMuxID)  FROM
 								".table_agency_customfield_mux." cmux
 								WHERE profile.ProfileID = cmux.ProfileID
@@ -1449,8 +1446,11 @@ class RBAgency_Profile {
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1)
 							";
+					} else {
+						$sql .= "FROM ". table_agency_profile ." profile 
+							WHERE ". $sql_where_array['standard'] ." ";
 					}
-					$sql .= self::$order_by;
+					$sql .= self::$order_by ."";
 
 					break;
 
@@ -1475,27 +1475,25 @@ class RBAgency_Profile {
 					profile.ProfileIsActive,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
 
+					// Do we need the custom fields table?
 					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
-					$sql .= ", cmux.ProfileCustomDateValue ";
-					}
-
-					$sql .= "FROM ". table_agency_profile ." profile 
-					LEFT JOIN ". table_agency_customfield_mux." cmux
-						ON profile.ProfileID = cmux.ProfileID
-					WHERE ". $sql_where_array['standard'] ." ";
-
-					// Check if there are any arguments
-					if ( isset($sql_where_array['custom']) ) {
-					$sql .= "WHERE 
-							EXISTS(
+						$sql .= ", cmux.ProfileCustomDateValue 
+							FROM ". table_agency_profile ." profile 
+							LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
+							WHERE ". $sql_where_array['standard'] ."
+								AND EXISTS (
 								SELECT count(cmux.ProfileCustomMuxID)  FROM
 								".table_agency_customfield_mux." cmux
 								WHERE profile.ProfileID = cmux.ProfileID
-								AND ". $sql_where_array['custom'] ."
+								". $sql_where_array['custom'] ."
 								GROUP BY cmux.ProfileCustomMuxID
-								LIMIT 1
-							)";
+								LIMIT 1)
+							";
+					} else {
+						$sql .= "FROM ". table_agency_profile ." profile 
+							WHERE ". $sql_where_array['standard'] ." ";
 					}
+
 					$sql .= self::$order_by;
 
 					break;
@@ -1615,6 +1613,9 @@ class RBAgency_Profile {
 				} else {
 					return self::search_result_public($sql, $castingcart,$shortcode);
 				}
+
+
+
 
 		}
 

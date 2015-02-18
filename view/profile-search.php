@@ -72,8 +72,12 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 						}
 					}
 				}
+				unset( $_REQUEST['search_profiles'] );
+				//unset( $_REQUEST['form_action'] );
+
 				$is_paging = get_query_var("page") ? get_query_var("page"):get_query_var("paging");
 				// Check something was entered in the form
+
 				if (count($_REQUEST) > 1 || $is_paging) {
 					$search_array = array_filter($_REQUEST);
 
