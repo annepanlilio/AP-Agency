@@ -714,7 +714,6 @@ class RBAgency_Profile {
 
 				}
 
-
 			/*
 			 * Create Array
 			 */
@@ -895,7 +894,7 @@ class RBAgency_Profile {
 				 */
 
 					// TODO: Check
-					$atts["profiletype"] = $atts["type"];
+					$atts["profiletype"] = $atts["profiletype"];
 					$atts["age_min"] = $atts["age_start"];
 					$atts["age_max"] = $atts["age_stop"];
 
@@ -931,7 +930,6 @@ class RBAgency_Profile {
 						"favorite" => NULL,
 						"override_privacy" => NULL
 					), $atts));
-
 
 				/*
 				 * WHERE
@@ -1373,8 +1371,8 @@ class RBAgency_Profile {
 			 * LIMIT
 			 */
 
-				if (isset($limit) && !empty($limit)){
-					$filter .= " LIMIT 0, $limit ";
+				if ( (isset($limit) && !empty($limit)) && strpos($filter, 'LIMIT') == 0  ){
+					//$filter .= " LIMIT 0, $limit ";
 				}
 
 				// Debug
@@ -1382,6 +1380,7 @@ class RBAgency_Profile {
 					self::$error_checking[] = array('search_generate_sqlorder',$filter);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 				}
+
 				self::$order_by = $filter;
 
 			} else {
@@ -1450,7 +1449,7 @@ class RBAgency_Profile {
 						$sql .= "FROM ". table_agency_profile ." profile 
 							WHERE ". $sql_where_array['standard'] ." ";
 					}
-					$sql .= self::$order_by ."";
+					$sql .= self::$order_by;
 
 					break;
 
@@ -1689,8 +1688,9 @@ class RBAgency_Profile {
 					$limit = (int)$rb_agency_option_profilelist_perpage;
 				
 				}
+					// Avoid double limits
 					$sql .= " LIMIT {$offset},{$limit}";
-					
+
 					$results = $wpdb->get_results($sql,ARRAY_A);
 					$count = $wpdb->num_rows;
 					
