@@ -397,10 +397,10 @@ class RBAgency_Profile {
 											echo "<textarea name=\"ProfileCustomID". $ProfileCustomID ."\">". $_REQUEST["ProfileCustomID". $ProfileCustomID] ."</textarea>\n";
 											echo "</div>\n";
 							*/
-											echo "<div class=\"rbfield rbsingle\">\n";
-											echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>\n";
-											echo "<input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"". $_REQUEST["ProfileCustomID". $ProfileCustomID] ."\"/>\n";
-											echo "</div>\n";
+								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>\n";
+								echo "<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".(isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:"")."\" /></div>";
+								echo "</div>\n";
 
 						/*
 						 * Checkbox
