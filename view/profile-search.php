@@ -19,10 +19,10 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		$type = 0;
 	}
 
-
-	echo "<div id=\"primary\" class=\"".(!$add_sidebar?"site-content":primary_class())."\">\n";
+	//".(!$add_sidebar?"site-content":primary_class())."
+	echo "<div id=\"primary\" class=\"".primary_class()."\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
-	echo "		<div id=\"profile-search\">\n";
+	echo "		<div id=\"profile-search\"  "; echo post_class(); echo ">\n";
 
 	// P R I V A C Y FILTER ====================================================
 	if ( //Must be logged to view model list and profile information
