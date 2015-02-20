@@ -44,11 +44,15 @@ class RBAgency_Extends {
 
 			ob_start();
 
+
 			// Get Shortcode Attributes
 			extract(shortcode_atts(array(
 					"mode" => null
 				), $atts));
 
+			if(empty($atts)){
+				$atts[1] = 1;
+			}
 			// Get Options
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
@@ -65,7 +69,6 @@ class RBAgency_Extends {
 			{
 				// Return SQL string based on fields
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($atts);
-
 				// Conduct Search
 				$shortcode = true;
 				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $atts,$shortcode);
