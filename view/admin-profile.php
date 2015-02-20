@@ -45,7 +45,7 @@ if (isset($_POST['action'])) {
 	$ProfileContactNameFirst = isset($_POST['ProfileContactNameFirst']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameFirst'])):"";
 	$ProfileContactNameLast = isset($_POST['ProfileContactNameLast']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameLast'])):"";
 	$ProfileContactDisplay = isset($_POST['ProfileContactDisplay']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactDisplay'])):"";
-	if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+//	if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 		if ($rb_agency_option_profilenaming == 0) {
 			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
 		} elseif ($rb_agency_option_profilenaming == 1) {
@@ -68,7 +68,7 @@ if (isset($_POST['action'])) {
 		} elseif ($rb_agency_option_profilenaming == 5) {
 			$ProfileContactDisplay = $ProfileContactNameLast;
 		}
-	}
+	//}
 
 	$ProfileGallery = isset($_POST['ProfileGallery']) ? $_POST['ProfileGallery']:"";
 
@@ -2198,9 +2198,12 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	$queryData1 = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . " ORDER BY $sort $dir $limit";
 	$resultsData1 = $wpdb->get_results($queryData1,ARRAY_A);
 	$count = $wpdb->num_rows;
+	$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
+		
 	foreach ($resultsData1 as $data) {
 		$ProfileID = $data['ProfileID'];
 		$ProfileContactDisplay = $data['ProfileContactDisplay'];
+
 		$ProfileGallery = stripslashes($data['ProfileGallery']);
 		$ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 		$ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
@@ -2210,6 +2213,30 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
 		$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 		$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
+
+		if ($rb_agency_option_profilenaming == 0) {
+			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
+		} elseif ($rb_agency_option_profilenaming == 1) {
+			// If John-D already exists, make John-D-1
+			for ($i = 'a', $j = 1; $j <= 26; $i++, $j++) {
+				if (isset($ar) && in_array($i, $ar)){
+					$ProfileContactDisplay = $ProfileContactNameFirst . " " . $i .'-'. $j;
+				} else {
+					$ProfileContactDisplay = $ProfileContactNameFirst . " " . substr($ProfileContactNameLast, 0, 1);
+				}
+			}
+
+		} elseif ($rb_agency_option_profilenaming == 2) {
+			$errorValidation['rb_agency_option_profilenaming'] = "<b><i>" . __(LabelSingular . " must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
+			$have_error = true;
+		} elseif ($rb_agency_option_profilenaming == 3) {
+			$ProfileContactDisplay = "ID-" . $ProfileID;
+		} elseif ($rb_agency_option_profilenaming == 4) {
+			$ProfileContactDisplay = $ProfileContactNameFirst;
+		} elseif ($rb_agency_option_profilenaming == 5) {
+			$ProfileContactDisplay = $ProfileContactNameLast;
+		}
+
 		if ($data['ProfileIsActive'] == 0) {
 			// Inactive
 			$rowColor = " style=\"background: #FFEBE8\"";
@@ -2266,7 +2293,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		echo "        </td>\n";
 		echo "        <td class=\"ProfileID column-ProfileID\">" . $ProfileID . "</td>\n";
 		if($rb_agency_option_formshow_displayname == 1){
-			echo "        <td class=\"ProfileID column-ProfileContactDisplay\">" . $ProfileContactDisplay;
+			echo "        <td class=\"ProfileID column-ProfileContactDisplay data-profile-name-type='".$rb_agency_option_profilenaming."'\">" . $ProfileContactDisplay;
 			echo "          <div class=\"row-actions\">\n";
 			echo "            <span class=\"edit\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&amp;action=editRecord&amp;ProfileID=" . $ProfileID . "\" title=\"" . __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">" . __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
 			echo "            <span class=\"edit\"><a href=\"" . RBAGENCY_PROFILEDIR .  $ProfileGallery . "/\" title=\"" . __("View", RBAGENCY_TEXTDOMAIN) . "\" target=\"_blank\">" . __("View", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
