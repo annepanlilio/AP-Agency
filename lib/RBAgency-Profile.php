@@ -640,7 +640,9 @@ class RBAgency_Profile {
 					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
 
 					if ($type == 1) {
-					echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
+						 if(!is_admin()){
+							echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
+						}
 					} elseif($rb_agency_option_formhide_advancedsearch_button != 1) {
 						 if(is_admin()){
 						 	echo "				<input type=\"button\" onclick=\"window.location.href='".admin_url("admin.php?page=rb_agency_search")."'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
