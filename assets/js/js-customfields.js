@@ -280,6 +280,7 @@ function remove_more_option_field(objNum){
 //Populate state options for selected  country
 function populateStates(countryId,stateId){
 	var url=jQuery("#url").val();
+	var ajax_url = (typeof(rb_ajaxurl)!=="undefined")? rb_ajaxurl: ajaxurl;
 	if(jQuery("#"+countryId).val()!=""){
 			jQuery("#"+stateId).show();
 			jQuery("#"+stateId).find("option:gt(0)").remove();
@@ -288,7 +289,7 @@ function populateStates(countryId,stateId){
 			type:'POST',
 			dataType : "json",
 	        data:{action:"get_state_ajax",country:jQuery("#"+countryId).val()},
-			url:rb_ajaxurl,
+			url: ajax_url,
 			success:function(data) {		
 				jQuery("<option/>").attr("value", "").text("Select State").appendTo(jQuery("#"+stateId));	
 	                        for (var i = 0; i < data.length; i++) {
