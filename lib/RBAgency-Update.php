@@ -1,7 +1,7 @@
 <?php
 
 /*
- * RBPlugin_Update Class
+ * RBAgency_Update Class
  *
  * These are functions needed to remotely update the WordPress plugin 
  */
