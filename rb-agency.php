@@ -100,7 +100,7 @@ See license.txt for full details.
 	if(!defined( 'RBAGENCY_SLUG'))
 	define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
 	
-	// Define Remote server
+	// Define Remote server paths
 	if(!defined( 'RBAGENCY_LICENSE_PATH'))
 	define( 'RBAGENCY_LICENSE_PATH', 'http://rbplugin.com/license/' );
 	
