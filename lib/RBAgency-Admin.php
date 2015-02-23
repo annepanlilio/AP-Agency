@@ -81,6 +81,8 @@ class RBAgency_Admin {
 
 			// RB Agency Casting
 			if(function_exists('rb_agency_casting_menu')){
+				// Manage casting profiles
+				add_submenu_page("rb_agency_menu", __("Manage Clients", RBAGENCY_TEXTDOMAIN), __("Manage Clients", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_manage", array('RBAgency_Admin', 'menu_casting_manageagents'));
 				// saved search for casting
 				add_submenu_page("rb_agency_menu", __("Approve Pending Clients", RBAGENCY_TEXTDOMAIN), __("Approve Clients", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_approveclients", array('RBAgency_Admin', 'menu_casting_approveclients'));
 
@@ -124,6 +126,9 @@ class RBAgency_Admin {
 		}
 		public static function menu_castingjob(){
 			rb_agency_casting_jobs();
+		}
+		public static function menu_casting_manageagents(){
+				include_once(RBAGENCY_casting_PLUGIN_DIR .'view/admin-casting-agent.php');
 		}
 
 		// Interact
