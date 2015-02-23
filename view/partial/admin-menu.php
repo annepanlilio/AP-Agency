@@ -9,6 +9,17 @@
 		<a href="http://rbplugin.com" class="add-new-h2">Casting Cart Version <?php echo get_option('RBAGENCY_casting_VERSION'); ?></a>
 		<?php } ?>
 	</h2>
+	<?php // TODO: Display new version available ?>
+	<?php $rb_remote_version = rb_get_remote_version();?>
+	<?php if($rb_remote_version <> get_option('rb_agency_version') && $rb_remote_version > get_option('rb_agency_version')):?>
+	<div class="update-message">
+	There is a new version of RB Agency available. 
+	<a href="<?php echo admin_url("plugin-install.php?tab=plugin-information&amp;plugin=rb-agency&amp;section=changelog&amp;TB_iframe=true&amp;width=772&amp;height=317"); ?>" class="thickbox" title="RB Agency">
+	View version <?php echo $rb_remote_version;?> details
+	</a> or 
+	<a href="<?php echo admin_url("update.php?action=upgrade-plugin&amp;plugin=rb-agency/rb-agency.php&amp;_wpnonce=b7f6e11f4a");?>">update now</a>.
+	</div>
+	<?php endif; ?>
 	<?php 
 		// Just a backup check if version numbers are off
 		if(get_option('rb_agency_version') <> RBAGENCY_VERSION) {
