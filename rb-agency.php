@@ -97,6 +97,16 @@ See license.txt for full details.
 	if (!defined('RBAGENCY_TEXTDOMAIN')) // rb-agency
 		define('RBAGENCY_TEXTDOMAIN', RBAGENCY_PLUGIN_NAME ); // 
 
+	if(!defined( 'RBAGENCY_SLUG'))
+	define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
+	
+	// Define Remote server
+	if(!defined( 'RBAGENCY_LICENSE_PATH'))
+	define( 'RBAGENCY_LICENSE_PATH', 'http://rbplugin.com/license/' );
+	
+	if(!defined( 'RBAGENCY_UPDATE_PATH'))
+	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/' );
+
 
 
 // *************************************************************************************************** //
@@ -148,6 +158,12 @@ See license.txt for full details.
 
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Init.php');
 		add_action( 'init', array('RBAgency_Init', 'init'), 0, 1 );
+
+	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Update.php'); // Update Specific
+		add_action( 'init', 'update_check' );
+			function update_check() {
+			 new RBAgency_Update (RBAGENCY_VERSION, RBAGENCY_UPDATE_PATH, RBAGENCY_SLUG);
+			}
 
 	// Profile Class
 	include_once(RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Profile.php');
