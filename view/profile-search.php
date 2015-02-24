@@ -119,7 +119,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 					if ( class_exists("RBAgencyCasting") ) {
 						echo "<h2>Page restricted. Only Admin & Casting Agents can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.</h2>";
 					}else{
-						echo "<h2>Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.</h2>";
+						echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
 					}
 					echo "	</div><!-- .restricted -->\n";
 				}
