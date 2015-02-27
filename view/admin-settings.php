@@ -734,6 +734,14 @@ elseif ($ConfigID == 11) {
 		echo "	   <input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url']:"")."\"/>	";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Redirect users after login(excluding new users)', RBAGENCY_interact_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin']:"", 1,false)."/> ". __("Redirect to /profile-member/account/(default)", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin']:"", 0,false)."/> ". __("Redirect to custom( e.g. /welcome/ ):", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
+		echo "	   <input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_url']:"")."\"/>	";
+		echo "   </td>\n";
+		echo " </tr>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Switch Sidebar', RBAGENCY_interact_TEXTDOMAIN) ."</th>\n";
@@ -789,7 +797,7 @@ elseif ($ConfigID == 11) {
 		echo "   <th scope=\"row\">". __('Delete Options', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 1,false)."/> ". __("No", RBAGENCY_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"2\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 2,false)."/> ". __("Yes (Allow users to perminently delete their profile)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"2\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 2,false)."/> ". __("Yes (Allow users to permanently delete their profile)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_profiledeletion]\" value=\"3\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_profiledeletion']:0, 3,false)."/> ". __("Archive Only (Allow users to hide their profile)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
