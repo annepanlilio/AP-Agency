@@ -2,7 +2,7 @@
 	/** 
 	*Debug Mode - $RB_DEBUG_MODE = true;
 	*/
-	if($RB_DEBUG_MODE){
+	if(isset($RB_DEBUG_MODE)){
 	 	 error_reporting(0);
 	     ini_set('display_errors', 'On');
 	}
