@@ -1,7 +1,7 @@
 # RB Agency
 Model and Talent Agency CRM management and scheduling tool.
 
-### Current Version 2.1
+### Current Version 2.4
 
 ## Installation
 
@@ -10,12 +10,31 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 ## Change Log
 
+### 2.4
+* Easy updating!  No more need to download from GitHub, once upgraded to 2.4 you can upgrade from WordPress easily.
+* Bug Fixes
+
+### 2.3
+* Optimized SQL queries to increase site speed!
+* Updated Profile Layout types
+* Large refactor to plugin structure
+* Added Registration shortcode (Interact)
+* Resolved WooCommerce conflict
+
+### 2.2
+* Added Multi-Select Dropdown as new custom field type
+* Upgraded to support WordPress 4.0 changes
+* Restored Featured Profile widget
+* Bug fixes
+
+
 ### 2.1
 * New custom field "Date".  Ability to search & sort by Date
 * User settings enhancement
 * Search optimization & enhancement
 * PDF download bugfixes
 * Bulk password generator enhancement
+* Added "SoundCloud" as media option
 * Change image shown in casting cart (other than default)
 
 

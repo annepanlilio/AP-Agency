@@ -653,22 +653,18 @@ global $wpdb;
 	}
 
 	if (get_option('rb_agency_version') == "2.0.5") {
-		// Updating version number!
 		update_option('rb_agency_version', "2.0.6");
 	}
 
 	if (get_option('rb_agency_version') == "2.0.6") {
 		// Add Column to media file for holding video type media
 		rb_agency_addColumn( table_agency_profile_media,"ProfileVideoType","VARCHAR(255) NOT NULL DEFAULT 'youtube'");
-		// Updating version number!
 		update_option('rb_agency_version', "2.0.7");
 	}
 
 	if (substr(get_option('rb_agency_version'), 0, 5) == "2.0.7") {
 		// Add Column
 		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowSearchSimple","INT(10) NOT NULL DEFAULT '0'");
-
-		// Updating version number!
 		update_option('rb_agency_version', "2.0.8");
 	}
 
@@ -676,8 +672,6 @@ global $wpdb;
 		// Add Column
 		rb_agency_addColumn( table_agency_data_media,"MediaCategoryFileType","VARCHAR(50)");
 		rb_agency_addColumn( table_agency_data_media,"MediaCategoryLinkType","VARCHAR(50)");
-
-		// Updating version number!
 		update_option('rb_agency_version', "2.0.9.3");
 	}
 
@@ -685,8 +679,6 @@ global $wpdb;
 		// Add Column
 		rb_agency_addColumn( table_agency_data_media,"MediaCategoryFileType","VARCHAR(50)");
 		rb_agency_addColumn( table_agency_data_media,"MediaCategoryLinkType","VARCHAR(50)");
-
-		// Updating version number!
 		update_option('rb_agency_version', "2.0.9.4");
 	}
 
@@ -697,16 +689,12 @@ global $wpdb;
 	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.5") {
 		// Add Column
 		rb_agency_addColumn( table_agency_customfield_mux,"ProfileCustomDateValue","DATE DEFAULT NULL");
-		
-		// Updating version number!
 		update_option('rb_agency_version', "2.0.9.6");
 	}
 
 	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.6") {
 		// Add Column
 		rb_agency_addColumn( table_agency_searchsaved_mux,"SearchMuxCustomThumbnail","VARCHAR(5000)");
-		
-		// Updating version number!
 		update_option('rb_agency_version', "2.0.9.7");
 	}
 
@@ -716,10 +704,13 @@ global $wpdb;
 
 	if (get_option('rb_agency_version') == "2.1" || get_option('rb_agency_version') == "2.2") {
 		$results = $wpdb->query("ALTER TABLE  ". table_agency_customfield_mux ." ADD INDEX (`ProfileID`)");
-
-		// Updating version number!
 		update_option('rb_agency_version', "2.3");
 	}
 
+	if (get_option('rb_agency_version') == "2.3") {
+
+		// Updating version number!
+		update_option('rb_agency_version', "2.4");
+	}
 
 ?>
