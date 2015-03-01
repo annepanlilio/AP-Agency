@@ -1,176 +1,190 @@
 <?php
-	/** 
-	*Debug Mode - $RB_DEBUG_MODE = true;
-	*/
-	if(isset($RB_DEBUG_MODE)){
-	 	 error_reporting(0);
-	     ini_set('display_errors', 'On');
-	}
+	/* 
+	 * Debug Mode - $RB_DEBUG_MODE = true;
+	 */
 
-	/**
+		if(isset($RB_DEBUG_MODE)){
+			error_reporting(0);
+			ini_set('display_errors', 'On');
+		}
+
+
+	/*
 	 * Set Sessions
 	 */
 
-	if(!function_exists("rb_agency_init_sessions")){
-		add_action('init', 'rb_agency_init_sessions');
-			function rb_agency_init_sessions() {
-				if (!session_id()) {
-					session_start();
+		if(!function_exists("rb_agency_init_sessions")){
+			add_action('init', 'rb_agency_init_sessions');
+				function rb_agency_init_sessions() {
+					if (!session_id()) {
+						session_start();
+					}
 				}
-			}
-	}
+		}
 
-	/**
-	* Set Mail
-	*/
-	//add_filter('wp_mail_content_type','rb_agency_set_content_type');
-	function rb_agency_set_content_type($content_type){
-					return 'text/html';
-	}
 
-	/**
-	 *Remove header already sent
+	/*
+	 * Set Mail
 	 */
-	if(!function_exists("rb_output_buffer")){
 
-		function rb_output_buffer() {
-			ob_start();
-		} // soi_output_buffer
-		add_action('init', 'rb_output_buffer');
-	}
+		//add_filter('wp_mail_content_type','rb_agency_set_content_type');
+		function rb_agency_set_content_type($content_type){
+			return 'text/html';
+		}
 
-	/**
+
+	/*
+	 * Remove header already sent
+	 */
+
+		if(!function_exists("rb_output_buffer")){
+
+			function rb_output_buffer() {
+				ob_start();
+			} // soi_output_buffer
+			add_action('init', 'rb_output_buffer');
+		}
+
+
+	/*
 	 * Add Rewrite Rules based on Path
-	*/
-    // Todo: Remove lines below. Causes permalink incompatibility with other plugins such as woocommerce
-	// Triggers on plugin activation
-	function rbflush_rules() {
-		global $wp_rewrite;
-		$wp_rewrite->flush_rules();
-	}
-	
-	/**
-	* Adding a new rule
-	*/		
-	add_filter('rewrite_rules_array','rb_agency_rewriteRules');
-		function rb_agency_rewriteRules($rules) {
-			$newrules = array();
-			$newrules['profile-search'] = 'index.php?type=search-basic'; // Cannot remove this route.
-			$newrules['search-basic'] = 'index.php?type=search-basic';
-			$newrules['search-advanced'] = 'index.php?type=search-advanced';
-			$newrules['search-results/(.*)$'] = 'index.php?type=search-result&paging=$matches[1]';
-			$newrules['search-results'] = 'index.php?type=search-result';
-			$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
-			$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
-			$newrules['profile-category/(.*)'] = 'index.php?type=category&target=$matches[1]';
-			$newrules['profile-category'] = 'index.php?type=category&target=all';
-			$newrules['profile-casting/jobs/(.*)/(.*)$'] = 'index.php?type=castingjobs&target=$matches[1]&value=$matches[2]';
-			$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
-			$newrules['profile-print'] = 'index.php?type=print';
-			$newrules['profile-email'] = 'index.php?type=email';
-			$newrules['client-view/(.*)$'] = 'index.php?type=profilecastingcart&target=$matches[1]';
-			$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
-			$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
-			$newrules['get-state/(.*)$'] = 'index.php?type=getstate&country=$matches[1]';
-			
-			$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
+	 */
 
-			$newrules['profile-favorite'] = 'index.php?type=favorite';
-			$newrules['logout'] = 'index.php?type=rblogout';
-
-			return $newrules + $rules;
+		// Todo: Remove lines below. Causes permalink incompatibility with other plugins such as woocommerce
+		// Triggers on plugin activation
+		function rbflush_rules() {
+			global $wp_rewrite;
+			$wp_rewrite->flush_rules();
 		}
 
-	/**
-	* Get Variables & Identify View Type
-	*/
-	add_action( 'query_vars', 'rb_agency_query_vars' );
-		function rb_agency_query_vars( $query_vars ) {
-			$query_vars[] = 'type';
-			$query_vars[] = 'target';
-			$query_vars[] = 'value';
-			$query_vars[] = 'country';
-			// pagination
-			$query_vars[] = 'paging';
-		
-			return $query_vars;
-		}
 
-	/**
-	* Get Veriables through filter
-	*/
-	add_filter( 'query_vars', 'rb_agency_filter_query_vars', 10, 1  );
-		function rb_agency_filter_query_vars( $query_vars ) {
-			$query_vars[] = 'paging';
-			$query_vars[] = 'gender';
-			$query_vars[] = 'age_start';
-			$query_vars[] = 'age_stop';
-			
-			
-			return $query_vars;
-		}
+	/*
+	 * Adding a new rule
+	 */
 
-	/**
-	* Set Custom Template
-	*/
-	add_filter('template_include', 'rb_agency_template_include', 1, 1);
-		function rb_agency_template_include( $template ) {
-			if ( get_query_var( 'type' ) ) {
-				//echo get_query_var( 'type' );
+		add_filter('rewrite_rules_array','rb_agency_rewriteRules');
+			function rb_agency_rewriteRules($rules) {
+				$newrules = array();
+				$newrules['profile-search'] = 'index.php?type=search-basic'; // Cannot remove this route.
+				$newrules['search-basic'] = 'index.php?type=search-basic';
+				$newrules['search-advanced'] = 'index.php?type=search-advanced';
+				$newrules['search-results/(.*)$'] = 'index.php?type=search-result&paging=$matches[1]';
+				$newrules['search-results'] = 'index.php?type=search-result';
+				$newrules['profile-category/(.*)/([0-9])$'] = 'index.php?type=category&target=$matches[1]&paging=$matches[2]';
+				$newrules['profile-category/([0-9])$'] = 'index.php?type=category&paging=$matches[1]';
+				$newrules['profile-category/(.*)'] = 'index.php?type=category&target=$matches[1]';
+				$newrules['profile-category'] = 'index.php?type=category&target=all';
+				$newrules['profile-casting/jobs/(.*)/(.*)$'] = 'index.php?type=castingjobs&target=$matches[1]&value=$matches[2]';
+				$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
+				$newrules['profile-print'] = 'index.php?type=print';
+				$newrules['profile-email'] = 'index.php?type=email';
+				$newrules['client-view/(.*)$'] = 'index.php?type=profilecastingcart&target=$matches[1]';
+				$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
+				$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
+				$newrules['get-state/(.*)$'] = 'index.php?type=getstate&country=$matches[1]';
+				
+				$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
 
-				if (get_query_var( 'type' ) == "search-basic" || 
-					get_query_var( 'type' ) == "search-result" || 
-					get_query_var( 'type' ) == "search-advanced" ) {
+				$newrules['profile-favorite'] = 'index.php?type=favorite';
+				$newrules['logout'] = 'index.php?type=rblogout';
 
-					// Public Profile Search
-					return RBAGENCY_PLUGIN_DIR . 'view/profile-search.php';
-
-				} elseif (get_query_var( 'type' ) == "profilecastingcart") {
-				// Casting cart
-					return RBAGENCY_PLUGIN_DIR . 'view/profile-admincart.php';
-
-				} elseif (get_query_var( 'type' ) == "castingjobs") {
-				// Casting cart
-					return RBAGENCY_PLUGIN_DIR . 'view/profile-castingjobs.php';
-
-				} elseif (get_query_var( 'type' ) == "category") {
-				// Category View
-					return dirname(__FILE__) . '/view/profile-category.php';
-
-				} elseif (get_query_var( 'type' ) == "profile") {
-				// Profile View
-					return RBAGENCY_PLUGIN_DIR . 'view/profile-view.php';
-
-				} elseif (get_query_var( 'type' ) == "profilecontact") {
-				// Profile Contact Form
-					return dirname(__FILE__) . '/view/profile-contact.php';
-
-				} elseif (get_query_var( 'type' ) == "print") {
-				// Print Mode: TODO REFACTOR
-					return dirname(__FILE__) . '/view/profile-print.php';
-
-				} elseif (get_query_var( 'type' ) == "version") {
-				// Have a dedicated route to ping latest version
-					return dirname(__FILE__) . '/version.php'; 
-
-				} elseif (get_query_var( 'type' ) == "getstate") {
-				// TODO: What is this????
-					return RBAGENCY_PLUGIN_DIR . '/view/partial/get-state.php'; 
-
-				} elseif (get_query_var( 'type' ) == "rblogout") {
-				// TODO: What is this????
-					rb_logout_user();
-
-
-				}
+				return $newrules + $rules;
 			}
-			return $template;
-		}
+
+
+	/*
+	 * Get Variables & Identify View Type
+	 */
+
+		add_action( 'query_vars', 'rb_agency_query_vars' );
+			function rb_agency_query_vars( $query_vars ) {
+				$query_vars[] = 'type';
+				$query_vars[] = 'target';
+				$query_vars[] = 'value';
+				$query_vars[] = 'country';
+				// pagination
+				$query_vars[] = 'paging';
+
+				return $query_vars;
+			}
+
+
+	/*
+	 * Get Veriables through filter
+	 */
+
+		add_filter( 'query_vars', 'rb_agency_filter_query_vars', 10, 1  );
+			function rb_agency_filter_query_vars( $query_vars ) {
+				$query_vars[] = 'paging';
+				$query_vars[] = 'gender';
+				$query_vars[] = 'age_start';
+				$query_vars[] = 'age_stop';
+
+				return $query_vars;
+			}
+
+	/*
+	 * Set Custom Template
+	 */
+
+		add_filter('template_include', 'rb_agency_template_include', 1, 1);
+			function rb_agency_template_include( $template ) {
+				if ( get_query_var( 'type' ) ) {
+					//echo get_query_var( 'type' );
+
+					if (get_query_var( 'type' ) == "search-basic" || 
+						get_query_var( 'type' ) == "search-result" || 
+						get_query_var( 'type' ) == "search-advanced" ) {
+
+						// Public Profile Search
+						return RBAGENCY_PLUGIN_DIR . 'view/profile-search.php';
+
+					} elseif (get_query_var( 'type' ) == "profilecastingcart") {
+					// Casting cart
+						return RBAGENCY_PLUGIN_DIR . 'view/profile-admincart.php';
+
+					} elseif (get_query_var( 'type' ) == "castingjobs") {
+					// Casting cart
+						return RBAGENCY_PLUGIN_DIR . 'view/profile-castingjobs.php';
+
+					} elseif (get_query_var( 'type' ) == "category") {
+					// Category View
+						return dirname(__FILE__) . '/view/profile-category.php';
+
+					} elseif (get_query_var( 'type' ) == "profile") {
+					// Profile View
+						return RBAGENCY_PLUGIN_DIR . 'view/profile-view.php';
+
+					} elseif (get_query_var( 'type' ) == "profilecontact") {
+					// Profile Contact Form
+						return dirname(__FILE__) . '/view/profile-contact.php';
+
+					} elseif (get_query_var( 'type' ) == "print") {
+					// Print Mode: TODO REFACTOR
+						return dirname(__FILE__) . '/view/profile-print.php';
+
+					} elseif (get_query_var( 'type' ) == "version") {
+					// Have a dedicated route to ping latest version
+						return dirname(__FILE__) . '/version.php'; 
+
+					} elseif (get_query_var( 'type' ) == "getstate") {
+					// TODO: What is this????
+						return RBAGENCY_PLUGIN_DIR . '/view/partial/get-state.php'; 
+
+					} elseif (get_query_var( 'type' ) == "rblogout") {
+					// TODO: What is this????
+						rb_logout_user();
+
+
+					}
+				}
+				return $template;
+			}
 
 
 	/*************************************************************************************************** //
-	 *Errors & Alerts
-	*/
+	 * Errors & Alerts
+	 */
 
 	// Create Message Wrapper
 	function rb_agency_adminmessage_former($message, $errormsg = false) {
@@ -198,8 +212,7 @@
 		}
 
 
-	// *************************************************************************************************** //
-	/**
+	/*************************************************************************************************** //
 	 *  General Functions
 	 */
 
@@ -250,48 +263,49 @@
 	}
 
 
-
 	/**
 	 * Get Profile Name
 	 *
 	 * @param id $ProfileID
 	 */
-	function rb_agency_getprofilename($ProfileID) {
-		global $rb_agency_option_profilenaming;
 
-		if ($rb_agency_option_profilenaming == 0) {
-			$ProfileContactDisplay = $ProfileContactNameFirst . "". $ProfileContactNameLast;
-		} elseif ($rb_agency_option_profilenaming == 1) {
-			$ProfileContactDisplay = $ProfileContactNameFirst . "". substr($ProfileContactNameLast, 0, 1);
-		} elseif ($rb_agency_option_profilenaming == 2) {
-			// It already is :)
+		function rb_agency_getprofilename($ProfileID) {
+			global $rb_agency_option_profilenaming;
+
+			if ($rb_agency_option_profilenaming == 0) {
+				$ProfileContactDisplay = $ProfileContactNameFirst . "". $ProfileContactNameLast;
+			} elseif ($rb_agency_option_profilenaming == 1) {
+				$ProfileContactDisplay = $ProfileContactNameFirst . "". substr($ProfileContactNameLast, 0, 1);
+			} elseif ($rb_agency_option_profilenaming == 2) {
+				// It already is :)
+			}
 		}
-	}
 
 
 	/**
 	 * Identify Current Langauge
 	 *
 	 */
-	function rb_agency_getActiveLanguage() {
-		if (function_exists('icl_get_languages')) {
-			// fetches the list of languages
-			$languages = icl_get_languages('skip_missing=N&orderby=KEY&order=DIR');
-			$activeLanguage = 'en';
 
-			// runs through the languages of the system, finding the active language
-			foreach($languages as $language) {
+		function rb_agency_getActiveLanguage() {
+			if (function_exists('icl_get_languages')) {
+				// fetches the list of languages
+				$languages = icl_get_languages('skip_missing=N&orderby=KEY&order=DIR');
+				$activeLanguage = 'en';
 
-				// tests if the language is the active one
-				if($language['active'] == 1) {
-					$activeLanguage = $language['language_code'];
+				// runs through the languages of the system, finding the active language
+				foreach($languages as $language) {
+
+					// tests if the language is the active one
+					if($language['active'] == 1) {
+						$activeLanguage = $language['language_code'];
+					}
+					return "/". $activeLanguage;
 				}
-				return "/". $activeLanguage;
+			} else {
+				return "";
 			}
-		} else {
-			return "";
 		}
-	}
 
 
 	/**
