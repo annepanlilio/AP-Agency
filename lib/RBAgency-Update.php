@@ -52,7 +52,6 @@ class RBAgency_Update {
 		// Define the alternative response for information checking
 		add_filter('plugins_api', array($this, 'check_info'), 10, 3);
 
-		
 	}
  
 	/**

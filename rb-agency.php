@@ -45,12 +45,11 @@ See license.txt for full details.
  */
 
 	//If you hardcode a RB Agency License Key here, it will automatically populate on activation.
-	$rb_agency_LICENSE = "";
-	define('rb_agency_LICENSE', $rb_agency_LICENSE);
+	$RBAGENCY_LICENSE = "";
+	define('RBAGENCY_LICENSE', $RBAGENCY_LICENSE);
 
-	// Registration URL
-	if(!defined("RBPLUGIN_URL"))
-		define("RBPLUGIN_URL", "http://rbplugin.com");
+	if(!defined( 'RBAGENCY_UPDATE_PATH'))
+	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/rb-agency' );
 
 
 // *************************************************************************************************** //
@@ -99,13 +98,6 @@ See license.txt for full details.
 
 	if(!defined( 'RBAGENCY_SLUG'))
 	define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
-	
-	// Define Remote server paths
-	if(!defined( 'RBAGENCY_LICENSE_PATH'))
-	define( 'RBAGENCY_LICENSE_PATH', 'http://rbplugin.com/license/' );
-	
-	if(!defined( 'RBAGENCY_UPDATE_PATH'))
-	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/' );
 
 
 
@@ -162,7 +154,7 @@ See license.txt for full details.
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Update.php'); // Update Specific
 		add_action( 'init', 'update_check' );
 			function update_check() {
-			 new RBAgency_Update (RBAGENCY_VERSION, RBAGENCY_UPDATE_PATH, RBAGENCY_SLUG);
+				new RBAgency_Update (RBAGENCY_VERSION, RBAGENCY_UPDATE_PATH, RBAGENCY_SLUG);
 			}
 
 	// Profile Class
