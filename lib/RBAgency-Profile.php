@@ -4,8 +4,8 @@ class RBAgency_Profile {
 	/*
 	 * Debug Options
 	 */
-		protected static $error_debug = true;
-		protected static $error_debug_query = true;
+		protected static $error_debug = false;
+		protected static $error_debug_query = false;
 		protected static $error_checking = array();
 
 	/*
