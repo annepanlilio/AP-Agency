@@ -4,8 +4,8 @@ class RBAgency_Profile {
 	/*
 	 * Debug Options
 	 */
-		protected static $error_debug = false;
-		protected static $error_debug_query = false;
+		protected static $error_debug = true;
+		protected static $error_debug_query = true;
 		protected static $error_checking = array();
 
 	/*
@@ -903,10 +903,13 @@ class RBAgency_Profile {
 				 * Get Search Chriteria
 				 */
 
-					// TODO: Check
-					$atts["profiletype"] = isset($atts["profiletype"])?$atts["profiletype"]:""; // Why? - Champ
-					$atts["age_min"] = $atts["age_start"];
-					$atts["age_max"] = $atts["age_stop"];
+					// Support Legacy Naming Convention
+					if ( isset($atts["age_start"]) && !empty($atts["age_start"])) {
+						$atts["age_min"] = $atts["age_start"];
+					}
+					if ( isset($atts["age_stop"]) && !empty($atts["age_stop"])) {
+						$atts["age_max"] = $atts["age_stop"];
+					}
 
 					// Exctract from Shortcode
 					extract(shortcode_atts(array(
@@ -994,18 +997,24 @@ class RBAgency_Profile {
 
 					// Age
 					$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
-					/* 
-					$timezone_offset = -10; // Hawaii Time
-					$dateInMonth = gmdate('d', time() + $timezone_offset *60 *60);
-					$format = 'Y-m-d';
-					$date = gmdate($format, time() + $timezone_offset *60 *60);
-					*/
+
+					// Age by Date
 					if (isset($datebirth_min) && !empty($datebirth_min)){
-						$minyear = date('Y-m-d', strtotime('-'. $datebirth_min .' year'. $date));
+						$minyear = date('Y-m-d', strtotime($datebirth_min));
 						$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
 					}
 					if (isset($datebirth_max) && !empty($datebirth_max)){
-						$maxyear = date('Y-m-d', strtotime('-'. $datebirth_max - 1 .' year'. $date));
+						$maxyear = date('Y-m-d', strtotime($datebirth_max));
+						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
+					}
+
+					// Age by Number
+					if (isset($age_min) && !empty($age_min)){
+						$minyear = date('Y-m-d', strtotime('-'. $age_min .' year'. $date));
+						$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
+					}
+					if (isset($age_max) && !empty($age_max)){
+						$maxyear = date('Y-m-d', strtotime('-'. $age_max - 1 .' year'. $date));
 						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
 					}
 
