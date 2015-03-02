@@ -231,7 +231,7 @@ class RBAgency_Profile {
 														$result_query_get = $wpdb->get_results($query_get);
 														foreach($result_query_get as $r){
 																$selected = isset($_REQUEST["country"]) && $_REQUEST["country"] ==$r->CountryID?"selected=selected":"";
-						echo "							<option ". $selected ." value=\".$r->CountryID.\">". $r->CountryTitle ."</option>\n";
+						echo "							<option ". $selected ." value=\"".$r->CountryID."\">". $r->CountryTitle ."</option>\n";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -246,7 +246,7 @@ class RBAgency_Profile {
 														$result_query_get = $wpdb->get_results($wpdb->prepare($query_get,(isset($_REQUEST["country"])?$_REQUEST["country"]:0)));
 														foreach($result_query_get as $r){
 															$selected = isset($_REQUEST["state"]) && $_REQUEST["state"] == $r->StateID?"selected=selected":"";
-						echo "								<option ". $selected ." value=\".$r->StateID.\">". $r->StateTitle ."</option>\n";
+						echo "								<option ". $selected ." value=\"".$r->StateID."\">". $r->StateTitle ."</option>\n";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";

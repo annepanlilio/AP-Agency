@@ -281,6 +281,9 @@ function remove_more_option_field(objNum){
 function populateStates(countryId,stateId){
 	var url=jQuery("#url").val();
 	var ajax_url = (typeof(rb_ajaxurl)!=="undefined")? rb_ajaxurl: ajaxurl;
+	console.log(ajax_url);
+	console.log(countryId);
+	console.log(stateId);
 	if(jQuery("#"+countryId).val()!=""){
 			jQuery("#"+stateId).show();
 			jQuery("#"+stateId).find("option:gt(0)").remove();
