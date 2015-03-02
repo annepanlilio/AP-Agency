@@ -910,6 +910,9 @@ class RBAgency_Profile {
 					if ( isset($atts["age_stop"]) && !empty($atts["age_stop"])) {
 						$atts["age_max"] = $atts["age_stop"];
 					}
+					if ( isset($atts["type"]) && !empty($atts["type"])) {
+						$atts["profiletype"] = $atts["type"];
+					}
 
 					// Exctract from Shortcode
 					extract(shortcode_atts(array(
