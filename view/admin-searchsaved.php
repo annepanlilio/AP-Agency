@@ -12,7 +12,8 @@ $siteurl = get_option('siteurl');
 		$rb_agency_option_agencyname		= $rb_agency_options_arr['rb_agency_option_agencyname'];
 		$rb_agency_option_agencyemail	= $rb_agency_options_arr['rb_agency_option_agencyemail'];
 		$rb_agency_option_agencyheader	= $rb_agency_options_arr['rb_agency_option_agencyheader'];
-
+		$rb_agency_option_profilenaming	 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+				
 	// Declare Hash
 	$SearchMuxHash			=  isset($_GET["SearchMuxHash"]) && !empty($_GET["SearchMuxHash"]) ?$_GET["SearchMuxHash"]:""; // Set Hash
 
@@ -165,9 +166,25 @@ $siteurl = get_option('siteurl');
 				<div style="height:550px; width:580px; overflow-y:scroll;">
 					<?php
 					foreach ($results as $data2 ) {
+						$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
+					$ProfileContactNameLast = $data2["ProfileContactNameLast"];
+					$ProfileID = $data2["ProfileID"];
+					if ($rb_agency_option_profilenaming == 0) {
+						$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+					} elseif ($rb_agency_option_profilenaming == 1) {
+						$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+					} elseif ($rb_agency_option_profilenaming == 2) {
+						$ProfileContactDisplay = $data2["ProfileContactDisplay"];
+					} elseif ($rb_agency_option_profilenaming == 3) {
+						$ProfileContactDisplay = "ID-". $ProfileID;
+					} elseif ($rb_agency_option_profilenaming == 4) {
+						$ProfileContactDisplay = $ProfileContactNameFirst;
+					} elseif ($rb_agency_option_profilenaming == 5) {
+						$ProfileContactDisplay = $ProfileContactNameLast;
+					}
 					echo " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 180px; margin: 2px; overflow:hidden;  \">";
 					echo " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
-					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+					echo $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "<br /><a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
@@ -254,10 +271,26 @@ $siteurl = get_option('siteurl');
 				<div style="border-top:1px solid #ccc;margin-top:20px;margin-bottom:10px;">
 					<?php
 					foreach ($results as $data2 ) {
+						$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
+					$ProfileContactNameLast = $data2["ProfileContactNameLast"];
+					$ProfileID = $data2["ProfileID"];
+					if ($rb_agency_option_profilenaming == 0) {
+						$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+					} elseif ($rb_agency_option_profilenaming == 1) {
+						$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+					} elseif ($rb_agency_option_profilenaming == 2) {
+						$ProfileContactDisplay = $data2["ProfileContactDisplay"];
+					} elseif ($rb_agency_option_profilenaming == 3) {
+						$ProfileContactDisplay = "ID-". $ProfileID;
+					} elseif ($rb_agency_option_profilenaming == 4) {
+						$ProfileContactDisplay = $ProfileContactNameFirst;
+					} elseif ($rb_agency_option_profilenaming == 5) {
+						$ProfileContactDisplay = $ProfileContactNameLast;
+					}
 					echo " <div style=\"background:black; color:white;float: left; max-width: 133px; height: 250px; margin: 2px; overflow:hidden;  \">";
 					echo " <div style=\"margin:10px;max-width:350px; max-height:300px; \">";
 					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
-					echo stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+					echo $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "<br /><a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
@@ -345,8 +378,23 @@ $siteurl = get_option('siteurl');
 								$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
 						
 								foreach ($results as $data) {
-
-									echo " <div style=\"float: left; width: 80px; height: 100px; margin-right: 5px; overflow: hidden; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "<br />";
+									$ProfileContactNameFirst = $data["ProfileContactNameFirst"];
+									$ProfileContactNameLast = $data["ProfileContactNameLast"];
+									$ProfileID = $data["ProfileID"];
+									if ($rb_agency_option_profilenaming == 0) {
+										$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+									} elseif ($rb_agency_option_profilenaming == 1) {
+										$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+									} elseif ($rb_agency_option_profilenaming == 2) {
+										$ProfileContactDisplay = $data2["ProfileContactDisplay"];
+									} elseif ($rb_agency_option_profilenaming == 3) {
+										$ProfileContactDisplay = "ID-". $ProfileID;
+									} elseif ($rb_agency_option_profilenaming == 4) {
+										$ProfileContactDisplay = $ProfileContactNameFirst;
+									} elseif ($rb_agency_option_profilenaming == 5) {
+										$ProfileContactDisplay = $ProfileContactNameLast;
+									}
+									echo " <div style=\"float: left; width: 80px; height: 100px; margin-right: 5px; overflow: hidden; \">". $ProfileContactDisplay . "<br />";
 									echo "<a href=\"". RBAGENCY_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">";
 									if(isset($arr_thumbnail[$data["ProfileID"]])){
 										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));

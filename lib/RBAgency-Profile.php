@@ -2171,7 +2171,7 @@ class RBAgency_Profile {
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
 				} elseif ($rb_agency_option_profilenaming == 2) {
-					$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
+					$ProfileContactDisplay = $data["ProfileContactDisplay"];
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileContactDisplay = "ID-". $ProfileID;
 				} elseif ($rb_agency_option_profilenaming == 4) {
