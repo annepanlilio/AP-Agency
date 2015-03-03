@@ -1324,7 +1324,7 @@
 							$xplode = array($ProfileCustomValue);
 						}
 						if(!empty($val)){
-							echo "<label class=\"checkbox\" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
+							echo "<label class=\"checkbox\" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode) && !empty($val)){ echo "checked=\"checked\""; } echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
 							echo "". $val."</label><br />";                               
 						}
 					}
@@ -1335,10 +1335,12 @@
 					$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
 					
 					foreach($array_customOptions_values as $val){
-						echo "<fieldset>";
-							echo "<label><input type=\"radio\" value=\"". $val."\" "; checked($val, $ProfileCustomValue); echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
-							echo "". $val."</label><br/>";
-						echo "</fieldset>";
+						if(!empty($val)){
+							echo "<fieldset>";
+								echo "<label><input type=\"radio\" value=\"". $val."\" "; if(!empty($val)){checked($val, $ProfileCustomValue);} echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+								echo "". $val."</label><br/>";
+							echo "</fieldset>";
+						}
 					}
 				} elseif ($ProfileCustomType == 7) { //Imperial/Metrics
 				
