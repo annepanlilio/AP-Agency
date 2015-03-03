@@ -904,11 +904,11 @@ class RBAgency_Profile {
 				 */
 
 					// Support Legacy Naming Convention
-					if ( isset($atts["age_start"]) && !empty($atts["age_start"])) {
-						$atts["age_min"] = $atts["age_start"];
+					if ( isset($atts["datebirth_min"]) && !empty($atts["datebirth_min"])) {
+						$atts["age_min"] = $atts["datebirth_min"];
 					}
-					if ( isset($atts["age_stop"]) && !empty($atts["age_stop"])) {
-						$atts["age_max"] = $atts["age_stop"];
+					if ( isset($atts["datebirth_max"]) && !empty($atts["datebirth_max"])) {
+						$atts["age_max"] = $atts["datebirth_max"];
 					}
 					if ( isset($atts["type"]) && !empty($atts["type"])) {
 						$atts["profiletype"] = $atts["type"];
@@ -1002,14 +1002,14 @@ class RBAgency_Profile {
 					$date = gmdate('Y-m-d', time() + $rb_agency_option_locationtimezone *60 *60);
 
 					// Age by Date
-					if (isset($datebirth_min) && !empty($datebirth_min)){
+					/*if (isset($datebirth_min) && !empty($datebirth_min)){
 						$minyear = date('Y-m-d', strtotime($datebirth_min));
 						$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
 					}
 					if (isset($datebirth_max) && !empty($datebirth_max)){
 						$maxyear = date('Y-m-d', strtotime($datebirth_max));
 						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
-					}
+					}*/
 
 					// Age by Number
 					if (isset($age_min) && !empty($age_min)){
