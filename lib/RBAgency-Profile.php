@@ -1397,6 +1397,10 @@ class RBAgency_Profile {
 				if ( (isset($limit) && !empty($limit)) && strpos($filter, 'LIMIT') == 0  ){
 					//$filter .= " LIMIT 0, $limit ";
 				}
+				// Show top 100
+				if(is_admin() && !isset($_GET["limit"])){
+					$filter .= " LIMIT 101";
+				}
 
 				// Debug
 				if(self::$error_debug){
