@@ -48,11 +48,15 @@ class RBAgency_Extends {
 			// Get Shortcode Attributes
 			extract(shortcode_atts(array(
 					"mode" => null
+
 				), $atts));
 
 			if(empty($atts)){
 				$atts[1] = 1;
 			}
+			// retrieve active profiles only
+			$atts['isactive'] = 1;
+			
 			// Get Options
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
