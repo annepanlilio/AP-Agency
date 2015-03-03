@@ -437,7 +437,7 @@
 					$years = "";
 				} else {
 					
-						$label_y = $years . " yr(s) ";
+						$label_y = $years . " yr(s)";
 				}
 			}
 			if($detail_month == 1|| is_admin()){
@@ -445,14 +445,14 @@
 				if($months == 0){
 					$label_m = "";
 				} else {
-					$label_m = $months . " mo(s) ";
+					$label_m = $months . " mo(s)";
 				}
 			}
 			if($detail_day == 1|| is_admin()){
-				$label_d = $days." day(s) ";
+				$label_d = $days." day(s)";
 			}
 
-			return  $label_y . $label_m.$label_d;
+			return  implode(" ",array($label_y,$label_m,$label_d));
 
 		// Or just do it the old way
 		} else {
