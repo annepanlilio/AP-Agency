@@ -1130,7 +1130,7 @@ class RBAgency_Profile {
 													if(strpos($val,",") === false){
 														$filter2 .= $open_st;
 														$val2 = $val;
-														$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s",$val2,"%".$val2."%");
+														$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue LIKE %s AND ProfileCustomValue LIKE %s",$val2,"%".$val2."%",$val2."%","%".$val2);
 														/*$val2 = addslashes(addslashes($val2));
 														$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
 														*/
@@ -1477,7 +1477,7 @@ class RBAgency_Profile {
 							WHERE ". $sql_where_array['standard'] ." ";
 					}
 					$sql .= self::$order_by;
-
+					
 					break;
 
 			/* 
