@@ -65,7 +65,10 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 				// Filter Post
 				foreach($_REQUEST as $key=>$value) {
 					if ( is_array($value) && !empty($value) ){
-							unset( $_REQUEST[$key] );
+						$is_array_empty = array_filter($_REQUEST[$key]);
+						if(empty($is_array_empty)){
+							 unset( $_REQUEST[$key] ); // Why unset custom fields? we have an array_filter
+						}
 					} else {
 						if ( !isset($value) || empty ($value) ){
 							unset( $_REQUEST[$key] );
@@ -75,13 +78,12 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 				unset( $_REQUEST['search_profiles'] );
 				unset( $_REQUEST['form_mode'] );
 				// Keep form_action
-
 				$is_paging = get_query_var("page") ? get_query_var("page"):get_query_var("paging");
 				// Check something was entered in the form
 
 				if (count($_REQUEST) > 1 || $is_paging) {
 					$search_array = array_filter($_REQUEST);
-
+					//var_dump($search_array);
 					$search_array = RBAgency_Profile::search_process();
 					$search_array["limit"] = $rb_agency_option_persearch;
 
