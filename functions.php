@@ -168,11 +168,11 @@
 						return dirname(__FILE__) . '/version.php'; 
 
 					} elseif (get_query_var( 'type' ) == "getstate") {
-					// TODO: What is this????
+					// TODO: Remove this, get states via ajax.
 						return RBAGENCY_PLUGIN_DIR . '/view/partial/get-state.php'; 
 
 					} elseif (get_query_var( 'type' ) == "rblogout") {
-					// TODO: What is this????
+					// TODO: Custom /logout/ uri to catch the user and redirect to a login form.
 						rb_logout_user();
 
 
@@ -336,7 +336,7 @@
 	}
 
 	/**
-	 * Get Profile Name
+	 * Convert Date & Time to Strings
 	 *
 	 * @param string $timestamp (unix timestamp)
 	 * @param string $offset  (offset from server)
@@ -2111,16 +2111,16 @@
 	* ======================== check agency data ===============
 	* @Returns Check agency data
 	/*/
-	function rb_check_exists($data,$proerty,$type){
+	function rb_check_exists($data,$property,$type){
 
 		global $wpdb;
 		
 		$count = 0;
 		if($type == 'text'){
-			$query = $wpdb->get_results("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = '" . $data . "'",ARRAY_A);
+			$query = $wpdb->get_results("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $property . " = '" . $data . "'",ARRAY_A);
 			$count = count($query);
 		} elseif($type == 'numeric'){
-			$query = $wpdb->get_results("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $proerty . " = " . $data ,ARRAY_A);
+			$query = $wpdb->get_results("SELECT ProfileID FROM  ".table_agency_profile." WHERE ". $property . " = " . $data ,ARRAY_A);
 			$count = count($query);
 		} 
 		if($count > 0) return true;
@@ -3675,13 +3675,18 @@
 	 * Set logout redirect per user group
 	 */
 	function rb_logout_user(){
-		 global $user_ID;
+		 global $user_ID, $wpdb;
 		   include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 			   if(is_user_logged_in()){
 			   
-						 $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
-						 
+						$is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
+						
+						if(empty($is_model)){
+							$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
+						 	$is_model = $wpdb->num_rows;
+						}
+				
 
 						 if(current_user_can("edit_posts")){
 
