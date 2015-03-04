@@ -450,7 +450,7 @@ $siteurl = get_option('siteurl');
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
 			$sort = $_GET['sort'];
 		} else {
-			$sort = "search.SearchDate";
+			$sort = "search.SearchID";
 		}
 
 		// Sort Order
@@ -477,14 +477,14 @@ $siteurl = get_option('siteurl');
 
 
 		//Paginate
-		$sqldata  = "SELECT count(*) as num_itms FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  .""; // number of total rows in the database
+		$sqldata  = "SELECT count(*) as num_itms FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  ." GROUP BY search.SearchID"; // number of total rows in the database
 		$results =  $wpdb->get_row($sqldata);
 		$items =$results->num_itms; // number of total rows in the database
 		if($items > 0) {
 
 			$p = new RBAgency_Pagination;
 			$p->items($items);
-			$p->limit(50); // Limit entries per page
+			$p->limit(10); // Limit entries per page
 			$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .(isset($query)?$query:""));
 			$p->currentPage(isset($_GET[isset($p->paging)?$p->paging:0])?$_GET[$p->paging]:0); // Gets and validates the current page
 			$p->calculate(); // Calculates what to show
@@ -505,9 +505,13 @@ $siteurl = get_option('siteurl');
 			$limit = "";
 		}
 		?>
+		<?php 
+			 //echo "Total Saved Searches: ".$items;
+		?>
+				
 		<div class="tablenav">
 			<div class='tablenav-pages'>
-				<?php
+			  <?php
 				if($items > 0) {
 					echo $p->show();  // Echo out the list of paging. 
 				}
@@ -564,10 +568,9 @@ $siteurl = get_option('siteurl');
 
 		$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchDate FROM ". table_agency_searchsaved ." search ". $filter  ." ORDER BY $sort $dir $limit";
 		//$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchOptions, search.SearchDate FROM ". table_agency_searchsaved_mux ." searchsent LEFT JOIN ". table_agency_searchsaved ." search ON searchsent.SearchID = search.SearchID ". $filter  ." ORDER BY $sort $dir $limit";
-
 		$results2 = $wpdb->get_results($query2, ARRAY_A);
 		$count2 = $wpdb->num_rows;
-
+		
 		foreach ($results2 as $data2) {
 			$SearchID = $data2['SearchID'];
 			$SearchTitle = stripslashes($data2['SearchTitle']);
