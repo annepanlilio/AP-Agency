@@ -638,12 +638,12 @@ class RBAgency_Profile {
 				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">\n";
 					echo "				<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\"  />\n"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
-
+					$is_casting_page = get_query_var("rbgroup");
 					if ($type == 1) {
 						 if(is_admin() === false){
 							echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
 						}
-					} elseif($rb_agency_option_formhide_advancedsearch_button != 1) {
+					} elseif($rb_agency_option_formhide_advancedsearch_button != 1 && $is_casting_page != "casting") {
 						 if(is_admin() === true){
 						 	echo "				<input type=\"button\" onclick=\"window.location.href='".admin_url("admin.php?page=rb_agency_search")."'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
 						 }else{

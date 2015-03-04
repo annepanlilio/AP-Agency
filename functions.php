@@ -119,7 +119,7 @@
 				$query_vars[] = 'gender';
 				$query_vars[] = 'age_start';
 				$query_vars[] = 'age_stop';
-
+				$query_vars[] = 'ref';
 				return $query_vars;
 			}
 
