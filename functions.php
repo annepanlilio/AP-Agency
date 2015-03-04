@@ -3676,45 +3676,44 @@
 	 */
 	function rb_logout_user(){
 		 global $user_ID, $wpdb;
-		   include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		   //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 			   if(is_user_logged_in()){
 			   
 						$is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
-						
 						if(empty($is_model)){
-							$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
-						 	$is_model = $wpdb->num_rows;
+							$is_casting = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
 						}
 				
-
 						 if(current_user_can("edit_posts")){
-
 								wp_logout();
-						 
-								wp_safe_redirect(admin_url());
+						 		wp_safe_redirect(admin_url());
 						 }else{
-								 wp_logout();
-						   
+								 
 						   $rb_agency_interact_options_arr = get_option('rb_agencyinteract_options');
 						   $rb_agencyinteract_option_redirect_custom_login = (int)$rb_agency_interact_options_arr['rb_agencyinteract_option_redirect_custom_login'];
 						
 						   if($rb_agencyinteract_option_redirect_custom_login == 2){
-								 wp_safe_redirect(get_bloginfo("url"));
-						   }else{
-								 if(is_plugin_active("rb-agency-casting")){
+						   		wp_logout();
+						   		wp_safe_redirect(get_bloginfo("url"));
+							}else{
+								if(class_exists("RBAgencyCasting")){
 								   if(!empty($is_model )){
-										 wp_safe_redirect(get_bloginfo("url")."/profile-login/");
-								   }else{
-										 wp_safe_redirect(get_bloginfo("url")."/casting-login/");
-								   }
+								   		wp_logout();
+						  			 	wp_safe_redirect(get_bloginfo("url")."/profile-login/");
+									}else if(!empty($is_casting)){
+								   		wp_logout();
+									 	wp_safe_redirect(get_bloginfo("url")."/casting-login/");
+									}
 								}else{
-										wp_safe_redirect(get_bloginfo("url")."/profile-login/");
-								   
+									wp_logout();
+						  			wp_safe_redirect(get_bloginfo("url")."/profile-login/");
 								}
 							}
 						}
 						
+				}else{
+					wp_safe_redirect(get_bloginfo("url")."/profile-login/");
 				}
 	}
 
