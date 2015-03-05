@@ -20,4 +20,9 @@ jQuery(document).ready(function(){
 		});
 			window.print();
 	});
+
+	jQuery(".link-profile-pdf").click(function(){
+			jQuery("body").prepend("<form style=\"display:none;\"  target=\"blank\" action=\""+rb_agency.site_url+"/profile-pdf/\" method=\"post\" id=\"rb-download-pdf\"><textarea name=\"profiles\"><div id=\"profile-list\">"+jQuery("#profile-list").html()+"</div></textarea></form>");
+			jQuery("#rb-download-pdf").submit();
+	});
 });
