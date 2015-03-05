@@ -77,6 +77,7 @@
 				$newrules['profile-casting/jobs/(.*)/(.*)$'] = 'index.php?type=castingjobs&target=$matches[1]&value=$matches[2]';
 				$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
 				$newrules['profile-print'] = 'index.php?type=print';
+				$newrules['profile-pdf'] = 'index.php?type=rb-pdf';
 				$newrules['profile-email'] = 'index.php?type=email';
 				$newrules['client-view/(.*)$'] = 'index.php?type=profilecastingcart&target=$matches[1]';
 				$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
@@ -159,6 +160,10 @@
 					// Profile Contact Form
 						return dirname(__FILE__) . '/view/profile-contact.php';
 
+					} elseif (get_query_var( 'type' ) == "rb-pdf") {
+					// Download Profiles PDF
+						return dirname(__FILE__) . '/view/profile-pdf.php';
+
 					} elseif (get_query_var( 'type' ) == "print") {
 					// Print Mode: TODO REFACTOR
 						return dirname(__FILE__) . '/view/profile-print.php';
@@ -168,7 +173,7 @@
 						return dirname(__FILE__) . '/version.php'; 
 
 					} elseif (get_query_var( 'type' ) == "getstate") {
-					// TODO: Remove this, get states via ajax.
+					// TODO: Remove this, get states through wp-ajax url.
 						return RBAGENCY_PLUGIN_DIR . '/view/partial/get-state.php'; 
 
 					} elseif (get_query_var( 'type' ) == "rblogout") {

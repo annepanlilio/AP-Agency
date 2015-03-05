@@ -94,7 +94,8 @@ class RBAgency_App {
 
 				var rb_agency = {
 					logo: "<?php echo $rb_agency_option_agencylogo;?>",
-					name: "<?php echo $rb_agency_option_agencyname;?>"
+					name: "<?php echo $rb_agency_option_agencyname;?>",
+					site_url: "<?php echo get_bloginfo('url');?>"
 				}
 				</script>
 				
