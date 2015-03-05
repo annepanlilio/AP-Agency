@@ -1,6 +1,9 @@
 @media screen {
-	.rb-print-header, .rb-print-footer, .print-clear{
+	.rb-print-header, .rb-print-footer, .print-clear,.rb-print{
 		display:none;	
+	}
+	.print-clear{
+		clear:none;
 	}
 }
 @media print{
@@ -30,7 +33,7 @@
 	#profile-list .rbprofile-list .image{
 			height: 205px;
 	}
-	.rb-print-header, .rb-print-footer,.rb-print-header *, .rb-print-footer *{
+	.rb-print-header, .rb-print-footer,.rb-print-header *, .rb-print-footer *,.rb-print, .rb-print *{
 			display: block !important;
 		    visibility: visible !important;
 	}
