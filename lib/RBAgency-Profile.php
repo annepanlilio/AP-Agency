@@ -1106,6 +1106,7 @@ class RBAgency_Profile {
 									  5 - Checkbox
 									  6 - Radiobutton
 									  7 - Metrics/Imperials
+									  9 - Multi-select
 									 *********************/
 
 									$open_st = ' AND EXISTS (SELECT DISTINCT(ProfileCustomMuxID) FROM '. table_agency_customfield_mux . ' WHERE ' ;
@@ -1130,7 +1131,7 @@ class RBAgency_Profile {
 													if(strpos($val,",") === false){
 														$filter2 .= $open_st;
 														$val2 = $val;
-														$filter2 .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue LIKE %s AND ProfileCustomValue LIKE %s",$val2,"%".$val2."%",$val2."%","%".$val2);
+														$filter2 .= $wpdb->prepare(" FIND_IN_SET(ProfileCustomValue,%s) = 0 AND ProfileCustomValue LIKE %s ",$val2,"%".$val2."%");
 														/*$val2 = addslashes(addslashes($val2));
 														$filter2 .= $wpdb->prepare(" ProfileCustomValue NOT LIKE %s AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s  OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)   ",$val2.",%",$val."-",$val." Months",$val." Months","-".$val." Months","%".$val."%","%".$val."-%","%".$val2." Months%",$val2);
 														*/
@@ -1147,7 +1148,7 @@ class RBAgency_Profile {
 
 															if($like!="") {
 																$val2 = addslashes(addslashes($like));
-																$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) > 0)".(($i <= $likecounter)?" AND ":""),$like);
+																$sr_data .= $wpdb->prepare("(FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s)".(($i <= $likecounter)?" AND ":""),$like,"%".$val2."%");
 																//$sr_data .= $wpdb->prepare(" (FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND FIND_IN_SET(%s,ProfileCustomValue) = 0 AND ProfileCustomValue LIKE %s AND ProfileCustomValue NOT LIKE %s AND ProfileCustomValue NOT LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0)     ".(($i <= $likecounter)?" OR ":""),$like."-",$like." Months",$like." Months","-".$like." Months","%".$val2."%","%".$val2."-%","%".$val2." Months%",$like);
 															}
 															//Commented to fix checkbox issue
@@ -1303,7 +1304,7 @@ class RBAgency_Profile {
 					if(isset($include) && !empty($include)){
 						$filter .= " AND profile.ProfileID IN (".$include.") ";
 					}
-
+					
 				/**
 				 * Filter Models Already in Cart
 				 */
