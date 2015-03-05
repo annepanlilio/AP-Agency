@@ -1,0 +1,56 @@
+@media screen {
+	.rb-print-header, .rb-print-footer, .print-clear{
+		display:none;	
+	}
+}
+@media print{
+
+	body *{
+		visibility: hidden;
+	}
+	#profile-list,#profile-list *{
+		 visibility: visible;
+	}
+	#profile-list{
+		position: absolute;
+		top:20px;
+	}
+	#profile-list .rb_profile_tool,#profile-list .rb_profile_tool * {
+			visibility: hidden;
+			display:none;
+	}
+	#profile-list .rbprofile-list{
+		float:left;
+		display: block !important;
+		margin-bottom:-30px;
+	}
+	#profile-list .rbprofile-list .details{
+		height: 56px;
+	}
+	#profile-list .rbprofile-list .image{
+			height: 205px;
+	}
+	.rb-print-header, .rb-print-footer,.rb-print-header *, .rb-print-footer *{
+			display: block !important;
+		    visibility: visible !important;
+	}
+	.rb-print-header{
+		height:30px;
+		margin-top:0px;
+		clear:both;
+	}
+	.rb-print-header img{
+		height:30px;
+		float:left;
+	}
+	.rb-print-footer{
+		height:30px;
+		font-size:14px;
+			margin-bottom: 30px;
+	
+		clear:both;
+	}
+	.print-clear{
+		clear:both;
+	}
+}

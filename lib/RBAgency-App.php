@@ -51,6 +51,9 @@ class RBAgency_App {
 				wp_register_style( 'rbagency-style', RBAGENCY_PLUGIN_URL .'assets/css/style.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-style' );
 
+				wp_register_style( 'rbagency-print-style', RBAGENCY_PLUGIN_URL .'assets/css/print.css', array(), strtotime("now"));
+				wp_enqueue_style( 'rbagency-print-style' );
+
 				wp_register_style( 'rbagency-formstyle',RBAGENCY_PLUGIN_URL .'assets/css/forms.css' );
 				wp_enqueue_style( 'rbagency-formstyle' );
 
@@ -80,9 +83,19 @@ class RBAgency_App {
 				
 
 			}
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+			$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
+
 				?>
+
 				<script type="text/javascript">
 				var rb_ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+
+				var rb_agency = {
+					logo: "<?php echo $rb_agency_option_agencylogo;?>",
+					name: "<?php echo $rb_agency_option_agencyname;?>"
+				}
 				</script>
 				
 				<?php
@@ -98,6 +111,8 @@ class RBAgency_App {
 			
 				wp_register_script( 'rb-customfields-search', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
 				wp_enqueue_script( 'rb-customfields-search' );
+				wp_register_script( 'rb-print-profile', RBAGENCY_PLUGIN_URL .'assets/js/rb-printProfiles.js' );
+				wp_enqueue_script( 'rb-print-profile' );
 			
 		}
 

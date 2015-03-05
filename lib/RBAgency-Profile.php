@@ -1669,6 +1669,7 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_sortby = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
 				$rb_agency_option_persearch = isset($rb_agency_options_arr["rb_agency_option_persearch"])?$rb_agency_options_arr["rb_agency_option_persearch"]:10;
 				$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr["rb_agency_option_profilelist_perpage"])?$rb_agency_options_arr["rb_agency_option_profilelist_perpage"]:15;
+				$rb_agency_option_profilelist_printpdf = isset($rb_agency_options_arr["rb_agency_option_profilelist_printpdf"])?$rb_agency_options_arr["rb_agency_option_profilelist_printpdf"]:0;
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$profile_list = "";
 				$all_html = "";
@@ -1708,9 +1709,16 @@ class RBAgency_Profile {
 			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1 || $type == "search-result"){
 
 				$all_html.="<div class=\"rb-cart-links\">";
-				$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> |";
+				$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
 				$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
 				$all_html.="</div>";
+			}
+			if($rb_agency_option_profilelist_printpdf == 1){
+				$all_html.="<div class=\"rb-cart-links\">";
+				$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">Print</a> <span class=\"link-separate\">|</span> ";
+				$all_html.="<a href=\"javascript:;\" class=\"link-profile-pdf\">Download PDF</a>";
+				$all_html.="</div>";
+				
 			}
 				$all_html.= "<hr />";
 				// RB Agency default paging variables
@@ -2148,31 +2156,9 @@ class RBAgency_Profile {
 				$rb_agency_option_detail_state 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
 
 			// TODO: Check Logic
-			$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "";
-			$ProfileContactNameLast = isset($dataList["ProfileContactNameLast"]) ? $dataList["ProfileContactNameLast"]: "";
+			$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "-";
+			$ProfileContactNameLast = isset($dataList["ProfileContactNameLast"]) ? $dataList["ProfileContactNameLast"]: "-";
 			$ProfileID = $dataList["ProfileID"];
-
-				/*if ($rb_agency_option_profilenaming == 0) {
-					$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
-				} elseif ($rb_agency_option_profilenaming == 1) {
-					// If John-D already exists, make John-D-1
-					for ($i = 'a', $j = 1; $j <= 26; $i++, $j++) {
-						if (isset($ar) && in_array($i, $ar)){
-							$ProfileContactDisplay = $ProfileContactNameFirst . " " . $i .'-'. $j;
-						} else {
-							$ProfileContactDisplay = $ProfileContactNameFirst . " " . substr($ProfileContactNameLast, 0, 1);
-						}
-					}
-
-				}elseif ($rb_agency_option_profilenaming == 3) {
-					$ProfileContactDisplay = "ID " . $ProfileID;
-				} elseif ($rb_agency_option_profilenaming == 4) {
-					$ProfileContactDisplay = $ProfileContactNameFirst;
-				} elseif ($rb_agency_option_profilenaming == 5) {
-					$ProfileContactDisplay = $ProfileContactNameLast;
-				}else{
-					$ProfileContactDisplay = $dataList["ProfileContactDisplay"];
-				}*/
 
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
@@ -2205,13 +2191,14 @@ class RBAgency_Profile {
 
 				$displayActions = "<div class=\"rb_profile_tool\">";
 				if($rb_agency_option_profilelist_favorite && $type != "casting"){
-					//  $displayActions .= "<div class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-favorite/\">Favorite</a></span></div>";
+				
 					$displayActions .= "<div id=\"profile-favorite\" class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
+				
 				}
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 
 				if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
-					//$displayActions .= "<div class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong></a>&nbsp;<span><a href=\"".get_bloginfo("url")."/profile-casting/\">Casting Cart</a></span></div>";
+				
 					$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
 				}
 				$displayActions .= "</div>";
@@ -2263,7 +2250,7 @@ class RBAgency_Profile {
 			}
 				$displayHTML .=  $displayActions;
 
-			if(function_exists("rb_agency_get_miscellaneousLinks")){
+			/*if(function_exists("rb_agency_get_miscellaneousLinks")){
 				// Check if user is registered as Model/Talent
 				$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
 				$is_model_or_talent = $wpdb->num_rows;
@@ -2274,7 +2261,7 @@ class RBAgency_Profile {
 						$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 
 				}
-			}
+			}*/
 			$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
 
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
