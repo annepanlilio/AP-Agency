@@ -3826,7 +3826,7 @@
 		$wpfrom = !empty($rb_agency_options["rb_agency_option_agencyheader"])?$rb_agency_options["rb_agency_option_agencyheader"]:$rb_blogname;
 		return $wpfrom;
 	}
-	add_filter('wp_mail_from_name', 'rb_fromname');
+	//add_filter('wp_mail_from_name', 'rb_fromname');
 
 	/**
 	* Check remote version
