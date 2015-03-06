@@ -204,7 +204,9 @@
 				($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype() /*|| ($ProfileUserLinked == $CurrentUser)*/  ) ||
 
 				//  Model list public. Must be logged to view profile information
-				($rb_agency_option_privacy == 1 && is_user_logged_in())
+				($rb_agency_option_privacy == 1 && is_user_logged_in()) ||
+				// View own profile
+				($ProfileUserLinked == $CurrentUser && is_user_logged_in())
 				) {
 
 				// Ok, but whats the status of the profile?
