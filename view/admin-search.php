@@ -115,7 +115,7 @@
 	 * Display Cart
 	 */
 
-		if (isset($_SESSION['cartArray']) || isset($_POST["action"]) && $_POST["action"] == "cartAdd" && $_POST["action"] !== "massEmail") {
+		if (isset($_SESSION['cartArray']) || isset($_POST["action"]) && $_POST["action"] == "cartAdd" && $_POST["action"] !== "massEmail" || isset($_REQUEST["action"]) && @$_REQUEST["action"] == "cartEmpty") {
 
 			echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
 			echo " <div class=\"boxblock\">\n";
@@ -136,7 +136,7 @@
 	/*
 	 * Display Search Form
 	 */
-	if (isset($_REQUEST["action"]) && @$_REQUEST["action"] !== "massEmail" ) {
+	if (isset($_REQUEST["action"]) && @$_REQUEST["action"] !== "massEmail"  && @$_REQUEST["action"] !== "cartEmpty" ) {
 	} else {
 
 		// Search Form
@@ -155,4 +155,5 @@
 
 ?>
 
+</div>
 </div>
