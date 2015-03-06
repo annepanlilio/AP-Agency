@@ -1966,7 +1966,7 @@ class RBAgency_Profile {
 					$displayHtml .=  "            <td class=\"ProfileStats column-ProfileStats\">\n";
 
 					if (!empty($data['ProfileContactEmail'])) {
-							$displayHtml .=  "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
+							$displayHtml .=  "<div><strong>Email:</strong> <a href=\"mailto:".$data['ProfileContactEmail']."\">". $data['ProfileContactEmail'] ."</a></div>\n";
 					}
 					if (!empty($data['ProfileLocationStreet'])) {
 							$displayHtml .=  "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
