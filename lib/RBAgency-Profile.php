@@ -1998,19 +1998,7 @@ class RBAgency_Profile {
 							$displayHtml .=  "<div><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 					}
 
-					$resultsCustomPrivate =  $wpdb->get_results("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue, c.ProfileCustomOrder FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView > 0 AND cx.ProfileID = ". (isset($ProfileID)?$ProfileID:'""') ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC");
-					if (count($resultsCustomPrivate) > 0){
-						foreach ($resultsCustomPrivate as $resultCustomPrivate) {
-							if(strpos(strtolower($resultCustomPrivate->ProfileCustomTitle),"height") !== false){
-								if(strpos($resultCustomPrivate->ProfileCustomValue, "'") !== false ||  strpos($resultCustomPrivate->ProfileCustomValue," ") !== false ){
-									$resultCustomPrivate->ProfileCustomValue =  $resultCustomPrivate->ProfileCustomValue."\"";
-								}
-								$displayHtml .=  "<div dtype='height-custom'><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";
-							} else {
-								$displayHtml .=  "<div dtype='rb-cfield'><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripslashes($resultCustomPrivate->ProfileCustomValue)."</div>\n";
-							}
-						}
-					}
+					$displayHtml .= rb_agency_getProfileCustomFields_admin($ProfileID ,$data['ProfileGender'],'1,2,3');
 
 					$displayHtml .=  "            </td>\n";
 					// public info
