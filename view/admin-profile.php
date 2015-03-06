@@ -1247,7 +1247,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									rb_custom_fields(1, 0, $ProfileGender, true);
 									echo"<script type=\"text/javascript\">
 										jQuery(document).ready(function(){
-											jQuery('#formAddProfile').trigger('reset');
+											jQuery(':input,#formAddProfile')
+											 .not(':button, :submit, :reset, :hidden')
+											 .val('')
+											 .removeAttr('checked')
+											 .removeAttr('selected');
 											jQuery('#ProfileGender option[value=".$ProfileGender."]').attr('selected','selected');
 										});
 										</script>";
