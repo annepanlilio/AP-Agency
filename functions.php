@@ -1197,13 +1197,13 @@
 		$rb_agency_option_locationtimezone 	= isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 		
 		if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){ 
-			$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
-			$row = current($subresult);
+			$subresult = $wpdb->get_row($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+			$row = $subresult;
 			
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 			$ProfileCustomType  = $data3['ProfileCustomType'];
 			$ProfileCustomDateValue =  ($row["ProfileCustomDateValue"]!=="1970-01-01"  && $row["ProfileCustomDateValue"]!=="0000-00-00")?$row["ProfileCustomDateValue"]:"";
-			$ProfileCustomValue = $row["ProfileCustomValue"];
+			$ProfileCustomValue = !empty($row["ProfileCustomValue"])?$row["ProfileCustomValue"]:"";
 			
 			/* Pull data from post so data will not lost @Satya 12/12/2013 */
 			if($ProfileCustomValue=="" && isset($_POST)){
