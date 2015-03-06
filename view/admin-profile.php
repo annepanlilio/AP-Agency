@@ -906,7 +906,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		$caption_text = __("Fill in the form below to add a new", RBAGENCY_TEXTDOMAIN) . " " . LabelSingular . ".";
 	}
 	if ($_GET["action"] == "add") {
-		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $_GET["ProfileGender"] . "\">\n";
+		echo "<form id=\"formAddProfile\" method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $_GET["ProfileGender"] . "\">\n";
 	} else {
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=".$_GET["ProfileID"]."\">\n";
 	}
@@ -1245,6 +1245,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if (isset($_GET["ProfileGender"])) {
 									$ProfileGender = $_GET["ProfileGender"];
 									rb_custom_fields(1, 0, $ProfileGender, true);
+									echo"<script type=\"text/javascript\">
+										jQuery(document).ready(function(){
+											jQuery('#formAddProfile').trigger('reset');
+											jQuery('#ProfileGender option[value=".$ProfileGender."]').attr('selected','selected');
+										});
+										</script>";
 								} else {
 									rb_custom_fields(1, $ProfileID, $ProfileGender, true);
 								}
