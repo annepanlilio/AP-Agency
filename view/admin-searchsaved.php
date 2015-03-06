@@ -369,7 +369,7 @@ $siteurl = get_option('siteurl');
 
 								<?php
 										   
-								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") ORDER BY ProfileContactNameFirst ASC";
+								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY profile.ProfileID ORDER BY ProfileContactNameFirst ASC";
 								$results = $wpdb->get_results($query, ARRAY_A);
 								$count = $wpdb->num_rows;
 
