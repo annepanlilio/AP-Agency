@@ -1714,6 +1714,7 @@ class RBAgency_Profile {
 				$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
 				$all_html.="</div>";
 			}
+
 			if($rb_agency_option_profilelist_printpdf == 1){
 				$all_html.="<div class=\"rb-cart-links\">";
 				$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">Print</a> <span class=\"link-separate\">|</span> ";
@@ -1831,13 +1832,12 @@ class RBAgency_Profile {
 			/* 
 			 * wrap profile listing
 			 */
-				//if(!$shortcode){
-					$all_html .= $paginate->show();
-				//}
-				$all_html .="<div id='profile-list'>".$profile_list."</div>";
-				//if(!$shortcode){
-					$all_html .= $paginate->show();
-				//}
+				$all_html .= $paginate->show();
+				$all_html .= "<div id='profile-list'>".$profile_list."</div>";
+				$all_html .= $paginate->show();
+				$all_html .= "<div class='clear'></div>";
+				$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
+				
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
