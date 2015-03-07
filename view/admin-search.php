@@ -136,7 +136,7 @@
 	/*
 	 * Display Search Form
 	 */
-	if (isset($_REQUEST["action"]) && @$_REQUEST["action"] !== "massEmail"  && @$_REQUEST["action"] !== "cartEmpty" ) {
+	if (isset($_REQUEST["action"]) && @$_REQUEST["action"] !== "massEmail"  && @$_REQUEST["action"] !== "cartEmpty"  && !isset($_SESSION['cartArray']) ) {
 	} else {
 
 		// Search Form
