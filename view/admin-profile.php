@@ -1245,6 +1245,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if (isset($_GET["ProfileGender"])) {
 									$ProfileGender = $_GET["ProfileGender"];
 									rb_custom_fields(1, 0, $ProfileGender, true);
+									if(!isset($_POST)){
 									echo"<script type=\"text/javascript\">
 										jQuery(document).ready(function(){
 											jQuery(':input,#formAddProfile')
@@ -1255,6 +1256,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											jQuery('#ProfileGender option[value=".$ProfileGender."]').attr('selected','selected');
 										});
 										</script>";
+									}
 								} else {
 									rb_custom_fields(1, $ProfileID, $ProfileGender, true);
 								}
