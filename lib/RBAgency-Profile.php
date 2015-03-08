@@ -2125,7 +2125,7 @@ class RBAgency_Profile {
 		 * Format Profile
 		 * Create list from IDs
 		 */
-		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = ''){
+		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = '',$plain = false){
 
 			global $wpdb;
 
@@ -2170,15 +2170,17 @@ class RBAgency_Profile {
 			 * initialize html
 			 */
 			$displayHTML ="";
-			$displayHTML .= "<div id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
+			$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0\" >\n";
+			if(!$plain){
 			$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
 			$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+			}
 			$displayActions = "";  
 			$type = get_query_var('type');  
 
-			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
+			if(!$plain && class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
 
 
 				$displayActions = "<div class=\"rb_profile_tool\">";
@@ -2242,18 +2244,6 @@ class RBAgency_Profile {
 			}
 				$displayHTML .=  $displayActions;
 
-			/*if(function_exists("rb_agency_get_miscellaneousLinks")){
-				// Check if user is registered as Model/Talent
-				$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",rb_agency_get_current_userid()));
-				$is_model_or_talent = $wpdb->num_rows;
-
-				$disp = "";
-
-				if(is_user_logged_in() && ($is_model_or_talent > 0 || current_user_can("manage_options"))){
-						$displayHTML .= rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
-
-				}
-			}*/
 			$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
 
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";

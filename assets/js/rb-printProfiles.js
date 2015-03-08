@@ -22,7 +22,11 @@ jQuery(document).ready(function(){
 	});
 
 	jQuery(".link-profile-pdf").click(function(){
-			jQuery("body").prepend("<form style=\"display:none;\"  target=\"blank\" action=\""+rb_agency.site_url+"/profile-pdf/\" method=\"post\" id=\"rb-download-pdf\"><textarea name=\"profiles\"><div id=\"profile-list\">"+jQuery("#profile-list").html()+"</div></textarea></form>");
-			jQuery("#rb-download-pdf").submit();
+		    var a = [];
+			jQuery.each(jQuery(".rbprofile-list"),function(){
+				a.push(jQuery(this).attr("data-profileid"));
+			});
+			window.location.href = rb_agency.site_url+"/profile-pdf/?profiles="+a.join(",");
+			
 	});
 });

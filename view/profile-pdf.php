@@ -1,4 +1,5 @@
 <?php
+global $wpdb;
 /**
 *This page that will generate HTML to feed on domPDF
 */
@@ -7,56 +8,102 @@
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
 	
 	// PDF layout style
-    $pdf_style = "<link rel=\"stylesheet\" href=\"".RBAGENCY_PLUGIN_URL .'assets/css/style.css'."\"/>
+    $pdf_style = "
     <style type=\"text/css\">
-		body *{visibility: hidden;}
-		body{background: #fff;}
-		#profile-list,#profile-list *{ visibility: visible;}
-		#profile-list{position: absolute;top:20px;}
-		#profile-list .rb_profile_tool,#profile-list .rb_profile_tool * {visibility: hidden;display:none;}
-		#profile-list .rbprofile-list{float:left;display: block !important;margin-bottom:-30px;}
-		#profile-list .rbprofile-list .details{height: 56px;}
-		#profile-list .rbprofile-list .image{height: 205px;}
-		.rb-print-header, .rb-print-footer,.rb-print-header *, .rb-print-footer *,.rb-print, .rb-print *{display: block !important;visibility: visible !important;}
-		.rb-print-header{height:30px;margin-top:0px;clear:both;}
-		.rb-print-header img{height:30px;float:left;}
-		.rb-print-footer{height:30px;font-size:14px;margin-bottom: 30px;clear:both;}
-		.print-clear{clear:both;}
+    	#profile-list{width:95%;margin:auto;}
+		#profile-list .rbprofile-list {
+			width: 33.33333333333333%;
+			padding: 10px 20px 20px 0px;
+			font-size: 100%;
+			max-width: 200px;
+			min-width: 150px;
+			margin-bottom: 15px;
+			position: relative;
+			vertical-align: top;
+			display:  block;
+			float:left;
+			box-sizing: border-box;
+			line-height: normal;
+			}
+			#profile-list .rbprofile-list .image {
+			width: 100%;
+			height: 230px;
+			overflow: hidden;
+			text-align: center;
+			position: relative;
+			}
+			.image a{
+				display: block;
+				width: 100%;
+				height: 100%;
+			}
+			a{text-decoration:none;color:#000}
 	</style>";
 	// Call Header
-	$header='
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	$header='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title> Print</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="Robots" content="noindex, nofollow" />
+	<title>Print</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="Robots" content="noindex, nofollow" />
 	</head>
 	<body  style="background: #fff;">';
 	// Call Footer
-	$footer='</body>
-	</html>';
-
+	$footer='</body></html>';
+    $footerBlock ='<img style="margin-top:60px;width:320px; height:67px;" src="'.$rb_agency_option_agencylogo.'">';
+	 
 	// Catch Profile HTML elements
-	$result = isset($_POST["profiles"])?stripslashes($_POST["profiles"]):"";
+	$profiles = isset($_GET["profiles"])?stripslashes($_GET["profiles"]):"";
 	
-	$htmlFile = "DirectBooking-Search-Result-".date("Ymd")."-".rand(100,200).".html"; 
-	$pdfFile = str_replace(" ","_",$htmlFile).$fileFormat.".pdf";
-	$pdfFile = str_replace(".html","",$pdfFile);
+	$sql = "SELECT 
+					profile.ProfileID,
+					profile.ProfileGallery,
+					profile.ProfileContactDisplay,
+					profile.ProfileContactNameFirst,
+					profile.ProfileContactNameLast,
+					profile.ProfileDateBirth,
+					profile.ProfileDateCreated,
+					profile.ProfileLocationState,
+					profile.ProfileLocationCountry,
+					profile.ProfileIsActive,
+					(SELECT media.ProfileMediaURL 
+						FROM ". table_agency_profile_media ." media  
+						WHERE  profile.ProfileID = media.ProfileID  
+						AND media.ProfileMediaType = \"Image\"  
+						AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL 
+					FROM ". table_agency_profile ." profile 
+						WHERE
+					profile.ProfileID IN(".$profiles.")
+					";
 
-	$blog_title = strtolower(str_replace(" ","_",get_bloginfo('name')));
-	$pdfFile = "$blog_title-".$pdfFile;
+	$dataList = $wpdb->get_results($sql,ARRAY_A);
+	
+	$results = "<div id=\"profile-list\">";
+	$i = 1;
+	foreach ($dataList as $profile) {
+		$results .= RBAgency_Profile::search_formatted($profile,array(),array(),'',true);
+		if($i%3==0){
+			$results .= "<div style=\"clear:both;\"></div>";
+		}
+		if($i%9==0 || $profile === end($dataList)){
+			$results .= "<div style=\"clear:both;\"></div>";
+			$results .= $footerBlock; 
+		}
+		$i++;
+	}
+	$results .= "</div>";
 
-	$toRedirect = RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
-	$path = "wp-content/plugins/rb-agency/ext/dompdf/htmls/";
+	$content  = $header.$pdf_style.$results.$footer;
+	$fileName = "Search-Result_".date("Y-m-d")."-".rand(100,200);
+	$htmlFile = $fileName.".html"; 
+	$pdfFile  = $fileName.".pdf";
+
+	$toRedirect = RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=10x16&output_filed=".$pdfFile."&input_file=".$htmlFile;
+	$path = RBAGENCY_PLUGIN_DIR."ext/dompdf/htmls/";
 
 	$fp = fopen($path.$htmlFile,"w");
-	fwrite($fp,$header);
-	fwrite($fp,$result);
-	fwrite($fp,$footer);
-	fwrite($fp,$pdf_style);
+	fwrite($fp,$content);
 	fclose($fp);
 
 	header("Location: $toRedirect");
-
 ?>

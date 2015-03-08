@@ -304,7 +304,7 @@ def("DOMPDF_FONT_HEIGHT_RATIO", 1.1);
  * Allows people to disabled CSS float support
  * @var bool
  */
-def("DOMPDF_ENABLE_CSS_FLOAT", false);
+def("DOMPDF_ENABLE_CSS_FLOAT", true);
 
 /**
  * Prepend the DOMPDF autoload function the spl_autoload stack
