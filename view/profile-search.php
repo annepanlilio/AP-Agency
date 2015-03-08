@@ -20,9 +20,9 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	}
 
 	//".(!$add_sidebar?"site-content":primary_class())."
-	echo "<div id=\"primary\" class=\"".primary_class()."\">\n";
-	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
-	echo "		<div id=\"profile-search\"  "; echo post_class(); echo ">\n";
+	echo "<div id=\"primary\" class=\"site-main  ".primary_class()."\">\n";
+	echo "	<div id=\"content\" role=\"main\" >\n";
+	echo "		<div id=\"profile-search\" "; echo post_class(); echo ">\n";
 
 	// P R I V A C Y FILTER ====================================================
 	if ( //Must be logged to view model list and profile information
@@ -43,7 +43,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		/*
 		 * Set Title
 		 */
-
+		echo '			<header class="entry-header">';
 			if (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") {
 				echo "			<h1 class=\"entry-title\">". __("Search Results", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
 			} else {
@@ -53,12 +53,13 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 						echo "	<h1 class=\"entry-title\">". __("Advanced Search", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
 				}
 			}
-
+		echo '			</header>';
+		
 		/*
 		 * IF: Search Results
 		 */
 
-			echo "	<div id=\"profile-search-results\">\n";
+			echo "	<div id=\"profile-search-results\" class=\"entry-content\">\n";
 
 			if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles" || (isset($_GET["form_action"]) && $_GET["form_action"] == "search_profiles")) {
 
