@@ -10,12 +10,11 @@ global $wpdb;
 	// PDF layout style
     $pdf_style = "
     <style type=\"text/css\">
-    	#profile-list{width:95%;margin:auto;}
-		#profile-list .rbprofile-list {
-			width: 33.33333333333333%;
+    	#profile-list .rbprofile-list {
+			width: 35%;
 			padding: 10px 20px 20px 0px;
-			font-size: 100%;
-			max-width: 200px;
+			font-size: 14px;
+			max-width: 150px;
 			min-width: 150px;
 			margin-bottom: 15px;
 			position: relative;
@@ -27,7 +26,7 @@ global $wpdb;
 			}
 			#profile-list .rbprofile-list .image {
 			width: 100%;
-			height: 230px;
+			height: 180px;
 			overflow: hidden;
 			text-align: center;
 			position: relative;
@@ -36,6 +35,7 @@ global $wpdb;
 				display: block;
 				width: 100%;
 				height: 100%;
+				background-repeat:no-repeat;
 			}
 			a{text-decoration:none;color:#000}
 	</style>";
@@ -50,7 +50,7 @@ global $wpdb;
 	<body  style="background: #fff;">';
 	// Call Footer
 	$footer='</body></html>';
-    $footerBlock ='<img style="margin-top:60px;width:320px; height:67px;" src="'.$rb_agency_option_agencylogo.'">';
+    $footerBlock ='<img style="height:30px page-break-before:always" src="'.$rb_agency_option_agencylogo.'">';
 	 
 	// Catch Profile HTML elements
 	$profiles = isset($_GET["profiles"])?stripslashes($_GET["profiles"]):"";
@@ -82,12 +82,14 @@ global $wpdb;
 	$i = 1;
 	foreach ($dataList as $profile) {
 		$results .= RBAgency_Profile::search_formatted($profile,array(),array(),'',true);
-		if($i%3==0){
+		if($i%4==0){
 			$results .= "<div style=\"clear:both;\"></div>";
 		}
-		if($i%9==0 || $profile === end($dataList)){
+		if($i%12==0 || $profile === end($dataList)){
 			$results .= "<div style=\"clear:both;\"></div>";
 			$results .= $footerBlock; 
+			$results .= "<div style=\"clear:both;\"></div>";
+			
 		}
 		$i++;
 	}
@@ -98,7 +100,7 @@ global $wpdb;
 	$htmlFile = $fileName.".html"; 
 	$pdfFile  = $fileName.".pdf";
 
-	$toRedirect = RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=10x16&output_filed=".$pdfFile."&input_file=".$htmlFile;
+	$toRedirect = RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=10x20&output_filed=".$pdfFile."&input_file=".$htmlFile;
 	$path = RBAGENCY_PLUGIN_DIR."ext/dompdf/htmls/";
 
 	$fp = fopen($path.$htmlFile,"w");
