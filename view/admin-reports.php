@@ -1165,6 +1165,7 @@ elseif ($ConfigID == 80) {
 	{
 		$obj_csv->import_to_db();   /*Store profile data*/
 		$form_display_flag = true;
+
 	}
 	
 	if( $form_display_flag == true )
@@ -2047,7 +2048,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 		echo '<input type="hidden" value ="'.$custom_header.'" name="custom_header"/>
 			  <input type="hidden" value ="'.$total_header.'" name="total_header"/>
 			  <input type="hidden" value ="'.$file_path.'" name="file_path"/>
-			  <input type="hidden" value ="'.@$clone.'" name="clone"/>
+			  <input type="hidden" value ="'.(isset($clone)?$clone:'').'" name="clone"/>
 			  <input type="hidden" value ="'.implode(",",$arr_headers).'" name="headers"/> ';
 		$default = 1;
 		$heads = 17;
@@ -2114,12 +2115,11 @@ class RBAgencyCSVXLSImpoterPlugin {
 	 * @return void
 	 */ 
 	function import_to_db(){
-
 		global $wpdb;
   	    $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int)$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
         
          // We already created a dynamic profile fields validation
-		//$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast DESC,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
+		$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast DESC,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
 		$c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";       
 	
 
@@ -2334,10 +2334,12 @@ class RBAgencyCSVXLSImpoterPlugin {
 											}else{
 												 echo "<div class='wrap' style='color:#FF0000'><ul><li> User Name:- ".$vv["ProfileContactDisplay"]." & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Not Imported. Email Already Used on site.</b></li></ul></div>";
 											}
-			     }
+		}
 			
 		if(isset($_REQUEST['clone']) && $_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
-
+        
+        
+		
 	}
 	/**
 	 * Upload Form

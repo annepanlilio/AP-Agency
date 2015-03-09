@@ -186,7 +186,7 @@ global $wpdb;
 	         	 $type = "CSV";
 	         	 $extension = "csv";
 	         }elseif($_POST["file_type"] == "xls"){
-	          	 $type = "Excel2007";
+	          	 $type = "Excel5";
 	         	 $extension = "xls";
 	        }
 				
