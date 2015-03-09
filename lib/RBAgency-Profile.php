@@ -1842,7 +1842,7 @@ class RBAgency_Profile {
 				$all_html .= $paginate->show();
 				$all_html .= "<div class='clear'></div>";
 				$type = get_query_var("type");
-				if(!in_array($type,array("favorite","casting"))){
+				if(!in_array($type,array("favorite","castingjobs","casting"))){
 					$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
 				}
 				if(self::$error_debug){
@@ -1859,8 +1859,9 @@ class RBAgency_Profile {
 			 */
 				$no_rec_html = '<div class=\"rbclear\"></div>' . __("No Profiles Found", RBAGENCY_TEXTDOMAIN);
 				$no_rec_html .= '<div class=\"rbclear\"></div>';
+				if(!in_array($type,array("favorite","castingjobs","casting"))){
 				$no_rec_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
-				
+				}
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$no_rec_html);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
