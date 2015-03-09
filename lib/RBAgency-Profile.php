@@ -97,15 +97,20 @@ class RBAgency_Profile {
 					jQuery("#rst_btn").rset();
 
 					<?php if(!is_admin()){ ?>
-						jQuery.fn.css_ = function(){
+						// TODO: What's this?
+						/*jQuery.fn.css_ = function(){
 							var el = this.get(0); var st; var returns = {};
-							if(window.getComputedStyle){
+							if(typeof(window.getComputedStyle) !== "undefined" && typeof(el) !== "undefined"){
 								var camel = function(a,b){return b.toUpperCase();}
 								st = window.getComputedStyle(el, null);
 								try{
 									for(var s=0; s < st.length; s++){
 										var css_style = st[s];
-										var cml = css_style.replace(/\-([a-z])/, camel);
+										var cml = null;
+										
+										if(typeof(css_style.replace) !== "undefined"){
+											 cml = css_style.replace(/\-([a-z])/, camel);
+										}
 										var vl = st.getPropertyValue(css_style);
 										returns[cml] = vl;
 									}
@@ -114,14 +119,14 @@ class RBAgency_Profile {
 								}
 								return returns;
 							}
-							if(el.currentStyle){
+							if(typeof(el) !== "undefined" && el.currentStyle){
 								st = el.currentStyle;
 								for(var prop in style){ returns[prop] = st[prop];}
 								return returns;
 							}
 							return this.css();
 						}
-						jQuery("#rst_btn").css(jQuery("#sr_pr").css_());
+						jQuery("#rst_btn").css(jQuery("#sr_pr").css_());*/
 					<?php } ?>
 				});
 				</script>
