@@ -1454,6 +1454,11 @@ class RBAgency_Profile {
 					$sql = "SELECT 
 					profile.ProfileID,
 					profile.ProfileGallery,
+					profile.ProfileContactEmail,
+					profile.ProfileContactPhoneCell,
+					profile.ProfileContactPhoneWork,
+					profile.ProfileContactPhoneHome,
+					profile.ProfileContactWebsite,
 					profile.ProfileContactDisplay,
 					profile.ProfileContactNameFirst,
 					profile.ProfileContactNameLast,
@@ -2154,7 +2159,11 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_printpdf		= isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
 				$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
 				$rb_agency_option_detail_state 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
-
+				$rb_agency_option_show_email_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0;
+				$rb_agency_option_show_contact_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0;
+				$rb_agency_option_show_email_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0;
+				$rb_agency_option_show_contact_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0;
+			
 			// TODO: Check Logic
 			$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "-";
 			$ProfileContactNameLast = isset($dataList["ProfileContactNameLast"]) ? $dataList["ProfileContactNameLast"]: "-";
@@ -2243,11 +2252,46 @@ class RBAgency_Profile {
 			}
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 			if ($rb_agency_option_profilelist_expanddetails) {
-				$displayHTML .= "     <div class=\"details\"><span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
-				if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
-					$stateTitle = rb_agency_getStateTitle($dataList["ProfileLocationState"],true);
-					$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"])>0 && !empty($stateTitle)?", ":" ")."</span><span class=\"details-state\">". $stateTitle ."</span>";
-				}
+				$displayHTML .= "<div class=\"details\">";
+					$displayHTML .= "<span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
+					if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
+						$stateTitle = rb_agency_getStateTitle($dataList["ProfileLocationState"],true);
+						$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"])>0 && !empty($stateTitle)?", ":" ")."</span>";
+						$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
+					}
+					$type = get_query_var("type");
+					
+					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
+						if($rb_agency_option_show_email_search_result){
+							if(!empty($dataList["ProfileContactEmail"]))
+							$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
+						}
+						if($rb_agency_option_show_contact_search_result){
+							if(!empty($dataList["ProfileContactPhoneWork"]))
+							$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
+							if(!empty($dataList["ProfileContactPhoneHome"]))
+							$displayHTML .= "<span class=\"details-contact-phonehome contact\"><label>Phone Home:</label> ". $dataList["ProfileContactPhoneHome"] ."</span>";
+							if(!empty($dataList["ProfileContactPhoneCell"]))
+							$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
+							if(!empty($dataList["ProfileContactWebsite"]))
+							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">Visit Website</a></span>";
+						}
+					}else{
+						if($rb_agency_option_show_email_listing){
+							if(!empty($dataList["ProfileContactEmail"]))
+							$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
+						}
+						if($rb_agency_option_show_contact_listing){
+							if(!empty($dataList["ProfileContactPhoneWork"]))
+							$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
+							if(!empty($dataList["ProfileContactPhoneHome"]))
+							$displayHTML .= "<span class=\"details-contact-phonehome contact\"><label>Phone Home:</label> ". $dataList["ProfileContactPhoneHome"] ."</span>";
+							if(!empty($dataList["ProfileContactPhoneCell"]))
+							$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
+							if(!empty($dataList["ProfileContactWebsite"]))
+							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">Visit Website</a></span>";
+						}
+					}
 				$displayHTML .= "</div>\n";
 			}
 				$displayHTML .=  $displayActions;

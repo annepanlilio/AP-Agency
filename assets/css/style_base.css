@@ -70,6 +70,9 @@
 #profile-list .rbprofile-list .profile-info .details {
 	font-size: 13px;
 }
+#profile-list .rbprofile-list .profile-info .details span{ 
+   display: block;
+}
 #profile-list .rbprofile-list .profile-info h3.name {
 	margin: 0;
 	margin: 5px 0;
