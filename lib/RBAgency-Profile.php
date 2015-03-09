@@ -1980,46 +1980,46 @@ class RBAgency_Profile {
 
 					// private into 
 					$displayHtml .=  "            <td class=\"ProfileStats column-ProfileStats\">\n";
-
+					$displayHtml .=  "<ul style='margin: 0px;list-type:none;'>" ;
+					
 					if (!empty($data['ProfileContactEmail'])) {
-							$displayHtml .=  "<div><strong>Email:</strong> <a href=\"mailto:".$data['ProfileContactEmail']."\">". $data['ProfileContactEmail'] ."</a></div>\n";
+							$displayHtml .=  "<li><strong>Email:</strong> <a href=\"mailto:".$data['ProfileContactEmail']."\">". $data['ProfileContactEmail'] ."</a></li>\n";
 					}
 					if (!empty($data['ProfileLocationStreet'])) {
-							$displayHtml .=  "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
+							$displayHtml .=  "<li><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</li>\n";
 					}
 					if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
-							$displayHtml .=  "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_stateabv_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</div>\n";
+							$displayHtml .=  "<li><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_stateabv_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</li>\n";
 					}
 					if (!empty($data['ProfileLocationCountry'])) {
 							$country = (rb_agency_getCountryTitle($data['ProfileLocationCountry']) != false) ? rb_agency_getCountryTitle($data['ProfileLocationCountry']):"";
-							$displayHtml .=  "<div><strong>". __("Country", RBAGENCY_TEXTDOMAIN) .":</strong> ". $country ."</div>\n";
+							$displayHtml .=  "<li><strong>". __("Country", RBAGENCY_TEXTDOMAIN) .":</strong> ". $country ."</li>\n";
 					}
 					if (!empty($data['ProfileDateBirth'])) {
-							$displayHtml .=  "<div><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
+							$displayHtml .=  "<li><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</li>\n";
 					}
 					if (!empty($data['ProfileDateBirth']) && $data['ProfileDateBirth'] !== "0000-00-00") {
-							$displayHtml .=  "<div><strong>". __("Birthdate", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</div>\n";
+							$displayHtml .=  "<li><strong>". __("Birthdate", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</li>\n";
 					}
 					if (!empty($data['ProfileContactWebsite'])) {
-							$displayHtml .=  "<div><strong>". __("Website", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactWebsite'] ."</div>\n";
+							$displayHtml .=  "<li><strong>". __("Website", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactWebsite'] ."</li>\n";
 					}
 					if (!empty($data['ProfileContactPhoneHome'])) {
-							$displayHtml .=  "<div><strong>". __("Phone Home", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneHome'] ."</div>\n";
+							$displayHtml .=  "<li><strong>". __("Phone Home", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneHome'] ."</li>\n";
 					}
 					if (!empty($data['ProfileContactPhoneCell'])) {
-							$displayHtml .=  "<div><strong>". __("Phone Cell", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</div>\n";
+							$displayHtml .=  "<li><strong>". __("Phone Cell", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneCell'] ."</li>\n";
 					}
 					
 					if (!empty($data['ProfileContactPhoneWork'])) {
-							$displayHtml .=  "<div><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
+							$displayHtml .=  "<li><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</li>\n";
 					}
-
 					$displayHtml .= rb_agency_getProfileCustomFields_admin($ProfileID ,$data['ProfileGender'],'1,2,3');
-
+					$displayHtml .= "</ul>";
 					$displayHtml .=  "            </td>\n";
 					// public info
 					$displayHtml .=  "            <td class=\"ProfileDetails column-ProfileDetails\">\n";
-					$displayHtml .=  "<ul style='margin: 0px;'>" ;
+					$displayHtml .=  "<ul style='margin: 0px;list-type:none;'>" ;
 
 					if (!empty($data['ProfileGender'])) {
 						$displayHtml .=  "<li><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</li>\n";
