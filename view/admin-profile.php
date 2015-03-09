@@ -2100,7 +2100,10 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	$results =$wpdb->get_results($query,ARRAY_A);
 	$count = $wpdb->num_rows;
 	foreach ($results as $data) {
-		echo "<option value=\"" . $data['DataTypeID'] . "\" " . selected($_GET['ProfileType'], $data["DataTypeID"]) . "\">" . $data['DataTypeTitle'] . "</option>\n";
+		echo "<option value=\"" . $data['DataTypeID'] . "\" " . selected(isset($_GET['ProfileType'])?$_GET['ProfileType']:"", $data["DataTypeID"]) . "\">" . $data['DataTypeTitle'] . "</option>\n";
+	}
+	if(!isset($selectedVisible)){
+		$selectedVisible = "";
 	}
 	echo "              </select></span>\n";
 	echo "              <span>" . __("Status", RBAGENCY_TEXTDOMAIN) . ":\n";
@@ -2122,7 +2125,10 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	$count = $wpdb->num_rows;
 	foreach ($results as $data) {
 		if (isset($data['ProfileLocationCity']) && !empty($data['ProfileLocationCity'])) {
-			echo "<option value=\"" . $data['ProfileLocationCity'] . "\" " . selected($selectedCity, $data["ProfileLocationCity"]) . "\">" . $data['ProfileLocationCity'] . ", " . strtoupper($dataLocation["ProfileLocationState"]) . "</option>\n";
+			if(!isset($selectedCity)){
+				$selectedCity = "";
+			}
+			echo "<option value=\"" . $data['ProfileLocationCity'] . "\" " . selected($selectedCity, $data["ProfileLocationCity"]) . "\">" . $data['ProfileLocationCity'] . ", " . strtoupper(isset($dataLocation["ProfileLocationState"])?$dataLocation["ProfileLocationState"]:"") . "</option>\n";
 		}
 	}
 	echo "              </select></span>\n";
@@ -2132,7 +2138,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	$query2 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . " ORDER BY GenderID";
 	$results2 =$wpdb->get_results($query2,ARRAY_A);
 	foreach ($results2 as  $dataGender) {
-		echo "<option value=\"" . $dataGender["GenderID"] . "\"" . selected($_GET["ProfileGender"], $dataGender["GenderID"], false) . ">" . $dataGender["GenderTitle"] . "</option>";
+		echo "<option value=\"" . $dataGender["GenderID"] . "\"" . selected(isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"", $dataGender["GenderID"], false) . ">" . $dataGender["GenderTitle"] . "</option>";
 	}
 	echo "              </select></span>\n";
 	echo "              <span class=\"submit\"><input type=\"submit\" value=\"" . __("Filter", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" /></span>\n";
