@@ -30,7 +30,9 @@
 			$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 			$rb_agency_option_profilelist_sidebar = isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0;
-
+			$rb_agency_option_profilelist_expanddetails_year = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
+			$rb_agency_option_profilelist_expanddetails_month = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
+			$rb_agency_option_profilelist_expanddetails_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
 			// Layout Type
 			$rb_agency_option_layoutprofile = isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0;
 				$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
@@ -96,7 +98,11 @@
 			$ProfileContactPhoneWork	=stripslashes($data['ProfileContactPhoneWork']);
 			$ProfileGender    			=stripslashes($data['ProfileGender']);
 			$ProfileDateBirth	    	=stripslashes($data['ProfileDateBirth']);
-			$ProfileAge 				= rb_agency_get_age($ProfileDateBirth);
+			if($rb_agency_option_profilelist_expanddetails_year || $rb_agency_option_profilelist_expanddetails_day || $rb_agency_option_profilelist_expanddetails_month){
+				$ProfileAge 				= rb_agency_get_age($ProfileDateBirth);
+			}else{
+				$ProfileAge = "";
+			}
 			$ProfileLocationCity		=stripslashes($data['ProfileLocationCity']);
 			$ProfileLocationState		=stripslashes($data['ProfileLocationState']);
 			$ProfileLocationZip			=stripslashes($data['ProfileLocationZip']);
