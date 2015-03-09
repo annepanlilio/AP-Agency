@@ -643,7 +643,7 @@ class RBAgency_Profile {
 				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">\n";
 					echo "				<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\"  />\n"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
-					$is_casting_page = get_query_var("rbgroup");
+					$is_casting_page = get_query_var("rbgroup"); 
 					if ($type == 1) {
 						 if(is_admin() === false){
 							echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
@@ -1841,8 +1841,10 @@ class RBAgency_Profile {
 				$all_html .= "<div id='profile-list'>".$profile_list."</div>";
 				$all_html .= $paginate->show();
 				$all_html .= "<div class='clear'></div>";
-				$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
-				
+				$type = get_query_var("type");
+				if(!in_array($type,array("favorite","casting"))){
+					$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
+				}
 				if(self::$error_debug){
 					self::$error_checking[] = array('search_result_public',$all_html);
 					echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
