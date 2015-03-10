@@ -1510,6 +1510,11 @@ class RBAgency_Profile {
 					profile.ProfileLocationCountry,
 					profile.ProfileGender,
 					profile.ProfileIsActive,
+					profile.ProfileContactEmail,
+					profile.ProfileContactPhoneCell,
+					profile.ProfileContactPhoneWork,
+					profile.ProfileContactPhoneHome,
+					profile.ProfileContactWebsite,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
 
 					// Do we need the custom fields table?
@@ -1994,6 +1999,10 @@ class RBAgency_Profile {
 					if (!empty($data['ProfileLocationCountry'])) {
 							$country = (rb_agency_getCountryTitle($data['ProfileLocationCountry']) != false) ? rb_agency_getCountryTitle($data['ProfileLocationCountry']):"";
 							$displayHtml .=  "<li><strong>". __("Country", RBAGENCY_TEXTDOMAIN) .":</strong> ". $country ."</li>\n";
+					}
+					if (!empty($data['ProfileLocationState'])) {
+							$State = (rb_agency_getStateTitle($data['ProfileLocationState']) != false) ? rb_agency_getStateTitle($data['ProfileLocationState']):"";
+							$displayHtml .=  "<li><strong>". __("State", RBAGENCY_TEXTDOMAIN) .":</strong> ". $State ."</li>\n";
 					}
 					if (!empty($data['ProfileDateBirth'])) {
 							$displayHtml .=  "<li><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</li>\n";
