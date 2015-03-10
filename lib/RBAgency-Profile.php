@@ -2269,7 +2269,8 @@ class RBAgency_Profile {
 						$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
 					}
 					$type = get_query_var("type");
-					
+				
+				if(is_user_logged_in()){	
 					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
 						if($rb_agency_option_show_email_search_result){
 							if(!empty($dataList["ProfileContactEmail"]))
@@ -2301,6 +2302,7 @@ class RBAgency_Profile {
 							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">Visit Website</a></span>";
 						}
 					}
+				}
 				$displayHTML .= "</div>\n";
 			}
 				$displayHTML .=  $displayActions;
