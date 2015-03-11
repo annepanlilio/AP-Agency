@@ -1653,7 +1653,7 @@
 						$measurements_label = "<span class=\"label options-".$resultCustom->ProfileCustomOptions."\">". $label ."</span>";
 
 						/*if($resultCustom->ProfileCustomOptions == 3){
-						*/	
+						*/	 
 							$value = rb_get_imperial_metrics($resultCustom->ProfileCustomValue,$resultCustom->ProfileCustomOptions);
 							$display .= "<li class=\"height-".$resultCustom->ProfileCustomValue." profilecustomid_".$resultCustom->ProfileCustomID." ctype_1_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$value."</li>\n";
 						/*} elseif($resultCustom->ProfileCustomOptions == 2){ // kg
@@ -3800,14 +3800,18 @@
 	function rb_get_imperial_metrics($value,$sub_unit = 1,$label = true){
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
-		$rb_agency_option_old_unittype = isset($rb_agency_options_arr['rb_agency_option_old_unittype'])?$rb_agency_options_arr['rb_agency_option_old_unittype']:0;
+		$rb_agency_option_old_unittype = isset($rb_agency_options_arr['rb_agency_option_old_unittype'])?$rb_agency_options_arr['rb_agency_option_old_unittype']:'';
 		
 		if ($rb_agency_option_unittype == 0){ // Metric
 			
 			if($sub_unit == 1 ){ // inch to cm
-				 $heightraw = $value;
-				 $heightcm = $heightraw * 2.48;
-				 return $heightcm.($label?" ".__("cm", RBAGENCY_TEXTDOMAIN):"");
+				if(!empty($rb_agency_option_old_unittype)){
+					 $heightraw = $value;
+					 $heightcm = $heightraw * 2.48;
+					 return $heightcm.($label?" ".__("cm", RBAGENCY_TEXTDOMAIN):"");
+				}else{
+					 return $value.($label?" ".__("cm", RBAGENCY_TEXTDOMAIN):"");
+				}
 			}elseif($sub_unit == 2){ // lb to kg
 				 $weightraw = $value;
 				 $weightkg = ceil($weightraw / 2.2046);
