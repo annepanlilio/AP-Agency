@@ -3813,9 +3813,13 @@
 					 return $value.($label?" ".__("cm", RBAGENCY_TEXTDOMAIN):"");
 				}
 			}elseif($sub_unit == 2){ // lb to kg
+				if(!empty($rb_agency_option_old_unittype)){
 				 $weightraw = $value;
 				 $weightkg = ceil($weightraw / 2.2046);
 				 return $weightkg.($label?" ".__("kg", RBAGENCY_TEXTDOMAIN):"");
+				}else{
+					 return $value.($label?" ".__("kg", RBAGENCY_TEXTDOMAIN):"");
+				}
 			}
 			return $value;
 			
