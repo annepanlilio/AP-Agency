@@ -17,7 +17,21 @@
 	<a href="<?php echo admin_url("plugin-install.php?tab=plugin-information&amp;plugin=rb-agency&amp;section=changelog&amp;TB_iframe=true&amp;width=772&amp;height=317"); ?>" class="thickbox" title="RB Agency">
 	View version <?php echo $rb_remote_version;?> details
 	</a> or 
-	<a href="<?php echo admin_url("update.php?action=upgrade-plugin&amp;plugin=rb-agency/rb-agency.php&amp;_wpnonce=b7f6e11f4a");?>">update now</a>.
+	<?php 
+	$action = 'upgrade-plugin';
+	$slug = 'rb-agency';
+	$update_url = wp_nonce_url(
+	    add_query_arg(
+	        array(
+	            'action' => $action,
+	            'plugin' => $slug
+	        ),
+	        admin_url( 'update.php' )
+	    ),
+	    $action.'_'.$slug
+	);
+	?>
+	<a href="<?php echo $update_url;?>">update now</a>.
 	</div>
 	<?php endif; ?>
 	<?php 
