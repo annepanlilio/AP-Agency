@@ -2268,16 +2268,17 @@ class RBAgency_Profile {
 			$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 			if ($rb_agency_option_profilelist_expanddetails) {
 				$displayHTML .= "<div class=\"details\">";
-					$displayHTML .= "<span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
+				$displayHTML .= "<span class=\"details-merged\">";
+				$displayHTML .= "<span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
 					if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
 						$stateTitle = rb_agency_getStateTitle($dataList["ProfileLocationState"],true);
 						$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"])>0 && !empty($stateTitle)?", ":" ")."</span>";
 						$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
 					}
 					$type = get_query_var("type");
-				
+				$displayHTML .= "</span>";
 				if(is_user_logged_in()){	
-					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
+					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result",'rb-pdf')) || $plain){
 						if($rb_agency_option_show_email_search_result){
 							if(!empty($dataList["ProfileContactEmail"]))
 							$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
@@ -2290,7 +2291,7 @@ class RBAgency_Profile {
 							if(!empty($dataList["ProfileContactPhoneCell"]))
 							$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
 							if(!empty($dataList["ProfileContactWebsite"]))
-							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">Visit Website</a></span>";
+							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">".($type == "rb-pdf"?$dataList["ProfileContactWebsite"]:"Visit Website")."</a></span>";
 						}
 					}else{
 						if($rb_agency_option_show_email_listing){
@@ -2305,7 +2306,7 @@ class RBAgency_Profile {
 							if(!empty($dataList["ProfileContactPhoneCell"]))
 							$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
 							if(!empty($dataList["ProfileContactWebsite"]))
-							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">Visit Website</a></span>";
+							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">".($type == "rb-pdf"?$dataList["ProfileContactWebsite"]:"Visit Website")."</a></span>";
 						}
 					}
 				}

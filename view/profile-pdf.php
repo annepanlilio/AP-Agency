@@ -10,6 +10,7 @@ global $wpdb;
 	// PDF layout style
     $pdf_style = "
     <style type=\"text/css\">
+    	#profile-list{background:#fff;}
     	#profile-list .rbprofile-list {
 			width: 35%;
 			padding: 10px 20px 20px 0px;
@@ -38,6 +39,8 @@ global $wpdb;
 				background-repeat:no-repeat;
 			}
 			a{text-decoration:none;color:#000}
+			.details-email,.details,.details-merged{font-size:10px;  word-wrap:break-word;}
+			.contact{display:block;font-size:10px;word-wrap:break-word;}
 	</style>";
 	// Call Header
 	$header='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -66,6 +69,11 @@ global $wpdb;
 					profile.ProfileLocationState,
 					profile.ProfileLocationCountry,
 					profile.ProfileIsActive,
+					profile.ProfileContactEmail,
+					profile.ProfileContactPhoneCell,
+					profile.ProfileContactPhoneWork,
+					profile.ProfileContactPhoneHome,
+					profile.ProfileContactWebsite,
 					(SELECT media.ProfileMediaURL 
 						FROM ". table_agency_profile_media ." media  
 						WHERE  profile.ProfileID = media.ProfileID  
