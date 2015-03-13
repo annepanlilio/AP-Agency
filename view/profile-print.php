@@ -26,7 +26,7 @@ global $wpdb;
 	<div id="print_wrapper" style="width: 887px;">
 		<div id="print_logo" style="float: left; width: 50%;">
 			<?php if(!empty($rb_agency_option_agencylogo)){ ?>
-			  <img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" />
+			  <img style="height:50px;" src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" />
 			<?php }else{ ?>
 			<?php echo $rb_agency_option_agencyname; ?>
 			<?php } ?>
@@ -167,7 +167,7 @@ global $wpdb;
 			}
 			
 			// Show Cart
-			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media $filter ORDER BY ProfileContactNameFirst";
+			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media $filter  GROUP BY  profile.ProfileID ORDER BY ProfileContactNameFirst";
 			$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
 			$count =  count($results);
 			if ($count < 1) {
@@ -183,7 +183,7 @@ global $wpdb;
 
 
 			// Show Cart
-			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") ORDER BY ProfileContactNameFirst ASC";
+			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (". $cartString .") GROUP BY  profile.ProfileID ORDER BY ProfileContactNameFirst ASC";
 			$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
 			$count = count($results);
 
