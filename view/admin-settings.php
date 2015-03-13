@@ -1137,91 +1137,37 @@ elseif ($ConfigID == 2) {
  * Manage Style
  */
 
-	// Get the file
-	$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style.css";
-
-
-	/*
-	 * Save File
-	 */
-
-		// Update File
-		if (isset($_POST["action"]) && $_POST["action"] == "saveChanges") {
-			$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"w") or exit("<p>Unable to open file to write!  Please edit via FTP</p>");
-			$rb_agency_stylesheet_string = stripslashes($_POST["rb_agency_stylesheet_string"]);
-			fwrite($rb_agency_stylesheet_file,$rb_agency_stylesheet_string,strlen($rb_agency_stylesheet_string));
-		}
-
-
-	/*
-	 * Ensure Stylesheet Exists
-	 */
-
-		if (file_exists($rb_agency_stylesheet)) {
-			// File Exists, check when it was modified last.
-			echo "<div id=\"message\" class=\"updated\"><p>Style last updated on " . date ("F d Y H:i:s.", filemtime($rb_agency_stylesheet)) .".</p></div>";
-
-		} else { // File Does Not Exist
-			$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style_base.css";
-			echo "<div id=\"message\" class=\"error\"><p>Stylesheet not setup, please click <strong>Save Changes</strong> below to initialize.</p></div>";
-		}
-
-
-	/*
-	 * Open File & Get Text
-	 */
-
-		// Open File
-		$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"r") or exit("Unable to open file to read!");
-
-		// Initialize Stgring
-		$rb_agency_stylesheet_string = "";
-
-		// Get all lines from css file
-		while(!feof($rb_agency_stylesheet_file)) {
-			$rb_agency_stylesheet_string .= fgets($rb_agency_stylesheet_file);
-		}
-
-		// Close File
-		fclose($rb_agency_stylesheet_file);
-
-
-	/*
-	 * Edit
-	 */
-
-		// Override
-		if (isset($_GET["mode"]) && $_GET["mode"] == "override") {
-			echo "<h1>OVERRIDE</h1>";
-			$rb_agency_options_arr = get_option('rb_agency_options');
-			if ($rb_agency_options_arr['rb_agency_option_defaultcss']) {
-				$rb_agency_stylesheet_string = $rb_agency_options_arr['rb_agency_option_defaultcss'];
-			}
-		}
-
-
-	echo "		<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
-	echo "		<table class=\"form-table\">\n";
-	echo "		<tbody>\n";
-	echo "		 <tr valign=\"top\">\n";
-	echo "		   <th scope=\"row\">". __('Stylesheet', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
-	echo "		   <td><textarea name=\"rb_agency_stylesheet_string\" style=\"width: 100%; height: 300px;\" />". $rb_agency_stylesheet_string ."</textarea></td>\n";
-	echo "		 </tr>\n";
-	echo "		</table>\n";
-	echo "		<input type=\"hidden\" name=\"action\" value=\"saveChanges\" />\n";
-	echo "		<input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
-	echo "		<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes'); echo "\" />\n";
-	echo "		</form>\n";
-
-	echo "<hr />NOTE: These forms must be saved seprately.  Only make changes to one at a time.";
-
-	/*
-	 * Update Options
-	 */
 		// Get Group
 		$rb_agency_options_arr = get_option('rb_agency_layout_options');
 
 		// Set Default Values
+		$rb_agency_value_stylesheet = $rb_agency_options_arr['rb_agency_value_stylesheet'];
+			// Open File & Get Base Style if not exists
+			if (!isset($rb_agency_value_stylesheet) || empty($rb_agency_value_stylesheet)) {
+
+				if (file_exists(RBAGENCY_PLUGIN_DIR ."assets/css/style.css")) {
+					// Use Custom
+					$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style.css";
+				} else { // Use Base
+					$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style_base.css";
+				}
+
+				// Open File
+				$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"r") or exit("Unable to open file to read!");
+
+				// Initialize Stgring
+				$rb_agency_stylesheet_string = "";
+
+				// Get all lines from css file
+				while(!feof($rb_agency_stylesheet_file)) {
+					$rb_agency_stylesheet_string .= fgets($rb_agency_stylesheet_file);
+				}
+
+				// Close File
+				fclose($rb_agency_stylesheet_file);
+
+				$rb_agency_value_stylesheet = $rb_agency_stylesheet_string;
+			}
 		$rb_agency_value_styleheader = $rb_agency_options_arr['rb_agency_option_styleheader'];
 		$rb_agency_value_stylefooter = $rb_agency_options_arr['rb_agency_option_stylefooter'];
 
@@ -1231,6 +1177,13 @@ elseif ($ConfigID == 2) {
 		echo "<form method=\"post\" action=\"options.php\">\n";
 		settings_fields( 'rb-agency-settings-layout-group' ); 
 		echo "<table class=\"form-table\">\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Stylesheet', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Header', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
+		echo "   <td><textarea name=\"rb_agency_layout_options[rb_agency_value_stylesheet]\">". $rb_agency_value_stylesheet ."</textarea></td>\n";
+		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Extra HTML', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
