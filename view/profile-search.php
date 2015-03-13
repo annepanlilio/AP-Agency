@@ -143,10 +143,28 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	echo "</div><!-- #primary -->\n"; // #primary
 
 
-	if($add_sidebar && !in_array(get_query_var("type"),array("search-basic","search-advanced","search-result"))){
+	if($add_sidebar && !in_array(get_query_var("type"),array("search-basic","search-advanced"))){
 	echo "<div id=\"secondary\" class=\"widget-area\">\n";
 	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
+	echo "<aside id=\"text-3\" class=\"widget widget_text\">";
+	echo "<h3 class=\"widget-title\">Search Profiles</h3>";
+	echo "<div class=\"textwidget\">";
 	echo RBAgency_Profile::search_form('', '', $type, 0);
+	echo "</div>";
+	echo "</aside>";
+	// Show Search Form
+	echo "<aside id=\"text-3\" class=\"widget widget_text\">";
+	echo "<h3 class=\"widget-title\">Featured Profile</h3>";
+	echo "<div class=\"textwidget\">";
+	if (class_exists('RBAgency_Profile')) { 
+				$atts = array(/*'type' => $type,*/"count"=> 1);
+				echo RBAgency_Profile::view_featured($atts);
+	}else {
+				echo "Invalid Function (Profile Search)";
+	}
+	echo "</div>";
+	echo "</aside>";
+	
 	echo "	</div><!-- #content -->\n"; // #content
 	echo "</div><!-- #secondary -->\n"; // #secondary
 	}
