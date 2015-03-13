@@ -915,6 +915,12 @@ class RBAgency_Profile {
 					if ( isset($atts["datebirth_max"]) && !empty($atts["datebirth_max"])) {
 						$atts["age_max"] = $atts["datebirth_max"];
 					}
+					if ( isset($atts["age_start"]) && !empty($atts["age_start"])) {
+						$atts["age_min"] = $atts["age_start"];
+					}
+					if ( isset($atts["age_stop"]) && !empty($atts["age_stop"])) {
+						$atts["age_max"] = $atts["age_stop"];
+					}
 					if ( isset($atts["type"]) && !empty($atts["type"])) {
 						$atts["profiletype"] = $atts["type"];
 					}
