@@ -717,5 +717,36 @@ global $wpdb;
 		// Updating version number!
 		update_option('rb_agency_version', "2.4.1");
 	}
+	if (substr(get_option('rb_agency_version'), 0, 3) == "2.4.x") {
+		// Updating version number!
+		update_option('rb_agency_version', "2.4.x");
 
+		// **Repair wp_agency_customfield_mux checkbox fields for new.Diamondagency.com
+		// Create a temporary table and insert concatinated ProfileCustomValue. 
+		// Checkbox type field is the target that needs to be concatinated and merged in a single row.
+		// Affected by migration and wrong field setup since version 1.9.2
+		$wpdb->query("CREATE TABLE IF NOT EXISTS 
+					  wp_agency_customfield_mux_temp ( INDEX(ProfileCustomMuxID) ) 
+					ENGINE=MyISAM 
+					AS (SELECT  ProfileCustomMuxID, ProfileID, 
+					GROUP_CONCAT(ProfileCustomValue SEPARATOR ',') as ProfileCustomValue,
+					ProfileCustomID 
+			FROM wp_agency_customfield_mux WHERE ProfileCustomID = 20 GROUP BY ProfileID)");
+
+		// Delete old checkboxes value from 'wp_agency_customfield_mux'
+		$wpdb->query("DELETE FROM wp_agency_customfield_mux WHERE ProfileCustomID = 20");
+
+		// Now insert the corrected custom values to match the custom field "checkbox" filter
+		$wpdb->query("INSERT INTO wp_agency_customfield_mux 
+				  (ProfileID, 
+				  	ProfileCustomValue,
+				  	ProfileCustomID)
+			SELECT  ProfileID, 
+					GROUP_CONCAT(ProfileCustomValue SEPARATOR ','),
+					ProfileCustomID 
+			FROM wp_agency_customfield_mux_temp WHERE ProfileCustomID = 20 GROUP BY ProfileID");
+
+		// Now let's drop the temporary table 'wp_agency_customfield_mux_temp' after succesfully inserted
+		$wpdb->query("DROP TABLE wp_agency_customfield_mux_temp");
+	}
 ?>
