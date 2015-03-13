@@ -14,6 +14,9 @@
 	body{
 		background: #fff;
 	}
+	#profile-list{
+		background: #fff;
+	}
 	#profile-list,#profile-list *{
 		 visibility: visible;
 	}

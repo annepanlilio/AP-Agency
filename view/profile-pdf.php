@@ -82,6 +82,7 @@ global $wpdb;
 					FROM ". table_agency_profile ." profile 
 						WHERE
 					profile.ProfileID IN(".$profiles.")
+					ORDER BY FIELD(profile.ProfileID, ".$profiles.")
 					";
 
 	$dataList = $wpdb->get_results($sql,ARRAY_A);
