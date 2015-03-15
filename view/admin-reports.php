@@ -1083,8 +1083,29 @@ elseif ($ConfigID == 12) {
 elseif ($ConfigID == 81) 
 {
 	echo "<h2>". __(" Export Database", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
-	
 	echo " <form action=\"".RBAGENCY_PLUGIN_URL."view/export-Profile-Database.php\" method=\"post\">";
+	echo "<input checked=\"checked\" type=\"radio\" name=\"export-profile\" value=\"template\">Download Template<br/>";
+	$total_profiles = $wpdb->get_row("SELECT count(*) as total_profiles FROM ".table_agency_profile."");
+	$from = 1;
+	$to = 0;
+	$count = isset($_GET["count"]) && !empty($_GET["count"])?$_GET["count"]:100;
+	$last = round($total_profiles->total_profiles/$count);
+	$loop_count = $count;
+	$x = 0;
+	for($a = 1; $a<=$last; $a++) {
+		$x++;
+		$from = ($a==1)?1:$loop_count+1;
+
+		$to = ($a*$count);
+		if($x == $last){
+			$to = $total_profiles->total_profiles;
+		}
+		
+		echo "<input  required type=\"radio\" name=\"export-profile\" value=\"".($from)."-".$to."\">Export Profiles(".($from)."-".$to.")<br/>";
+		
+		$loop_count = (($a==1)?50:$loop_count + 50);
+		
+	}
 	echo "      <select name=\"file_type\" required>";
 	echo "          <option value=\"\">Select file format</option>";
 	echo "          <option value=\"xls\">XLS</option>";

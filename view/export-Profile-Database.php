@@ -44,10 +44,15 @@ global $wpdb;
 	            	$head_count++;
 	            }
             }
+
+            $limit_template = isset($_POST["export-profile"]) && !empty($_POST["export-profile"])?" LIMIT ".str_replace("-",",",$_POST["export-profile"]):"";
+            if(isset($_POST["export-profile"]) && $_POST["export-profile"] == "template"){
+            	$limit_template = "LIMIT 1";
+            }
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
 			/*Profile data*/
 			$row_data = array();
-			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile, ARRAY_A);
+			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile." ORDER BY ProfileContactNameFirst,ProfileContactNameLast ASC $limit_template ", ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
 
 			foreach ($row_data as $key => $data) 
@@ -192,13 +197,15 @@ global $wpdb;
 				
 			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,  $type);
 			$objWriter->save(str_replace('.php', '.'.$extension, __FILE__));
+			$profile_paginate = isset($_POST["export-profile"]) && !empty($_POST["export-profile"])?"-profiles-".$_POST["export-profile"]:"";
+            
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 
 			header("Content-Type: application/force-download");
 			header("Content-Type: application/octet-stream");
 			header("Content-Type: application/download");
-			header("Content-Disposition: attachment;filename=".$_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time()).'.'.$extension); 
+			header("Content-Disposition: attachment;filename=".$_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time()).$profile_paginate .'.'.$extension); 
 			header("Content-Transfer-Encoding: binary ");
 			ob_clean();
 			flush();
