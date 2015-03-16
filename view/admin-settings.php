@@ -2250,7 +2250,7 @@ elseif ($ConfigID == 5) {
 
 
 				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
-						echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
+						echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;</h3>
 						<div class=\"postbox\"  style=\"width:350px;float:left;border:0px solid black;\">";
 				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
 				 echo" <div class=\"inside\"> ";
@@ -2364,10 +2364,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			
 			echo "\n";
 		echo " 
-		<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
 		<div class=\"postbox \"  style=\"width:350px;float:left;border:0px solid black;\">
-			 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>
+		<!--	 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>
+		-->
 		<div class=\"inside\"> ";
+		if(isset($_GET["action"]) !== "editRecord"){
+		 	echo "<h3 class=\"hndle\" style=\"margin-top:-0px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>";
+		}
+		
 	}
 	if(isset($_GET["action"]) == "editRecord"){
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileCustomID=".$_GET["ProfileCustomID"]."&ConfigID=".$_GET["ConfigID"]."\">\n";
@@ -2753,7 +2757,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											
 												
 											} 
-											
+
 												echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12 ul' ).sortable();});</script>";
 									
 											echo "<div  id=\"editfield_add_more_options_2\"></div><br/>";
@@ -2895,10 +2899,16 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			</div>
 </div>
 <div class="all-custom_fields" style="width:700px;float:left;border:0px solid black;margin-left:15px;">
+<style type="text/css">
+	#rb-cfield tr td {
+	  border-bottom: 2px dotted #ccc;
+	}
+</style>
 	<?php
 	
 	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
-	
+	echo " <span>Select a custom field to record.</span>";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;<a style=\"float: right;  margin-top: -20px;\" class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a>";
 		/******** Sort Order ************/
 		$sort = "";
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
@@ -2923,7 +2933,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		}
 	
 		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=5\">\n";	
-		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
+		echo "<table id=\"rb-cfield\" cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
