@@ -2030,10 +2030,10 @@ elseif ($ConfigID == 5) {
 			$ProfileCustomOptions = $_POST["ProfileCustomOptions"];
 		}elseif($ProfileCustomType == 5){ //Checkbox
 			$pos = 0;
-			foreach($_POST["label"] as $key => $val){
-				if(!empty($_POST["label"]) && $_POST["label"] !=""  && !empty($val)){
+			foreach($_POST["option"] as $key => $val){
+				if(!empty($_POST["option"]) && $_POST["option"] !=""  && !empty($val)){
 					$pos++;		
-					if($pos!= count($_POST["label"])){ 
+					if($pos!= count($_POST["option"])){ 
 						$ProfileCustomOptions .= stripslashes($val)."|";
 					}else{
 						$ProfileCustomOptions .= stripslashes($val);
@@ -2042,10 +2042,10 @@ elseif ($ConfigID == 5) {
 			}
 		}elseif($ProfileCustomType == 6){ //RadioButton
 			$pos = 0;
-				foreach($_POST["label"] as $key => $val){
-				if(!empty($_POST["label"])  && $_POST["label"] !="" && !empty($val)){
+				foreach($_POST["option"] as $key => $val){
+				if(!empty($_POST["option"])  && $_POST["option"] !="" && !empty($val)){
 					$pos++;	
-					if($pos!= count($_POST["label"])){ 
+					if($pos!= count($_POST["option"])){ 
 						$ProfileCustomOptions .= $val."|";
 					}else{
 						$ProfileCustomOptions .= $val;
@@ -2391,13 +2391,13 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									<option value=\"3\">Dropdown</option>
 									<option value=\"4\">Textbox</option>
 									<option value=\"5\">Checkbox</option>
-									<option value=\"6\">Radiobutton</option>";
+									<option value=\"6\">Radio Button</option>";
 									if($rb_agency_options_arr['rb_agency_option_unittype']==1){
-										echo"     <option value=\"7\" id=\"1\">Imperial(ft/in/lb)</option>";
+										echo"     <option value=\"7\" id=\"1\">Imperial (ft/in/lb)</option>";
 									}else{
-										echo"     <option value=\"7\" id=\"0\">Metric(cm/kg)</option>";
+										echo"     <option value=\"7\" id=\"0\">Metric (cm/kg)</option>";
 									}
-									echo "<option value=\"9\">Dropdown(Multi-Select)</option>";
+									echo "<option value=\"9\">Dropdown (Multi-Select)</option>";
 									echo "<option value=\"10\">Date</option>";
 			echo"				</select>";
 			echo "			</td>
@@ -2532,13 +2532,13 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											<option value=\"3\" ". ($data1["ProfileCustomType"] == 3 ? 'selected=\"selected\"':'').">Dropdown</option>
 											<option value=\"4\" ". ($data1["ProfileCustomType"] == 4 ? 'selected=\"selected\"':'').">Textbox</option>
 											<option value=\"5\" ". ($data1["ProfileCustomType"] == 5 ? 'selected=\"selected\"':'').">Checkbox</option>
-											<option value=\"6\" ". ($data1["ProfileCustomType"] == 6 ? 'selected=\"selected\"':'').">Radiobutton</option>";
+											<option value=\"6\" ". ($data1["ProfileCustomType"] == 6 ? 'selected=\"selected\"':'').">Radio Button</option>";
 											if($rb_agency_options_arr['rb_agency_option_unittype']==1){
 												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Imperial (ft/in/lb)</option>";
 											}else{
 												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Metric (cm/kg)</option>";
 											}
-										  echo "<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown(Multi-Select)</option>";;
+										  echo "<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown (Multi-Select)</option>";;
 										  echo "<option value=\"10\" ". ($data1["ProfileCustomType"] == 10? 'selected=\"selected\"':'').">Date</option>";;
 										
 										  echo"  </select>
@@ -2709,8 +2709,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											echo "</td>";
 											echo "<td>";
 											 echo "<br/>";
-											 
-											 echo '<ul id="editfield_add_more_options_1">';
+											 echo "<div  id=\"editfield_add_more_options_12\">";
+											 echo '<ul style="list-style:type">';
 												$pos = 0;
 												foreach($data1 as $val1){
 													
@@ -2720,13 +2720,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													}
 												}
 											echo '</ul>'; 
+											echo '</div>';
 											//echo "<div  id=\"editfield_add_more_options_1\"></div>";
 											echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
 											echo "<br/>";	
 											echo "<br/>";	
 											
 											if(!empty($data2) && !empty($option2)){
-												echo "Labe:<input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/>";
+												echo "Label:<input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/>";
 											
 												$pos2 = 0;
 											echo '<ul id="editfield_add_more_options_1">';
@@ -2751,8 +2752,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												echo '</ul>'; 
 											
 												
-											}
+											} 
 											
+												echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12 ul' ).sortable();});</script>";
+									
 											echo "<div  id=\"editfield_add_more_options_2\"></div><br/>";
 											echo "</td>";
 									echo "</tr>";		
@@ -2785,17 +2788,24 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													  <tr>
 														  <td>&nbsp;</td>
 														   <td valign=\"top\">
-														   <ul>
+														   <div  id=\"editfield_add_more_options_12\">
+														   <ul style=\"list-style:none;\">
 														 ";
 										 foreach($array_customOptions_values as  $val){
-											   echo" <li>Value:<input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
+											   echo" <li>Option: <input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
 										 }
 										echo "</ul>";
-										echo "<div id=\"addcheckbox_field_1\"></div>";
-										echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
-										echo " </td>";
-										echo" </tr>";
+										echo "</div>";
+										//echo "<div id=\"addcheckbox_field_12\"></div>";
+										//echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
+										//echo "<div  id=\"editfield_add_more_options_12\"><ul style=\"list-style:none;\"></ul></div><br/>";
+										echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
 										
+										//echo "<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(12);\" >add more[+]</a>";	
+										echo " </td>";
+										echo " </tr>";
+										echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12 ul' ).sortable();});</script>";
+											
 								 }
 								  elseif($data1["ProfileCustomType"] == 6){	 //radio button
 									$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
@@ -2809,24 +2819,25 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												   <tr>
 														  <td>&nbsp;</td>
 														<td valign=\"top\">
-														 <br/>";
+														 <br/><div  id=\"editfield_add_more_options_12\"><ul  style=\"list-style:none;\">";
 										 foreach($array_customOptions_values as  $val){
 											 if(!empty($val)){
 											  $pos++;	
-											  echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
-											
-											  echo "<br/>";	
+											  //echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+											  echo" <li>Option: <input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
 											   }
 												 
 											
 										 }
 
-													 echo "</td>";
+													 echo "</ul></div></td>";
 												 echo "</tr>";
 												 
-										   echo "<div id=\"addcheckbox_field_1\"></div>";
-											echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
-											
+										   //echo "<div id=\"addcheckbox_field_1\"></div>";
+										    //echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
+										//echo "<div  id=\"editfield_add_more_options_12\"><ul style=\"list-style:none;\"></ul></div><br/>";
+										echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
+											echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12 ul' ).sortable();});</script>";
 											 
 								
 								
