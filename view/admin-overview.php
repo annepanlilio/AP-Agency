@@ -3,7 +3,7 @@ global $wpdb, $user_level;
 
 // Get Unit Type
 $rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
+$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
 get_currentuserinfo(); 
 
 ?>
@@ -20,32 +20,38 @@ get_currentuserinfo();
 					<h3><?php echo __("Welcome to RB Agency", RBAGENCY_TEXTDOMAIN ) ?>!</h3>
 					<p class="about-description"><?php echo __("We have added some resources below to help you get started.", RBAGENCY_TEXTDOMAIN ) ?></p>
 					<h4><?php echo __("Quick Links", RBAGENCY_TEXTDOMAIN ) ?></h4>
-					<ul>
+					<ul id="rbquick-links">
 						<?php
 						if (current_user_can("manage_options")) {
-							echo "<li><a href='?page=rb_agency_profiles' class=\"button-secondary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							// echo "<li><a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							echo "<li><a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a></li>";
 
 							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender, ARRAY_A);
 							$queryGenderCount = $wpdb->num_rows;
 
-							foreach($queryGenderResult as $fetchGender){
-								echo "<li><a class=\"button-secondary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", RBAGENCY_TEXTDOMAIN) ."</a></li>\n";
-							}
-							if($queryGenderCount < 1){
-							echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", RBAGENCY_TEXTDOMAIN) ."</li>\n";
-							} 
+							// echo "<li><a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Find profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							echo "<li><a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a></li>";
 
-							echo "<li><a href='?page=rb_agency_search' class=\"button-secondary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Find profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							foreach($queryGenderResult as $fetchGender){
+								echo "<li><a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", RBAGENCY_TEXTDOMAIN) ."</a></li>\n";
+							}
 							
-							echo "<li><a href='?page=rb_agency_interact_approvemembers' class=\"button-secondary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							if($queryGenderCount < 1){
+								echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", RBAGENCY_TEXTDOMAIN) ."</li>\n";
+							} 
+							
+							// echo "<li><a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							echo "<li><a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a></li>";
 						
 						}
 						?>
 					</ul>
 				</div>
 
-				<div class="welcome-panel-column" style="margin-left: 50px;">
-					<iframe src="http://player.vimeo.com/video/27752740" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+				<div id="welcome-video" class="welcome-panel-column">
+					<div class="rbvideo">
+						<iframe src="http://player.vimeo.com/video/27752740" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+					</div>
 				</div>
 
 			</div>
