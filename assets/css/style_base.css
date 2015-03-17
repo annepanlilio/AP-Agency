@@ -110,8 +110,18 @@
 	float: right;
 	padding: 5px 0px;
 }
+#results-options {
+	float: left;
+}
+#results-info {
+	float: right;
+}
+.rbsort {
+	margin-bottom: 10px;
+}
 .rbsort select {
-	margin-left: 5px;
+	margin-left: 0;
+	margin-right: 5px;
 	border-radius: 3px;
 }
 .rbfilter-letter {	

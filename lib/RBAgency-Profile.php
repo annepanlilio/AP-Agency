@@ -1695,55 +1695,14 @@ class RBAgency_Profile {
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$profile_list = "";
 				$all_html = "";
-				$all_html.='<div id="rbfilter-sort">';
+				// $all_html.='<div id="rbfilter-sort">';
 				$paginate = new RBAgency_Pagination;
 				$items = $wpdb->num_rows;
 				$count = $items;
 
+				$all_html.='<div id="results-options">';
 				$all_html.='	<div class="rbsort">';
-				
-			/*
-			 *  sorting options is activated if set on in admin/settings
-			 */
-			
-				if($rb_agency_option_profilelist_sortby && empty($castingcart) && strpos($_SERVER['REQUEST_URI'],'profile-favorite') <= -1){
 
-					// Enqueue our js script
-					wp_enqueue_script( 'list_reorder', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array('jquery'));
-
-					// Dropdown
-					
-					$all_html.='<label>Sort By: </label>
-							<select id="sort_by">
-								<option value="">Sort List</option>
-								<option value="1">Age</option>
-								<option value="2">Name</option>
-								<option value="3">Date Joined</option>
-								<option value="2">Display Name</option>
-							</select>
-							<select id="sort_option">
-								<option value="">Sort Options</option>
-							</select>';
-				}
-				$all_html.="	</div>";
-				$type = get_query_var('type');  
-
-			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1){
-
-				$all_html.="<div class=\"rb-cart-links\">";
-				$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
-				$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
-				$all_html.="</div>";
-			}
-
-			if($rb_agency_option_profilelist_printpdf == 1){
-				$all_html.="<div class=\"rb-cart-links\">";
-				$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">Print</a> <span class=\"link-separate\">|</span> ";
-				$all_html.="<a href=\"javascript:;\" class=\"link-profile-pdf\">Download PDF</a>";
-				$all_html.="</div>";
-				
-			}
-				$all_html.= "<hr />";
 				// RB Agency default paging variables
 				$page = get_query_var("paging");
 				$paging = get_query_var("paging");
@@ -1757,22 +1716,65 @@ class RBAgency_Profile {
 					$limit = (int)$rb_agency_option_profilelist_perpage;
 				
 				}
-					// Avoid double limits
-					$sql .= " LIMIT {$offset},{$limit}";
 
-					$results = $wpdb->get_results($sql,ARRAY_A);
-					$count = $wpdb->num_rows;
+				// Avoid double limits
+				$sql .= " LIMIT {$offset},{$limit}";
+
+				$results = $wpdb->get_results($sql,ARRAY_A);
+				$count = $wpdb->num_rows;
+				
+				unset($_REQUEST["search_profiles"]); //unset unwanted variable
+				$query = RBAgency_Common::http_build_query($_REQUEST);
+				$target = $query;
+				$paginate->items($items);
+				$paginate->limit($limit);
+				$paginate->target($_SERVER["REQUEST_URI"],$target);
+				$paginate->currentPage(!empty($paging)?$paging:1);
+				
+				
+			/*
+			 *  sorting options is activated if set on in admin/settings
+			 */
+			
+				if($rb_agency_option_profilelist_sortby && empty($castingcart) && strpos($_SERVER['REQUEST_URI'],'profile-favorite') <= -1){
+
+					// Enqueue our js script
+					wp_enqueue_script( 'list_reorder', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array('jquery'));
+
+					// Dropdown
 					
-					unset($_REQUEST["search_profiles"]); //unset unwanted variable
-					$query = RBAgency_Common::http_build_query($_REQUEST);
-					$target = $query;
-					$paginate->items($items);
-					$paginate->limit($limit);
-					$paginate->target($_SERVER["REQUEST_URI"],$target);
-					$paginate->currentPage(!empty($paging)?$paging:1);
-					if(!in_array(get_query_var("type"), array("favorite","casting"))){
-						$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
-					}
+					$all_html.='
+							<select id="sort_by">
+								<option value="">Sort List</option>
+								<option value="1">Age</option>
+								<option value="2">Name</option>
+								<option value="3">Date Joined</option>
+								<option value="2">Display Name</option>
+							</select>
+							<select id="sort_option">
+								<option value="">Sort Options</option>
+							</select>';
+				}
+				$all_html.="	</div>";
+				$all_html .= $paginate->show();
+				$all_html.="	</div>"; // #results-options
+				$type = get_query_var('type');
+
+				$all_html.='<div id="results-info">';
+
+				if(!in_array(get_query_var("type"), array("favorite","casting"))){
+					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
+				}
+
+			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1){
+
+				$all_html.="<div class=\"rb-cart-links\">";
+				$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
+				$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
+				$all_html.="</div>";
+			}
+			
+				
 				if ($count > 0){
 
 				$castingcart_results = array();
@@ -1832,6 +1834,13 @@ class RBAgency_Profile {
 					$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong><span class='count-display'>". (isset($count)?$count:0) ."</span></strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." <span class='items-display'>". (isset($items)?$items:0) ."</span> ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
 					$all_html .= "</div>\n";
 				}
+
+				if($rb_agency_option_profilelist_printpdf == 1){
+					$all_html.="<div class=\"results-links\">";
+					$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">Print</a> <span class=\"link-separate\">|</span> ";
+					$all_html.="<a href=\"javascript:;\" class=\"link-profile-pdf\">Download PDF</a>";
+					$all_html.="</div>";				
+				}				
 				
 				$all_html .= '<div id="profile-results-info">';
 				/*
@@ -1853,7 +1862,10 @@ class RBAgency_Profile {
 			/* 
 			 * wrap profile listing
 			 */
-				$all_html .= $paginate->show();
+				
+				$all_html .= '</div>'; // #results-info
+				$all_html .= '<br />';
+				$all_html .= '<hr />';
 				$all_html .= "<div id='profile-list'>".$profile_list."</div>";
 				$all_html .= $paginate->show();
 				$all_html .= "<div class='clear'></div>";
