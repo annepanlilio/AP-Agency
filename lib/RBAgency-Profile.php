@@ -1863,8 +1863,8 @@ class RBAgency_Profile {
 			 * wrap profile listing
 			 */
 				
-				$all_html .= '</div>'; // #results-info
-				$all_html .= '<br />';
+				$all_html .= '</div>'; // #results-info				
+				$all_html .= '<div class="rbclear"></div>';
 				$all_html .= '<hr />';
 				$all_html .= "<div id='profile-list'>".$profile_list."</div>";
 				$all_html .= $paginate->show();
