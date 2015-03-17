@@ -16,6 +16,7 @@
 	}
 	#profile-list{
 		background: #fff;
+		width: 100%;
 	}
 	#profile-list,#profile-list *{
 		 visibility: visible;
@@ -23,6 +24,7 @@
 	#profile-list{
 		position: absolute;
 		top:20px;
+		left:0px;
 	}
 	#profile-list .rb_profile_tool,#profile-list .rb_profile_tool * {
 			visibility: hidden;

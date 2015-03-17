@@ -56,7 +56,7 @@ global $wpdb;
     $footerBlock ='<img style="height:30px page-break-before:always" src="'.$rb_agency_option_agencylogo.'">';
 	 
 	// Catch Profile HTML elements
-	$profiles = isset($_GET["profiles"])?stripslashes($_GET["profiles"]):"";
+	$profiles = isset($_GET["target"])?stripslashes($_GET["target"]):"";
 	
 	$sql = "SELECT 
 					profile.ProfileID,
