@@ -161,7 +161,7 @@ class RBAgency_Profile {
 						echo "				</div>\n";
 				}
 
-				// Show Profile Type
+				// Show Classification
 				if ( ($rb_agency_option_formshow_type > 0) || isset($search_layout) && $search_layout == "admin" || ( isset($search_layout) &&  $search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
 						echo "				<div class=\"rbfield rbselect rbsingle rb_profiletype\" id=\"rb_profiletype\">\n";
 						echo "					<label for=\"type\">". __("Type", RBAGENCY_TEXTDOMAIN) . "</label>\n";
@@ -1521,6 +1521,7 @@ class RBAgency_Profile {
 					profile.ProfileContactPhoneWork,
 					profile.ProfileContactPhoneHome,
 					profile.ProfileContactWebsite,
+					profile.ProfileType,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
 
 					// Do we need the custom fields table?
@@ -2065,7 +2066,7 @@ class RBAgency_Profile {
 						} else {
 							$ptype = retrieve_title($data['ProfileType']);
 						}
-						$displayHtml .= "<li><strong>". __("Profile Type", RBAGENCY_TEXTDOMAIN) .":</strong> ".$ptype."</li>\n";
+						$displayHtml .= "<li><strong>". __("Classification", RBAGENCY_TEXTDOMAIN) .":</strong> ".$ptype."</li>\n";
 					}
 
 					$displayHtml .= rb_agency_getProfileCustomFields_admin($ProfileID ,$data['ProfileGender']);
