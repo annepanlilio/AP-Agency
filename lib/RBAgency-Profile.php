@@ -1871,7 +1871,8 @@ class RBAgency_Profile {
 				$all_html .= $paginate->show();
 				$all_html .= "<div class='clear'></div>";
 				$type = get_query_var("type");
-				if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
+				// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
+				if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
 					$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
 				}
 				if(self::$error_debug){
