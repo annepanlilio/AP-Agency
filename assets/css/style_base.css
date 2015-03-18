@@ -133,6 +133,15 @@
 .rbfilter-letter a {
 	padding: 5px;
 }
+.rb-search-result-links a {
+	  background: #999;
+	  border: none;
+	  padding: 5px 15px;
+	  border-radius: 3px;
+	  font-weight: bold;
+	  color: #333;
+	  margin-bottom: 10px;
+}
 
 /* Pagination */
 .rbpagination-top {
