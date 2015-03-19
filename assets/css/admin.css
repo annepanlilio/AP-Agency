@@ -186,9 +186,9 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 .welcome-panel-column#welcome-video { margin-right: 15px; margin-bottom:30px; float:right; width:40% }
 
 /* Admin Search Results */
-#profile-search-results table tr th, #profile-search-results table tr td { border-bottom: 1px solid #f1f1f1; }
-#profile-search-results table tr.inactive { background: #e0979f; }
-#profile-search-results table tr.active { background: #a9d59d; }
-#profile-search-results table tr.archived { background: #c0c0c0; }
-#profile-search-results table tr.pending { background: #e8f6ff; }
-#profile-search-results table tr.active-notvisible { background: #d2d49b; }
+table.widefat tr th, table.widefat tr td { border-bottom: 1px solid #e5e5e5; }
+table.widefat tr.inactive { background: #e0979f; }
+table.widefat tr.active { background: #a9d59d; }
+table.widefat tr.archived { background: #c0c0c0; }
+table.widefat tr.pending { background: #e8f6ff; }
+table.widefat tr.active-notvisible { background: #d2d49b; }

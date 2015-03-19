@@ -2256,18 +2256,26 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 			$ProfileContactDisplay = $ProfileContactNameLast;
 		}
 
-		if ($data['ProfileIsActive'] == 0) {
-			// Inactive
-			$rowColor = " style=\"background: #FFEBE8\"";
-		} elseif ($data['ProfileIsActive'] == 1) {
-			// Active
-			$rowColor = "";
-		} elseif ($data['ProfileIsActive'] == 2) {
-			// Archived
-			$rowColor = " style=\"background: #dadada\"";
-		} elseif ($data['ProfileIsActive'] == 3) {
-			// Pending Approval
-			$rowColor = " style=\"background: #DD4B39\"";
+
+		/*
+		 * Profile Type Row Color
+		 */
+		$statusClass = '';
+		$profileStatus = $data['ProfileIsActive'];
+		if($profileStatus == 0){
+			$statusClass = "inactive";
+		}
+		if($profileStatus == 1){
+			$statusClass = "active";
+		}
+		if($profileStatus == 2){
+			$statusClass = "archived";
+		}
+		if($profileStatus == 3){
+			$statusClass = "pending";
+		}
+		if($profileStatus == 4){
+			$statusClass = "active-notvisible";
 		}
 
 		/*
@@ -2306,7 +2314,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
   
 		$ProfileGender = $fetchProfileGender["GenderTitle"];
 
-		echo "    <tr" . $rowColor . ">\n";
+		echo "    <tr class=\"".$statusClass."\">\n";
 		echo "        <td class=\"check-column\" scope=\"row\">\n";
 		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\"  data-name=\"".$ProfileContactNameFirst." ". $ProfileContactNameLast."\" class=\"administrator\" id=\"" . $ProfileID . "\" name=\"" . $ProfileID . "\"/>\n";
 		echo "        </td>\n";
