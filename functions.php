@@ -442,7 +442,7 @@
 					$years = "";
 				} else {
 					
-						$label_y = $years . " yr(s)";
+						$label_y = "<span>" . $years . " yr(s)</span>";
 				}
 			}
 			if($detail_month == 1|| is_admin()){
@@ -450,11 +450,11 @@
 				if($months == 0){
 					$label_m = "";
 				} else {
-					$label_m = $months . " mo(s)";
+					$label_m = "<span>" . $months . " mo(s)</span>";
 				}
 			}
 			if($detail_day == 1|| is_admin()){
-				$label_d = $days." day(s)";
+				$label_d = "<span>" . $days." day(s)</span>";
 			}
 
 			return  implode(" ",array($label_y,$label_m,$label_d));

@@ -185,6 +185,9 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 #rbquick-links li:nth-child(odd) { clear: left; }
 .welcome-panel-column#welcome-video { margin-right: 15px; margin-bottom:30px; float:right; width:40% }
 
+/* Admin Manage Profiles */
+table.widefat tr td.column-ProfilesProfileDate span { display: block; }
+
 /* Admin Search Results */
 table.widefat tr th, table.widefat tr td { border-bottom: 1px solid #e5e5e5; }
 table.widefat tr.inactive { background: #e0979f; }
