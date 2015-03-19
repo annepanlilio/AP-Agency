@@ -595,7 +595,7 @@ class RBAgency_Casting {
 			 } // end is not resend / is new
 
 							$profileimage = "";  
-							$profileimage .='<p><div style="width:550px;min-height: 170px;">';
+							$profileimage .='<div id="searchsaved-emailsent" class="searchsaved-profiles">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
 							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
 							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".implode(",",array_filter(array_unique(explode(",",$data['SearchProfileID'])))).") GROUP BY(profile.ProfileID)";
@@ -620,20 +620,23 @@ class RBAgency_Casting {
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
-								$profileimage .= "<div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
-								$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
-								$profileimage .= $ProfileContactDisplay ; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
-								$profileimage .= "<br /><a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+								$profileimage .= "<div class=\"saved-profile\">";
+								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);								
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
-								}else{
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
-								}
-								$profileimage .= "</div>\n";
+									$profileimage .= "<div class=\"thumbnail\">\n";
+									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+									$profileimage .= "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&w=110\"/></a>";
+									$profileimage .= "</div>\n";
+								} else {
+									$profileimage .= "<div class=\"thumbnail\">\n";
+									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+									$profileimage .= "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."&w=110\"/></a>";
+									$profileimage .= "</div>\n";
+								}								
 								$profileimage .= "</div>\n";
 							}
-							$profileimage .="</div></p>";
+							$profileimage .="</div>";
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
@@ -665,14 +668,14 @@ class RBAgency_Casting {
 
 			//if($isSent){
 				if(!empty($SearchMuxFromEmail)){
-					$email_error .= "<div style=\"margin:15px;white-space: pre;\">";
+					$email_error .= "<div style=\"margin:15px;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
 					$email_error .= "Email successfully sent from <strong>". $SearchMuxFromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
 					$email_error .= "Message sent: <p>". stripcslashes(make_clickable($SearchMuxMessage)) ."</p>";
 					$email_error .= "</div>";
 					$email_error .= "</div>";
 				} else {
-					$email_error .= "<div style=\"margin:15px;white-space: pre;\">";
+					$email_error .= "<div style=\"margin:15px;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
 					$email_error .= "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
 					$email_error .= "Message sent: <p>". stripcslashes(make_clickable($SearchMuxMessage)) ."</p>";
