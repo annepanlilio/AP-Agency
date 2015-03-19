@@ -1968,6 +1968,23 @@ class RBAgency_Profile {
 					$ProfileID = $data['ProfileID'];
 					$isInactive = '';
 					$isInactiveDisable = '';
+					$statusClass = '';
+					$profileStatus = $data['ProfileIsActive'];
+					if($profileStatus == 0){
+						$statusClass = "inactive";
+					}
+					if($profileStatus == 1){
+						$statusClass = "active";
+					}
+					if($profileStatus == 2){
+						$statusClass = "archived";
+					}
+					if($profileStatus == 3){
+						$statusClass = "pending";
+					}
+					if($profileStatus == 4){
+						$statusClass = "active-notvisible";
+					}
 					if ($data['ProfileIsActive'] == 0 || empty($data['ProfileIsActive'])){
 						$isInactive = 'style="background: #FFEBE8"';
 						$isInactiveDisable = "disabled=\"disabled\"";
@@ -1980,7 +1997,7 @@ class RBAgency_Profile {
 					}else{
 						$checkboxDisable ="";
 					}
-					$displayHtml .=  "        <tr ". $isInactive.">\n";
+					$displayHtml .=  "        <tr class=\"".$statusClass."\">\n";
 					$displayHtml .=  "            <th class=\"check-column\" scope=\"row\" >\n";
 					$displayHtml .=  "                <input ".$checkboxDisable." type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
 					$displayHtml .=  "            </th>\n";
