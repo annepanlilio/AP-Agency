@@ -163,7 +163,7 @@ $siteurl = get_option('siteurl');
 		
 		<div style="padding:10px;max-width:580px;float:left;">
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
-				<div id="searchsaved-profiles">
+				<div id="searchsaved-email" class="searchsaved-profiles">
 					<?php
 					foreach ($results as $data2 ) {
 						$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
@@ -182,18 +182,20 @@ $siteurl = get_option('siteurl');
 					} elseif ($rb_agency_option_profilenaming == 5) {
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
-					echo " <div class=\"saved-profile\">";
-					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);					
+					echo " <div class=\"saved-profile\">";					
+					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+					
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 						echo "<div class=\"thumbnail\">";
-						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
+						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+						echo "<img attr-type=\"custom\" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
 						echo "</div>\n";
 					} else {
 						echo "<div class=\"thumbnail\">";
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-						echo "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+						// echo "<img src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=110\" /></a>";
 						echo "</div>\n";
 					}					
 					echo "</div>\n";
@@ -271,7 +273,8 @@ $siteurl = get_option('siteurl');
 			<a href="<?php echo admin_url("admin.php?page=rb_agency_search");?>" class="button button-primary">Add profiles</a>
        		</div>
 			<form method="post" action="" name="removeForm">
-				<div style="border-top:1px solid #ccc;margin-top:20px;margin-bottom:10px;">
+				<hr/>
+				<div id="searchsaved-edit" class="searchsaved-profiles">
 					<?php
 					foreach ($results as $data2 ) {
 						$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
@@ -290,22 +293,25 @@ $siteurl = get_option('siteurl');
 					} elseif ($rb_agency_option_profilenaming == 5) {
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
-					echo " <div style=\"background:black; color:white;float: left; max-width: 133px; height: 250px; margin: 2px; overflow:hidden;  \">";
-					echo " <div style=\"margin:10px;max-width:350px; max-height:300px; \">";
+					
+					echo " <div class=\"saved-profile\">";
 					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
-					echo $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
-					echo "<br /><a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-					if(isset($arr_thumbnail[$data2["ProfileID"]])){
-									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
-					}else{
-						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=113&h=170\" /></a>";
-					}
-					echo "</div>\n";
+					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);					
+					if(isset($arr_thumbnail[$data2["ProfileID"]])){												
+						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+						echo " <div class=\"thumbnail\">";
+						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+						echo "<img attr-type=\"custom\" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
+					} else {
+						echo " <div class=\"thumbnail\">";
+						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=150\" /></a>";
+						echo "</div>\n";
+					}					
 					echo "</div>\n";
 					}
 					?>
-				</div>
+				</div> <!-- #searchsaved-edit -->
 			</form>
 			
 		</div>
