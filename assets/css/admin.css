@@ -195,3 +195,10 @@ table.widefat tr.active { background: #a9d59d; }
 table.widefat tr.archived { background: #c0c0c0; }
 table.widefat tr.pending { background: #e8f6ff; }
 table.widefat tr.active-notvisible { background: #d2d49b; }
+
+/* Admin Saved Searches */
+#searchsaved-profiles { height: 500px; overflow-y: scroll;   padding: 0 0 10px 10px; background: #EAEAEA; border: 1px solid #dedede; }
+#searchsaved-profiles .saved-profile { float: left; max-width: 110px; height: 175px; margin: 10px 10px 0 0; }
+#searchsaved-profiles .saved-profile span { display: block;margin-bottom: 5px; }
+#searchsaved-profiles .saved-profile .thumbnail { max-width: 100%; height: 150px; overflow: hidden; }
+#searchsaved-profiles .saved-profile .thumbnail img { max-width: 100%; }

@@ -163,7 +163,7 @@ $siteurl = get_option('siteurl');
 		
 		<div style="padding:10px;max-width:580px;float:left;">
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
-				<div style="height:550px; width:580px; overflow-y:scroll;">
+				<div id="searchsaved-profiles">
 					<?php
 					foreach ($results as $data2 ) {
 						$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
@@ -182,21 +182,24 @@ $siteurl = get_option('siteurl');
 					} elseif ($rb_agency_option_profilenaming == 5) {
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
-					echo " <div style=\"background:black; color:white;float: left; max-width: 100px; height: 180px; margin: 2px; overflow:hidden;  \">";
-					echo " <div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
-					echo $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
-					echo "<br /><a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+					echo " <div class=\"saved-profile\">";
+					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);					
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
-									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+						echo "<div class=\"thumbnail\">";
+						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
 						echo "<img attr-type=\"custom\" style=\"max-width:130px; max-height:150px; \"  \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
-					}else{
+						echo "</div>\n";
+					} else {
+						echo "<div class=\"thumbnail\">";
+						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						echo "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
-					}
-					echo "</div>\n";
+						echo "</div>\n";
+					}					
 					echo "</div>\n";
 					}
 					?>
-				</div>
+				</div> <!-- #searchsaved-profiles -->
 		</div>
 		<?php
 
