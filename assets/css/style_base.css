@@ -18,7 +18,7 @@
 }
 #profile-list .rbprofile-list {
 	width: 33.33333333333333%;
-	padding: 10px 20px 20px 0px;
+	padding: 10px 20px 0 0;
 	font-size: 100%;
 	max-width: 200px;
 	min-width: 150px;
@@ -65,7 +65,7 @@
 	text-decoration: none;
 }
 #profile-list .rbprofile-list .profile-info {
-	
+	padding: 5px 0px;
 }
 #profile-list .rbprofile-list .profile-info .details {
 	font-size: 13px;
@@ -75,7 +75,6 @@
 }
 #profile-list .rbprofile-list .profile-info h3.name {
 	margin: 0;
-	margin: 5px 0;
 	font-size: 13px;
 	overflow: hidden;
 	line-height: normal;	
@@ -84,6 +83,18 @@
 	white-space: nowrap;
 	text-decoration: none;
 	display: inline-block;
+}
+#profile-list .profilelist-style-0 .profile-info {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	padding: 10px;
+  	background: rgba(0,0,0,0.8);
+}
+#profile-list .profilelist-style-1 .profile-info {	
+	padding: 10px;
+  	background: #000;
 }
 
 /* Featured Profile Widget */
