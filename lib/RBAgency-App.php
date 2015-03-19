@@ -51,8 +51,36 @@ class RBAgency_App {
 				
 				wp_register_style( 'rbagency-print-style', RBAGENCY_PLUGIN_URL .'assets/css/print.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-print-style' );
-				
+
+				// Set Default Values
 				$rb_agency_value_stylesheet = $rb_agency_options_arr['rb_agency_value_stylesheet'];
+					// Open File & Get Base Style if not exists
+					if (!isset($rb_agency_value_stylesheet) || empty($rb_agency_value_stylesheet)) {
+
+						if (file_exists(RBAGENCY_PLUGIN_DIR ."assets/css/style.css")) {
+							// Use Custom
+							$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style.css";
+						} else { // Use Base
+							$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style_base.css";
+						}
+
+						// Open File
+						$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"r") or exit("Unable to open file to read!");
+
+						// Initialize Stgring
+						$rb_agency_stylesheet_string = "";
+
+						// Get all lines from css file
+						while(!feof($rb_agency_stylesheet_file)) {
+							$rb_agency_stylesheet_string .= fgets($rb_agency_stylesheet_file);
+						}
+
+						// Close File
+						fclose($rb_agency_stylesheet_file);
+
+						$rb_agency_value_stylesheet = $rb_agency_stylesheet_string;
+					}
+				
 				wp_add_inline_style( 'rbagency-print-style', $rb_agency_value_stylesheet );
 
 				wp_register_style( 'rbagency-formstyle',RBAGENCY_PLUGIN_URL .'assets/css/forms.css' );
