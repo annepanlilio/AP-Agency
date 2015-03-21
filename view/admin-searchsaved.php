@@ -183,8 +183,6 @@ $siteurl = get_option('siteurl');
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
 					echo " <div class=\"saved-profile\">";					
-					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
-					
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 						echo "<div class=\"thumbnail\">";
 						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
@@ -197,7 +195,8 @@ $siteurl = get_option('siteurl');
 						// echo "<img src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
 						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=110\" /></a>";
 						echo "</div>\n";
-					}					
+					}
+					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "</div>\n";
 					}
 					?>
