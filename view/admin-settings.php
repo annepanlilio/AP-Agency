@@ -2796,7 +2796,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														   <ul style=\"list-style:none;\">
 														 ";
 										 foreach($array_customOptions_values as  $val){
-											   echo" <li>Option: <input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
+											   echo" <li>Option: <input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
 										 }
 										echo "</ul>";
 										echo "</div>";
@@ -2828,7 +2828,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											 if(!empty($val)){
 											  $pos++;	
 											  //echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
-											  echo" <li>Option: <input type=\"text\" name=\"label[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
+											  echo" <li>Option: <input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></li>";
 											   }
 												 
 											
