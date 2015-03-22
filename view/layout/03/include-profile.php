@@ -360,10 +360,16 @@ echo " 							<div class=\"tab-panel\">\n";
 										
 										} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 											
-											$outLinkVoiceDemo .= $dataMedia['ProfileMediaType'] .
-											": <a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
-											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
-											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] 
+											// $outLinkVoiceDemo .= $dataMedia['ProfileMediaType'] .
+											// ": <a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+											// "\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
+											// "</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] 
+											// ."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
+
+											$outLinkVoiceDemo .= "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL']
+											."\" target=\"_blank\">"
+											.$dataMedia['ProfileMediaType']
+											."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] 
 											."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
 										
 										} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
