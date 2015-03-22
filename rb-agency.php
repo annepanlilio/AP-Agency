@@ -211,13 +211,13 @@ add_filter( 'option_page_capability_baw-settings-group', 'twentyeleven_option_pa
  */
 
 	// Activate Plugin
-	register_activation_hook(__FILE__, array('RBAgency_Admin', 'activation'));
+	register_activation_hook(__FILE__, array('RBAgency_Init', 'activation'));
 
 	// Deactivate Plugin
-	register_deactivation_hook(__FILE__, array('RBAgency_Admin', 'deactivation'));
+	register_deactivation_hook(__FILE__, array('RBAgency_Init', 'deactivation'));
 
 	// Uninstall Plugin
-	register_uninstall_hook(__FILE__, array('RBAgency_Admin', 'uninstall'));
+	register_uninstall_hook(__FILE__, array('RBAgency_Init', 'uninstall'));
 
 
 
