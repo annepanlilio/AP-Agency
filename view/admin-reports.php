@@ -1094,7 +1094,7 @@ elseif ($ConfigID == 81)
 	$x = 0;
 	for($a = 1; $a<=$last; $a++) {
 		$x++;
-		$from = ($a==1)?1:$loop_count+1;
+		$from = ($a==1)?1:($loop_count+1);
 
 		$to = ($a*$count);
 		if($x == $last){
@@ -1103,7 +1103,7 @@ elseif ($ConfigID == 81)
 		
 		echo "<input  required type=\"radio\" name=\"export-profile\" value=\"".($from)."-".$to."\">Export Profiles(".($from)."-".$to.")<br/>";
 		
-		$loop_count = (($a==1)?50:$loop_count + 50);
+		$loop_count = (($a==1)?$count:$loop_count + $count);
 		
 	}
 	echo "      <select name=\"file_type\" required>";
