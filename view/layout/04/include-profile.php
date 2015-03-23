@@ -24,7 +24,7 @@ echo " 		<div id=\"rblayout-four\" class=\"rblayout\">\n";
 
 echo "			<div class=\"rbcol-12 rbcolumn\">";
 echo "				<header class=\"entry-header\">";
-echo "	  				<h1 class=\"entry-title\">". $ProfileContactDisplay ." <a href=\"/contact/\">Book Now!</a></h1>\n";
+echo "	  				<h1 class=\"entry-title\">". $ProfileContactDisplay ."</h1>\n";
 echo "				</header>";
 echo "			</div>";
 
