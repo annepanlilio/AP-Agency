@@ -1,9 +1,8 @@
 /* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
 
 #rblayout-four #name { margin-bottom: 15px; }
-#rblayout-four h3 { margin: -15px -15px 15px -15px; background: #ccc; font-weight: normal; padding: 15px; }
-#rblayout-four #profile-info h3 {  }
-#rblayout-four #profile-info { background: #e9e9e9; padding: 15px; }
+#rblayout-four h3 { margin: -15px -15px 15px -15px; font-weight: normal; padding: 15px; }
+#rblayout-four #profile-info { padding: 15px; }
 #rblayout-four #profile-info .stats { font-size: 13px; }
 #rblayout-four #profile-info .stats ul { margin: 0px 0px 15px 0px; padding: 0px; list-style: none; }
 #rblayout-four .col_8 h3 { margin-top: 0px; }

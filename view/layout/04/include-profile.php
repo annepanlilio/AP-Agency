@@ -42,6 +42,10 @@ echo "	  					<ul>\n";
 								// Insert Custom Fields
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
+								if (!empty($ProfileContactPhoneWork)) {									
+									echo "<li class=\"rb_contact\" id=\"rb_phone_work\"><strong>". __("Phone", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileContactPhoneWork . "</li>\n";
+								}
+
 echo "	  					</ul>\n"; // Close ul
 echo "	    				<div id=\"book-now\"><a href=\"contact/\" title=\"Book Now!\" class=\"rb_button\">Book Now!</a></div>\n"; // Close Stats
 echo "	  				</div>\n"; // Close Stats	
@@ -49,7 +53,6 @@ echo "				</div><!-- #profile-info -->\n";
 echo "			</div><!-- .rbcol-4 -->\n";
 
 echo "			<div class=\"rbcol-8 rbcolumn\">\n";
-echo "	  			<h3>". __("Call", RBAGENCY_TEXTDOMAIN). ": <span>". $ProfileContactPhoneWork ."</span></h3>\n";
 echo "	  			<div id=\"photos\">\n";
 	
 						// images
