@@ -1,14 +1,14 @@
 /* Profile Layout (Display Model Contact Information)  (include-profile-layout4.php) */
 
 #rblayout-four #name { margin-bottom: 15px; }
-#rblayout-four h3 { margin: -15px -15px 15px -15px; font-weight: normal; padding: 15px; }
+#rblayout-four h3 { margin: -15px -15px 0 -15px; font-weight: normal; padding: 15px; }
 #rblayout-four #profile-info { padding: 15px; }
 #rblayout-four #profile-info .stats { font-size: 13px; }
 #rblayout-four #profile-info .stats ul { margin: 0px 0px 15px 0px; padding: 0px; list-style: none; }
 #rblayout-four .col_8 h3 { margin-top: 0px; }
 #rblayout-four #photos { overflow: hidden; }
-#rblayout-four #photos .photo { float: left; width: 33.33333%; height: 150px; overflow: hidden; }
-#rblayout-four #photos .photo a { float: left; width: 100%; height: 100%; background-size: cover; background-position: center top; background-repeat: no-repeat; background-color: #e9e9e9; border-right: 1px solid #e9e9e9; border-bottom: 1px solid #e9e9e9; }
+#rblayout-four #photos .photo { float: left; width: 25%; height: 200px; padding: 0 10px 0 0; overflow: hidden; margin-bottom: 10px; }
+#rblayout-four #photos .photo img { max-width: 100%; }
 #rblayout-four #photos .photo:last-of-type a,
 #rblayout-four #photos .photo:nth-child(3n+0) a { border-right: none; }
 #rblayout-four #photos .photo:nth-last-child(-n+3) a { border-bottom: none; }

@@ -62,10 +62,10 @@ echo "	  			<div id=\"photos\">\n";
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 						  	if ($countImg > 1) { 
-								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". __("Call Now", RBAGENCY_TEXTDOMAIN). ": ". $ProfileContactPhoneWork ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\"></a></div>\n";
-						  	} else {
-								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". __("Call Now", RBAGENCY_TEXTDOMAIN). ": ". $ProfileContactPhoneWork ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\"></a></div>\n";
-						  	}
+								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=200&h=250\"  /></a></div>\n";
+							} else {
+								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=200&h=250\" /></a></div>\n";
+							}
 						}
 echo "	  			</div><!-- #photos -->\n";
 echo "			</div><!-- .rbcol-8 -->\n";	
