@@ -2137,8 +2137,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 	 */ 
 	function import_to_db(){
 		global $wpdb;
-  	    $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int)$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-        
+  	    $rb_agency_options_arr = get_option('rb_agency_options');
+
+  	    $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
+		
          // We already created a dynamic profile fields validation
 		$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast DESC,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
 		$c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";       
@@ -2229,6 +2231,9 @@ class RBAgencyCSVXLSImpoterPlugin {
 											$queryGenderResult = $wpdb->get_row($wpdb->prepare("SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle ='%s'",$vv["ProfileGender"]), ARRAY_A);
 											$ProfileContactDisplay = $wpdb->get_row($wpdb->prepare("SELECT ProfileID FROM ".table_agency_profile." WHERE ProfileContactEmail ='%s'",$vv["ProfileContactEmail"]), ARRAY_A);
 											
+											$ProfileContactNameFirst = $vv["ProfileContactNameFirst"];
+											$ProfileContactNameLast = $vv["ProfileContactNameLast"];
+
 											if(( ! is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' )) || (!email_exists($vv["ProfileContactEmail"]) && is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) ){
 													// parse profile type
 													if(strpos($vv["ProfileType"], "|") != -1){
@@ -2330,10 +2335,32 @@ class RBAgencyCSVXLSImpoterPlugin {
 													}
 													
 											
-												 			$ProfileGalleryCurrent = generate_foldername($last_inserted_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
-			
-																
-																if(!empty($ProfileGallery)){
+												 			//$ProfileGalleryCurrent = generate_foldername($last_inserted_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
+																if ($rb_agency_option_profilenaming == 0) {
+																	$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
+																} elseif ($rb_agency_option_profilenaming == 1) {
+																	// If John-D already exists, make John-D-1
+																	for ($i = 'a', $j = 1; $j <= 26; $i++, $j++) {
+																		if (isset($ar) && in_array($i, $ar)){
+																			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $i .'-'. $j;
+																		} else {
+																			$ProfileContactDisplay = $ProfileContactNameFirst . " " . substr($ProfileContactNameLast, 0, 1);
+																		}
+																	}
+
+																} elseif ($rb_agency_option_profilenaming == 2) {
+																	$ProfileContactDisplay = $vv["ProfileContactDisplay"];
+																} elseif ($rb_agency_option_profilenaming == 3) {
+																	$ProfileContactDisplay = "ID-" . $ProfileID;
+																} elseif ($rb_agency_option_profilenaming == 4) {
+																	$ProfileContactDisplay = $ProfileContactNameFirst;
+																} elseif ($rb_agency_option_profilenaming == 5) {
+																	$ProfileContactDisplay = $ProfileContactNameLast;
+																}
+																$ProfileContactDisplay = RBAgency_Common::format_stripchars($ProfileContactDisplay);
+																$ProfileGallery = rb_agency_createdir($ProfileContactDisplay);
+
+																/*if(!empty($ProfileGallery)){
 																	if($ProfileGallery != $ProfileGalleryCurrent){
 																		// just rename the existing folder,
 																		rename(RBAGENCY_UPLOADPATH. $ProfileGallery."/", RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent."/");
@@ -2343,10 +2370,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 																	$dirURL = RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent;
 																	mkdir($dirURL, 0755); //700
 																	chmod($dirURL, 0777);
-																}
+																}*/
 
 																// Then Update our DB
-																$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryCurrent ."' WHERE ProfileID = \"". $last_inserted_id ."\"";
+																$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGallery ."' WHERE ProfileID = \"". $last_inserted_id ."\"";
 																$renamed = $wpdb->query($rename);
 
 																echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records</b></li></ul></div>";
