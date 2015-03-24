@@ -599,9 +599,6 @@ text-align: center;
 color: #FFDA18;
 font-size: 12px;
 }
-#profile-list span.details-state {
-  padding-left: 52px;
-}
 #profile-list span.divider {
   display: inline;
   float: left;
