@@ -8,14 +8,16 @@
 #photobook-pagination { overflow: hidden; }
 #rblayout-eight #photobook-pagination { margin: 0px 0px 15px 0px; }
 #rblayout-eight #layout-head { padding: 15px 0px; }
-#rblayout-eight #photobook { overflow: hidden; margin: 0 auto 15px auto; }
+#rblayout-eight #photobook { overflow: hidden; margin: 0 auto 15px auto; max-width: 800px!important; position: relative; }
 #rblayout-eight #layout-head h1 { float: left; color: #6a6a6a; margin: 0; }
 #rblayout-eight #layout-head a { float: right; }
 #rblayout-eight #photobook-pagination a#prev-page { float: left; }
 #rblayout-eight #photobook-pagination a#next-page { float: right; }
 #rblayout-eight #profile-info { overflow: hidden; list-style: none; padding: 0px; margin: 0px; }
-#rblayout-eight #profile-info li { float: left; padding: 0px 10px 10px 10px; color: #3c3c3c; font-size: 18px; }
-#rblayout-eight #profile-info li em { display: block; color: #8c8b8b; font-style: italic; font-size: 13px; }
+#rblayout-eight #profile-info li { float: left; padding: 0px 10px 10px 10px; }
+#rblayout-eight #profile-info li em { display: block; }
+#rblayout-eight #profile-info li strong { font-size: larger; }
+#rblayout-eight #profile-info li.ctype_5_4 br { display: none; }
 #rblayout-eight .booklet .b-wrap .page { text-align: center; }
 #rblayout-eight .booklet .b-wrap .page img { max-width: none; max-height: 300px }
 #rblayout-eight .booklet .b-wrap .b-page-empty { width: 100%; height: 100%; background-position: center center; background-repeat: no-repeat; }

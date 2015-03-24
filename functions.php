@@ -1575,7 +1575,7 @@
 	* ======================== Get Custom Fields ===============
 	* @Returns Custom Fields
 	/*/
-	function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $echo = true, $is_print = false) {
+	function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $label_tag="strong", $value_tag="span", $echo = true, $is_print = false) {
 
 		global $wpdb;
 		$rb_agency_options_arr = get_option('rb_agency_options');
@@ -1655,7 +1655,7 @@
 						/*if($resultCustom->ProfileCustomOptions == 3){
 						*/	 
 							$value = rb_get_imperial_metrics($resultCustom->ProfileCustomValue,$resultCustom->ProfileCustomOptions);
-							$display .= "<li class=\"height-".$resultCustom->ProfileCustomValue." profilecustomid_".$resultCustom->ProfileCustomID." ctype_1_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$value."</li>\n";
+							$display .= "<li class=\"height-".$resultCustom->ProfileCustomValue." profilecustomid_".$resultCustom->ProfileCustomID." ctype_1_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag."> <".$value_tag.">".$value."</".$value_tag."></li>\n";
 						/*} elseif($resultCustom->ProfileCustomOptions == 2){ // kg
 							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_2_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 						} elseif($resultCustom->ProfileCustomOptions == 1){ 
@@ -1671,11 +1671,11 @@
 						}*/
 					} else {
 						if ($resultCustom->ProfileCustomType == 4){
-							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong><br/> ". nl2br($resultCustom->ProfileCustomValue) ."</li>\n";
+							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag."><br/> <".$value_tag.">". nl2br($resultCustom->ProfileCustomValue) ."</".$value_tag."></li>\n";
 						}elseif ($resultCustom->ProfileCustomType == 10){
-							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</li>\n";
+							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag."> <".$value_tag.">". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</".$value_tag."></li>\n";
 						} else {
-							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong>  ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</li>\n";
+							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag."> <".$value_tag.">". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</".$value_tag."></li>\n";
 						}
 					}
 				}
