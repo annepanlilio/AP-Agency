@@ -1,18 +1,24 @@
 /* Profile Layout Nine */
-#rblayout-nine { padding-bottom: 60px; }
-#rblayout-nine .mCSB_container a img { max-height: 400px; float: left; }
-#rblayout-nine .mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools { background: none; height: 18px; }
-#rblayout-nine .mCSB_scrollTools .mCSB_draggerRail { background: #000; margin: 6px 0px; }
-#rblayout-nine .mCSB_horizontal .mCSB_scrollTools .mCSB_dragger { width: 30px!important; }
-#rblayout-nine .mCSB_scrollTools a+.mCSB_draggerContainer { margin: 0 100px 0 90px; }
-#rblayout-nine .mCSB_horizontal .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar { width: 30px!important; height: 14px; background: url(../style/layout9-dragger.png); margin: 0; }
-#rblayout-nine .mCSB_scrollTools .mCSB_buttonLeft { left: 30px; width: 46px; height: 18px; background: url(../style/layout9-prev.png) no-repeat; }
-#rblayout-nine .mCSB_scrollTools .mCSB_buttonRight { right: 30px; width: 60px; height: 18px; background: url(../style/layout9-next.png) no-repeat; }
+#rblayout-nine { padding-bottom: 60px; overflow: visible; }
+#scroller { margin-bottom: 60px; }
+#photo-scroller { width: 100%; height: 350px;font-size: 0; }
+#photo-scroller img { display: inline-block; max-height: 350px; }
+
+/*scroller overrides*/
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft,
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonRight { width: 60px; height: 18px; background-image: url(../images/scroller-white.png); background-position: center top; background-repeat: no-repeat; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft { background-position: 0 0; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonRight { background-position: 0 -18px; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar { width: 30px; height: 14px; margin: 0px; background-image: url(../images/scroller-white.png); background-position: center top; background-repeat: no-repeat; background-position: 0 -36px; background-color: transparent; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal a+.mCSB_draggerContainer { margin: 2px 75px 0 75px!important; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_draggerRail { background-color: #fff; margin: 6px 0; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal { margin: 0 15px; }
+
 #rblayout-nine #info { text-align: center; }
 #rblayout-nine #info #name { text-transform: uppercase; margin: 15px 0px; }
 #rblayout-nine #stats li { display: inline-block; padding: 0 5px; font-weight: bold; }
 #rblayout-nine #stats li strong { font-weight: normal; }
-#rblayout-nine #links { width: 200px; padding: 0 15px; position: absolute; right: -185px; top: 0px; z-index: 5; background: rgba(255,255,255,0.5); text-align: left; }
+#rblayout-nine #links { width: 200px; padding: 0 15px; position: absolute; right: -200px; top: -20px; z-index: 5; text-align: left; }
 #rblayout-nine #links li a { text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
 #rblayout-nine #resultsGoHereAddtoCart { font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
 

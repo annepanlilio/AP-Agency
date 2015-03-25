@@ -11,6 +11,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/09/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
+	wp_register_style( 'scroller-style', RBAGENCY_PLUGIN_URL .'view/layout/09/css/jquery.mCustomScrollbar.min.css' );
+	wp_enqueue_style( 'scroller-style' );
+
 
 /*
  * Insert Script
