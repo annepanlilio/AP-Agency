@@ -704,6 +704,7 @@ global $wpdb;
 
 	if (get_option('rb_agency_version') == "2.1" || get_option('rb_agency_version') == "2.2") {
 		$results = $wpdb->query("ALTER TABLE  ". table_agency_customfield_mux ." ADD INDEX (`ProfileID`)");
+		$results = $wpdb->query("ALTER TABLE  ". table_agency_profile_media ." ADD INDEX (`ProfileID`)");
 		update_option('rb_agency_version', "2.3");
 	}
 
