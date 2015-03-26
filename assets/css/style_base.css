@@ -578,9 +578,6 @@ display: block;
 .rb_profile_tool a span { font-size:11px; color:#000; }
  
 #profile-single-view.rb_profile_tool span { font-size:13px; }
-#profile-list .rbprofile-list .profile-info h3.name a:visited{
-	color:#21759b;
-}
 
 .rb_profile_tool div.favorite {
 text-align: center;
