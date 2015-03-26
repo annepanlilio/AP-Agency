@@ -5,8 +5,10 @@ jQuery(window).load(function(){
 		controlNav: false,
 		animationLoop: false,
 		slideshow: false,
-		itemWidth: 210,
-		itemMargin: 5,
+		itemWidth: 150,
+		itemMargin: 0,
+		prevText: "",
+		nextText: "",
 		asNavFor: '#layout6-slider'
 	});
 
@@ -15,6 +17,8 @@ jQuery(window).load(function(){
 		controlNav: false,
 		animationLoop: false,
 		slideshow: false,
+		prevText: "",
+		nextText: "",
 		sync: "#layout6-carousel"
 	});
 });

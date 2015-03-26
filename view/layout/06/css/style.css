@@ -14,10 +14,10 @@
 }
 
 /* Profile Layout Six */
-#rblayout-six #profile-slide { background: #fff; }
-#rblayout-six #info-slider { background: #000; } 
+#layout6-slider { background: transparent; }
 #rblayout-six #layout6-slider { margin-bottom: 15px; }
 #rblayout-six h1.entry-title { float: left; margin: 0px; }
+#model-stats { margin-bottom: 30px; }
 
 /* Category Template */
 .model-categories {  }
@@ -87,12 +87,20 @@
 #rblayout-six #layout6-slider,
 #rblayout-six #layout6-slider .slides { margin: 0px!important; }
 #rblayout-six #layout6-slider .slides li { text-align: center; }
-#rblayout-six #layout6-slider .slides li img { max-height: 400px; display: inline-block; width: auto; }
+#layout6-slider .slides li img { max-height: 400px; display: inline-block; width: auto; }
+#layout6-slider .flex-direction-nav a { background-image: url(../images/slider_nav.png); background-repeat: no-repeat; width: 64px; height: 64px; }
+#layout6-slider .flex-direction-nav a:before,
+#layout6-slider .flex-direction-nav a:after { content: ""; }
+#layout6-slider .flex-direction-nav a.flex-prev { background-position: 0 -64px }
+#layout6-slider .flex-direction-nav a.flex-next { background-position: -64px -64px; }
 #rblayout-six #layout6-carousel { background: #e9e9e9; }
 #rblayout-six #layout6-carousel .slides { margin: 0px; }
-#rblayout-six #layout6-carousel .slides li { text-align: center; height: 100px; overflow: hidden; }
-#rblayout-six #layout6-carousel .slides li img { display: inline-block; max-height: 100px; width: auto; }
-#rblayout-six #layout6-carousel .slides li figure { margin: 0px; float: left; width: 100%; height: 100%; background-size: cover; background-position: center top; background-repeat: no-repeat; }
+#rblayout-six #layout6-carousel .flex-direction-nav a { background-image: url(../images/carousel_nav.png); background-repeat: no-repeat; width: 27px; height: 27px; }
+#rblayout-six #layout6-carousel .flex-direction-nav a:before,
+#rblayout-six #layout6-carousel .flex-direction-nav a:after { content: ""; }
+#rblayout-six #layout6-carousel .flex-direction-nav a.flex-prev {  }
+#rblayout-six #layout6-carousel .flex-direction-nav a.flex-next { background-position: -27px 0; }
+
 
 
 /**

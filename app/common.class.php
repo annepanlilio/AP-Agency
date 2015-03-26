@@ -855,7 +855,7 @@ class RBAgency_Common {
 										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
-											echo "<li><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+											echo "<li><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&h=400\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
 										}
 							?>
 						</ul>
@@ -867,7 +867,7 @@ class RBAgency_Common {
 										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
-											echo "<li><figure style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .")\" alt=\"". $ProfileContactDisplay ."\" ></figure></li>\n";
+											echo "<li><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=150&h=150\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";											
 										}
 							?>
 						</ul>
