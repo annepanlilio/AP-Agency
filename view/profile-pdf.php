@@ -57,6 +57,7 @@ global $wpdb;
 	 
 	// Catch Profile HTML elements
 	$profiles = isset($_GET["target"])?stripslashes($_GET["target"]):"";
+	$profiles = implode(",",array_filter(explode(",",$profiles)));
 	
 	$sql = "SELECT 
 					profile.ProfileID,
@@ -86,7 +87,6 @@ global $wpdb;
 					";
 
 	$dataList = $wpdb->get_results($sql,ARRAY_A);
-	
 	$results = "<div id=\"profile-list\">";
 	$i = 1;
 	foreach ($dataList as $profile) {
