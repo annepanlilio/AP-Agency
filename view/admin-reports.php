@@ -1333,8 +1333,7 @@ elseif ($ConfigID == 14) {
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					$ProfileContactDisplay = $ProfileContact[1] . " ". substr($ProfileContact[0], 0, 1);
 				} elseif ($rb_agency_option_profilenaming == 2) {
-					$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
-					$have_error = true;
+						$ProfileContactDisplay = $ProfileContact[1] . " ". $ProfileContact[0];
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileContactDisplay = "ID ". $ProfileID;
 				}
@@ -1402,55 +1401,93 @@ elseif ($ConfigID == 14) {
 			echo "<h2>". __("Removing Dummy Profiles...", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 			echo "<br/>";
 
-		
-			// Track dummies to pull out
-		   $arr_duplicates = array();
-			foreach($userProfileNames as $ProfileContact){
-				$ProfileContactDisplay = "";
-				$ProfileGallery = "";
+			if($rb_agency_option_profilenaming != 3){
+				
+				// Track dummies to pull out
+			   $arr_duplicates = array();
+				foreach($userProfileNames as $ProfileContact){
+					$ProfileContactDisplay = "";
+					$ProfileGallery = "";
 
-							if (empty($ProfileContactDisplay)) {  // Probably a new record... 
-								if ($rb_agency_option_profilenaming == 0) {
-									$ProfileContactDisplay = $ProfileContact[0] . " ". $ProfileContact[1];
-								} elseif ($rb_agency_option_profilenaming == 1) {
-									$ProfileContactDisplay = $ProfileContact[0] . " ". substr($ProfileContact[1], 0, 1);
-								} elseif ($rb_agency_option_profilenaming == 2) {
-									$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
-									$have_error = true;
-								} elseif ($rb_agency_option_profilenaming == 3) {
-									$ProfileContactDisplay = "ID ". $ProfileID;
+								if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+									if ($rb_agency_option_profilenaming == 0) {
+										$ProfileContactDisplay = $ProfileContact[0] . " ". $ProfileContact[1];
+									} elseif ($rb_agency_option_profilenaming == 1) {
+										$ProfileContactDisplay = $ProfileContact[0] . " ". substr($ProfileContact[1], 0, 1);
+									} elseif ($rb_agency_option_profilenaming == 2) {
+										$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
+										$have_error = true;
+									} elseif ($rb_agency_option_profilenaming == 3) {
+										$ProfileContactDisplay = "ID ". $ProfileID;
+									}
+
+									$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
+	                              
+					                 array_push($arr_duplicates, $ProfileGalleryFixed);
+
+					                 $arr = array_count_values($arr_duplicates);
+					                 //print_r($arr);
+					                  
+					                  $file_rename_count = $arr[$ProfileGalleryFixed];
+					 
+					                  if($file_rename_count > 1){
+					                      $gallery = $ProfileGalleryFixed."-".$file_rename_count;
+					                  }else{
+					                       $gallery = $ProfileGalleryFixed;
+					                  }
+
 								}
+								echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
+								$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = %s ";
+								$fID =  $wpdb->get_row($wpdb->prepare($getGallary,$gallery), ARRAY_A);
+								$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
+								$wpdb->query($wpdb->prepare($pSql,$fID["ProfileID"]));
+								$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '%d' ";
+								$wpdb->query($wpdb->prepare($pmSql,$fID["ProfileID"]));
+								uninstall_dummy_profile($gallery);
+				}// endforeach
+					
+			  } else{
+				$dummy_profile_ids = get_option("rb_agency_dummy_profiles");
+				if(isset($dummy_profile_ids) && !empty($dummy_profile_ids)){
+					$getGallery="SELECT ProfileID,ProfileGallery,ProfileContactNameFirst,ProfileContactNameLast FROM ".table_agency_profile ." WHERE ProfileID IN(".$dummy_profile_ids.") ";
+					$results = $wpdb->get_results($getGallery);	
+					foreach ($results as $k) {
+						$ProfileGallery = $k->ProfileGallery;
+						$ProfileContactNameFirst = $k->ProfileContactNameFirst;
+						$ProfileContactNameLast = $k->ProfileContactNameLast;
+						$ProfileID = $k->ProfileID;
 
-								$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
-                              
-				                 array_push($arr_duplicates, $ProfileGalleryFixed);
+									if ($rb_agency_option_profilenaming == 0) {
+										$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+									} elseif ($rb_agency_option_profilenaming == 1) {
+										$ProfileContactDisplay = $ProfileContactNameFirst. " ". substr($ProfileContactNameLast, 0, 1);
+									} elseif ($rb_agency_option_profilenaming == 2) {
+										$ProfileContactDisplay = $ProfileContactNameFirst. " ". substr($ProfileContactNameLast, 0, 1);
+									} elseif ($rb_agency_option_profilenaming == 3) {
+										$ProfileContactDisplay = "ID ". $ProfileID;
+									}
 
-				                 $arr = array_count_values($arr_duplicates);
-				                 //print_r($arr);
-				                  
-				                  $file_rename_count = $arr[$ProfileGalleryFixed];
-				 
-				                  if($file_rename_count > 1){
-				                      $gallery = $ProfileGalleryFixed."-".$file_rename_count;
-				                  }else{
-				                       $gallery = $ProfileGalleryFixed;
-				                  }
+						$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
+	                    
+	                    $pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
+						$wpdb->query($wpdb->prepare($pSql,$ProfileID));
+						$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '%d' ";
+						$wpdb->query($wpdb->prepare($pmSql,$ProfileID));
+						$pmSql="DELETE FROM ".table_agency_customfield_mux ." WHERE ProfileID = '%d' ";
+						$wpdb->query($wpdb->prepare($pmSql,$ProfileID));
+						
+						uninstall_dummy_profile($ProfileGalleryFixed);
 
-							}
-
-				echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
-				$getGallary="SELECT ProfileID,ProfileGallery FROM ".table_agency_profile ." WHERE ProfileGallery = %s ";
-				$fID =  $wpdb->get_row($wpdb->prepare($getGallary,$gallery), ARRAY_A);
-				$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
-				$wpdb->query($wpdb->prepare($pSql,$fID["ProfileID"]));
-				$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '%d' ";
-				$wpdb->query($wpdb->prepare($pmSql,$fID["ProfileID"]));
-				uninstall_dummy_profile($gallery);
+						echo "<strong>/".$ProfileGalleryFixed."/</strong> linked directory removed.<br/>";
+					}
+					delete_option("rb_agency_dummy_profiles");
+				}
+			  }
+				
 			}
-			echo "<br/>Succesfully removed...";
-			
-			
-		}
+
+
 		
 		
 		if(isset($_GET["settings-updated"]) && !empty($rb_agency_dummy_options_installdummy)){	
@@ -1458,6 +1495,8 @@ elseif ($ConfigID == 14) {
 			echo "<br/>";  
 			echo "Succesfully created ".count($userProfileNames)." dummy profiles..<br/>";
 
+			$arr_profile_ids = array();
+			
 			foreach($userProfileNames as $ProfileContact){
 
 				$ProfileContactDisplay = "";
@@ -1485,8 +1524,7 @@ elseif ($ConfigID == 14) {
 					} elseif ($rb_agency_option_profilenaming == 1) {
 						$ProfileContactDisplay = $ProfileContact[0] . " ". substr($ProfileContact[1], 0, 1);
 					} elseif ($rb_agency_option_profilenaming == 2) {
-						$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
-						$have_error = true;
+						$ProfileContactDisplay = $ProfileContact[0] . " ". $ProfileContact[1];
 					} elseif ($rb_agency_option_profilenaming == 3) {
 						$ProfileContactDisplay = "ID ". $ProfileID;
 					}
@@ -1512,9 +1550,9 @@ elseif ($ConfigID == 14) {
 				if (empty($ProfileGallery)) {  // Probably a new record... 
 					$ProfileGallery = RBAgency_Common::format_stripchars($ProfileGallery); 
 				}
-
-				$ProfileGallery = rb_agency_createdir($ProfileGallery);
-
+				if($rb_agency_option_profilenaming != 3){
+	    			$ProfileGallery = rb_agency_createdir($ProfileGallery);
+	    		}
 				// Select city and state
 				$queryCountry = "SELECT * FROM ".table_agency_data_country." ORDER BY RAND( ) ASC LIMIT 1";
 				$userCountry =  $wpdb->get_row($queryCountry, ARRAY_A);
@@ -1564,6 +1602,15 @@ elseif ($ConfigID == 14) {
 				
 				$results = $wpdb->query($insert);
 				$ProfileID = $wpdb->insert_id;
+				array_push($arr_profile_ids, $ProfileID);
+
+				if ($rb_agency_option_profilenaming == 3) {
+
+					$ProfileGallery = RBAgency_Common::format_stripchars('ID-'.$ProfileID); 
+					$ProfileGallery = rb_agency_createdir($ProfileGallery);
+
+					$wpdb->query($wpdb->prepare("UPDATE ".table_agency_profile." SET ProfileContactDisplay = %s,ProfileGallery = %s WHERE ProfileID = %d",'ID-'.$ProfileID,$ProfileGallery,$ProfileID));
+				}
 
 				// Inserting Custom Field 
 				$queryCustom = $wpdb->get_results("SELECT * FROM ".table_agency_customfields." ", ARRAY_A); 
@@ -1643,7 +1690,15 @@ elseif ($ConfigID == 14) {
 
 				}
 			} // End foreach
+			$profile_ids = implode(",",$arr_profile_ids);
+			if ( get_option("rb_agency_dummy_profiles") !== false ) {
 
+			    // The option already exists, so we just update it.
+			    update_option("rb_agency_dummy_profiles", $profile_ids );
+
+			} else {
+				add_option("rb_agency_dummy_profiles", $profile_ids, null,"no" );
+			}
 			unset($_SESSION["trackDummies_text"]);
 		} // if option is empty
 
