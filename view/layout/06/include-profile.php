@@ -12,6 +12,22 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_enqueue_style( 'rblayout-style' );
 
 
+	$profile_uri = "/profile/".$ProfileGallery."/";
+	$site_uri = $_SERVER["REQUEST_URI"];
+
+	if($site_uri == $profile_uri){
+
+		wp_register_style( 'slider-style', RBAGENCY_PLUGIN_URL .'view/layout/06/css/flexslider.css' );
+		wp_enqueue_style( 'slider-style' );
+
+		wp_register_script( 'flexslider-js', RBAGENCY_PLUGIN_URL .'view/layout/06/js/jquery.flexslider-min.js', '', 1, true );		
+		wp_enqueue_script( 'flexslider-js' );
+
+		wp_register_script( 'init-flexslider', RBAGENCY_PLUGIN_URL .'view/layout/06/js/init-flexslider.js', '', 1, true );
+		wp_enqueue_script( 'init-flexslider' );
+
+	}
+
 /*
  * Layout 
  */
@@ -23,7 +39,6 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 Large featured image and scrolling thumbnails
 */
 // Donot Edit this this is for subview 
-
 
 ?>
 
