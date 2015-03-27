@@ -17,7 +17,7 @@
 #layout6-slider { background: transparent; }
 #rblayout-six #layout6-slider { margin-bottom: 15px; }
 #rblayout-six h1.entry-title { float: left; margin: 0px; }
-#model-stats { margin-bottom: 30px; }
+#model-stats { margin-bottom: 30px; overflow: hidden; }
 
 /* Category Template */
 .model-categories {  }
@@ -69,13 +69,13 @@
 #polaroids .column .polaroid { min-height:200px; background:#fff; display:block; text-align:center; }
 
 /* Portfolio Template */
-#rblayout-six .entry-header { padding: 0px 0px 10px 0px; }
-#rblayout-six #profile-filter .filters { float: right; }
-#rblayout-six #profile-filter .filters > * { float: left; }
-#rblayout-six #description { font-family: Arial; margin: 0px 0px 30px 0px; font-size: 13px; }
-#rblayout-six #profile-info { padding: 30px 15px; overflow: hidden; }
+#layout-header { padding-bottom: 30px; }
+#layout-header .name { float: left; margin: 0; }
+#layout-header .profile-filter { float: right; }
+#layout-header .profile-filter .filter { float: left; }
+#rblayout-six .layout { padding-bottom: 30px; }
+#rblayout-six #profile-info { padding-top: 10px; padding-bottom: 10px; }
 #rblayout-six #profile-info a { text-decoration: none; }
-#rblayout-six #profile-info > * { font-size: 13px; line-height: 18px; overflow: hidden; }
 #rblayout-six #profile-info ul { list-style:none; margin:0; padding:0; display:block; }
 #rblayout-six #profile-info ul li { float:left; width:100%; margin: 0; padding: 3px 0; }
 #rblayout-six #profile-info #model-stats label, #rblayout-six #profile-info #model-stats span { float:left; width: 50%; }
@@ -84,7 +84,7 @@
 #rblayout-six #profile-info #model-nav { padding-top: 15px; }
 #rblayout-six #profile-info #model-nav li { float: left; width: 33.33333%; text-align: center; }
 #rblayout-six .flexslider { border-radius: 0px; border: none; box-shadow: none; }
-#rblayout-six #layout6-slider,
+#layout6-slider { margin-bottom: 30px; }
 #rblayout-six #layout6-slider .slides { margin: 0px!important; }
 #rblayout-six #layout6-slider .slides li { text-align: center; }
 #layout6-slider .slides li img { max-height: 400px; display: inline-block; width: auto; }

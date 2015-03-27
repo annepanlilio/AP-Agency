@@ -61,59 +61,54 @@ Large featured image and scrolling thumbnails
 <div id="rbprofile" class="model-portfolio">
 
 	<div id="rblayout-six" class="rblayout">
-		<div class="rbcol-12 rbcolumn">
-			<header class="entry-header">
-				<div id="profile-filter">
-					<div class="filters">
-						<div>
-							<select name="division" id="division">
-								<option value="">Select Division</option>
-								<option value="men">Men</option>
-								<option value="women">Women</option>
-								<option value="teen_girls">Teen Girls</option>
-								<option value="teen_boys">Teen Boys</option>
-								<option value="boys">Boys</option>
-								<option value="girls">Girls</option>
-							</select>
-						</div>
-						<div id="resultsGoHere">
-							<select>
-								<option>Select Division First</option>
-							</select>
-						</div>
-					</div><!-- .filters -->
+		<div id="layout-header" class="rbcol-12 rbcolumn">
+			<h2 class="name"><?php echo $ProfileContactDisplay; ?></h2>
+			<div class="profile-filter">
+				<div class="filter">
+					<select name="division" id="division">
+						<option value="">Select Division</option>
+						<option value="men">Men</option>
+						<option value="women">Women</option>
+						<option value="teen_girls">Teen Girls</option>
+						<option value="teen_boys">Teen Boys</option>
+						<option value="boys">Boys</option>
+						<option value="girls">Girls</option>
+					</select>
 				</div>
-				<div class="rbclear"></div>
-			</header>
+				<div id="resultsGoHere"  class="filter">
+					<select>
+						<option>Select Division First</option>
+					</select>
+				</div>
+			</div>
+			<div class="rbclear"></div>
 		</div>
 
 		<div class="rbclear"></div>
 
 		<?php
-		$experience = getExperience($ProfileID);
-		if(!empty($experience)) : ?>
-			<div class="rbcol-12 rbcolumn">
-				<pre id="description">
-					<?php echo getExperience($ProfileID); ?>
-				</pre>
-			</div>
-		<?php endif; ?>
+		// $experience = getExperience($ProfileID);
+		// if(!empty($experience)) : ?>
+			<!-- <div class="rbcol-12 rbcolumn"> -->
+				<!-- <pre id="description"> -->
+					<?php // echo getExperience($ProfileID); ?>
+				<!-- </pre> -->
+			<!-- </div> -->
+		<?php // endif; ?>
 
-		<div class="rbclear"></div>
+		<!-- <div class="rbclear"></div> -->
 
 		<div class="rbcol-12 rbcolumn">
 			<div id="profile-info" class="rbcol-4 rbcolumn">
 
-				<div class="panel">
-
-					<h2><?php echo $ProfileContactDisplay; ?></h2>
+					<h4 class="name"><?php echo $ProfileContactDisplay; ?></h4>
 
 					<div id="model-stats">
 						<ul>
 							<?php
 							if (!empty($ProfileGender)) {
 								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
-								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). ":</strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
+								echo "<li class=\"rb_gender\" id=\"rb_gender\"><span class=\"title\">". __("Gender", RBAGENCY_TEXTDOMAIN). ":</span> <span>". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</span></li>\n";
 							}									
 							if (!empty($ProfileStatHeight)) {
 								if ($rb_agency_option_unittype == 0) { // Metric
@@ -134,7 +129,7 @@ Large featured image and scrolling thumbnails
 							}
 									
 							// Insert Custom Fields
-							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender); ?>
+							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $label_tag="span class='title'", $value_tag="span class='value'"); ?>
 						</ul>
 					</div>
 
@@ -257,7 +252,6 @@ Large featured image and scrolling thumbnails
 							<li class="next"><a href="<?php  get_bloginfo("url");?>/profile/<?php echo linkPrevNext($ProfileGallery,"next",$ProfileGender,$divisionDir);?>/" title=""><?php echo __("Next", RBAGENCY_TEXTDOMAIN)?></a>  </li>
 						</ul>
 					</div>
-				</div> <!-- #profile-info -->
 			</div><!-- .rbcol-4 -->
                  <?php RBAgency_Common::print_profile($ProfileID,$ProfileGallery, $ProfileContactDisplay); ?>
 		</div><!-- .rbcol-12 -->
