@@ -1,21 +1,21 @@
 (function($){
     $("#photobook").booklet({
-    	width: 800,
-    	height: 300,
-    	pageNumbers: false,
-    	pagePadding: 0,
-    	overlays: true,
-    	manual: false,
+        width: 600,
+        height: 450,
+        pageNumbers: false,
+        pagePadding: 0,
+        overlays: true,
+        manual: false,
         closed: true,        
     });
 
     $('#next-page').click(function(e){
-		e.preventDefault();
-		$('#photobook').booklet("next");
-	});
+        e.preventDefault();
+        $('#photobook').booklet("next");
+    });
 
-	$('#prev-page').click(function(e){
-		e.preventDefault();
-		$('#photobook').booklet("prev");
-	});
+    $('#prev-page').click(function(e){
+        e.preventDefault();
+        $('#photobook').booklet("prev");
+    });
 })(jQuery);

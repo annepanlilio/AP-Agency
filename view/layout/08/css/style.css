@@ -6,6 +6,7 @@
 #rblayout-eight #layout-head,
 #rblayout-eight,
 #photobook-pagination { overflow: hidden; }
+#photobook .b-page-0 .b-page-empty { background: #fff url(../../../../assets/img/rbplugin-logo-o25.png) no-repeat center center; }
 #rblayout-eight #photobook-pagination { margin: 0px 0px 15px 0px; }
 #rblayout-eight #layout-head { padding: 15px 0px; }
 #rblayout-eight #photobook { overflow: hidden; margin: 0 auto 15px auto; max-width: 800px!important; position: relative; }
@@ -18,8 +19,8 @@
 #rblayout-eight #profile-info li em { display: block; }
 #rblayout-eight #profile-info li strong { font-size: larger; }
 #rblayout-eight #profile-info li.ctype_5_4 br { display: none; }
-#rblayout-eight .booklet .b-wrap .page { text-align: center; }
-#rblayout-eight .booklet .b-wrap .page img { max-width: none; max-height: 300px }
+#rblayout-eight .booklet .b-wrap .page { text-align: center; position: relative; height: 100%; }
+#rblayout-eight .booklet .b-wrap .page img { position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: auto; }
 #rblayout-eight .booklet .b-wrap .b-page-empty { width: 100%; height: 100%; background-position: center center; background-repeat: no-repeat; }
 #videos .video-col { vertical-align: top; display: inline-block; padding: 0px 10px; width: 33%; }
 #videos .video a { padding: 15px; background: #EFEFEF; min-height: 70px; margin-bottom: 15px; color: #3d4f63; font-weight: bold; display: inline-block; width: 100%; }

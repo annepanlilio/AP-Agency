@@ -58,7 +58,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				 $resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 						$countImg =$wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-						  	echo "<div class=\"page\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
+						  	echo "<div class=\"page\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=300&h=450&zc=3\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
 						}
 				?>
 		    </div><!-- .rbcol-12 -->
