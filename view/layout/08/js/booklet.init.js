@@ -1,6 +1,6 @@
 (function($){
     $("#photobook").booklet({
-    	width: '100%',
+    	width: 800,
     	height: 300,
     	pageNumbers: false,
     	pagePadding: 0,
