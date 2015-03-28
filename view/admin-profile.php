@@ -623,12 +623,12 @@ if (isset($_POST['action'])) {
 									while (false !== ($file = @readdir($mydir))) {
 										if ($file != "." && $file != "..") {
 											if(@is_file($dir . $file))
-											@unlink($dir . $file) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing file:", RBAGENCY_TEXTDOMAIN) . $dir . $file . "</p></div>");
+											@unlink($dir . $file);// or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing file:", RBAGENCY_TEXTDOMAIN) . $dir . $file . "</p></div>");
 										}
 									}
 									// Remove Directory
 									if (@is_dir($dir)) {
-										@rmdir($dir) or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing directory:", RBAGENCY_TEXTDOMAIN) . $dir . $file . "</p></div>");
+										@rmdir($dir);// or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing directory:", RBAGENCY_TEXTDOMAIN) . $dir . $file . "</p></div>");
 									}
 									@closedir($mydir);
 								} else {
@@ -682,12 +682,12 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 			$mydir = @opendir($dir);
 			while (false !== ($file = @readdir($mydir))) {
 				if ($file != "." && $file != "..") {
-					@unlink($dir . $file) or DIE("couldn't delete $dir$file<br />");
+					@unlink($dir . $file); // or DIE("couldn't delete $dir$file<br />");
 				}
 			}
 			// remove dir
 			if (is_dir($dir)) {
-				rmdir($dir) or DIE("couldn't delete $dir$file folder not exist<br />");
+				rmdir($dir);// or DIE("couldn't delete $dir$file folder not exist<br />");
 			}
 			closedir($mydir);
 		} else {
