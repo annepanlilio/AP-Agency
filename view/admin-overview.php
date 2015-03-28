@@ -40,9 +40,11 @@ get_currentuserinfo();
 								echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", RBAGENCY_TEXTDOMAIN) ."</li>\n";
 							} 
 							
-							// echo "<li><a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							if(function_exists('rb_agency_interact_menu')){
 							echo "<li><a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a></li>";
-						
+							}
+						echo "<li><a href='?page=rb_agency_searchsaved' class=\"button-primary\">". __("Saved Searches", RBAGENCY_TEXTDOMAIN) . "</a></li>";
+							
 						}
 						?>
 					</ul>
