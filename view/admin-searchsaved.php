@@ -118,29 +118,31 @@ $siteurl = get_option('siteurl');
 		$data =  $wpdb->get_row($query);
 	  	
 		?>
-		<div style="width:500px; float:left;">
+		<br /><br />
+		<div id="searchsaved" style="width:500px; float:left;" class="rbform">
 		 <h2><?php echo __("Search Saved", RBAGENCY_TEXTDOMAIN); ?></h2>
+		 <br />
 		  <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
 		   <input type="hidden" name="action" value="cartEmail" />
-		   <div><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
-		   <div><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
-		   <div><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
-		   <div><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
+		   <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+		   <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
+		   <div class="rbfield"><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+		   <div class="rbfield"><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
 		   
-		   <div><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
+		   <div class="rbfield"><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
 		   
-		   <div><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
-		   <div><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
+		   <div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
+		   <div class="rbfield"><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
 			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){ echo @$dataSearchSavedMux["SearchMuxMessage"];}else{echo @"Click the following link (or copy and paste it into your browser): [link-place-holder]";} ?></textarea>
 			</div>
-		   <p class="submit">
+		   <div class="submit rbfield rbsubmit">
 			   <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
 			   <input type="hidden" name="action" value="emailSend" />
 			   <?php if(isset($_GET["resend"])):?>
 			   <input type="hidden" name="resend" value="true" />
 			   <?php endif; ?>
 			   <input type="submit" name="submit" value="Send Email" class="button-primary" />
-		   </p>
+		   </div>
 
 		  </form>
 		</div>
@@ -271,6 +273,7 @@ $siteurl = get_option('siteurl');
 			<input type="submit" class="button button-primary" onclick="javascript: return confirm('Are you sure to remove selected profile(s)?')? document.removeForm.submit(): false;" value="Remove"/>
 			<a href="<?php echo admin_url("admin.php?page=rb_agency_search");?>" class="button button-primary">Add profiles</a>
        		</div>
+       		<br/><br/>
 			<form method="post" action="" name="removeForm">
 				<hr/>
 				<div id="searchsaved-edit" class="searchsaved-profiles">
@@ -293,20 +296,19 @@ $siteurl = get_option('siteurl');
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
 					
-					echo " <div class=\"saved-profile\">";
-					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
-					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);					
+					echo " <div class=\"saved-profile\">";					
+					echo " <div class=\"thumbnail\">";
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){												
-						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-						echo " <div class=\"thumbnail\">";
+						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));						
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						echo "<img attr-type=\"custom\" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
-					} else {
-						echo " <div class=\"thumbnail\">";
+					} else {						
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=150\" /></a>";
-						echo "</div>\n";
 					}					
+					echo "</div>\n";
+					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
+					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "</div>\n";
 					}
 					?>
@@ -372,8 +374,9 @@ $siteurl = get_option('siteurl');
 						   </td>
 					   </tr>
 					   <tr valign="top">
-						   <th scope="row">Profiles:</th>
-						   <td>
+						   	<th scope="row">Profiles:</th>
+						   	<td>
+						   		<div id="searchsaved-save" class="searchsaved-profiles">
 
 								<?php
 										   
@@ -402,21 +405,25 @@ $siteurl = get_option('siteurl');
 									} elseif ($rb_agency_option_profilenaming == 5) {
 										$ProfileContactDisplay = $ProfileContactNameLast;
 									}
-									echo " <div style=\"float: left; width: 80px; height: 100px; margin-right: 5px; overflow: hidden; \">". $ProfileContactDisplay . "<br />";
+									echo " <div class=\"saved-profile\">";
+									echo " <div class=\"thumbnail\">";
 									echo "<a href=\"". RBAGENCY_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">";
 									if(isset($arr_thumbnail[$data["ProfileID"]])){
 										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
-										echo "<img  style=\"width: 80px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" />\n";
-									}else{
-									echo "<img style=\"width: 80px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" />";
+										echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&w=110\" />\n";
+									} else {
+										echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."&w=110\" />";
 									}
 									echo "</a>";
+									echo "</div>\n";
+									echo "<span>".$ProfileContactDisplay."</span>\n";
 									echo "</div>\n";
 
 								}
 
 								?>
 							<input type="hidden" name="SearchProfileID" value="<?php echo $cartString; ?>" />
+							</div>
 						   </td>
 					   </tr>
 					   </tbody>
