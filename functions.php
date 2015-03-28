@@ -2089,8 +2089,8 @@
 		$query = $wpdb->get_results("SELECT * FROM  ".table_agency_data_media." ORDER BY MediaCategoryOrder",ARRAY_A);
 		$count = count($query);
 		foreach($query as $f){
-			if($f["MediaCategoryGender"] == $GenderID || $f["MediaCategoryGender"] == 0){
-				echo "<option value=\"rbcustommedia_".str_replace(" ","-",strtolower($f["MediaCategoryTitle"]))."_".$f["MediaCategoryLinkType"]."_".$f["MediaCategoryFileType"]."_".$f["MediaCategoryID"]."\">".$f["MediaCategoryTitle"]."(".$f["MediaCategoryFileType"].")</option>";	 
+			if(($f["MediaCategoryGender"] == $GenderID || $f["MediaCategoryGender"] == 0) && !empty($f["MediaCategoryFileType"])){
+				echo "<option value=\"rbcustommedia_".str_replace(" ","-",strtolower($f["MediaCategoryTitle"]))."_".$f["MediaCategoryLinkType"]."_".$f["MediaCategoryFileType"]."_".$f["MediaCategoryID"]."\">".$f["MediaCategoryTitle"]." (".$f["MediaCategoryFileType"].")</option>";	 
 			}
 		}
 	}
