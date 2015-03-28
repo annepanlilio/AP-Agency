@@ -214,4 +214,5 @@ table.widefat tr.active-notvisible { background: #d2d49b; }
 #searchsaved-email .saved-profile .thumbnail { height: 150px; }
 
 /* Saved Searches - Email Sent */
+#searchsaved-emailsent .saved-profile { max-width: 110px; height: 195px; }
 #searchsaved-emailsent .saved-profile .thumbnail { height: 150px; }

@@ -620,8 +620,7 @@ class RBAgency_Casting {
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
-								$profileimage .= "<div class=\"saved-profile\">";
-								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);								
+								$profileimage .= "<div class=\"saved-profile\">";								
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
 									$profileimage .= "<div class=\"thumbnail\">\n";
@@ -633,7 +632,8 @@ class RBAgency_Casting {
 									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 									$profileimage .= "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."&w=110\"/></a>";
 									$profileimage .= "</div>\n";
-								}								
+								}
+								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);								
 								$profileimage .= "</div>\n";
 							}
 							$profileimage .="</div>";
