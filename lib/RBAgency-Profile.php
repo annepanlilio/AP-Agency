@@ -271,7 +271,7 @@ class RBAgency_Profile {
 			// Query Fields
 				if(is_admin()){
 					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
-									FROM ". table_agency_customfields ." WHERE ProfileCustomView <= 1 ORDER BY ProfileCustomOrder ASC";
+									FROM ". table_agency_customfields ." WHERE ProfileCustomView <= 2 ORDER BY ProfileCustomOrder ASC";
 				} else {
 					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
 									FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
