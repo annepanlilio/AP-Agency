@@ -2300,7 +2300,10 @@ class RBAgency_Profile {
 			if ($rb_agency_option_profilelist_expanddetails) {
 				$displayHTML .= "<div class=\"details\">";
 				$displayHTML .= "<span class=\"details-merged\">";
-				$displayHTML .= "<span class=\"details-age\">". (rb_agency_get_age($dataList["ProfileDateBirth"])>0?rb_agency_get_age($dataList["ProfileDateBirth"]):"") ."</span>";
+				$ProfileDateBirth = rb_agency_get_age($dataList["ProfileDateBirth"]);
+				if(!empty($ProfileDateBirth)){
+				$displayHTML .= "<span class=\"details-age\">". $ProfileDateBirth ."</span>";
+				}
 					if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
 						$stateTitle = rb_agency_getStateTitle($dataList["ProfileLocationState"],true);
 						$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"])>0 && !empty($stateTitle)?", ":" ")."</span>";
