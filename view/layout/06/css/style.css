@@ -72,7 +72,7 @@
 #layout-header { padding-bottom: 30px; }
 #layout-header .name { float: left; margin: 0; }
 #layout-header .profile-filter { float: right; }
-#layout-header .profile-filter .filter { float: left; }
+#layout-header .profile-filter .filter { float: left; margin-left: 10px; }
 #rblayout-six .layout { padding-bottom: 30px; }
 #rblayout-six #profile-info { padding-top: 10px; padding-bottom: 10px; }
 #rblayout-six #profile-info a { text-decoration: none; }
@@ -80,7 +80,7 @@
 #rblayout-six #profile-info ul li { float:left; width:100%; margin: 0; padding: 3px 0; }
 #rblayout-six #profile-info #model-stats label, #rblayout-six #profile-info #model-stats span { float:left; width: 50%; }
 #rblayout-six #profile-info #model-stats span { text-transform:none; }
-#rblayout-six #profile-info #model-links { font-weight:bold; }
+#rblayout-six #model-links { font-weight:bold; overflow: hidden; }
 #rblayout-six #profile-info #model-nav { padding-top: 15px; }
 #rblayout-six #profile-info #model-nav li { float: left; width: 33.33333%; text-align: center; }
 #rblayout-six .flexslider { border-radius: 0px; border: none; box-shadow: none; }
@@ -93,13 +93,15 @@
 #layout6-slider .flex-direction-nav a:after { content: ""; }
 #layout6-slider .flex-direction-nav a.flex-prev { background-position: 0 -64px }
 #layout6-slider .flex-direction-nav a.flex-next { background-position: -64px -64px; }
-#rblayout-six #layout6-carousel { background: #e9e9e9; }
-#rblayout-six #layout6-carousel .slides { margin: 0px; }
-#rblayout-six #layout6-carousel .flex-direction-nav a { background-image: url(../images/carousel_nav.png); background-repeat: no-repeat; width: 27px; height: 27px; }
-#rblayout-six #layout6-carousel .flex-direction-nav a:before,
-#rblayout-six #layout6-carousel .flex-direction-nav a:after { content: ""; }
-#rblayout-six #layout6-carousel .flex-direction-nav a.flex-prev {  }
-#rblayout-six #layout6-carousel .flex-direction-nav a.flex-next { background-position: -27px 0; }
+
+#layout6-carousel {background: transparent;}
+#layout6-carousel .slides { margin: 0px; }
+#layout6-carousel .slides img { margin: 3px; width: auto; }
+#layout6-carousel .flex-direction-nav a { background-image: url(../images/carousel_nav.png); background-repeat: no-repeat; width: 27px; height: 27px; }
+#layout6-carousel .flex-direction-nav a:before,
+#layout6-carousel .flex-direction-nav a:after { content: ""; }
+#layout6-carousel .flex-direction-nav a.flex-prev {  }
+#layout6-carousel .flex-direction-nav a.flex-next { background-position: -27px 0; }
 
 
 

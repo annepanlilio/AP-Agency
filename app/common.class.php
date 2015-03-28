@@ -867,7 +867,7 @@ class RBAgency_Common {
 										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
-											echo "<li><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=150&h=150\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";											
+											echo "<li><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=144&h=144\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
 										}
 							?>
 						</ul>
