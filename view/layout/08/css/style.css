@@ -7,7 +7,7 @@
 #rblayout-eight,
 #photobook-pagination { overflow: hidden; }
 #photobook .b-page-0 .b-page-empty { background: #fff url(../../../../assets/img/rbplugin-logo-o25.png) no-repeat center center; }
-#rblayout-eight #photobook-pagination { margin: 0px 0px 15px 0px; }
+#rblayout-eight #photobook-pagination { margin-bottom: 30px; }
 #rblayout-eight #layout-head { padding: 15px 0px; }
 #rblayout-eight #photobook { overflow: hidden; margin: 0 auto 15px auto; max-width: 800px!important; position: relative; }
 #rblayout-eight #layout-head h1 { float: left; color: #6a6a6a; margin: 0; }
