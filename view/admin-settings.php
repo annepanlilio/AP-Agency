@@ -328,14 +328,14 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> Remove Updates on Dashboard<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-
+		if(function_exists('rb_agency_interact_menu')){
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Default Profile Status', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_inactive_profile_on_update]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])?$rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0, 1,false)."/> Change the status to \"pending approval\" whenever a profile is updated<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-		
+		}
 		if ( class_exists("RBAgencyCasting") ) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Send email to Models/Talents', RBAGENCY_TEXTDOMAIN) ."</th>\n";
