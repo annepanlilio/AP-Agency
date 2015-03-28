@@ -1074,7 +1074,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "            <option value=\"4\"" . selected(4, $ProfileIsActive) . ">" . __("Active - Not Visible On Website", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 							echo "            <option value=\"0\"" . selected(0, $ProfileIsActive) . ">" . __("Inactive", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 							echo "            <option value=\"2\"" . selected(2, $ProfileIsActive) . ">" . __("Archived", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							if(function_exists('rb_agency_interact_menu')){
 							echo "            <option value=\"3\"" . selected(3, $ProfileIsActive) . ">" . __("Pending Approval", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							}
 							echo "          </select></td>\n";
 							echo "    </tr>\n";
 							echo "    <tr valign=\"top\">\n";
