@@ -615,7 +615,9 @@ if (isset($_POST['action'])) {
 							// Remove Media
 							$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = %d ";
 							$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
-
+							/// Now delete
+					  		wp_delete_user($dataDelete["ProfileUserLinked"]);
+					
 								if (isset($ProfileGallery)) {
 									// Remove Folder
 									$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/";
@@ -643,8 +645,6 @@ if (isset($_POST['action'])) {
 								} else {
 									$AdminID = 1;
 								}*/
-								/// Now delete
-								wp_delete_user($dataDelete["ProfileUserLinked"]);
 						} // foreach || is there record?
 				} // is numeric
 			}
@@ -676,6 +676,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 		$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = \"" . $ProfileID . "\"";
 		$results = $wpdb->query($delete);
 
+		wp_delete_user($dataDelete["ProfileUserLinked"]);
+		
 		if (isset($ProfileGallery)) {
 			// Remove Folder
 			$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/";
@@ -694,7 +696,6 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 			echo __("No valid record found.", RBAGENCY_TEXTDOMAIN);
 		}
 
-		wp_delete_user($dataDelete["ProfileUserLinked"]);
 		echo ('<div id="message" class="updated"><p>' . __("Profile deleted successfully!", RBAGENCY_TEXTDOMAIN) . '</p></div>');
 	} // is there record?
 	rb_display_list();
