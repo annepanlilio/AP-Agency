@@ -11,6 +11,14 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_register_style( 'rblayout-style', RBAGENCY_PLUGIN_URL .'view/layout/07/css/style.css' );
 	wp_enqueue_style( 'rblayout-style' );
 
+	wp_register_style( 'flexslider-style', RBAGENCY_PLUGIN_URL .'view/layout/07/css/flexslider.css' );
+	wp_enqueue_style( 'flexslider-style' );
+
+	wp_register_script( 'flexslider-js', RBAGENCY_PLUGIN_URL .'view/layout/07/js/jquery.flexslider-min.js', '', 1, true );		
+	wp_enqueue_script( 'flexslider-js' );
+
+	wp_register_script( 'init-flexslider', RBAGENCY_PLUGIN_URL .'view/layout/07/js/init-flexslider.js', '', 1, true );
+	wp_enqueue_script( 'init-flexslider' );
 
 /*
  * Layout 
@@ -66,47 +74,47 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						$ProfileMediaPrimary = ""; 
 						$ProfileMediaSecondry= "";
 					
-									$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-									$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
-									$countImg  = $wpdb->num_rows;
-									
-									$open = 1;
-									$close = false;
-									foreach($resultsImg as $dataImg ){
-									   // option for two images
-									   if($option_two_image){	
-											   if($open==1){
-													$close = false;
-													echo "<li>";
-											   } 
+						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$countImg  = $wpdb->num_rows;
+						
+						$open = 1;
+						$close = false;
+						foreach($resultsImg as $dataImg ){
+						   	// option for two images
+						   	if($option_two_image){	
+								   	if($open==1){
+										$close = false;
+										echo "<li>";
+								   	} 
 
-												echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
+									echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
 
-											   $open++;
-											   if($open == 3){
-												  $open = 1;
-												  $close = true;
-												  echo "</li>\n";	
-											   }	
-									   } else {
-											  
-											   if($dataImg['ProfileMediaPrimary']==1){
-													$ProfileMediaPrimary= 	"<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
-												} else {
-													$ProfileMediaSecondry .= "<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
-												}
-												echo $ProfileMediaPrimary; 
-												echo $ProfileMediaSecondry; 
-									   }
+								   	$open++;
+								   	if($open == 3){
+										$open = 1;
+									  	$close = true;
+									  	echo "</li>\n";
+								   	}
+						   	} else {
+								  
+								   	if($dataImg['ProfileMediaPrimary']==1){
+										$ProfileMediaPrimary= 	"<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
+									} else {
+										$ProfileMediaSecondry .= "<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
 									}
-									if($option_two_image && !$close){
-										echo "</li>\n";
-									}
+									echo $ProfileMediaPrimary; 
+									echo $ProfileMediaSecondry; 
+						   	}
+						}
+						if($option_two_image && !$close){
+							echo "</li>\n";
+						}
 
 						?>
 					</ul>
 				</div>
-			 <div id="video_player" class="rbcol-8 rbcolumn" style="display:none; position:relative; ">	
+			<div id="video_player" class="rbcol-8 rbcolumn" style="display:none; position:relative; ">	
 				<?php
 				//Video Slate
 				$count_video = 0;
@@ -132,8 +140,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				if ($countMedia > 0) {
 					foreach($resultsMedia as $dataMedia ){
 						$profileVideoEmbed2 = $dataMedia['ProfileMediaURL'];
-						$count_video++;
-	
+						$count_video++;	
 							echo "<div class='vids' style='display:none;'><div id='v_mono' style='width:100%; height:100%'></div></div>";
 						}
 				}
@@ -149,129 +156,128 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 							echo "<div class='vids' style='display:none;'><div id='d_reel' style='width:100%; height:100%'></div></div>";
 						}
 				}
-				 ?>
+				?>
 				 
 			</div>	
 <!--			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
 -->			
 			<script>
-						var tag = document.createElement('script');
-						tag.src = "//www.youtube.com/iframe_api";
-						var firstScriptTag = document.getElementsByTagName('script')[0];
-						firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-						var yPlayer1;
-						var yPlayer2;
-						var yPlayer3;
-						function onYouTubeIframeAPIReady() {
-						<?php
-							$embed = "profileVideoEmbed";
-							$e = array("","v_slate","v_mono","d_reel");
-							for($x = 1; $x <=$count_video ; $x++){
-								$ytube = $embed . $x;
-								if(!empty($$ytube)){
-						?>	
-								yPlayer<?php echo $x; ?> = new YT.Player('<?php echo $e[$x]; ?>',{
-									height: '100%',
-									width: '100%',
-									videoId: '<?php echo $$ytube; ?>',
-									playerVars: {
-									  wmode: "opaque"
-									},
-									events: {
-										'onReady': onYReady<?php echo $x; ?>
-									}
-								});
-								
-						<?php } }?>		
-		
+				var tag = document.createElement('script');
+				tag.src = "//www.youtube.com/iframe_api";
+				var firstScriptTag = document.getElementsByTagName('script')[0];
+				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+				var yPlayer1;
+				var yPlayer2;
+				var yPlayer3;
+				function onYouTubeIframeAPIReady() {
+				<?php
+					$embed = "profileVideoEmbed";
+					$e = array("","v_slate","v_mono","d_reel");
+					for($x = 1; $x <=$count_video ; $x++){
+						$ytube = $embed . $x;
+						if(!empty($$ytube)){ ?>	
+							yPlayer<?php echo $x; ?> = new YT.Player('<?php echo $e[$x]; ?>',{
+							height: '100%',
+							width: '100%',
+							videoId: '<?php echo $$ytube; ?>',
+							playerVars: {
+							  wmode: "opaque"
+							},
+							events: {
+								'onReady': onYReady<?php echo $x; ?>
 							}
-						<?php 
-						for($x = 1; $x <=$count_video ; $x++){
-						?>	
-						function onYReady<?php echo $x; ?>(event) {
-									yPlayer<?php echo $x;?>.stopVideo();
-									e.preventDefault();
-							}
-						<?php } ?>	
+						});
+						
+				<?php } }?>		
 
+				}
+				<?php 
+				for($x = 1; $x <=$count_video ; $x++){ ?>
+
+					function onYReady<?php echo $x; ?>(event) {
+								yPlayer<?php echo $x;?>.stopVideo();
+								e.preventDefault();
+					}
+				<?php
+				} ?>
 	
-					jQuery(document).ready(function(){
-						  
-						  jQuery("#videos-carousel").find("li").click(function(){
-							  <?php 
-								for($x = 1; $x <=$count_video ; $x++){
-								?>	
-									yPlayer<?php echo $x;?>.pauseVideo();
-							  <?php } ?>	
+				jQuery(document).ready(function(){
+					  
+					  jQuery("#videos-carousel").find("li").click(function(){
+						  <?php 
+							for($x = 1; $x <=$count_video ; $x++){
+							?>	
+								yPlayer<?php echo $x;?>.pauseVideo();
+						  <?php } ?>	
+					
+						  var _next = "#" + jQuery(this).attr("class");
+						  var _curr = jQuery("#video_player").find(".act_vids");
+						  _curr.removeClass("act_vids");
+							  _curr.addClass("vids");	
+							  jQuery(_next).parent().show();
+							  jQuery(_next).parent().addClass("act_vids");
+					  });
+					  
+					  jQuery("#vid_changer").width(jQuery("#video_player").width()+"px");
 						
-							  var _next = "#" + jQuery(this).attr("class");
-							  var _curr = jQuery("#video_player").find(".act_vids");
-							  _curr.removeClass("act_vids");
-								  _curr.addClass("vids");	
-								  jQuery(_next).parent().show();
-								  jQuery(_next).parent().addClass("act_vids");
-						  });
-						  
-						  jQuery("#vid_changer").width(jQuery("#video_player").width()+"px");
-							
-						 
-						
-						jQuery("a.showSingle1").click(function(){
-							jQuery("#profile-slider").show();
-							jQuery("#video_player").hide();
-						});
-						jQuery("a.showSingle3").click(function(){
-							jQuery("#profile-slider").hide();
-							jQuery("#video_player").show();
-						});
-						jQuery(".video_player").click(function(){
-							jQuery("#profile-slider").hide();
-							jQuery("#video_player").show();
-						});
-						 
-						  
-						
-						jQuery("#profile-carousel li").click(function(){
-							jQuery("#profile-slider").show();
-							jQuery("#video_player").hide();
-						});
-						
-						jQuery(".save_fav").click(function(){
-							ajax_submit(jQuery(this),"favorite");
-						});
+					 
+					
+					jQuery("a.showSingle1").click(function(){
+						jQuery("#profile-slider").show();
+						jQuery("#video_player").hide();
+					});
+					jQuery("a.showSingle3").click(function(){
+						jQuery("#profile-slider").hide();
+						jQuery("#video_player").show();
+					});
+					jQuery(".video_player").click(function(){
+						jQuery("#profile-slider").hide();
+						jQuery("#video_player").show();
+					});
+					 
+					  
+					
+					jQuery("#profile-carousel li").click(function(){
+						jQuery("#profile-slider").show();
+						jQuery("#video_player").hide();
+					});
+					
+					jQuery(".save_fav").click(function(){
+						ajax_submit(jQuery(this),"favorite");
+					});
 
-						jQuery(".save_cart").click(function(){
-							ajax_submit(jQuery(this),"casting");	
-						});	
+					jQuery(".save_cart").click(function(){
+						ajax_submit(jQuery(this),"casting");	
+					});	
 
-						function ajax_submit(Obj,type){
-							if(type == "favorite"){
-								var action_function = "rb_agency_save_favorite";
-							} else if(type == "casting"){
-								var action_function = "rb_agency_save_castingcart";
-							}
-							
-							jQuery.ajax({type: 'POST',url: '<?php echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
-										 data: {action: action_function,  'talentID': <?php echo $ProfileID ?>},
-										success: function(results) {  
-											if(results=='error'){ 
-												alert("Error in query. Try again"); 
-											}else if(results==-1){ 
-												alert("You're not signed in");
-											} else { 
-												if(type == "favorite"){
-													document.getElementById('myfav_add').style.display="none";	
-													document.getElementById('myfav_view').style.display="inline-block";					  
-												} else if(type == "casting") {
-													document.getElementById('mycart_add').style.display="none";	
-													document.getElementById('mycart_view').style.display="inline-block";											
-												}
+					function ajax_submit(Obj,type){
+						if(type == "favorite"){
+							var action_function = "rb_agency_save_favorite";
+						} else if(type == "casting"){
+							var action_function = "rb_agency_save_castingcart";
+						}
+						
+						jQuery.ajax({type: 'POST',url: '<?php echo get_bloginfo('url') ?>/wp-admin/admin-ajax.php',
+									 data: {action: action_function,  'talentID': <?php echo $ProfileID ?>},
+									success: function(results) {  
+										if(results=='error'){ 
+											alert("Error in query. Try again"); 
+										}else if(results==-1){ 
+											alert("You're not signed in");
+										} else { 
+											if(type == "favorite"){
+												document.getElementById('myfav_add').style.display="none";	
+												document.getElementById('myfav_view').style.display="inline-block";					  
+											} else if(type == "casting") {
+												document.getElementById('mycart_add').style.display="none";	
+												document.getElementById('mycart_view').style.display="inline-block";											
 											}
 										}
-						   }); // ajax submit
-						} // end function
-					});
-				</script>
+									}
+					   }); // ajax submit
+					} // end function
+				});
+			</script>
 		</div><!-- #info-slide -->
 
 		<div class="rbcol-12 rbcolumn">

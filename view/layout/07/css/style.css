@@ -5,6 +5,13 @@
 #rblayout-seven #profile-carousel { border: none; padding: 0; border-radius: 0; box-shadow: none; }
 #rblayout-seven #profile-slider { margin-bottom: 0px; }
 #rblayout-seven #profile-slider .slides { margin: 0px; }
+
+#profile-slider .flex-direction-nav a { background-image: url(../images/slider_nav.png); background-repeat: no-repeat; width: 64px; height: 64px; }
+#profile-slider .flex-direction-nav a:before,
+#profile-slider .flex-direction-nav a:after { content: ""; }
+#profile-slider .flex-direction-nav a.flex-prev { background-position: 0 -64px }
+#profile-slider .flex-direction-nav a.flex-next { background-position: -64px -64px; }
+
 #rblayout-seven #profile-slider .slides li { height: 100%; text-align: center; overflow: hidden; max-height: 350px; }
 #rblayout-seven #profile-slider .slides li figure.multi { width: 50%; height: 100%; text-align: center; float: left; margin: 0px; overflow: hidden; }
 #rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; display: inline-block; width: inherit; max-width: 100%; }
