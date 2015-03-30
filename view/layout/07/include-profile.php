@@ -88,7 +88,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 										echo "<li>";
 								   	} 
 
-									echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
+									echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=400\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
 
 								   	$open++;
 								   	if($open == 3){
@@ -360,8 +360,8 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 			</div>
 		</div>
 				
-		<div id="videos-carousel" class="rbcol-12 rbcolumn rbtab-content targetvideo" style="display:none"  >
-			<div class="flexslider">
+		<div class="rbcol-12 rbcolumn rbtab-content targetvideo" style="display:none"  >
+			<div id="videos-carousel" class="flexslider">
 				<ul class="slides">
 					<?php
 					//Video Slate
@@ -372,7 +372,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					if ($countMedia > 0) {
 						foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-							echo "<li class='v_slate'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Slate'></span></li>";
+							echo "<li class='v_slate'><img src='http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg' alt='Video Slate' /></li>";
 						}
 					}
 
@@ -383,7 +383,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					if ($countMedia > 0) {
 						foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-								echo "<li class='v_mono'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Video Monologue'></span></li>";
+								echo "<li class='v_mono'><img src='http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg' alt='Video Monologue' /></li>";
 							}
 					}
 					//Demoreel
@@ -393,7 +393,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					if ($countMedia > 0) {
 							foreach($resultsMedia as $dataMedia ){
 							$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-								echo "<li class='d_reel'><figure><span class='video_player' style='background-image: url(http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg)' title='Demo Reel'></span></li>";
+								echo "<li class='d_reel'><img src='http://img.youtube.com/vi/".$profileVideoEmbed."/default.jpg' alt='Demo Reel' /></li>";
 							}
 					}
 					 ?>

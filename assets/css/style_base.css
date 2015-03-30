@@ -445,14 +445,6 @@ img.fillheight {
 .rblayout .profile-photos { padding: 10px 0px 0px 10px; background: #e9e9e9; overflow: hidden; }
 .rblayout .profile-photos .photo { vertical-align: top; float: left; margin: 0px 10px 10px 0px; }
 
-#video_player {height:500px; width:66%;}
-#video_player .vids{height:500px; width:100%; display:none; position:absolute; z-index:0; top:0px; left:0px;}
-#video_player .act_vids{height:500px; width:100%; display:block; position:absolute; z-index:100; top:0px; left:0px;}
-.video_player{width:150px; height:92px; display:block; }
-#videos-carousel{height:160px;}
-#videos-carousel li{ height:100px; width:150px; float:left; margin-left:5px; display:inline;}
-#videos-carousel figure{ height:100%; width:100%;}
-
 /* Quick Search */
 #rbquick-search { overflow: hidden; padding: 30px 0; padding-top: 0; margin-top: 30px; }
 #rbquick-search h2 { margin-bottom: 15px; text-transform: uppercase; }
