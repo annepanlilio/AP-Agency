@@ -435,7 +435,7 @@ img.fillheight {
 /* Profile View */
 #rbprofile #info-links h2 { padding: 15px 0px; margin: 15px 0px 0px 0px; font-size: initial; }
 #rbprofile #stats ul,
-#rbprofile #links ul { list-style: none; margin: 0px; padding: 0px; font-size: 13px; }
+#rbprofile #links ul { list-style: none; margin: 0px; padding: 0px; }
 #rbprofile #stats ul li { margin: 0px; }
 #rbprofile #links ul li { padding: 7px; border-bottom: 1px solid #ddd; }
 #rbprofile #links ul li a { text-decoration: none; font-size: 13px; }

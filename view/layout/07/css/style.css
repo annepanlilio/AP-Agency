@@ -4,7 +4,7 @@
 #rblayout-seven #video_player .act_vids{height:500px; width:100%; display:block; position:absolute; z-index:100; top:0px; left:0px;}
 #profile-slider,
 #profile-carousel { border: none; padding: 0; border-radius: 0; box-shadow: none; }
-#rblayout-seven #profile-slider { margin-bottom: 0px; background: transparent; }
+#rblayout-seven #profile-slider { margin-bottom: 0px; background: transparent; min-height: 300px; }
 #rblayout-seven #profile-slider .slides { margin: 0px; }
 
 #profile-slider .flex-direction-nav a { background-image: url(../images/slider_nav.png); background-repeat: no-repeat; width: 64px; height: 64px; }
@@ -15,7 +15,6 @@
 
 #rblayout-seven #profile-slider .slides li { height: 100%; text-align: center; overflow: hidden; max-height: 400px; }
 #rblayout-seven #profile-slider .slides li figure.multi { width: 50%; height: 100%; text-align: center; float: left; margin: 0px; overflow: hidden; position: relative; }
-#rblayout-seven #profile-slider .slides li figure.multi img { position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto; }
 #rblayout-seven #profile-slider .slides img { border-radius: 0; box-shadow: none; margin: 0 auto; display: inline-block; width: inherit; max-width: 100%; }
 #rblayout-seven #profile-carousel { clear: both; width: 100%; display: block; background: #fff; margin: 0; }
 #rblayout-seven #profile-carousel .slides li { width: 150px; height: 140px; overflow: hidden; text-align: center; }

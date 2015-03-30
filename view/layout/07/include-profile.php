@@ -88,7 +88,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 										echo "<li>";
 								   	} 
 
-									echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=400\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
+									echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=400&h=600&zc=3\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
 
 								   	$open++;
 								   	if($open == 3){
