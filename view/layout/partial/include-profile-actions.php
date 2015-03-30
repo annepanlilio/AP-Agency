@@ -25,14 +25,14 @@ echo "</div>";
 
 echo "<div id=\"profile-links\">\n";
 		
-	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2){
+	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 1){
 		
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\" class=\"profile-link\">". __("Print Photos", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28			
+			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\" class=\"profile-link\">". __("Print Photos", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		}
 	}
 // Polaroid	
