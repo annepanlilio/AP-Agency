@@ -68,7 +68,7 @@ global $wpdb;
 
 		// Data: Custom Fields
 		case 5:
-			echo "<h1>Settings &raquo; Data &raquo; Custom Fields</h1>";
+			echo "<h1>Settings &raquo; Data &raquo; Custom Fields</h1><br />";
 			//return RBAgency_AdminSettings::DataCustomFields();
 			break;
 
@@ -1912,6 +1912,8 @@ echo '</table>';
 
 
 elseif ($ConfigID == 5) {
+
+echo "<div id=\"custom-fields\">";
 	/** Identify Labels **/
 	define("LabelPlural", __("Custom Fields", RBAGENCY_TEXTDOMAIN));
 	define("LabelSingular", __("Custom Field", RBAGENCY_TEXTDOMAIN));
@@ -2372,7 +2374,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			
 			echo "\n";
 		echo " 
-		<div class=\"postbox \"  style=\"width:350px;float:left;border:0px solid black;\">
+		<div class=\"postbox \">
 		<!--	 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>
 		-->
 		<div class=\"inside\"> ";
@@ -2386,12 +2388,12 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 	}else{
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 	}
-	echo "<table class=\"form-table\">\n";
+	echo "<div id=\"new-customfields\" class=\"rbform\">\n";
 		if(!isset($_GET["action"])){  // Create new Field		
 			echo "
-						<tr>
-							<td>Type*:</td>
-							<td>";
+						<div class=\"rbfield rbselect rbsingle\">
+							<label>Type*:</label>
+							<div>";
 								if($rb_agency_options_arr['rb_agency_option_unittype']==1){
 										echo"	<select class=\"objtype\" name=\"ProfileCustomType\" id=\"1\">";
 								}else{
@@ -2412,29 +2414,29 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									echo "<option value=\"9\">Dropdown (Multi-Select)</option>";
 									echo "<option value=\"10\">Date</option>";
 			echo"				</select>";
-			echo "			</td>
-						</tr>
-						<tr>
-							<td valign=\"top\">Visibility*:</td>
-							<td style=\"font-size:13px;\">
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" /> <strong>". __("Public", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Visible on Profile & Search, Profile Management, Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" /> <strong>". __("Private", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Visible in Profile Management & Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
-								<div><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" /> <strong>". __("Restricted", RBAGENCY_TEXTDOMAIN) ."</strong><br/>". __("Only visible in Admin CRM", RBAGENCY_TEXTDOMAIN) ."</div>
-							</td>
-						</tr>
-						<tr>
-							<td valign=\"top\">Custom Views:</td>
-							<td style=\"font-size:13px;\">
-							<input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" /> Show on Registration Form<br/>
-							<input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)<br/>  
-							<input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)<br/>
-							<input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager<br/>
-							</td>
-						</tr>
+			echo "			</div>
+						</div>
+						<div class=\"rbfield rbradio rbmulti\">
+							<label>Visibility*:</label>
+							<div>
+								<div><label><input type=\"radio\" name=\"ProfileCustomView\" value=\"0\" checked=\"checked\" /> <strong>". __("Public", RBAGENCY_TEXTDOMAIN) ."</strong></label><br/><small>". __("Visible on Profile & Search, Profile Management, Admin CRM", RBAGENCY_TEXTDOMAIN) ."</small></div>
+								<div><label><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" /> <strong>". __("Private", RBAGENCY_TEXTDOMAIN) ."</strong></label><br/><small>". __("Visible in Profile Management & Admin CRM", RBAGENCY_TEXTDOMAIN) ."</small></div>
+								<div><label><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" /> <strong>". __("Restricted", RBAGENCY_TEXTDOMAIN) ."</strong></label><br/><small>". __("Only visible in Admin CRM", RBAGENCY_TEXTDOMAIN) ."</small></div>
+							</div>
+						</div>
+						<div class=\"rbfield rbcheckbox rbmulti\">
+							<label>Custom Views:</label>
+							<div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" /> Show on Registration Form</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager</label></div>
+							</div>
+						</div>
 
-						<tr>
-							<td valign=\"top\">Gender*:</td>
-							<td valign=\"top\" style=\"font-size:13px;\">";
+						<div class=\"rbfield rbselect rbsingle\">
+							<label>Gender*:</label>
+							<div>";
 							$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 							echo "<select name=\"ProfileCustomShowGender\">";
 							echo "<option value=\"\">All Gender</option>";
@@ -2447,55 +2449,39 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									 }
 								 }
 							echo "</select>";
+							echo "</div>
+						</div>
+						<div class=\"rbfield rbcheckbox rbmulti\">
+							<label>Profile Type:</label>
+							<div>";						
+							/*
+							 * get the proper fields on
+							 * profile types here
+							 */
 							
-							echo " </td>
-						</tr>
-						<tr>
-						<td valign=\"top\">Profile Type:</td>
-						<td style=\"font-size:13px;\">";
-						
-						/*
-						 * get the proper fields on
-						 * profile types here
-						 */
-						
-						$get_types = "SELECT * FROM ". table_agency_data_type;
-						
-						$result = $wpdb->get_results($get_types,ARRAY_A);
-						
-						foreach( $result as $typ){
-										$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));    
-										$checked = 'checked="checked"';                    
-										echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
-											 $checked . '  />&nbsp;'.
-											 trim($typ['DataTypeTitle'])
-											 .'&nbsp;<br/>';
-						} 
-						echo	   "</td>
-									<td style=\"font-size:13px;\">
-								   
-									</td>
-									<td style=\"font-size:13px;\">
-								   
-									</td>
-								</tr>
-						<tr>
-							<td valign=\"top\">Custom Order:</td>
-							<td style=\"font-size:13px;\">
+							$get_types = "SELECT * FROM ". table_agency_data_type;
+							
+							$result = $wpdb->get_results($get_types,ARRAY_A);
+							
+							foreach( $result as $typ){
+								echo "<div><label>";
+											$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));    
+											$checked = 'checked="checked"';                    
+											echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
+												 $checked . '  />&nbsp;'.
+												 trim($typ['DataTypeTitle'])
+												 .'&nbsp;<br/>';
+								echo "</label></div>";
+							} 
+						echo	   "</div>
+						</div>
+						<div class=\"rbfield rbselect rbsingle\">
+							<label>Custom Order:</label>
+							<div>
 							<input type=\"text\" name=\"ProfileCustomOrder\" value=\"0\" />
-							</td>
-							<td style=\"font-size:13px;\">
-						   
-							</td>
-							<td style=\"font-size:13px;\">
-						   
-							</td>
-						</tr>
-					</td>
-				</tr>
-			</td>
-		</tr>
-	</table>";
+							</div>
+						</div>
+	</div>";
 		
 		echo " <table>\n";
 			 echo "<tr id=\"objtype_customize\">\n";
@@ -2906,7 +2892,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		  
 			</div>
 </div>
-<div class="all-custom_fields" style="width:700px;float:left;border:0px solid black;margin-left:15px;">
+<div class="all-custom_fields">
 <style type="text/css">
 	#rb-cfield tr td {
 	  border-bottom: 2px dotted #ccc;
@@ -3068,6 +3054,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		
 		echo "</form>\n";
 echo "</div>";
+echo "</div><!-- #custom-fields -->";
 
 
 
