@@ -20,34 +20,36 @@ get_currentuserinfo();
 					<h3><?php echo __("Welcome to RB Agency", RBAGENCY_TEXTDOMAIN ) ?>!</h3>
 					<p class="about-description"><?php echo __("We have added some resources below to help you get started.", RBAGENCY_TEXTDOMAIN ) ?></p>
 					<h4><?php echo __("Quick Links", RBAGENCY_TEXTDOMAIN ) ?></h4>
-					<ul id="rbquick-links">
+					<div id="rbquick-links">
 						<?php
 						if (current_user_can("manage_options")) {
+
 							// echo "<li><a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
-							echo "<li><a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a></li>";
+							echo "<a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
 
 							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender, ARRAY_A);
-							$queryGenderCount = $wpdb->num_rows;
-
-							// echo "<li><a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Find profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
-							echo "<li><a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a></li>";
+							$queryGenderCount = $wpdb->num_rows;						
 
 							foreach($queryGenderResult as $fetchGender){
-								echo "<li><a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", RBAGENCY_TEXTDOMAIN) ."</a></li>\n";
+								echo "<a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", RBAGENCY_TEXTDOMAIN) ."</a><br/>\n";
 							}
-							
+
+							// echo "<li><a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Find profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
+							echo "<a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+
 							if($queryGenderCount < 1){
-								echo "<li>". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", RBAGENCY_TEXTDOMAIN) ."</li>\n";
+								echo "". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a><br/>", RBAGENCY_TEXTDOMAIN) ."\n";
 							} 
 							
 							if(function_exists('rb_agency_interact_menu')){
-							echo "<li><a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a></li>";
+							echo "<a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
 							}
-						echo "<li><a href='?page=rb_agency_searchsaved' class=\"button-primary\">". __("Saved Searches", RBAGENCY_TEXTDOMAIN) . "</a></li>";
-							
+							echo "<a href='?page=rb_agency_searchsaved' class=\"button-primary\">". __("Saved Searches", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+							echo "<a href='?page=rb_agency_reports' class=\"button-primary\">". __("Tools & Reports", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+							echo "<a href='?page=rb_agency_settings' class=\"button-primary\">". __("Settings", RBAGENCY_TEXTDOMAIN) . "</a>";
 						}
 						?>
-					</ul>
+					</div>
 				</div>
 
 				<div id="welcome-video" class="welcome-panel-column">

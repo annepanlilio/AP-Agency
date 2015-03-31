@@ -181,8 +181,9 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 .rbvideo object, .rbvideo iframe, .rbvideo embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 /* Welcome */
-#rbquick-links li { float: left; width: 50%; }
-#rbquick-links li:nth-child(odd) { clear: left; }
+#rbquick-links { padding-bottom: 15px; }
+#rbquick-links a { margin-top: 5px; }
+
 .welcome-panel-column#welcome-video { margin-right: 15px; margin-bottom:30px; float:right; width:40% }
 
 /* Manage Profiles */
