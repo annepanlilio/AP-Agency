@@ -718,7 +718,7 @@ global $wpdb;
 		// Updating version number!
 		update_option('rb_agency_version', "2.4.1");
 	}
-	if (substr(get_option('rb_agency_version'), 0, 3) == "2.4.x") {
+	if (substr(get_option('rb_agency_version'), 0, 3) == "2.4") {
 		// Updating version number!
 		update_option('rb_agency_version', "2.4.x");
 
@@ -750,4 +750,12 @@ global $wpdb;
 		// Now let's drop the temporary table 'wp_agency_customfield_mux_temp' after succesfully inserted
 		$wpdb->query("DROP TABLE wp_agency_customfield_mux_temp");
 	}
+
+	// 2.4.2
+	if (substr(get_option('rb_agency_version'), 0, 3) == "2.4") {
+		// Updating version number!
+		update_option('rb_agency_version', "2.4.2");
+	}
+
+
 ?>
