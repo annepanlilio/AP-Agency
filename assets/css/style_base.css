@@ -70,8 +70,10 @@
 #profile-list .rbprofile-list .profile-info .details {
 	font-size: small;
 }
+#profile-list .rbprofile-list .profile-info .details > span,
 #profile-list .rbprofile-list .profile-info .details-merged > span {
 	display: block;
+	word-wrap: break-word;
 }
 #profile-list .details-age > span {
 	white-space: nowrap;
