@@ -10,11 +10,10 @@ echo "<div id=\"profile-social\">";
 echo "</div>";
 echo "<div id=\"profile-casting-link\">";
 	if(is_user_logged_in()){
-	       
-				if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
-	       		   $disp .= "<a href=\"".  get_bloginfo("wpurl") ."/casting-dashboard/\" rel=\"nofollow\" title=\"View Favorites\" class=\"btn btn-primary\">Go Back to My Account</a>";
-				}
-	       	}
+		if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
+			$disp .= "<a href=\"".  get_bloginfo("wpurl") ."/casting-dashboard/\" rel=\"nofollow\" title=\"View Favorites\" class=\"btn btn-primary\">Go Back to My Account</a>";
+		}
+	}
 echo "</div>";
 echo "<div id=\"profile-actions\">";
 	if (is_plugin_active('rb-agency-casting/rb-agency-casting.php') && is_user_logged_in()) {
@@ -35,15 +34,15 @@ echo "<div id=\"profile-links\">\n";
 			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\" class=\"profile-link\">". __("Print Photos", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		}
 	}
+
 // Polaroid	
 	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 3){
-	
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-		    echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link polaroid\">". __("View Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
+			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link polaroid\">". __("View Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
 			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link polaroid\">". __("Print Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		}
 	}
@@ -116,6 +115,16 @@ echo "<div id=\"profile-links\">\n";
 		if ($countMedia > 0) {
 			foreach($resultsImg as $dataMedia ){
 				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+			}
+		}
+
+	// Custom URLs
+		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Link");
+		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+		$countMedia = $wpdb->num_rows;
+		if ($countMedia > 0) {
+			foreach($resultsImg as $dataMedia ){
+				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">". $dataMedia['ProfileMediaTitle'] ."</a>\n";
 			}
 		}
 

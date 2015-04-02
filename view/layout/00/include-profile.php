@@ -52,11 +52,10 @@ echo "				<div id=\"photos\">\n";
 						# rb_agency_option_galleryorder
 						$rb_agency_options_arr = get_option('rb_agency_options');
 						$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
-	
+
 						$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder']) ? $rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-											
-										
+
 						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
@@ -66,7 +65,6 @@ echo "				<div id=\"photos\">\n";
 								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
 							}
 						}
-
 
 echo "					<div class=\"rbclear\"></div>\n";
 echo "				</div>\n"; // close #photos
@@ -118,7 +116,6 @@ echo "				<div id=\"links\">\n";
 						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
 
 
-
 echo "				</div>\n";  // Close Links
 echo "			</div>\n";  // Close .rbcol-3
 
@@ -136,9 +133,9 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 									echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
 							}
 
-echo "					</div>\n"; // #photos						
+echo "					</div>\n"; // #photos
 					}*/
-					if($subview == "images"){//show all images page  //MODS 2012-11-28 ?>
+					if ($subview == "images") {//show all images page  ?>
 						<div id="print-photos" class="profile-photos">
 							<script>  //JS to higlight selected images 
 								function selectImg(mid){
@@ -149,7 +146,7 @@ echo "					</div>\n"; // #photos
 										img.style.filter       = "alpha(opacity=100)";
 										img.style.MozOpacity   = "100";
 										img.style.opacity      = "100";
-										img.style.KhtmlOpacity = "100";    
+										img.style.KhtmlOpacity = "100";
 										document.getElementById("p"+mid).value = 0;
 									} else {
 										document.getElementById("p"+mid).value = 1;
@@ -157,7 +154,7 @@ echo "					</div>\n"; // #photos
 										img.style.filter       = "alpha(opacity=25)";
 										img.style.MozOpacity   = "0.25";
 										img.style.opacity      = "0.25";
-										img.style.KhtmlOpacity = "0.25";    
+										img.style.KhtmlOpacity = "0.25";
 									}
 								}
 
@@ -176,7 +173,7 @@ echo "					</div>\n"; // #photos
 								<input type="hidden" id="selected_image" name="selected_image" />
 
 								<?php
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+								$queryImg = rb_agency_option_galleryorder_query($order, $ProfileID, "Image");
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg = $wpdb->num_rows;
 
@@ -209,7 +206,7 @@ echo "					</div>\n"; // #photos
 										img.style.filter       = "alpha(opacity=100)";
 										img.style.MozOpacity   = "100";
 										img.style.opacity      = "100";
-										img.style.KhtmlOpacity = "100";    
+										img.style.KhtmlOpacity = "100";
 										document.getElementById("p"+mid).value = 0;
 									} else {
 										document.getElementById("p"+mid).value = 1;
@@ -217,21 +214,21 @@ echo "					</div>\n"; // #photos
 										img.style.filter       = "alpha(opacity=25)";
 										img.style.MozOpacity   = "0.25";
 										img.style.opacity      = "0.25";
-										img.style.KhtmlOpacity = "0.25";    
+										img.style.KhtmlOpacity = "0.25";
 									}
 								}
 							</script>
-							<?php 
-							
+							<?php
+
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
-								
+
 							if($countImg>0){ ?>
 							<form action="../print-polaroids/" method="post" id="allimageform">
 								<input type="hidden" id="selected_image" name="selected_image" />
 
-								<?php  
+								<?php
 								foreach($resultsImg as $dataImg ){
 									echo '<div class="photo">';
 									echo '	<a href="'. RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
@@ -386,8 +383,8 @@ echo "					</div>\n"; // #photos
 									<input type="hidden" name="pdf_image_id" value="<?php echo($pdf_image_id);?>" />
 								<?php
 								}
-								?>			
-							</div><!-- polariod -->		
+								?>
+							</div><!-- polariod -->
 							<center>
 								<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
 								<input type="submit" value="Download PDF" name="pdf_all_images" />
@@ -412,10 +409,10 @@ echo "					</div>\n"; // #photos
 
 						if($withSelected != 1){ $selected = "<input type='hidden' value='1' name='".$lasID."'>"; }
 						?>
-						
+
 						<div class="print_options">
 							<span class="allimages_text">Select Print Format</span><br /><br />
-						</div> 
+						</div>
 
 						<form action="" method="post" target="_blank">
 							<?php echo $selected;?>
@@ -460,21 +457,20 @@ echo "					</div>\n"; // #photos
 								<?php
 									}
 								?>
-								
-								
+
 							</div><!-- polariod -->
 							<center>
 								<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
 								<input type="submit" value="Print Pictures" name="print_all_images" />&nbsp;
 							</center>
-						</form>			
+						</form>
 					<?php
-					}					
+					}
 
 echo "				<div class=\"rbclear\"></div>\n"; // Clear All
 echo "			</div>\n"; // .rbcol-12
-echo "		  	<div class=\"rbclear\"></div>\n"; // Clear All
-echo "  	</div>\n";  // Close Profile Zero
+echo "			<div class=\"rbclear\"></div>\n"; // Clear All
+echo "		</div>\n";  // Close Profile Zero
 echo "		<div class=\"rbclear\"></div>\n"; // Clear All
 echo "	</div>\n";  // Close Profile
 ?>

@@ -10,6 +10,9 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 ## Change Log
 
+### 2.4.3
+* Added Custom URL's to Profiles
+
 ### 2.4
 * Easy updating!  No more need to download from GitHub, once upgraded to 2.4 you can upgrade from WordPress easily.
 * Bug Fixes
