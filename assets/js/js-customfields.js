@@ -254,13 +254,13 @@ jQuery(document).ready(function(){
      }
 	
 		jQuery("#addmoreoption_1").on('click',function(){
-			jQuery("#editfield_add_more_options_12 ul").append("<li>Option:<input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
+			jQuery("#editfield_add_more_options_12 ul").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
 		});
 		jQuery("#addmoreoption_2").on('click',function(){
-			jQuery("#editfield_add_more_options_2 ul").append("<li>Option:<input type=\"text\" name=\"option2[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
+			jQuery("#editfield_add_more_options_2 ul").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option2[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
 		}); 
 		jQuery("#addmoreoption_12").on('click',function(){
-			jQuery("#editfield_add_more_options_12 ul").append("<li>Option:<input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></br></li>");
+			jQuery("#editfield_add_more_options_12 ul").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
 		});
 
 		jQuery("a.del_opt").on('click',function(){

@@ -36,6 +36,12 @@
 	float: left;
 	line-height: normal;		
 }
+.rbform .rbfield > div.option select,
+.rbform .rbfield > div.option input[type="text"],
+.rbform .rbfield > div.option input[type="email"],
+.rbform .rbfield > div.option input[type="password"] {
+	width: 88%;
+}
 .rbform .rbfield select,
 .rbform .rbfield textarea,
 .rbform .rbfield input[type="text"],
