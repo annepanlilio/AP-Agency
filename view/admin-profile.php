@@ -27,9 +27,7 @@ define("LabelSingular", "Profiles");
 		}
 
 		$rb_agency_option_inactive_profile_on_update = isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])? $rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0;
-	
 
- 
 
 // *************************************************************************************************** //
 // Handle Post Actions
@@ -195,29 +193,29 @@ if (isset($_POST['action'])) {
 					// Create Record
 					$insert = "INSERT INTO " . table_agency_profile .
 						" (ProfileGallery,
-						   ProfileContactDisplay,
-						   ProfileUserLinked,
-						   ProfileContactNameFirst,
-						   ProfileContactNameLast,
-						   ProfileContactEmail,
-						   ProfileContactWebsite,
-						   ProfileGender,
-						   ProfileDateBirth,
-						   ProfileLocationStreet,
-						   ProfileLocationCity,
-						   ProfileLocationState,
-						   ProfileLocationZip,
-						   ProfileLocationCountry,
-						   ProfileContactPhoneHome, 
-						   ProfileContactPhoneCell, 
-						   ProfileContactPhoneWork,
-						   ProfileDateUpdated,
-						   ProfileType,
-						   ProfileIsActive,
-						   ProfileIsFeatured,
-						   ProfileIsPromoted,
-						   ProfileStatHits,
-						   ProfileDateViewLast)" .
+							ProfileContactDisplay,
+							ProfileUserLinked,
+							ProfileContactNameFirst,
+							ProfileContactNameLast,
+							ProfileContactEmail,
+							ProfileContactWebsite,
+							ProfileGender,
+							ProfileDateBirth,
+							ProfileLocationStreet,
+							ProfileLocationCity,
+							ProfileLocationState,
+							ProfileLocationZip,
+							ProfileLocationCountry,
+							ProfileContactPhoneHome, 
+							ProfileContactPhoneCell, 
+							ProfileContactPhoneWork,
+							ProfileDateUpdated,
+							ProfileType,
+							ProfileIsActive,
+							ProfileIsFeatured,
+							ProfileIsPromoted,
+							ProfileStatHits,
+							ProfileDateViewLast)" .
 						"VALUES (
 							'" . esc_attr($ProfileGallery) . "',
 							'" . esc_attr($ProfileContactDisplay) . "',
@@ -247,8 +245,6 @@ if (isset($_POST['action'])) {
 					$results = $wpdb->query($insert);
 					$ProfileID = $wpdb->insert_id;
 					add_user_meta( $ProfileID, 'rb_agency_interact_profiletype',true);
-					
-
 
 					// Notify admin and user
 					if ($ProfileNotifyUser <> "yes" && function_exists('rb_agency_interact_menu')) {
@@ -297,280 +293,281 @@ if (isset($_POST['action'])) {
 
 		// *************************************************************************************************** //
 		// Edit Record
+
 		case 'editRecord':
 			if (!empty($ProfileContactNameFirst) && !empty($ProfileID)) {
-                
-               if($have_error == false){    
-               	        if($rb_agency_option_inactive_profile_on_update == 1){
-               	        	$ProfileIsActive = 3;
-               	        }
-										// Update Record
-										$update = "UPDATE " . table_agency_profile . " SET 
-											ProfileGallery='" . esc_attr($ProfileGallery) . "',
-											ProfileContactDisplay='" . esc_attr($ProfileContactDisplay) . "',
-											ProfileContactNameFirst='" . esc_attr($ProfileContactNameFirst) . "',
-											ProfileContactNameLast='" . esc_attr($ProfileContactNameLast) . "',
-											ProfileContactEmail='" . esc_attr($ProfileContactEmail) . "',
-											ProfileContactWebsite='" . esc_attr($ProfileContactWebsite) . "',
-											ProfileContactPhoneHome='" . esc_attr($ProfileContactPhoneHome) . "',
-											ProfileContactPhoneCell='" . esc_attr($ProfileContactPhoneCell) . "',
-											ProfileContactPhoneWork='" . esc_attr($ProfileContactPhoneWork) . "',
-											ProfileGender='" . esc_attr($ProfileGender) . "',
-											ProfileDateBirth ='" . esc_attr($ProfileDateBirth) . "',
-											ProfileLocationStreet='" . esc_attr($ProfileLocationStreet) . "',
-											ProfileLocationCity='" . esc_attr($ProfileLocationCity) . "',
-											ProfileLocationState='" . esc_attr($ProfileLocationState) . "',
-											ProfileLocationZip ='" . esc_attr($ProfileLocationZip) . "',
-											ProfileLocationCountry='" . esc_attr($ProfileLocationCountry) . "',
-											ProfileDateUpdated=now(),
-											ProfileType='" . $ProfileType . "',
-											ProfileIsActive='" . esc_attr($ProfileIsActive) . "',
-											ProfileIsFeatured='" . esc_attr($ProfileIsFeatured) . "',
-											ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
-											ProfileStatHits='" . esc_attr($ProfileStatHits) . "'
-											WHERE ProfileID=$ProfileID";
-										$results = $wpdb->query($update);
-										
-											update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
-											update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_pgender', esc_attr($ProfileGender));
 
-										if ($ProfileUserLinked > 0) {
-											/* Update WordPress user information. */
-											update_user_meta($ProfileUserLinked, 'first_name', esc_attr($ProfileContactNameFirst));
-											update_user_meta($ProfileUserLinked, 'last_name', esc_attr($ProfileContactNameLast));
-											update_user_meta($ProfileUserLinked, 'nickname', esc_attr($ProfileContactDisplay));
-											update_user_meta($ProfileUserLinked, 'display_name', esc_attr($ProfileContactDisplay));
-											//update_usermeta($ProfileUserLinked, 'user_email', esc_attr($ProfileContactEmail));
-											wp_update_user( array( 'ID' => $ProfileUserLinked,  'user_email' => esc_attr($ProfileContactEmail) ) );
-											update_user_meta( $ProfileUserLinked, 'rb_agency_interact_profiletype',true);
-					
-										}
+				if($have_error == false){
+						if($rb_agency_option_inactive_profile_on_update == 1){
+							$ProfileIsActive = 3;
+						}
+						// Update Record
+						$update = "UPDATE " . table_agency_profile . " SET 
+							ProfileGallery='" . esc_attr($ProfileGallery) . "',
+							ProfileContactDisplay='" . esc_attr($ProfileContactDisplay) . "',
+							ProfileContactNameFirst='" . esc_attr($ProfileContactNameFirst) . "',
+							ProfileContactNameLast='" . esc_attr($ProfileContactNameLast) . "',
+							ProfileContactEmail='" . esc_attr($ProfileContactEmail) . "',
+							ProfileContactWebsite='" . esc_attr($ProfileContactWebsite) . "',
+							ProfileContactPhoneHome='" . esc_attr($ProfileContactPhoneHome) . "',
+							ProfileContactPhoneCell='" . esc_attr($ProfileContactPhoneCell) . "',
+							ProfileContactPhoneWork='" . esc_attr($ProfileContactPhoneWork) . "',
+							ProfileGender='" . esc_attr($ProfileGender) . "',
+							ProfileDateBirth ='" . esc_attr($ProfileDateBirth) . "',
+							ProfileLocationStreet='" . esc_attr($ProfileLocationStreet) . "',
+							ProfileLocationCity='" . esc_attr($ProfileLocationCity) . "',
+							ProfileLocationState='" . esc_attr($ProfileLocationState) . "',
+							ProfileLocationZip ='" . esc_attr($ProfileLocationZip) . "',
+							ProfileLocationCountry='" . esc_attr($ProfileLocationCountry) . "',
+							ProfileDateUpdated=now(),
+							ProfileType='" . $ProfileType . "',
+							ProfileIsActive='" . esc_attr($ProfileIsActive) . "',
+							ProfileIsFeatured='" . esc_attr($ProfileIsFeatured) . "',
+							ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
+							ProfileStatHits='" . esc_attr($ProfileStatHits) . "'
+							WHERE ProfileID=$ProfileID";
+						$results = $wpdb->query($update);
 
-										// Remove Old Custom Field Values
-										$delete1 = "DELETE FROM " . table_agency_customfield_mux . " WHERE ProfileID = \"" . $ProfileID . "\"";
-										$results1 = $wpdb->query($delete1);
+							update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
+							update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_pgender', esc_attr($ProfileGender));
 
-										// Add New Custom Field Values
-										foreach ($_POST as $key => $value) {
-											if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value) || $value == 0)) {
-												$ProfileCustomID = substr($key, 15);
-												if (is_array($value)) {
-													$value = implode(",", $value);
+						if ($ProfileUserLinked > 0) {
+							/* Update WordPress user information. */
+							update_user_meta($ProfileUserLinked, 'first_name', esc_attr($ProfileContactNameFirst));
+							update_user_meta($ProfileUserLinked, 'last_name', esc_attr($ProfileContactNameLast));
+							update_user_meta($ProfileUserLinked, 'nickname', esc_attr($ProfileContactDisplay));
+							update_user_meta($ProfileUserLinked, 'display_name', esc_attr($ProfileContactDisplay));
+							//update_usermeta($ProfileUserLinked, 'user_email', esc_attr($ProfileContactEmail));
+							wp_update_user( array( 'ID' => $ProfileUserLinked,  'user_email' => esc_attr($ProfileContactEmail) ) );
+							update_user_meta( $ProfileUserLinked, 'rb_agency_interact_profiletype',true);
+
+						}
+
+						// Remove Old Custom Field Values
+						$delete1 = "DELETE FROM " . table_agency_customfield_mux . " WHERE ProfileID = \"" . $ProfileID . "\"";
+						$results1 = $wpdb->query($delete1);
+
+						// Add New Custom Field Values
+						foreach ($_POST as $key => $value) {
+							if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value) || $value == 0)) {
+								$ProfileCustomID = substr($key, 15);
+								if (is_array($value)) {
+									$value = implode(",", $value);
+								}
+								
+								$profilecustomfield_date = explode("_",$key);
+								
+								if(count($profilecustomfield_date) == 2){ // customfield date
+									$value = date("y-m-d h:i:s",strtotime($value));
+									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
+								}else{
+									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
+								}
+								$results1 = $wpdb->query($insert1);
+							}
+						}
+
+						// Check Directory - create directory if does not exist
+						$ProfileGallery = rb_agency_checkdir($ProfileGallery);
+
+						// Upload Image & Add to Database
+						$i = 1;
+
+						while ($i <= 10) {
+
+							if (isset($_FILES['profileMedia' . $i]['tmp_name']) && $_FILES['profileMedia' . $i]['tmp_name'] != "") {
+								$uploadMediaType = $_POST['profileMedia' . $i . 'Type'];
+								if ($have_error != true) {
+									// Upload if it doesnt exist already
+									$path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
+									$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] ."_". RBAgency_Common::generate_random_string(6) . "." . $path_parts['extension']);
+									$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaURL = '%d2'";
+									$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID, $safeProfileMediaFilename),ARRAY_A);
+									$count =  $wpdb->num_rows;
+
+									if ($count < 1) {
+										if ($uploadMediaType == "Image" || $uploadMediaType == "Polaroid") {
+
+											if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
+
+												$image = new rb_agency_image();
+												$image->load($_FILES['profileMedia' . $i]['tmp_name']);
+
+												if ($image->getHeight() > $rb_agency_option_agencyimagemaxheight) {
+													$image->resizeToHeight($rb_agency_option_agencyimagemaxheight);
 												}
-												
-												$profilecustomfield_date = explode("_",$key);
-												
-												if(count($profilecustomfield_date) == 2){ // customfield date
-													$value = date("y-m-d h:i:s",strtotime($value));
-													$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
-												}else{
-													$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
-												}
-												$results1 = $wpdb->query($insert1);
+												$image->save(RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+
+												// Add to database
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+											} else {
+												$errorValidation['profileMedia'] = "<b><i>"._("Please upload an image file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
+												$have_error = true;
 											}
-										}
-
-										// Check Directory - create directory if does not exist
-										$ProfileGallery = rb_agency_checkdir($ProfileGallery);
-
-										// Upload Image & Add to Database
-										$i = 1;
-
-										while ($i <= 10) {
-
-											if (isset($_FILES['profileMedia' . $i]['tmp_name']) && $_FILES['profileMedia' . $i]['tmp_name'] != "") {
-												$uploadMediaType = $_POST['profileMedia' . $i . 'Type'];
-												if ($have_error != true) {
-													// Upload if it doesnt exist already
-													$path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
-													$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] ."_". RBAgency_Common::generate_random_string(6) . "." . $path_parts['extension']);
-													$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaURL = '%d2'";
-													$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID, $safeProfileMediaFilename),ARRAY_A);
-													$count =  $wpdb->num_rows;
-
-													if ($count < 1) {
-														if ($uploadMediaType == "Image" || $uploadMediaType == "Polaroid") {
-
-															if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-
-																$image = new rb_agency_image();
-																$image->load($_FILES['profileMedia' . $i]['tmp_name']);
-
-																if ($image->getHeight() > $rb_agency_option_agencyimagemaxheight) {
-																	$image->resizeToHeight($rb_agency_option_agencyimagemaxheight);
-																}
-																$image->save(RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
-
-																// Add to database
-																$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-															} else {
-																$errorValidation['profileMedia'] = "<b><i>"._("Please upload an image file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
-																$have_error = true;
-															}
-														} else if ($uploadMediaType == "VoiceDemo") {
-															// Add to database
-															$MIME = array('audio/mpeg', 'audio/mp3');
-															if (in_array($_FILES['profileMedia' . $i]['type'], $MIME)) {
-																$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-																move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
-															} else {
-																$errorValidation['profileMedia'] = "<b><i>"._("Please upload a mp3 file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
-																$have_error = true;
-															}
-														} else if ($uploadMediaType == "Resume") {
-															// Add to database
-															if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf") {
-																$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-																move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
-															} else {
-																$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSword/RTF files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
-																$have_error = true;
-															}
-														} else if ($uploadMediaType == "Headshot") {
-															// Add to database
-															if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-																$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-																move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
-															} else {
-																$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSWord/RTF/Image files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
-																$have_error = true;
-															}
-														} else if ($uploadMediaType == "CompCard") {
-															// Add to database
-															if ($_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-																$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-																move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
-															} else {
-																$errorValidation['profileMedia'] = "<b><i>"._("Please upload jpeg or png files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
-																$have_error = true;
-															}
-														} 
-														// Custom Media Categories
-														else if (strpos($uploadMediaType,"rbcustommedia") !== false) {
-															// Add to database
-															$custom_media_info = explode("_",$uploadMediaType);
-															$custom_media_title = $custom_media_info[1];
-															$custom_media_type = $custom_media_info[2];
-															$custom_media_extenstion = $custom_media_info[3];
-															$arr_extensions = array();
-
-															array_push($arr_extensions, $custom_media_extenstion);
-															
-															if($custom_media_extenstion == "doc"){
-																array_push($arr_extensions,"application/octet-stream");
-																array_push($arr_extensions,"docx");
-															}elseif($custom_media_extenstion == "mp3"){
-																array_push($arr_extensions,"audio/mpeg");
-																array_push($arr_extensions,"audio/mp3");
-															}elseif($custom_media_extenstion == "pdf"){
-																array_push($arr_extensions,"application/pdf");
-															}elseif($custom_media_extenstion == "jpg"){
-																array_push($arr_extensions,"image/jpeg");
-																array_push($arr_extensions,"jpeg");
-															}
-
-															if (in_array($_FILES['profileMedia' . $i]['type'], $arr_extensions)) {
-																$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-																move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
-															} else {
-																$errorValidation['profileMedia'] = "<b><i>".__("Please upload ".$custom_media_extenstion." files only", RBAGENCY_TEXTDOMAIN)."</i></b><br />";
-																$have_error = true;
-
-															}
-														}
-													} // End count
-												} // End have error = false
-											} //End:: if profile media is not empty.
-											$i++;
-										} // endwhile   
-
-										// Upload Videos to Database
-										for ($k = 1 ; $k < 4; $k++){
-											if (isset($_POST['profileMediaV'. $k]) && !empty($_POST['profileMediaV'. $k])) {
-												$profileMediaType = $_POST['profileMediaV'.$k.'Type'];
-												$profileMediaTitle = $_POST['media'.$k.'_title'] ."<br>". $_POST['media'.$k.'_caption'];
-												$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV'. $k]);
-												$profileVideoType = rb_agency_get_videotype($_POST['profileMediaV'. $k]);
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
+										} else if ($uploadMediaType == "VoiceDemo") {
+											// Add to database
+											$MIME = array('audio/mpeg', 'audio/mp3');
+											if (in_array($_FILES['profileMedia' . $i]['type'], $MIME)) {
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+											} else {
+												$errorValidation['profileMedia'] = "<b><i>"._("Please upload a mp3 file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
+												$have_error = true;
 											}
-										}
-
-										// Add Custom URL/Links to Database
-										for ($k = 1 ; $k < 4; $k++){
-											if (isset($_POST['profileLinkTitleV'. $k]) && !empty($_POST['profileLinkTitleV'. $k]) && isset($_POST['profileLinkURLV'. $k]) && !empty($_POST['profileLinkURLV'. $k])) {
-												$profileLinkTitle = $_POST['profileLinkTitleV'. $k];
-												$profileLinkURL = $_POST['profileLinkURLV'. $k];
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','Link','" . $profileLinkTitle . "','" . $profileLinkURL . "')");
+										} else if ($uploadMediaType == "Resume") {
+											// Add to database
+											if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf") {
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+											} else {
+												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSword/RTF files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
+												$have_error = true;
 											}
-										}
-
-										/* --------------------------------------------------------- CLEAN THIS UP -------------- */
-										// Do we have a custom image yet? Lets just set the first one as primary.
-										$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' AND ProfileMediaPrimary='1'";
-										$results=  $wpdb->get_results($wpdb->prepare($results, $ProfileID),ARRAY_A);
-										$count =  $wpdb->num_rows;
-										if ($count < 1) {
-
-											$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' LIMIT 0, 1";
-											$resultsNeedOne=  $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
-											$count =  $wpdb->num_rows;
-											foreach ($resultsNeedOne as $dataNeedOne) {
-												$resultsFoundOne = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaID = '" . $dataNeedOne['ProfileMediaID'] . "'");
-												break;
+										} else if ($uploadMediaType == "Headshot") {
+											// Add to database
+											if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+											} else {
+												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSWord/RTF/Image files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
+												$have_error = true;
 											}
-										}
-										if ($ProfileMediaPrimaryID > 0) {
-											// Update Primary Image
-											$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=$ProfileID");
-											$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=$ProfileID AND ProfileMediaID=$ProfileMediaPrimaryID");
-										}
-										// Update Image order 
-										$ProfileMediaOrder1 =  array();
-										$ProfileMediaOrder2 =  array();
-										foreach ($_POST as $key => $val) {
-											if (substr($key,0,18) == "ProfileMediaOrder_") {
-												 $pieces = explode("_", $key);
-												if($pieces[1]>0){
-													if($val!=""){
-														$ProfileMediaOrder1[(int)$pieces[1]] = (int) $val ; 
-													}else{
-														$ProfileMediaOrder2[(int)$pieces[1]] = (int) $val ; 
-													}
-														
-												}
+										} else if ($uploadMediaType == "CompCard") {
+											// Add to database
+											if ($_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+											} else {
+												$errorValidation['profileMedia'] = "<b><i>"._("Please upload jpeg or png files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
+												$have_error = true;
+											}
+										} 
+										// Custom Media Categories
+										else if (strpos($uploadMediaType,"rbcustommedia") !== false) {
+											// Add to database
+											$custom_media_info = explode("_",$uploadMediaType);
+											$custom_media_title = $custom_media_info[1];
+											$custom_media_type = $custom_media_info[2];
+											$custom_media_extenstion = $custom_media_info[3];
+											$arr_extensions = array();
+
+											array_push($arr_extensions, $custom_media_extenstion);
+											
+											if($custom_media_extenstion == "doc"){
+												array_push($arr_extensions,"application/octet-stream");
+												array_push($arr_extensions,"docx");
+											}elseif($custom_media_extenstion == "mp3"){
+												array_push($arr_extensions,"audio/mpeg");
+												array_push($arr_extensions,"audio/mp3");
+											}elseif($custom_media_extenstion == "pdf"){
+												array_push($arr_extensions,"application/pdf");
+											}elseif($custom_media_extenstion == "jpg"){
+												array_push($arr_extensions,"image/jpeg");
+												array_push($arr_extensions,"jpeg");
 											}
 
-										}
-										asort($ProfileMediaOrder1);
-										$imedia=1; 
-										if(is_array($ProfileMediaOrder1) && count($ProfileMediaOrder1)){
-											foreach($ProfileMediaOrder1 as $key => $val){
-												$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
-												 $imedia++; 
-											}
-										}
-										if(is_array($ProfileMediaOrder2) && count($ProfileMediaOrder2)){
-											foreach($ProfileMediaOrder2 as $key => $val){
-												 $results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
-												 $imedia++; 
-											}
-										}
+											if (in_array($_FILES['profileMedia' . $i]['type'], $arr_extensions)) {
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+											} else {
+												$errorValidation['profileMedia'] = "<b><i>".__("Please upload ".$custom_media_extenstion." files only", RBAGENCY_TEXTDOMAIN)."</i></b><br />";
+												$have_error = true;
 
-				 }// if have_error == false
-									
-										/* --------------------------------------------------------- CLEAN THIS UP -------------- */
-										if(!$have_error){
-												echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", RBAGENCY_TEXTDOMAIN) . "! </a></p></div>");
-										}else{
-											foreach($errorValidation as $Error => $error){
-												echo ("<div id=\"message\" class=\"error\"><p>" . __($error, RBAGENCY_TEXTDOMAIN) . "</p></div>");
 											}
 										}
-												
-			 	
+									} // End count
+								} // End have error = false
+							} //End:: if profile media is not empty.
+							$i++;
+						} // endwhile   
+
+						// Upload Videos to Database
+						for ($k = 1 ; $k < 4; $k++){
+							if (isset($_POST['profileMediaV'. $k]) && !empty($_POST['profileMediaV'. $k])) {
+								$profileMediaType = $_POST['profileMediaV'.$k.'Type'];
+								$profileMediaTitle = $_POST['media'.$k.'_title'] ."<br>". $_POST['media'.$k.'_caption'];
+								$profileMediaURL = rb_agency_get_VideoFromObject($_POST['profileMediaV'. $k]);
+								$profileVideoType = rb_agency_get_videotype($_POST['profileMediaV'. $k]);
+								$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileVideoType) VALUES ('" . $ProfileID . "','" . $profileMediaType . "','" . $profileMediaTitle . "','" . $profileMediaURL . "','".$profileVideoType."')");
+							}
+						}
+
+						// Add Custom URL/Links to Database
+						for ($k = 1 ; $k < 4; $k++){
+							if (isset($_POST['profileLinkTitleV'. $k]) && !empty($_POST['profileLinkTitleV'. $k]) && isset($_POST['profileLinkURLV'. $k]) && !empty($_POST['profileLinkURLV'. $k])) {
+								$profileLinkTitle = $_POST['profileLinkTitleV'. $k];
+								$profileLinkURL = $_POST['profileLinkURLV'. $k];
+								$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','Link','" . $profileLinkTitle . "','" . $profileLinkURL . "')");
+							}
+						}
+
+						/* Set Primary Image */
+						// TODO: Refactor
+						$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' AND ProfileMediaPrimary='1'";
+						$results = $wpdb->get_results($wpdb->prepare($results, $ProfileID),ARRAY_A);
+						$count = $wpdb->num_rows;
+
+						// Do we have a custom image yet?
+						if ($count < 1) { // No, let's set the first one as primary
+							$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' ORDER BY ProfileMediaID ASC LIMIT 0, 1";
+							$resultsNeedOne=  $wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A);
+							$count =  $wpdb->num_rows;
+							foreach ($resultsNeedOne as $dataNeedOne) {
+								$resultsFoundOne = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID='" . $ProfileID . "' AND ProfileMediaID = '" . $dataNeedOne['ProfileMediaID'] . "'");
+								break;
+							}
+						}
+
+						if ($ProfileMediaPrimaryID > 0) {
+							// Update Primary Image
+							$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=$ProfileID");
+							$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=$ProfileID AND ProfileMediaID=$ProfileMediaPrimaryID");
+						}
+
+						// Update Image order 
+						$ProfileMediaOrder1 =  array();
+						$ProfileMediaOrder2 =  array();
+						foreach ($_POST as $key => $val) {
+							if (substr($key,0,18) == "ProfileMediaOrder_") {
+								 $pieces = explode("_", $key);
+								if($pieces[1]>0){
+									if($val!=""){
+										$ProfileMediaOrder1[(int)$pieces[1]] = (int) $val ; 
+									}else{
+										$ProfileMediaOrder2[(int)$pieces[1]] = (int) $val ; 
+									}
+								}
+							}
+
+						}
+						asort($ProfileMediaOrder1);
+						$imedia=1; 
+						if(is_array($ProfileMediaOrder1) && count($ProfileMediaOrder1)){
+							foreach($ProfileMediaOrder1 as $key => $val){
+								$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
+								 $imedia++; 
+							}
+						}
+						if(is_array($ProfileMediaOrder2) && count($ProfileMediaOrder2)){
+							foreach($ProfileMediaOrder2 as $key => $val){
+								 $results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaOrder='".$val."' WHERE ProfileID=$ProfileID AND ProfileMediaID=$key");
+								 $imedia++; 
+							}
+						}
+
+					} // if have_error == false
+
+						/* TODO: ------------ CLEAN THIS UP -------------- */
+						if(!$have_error){
+								echo ("<div id=\"message\" class=\"updated\"><p>" . __("Profile updated successfully", RBAGENCY_TEXTDOMAIN) . "! </a></p></div>");
+						}else{
+							foreach($errorValidation as $Error => $error){
+								echo ("<div id=\"message\" class=\"error\"><p>" . __($error, RBAGENCY_TEXTDOMAIN) . "</p></div>");
+							}
+						}
+
 			} else {
 				echo ("<div id=\"message\" class=\"error\"><p>" . __("Error updating record, please ensure you have filled out all required fields.", RBAGENCY_TEXTDOMAIN) . "</p></div>");
-			
 			}
 
 			if($have_error == false && isset($_GET["action"]) && $_GET["action"] !="editRecord"){
@@ -581,7 +578,7 @@ if (isset($_POST['action'])) {
 						$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID=%d";
 						$results = current($wpdb->get_results($wpdb->prepare($query, $ProfileID),ARRAY_A));
 						$wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=".($ProfileID)." ");
-					    $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".($ProfileID)." AND ProfileMediaID=".(isset($results["ProfileMediaID"])?$results["ProfileMediaID"]:"0"));
+						 $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=".($ProfileID)." AND ProfileMediaID=".(isset($results["ProfileMediaID"])?$results["ProfileMediaID"]:"0"));
 					}
 				
 					
@@ -592,10 +589,10 @@ if (isset($_POST['action'])) {
 		// *************************************************************************************************** //
 		// Delete bulk
 		case 'deleteRecord':
-		    $profiles_count = 0;
+			 $profiles_count = 0;
 			foreach ($_POST as $ProfileID) {
-                
-                if(is_numeric($ProfileID)){
+				
+				if(is_numeric($ProfileID)){
 						// Verify Record
 						$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  '%d'";
 						
@@ -613,7 +610,7 @@ if (isset($_POST['action'])) {
 							$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = %d ";
 							$results = $wpdb->query($wpdb->prepare($delete,$ProfileID));
 							/// Now delete
-					  		wp_delete_user($dataDelete["ProfileUserLinked"]);
+							wp_delete_user($dataDelete["ProfileUserLinked"]);
 					
 								if (isset($ProfileGallery)) {
 									// Remove Folder
@@ -1544,7 +1541,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}else{
 										$outVideoMedia .=  "<div class=\"media-file\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) . "<br /><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"Watch Video\" target=\"_blank\">Watch Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 									}
-			 					} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+								} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 									$outLinkVoiceDemo .= "<div class=\"media-file resume\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
@@ -1884,9 +1881,9 @@ function rb_display_list() {
 			$selectedNameLast = $_GET['ProfileContactNameLast'];
 			$query .= "&ProfileContactNameLast=". $selectedNameLast ."";
 				if(strpos($filter,'profile') > 0){
-					   $filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+						$filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
 				} else {
-					   $filter .= " profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
+						$filter .= " profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
 				}
 			}
 		}
@@ -1945,9 +1942,9 @@ function rb_display_list() {
 
 		$to_paginate = $_GET;
 		$to_paginate = array_unique($to_paginate);
-	    unset($to_paginate["page"]);
-	    if(!empty($dir)){
-		    unset($to_paginate["dir"]);
+		 unset($to_paginate["page"]);
+		 if(!empty($dir)){
+			 unset($to_paginate["dir"]);
 		}
 		$build_query = http_build_query($to_paginate);
 
@@ -2399,18 +2396,18 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "</p>\n";
 	echo "</form>\n";
 	echo "<script  type=\"text/javascript\">\n\n";
-    echo "jQuery('.delete-profiles').click(function(){\n\n";
-    echo "    var profiles = '';\n\n";
-    echo "       jQuery('tbody .check-column input[type=checkbox]:checked').each(function(){ \n\n";
-    echo "           profiles = profiles +'\\n'+jQuery(this).attr('data-name'); \n\n";
-    echo "       });   \n\n";
-    echo "  if(profiles !=='') {if(!confirm('Are you sure that you want to delete the following profiles? \\n'+profiles)){ \n\n";
-    echo "           return false; \n\n";
-    echo "  }}else{\n\n";
-    echo "   alert('Please \'check\' the profiles that you want to delete.'); return false;\n\n";
-    echo "  }\n\n";
-    echo "});\n\n";
-    echo "</script>";
+	echo "jQuery('.delete-profiles').click(function(){\n\n";
+	echo "    var profiles = '';\n\n";
+	echo "       jQuery('tbody .check-column input[type=checkbox]:checked').each(function(){ \n\n";
+	echo "           profiles = profiles +'\\n'+jQuery(this).attr('data-name'); \n\n";
+	echo "       });   \n\n";
+	echo "  if(profiles !=='') {if(!confirm('Are you sure that you want to delete the following profiles? \\n'+profiles)){ \n\n";
+	echo "           return false; \n\n";
+	echo "  }}else{\n\n";
+	echo "   alert('Please \'check\' the profiles that you want to delete.'); return false;\n\n";
+	echo "  }\n\n";
+	echo "});\n\n";
+	echo "</script>";
 }
 
 echo "</div>\n";
