@@ -23,7 +23,8 @@ echo "</div>";
 
 
 echo "<div id=\"profile-links\">\n";
-		
+
+// Print Photos		
 	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 1){
 		
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
@@ -47,86 +48,86 @@ echo "<div id=\"profile-links\">\n";
 		}
 	}
 
-	// Resume
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".rb_get_profile_link_label()." Resume</a>\n";
-			}
+// Resume
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".rb_get_profile_link_label()." Resume</a>\n";
 		}
+	}
 
-	// Comp Card
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CompCard");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Comp Card</a>\n";
-			}
+// Comp Card
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CompCard");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Comp Card</a>\n";
 		}
+	}
 
-	// Headshots
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Headshot</a>\n";
-			}
+// Headshots
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Headshot</a>\n";
 		}
+	}
 
-	//Voice Demo
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"VoiceDemo");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">Listen to Voice Demo</a>\n";
-			}
+//Voice Demo
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"VoiceDemo");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">Listen to Voice Demo</a>\n";
 		}
+	}
 
-	//Video Slate
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Slate");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link slate\">Watch Video Slate</a>\n";
-			}
+//Video Slate
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Slate");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link slate\">Watch Video Slate</a>\n";
 		}
+	}
 
-	//Video Monologue
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Monologue");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link monologue\">Watch Video Monologue</a>\n";
-			}
+//Video Monologue
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Video Monologue");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link monologue\">Watch Video Monologue</a>\n";
 		}
+	}
 
-	//Demo Reel
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
-			}
+//Demo Reel
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
 		}
+	}
 
-	// Custom URLs
-		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Link");
-		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-		$countMedia = $wpdb->num_rows;
-		if ($countMedia > 0) {
-			foreach($resultsImg as $dataMedia ){
-				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">". $dataMedia['ProfileMediaTitle'] ."</a>\n";
-			}
+// Custom URLs
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Link");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		foreach($resultsImg as $dataMedia ){
+			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">". $dataMedia['ProfileMediaTitle'] ."</a>\n";
 		}
+	}
 
 	// Other Media Type not the default ones
 		/*$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType NOT IN ('Image','Resume','Polaroid','CompCard','Comp Card','Headshot','VoiceDemo','Voice Demo','Video Slate','Video Monologue','Demo Reel')";
