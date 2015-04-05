@@ -593,7 +593,8 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"8\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 8,false) ."> ". __("Layout 08 - Booklet", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"9\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 9,false) ."> ". __("Layout 09 - Large Scroller", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"10\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 10,false) ."> ". __("Layout 10 - Profile View with Thumbnails, Primary Image & Video Player Embed", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-			$x=11;
+		echo "       <option value=\"11\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 11,false) ."> ". __("Layout 11 - Profile View with Thumbnails, Primary Image, Print Photos & Print Polaroids", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+			$x=12;
 			while($x<=15) {
 				if (file_exists(RBAGENCY_PLUGIN_DIR .'view/layout/'. sprintf("%02s", $x) .'/include-profile.php')) {
 				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout ", RBAGENCY_TEXTDOMAIN). $x ."</option>\n";
@@ -2498,14 +2499,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							<div>
 							<input type=\"text\" name=\"ProfileCustomOrder\" value=\"0\" />
 							</div>
-						</div>";
+						</div>";	
 		
-		echo " <table>\n";
-			 echo "<tr id=\"objtype_customize\">\n";
-				 echo "<td>\n";
-				 echo "</td>\n";
-			echo "</tr>\n";
-		echo "</table>\n";
+			 echo "<div id=\"objtype_customize\">\n";
+		echo "</div>\n";
 		
 		
 		}else{ //Edit/Update Field
