@@ -45,34 +45,29 @@ jQuery(document).ready(function(){
 	        
 	      switch(type){
 			case "1": // Text
-			     return '<tr>'
-				          +'<td>'
-						     +'<tr>'
-						    	 +'<td align="right">Title*:</td> <td><input type="text" name="ProfileCustomTitle"/></td>'
-							 +'</tr>'
-						  +'</td>'
-						   +'<td>'
-						    + '<tr>'
-						     +'<td align="right">Value:</td> <td><input type="text" name="ProfileCustomOptions"/></td>'
-							+'</tr>' 
-						  +'</td>'
-						+'</tr>';
+			     return '<div class="rbfield rbtext rbsingle">'
+						    +'<label>Title*:</label> <div><input type="text" name="ProfileCustomTitle"/></div>'
+						+'</div>'
+						+ '<div class="rbfield rbtext rbsingle">'
+						    +'<label>Value:</label> <div><input type="text" name="ProfileCustomOptions"/></div>'
+						+'</div>';
 			break;  
 			case "2": 
-			        jQuery("#objtype_customize").empty().html('<tr><td><td align="right" style="width:50px;">Title:</td><td style="width:10px;"><input type="text" name="ProfileCustomTitle"/></td></td></tr>');
-					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:50px;">Min*:</td><td style="width:10px;"><input type="text" name="textmin"/></td></td></tr>');
-					jQuery("#objtype_customize").append('<tr><td><td align="right" style="width:10px;">Max*:</td><td style="width:10px;"><input type="text" name="textmax"/></td></td></tr></tr>');
+			        jQuery("#objtype_customize").empty().html('<div class="rbfield rbtext rbsingle"><label>Title:</label><div><input type="text" name="ProfileCustomTitle"/></div></div>');
+					jQuery("#objtype_customize").append('<div class="rbfield rbtext rbsingle"><label>Min*:</label><div><input type="text" name="textmin"/></div></div>');
+					jQuery("#objtype_customize").append('<div class="rbfield rbtext rbsingle"><label>Max*:</label><div><input type="text" name="textmax"/></div></div>');
 			break;  
 			case "3":  // Dropdown
 			    jQuery("#objtype_customize").empty();
 			    jQuery("#obj_edit").remove();
 
 				var appnd = ['<div id="obj_edit" class="3">',
-							 'Title:<input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" style="width:190px;" type="text"><br>',
+							 '<div class="rbfield rbtext rbsingle">',
+							 '<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div>',
 							 '<ul id="editfield_add_more_options_12">',
-							 '<li>',
-							 'Option:<input value="" name="option[]" type="text">',
-							 '<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br>',
+							 '<li class="rbfield rbselect rbsingle">',
+							 '<label>Option:</label><div class="option"><input value="" name="option[]" type="text">',
+							 '<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div>',
 							 '</li>',
 							 '</ul><br>',
 							 '<a href="javascript:;" onclick="addmoreoption(12);" id="addmoreoption_2">add more option[+]</a><br><br>',
@@ -86,18 +81,12 @@ jQuery(document).ready(function(){
 				jQuery( "#editfield_add_more_options_12" ).sortable();
 			break;  
 			case "4": // Textbox
-			     return '<tr>'
-				          +'<td>'
-						     +'<tr>'
-						    	 +'<td align="right">Title*:</td> <td><input type="text" name="ProfileCustomTitle"/></td>'
-							 +'</tr>'
-						  +'</td>'
-						   +'<td>'
-						    + '<tr>'
-						     +'<td align="right" valign="top">TextArea:</td> <td><textarea cols="60" rows="30" name="ProfileCustomOptions"></textarea></td>'
-							+'</tr>' 
-						  +'</td>'
-					+'</tr>';
+			     return '<div class="rbfield rbtext rbsingle">'
+						    	+'<label>Title*:</label><div><input type="text" name="ProfileCustomTitle"/></div>'
+							+'</div>'
+						+'<div class="rbfield rbtextarea rbsingle">'
+						    +'<label>TextArea:</label><div><textarea cols="60" rows="30" name="ProfileCustomOptions"></textarea></div>'
+						+'</div>';
 			break;  
 			case "5": // Checkbox
 			   
