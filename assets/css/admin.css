@@ -216,7 +216,9 @@ table.widefat tr.active-notvisible { background: #d2d49b; }
 #custom-fields .postbox { width: 35%; background: transparent; border: none; float: left; }
 #custom-fields .inside { padding: 0; }
 #custom-fields .all-custom_fields { width: 65%; float: right; }
+#new-customfields .submit { margin-top: 10px; }
 #new-customfields .rbfield > label { width: 30%; }
 #new-customfields .rbfield > div { width: 65%; }
 #new-customfields .rbfield > div { width: 65%; }
 #new-customfields .rbfield > div div small { display: inline-block; margin-left: 24px; }
+#new-customfields .add-more-option { margin-left: 30%; }

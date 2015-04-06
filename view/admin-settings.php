@@ -2821,20 +2821,20 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 					}  //endwhile
 			
 			   
-		}	
+		}
 						
 		
 	
 			
 			if ( $ProfileCustomID > 0) {
-			echo "<p class=\"submit\">\n";
+			echo "<p class=\"submit rbfield\">\n";
 			echo "     <input type=\"hidden\" name=\"ProfileCustomID\" value=\"". $ProfileCustomID ."\" />\n";
 			echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 			echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
 			echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 			echo "</p>\n";
 			} else {
-			echo "<p class=\"submit\">\n";
+			echo "<p class=\"submit rbfield\">\n";
 			echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 			echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 			echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
