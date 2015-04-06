@@ -62,21 +62,22 @@ jQuery(document).ready(function(){
 			    jQuery("#obj_edit").remove();
 
 				var appnd = ['<div id="obj_edit" class="3">',
-							 '<div class="rbfield rbtext rbsingle">',
-							 '<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div></div>',
-							 '<ul id="editfield_add_more_options_12">',
-							 '<li class="rbfield rbselect rbsingle">',
-							 '<label>Option:</label><div class="option"><input value="" name="option[]" type="text">',
-							 '<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div>',
-							 '</li>',
-							 '</ul><br>',
-							 '<a href="javascript:;" onclick="addmoreoption(12);" id="addmoreoption_2" class="add-more-option">add more option[+]</a>',
-							 '<div class="ui-sortable" id="editfield_add_more_options_2"></div>',
+							 '	<div class="rbfield rbtext rbsingle">',
+							 '		<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div>',
+							 '	</div>',
+							 '	<ul id="editfield_add_more_options_12">',
+							 '		<li class="rbfield rbtext rbsingle">',
+							 '			<label>Option:</label><div class="option"><input value="" name="option[]" type="text">',
+							 '			<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div>',
+							 '		</li>',
+							 '	</ul><br>',
+							 '	<a href="javascript:;" onclick="addmoreoption(12);" id="addmoreoption_2" class="add-more-option">add more option[+]</a>',
+							 '	<div class="ui-sortable" id="editfield_add_more_options_2"></div>',							 
 							 '</div>'];
 				jQuery(".inside form").find('.submit').before(appnd.join(''));
 				jQuery("#obj_edit").css({display:'block'});
 				jQuery.each(dropdown_values,function(i,v){
-					jQuery( "#editfield_add_more_options_12" ).append('<li class="rbfield rbselect rbsingle"><label>Option:</label><div><input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div></li>');
+					jQuery( "#editfield_add_more_options_12" ).append('<li class="rbfield rbtext rbsingle"><label>Option:</label><div class="option"><input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div></li>');
 				});
 				jQuery( "#editfield_add_more_options_12" ).sortable();
 			break;  
@@ -124,7 +125,7 @@ jQuery(document).ready(function(){
 							 '</div>'];
 				jQuery(".inside form").find('.submit').before(appnd.join(''));
 				jQuery.each(dropdown_values,function(i,v){
-					jQuery( "#editfield_add_more_options_12" ).append('<li class="rbfield rbcheckbox rbsingle">Option:<input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a><br></li>');
+					jQuery( "#editfield_add_more_options_12" ).append('<li class="rbfield rbcheckbox rbsingle"><label>Option:</label><div class="option"><input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div></li>');
 				});
 				jQuery( "#editfield_add_more_options_12" ).sortable();
 
@@ -150,20 +151,21 @@ jQuery(document).ready(function(){
 			    jQuery("#obj_edit").css({display:'block'});
 				
 				var appnd = ['<div id="obj_edit" class="6">',
-							 '<div class=\"rbfield rbtext rbsingle\">',
-							 '<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div></div>',
-							 '<ul id="editfield_add_more_options_12">',
-							 '<li class="rbfield rbselect rbsingle">',
-							 '<label>Option:</label><div class="option"><input value="" name="option[]" type="text">',
-							 '<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div>',
-							 '</li>',
-							 '</ul><br>',
-							 '<a href="javascript:;" onclick="addmoreoption(12);" id="addmoreoption_2" class="add-more-option">add more option[+]</a>',
-							 '<div class="ui-sortable" id="editfield_add_more_options_2"></div>',
+							 '	<div class=\"rbfield rbtext rbsingle\">',
+							 '		<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div>',
+							 '	</div>',
+							 '	<ul id="editfield_add_more_options_12">',
+							 '		<li class="rbfield rbtext rbsingle">',
+							 '			<label>Option:</label><div class="option"><input value="" name="option[]" type="text">',
+							 '			<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div>',
+							 '		</li>',
+							 '	</ul><br>',
+							 '	<a href="javascript:;" onclick="addmoreoption(12);" id="addmoreoption_2" class="add-more-option">add more option[+]</a>',
+							 '	<div class="ui-sortable" id="editfield_add_more_options_2"></div>',
 							 '</div>'];
 				jQuery(".inside form").find('.submit').before(appnd.join(''));
 				jQuery.each(dropdown_values,function(i,v){
-					jQuery( "#editfield_add_more_options_12" ).append('<li class="rbfield rbselect rbsingle"><label>Option:</label><div><input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div></li>');
+					jQuery( "#editfield_add_more_options_12" ).append('<li class="rbfield rbtext rbsingle"><label>Option:</label><div class="option"><input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div></li>');
 				});
 				jQuery( "#editfield_add_more_options_12" ).sortable();
 			  break;  
@@ -200,20 +202,21 @@ jQuery(document).ready(function(){
 				
 				
 				var appnd = ['<div id="obj_edit" class="9">',
-							 '<div class="rbfield rbselect rbsingle">',
-							 '<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div></div>',
-							 '<ul id="editfield_add_more_options_12">',
-							 '<li class="rbfield rbselect rbsingle">',
-							 '<label>Option:</label><div class="option"><input value="" name="option[]" type="text">',
-							 '<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div>',
-							 '</li>',
-							 '</ul><br>',
-							 '<a href="javascript:;" onclick="addmoreoption(12);" id="addmoreoption_2" class="add-more-option">add more option[+]</a>',
-							 '<div class="ui-sortable" id="editfield_add_more_options_2"></div>',
+							 '	<div class="rbfield rbtext rbsingle">',
+							 '		<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div>',
+							 '	</div>',
+							 '	<ul id="editfield_add_more_options_12">',
+							 '		<li class="rbfield rbtext rbsingle">',
+							 '			<label>Option:</label><div class="option"><input value="" name="option[]" type="text">',
+							 '			<a href="javascript:;" onclick="del_opt(jQuery(this));" class="del_opt" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div>',
+							 '		</li>',
+							 '	</ul><br>',
+							 '	<a href="javascript:;" onclick="addmoreoption(12);" id="addmoreoption_2" class="add-more-option">add more option[+]</a>',
+							 '	<div class="ui-sortable" id="editfield_add_more_options_2"></div>',
 							 '</div>'];
 				jQuery(".inside form").find('.submit').before(appnd.join(''));
 				jQuery.each(dropdown_values,function(i,v){
-					jQuery( "#editfield_add_more_options_12 ul" ).append('<li class="rbfield rbselect rbsingle"><label>Option:<label><div class="option"><input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div></li>');
+					jQuery( "#editfield_add_more_options_12" ).append('<li class="rbfield rbselect rbsingle"><label>Option:</label><div class="option"><input type="text" value="'+v+'" name="option[]"><a href="javascript:;" class="del_opt" onclick="del_opt(jQuery(this));" title="Delete Option" style="color:red; text-decoration:none">&nbsp;[ - ]</a></div></li>');
 				});
 				jQuery( "#editfield_add_more_options_12 " ).sortable();
 				
@@ -248,13 +251,13 @@ jQuery(document).ready(function(){
      }
 	
 		jQuery("#addmoreoption_1").on('click',function(){
-			jQuery("#editfield_add_more_options_12 ul").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
+			jQuery("#editfield_add_more_options_12").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
 		});
 		jQuery("#addmoreoption_2").on('click',function(){
-			jQuery("#editfield_add_more_options_2 ul").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option2[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
+			jQuery("#editfield_add_more_options_2").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option2[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
 		}); 
 		jQuery("#addmoreoption_12").on('click',function(){
-			jQuery("#editfield_add_more_options_12 ul").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
+			jQuery("#editfield_add_more_options_12").append("<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\" name=\"option[]\"><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>");
 		});
 
 		jQuery("a.del_opt").on('click',function(){
