@@ -448,7 +448,7 @@ elseif ($ConfigID == 3) {
 									$actionText = ($has_rename?"and":"")." exists in database";
 							}
 						} else {
-								$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
+							//	$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
 						}
 								echo $actionText ."</div>\n";
 					}
