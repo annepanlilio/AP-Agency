@@ -291,6 +291,7 @@ elseif ($ConfigID == 53) {
 		$query1 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 		$results1 =$wpdb->get_results($wpdb->prepare($query1), ARRAY_A);
 		$count1 =  $wpdb->num_rows;
+		$arr_folder_names = array();
 		foreach ($results1 as $data1) {
 			$ProfileID = $data1['ProfileID'];
 
@@ -299,12 +300,20 @@ elseif ($ConfigID == 53) {
 			// Create the right folder name for the profile
 			$ProfileGalleryCurrent = generate_foldername($data1['ProfileID'], $data1['ProfileContactNameFirst'], $data1['ProfileContactNameLast'], $data1['ProfileContactDisplay']);
 			
+
 			if(!empty($ProfileGallery)){
-				if($ProfileGallery != $ProfileGalleryCurrent){
-					// just rename the existing folder,
+				$rb_folder = rb_check_duplicate_folder($ProfileGallery,$ProfileGalleryCurrent,$arr_folder_names);
+				array_push($arr_folder_names,$rb_folder);
+				if ($rb_folder != $ProfileGallery) {
+					$ProfileGalleryCurrent = $rb_folder;
+						// just rename the existing folder,
 					rename(RBAGENCY_UPLOADPATH. $ProfileGallery."/", RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent."/");
 				}
 			} else {
+				$rb_folder = rb_check_duplicate_folder($ProfileGallery,$ProfileGalleryCurrent);
+				array_push($arr_folder_names,$rb_folder);
+				$ProfileGalleryCurrent = $rb_folder;
+					
 				// actual folder creation
 				$dirURL = RBAGENCY_UPLOADPATH. $ProfileGalleryCurrent;
 				mkdir($dirURL, 0755); //700
@@ -330,20 +339,23 @@ elseif ($ConfigID == 53) {
 		echo "<h3>". __("Generate folder names for profiles", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
 		echo "<p>". __("Check that all profiles have folder names generated.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 		echo "<p>". __("Total Number of Folders Created: <strong>".$count1."</strong>", RBAGENCY_TEXTDOMAIN) . "</p>\n";
-
+            $arr_folder_names = array();
 			foreach ($results1 as $data1) {
 				$ProfileGallery = $data1['ProfileGallery'];
 
 				// Create the right folder name for the profile
 				$ProfileGalleryCurrent = generate_foldername($data1['ProfileID'], $data1['ProfileContactNameFirst'], $data1['ProfileContactNameLast'], $data1['ProfileContactDisplay']);
 				echo "<div>\n";
+				$rb_folder = rb_check_duplicate_folder($ProfileGallery,$ProfileGalleryCurrent,$arr_folder_names);
+				array_push($arr_folder_names,$rb_folder);
+			
 				if (isset($ProfileGallery) && !empty($ProfileGallery)) {
-					if ($ProfileGallery == $ProfileGalleryCurrent) {
+					if ($rb_folder == $ProfileGallery) {
 						echo "  <span style='width: 240px; color: green;'>". $ProfileGallery ."</span>\n";
 					} else {
 						// Add Profiles to Array to Create later
 						$throw_error = true;
-						echo "  <span style='width: 240px; color: red;'>". $ProfileGallery ." should be <strong>". $ProfileGalleryCurrent ."</strong></span>\n";
+						echo "  <span style='width: 240px; color: red;'>". $ProfileGallery ." should be <strong>". $rb_folder ."</strong></span>\n";
 					}
 				} else {
 					// Add Profiles to Array to Create later
@@ -403,18 +415,20 @@ elseif ($ConfigID == 3) {
 
 			$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID=".$data3["ProfileID"];
 			$results4a = $wpdb->get_results($query4a, ARRAY_A);
-			foreach ($results4a as $key) {
-				if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true) || empty($key["ProfileMediaURL"]) ){
-					if(!file_exists($dirURL."/".$key["ProfileMediaURL"]) || empty($key["ProfileMediaURL"])){
-						if($_GET['action'] == "remove"){
-							$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileMediaID=".$key["ProfileMediaID"]);
-							echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span style=\"color:green;\">has been removed from the database</span>.</div>\n";
-						}else{
-							echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is mssing in the directory.</div>\n";
+			//if(!in_array($_GET['action'],array("add"))){
+				foreach ($results4a as $key) {
+					if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true) || empty($key["ProfileMediaURL"]) ){
+						if(strpos($key["ProfileMediaTitle"],"migrated") !== true && (!file_exists($dirURL."/".$key["ProfileMediaURL"]) /*|| empty($key["ProfileMediaURL"])*/)){
+							if($_GET['action'] == "remove"){
+								$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileID = ".$key["ProfileID"]." AND  ProfileMediaURL='".$key["ProfileMediaURL"]."'");
+								echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span style=\"color:green;\">has been removed from the database</span>.</div>\n";
+							}else{
+								echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is mssing in the directory.</div>\n";
+							}
 						}
 					}
 				}
-			}
+			//}
 
 			if ($handle = opendir($dirURL) ) {  //  Open seasame 
 				while (false !== ($file = readdir($handle))) {
@@ -428,49 +442,69 @@ elseif ($ConfigID == 3) {
 						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file,false));
 						echo "<div style=\"border-color: #E6DB55;\">";
 						echo "File: ". $file ."";
+						$result = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL as url FROM ".table_agency_profile_media." WHERE ProfileMediaURL = %s", $file));
 						// no need to rename if the file exist with the new filename
 						$has_rename = false;
-						if(file_exists($dirURL ."/".$new_file) && strpos($new_file , $data3["ProfileID"]) === false){
+
+						if(file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) === false){
 								$new_file =  $data3["ProfileID"]."-".$new_file;
 								rename($dirURL ."/". $file, $dirURL ."/".$new_file);
 								echo " has been renamed <strong>". $new_file ."</strong>";
 								$has_rename = true;
+								$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s",$new_file, $data3['ProfileID'],$file));
+									
 						}
 						$file_ext = strtolower(rb_agency_filenameextension($file));
-						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
-							if (!in_array($new_file,$arr_media,true)) {
+
+						if (($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp")) {
+							if (empty($result->url) && !in_array($new_file,$arr_media,true)) {
 								if($_GET['action'] == "add") {
-									$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
-									$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+									if(!empty($result->url) && strpos($result->url , $data3["ProfileID"]) === false){
+										$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaTitle = %s, ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s", $data3['ProfileContactNameFirst'] ."-". $new_file."-migrated",$new_file, $data3['ProfileID'],$file));
+									}else{
+										$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+									}	
+									$actionText = ($has_rename?" and":"")." <span style=\"color: green;\">added to database</span> ";
 								} else {
-									$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+									$actionText = ($has_rename?" and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
 								}
 							} else {
-									$actionText = ($has_rename?"and":"")." exists in database";
+									$actionText = ($has_rename?" and":"")." exists in database";
 							}
-						} elseif ($file_ext == "amr" || $file_ext == "m4a" || $file_ext == "mp3") {
-							if (!in_array($new_file,$arr_media,true)) {
+						} elseif (($file_ext == "amr" || $file_ext == "m4a" || $file_ext == "mp3" || $file_ext == "wav")) {
+							if (empty($result->url) && !in_array($new_file,$arr_media,true)) {
 								if($_GET['action'] == "add") {
-									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $data3['ProfileID'] . "','VoiceDemo','" . $new_file . "','" . $new_file . "')");
-									$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+									if(!empty($result->url) && strpos($result->url , $data3["ProfileID"]) === false){
+										$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaTitle = %s, ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s", $data3['ProfileContactNameFirst'] ."-". $new_file."-migrated",$new_file, $data3['ProfileID'],$file));
+									}else{
+										$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'VoiceDemo',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+									}	
+									$actionText = ($has_rename?" and":"")." <span style=\"color: green;\">added to database</span> ";
 								} else {
-									$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+									$actionText = ($has_rename?" and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
 								}
 							}
-						} elseif ($file_ext == "pdf" || $file_ext == "doc" || $file_ext == "docx") {
-							if (!in_array($new_file,$arr_media,true)) {
+						} elseif (($file_ext == "pdf" || $file_ext == "doc" || $file_ext == "docx")) {
+							if (empty($result->url) && !in_array($new_file,$arr_media,true)) {
 								if($_GET['action'] == "add") {
-									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $data3['ProfileID'] . "','Resume','" . $new_file . "','" . $new_file . "')");
-									$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+									if(!empty($result->url) && strpos($result->url , $data3["ProfileID"]) === false){
+										$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaTitle = %s, ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s", $data3['ProfileContactNameFirst'] ."-". $new_file."-migrated",$new_file, $data3['ProfileID'],$file));
+									}else{
+										$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Resume',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+									}	
+									$actionText = ($has_rename?" and":"")." <span style=\"color: green;\">added to database</span> ";
 								} else {
-									$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+									$actionText = ($has_rename?" and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
 								}
 							} else {
-									$actionText = ($has_rename?"and":"")." exists in database";
+									$actionText = ($has_rename?" and":"")." exists in database";
 							}
-						} else {
-							//	$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
+						} elseif(empty($result->url)) {
+							    $actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
+								$actionText = "";
 						}
+						//$wpdb->show_errors();
+						//$wpdb->print_error();
 								echo $actionText ."</div>\n";
 					}
 				}
