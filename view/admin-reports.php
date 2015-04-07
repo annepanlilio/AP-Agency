@@ -118,7 +118,7 @@ if ($ConfigID == 0) {
 	echo "    </div>\n";
 	echo "    </div>\n";
 
-        echo "<hr />\n";
+		echo "<hr />\n";
 
 	echo "<div class=\"boxlinkgroup\">\n";
 	echo "  <h2>". __("Importing Records", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
@@ -161,8 +161,8 @@ if ($ConfigID == 0) {
 
 	echo "    <div class=\"boxlink\">\n";
 	echo "      <h3>". __("Step 5", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Scan Folders for Images", RBAGENCY_TEXTDOMAIN) . "\">". __("Scan Folders for Images", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
-	echo "      <p>". __("First upload images directly to folders via FTP then use this tool to sync the images to the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3\" title=\"". __("Scan Folders for Images/Media", RBAGENCY_TEXTDOMAIN) . "\">". __("Scan Folders for Images/Media", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("First upload images directly to folders via FTP then use this tool to sync the images & media to the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
 	echo "    <div class=\"boxlink\">\n";
@@ -171,17 +171,17 @@ if ($ConfigID == 0) {
 	echo "      <p>". __("Identify which image is the primary image for each profile.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
-        $active = get_option('active_plugins');
+		$active = get_option('active_plugins');
 	foreach($active as $act){
 		if(preg_match('/rb-agency-interact\.php/',$act)){
 			echo "    <div class=\"boxlink\">\n";
-                	echo "      <h3>". __("Step 7", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+					echo "      <h3>". __("Step 7", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
 			echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=99\" title=\"". __("Generate Logins / Passwords", RBAGENCY_TEXTDOMAIN) . "\">". __("Generate Logins / Passwords", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
 			echo "      <p>". __("You may generate login and password for profiles which has been uploaded via importer, using this tool", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 			echo "    </div>\n";
 		}
 	}
-        
+		
 	echo "</div>\n";
 
 }
@@ -387,7 +387,7 @@ elseif ($ConfigID == 3) {
 
 	$query3a = "SELECT * FROM ". table_agency_profile_media ."";
 	$results3a = $wpdb->get_results($query3a, ARRAY_A);
-    $arr_media = array();
+	$arr_media = array();
 	foreach($results3a as $media){
 		if (!empty($media["ProfileMediaURL"])) {
 			array_push($arr_media, $media["ProfileMediaURL"]);
@@ -401,20 +401,21 @@ elseif ($ConfigID == 3) {
 			echo "<strong>Directory: ".$dirURL."</strong>";
 			echo "<br/>";
 
-				$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID=".$data3["ProfileID"];
-				$results4a = $wpdb->get_results($query4a, ARRAY_A);
-				foreach ($results4a as $key) {
-					if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true) || empty($key["ProfileMediaURL"]) ){
-							if(!file_exists($dirURL."/".$key["ProfileMediaURL"]) || empty($key["ProfileMediaURL"])){
-								if($_GET['action'] == "remove"){
-									$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileMediaID=".$key["ProfileMediaID"]);
-									echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span style=\"color:green;\">has been removed from the database</span>.</div>\n";
-								}else{
-									echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is mssing in the directory.</div>\n";
-								}
-							}
+			$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID=".$data3["ProfileID"];
+			$results4a = $wpdb->get_results($query4a, ARRAY_A);
+			foreach ($results4a as $key) {
+				if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true) || empty($key["ProfileMediaURL"]) ){
+					if(!file_exists($dirURL."/".$key["ProfileMediaURL"]) || empty($key["ProfileMediaURL"])){
+						if($_GET['action'] == "remove"){
+							$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileMediaID=".$key["ProfileMediaID"]);
+							echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span style=\"color:green;\">has been removed from the database</span>.</div>\n";
+						}else{
+							echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is mssing in the directory.</div>\n";
+						}
 					}
 				}
+			}
+
 			if ($handle = opendir($dirURL) ) {  //  Open seasame 
 				while (false !== ($file = readdir($handle))) {
 					if (strtolower($file) == "thumbs.db"  || strtolower($file) == "thumbsdb.jpg" || strtolower($file) == "thumbsdbjpg.jpg" || strtolower($file) == "thumbsdbjpgjpg.jpg") {
@@ -438,12 +439,32 @@ elseif ($ConfigID == 3) {
 						$file_ext = strtolower(rb_agency_filenameextension($file));
 						if ($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp") {
 							if (!in_array($new_file,$arr_media,true)) {
-									if($_GET['action'] == "add") {
-									    $results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
-										$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
-									} else {
-										$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
-									}
+								if($_GET['action'] == "add") {
+									$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
+									$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+								} else {
+									$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+								}
+							} else {
+									$actionText = ($has_rename?"and":"")." exists in database";
+							}
+						} elseif ($file_ext == "amr" || $file_ext == "m4a" || $file_ext == "mp3") {
+							if (!in_array($new_file,$arr_media,true)) {
+								if($_GET['action'] == "add") {
+									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $data3['ProfileID'] . "','VoiceDemo','" . $new_file . "','" . $new_file . "')");
+									$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+								} else {
+									$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+								}
+							}
+						} elseif ($file_ext == "pdf" || $file_ext == "doc" || $file_ext == "docx") {
+							if (!in_array($new_file,$arr_media,true)) {
+								if($_GET['action'] == "add") {
+									$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $data3['ProfileID'] . "','Resume','" . $new_file . "','" . $new_file . "')");
+									$actionText = ($has_rename?"and":"")." <span style=\"color: green;\">added to database</span> ";
+								} else {
+									$actionText = ($has_rename?"and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
+								}
 							} else {
 									$actionText = ($has_rename?"and":"")." exists in database";
 							}
@@ -463,7 +484,7 @@ elseif ($ConfigID == 3) {
 		echo "There are currently no profile records.";
 	}
 	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=add' class='button-primary'>Add All Pending Changes</a>";
-    echo "<a href='?page=rb_agency_reports&ConfigID=3&action=remove' class='button-primary'>Remove All Missing Files</a>";
+	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=remove' class='button-primary'>Remove All Missing Files</a>";
 
 
 
@@ -769,20 +790,20 @@ elseif ($ConfigID == 8) {
 
 				
 
-                
+				
 
-                 array_push($arr_duplicates, $ProfileGalleryFixed);
+				 array_push($arr_duplicates, $ProfileGalleryFixed);
 
-                 $arr = array_count_values($arr_duplicates);
-                 //print_r($arr);
-                  
-                  $file_rename_count = $arr[$ProfileGalleryFixed];
+				 $arr = array_count_values($arr_duplicates);
+				 //print_r($arr);
+				  
+				  $file_rename_count = $arr[$ProfileGalleryFixed];
  
-                  if($file_rename_count > 1){
-                       $ProfileGalleryFixed = $ProfileGalleryFixed."-".$file_rename_count;
-                  }else{
-                        $ProfileGalleryFixed = $ProfileGalleryFixed;
-                  }
+				  if($file_rename_count > 1){
+					   $ProfileGalleryFixed = $ProfileGalleryFixed."-".$file_rename_count;
+				  }else{
+						$ProfileGalleryFixed = $ProfileGalleryFixed;
+				  }
 
 
 
@@ -898,18 +919,18 @@ elseif ($ConfigID == 8) {
 				$arrayReservedFoldername[$pos] = $ProfileGalleryFixed;
 			}
 
-			    array_push($arr_duplicates, $ProfileGalleryFixed);
+				array_push($arr_duplicates, $ProfileGalleryFixed);
 
-                 $arr = array_count_values($arr_duplicates);
-                 //print_r($arr);
-                  
-                  $file_rename_count = $arr[$ProfileGalleryFixed];
+				 $arr = array_count_values($arr_duplicates);
+				 //print_r($arr);
+				  
+				  $file_rename_count = $arr[$ProfileGalleryFixed];
  
-                  if($file_rename_count > 1){
-                       $ProfileGalleryFixed = $ProfileGalleryFixed."-".$file_rename_count;
-                  }else{
-                        $ProfileGalleryFixed = $ProfileGalleryFixed;
-                  }
+				  if($file_rename_count > 1){
+					   $ProfileGalleryFixed = $ProfileGalleryFixed."-".$file_rename_count;
+				  }else{
+						$ProfileGalleryFixed = $ProfileGalleryFixed;
+				  }
 
 
 			// Check for duplicate
@@ -940,14 +961,14 @@ elseif ($ConfigID == 8) {
 						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
 					}
 				}else{
-					    // actual folder creation
+						// actual folder creation
 						$dirURL = RBAGENCY_UPLOADPATH. $ProfileGalleryFixed;
 						if (!is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed) ) {
 							mkdir($dirURL, 0755); //700
 							chmod($dirURL, 0777);
 						}
-					    echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
-			           $rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."', ProfileContactDisplay = '".$ProfileContactDisplay ."' WHERE ProfileID = \"". $ProfileID ."\"";
+						echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>". $dirURL ."/</strong> has been created for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
+					   $rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."', ProfileContactDisplay = '".$ProfileContactDisplay ."' WHERE ProfileID = \"". $ProfileID ."\"";
 					   $renamed = $wpdb->query($rename);
 						
 				   
@@ -1133,8 +1154,8 @@ elseif ($ConfigID == 80) {
 		$fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive'));
 	
 		$count = count($fields_array[0]);
-                
-        // right distribution of header keys
+				
+		// right distribution of header keys
 		foreach ($custom_fields_rb_agency as $keys) 
 		{	
 			foreach ($keys as $key => $c_field) 
@@ -1339,22 +1360,22 @@ elseif ($ConfigID == 14) {
 				}
 				
 				$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
-                
+				
 
-                 array_push($arr_duplicates, $ProfileGalleryFixed);
+				 array_push($arr_duplicates, $ProfileGalleryFixed);
 
-                 $arr = array_count_values($arr_duplicates);
-                 //print_r($arr);
-                  
-                  $file_rename_count = $arr[$ProfileGalleryFixed];
+				 $arr = array_count_values($arr_duplicates);
+				 //print_r($arr);
+				  
+				  $file_rename_count = $arr[$ProfileGalleryFixed];
  
-                  if($file_rename_count > 1){
-                      $ProfileGallery = $ProfileGalleryFixed."-".$file_rename_count;
-                  }else{
-                       $ProfileGallery = $ProfileGalleryFixed;
-                  }
+				  if($file_rename_count > 1){
+					  $ProfileGallery = $ProfileGalleryFixed."-".$file_rename_count;
+				  }else{
+					   $ProfileGallery = $ProfileGalleryFixed;
+				  }
 
-                 
+				 
 			}
 
 			if (empty($ProfileGallery)) {  // Probably a new record... 
@@ -1422,19 +1443,19 @@ elseif ($ConfigID == 14) {
 									}
 
 									$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
-	                              
-					                 array_push($arr_duplicates, $ProfileGalleryFixed);
+								  
+									 array_push($arr_duplicates, $ProfileGalleryFixed);
 
-					                 $arr = array_count_values($arr_duplicates);
-					                 //print_r($arr);
-					                  
-					                  $file_rename_count = $arr[$ProfileGalleryFixed];
+									 $arr = array_count_values($arr_duplicates);
+									 //print_r($arr);
+									  
+									  $file_rename_count = $arr[$ProfileGalleryFixed];
 					 
-					                  if($file_rename_count > 1){
-					                      $gallery = $ProfileGalleryFixed."-".$file_rename_count;
-					                  }else{
-					                       $gallery = $ProfileGalleryFixed;
-					                  }
+									  if($file_rename_count > 1){
+										  $gallery = $ProfileGalleryFixed."-".$file_rename_count;
+									  }else{
+										   $gallery = $ProfileGalleryFixed;
+									  }
 
 								}
 								echo "<strong>/".$gallery."/</strong> linked directory removed.<br/>";
@@ -1469,8 +1490,8 @@ elseif ($ConfigID == 14) {
 									}
 
 						$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
-	                    
-	                    $pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
+						
+						$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
 						$wpdb->query($wpdb->prepare($pSql,$ProfileID));
 						$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '%d' ";
 						$wpdb->query($wpdb->prepare($pmSql,$ProfileID));
@@ -1530,20 +1551,20 @@ elseif ($ConfigID == 14) {
 					}
 
 						$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
-                              
-                                 
-					     array_push($arr_duplicates, $ProfileGalleryFixed);
+							  
+								 
+						 array_push($arr_duplicates, $ProfileGalleryFixed);
 
-		                 $arr = array_count_values($arr_duplicates);
-		                 //print_r($arr);
-		                  
-		                  $file_rename_count = $arr[$ProfileGalleryFixed];
+						 $arr = array_count_values($arr_duplicates);
+						 //print_r($arr);
+						  
+						  $file_rename_count = $arr[$ProfileGalleryFixed];
 		 
-		                  if($file_rename_count > 1){
-		                      $ProfileGallery = $ProfileGalleryFixed."-".$file_rename_count;
-		                  }else{
-		                       $ProfileGallery = $ProfileGalleryFixed;
-		                  }
+						  if($file_rename_count > 1){
+							  $ProfileGallery = $ProfileGalleryFixed."-".$file_rename_count;
+						  }else{
+							   $ProfileGallery = $ProfileGalleryFixed;
+						  }
 				}
 
 
@@ -1551,8 +1572,8 @@ elseif ($ConfigID == 14) {
 					$ProfileGallery = RBAgency_Common::format_stripchars($ProfileGallery); 
 				}
 				if($rb_agency_option_profilenaming != 3){
-	    			$ProfileGallery = rb_agency_createdir($ProfileGallery);
-	    		}
+					$ProfileGallery = rb_agency_createdir($ProfileGallery);
+				}
 				// Select city and state
 				$queryCountry = "SELECT * FROM ".table_agency_data_country." ORDER BY RAND( ) ASC LIMIT 1";
 				$userCountry =  $wpdb->get_row($queryCountry, ARRAY_A);
@@ -1672,7 +1693,7 @@ elseif ($ConfigID == 14) {
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesF[$randTo8]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaImagesF[$randTo8]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL,ProfileMediaPrimary) VALUES ('". $ProfileID ."','Image','". $userMediaImagesF[$randTo8]."','". $userMediaImagesF[$randTo8] ."',1)");
 						}
-                          
+						  
 						// Any Gender
 						copy(rb_chmod_file_display($sample_url."/".$userMediaImagesM[$randTo8]),RBAGENCY_UPLOADPATH . $ProfileGallery ."/".$userMediaHeadshot[$rand]);
 						$results =  $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('". $ProfileID ."','Headshot','". $userMediaHeadshot[$rand]."','". $userMediaHeadshot[$rand] ."')");
@@ -1693,8 +1714,8 @@ elseif ($ConfigID == 14) {
 			$profile_ids = implode(",",$arr_profile_ids);
 			if ( get_option("rb_agency_dummy_profiles") !== false ) {
 
-			    // The option already exists, so we just update it.
-			    update_option("rb_agency_dummy_profiles", $profile_ids );
+				// The option already exists, so we just update it.
+				update_option("rb_agency_dummy_profiles", $profile_ids );
 
 			} else {
 				add_option("rb_agency_dummy_profiles", $profile_ids, null,"no" );
@@ -1833,18 +1854,18 @@ elseif($ConfigID == '83'){
 				// Update Profiles Types and Gender
 				if(isset($_GET["action"]) && $_GET["action"] == "fix-profiles"){
 				   echo "<br/><strong>Fixed errors:</strong><br/><br/>";
-			   	   if(empty($key["gender"])){
-			   	   	$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$key["gender_raw"]."' WHERE ProfileID='".$key["profileid"]."'");
-    		        echo "<strong style=\"color:green;\">Succesfully assigned gender to profile.</strong><br/>";
-			   	   }
-			   	   if(empty($key["datatype"])){
-			   	   	  $wpdb->query("UPDATE ".table_agency_profile." SET ProfileType='".$key["datatype_raw"]."' WHERE ProfileID='".$key["profileid"]."'");
-			   	     echo "<strong style=\"color:green;\">Succesfully assigned profile type to profile.</strong><br/>";
-			   	   }
-			   	   if( strpos($key["contactdisplay"],"  ") !== false){
-				 	  $wpdb->query("UPDATE ".table_agency_profile." SET ProfileContactDisplay='".$key["fullname"]."' WHERE ProfileID='".$key["profileid"]."'");
-			   	     echo "<strong style=\"color:green;\">Removed double spacings from Contact Display.</strong><br/>";
-			   	   
+				   if(empty($key["gender"])){
+					$wpdb->query("UPDATE ".table_agency_profile." SET ProfileGender='".$key["gender_raw"]."' WHERE ProfileID='".$key["profileid"]."'");
+					echo "<strong style=\"color:green;\">Succesfully assigned gender to profile.</strong><br/>";
+				   }
+				   if(empty($key["datatype"])){
+					  $wpdb->query("UPDATE ".table_agency_profile." SET ProfileType='".$key["datatype_raw"]."' WHERE ProfileID='".$key["profileid"]."'");
+					 echo "<strong style=\"color:green;\">Succesfully assigned profile type to profile.</strong><br/>";
+				   }
+				   if( strpos($key["contactdisplay"],"  ") !== false){
+					  $wpdb->query("UPDATE ".table_agency_profile." SET ProfileContactDisplay='".$key["fullname"]."' WHERE ProfileID='".$key["profileid"]."'");
+					 echo "<strong style=\"color:green;\">Removed double spacings from Contact Display.</strong><br/>";
+				   
 				   }
 				}
 
@@ -1856,7 +1877,7 @@ elseif($ConfigID == '83'){
 }
 elseif($ConfigID == '99'){
 	
-        $active = get_option('active_plugins');
+		$active = get_option('active_plugins');
 	$found = false;
 	foreach($active as $act){
 		if(preg_match('/rb-agency-interact\.php/',$act)){
@@ -2053,7 +2074,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 			
 			
 
-        
+		
 			foreach ($sheetData as $key => $value) 
 			{
 				if(!empty( $value ))
@@ -2070,12 +2091,12 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$total_header = count($header);
 		$arr_headers = array();
 		$arr_exists = array();
-        
-        if( strtolower($get_ext) == 'xls' ){
-	        for($a=0; $a<=$total_header; $a++){
+		
+		if( strtolower($get_ext) == 'xls' ){
+			for($a=0; $a<=$total_header; $a++){
 			
 				$row = $objPHPExcel->getActiveSheet()->getRowIterator($a)->current();
-	           
+			   
 				$cellIterator = $row->getCellIterator();
 				$cellIterator->setIterateOnlyExistingCells(false);
 
@@ -2085,7 +2106,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 					$value =  str_replace("||",",",$cell->getValue());
 					if(!empty($val) && count($arr_headers) < $total_header && !in_array($val,$arr_exists)){
 						array_push($arr_exists,$value);
-					    array_push($arr_headers ,$value);
+						array_push($arr_headers ,$value);
 					}
 
 				}
@@ -2094,17 +2115,17 @@ class RBAgencyCSVXLSImpoterPlugin {
 			}
 		}elseif( strtolower($get_ext) == 'csv' ){
 
-			 	while($column = fgetcsv($handle, 4096, ','))
+				while($column = fgetcsv($handle, 4096, ','))
 					{
-					    // This is a great trick, to get an associative row by combining the headrow with the content-rows.
-					    $column = @array_combine($header, $column);
-                       
-					    foreach($column as $key => $val){
+						// This is a great trick, to get an associative row by combining the headrow with the content-rows.
+						$column = @array_combine($header, $column);
+					   
+						foreach($column as $key => $val){
 						   $val =  str_replace(" ","_",$key);
 						   $val =  str_replace("||",",",$key);
 						if(!empty($val) && count($arr_headers) < $total_header && !in_array($val,$arr_exists)){
 							array_push($arr_exists,$val);
-						    array_push($arr_headers ,$val);
+							array_push($arr_headers ,$val);
 						}
 						}
 					   
@@ -2192,11 +2213,11 @@ class RBAgencyCSVXLSImpoterPlugin {
 	 */ 
 	function import_to_db(){
 		global $wpdb;
-  	    $rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_options_arr = get_option('rb_agency_options');
 
-  	    $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
+		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
 		
-         // We already created a dynamic profile fields validation
+		 // We already created a dynamic profile fields validation
 		$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast DESC,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
 		$c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";       
 	
@@ -2226,15 +2247,15 @@ class RBAgencyCSVXLSImpoterPlugin {
 			foreach( $value as $k => $v)
 			array_push($arr_profile_fields, str_replace(" ","_",$v));
 		}
-        
+		
 		
 		$arr_import_headers = explode(",",$_REQUEST["headers"]);
 
 		// Check for invalid header profile field format
 		foreach($arr_import_headers as $pf){
 			 if(!in_array($pf,$arr_profile_fields)){
-			 	unset($arr_profile_fields[$pf]);
-			 	//die("<br/><div class='wrap' style='color:#FF0000'>Invalid Column name Format: ".$pf."</div>");
+				unset($arr_profile_fields[$pf]);
+				//die("<br/><div class='wrap' style='color:#FF0000'>Invalid Column name Format: ".$pf."</div>");
 			 }
 		}
 	
@@ -2251,10 +2272,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 		while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
 			  $arr = array();
-			      $a = 0;
+				  $a = 0;
 			 
 			 if(!empty($data[$a])){
-	 		     while($a< count($arr_import_headers)){
+				 while($a< count($arr_import_headers)){
 								$arr[$arr_import_headers[$a]] = $data[$a];
 								$a++;
 				}
@@ -2267,17 +2288,17 @@ class RBAgencyCSVXLSImpoterPlugin {
 		
 		foreach ($arr_import_data  as &$vv) {
 				
-	      
-	        
+		  
+			
 										
 										  if(!isset($vv["ProfileContactEmail"])){
-										      	$domain_name =  preg_replace('/^www\./','',$_SERVER['SERVER_NAME']);
+												$domain_name =  preg_replace('/^www\./','',$_SERVER['SERVER_NAME']);
 
-										  		$vv["ProfileContactEmail"] = RBAgency_Common::generate_random_string(8)."@".$domain_name; 
+												$vv["ProfileContactEmail"] = RBAgency_Common::generate_random_string(8)."@".$domain_name; 
 										  }
 
 										  if(empty($vv["ProfileContactDisplay"])){
-										  	  $vv["ProfileContactDisplay"] = $vv["ProfileContactNameFirst"]." ".$vv["ProfileContactNameLast"];
+											  $vv["ProfileContactDisplay"] = $vv["ProfileContactNameFirst"]." ".$vv["ProfileContactNameLast"];
 										  }
 										
 				
@@ -2353,11 +2374,11 @@ class RBAgencyCSVXLSImpoterPlugin {
 															}
 
 															if($pos < count($arr_import_headers)){
-														   	   $p_table_fields  .= ",";
-														   	   $p_table_values  .= ",";
-														   	}
-														    $pos++;
-													    }
+															   $p_table_fields  .= ",";
+															   $p_table_values  .= ",";
+															}
+															$pos++;
+														}
 													}
 													$p_table_fields = trim($p_table_fields, ","); 
 													$p_table_values = trim($p_table_values, ","); 
@@ -2390,7 +2411,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 													}
 													
 											
-												 			//$ProfileGalleryCurrent = generate_foldername($last_inserted_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
+															//$ProfileGalleryCurrent = generate_foldername($last_inserted_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
 																if ($rb_agency_option_profilenaming == 0) {
 																	$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
 																} elseif ($rb_agency_option_profilenaming == 1) {
@@ -2440,8 +2461,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 		}
 			
 		if(isset($_REQUEST['clone']) && $_REQUEST['clone'] != "") unlink($_REQUEST['clone']);
-        
-        
+		
+		
 		
 	}
 	/**

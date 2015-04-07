@@ -68,10 +68,15 @@
 	padding: 5px 0px;
 }
 #profile-list .rbprofile-list .profile-info .details {
-	font-size: 13px;
+	font-size: small;
 }
-#profile-list .rbprofile-list .profile-info .details span{ 
-   display: block;
+#profile-list .rbprofile-list .profile-info .details > span,
+#profile-list .rbprofile-list .profile-info .details-merged > span {
+	display: block;
+	word-wrap: break-word;
+}
+#profile-list .details-age > span {
+	white-space: nowrap;
 }
 #profile-list .rbprofile-list .profile-info h3.name {
 	margin: 0;
@@ -159,8 +164,7 @@
 	margin-top: 15px;
 }
 .rbpagination { 
-	float: left;
-	clear: left;
+	overflow: hidden;
 	font-size: 13px;
 	padding:2px 5px 0px 0px;
 }
@@ -587,11 +591,4 @@ text-align: center;
 .rb_profile_tool a.inactive.castingcart, .rb_profile_tool a.active.castingcart:hover {
 color: #FFDA18;
 font-size: 12px;
-}
-#profile-list span.divider {
-  display: inline;
-  float: left;
-}
-#profile-list span.details-age {
-  float: left;
 }

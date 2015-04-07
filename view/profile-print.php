@@ -1,8 +1,10 @@
 <?php 
 $rb_agency_options_arr = get_option('rb_agency_options');
-$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
-	
+	$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
+	$rb_agency_option_adminprint_hidden = isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0;
+
+
 global $wpdb;
 
 
@@ -88,9 +90,7 @@ global $wpdb;
 			}
 			// Gender
 			if (isset($ProfileGender) && !empty($ProfileGender)){
-			  
 				$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
-			  
 			} else {
 				$ProfileGender = "";
 			}
@@ -216,11 +216,16 @@ global $wpdb;
 						$ProfileID = $data['ProfileID'];
 						echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 						// Hide private information from print
+<<<<<<< HEAD
 							
+||||||| merged common ancestors
+							/*
+=======
+						if ($rb_agency_option_adminprint_hidden == 1 && current_user_can('edit_pages')) {
+>>>>>>> origin/master
 							if (!empty($data['ProfileContactEmail'])) {
 								echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
 							}
-							
 							if (!empty($data['ProfileLocationStreet'])) {
 								echo "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
 							}
@@ -248,11 +253,27 @@ global $wpdb;
 							if (!empty($data['ProfileContactPhoneWork'])) {
 								echo "<div><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 							}
+<<<<<<< HEAD
 							
 						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 						//}
+||||||| merged common ancestors
+							*/
+						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
+						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
+						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
+						//}
+=======
+							$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
+							foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
+								if (!empty($resultCustomPrivate->ProfileCustomValue)) {
+									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
+								}
+							}
+						} // End Private Fields
+>>>>>>> origin/master
 
 						if (!empty($data['ProfileGender'])) {
 							if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
@@ -292,8 +313,7 @@ global $wpdb;
 			echo "<div style=\"clear: both;\"></div>";
 			echo "</div>";
 			echo "</tr>";
-		echo "</table>";	
-			
+		echo "</table>";
 		}
 		?>
 		<center>

@@ -69,7 +69,7 @@ echo " 			</div>\n";
 echo " 			<div id=\"profile-overview\">\n";
 
 // Column 1
-echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
+echo "				<div class=\"rbcol-4 rbcolumn\">\n";
 
 						echo "<div id=\"profile-picture\">\n";
 
@@ -94,11 +94,11 @@ echo "		  		<div class=\"rbcol-4 rbcolumn\">\n";
 							echo rb_agency_get_new_miscellaneousLinks($ProfileID);
 						} 
 echo '					<div id="resultsGoHereAddtoCart"></div>';
-echo "	  			</div> <!-- #profile-picture -->\n";
+echo "				</div> <!-- #profile-picture -->\n";
 
 // Column 2
-echo "	  			<div class=\"rbcol-5 rbcolumn\">\n";
-echo "	  				<div id=\"profile-info\">\n";
+echo "				<div class=\"rbcol-5 rbcolumn\">\n";
+echo "					<div id=\"profile-info\">\n";
 
 echo "	      				<h1>". $ProfileContactDisplay ."</h1>\n";
 echo "	      				<p>\n";
@@ -109,7 +109,7 @@ echo "								<span class=\"age\">". rb_agency_get_age($ProfileDateBirth) ."</sp
 echo "								from <span class=\"state\"> ".rb_agency_getStateTitle($ProfileLocationState,true)."</span>\n";
 								}
 echo "	      				</p>\n";
-echo "		  				<ul>\n";
+echo "						<ul>\n";
 
 
 								$queryType = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID IN ($ProfileType) ORDER BY DataTypeTitle";
@@ -117,17 +117,17 @@ echo "		  				<ul>\n";
 								foreach($resultsType as $dataType ){
 									echo "<li>". $dataType["DataTypeTitle"] ."</li>";
 								}
-echo "		  				</ul>\n";
+echo "						</ul>\n";
 
 							// Social Link
 							rb_agency_getSocialLinks();
 
-echo "	  				</div> <!-- #profile-info -->\n";
-echo "	  			</div> <!-- .rbcol-5 -->\n";
+echo "					</div> <!-- #profile-info -->\n";
+echo "				</div> <!-- .rbcol-5 -->\n";
 
 					// Column 3
-echo "			  	<div class=\"rbcol-3 rbcolumn\">\n";
-echo "			  		<div id=\"profile-actions\">\n";
+echo "				<div class=\"rbcol-3 rbcolumn\">\n";
+echo "					<div id=\"profile-actions\">\n";
 
 
 echo "	      				<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong> Profile Views</p>\n";
@@ -140,8 +140,8 @@ echo '	      				<div id="profile-links">';
 							} 		
 echo '						</div>';
 
-echo "	  				</div> <!-- #profile-actions -->\n";
-echo "	  			</div> <!-- .rbcol-3 -->\n";
+echo "					</div> <!-- #profile-actions -->\n";
+echo "				</div> <!-- .rbcol-3 -->\n";
 echo "				<div class=\"rbclear\"></div>\n"; // Clear All
 echo " 			</div>\n"; // #profile-overview
 
@@ -152,7 +152,7 @@ echo " 					<div id=\"tabs\">\n";
 echo "   					<div id=\"subMenuTab\">\n";
 echo " 							<div class=\"maintab tab-left tab-active\" id=\"row-all\">\n";
 echo " 								<a href=\"#space\">\n";
-echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">All</div></div></div>\n";
+echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">All</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
 								    $queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
@@ -161,53 +161,53 @@ echo " 							</div>\n";
 
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-photos\">\n";
 echo " 								<a href=\"#space\">\n";
-echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Photos(".$countImg.")</div></div></div>\n";
+echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Photos(".$countImg.")</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-physical\">\n";
 echo " 								<a href=\"#space\">\n";
-echo " 			  						<div class=\"subMenuTabBG\" ><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Physical Details</div></div></div>\n";
+echo " 									<div class=\"subMenuTabBG\" ><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Physical Details</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-videos\">\n";
 echo " 								<a href=\"#space\">\n";
-echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Videos</div></div></div>\n";
+echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Videos</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-experience\">\n";
 echo " 								<a href=\"#space\">\n";
-echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Experience</div></div></div>\n";
+echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Experience</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
 if(function_exists('rb_agency_casting_menu')){
 echo " 							<div class=\"maintab tab-inner tab-inactive\" id=\"row-bookings\">\n";
 echo " 								<a href=\"/profile-casting/\">\n";
-echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Booking</div></div></div>\n";
+echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Booking</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
 }
 echo " 							<div class=\"maintab tab-right tab-inactive\" id=\"row-downloads\">\n";
 echo " 								<a href=\"javascript:;\">\n";
-echo " 			  						<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Downloads</div></div></div>\n";
+echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Downloads</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";	
 echo "	   					</div>\n";
 echo " 					</div>\n"; // end #tabs
 echo " 				</div>\n"; // twelve rbcolumn 2
 
-echo "				<div class=\"rbclear\"></div>\n"; // Clear All					
+echo "				<div class=\"rbclear\"></div>\n"; // Clear All
 echo " 				<div class=\"rbcol-12 rbcolumn\">\n";
 echo " 					<div id=\"tab-panels\">\n";
 echo " 						<div class=\"row-photos tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
 
 									// images
-								   foreach($resultsImg as $dataImg ){
-									  	if ($countImg > 1) { 
+									foreach($resultsImg as $dataImg ){
+										if ($countImg > 1) { 
 											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
-									  	} else {
+										} else {
 											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
-									  	}
+										}
 									}
 echo " 							</div>\n"; // .tab-panel
 echo " 						</div>\n"; // twelve rbcolumn photos
@@ -240,19 +240,19 @@ echo " 							<div class=\"tab-panel\">\n";
 									$countMedia  = $wpdb->num_rows;
 
 									if ($countMedia > 0) {
-									  		foreach($resultsMedia as $dataMedia ){
+											foreach($resultsMedia as $dataMedia ){
 											$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 											//echo"<div class=\"video slate rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
-									  		echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
-									  		echo "<div class=\"video-container\">\n";
-									  		echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
-									  		echo rb_agency_get_videothumbnail($profileVideoEmbed );
-									  		echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
-									  		echo "</a>\n";
-									  		echo "</div>\n";
-									  		echo "</div>\n";
-									  	
-									  	}
+											echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
+											echo "<div class=\"video-container\">\n";
+											echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
+											echo rb_agency_get_videothumbnail($profileVideoEmbed );
+											echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
+											echo "</a>\n";
+											echo "</div>\n";
+											echo "</div>\n";
+										
+										}
 									}
 
 									//Video Monologue
@@ -260,21 +260,18 @@ echo " 							<div class=\"tab-panel\">\n";
 									$resultsMedia=  $wpdb->get_results($queryMedia,ARRAY_A);
 									$countMedia  = $wpdb->num_rows;
 									if ($countMedia > 0) {
-									  	foreach($resultsMedia as $dataMedia ){
+										foreach($resultsMedia as $dataMedia ){
 											$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 											//echo"<div class=\"video monologue rbcol-2 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
-									  		echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
-									  		echo "<div class=\"video-container\">\n";
-									  		echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
-									  		echo rb_agency_get_videothumbnail($profileVideoEmbed );
-									  		echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
-									  		echo "</a>\n";
-									  		echo "</div>\n";
-									  		echo "</div>\n";
-									  	
-									  	
-												 
-									  	}
+											echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
+											echo "<div class=\"video-container\">\n";
+											echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
+											echo rb_agency_get_videothumbnail($profileVideoEmbed );
+											echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
+											echo "</a>\n";
+											echo "</div>\n";
+											echo "</div>\n";
+										}
 									}
 
 									//Demo Reel
@@ -282,26 +279,26 @@ echo " 							<div class=\"tab-panel\">\n";
 									$resultsMedia=  $wpdb->get_results($queryMedia,ARRAY_A);
 									$countMedia  = $wpdb->num_rows;
 									if ($countMedia > 0) {
-									  	foreach($resultsMedia as $dataMedia ){
+										foreach($resultsMedia as $dataMedia ){
 											$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
 											//echo"<div class=\"video demoreel rbcol-2 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
-									  		echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
-									  		echo "<div class=\"video-container\">\n";
-									  		echo "<a href=\"".$profileVideoEmbed."\" target=\"_blank\" rel=\"nofollow\">\n";
-									  		echo rb_agency_get_videothumbnail($profileVideoEmbed );
-									  		echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
-									  		echo "</a>\n";
-									  		echo "</div>\n";
-									  		echo "</div>\n";
-									  	
-									  	
-									  	}
+											echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
+											echo "<div class=\"video-container\">\n";
+											echo "<a href=\"".$profileVideoEmbed."\" target=\"_blank\" rel=\"nofollow\">\n";
+											echo rb_agency_get_videothumbnail($profileVideoEmbed );
+											echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
+											echo "</a>\n";
+											echo "</div>\n";
+											echo "</div>\n";
+										
+										
+										}
 									}
-echo " 							</div>\n"; // .tab-panel								
-echo " 						</div>\n"; // twelve rbcolumn videos
+echo "							</div>\n"; // .tab-panel								
+echo "						</div>\n"; // twelve rbcolumn videos
 
-echo " 						<div class=\"row-experience tab\">\n";
-echo " 							<div class=\"tab-panel\">\n";
+echo "						<div class=\"row-experience tab\">\n";
+echo "							<div class=\"tab-panel\">\n";
 									$query1 ="SELECT c.ProfileCustomID, c.ProfileCustomTitle, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d ORDER BY c.ProfileCustomOrder DESC";
 									$results1=  $wpdb->get_results($wpdb->prepare($query1, $ProfileID),ARRAY_A);
 									$count1  = $wpdb->num_rows;
@@ -314,26 +311,24 @@ echo " 							<div class=\"tab-panel\">\n";
 											echo "	  </div>\n";
 										}
 									}
-echo " 							</div>\n"; // .tab-panel							
-echo " 						</div>\n"; // twelve rbcolumn experience
+echo "							</div>\n"; // .tab-panel
+echo "						</div>\n"; // twelve rbcolumn experience
 
 if(function_exists('rb_agency_casting_menu')){
-echo " 						<div class=\"row-bookings tab\">\n";
+echo "						<div class=\"row-bookings tab\">\n";
 echo "						<h3>Bookings</h3>";
-echo " 						<div class=\"tab-panel\">\n";
-echo " 						</div>\n"; // .tab-panel
-echo " 						</div>\n"; // Row booking
+echo "						<div class=\"tab-panel\">\n";
+echo "						</div>\n"; // .tab-panel
+echo "						</div>\n"; // Row booking
 }
 // added this section to be able to display downloadable 
 // files attached to a specific profile 
 echo "						<div class=\"row-downloads tab\">\n";
-echo " 							<div class=\"tab-panel\">\n";
-	echo "							<p>". __("The following files (pdf, audio file, etc.) are associated with this profile",
-						        	RBAGENCY_TEXTDOMAIN) .".</p>\n";
-					
-									$queryMedia = "SELECT * FROM ". table_agency_profile_media ." 
-									              WHERE ProfileID =  \"%s\" AND ProfileMediaType <> \"Image\"";
-									
+echo "							<div class=\"tab-panel\">\n";
+	echo "							<p>". __("The following files (pdf, audio file, etc.) are associated with this profile", RBAGENCY_TEXTDOMAIN) .".</p>\n";
+
+									$queryMedia = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID =  \"%s\" AND ProfileMediaType <> \"Link\" AND ProfileMediaType <> \"Image\"";
+
 									$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia,$ProfileID),ARRAY_A);
 									$countImg  = $wpdb->num_rows;
 									$outLinkVoiceDemo = "";
@@ -342,24 +337,24 @@ echo " 							<div class=\"tab-panel\">\n";
 									$outLinkComCard = "";
 									$outVideoMedia = "";
 									$outCustomMediaLink  = "";
-									
+
 									foreach($resultsMedia as $dataMedia ){
-											
+
 										if ($dataMedia['ProfileMediaType'] == "Demo Reel" || 
-										    $dataMedia['ProfileMediaType'] == "Video Monologue" || 
+											$dataMedia['ProfileMediaType'] == "Video Monologue" || 
 											$dataMedia['ProfileMediaType'] == "Video Slate") {
-											
+
 											$outVideoMedia .= "<div style=\"float: left; width: 120px; text-align: center; padding: 10px; \">"
 											. $dataMedia['ProfileMediaType'] ."<br />". 
 											rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL']) 
 											."<br /><a href=\"http://www.youtube.com/watch?v="
 											. $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">Link to Video</a><br />[<a href=\"javascript:confirmDelete('".
-											 $dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType'].
-											 "')\">DELETE</a>]</div>\n";
-										
+											$dataMedia['ProfileMediaID'] ."','".$dataMedia['ProfileMediaType'].
+											"')\">DELETE</a>]</div>\n";
+
 										} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
-											
+
 											// $outLinkVoiceDemo .= $dataMedia['ProfileMediaType'] .
 											// ": <a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											// "\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
@@ -371,9 +366,9 @@ echo " 							<div class=\"tab-panel\">\n";
 											.$dataMedia['ProfileMediaType']
 											."</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] 
 											."','".$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
-										
+
 										} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
-										
+
 /*											$outLinkResume .= $dataMedia['ProfileMediaType'] 
 											.": <a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
@@ -381,39 +376,36 @@ echo " 							<div class=\"tab-panel\">\n";
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";
 */
 											$outLinkResume .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
-			
-										
+
 										} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
-										
+
 											/*$outLinkHeadShot .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
 											RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
 											$outLinkHeadShot .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
-			
-										
+
 										} elseif ($dataMedia['ProfileMediaType'] == "CompCard") {
-										
+
 											/*$outLinkComCard .= $dataMedia['ProfileMediaType'] .": <a href=\"". 
 											RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
 											$outLinkComCard .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
-			
-										
+
 										} else{
-										
+
 											/*$outCustomMediaLink .= $dataMedia['ProfileMediaType'] .": <a href=\"".
 										 	RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 										 	"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 										 	$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
 											$outCustomMediaLink .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
-			
+
 										}
-								  	}
+	}
 
 									echo '<ul>';
 									if(!empty($outLinkVoiceDemo)){
@@ -442,16 +434,16 @@ echo " 							<div class=\"tab-panel\">\n";
 										echo '</li>';
 									}
 									echo '</ul>';
-echo " 							</div>\n"; // .tab-panel
-echo " 						</div>\n"; // Download Tab
+echo "							</div>\n"; // .tab-panel
+echo "						</div>\n"; // Download Tab
 
 echo "						<div class=\"rbclear\"></div>\n"; // Clear All
-					
-echo "	 				</div>\n";  // Close Tab Panels
-echo "	 			</div>\n";  // Close Tab Panels
-echo " 			</div>\n";  // Close RB Tabs
-echo " 		</div>\n";  // Close Profile Layout
+
+echo "					</div>\n";  // Close Tab Panels
+echo "				</div>\n";  // Close Tab Panels
+echo "			</div>\n";  // Close RB Tabs
+echo "		</div>\n";  // Close Profile Layout
 echo "	</div>\n";  // Close Profile
 echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 
-?>        
+?>
