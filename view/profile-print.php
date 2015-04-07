@@ -216,7 +216,7 @@ global $wpdb;
 						$ProfileID = $data['ProfileID'];
 						echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 						// Hide private information from print
-							/*
+							
 							if (!empty($data['ProfileContactEmail'])) {
 								echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
 							}
@@ -225,10 +225,10 @@ global $wpdb;
 								echo "<div><strong>Address:</strong> ". $data['ProfileLocationStreet'] ."</div>\n";
 							}
 							if (!empty($data['ProfileLocationCity']) || !empty($data['ProfileLocationState'])) {
-								echo "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". $data['ProfileLocationState'] ." ". $data['ProfileLocationZip'] ."</div>\n";
+								echo "<div><strong>Location:</strong> ". $data['ProfileLocationCity'] .", ". get_state_by_id($data['ProfileLocationState']) ." ". $data['ProfileLocationZip'] ."</div>\n";
 							}
 							if (!empty($data['ProfileLocationCountry'])) {
-								echo "<div><strong>". __("Country", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileLocationCountry'] ."</div>\n";
+								echo "<div><strong>". __("Country", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_getCountryTitle($data['ProfileLocationCountry']) ."</div>\n";
 							}
 							if (!empty($data['ProfileDateBirth'])) {
 								echo "<div><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
@@ -248,7 +248,7 @@ global $wpdb;
 							if (!empty($data['ProfileContactPhoneWork'])) {
 								echo "<div><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 							}
-							*/
+							
 						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
