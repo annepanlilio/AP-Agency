@@ -2,7 +2,6 @@
 	/* 
 	 * Debug Mode - $RB_DEBUG_MODE = true;
 	 */
-
 		if(isset($RB_DEBUG_MODE)){
 			ini_set('display_errors', 'On');
 		}else{
@@ -623,7 +622,7 @@
 		} elseif ($rb_agency_option_profilenaming == 2) {
 				$ProfileGalleryFixed = $display;
 		} elseif ($rb_agency_option_profilenaming == 3) {
-				$ProfileGalleryFixed = "ID".$ID;
+				$ProfileGalleryFixed = "ID-".$ID;
 		} elseif ($rb_agency_option_profilenaming == 4) {
 				$ProfileGalleryFixed = $first;
 		} elseif ($rb_agency_option_profilenaming == 5) {
@@ -633,6 +632,31 @@
 		return RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
 	}
 
+	/**
+	*  Check duplicate folder
+	* @param $diplay - contact display, $current_display - formatted contact display
+	* @return - suggested folder name
+	*/
+    function rb_check_duplicate_folder($display,$current_display, $arr = array()){
+    	
+    	if($display != $current_display ){	
+    		$arr = array_unique($arr);
+    		$i = 0;
+    		do{
+    			//champ-camba
+    			//champ-camba-1
+    				$current_display = $current_display.($i>0?"-".$i:"");
+    				$i++;
+    					    
+    			    
+	    	}while( in_array($current_display,$arr,true));
+
+	    	return $current_display;
+    		     	
+    		   
+		}   
+	  	return $display;
+    }
 
 
 
