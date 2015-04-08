@@ -99,7 +99,7 @@ echo "					<div id=\"links\">\n";
 					 * Include Action Icons
 					 */
 
-						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
+						//include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
 
 echo "						<ul>\n";
 								
