@@ -168,7 +168,9 @@ global $wpdb;
 			
 			// Show Cart
 			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media $filter  GROUP BY  profile.ProfileID ORDER BY ProfileContactNameFirst";
-			$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
+			$results = $wpdb->get_results($query,ARRAY_A);// or die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
+			//$wpdb->show_errors();
+			//$wpdb->print_error();
 			$count =  count($results);
 			if ($count < 1) {
 				echo "There are currently no profiles in the casting cart.";
@@ -216,13 +218,8 @@ global $wpdb;
 						$ProfileID = $data['ProfileID'];
 						echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 						// Hide private information from print
-<<<<<<< HEAD
-							
-||||||| merged common ancestors
 							/*
-=======
 						if ($rb_agency_option_adminprint_hidden == 1 && current_user_can('edit_pages')) {
->>>>>>> origin/master
 							if (!empty($data['ProfileContactEmail'])) {
 								echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
 							}
@@ -253,19 +250,16 @@ global $wpdb;
 							if (!empty($data['ProfileContactPhoneWork'])) {
 								echo "<div><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 							}
-<<<<<<< HEAD
 							
 						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 						//}
-||||||| merged common ancestors
 							*/
 						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 						//}
-=======
 							$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 							foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 								if (!empty($resultCustomPrivate->ProfileCustomValue)) {
@@ -273,7 +267,7 @@ global $wpdb;
 								}
 							}
 						} // End Private Fields
->>>>>>> origin/master
+
 
 						if (!empty($data['ProfileGender'])) {
 							if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
@@ -309,7 +303,7 @@ global $wpdb;
 					echo "</tr>";
 				}
 
-			}
+			//}
 			echo "<div style=\"clear: both;\"></div>";
 			echo "</div>";
 			echo "</tr>";
