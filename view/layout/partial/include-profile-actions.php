@@ -115,7 +115,15 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+			if ( substr($dataMedia['ProfileMediaURL'], 0, 4) == "http" ) {
+				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+			} else {
+				if ( $dataMedia['ProfileVideoType'] == "youtube") {
+					echo "<a href=\"https://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+				} elseif ( $dataMedia['ProfileVideoType'] == "vimeo") {
+					echo "<a href=\"https://vimeo.com/". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+				}
+			}
 		}
 	}
 

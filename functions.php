@@ -507,7 +507,7 @@
 	 *
 	 * @param string $videoID
 	 */
-	function rb_agency_get_videothumbnail($url) {
+	function rb_agency_get_videothumbnail($url, $host) {
 	/*	
 	TODO: Cleanup
 		$videoID = ltrim($videoID);
@@ -524,17 +524,31 @@
 		if(isset($image_url['host']) && ($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com')){
 			$array = explode("&", $image_url['query']);
 			return "<img src=\"http://img.youtube.com/vi/".substr($array[0], 2)."/default.jpg\"/>";
-		} else if(isset($image_url['host']) && ($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com')){
+		} elseif(isset($image_url['host']) && ($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com')){
 			$is_host_active = @file_get_contents("http://vimeo.com/api/v2/video/".substr($image_url['path'], 1).".php");
 
 			if(!empty($is_host_active)){
 				$hash = unserialize($is_host_active);
 				return "<img src=\"".$hash[0]["thumbnail_medium"]."\" width=\"120\" height=\"90\"/>";
 			}else{
-				return "<img src=\"". RBAGENCY_PLUGIN_DIR ."assets/img/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+				return "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
 			}
-		}else{
-			return "<img src=\"". RBAGENCY_PLUGIN_DIR ."assets/img/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+
+		} else {
+			if ($host == "youtube") {
+				return "<img src=\"http://img.youtube.com/vi/".$url."/default.jpg\"/>";
+			} elseif ($host == "vimeo") {
+				$is_host_active = @file_get_contents("http://vimeo.com/api/v2/video/".$url.".php");
+
+				if(!empty($is_host_active)){
+					$hash = unserialize($is_host_active);
+					return "<img src=\"".$hash[0]["thumbnail_medium"]."\" width=\"120\" height=\"90\"/>";
+				}else{
+					return "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+				}
+			} else {
+				return "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/video-thumbnail.png\" width=\"120\" height=\"90\"/>";
+			}
 		}
 	}
 
