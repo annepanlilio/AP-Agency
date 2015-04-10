@@ -639,7 +639,7 @@
 	*/
     function rb_check_duplicate_folder($display,$current_display, $arr = array()){
     	
-    	if($display != $current_display ){	
+    	if($display != $current_display && count($arr) > 1){	
     		$arr = array_unique($arr);
     		$i = 0;
     		do{
