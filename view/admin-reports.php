@@ -450,7 +450,7 @@ elseif ($ConfigID == 3) {
 								$new_file =  $data3["ProfileID"]."-".$new_file;
 								rename($dirURL ."/". $file, $dirURL ."/".$new_file);
 								echo " has been renamed <strong>". $new_file ."</strong>";
-								$has_rename = true;
+								//$has_rename = true;
 								$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s",$new_file, $data3['ProfileID'],$file));
 									
 						}
@@ -469,7 +469,7 @@ elseif ($ConfigID == 3) {
 									$actionText = ($has_rename?" and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
 								}
 							} else {
-									$actionText = ($has_rename?" and":"")." exists in database";
+							//		$actionText = ($has_rename?" and":"")." exists in database";
 							}
 						} elseif (($file_ext == "amr" || $file_ext == "m4a" || $file_ext == "mp3" || $file_ext == "wav")) {
 							if (empty($result->url) && !in_array($new_file,$arr_media,true)) {
@@ -497,7 +497,7 @@ elseif ($ConfigID == 3) {
 									$actionText = ($has_rename?" and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
 								}
 							} else {
-									$actionText = ($has_rename?" and":"")." exists in database";
+									//$actionText = ($has_rename?" and":"")." exists in database";
 							}
 						} elseif(empty($result->url)) {
 							    $actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
