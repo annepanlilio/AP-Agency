@@ -3,8 +3,6 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
 	$rb_agency_option_adminprint_hidden = isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0;
-
-
 global $wpdb;
 
 
@@ -218,7 +216,6 @@ global $wpdb;
 						$ProfileID = $data['ProfileID'];
 						echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 						// Hide private information from print
-							/*
 						if ($rb_agency_option_adminprint_hidden == 1 && current_user_can('edit_pages')) {
 							if (!empty($data['ProfileContactEmail'])) {
 								echo "<div><strong>Email:</strong> ". $data['ProfileContactEmail'] ."</div>\n";
@@ -250,7 +247,8 @@ global $wpdb;
 							if (!empty($data['ProfileContactPhoneWork'])) {
 								echo "<div><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 							}
-							
+						} 
+						/*	
 						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
@@ -260,6 +258,12 @@ global $wpdb;
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 						//}
+							/*$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
+							foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
+								if (!empty($resultCustomPrivate->ProfileCustomValue)) {
+									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
+								}
+							}*/
 							$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 							foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 								if (!empty($resultCustomPrivate->ProfileCustomValue)) {
@@ -269,7 +273,7 @@ global $wpdb;
 						} // End Private Fields
 
 
-						if (!empty($data['ProfileGender'])) {
+					/*	if (!empty($data['ProfileGender'])) {
 							if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
 								echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
 							}else{
@@ -286,7 +290,7 @@ global $wpdb;
 									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
 								}
 							}
-						}
+						}*/
 
 						echo " </div>";
 						echo " <div style=\"clear: both; text-align: center; padding: 5px; \">\n";
