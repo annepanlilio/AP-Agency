@@ -264,12 +264,27 @@ global $wpdb;
 									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 								}
 							}*/
-							$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
-							foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
-								if (!empty($resultCustomPrivate->ProfileCustomValue)) {
-									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
+							$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
+							foreach  ($resultsCustomPrivate as $resultCustomPrivatePrivate) {
+								if(!empty($resultCustomPrivate->ProfileCustomValue ) || !empty($resultCustomPrivate->ProfileCustomDateValue )){
+									if($resultCustomPrivate->ProfileCustomType == 10){
+										echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustomPrivate->ProfileCustomDateValue))) ."</div>\n";
+									}else{
+										echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustomPrivate->ProfileCustomValue) ."</div>\n";
+									}
 								}
 							}
+								$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue,cx.ProfileCustomDateValue, c.ProfileCustomType FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
+								foreach  ($resultsCustom as $resultCustom) {
+									if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
+										if($resultCustom->ProfileCustomType == 10){
+											echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
+										}else{
+											echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
+										}
+									}
+								}
+
 						} // End Private Fields
 
 
@@ -280,18 +295,8 @@ global $wpdb;
 								echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> --</div>\n";	
 							}
 						}
-
-						$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue,cx.ProfileCustomDateValue, c.ProfileCustomType FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
-						foreach  ($resultsCustom as $resultCustom) {
-							if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
-								if($resultCustom->ProfileCustomType == 10){
-									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
-								}else{
-									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
-								}
-							}
-						}*/
-
+				*/
+					
 						echo " </div>";
 						echo " <div style=\"clear: both; text-align: center; padding: 5px; \">\n";
 					} else {
