@@ -3345,25 +3345,24 @@
 	*/
 	function rb_is_page($page){
 
-			if(empty($page)){ return false; }
-		
+		if(empty($page)) { return false; }
+
 		$uri = $_SERVER['REQUEST_URI'];
 
 		if((strpos($uri,"/profile/") > -1 && $page == "rb_profile" ) ||
-			   (strpos($uri,"/dashboard/") > -1 && $page == "rb_dashboard") ||
-			   (strpos($uri,"/profile-category/") > -1 && $page == "rb_category") ||
-			   (strpos($uri,"/profile-register/") > 1 && $page == "rb_register") ||
-			   (strpos($uri,"/profile-search/") > -1 ||
-				  strpos($uri,"/search/") > -1 ||
-				  strpos($uri,"/search") > -1 &&
-							  $page == "rb_search")	||
-			   (strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
-			   (strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
-			   (strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites" )) {
+			(strpos($uri,"/dashboard/") > -1 && $page == "rb_dashboard") ||
+			(strpos($uri,"/profile-category/") > -1 && $page == "rb_category") ||
+			(strpos($uri,"/profile-register/") > 1 && $page == "rb_register") ||
+			(strpos($uri,"/profile-search/") > -1 ||
+				strpos($uri,"/search/") > -1 ||
+				strpos($uri,"/search") > -1 &&
+				$page == "rb_search")	||
+			(strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
+			(strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
+			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites" )) {
 
-				return true;	
-				
-			} 
+				return true;
+			}
 
 			return false;
 	}
@@ -3444,7 +3443,6 @@
 		if (!session_id()) {
 					session_start();
 		}
-		 
 		/* foreach($_SESSION as $key => $val){
 			 unset($_SESSION[$key]);
 		 }*/
@@ -3466,7 +3464,7 @@
 			wp_redirect(home_url());
 			exit();
 		}
-	} 
+	}
 
 	/*
 	 * WP Login Form
@@ -3492,14 +3490,14 @@
 							if (data.loggedin == true){
 								document.location.href = "<?php echo $redirect; ?>";
 							} else {
-														jQuery('#rbsign-in p.status').text(data.message);
+								jQuery('#rbsign-in p.status').text(data.message);
 							}
 						}
 					});
 				 });
-			 });
-			 </script>
-			<?php	
+			});
+			</script>
+			<?php
 			//
 			// Login Form
 			//
@@ -3522,13 +3520,13 @@
 			echo '        </div> <!-- rbsign-in -->';
 			echo '      <div class="clear line"></div>';
 			echo '      </div>';
-	} 
+	}
 
 	/*
 	 * Get Current URl for redirection
 	 */
 	function rb_current_url(){
-		
+
 		$URL = 'http';
 		if ($_SERVER["HTTPS"] == "on") {$URL .= "s";}
 		$URL .= "://";
@@ -3544,42 +3542,44 @@
 	 * Check casting cart / add fav if permitted to be displayed
 	 */
 	function is_permitted($type){
-		
-					$rb_agency_options_arr = get_option('rb_agency_options');
-					$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
-					$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
-					$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
-				
-					if($type=="casting" && !$rb_agency_option_profilelist_castingcart) return false;
-					if($type=="favorite" && !$rb_agency_option_profilelist_favorite) return false;
-					if(!is_user_logged_in()) return false;
-					
-					if($type == "casting" || $type == "favorite" ){
-							
-						 if ( ($rb_agency_option_privacy == 2) || 
-				 
-							   // Model list public. Must be logged to view profile information
-							   ($rb_agency_option_privacy == 1) ||
-								
-								// Model list public and information
-							   ($rb_agency_option_privacy == 0) ||
-								
-								//admin users
-								(current_user_can( 'edit_posts' )) ||
-				 
-								//  Must be logged as "Client" to view model list and profile information
-								($rb_agency_option_privacy == 3 && is_client_profiletype()) ) {
-							
-							 return true;
-						   }
-					 }
-			return false;
+
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_privacy = $rb_agency_options_arr['rb_agency_option_privacy'];
+		$rb_agency_option_profilelist_castingcart  = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] : 0;
+		$rb_agency_option_profilelist_favorite	 = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite'] : 0;
+
+		if($type=="casting" && !$rb_agency_option_profilelist_castingcart) return false;
+		if($type=="favorite" && !$rb_agency_option_profilelist_favorite) return false;
+		if(!is_user_logged_in()) return false;
+
+		if($type == "casting" || $type == "favorite" ){
+
+			if ( ($rb_agency_option_privacy == 2) || 
+
+				// Model list public. Must be logged to view profile information
+				($rb_agency_option_privacy == 1) ||
+
+				// Model list public and information
+				($rb_agency_option_privacy == 0) ||
+
+				//admin users
+				(current_user_can( 'edit_posts' )) ||
+
+				//  Must be logged as "Client" to view model list and profile information
+				($rb_agency_option_privacy == 3 && is_client_profiletype()) ) {
+
+				return true;
+			}
+		}
+		return false;
 	}
-	 /**
-		 * Clean String, remove extra quotes
-		 *
-		 * @param string $string
-		 */
+
+
+	/**
+	 * Clean String, remove extra quotes
+	 *
+	 * @param string $string
+	 */
 		function rb_agency_cleanString($string) {
 			// Remove trailing dingleberry
 			if (substr($string, -1) == ",") {  $string = substr($string, 0, strlen($string)-1); }
@@ -3589,19 +3589,19 @@
 
 			return $string;
 		}
-		
-		
+
+
 	/*
 	 * Check if profilet type ID is "Client" type
 	 */
 	function is_client_profiletype(){
-		
+
 		global $current_user;
 		global $wpdb;
 
 		$query = "SELECT ProfileType FROM ". table_agency_profile ." WHERE ProfileUserLinked = ". rb_agency_get_current_userid();
 		$results = $wpdb->get_results($query,ARRAY_A);
-		
+
 		if(count($results) > 0){
 			/*$id = current($results);
 			$id = $id['ProfileType'];
@@ -3617,46 +3617,45 @@
 			 */
 			//$check_type = get_user_meta($current_user->ID, 'rb_agency_interact_clientdata', true);
 			//if($check_type != ""){
-			   return false;
+			return false;
 			//} 
-		} 
+		}
 		/*
 		 * lets check postmeta field
 		 */
 		else {
 			$check_type = get_user_meta($current_user->ID, 'rb_agency_interact_clientdata', true);
 			if($check_type != ""){
-			   return false;
-			} 	
-		}	
-		
+				return false;
+			}
+		}
+
 		return true;
 	}
-		
+
 	/*
 	 * Get current user's profile type
 	 */
 	function rb_get_profiletype(){
-		
+
 		global $current_user;
 		global $wpdb;
 
 		$query = "SELECT ProfileType FROM ". table_agency_profile ." WHERE ProfileUserLinked = ". rb_agency_get_current_userid();
 		$results = $wpdb->get_results($query,ARRAY_A);
-		
+
 		if(count($results) > 0){
 			$id = current($results);
 			$id = $id['ProfileType'];
 			$queryList = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = ". $id;
 			$resultsList = $wpdb->get_results($queryList,ARRAY_A);
 			foreach($resultsList as $d) {
-				 echo "You are logged in as ".ucfirst($d["DataTypeTitle"]).", please <a href=".wp_logout_url().">logout</a> first.";
-			}	
+				echo "You are logged in as ".ucfirst($d["DataTypeTitle"]).", please <a href=".wp_logout_url().">logout</a> first.";
+			}
 			
 		} else{
 			 echo "You are logged in as Model/Talent, please <a href=".wp_logout_url().">logout</a> first.";
 		}
-			
 	}
 
 
@@ -3699,23 +3698,21 @@
 	 */
 	function rb_agency_group_permission($group){
 
-			   global $user_ID;
-			   include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			   $is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
-						
-			   if(is_user_logged_in() /* &&  !current_user_can("edit_posts") && is_plugin_active("rb-agency-casting") */){
-			   
-						if($group == "casting"){ //if we are in a casting page while using a model/talent profile, redirect to profile member paage
-						
-						   if(!empty($is_model)){
-							 wp_safe_redirect(get_bloginfo("url")."/profile-member/");
-							}
-						}elseif($group == "models"){ //if casting is accessing model/talent page, redirect back to casting dashboard
-						   if(empty($is_model )){
-							// wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
-						   }
-						}
+		global $user_ID;
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		$is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
+				
+		if(is_user_logged_in() /* &&  !current_user_can("edit_posts") && is_plugin_active("rb-agency-casting") */){
+				if($group == "casting"){ //if we are in a casting page while using a model/talent profile, redirect to profile member paage
+					if(!empty($is_model)){
+					 wp_safe_redirect(get_bloginfo("url")."/profile-member/");
+					}
+				} elseif($group == "models"){ //if casting is accessing model/talent page, redirect back to casting dashboard
+					if(empty($is_model )){
+					// wp_safe_redirect(get_bloginfo("url")."/casting-dashboard/");
+					}
 				}
+		}
 	}
 
 	/**
@@ -3731,44 +3728,43 @@
 	 * Set logout redirect per user group
 	 */
 	function rb_logout_user(){
-		 global $user_ID, $wpdb;
-		   //include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		global $user_ID, $wpdb;
+			//include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-			   if(is_user_logged_in()){
-			   
+			if(is_user_logged_in()){
+
 						$is_model = get_user_meta( $user_ID, 'rb_agency_interact_profiletype',true);
 						if(empty($is_model)){
 							$is_casting = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
 						}
-				
-						 if(current_user_can("edit_posts")){
+
+						if(current_user_can("edit_posts")){
+							wp_logout();
+							wp_safe_redirect(admin_url());
+						} else {
+							$rb_agency_interact_options_arr = get_option('rb_agencyinteract_options');
+							$rb_agencyinteract_option_redirect_custom_login = (int)$rb_agency_interact_options_arr['rb_agencyinteract_option_redirect_custom_login'];
+
+							if($rb_agencyinteract_option_redirect_custom_login == 2){
 								wp_logout();
-						 		wp_safe_redirect(admin_url());
-						 }else{
-								 
-						   $rb_agency_interact_options_arr = get_option('rb_agencyinteract_options');
-						   $rb_agencyinteract_option_redirect_custom_login = (int)$rb_agency_interact_options_arr['rb_agencyinteract_option_redirect_custom_login'];
-						
-						   if($rb_agencyinteract_option_redirect_custom_login == 2){
-						   		wp_logout();
-						   		wp_safe_redirect(get_bloginfo("url"));
-							}else{
+								wp_safe_redirect(get_bloginfo("url"));
+							} else {
 								if(class_exists("RBAgencyCasting")){
-								   if(!empty($is_model )){
-								   		wp_logout();
-						  			 	wp_safe_redirect(get_bloginfo("url")."/profile-login/");
-									}else if(!empty($is_casting)){
-								   		wp_logout();
-									 	wp_safe_redirect(get_bloginfo("url")."/casting-login/");
+									if(!empty($is_model )){
+										wp_logout();
+										wp_safe_redirect(get_bloginfo("url")."/profile-login/");
+									} elseif(!empty($is_casting)) {
+										wp_logout();
+										wp_safe_redirect(get_bloginfo("url")."/casting-login/");
 									}
-								}else{
+								} else {
 									wp_logout();
-						  			wp_safe_redirect(get_bloginfo("url")."/profile-login/");
+									wp_safe_redirect(get_bloginfo("url")."/profile-login/");
 								}
 							}
 						}
-						
-				}else{
+
+				} else {
 					wp_safe_redirect(get_bloginfo("url")."/profile-login/");
 				}
 	}
@@ -3797,7 +3793,7 @@
 
 		if($rb_agency_option_profilemedia_links == 2){
 			return __("View", RBAGENCY_TEXTDOMAIN);
-		}elseif($rb_agency_option_profilemedia_links == 3){
+		} elseif($rb_agency_option_profilemedia_links == 3){
 			return __("Download", RBAGENCY_TEXTDOMAIN);
 		}
 	}
@@ -3815,7 +3811,7 @@
 			}else{
 				return " href=\"javascript:;\" onclick=\"window.open('".RBAGENCY_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 			}
-		}elseif($rb_agency_option_profilemedia_links == 3){
+		} elseif($rb_agency_option_profilemedia_links == 3){
 			return " href=\"".RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$url."\" ";
 		}
 	}
