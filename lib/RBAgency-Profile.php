@@ -1829,7 +1829,7 @@ class RBAgency_Profile {
 			 * this is the upper header html of the profile list
 			 */
 
-				$all_html .=  "<script type='text/javascript' src='". RBAGENCY_PLUGIN_URL ."assets/js/resize.js'></script>";
+				// $all_html .=  "<script type='text/javascript' src='". RBAGENCY_PLUGIN_URL ."assets/js/resize.js'></script>";
 				if ($rb_agency_option_profilelist_count) {
 					$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
 					$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong><span class='count-display'>". (isset($count)?$count:0) ."</span></strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." <span class='items-display'>". (isset($items)?$items:0) ."</span> ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
