@@ -3359,7 +3359,14 @@
 				$page == "rb_search")	||
 			(strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
 			(strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
-			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites" )) {
+			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites" )) ||
+
+			// RB Agency Casting
+			(strpos($uri,"/casting-manage/") > -1 && $page == "casting_manage" ) ||
+			(strpos($uri,"/browse-jobs/") > -1 && $page == "browse_jobs" ) ||
+			(strpos($uri,"/view-applicants/") > -1 && $page == "view_applicants" ) ||
+			(strpos($uri,"/profile-casting/") > -1 && $page == "profile_casting" ) ||
+			(strpos($uri,"/casting-postjob/") > -1 && $page == "casting_postjob" )) {
 
 				return true;
 			}

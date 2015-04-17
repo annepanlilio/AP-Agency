@@ -177,6 +177,23 @@ class RBAgency_App {
 				$classes[] = 'rbagency-search';
 			} elseif (rb_is_page("rb_print")) {
 				$classes[] = 'rbagency-print';
+			}
+			// RB Agency Casting Pages
+			elseif (rb_is_page("casting_postjob")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'casting-postjob';
+			} elseif (rb_is_page("casting_manage")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'casting-manage';
+			} elseif (rb_is_page("browse_jobs")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'browse-jobs';
+			} elseif (rb_is_page("view_applicants")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'view-applicants';
+			} elseif (rb_is_page("profile_casting")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'profile-casting';
 			} else {
 				$classes[] = 'rbagency';
 			}
