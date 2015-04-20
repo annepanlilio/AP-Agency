@@ -12,7 +12,7 @@ $siteurl = get_option('siteurl');
 		$rb_agency_option_agencyname		= $rb_agency_options_arr['rb_agency_option_agencyname'];
 		$rb_agency_option_agencyemail	= $rb_agency_options_arr['rb_agency_option_agencyemail'];
 		$rb_agency_option_agencyheader	= $rb_agency_options_arr['rb_agency_option_agencyheader'];
-		$rb_agency_option_profilenaming	 = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+		$rb_agency_option_profilenaming	= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 				
 	// Declare Hash
 	$SearchMuxHash			=  isset($_GET["SearchMuxHash"]) && !empty($_GET["SearchMuxHash"]) ?$_GET["SearchMuxHash"]:""; // Set Hash
@@ -91,8 +91,8 @@ $siteurl = get_option('siteurl');
 
 	} elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	/* 
-	 * Delete Email
-	 */
+	* Delete Email
+	*/
 
 		$SearchID = $_GET['SearchID'];
 
@@ -106,45 +106,45 @@ $siteurl = get_option('siteurl');
 			$results = $wpdb->query($delete);
 			echo ('<div id="message" class="updated"><p>Record deleted successfully! <a href="'. admin_url("admin.php?page=". $_GET['page']) .'"> Go back to Saved Seach</a></p></p></div>');
 		}
-    } elseif ((isset($_GET['action']) && $_GET['action'] == "emailCompose") && isset($_GET['SearchID'])) {
+	} elseif ((isset($_GET['action']) && $_GET['action'] == "emailCompose") && isset($_GET['SearchID'])) {
 	/* 
-	 * Compose Email
-	 */
+	* Compose Email
+	*/
 
 		$SearchID = $_GET['SearchID'];
 
 		$dataSearchSavedMux = $wpdb->get_row("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ", ARRAY_A ,0);
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);
-	  	
+		
 		?>
 		<br /><br />
 		<div id="searchsaved" style="width:500px; float:left;" class="rbform">
-		 <h2><?php echo __("Search Saved", RBAGENCY_TEXTDOMAIN); ?></h2>
-		 <br />
-		  <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
-		   <input type="hidden" name="action" value="cartEmail" />
-		   <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
-		   <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
-		   <div class="rbfield"><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
-		   <div class="rbfield"><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
-		   
-		   <div class="rbfield"><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
-		   
-		   <div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
-		   <div class="rbfield"><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
+		<h2><?php echo __("Search Saved", RBAGENCY_TEXTDOMAIN); ?></h2>
+		<br />
+		 <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
+		  <input type="hidden" name="action" value="cartEmail" />
+		  <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+		  <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
+		  <div class="rbfield"><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+		  <div class="rbfield"><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
+		  
+		  <div class="rbfield"><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
+		  
+		  <div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
+		  <div class="rbfield"><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
 			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){ echo @$dataSearchSavedMux["SearchMuxMessage"];}else{echo @"Click the following link (or copy and paste it into your browser): [link-place-holder]";} ?></textarea>
 			</div>
-		   <div class="submit rbfield rbsubmit">
-			   <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
-			   <input type="hidden" name="action" value="emailSend" />
-			   <?php if(isset($_GET["resend"])):?>
-			   <input type="hidden" name="resend" value="true" />
-			   <?php endif; ?>
-			   <input type="submit" name="submit" value="Send Email" class="button-primary" />
-		   </div>
+		  <div class="submit rbfield rbsubmit">
+			  <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
+			  <input type="hidden" name="action" value="emailSend" />
+			  <?php if(isset($_GET["resend"])):?>
+			  <input type="hidden" name="resend" value="true" />
+			  <?php endif; ?>
+			  <input type="submit" name="submit" value="Send Email" class="button-primary" />
+		  </div>
 
-		  </form>
+		 </form>
 		</div>
 		<?php
 
@@ -210,44 +210,44 @@ $siteurl = get_option('siteurl');
 	?>
 	<div style="clear:both"></div>
 	<div class="wrap" style="min-width: 1020px;">
-		 <div id="rb-overview-icon" class="icon32"></div>
-		 <h2>Profile Search &raquo; Edit</h2>
-		 
-	   <?php
-	    // Save Search title
-		 if(isset($_POST["SearchTitle"])){
-		 	if(!empty($_POST["SearchTitle"])){
-		 	   $wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",$_POST["SearchTitle"],$_GET["SearchID"]));
-		 		echo "Updated successfully!";
-		 	}else{
-		 		echo "Title field is required.";
-		 	}
-		 }
-		 //Remove profiles
-		 if(isset($_POST["ProfileID"])){
-		 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+		<div id="rb-overview-icon" class="icon32"></div>
+		<h2>Profile Search &raquo; Edit</h2>
+		
+	  <?php
+		// Save Search title
+		if(isset($_POST["SearchTitle"])){
+			if(!empty($_POST["SearchTitle"])){
+			  $wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",$_POST["SearchTitle"],$_GET["SearchID"]));
+				echo "Updated successfully!";
+			}else{
+				echo "Title field is required.";
+			}
+		}
+		//Remove profiles
+		if(isset($_POST["ProfileID"])){
+				$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 				$data =  $wpdb->get_row($query);
 
 				$old_arr = array_unique(explode(",", $data->SearchProfileID));
 				$new_arr = $_POST["ProfileID"];
 
 				$final_arr = array_diff($old_arr,$new_arr);
-                $wpdb->query("UPDATE ".table_agency_searchsaved." SET SearchProfileID = \"".implode(",", $final_arr)."\" WHERE SearchID = ".$_GET["SearchID"]);
-		 	    echo "Removed successfully.";
-		 }
+				$wpdb->query("UPDATE ".table_agency_searchsaved." SET SearchProfileID = \"".implode(",", $final_arr)."\" WHERE SearchID = ".$_GET["SearchID"]);
+				echo "Removed successfully.";
+		}
 
-		 //Remove profiles
-		 if(isset($_POST["SearchID"]) && isset($_POST["addprofiles"])){
-		 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
+		//Remove profiles
+		if(isset($_POST["SearchID"]) && isset($_POST["addprofiles"])){
+				$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 				$data =  $wpdb->get_row($query);
 
 				$old_arr = array_unique(explode(",", $data->SearchProfileID));
 				$new_arr = array_unique(explode(",", $_POST["addprofiles"]));
 
 				$final_arr = array_unique(array_merge($old_arr,$new_arr));
-                $wpdb->query("UPDATE ".table_agency_searchsaved." SET SearchProfileID = \"".implode(",", $final_arr)."\" WHERE SearchID = ".$_GET["SearchID"]);
-		 	    echo "Updated successfully.";
-		 }
+				$wpdb->query("UPDATE ".table_agency_searchsaved." SET SearchProfileID = \"".implode(",", $final_arr)."\" WHERE SearchID = ".$_GET["SearchID"]);
+				echo "Updated successfully.";
+		}
 
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);
@@ -259,21 +259,20 @@ $siteurl = get_option('siteurl');
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
-		 ?>
-		
+		?>
 		<form method="post" action="">
-		 Title: <input type="text" name="SearchTitle" value="<?php echo $data->SearchTitle;?>" style="width:50%" />
-		 <input type="button" class="button button-primary" value="Save"/>
-         </form>
-         <hr/>
-       <div style="padding:10px;">
+		Title: <input type="text" name="SearchTitle" value="<?php echo $data->SearchTitle;?>" style="width:50%" />
+		<input type="button" class="button button-primary" value="Save"/>
+		</form>
+		<hr/>
+		<div style="padding:10px;">
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
 			<div style="float:right">
 			<input type="checkbox" id="selectall" name="selectall">Select all |
 			<input type="submit" class="button button-primary" onclick="javascript: return confirm('Are you sure to remove selected profile(s)?')? document.removeForm.submit(): false;" value="Remove"/>
 			<a href="<?php echo admin_url("admin.php?page=rb_agency_search");?>" class="button button-primary">Add profiles</a>
-       		</div>
-       		<br/><br/>
+			</div>
+			<br/><br/>
 			<form method="post" action="" name="removeForm">
 				<hr/>
 				<div id="searchsaved-edit" class="searchsaved-profiles">
@@ -296,16 +295,16 @@ $siteurl = get_option('siteurl');
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
 					
-					echo " <div class=\"saved-profile\">";					
+					echo " <div class=\"saved-profile\">";
 					echo " <div class=\"thumbnail\">";
-					if(isset($arr_thumbnail[$data2["ProfileID"]])){												
+					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));						
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						echo "<img attr-type=\"custom\" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
-					} else {						
+					} else {
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=150\" /></a>";
-					}					
+					}
 					echo "</div>\n";
 					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
 					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
@@ -319,36 +318,36 @@ $siteurl = get_option('siteurl');
 		</div> 
 		<script type="text/javascript">
 		jQuery(function(){
-			 var arr = [];
-			 jQuery("#selectall").change(function(){
-	                 		var ischecked = jQuery(this).is(':checked');
-	                 		jQuery("input[type=checkbox][id=ProfileID]").each(function(){
-	                 			if(ischecked){
-	                 			 jQuery(this).removeAttr("checked");
-	                 			 jQuery(this).prop("checked",true);
-	                 			 arr.push(jQuery(this).val());
-	                 			}else{
-	                 		     jQuery(this).prop("checked",true);
-	                 		     jQuery(this).removeAttr("checked");
-	                 			 arr = [];
-								}
-							});
-	                 		
-	         });
+			var arr = [];
+			jQuery("#selectall").change(function(){
+				var ischecked = jQuery(this).is(':checked');
+				jQuery("input[type=checkbox][id=ProfileID]").each(function(){
+					if(ischecked){
+					jQuery(this).removeAttr("checked");
+					jQuery(this).prop("checked",true);
+					arr.push(jQuery(this).val());
+					}else{
+					jQuery(this).prop("checked",true);
+					jQuery(this).removeAttr("checked");
+					arr = [];
+					}
+				});
+			});
 		});
-     </script>
+	</script>
 	<?php 
 	}else {
+
 	/* 
-	 * View
-	 */
+	* View
+	*/
 
 		?>
 		<div style="clear:both"></div>
 
 		<div class="wrap" style="min-width: 1020px;">
-		 <div id="rb-overview-icon" class="icon32"></div>
-		 <h2>Profile Search</h2>
+		<div id="rb-overview-icon" class="icon32"></div>
+		<h2>Profile Search</h2>
 
 			<?php
 
@@ -364,22 +363,21 @@ $siteurl = get_option('siteurl');
 					<h3 class="title">Save Search and Email</h3>
 
 
-				   <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
-				   <table class="form-table">
-				   <tbody>
-					   <tr valign="top">
-						   <th scope="row">Group Title:</th>
-						   <td>
-							   <input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo isset($CastingCompany)?$CastingCompany:""; ?>" />
-						   </td>
-					   </tr>
-					   <tr valign="top">
-						   	<th scope="row">Profiles:</th>
-						   	<td>
-						   		<div id="searchsaved-save" class="searchsaved-profiles">
+				  <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
+				  <table class="form-table">
+				  <tbody>
+					  <tr valign="top">
+						  <th scope="row">Group Title:</th>
+						  <td>
+							  <input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo isset($CastingCompany)?$CastingCompany:""; ?>" />
+						  </td>
+					  </tr>
+					  <tr valign="top">
+							<th scope="row">Profiles:</th>
+							<td>
+								<div id="searchsaved-save" class="searchsaved-profiles">
 
 								<?php
-										   
 								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY profile.ProfileID ORDER BY ProfileContactNameFirst ASC";
 								$results = $wpdb->get_results($query, ARRAY_A);
 								$count = $wpdb->num_rows;
@@ -387,7 +385,7 @@ $siteurl = get_option('siteurl');
 								$arr_thumbnail = "";
 								if(isset($_SESSION["profilephotos"]))
 								$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
-						
+
 								foreach ($results as $data) {
 									$ProfileContactNameFirst = $data["ProfileContactNameFirst"];
 									$ProfileContactNameLast = $data["ProfileContactNameLast"];
@@ -424,32 +422,32 @@ $siteurl = get_option('siteurl');
 								?>
 							<input type="hidden" name="SearchProfileID" value="<?php echo $cartString; ?>" />
 							</div>
-						   </td>
-					   </tr>
-					   </tbody>
-				   </table>
-				   <p class="submit">
-					   <input type="hidden" name="action" value="addRecord" />
-					   <input type="submit" name="Submit" value="Save Search" class="button-primary" />
-				   </p>
-				   </form>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<p class="submit">
+					<input type="hidden" name="action" value="addRecord" />
+					<input type="submit" name="Submit" value="Save Search" class="button-primary" />
+				</p>
+				</form>
 
 					<hr />
 
 					<?php
-			   } else {
+			} else {
 
 					echo "Session expired. Please search again.";
 
 				}
-		   } // End Serach Save
+		} // End Serach Save
 
 
 	?>
-  <div style="clear:both"></div>
+	<div style="clear:both"></div>
 		<h3 class="title">Recently Saved Searches</h3>
 
-		<?php  
+		<?php
 		$sqldata = "";
 
 		if(isset($_REQUEST["m"]) && $_REQUEST['m'] == '1' ) {
@@ -520,13 +518,13 @@ $siteurl = get_option('siteurl');
 			$limit = "";
 		}
 		?>
-		<?php 
-			 //echo "Total Saved Searches: ".$items;
+		<?php
+			//echo "Total Saved Searches: ".$items;
 		?>
-				
+
 		<div class="tablenav">
 			<div class='tablenav-pages'>
-			  <?php
+			 <?php
 				if($items > 0) {
 					echo $p->show();  // Echo out the list of paging. 
 				}
@@ -539,17 +537,17 @@ $siteurl = get_option('siteurl');
 				<tr>
 					<td style="width: 360px;" nowrap="nowrap">
 						<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
-						 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
-						 Search by : 
-						 Title: <input type="text" name="SearchTitle" value="<?php echo isset($SearchTitle)?$SearchTitle:""; ?>" style="width: 100px;" />
+						<input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
+						Search by : 
+						Title: <input type="text" name="SearchTitle" value="<?php echo isset($SearchTitle)?$SearchTitle:""; ?>" style="width: 100px;" />
 							<input type="submit" value="Filter" class="button-primary" />
 						</form>
 					</td>
 					<td style="width: 300px;" nowrap="nowrap">
 						<form method="GET" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
-						 <input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
-						 <input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
-						 <input type="submit" value="Clear Filters" class="button-secondary" />
+						<input type='hidden' name='page_index' id='page_index' value='<?php echo isset($_GET['page_index'])?$_GET['page_index']:""; ?>' />  
+						<input type='hidden' name='page' id='page' value='<?php echo $_GET['page']; ?>' />
+						<input type="submit" value="Clear Filters" class="button-secondary" />
 						</form>
 					</td>
 					<td>&nbsp;</td>
@@ -612,22 +610,19 @@ $siteurl = get_option('siteurl');
 				if($count3<=0){
 				?>
 					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
-				
 					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Email Client</a> | </span>
 				<?php
 				}else{
 				?>
 						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
-				
 						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>&SearchMuxHash=<?php echo $results3[0]['SearchMuxHash'];?>&resend=true">Email Client</a> | </span>
 				<?php } ?>
 						<span class="send"><a href="admin.php?page=rb_agency_search&action=massEmail&SearchID=<?php echo $SearchID;?>">Mass Email Profiles</a> | </span>
-				
 						<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
 				</div>
 			</td>
 			<td>
-			    <?php $profiles_count = array_unique(array_filter(explode(",",$data2["SearchProfileID"]))); ?>
+				<?php $profiles_count = array_unique(array_filter(explode(",",$data2["SearchProfileID"]))); ?>
 				<?php  echo count($profiles_count); ?>
 			</td>
 			<td>
@@ -635,14 +630,14 @@ $siteurl = get_option('siteurl');
 				$pos = 0;
 				foreach ($results3 as $data3 ) {
 				$pos++;
-					 if($pos == 1){
+					if($pos == 1){
 						echo "Link: <a href=\"". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/\" target=\"_blank\">". get_bloginfo("url") ."/client-view/". $data3["SearchMuxHash"] ."/</a><br />\n";
 					}
 					echo "(". rb_agency_makeago(rb_agency_convertdatetime( $data3["SearchMuxSent"]), $rb_agency_option_locationtimezone) .") ";
 					echo "<strong>". $data3["SearchMuxToName"]."&lt;".$data3["SearchMuxToEmail"]."&gt;"."</strong> ";
 					echo "<br/>";
 				}
-				
+
 				if ($count3 < 1) {
 					echo "Not emailed yet\n";
 				}
@@ -652,7 +647,7 @@ $siteurl = get_option('siteurl');
 		<?php
 		}
 			if ($count2 < 1) {
-				if (isset($filter)) { 
+				if (isset($filter)) {
 		?>
 		<tr>
 			<th class="check-column" scope="row"></th>
