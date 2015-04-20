@@ -1690,6 +1690,8 @@ class RBAgency_Profile {
 				$rb_agency_option_persearch = isset($rb_agency_options_arr["rb_agency_option_persearch"])?$rb_agency_options_arr["rb_agency_option_persearch"]:10;
 				$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr["rb_agency_option_profilelist_perpage"])?$rb_agency_options_arr["rb_agency_option_profilelist_perpage"]:15;
 				$rb_agency_option_profilelist_printpdf = isset($rb_agency_options_arr["rb_agency_option_profilelist_printpdf"])?$rb_agency_options_arr["rb_agency_option_profilelist_printpdf"]:0;
+				$rb_agency_option_profilelist_count = isset($rb_agency_options_arr["rb_agency_option_profilelist_count"])?$rb_agency_options_arr["rb_agency_option_profilelist_count"]:0;
+
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$profile_list = "";
 				$all_html = "";
@@ -1760,7 +1762,7 @@ class RBAgency_Profile {
 
 				$all_html.='<div id="results-info">';
 
-				if(!in_array(get_query_var("type"), array("favorite","casting"))){
+				if ($rb_agency_option_profilelist_count && (!in_array(get_query_var("type"), array("favorite","casting"))) ){
 					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
 				}
 
@@ -1820,7 +1822,7 @@ class RBAgency_Profile {
 				$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:0;
 				$rb_agency_option_profilelist_count  = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
 				$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-				
+
 			/* 
 			 * this is the upper header html of the profile list
 			 */
@@ -1860,7 +1862,7 @@ class RBAgency_Profile {
 			 * wrap profile listing
 			 */
 				
-				$all_html .= '</div>'; // #results-info				
+				$all_html .= '</div>'; // #results-info
 				$all_html .= '<div class="rbclear"></div>';
 				$all_html .= '<hr />';
 				$all_html .= "<div id='profile-list'>".$profile_list."</div>";
