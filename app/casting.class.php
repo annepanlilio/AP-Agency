@@ -2,15 +2,15 @@
 class RBAgency_Casting {
 
 	/*
-	 * Casting Cart
-	 * Process Actions
-	 */
+	* Casting Cart
+	* Process Actions
+	*/
 
 		public static function cart_process(){
 
 			/*
-			 * Setup Requirements
-			 */
+			* Setup Requirements
+			*/
 
 			// Protect and defend the cart string!
 				$cartString = "";
@@ -61,9 +61,9 @@ class RBAgency_Casting {
 
 
 	/*
-	 * Casting Cart - Add to Cart
-	 * @return str $cartString
-	 */
+	* Casting Cart - Add to Cart
+	* @return str $cartString
+	*/
 
 		public static function cart_process_add(){
 
@@ -96,9 +96,9 @@ class RBAgency_Casting {
 
 
 	/*
-	 * Casting Cart - Remove from Cart
-	 * @return str $cartString
-	 */
+	* Casting Cart - Remove from Cart
+	* @return str $cartString
+	*/
 
 		public static function cart_process_remove($id){
 
@@ -121,8 +121,8 @@ class RBAgency_Casting {
 
 
 	/*
-	 * Show Casting Cart
-	 */
+	* Show Casting Cart
+	*/
 
 		public static function cart_show(){
 			
@@ -201,8 +201,8 @@ class RBAgency_Casting {
 					echo "    </div>";
 					echo "    <div style=\"position: absolute; z-index: 20; top: 120px; left: 200px; width: 20px; height: 20px; overflow: hidden; \"><a href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\"><img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\" /></a></div>";
 					echo "    <div style=\"clear: both; \"></div>";
-					echo "	  <a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a>";
-					echo " 	  <input type=\"hidden\" id=\"thumbnail-".$data['ProfileID']."\"  name=\"thumbnail[".$data['ProfileID']."]\" value=\"\"/>";
+					echo "	 <a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a>";
+					echo " 	 <input type=\"hidden\" id=\"thumbnail-".$data['ProfileID']."\"  name=\"thumbnail[".$data['ProfileID']."]\" value=\"\"/>";
 					echo "  </div>";
 				}
 				echo "  <div style=\"clear: both;\"></div>\n";
@@ -219,61 +219,57 @@ class RBAgency_Casting {
 				<script type="text/javascript">
 
 					jQuery(document).ready(function(){
-						
+
 						var arr_thumbnails = [];
 
 							jQuery('a[class^=thickbox]').on('click', function(){
 								var id = jQuery(this).attr("id");
 								var profile_gallery = "<?php echo get_bloginfo('url').'/wp-content/plugins/rb-agency/ext/timthumb.php?src='.RBAGENCY_UPLOADDIR;?>"+jQuery(this).attr("attr-gallery")+"/";
-											jQuery("#profilephotos").empty().html("<center>Loading photos...</center>");
-											jQuery.ajax({
-												type: 'POST',
-												dataType: 'json',
-												url: '<?php echo admin_url('admin-ajax.php'); ?>',
-												data: { 
-													'action': 'rb_agency_profile_photos', 
-													'profileID': id, 
-												},
-												success: function(data){
-													jQuery("#TB_ajaxContent").empty();
-													for (var i = data.length - 1; i >= 0; i--) {
-														jQuery("#TB_ajaxContent").append("<div class=\"\" style=\"width:120px;height:120px;float:left;margin:5px;padding:5px; border:1px solid #ccc;\"><img src=\""+profile_gallery+data[i].ProfileMediaURL+"&h=120&w=120\" style=\"z-index: -33;float: left;\"/><input style=\"float: left;margin-top: -20px;margin-left: 5px;z-index: 12;\" type=\"radio\" name=\"photo\" value=\""+data[i].ProfileID+"\" attr-media-id=\""+data[i].ProfileMediaID+"\" attr-media=\""+data[i].ProfileMediaURL+"\"/></div>");
-													};
-													if(data.length <= 0){
-														jQuery("#TB_ajaxContent").html("<center>No photos found.</center>");
-													}
-													jQuery("input[name=photo]").on("click",function(){
-															jQuery("img[class=img-"+id).attr("src",profile_gallery+jQuery(this).attr("attr-media"));
-															jQuery("input[id^=thumbnail-"+id+"]").val(id+":"+jQuery(this).attr("attr-media-id"));
-															arr_thumbnails[id] = jQuery(this).attr("attr-media-id");
-															jQuery.ajax({
-																type: 'POST',
-																url: '<?php echo admin_url('admin-ajax.php'); ?>',
-																data: { 
-																	'action': 'rb_agency_save_profile_photos', 
-																	'profilephotos': arr_thumbnails, 
-																},
-																success: function(data){
-																	console.log(data);
+									jQuery("#profilephotos").empty().html("<center>Loading photos...</center>");
+									jQuery.ajax({
+										type: 'POST',
+										dataType: 'json',
+										url: '<?php echo admin_url('admin-ajax.php'); ?>',
+										data: { 
+											'action': 'rb_agency_profile_photos', 
+											'profileID': id, 
+										},
+										success: function(data){
+											jQuery("#TB_ajaxContent").empty();
+											for (var i = data.length - 1; i >= 0; i--) {
+												jQuery("#TB_ajaxContent").append("<div class=\"\" style=\"width:120px;height:120px;float:left;margin:5px;padding:5px; border:1px solid #ccc;\"><img src=\""+profile_gallery+data[i].ProfileMediaURL+"&h=120&w=120\" style=\"z-index: -33;float: left;\"/><input style=\"float: left;margin-top: -20px;margin-left: 5px;z-index: 12;\" type=\"radio\" name=\"photo\" value=\""+data[i].ProfileID+"\" attr-media-id=\""+data[i].ProfileMediaID+"\" attr-media=\""+data[i].ProfileMediaURL+"\"/></div>");
+											};
+											if(data.length <= 0){
+												jQuery("#TB_ajaxContent").html("<center>No photos found.</center>");
+											}
+											jQuery("input[name=photo]").on("click",function(){
+													jQuery("img[class=img-"+id).attr("src",profile_gallery+jQuery(this).attr("attr-media"));
+													jQuery("input[id^=thumbnail-"+id+"]").val(id+":"+jQuery(this).attr("attr-media-id"));
+													arr_thumbnails[id] = jQuery(this).attr("attr-media-id");
+													jQuery.ajax({
+														type: 'POST',
+														url: '<?php echo admin_url('admin-ajax.php'); ?>',
+														data: { 
+															'action': 'rb_agency_save_profile_photos', 
+															'profilephotos': arr_thumbnails, 
+														},
+														success: function(data){
+															console.log(data);
 
-																}
-															});
-															tb_remove();
-															jQuery("#TB_ajaxContent").empty();
-															
+														}
 													});
-
-
-												}
+													tb_remove();
+													jQuery("#TB_ajaxContent").empty();
 											});
+
+
+										}
+									});
 							});
 						});
 				</script>
-				<?php 
-				
-				 
-				
-				
+				<?php
+
 				if (($cartAction == "cartEmpty") || ($cartAction == "cartRemove")) {
 				echo "<a name=\"compose\">&nbsp;</a>"; 
 				echo "<div class=\"boxblock\">\n";
@@ -289,15 +285,15 @@ class RBAgency_Casting {
 				$cartArray = isset($_SESSION['cartArray'])?$_SESSION['cartArray']:array();
 				$cartString = implode(",", array_unique($cartArray));
 				$cartString = RBAgency_Common::clean_string($cartString);
-						
-				 echo "<div class=\"boxblock-container\">";
-						 echo "<div class=\"boxblock\" style=\"width:100%\" >";
-						 
-									echo "<h3>Add to existing Job</h3>";
-								 
-							 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
-			 				 echo "<form class=\"castingtext\" method=\"post\" action=\"?page=rb_agency_castingjobs&action=informTalent&Job_ID=\">";
-							   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+
+				echo "<div class=\"boxblock-container\">";
+						echo "<div class=\"boxblock\" style=\"width:100%\" >";
+
+							echo "<h3>Add to existing Job</h3>";
+
+							echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+							echo "<form class=\"castingtext\" method=\"post\" action=\"?page=rb_agency_castingjobs&action=informTalent&Job_ID=\">";
+							echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 									echo "<div>";
 										echo "<select name=\"Job_ID\" style=\"width:80%;\">";
 										echo "<option value=\"\">- Select -</option>";
@@ -306,12 +302,12 @@ class RBAgency_Casting {
 											echo "<option attrid=\"".$key->Job_ID."\" value=\"".$key->Job_ID."-".$key->Job_UserLinked."\">".$key->Job_Title."</option>";
 										}
 										echo "<select>";
-									    echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
+									echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
 									echo "</div>";
 								echo "</div>";
 								echo "<script type=\"text/javascript\">";
 								echo "jQuery(function(){
-										 jQuery(\"select[name=Job_ID]\").change(function(){
+										jQuery(\"select[name=Job_ID]\").change(function(){
 												var a = jQuery(\"select[name=Job_ID] option:selected\").attr('attrid');
 												if(a !== 'undefined'){
 													jQuery('.castingtext').attr('action','?page=rb_agency_castingjobs&action=informTalent&Job_ID='+a);
@@ -320,16 +316,14 @@ class RBAgency_Casting {
 								});";
 								echo "</script>";
 								echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
-							 echo "</form>";
+							echo "</form>";
 							echo "</div>";
 						echo "</div>";
-						 echo "<div class=\"boxblock\" style=\"width:100%\" >";
-						 
-									echo "<h3>Add to saved search</h3>";
-								 
-							 echo "<div class=\"innerr\" style=\"padding: 10px;\">";
-			 				 echo "<form class=\"savedsearchtext\" method=\"post\" action=\"?page=rb_agency_searchsaved&action=edit&SearchID=\">";
-							   echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+						echo "<div class=\"boxblock\" style=\"width:100%\" >";
+							echo "<h3>Add to saved search</h3>";
+							echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+							echo "<form class=\"savedsearchtext\" method=\"post\" action=\"?page=rb_agency_searchsaved&action=edit&SearchID=\">";
+							echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
 									echo "<div>";
 										echo "<select name=\"SearchID\" style=\"width:80%;\">";
 										echo "<option value=\"\">- Select -</option>";
@@ -338,12 +332,12 @@ class RBAgency_Casting {
 											echo "<option attrid=\"".$key->SearchID."\" value=\"".$key->SearchID."\">".$key->SearchTitle."</option>";
 										}
 										echo "<select>";
-									    echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
+									echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
 									echo "</div>";
 								echo "</div>";
 								echo "<script type=\"text/javascript\">";
 								echo "jQuery(function(){
-										 jQuery(\"select[name=SearchID]\").change(function(){
+										jQuery(\"select[name=SearchID]\").change(function(){
 												var a = jQuery(\"select[name=SearchID] option:selected\").attr('attrid');
 												if(a !== 'undefined'){
 													jQuery('.savedsearchtext').attr('action','?page=rb_agency_searchsaved&action=edit&SearchID='+a);
@@ -352,7 +346,7 @@ class RBAgency_Casting {
 								});";
 								echo "</script>";
 								echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
-							 echo "</form>";
+							echo "</form>";
 							echo "</div>";
 						echo "</div>";
 				echo "</div>";
@@ -362,10 +356,6 @@ class RBAgency_Casting {
 				echo " window.open(url,'mywindow'+Math.random(),'width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes');";
 				echo "}\n";
 				echo "</script>\n";
-				?>
-			
-
-				<?php 
 				} // Is Cart Empty 
 
 			} else {
@@ -379,8 +369,8 @@ class RBAgency_Casting {
 
 
 	/*
-	 * Casting Cart - Send Email Process
-	 */
+	* Casting Cart - Send Email Process
+	*/
 
 		public static function cart_send_process(){
 			
@@ -389,16 +379,14 @@ class RBAgency_Casting {
 			$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 			$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-				
 
 			$MassEmailSubject = $_POST["MassEmailSubject"];
 			$MassEmailMessage = preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\\\- \t\n\r\0\x0B]/u','',$_POST["MassEmailMessage"]);
 			$MassEmailMessage = preg_replace('/\n(\s*\n)+/', '</p><p>', $MassEmailMessage);
 			$MassEmailRecipient = $_POST["MassEmailRecipient"];
 			$MassEmailBccEmail = $_POST["MassEmailBccEmail"];
-			
+
 			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
-		
 			$SearchMuxToName		= $_POST["MassEmailRecipient"];
 			$SearchMuxToEmail		= $_POST["MassEmailRecipient"];
 			
@@ -418,9 +406,7 @@ class RBAgency_Casting {
 		if(!isset($_GET["SearchID"])){
 
 		$wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('%s','%s')",$cartString,$SearchMuxSubject)) or die($wpdb->print_error());
-					
 		$lastid = $wpdb->insert_id;
-		
 		// Create Record
 		$insert = "INSERT INTO " . table_agency_searchsaved_mux ." 
 				(
@@ -514,11 +500,11 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bcc;
 				}
 			}
-			 $MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$MassEmailMessage);
-			 $MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
-			 $MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
-			 $isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
-			 $url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
+			$MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$MassEmailMessage);
+			$MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
+			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
+			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
+			$url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
 			if($isSent){?>
 			<script type="text/javascript"> 
 				window.location="<?php echo $url;?>";
@@ -526,7 +512,7 @@ class RBAgency_Casting {
 			<?php 
 			exit;
 			}
-			 return $isSent;
+			return $isSent;
 
 		}
 
@@ -538,11 +524,11 @@ class RBAgency_Casting {
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_option_agencyname'])?$rb_agency_options_arr['rb_agency_option_agencyname']:"";
 			$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
-		    $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+		   $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 			
 			$SearchID			= isset($_GET['SearchID']) ? $_GET['SearchID']: "";
 			if(!isset($_POST["resend"]) && empty($_POST["resend"])){
-			    $SearchMuxHash	= RBAgency_Common::generate_random_string(8);
+			   $SearchMuxHash	= RBAgency_Common::generate_random_string(8);
 			}else{
 				$SearchMuxHash = isset($_GET["SearchMuxHash"])?$_GET["SearchMuxHash"]:"";
 			}
@@ -565,7 +551,7 @@ class RBAgency_Casting {
 			global $wpdb;
 			//$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die($wpdb->print_error());
 					
-		   //$lastid = $wpdb->insert_id;
+		  //$lastid = $wpdb->insert_id;
 		if(!isset($_GET["resend"])){
 						// Create Record
 						$insert = "INSERT INTO " . table_agency_searchsaved_mux ." 
@@ -592,7 +578,7 @@ class RBAgency_Casting {
 								)";
 							$results = $wpdb->query($insert);  
 							
-			 } // end is not resend / is new
+			} // end is not resend / is new
 
 							$profileimage = "";  
 							$profileimage .='<div id="searchsaved-emailsent" class="searchsaved-profiles">';
@@ -687,8 +673,8 @@ class RBAgency_Casting {
 		}
 
 	/*
-	 * Form to Send Casting Cart
-	 */
+	* Form to Send Casting Cart
+	*/
 
 		public static function cart_send_form(){
 			global $wpdb;
@@ -774,15 +760,15 @@ class RBAgency_Casting {
 
 		public static function sendEmailCastingAvailability($Talents_Display_Name,$Availability,$Job_Name,$link){
 			// Mail it
-		    $headers[]  = 'MIME-Version: 1.0';
+		   $headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			$headers[]  = 'From: '. get_bloginfo("name") .' <noreply@'.get_bloginfo("siteurl").'>' . "\r\n";
 				
 
 			$MassEmailMessage	= "Hi, \n\n".$Talents_Display_Name." has changed the job availability to \"".$Availability."\" for the job \"".$Job_Name."\"."
-								 . "\nClick here to review your casting cart: ".$link
-								 .  "\n\n-".get_bloginfo("name");
+								. "\nClick here to review your casting cart: ".$link
+								.  "\n\n-".get_bloginfo("name");
 			$isSent = wp_mail(get_bloginfo('admin_email'), get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
 			
 	}
