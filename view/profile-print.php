@@ -65,7 +65,7 @@ global $wpdb;
 			width: 35%;
 		}
 		#fullpage .photos {
-			clear: both;			
+			clear: both;
 			margin-top: 15px;
 			overflow: hidden;
 			background: #ddd;
@@ -112,14 +112,14 @@ if ($_GET['cD'] == "0") {
 			$hasQuery = true;
 			extract($_SESSION);
 			foreach($_SESSION as $key=>$value) {
-				  $$key = $value;
+				$$key = $value;
 			}
-			
+
 			//// Filter
 			$filter = " WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
 			if(isset($_GET['id']) && $_GET['id']){
 				$filter .= " AND profile.ProfileID IN (".$_GET['id'].") "; 
-			} 
+			}
 			// Name
 			if ((isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)) || isset($ProfileContactNameLast) && !empty($ProfileContactNameLast)){
 				if (isset($ProfileContactNameFirst) && !empty($ProfileContactNameFirst)){
@@ -277,8 +277,8 @@ if ($_GET['cD'] == "0") {
 				} else {
 					$ii++;
 					if ($ii % 3 == 1) {
-	       			 echo "<tr>";
-	    			}
+					 echo "<tr>";
+					}
 				}
 				
 				echo "<td style=\" border: 1px solid #e1e1e1; vertical-align: top;\">";
@@ -375,7 +375,7 @@ if ($_GET['cD'] == "0") {
 							echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 
 							echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
-							echo " <div class=\"info\">";							
+							echo " <div class=\"info\">";
 
 								if (!empty($data['ProfileDateBirth'])) {
 									echo "<div><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
@@ -400,13 +400,16 @@ if ($_GET['cD'] == "0") {
 										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", RBAGENCY_TEXTDOMAIN). " ". $heightinch ." ". __("in", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
 									}
 								}
-							
+
 							echo "</div>";
 							echo "<div style=\"clear:both\"></div>";
 							echo "<div class=\"photos\">";
-								echo "<img src=\"".get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/assets/demo-data/female_model-01.jpg\" alt=\"\" width=\"100\">";
-								echo "<img src=\"".get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/assets/demo-data/female_model-01.jpg\" alt=\"\" width=\"100\">";
-								echo "<img src=\"".get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/assets/demo-data/female_model-01.jpg\" alt=\"\" width=\"100\">";
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+								$countImg = $wpdb->num_rows;
+								foreach($resultsImg as $dataImg ){
+									echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
+								}
 							echo "</div>";
 
 						}

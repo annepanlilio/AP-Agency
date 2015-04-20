@@ -50,7 +50,7 @@ echo "				<div id=\"profile-picture\"  class=\"lightbox-enabled\">\n";
 						}
 
 echo "				</div>\n"; // #profile-picture
-echo "			    <div id=\"soundcloud\">";
+echo "				<div id=\"soundcloud\">";
 
 						$querySC = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"SoundCloud\" ORDER BY $orderBy";
 						$resultsSC = $wpdb->get_results($wpdb->prepare($querySC, $ProfileID),ARRAY_A);
@@ -91,7 +91,7 @@ echo "						<ul>\n";
 									}
 								}
 
-                               	// Insert Custom Fields
+								// Insert Custom Fields
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);								
 
 echo "						</ul>\n"; // Close Stats ul
@@ -111,7 +111,7 @@ echo "			</div>\n";  // .rbcol-3
 
 echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 
-	                if($subview == ""){
+					if($subview == ""){
 echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 
 							// images
@@ -123,7 +123,7 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 									echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
 							}
 
-echo "					</div>\n"; // #photos						
+echo "					</div>\n"; // #photos
 					}
 
 					if($subview == "images"){//show all images page  //MODS 2012-11-28 ?>
