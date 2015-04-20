@@ -1208,7 +1208,7 @@ elseif ($ConfigID == 2) {
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Header', RBAGENCY_TEXTDOMAIN); echo "</th>\n";
-		echo "   <td><textarea name=\"rb_agency_layout_options[rb_agency_value_stylesheet]\">". $rb_agency_value_stylesheet ."</textarea></td>\n";
+		echo "   <td><textarea style=\"width: 80%; height: 500px;\" name=\"rb_agency_layout_options[rb_agency_value_stylesheet]\">". $rb_agency_value_stylesheet ."</textarea></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Extra HTML', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
