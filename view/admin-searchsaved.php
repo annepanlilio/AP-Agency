@@ -116,7 +116,7 @@ $siteurl = get_option('siteurl');
 		$dataSearchSavedMux = $wpdb->get_row("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ", ARRAY_A ,0);
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);
-		
+
 		?>
 		<br /><br />
 		<div id="searchsaved" style="width:500px; float:left;" class="rbform">
@@ -407,7 +407,7 @@ $siteurl = get_option('siteurl');
 									echo " <div class=\"thumbnail\">";
 									echo "<a href=\"". RBAGENCY_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">";
 									if(isset($arr_thumbnail[$data["ProfileID"]])){
-										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
+										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaPrimary = 1 AND ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
 										echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&w=110\" />\n";
 									} else {
 										echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."&w=110\" />";
