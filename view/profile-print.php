@@ -1,7 +1,7 @@
 <?php 
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
+	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:""; // get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg"
 	$rb_agency_option_adminprint_hidden = isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0;
 global $wpdb;
 
@@ -46,6 +46,7 @@ global $wpdb;
 
 		#print_logo {
 			float: left;
+			max-height: 100px;
 			width: 50%;
 		}
 		#print_actions {
@@ -123,11 +124,13 @@ if ($_GET['cD'] == "0") {
 	<div id="<?php echo $layout_class; ?>">
 		<?php if ($_GET['cD'] != 2) : ?>
 		<div id="print_logo">
-			<?php if(!empty($rb_agency_option_agencylogo)){ ?>
-			  <img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" />
-			<?php }else{ ?>
-			<?php echo $rb_agency_option_agencyname; ?>
-			<?php } ?>
+			<?php
+			if (!empty($rb_agency_option_agencylogo)) {
+				?><img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" /><?php
+			} else {
+				echo "<h3>". $rb_agency_option_agencyname ."</h3>";
+			}
+			?>
 		</div>
 		<?php endif; ?>
 			<div id="print_actions">
@@ -404,12 +407,11 @@ if ($_GET['cD'] == "0") {
 
 						if ($_GET['cD'] == "2") {
 
-							
 							echo "<div class=\"print_logo\">";
 								if(!empty($rb_agency_option_agencylogo)) {
-								  echo "<img src=\"". $rb_agency_option_agencylogo."\" title=\"". $rb_agency_option_agencyname."\" />";
+									echo "<img src=\"". $rb_agency_option_agencylogo."\" title=\"". $rb_agency_option_agencyname."\" />";
 								} else {
-									echo $rb_agency_option_agencyname;
+									echo "<h3>". $rb_agency_option_agencyname ."</h3>";
 								}
 							echo "</div>";
 
@@ -469,25 +471,25 @@ if ($_GET['cD'] == "0") {
 							}
 						}
 				*/
-					
+
 						echo " </div>";
 						echo " <div style=\"clear: both; text-align: center;\">\n";
 					} else {
 						echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast'])  . "</h2>"; 
 					}
-				
-					echo " </div>";					
+
+					echo " </div>";
 				} // elseif (layout style is another value......) {
-				
+
 				echo "</td>";
-				
+
 				if($_GET['cD'] == "2") {
 					echo "<tr>";
 				} else {
 					if( $ii % 3==0){
 						echo "</tr>";
 					}
-				}				
+				}
 
 			}
 			echo "<div style=\"clear: both;\"></div>";
