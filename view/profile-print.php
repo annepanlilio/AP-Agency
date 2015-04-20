@@ -404,13 +404,14 @@ if ($_GET['cD'] == "0") {
 							echo "</div>";
 							echo "<div style=\"clear:both\"></div>";
 							echo "<div class=\"photos\">";
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 3, true);
+echo $queryImg;
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg = $wpdb->num_rows;
 								$i = 0;
 								foreach($resultsImg as $dataImg ){
 									if ($i < 3) {
-										echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
+										echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
 									}
 									$i++;
 								}
