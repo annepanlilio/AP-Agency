@@ -22,6 +22,10 @@ global $wpdb;
 		//-->
 	</script>
 	<style type="text/css">
+		table td {
+			 border: 1px solid #e1e1e1;
+			 vertical-align: top;
+		}
 		.profile-print {
 			position: relative;
 		}
@@ -30,10 +34,10 @@ global $wpdb;
 		}.profile-print td .box {
 			padding: 10px;
 		}.profile-print .profile-pic {
-			width: 35%;
+			width: 30%;
 			float: left;
 		}.profile-print .profile-pic img {
-			max-width: 90%;
+			max-width: 100%;
 		}.profile-print .info {
 			width: 65%;
 			float: left;
@@ -46,23 +50,48 @@ global $wpdb;
 		}
 		#print_actions {
 			float: right;
-		}#fullpage #print_actions {
-			position: absolute;
-			top: 0;
-			right: 0;
 		}
-		#fullpage #print_logo {
-			text-align: center;
+
+		#fullpage table td {
+			 border: none;
+		}
+		#fullpage .box {
+			height: 900px;
+		}
+		#fullpage #print_actions {
+			top: 15px;
+			right: 15px;
+			z-index: 2;
+			position: absolute;			
+		}
+		#fullpage .name {
+			font-size: 42px;
+			margin-top: 15px;
+			margin-bottom: 5px;
+		}
+		#fullpage .print_logo {
 			width: 100%;
+			text-align: center;
+			margin-bottom: 15px;
+		}
+		#fullpage .print_logo img {
+			width: 300px;
 		}
 		#fullpage td {
 			min-height: 900px;
 		}
 		#fullpage .profile-pic {
-			width: 65%;
-		}
+			width: 65%;			
+			float: left;
+			height: 575px;
+			overflow: hidden;
+		}#fullpage .profile-pic img {
+			max-width: 300px;
+		}		
 		#fullpage .info {
-			width: 35%;
+			width: 30%;
+			float: right;
+			font-size: x-large;
 		}
 		#fullpage .photos {
 			clear: both;
@@ -71,6 +100,7 @@ global $wpdb;
 			background: #ddd;
 		}#fullpage .photos img {
 			margin: 10px;
+			max-width: 100%;
 		}
 
 		#photos .profile-pic {
@@ -91,13 +121,15 @@ if ($_GET['cD'] == "0") {
 ?>
 <body onload="printpage()" style="background: #fff;">
 	<div id="<?php echo $layout_class; ?>">
+		<?php if ($_GET['cD'] != 2) : ?>
 		<div id="print_logo">
 			<?php if(!empty($rb_agency_option_agencylogo)){ ?>
-			  <img style="height:50px;" src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" />
+			  <img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" />
 			<?php }else{ ?>
 			<?php echo $rb_agency_option_agencyname; ?>
 			<?php } ?>
 		</div>
+		<?php endif; ?>
 			<div id="print_actions">
 				<a href="#" onclick="printpage();">Print</a> | <a href="javascript:window.opener='x';window.close();">Close</a>
 			</div>
@@ -281,7 +313,8 @@ if ($_GET['cD'] == "0") {
 					}
 				}
 
-				echo "<td style=\" border: 1px solid #e1e1e1; vertical-align: top;\">";
+				echo "<td>";
+
 				if (1 == 1) {
 
 					echo "<div class=\"box\">";
@@ -371,8 +404,17 @@ if ($_GET['cD'] == "0") {
 
 						if ($_GET['cD'] == "2") {
 
+							
+							echo "<div class=\"print_logo\">";
+								if(!empty($rb_agency_option_agencylogo)) {
+								  echo "<img src=\"". $rb_agency_option_agencylogo."\" title=\"". $rb_agency_option_agencyname."\" />";
+								} else {
+									echo $rb_agency_option_agencyname;
+								}
+							echo "</div>";
+
 							$ProfileID = $data['ProfileID'];
-							echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
+							echo "	<h2 class=\"name\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 
 							echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
 							echo " <div class=\"info\">";
@@ -405,18 +447,17 @@ if ($_GET['cD'] == "0") {
 							echo "<div style=\"clear:both\"></div>";
 							echo "<div class=\"photos\">";
 								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 3, true);
-echo $queryImg;
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg = $wpdb->num_rows;
 								$i = 0;
 								foreach($resultsImg as $dataImg ){
 									if ($i < 3) {
-										echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
+										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
 									}
 									$i++;
 								}
 							echo "</div>";
-
+							echo "<p style=\"text-align: center;\">Property of ".$rb_agency_option_agencyname.". All rights reserved.</p>";
 						}
 
 
@@ -430,13 +471,14 @@ echo $queryImg;
 				*/
 					
 						echo " </div>";
-						echo " <div style=\"clear: both; text-align: center; padding: 5px; \">\n";
+						echo " <div style=\"clear: both; text-align: center;\">\n";
 					} else {
 						echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast'])  . "</h2>"; 
 					}
 				
 					echo " </div>";					
 				} // elseif (layout style is another value......) {
+				
 				echo "</td>";
 				
 				if($_GET['cD'] == "2") {
@@ -452,10 +494,6 @@ echo $queryImg;
 		echo "</table>";
 		
 		?>
-		<center>
-		<img style="width:347px;" src="<?php echo $rb_agency_option_agencylogo;?>"/>
-		</center>
-		<p style="text-align: center;">Property of <?php echo $rb_agency_option_agencyname; ?>.  All rights reserved.</p>
 	</div> <!-- #print_wrapper -->
 </body>
 </html>
