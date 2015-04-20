@@ -254,7 +254,7 @@ $siteurl = get_option('siteurl');
 
 		$profile_list  = (isset($data->SearchProfileID)? implode(",",array_filter( array_unique( explode(",",$data->SearchProfileID) ) ) ):"''");
 		$query ="SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
-				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND profile.ProfileID IN ("
+				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
 				.$profile_list.")  GROUP BY(profile.ProfileID) ";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
