@@ -184,10 +184,10 @@ $siteurl = get_option('siteurl');
 					} elseif ($rb_agency_option_profilenaming == 5) {
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
-					echo " <div class=\"saved-profile\">";					
+					echo " <div class=\"saved-profile\">";
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
 						echo "<div class=\"thumbnail\">";
-						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaPrimary = 1 AND ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						echo "<img attr-type=\"custom\" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
 						echo "</div>\n";
@@ -294,11 +294,11 @@ $siteurl = get_option('siteurl');
 					} elseif ($rb_agency_option_profilenaming == 5) {
 						$ProfileContactDisplay = $ProfileContactNameLast;
 					}
-					
+
 					echo " <div class=\"saved-profile\">";
 					echo " <div class=\"thumbnail\">";
 					if(isset($arr_thumbnail[$data2["ProfileID"]])){
-						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));						
+						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaPrimary = 1 AND ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						echo "<img attr-type=\"custom\" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
 					} else {
