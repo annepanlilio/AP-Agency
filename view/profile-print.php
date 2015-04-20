@@ -21,7 +21,7 @@ global $wpdb;
 		}
 		//-->
 	</script>
-	<style type="text/css">		
+	<style type="text/css">
 		.profile-print {
 			position: relative;
 		}
@@ -287,7 +287,7 @@ if ($_GET['cD'] == "0") {
 					echo "<div class=\"box\">";
 
 					if ($_GET['cD'] == "0") {
-						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" width=\"150\"/></div>\n";						
+						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" width=\"150\"/></div>\n";
 					}
 
 					if ($_GET['cD'] == "1") {
@@ -385,7 +385,7 @@ if ($_GET['cD'] == "0") {
 									if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
 										echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
 									} else {
-										echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> --</div>\n";	
+										echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> --</div>\n";
 									}
 								}
 								echo "<div><strong>Skin Tone</strong></div>";
