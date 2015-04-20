@@ -23,8 +23,8 @@ global $wpdb;
 	</script>
 	<style type="text/css">
 		table td {
-			 border: 1px solid #e1e1e1;
-			 vertical-align: top;
+			border: 1px solid #e1e1e1;
+			vertical-align: top;
 		}
 		.profile-print {
 			position: relative;
@@ -62,7 +62,7 @@ global $wpdb;
 			top: 15px;
 			right: 15px;
 			z-index: 2;
-			position: absolute;			
+			position: absolute;
 		}
 		#fullpage .name {
 			font-size: 42px;
@@ -70,24 +70,24 @@ global $wpdb;
 			margin-bottom: 5px;
 		}
 		#fullpage .print_logo {
-			width: 100%;
+			/*width: 100%;
 			text-align: center;
-			margin-bottom: 15px;
+			margin-bottom: 15px;*/
 		}
 		#fullpage .print_logo img {
-			width: 300px;
+			/*width: 300px;*/
 		}
 		#fullpage td {
 			min-height: 900px;
 		}
 		#fullpage .profile-pic {
-			width: 65%;			
+			width: 65%;
 			float: left;
-			height: 575px;
+			height: 475px;
 			overflow: hidden;
 		}#fullpage .profile-pic img {
-			max-width: 300px;
-		}		
+			max-height: 475px;
+		}
 		#fullpage .info {
 			width: 30%;
 			float: right;
