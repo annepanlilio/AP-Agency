@@ -1614,7 +1614,9 @@ class RBAgency_Profile {
 											AND
 											media.ProfileMediaType = \"Image\"
 											AND
-											media.ProfileMediaPrimary = 1)
+											media.ProfileMediaPrimary = 1
+											LIMIT 1
+											)
 											AS
 								ProfileMediaURL,
 								(SELECT cmux.ProfileCustomDateValue FROM ".
@@ -1629,7 +1631,6 @@ class RBAgency_Profile {
 								INNER JOIN  ".table_agency_castingcart." cart
 								WHERE $sqlCasting_userID
 								GROUP BY profile.ProfileID";
-
 					break;
 
 			/*
