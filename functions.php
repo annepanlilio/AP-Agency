@@ -3359,8 +3359,7 @@
 				$page == "rb_search")	||
 			(strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
 			(strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
-			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites" )) ||
-
+			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites") ||
 			// RB Agency Casting
 			(strpos($uri,"/casting-manage/") > -1 && $page == "casting_manage" ) ||
 			(strpos($uri,"/browse-jobs/") > -1 && $page == "browse_jobs" ) ||
@@ -3876,11 +3875,11 @@
 					return $value.($label? " ". __("in", RBAGENCY_TEXTDOMAIN):"");
 				}
 			}elseif($sub_unit == 2){ // lb 
-			   return $value.($label?" ".__("lb",RBAGENCY_TEXTDOMAIN):"");
-			}	
-			return $value;								
+				return $value.($label?" ".__("lb",RBAGENCY_TEXTDOMAIN):"");
+			}
+			return $value;
 		}
-										
+
 	}
 
 	/**
