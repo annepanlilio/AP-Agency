@@ -3679,16 +3679,31 @@
 
 
 	/**
-	* Genrate query for gallary Order
+	* Genrate query for gallery Order
 	*/
-	function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaType){
-		$queryImg = ""; 
+	function rb_agency_option_galleryorder_query($order,$profileID, $ProfileMediaType, $count = 99, $exclude_primary = false){
 		global $wpdb;
-		if($order){
-			 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC ", $profileID, $ProfileMediaType);
+
+		$queryImg = "";
+
+		if ($count > 0) {
+			$sql_count = " LIMIT ". $count;
 		} else {
-			 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" GROUP BY(ProfileMediaURL) ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC ", $profileID, $ProfileMediaType);
+			$sql_count = "";
 		}
+
+		if ($count > 0) {
+			$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
+		} else {
+			$sql_exclude_primary_image = "";
+		}
+
+		if($order){
+			 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC ". $sql_count, $profileID, $ProfileMediaType);
+		} else {
+			 $queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY convert(`ProfileMediaOrder`, decimal)  ASC ". $sql_count, $profileID, $ProfileMediaType);
+		}
+
 		return $queryImg ;
 	}
 	

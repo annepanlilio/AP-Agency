@@ -1,7 +1,7 @@
 <?php 
 $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
+	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:""; // get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg"
 	$rb_agency_option_adminprint_hidden = isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0;
 global $wpdb;
 
@@ -23,8 +23,8 @@ global $wpdb;
 	</script>
 	<style type="text/css">
 		table td {
-			 border: 1px solid #e1e1e1;
-			 vertical-align: top;
+			border: 1px solid #e1e1e1;
+			vertical-align: top;
 		}
 		.profile-print {
 			position: relative;
@@ -46,6 +46,7 @@ global $wpdb;
 
 		#print_logo {
 			float: left;
+			max-height: 100px;
 			width: 50%;
 		}
 		#print_actions {
@@ -62,7 +63,7 @@ global $wpdb;
 			top: 15px;
 			right: 15px;
 			z-index: 2;
-			position: absolute;			
+			position: absolute;
 		}
 		#fullpage .name {
 			font-size: 42px;
@@ -70,24 +71,24 @@ global $wpdb;
 			margin-bottom: 5px;
 		}
 		#fullpage .print_logo {
-			width: 100%;
+			/*width: 100%;
 			text-align: center;
-			margin-bottom: 15px;
+			margin-bottom: 15px;*/
 		}
 		#fullpage .print_logo img {
-			width: 300px;
+			/*width: 300px;*/
 		}
 		#fullpage td {
 			min-height: 900px;
 		}
 		#fullpage .profile-pic {
-			width: 65%;			
+			width: 65%;
 			float: left;
-			height: 575px;
+			height: 475px;
 			overflow: hidden;
 		}#fullpage .profile-pic img {
-			max-width: 300px;
-		}		
+			max-height: 475px;
+		}
 		#fullpage .info {
 			width: 30%;
 			float: right;
@@ -123,11 +124,13 @@ if ($_GET['cD'] == "0") {
 	<div id="<?php echo $layout_class; ?>">
 		<?php if ($_GET['cD'] != 2) : ?>
 		<div id="print_logo">
-			<?php if(!empty($rb_agency_option_agencylogo)){ ?>
-			  <img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" />
-			<?php }else{ ?>
-			<?php echo $rb_agency_option_agencyname; ?>
-			<?php } ?>
+			<?php
+			if (!empty($rb_agency_option_agencylogo)) {
+				?><img src="<?php echo $rb_agency_option_agencylogo; ?>" title="<?php echo $rb_agency_option_agencyname; ?>" /><?php
+			} else {
+				echo "<h3>". $rb_agency_option_agencyname ."</h3>";
+			}
+			?>
 		</div>
 		<?php endif; ?>
 			<div id="print_actions">
@@ -312,8 +315,9 @@ if ($_GET['cD'] == "0") {
 					 echo "<tr>";
 					}
 				}
-				
+
 				echo "<td>";
+
 				if (1 == 1) {
 
 					echo "<div class=\"box\">";
@@ -403,15 +407,13 @@ if ($_GET['cD'] == "0") {
 
 						if ($_GET['cD'] == "2") {
 
-							
 							echo "<div class=\"print_logo\">";
 								if(!empty($rb_agency_option_agencylogo)) {
-								  echo "<img src=\"". $rb_agency_option_agencylogo."\" title=\"". $rb_agency_option_agencyname."\" />";
+									echo "<img src=\"". $rb_agency_option_agencylogo."\" title=\"". $rb_agency_option_agencyname."\" />";
 								} else {
-									echo $rb_agency_option_agencyname;
+									echo "<h3>". $rb_agency_option_agencyname ."</h3>";
 								}
 							echo "</div>";
-							
 
 							$ProfileID = $data['ProfileID'];
 							echo "	<h2 class=\"name\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
@@ -446,12 +448,15 @@ if ($_GET['cD'] == "0") {
 							echo "</div>";
 							echo "<div style=\"clear:both\"></div>";
 							echo "<div class=\"photos\">";
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 3, true);
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg = $wpdb->num_rows;
+								$i = 0;
 								foreach($resultsImg as $dataImg ){
-									// echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
-									echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
+									if ($i < 3) {
+										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
+									}
+									$i++;
 								}
 							echo "</div>";
 							echo "<p style=\"text-align: center;\">Property of ".$rb_agency_option_agencyname.". All rights reserved.</p>";
@@ -466,25 +471,25 @@ if ($_GET['cD'] == "0") {
 							}
 						}
 				*/
-					
+
 						echo " </div>";
 						echo " <div style=\"clear: both; text-align: center;\">\n";
 					} else {
 						echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast'])  . "</h2>"; 
 					}
-				
-					echo " </div>";					
+
+					echo " </div>";
 				} // elseif (layout style is another value......) {
-				
+
 				echo "</td>";
-				
+
 				if($_GET['cD'] == "2") {
 					echo "<tr>";
 				} else {
 					if( $ii % 3==0){
 						echo "</tr>";
 					}
-				}				
+				}
 
 			}
 			echo "<div style=\"clear: both;\"></div>";
