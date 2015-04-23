@@ -30,39 +30,12 @@
 	line-height: normal;
 }
 #profile-list .rbprofile-list .image {
-	width: 100%;
-	height: 230px;	
-	overflow: hidden;
-	text-align: center;
 	position: relative;
 }
-#profile-list .rbprofile-list .image a {
-	float: left;
-	width: 100%;
-	height: 100%;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center top;
-}
 #profile-list .rbprofile-list .image img {
-	float: left;
 	border: none;
 	border-radius: 0;
 	box-shadow: none;
-}
-#profile-list .rbprofile-list .image img.fillheight {
-	max-height: 100%;
-	max-width: none!important;
-}
-#profile-list .rbprofile-list .image.image-broken {
-	text-align: center;
-	line-height: 230px;
-	background: #f8ced6;
-}
-#profile-list .rbprofile-list .image.image-broken a {
-	font-weight: bold;
-	text-align: center;
-	text-decoration: none;
 }
 #profile-list .rbprofile-list .profile-info {
 	padding: 5px 0px;
