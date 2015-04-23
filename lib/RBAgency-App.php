@@ -25,13 +25,12 @@ class RBAgency_App {
 				// Add Scripts to Admin Head Section 
 				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_scripts') );
 
-				// Add Scripts to Footer Section 
+				// Add Scripts to Footer Section
 				add_action( 'wp_footer', array('RBAgency_App', 'rbagency_footer_scripts') );
 
 				// Apply Body Class
 				add_filter( 'body_class', array('RBAgency_App', 'rb_agency_insertbodyclass') );
 			}
-
 		}
 
 	// *************************************************************************************************** //
@@ -92,9 +91,6 @@ class RBAgency_App {
 
 				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.min.css');
 				wp_enqueue_style( 'rbagency-datepicker' );
-
-
-
 			}
 		}
 
@@ -108,10 +104,8 @@ class RBAgency_App {
 				//wp_enqueue_script( 'jquery-core' );
 				wp_enqueue_script( 'jquery-ui-core' );
 				wp_enqueue_script( 'jquery-ui-datepicker' );
-
-				
-
 			}
+
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 			$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
@@ -130,22 +124,18 @@ class RBAgency_App {
 				
 				<?php
 
-
 				// TODO: Check Validity
 				add_action('wp_enqueue_scripts', array('RBAgency_App', 'rb_agency_insertscripts') );
-
 		}
 
 		// Get public footer scripts
 		public static function rbagency_footer_scripts(){
 			
-				wp_register_script( 'rb-customfields-search', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
-				wp_enqueue_script( 'rb-customfields-search' );
-				wp_register_script( 'rb-print-profile', RBAGENCY_PLUGIN_URL .'assets/js/rb-printProfiles.js' );
-				wp_enqueue_script( 'rb-print-profile' );
-			
+			wp_register_script( 'rb-customfields-search', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
+			wp_enqueue_script( 'rb-customfields-search' );
+			wp_register_script( 'rb-print-profile', RBAGENCY_PLUGIN_URL .'assets/js/rb-printProfiles.js' );
+			wp_enqueue_script( 'rb-print-profile' );
 		}
-
 
 
 		// TODO: Check Validity
@@ -194,11 +184,19 @@ class RBAgency_App {
 			} elseif (rb_is_page("profile_casting")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'profile-casting';
+			} elseif (rb_is_page("casting_register")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'casting-register';
+			} elseif (rb_is_page("job_application")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'job-application';
+			} elseif (rb_is_page("job_detail")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'job-detail';
 			} else {
 				$classes[] = 'rbagency';
 			}
 			return $classes;
 		}
-
 }
 ?>

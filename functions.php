@@ -4,7 +4,7 @@
 	 */
 		if(isset($RB_DEBUG_MODE)){
 			ini_set('display_errors', 'On');
-		}else{
+		} else {
 			error_reporting(0);
 		}
 
@@ -417,15 +417,11 @@
 			$thirdMonths=array(2);
 
 			if($today_m - $dob_m == 1) {
-				if(in_array($dob_m, $firstMonths)) 
-				{
+				if(in_array($dob_m, $firstMonths)){
 					array_push($firstMonths, 0);
-				}
-				elseif(in_array($dob_m, $secondMonths)) 
-				{
+				} elseif(in_array($dob_m, $secondMonths)){
 					array_push($secondMonths, 0);
-				}elseif(in_array($dob_m, $thirdMonths)) 
-				{
+				} elseif(in_array($dob_m, $thirdMonths)){
 					array_push($thirdMonths, 0);
 				}
 			}
@@ -468,12 +464,7 @@
 		if(empty($p_strDate) || $p_strDate == "0000-00-00"){
 			return '-';
 		}
-	
-
 	}
-
-
-
 
 
 	/**
@@ -499,7 +490,6 @@
 			return substr($filename, $pos+1);
 		}
 	}
-
 
 
 	/**
@@ -3365,7 +3355,10 @@
 			(strpos($uri,"/browse-jobs/") > -1 && $page == "browse_jobs" ) ||
 			(strpos($uri,"/view-applicants/") > -1 && $page == "view_applicants" ) ||
 			(strpos($uri,"/profile-casting/") > -1 && $page == "profile_casting" ) ||
-			(strpos($uri,"/casting-postjob/") > -1 && $page == "casting_postjob" )) {
+			(strpos($uri,"/casting-postjob/") > -1 && $page == "casting_postjob" ) ||
+			(strpos($uri,"/casting-register/") > -1 && $page == "casting_register" ) ||
+			(strpos($uri,"/job-application/") > -1 && $page == "job_application" ) ||
+			(strpos($uri,"/job-detail/") > -1 && $page == "job_detail" )) {
 
 				return true;
 			}
@@ -3898,10 +3891,10 @@
 	* Check remote version
 	*/
 	function rb_get_remote_version(){
-	$request = wp_remote_post(RBAGENCY_UPDATE_PATH, array('method'=>'POST','body' => array('action' => 'version')));
-			if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) == 200) {
-				return $request['body'];
-			}
+		$request = wp_remote_post(RBAGENCY_UPDATE_PATH, array('method'=>'POST','body' => array('action' => 'version')));
+		if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) == 200) {
+			return $request['body'];
+		}
 	}
 
 ?>
