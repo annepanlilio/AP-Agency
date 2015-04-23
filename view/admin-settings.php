@@ -231,6 +231,10 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_value_maxwidth)) { $rb_agency_value_maxwidth = "1000"; }
 		$rb_agency_value_maxheight = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxheight']:0;
 			if (empty($rb_agency_value_maxheight)) { $rb_agency_value_maxheight = "800"; }
+			$rb_agency_value_profilethumbwidth = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth']:0;
+			if (empty($rb_agency_value_profilethumbwidth)) { $rb_agency_value_profilethumbwidth = "180"; }
+		$rb_agency_value_profilethumbheight = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:0;
+			if (empty($rb_agency_value_profilethumbheight)) { $rb_agency_value_profilethumbheight = "230"; }
 		$rb_agency_option_locationcountry = isset($rb_agency_options_arr['rb_agency_option_locationcountry'])?$rb_agency_options_arr['rb_agency_option_locationcountry']:0;
 			if (empty($rb_agency_option_locationcountry)) { $rb_agency_option_locationcountry = "US"; }
 		$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage'])?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
@@ -533,6 +537,13 @@ elseif ($ConfigID == 1) {
 		echo "   <td>";
 				 _e('Maximum Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" /><br />\n";
 				 _e('Maximum Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profile Thumbnails', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+				 _e('Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbwidth]\" value=\"". $rb_agency_value_profilethumbwidth ."\" style=\"width: 80px;\" /><br />\n";
+				 _e('Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbheight]\" value=\"". $rb_agency_value_profilethumbheight ."\" style=\"width: 80px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
