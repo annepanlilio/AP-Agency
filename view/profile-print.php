@@ -322,10 +322,17 @@ if ($_GET['cD'] == "0") {
 
 					echo "<div class=\"box\">";
 
+					/*
+					 * Option 0
+					 */
 					if ($_GET['cD'] == "0") {
 						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" width=\"150\"/></div>\n";
 					}
 
+
+					/*
+					 * Option 1
+					 */
 					if ($_GET['cD'] == "1") {
 
 						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
@@ -382,85 +389,85 @@ if ($_GET['cD'] == "0") {
 									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 								}
 							}*/
-							$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
-							foreach  ($resultsCustomPrivate as $resultCustomPrivatePrivate) {
-								if(!empty($resultCustomPrivate->ProfileCustomValue ) || !empty($resultCustomPrivate->ProfileCustomDateValue )){
-									if($resultCustomPrivate->ProfileCustomType == 10){
-										echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustomPrivate->ProfileCustomDateValue))) ."</div>\n";
+
+						// Show Private Fields
+						$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
+						foreach  ($resultsCustomPrivate as $resultCustomPrivatePrivate) {
+							if(!empty($resultCustomPrivate->ProfileCustomValue ) || !empty($resultCustomPrivate->ProfileCustomDateValue )){
+								if($resultCustomPrivate->ProfileCustomType == 10){
+									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustomPrivate->ProfileCustomDateValue))) ."</div>\n";
+								}else{
+									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustomPrivate->ProfileCustomValue) ."</div>\n";
+								}
+							}
+						}
+
+						// Show Custom Fields
+						$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue,cx.ProfileCustomDateValue, c.ProfileCustomType FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
+						foreach  ($resultsCustom as $resultCustom) {
+							if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
+								if($resultCustom->ProfileCustomType == 10){
+									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
+								}else{
+									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
+								}
+							}
+						}
+
+					} // End Private Fields
+
+
+					/*
+					 * Option 2
+					 */
+
+					if ($_GET['cD'] == "2") {
+
+						echo "<div class=\"print_logo\">";
+							if(!empty($rb_agency_option_agencylogo)) {
+								echo "<img src=\"". $rb_agency_option_agencylogo."\" title=\"". $rb_agency_option_agencyname."\" />";
+							} else {
+								echo "<h3>". $rb_agency_option_agencyname ."</h3>";
+							}
+						echo "</div>";
+
+						$ProfileID = $data['ProfileID'];
+						echo "	<h2 class=\"name\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
+
+						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
+						echo " <div class=\"info\">";
+
+							$ProfileID = $data['ProfileID'];
+							echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
+
+							// Show Custom Fields
+							$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue,cx.ProfileCustomDateValue, c.ProfileCustomType FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
+							foreach  ($resultsCustom as $resultCustom) {
+								if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
+									if($resultCustom->ProfileCustomType == 10){
+										echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
 									}else{
-										echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustomPrivate->ProfileCustomValue) ."</div>\n";
+										echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
 									}
 								}
 							}
-								$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue,cx.ProfileCustomDateValue, c.ProfileCustomType FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
-								foreach  ($resultsCustom as $resultCustom) {
-									if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
-										if($resultCustom->ProfileCustomType == 10){
-											echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
-										}else{
-											echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
-										}
-									}
+
+						echo "</div>";
+						echo "<div style=\"clear:both\"></div>";
+						echo "<div class=\"photos\">";
+							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 3, true);
+							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+							$countImg = $wpdb->num_rows;
+							$i = 0;
+							foreach($resultsImg as $dataImg ){
+								if ($i < 3) {
+									echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
 								}
-
-						} // End Private Fields
-
-						if ($_GET['cD'] == "2") {
-
-							echo "<div class=\"print_logo\">";
-								if(!empty($rb_agency_option_agencylogo)) {
-									echo "<img src=\"". $rb_agency_option_agencylogo."\" title=\"". $rb_agency_option_agencyname."\" />";
-								} else {
-									echo "<h3>". $rb_agency_option_agencyname ."</h3>";
-								}
-							echo "</div>";
-
-							$ProfileID = $data['ProfileID'];
-							echo "	<h2 class=\"name\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
-
-							echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
-							echo " <div class=\"info\">";
-
-								if (!empty($data['ProfileDateBirth'])) {
-									echo "<div><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
-								}
-
-								if (!empty($data['ProfileGender'])) {
-									if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
-										echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
-									} else {
-										echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> --</div>\n";
-									}
-								}
-								echo "<div><strong>Skin Tone</strong></div>";
-
-								if (!empty($data['ProfileStatHeight'])) {
-									if ($rb_agency_option_unittype == 0) { // Metric
-										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
-									} else { // Imperial
-										$heightraw = $ProfileStatHeight;
-										$heightfeet = floor($heightraw/12);
-										$heightinch = $heightraw - floor($heightfeet*12);
-										echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $heightfeet ." ". __("ft", RBAGENCY_TEXTDOMAIN). " ". $heightinch ." ". __("in", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
-									}
-								}
-
-							echo "</div>";
-							echo "<div style=\"clear:both\"></div>";
-							echo "<div class=\"photos\">";
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 3, true);
-								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
-								$countImg = $wpdb->num_rows;
-								$i = 0;
-								foreach($resultsImg as $dataImg ){
-									if ($i < 3) {
-										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
-									}
-									$i++;
-								}
-							echo "</div>";
-							echo "<p style=\"text-align: center;\">Property of ".$rb_agency_option_agencyname.". All rights reserved.</p>";
-						}
+								$i++;
+							}
+						echo "</div>";
+						echo "<p style=\"text-align: center;\">Property of ".$rb_agency_option_agencyname.". All rights reserved.</p>";
+					}
 
 
 					/*	if (!empty($data['ProfileGender'])) {
