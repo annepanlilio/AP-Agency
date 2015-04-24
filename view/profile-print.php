@@ -471,6 +471,7 @@ if ($_GET['cD'] == "0") {
 						echo "</div>";
 						echo "<div style=\"clear:both\"></div>";
 						echo "<div class=\"photos\">";
+							$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 3, true);
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
