@@ -1444,7 +1444,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$massDelete = "";
 
 								foreach ($resultsImg as $dataImg) {
-									echo $dataImg['ProfileMediaURL'];
 									if ($dataImg['ProfileMediaPrimary']) {
 										$toggleClass = " primary";
 										$isChecked = " checked";
