@@ -1024,136 +1024,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
-					<div id="dashboard_account_information" class="postbox">
-						<div class="handlediv" title="Click to toggle"><br></div>
-						<h3 class="hndle"><span><?php echo  __("Account Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
-						<div class="inside">
-							<div class="main">
-							<?php
-							echo "<table class=\"form-table\">\n";
-							echo " <tbody>\n";
-
-							echo "    <tr valign=\"top\">\n";
-							echo "      <th scope=\"row\" data=\"this_".$ProfileType."\">" . __("Classification", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-							echo "      <td>\n";
-							echo "      <fieldset>\n";
-							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
-
-							$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
-							$results3=  $wpdb->get_results($query3,ARRAY_A);
-							$count3  = $wpdb->num_rows;
-							$action = @$_GET["action"];
-							foreach ($results3 as $data3) {
-								if ($action == "add") {
-									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\"";
-									if(is_array($ProfileType)){
-											if (in_array($data3['DataTypeID'], $ProfileType)) {
-												echo " checked=\"checked\"";
-											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									} else {
-											if ($data3['DataTypeID'] == $ProfileType) {
-												echo " checked=\"checked\"";
-											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									}
-								}
-								if ($action == "editRecord") {
-									echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\"";
-									if(is_array($ProfileType)){
-											if (in_array($data3['DataTypeID'], $ProfileType)) {
-												echo " checked=\"checked\"";
-											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									} else {
-											if ($data3['DataTypeID'] == $ProfileType) {
-												echo " checked=\"checked\"";
-											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									}
-								}
-							}
-							echo "      </fieldset>\n";
-							if ($count3 < 1) {
-								echo "" . __("No items to select", RBAGENCY_TEXTDOMAIN) . ". <a href='" . admin_url("admin.php?page=rb_agency_settings&ConfigID=5") . "'>" . __("Setup Options", RBAGENCY_TEXTDOMAIN) . "</a>\n";
-							}
-
-							echo "      </td>\n";
-							echo "    </tr>\n";
-							echo "    <tr valign=\"top\">\n";
-							echo "        <th scope=\"row\">" . __("Status", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
-							echo "        <td><select id=\"ProfileIsActive\" name=\"ProfileIsActive\">\n";
-							echo "            <option value=\"1\"" . selected(1, $ProfileIsActive) . ">" . __("Active", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-							echo "            <option value=\"4\"" . selected(4, $ProfileIsActive) . ">" . __("Active - Not Visible On Website", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-							echo "            <option value=\"0\"" . selected(0, $ProfileIsActive) . ">" . __("Inactive", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-							echo "            <option value=\"2\"" . selected(2, $ProfileIsActive) . ">" . __("Archived", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-							if(function_exists('rb_agency_interact_menu')){
-							echo "            <option value=\"3\"" . selected(3, $ProfileIsActive) . ">" . __("Pending Approval", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-							}
-							echo "          </select></td>\n";
-							echo "    </tr>\n";
-							echo "    <tr valign=\"top\">\n";
-							echo "        <th scope=\"row\">" . __("Promotion", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
-							echo "        <td>\n";
-							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked(isset($ProfileIsFeatured)?$ProfileIsFeatured:0, 1, false) . " /> Featured<br />\n";
-							echo "        </td>\n";
-							echo "    </tr>\n";
-							/*
-							if (function_exists('rb_agency_interact_menu')) {
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Membership", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"". checked($ProfileIsPromoted, 1, false) ." /> Rising Star<br />\n";
-								echo "      </td>\n";
-								echo "    </tr>\n";
-							}
-							*/
-
-							if (isset($ProfileUserLinked) && $ProfileUserLinked > 0) {
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("WordPress User", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "        <a href=\"". admin_url("user-edit.php") ."?user_id=". $ProfileUserLinked ."&wp_http_referer=%2Fwp-admin%2Fadmin.php%3Fpage%3Drb_agency_profiles\">ID# ". $ProfileUserLinked ."</a>";
-								echo "        <input type='hidden' name='wpuserid' value='".$ProfileUserLinked."' />";
-								echo "      </td>\n";
-								echo "    </tr>\n";
-							}
-
-
-							// Hidden Settings
-							if (isset($_GET["mode"]) && $_GET["mode"] == "override") {
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Date Updated", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . $ProfileDateUpdated . "\" />\n";
-								echo "      </td>\n";
-								echo "    </tr>\n";
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Profile Views", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . $ProfileStatHits . "\" />\n";
-								echo "      </td>\n";
-								echo "    </tr>\n";
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Profile Viewed Last", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . $ProfileDateViewLast . "\" />\n";
-								echo "      </td>\n";
-								echo "    </tr>\n";
-							} else {
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\"></th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"hidden\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . (isset($ProfileDateUpdated)?$ProfileDateUpdated:"") . "\" />\n";
-								echo "          <input type=\"hidden\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . (isset($ProfileStatHits)?$ProfileStatHits:"") . "\" />\n";
-								echo "          <input type=\"hidden\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . (isset($ProfileDateViewLast)?$ProfileDateViewLast:"") . "\" />\n";
-								echo "      </td>\n";
-								echo "    </tr>\n";
-							}
-							echo "  </tbody>\n";
-							echo "</table>\n";
-
-?>
-							</div>
-						</div>
-					</div>
-
 					<div id="dashboard_private_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Private Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
@@ -1287,8 +1157,142 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 			<!-- Row 1: Column Right Start -->
 
+
 			<div id="postbox-container-2" class="postbox-container">
 				<div id="side-sortables" class="meta-box-sortables ui-sortable">
+
+
+					<div id="dashboard_account_information" class="postbox">
+						<div class="handlediv" title="Click to toggle"><br></div>
+						<h3 class="hndle"><span><?php echo  __("Account Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
+						<div class="inside">
+							<div class="main">
+							<?php
+							echo "<table class=\"form-table\">\n";
+							echo " <tbody>\n";
+
+							echo "    <tr valign=\"top\">\n";
+							echo "      <th scope=\"row\" data=\"this_".$ProfileType."\">" . __("Classification", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+							echo "      <td>\n";
+							echo "      <fieldset>\n";
+							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
+
+							$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
+							$results3=  $wpdb->get_results($query3,ARRAY_A);
+							$count3  = $wpdb->num_rows;
+							$action = @$_GET["action"];
+							foreach ($results3 as $data3) {
+								if ($action == "add") {
+									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\"";
+									if(is_array($ProfileType)){
+											if (in_array($data3['DataTypeID'], $ProfileType)) {
+												echo " checked=\"checked\"";
+											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+									} else {
+											if ($data3['DataTypeID'] == $ProfileType) {
+												echo " checked=\"checked\"";
+											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+									}
+								}
+								if ($action == "editRecord") {
+									echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\"";
+									if(is_array($ProfileType)){
+											if (in_array($data3['DataTypeID'], $ProfileType)) {
+												echo " checked=\"checked\"";
+											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+									} else {
+											if ($data3['DataTypeID'] == $ProfileType) {
+												echo " checked=\"checked\"";
+											} echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+									}
+								}
+							}
+							echo "      </fieldset>\n";
+							if ($count3 < 1) {
+								echo "" . __("No items to select", RBAGENCY_TEXTDOMAIN) . ". <a href='" . admin_url("admin.php?page=rb_agency_settings&ConfigID=5") . "'>" . __("Setup Options", RBAGENCY_TEXTDOMAIN) . "</a>\n";
+							}
+
+							echo "      </td>\n";
+							echo "    </tr>\n";
+							echo "    <tr valign=\"top\">\n";
+							echo "        <th scope=\"row\">" . __("Status", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
+							echo "        <td><select id=\"ProfileIsActive\" name=\"ProfileIsActive\">\n";
+							echo "            <option value=\"1\"" . selected(1, $ProfileIsActive) . ">" . __("Active", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							echo "            <option value=\"4\"" . selected(4, $ProfileIsActive) . ">" . __("Active - Not Visible On Website", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							echo "            <option value=\"0\"" . selected(0, $ProfileIsActive) . ">" . __("Inactive", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							echo "            <option value=\"2\"" . selected(2, $ProfileIsActive) . ">" . __("Archived", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							if(function_exists('rb_agency_interact_menu')){
+							echo "            <option value=\"3\"" . selected(3, $ProfileIsActive) . ">" . __("Pending Approval", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							}
+							echo "          </select></td>\n";
+							echo "    </tr>\n";
+							echo "    <tr valign=\"top\">\n";
+							echo "        <th scope=\"row\">" . __("Promotion", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
+							echo "        <td>\n";
+							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked(isset($ProfileIsFeatured)?$ProfileIsFeatured:0, 1, false) . " /> Featured<br />\n";
+							echo "        </td>\n";
+							echo "    </tr>\n";
+							/*
+							if (function_exists('rb_agency_interact_menu')) {
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Membership", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"checkbox\" name=\"ProfileIsPromoted\" id=\"ProfileIsPromoted\" value=\"1\"". checked($ProfileIsPromoted, 1, false) ." /> Rising Star<br />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+							}
+							*/
+
+							if (isset($ProfileUserLinked) && $ProfileUserLinked > 0) {
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("WordPress User", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "        <a href=\"". admin_url("user-edit.php") ."?user_id=". $ProfileUserLinked ."&wp_http_referer=%2Fwp-admin%2Fadmin.php%3Fpage%3Drb_agency_profiles\">ID# ". $ProfileUserLinked ."</a>";
+								echo "        <input type='hidden' name='wpuserid' value='".$ProfileUserLinked."' />";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+							}
+
+
+							// Hidden Settings
+							if (isset($_GET["mode"]) && $_GET["mode"] == "override") {
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Date Updated", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"text\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . $ProfileDateUpdated . "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Profile Views", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"text\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . $ProfileStatHits . "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Profile Viewed Last", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"text\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . $ProfileDateViewLast . "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+							} else {
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\"></th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"hidden\" id=\"ProfileDateUpdated\" name=\"ProfileDateUpdated\" value=\"" . (isset($ProfileDateUpdated)?$ProfileDateUpdated:"") . "\" />\n";
+								echo "          <input type=\"hidden\" id=\"ProfileStatHits\" name=\"ProfileStatHits\" value=\"" . (isset($ProfileStatHits)?$ProfileStatHits:"") . "\" />\n";
+								echo "          <input type=\"hidden\" id=\"ProfileDateViewLast\" name=\"ProfileDateViewLast\" value=\"" . (isset($ProfileDateViewLast)?$ProfileDateViewLast:"") . "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+							}
+							echo "  </tbody>\n";
+							echo "</table>\n";
+
+							?>
+							</div>
+						</div>
+					</div>
+
+
 
 					<div id="dashboard_public_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
@@ -1352,13 +1356,27 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 		</div>
-<?php 	if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record ?>
+		<?php
+		if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record 
+		?>
 		<div id="dashboard-widgets" class="metabox-holder columns-1">
 
 			<!-- Row 2: Column Left Start -->
 
 			<div id="postbox-container-3" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+
+					<div class="postbox">
+						<div class="inside">
+						<?php
+						echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
+						echo "     <input type=\"hidden\" name=\"ProfileUserLinked\" value=\"" . $ProfileUserLinked. "\" />\n";
+						echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
+						echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+						?>
+						</div>
+					</div>
+
 
 					<div id="dashboard_gallery" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
@@ -1798,34 +1816,28 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 			<!-- Row 2: Column Right End -->
 			<?php } ?>
-
 		</div>
+	</div>
+	</div>
+		<div class="postbox">
+			<div class="inside">
 
 
-
-
-<?php
-
-
+	<?php
 	if (!empty($ProfileID) && ($ProfileID > 0)) {
-
-		echo "<div class=\"rbtool-box\">\n";
-		echo "<p class=\"submit\">\n";
-		echo "" . __("Last updated on", RBAGENCY_TEXTDOMAIN) . ": " . $ProfileDateUpdated . "\n";
 		echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
 		echo "     <input type=\"hidden\" name=\"ProfileUserLinked\" value=\"" . $ProfileUserLinked. "\" />\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-		echo "     <br /><br /><input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "</p>\n";
-		echo "</div>\n";
+		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "" . __("Last updated ", RBAGENCY_TEXTDOMAIN) . " " . rb_make_ago($ProfileDateUpdated) . "\n";
 	} else {
-		echo "<div class=\"rbtool-box\">\n";
-		echo "<p class=\"submit\">\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Create Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "</p>\n";
-		echo "</div>\n";
 	}
+
+		echo "	</div>\n";
+		echo "</div>\n";
+
 	echo "</form>\n";
 }
 

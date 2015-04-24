@@ -641,26 +641,26 @@
 	* @param $diplay - contact display, $current_display - formatted contact display
 	* @return - suggested folder name
 	*/
-    function rb_check_duplicate_folder($display,$current_display, $arr = array()){
-    	
-    	if($display != $current_display && count($arr) > 1){	
-    		$arr = array_unique($arr);
-    		$i = 0;
-    		do{
-    			//champ-camba
-    			//champ-camba-1
-    				$current_display = $current_display.($i>0?"-".$i:"");
-    				$i++;
-    					    
-    			    
-	    	}while( in_array($current_display,$arr,true));
+	function rb_check_duplicate_folder($display,$current_display, $arr = array()){
+		
+		if($display != $current_display && count($arr) > 1){	
+			$arr = array_unique($arr);
+			$i = 0;
+			do{
+				//champ-camba
+				//champ-camba-1
+					$current_display = $current_display.($i>0?"-".$i:"");
+					$i++;
+							
+					
+			}while( in_array($current_display,$arr,true));
 
-	    	return $current_display;
-    		     	
-    		   
+			return $current_display;
+					
+			   
 		}   
-	  	return $display;
-    }
+		return $display;
+	}
 
 
 
@@ -1729,9 +1729,9 @@
 		global $rb_agency_option_unittype;
 		$html = "";
 		
-	    $resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue,  cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView IN(".$Privacy.") AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
-	  	
-	  	foreach ($resultsCustom as $resultCustom) {
+		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue,  cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView IN(".$Privacy.") AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+		
+		foreach ($resultsCustom as $resultCustom) {
 
 			if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
 
@@ -3912,4 +3912,42 @@
 		}
 	}
 
+	/**
+	* Make Ago
+	*/
+	function rb_make_ago($datetime) {
+
+		// Check if Timezone specified
+		$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_locationtimezone = (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
+
+		$origin_dtz = new DateTimeZone($rb_agency_option_locationtimezone);
+
+		$now = new DateTime("now", $origin_dtz);
+		$ago = new DateTime($datetime, $origin_dtz);
+		$diff = $now->diff($ago);
+		$diff->w = floor($diff->d / 7);
+		$diff->d -= $diff->w * 7;
+
+		$string = array(
+			'y' => 'year',
+			'm' => 'month',
+			'w' => 'week',
+			'd' => 'day',
+			'h' => 'hour',
+			'i' => 'minute',
+			's' => 'second',
+		);
+
+		foreach ($string as $k => &$v) {
+			if ($diff->$k) {
+				$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+			} else {
+				unset($string[$k]);
+			}
+		}
+
+		if (!$full) $string = array_slice($string, 0, 1);
+		return $string ? implode(', ', $string) . ' ago' : 'just now';
+	}
 ?>
