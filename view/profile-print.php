@@ -150,7 +150,7 @@ if ($_GET['cD'] == "0") {
 				$$key = $value;
 			}
 
-			//// Filter
+			// Filter
 			$filter = " WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1";
 			if(isset($_GET['id']) && $_GET['id']){
 				$filter .= " AND profile.ProfileID IN (".$_GET['id'].") "; 
@@ -440,6 +440,22 @@ if ($_GET['cD'] == "0") {
 							$ProfileID = $data['ProfileID'];
 							echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 
+							if (!empty($data['ProfileDateBirth'])) {
+								echo "<div><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
+							}
+
+							if (!empty($data['ProfileType'])) {
+								echo "<div><strong>". __("Classification", RBAGENCY_TEXTDOMAIN) .":</strong> ". retrieve_title($data['ProfileType']) ."</div>\n";
+							}
+
+							if (!empty($data['ProfileGender'])) {
+								if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
+									echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
+								}else{
+									echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> --</div>\n";
+								}
+							}
+
 							// Show Custom Fields
 							$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue,cx.ProfileCustomDateValue, c.ProfileCustomType FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID ));
 							foreach  ($resultsCustom as $resultCustom) {
@@ -469,15 +485,6 @@ if ($_GET['cD'] == "0") {
 						echo "<p style=\"text-align: center;\">Property of ".$rb_agency_option_agencyname.". All rights reserved.</p>";
 					}
 
-
-					/*	if (!empty($data['ProfileGender'])) {
-							if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
-								echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
-							}else{
-								echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> --</div>\n";	
-							}
-						}
-				*/
 
 						echo " </div>";
 						echo " <div style=\"clear: both; text-align: center;\">\n";

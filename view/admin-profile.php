@@ -1206,7 +1206,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");'>";
 								echo '<option value="">'. __("Select country", RBAGENCY_TEXTDOMAIN) .'</option>';
 								 foreach($result_query_get as $r){
-									  $selected = isset($ProfileLocationCountry) && $ProfileLocationCountry==$r->CountryID?"selected=selected":"";
+										$selected = isset($ProfileLocationCountry) && $ProfileLocationCountry==$r->CountryID?"selected=selected":"";
 									echo '<option '.$selected.' value='.$r->CountryID.' >'.$r->CountryTitle.'</option>';
 								 }
 								echo '</select>';
@@ -1444,6 +1444,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$massDelete = "";
 
 								foreach ($resultsImg as $dataImg) {
+									echo $dataImg['ProfileMediaURL'];
 									if ($dataImg['ProfileMediaPrimary']) {
 										$toggleClass = " primary";
 										$isChecked = " checked";
@@ -1868,23 +1869,23 @@ function rb_display_list() {
 		$sortDirection = "desc";
 		$dir = "asc";
 	}
-	  // Query 
-	  $query = "";
-	  $selectedNameFirst = "";
-	  $selectedNameLast =  "";
+		// Query 
+		$query = "";
+		$selectedNameFirst = "";
+		$selectedNameLast =  "";
 
-	  // Filter
-	  $filter = "WHERE ";
+		// Filter
+		$filter = "WHERE ";
 		if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
 			if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
 			$selectedNameFirst = $_GET['ProfileContactNameFirst'];
 			$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
 
-			  if(strpos($filter,'profile') > 0){
+				if(strpos($filter,'profile') > 0){
 					$filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
-			  } else {
+				} else {
 					$filter .= " profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
-			  }
+				}
 			}
 			if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
 			$selectedNameLast = $_GET['ProfileContactNameLast'];
@@ -1928,12 +1929,12 @@ function rb_display_list() {
 		if (isset($_GET['ProfileGender']) && !empty($_GET['ProfileGender'])){
 			$ProfileGender = (int)$_GET['ProfileGender'];
 			if($ProfileGender)
-			  if(strpos($filter,'profile') > 0){
+				if(strpos($filter,'profile') > 0){
 					$filter .= " AND profile.ProfileGender='".$ProfileGender."'";
 
-			  } else {
+				} else {
 					$filter .= " profile.ProfileGender='".$ProfileGender."'";
-			  }
+				}
 
 		}
 
