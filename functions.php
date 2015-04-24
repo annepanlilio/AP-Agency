@@ -3692,7 +3692,7 @@
 			$sql_count = "";
 		}
 
-		if ($sql_exclude_primary_image > 0) {
+		if ($sql_exclude_primary_image = true) {
 			$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
 		} else {
 			$sql_exclude_primary_image = "";
