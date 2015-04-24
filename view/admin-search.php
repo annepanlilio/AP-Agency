@@ -56,6 +56,8 @@
 		if($cartHTML!=1)
 			echo $cartHTML;	// search result
 		}
+
+
 	/*
 	 * Display Search Results
 	 */
