@@ -1311,22 +1311,45 @@
 					$data = explode("|",$option1);
 					$data2 = explode("|",$option2);
 					
+					if($ProfileCustomType == 9){
+						$expertiseToArray = explode("|",$ProfileCustomValue);
+					}
 
 					echo "<label class=\"dropdown\">".$data[0]."</label>";
 					echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"").">\n";
 					echo "<option value=\"\">--</option>";
-						$pos = 0;
-						foreach($data as $val1){
-							
-							if($val1 != end($data) && $val1 != $data[0]){
-								if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue))) {
+
+
+
+					/**	if($ProfileCustomType == 9){
+							foreach($data as $val1){
+								if(in_array(trim(stripcslashes($val1),'"'),$expertiseToArray)){
 									$isSelected = "selected=\"selected\"";
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
-								} else {
-									echo "<option value=\"".trim(stripslashes($val1),'"')."\" >".stripslashes($val1)."</option>";
-								}					
+								}elseif(empty($val1)){
+									echo "";
+								}else{
+									echo "<option value=\"".trim(stripslashes($val1),'"')."\">".stripslashes($val1)."</option>";
+								}							
 							}
-						}
+						}else{
+							$pos = 0;
+							foreach($data as $val1){
+								
+								if($val1 != end($data) && $val1 != $data[0]){
+									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue))) {
+										$isSelected = "selected=\"selected\"";
+										echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
+									} else {
+										echo "<option value=\"".trim(stripslashes($val1),'"')."\" >".stripslashes($val1)."</option>";
+									}					
+								}
+							}
+						} **/
+
+						
+
+
 					echo "</select>\n";
 						
 						
@@ -3952,3 +3975,5 @@
 		return $string ? implode(', ', $string) . ' ago' : 'just now';
 	}
 ?>
+
+

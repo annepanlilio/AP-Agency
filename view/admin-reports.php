@@ -2377,7 +2377,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 		
 		
 		$arr_import_headers = explode(",",$_REQUEST["headers"]);
-
+		//print_r($arr_import_headers);
 		// Check for invalid header profile field format
 		foreach($arr_import_headers as $pf){
 			 if(!in_array($pf,$arr_profile_fields)){
@@ -2424,6 +2424,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 										  if(empty($vv["ProfileContactDisplay"])){
 											  $vv["ProfileContactDisplay"] = $vv["ProfileContactNameFirst"]." ".$vv["ProfileContactNameLast"];
 										  }
+
+										  
 										
 				
 									
