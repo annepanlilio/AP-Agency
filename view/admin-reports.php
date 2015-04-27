@@ -436,7 +436,8 @@ elseif ($ConfigID == 3) {
 				}
 			//}
 			$has_rename = false;
-			$_SESSION['renamed_pending'] = "";
+			$_SESSION['renamed_pending'] = false;
+			$fileArray = array();
 			$open_div = "";
 			if ($handle = opendir($dirURL) ) {  //  Open seasame 
 				//echo $file;
@@ -450,51 +451,57 @@ elseif ($ConfigID == 3) {
 						}
 					} elseif ($file != "." && $file != "..") {
 						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file,false));
-						
-						$old_file = $file;
-						
+											
 						$result = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL as url FROM ".table_agency_profile_media." WHERE ProfileMediaURL = %s", $file));
 						// no need to rename if the file exist with the new filename
 						
+						//If newly imported files
 						if(file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) === false){
 							
+							//Rename the files
 							$new_file =  $data3["ProfileID"]."-".$new_file;
 							rename($dirURL ."/". $file, $dirURL ."/".$new_file);
 							$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s",$new_file, $data3['ProfileID'],$file));
+							
+							//Setters
 							$has_rename = true;
-							$_SESSION['renamed_pending'] = $new_file;
-							echo $_SESSION['renamed_pending'] .'=='. $new_file. "=1";
+							$fileArray[$new_file] = $new_file;
+
+							//Message
+							$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
+							$fileMessage = "File: ". $file ."";
+							$newFile = " has been renamed <strong>". $new_file ."</strong>";
 						}
 						
-						if($has_rename){
-							
-							if($_SESSION['renamed_pending'] == $file){
-								$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
+						//Else if imported files are renamed
+						if(file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) !== false){
+
+							if(isset($fileArray[$new_file])){
+								$open_div = "<div id='2' style=\"border-color: #E6DB55;display:none;\">";
+								unset($fileArray[$k]);
+							}else{
+								$open_div = "<div id='3' style=\"border-color: #E6DB55;\">";
 								$fileMessage = "File: ". $file ."";
 								$newFile = "";
+							}					
+							
+						}
+						
+
+						/**if($has_rename){
+							if($_SESSION['renamed_pending'] === true){
+								$open_div = "<div id='1' style=\"border-color: #E6DB55;display:none;\">";
 							}else{
 								$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
-								$fileMessage = "File: ". $file ."";
-								$newFile = " has been renamed <strong>". $new_file ."</strong>";
-								//$actionText = ($has_rename ? $newFile." and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
-							}				
+							}							
+							$fileMessage = "File: ". $file ."";
+							$newFile = "";				
 							
 						}else{
 							
-							if(strpos($file , $data3["ProfileID"]) !== false){
-								if($_SESSION['renamed_pending'] != $new_file){
-									echo $_SESSION['renamed_pending'] .'=='. $new_file . "=2";
-									$open_div = "<div id='2' style=\"border-color: #E6DB55;display:none;\">";
-								}
-								if(empty($_SESSION['renamed_pending'])){
-									echo $_SESSION['renamed_pending'] .'=='. $new_file . "=3";
-									$open_div = "<div id='3' style=\"border-color: #E6DB55;\">";
-								}
-								$fileMessage = "File: ". $file ."";
-								$newFile = "";
-							}
-
-							unset($_SESSION['renamed_pending']);
+							$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
+							$fileMessage = "File: ". $file ."";
+							$newFile = "";
 						}	
 
 						//PENDING
