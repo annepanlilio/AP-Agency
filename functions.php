@@ -3693,7 +3693,8 @@
 		}
 
 		if ($sql_exclude_primary_image = true) {
-			$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
+			//$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
+			$sql_exclude_primary_image = "";
 		} else {
 			$sql_exclude_primary_image = "";
 		}
