@@ -1311,6 +1311,7 @@
 					$data = explode("|",$option1);
 					$data2 = explode("|",$option2);
 					
+
 					if($ProfileCustomType == 9){
 						$expertiseToArray = explode("|",$ProfileCustomValue);
 					}
@@ -1319,9 +1320,7 @@
 					echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"").">\n";
 					echo "<option value=\"\">--</option>";
 
-
-
-					/**	if($ProfileCustomType == 9){
+					if($ProfileCustomType == 9){
 							foreach($data as $val1){
 								if(in_array(trim(stripcslashes($val1),'"'),$expertiseToArray)){
 									$isSelected = "selected=\"selected\"";
@@ -1345,11 +1344,20 @@
 									}					
 								}
 							}
-						} **/
-
+						} 
 						
-
-
+						/**$pos = 0;
+						foreach($data as $val1){
+							
+							if($val1 != end($data) && $val1 != $data[0]){
+								if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue))) {
+									$isSelected = "selected=\"selected\"";
+									echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
+								} else {
+									echo "<option value=\"".trim(stripslashes($val1),'"')."\" >".stripslashes($val1)."</option>";
+								}					
+							}
+						}**/
 					echo "</select>\n";
 						
 						
@@ -3974,6 +3982,16 @@
 		if (!$full) $string = array_slice($string, 0, 1);
 		return $string ? implode(', ', $string) . ' ago' : 'just now';
 	}
+
+	function load_admin_css() {
+		if( is_admin() ){
+			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/admin.css', __FILE__ ) );	
+			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/forms.css', __FILE__ ) );	 
+			wp_enqueue_style('rbagency-datepicker', plugins_url( '/assets/css/jquery-ui/jquery-ui.css', __FILE__ ) );
+		  	wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
+		}	 
+	}
+	add_action('init','load_admin_css');
+
+    
 ?>
-
-
