@@ -3992,6 +3992,9 @@
 		}	 
 	}
 	add_action('init','load_admin_css');
-
     
+    function set_content_type($content_type){
+		return 'text/html';
+	}
+	add_filter('wp_mail_content_type','set_content_type');
 ?>
