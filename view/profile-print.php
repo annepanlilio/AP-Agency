@@ -420,7 +420,7 @@ if ($_GET['cD'] == "0") {
 					/*
 					 * Option 2
 					 */
-
+					$profile_image = "";
 					if ($_GET['cD'] == "2") {
 
 						echo "<div class=\"print_logo\">";
@@ -432,13 +432,14 @@ if ($_GET['cD'] == "0") {
 						echo "</div>";
 
 						$ProfileID = $data['ProfileID'];
+						$profile_image = basename($data["ProfileMediaURL"]);
 						echo "	<h2 class=\"name\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 
 						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
 						echo " <div class=\"info\">";
 
 							$ProfileID = $data['ProfileID'];
-							echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
+							//echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 
 							if (!empty($data['ProfileDateBirth'])) {
 								echo "<div><strong>". __("Age", RBAGENCY_TEXTDOMAIN) .":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</div>\n";
@@ -472,13 +473,16 @@ if ($_GET['cD'] == "0") {
 						echo "<div style=\"clear:both\"></div>";
 						echo "<div class=\"photos\">";
 							$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 3, true);
+							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 5, true);
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
 							$i = 0;
 							foreach($resultsImg as $dataImg ){
-								if ($i < 3) {
-									echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
+								if ($i < 4) {
+									if($profile_image != basename($dataImg['ProfileMediaURL'])){
+										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
+									}
+									//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
 								}
 								$i++;
 							}
