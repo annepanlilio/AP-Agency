@@ -1249,7 +1249,7 @@ elseif ($ConfigID == 81)
 			$to = $total_profiles->total_profiles;
 		}
 		
-		echo "<input  required type=\"radio\" name=\"export-profile\" value=\"".($from)."-".$to."\">Export Profiles(".($from)."-".$to.")<br/>";
+		echo "<input  required type=\"radio\" name=\"export-profile\" value=\"".($from - 1)."-".($to - 1)."\">Export Profiles(".($from)."-".$to.")<br/>";
 		
 		$loop_count = (($a==1)?$count:$loop_count + $count);
 		
@@ -1259,7 +1259,9 @@ elseif ($ConfigID == 81)
 	echo "          <option value=\"xls\">XLS</option>";
 	echo "          <option value=\"csv\">CSV</option>";
 	echo "      </select>";
+
 	echo "      <input type=\"submit\" value=\"Export Now\" class=\"button-primary\">";
+
 	echo "  </form>";    
 }
 elseif ($ConfigID == 80) {

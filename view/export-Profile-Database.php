@@ -46,13 +46,14 @@ global $wpdb;
             }
 
             $limit_template = isset($_POST["export-profile"]) && !empty($_POST["export-profile"])?" LIMIT ".str_replace("-",",",$_POST["export-profile"]):"";
+            
             if(isset($_POST["export-profile"]) && $_POST["export-profile"] == "template"){
             	$limit_template = "LIMIT 1";
             }
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
 			/*Profile data*/
 			$row_data = array();
-			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile." ORDER BY ProfileContactNameFirst,ProfileContactNameLast ASC $limit_template ", ARRAY_A);
+			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile." ORDER BY ProfileContactDisplay ASC $limit_template", ARRAY_A);
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
 
 			foreach ($row_data as $key => $data) 
