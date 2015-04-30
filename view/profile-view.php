@@ -19,6 +19,8 @@
 		$urlexploade = explode("/", $profileURLString);
 		$profileURL=$urlexploade[0];  
 
+		echo $profileURL;
+
 	/*
 	 * Get Preferences
 	 */
@@ -71,6 +73,7 @@
 
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", RBAGENCY_TEXTDOMAIN ));
+		
 		$count = count($results);
 		foreach($results as $data) {
 			$ProfileID					=$data['ProfileID'];
