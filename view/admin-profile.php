@@ -192,7 +192,8 @@ if (isset($_POST['action'])) {
 
 					// Create Record
 					$insert = "INSERT INTO " . table_agency_profile .
-						" (ProfileGallery,
+						" (
+							ProfileGallery,
 							ProfileContactDisplay,
 							ProfileUserLinked,
 							ProfileContactNameFirst,
@@ -253,11 +254,14 @@ if (isset($_POST['action'])) {
 					// Set Display Name as Record ID (We have to do this after so we know what record ID to use... right ;)
 					if ($rb_agency_option_profilenaming == 3) {
 						$ProfileContactDisplay = "ID-" . $ProfileID;
-						$ProfileGallery = "ID" . $ProfileID;
+						$ProfileGallery = "ID-" . $ProfileID;
 
 						$update = $wpdb->query("UPDATE " . table_agency_profile . " SET ProfileContactDisplay='" . $ProfileContactDisplay . "', ProfileGallery='" . $ProfileGallery . "' WHERE ProfileID='" . $ProfileID . "'");
 						$updated = $wpdb->query($update);
 					}
+
+					//Generate folder
+					rb_agency_createdir($ProfileContactDisplay);
 
 					// Add Custom Field Values stored in Mux
 					foreach ($_POST as $key => $value) {
