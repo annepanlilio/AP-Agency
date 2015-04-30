@@ -1818,8 +1818,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			<?php } ?>
 		</div>
 	</div>
-	</div>
-		<div class="postbox">
+	<?php 
+
+	if($_GET["action"] == "add"){
+
+	}elseif($_GET["action"] == "editRecord"){
+		echo "</div>";
+	}
+
+	?>
+	<div class="postbox">
 			<div class="inside">
 
 
@@ -1837,6 +1845,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 		echo "	</div>\n";
 		echo "</div>\n";
+		
+		
 
 	echo "</form>\n";
 }
@@ -2189,7 +2199,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 
 			</div>
 		</div>
-		</div>
+	</div>
 <?php
 	// Show Pagination
 	echo "<div class=\"tablenav\">\n";
@@ -2431,5 +2441,10 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "</script>";
 }
 
-echo "</div>\n";
+if($_GET['action'] == "add"){
+
+}elseif($_GET['action'] == "editRecord"){
+	echo "</div>\n";
+}
+
 ?>
