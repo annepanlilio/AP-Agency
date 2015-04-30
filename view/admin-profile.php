@@ -1365,8 +1365,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 			<div id="postbox-container-3" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-
-					<div class="postbox">
+ 
+					<div class="postbox" style="display:none;">
 						<div class="inside">
 						<?php
 						echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
