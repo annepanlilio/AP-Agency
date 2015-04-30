@@ -344,28 +344,10 @@ elseif ($ConfigID == 53) {
 		echo "<h3>". __("Generate folder names for profiles", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
 		echo "<p>". __("Check that all profiles have folder names generated.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 		echo "<p>". __("Total Number of Folders Created: <strong>".$count1."</strong>", RBAGENCY_TEXTDOMAIN) . "</p>\n";
-            $arr_all_folder_names = array();
             $arr_folder_names = array();
-            foreach ($results1 as $data1) {
-				$ProfileGallery = $data1['ProfileGallery'];
-
-				// Create the right folder name for the profile
-				$ProfileGalleryCurrent = generate_foldername($data1['ProfileID'], $data1['ProfileContactNameFirst'], $data1['ProfileContactNameLast'], $data1['ProfileContactDisplay']);
-				$rb_folder = rb_check_duplicate_folder($ProfileGallery,$ProfileGalleryCurrent,$arr_folder_names);
-				array_push($arr_all_folder_names,$rb_folder);
-			}
-
-            function rb_recheck_duplication($ProfileGallery,$ProfileID, $ProfileContactNameFirst,$ProfileContactNameLast,$ProfileContactDisplay){
-
-            	$ProfileGalleryCurrent = generate_foldername($ProfileID, $ProfileContactNameFirst, $ProfileContactNameLast, $ProfileContactDisplay);
-				$rb_folder = rb_check_duplicate_folder($ProfileGallery,$ProfileGalleryCurrent,$arr_all_folder_names);
-				array_push($arr_folder_names,$rb_folder);
-				return $rb_folder;
-			
-            }
 			foreach ($results1 as $data1) {
 				$ProfileGallery = $data1['ProfileGallery'];
-			
+
 				// Create the right folder name for the profile
 				$ProfileGalleryCurrent = generate_foldername($data1['ProfileID'], $data1['ProfileContactNameFirst'], $data1['ProfileContactNameLast'], $data1['ProfileContactDisplay']);
 				echo "<div>\n";
