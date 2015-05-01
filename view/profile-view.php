@@ -19,7 +19,7 @@
 		$urlexploade = explode("/", $profileURLString);
 		$profileURL=$urlexploade[0];  
 
-		echo $profileURL;
+		//echo $profileURL;
 
 	/*
 	 * Get Preferences
