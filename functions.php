@@ -3993,5 +3993,12 @@
 	}
 	add_action('init','load_admin_css');
 
+	function load_admin_js(){
+		if(is_admin()){
+			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
+		}
+	}
+	add_action( 'init', 'load_admin_js' );
+
     
 ?>
