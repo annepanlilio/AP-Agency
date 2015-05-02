@@ -1314,6 +1314,7 @@
 
 					if($ProfileCustomType == 9){
 						$expertiseToArray = explode("|",$ProfileCustomValue);
+						$expertiseToArray = explode(",",$ProfileCustomValue);
 					}
 
 					echo "<label class=\"dropdown\">".$data[0]."</label>";
