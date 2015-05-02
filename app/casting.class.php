@@ -476,7 +476,7 @@ class RBAgency_Casting {
 		}
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0';
-			$headers[] = "Content-Type: multipart/mixed; boundary=\"$boundary\"\n";
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			if(!empty($SearchMuxFromName)){
 				$rb_agency_value_agencyname = $SearchMuxFromName;
@@ -493,7 +493,7 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bccEmail;
 				}
 			}*/
-			add_filter( 'wp_mail_content_type', 'my_custom_email_content_type' );
+			
 			//For Bcc emails
 			if(!empty($MassEmailBccEmail)){
 				$bccMail = explode(";",$MassEmailBccEmail);
@@ -501,16 +501,11 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bcc;
 				}
 			}
-			$MassEmailMessageSend = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/><br/><br/>",$_POST["MassEmailMessage"]);
-			$MassEmailMessageSend = str_replace("[site-url]",get_bloginfo("url"),$MassEmailMessageSend);
-			$MassEmailMessageSend = str_replace("[site-title]",get_bloginfo("name"),$MassEmailMessageSend);
-			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessageSend)), $headers);
-			
-			//echo stripcslashes(make_clickable($MassEmailMessage))."<br>";
-
+			$MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$MassEmailMessage);
+			$MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
+			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
+			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
 			$url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
-			//for testing
-			//$url = admin_rul('admin.php?page=rb_agency_search&action=massEmail#compose');
 			if($isSent){?>
 			<script type="text/javascript"> 
 				window.location="<?php echo $url;?>";
@@ -732,7 +727,7 @@ class RBAgency_Casting {
 				// Email
 				//echo "Email starts";
 				echo "<div style=\"clear:both;\"></div>";
-				echo "<form enctype=\"multipart/form-data\" method=\"post\" >";
+				echo "<form method=\"post\">";
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 				echo "        <div class=\"inner\">\n";
@@ -779,8 +774,4 @@ class RBAgency_Casting {
 			
 	}
 
-}
-
-function my_custom_email_content_type($content_type) {
-    return 'text/html';
 }

@@ -245,7 +245,7 @@ if (isset($_POST['action'])) {
 						)";
 					$results = $wpdb->query($insert);
 					$ProfileID = $wpdb->insert_id;
-					add_user_meta( $ProfileID, 'rb_agency_interact_profiletype',true);
+					add_user_meta( $new_user, 'rb_agency_interact_profiletype',true);
 
 					// Notify admin and user
 					if ($ProfileNotifyUser <> "yes" && function_exists('rb_agency_interact_menu')) {

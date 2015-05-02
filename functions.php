@@ -1260,11 +1260,11 @@
 						}
 					} elseif($rb_agency_option_unittype ==1) { //1 = Imperial(in/lb)
 						if($data3['ProfileCustomOptions'] == 1){
-							$measurements_label  ="<em>(In Inches)</em>";
+							$measurements_label  ="<em>(in)</em>";
 						} elseif($data3['ProfileCustomOptions'] == 2) {
-							$measurements_label  ="<em>(In Pounds)</em>";
+							$measurements_label  ="<em>(lb)</em>";
 						} elseif($data3['ProfileCustomOptions'] == 3) {
-							$measurements_label  ="<em>(In Feet/Inches)</em>";
+							$measurements_label  ="<em>(ft/in)</em>";
 						}
 					}
 				}  
