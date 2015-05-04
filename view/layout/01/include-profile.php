@@ -44,8 +44,9 @@ echo "				<div id=\"profile-picture\"  class=\"lightbox-enabled\">\n";
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1 LIMIT 1";
 						$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
 						$countImg = $wpdb->num_rows;
-
+						$primary_image_handler = "";
 						foreach($resultsImg as $dataImg){
+							$primary_image_handler = $dataImg['ProfileMediaURL'];
 							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=400\" /></a>\n";
 						}
 
@@ -120,7 +121,9 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
+								if($primary_image_handler != $dataImg['ProfileMediaURL']){
 									echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
+								}									
 							}
 
 echo "					</div>\n"; // #photos
