@@ -1504,7 +1504,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo '<a href="javascript:confirm_mass_gallery_delete();">Delete Selected Images</a>';
 								echo '<script language="javascript">';
 								echo 'function confirm_mass_gallery_delete(){';
-								echo 'jQuery(document).ready(function() {';
+								//echo 'jQuery(document).ready(function() {';
 								echo "var mas_del_ids = '&';";
 								echo 'jQuery("input:checkbox[name=massgaldel]:checked").each(function() {';
 								echo "if(mas_del_ids != '&'){";
@@ -1512,7 +1512,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo '}';
 
 								echo "mas_del_ids += 'targetids[]='+jQuery(this).val();";
-								echo "});";
+								//echo "});";
 
 								echo "if( mas_del_ids != '&'){ ";
 								echo 'if(confirm("Do you want to delete all the selected images?")){';
