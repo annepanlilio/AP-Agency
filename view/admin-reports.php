@@ -1240,6 +1240,7 @@ elseif ($ConfigID == 81)
 	$last = round($total_profiles->total_profiles/$count);
 	$loop_count = $count;
 	$x = 0;
+
 	for($a = 1; $a<=$last; $a++) {
 		$x++;
 		$from = ($a==1)?1:($loop_count+1);
@@ -2438,6 +2439,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 											$ProfileContactNameFirst = $vv["ProfileContactNameFirst"];
 											$ProfileContactNameLast = $vv["ProfileContactNameLast"];
 
+
 											if(( ! is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' )) || (!email_exists($vv["ProfileContactEmail"]) && is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) ){
 													// parse profile type
 													if(strpos($vv["ProfileType"], "|") != -1){
@@ -2555,7 +2557,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 																} elseif ($rb_agency_option_profilenaming == 2) {
 																	$ProfileContactDisplay = $vv["ProfileContactDisplay"];
 																} elseif ($rb_agency_option_profilenaming == 3) {
-																	$ProfileContactDisplay = "ID-" . $ProfileID;
+																	$ProfileContactDisplay = "ID-" . $ProfileContactDisplay["ProfileID"];
 																} elseif ($rb_agency_option_profilenaming == 4) {
 																	$ProfileContactDisplay = $ProfileContactNameFirst;
 																} elseif ($rb_agency_option_profilenaming == 5) {
