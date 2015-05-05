@@ -2559,7 +2559,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 																} elseif ($rb_agency_option_profilenaming == 2) {
 																	$ProfileContactDisplay = $vv["ProfileContactDisplay"];
 																} elseif ($rb_agency_option_profilenaming == 3) {
-																	$ProfileContactDisplay = "ID-" . $ProfileContactDisplay["ProfileID"];
+																	$ProfileContactDisplay = "ID-" . $vv["ProfileContactDisplay"];
 																} elseif ($rb_agency_option_profilenaming == 4) {
 																	$ProfileContactDisplay = $ProfileContactNameFirst;
 																} elseif ($rb_agency_option_profilenaming == 5) {
@@ -2587,7 +2587,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 																$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGallery ."' WHERE ProfileID = \"". $last_inserted_id ."\"";
 																$renamed = $wpdb->query($rename);
 																//rb_agency_deldir($ProfileGallery);
-																echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records</b></li></ul></div>";
+																echo "<div class='wrap' style='color:#008000'><ul><li> User Name:- <a target='_blank' href='".admin_url("admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=".$last_inserted_id)."'>".$vv["ProfileContactDisplay"]."</a> & Email:- ".$vv["ProfileContactEmail"]."  <b>Successfully Imported Records </b></li></ul></div>";
 											
 															
 											}else{
