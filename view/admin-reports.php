@@ -1031,7 +1031,7 @@ elseif ($ConfigID == 8) {
 							} elseif ($rb_agency_option_profilenaming == 2) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst;
 							} elseif ($rb_agency_option_profilenaming == 3) {
-								$ProfileGalleryFixed = "ID ". $ProfileID;
+								$ProfileGalleryFixed = "ID-". $ProfileID;
 							} elseif ($rb_agency_option_profilenaming == 4) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst;
 							} elseif ($rb_agency_option_profilenaming == 5) {
@@ -1569,7 +1569,7 @@ elseif ($ConfigID == 14) {
 										$error .= "<b><i>". __(LabelSingular ." must have a display name identified", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 										$have_error = true;
 									} elseif ($rb_agency_option_profilenaming == 3) {
-										$ProfileContactDisplay = "ID ". $ProfileID;
+										$ProfileContactDisplay = "ID-". $ProfileID;
 									}
 
 									$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
@@ -1616,7 +1616,7 @@ elseif ($ConfigID == 14) {
 									} elseif ($rb_agency_option_profilenaming == 2) {
 										$ProfileContactDisplay = $ProfileContactNameFirst. " ". substr($ProfileContactNameLast, 0, 1);
 									} elseif ($rb_agency_option_profilenaming == 3) {
-										$ProfileContactDisplay = "ID ". $ProfileID;
+										$ProfileContactDisplay = "ID-". $ProfileID;
 									}
 
 						$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
@@ -1677,7 +1677,7 @@ elseif ($ConfigID == 14) {
 					} elseif ($rb_agency_option_profilenaming == 2) {
 						$ProfileContactDisplay = $ProfileContact[0] . " ". $ProfileContact[1];
 					} elseif ($rb_agency_option_profilenaming == 3) {
-						$ProfileContactDisplay = "ID ". $ProfileID;
+						$ProfileContactDisplay = "ID-". $ProfileID;
 					}
 
 						$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
