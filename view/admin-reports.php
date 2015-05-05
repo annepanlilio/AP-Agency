@@ -2243,6 +2243,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 				
 			}
+			
 		}elseif( strtolower($get_ext) == 'csv' ){
 
 				while($column = fgetcsv($handle, 4096, ','))
@@ -2304,8 +2305,9 @@ class RBAgencyCSVXLSImpoterPlugin {
 				echo '</td></tr>';
 			}*/
 			$pos = 0;
+			
 			foreach ($arr_headers as $key ) {
-				  if(substr($key, 0, 7) != "Profile"){
+				  if(substr($key, 0, 7) != "Profile" && substr($key,0,2) != "ID"){
 						echo '<tr><th><label>'.str_replace("_"," ",$key).'</label></th>';	
 						echo '<td><select name = "select'.$pos.'">';
 						foreach ($custom_fields as $custom_fields_result) {
