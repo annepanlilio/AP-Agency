@@ -2533,7 +2533,13 @@ class RBAgencyCSVXLSImpoterPlugin {
 																			$vv[$key]  = $cal_height;
 																			
 																		}
-																		
+
+																		$parse = explode(" ",$vv[$key]);
+																		if($parse[1] == "lb" || $parse[1] == "ft" || $parse[1] == "in"){
+																			$removeLabels = array("in","ft","lb");
+																			$vv[$key] = str_replace($removeLabels, " ", $vv[$key]);
+																		}																		
+
 																		$add_to_c_table = $wpdb->prepare("INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields) values(%d,%d,%s)",$select_id,$last_inserted_id,$vv[$key]);
 																		$wpdb->query($add_to_c_table);
 																		$pos++;
