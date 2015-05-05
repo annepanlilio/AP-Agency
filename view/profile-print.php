@@ -92,7 +92,7 @@ global $wpdb;
 		#fullpage .info {
 			width: 30%;
 			float: right;
-			font-size: large;
+			font-size: x-large;
 		}
 		#fullpage .photos {
 			clear: both;

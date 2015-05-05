@@ -894,7 +894,7 @@ elseif ($ConfigID == 8) {
 							} elseif ($rb_agency_option_profilenaming == 2) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst;
 							} elseif ($rb_agency_option_profilenaming == 3) {
-								$ProfileGalleryFixed = "ID ". $ProfileID;
+								$ProfileGalleryFixed = "ID-". $ProfileID;
 							} elseif ($rb_agency_option_profilenaming == 4) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst;
 							} elseif ($rb_agency_option_profilenaming == 5) {
@@ -1486,7 +1486,7 @@ elseif ($ConfigID == 14) {
 				} elseif ($rb_agency_option_profilenaming == 2) {
 						$ProfileContactDisplay = $ProfileContact[1] . " ". $ProfileContact[0];
 				} elseif ($rb_agency_option_profilenaming == 3) {
-					$ProfileContactDisplay = "ID ". $ProfileID;
+					$ProfileContactDisplay = "ID-". $ProfileID;
 				}
 				
 				$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 

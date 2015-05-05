@@ -186,4 +186,7 @@
 }
 #rblayout-two{ margin-top: 40px;}
 
+/*.lb-outerContainer{height: 600px !important;width: auto !important;}
+*/.lb-image{max-height: 600px !important; max-width:1000px !important;}
+
 .mCustomScrollBox{ height:auto!important;}

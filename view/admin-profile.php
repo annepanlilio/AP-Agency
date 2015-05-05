@@ -1396,6 +1396,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "}\n";
 								echo "</script>\n";
 
+								echo "<script type='text/javascript'>\n";
+								//echo "Jquery(document).ready(function (){";
+
+									echo "function editLink(delMedia,mediaType) {\n";
+										echo "alert(delMedia);";
+									echo "}\n";
+
+								//echo "})";								
+								echo "</script>\n";
+
 								// Mass delete
 								if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
 									$massmediaids = '';
@@ -1572,7 +1582,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-									$outVideoMedia .= "<div class=\"media-file voice-demo\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'], $dataMedia['ProfileVideoType']) . "<br />".ucfirst($dataMedia["ProfileMediaTitle"])."<a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
+									$outVideoMedia .= "<div class=\"media-file voice-demo\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'], $dataMedia['ProfileVideoType']) . "<br /><span class='video-title'>".ucfirst($dataMedia["ProfileMediaTitle"])."</span><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
+									[<a href=\"javascript:editLink('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">EDIT</a>]
+									[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 									$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
