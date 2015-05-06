@@ -1637,8 +1637,19 @@ class RBAgency_Profile {
 			 * Casting Query
 			 */
 				case 3:
-					$sql = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst) AS profile, "
-							. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND ".$sql_where_array['standard']."  GROUP BY(profile.ProfileID) ";
+				   //(SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst)
+					$sql = "SELECT profile.*, (SELECT media.ProfileMediaURL FROM ".
+											table_agency_profile_media ." media
+											WHERE
+											profile.ProfileID = media.ProfileID
+											AND
+											media.ProfileMediaType = \"Image\"
+											AND
+											media.ProfileMediaPrimary = 1
+											LIMIT 1
+											)
+											AS
+								ProfileMediaURL  FROM ".table_agency_profile." AS profile WHERE ".$sql_where_array['standard']."  GROUP BY(profile.ProfileID) ";
 					break;
 
 			/* 
