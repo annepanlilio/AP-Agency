@@ -75,6 +75,9 @@
   	background: #000;
 }
 
+/*Profile List Layout 01*/
+#profile-list .rbprofile-list.-list-layout-1 { padding: 0px; width: auto; max-width: none; min-width: 0 }
+
 /* Featured Profile Widget */
 #profile-featured {
 	text-align: center;
