@@ -2209,6 +2209,7 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_perpage		= isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
 				$rb_agency_option_profilelist_sortby		= isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
 				$rb_agency_option_layoutprofilelist			= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
+				$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
 				$rb_agency_option_profilelist_expanddetails	= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
 				$rb_agency_option_locationtimezone			= isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 				$rb_agency_option_profilenaming				= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
@@ -2245,125 +2246,164 @@ class RBAgency_Profile {
 			/* 
 			 * initialize html
 			 */
-			$displayHTML ="";			
-			$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list profile-list-layout0 profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
-			if(!$plain){
-			$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
-			$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
-			$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
-			$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
-			}
-			$displayActions = "";  
-			$type = get_query_var('type');  
+			$displayHTML ="";
 
-			if(!$plain && class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
+			$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
 
+			if($rb_agency_option_layoutprofilelistlayout == 0) { // Default Profile Layout
 
-				$displayActions = "<div class=\"rb_profile_tool\">";
-				if($rb_agency_option_profilelist_favorite && $type != "casting"){
-				
-					$displayActions .= "<div id=\"profile-favorite\" class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
-				
+				if(!$plain){
+					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
+					$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
+					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
+					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
 				}
+				$displayActions = "";  
+				$type = get_query_var('type');
+
+				if(!$plain && class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
+
+
+					$displayActions = "<div class=\"rb_profile_tool\">";
+					if($rb_agency_option_profilelist_favorite && $type != "casting"){
+					
+						$displayActions .= "<div id=\"profile-favorite\" class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><strong>&#9829;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
+					
+					}
+					$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
+
+					if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
+					
+						$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
+					}
+					$displayActions .= "</div>";
+
+					if(!empty($casting_availability)){
+						if($casting_availability == 'available'){
+							$displayActions .= "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
+						}else{
+							$displayActions .= "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
+						}
+					}
+				}
+				/* 
+				 * determine primary image
+				 */
+				$images = "";
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
-
-				if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
-				
-					$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><strong>&#9733;</strong>&nbsp;<span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
-				}
-				$displayActions .= "</div>";
-
-				if(!empty($casting_availability)){
-					if($casting_availability == 'available'){
-						$displayActions .= "<span style=\"text-align:center;color:#2BC50C;font-weight:bold;width:80%;padding:10px;display:block;\">Available</span>\n";
-					}else{
-						$displayActions .= "<span style=\"text-align:center;color:#EE0F2A;font-weight:bold;width:80%;padding:10px;display:block;\">Not Available</span>\n";
+				if ($p_image){
+					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
+						if($rb_agency_option_profilelist_thumbsslide==1){  //show profile sub thumbs for thumb slide on hover
+							$images=getAllImages($dataList["ProfileID"]);
+							$images=str_replace("{PHOTO_PATH}",RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
+						}
+						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."</div>\n";
+					} else {
+						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></a>".$images."</div>\n";
 					}
-				}
-			}
-			/* 
-			 * determine primary image
-			 */
-			$images = "";
-			$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
-			if ($p_image){
-				if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-					if($rb_agency_option_profilelist_thumbsslide==1){  //show profile sub thumbs for thumb slide on hover
-						$images=getAllImages($dataList["ProfileID"]);
-						$images=str_replace("{PHOTO_PATH}",RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
-					}
-					$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."</div>\n";
 				} else {
-					$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></a>".$images."</div>\n";
+					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
 				}
-			} else {
-				$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
-			}
 
-			/* 
-			 * determine profile details
-			 */
-			$displayHTML .= "  <div class=\"profile-info\">\n";
-			$uid = rb_agency_get_current_userid();
+				/* 
+				 * determine profile details
+				 */
+				$displayHTML .= "  <div class=\"profile-info\">\n";
+				$uid = rb_agency_get_current_userid();
 
-			if(get_query_var('type') == "casting" && $uid > 0){
-				$displayHTML .= "<input type=\"checkbox\" name=\"profileid\" value=\"".$dataList["ProfileID"]."\"/>";
-			}
-			$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
-			if ($rb_agency_option_profilelist_expanddetails) {
-				$displayHTML .= "<div class=\"details\">";
-				$displayHTML .= "<span class=\"details-merged\">";
-				$ProfileDateBirth = rb_agency_get_age($dataList["ProfileDateBirth"]);
-				if(!empty($ProfileDateBirth)){
-				$displayHTML .= "<span class=\"details-age\">". $ProfileDateBirth ."</span>";
+				if(get_query_var('type') == "casting" && $uid > 0){
+					$displayHTML .= "<input type=\"checkbox\" name=\"profileid\" value=\"".$dataList["ProfileID"]."\"/>";
 				}
-					if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
-						$stateTitle = rb_agency_getStateTitle($dataList["ProfileLocationState"],true);
-						$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"])>0 && !empty($stateTitle)?", ":" ")."</span>";
-						$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
+				$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
+				if ($rb_agency_option_profilelist_expanddetails) {
+					$displayHTML .= "<div class=\"details\">";
+					$displayHTML .= "<span class=\"details-merged\">";
+					$ProfileDateBirth = rb_agency_get_age($dataList["ProfileDateBirth"]);
+					if(!empty($ProfileDateBirth)){
+					$displayHTML .= "<span class=\"details-age\">". $ProfileDateBirth ."</span>";
 					}
-					$type = get_query_var("type");
-				$displayHTML .= "</span>";
-				if(is_user_logged_in()){	
-					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result",'rb-pdf')) || $plain){
-						if($rb_agency_option_show_email_search_result){
-							if(!empty($dataList["ProfileContactEmail"]))
-							$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
+						if($dataList["ProfileLocationState"]!="" && $rb_agency_option_detail_state  == 1){
+							$stateTitle = rb_agency_getStateTitle($dataList["ProfileLocationState"],true);
+							$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"])>0 && !empty($stateTitle)?", ":" ")."</span>";
+							$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
 						}
-						if($rb_agency_option_show_contact_search_result){
-							if(!empty($dataList["ProfileContactPhoneWork"]))
-							$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
-							if(!empty($dataList["ProfileContactPhoneHome"]))
-							$displayHTML .= "<span class=\"details-contact-phonehome contact\"><label>Phone Home:</label> ". $dataList["ProfileContactPhoneHome"] ."</span>";
-							if(!empty($dataList["ProfileContactPhoneCell"]))
-							$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
-							if(!empty($dataList["ProfileContactWebsite"]))
-							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">".($type == "rb-pdf"?$dataList["ProfileContactWebsite"]:"Visit Website")."</a></span>";
-						}
-					}else{
-						if($rb_agency_option_show_email_listing){
-							if(!empty($dataList["ProfileContactEmail"]))
-							$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
-						}
-						if($rb_agency_option_show_contact_listing){
-							if(!empty($dataList["ProfileContactPhoneWork"]))
-							$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
-							if(!empty($dataList["ProfileContactPhoneHome"]))
-							$displayHTML .= "<span class=\"details-contact-phonehome contact\"><label>Phone Home:</label> ". $dataList["ProfileContactPhoneHome"] ."</span>";
-							if(!empty($dataList["ProfileContactPhoneCell"]))
-							$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
-							if(!empty($dataList["ProfileContactWebsite"]))
-							$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">".($type == "rb-pdf"?$dataList["ProfileContactWebsite"]:"Visit Website")."</a></span>";
+						$type = get_query_var("type");
+					$displayHTML .= "</span>";
+					if(is_user_logged_in()){	
+						if(in_array($type,array("search-basic","search-advanced","search-basic","search-result",'rb-pdf')) || $plain){
+							if($rb_agency_option_show_email_search_result){
+								if(!empty($dataList["ProfileContactEmail"]))
+								$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
+							}
+							if($rb_agency_option_show_contact_search_result){
+								if(!empty($dataList["ProfileContactPhoneWork"]))
+								$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
+								if(!empty($dataList["ProfileContactPhoneHome"]))
+								$displayHTML .= "<span class=\"details-contact-phonehome contact\"><label>Phone Home:</label> ". $dataList["ProfileContactPhoneHome"] ."</span>";
+								if(!empty($dataList["ProfileContactPhoneCell"]))
+								$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
+								if(!empty($dataList["ProfileContactWebsite"]))
+								$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">".($type == "rb-pdf"?$dataList["ProfileContactWebsite"]:"Visit Website")."</a></span>";
+							}
+						}else{
+							if($rb_agency_option_show_email_listing){
+								if(!empty($dataList["ProfileContactEmail"]))
+								$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
+							}
+							if($rb_agency_option_show_contact_listing){
+								if(!empty($dataList["ProfileContactPhoneWork"]))
+								$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
+								if(!empty($dataList["ProfileContactPhoneHome"]))
+								$displayHTML .= "<span class=\"details-contact-phonehome contact\"><label>Phone Home:</label> ". $dataList["ProfileContactPhoneHome"] ."</span>";
+								if(!empty($dataList["ProfileContactPhoneCell"]))
+								$displayHTML .= "<span class=\"details-contact-phonecell contact\"><label>CellPhone:</label> ". $dataList["ProfileContactPhoneCell"] ."</span>";
+								if(!empty($dataList["ProfileContactWebsite"]))
+								$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">".($type == "rb-pdf"?$dataList["ProfileContactWebsite"]:"Visit Website")."</a></span>";
+							}
 						}
 					}
+					$displayHTML .= "</div>\n";
 				}
-				$displayHTML .= "</div>\n";
-			}
-				$displayHTML .=  $displayActions;
+					$displayHTML .=  $displayActions;
 
-			$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
+				$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
+
+			} elseif($rb_agency_option_layoutprofilelistlayout == 1){ // Profile Layout 02
+
+				$displayActions = "";  
+				$type = get_query_var('type');
+				
+				if(!$plain){
+					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
+					$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
+					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
+					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+				}
+				/* 
+				 * determine primary image
+				 */
+				$images = "";
+				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
+				if ($p_image){
+					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
+						if($rb_agency_option_profilelist_thumbsslide==1){  //show profile sub thumbs for thumb slide on hover
+							$images=getAllImages($dataList["ProfileID"]);
+							$images=str_replace("{PHOTO_PATH}",RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
+						}
+						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."</div>\n";
+					} else {
+						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></a>".$images."</div>\n";
+					}
+				} else {
+					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
+				}
+				$displayHTML .= "  <div class=\"profile-info\">\n";
+				$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
+				$displayHTML .= "  </div><!-- .profile-info -->\n";				
+			}
 
 			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
+			
 			if(self::$error_debug){
 				self::$error_checking[] = array('search_formatted',$displayHTML);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
