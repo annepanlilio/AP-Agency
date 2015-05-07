@@ -533,12 +533,6 @@ img.fillheight {
   .rbcolumn:after, { clear: both; }
 }
 
-#rbprofile-11 .image{
-width: 145px;
-height: 160px;
-background-size: 150px;
-display: block;
-}
 .rb_profile_tool { font-size: 13px; }
 .rb_profile_tool div.favorite { float: left; }
 .rb_profile_tool div.casting { float: right; padding-top: 5px; }
