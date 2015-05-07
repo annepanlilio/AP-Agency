@@ -100,7 +100,7 @@
 						$wpdb->get_results("SELECT * FROM ".table_agency_casting_job_application." WHERE Job_ID='".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."'");
 						$is_applied = $wpdb->num_rows;
 						if($is_applied <= 0){
-							$wpdb->query("INSERT INTO  " . table_agency_casting_job_application . " (Job_ID, Job_UserLinked) VALUES('".$Job_ID."','".$data["ProfileUserLinked"]."') ");		
+							$wpdb->query("INSERT INTO  " . table_agency_casting_job_application . " (Job_ID, Job_UserLinked,Job_UserProfileID) VALUES('".$Job_ID."','".$data["ProfileUserLinked"]."','".$data["ProfileID"]."') ");		
 						}
 					}else{
 							$wpdb->query("DELETE FROM  " . table_agency_casting_job_application . " WHERE Job_ID = '".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."' ");		
