@@ -198,7 +198,10 @@ global $wpdb;
 				
 			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,  $type);
 			$objWriter->save(str_replace('.php', '.'.$extension, __FILE__));
-			$profile_paginate = isset($_POST["export-profile"]) && !empty($_POST["export-profile"])?"-profiles-".$_POST["export-profile"]:"";
+			$profile_name = explode("-",$_POST["export-profile"]);
+			$from = $profile_name[0];
+			$to = $profile_name[1];
+			$profile_paginate = isset($_POST["export-profile"]) && !empty($_POST["export-profile"])?"-profiles-".($from."-".(($to+$from)-1)):"";
             
 			header("Pragma: public");
 			header("Expires: 0");
