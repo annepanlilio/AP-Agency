@@ -1702,7 +1702,9 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr["rb_agency_option_profilelist_perpage"])?$rb_agency_options_arr["rb_agency_option_profilelist_perpage"]:15;
 				$rb_agency_option_profilelist_printpdf = isset($rb_agency_options_arr["rb_agency_option_profilelist_printpdf"])?$rb_agency_options_arr["rb_agency_option_profilelist_printpdf"]:0;
 				$rb_agency_option_profilelist_count = isset($rb_agency_options_arr["rb_agency_option_profilelist_count"])?$rb_agency_options_arr["rb_agency_option_profilelist_count"]:0;
-				$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
+				$rb_agency_option_layoutprofilelistlayout = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
+				$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:5;
+				$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$profile_list = "";
@@ -1825,7 +1827,7 @@ class RBAgency_Profile {
 					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart, $availability );
 					
 					if($rb_agency_option_layoutprofilelistlayout == 1){
-						if($profilesPerRow % 6 == 0) {
+						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
 			    			$profile_list .=" <div class=\"info-panel\"> \n";
 							$profile_list .=" 	<div class=\"profile-pic\"> \n";
 							$profile_list .=" 	<img src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg\" alt=\"Profile Pic\"> \n";
@@ -1859,8 +1861,8 @@ class RBAgency_Profile {
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:0;
 				$rb_agency_option_profilelist_count  = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
-				$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-				$rb_agency_option_profilesperrow = 6;
+				$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;				
+				$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:5;
 				$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
 			/* 
@@ -1905,7 +1907,7 @@ class RBAgency_Profile {
 				$all_html .= '</div>'; // #results-info
 				$all_html .= '<div class="rbclear"></div>';
 				$all_html .= '<hr />';
-				$all_html .= "<div id='profile-list' class='".$profiles_perrow[$rb_agency_option_profilesperrow-1]."-profiles'>".$profile_list."</div>";
+				$all_html .= "<div id='profile-list' class='".$profiles_perrow[$rb_agency_option_layoutprofilelist_perrow-1]."-profiles'>".$profile_list."</div>";
 				$all_html .= $paginate->show();
 				$all_html .= "<div class='clear'></div>";
 				$type = get_query_var("type");

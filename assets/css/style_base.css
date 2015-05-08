@@ -36,6 +36,7 @@
 }
 #profile-list .rbprofile-list .profile-info {
 	padding: 5px 0px;
+	float: left;
 }
 #profile-list .rbprofile-list .profile-info .details {
 	font-size: small;
