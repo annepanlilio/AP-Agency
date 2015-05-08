@@ -1702,6 +1702,7 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr["rb_agency_option_profilelist_perpage"])?$rb_agency_options_arr["rb_agency_option_profilelist_perpage"]:15;
 				$rb_agency_option_profilelist_printpdf = isset($rb_agency_options_arr["rb_agency_option_profilelist_printpdf"])?$rb_agency_options_arr["rb_agency_option_profilelist_printpdf"]:0;
 				$rb_agency_option_profilelist_count = isset($rb_agency_options_arr["rb_agency_option_profilelist_count"])?$rb_agency_options_arr["rb_agency_option_profilelist_count"]:0;
+				$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
 
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$profile_list = "";
@@ -1802,6 +1803,9 @@ class RBAgency_Profile {
 				foreach ($favorites_results  as $key) {
 					array_push($arr_favorites, $key->SavedFavoriteTalentID);
 				}
+
+				$profilesPerRow = 1;
+
 				foreach($results as $profile) {
 					$availability = '';
 
@@ -1819,6 +1823,29 @@ class RBAgency_Profile {
 					}
 
 					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart, $availability );
+					
+					if($rb_agency_option_layoutprofilelistlayout == 1){
+						if($profilesPerRow % 6 == 0) {
+			    			$profile_list .=" <div class=\"info-panel\"> \n";
+							$profile_list .=" 	<div class=\"profile-pic\"> \n";
+							$profile_list .=" 	<img src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg\" alt=\"Profile Pic\"> \n";
+							$profile_list .=" 	</div> <!-- .profile-pic --> \n";
+							$profile_list .=" 	<div class=\"info\"> \n";
+							$profile_list .=" 		<h2>Profile Name</h2> \n";
+							$profile_list .=" 		<ul class=\"stats\"> \n";			
+							$profile_list .=" 		<li><strong>Gender<span>:</span></strong> Female</li> \n";
+							$profile_list .=" 		<li><strong>Ethnicity:</strong>  White</li> \n";
+							$profile_list .=" 		<li><strong>Skin Colour:</strong> White</li> \n";
+							$profile_list .=" 		<li><strong>Height (cm):</strong> 172</li> \n";
+							$profile_list .=" 		<li><strong>Hair Colour:</strong> Blonde</li> \n";
+							$profile_list .=" 		</ul> <!-- .stats --> \n";
+							$profile_list .=" 		<div class=\"owl-carousel\"> \n";
+							$profile_list .=" 		</div> <!-- .info --> \n";
+							$profile_list .=" 	</div> <!-- .info --> \n";
+							$profile_list .=" </div> <!-- .info-panel --> \n";
+						}
+						$profilesPerRow++;
+					}
 				}
 
 				if(self::$error_debug){
@@ -1833,6 +1860,8 @@ class RBAgency_Profile {
 				$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:0;
 				$rb_agency_option_profilelist_count  = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
 				$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
+				$rb_agency_option_profilesperrow = 6;
+				$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
 			/* 
 			 * this is the upper header html of the profile list
@@ -1876,7 +1905,7 @@ class RBAgency_Profile {
 				$all_html .= '</div>'; // #results-info
 				$all_html .= '<div class="rbclear"></div>';
 				$all_html .= '<hr />';
-				$all_html .= "<div id='profile-list'>".$profile_list."</div>";
+				$all_html .= "<div id='profile-list' class='".$profiles_perrow[$rb_agency_option_profilesperrow-1]."-profiles'>".$profile_list."</div>";
 				$all_html .= $paginate->show();
 				$all_html .= "<div class='clear'></div>";
 				$type = get_query_var("type");
