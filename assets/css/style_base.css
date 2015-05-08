@@ -34,6 +34,7 @@
 }
 #profile-list .rbprofile-list .image img {
 	border: none;
+	max-width: 100%;
 	border-radius: 0;
 	box-shadow: none;
 }
@@ -81,6 +82,10 @@
 /* Featured Profile Widget */
 #profile-featured {
 	text-align: center;
+}
+
+#profile-featured img {
+	max-width: 100%;
 }
 
 /* RBLinks */
