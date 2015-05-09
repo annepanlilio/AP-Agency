@@ -1854,7 +1854,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		echo "     <input type=\"hidden\" name=\"ProfileUserLinked\" value=\"" . $ProfileUserLinked. "\" />\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
 		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		echo "" . __("Last updated ", RBAGENCY_TEXTDOMAIN) . " " . rb_make_ago($ProfileDateUpdated) . "\n";
+		//echo "" . __("Last updated ", RBAGENCY_TEXTDOMAIN) . " " . rb_make_ago($ProfileDateUpdated) . "\n";
 	} else {
 		echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
 		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Create Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
