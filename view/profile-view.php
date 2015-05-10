@@ -212,6 +212,8 @@
 				 // Public
 				 ($rb_agency_option_privacy == 0) ||
 
+				 ($rb_agency_option_privacy == 3) ||
+				 
 				//admin users
 				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 
