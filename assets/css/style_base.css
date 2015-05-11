@@ -107,6 +107,9 @@
 #profile-featured {
 	text-align: center;
 }
+#profile-featured img {
+	max-width: 100%;
+}
 
 /* RBLinks */
 .rblinks {
