@@ -213,6 +213,8 @@
 				 ($rb_agency_option_privacy == 0) ||
 
 				 ($rb_agency_option_privacy == 3) ||
+
+				 ($rb_agency_option_privacy == 2) ||
 				 
 				//admin users
 				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
@@ -222,6 +224,7 @@
 
 				//  Model list public. Must be logged to view profile information
 				($rb_agency_option_privacy == 1 && is_user_logged_in()) ||
+				
 				// View own profile
 				($ProfileUserLinked == $CurrentUser && is_user_logged_in())
 				) {
