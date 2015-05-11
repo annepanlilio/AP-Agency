@@ -33,6 +33,7 @@
 	border: none;
 	border-radius: 0;
 	box-shadow: none;
+	max-width: 100%;
 }
 #profile-list .rbprofile-list .profile-info {
 	padding: 5px 0px;
