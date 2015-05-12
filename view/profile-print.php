@@ -56,8 +56,8 @@ global $wpdb;
 		#fullpage table td {
 			 border: none;
 		}
-		#fullpage .box {
-			height: 890px;
+		#fullpage .box {	
+			height: 860px;		
 			overflow: hidden;
 		}
 		#fullpage #print_actions {
@@ -80,18 +80,15 @@ global $wpdb;
 			/*width: 300px;*/
 		}
 		#fullpage td {
-			min-height: 900px;
 		}
 		#fullpage .profile-pic {
-			width: 65%;
+			width: 55%;
 			float: left;
-			height: 660px;
+			height: 628px;
 			overflow: hidden;
-		}#fullpage .profile-pic img {
-			max-height: 475px;
 		}
 		#fullpage .info {
-			width: 30%;
+			width: 40%;
 			float: right;
 			font-size: x-large;
 		}
@@ -447,7 +444,7 @@ if ($_GET['cD'] == "0") {
 							foreach($resultsImg as $dataImg ){
 								if ($i < 4) {
 									if($profile_image != basename($dataImg['ProfileMediaURL'])){
-										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
+										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=128\" />\n";
 									}
 									//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
 								}
