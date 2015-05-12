@@ -382,7 +382,7 @@ class RBAgency_Casting {
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 
 			$MassEmailSubject = $_POST["MassEmailSubject"];
-			$MassEmailMessage = preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\\\- \t\n\r\0\x0B]/u','',$_POST["MassEmailMessage"]);
+			$MassEmailMessage = $_POST["MassEmailMessage"]; //preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\\\- \t\n\r\0\x0B]/u','',$_POST["MassEmailMessage"]);
 			$MassEmailMessage = preg_replace('/\n(\s*\n)+/', '</p><p>', $MassEmailMessage);
 			$MassEmailRecipient = $_POST["MassEmailRecipient"];
 			$MassEmailBccEmail = $_POST["MassEmailBccEmail"];
@@ -623,8 +623,8 @@ class RBAgency_Casting {
 							}
 							$profileimage .="</div>";
 			// Mail it
-			$headers[]  = 'MIME-Version: 1.0';
-			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
+			$headers[]  = 'MIME-Version: 1.0'. "\r\n";
+			$headers[] = 'Content-type: text/html; charset=iso-8859-1'. "\r\n";
 
 			if(!empty($SearchMuxFromName)){
 				$rb_agency_value_agencyname = $SearchMuxFromName;
@@ -636,7 +636,7 @@ class RBAgency_Casting {
 				$SearchMuxToEmail = $SearchMuxToName." <".$SearchMuxToEmail.">";
 			}
 			
-			$headers[]  = 'From: "'.$rb_agency_value_agencyname.'" <'. $rb_agency_option_agencyemail .'>' . "\r\n";
+			$headers[]  = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
 			
 			//For Bcc emails
 			if(!empty($SearchMuxBccEmail)){
@@ -651,6 +651,7 @@ class RBAgency_Casting {
 			$SearchMuxMessage = $SearchMuxMessage;
 			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  make_clickable(stripcslashes($SearchMuxMessage)), $headers);
 
+			var_dump(array($headers,$SearchMuxToEmail,$SearchMuxSubject, $SearchMuxSubject, $SearchMuxHash));
 			//if($isSent){
 				if(!empty($SearchMuxFromEmail)){
 					$email_error .= "<div style=\"margin:15px;\">";
@@ -680,11 +681,13 @@ class RBAgency_Casting {
 		public static function cart_send_form(){
 			global $wpdb;
 		
-		/*if(isset($_POST["SendEmail"])){
+		if(isset($_POST["SendEmail"])){
 			// Process Form
 			$isSent = RBAgency_Casting::cart_send_process();
-
-		}*/
+			if(isset($isSent)){
+				echo "          <div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+			}
+		}
 
 			if(isset($_GET["action"]) && $_GET["action"] == "massEmail"){
 				//echo RBAgency_Casting::cart_show();
@@ -731,9 +734,7 @@ class RBAgency_Casting {
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 				echo "        <div class=\"inner\">\n";
-				/*if($msg!=""){
-				echo "          <div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
-				}*/
+				
 				echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$rb_agency_value_agencyemail."</textarea><br/>";
 				echo "          <strong>Bcc:</strong><br/><textarea name=\"MassEmailBccEmail\" style=\"width:100%;\">".$recipient."</textarea><br/>";
 				echo "          <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
