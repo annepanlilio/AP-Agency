@@ -100,15 +100,14 @@ echo $raw_response;
 	 */
 
 		public static function check_stylesheet_exists(){
-			// Get the file
-			$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style.css";
+			// Exists?
+			$rb_agency_options_arr = get_option('rb_agency_layout_options');
 
-			if (file_exists($rb_agency_stylesheet)) {
+			// Set Default Values
+			$rb_agency_value_stylesheet = $rb_agency_options_arr['rb_agency_value_stylesheet'];
+			if (isset($rb_agency_value_stylesheet) && !empty($rb_agency_value_stylesheet)) {
 				return true; 
-				// "<div id=\"message\" class=\"updated\"><p>Style last updated on " . date ("F d Y H:i:s.", filemtime($rb_agency_stylesheet)) .".</p></div>";
 			} else {
-				//$rb_agency_stylesheet = RBAGENCY_PLUGIN_DIR ."assets/css/style_base.css";
-				//echo "<div id=\"message\" class=\"error\"><p>Stylesheet not setup, please click <strong>Save Changes</strong> below to initialize.</p></div>";
 				return false; 
 			}
 		}

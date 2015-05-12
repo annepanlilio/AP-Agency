@@ -1843,12 +1843,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		echo "</div>";
 	}
 
-	?>
-	<div class="postbox">
-			<div class="inside">
+		echo "<div class=\"postbox\">\n";
+		echo "	<div class=\"inside\">\n";
 
-
-	<?php
 	if (!empty($ProfileID) && ($ProfileID > 0)) {
 		echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
 		echo "     <input type=\"hidden\" name=\"ProfileUserLinked\" value=\"" . $ProfileUserLinked. "\" />\n";
@@ -1862,8 +1859,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 		echo "	</div>\n";
 		echo "</div>\n";
-		
-		
 
 	echo "</form>\n";
 }
