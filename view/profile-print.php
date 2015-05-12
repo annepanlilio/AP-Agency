@@ -57,7 +57,8 @@ global $wpdb;
 			 border: none;
 		}
 		#fullpage .box {
-			height: 900px;
+			height: 890px;
+			overflow: hidden;
 		}
 		#fullpage #print_actions {
 			top: 15px;
@@ -435,7 +436,7 @@ if ($_GET['cD'] == "0") {
 						echo "	<h2 class=\"name\">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
 
 						echo " <div class=\"profile-pic\">";
-						echo "<img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" />";
+						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."&h=475\" />";
 
 						echo "<div class=\"photos\">";
 							$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
