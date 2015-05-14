@@ -1474,7 +1474,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg =$wpdb->num_rows;
 								$massDelete = "";
-
+								echo "<div id='wrapper-sortable'><div id='gallery-sortable' style='list-style:none;'>";
 								foreach ($resultsImg as $dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
 										$toggleClass = " primary";
@@ -1494,17 +1494,33 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
 										$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
 									}
-									echo "<div class=\"gallery-item".$toggleClass."\">\n";
+									echo "<div class=\"item gallery-item".$toggleClass."\">\n";
 									
 									echo $toDelete;
 									// <img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 									echo "  <div class=\"photo\"><img src=\"" . get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "&a=t&w=100&h=150\"/></div>\n";
-									echo "    	<div class=\"item-order\">Order: <input type=\"text\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
+									echo "    	<div class=\"item-order\" style='display:none;'>Order: <input type=\"hidden\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
 									echo "  	<div class=\"make-primary\"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "</div>";																		
 									echo "    	<div>".$massDelete."</div>";
 									echo "  </div>\n";
-
 								}
+								echo "</div></div>";
+								?>
+								<script type="text/javascript">
+								jQuery(document).ready(function(){
+									jQuery("#wrapper-sortable #gallery-sortable").sortable(
+										{item:'.item',
+										cursor:'move',
+										update: function( event, ui ) {
+												jQuery("#wrapper-sortable #gallery-sortable .item").each(function(i,d){
+													 jQuery(this).find("input[type=hidden]").val(i);
+												});
+										}
+									});
+									jQuery("#wrapper-sortable #gallery-sortable").disableSelection();
+								});
+								</script>
+								<?php 
 								// No records?
 								if ($countImg < 1) {
 									echo "<div>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
