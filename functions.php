@@ -446,11 +446,11 @@
 				if($months == 0){
 					$label_m = "";
 				} else {
-					$label_m = "<span>" . $months . " mo(s)</span>";
+					$label_m = "<span>" .(($months<=12)?$months:12) . " mo(s)</span>";
 				}
 			}
 			if($detail_day == 1|| is_admin()){
-				$label_d = "<span>" . $days." day(s)</span>";
+				$label_d = "<span>" . (($days<=31)?$days:31)." day(s)</span>";
 			}
 
 			return  implode(" ",array($label_y,$label_m,$label_d));
