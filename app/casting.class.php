@@ -498,9 +498,12 @@ class RBAgency_Casting {
 			if(!empty($MassEmailBccEmail)){
 				$bccMail = explode(";",$MassEmailBccEmail);
 				foreach($bccMail as $bcc){
-						$headers[] = 'Bcc: '.$bcc;
+						if(!empty($bcc)){
+							$headers[] = 'Bcc: '.$bcc;
+						}
 				}
 			}
+
 			$MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$MassEmailMessage);
 			$MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
