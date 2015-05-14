@@ -409,7 +409,8 @@
 				$months--;
 			}
 			if($days < 0){
-				$days =   ($today_d - $days) - 12;
+				$_day = $today_d + 30;
+				$days =  $_day - ($today_d - $days);
 			}
 
 			$firstMonths=array(1,3,5,7,8,10,12);
