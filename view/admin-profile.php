@@ -359,7 +359,7 @@ if (isset($_POST['action'])) {
 								if (is_array($value)) {
 									$value = implode(",", $value);
 								}
-								echo $value;
+								
 								$profilecustomfield_date = explode("_",$key);
 								
 								if(count($profilecustomfield_date) == 2){ // customfield date

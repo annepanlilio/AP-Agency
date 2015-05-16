@@ -2712,6 +2712,11 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											<label>Title*:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
+									echo "
+											  <div class=\"rbfield rbtext rbsingle\">
+												 <label>Value*:</label>
+												 <div><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></div>											  
+											  </div>";
 								 }
 							
 								 elseif($data1["ProfileCustomType"] == 3 || $data1["ProfileCustomType"] == 9){	  // Dropdown || Multi-Select

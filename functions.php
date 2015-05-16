@@ -1273,7 +1273,7 @@
 				if($ProfileCustomType == 4){
 					$isTextArea ="textarea-field"; 
 				}
-			echo "  <tr valign=\"top rbfunc\" data-val=\"".$ProfileCustomValue."\" class=\"".$isTextArea."\">\n";
+			echo "  <tr valign=\"top rbfunc\" data-val=\"".htmlentities($ProfileCustomValue)."\" class=\"".$isTextArea."\">\n";
 			echo "    <th scope=\"row\"><div class=\"box\">". stripcslashes($data3['ProfileCustomTitle'])." ".$measurements_label."</div></th>\n"; 
 			echo "    <td>\n";		  
 			  
