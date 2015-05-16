@@ -1739,7 +1739,7 @@
 						if ($resultCustom->ProfileCustomType == 4){
 							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag."><br/> <".$value_tag.">". nl2br($resultCustom->ProfileCustomValue) ."</".$value_tag."></li>\n";
 						}elseif($resultCustom->ProfileCustomType == 11){
-							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue.">Click Here</a></li>\n";
+							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"blank\">Click Here</a></li>\n";
 						}elseif ($resultCustom->ProfileCustomType == 10){
 							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><".$label_tag.">". $resultCustom->ProfileCustomTitle .":</".$label_tag."> <".$value_tag.">". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</".$value_tag."></li>\n";
 						} else {
@@ -1818,6 +1818,8 @@
 						} else {
 							$html .=  "<li class=\"options_3\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 						}
+					}elseif($resultCustom->ProfileCustomType == 11){
+							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle ."</strong>:</".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"_blank\">Click Here</a></li>\n";
 					}elseif ($resultCustom->ProfileCustomType == 10){
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 					} else {
@@ -1836,6 +1838,8 @@
 						} else {
 							$html .=  "<li  class=\"options_2\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 						}
+					}elseif($resultCustom->ProfileCustomType == 11){
+							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle ."</strong>:</".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"_blank\">Click Here</a></li>\n";
 					}elseif ($resultCustom->ProfileCustomType == 10){
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 					} else {
@@ -1849,6 +1853,8 @@
 						} else {
 							$html .="<li   class=\"profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 						}
+					}elseif($resultCustom->ProfileCustomType == 11){
+							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle ."</strong>:</".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"_blank\">Click Here</a></li>\n";
 					}elseif ($resultCustom->ProfileCustomType == 10){
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 					} else {
@@ -1862,6 +1868,8 @@
 						} else {
 							$html .="<li   class=\"options_3 profilecustomid_".$resultCustom->ProfileCustomID."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 						}
+					}elseif($resultCustom->ProfileCustomType == 11){
+							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle ."</strong>:</".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"_blank\">Click Here</a></li>\n";
 					}elseif ($resultCustom->ProfileCustomType == 10){
 							$html .="<li class=\"options_3 profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 					} else {

@@ -2088,7 +2088,7 @@ class RBAgency_Profile {
 							$displayHtml .=  "<li><strong>". __("Birthdate", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileDateBirth'] ."</li>\n";
 					}
 					if (!empty($data['ProfileContactWebsite'])) {
-							$displayHtml .=  "<li><strong>". __("Website", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactWebsite'] ."</li>\n";
+							$displayHtml .=  "<li><strong>". __("Website", RBAGENCY_TEXTDOMAIN) .":</strong> <a href=\"".$data['ProfileContactWebsite']."\" target=\"_blank\" > Click Here</li>\n";
 					}
 					if (!empty($data['ProfileContactPhoneHome'])) {
 							$displayHtml .=  "<li><strong>". __("Phone Home", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneHome'] ."</li>\n";
