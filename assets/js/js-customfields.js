@@ -226,6 +226,11 @@ jQuery(document).ready(function(){
 			     return '<div class="rbfield rbtext rbsingle">'
 						    +'<label>Title*:</label><div><input type="text" name="ProfileCustomTitle"/></div>'
 				 		+'</div>';
+			break; 
+			case "11": // Text
+			     jQuery("#objtype_customize").empty().html('<div class="rbfield rbtext rbsingle"><label>Title*:</label><div><input type="text" name="ProfileCustomTitle"/></div></div>');
+					//jQuery("#objtype_customize").append('<div class="rbfield rbtext rbsingle"><label>Load in New window ? :</label><div><input type="radio" name="loadin" value="1"/></div><label>No*:</label><div><input type="radio" name="loadin" value="0"/></div></div>');
+					
 			break;  
 			
 			default:

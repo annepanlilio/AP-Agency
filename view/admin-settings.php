@@ -2464,7 +2464,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									<option value=\"3\">Dropdown</option>
 									<option value=\"4\">Textbox</option>
 									<option value=\"5\">Checkbox</option>
-									<option value=\"6\">Radio Button</option>";
+									<option value=\"6\">Radio Button</option>
+									<option value=\"11\">Link</option>";
 									if($rb_agency_options_arr['rb_agency_option_unittype']==1){
 										echo"     <option value=\"7\" id=\"1\">Imperial (ft/in/lb)</option>";
 									}else{
@@ -2591,7 +2592,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Metric (cm/kg)</option>";
 											}
 										  echo "<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown (Multi-Select)</option>";;
-										  echo "<option value=\"10\" ". ($data1["ProfileCustomType"] == 10? 'selected=\"selected\"':'').">Date</option>";;
+										  echo "<option value=\"10\" ". ($data1["ProfileCustomType"] == 10? 'selected=\"selected\"':'').">Date</option>";
+										  echo "<option value=\"11\" ". ($data1["ProfileCustomType"] == 11? 'selected=\"selected\"':'').">Link</option>";
 										
 										  echo"  </select>
 										   
@@ -2704,6 +2706,12 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												 <label>Value*:</label>
 												 <div><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></div>											  
 											  </div>";
+								 }elseif($data1['ProfileCustomType'] == 11){
+								 	echo "<div class=\"rbfield rbtext rbsingle\">";
+									echo "
+											<label>Title*:</label>
+											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
+										</div>";
 								 }
 							
 								 elseif($data1["ProfileCustomType"] == 3 || $data1["ProfileCustomType"] == 9){	  // Dropdown || Multi-Select
@@ -2970,7 +2978,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
-		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1 ){ echo "Text"; } elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; }elseif ($data['ProfileCustomType'] == 9) { echo "Dropdown(Multi-Select)"; }  elseif ($data['ProfileCustomType'] == 7) { if($rb_agency_options_arr['rb_agency_option_unittype']==1){ if($data['ProfileCustomOptions']==1){echo "Imperial(in)";}elseif($data['ProfileCustomOptions']==2){echo "Imperial(lb)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } else{ if($data['ProfileCustomOptions']==2){echo "Metric(cm)";}elseif($data['ProfileCustomOptions']==2){echo "Metric(kg)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } }elseif ($data['ProfileCustomType'] == 10 ){ echo "Date"; }  echo "</td>\n";
+		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1){ echo "Text"; } elseif($data['ProfileCustomType'] == 11){ echo "Link"; }elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; }elseif ($data['ProfileCustomType'] == 9) { echo "Dropdown(Multi-Select)"; }  elseif ($data['ProfileCustomType'] == 7) { if($rb_agency_options_arr['rb_agency_option_unittype']==1){ if($data['ProfileCustomOptions']==1){echo "Imperial(in)";}elseif($data['ProfileCustomOptions']==2){echo "Imperial(lb)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } else{ if($data['ProfileCustomOptions']==2){echo "Metric(cm)";}elseif($data['ProfileCustomOptions']==2){echo "Metric(kg)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } }elseif ($data['ProfileCustomType'] == 10 ){ echo "Date"; }  echo "</td>\n";
 				
 			
 			  $measurements_label = "";

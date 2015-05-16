@@ -1279,6 +1279,10 @@
 			  
 				if ($ProfileCustomType == 1) { //TEXT
 							echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /><br />\n";						
+				}elseif($ProfileCustomType == 11){
+						//link
+					 	$link = htmlentities(stripslashes($ProfileCustomValue));
+							echo "<input type=\"text\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $link ."\" /><br />\n";
 				} elseif ($ProfileCustomType == 2) { // Min Max
 				
 					$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($data3['ProfileCustomOptions'],"}"),"{"));
