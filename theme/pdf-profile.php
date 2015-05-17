@@ -5,7 +5,7 @@ global $wpdb;
 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']: RBAGENCY_PLUGIN_URL .'assets/img/logo_example.jpg";
+$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']: RBAGENCY_PLUGIN_URL .'assets/img/logo_example.jpg';
 
 $toLandScape = "";
 $ul_css = "";
@@ -382,19 +382,19 @@ else{$format="";}
 
 $pdfFile=strtolower(str_replace(" ","-",$ProfileContactDisplay)).".pdf";
 
+$p = str_replace("theme","ext",plugin_dir_path(__FILE__));
 
-$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
-$path="wp-content/plugins/rb-agency/ext/dompdf/htmls/";
+$path=$p."dompdf/htmls/";
 
 //*include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
 $fp=fopen($path.$htmlFile,"w");
 fwrite($fp,$header);
 //*fwrite($fp,$border);
 //*fwrite($fp,$modelInfo);
-//*fwrite($fp,$allImages);
+//fwrite($fp,$allImages);
 fwrite($fp,$table);
 fwrite($fp,$footer);
 fclose($fp);
-
+$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
 //*die($toRedirect);
-wp_redirect($toRedirect); exit;
+wp_redirect($toRedirect); exit();
