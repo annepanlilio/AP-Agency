@@ -37,6 +37,11 @@
 	float: left;
 	line-height: normal;		
 }
+.rbform.block .rbfield > div,
+.rbform.block .rbfield > label,
+.rbform.block .rbfield > legend {
+	width: 100%;
+}
 .rbform .rbfield > div.option select,
 .rbform .rbfield > div.option input[type="text"],
 .rbform .rbfield > div.option input[type="email"],
@@ -97,7 +102,6 @@
 }
 .rbform .rbfield.rbsubmit {
 	padding: 15px 0px;
-	text-align: center;
 }
 .rbform .rbfield.rbsubmit input {
 	margin-bottom: 10px;
