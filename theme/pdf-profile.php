@@ -4,8 +4,9 @@
 global $wpdb;
 
 $rb_agency_options_arr = get_option('rb_agency_options');
+
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
-$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']: RBAGENCY_PLUGIN_URL .'assets/img/logo_example.jpg';
+$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? get_site_url().RBAGENCY_PLUGIN_URL."assets/img/".basename($rb_agency_options_arr['rb_agency_option_agencylogo']): get_site_url().RBAGENCY_PLUGIN_URL ."assets/img/logo_example.jpg";
 
 $toLandScape = "";
 $ul_css = "";
@@ -187,6 +188,7 @@ else{$widthAndHeight='style="width:400px"';
 
 $header.='
 <style>
+ul{ list-style:none; }
 #Experience{display:none;}
 '.$toLandScape.'
 body{color:#000;}
@@ -198,7 +200,7 @@ tr td{ list-style:none; padding-bottom:1px; padding-top:1px;}
 #print_logo{margin-bottom:25px; width:100%; float:left;}
 #model_info{border:0px solid #000; float:left;'.$model_info_width.'}
 #print_wrapper img.allimages_thumbs{margin-right:5px;}
-
+ul{ list-style:none; }
 '.$additionalCss.'
 </style>
 
@@ -235,7 +237,7 @@ if($_POST['print_option']==14){  // print for division
 	 // $table.=' <div style="page-break-before:always" /></div><br><br><br>';
 	  $table.="</td></tr></table><table border='0'><tr>".$table2."</tr></table>-->";
 	  $table.='<div style="page-break-before:always" /></div><br><br><br>';
-	  $table.='<img style="width:347px;" src="'.$rb_agency_option_agencylogo.'">'."</td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
+	  $table.='<img style="width:50%;height:auto;" src="'.$rb_agency_option_agencylogo.'">'."</td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
 	  $table = str_replace("src","",$table);
 	  $table = str_replace('<img ="','<img src="',$table);
 	  
@@ -248,21 +250,28 @@ if($_POST['print_option']==14){  // print for division
 	  
 }else{ //this will loop images of simple profile
 	
+		
 		$modelInfo.='
 				<div id="model_info" style="'.$model_info_width.'">
-					<h1 style="margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1>
-				
-					<ul>
-					'.rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,false,true).'
+					<h1 style="margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1>';
+		
+		$modelInfo .='<ul>';
+		$modelInfo .= '
+					 	<tr><td><span style="margin-left:-3px;">Age : '.$ProfileAge.'</span></td></tr>
+					 	<tr><td><span style="margin-left:-3px;">Gender : '.__($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN).'</span></td></tr>
+					  ';			 
+		$modelInfo .= rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,"strong","span",false,true).'
 					</ul>
 				</div>'."\n";
 				
 		//trim more infom
-		$modelInfo=str_replace("<li","<tr><td",$modelInfo);
+		$modelInfo=str_replace("<li>","<tr><td>",$modelInfo);
 		$modelInfo=str_replace("</li>","</td></tr>",$modelInfo);
 		$modelInfo=str_replace("<ul>","<table>",$modelInfo);
 		$modelInfo=str_replace("</ul>","</table>",$modelInfo);  
+		$modelInfo=str_replace("strong>","<strong>",$modelInfo); 
 		$modelInfo=str_replace("</label>","</label>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$modelInfo);  
+
 		
 			if($_POST['print_type']=="print-polaroids"){$printType="Polaroid";}
 			else{$printType="Image";}
@@ -305,7 +314,7 @@ if($_POST['print_option']==14){  // print for division
 				
 			//	$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
 				
-					$allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src='".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."' alt='' class='allimages_thumbs' /></td>\n";
+					$allImages.="<td><img style='width:100%;height:auto;' id='".$dataImg["ProfileMediaID"]."' src='".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."' alt='' class='allimages_thumbs' /></td>\n";
 					
 				
 
@@ -316,7 +325,7 @@ if($_POST['print_option']==14){  // print for division
 						 if($cnt==$col){ $allImages.="</tr></table>\n";
 						   if($cnt2==$perPage){
 							
-								  $allImages.='<br><br clear=""><img style="width:347px;" src="'.$rb_agency_option_agencylogo.'">';
+								  $allImages.='<br><br clear=""><img style="width:50%;height:auto;" src="'.$rb_agency_option_agencylogo.'">';
 								  
 								  if($printType=="Polaroid" AND $excape!=1){$allImages.="<td></tr></table>"; $excape=1;}
 								  
@@ -336,13 +345,14 @@ if($_POST['print_option']==14){  // print for division
 		$table.="</tr></table>\n";
 		
 		if($cnt2!=$perPage AND $cnt2!="0"){
-		$table.='<br clear="all"><img style="width:347px;" src="'.$rb_agency_option_agencylogo.'">';
+		$table.='<br clear="all"><img style="width:50%;height:auto;" src="'.$rb_agency_option_agencylogo.'">';
 		}
 		if($printType=="Polaroid"){
 			$modelInfo="<table border='0' width='800'><tr><td width='180'>$modelInfo</td><td width='600'>$table";
 			$table=$modelInfo;
 		}
 }  //end else of if($_POST['print_option']
+
 
 $footer.='
 </div>
@@ -362,7 +372,6 @@ echo $allImages;
 echo $footer;
 
 die();*/
-
 
 $htmlFile=rand(1,10000).time().date("ymd").".html"; 
 //$pdfFile=str_replace(".html",".pdf",$htmlFile);
@@ -388,9 +397,11 @@ $path=$p."dompdf/htmls/";
 
 //*include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
 $fp=fopen($path.$htmlFile,"w");
-fwrite($fp,$header);
+//fwrite($fp,$header);
 //*fwrite($fp,$border);
-//*fwrite($fp,$modelInfo);
+if($_POST["print_option"] == 1 || $_POST['print_option'] == 3){
+	//fwrite($fp,$modelInfo );
+}
 //fwrite($fp,$allImages);
 fwrite($fp,$table);
 fwrite($fp,$footer);
