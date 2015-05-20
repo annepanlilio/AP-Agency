@@ -1423,6 +1423,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}
 									//delete all the images from database
 									$massmediaids = implode(",", array_keys($mass_image_data));
+									
 									$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image' ";
 									$resultsMassImageDelete = $wpdb->query($queryMassImageDelete);
 									//delete images on the disk
