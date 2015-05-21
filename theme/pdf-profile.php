@@ -7,7 +7,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 
 $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 
-if(strpos('localhost',get_site_url()) === true){
+if(strpos(get_site_url(),'localhost') !== false){
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? RBAGENCY_PLUGIN_URL."assets/img/".basename($rb_agency_options_arr['rb_agency_option_agencylogo']): RBAGENCY_PLUGIN_URL ."assets/img/logo_example.jpg";
 }else{
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? get_site_url().RBAGENCY_PLUGIN_URL."assets/img/".basename($rb_agency_options_arr['rb_agency_option_agencylogo']): get_site_url().RBAGENCY_PLUGIN_URL ."assets/img/logo_example.jpg";
@@ -104,7 +104,7 @@ $header='
 
 
    elseif($_POST['print_option']==11){
-		$widthAndHeight='style="width:232px; "';
+			$widthAndHeight='style="width:232px; "';
 			$model_info_width="width:158px; border:0px solid #000;"; 
 			$col=2;
 			$perPage=4;
@@ -115,8 +115,8 @@ $header='
 
    elseif($_POST['print_option']==12){
 
-		$widthAndHeight='style="width:520px; "';
-			$model_info_width="width:158px; border:0px solid #000;"; 
+		$widthAndHeight='style="width:360px; "';
+			$model_info_width="width:348px; border:0px solid #000;"; 
 			$col=1;
 			$perPage=1;
 			$fileFormat="_4perpage";
@@ -245,8 +245,6 @@ if($_POST['print_option']==14){  // print for division
 	  $table.='<div style="page-break-before:always" /></div><br><br><br>';
 	  if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
 	  	$table.="</td><td><img style='width:50%;height:auto;'' src=".$rb_agency_option_agencylogo."></td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
-	  }else{
-	  	$table.='<img style="width:50%;height:auto;" src="'.$rb_agency_option_agencylogo.'">'."</td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
 	  }
 	  
 	  $table = str_replace("src","",$table);
@@ -284,8 +282,12 @@ if($_POST['print_option']==14){  // print for division
 		$modelInfo=str_replace("</label>","</label>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$modelInfo);  
 
 		
-			if($_POST['print_type']=="print-polaroids"){$printType="Polaroid";}
-			else{$printType="Image";}
+			if($_POST['print_type']=="print-polaroids")
+			{
+				$printType="Polaroid";
+			}else{
+				$printType="Image";
+			}
 
 			if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
 				$pdf_image_id=$_POST['pdf_image_id'];
@@ -295,9 +297,7 @@ if($_POST['print_option']==14){  // print for division
 			elseif(!empty($orderBy)) {
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
 			}else{
-					$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
-			
-			
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
 			}
 					$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 					$countImg = count($resultsImg);
@@ -308,7 +308,7 @@ if($_POST['print_option']==14){  // print for division
 						 if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){
 							 
 							 $allImages.="<td>$modelInfo</td>";
-							$cnt=1;  $cnt2=1; 
+							 $cnt=1;  $cnt2=1; 
 						 }
 					 }
 							 
@@ -345,6 +345,10 @@ if($_POST['print_option']==14){  // print for division
 				    		$imgStyle = "style='width:25%;height:auto;padding-top:0px;'";
 				    	}elseif($_POST['print_option'] == '3-1' && $totalCount > 2){
 				    		$imgStyle = "style='width:25%;height:auto;padding-top:0px;'";
+				    	}elseif($_POST['print_option'] == '11' && $totalCount > 2){
+				    		$imgStyle = "style='width:20%;height:auto;padding-top:0px;'";
+				    	}elseif($_POST['print_option'] == '12' && $totalCount > 2){
+				    		$imgStyle = "style='width:100%;height:auto;padding-top:0px;'";
 				    	}
 				    	
 				    }else{
@@ -369,8 +373,10 @@ if($_POST['print_option']==14){  // print for division
 							
 							if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
 								$allImages.='<br><br clear=""><h1 style="float:left;margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1><img style="width:50%;height:auto;float:right;" src="'.$rb_agency_option_agencylogo.'">';
+							}elseif($_POST['print_option'] == 3 || $_POST['print_option'] == 1){
+								$allImages.='<br><br clear=""><img style="width:50%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'">';
 							}else{
-								$allImages.='<br><br clear=""><img style="width:50%;height:auto;" src="'.$rb_agency_option_agencylogo.'">';
+								//$allImages.='<br><br clear=""><img style="width:50%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'">';
 							}
 								  
 								  
@@ -392,14 +398,17 @@ if($_POST['print_option']==14){  // print for division
 		$table.="</tr></table>\n";
 		
 		if($cnt2!=$perPage AND $cnt2!="0"){
-			 if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
+			if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
 				$table.='<br clear="all"><h1 style="float:left;margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1><img style="width:50%;height:auto;float:right;" src="'.$rb_agency_option_agencylogo.'">';
+			}elseif($_POST['print_option'] == 11 || $_POST['print_option'] == 12){
+				$table.='<br clear="all">';			
 			}else{
-				$table.='<br clear="all"><img style="width:50%;height:auto;" src="'.$rb_agency_option_agencylogo.'">';
+				$table.='<br clear="all"><img style="width:50%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'">';
 			}
 		}
+		$logo_img = '<table><tr><td><img style="width:100%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'"></td></tr></table>';
 		if($printType=="Polaroid"){
-			$modelInfo="<table border='0' width='800'><tr><td width='180'>$modelInfo</td><td width='600'>$table";
+			$modelInfo="<table border='0' width='800'><tr><td width='180'>".$modelInfo.$logo_img."</td><td width='600'>$table";
 			$table=$modelInfo;
 		}
 }  //end else of if($_POST['print_option']
@@ -460,4 +469,6 @@ fwrite($fp,$footer);
 fclose($fp);
 $toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
 //*die($toRedirect);
+
+
 wp_redirect($toRedirect); exit();
