@@ -435,7 +435,7 @@ class RBAgency_Casting {
 			$SearchID = $results; 
 
 							$profileimage = "";  
-							$profileimage .='<p><div style="width:550px;min-height: 170px;">';
+							$profileimage .='<p><div style="overflow:hidden;min-height: 170px;">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
 							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
 							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY(profile.ProfileID)";
@@ -459,16 +459,16 @@ class RBAgency_Casting {
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
-								$profileimage .= "<div style=\"background:black; color:white;float: left; max-width: 100px; height: 150px; margin: 2px; overflow:hidden;  \">";
-								$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
-								$profileimage .=  $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
-								$profileimage .= "<br /><a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+								$profileimage .= "<div style=\"color:#020202;float: left; max-width: 100px; height: 175px; margin: 2px; overflow:hidden;  \">";
+								$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";								
+								$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&a=t&w=100&h=130\" /></div>\n";
 								}else{
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."&a=t&w=100&h=130\" /></a>";
 								}
+								$profileimage .=  $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 								$profileimage .= "</div>\n";
 								$profileimage .= "</div>\n";
 							}
@@ -747,7 +747,7 @@ class RBAgency_Casting {
 				$content = "";
 				if(!isset($_GET["SearchID"])){
 								$content = "Add Message Here<br />Click the following link (or copy and paste it into your browser):<br />
-				[link-place-holder]<br /><br />This message was sent to you by:<br />[site-title]<br />[site-url]";
+											[link-place-holder]<br />This message was sent to you by:<br />[site-title]<br />[site-url]";
 				}
 				$editor_id = 'MassEmailMessage';
 				wp_editor( $content, $editor_id,array("wpautop"=>false,"tinymce"=>true) );
