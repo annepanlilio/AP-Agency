@@ -269,7 +269,7 @@ echo "					</div>\n"; // #photos
 							<span class="allimages_text">Select Print Format</span><br /><br />
 						</div> 
 
-						<form action="" method="post" target="_blank">
+						<form action="" method="post">
 							<?php echo $selected;?>
 							<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 							<!-- display options-->

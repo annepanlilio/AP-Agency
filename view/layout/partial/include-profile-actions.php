@@ -24,7 +24,7 @@ echo "</div>";
 
 echo "<div id=\"profile-links\">\n";
 
-// View Photos and Print Photos
+// Print Photos		
 	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 3){
 		
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
@@ -32,7 +32,6 @@ echo "<div id=\"profile-links\">\n";
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/\" class=\"profile-link\">". __("View Photos", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2014-05-21
 			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/images/\" class=\"profile-link\">". __("Print Photos", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		}
 	}
