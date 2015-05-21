@@ -49,7 +49,7 @@ $header='
 
  //where we decide what print format will it be.
 
-  if($_POST['print_option']==1){
+  if($_POST['print_option']==1){ // PDF Print Large Photos
 	  $chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;  //detect if CHROME
 	  if($chrome){
 		  $widthAndHeight='style="width:365px; height:546px"';
@@ -62,7 +62,7 @@ $header='
 	  $col=2;
       $perPage=2;
 	  }
-  elseif($_POST['print_option']=="1-1"){
+  elseif($_POST['print_option']=="1-1"){ // PDF Print Large Photos Without Model Info
 	   	$widthAndHeight='style="width:183px;"';
 		$model_info_width="width:182px;"; 
 		$col=4;
@@ -74,7 +74,7 @@ $header='
 		$col=4;
 		$perPage=8;
 	  }
- elseif($_POST['print_option']==3){
+ elseif($_POST['print_option']==3){ // PDF Print Medium Size Photos
 		$widthAndHeight='style="width:183px; height:264px"';
 		$model_info_width="width:182px;"; 
 		$col=4;
@@ -82,7 +82,7 @@ $header='
 		$fileFormat="_medium";
 	  }
 	  
-  elseif($_POST['print_option']=="3-1"){
+  elseif($_POST['print_option']=="3-1"){ // PDF Print Medium Size Photos Without Model Info
 		$widthAndHeight='style="width:183px; "';
 		$model_info_width="width:182px;"; 
 		$col=4;
@@ -245,7 +245,7 @@ if($_POST['print_option']==14){  // print for division
 	  $table.="</td></tr></table><table border='0'><tr>".$table2."</tr></table>-->";
 	  $table.='<div style="page-break-before:always" /></div><br><br><br>';
 	  if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
-	  	$table.="</td><td><img style='width:50%;height:auto;'' src=".$rb_agency_option_agencylogo."></td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
+	  	$table.="</td><td valign='top'><img style='width:50%;height:auto;'' src=".$rb_agency_option_agencylogo."></td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
 	  }
 	  
 	  $table = str_replace("src","",$table);
@@ -275,7 +275,7 @@ if($_POST['print_option']==14){  // print for division
 				</div>'."\n";
 				
 		//trim more infom
-		$modelInfo=str_replace("<li>","<tr><td valign=\"top\">",$modelInfo);
+		$modelInfo=str_replace("<li>","<tr><td valign='top'>",$modelInfo);
 		$modelInfo=str_replace("</li>","</td></tr>",$modelInfo);
 		$modelInfo=str_replace("<ul>","<table>",$modelInfo);
 		$modelInfo=str_replace("</ul>","</table>",$modelInfo);  
@@ -308,8 +308,8 @@ if($_POST['print_option']==14){  // print for division
 					if($printType!="Polaroid"){ 
 						 if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){
 							 
-							 $allImages.="<td valign=\"top\">$modelInfo</td>";
-							$cnt=1;  $cnt2=1; 
+							 $allImages.="<td valign='top'>$modelInfo</td>";
+							 $cnt=1;  $cnt2=1; 
 						 }
 					 }
 							 
@@ -381,7 +381,7 @@ if($_POST['print_option']==14){  // print for division
 							}
 								  
 								  
-								  if($printType=="Polaroid" AND $excape!=1){$allImages.="<td></tr></table>"; $excape=1;}
+								  if($printType=="Polaroid" AND $excape!=1){$allImages.="<td valign='top'></tr></table>"; $excape=1;}
 								  
 								  $allImages.='<div style="page-break-before:always" /></div><br>';
 						   
@@ -407,9 +407,9 @@ if($_POST['print_option']==14){  // print for division
 				$table.='<br clear="all"><img style="width:50%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'">';
 			}
 		}
-		$logo_img = '<table><tr><td><img style="width:100%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'"></td></tr></table>';
+		$logo_img = '<table><tr><td valign="top"><img style="width:100%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'"></td></tr></table>';
 		if($printType=="Polaroid"){
-			$modelInfo="<table border='0' width='800'><tr><td width='180'>".$modelInfo.$logo_img."</td><td width='600'>$table";
+			$modelInfo="<table border='0' width='800'><tr><td width='180' valign'top>".$modelInfo.$logo_img."</td><td width='600' valign='top'>$table";
 			$table=$modelInfo;
 		}
 }  //end else of if($_POST['print_option']
