@@ -222,3 +222,6 @@ table.widefat tr.active-notvisible { background: #d2d49b; }
 #new-customfields .rbfield > div { width: 65%; }
 #new-customfields .rbfield > div div small { display: inline-block; margin-left: 24px; }
 #new-customfields .add-more-option { margin-left: 30%; }
+
+/* Admin Search Profiles */
+#cart-actions .button-primary { margin-bottom: 5px; }

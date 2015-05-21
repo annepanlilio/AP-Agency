@@ -272,7 +272,7 @@ class RBAgency_Casting {
 
 				if (($cartAction == "cartEmpty") || ($cartAction == "cartRemove")) {
 				echo "<a name=\"compose\">&nbsp;</a>"; 
-				echo "<div class=\"boxblock\">\n";
+				echo "<div id=\"cart-actions\" class=\"boxblock\">\n";
 				echo "   <h3>". __("Cart Actions", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 				echo "   <div class=\"inner\">\n";
 				echo "      <a href=\"?page=rb_agency_searchsaved&action=searchSave\" title=\"". __("Save Search & Email", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\">". __("Save Search & Email", RBAGENCY_TEXTDOMAIN) ."</a>\n";
