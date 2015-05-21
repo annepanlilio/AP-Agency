@@ -224,4 +224,6 @@ table.widefat tr.active-notvisible { background: #d2d49b; }
 #new-customfields .add-more-option { margin-left: 30%; }
 
 /* Admin Search Profiles */
+#casting-cart .in-cart { float: left; font-family:Georgia; font-size:13px; font-style: italic; color: #777; margin-top: 10px; }
+#casting-cart .empty-cart { float: right; margin-bottom: 10px; }
 #cart-actions .button-primary { margin-bottom: 5px; }

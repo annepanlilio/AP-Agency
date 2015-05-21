@@ -146,10 +146,10 @@ class RBAgency_Casting {
 					
 				$results = $wpdb->get_results($query,ARRAY_A);// or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", RBAGENCY_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
 				$count = count($results);
-				echo "<div class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
-				echo "<div style=\"float: right; width: 100px; \"><a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("Empty Cart", RBAGENCY_TEXTDOMAIN) ."</a></div>";
-				echo "<div style=\"float: left; line-height: 22px; font-family:Georgia; font-size:13px; font-style: italic; color: #777777; \">". __("Currently", RBAGENCY_TEXTDOMAIN) ." <strong>". $count ."</strong> ". __("in Cart", RBAGENCY_TEXTDOMAIN) ."</div>";
-				echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0; width:510px;\" class=\"profile\">";
+				
+				echo "<div class=\"empty-cart\"><a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("Empty Cart", RBAGENCY_TEXTDOMAIN) ."</a></div>";
+				echo "<div class=\"in-cart\">". __("Currently", RBAGENCY_TEXTDOMAIN) ." <strong>". $count ."</strong> ". __("in Cart", RBAGENCY_TEXTDOMAIN) ."</div>";
+				echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0;\" class=\"profile\">";
 
 				if ($count == 1) {
 					$cartAction = "cartEmpty";
@@ -206,7 +206,7 @@ class RBAgency_Casting {
 					echo "  </div>";
 				}
 				echo "  <div style=\"clear: both;\"></div>\n";
-				echo "</div>";
+				
 
 				add_thickbox();
 
@@ -287,70 +287,67 @@ class RBAgency_Casting {
 				$cartString = implode(",", array_unique($cartArray));
 				$cartString = RBAgency_Common::clean_string($cartString);
 
-				echo "<div class=\"boxblock-container\">";
-						echo "<div class=\"boxblock\" style=\"width:100%\" >";
-
-							echo "<h3>Add to existing Job</h3>";
-
-							echo "<div class=\"innerr\" style=\"padding: 10px;\">";
-							echo "<form class=\"castingtext\" method=\"post\" action=\"?page=rb_agency_castingjobs&action=informTalent&Job_ID=\">";
-							echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
-									echo "<div>";
-										echo "<select name=\"Job_ID\" style=\"width:80%;\">";
-										echo "<option value=\"\">- Select -</option>";
-										$castings = $wpdb->get_results("SELECT * FROM ".table_agency_casting_job." ORDER BY Job_ID DESC");
-										foreach ($castings as $key) {
-											echo "<option attrid=\"".$key->Job_ID."\" value=\"".$key->Job_ID."-".$key->Job_UserLinked."\">".$key->Job_Title."</option>";
-										}
-										echo "<select>";
-									echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
-									echo "</div>";
-								echo "</div>";
-								echo "<script type=\"text/javascript\">";
-								echo "jQuery(function(){
-										jQuery(\"select[name=Job_ID]\").change(function(){
-												var a = jQuery(\"select[name=Job_ID] option:selected\").attr('attrid');
-												if(a !== 'undefined'){
-													jQuery('.castingtext').attr('action','?page=rb_agency_castingjobs&action=informTalent&Job_ID='+a);
-												}
-										});
-								});";
-								echo "</script>";
-								echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
-							echo "</form>";
+				
+				echo "<div class=\"boxblock\" style=\"width:100%\" >";
+					echo "<h3>Add to existing Job</h3>";
+					echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+					echo "<form class=\"castingtext\" method=\"post\" action=\"?page=rb_agency_castingjobs&action=informTalent&Job_ID=\">";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+							echo "<div>";
+								echo "<select name=\"Job_ID\" style=\"width:80%;\">";
+								echo "<option value=\"\">- Select -</option>";
+								$castings = $wpdb->get_results("SELECT * FROM ".table_agency_casting_job." ORDER BY Job_ID DESC");
+								foreach ($castings as $key) {
+									echo "<option attrid=\"".$key->Job_ID."\" value=\"".$key->Job_ID."-".$key->Job_UserLinked."\">".$key->Job_Title."</option>";
+								}
+								echo "<select>";
+							echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
 							echo "</div>";
 						echo "</div>";
-						echo "<div class=\"boxblock\" style=\"width:100%\" >";
-							echo "<h3>Add to saved search</h3>";
-							echo "<div class=\"innerr\" style=\"padding: 10px;\">";
-							echo "<form class=\"savedsearchtext\" method=\"post\" action=\"?page=rb_agency_searchsaved&action=edit&SearchID=\">";
-							echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
-									echo "<div>";
-										echo "<select name=\"SearchID\" style=\"width:80%;\">";
-										echo "<option value=\"\">- Select -</option>";
-										$castings = $wpdb->get_results("SELECT * FROM ".table_agency_searchsaved." ORDER BY  SearchID DESC");
-										foreach ($castings as $key) {
-											echo "<option attrid=\"".$key->SearchID."\" value=\"".$key->SearchID."\">".$key->SearchTitle."</option>";
+						echo "<script type=\"text/javascript\">";
+						echo "jQuery(function(){
+								jQuery(\"select[name=Job_ID]\").change(function(){
+										var a = jQuery(\"select[name=Job_ID] option:selected\").attr('attrid');
+										if(a !== 'undefined'){
+											jQuery('.castingtext').attr('action','?page=rb_agency_castingjobs&action=informTalent&Job_ID='+a);
 										}
-										echo "<select>";
-									echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
-									echo "</div>";
-								echo "</div>";
-								echo "<script type=\"text/javascript\">";
-								echo "jQuery(function(){
-										jQuery(\"select[name=SearchID]\").change(function(){
-												var a = jQuery(\"select[name=SearchID] option:selected\").attr('attrid');
-												if(a !== 'undefined'){
-													jQuery('.savedsearchtext').attr('action','?page=rb_agency_searchsaved&action=edit&SearchID='+a);
-												}
-										});
-								});";
-								echo "</script>";
-								echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
-							echo "</form>";
+								});
+						});";
+						echo "</script>";
+						echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
+					echo "</form>";
+					echo "</div><!-- .inner -->";
+				echo "</div><!-- .boxblock -->";
+				echo "<div class=\"boxblock\" style=\"width:100%\" >";
+					echo "<h3>Add to saved search</h3>";
+					echo "<div class=\"innerr\" style=\"padding: 10px;\">";
+					echo "<form class=\"savedsearchtext\" method=\"post\" action=\"?page=rb_agency_searchsaved&action=edit&SearchID=\">";
+					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
+							echo "<div>";
+								echo "<select name=\"SearchID\" style=\"width:80%;\">";
+								echo "<option value=\"\">- Select -</option>";
+								$castings = $wpdb->get_results("SELECT * FROM ".table_agency_searchsaved." ORDER BY  SearchID DESC");
+								foreach ($castings as $key) {
+									echo "<option attrid=\"".$key->SearchID."\" value=\"".$key->SearchID."\">".$key->SearchTitle."</option>";
+								}
+								echo "<select>";
+							echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
 							echo "</div>";
 						echo "</div>";
-				echo "</div>";
+						echo "<script type=\"text/javascript\">";
+						echo "jQuery(function(){
+								jQuery(\"select[name=SearchID]\").change(function(){
+										var a = jQuery(\"select[name=SearchID] option:selected\").attr('attrid');
+										if(a !== 'undefined'){
+											jQuery('.savedsearchtext').attr('action','?page=rb_agency_searchsaved&action=edit&SearchID='+a);
+										}
+								});
+						});";
+						echo "</script>";
+						echo "<input type=\"hidden\" name=\"addprofiles\" value=\"".$cartString."\"/>";
+					echo "</form>";
+					echo "</div><!-- .inner -->";
+				echo "</div><!-- .boxblock -->";
 				echo "</div>";
 				echo "<script type=\"text/javascript\">\n";
 				echo "function openWindow(url){ \n";
