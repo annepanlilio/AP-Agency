@@ -181,7 +181,8 @@ $header='
 	#profile-results #profile-list .profile-list-layout2 .details div { float: left; }
 	#profile-results #profile-list .profile-list-layout2 .details .details-age { width: 50%; text-align: right; }
 	#profile-results #profile-list .profile-list-layout2 .details .details-state { width: 50%; text-align: left;  }
-	.pagination{display: none;}';
+	.pagination{display: none;}
+	td {vertical-align: top}';
 	
 	  }
 	  
@@ -202,9 +203,9 @@ h1{color: #000; margin-bottom:15px; margin-top:15px;}
 
 tr td span{ float:right; text-align:left; width:200px;}
 table {'.$ul_css.'}
-tr td{ list-style:none; padding-bottom:1px; padding-top:1px;}
+tr td{ list-style:none; padding-bottom:1px; padding-top:1px;vertical-align:top;margin: 0;}
 #print_logo{margin-bottom:25px; width:100%; float:left;}
-#model_info{border:0px solid #000; float:left;'.$model_info_width.'}
+#model_info{border:0px solid #000; float:left;'.$model_info_width.';margin: 0; padding; 0;}
 #print_wrapper img.allimages_thumbs{margin-right:5px;}
 ul{ list-style:none; }
 '.$additionalCss.'
@@ -274,7 +275,7 @@ if($_POST['print_option']==14){  // print for division
 				</div>'."\n";
 				
 		//trim more infom
-		$modelInfo=str_replace("<li>","<tr><td>",$modelInfo);
+		$modelInfo=str_replace("<li>","<tr><td valign=\"top\">",$modelInfo);
 		$modelInfo=str_replace("</li>","</td></tr>",$modelInfo);
 		$modelInfo=str_replace("<ul>","<table>",$modelInfo);
 		$modelInfo=str_replace("</ul>","</table>",$modelInfo);  
@@ -307,8 +308,8 @@ if($_POST['print_option']==14){  // print for division
 					if($printType!="Polaroid"){ 
 						 if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){
 							 
-							 $allImages.="<td>$modelInfo</td>";
-							 $cnt=1;  $cnt2=1; 
+							 $allImages.="<td valign=\"top\">$modelInfo</td>";
+							$cnt=1;  $cnt2=1; 
 						 }
 					 }
 							 
@@ -360,7 +361,7 @@ if($_POST['print_option']==14){  // print for division
 			//	$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
 					
 					
-					$allImages.= "<td><img ".$imgStyle." id='".$dataImg["ProfileMediaID"]."' src='".$imgURL."' alt='' class='allimages_thumbs' /></td>\n";
+					$allImages.= "<td valign='top'><img ".$imgStyle." id='".$dataImg["ProfileMediaID"]."' src='".$imgURL."' alt='' class='allimages_thumbs' /></td>\n";
 					
 				
 
