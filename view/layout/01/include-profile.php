@@ -335,7 +335,7 @@ echo "					</div>\n"; // #photos
 							<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 							<!-- display options-->
 
-							<div id="polaroids" class="rbcol-8 rbcolumn">
+							<div id="polaroids" class="rbcol-12 rbcolumn">
 								<div class="rbcol-6 rbcolumn">
 									<h3><input type="radio" value="1" name="print_option" checked="checked" /> Print Large Photos</h3>
 									<div class="polaroid">
@@ -378,7 +378,7 @@ echo "					</div>\n"; // #photos
 								<?php
 								}
 								?>			
-							</div><!-- polariod -->		
+							</div><!-- #polariods -->
 							<center>
 								<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
 								<input type="submit" value="Download PDF" name="pdf_all_images" />
