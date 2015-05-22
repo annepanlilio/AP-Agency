@@ -903,11 +903,6 @@ class RBAgency_Profile {
 					}
 				}
 
-					//expanded
-
-					if(isset($atts['show_age_year'])){
-
-					}
 
 				/*
 				 * Get Search Chriteria
@@ -1687,7 +1682,7 @@ class RBAgency_Profile {
 				if(is_admin()){
 					return self::search_result_admin($sql,$arr_query );
 				} else {
-					return self::search_result_public($sql, $castingcart,$shortcode,$arr_query );
+					return self::search_result_public($sql, $castingcart,$shortcode);
 				}
 
 		}
@@ -1695,7 +1690,7 @@ class RBAgency_Profile {
 	/* 
 	 * Results for Public (Front-End)
 	 */
-		public static function search_result_public($sql, $castingcart = '',$shortcode = false,$attrs = array()){
+		public static function search_result_public($sql, $castingcart = '',$shortcode = false){
 			global $wpdb;
 
 			/* 
@@ -1841,7 +1836,7 @@ class RBAgency_Profile {
 						}
 					}
 
-					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart, $availability,$attrs );
+					$profile_list .= self::search_formatted($profile,$arr_favorites,$arr_castingcart, $availability );
 					
 					if($rb_agency_option_layoutprofilelistlayout == 1){
 						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
@@ -2242,7 +2237,7 @@ class RBAgency_Profile {
 		 * Format Profile
 		 * Create list from IDs
 		 */
-		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = '',$plain = false,$attrs = array()){
+		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = '',$plain = false){
 
 			global $wpdb;
 

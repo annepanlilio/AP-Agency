@@ -380,7 +380,7 @@
 	 *
 	 * @param string $p_strDate
 	 */
-	function rb_agency_get_age($p_strDate) {
+	function rb_agency_get_age($p_strDate,$attrs = array()) {
 	//Get Age Option if it should display with months included
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$detail_year = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
@@ -389,6 +389,8 @@
 		
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
 			
+			
+
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
 			$localtime = getdate();
