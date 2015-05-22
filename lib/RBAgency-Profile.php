@@ -1795,9 +1795,17 @@ class RBAgency_Profile {
 
 			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1){
 
+
 				$all_html.="<div class=\"rb-cart-links\">";
-				$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
-				$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
+
+				if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] == 1){
+					$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
+				}
+
+				if($rb_agency_options_arr['rb_agency_option_profilelist_favorite'] == 1){
+					$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
+				}
+				
 				$all_html.="</div>";
 			}
 
@@ -2246,7 +2254,7 @@ class RBAgency_Profile {
 			 * rb agency options
 			 */
 			$rb_agency_options_arr = get_option('rb_agency_options');
-			
+
 				$rb_agency_option_profilelist_castingcart	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
 				$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
 				$rb_agency_option_privacy					= isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
