@@ -382,13 +382,33 @@
 	 */
 	function rb_agency_get_age($p_strDate,$attrs = array()) {
 	//Get Age Option if it should display with months included
-		$rb_agency_options_arr = get_option('rb_agency_options');
-		$detail_year = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
-		$detail_month = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
-		$detail_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
+
 		
+			$sc = shortcode_atts( array(
+			        'show_age_year' => false,
+			        'show_age_month' => false,
+			        'show_age_day' => false,
+			    ), $attrs );
+
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		//$detail_year = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
+		//$detail_month = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
+		//$detail_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
+
+		$detail_year_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
+		$detail_month_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
+		$detail_day_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
+		
+
+		$detail_year = $sc['show_age_year'] == true ? 1 : $detail_year_op;
+		$detail_month = $sc['show_age_month']== true ? 1 : $detail_month_op;
+		$detail_day = $sc['show_age_day']== true ? 1 : $detail_day_op;
+
+		
+
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
 			
+
 			
 
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
@@ -1505,7 +1525,10 @@
 		global $wpdb;
 			$rb_agency_options_arr 				= get_option('rb_agency_options');
 		$rb_agency_option_showstatecode  		= isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0;
+		$rb_agency_option_profilelist_expanddetails_state = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
+		
 
+		
 		
 		if(empty($state_id)) return false;
 		
@@ -1523,6 +1546,7 @@
 
 		if(count($result) > 0){
 			return $return;
+			
 		}	
 		
 		return false;
