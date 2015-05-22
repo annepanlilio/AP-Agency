@@ -2390,12 +2390,16 @@ class RBAgency_Profile {
 
 
 						if($dataList["ProfileLocationState"]!=""){
-							$detailState = $rb_agency_option_detail_state  == 1 ? $rb_agency_optioin_detail_state : 0;
-							$displayState = $arr_query['show_state'] == true ? 1 : $detailState;
-							$stateTitle =  $displayState == 1 ? rb_agency_getStateTitle($dataList["ProfileLocationState"],false) : "";
+
+							$detailState = $arr_query['show_state'] == true ? 1 :$rb_agency_option_detail_state;
+							
+							$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false);
 
 							$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
-							$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
+							if($detailState == 1){
+								$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
+							}
+							
 						}
 						$type = get_query_var("type");
 					$displayHTML .= "</span>";
