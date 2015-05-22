@@ -2045,6 +2045,8 @@ echo "<div id=\"custom-fields\">";
 		$ProfileCustomShowAdmin   	= isset($_POST['ProfileCustomShowAdmin'])?(int)$_POST['ProfileCustomShowAdmin']:0;
 		$ProfileCustomPrivacy   	= isset($_POST['ProfileCustomPrivacy'])?(int)$_POST['ProfileCustomPrivacy']:0;
 
+		//use for filter
+		$ProfileCustomShowFilter   	= isset($_POST['ProfileCustomShowFilter'])?(int)$_POST['ProfileCustomShowFilter']:0;
 		/*
 		 * Set profile types here
 		 */
@@ -2167,7 +2169,7 @@ echo "<div id=\"custom-fields\">";
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) . "','" . esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) . "','" . esc_sql($ProfileCustomShowFilter) . "' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -2252,7 +2254,8 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomShowLogged=" . esc_sql($ProfileCustomShowLogged) . " ,
 								ProfileCustomShowRegistration=" . esc_sql($ProfileCustomShowRegistration) . " ,
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
-								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " 
+								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " ,
+								ProfileCustomShowFilter=".esc_sql($ProfileCustomShowFilter)."
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = $wpdb->query($update);
 
@@ -2493,7 +2496,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager</label></div>
 							</div>
 						</div>
-
+						<div class=\"rbfield rbselect rbsingle\">
+							<label>Use as sort filter:</label>
+							<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" /> Click to enable</div>
+						</div>
 						<div class=\"rbfield rbselect rbsingle\">
 							<label>Gender*:</label>
 							<div>";
@@ -2619,7 +2625,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile View</label></div>
 													</div>
 												</div>
-
+												<div class=\"rbfield rbselect rbsingle\">
+													<label>Use as sort filter:</label>
+													<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" ". ($data1['ProfileCustomShowFilter'] == 1 ? 'checked=\"checked\"':'')."/> Click to enable</div>
+												</div>
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Gender*:</label>
 													<div>";

@@ -1756,15 +1756,27 @@ class RBAgency_Profile {
 					wp_enqueue_script( 'list_reorder', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array('jquery'));
 
 					// Dropdown
-					
+					///get custom field
+					$query = " SELECT ProfileCustomTitle, ProfileCustomType	,ProfileCustomID FROM " .  table_agency_customfields . " WHERE ProfileCustomShowFilter = 1 ";
+					$customFilters = $wpdb->get_results($query,ARRAY_A);
+
 					$all_html.='
 							<select id="sort_by">
 								<option value="">Sort List</option>
 								<option value="1">Age</option>
 								<option value="2">Name</option>
 								<option value="3">Date Joined</option>
-								<option value="2">Display Name</option>
-							</select>
+								<option value="2">Display Name</option>';
+								foreach($customFilters as $customFilter){
+									if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
+										$all_html.= "<option value='24'>".$customFilter['ProfileCustomTitle']."</option>";
+									}
+									if($customFilter['ProfileCustomType'] == 10){
+										$all_html.= "<option value='25'>".$customFilter['ProfileCustomTitle']."</option>";
+									}
+									
+								}
+					$all_html.='</select>
 							<select id="sort_option">
 								<option value="">Sort Options</option>
 							</select>';
@@ -2288,6 +2300,25 @@ class RBAgency_Profile {
 					$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
 					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+				
+					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomDateValue,mu.ProfileCustomID,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowFilter = 1";
+					$customFilters = $wpdb->get_results($query,ARRAY_A);
+					
+					foreach($customFilters as $customFilter){
+
+						if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
+							
+							$displayHTML .= '<input id="csnm'.$customFilter["ProfileCustomMuxID"].'" type="hidden" name="tt" class="csp_name" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+							
+						}
+						if($customFilter['ProfileCustomType'] == 10){
+							
+							$displayHTML .= '<input id="cscr'.$customFilter["ProfileCustomMuxID"].'" type="hidden" class="csp_created" name="dd" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
+						}
+						
+					}
+
+
 				}
 				$displayActions = "";  
 				$type = get_query_var('type');
@@ -2409,6 +2440,23 @@ class RBAgency_Profile {
 					$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
 					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+				
+					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomID,mu.ProfileCustomDateValue,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowFilter = 1";
+					$customFilters = $wpdb->get_results($query,ARRAY_A);
+					
+					foreach($customFilters as $customFilter){
+
+						if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
+							
+							$displayHTML .= '<input id="csnm'.$customFilter["ProfileCustomMuxID"].'" type="hidden" name="tt" class="csp_name" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+							
+						}
+						if($customFilter['ProfileCustomType'] == 10){
+							
+							$displayHTML .= '<input id="cscr'.$customFilter["ProfileCustomMuxID"].'" type="hidden" name="dd" class="csp_created" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
+						}
+						
+					}
 				}
 				/* 
 				 * determine primary image

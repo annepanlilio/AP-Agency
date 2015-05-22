@@ -3,30 +3,26 @@
  * jquery attach to sorting dropdown 
  */
 jQuery(document).ready(function(){
-	
+    
         /*
          * create element if not exist
          */
         if(jQuery('#hidden_div').length == 0){
-		var h = '<div id="hidden_div" style="display:none !important"></div>';
-		jQuery("body").append(h);
-	}
+        var h = '<div id="hidden_div" style="display:none !important"></div>';
+        jQuery("body").append(h);
+    }
         
         jQuery("#sort_by option[value='']").attr("selected", "selected");
         
-	jQuery("#sort_by, #sort_option").change(function(){
+    jQuery("#sort_by, #sort_option").change(function(){
 
-                var manage = new manage_elem(jQuery("#sort_by").val(),
-                                            jQuery("#profile-list"),
-                                            jQuery("#hidden_div"));
+                var manage = new manage_elem(jQuery("#sort_by").val(),jQuery("#profile-list"),jQuery("#hidden_div"));
                    manage.current_custom_date_id(jQuery("#sort_by").val());
                 
 
                 if(jQuery(this).attr('id') == 'sort_by'){
                         
-                        manage.update_option_fields(jQuery(this).val(),
-                                                    jQuery("#sort_option"),
-                                                    manage.start_sorting);
+                        manage.update_option_fields(jQuery(this).val(),jQuery("#sort_option"),manage.start_sorting);
                      
                 } else {
                         
@@ -34,10 +30,10 @@ jQuery(document).ready(function(){
                 
                 }                            
 
-	});
+    });
 
 
-	
+    
 });
 
 /* 
@@ -47,11 +43,11 @@ jQuery(document).ready(function(){
 function manage_elem(typ1, main_elm, hidden_elm){
                 
                 // this object
-		var prc = this;
+        var prc = this;
                 
                 // sorting type
                 var sort_typ;
-		
+        
                 // array that holds sorting arrangement
                 var srt_arr = new Array();
                 
@@ -87,13 +83,13 @@ function manage_elem(typ1, main_elm, hidden_elm){
                          }); 
                       
                       sort_typ = prc.calculate_sortyp(typ1, typ2.val());
-			             
+                         
                            ////console.log(srt_arr_original);
                       if(sort_typ != ''){
-				        prc.hide_elem(main_elm, prc.transfer_objects);
-			         }
-			
-	            }
+                        prc.hide_elem(main_elm, prc.transfer_objects);
+                     }
+            
+                }
 
                 /*
                  * update sorting options    
@@ -212,105 +208,119 @@ function manage_elem(typ1, main_elm, hidden_elm){
                             return '10';
                         }*/
 
-                        if(t1 > 5 && t2 == '1'){
+                        if((t1 > 5 && t1 < 24 && t1 < 25) && t2 == '1'){
                             return '11';
                         }
-                        if(t1 > 5 && t2 == '2'){
+                        if((t1 > 5 && t1 < 24 && t1 < 25) && t2 == '2'){
                             return '12';
                         }
 
+                         if(t1 == '24' && t2 == '1'){
+                            return '24';
+                        }
+                        if(t1 == '24' && t2 == '2'){
+                            return '25';
+                        }
+
+                         if(t1 == '25' && t2 == '1'){
+                            return '26';
+                        }
+                        if(t1 == '25' && t2 == '2'){
+                            return '27';
+                        }
                         return "";
-           		
-	        }
+                
+            }
 
                 /* 
                 * hide elements in main div
                 */
-		prc.hide_elem = function(main, call){
+        prc.hide_elem = function(main, call){
 
-			main.animate({opacity:0},1000, function(){
-				 call(main_elm, hidden_elm, prc.create_array_elm);
-			});
+            main.animate({opacity:0},1000, function(){
+                 call(main_elm, hidden_elm, prc.create_array_elm);
+            });
 
-		}
-		
+        }
+        
                 /* 
                 * transfer elements only when hidden div is empty
                 */
-		prc.transfer_objects = function(from_elm, to_elm, call){
+        prc.transfer_objects = function(from_elm, to_elm, call){
                         
-                            var htm = from_elm.html();		
+                            var htm = from_elm.html();      
                             from_elm.html('');
-                            to_elm.html(htm);	
-                            call(htm, prc.clone_object_elements);	
+                            to_elm.html(htm);   
+                            call(htm, prc.clone_object_elements);   
 
                 }
 
                 /* 
                 * provide values to arrangement array
                 */
-				
+                
                 prc.create_array_elm = function(hd_elm, clone){
-			
-			            srt_arr = [];
+            
+                        srt_arr = [];
                         srt_arr.length = 0;
                         srt_arr_assoc = [];
                         main_elm.html('');
 
-                        ////console.log("split 0:"+sort_typ.split("_")[0]);
-                        ////console.log("split 1:"+sort_typ.split("_")[1]);
-                        ////console.log("split 2:"+sort_typ.split("_")[2]);
+                       console.log("split 0:"+sort_typ.split("_")[0]);
+                       ///console.log("split 1:"+sort_typ.split("_")[1]);
+                        ///console.log("split 2:"+sort_typ.split("_")[2]);
                         // age sorting youngest to oldest   
-			if(sort_typ == '1') {
-				jQuery("#hidden_div").find(".p_birth").each(function(){
-					srt_arr.push(jQuery(this).val());
+            if(sort_typ == '1') {
+                jQuery("#hidden_div").find(".p_birth").each(function(){
+                    srt_arr.push(jQuery(this).val());
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-				});
-				srt_arr.sort();
+                });
+                srt_arr.sort();
                                 srt_arr.reverse();
-			
-                        // name sorting ascending 	
-			} else if (sort_typ == '2') {
-				jQuery("#hidden_div").find(".p_name").each(function(){
-					srt_arr.push(jQuery(this).val());	
+            
+                        // name sorting ascending   
+            } else if (sort_typ == '2') {
+                jQuery("#hidden_div").find(".p_name").each(function(){
+                    srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-				});
-				srt_arr.sort();
+                });
+                srt_arr.sort();
                                 
                         // member registered sorting descending         
-			} else if (sort_typ == '3') {
-				jQuery("#hidden_div").find(".p_created").each(function(){
-					srt_arr.push(jQuery(this).val());	
+            } else if (sort_typ == '3') {
+                jQuery("#hidden_div").find(".p_created").each(function(){
+                    srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-				});
-				srt_arr.sort();
+                });
+                srt_arr.sort();
                                 srt_arr.reverse();
                         
                         // member registered sorting ascending   
-			} else if (sort_typ == '4') {
-				jQuery("#hidden_div").find(".p_created").each(function(){
-                			srt_arr.push(jQuery(this).val());	
+            } else if (sort_typ == '4') {
+                jQuery("#hidden_div").find(".p_created").each(function(){
+                            srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-				});
-				srt_arr.sort();
+                });
+                srt_arr.sort();
                                 
                         // age sorting oldest to youngest 
-			} else if (sort_typ == '5') {
-				jQuery("#hidden_div").find(".p_birth").each(function(){
-                			srt_arr.push(jQuery(this).val());	
+            } else if (sort_typ == '5') {
+                jQuery("#hidden_div").find(".p_birth").each(function(){
+                            srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-				});
-				srt_arr.sort();
+                });
+                srt_arr.sort();
                                 
                       
-		 	// member registered sorting descending         
-		        } else if (sort_typ == '6') {
-				jQuery("#hidden_div").find(".p_name").each(function(){
-					srt_arr.push(jQuery(this).val());	
+            // member registered sorting descending         
+                } else if (sort_typ == '6') {
+                jQuery("#hidden_div").find(".p_name").each(function(){
+                    srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-				});
-				srt_arr.sort();
-                                srt_arr.reverse();
+                });
+                srt_arr.sort();
+                srt_arr.reverse();
+                
 
                }else if (sort_typ.split("_")[0] == 7) {  // duedate sorting descending 
                                
@@ -334,23 +344,23 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                     
                           
                 } else if (sort_typ == '9') {
-					jQuery("#hidden_div").find(".p_duedate").each(function(){
-						srt_arr.push(jQuery(this).val());	
-	                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-					});
-					srt_arr.sort();
-	                                srt_arr.reverse();
-	                        
-	                        // member registered sorting ascending   
-				} else if (sort_typ == '10') {
-					jQuery("#hidden_div").find(".p_duedate").each(function(){
-	                			srt_arr.push(jQuery(this).val());	
-	                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
-					});
-					srt_arr.sort();
-	                                
-	                        // age sorting oldest to youngest 
-				// Custom Date
+                    jQuery("#hidden_div").find(".p_duedate").each(function(){
+                        srt_arr.push(jQuery(this).val());   
+                                            srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                    });
+                    srt_arr.sort();
+                                    srt_arr.reverse();
+                            
+                            // member registered sorting ascending   
+                } else if (sort_typ == '10') {
+                    jQuery("#hidden_div").find(".p_duedate").each(function(){
+                                srt_arr.push(jQuery(this).val());   
+                                            srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                    });
+                    srt_arr.sort();
+                                    
+                            // age sorting oldest to youngest 
+                // Custom Date
                 } else if (sort_typ == '11') {
                     jQuery("#hidden_div").find("#"+current_custom_date_id+".p_customdate").each(function(){
                                 srt_arr.push(jQuery(this).val());   
@@ -369,19 +379,56 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     srt_arr.sort();
                     srt_arr.reverse();
                                          
-                            // age sorting oldest to youngest 
-                }
+                            
+                }else if (sort_typ == '24') {
+                     jQuery("#hidden_div").find("input[name='tt']").each(function(){
+                                srt_arr.push(jQuery(this).val());   
+                                            srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                    });
+                    srt_arr.sort();
+
+                            
+                     
+                        // member registered sorting descending         
+                }else if (sort_typ == '25') {
+                 jQuery("#hidden_div").find("input[name='tt']").each(function(){
+
+                        srt_arr.push(jQuery(this).val());   
+                                                srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                        });
+                        srt_arr.sort();
+                        srt_arr.reverse();  
+                                
+                        // member registered sorting descending         
+                }else if (sort_typ == '26') {
+                 jQuery("#hidden_div").find("input[name='dd']").each(function(){
+                            srt_arr.push(jQuery(this).val());   
+                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                });
+                srt_arr.sort();
+                        
+                        // member registered sorting ascending   
+            } else if (sort_typ == '27') {
+               jQuery("#hidden_div").find("input[name='dd']").each(function(){
+                    srt_arr.push(jQuery(this).val());   
+                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                });
+                srt_arr.sort();
+                                srt_arr.reverse();
+                                
+                        // age sorting oldest to youngest 
+            }
                    ////console.log(total_items);
                    
                         ////console.log(srt_arr);
                         clone();
-		
-		}
+        
+        }
 
                 /* 
                 * rearrange back the elements to main container
                 */
-		prc.clone_object_elements = function(){
+        prc.clone_object_elements = function(){
                        
                        var counted = new Array();
                        counted = [];
@@ -442,7 +489,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         }
                                         
                                 }else if(sort_typ == '9' || sort_typ == '10' ) {
-                                	    if(prc.check_instance_in_array(value)){
+                                        if(prc.check_instance_in_array(value)){
                                                 var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
                                                 prc.clone_em(cloned);
                                        } else {
@@ -466,8 +513,33 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         //console.log(".p_customdate[value='"+value+"'][id='"+current_custom_date_id+"']");
 
 
+                                } else if(sort_typ == '24' || sort_typ == '25') {
+                                        if(prc.check_instance_in_array(value)){
+                                            var cloned = jQuery("#hidden_div").find(".csp_name[value=\""+value+"\"]").parent();
+                                            prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"csp_name");
+                                                counted.push(value);
+                                            }
+                                        }
+
+
+                                }else if(sort_typ == '26'  || sort_typ == '27') {
+
+                                        if(prc.check_instance_in_array(value)){
+                                                var cloned = jQuery("#hidden_div").find(".csp_created[value='"+value+"']").parent();
+                                                prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"csp_created");
+                                                counted.push(value);
+                                            }
+                                        }
+
+
                                 }                                     
-					  					
+                                        
                                  ////console.log(value);
 
                        });
@@ -479,7 +551,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         });
 
                        
-          	 }
+             }
 
                /* 
                 * check if there is more than one instance
