@@ -651,7 +651,7 @@ class RBAgency_Casting {
 			$SearchMuxMessage = $SearchMuxMessage;
 			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  make_clickable(stripcslashes($SearchMuxMessage)), $headers);
 
-			var_dump(array($headers,$SearchMuxToEmail,$SearchMuxSubject, $SearchMuxSubject, $SearchMuxHash));
+			//var_dump(array($headers,$SearchMuxToEmail,$SearchMuxSubject, $SearchMuxSubject, $SearchMuxHash));
 			//if($isSent){
 				if(!empty($SearchMuxFromEmail)){
 					$email_error .= "<div style=\"margin:15px;\">";
