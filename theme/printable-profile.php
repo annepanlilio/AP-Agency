@@ -31,37 +31,20 @@ function is_chrome() {
 	$imageLeft = "";
 	$isLeft = "";
 	$wrapperWidthHeight = "";
-
-	$print_format = $_POST['print_option']; // get print format
-
-	// classes for print format styling
-	if($print_format == 1){
-		$print_format_class = "lg-photos-info";
-	}
-	if($print_format == 3) {
-		$print_format_class = "md-photos-info";
-	}
-	if ($print_format == "1-1" ) {
-		$print_format_class = "lg-photos";
-	}
-	if ($print_format == "3-1" ) {
-		$print_format_class = "lg-photos";
-	}
 		
-	if($_POST['print_option']==1){ // Print Large Photos
+	if($_POST['print_option']==1){
 		if($chrome){
 			$widthAndHeight='style="width:420px; height:550px;"';
 			//$wrapperWidthHeight="width:887px;"; // $wrapperWidth="1774px";
 			$isLeft="float:left;";  //put this for page on chrome preview
 			$model_info_width="width:310px;";
 			//die("chrome");
-		} else {
+		}else{
 			$widthAndHeight='style="width:450px; height:580px"';
 			$model_info_width="width:410px;";
 			$logoMarginTop=" margin-top:30px;";
 			//die("not chrome");
 		}
-
 		$ul_css="width:70%;";
 		$toLandScape='@page{size: landscape;margin: 2cm;}';
 		$showFooter=2; //at what loop should the footer be displayed
@@ -71,16 +54,16 @@ function is_chrome() {
 		$ul_css="width:100%;";
 	} elseif($_POST['print_option']==3){
 		if($chrome){
-			$widthAndHeight='style="width:220px; height:270px;"';
+			$widthAndHeight='style="width:202px; height:270px;"';
 			$ul_css="width:100%;";
-			// $model_info_width="width:202px; height:270px;";
-		} else {
-			$widthAndHeight='style="width:220px; height:320px;"';
+			$model_info_width="width:202px; height:270px;";
+		}else{
+			$widthAndHeight='style="width:202px; height:320px;"';
 			$ul_css="width:100%;";
-			// $model_info_width="width:202px; height:320px;";
+			$model_info_width="width:202px; height:320px;";
 		}
-		$toLandScape = '@page{size: landscape;margin: 2cm 1cm;}';
-		$showFooter = 8; //at what loop should the footer be displayed
+		$toLandScape='@page{size: landscape;margin: 2cm;}';
+		$showFooter=8; //at what loop should the footer be displayed
 	} elseif($_POST['print_option']==4){
 		$widthAndHeight='style="width:500px"';
 		$ul_css="width:100%;";
@@ -115,25 +98,19 @@ function is_chrome() {
 <?php echo $toLandScape;?> 
 <?php echo $imageLeft;?>
 body{color:#000;}
-body:before{display: none!important; }
 h1{color: #000; margin-bottom:15px; margin-top:15px;}
 
 ul li span{ float:right; text-align:left; width:100px;}
-ul { margin: 0; <?php echo $ul_css;?>}
-ul li{ list-style:none;}
+ul {<?php echo $ul_css;?>}
+ul li{ list-style:none; padding-bottom:5px; padding-top:5px;}
 #print_logo{margin-bottom:25px; width:100%; float:left;}
-#model_info{border:0px solid #000; margin-right: 5px; float:left; <?php echo $model_info_width;?>}
-#print_wrapper img.allimages_thumbs{margin-left:10px;margin-bottom:10px; <?php echo $isLeft; ?> }
-.agency-logo { max-width: 300px; float: right; clear: both; }
-.group { float: left; width: 920px; }
-.group.first { width: 690px; }
-.row { float: left; width: 100%; clear: both; }
-.md-photos-info #model_info { height: auto; width: 220px; }
+#model_info{border:0px solid #000; float:left; <?php echo $model_info_width;?>}
+#print_wrapper img.allimages_thumbs{margin-right:5px; <?php echo $isLeft; ?> }
 </style>
 
 </head>
 <body onload="printpage()" style="background: #fff;">
-<div id="print_wrapper" class="<?php echo $print_format_class; ?>" style=" <?php echo $wrapperWidthHeight;?>  border:0px solid #000;">
+<div id="print_wrapper" style=" <?php echo $wrapperWidthHeight;?>  border:0px solid #000;">
 
 <?php /*
 <div id="print_logo" style="float: left; width: 50%;">
@@ -149,8 +126,8 @@ ul li{ list-style:none;}
 ?>
 		<div id="model_info">
 			<h1><?php echo $ProfileContactDisplay; ?></h1>
-		   	<ul>
-				<?php rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);?>
+		   <ul>
+			<?php  rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);?>
 			</ul>
 		</div>
 
@@ -172,17 +149,7 @@ ul li{ list-style:none;}
 	$countImg = count($resultsImg);
 	$imageCnt = 0;
 	$rowCount = 0;
-	
-	foreach($resultsImg as $dataImg){
-
-		$imageCnt++;
-		$rowCount++;
-
-		if($rowCount == 1) { $showFooter = 6; } // first six photos beside info
-
-		if(($rowCount % $showFooter == 1) || $showFooter == 1) { // group photos in a div
-			echo '<div class="group'.($rowCount == 1 ? ' first' : '').'">';
-		}
+	foreach($resultsImg as $dataImg){$imageCnt++; $rowCount++;
 		if($imageCnt>1){
 			$left='class="lefty"';
 		} else{
@@ -194,15 +161,15 @@ ul li{ list-style:none;}
 		$timthumbHW=str_replace('px;"',"",$timthumbHW);
 
 		echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
-        
-    	if($rowCount % $showFooter == 0) { // add row clear, add agency logo, close .group
-			echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div><!-- .group -->';
+        if($rowCount == $showFooter){
+			$rowCount=0; //reset to loop another row 
+			echo '<br clear="all"><img style="width:347px; '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'\"><br clear=\"all\">';
 		}
-	}	
+	}
 
-	// if($rowCount!=$showFooter AND $rowCount!= "0"){
-	// 	echo '<br clear="all"><img style="width:347px;" src="'.$rb_agency_option_agencylogo."\"><br clear=\"all\">";
-	// }
+	if($rowCount!=$showFooter AND $rowCount!="0"){
+		echo '<br clear="all"><img style="width:347px;" src="'.$rb_agency_option_agencylogo."\"><br clear=\"all\">";
+	}
 ?>
 </div>
 </body>

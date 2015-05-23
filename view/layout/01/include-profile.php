@@ -413,7 +413,7 @@ echo "					</div>\n"; // #photos
 							<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 							<!-- display options-->
 
-							<div id="polaroids" class="rbcol-12 rbcolumn">
+							<div id="polaroids" class="rbcol-8 rbcolumn">
 								<div class="rbcol-6 rbcolumn">
 									<h3><input type="radio" value="1" name="print_option" checked="checked" /> Print Large Photos</h3>
 									<div class="polaroid">
