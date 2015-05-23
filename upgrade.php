@@ -755,6 +755,8 @@ global $wpdb;
 	if (substr(get_option('rb_agency_version'), 0, 3) == "2.4") {
 		// Updating version number!
 		update_option('rb_agency_version', "2.4.3");
+
+		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowFilter"," INT(10) NOT NULL DEFAULT '0'");
 	}
 
 

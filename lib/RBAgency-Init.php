@@ -237,6 +237,7 @@ class RBAgency_Init {
 					ProfileCustomShowGender INT(10) NOT NULL DEFAULT '0',
 					ProfileCustomShowProfile INT(10) NOT NULL DEFAULT '1',
 					ProfileCustomShowSearch INT(10) NOT NULL DEFAULT '1',
+					ProfileCustomShowFilter INT(10) NOT NULL DEFAULT '0',
 					ProfileCustomShowSearchSimple INT(10) NOT NULL DEFAULT '0',
 					ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
 					ProfileCustomShowRegistration INT(10) NOT NULL DEFAULT '1',
