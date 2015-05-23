@@ -1470,11 +1470,11 @@
 								  <div class='error_msg' style='color:red; min-width:0px'></div>";
 					}						
 				} elseif ($ProfileCustomType == 10) { //Date
-					
-						echo "<input type=\"text\" id=\"rb_datepicker". $data3['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $ProfileCustomDateValue ."\" /><br />\n";						
+						$getDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : $ProfileCustomValue;
+						echo "<input type=\"text\" id=\"rb_datepicker". $data3['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $getDateValue ."\" /><br />\n";						
 						echo "<script type=\"text/javascript\">\n\n";
 						echo "jQuery(function(){\n\n";
-						echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". (isset($_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"])?$_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"]:$ProfileCustomDateValue) ."');\n\n";
+						echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". (isset($_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"])?$_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"]:$getDateValue) ."');\n\n";
 						echo "});\n\n";
 						echo "</script>\n\n";
 
@@ -1771,6 +1771,7 @@
 								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"blank\">Click Here</a></li>\n";
 							}
 						}elseif ($resultCustom->ProfileCustomType == 10){
+
 							if(!empty($resultCustom->ProfileCustomDateValue) && $resultCustom->ProfileCustomDateValue !== "January 01, 1970"){
 								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</".$value_tag."></li>\n";
 							}

@@ -2380,6 +2380,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 			array_push($arr_profile_fields, str_replace(" ","_",$v));
 		}
 		
+
 		
 		$arr_import_headers = explode(",",$_REQUEST["headers"]);
 		//print_r($arr_import_headers);
@@ -2480,10 +2481,23 @@ class RBAgencyCSVXLSImpoterPlugin {
 														}
 													}
 
+													//check if it is a date
+													function checkIfDate($date) {
+													  $tempDate = explode('-', $date);
+													  if (checkdate($tempDate[1], $tempDate[2], $tempDate[0])) {//checkdate(month, day, year)
+													    return true;
+													  } else {
+													     return false;
+													  }
+													}
+
 													$p_table_fields = "";
 													$p_table_values = "";
 													$pos = 0;
 													foreach ($arr_import_headers as $key ) {
+
+														
+
 													   if(substr($key, 0, 7) == "Profile"){
 															
 															$p_table_fields  .= $key;
@@ -2505,6 +2519,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 														
 															}
 
+															
+
 															if($pos < count($arr_import_headers)){
 															   $p_table_fields  .= ",";
 															   $p_table_values  .= ",";
@@ -2523,6 +2539,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 													if($last_inserted_id){
 														$pos = 0;
 														foreach ($arr_import_headers as $key ) {
+
+															//echo $key."=".$vv[$key];
 															   if(substr($key, 0, 7) != "Profile"){
 																	if(isset($_REQUEST['select'.$pos])){
 																	   $select_id = esc_html($_REQUEST['select'.$pos]);
@@ -2532,6 +2550,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 																			$cal_height = ($height[0] * 12) + $height[2];
 																			$vv[$key]  = $cal_height;
 																			
+																		}
+
+																		if(checkIfDate($key[$key]) == true){
+																			$vv[$key] = !empty($vv[$key]) ? date("Y-m-d",strtotime($vv[$key])):date("Y-m-d");
 																		}
 
 																		$parse = explode(" ",$vv[$key]);
