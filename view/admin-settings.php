@@ -2038,7 +2038,7 @@ echo "<div id=\"custom-fields\">";
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
 		$ProfileCustomShowProfile  	= isset($_POST['ProfileCustomShowProfile'])?(int)$_POST['ProfileCustomShowProfile']:0;
-		$ProfileCustomShowSearch  	= (int)$_POST['ProfileCustomShowSearch'];
+		$ProfileCustomShowSearch  	= isset($_POST['ProfileCustomShowFilter']) ? 2 : (int)$_POST['ProfileCustomShowSearch'];
 		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
 		$ProfileCustomShowRegistration= isset($_POST['ProfileCustomShowRegistration'])?(int)$_POST['ProfileCustomShowRegistration']:0;
 		$ProfileCustomShowSearchSimple= isset($_POST['ProfileCustomShowSearchSimple'])?(int)$_POST['ProfileCustomShowSearchSimple']:0;
@@ -2169,7 +2169,7 @@ echo "<div id=\"custom-fields\">";
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) . "','" . esc_sql($ProfileCustomShowFilter) . "' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) . "' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -2254,8 +2254,7 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomShowLogged=" . esc_sql($ProfileCustomShowLogged) . " ,
 								ProfileCustomShowRegistration=" . esc_sql($ProfileCustomShowRegistration) . " ,
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
-								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " ,
-								ProfileCustomShowFilter=".esc_sql($ProfileCustomShowFilter)."
+								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " 
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = $wpdb->query($update);
 

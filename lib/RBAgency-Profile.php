@@ -1758,7 +1758,7 @@ class RBAgency_Profile {
 
 					// Dropdown
 					///get custom field
-					$query = " SELECT ProfileCustomTitle, ProfileCustomType	,ProfileCustomID FROM " .  table_agency_customfields . " WHERE ProfileCustomShowFilter = 1 ";
+					$query = " SELECT ProfileCustomTitle, ProfileCustomType	,ProfileCustomID FROM " .  table_agency_customfields . " WHERE ProfileCustomShowSearch = 2 ";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 
 					$all_html.='
@@ -2311,7 +2311,7 @@ class RBAgency_Profile {
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
 					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
 				
-					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomDateValue,mu.ProfileCustomID,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowFilter = 1";
+					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomDateValue,mu.ProfileCustomID,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowSearch = 2";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 					
 					foreach($customFilters as $customFilter){
@@ -2467,7 +2467,7 @@ class RBAgency_Profile {
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
 					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
 				
-					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomID,mu.ProfileCustomDateValue,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowFilter = 1";
+					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomID,mu.ProfileCustomDateValue,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowSearch = 2";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 					
 					foreach($customFilters as $customFilter){
