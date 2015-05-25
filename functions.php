@@ -401,22 +401,23 @@
 
 		
 
-		if(!empty($sc['show_age_year']) && $sc['show_age_year'] == false){
-			$detail_year = 0;
-		}elseif(empty($sc['show_age_year'])){
+		if(!empty($sc['show_age_year'])){
+			
+			$detail_year = $sc['show_age_year'] == "true" ? 1 : 0;
+		}else{
 			$detail_year = $detail_year_op;
 		}
-		if(!empty($sc['show_age_month']) && $sc['show_age_month'] == false){
-			$detail_month = 0;
-		}elseif(empty($sc['show_age_month'])){
+		if(!empty($sc['show_age_month'])){
+			$detail_month = $sc['show_age_month'] == "true" ? 1 : 0;
+		}else{
 			$detail_month = $detail_month_op;
 		}
-		if(!empty($sc['show_age_day']) && $sc['show_age_day'] == false){
-			$detail_day = 0;
-		}elseif(empty($sc['show_age_day'])){
+		if(!empty($sc['show_age_day'])){
+			$detail_day = $sc['show_age_day'] == "true" ? 1 : 0;
+		}else{
 			$detail_day = $detail_day_op;
 		}
-		
+
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
 			
 

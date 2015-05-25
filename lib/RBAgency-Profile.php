@@ -2400,8 +2400,12 @@ class RBAgency_Profile {
 
 						if($dataList["ProfileLocationState"]!=""){
 
-							$detailState = $arr_query['show_state'] == true ? 1 :$rb_agency_option_detail_state;
-							
+							if(!empty($arr_query['show_state'])){
+								$detailState = $arr_query['show_state'] == "true" ? 1 : 0;
+							}else{
+								$detailState = $rb_agency_option_detail_state;
+							}
+														
 							$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false);
 
 							$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
