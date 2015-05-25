@@ -36,33 +36,33 @@ function is_chrome() {
 	$print_format = $_POST['print_option']; // get print format
 
 	// classes for print format styling
-	if($print_format == 1){
+	if($print_format == "1"){ // Print Large Photos
 		$print_format_class = "lg-photos-info";
-		$first_photos = 1;
-		$showFooter = 2;
+		$images_per_row = 2;
 	}
-	if($print_format == 3) {
+	if($print_format == "3") { // Print Medium Size Photos
 		$print_format_class = "md-photos-info";
-		$first_photos = 6;
-		$showFooter = 6;
+		$images_per_row = 6;
 	}
-	if ($print_format == "1-1" ) {
+	if ($print_format == "1-1" ) { // Print Large Photos Without Model Info
 		$print_format_class = "lg-photos";
+		$images_per_row = 2;
 	}
-	if ($print_format == "3-1" ) {
-		$print_format_class = "lg-photos";
+	if ($print_format == "3-1" ) { // Print Medium Size Photos Without Model Info
+		$print_format_class = "md-photos";
+		$images_per_row = 8;
 	}
 
 		
 	if($_POST['print_option']==1){ // Print Large Photos
 		if($chrome){
-			$widthAndHeight='style="width:450px; height:570px;"';
+			$widthAndHeight='style="width:455px; height:570px;"';
 			//$wrapperWidthHeight="width:887px;"; // $wrapperWidth="1774px";
 			$isLeft="float:left;";  //put this for page on chrome preview
 			$model_info_width="width:310px;";
 			//die("chrome");
 		} else {
-			$widthAndHeight='style="width:450px; height:580px"';
+			$widthAndHeight='style="width:455px; height:580px"';
 			$model_info_width="width:415px;";
 			$logoMarginTop=" margin-top:30px;";
 			//die("not chrome");
@@ -130,9 +130,11 @@ ul li{ list-style:none;}
 #print_logo{margin-bottom:25px; width:100%; float:left;}
 #model_info{border:0px solid #000; margin-right: 5px; float:left; <?php echo $model_info_width;?>}
 #print_wrapper img.allimages_thumbs{margin-left:10px;margin-bottom:10px; <?php echo $isLeft; ?> }
-.agency-logo { max-width: 300px; float: right; clear: both; }
+.agency-logo { max-width: 300px; float: right; }
 .group { float: left; width: 920px; }
+#print_wrapper .group img:first-child { margin-left: 0; }
 .row { float: left; width: 100%; clear: both; }
+.name { float: left; text-transform: uppercase; font-size: 26px; }
 .lg-photos-info #model_info { height: auto; width: 450px; }
 .lg-photos-info .group.first { width: 450px; }
 .lg-photos-info .allimages_thumbs { width: 450px; }
@@ -194,22 +196,21 @@ ul li{ list-style:none;}
 		$timthumbHW=str_replace('px; height:',"&h=",$timthumbHW);
 		$timthumbHW=str_replace('px;"',"",$timthumbHW);
 
-		if($print_format == 1) { // Print Large Photos with info Layout
+		if($print_format == "1") { // Print Large Photos with info Layout
 
-        	if($rowCount % $showFooter == 1 || $rowCount == 0) { // add row clear, add agency logo, close .group
+        	if($rowCount % $images_per_row == 1 || $rowCount == 0) { // add row clear, add agency logo, close .group
 				echo '<div class="group'.($rowCount == 0 ? ' first' : '').'">';
 			}
 
 			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 			
-        	if($rowCount % $showFooter == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
+        	if($rowCount % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
 				echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
 			}
 
-			$rowCount++;        	
-        }
+			$rowCount++;
 
-		if($print_format == 3){ // Print Medium Photos with info Layout
+        } elseif ($print_format == "3"){ // Print Medium Photos with info Layout
 
 			if($rowCount < 6) { // First six photos beside info
 				
@@ -227,22 +228,48 @@ ul li{ list-style:none;}
 
 			} else {  // Succeding Photos
 			
-				if(($imageCnt % 8 == 1) || 8 == 1) { // group photos in a div
+				if(($imageCnt % $images_per_row == 1) || $images_per_row == 1) { // group photos in a div
 					echo '<div class="group">';
 				}
 
 				echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 
-				if($imageCnt % 8 == 0 || $imageCnt+6 == $countImg) { // add row clear, add agency logo, close .group
+				if($imageCnt % $images_per_row == 0 || $imageCnt+6 == $countImg) { // add row clear, add agency logo, close .group
 					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
 				}
 
 				$imageCnt++;
 			}
 			
-		}		
+		} elseif ($print_format == "1-1"){ // Print Large Photos with without info
 
-	}	
+			$rowCount++;
+
+			if(($rowCount % $images_per_row == 1) || $images_per_row == 1) {
+				echo '<div class="group">';
+			}
+
+			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+			
+        	if($rowCount % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
+				echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+			}
+			
+		} else {  // Print Medium Photos with without info
+
+			$rowCount++;
+			if(($rowCount % $images_per_row == 1) || $images_per_row == 1) {
+				echo '<div class="group">';
+			}
+
+			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+			
+        	if($rowCount % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
+				echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+			}
+		}
+
+	}
 
 	// if($rowCount!=$showFooter AND $rowCount!= "0"){
 	// 	echo '<br clear="all"><img style="width:347px;" src="'.$rb_agency_option_agencylogo."\"><br clear=\"all\">";
