@@ -274,7 +274,7 @@ echo "					</div>\n"; // #photos
 							<input type="hidden" name="print_type" value="<?php echo $subview;?>" />
 							<!-- display options-->
 
-							<div id="polaroids" class="rbcol-8 rbcolumn">
+							<div id="polaroids" class="rbcol-12 rbcolumn">
 
 								<div class="rbcol-6 rbcolumn">
 									<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
