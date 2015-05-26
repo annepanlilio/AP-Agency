@@ -381,7 +381,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                          
                             
                 }else if (sort_typ == '24') {
-                     jQuery("#hidden_div").find("input[name='tt']").each(function(){
+                     jQuery("#hidden_div").find(".csp_name").each(function(){
                                 srt_arr.push(jQuery(this).val());   
                                             srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
                     });
@@ -391,7 +391,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                      
                         // member registered sorting descending         
                 }else if (sort_typ == '25') {
-                 jQuery("#hidden_div").find("input[name='tt']").each(function(){
+                 jQuery("#hidden_div").find(".csp_name").each(function(){
 
                         srt_arr.push(jQuery(this).val());   
                                                 srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -401,7 +401,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                 
                         // member registered sorting descending         
                 }else if (sort_typ == '26') {
-                 jQuery("#hidden_div").find("input[name='dd']").each(function(){
+                 jQuery("#hidden_div").find(".csp_created").each(function(){
                             srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
                 });
@@ -409,7 +409,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         
                         // member registered sorting ascending   
             } else if (sort_typ == '27') {
-               jQuery("#hidden_div").find("input[name='dd']").each(function(){
+               jQuery("#hidden_div").find(".csp_created").each(function(){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
                 });
@@ -517,10 +517,11 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         if(prc.check_instance_in_array(value)){
                                             var cloned = jQuery("#hidden_div").find(".csp_name[value=\""+value+"\"]").parent();
                                             prc.clone_em(cloned);
+                                           
                                        } else {
                                             if(prc.not_in_array(counted,value)){
-                                                prc.clone_em_all(value,"csp_name");
-                                                counted.push(value);
+                                                //prc.clone_em_all(value,"csp_name");
+                                                //counted.push(value);
                                             }
                                         }
 
@@ -530,10 +531,11 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         if(prc.check_instance_in_array(value)){
                                                 var cloned = jQuery("#hidden_div").find(".csp_created[value='"+value+"']").parent();
                                                 prc.clone_em(cloned);
+                                                
                                        } else {
                                             if(prc.not_in_array(counted,value)){
-                                                prc.clone_em_all(value,"csp_created");
-                                                counted.push(value);
+                                                //prc.clone_em_all(value,"csp_created");
+                                                //counted.push(value);
                                             }
                                         }
 

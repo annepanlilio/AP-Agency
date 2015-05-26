@@ -2626,7 +2626,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												</div>
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Use as sort filter:</label>
-													<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" ". ($data1['ProfileCustomShowFilter'] == 1 ? 'checked=\"checked\"':'')."/> Click to enable</div>
+													<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" ". ($data1['ProfileCustomShowSearch'] == 2 ? 'checked=\"checked\"':'')."/> Click to enable</div>
 												</div>
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Gender*:</label>
