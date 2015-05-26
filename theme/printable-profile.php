@@ -52,6 +52,17 @@ function is_chrome() {
 		$print_format_class = "md-photos";
 		$images_per_row = 8;
 	}
+	if ($print_format == "11" ) { // Print Medium Size Photos Without Model Info
+		$print_format_class = "polariod-1-4";
+		$widthAndHeight='style="width:275px; height:270px;"';
+		$images_per_row = 4;
+	}
+	if ($print_format == "12" ) { // Print Medium Size Photos Without Model Info
+		$print_format_class = "polariod-1-2";
+		$widthAndHeight='style="width:275px; height:270px;"';
+		$images_per_row = 2;
+		$toLandScape='@page{size: landscape; margin: 1cm}';
+	}
 
 		
 	if($_POST['print_option']==1){ // Print Large Photos
@@ -95,19 +106,16 @@ function is_chrome() {
 		$widthAndHeight='style="width:100px"';
 		$wrapperWidthHeight="width:887px; height:600px;";   
 		$toLandScape='@page{size: landscape;margin: 2cm;}';
-	} elseif($_POST['print_option']==11){
-		$widthAndHeight='style="width:232px; height:340px;margin-bottom:5px;"';
+	} elseif($_POST['print_option']==11){		
 		$ul_css="width:100%;";
-		$model_info_width="width:170px; height:520px;";
+		$toLandScape='@page{size: landscape;margin: 1.5cm;}';
 	} elseif($_POST['print_option']==12){
 
 		$ul_css="width:100%;";
-		if(is_chrome()){
-			$model_info_width="width:180px; height:520px;";
-			$widthAndHeight='style="width:490px; height:620px;margin-bottom:5px;"';
-		}else{
-			$model_info_width="width:180px; height:520px;";
-			$widthAndHeight='style="width:520px; height:620px;margin-bottom:5px;"';
+		if(is_chrome()){			
+			$widthAndHeight='style="width:450px; height:600px;margin-bottom:5px;"';
+		}else{			
+			$widthAndHeight='style="width:550px; height:600px;margin-bottom:5px;"';
 		}
 		$imageLeft=".lefty{margin-left:180px;}";
 	} else {
@@ -124,22 +132,30 @@ body{color:#000;}
 body:before{display: none!important; }
 h1{color: #000; margin-bottom:15px; margin-top:15px;}
 
-ul li span{ float:right; text-align:left; width:100px;}
+ul li span{ float:right; text-align:left;}
 ul { margin: 0; <?php echo $ul_css;?>}
 ul li{ list-style:none;}
 #print_logo{margin-bottom:25px; width:100%; float:left;}
 #model_info{border:0px solid #000; margin-right: 5px; float:left; <?php echo $model_info_width;?>}
-#print_wrapper img.allimages_thumbs{margin-left:10px;margin-bottom:10px; <?php echo $isLeft; ?> }
+#print_wrapper img.allimages_thumbs{margin-left:10px;margin-bottom:10px; float: left; <?php echo $isLeft; ?> }
 .agency-logo { max-width: 300px; float: right; }
 .group { float: left; width: 920px; }
-#print_wrapper .group img:first-child { margin-left: 0; }
+
 .row { float: left; width: 100%; clear: both; }
 .name { float: left; text-transform: uppercase; font-size: 26px; }
-.lg-photos-info #model_info { height: auto; width: 450px; }
-.lg-photos-info .group.first { width: 450px; }
+
+.lg-photos-info #model_info,
+.polariod-1-2 #model_info { height: auto; width: 450px; }
+.lg-photos-info .group.first,
+.polariod-1-2 .group.first { width: 450px; }
 .lg-photos-info .allimages_thumbs { width: 450px; }
+
 .md-photos-info #model_info { height: auto; width: 220px; }
 .md-photos-info .group.first { width: 690px; }
+
+.polariod-1-4 #model_info { height: auto; width: 270px; }
+.polariod-1-4 .group.first { width: 570px; }
+
 </style>
 
 </head>
@@ -179,6 +195,7 @@ ul li{ list-style:none;}
 	} else {
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
 	}
+
 	$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 	$countImg = count($resultsImg);
 	$imageCnt = 1;
@@ -255,7 +272,7 @@ ul li{ list-style:none;}
 				echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
 			}
 			
-		} else {  // Print Medium Photos with without info
+		} elseif ($print_format == "3-1") { // Print Medium Photos with without info
 
 			$rowCount++;
 			if(($rowCount % $images_per_row == 1) || $images_per_row == 1) {
@@ -266,6 +283,68 @@ ul li{ list-style:none;}
 			
         	if($rowCount % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
 				echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+			}
+
+		} elseif ($print_format == "11") { //  Four Polaroids Per Page
+			
+			if($rowCount < 4) { // First 4 photos beside info
+				
+				if($rowCount == 0){
+					echo '<div class="group first">';
+				}
+				
+				echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+
+				if($rowCount == 3){
+					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+				}
+
+				$rowCount++;
+
+			} else {  // Succeding Photos
+			
+				if(($imageCnt % $images_per_row == 1) || $images_per_row == 1) { // group photos in a div
+					echo '<div class="group">';
+				}
+
+				echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+
+				if($imageCnt % $images_per_row == 0 || $imageCnt+4 == $countImg) { // add row clear, add agency logo, close .group
+					echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+				}
+
+				$imageCnt++;
+			}
+
+		} else { // One Polaroid Per Page
+
+			if($rowCount < 1) { // First 4 photos beside info
+				
+				if($rowCount == 0){
+					echo '<div class="group first">';
+				}
+				
+				echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+
+				if($rowCount == 0){
+					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+				}
+
+				$rowCount++;
+
+			} else {  // Succeding Photos
+			
+				if(($imageCnt % $images_per_row == 1) || $images_per_row == 1) { // group photos in a div
+					echo '<div class="group">';
+				}
+
+				echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+
+				if($imageCnt % $images_per_row == 0 || $imageCnt+1 == $countImg) { // add row clear, add agency logo, close .group
+					echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+				}
+
+				$imageCnt++;
 			}
 		}
 
