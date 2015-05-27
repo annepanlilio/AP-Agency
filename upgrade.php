@@ -675,6 +675,10 @@ global $wpdb;
 		update_option('rb_agency_version', "2.0.9.3");
 	}
 
+	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.1") {
+		update_option('rb_agency_version', "2.0.9.3");
+	}
+
 	if (substr(get_option('rb_agency_version'), 0, 7) == "2.0.9.3") {
 		// Add Column
 		rb_agency_addColumn( table_agency_data_media,"MediaCategoryFileType","VARCHAR(50)");
