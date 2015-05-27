@@ -199,10 +199,11 @@ global $wpdb;
 			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,  $type);
 			$objWriter->save(str_replace('.php', '.'.$extension, __FILE__));
 			$profile_name = explode("-",$_POST["export-profile"]);
-			$from = $profile_name[0];
-			$to = $profile_name[1];
-			$profile_paginate = isset($_POST["export-profile"]) && !empty($_POST["export-profile"])?"-profiles-".($from."-".(($to+$from)-1)):"";
-            
+			$from = $profile_name[0]+1;
+			$to = ($profile_name[1] == 100) ? 100 : ($profile_name[1] < 100 ? $profile_name[1] : $profile_name[1] - 100);
+			$fname = is_numeric($profile_name[1]) ? ($from."-".(($to+$from)-1)) : $_POST["export-profile"];
+			$profile_paginate = isset($_POST["export-profile"]) && !empty($_POST["export-profile"]) ? "-profiles-".$fname : "-profiles-".$fname;
+          
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 

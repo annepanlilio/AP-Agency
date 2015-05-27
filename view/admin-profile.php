@@ -348,6 +348,17 @@ if (isset($_POST['action'])) {
 
 						}
 
+						//Personal expanded detail
+						$hide_age_year = isset($_REQUEST['hide_age_year']) ? true : false;
+						$hide_age_month = isset($_REQUEST['hide_age_month']) ? true : false;
+						$hide_age_day = isset($_REQUEST['hide_age_day']) ? true : false;
+						$hide_state = isset($_REQUEST['hide_state']) ? true : false;
+
+						update_user_meta( $ProfileID, 'rb_agency_hide_age_year', $hide_age_year);
+						update_user_meta( $ProfileID, 'rb_agency_hide_age_month',$hide_age_month );
+						update_user_meta( $ProfileID, 'rb_agency_hide_age_day',$hide_age_day );
+						update_user_meta( $ProfileID, 'rb_agency_hide_state',$hide_state );
+
 						// Remove Old Custom Field Values
 						$delete1 = "DELETE FROM " . table_agency_customfield_mux . " WHERE ProfileID = \"" . $ProfileID . "\"";
 						$results1 = $wpdb->query($delete1);
@@ -1843,6 +1854,38 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									</table>\n";
 								}
 							?>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+
+			<!--Expanded Model Detail-->
+			<div id="postbox-container-6" class="postbox-container">
+				<div id="side-sortables" class="meta-box-sortables ui-sortable">
+					
+					<!-- Custom Links -->
+					<div id="dashboard_line_to_links" class="postbox ">
+						<div class="handlediv" title="Click to toggle"><br></div>
+						<h3 class="hndle"><span><?php echo  __("Custom Display Settings", RBAGENCY_TEXTDOMAIN); ?></span></h3>
+						<div class="inside">
+							<div class="main">
+								<?php 
+
+								$edit_hide_age_year = get_user_meta($_REQUEST['ProfileID'],'rb_agency_hide_age_year',true) == true ? "checked='checked'" : "";
+								$edit_hide_age_month = get_user_meta($_REQUEST['ProfileID'],'rb_agency_hide_age_month',true)== true ? "checked='checked'" : "";
+								$edit_hide_age_day = get_user_meta($_REQUEST['ProfileID'],'rb_agency_hide_age_day',true)== true ? "checked='checked'" : "";
+								$edit_hide_state = get_user_meta($_REQUEST['ProfileID'],'rb_agency_hide_state',true)== true ? "checked='checked'" : "";
+
+								echo "<input type=\"checkbox\" name=\"hide_age_year\" ".$edit_hide_age_year."/> &nbsp; Hide Age (year)<br>";
+								echo "<input type=\"checkbox\" name=\"hide_age_month\" ".$edit_hide_age_month."/> &nbsp; Hide Age (month)<br>";
+								echo "<input type=\"checkbox\" name=\"hide_age_day\" ".$edit_hide_age_day."/> &nbsp; Hide Age (Day)<br>";
+								echo "<input type=\"checkbox\" name=\"hide_state\" ".$edit_hide_state."/> &nbsp; Hide State<br>";
+								?>
 							</div>
 						</div>
 					</div>

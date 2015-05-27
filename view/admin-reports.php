@@ -1240,7 +1240,7 @@ elseif ($ConfigID == 81)
 	$last = round($total_profiles->total_profiles/$count);
 	$loop_count = $count;
 	$x = 0;
-
+	$last = $total_profiles->total_profiles > 100 ? $last + 1 : $last;
 	for($a = 1; $a<=$last; $a++) {
 		$x++;
 		$from = ($a==1)?1:($loop_count+1);
@@ -1250,7 +1250,7 @@ elseif ($ConfigID == 81)
 			$to = $total_profiles->total_profiles;
 		}
 		
-		echo "<input  required type=\"radio\" name=\"export-profile\" value=\"".((($from - 1) == 0)?1:$to+1-(100))."-".((($from - 1) == 0)?100:$count)."\">Export Profiles(".($from)."-".$to.")<br/>";
+		echo "<input  required type=\"radio\" name=\"export-profile\" value=\"".($from==1?0:$from-1)."-".$to."\">Export Profiles(".($from)."-".$to.")<br/>";
 		
 		$loop_count = (($a==1)?$count:$loop_count + $count);
 		
