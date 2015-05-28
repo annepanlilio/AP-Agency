@@ -398,8 +398,7 @@
 		$detail_month_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
 		$detail_day_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
 		
-
-		
+				
 
 		if(!empty($sc['show_age_year'])){
 			
@@ -473,7 +472,7 @@
 					$years = "";
 				} else {
 					
-						$label_y = "<span>" . $years . " yr(s)</span>";
+						$label_y = "<span ".$attrs['year_style'].">" . $years . " yr(s)</span>";
 				}
 			}
 			if($detail_month == 1|| is_admin()){
@@ -481,11 +480,11 @@
 				if($months == 0){
 					$label_m = "";
 				} else {
-					$label_m = "<span>" .(($months<12)?$months:11) . " mo(s)</span>";
+					$label_m = "<span ".$attrs['month_style'].">" .(($months<12)?$months:11) . " mo(s)</span>";
 				}
 			}
 			if($detail_day == 1|| is_admin()){
-				$label_d = "<span>" . (($days<31)?$days:30)." day(s)</span>";
+				$label_d = "<span ".$attrs['day_style'].">" . (($days<31)?$days:30)." day(s)</span>";
 			}
 
 			return  implode(" ",array($label_y,$label_m,$label_d));

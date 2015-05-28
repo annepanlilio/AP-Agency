@@ -2392,6 +2392,19 @@ class RBAgency_Profile {
 				if ($rb_agency_option_profilelist_expanddetails) {
 					$displayHTML .= "<div class=\"details\">";
 					$displayHTML .= "<span class=\"details-merged\">";
+
+					$HideAgeYear = get_user_meta($dataList['ProfileID'],"rb_agency_hide_age_year",true);
+					if($HideAgeYear == 1){
+						$arr_query['year_style'] = 'style="display:none!important;"';
+					}
+					$HideAgeMonth = get_user_meta($dataList['ProfileID'],"rb_agency_hide_age_month",true);
+					if($HideAgeMonth == 1){
+						$arr_query['month_style'] = 'style="display:none!important;"';
+					}
+					$HideAgeDay = get_user_meta($dataList['ProfileID'],"rb_agency_hide_age_day",true);
+					if($HideAgeDay == 1){
+						$arr_query['day_style'] = 'style="display:none!important;"';
+					}
 					$ProfileDateBirth = rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query);
 					if(!empty($ProfileDateBirth)){
 					$displayHTML .= "<span class=\"details-age\">". $ProfileDateBirth ."</span>";
@@ -2405,12 +2418,17 @@ class RBAgency_Profile {
 							}else{
 								$detailState = $rb_agency_option_detail_state;
 							}
-														
-							$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false);
+							
+							$HideState = get_user_meta($dataList['ProfileID'],"rb_agency_hide_state",true);
+							if($HideState == 1){
+								$state_style = 'style="display:none!important;"';
+							}
 
-							$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
+							$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false,$arr_query);
+
+							//$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
 							if($detailState == 1){
-								$displayHTML .= "<span class=\"details-state\">". $stateTitle ."</span>";
+								$displayHTML .= "<span class=\"details-state\" ".$state_style.">". $stateTitle ."</span>";
 							}
 							
 						}

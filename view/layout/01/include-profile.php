@@ -71,8 +71,12 @@ echo "			<div class=\"rbcol-5 rbcolumn\">\n";
 echo "				<div id=\"profile-info\">\n";
 echo "					<div id=\"stats\">\n";
 echo "						<ul>\n";
+	if($hideY == 1 && $hideM == 1 && $hideD == 1){
+		$hideAgeLabel = 'style="display:none!important;"';
+	}
+	
 								if(!empty($ProfileAge)){
-									echo "<li class=\"rb_gender\" id=\"rb_age\"><strong>". __("Age", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> ". __($ProfileAge, RBAGENCY_TEXTDOMAIN). "</li>\n";
+									echo "<li class=\"rb_gender\" id=\"rb_age\" ".$hideAgeLabel." ><strong>". __("Age", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> ". __($ProfileAge, RBAGENCY_TEXTDOMAIN). "</li>\n";
 								}
 
 								if(!empty($ProfileGender)){

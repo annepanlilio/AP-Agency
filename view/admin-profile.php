@@ -354,11 +354,11 @@ if (isset($_POST['action'])) {
 						$hide_age_day = isset($_REQUEST['hide_age_day']) ? true : false;
 						$hide_state = isset($_REQUEST['hide_state']) ? true : false;
 
-						update_user_meta( $ProfileID, 'rb_agency_hide_age_year', $hide_age_year);
-						update_user_meta( $ProfileID, 'rb_agency_hide_age_month',$hide_age_month );
-						update_user_meta( $ProfileID, 'rb_agency_hide_age_day',$hide_age_day );
-						update_user_meta( $ProfileID, 'rb_agency_hide_state',$hide_state );
-
+						update_user_meta( $_REQUEST['ProfileID'], 'rb_agency_hide_age_year', $hide_age_year);
+						update_user_meta( $_REQUEST['ProfileID'], 'rb_agency_hide_age_month',$hide_age_month );
+						update_user_meta( $_REQUEST['ProfileID'], 'rb_agency_hide_age_day',$hide_age_day );
+						update_user_meta( $_REQUEST['ProfileID'], 'rb_agency_hide_state',$hide_state );
+						//echo $hide_age_year .' - ' .$_REQUEST['ProfileID'] .'-'.get_user_meta($_REQUEST['ProfileID'],"rb_agency_hide_age_year",true);
 						// Remove Old Custom Field Values
 						$delete1 = "DELETE FROM " . table_agency_customfield_mux . " WHERE ProfileID = \"" . $ProfileID . "\"";
 						$results1 = $wpdb->query($delete1);
@@ -1881,11 +1881,32 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$edit_hide_age_day = get_user_meta($_REQUEST['ProfileID'],'rb_agency_hide_age_day',true)== true ? "checked='checked'" : "";
 								$edit_hide_state = get_user_meta($_REQUEST['ProfileID'],'rb_agency_hide_state',true)== true ? "checked='checked'" : "";
 
-								echo "<input type=\"checkbox\" name=\"hide_age_year\" ".$edit_hide_age_year."/> &nbsp; Hide Age (year)<br>";
-								echo "<input type=\"checkbox\" name=\"hide_age_month\" ".$edit_hide_age_month."/> &nbsp; Hide Age (month)<br>";
-								echo "<input type=\"checkbox\" name=\"hide_age_day\" ".$edit_hide_age_day."/> &nbsp; Hide Age (Day)<br>";
-								echo "<input type=\"checkbox\" name=\"hide_state\" ".$edit_hide_state."/> &nbsp; Hide State<br>";
+													
+								
+								
 								?>
+							<table>
+								<tr>
+									<th>Expanded Model Detail</th>
+									<td>
+										<table>
+										<tr>
+											<td><?php echo "<input type=\"checkbox\" name=\"hide_age_year\" ".$edit_hide_age_year."/> &nbsp; Hide Age (Year)"; ?></td>
+										</tr>
+										<tr>
+											<td><?php echo "<input type=\"checkbox\" name=\"hide_age_month\" ".$edit_hide_age_month."/> &nbsp; Hide Age (Month)"; ?></td>
+										</tr>
+										<tr>
+											<td><?php echo "<input type=\"checkbox\" name=\"hide_age_day\" ".$edit_hide_age_day."/> &nbsp; Hide Age (Day)"; ?></td>
+										</tr>
+										<tr>
+											<td><?php echo "<input type=\"checkbox\" name=\"hide_state\" ".$edit_hide_state."/> &nbsp; Hide State"; ?></td>
+										</tr>
+									</table>
+									</td>
+								</tr>
+							</table>
+								
 							</div>
 						</div>
 					</div>
