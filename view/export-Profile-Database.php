@@ -133,7 +133,7 @@ global $wpdb;
 						$ProfileCustomValue = "";
 
 						if($cfield["ProfileCustomType"] == 10){
-								$ProfileCustomValue = $sub_value['ProfileCustomDateValue'];
+								$ProfileCustomValue = !empty($sub_value['ProfileCustomDateValue']) ? $sub_value['ProfileCustomDateValue'] : $sub_value['ProfileCustomValue'];
 						}elseif($cfield["ProfileCustomType"] == 7){
 								$ProfileCustomValue = rb_get_imperial_metrics($sub_value['ProfileCustomValue'],$cfield['ProfileCustomOptions']);
 						}elseif($cfield["ProfileCustomType"] == 4 || $cfield["ProfileCustomType"] == 1){
@@ -158,27 +158,26 @@ global $wpdb;
 				}
 				
 				//Height conversion from inches to feet n inches
-				//foreach($custom_fields_title as $key => $title){
-					/*if($title=="Height"){
-						$rawValue=$temp_array[$custom_fields_id[$key]];
-						$feet=intval($rawValue/12);
-						$inches=intval($rawValue%12);
-						if($feet==0 && $inches==0){
-							$c_value_array[$key]='';
-						}
-						elseif(!is_int($rawValue)){
-						   if(strpos($rawValue, "'") !== false && strpos($rawValue, "and") === false){
-                          	     $c_value_array[$key] = str_replace('""',"\"",str_replace('\'"',"'",$rawValue.'"'));
-	                        }else{
-								 $c_value_array[$key] = $rawValue;
-							}
-					    }
+				foreach($custom_fields_title as $key => $title){
+						if($title=="Height"){
+							$rawValue=$temp_array[$custom_fields_id[$key]];
+							$feet=intval($rawValue/12);
+							$inches=intval($rawValue%12);
+							if($feet==0 && $inches==0){
+								$c_value_array[$key]='';
+							}elseif(!is_int($rawValue)){
+							    if(strpos($rawValue, "'") !== false && strpos($rawValue, "and") === false){
+	                          	     $c_value_array[$key] = str_replace('""',"\"",str_replace('\'"',"'",$rawValue.'"'));
+		                        }else{
+									 $c_value_array[$key] = $rawValue;
+								}
+					    	}
 						else
 							$c_value_array[$key]=$feet."ft ".$inches."in";
 							
 						
 						}
-                    }*/
+                    }
 
                          $data = array_merge($data, $c_value_array);
                          unset($data['ProfileID']);
