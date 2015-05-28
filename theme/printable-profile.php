@@ -38,11 +38,13 @@ function is_chrome() {
 	// classes for print format styling
 	if($print_format == "1"){ // Print Large Photos
 		$print_format_class = "lg-photos-info";
+		$first_photos = 1;
 		$images_per_row = 2;
 	}
 	if($print_format == "3") { // Print Medium Size Photos
 		$print_format_class = "md-photos-info";
-		$images_per_row = 6;
+		$first_photos = 7;
+		$images_per_row = 8;
 	}
 	if ($print_format == "1-1" ) { // Print Large Photos Without Model Info
 		$print_format_class = "lg-photos";
@@ -88,7 +90,7 @@ function is_chrome() {
 		$ul_css="width:100%;";
 	} elseif($_POST['print_option']==3){
 		if($chrome){
-			$widthAndHeight='style="width:220px; height:270px;"';
+			$widthAndHeight='style="width:222px; height:270px;"';
 			$ul_css="width:100%;";
 			// $model_info_width="width:202px; height:270px;";
 		} else {
@@ -132,30 +134,31 @@ body{color:#000;}
 body:before{display: none!important; }
 h1{color: #000; margin-bottom:15px; margin-top:15px;}
 
-ul li span{ float:right; text-align:left;}
+ul li span{ float:right; text-align:left; width:100px;}
 ul { margin: 0; <?php echo $ul_css;?>}
 ul li{ list-style:none;}
 #print_logo{margin-bottom:25px; width:100%; float:left;}
-#model_info{border:0px solid #000; margin-right: 5px; float:left; <?php echo $model_info_width;?>}
-#print_wrapper img.allimages_thumbs{margin-left:10px;margin-bottom:10px; float: left; <?php echo $isLeft; ?> }
-.agency-logo { max-width: 300px; float: right; }
+#model_info{border:0px solid #000; float:left; <?php echo $model_info_width;?>}
+.allimages_thumbs{margin-left:10px;margin-bottom:10px; float: left; <?php echo $isLeft; ?> }
+.agency-logo { max-height: 60px; float: right; }
 .group { float: left; width: 920px; }
-
 .row { float: left; width: 100%; clear: both; }
 .name { float: left; text-transform: uppercase; font-size: 26px; }
 
-.lg-photos-info #model_info,
-.polariod-1-2 #model_info { height: auto; width: 450px; }
-.lg-photos-info .group.first,
-.polariod-1-2 .group.first { width: 450px; }
+.lg-photos .group .allimages_thumbs:first-child { margin-left: 0; }
+.lg-photos-info #model_info { height: auto; width: 450px; }
+.lg-photos-info .group.first { width: 450px; }
 .lg-photos-info .allimages_thumbs { width: 450px; }
 
-.md-photos-info #model_info { height: auto; width: 220px; }
+.md-photos-info #model_info { height: auto; width: 222px; }
+.md-photos-info #model_info h1 { margin-top: 0; }
 .md-photos-info .group.first { width: 690px; }
+.md-photos-info > img:nth-of-type(4) { margin-left: 0; }
 
-.polariod-1-4 #model_info { height: auto; width: 270px; }
-.polariod-1-4 .group.first { width: 570px; }
-
+.md-photos .group .allimages_thumbs:first-child,
+.md-photos .group .allimages_thumbs:nth-child(5n+0),
+.md-photos-info .group .allimages_thumbs:first-child,
+.md-photos-info .group .allimages_thumbs:nth-child(5n+0) { margin-left: 0; }
 </style>
 
 </head>
@@ -176,8 +179,18 @@ ul li{ list-style:none;}
 ?>
 		<div id="model_info">
 			<h1><?php echo $ProfileContactDisplay; ?></h1>
-		   	<ul>
-				<?php rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);?>
+		   	<ul id="info">
+				<?php rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);	?>
+				<script type="text/javascript">
+ 
+				function count(){
+					var ul = document.getElementById('info');
+					var i=0, c =0;
+					while(ul.getElementsByTagName('li')[i++]) c++;
+					return(c);
+				}
+				 
+				</script>
 			</ul>
 		</div>
 
@@ -195,7 +208,6 @@ ul li{ list-style:none;}
 	} else {
 		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY $orderBy";
 	}
-
 	$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 	$countImg = count($resultsImg);
 	$imageCnt = 1;
@@ -215,13 +227,13 @@ ul li{ list-style:none;}
 
 		if($print_format == "1") { // Print Large Photos with info Layout
 
-        	if($rowCount % $images_per_row == 1 || $rowCount == 0) { // add row clear, add agency logo, close .group
+        	if($rowCount % $images_per_row == $first_photos || $rowCount == 0) { // add row clear, add agency logo, close .group
 				echo '<div class="group'.($rowCount == 0 ? ' first' : '').'">';
 			}
 
 			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 			
-        	if($rowCount % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
+        	if($rowCount % $images_per_row == 0 || $rowCount+$first_photos == $countImg) { // add row clear, add agency logo, close .group
 				echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
 			}
 
@@ -229,21 +241,24 @@ ul li{ list-style:none;}
 
         } elseif ($print_format == "3"){ // Print Medium Photos with info Layout
 
-			if($rowCount < 6) { // First six photos beside info
+			if($rowCount < $first_photos) { // Photos beside info
 				
-				if($rowCount == 0){
-					echo '<div class="group first">';
-				}
+			// 	if($rowCount == 0){
+			// 		echo '<div class="group first">';
+			// 	}
 				
-				echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+				echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";				
 
-				if($rowCount == 5){
-					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+				if($rowCount == $first_photos-1){
+					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'">'; // add row clear, add agency logo, close .group
+					$imageCnt = 1;
 				}
 
 				$rowCount++;
 
-			} else {  // Succeding Photos
+			} else {  // Succeding Photos				
+
+				$rowCount++;
 			
 				if(($imageCnt % $images_per_row == 1) || $images_per_row == 1) { // group photos in a div
 					echo '<div class="group">';
@@ -251,7 +266,7 @@ ul li{ list-style:none;}
 
 				echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 
-				if($imageCnt % $images_per_row == 0 || $imageCnt+6 == $countImg) { // add row clear, add agency logo, close .group
+				if($imageCnt % $images_per_row == 0 || $imageCnt+$first_photos == $countImg) { // add row clear, add agency logo, close .group
 					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
 				}
 
