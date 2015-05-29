@@ -257,10 +257,46 @@ if($_POST['print_option']==14){  // print for division
 				<h1 style="margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1>';
 	
 	$modelInfo .='<ul>';
+
+								$hideY = get_user_meta($ProfileID,"rb_agency_hide_age_year",true);
+								$hideM = get_user_meta($ProfileID,"rb_agency_hide_age_month",true);
+								$hideD = get_user_meta($ProfileID,"rb_agency_hide_age_day",true);
+
+								$ParseAge = explode(' ',$ProfileAge);
+
+								$hideTheAgeYear = 0;
+								$hideTheAgeMonth = 0;
+								$hideTheAgeDay = 0;	
+								
+								$theYear = str_replace('>','',$ParseAge[1]);
+								$theMonth = str_replace('>','',$ParseAge[4]);
+								$theDay = str_replace('>','',$ParseAge[7]);
+								
+								if((empty($theYear) || !is_numeric($theYear)) || $hideY == 1){
+									$hideTheAgeYear = 1;
+								}
+
+								if((empty($theMonth) || !is_numeric($theMonth)) || $hideM == 1){
+									$hideTheAgeMonth = 1;
+								}
+
+								if((empty($theDay) || !is_numeric($theDay)) || $hideD == 1){
+									$hideTheAgeDay = 1;
+								}
+
+								
+								if($hideTheAgeYear == 1 && $hideTheAgeMonth == 1 && $hideTheAgeDay == 1){
+									$hideAgeLabel = true;
+								}
+if($hideAgeLabel == true){
+
+}else{
 	$modelInfo .= '
 				 	<tr><td><span style="margin-left:-3px;">Age : '.$ProfileAge.'</span></td></tr>
 				 	<tr><td><span style="margin-left:-3px;">Gender : '.__($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN).'</span></td></tr>
-				  ';			 
+				  ';
+}
+				 
 	$modelInfo .= rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,"strong","span",false,true).'
 				</ul>
 			</div>'."\n";
