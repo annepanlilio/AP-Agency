@@ -37,6 +37,7 @@ class RBAgency_Profile {
 					$rb_agency_option_formshow_type = isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0;
 					$rb_agency_option_formshow_gender = isset($rb_agency_options_arr['rb_agency_option_formshow_gender'])?$rb_agency_options_arr['rb_agency_option_formshow_gender']:0;
 					$rb_agency_option_formshow_age = isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0;
+					$rb_agency_option_formshow_birthdate = isset($rb_agency_options_arr['rb_agency_option_formshow_birthdate'])?$rb_agency_options_arr['rb_agency_option_formshow_birthdate']:0;
 					$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
 					$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
 					$rb_agency_option_form_clearvalues = isset($rb_agency_options_arr['rb_agency_option_form_clearvalues'])?$rb_agency_options_arr['rb_agency_option_form_clearvalues']:0;
@@ -217,6 +218,38 @@ class RBAgency_Profile {
 						echo "					</div>\n";
 						echo "				</div>\n";
 				}
+
+				// Show Profile birthdate
+				if ( ($rb_agency_option_formshow_birthdate > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_birthdate > 1) ) {
+						echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth2\">\n";
+						echo "					<label for=\"datebirth_min2 datebirth_max\">". __("Birthdate", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+						echo "					<div>\n";
+						echo "						<div>\n";
+						echo "							<label for=\"datebirth_min2\">". __("Min", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+						echo "							<input  id=\"rb_datepicker_from_bd\" name=\"rb_datepicker_from_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
+						//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min2\" name=\"datebirth_min2\" value=\"".(isset($_REQUEST['datebirth_min2'])?$_REQUEST['datebirth_min2']:"") ."\" />\n";
+						echo "						</div>";
+						echo "						<div>\n";
+						echo "							<label for=\"datebirth_max2\">". __("Max", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+						echo "							<input  id=\"rb_datepicker_to_bd\" name=\"rb_datepicker_to_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
+						//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max2\" name=\"datebirth_max2\" value=\"".(isset($_REQUEST['datebirth_max2'])?$_REQUEST['datebirth_max2']:"") ."\" />\n";
+						echo "						</div>\n";
+						echo "					</div>\n";
+						echo "				</div>\n";
+
+						
+						//JS here..
+						
+				?>		
+<script type="text/javascript">
+				jQuery(function(){
+
+jQuery( "input[id=rb_datepicker_from_bd],input[id=rb_datepicker_to_bd]").datepicker();
+
+});
+</script>
+						
+				<?php }
 
 				// Show Location Search
 				if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
@@ -867,6 +900,19 @@ class RBAgency_Profile {
 						$filterArray['isactive'] = $_REQUEST['isactive'];
 					}
 
+				/*
+				* Search by birthdate
+				*/
+
+					if(isset($_REQUEST['rb_datepicker_from_bd'])){
+						$filterArray['rb_datepicker_from_bd'] = $_REQUEST['rb_datepicker_from_bd'];
+						
+					}
+					if(isset($_REQUEST['rb_datepicker_to_bd'])){
+						$filterArray['rb_datepicker_to_bd'] = $_REQUEST['rb_datepicker_to_bd'];
+						
+					}
+
 			// Debug
 			if(self::$error_debug){
 				self::$error_checking[] = array('search_process',$filterArray);
@@ -1021,7 +1067,15 @@ class RBAgency_Profile {
 						$maxyear = date('Y-m-d', strtotime($datebirth_max));
 						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
 					}*/
-
+					// By birthdate
+					if(isset($atts['rb_datepicker_from_bd'])){
+						$birthdate_from = $atts['rb_datepicker_from_bd'];
+						$filter .= " AND profile.ProfileDateBirth >= '$birthdate_from'";
+					}
+					if(isset($atts['rb_datepicker_to_bd'])){
+						$birthdate_to = $atts['rb_datepicker_to_bd'];
+						$filter .= " AND profile.ProfileDateBirth <= '$birthdate_to'";
+					}
 					// Age by Number
 					if (isset($age_min) && !empty($age_min)){
 						$minyear = date('Y-m-d', strtotime('-'. $age_min .' year'. $date));

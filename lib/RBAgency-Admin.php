@@ -330,6 +330,8 @@ class RBAgency_Admin {
 
 						}
 					});
+
+					jQuery( "input[id=rb_datepicker_from_bd],input[id=rb_datepicker_to_bd]").datepicker();
 				});
 				</script>
 
