@@ -331,7 +331,11 @@ class RBAgency_Admin {
 						}
 					});
 
-					jQuery( "input[id=rb_datepicker_from_bd],input[id=rb_datepicker_to_bd]").datepicker();
+					jQuery( "input[id=rb_datepicker_from_bd],input[id=rb_datepicker_to_bd]").datepicker({
+
+						dateFormat: "yy-mm-dd"
+					
+					});
 				});
 				</script>
 

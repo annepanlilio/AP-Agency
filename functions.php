@@ -400,8 +400,7 @@
 		
 				
 
-		if(!empty($sc['show_age_year'])){
-			
+		if(!empty($sc['show_age_year'])){			
 			$detail_year = $sc['show_age_year'] == "true" ? 1 : 0;
 		}else{
 			$detail_year = $detail_year_op;
@@ -416,7 +415,7 @@
 		}else{
 			$detail_day = $detail_day_op;
 		}
-
+		
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
 			
 
@@ -4069,6 +4068,22 @@
 		}
 	}
 	add_action( 'init', 'load_admin_js' );
+
+	function load_datetime_basic_search(){
+		echo '<script type="text/javascript">
+				jQuery(function(){
+
+					jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
+						dateFormat: "yy-mm-dd"
+					});
+					jQuery( "input[id=rb_datepicker_to_bd]").datepicker({
+						dateFormat: "yy-mm-dd"
+					});
+
+				});
+				</script>';
+	}
+	add_action( 'wp_head', 'load_datetime_basic_search' );
 
     
 ?>

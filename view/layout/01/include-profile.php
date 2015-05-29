@@ -71,11 +71,35 @@ echo "			<div class=\"rbcol-5 rbcolumn\">\n";
 echo "				<div id=\"profile-info\">\n";
 echo "					<div id=\"stats\">\n";
 echo "						<ul>\n";
-	if($hideY == 1 && $hideM == 1 && $hideD == 1){
-		$hideAgeLabel = 'style="display:none!important;"';
-	}
-	
-								if(!empty($ProfileAge)){
+								
+								$ParseAge = explode(' ',$ProfileAge);
+
+								$hideTheAgeYear = 0;
+								$hideTheAgeMonth = 0;
+								$hideTheAgeDay = 0;	
+								
+								$theYear = str_replace('>','',$ParseAge[1]);
+								$theMonth = str_replace('>','',$ParseAge[4]);
+								$theDay = str_replace('>','',$ParseAge[7]);
+								
+								if((empty($theYear) || !is_numeric($theYear)) || $hideY == 1){
+									$hideTheAgeYear = 1;
+								}
+
+								if((empty($theMonth) || !is_numeric($theMonth)) || $hideM == 1){
+									$hideTheAgeMonth = 1;
+								}
+
+								if((empty($theDay) || !is_numeric($theDay)) || $hideD == 1){
+									$hideTheAgeDay = 1;
+								}
+
+								
+								if($hideTheAgeYear == 1 && $hideTheAgeMonth == 1 && $hideTheAgeDay == 1){
+									$hideAgeLabel = 'style="display:none!important;"';
+								}
+								
+								if(!empty($ProfileAge) && $ProfileDateBirth != '0000-00-00'){
 									echo "<li class=\"rb_gender\" id=\"rb_age\" ".$hideAgeLabel." ><strong>". __("Age", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> ". __($ProfileAge, RBAGENCY_TEXTDOMAIN). "</li>\n";
 								}
 

@@ -225,12 +225,12 @@ class RBAgency_Profile {
 						echo "					<label for=\"datebirth_min2 datebirth_max\">". __("Birthdate", RBAGENCY_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>\n";
 						echo "						<div>\n";
-						echo "							<label for=\"datebirth_min2\">". __("Min", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+						echo "							<label for=\"datebirth_min2\">". __("From", RBAGENCY_TEXTDOMAIN) . "</label>\n";
 						echo "							<input  id=\"rb_datepicker_from_bd\" name=\"rb_datepicker_from_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
 						//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min2\" name=\"datebirth_min2\" value=\"".(isset($_REQUEST['datebirth_min2'])?$_REQUEST['datebirth_min2']:"") ."\" />\n";
 						echo "						</div>";
 						echo "						<div>\n";
-						echo "							<label for=\"datebirth_max2\">". __("Max", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+						echo "							<label for=\"datebirth_max2\">". __("To", RBAGENCY_TEXTDOMAIN) . "</label>\n";
 						echo "							<input  id=\"rb_datepicker_to_bd\" name=\"rb_datepicker_to_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
 						//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max2\" name=\"datebirth_max2\" value=\"".(isset($_REQUEST['datebirth_max2'])?$_REQUEST['datebirth_max2']:"") ."\" />\n";
 						echo "						</div>\n";
@@ -240,16 +240,7 @@ class RBAgency_Profile {
 						
 						//JS here..
 						
-				?>		
-<script type="text/javascript">
-				jQuery(function(){
-
-jQuery( "input[id=rb_datepicker_from_bd],input[id=rb_datepicker_to_bd]").datepicker();
-
-});
-</script>
-						
-				<?php }
+				}
 
 				// Show Location Search
 				if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
@@ -1812,7 +1803,7 @@ jQuery( "input[id=rb_datepicker_from_bd],input[id=rb_datepicker_to_bd]").datepic
 
 					// Dropdown
 					///get custom field
-					$query = " SELECT ProfileCustomTitle, ProfileCustomType	,ProfileCustomID FROM " .  table_agency_customfields . " WHERE ProfileCustomShowSearch = 2 ";
+					$query = " SELECT ProfileCustomTitle, ProfileCustomType	,ProfileCustomID FROM " .  table_agency_customfields . " WHERE ProfileCustomShowSearch = 2 ORDER BY ProfileCustomOrder ASC";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 
 					$all_html.='
