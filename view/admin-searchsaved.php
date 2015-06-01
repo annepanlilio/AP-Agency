@@ -195,7 +195,16 @@ $siteurl = get_option('siteurl');
 						echo "<div class=\"thumbnail\">";
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 						// echo "<img src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."\" /></a>";
-						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=110\" /></a>";
+
+						$image_path = RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'];
+						$bfi_params = array(
+							'crop'=>true,
+							'width'=>110
+						);
+						$image_src = bfi_thumb( $image_path, $bfi_params );
+
+						echo "<img src=\"". .$image_src."\" /></a>";
+						//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=110\" /></a>";
 						echo "</div>\n";
 					}
 					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
@@ -303,7 +312,16 @@ $siteurl = get_option('siteurl');
 						echo "<img attr-type=\"custom\" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></a>\n";
 					} else {
 						echo "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=150\" /></a>";
+
+						$image_path = RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'];
+						$bfi_params = array(
+							'crop'=>true,
+							'width'=>150
+						);
+						$image_src = bfi_thumb( $image_path, $bfi_params );
+
+						//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=150\" /></a>";
+						echo "<img src=\"". $image_src."\" /></a>";
 					}
 					echo "</div>\n";
 					echo "<input type=\"checkbox\" id=\"ProfileID\" name=\"ProfileID[]\" value=\"".$data2['ProfileID']."\"/>";
@@ -408,9 +426,23 @@ $siteurl = get_option('siteurl');
 									echo "<a href=\"". RBAGENCY_PROFILEDIR . $data['ProfileGallery'] ."/\" target=\"_blank\">";
 									if(isset($arr_thumbnail[$data["ProfileID"]])){
 										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaPrimary = 1 AND ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
-										echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&w=110\" />\n";
+										$image_path = RBAGENCY_UPLOADDIR . $data['ProfileGallery']."/". $data['ProfileMediaURL'];
+										$bfi_params = array(
+											'crop'=>true,
+											'width'=>110
+										);
+										$image_src = bfi_thumb( $image_path, $bfi_params );
+										//echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&w=110\" />\n";
+										echo "<img src=\"".$image_src ."\" />\n";
 									} else {
-										echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."&w=110\" />";
+										$image_path = RBAGENCY_UPLOADDIR . $data['ProfileGallery']."/". $data['ProfileMediaURL'];
+										$bfi_params = array(
+											'crop'=>true,
+											'width'=>110
+										);
+										$image_src = bfi_thumb( $image_path, $bfi_params );
+										//echo "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."&w=110\" />";
+										echo "<img src=\"". $image_src."\" />";
 									}
 									echo "</a>";
 									echo "</div>\n";

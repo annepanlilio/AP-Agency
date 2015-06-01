@@ -149,7 +149,18 @@
 		              <td colspan="2">
 		              		        <div style="width:95%;height:220px;padding:10px;text-align:center;background:#ccc;overflow:hidden;">
 							        <?php if(!empty($data['ProfileMediaURL'])):?>
-							        <?php echo "<img style=\"width: 50%;height:99.9% \" src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'] ."&w=180&h=220\" />"; ?>
+							        <?php
+							       		$image_path = RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'];
+										$bfi_params = array(
+											'crop'=>true,
+											'width'=>180,
+											'height'=>220
+										);
+										$image_src = bfi_thumb( $image_path, $bfi_params );
+							        ?>
+							        <?php 
+							        echo "<img style=\"width: 50%;height:99.9% \" src=\"".$image_src ."\" />";
+							        //echo "<img style=\"width: 50%;height:99.9% \" src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'] ."&w=180&h=220\" />"; ?>
 							        <?php else:?>
 							        		No Image Available.
 							        <?php endif; ?>

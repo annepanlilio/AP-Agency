@@ -684,11 +684,21 @@ elseif ($ConfigID == 4) {
 					$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image' GROUP BY(ProfileMediaURL)";
 					$results4a = $wpdb->get_results($wpdb->prepare($query4a,$profileID), ARRAY_A);
 					$count4a = $wpdb->num_rows;
+
+					$image_path = $dirURL ."/". $data4a['ProfileMediaURL'];
+					$bfi_params = array(
+						'crop'=>true,
+						'width'=>150,
+						'height'=>150
+					);
+					$image_src = bfi_thumb( $image_path, $bfi_params );
+
 					if ($count4a < 1) {
 						echo "This profile has no images loaded.";
 					} else {
 						foreach ($results4a as $data4a) {
-							echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". $dirURL."/". $data4a['ProfileMediaURL'] ."&w=150&h=150\"  style=\"width: 150px;\" /></div>\n";
+							//echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". $dirURL."/". $data4a['ProfileMediaURL'] ."&w=150&h=150\"  style=\"width: 150px;\" /></div>\n";
+							echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". $image_src."\"  style=\"width: 150px;\" /></div>\n";
 						}
 						echo "<div style=\"clear: both;\"></div>\n";
 					}

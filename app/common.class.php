@@ -641,10 +641,17 @@ class RBAgency_Common {
 						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-
+							$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+							$bfi_params = array(
+								'crop'=>true,
+								'width'=>106,
+								'height'=>130
+							);
+							$image_src = bfi_thumb( $image_path, $bfi_params );
 
 							echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
-							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
+							//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
+							echo "<img src=\"". $image_src."\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
 						}
 						?> <br clear="all" />
 						<input type="submit" value="Next, Select Print Format" />
@@ -663,8 +670,17 @@ class RBAgency_Common {
 						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
+							$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+							$bfi_params = array(
+								'crop'=>true,
+								'width'=>106,
+								'height'=>130
+							);
+							$image_src = bfi_thumb( $image_path, $bfi_params );
+
 							echo '<a class="allimages_print" href="'. RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery">';
-							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							//echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". $image_src."\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 					}
 					?> <br clear="all" />
 
@@ -709,8 +725,18 @@ class RBAgency_Common {
 						<input type="hidden" id="selected_image" name="selected_image" />
 						<?php  
 						foreach($resultsImg as $dataImg ){
+
+							$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+							$bfi_params = array(
+								'crop'=>true,
+								'width'=>106,
+								'height'=>130
+							);
+							$image_src = bfi_thumb( $image_path, $bfi_params );
+
 							echo '<a href="'. RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
-							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							//echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+							echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"". $image_src."\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 						}
 						?> <br clear="all" />
 
@@ -855,7 +881,16 @@ class RBAgency_Common {
 										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
-											echo "<li><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&h=400\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+
+											$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+											$bfi_params = array(
+												'crop'=>true,
+												'height'=>400
+											);
+											$image_src = bfi_thumb( $image_path, $bfi_params );
+
+											//echo "<li><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&h=400\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
+											echo "<li><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". $image_src."\" alt=\"". $ProfileContactDisplay ."\" /></a></li>\n";
 										}
 							?>
 						</ul>
@@ -867,7 +902,15 @@ class RBAgency_Common {
 										$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 										$countImg  = $wpdb->num_rows;
 										foreach($resultsImg as $dataImg ){
-											echo "<li><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=144&h=144\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
+											$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+											$bfi_params = array(
+												'crop'=>true,
+												'height'=>144,
+												'width'=>144
+											);
+											$image_src = bfi_thumb( $image_path, $bfi_params );
+											//echo "<li><img src=\"". get_bloginfo("url")."/wp-content/plugins/".RBAGENCY_TEXTDOMAIN."/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=144&h=144\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
+											echo "<li><img src=\"". $image_src."\" alt=\"". $ProfileContactDisplay ."\" /></li>\n";
 										}
 							?>
 						</ul>

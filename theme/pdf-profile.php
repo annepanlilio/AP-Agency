@@ -52,9 +52,13 @@ if($_POST['print_option']==1){ // Print Large Photos
 	if($chrome){
 	  	$widthAndHeight='style="width:365px; height:546px"';
 	  	$model_info_width="width:365px;";
+	  	$w = 365;
+	  	$h = 546;
 	} else {
 	  	$widthAndHeight='style="width:350px; height:550px"';
-	  	$model_info_width="width:410px;";		  
+	  	$model_info_width="width:410px;";
+	  	$w = 350;
+	  	$h = 550;		  
 	}
 
 	$col=2;
@@ -66,6 +70,7 @@ elseif($_POST['print_option']=="1-1"){ // Print Large Photos Without Model Info
 	$model_info_width="width:182px;"; 
 	$col=4;
 	$perPage=8;
+	$w = 183;
 }
 
 elseif($_POST['print_option']==2){
@@ -73,6 +78,7 @@ elseif($_POST['print_option']==2){
 	$model_info_width="width:182px;"; 
 	$col=4;
 	$perPage=8;
+	$w = 183;
 }
 
 elseif($_POST['print_option']==3){ // Print Medium Size Photos
@@ -81,6 +87,8 @@ elseif($_POST['print_option']==3){ // Print Medium Size Photos
 	$col=4;
 	$perPage=8;
 	$fileFormat="_medium";
+	$w = 183;
+	$h = 264;
 }
 
 elseif($_POST['print_option']=="3-1"){ // Print Medium Size Photos Without Model Info
@@ -89,18 +97,21 @@ elseif($_POST['print_option']=="3-1"){ // Print Medium Size Photos Without Model
 	$col=4;
 	$perPage=8;
 	$fileFormat="_medium";
+	$w = 183;
 }
 
 elseif($_POST['print_option']==4){
 	$widthAndHeight='style="width:500px"';
 	$ul_css="width:100%;";
 	$model_info_width="width:202px; height:320px;";
+	$w = 500;
 }
 
 elseif($_POST['print_option']==5){
 	$widthAndHeight='style="width:100px"';
 	$wrapperWidthHeight="width:887px; height:600px;";   
 	$toLandScape='@page{size: landscape;margin: 2cm;}';
+	$w = 100;
 }
 
 elseif($_POST['print_option']==11){
@@ -111,6 +122,7 @@ elseif($_POST['print_option']==11){
 	$fileFormat="_4perpage";
 	$additionalCss="#4, #6, #8, #10, #12, #14, #16, #18 {margin-left:158px;}";
 	$paperDef="10x16"; //pdf size
+	$w = 232;
 }
 
 elseif($_POST['print_option']==12){
@@ -121,6 +133,7 @@ elseif($_POST['print_option']==12){
 	$fileFormat="_4perpage";
 	$additionalCss="#1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11, #12 {margin-left:158px;}";
 	$paperDef="10x16"; //pdf size
+	$w = 360;
 }
 
 elseif($_POST['print_option']==14){
@@ -128,6 +141,7 @@ elseif($_POST['print_option']==14){
 	$model_info_width="width:154px;"; 
 	$col=5;
 	$perPage=10;
+	$w = 91;
 	$fileFormat="_division";
 
 	$additionalCss='#profile-results #profile-list .profile-list-layout0 { width: 150px; float: left; margin:  0 10px 10px 10px; position: relative; z-index: 8;  overflow: hidden; height:270px; }
@@ -185,6 +199,7 @@ elseif($_POST['print_option']==14){
 	$wrapperWidth="887px";
 	$wrapperWidthHeight="887px";
 	$toLandScape='@page{size: landscape;margin: 2cm;}';
+	$w = 400;
 }
 
 $header.='
@@ -380,10 +395,19 @@ if($hideAgeLabel == true){
 			    	
 			    } else {
 			    	$imgStyle = "";
-			    	$imgURL = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW;			   	    
+
+			    	$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+					$bfi_params = array(
+						'crop'=>true,
+						'height'=>$h,
+						'width'=>$w
+					);
+					$image_src = bfi_thumb( $image_path, $bfi_params );
+					
+			    	$imgURL = $image_src;			   	    
 			    }
 			
-		//	$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
+			//$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
 				
 				
 				$allImages.= "<td valign='top'><img ".$imgStyle." id='".$dataImg["ProfileMediaID"]."' src='".$imgURL."' alt='' class='allimages_thumbs' /></td>\n";

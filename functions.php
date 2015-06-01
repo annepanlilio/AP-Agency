@@ -708,7 +708,14 @@
 			// Fix Spaces
 			$img_src = str_replace(array("%20", "+", " "), "%2B", $dataImg['ProfileMediaURL']);
 
-			$images ."<img  class=\"roll\" src=\"".RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src={PHOTO_PATH}". $img_src ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+			$image_path = RBAGENCY_UPLOADDIR . $dataImg["ProfileGallery"] ."/". $img_src;
+			$bfi_params = array(
+				'crop'=>true,
+				'width'=>200
+			);
+			$image_src = bfi_thumb( $image_path, $bfi_params );
+			//$images ."<img  class=\"roll\" src=\"".RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src={PHOTO_PATH}". $img_src ."&w=200&q=30\" alt='' style='width:148px'   />\n";
+			$images ."<img  class=\"roll\" src=\"".$image_src."\" alt='' style='width:148px'   />\n";
 		}
 	return $images;
 	}

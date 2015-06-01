@@ -176,6 +176,9 @@ See license.txt for full details.
 		add_action( 'init', array('RBAgency_App', 'init'), 0, 1 );
 
 
+	include_once(RBAGENCY_PLUGIN_DIR.'ext/BFI_Thumb.php');
+
+
 
 
 
