@@ -470,7 +470,7 @@
 				if($years == 0){
 					$years = "";
 				} else {
-					
+						
 						$label_y = "<span ".$attrs['year_style'].">" . $years . " yr(s)</span>";
 				}
 			}
@@ -701,7 +701,7 @@
 		// Call DB
 		global $wpdb;
 
-		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%d\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC LIMIT 0, 7 "; // TODO: Why Limit of 7?
+		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media INNER JOIN ".table_agency_profile." prof ON media.ProfileID = prof.ProfileID WHERE media.ProfileID =  \"%d\" AND media.ProfileMediaType = \"Image\" ORDER BY media.ProfileMediaPrimary DESC LIMIT 0, 7 "; // TODO: Why Limit of 7?
 		$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg,$profileID),ARRAY_A);
 		$countImg = count($resultsImg);
 		$images = "";

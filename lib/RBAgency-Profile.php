@@ -1900,7 +1900,7 @@ class RBAgency_Profile {
 						}
 					}
 
-					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, $plain,$arr_query );
+					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, true,$arr_query );
 
 					if($rb_agency_option_layoutprofilelistlayout == 1){
 						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
@@ -2448,14 +2448,20 @@ echo "TESTERS";
 					$HideAgeYear = get_user_meta($dataList['ProfileID'],"rb_agency_hide_age_year",true);
 					if($HideAgeYear == 1){
 						$arr_query['year_style'] = 'style="display:none!important;"';
+					}else{
+						$arr_query['year_style'] = "";
 					}
 					$HideAgeMonth = get_user_meta($dataList['ProfileID'],"rb_agency_hide_age_month",true);
 					if($HideAgeMonth == 1){
 						$arr_query['month_style'] = 'style="display:none!important;"';
+					}else{
+						$arr_query['month_style'] = "";
 					}
 					$HideAgeDay = get_user_meta($dataList['ProfileID'],"rb_agency_hide_age_day",true);
 					if($HideAgeDay == 1){
 						$arr_query['day_style'] = 'style="display:none!important;"';
+					}else{
+						$arr_query['day_style'] = "";
 					}
 					$ProfileDateBirth = rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query);
 					if(!empty($ProfileDateBirth)){
@@ -2474,6 +2480,8 @@ echo "TESTERS";
 							$HideState = get_user_meta($dataList['ProfileID'],"rb_agency_hide_state",true);
 							if($HideState == 1){
 								$state_style = 'style="display:none!important;"';
+							}else{
+								$state_style = "";
 							}
 
 							$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false,$arr_query);
@@ -2489,12 +2497,12 @@ echo "TESTERS";
 					if(is_user_logged_in()){
 						if(in_array($type,array("search-basic","search-advanced","search-basic","search-result",'rb-pdf')) || $plain){
 
-							$displayEmailInSearchResult = $arr_query['show_email_search_result'] == true ? 1 :$rb_agency_option_show_email_search_result;
+							$displayEmailInSearchResult = isset($arr_query['show_email_search_result']) && $arr_query['show_email_search_result'] == true ? 1 :$rb_agency_option_show_email_search_result;
 							if($displayEmailInSearchResult == 1){
 								if(!empty($dataList["ProfileContactEmail"]))
 								$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
 							}
-							$displayContactSearchResult = $arr_query['show_contact_search_result'] == true ? 1 :$rb_agency_option_show_contact_search_result;
+							$displayContactSearchResult = isset($arr_query['show_contact_search_result']) && $arr_query['show_contact_search_result'] == true ? 1 :$rb_agency_option_show_contact_search_result;
 							if($displayContactSearchResult == 1){
 								if(!empty($dataList["ProfileContactPhoneWork"]))
 								$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
