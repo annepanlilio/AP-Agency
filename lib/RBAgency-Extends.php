@@ -75,7 +75,8 @@ class RBAgency_Extends {
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($atts);
 				// Conduct Search
 				$shortcode = true;
-				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $atts,$shortcode);
+
+				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $atts, $shortcode);
 
 			} else {
 				if(is_user_logged_in()){

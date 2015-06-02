@@ -674,37 +674,39 @@
 	* @param $diplay - contact display, $current_display - formatted contact display
 	* @return - suggested folder name
 	*/
+
 	function rb_check_duplicate_folder($display,$current_display, $arr = array()){
-		
-		if($display != $current_display && count($arr) > 1){	
+
+		if($display != $current_display && count($arr) > 1){
 			$arr = array_unique($arr);
 			$i = 0;
-			do{
+			do {
 				//champ-camba
 				//champ-camba-1
-					$current_display = $current_display.($i>0?"-".$i:"");
-					$i++;
-							
-					
-			}while( in_array($current_display,$arr,true));
+				$current_display = $current_display.($i>0?"-".$i:"");
+				$i++;
+
+			} while ( in_array($current_display,$arr,true));
 
 			return $current_display;
-					
-			   
-		}   
+
+		}
 		return $display;
 	}
 
 
 
-	//get profile images
-	function getAllImages($profileID){
+	// Get profile images
+	function rb_agency_profileimages($profileID){
+		// Call DB
 		global $wpdb;
-		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%d\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC LIMIT 0, 7 ";
+
+		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%d\" AND ProfileMediaType = \"Image\" ORDER BY ProfileMediaPrimary DESC LIMIT 0, 7 "; // TODO: Why Limit of 7?
 		$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg,$profileID),ARRAY_A);
 		$countImg = count($resultsImg);
 		$images = "";
 		foreach ($resultsImg as $dataImg) {//style=\"display:none\"
+
 			// Fix Spaces
 			$img_src = str_replace(array("%20", "+", " "), "%2B", $dataImg['ProfileMediaURL']);
 
@@ -715,9 +717,10 @@
 			);
 			$image_src = bfi_thumb( $image_path, $bfi_params );
 			//$images ."<img  class=\"roll\" src=\"".RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src={PHOTO_PATH}". $img_src ."&w=200&q=30\" alt='' style='width:148px'   />\n";
-			$images ."<img  class=\"roll\" src=\"".$image_src."\" alt='' style='width:148px'   />\n";
+			$images ."<img  class=\"roll\" src=\"". $image_src ."\" alt='' style='width:148px'   />\n";
 		}
-	return $images;
+
+		return $images;
 	}
 
 
