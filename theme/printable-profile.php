@@ -134,7 +134,6 @@ body{color:#000;}
 body:before{display: none!important; }
 h1{color: #000; margin-bottom:15px; margin-top:15px;}
 
-ul li span{ float:right; text-align:left; width:100px;}
 ul { margin: 0; <?php echo $ul_css;?>}
 ul li{ list-style:none;}
 #print_logo{margin-bottom:25px; width:100%; float:left;}
