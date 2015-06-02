@@ -701,7 +701,7 @@
 		// Call DB
 		global $wpdb;
 
-		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media INNER JOIN ".table_agency_profile." prof ON media.ProfileID = prof.ProfileID WHERE media.ProfileID =  \"%d\" AND media.ProfileMediaType = \"Image\" ORDER BY media.ProfileMediaPrimary DESC LIMIT 0, 7 "; // TODO: Why Limit of 7?
+		$queryImg = "SELECT * FROM ". table_agency_profile_media ." media INNER JOIN ".table_agency_profile." prof ON media.ProfileID = prof.ProfileID WHERE media.ProfileID =  \"%d\" AND media.ProfileMediaType = \"Image\" ORDER BY media.ProfileMediaPrimary "; // TODO: Why Limit of 7?
 		$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg,$profileID),ARRAY_A);
 		$countImg = count($resultsImg);
 		$images = "";
@@ -715,7 +715,7 @@
 				'crop'=>true,
 				'width'=>200
 			);
-			@$image_src = bfi_thumb( $image_path, $bfi_params );
+			$image_src = bfi_thumb( $image_path, $bfi_params );
 			//$images ."<img  class=\"roll\" src=\"".RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src={PHOTO_PATH}". $img_src ."&w=200&q=30\" alt='' style='width:148px'   />\n";
 			$images ."<img  class=\"roll\" src=\"". $image_src ."\" alt='' style='width:148px'   />\n";
 		}
