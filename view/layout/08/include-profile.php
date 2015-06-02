@@ -78,28 +78,34 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,$label_tag="em", $value_tag="strong");
 				?>			
 			</ul>
-			<div id="videos">
-			<h4>Videos</h4>
+
 			<?php 
 			$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileVideoType IN('youtube','vimeo')";
 			$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
 			$countMedia = $wpdb->num_rows;
-			foreach ($resultsMedia  as $dataMedia) {
-				if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-					// if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
-					// 	$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><a href=\"http://www.youtube.com/watch?v=" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" .$dataMedia["ProfileMediaTitle"]."</a></div></div>\n";
-					// }elseif($dataMedia['ProfileVideoType'] == "vimeo"){
-					// 	$json = file_get_contents('http://vimeo.com/api/v2/video/'.$dataMedia['ProfileMediaURL'].'.json');
-					// 	$data = json_decode($json,true);
-					// 		$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" .$dataMedia["ProfileMediaTitle"]."</a></div></div>\n";
-					// 	}
-					// } 
-					$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><div class=\"video-info\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<br/>" .$dataMedia["ProfileMediaTitle"]."</div><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Watch Video</a></div></div>\n";
+
+			if($countMedia > 0) {
+				echo "<div id=\"videos\">";
+				echo "<h4>Videos</h4>";
+				
+				foreach ($resultsMedia  as $dataMedia) {
+					if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
+						// if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
+						// 	$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><a href=\"http://www.youtube.com/watch?v=" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" .$dataMedia["ProfileMediaTitle"]."</a></div></div>\n";
+						// }elseif($dataMedia['ProfileVideoType'] == "vimeo"){
+						// 	$json = file_get_contents('http://vimeo.com/api/v2/video/'.$dataMedia['ProfileMediaURL'].'.json');
+						// 	$data = json_decode($json,true);
+						// 		$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" .$dataMedia["ProfileMediaTitle"]."</a></div></div>\n";
+						// 	}
+						// } 
+						$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><div class=\"video-info\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<br/>" .$dataMedia["ProfileMediaTitle"]."</div><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Watch Video</a></div></div>\n";
+					}
 				}
+					echo $outVideoMedia;
+				
+				echo "</div><!-- #videos -->";
 			}
-				echo $outVideoMedia;
 			?>
-			</div>			
 			
 		</div>
 		<div class="rbcol-12 rbcolumn">
