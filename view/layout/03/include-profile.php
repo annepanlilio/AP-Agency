@@ -80,6 +80,9 @@ echo "				<div class=\"rbcol-4 rbcolumn\">\n";
 						foreach($resultsImg as $dataImg ){
 							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
 						}
+						if($countImg == 0){
+							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=400&h=450&a=t\" alt=\"\">\n";
+						}
 
 						echo "</div> <!-- #profile-picture -->\n";
 
