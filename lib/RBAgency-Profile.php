@@ -1,4 +1,11 @@
 <?php
+
+/*
+ * RBAgency_Profile Class
+ *
+ * These are profile specific functions
+ */
+
 class RBAgency_Profile {
 
 	/*
