@@ -91,6 +91,9 @@ class RBAgency_App {
 
 				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.min.css');
 				wp_enqueue_style( 'rbagency-datepicker' );
+
+				wp_register_style( 'rbagency-fontawesome', RBAGENCY_PLUGIN_URL .'ext/fontawesome/css/font-awesome.min.css');
+				wp_enqueue_style( 'rbagency-fontawesome' );
 			}
 		}
 
