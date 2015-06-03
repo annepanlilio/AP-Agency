@@ -2014,7 +2014,7 @@ class RBAgency_Profile {
 						self::$error_checking[] = array('search_result_public',$no_rec_html);
 						echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 					}
-echo "TESTERS";
+
 				// Return
 				return $no_rec_html;
 

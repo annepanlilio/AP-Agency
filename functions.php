@@ -87,6 +87,7 @@
 				$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
 
 				$newrules['profile-favorite'] = 'index.php?type=favorite';
+				$newrules['model-polaroid/profile/(.*)'] = 'index.php?type=modelpolaroid&target=$matches[1]';
 				$newrules['logout'] = 'index.php?type=rblogout';
 
 				return $newrules + $rules;
@@ -180,7 +181,9 @@
 					// TODO: Custom /logout/ uri to catch the user and redirect to a login form.
 						rb_logout_user();
 
-
+					//model polaroid
+					}elseif(get_query_var('type') == 'modelpolaroid'){
+						return RBAGENCY_PLUGIN_DIR . 'view/model-polaroid.php'; 
 					}
 				}
 				return $template;
