@@ -249,6 +249,8 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
 		$rb_agency_option_profilelist_castingcart = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
 			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }
+		$rb_agency_option_profilelist_castingcart = isset($rb_agency_options_arr['rb_agency_option_profilelist_favcarthover'])?$rb_agency_options_arr['rb_agency_option_profilelist_favcarthover']:0;
+			if (empty($rb_agency_option_profilelist_favcarthover)) { $rb_agency_option_profilelist_favcarthover = "1"; }
 		$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy'])?$rb_agency_options_arr['rb_agency_option_privacy']:0;
 			if (empty($rb_agency_option_privacy)) { $rb_agency_option_privacy = "0"; }
 		// Profile Search Options
@@ -462,6 +464,7 @@ elseif ($ConfigID == 1) {
 		
 		if ( class_exists("RBAgencyCasting") ) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0, 1,false)."/> ". __("Show Casting Cart", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favcarthover]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_favcarthover'])?$rb_agency_options_arr['rb_agency_option_profilelist_favcarthover']:0, 1,false)."/> ". __("Show Favorites and Casting Cart Links on Hover", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		}
 		
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'])?$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0, 1,false)."/> ". __("Show Thumbs Slide", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
