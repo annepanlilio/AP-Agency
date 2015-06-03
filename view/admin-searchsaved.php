@@ -201,10 +201,10 @@ $siteurl = get_option('siteurl');
 							'crop'=>true,
 							'width'=>110
 						);
-						$image_src = bfi_thumb( $image_path, $bfi_params );
+						//$image_src = bfi_thumb( $image_path, $bfi_params );
 
-						echo "<img src=\"". .$image_src."\" /></a>";
-						//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=110\" /></a>";
+						//echo "<img src=\"". .$image_src."\" /></a>";
+						echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data2['ProfileGallery']."/". $data2['ProfileMediaURL'] ."&w=110\" /></a>";
 						echo "</div>\n";
 					}
 					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);

@@ -43,7 +43,7 @@ if (isset($_POST['action'])) {
 	$ProfileContactNameFirst = isset($_POST['ProfileContactNameFirst']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameFirst'])):"";
 	$ProfileContactNameLast = isset($_POST['ProfileContactNameLast']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameLast'])):"";
 	$ProfileContactDisplay = isset($_POST['ProfileContactDisplay']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactDisplay'])):"";
-//	if (empty($ProfileContactDisplay)) {  // Probably a new record... 
+if (empty($ProfileContactDisplay)) {  // Probably a new record... 
 		if ($rb_agency_option_profilenaming == 0) {
 			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
 		} elseif ($rb_agency_option_profilenaming == 1) {
@@ -66,7 +66,7 @@ if (isset($_POST['action'])) {
 		} elseif ($rb_agency_option_profilenaming == 5) {
 			$ProfileContactDisplay = $ProfileContactNameLast;
 		}
-	//}
+	}
 
 	$ProfileGallery = isset($_POST['ProfileGallery']) ? $_POST['ProfileGallery']:"";
 
