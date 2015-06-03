@@ -1900,7 +1900,7 @@ class RBAgency_Profile {
 						}
 					}
 
-					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, true,$arr_query );
+					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false,$arr_query );
 
 					if($rb_agency_option_layoutprofilelistlayout == 1){
 						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
@@ -1938,8 +1938,7 @@ class RBAgency_Profile {
 					$rb_agency_options_arr = get_option('rb_agency_options');
 					$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:0;
 					$rb_agency_option_profilelist_count  = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
-					$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-					$rb_agency_option_profilelist_favcarthover = isset($rb_agency_options_arr['rb_agency_option_profilelist_favcarthover'])?$rb_agency_options_arr['rb_agency_option_profilelist_favcarthover']:0;
+					$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;				
 					$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:5;
 					$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
@@ -1988,18 +1987,6 @@ class RBAgency_Profile {
 					$all_html .= "<div id='profile-list' class='".$profiles_perrow[$rb_agency_option_layoutprofilelist_perrow-1]."-profiles'>".$profile_list."</div>";
 					$all_html .= $paginate->show();
 					$all_html .= "<div class='clear'></div>";
-					if($rb_agency_option_profilelist_favcarthover > 0) {
-						$all_html .= '<script type="text/javascript">
-							// Casting and Favorite slide down
-							jQuery(".rb_profile_tool").hide();
-							jQuery("#profile-list .rbprofile-list").mouseover(function(){
-							   jQuery(this).find(".rb_profile_tool").stop().slideDown("slow");
-						  	});
-							jQuery("#profile-list .rbprofile-list").mouseout(function(){
-								jQuery(this).find(".rb_profile_tool").stop().slideUp("slow");
-							});
-						</script>';
-					}
 					$type = get_query_var("type");
 					// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
 					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
