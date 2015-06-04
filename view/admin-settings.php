@@ -2007,6 +2007,8 @@ echo "<div id=\"custom-fields\">";
 				$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
 				if ( !$data_custom_exists ) {
 						// Assume the rest dont exist either
+						
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (1, 'Ethnicity', 	3, '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|', 0, 2, 0, 1, 1,0,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (2, 'Skin Tone', 	3, '|Fair|Medium|Dark|', 0, 2, 0, 1, 1,0,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (3, 'Hair Color', 	3, '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|', 0, 3, 0, 1, 1,0, 0,0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (4, 'Eye Color', 	3, '|Blue|Brown|Hazel|Green|Black|', 0, 4, 0, 1, 1,0, 0,0, 1, 0)");
@@ -2041,7 +2043,8 @@ echo "<div id=\"custom-fields\">";
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
 		$ProfileCustomShowProfile  	= isset($_POST['ProfileCustomShowProfile'])?(int)$_POST['ProfileCustomShowProfile']:0;
-		$ProfileCustomShowSearch  	= isset($_POST['ProfileCustomShowFilter']) ? 2 : (int)$_POST['ProfileCustomShowSearch'];
+		
+		$ProfileCustomShowSearch  	= isset($_POST['ProfileCustomShowSearch']) ? (int)$_POST['ProfileCustomShowSearch'] : 0;
 		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
 		$ProfileCustomShowRegistration= isset($_POST['ProfileCustomShowRegistration'])?(int)$_POST['ProfileCustomShowRegistration']:0;
 		$ProfileCustomShowSearchSimple= isset($_POST['ProfileCustomShowSearchSimple'])?(int)$_POST['ProfileCustomShowSearchSimple']:0;
@@ -2050,6 +2053,8 @@ echo "<div id=\"custom-fields\">";
 
 		//use for filter
 		$ProfileCustomShowFilter   	= isset($_POST['ProfileCustomShowFilter'])?(int)$_POST['ProfileCustomShowFilter']:0;
+
+		
 		/*
 		 * Set profile types here
 		 */
@@ -2172,7 +2177,7 @@ echo "<div id=\"custom-fields\">";
 			} else {
 		
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) . "' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -2254,6 +2259,7 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomShowGender=" . esc_sql($ProfileCustomShowGender) . ",
 								ProfileCustomShowProfile=" . esc_sql($ProfileCustomShowProfile) . " ,
 								ProfileCustomShowSearch=" . esc_sql($ProfileCustomShowSearch) . " ,
+								ProfileCustomShowFilter=" . esc_sql($ProfileCustomShowFilter) . " ,
 								ProfileCustomShowLogged=" . esc_sql($ProfileCustomShowLogged) . " ,
 								ProfileCustomShowRegistration=" . esc_sql($ProfileCustomShowRegistration) . " ,
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
@@ -2629,7 +2635,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												</div>
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Use as sort filter:</label>
-													<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" ". ($data1['ProfileCustomShowSearch'] == 2 ? 'checked=\"checked\"':'')."/> Click to enable</div>
+													<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" ". ($data1['ProfileCustomShowFilter'] == 1 ? 'checked=\"checked\"':'')."/> Click to enable</div>
 												</div>
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Gender*:</label>

@@ -1822,10 +1822,11 @@ class RBAgency_Profile {
 								<option value="2">Display Name</option>';
 								foreach($customFilters as $customFilter){
 									if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
-										$all_html.= "<option value='24'>".$customFilter['ProfileCustomTitle']."</option>";
-									}
-									if($customFilter['ProfileCustomType'] == 10){
-										$all_html.= "<option value='25'>".$customFilter['ProfileCustomTitle']."</option>";
+										$all_html.= "<option value='2'>".$customFilter['ProfileCustomTitle']."</option>";
+									}elseif($customFilter['ProfileCustomType'] == 10){
+										$all_html.= "<option value='3'>".$customFilter['ProfileCustomTitle']."</option>";
+									}elseif($customFilter['ProfileCustomType'] == 3){
+										$all_html.= "<option value='3'>".$customFilter['ProfileCustomTitle']."</option>";
 									}
 								}
 					$all_html.='</select>
@@ -1867,7 +1868,7 @@ class RBAgency_Profile {
 				if(function_exists("rb_agency_get_miscellaneousLinks")){
 					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
 				}
-
+				
 				$arr_castingcart = array();
 				foreach ($castingcart_results as $key) {
 					array_push($arr_castingcart, $key->CastingCartTalentID);
