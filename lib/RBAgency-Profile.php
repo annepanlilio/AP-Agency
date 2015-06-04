@@ -1938,7 +1938,8 @@ class RBAgency_Profile {
 					$rb_agency_options_arr = get_option('rb_agency_options');
 					$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:0;
 					$rb_agency_option_profilelist_count  = isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
-					$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;				
+					$rb_agency_option_profilelist_favorite  = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
+					$rb_agency_option_layoutprofilelist_favcartfx = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0;
 					$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:5;
 					$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
@@ -1987,6 +1988,28 @@ class RBAgency_Profile {
 					$all_html .= "<div id='profile-list' class='".$profiles_perrow[$rb_agency_option_layoutprofilelist_perrow-1]."-profiles'>".$profile_list."</div>";
 					$all_html .= $paginate->show();
 					$all_html .= "<div class='clear'></div>";
+
+					// casting and favorite effect
+					if($rb_agency_option_layoutprofilelist_favcartfx > 0) {
+						if($rb_agency_option_layoutprofilelist_favcartfx == 2) {
+							$mouseoverfx = 'jQuery(this).find(".rb_profile_tool").stop().slideDown("slow");';
+							$mouseoutfx  = 'jQuery(this).find(".rb_profile_tool").stop().slideUp("slow");';
+						} else {
+							$mouseoverfx = 'jQuery(this).find(".rb_profile_tool").stop().fadeIn("slow");';
+							$mouseoutfx  = 'jQuery(this).find(".rb_profile_tool").stop().fadeOut("slow");';
+						}
+						$all_html .= '<script type="text/javascript">
+							// Casting and Favorite slide down
+							jQuery(".rb_profile_tool").hide();
+							jQuery("#profile-list .rbprofile-list").mouseover(function(){
+								'.$mouseoverfx.'							   
+						  	});
+							jQuery("#profile-list .rbprofile-list").mouseout(function(){
+								'.$mouseoutfx.'								
+							});
+						</script>';
+					}
+
 					$type = get_query_var("type");
 					// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
 					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
@@ -2314,26 +2337,27 @@ class RBAgency_Profile {
 			 */
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
-				$rb_agency_option_profilelist_castingcart	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
-				$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-				$rb_agency_option_privacy					= isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
-				$rb_agency_option_profilelist_count			= isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
-				$rb_agency_option_profilelist_perpage		= isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
-				$rb_agency_option_profilelist_sortby		= isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
-				$rb_agency_option_layoutprofilelist			= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
-				$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
-				$rb_agency_option_profilelist_expanddetails	= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
-				$rb_agency_option_locationtimezone			= isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
-				$rb_agency_option_profilenaming				= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-				$rb_agency_option_profilelist_printpdf		= isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
-				$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
-				$rb_agency_option_detail_state 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
-				$rb_agency_option_show_email_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0;
-				$rb_agency_option_show_contact_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0;
-				$rb_agency_option_show_email_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0;
-				$rb_agency_option_show_contact_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0;
-				$rb_agency_value_profilethumbwidth = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth']:180;
-				$rb_agency_value_profilethumbheight = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:230;
+			$rb_agency_option_profilelist_castingcart	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
+			$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
+			$rb_agency_option_privacy					= isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
+			$rb_agency_option_profilelist_count			= isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
+			$rb_agency_option_profilelist_perpage		= isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
+			$rb_agency_option_profilelist_sortby		= isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
+			$rb_agency_option_layoutprofilelist			= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
+			$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
+			$rb_agency_option_profilelist_expanddetails	= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
+			$rb_agency_option_locationtimezone			= isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
+			$rb_agency_option_profilenaming				= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+			$rb_agency_option_profilelist_printpdf		= isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
+			$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
+			$rb_agency_option_detail_state 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
+			$rb_agency_option_show_email_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0;
+			$rb_agency_option_show_contact_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0;
+			$rb_agency_option_show_email_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0;
+			$rb_agency_option_show_contact_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0;
+			$rb_agency_value_profilethumbwidth = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth']:180;
+			$rb_agency_value_profilethumbheight = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:230;
+			$rb_agency_option_layoutprofilelist_favcartdisp = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
 
 
 			// TODO: Check Logic
@@ -2416,20 +2440,27 @@ class RBAgency_Profile {
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 				if ($p_image){
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-						if($rb_agency_option_profilelist_thumbsslide==1){  //show profile sub thumbs for thumb slide on hover
-
+						if($rb_agency_option_profilelist_thumbsslide==1){  //show profile sub thumbs for thumb slide on hover							
 							$images = rb_agency_profileimages($dataList["ProfileID"]);
 							$images = str_replace("{PHOTO_PATH}",RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"]."/", $images);
 						}
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."</div>\n";
+						$displayHTML .="<div  class=\"image\">";
+
+						// Favorite and Casting Display - Image Overlay
+						if($rb_agency_option_layoutprofilelist_favcartdisp == 1) {
+							$displayHTML .= $displayActions;
+						}
+
+						$displayHTML .="	<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."";
+						$displayHTML .="</div>\n";
 					} else {
 						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></a>".$images."</div>\n";
 					}
 				} else {
-					$displayHTML .= "<div class=\"image image-broken\" style=\"background:#ffffff!important;\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
+					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
 				}
 
-				/* 
+				/*
 				 * determine profile details
 				 */
 				$displayHTML .= "  <div class=\"profile-info\">\n";
@@ -2534,7 +2565,11 @@ class RBAgency_Profile {
 					}
 					$displayHTML .= "</div>\n";
 				}
-					$displayHTML .=  $displayActions;
+
+					// Favorite and Casting Display - Default
+					if($rb_agency_option_layoutprofilelist_favcartdisp == 0) {
+						$displayHTML .= $displayActions;
+					}
 
 				$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
 
@@ -2575,9 +2610,9 @@ class RBAgency_Profile {
 							$images=rb_agency_profileimages($dataList["ProfileID"]);
 							$images=str_replace("{PHOTO_PATH}",RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"]."/",$images);
 						}
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."</div>\n";
+						$displayHTML .="<div class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."</div>\n";
 					} else {
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></a>".$images."</div>\n";
+						$displayHTML .="<div class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></a>".$images."</div>\n";
 					}
 				} else {
 					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";

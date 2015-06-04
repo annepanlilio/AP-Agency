@@ -18,6 +18,7 @@ Last updated: June 2, 2015
 #profile-list {
 	font-size: 0;
 	margin: 0 -7px;
+	clear: both;
 }
 #profile-list .rbprofile-list {
 	padding: 7px;
@@ -37,6 +38,14 @@ Last updated: June 2, 2015
 	border-radius: 0;
 	box-shadow: none;
 	max-width: 100%;
+}
+#profile-list .rbprofile-list .image .rb_profile_tool {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 5px;
+	background: rgba(255,255,255,0.8);
 }
 #profile-list .rbprofile-list .profile-info {
 	padding: 5px 0px;
@@ -530,21 +539,10 @@ img.fillheight {
   .rbcolumn:before, .rbcolumn:after { content: ""; display: table; }
   .rbcolumn:after, { clear: both; }
 }
-
-.rb_profile_tool div.favorite { float: left; }
-.rb_profile_tool div.casting { float: right; }
-#profile-list .rb_profile_tool a { text-decoration: none; font-size: small; }
+rb_profile_tool #profile-list { margin-top: 10px; }
+#profile-list .rb_profile_tool a { text-decoration: none; font-size: 70%; }
 .rb_profile_tool a.active.favorite { color:#ccc; }
 .rb_profile_tool a.active.castingcart { color:#ccc; }
 .rb_profile_tool a.inactive.favorite strong, .rb_profile_tool  a.active.favorite strong:hover { color:#dd1818; }
 .rb_profile_tool a.inactive.castingcart strong, .rb_profile_tool  a.active.castingcart strong:hover { color:#ffda18; }
 #profile-single-view.rb_profile_tool span { font-size:13px; }
-
-.rb_profile_tool div.favorite {
-text-align: center;
-margin-bottom: 2px;
-}
-
-.rb_profile_tool div.casting {
-text-align: center;
-}
