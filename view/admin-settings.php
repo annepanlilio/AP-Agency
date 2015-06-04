@@ -241,6 +241,10 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_profilelist_perpage)) { $rb_agency_option_profilelist_perpage = "20"; }
 		$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:0;
 			if (empty($rb_agency_option_layoutprofilelist_perrow)) { $rb_agency_option_layoutprofilelist_perrow = "5"; }
+		$rb_agency_option_layoutprofilelist_favcartdisp = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
+			if (empty($rb_agency_option_layoutprofilelist_favcartdisp)) { $rb_agency_option_layoutprofilelist_favcartdisp = "0"; }
+			$rb_agency_option_layoutprofilelist_favcartfx = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0;
+			if (empty($rb_agency_option_layoutprofilelist_favcartfx)) { $rb_agency_option_layoutprofilelist_favcartfx = "0"; }
 		$rb_agency_option_persearch = isset($rb_agency_options_arr['rb_agency_option_persearch'])?$rb_agency_options_arr['rb_agency_option_persearch']:0;
 			if (empty($rb_agency_option_persearch)) { $rb_agency_option_persearch = "100"; }
 		$rb_agency_option_showcontactpage = isset($rb_agency_options_arr['rb_agency_option_showcontactpage'])?$rb_agency_options_arr['rb_agency_option_showcontactpage']:0;
@@ -248,7 +252,7 @@ elseif ($ConfigID == 1) {
 		$rb_agency_option_profilelist_favorite = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
 			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
 		$rb_agency_option_profilelist_castingcart = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
-			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }
+			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }		
 		$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy'])?$rb_agency_options_arr['rb_agency_option_privacy']:0;
 			if (empty($rb_agency_option_privacy)) { $rb_agency_option_privacy = "0"; }
 		// Profile Search Options
@@ -516,6 +520,27 @@ elseif ($ConfigID == 1) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		if ( class_exists("RBAgencyCasting") ) {
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Favorite and Casting Display', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist_favcartdisp]\">\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0, 0,false) ."> ". __("Default", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0, 1,false) ."> ". __("Image Overlay", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "	 </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Favorite and Casting Effect', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist_favcartfx]\">\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0, 0,false) ."> ". __("No effect", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0, 1,false) ."> ". __("Fade", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0, 2,false) ."> ". __("Slide", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "	 </td>\n";
+		echo " </tr>\n";
+		}
 
 		/*
 		 * Profile Search
