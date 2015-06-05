@@ -452,15 +452,15 @@ if ($_GET['cD'] == "0") {
 							$i = 0;
 							foreach($resultsImg as $dataImg ){
 								if ($i < 4) {
-									$image_path = RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'];
+									$image_path = RBAGENCY_UPLOADDIR . $dataImg["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'];
 									$bfi_params = array(
 										'crop'=>true,
 										'height'=>128
 									);
 									$image_src = bfi_thumb( $image_path, $bfi_params );
-									if($profile_image != basename($dataImg['ProfileMediaURL'])){
-										echo "<img src=\"".$image_src ."\" />\n";
-										//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=128\" />\n";
+									if($dataImg['ProfileMediaPrimary'] == 0){
+										//echo "<img src=\"".$image_src ."\" />\n";
+										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=128\" />\n";
 									}
 									//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
 								}
