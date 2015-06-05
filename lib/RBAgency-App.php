@@ -206,6 +206,10 @@ class RBAgency_App {
 				$classes[] = 'rba-interact';
 				$classes[] = 'profile-register';
 				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
+			} elseif (rb_is_page("profile_member")) {
+				$classes[] = 'rba-interact';
+				$classes[] = 'profile-member';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} else {
 				$classes[] = 'rbagency';
 			}

@@ -3474,7 +3474,8 @@
 			(strpos($uri,"/job-detail/") > -1 && $page == "job_detail" ) ||
 			// RB Interact Pages
 			(strpos($uri,"/profile-register/") > -1 && $page == "profile_register" ) ||
-			(strpos($uri,"/profile-login/") > -1 && $page == "profile_login" )) {
+			(strpos($uri,"/profile-login/") > -1 && $page == "profile_login" ) ||
+			(strpos($uri,"/profile-member/") > -1 && $page == "profile_member" )) {
 
 				return true;
 			}
