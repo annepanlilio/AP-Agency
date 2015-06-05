@@ -218,10 +218,11 @@
 		}
 
 
-	
+		
+		$enable_sidebar = ($rb_agency_option_profilelist_sidebar == 0) ? 'one-column' : ''; // check sidebar
 
-		echo "<div id=\"container\" "; if ($rb_agency_option_profilelist_sidebar==0) { echo "class=\"one-column\""; } echo">\n";
-		echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
+		echo "<div class=\"". $enable_sidebar ."\">\n";
+		echo "    <div id=\"rbcontent\">\n";
 		if ($count > 0) {
 
 			// P R I V A C Y FILTER ====================================================
