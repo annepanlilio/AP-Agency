@@ -77,7 +77,7 @@ global $wpdb;
 			margin-bottom: 15px;*/
 		}
 		#fullpage .print_logo img {
-			/*width: 300px;*/
+			max-height: 64px;
 		}
 		#fullpage td {
 		}
@@ -98,7 +98,7 @@ global $wpdb;
 			overflow: hidden;
 		}#fullpage .photos img {
 			margin: 10px 10px 0 0;
-			max-width: 100%;
+			max-width: 129px;
 		}
 
 		#photos .profile-pic {
@@ -444,8 +444,7 @@ if ($_GET['cD'] == "0") {
 						//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."&h=475\" />";
 						echo "<img src=\"". $image_src."\" />\n";
 						echo "<br>";
-						echo "<br>";
-						///echo "<div class=\"photos\" >";
+						echo "<div class=\"photos\" >";
 							$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 99, true);
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
@@ -472,8 +471,7 @@ if ($_GET['cD'] == "0") {
 								}
 								$i++;
 							}
-							
-						///echo "</div>";
+						echo "</div>";
 						echo "</div>\n";
 						echo " <div class=\"info\">";
 
