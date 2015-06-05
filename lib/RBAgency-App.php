@@ -195,7 +195,17 @@ class RBAgency_App {
 				$classes[] = 'job-application';
 			} elseif (rb_is_page("job_detail")) {
 				$classes[] = 'rbagency-casting';
-				$classes[] = 'job-detail';
+				$classes[] = 'job-detail';			
+			}
+			// RB Interact Pages
+			elseif (rb_is_page("profile_login")) {
+				$classes[] = 'rba-interact';
+				$classes[] = 'profile-login';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
+			} elseif (rb_is_page("profile_register")) {
+				$classes[] = 'rba-interact';
+				$classes[] = 'profile-register';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} else {
 				$classes[] = 'rbagency';
 			}
