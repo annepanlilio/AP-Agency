@@ -442,31 +442,38 @@ if ($_GET['cD'] == "0") {
 						$image_src = bfi_thumb( $image_path, $bfi_params );
 						
 						//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."&h=475\" />";
-						echo "<img src=\"". $image_src."\" />";
-
-						echo "<div class=\"photos\">";
+						echo "<img src=\"". $image_src."\" />\n";
+						echo "<br>";
+						echo "<br>";
+						///echo "<div class=\"photos\" >";
 							$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 5, true);
+							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 99, true);
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
+							
 							$i = 0;
 							foreach($resultsImg as $dataImg ){
-								if ($i < 4) {
+								if ($i < $countImg) {
 									$image_path = RBAGENCY_UPLOADDIR . $dataImg["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'];
-									$bfi_params = array(
-										'crop'=>true,
-										'height'=>128
-									);
-									$image_src = bfi_thumb( $image_path, $bfi_params );
-									if($dataImg['ProfileMediaPrimary'] == 0){
+									
+									if($dataImg['ProfileMediaPrimary'] != 1){
+										//echo $dataImg['ProfileMediaURL']."<br>";
 										//echo "<img src=\"".$image_src ."\" />\n";
-										echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=128\" />\n";
+										if($countImg <= 4){
+											$imgSize = '&h=120';											
+										}elseif($countImg > 4){
+											$imgSize = '&h=128';
+											$width = "width='60'";
+										}
+
+										echo "<img ".$width." src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] .$imgSize."\" />\n\n\n";
 									}
 									//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&h=150\" />\n";
 								}
 								$i++;
 							}
-						echo "</div>";
+							
+						///echo "</div>";
 						echo "</div>\n";
 						echo " <div class=\"info\">";
 
