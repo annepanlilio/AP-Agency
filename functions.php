@@ -3464,14 +3464,15 @@
 			(strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
 			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites") ||
 			// RB Agency Casting Pages
+			(strpos($uri,"/casting-login/") > -1 && $page == "casting_login" ) ||
+			(strpos($uri,"/casting-register/") > -1 && $page == "casting_register" ) ||
 			(strpos($uri,"/casting-manage/") > -1 && $page == "casting_manage" ) ||
 			(strpos($uri,"/browse-jobs/") > -1 && $page == "browse_jobs" ) ||
 			(strpos($uri,"/view-applicants/") > -1 && $page == "view_applicants" ) ||
 			(strpos($uri,"/profile-casting/") > -1 && $page == "profile_casting" ) ||
 			(strpos($uri,"/casting-postjob/") > -1 && $page == "casting_postjob" ) ||
-			(strpos($uri,"/casting-register/") > -1 && $page == "casting_register" ) ||
-			(strpos($uri,"/job-application/") > -1 && $page == "job_application" ) ||
-			(strpos($uri,"/job-detail/") > -1 && $page == "job_detail" ) ||
+			(strpos($uri,"/casting-dashboard/") > -1 && $page == "casting_dashboard" ) ||
+			(strpos($uri,"/job-application/job-detail/") > -1 && $page == "job_detail" ) ||
 			// RB Interact Pages
 			(strpos($uri,"/profile-register/") > -1 && $page == "profile_register" ) ||
 			(strpos($uri,"/profile-login/") > -1 && $page == "profile_login" ) ||

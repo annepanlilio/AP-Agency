@@ -172,30 +172,42 @@ class RBAgency_App {
 				$classes[] = 'rbagency-print';
 			}
 			// RB Agency Casting Pages
+			elseif (rb_is_page("casting_login")) {
+				$classes[] = 'rbagency-casting';
+				$classes[] = 'casting-login';
+			}
 			elseif (rb_is_page("casting_postjob")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'casting-postjob';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} elseif (rb_is_page("casting_manage")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'casting-manage';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} elseif (rb_is_page("browse_jobs")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'browse-jobs';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} elseif (rb_is_page("view_applicants")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'view-applicants';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} elseif (rb_is_page("profile_casting")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'profile-casting';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} elseif (rb_is_page("casting_register")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'casting-register';
-			} elseif (rb_is_page("job_application")) {
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
+			} elseif (rb_is_page("casting_dashboard")) {
 				$classes[] = 'rbagency-casting';
-				$classes[] = 'job-application';
+				$classes[] = 'casting-dashboard';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';			
 			} elseif (rb_is_page("job_detail")) {
 				$classes[] = 'rbagency-casting';
-				$classes[] = 'job-detail';			
+				$classes[] = 'job-detail';
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			}
 			// RB Interact Pages
 			elseif (rb_is_page("profile_login")) {
