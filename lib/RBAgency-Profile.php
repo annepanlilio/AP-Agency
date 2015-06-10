@@ -1076,11 +1076,11 @@ class RBAgency_Profile {
 					}
 					// Age by Number
 					if (isset($age_min) && !empty($age_min)){
-						$minyear = date('Y-m-d', strtotime('-'. $age_min .' year'. $date));
+						$minyear = date('Y-m-d', strtotime('-'. $age_min - 1 .' year'. $date));
 						$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
 					}
 					if (isset($age_max) && !empty($age_max)){
-						$maxyear = date('Y-m-d', strtotime('-'. $age_max - 1 .' year'. $date));
+						$maxyear = date('Y-m-d', strtotime('-'. $age_max - 2 .' year'. $date));
 						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
 					}
 
@@ -1503,7 +1503,7 @@ class RBAgency_Profile {
 			$sql_where = $sql_where_array['standard'] ." ". $sql_where_array['custom'];
 
 			$sqlCasting_userID = "";
-
+			
 			switch ($query_type) {
 			/* 
 			 * Standard Query (Public Front-End)
@@ -1810,23 +1810,26 @@ class RBAgency_Profile {
 
 					// Dropdown
 					///get custom field
-					$query = " SELECT ProfileCustomTitle, ProfileCustomType	,ProfileCustomID FROM " .  table_agency_customfields . " WHERE ProfileCustomShowSearch = 2 ORDER BY ProfileCustomOrder ASC";
+					$query = " SELECT * FROM " .  table_agency_customfields . " WHERE ProfileCustomShowFilter = 1 ORDER BY ProfileCustomOrder ASC";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 
 					$all_html.='
 							<select id="sort_by">
 								<option value="">Sort List</option>
-								<option value="1">Age</option>
-								<option value="2">Name</option>
-								<option value="3">Date Joined</option>
-								<option value="2">Display Name</option>';
+								1<option value="sortage">Age</option>
+								2<option value="sortname">Name</option>
+								3<option value="sortdate">Date Joined</option>
+								2<option value="sortname">Display Name</option>';
 								foreach($customFilters as $customFilter){
-									if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
-										$all_html.= "<option value='2'>".$customFilter['ProfileCustomTitle']."</option>";
+									$customID = $customFilter['ProfileCustomID'] + 100; 
+									if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4){
+										$all_html.= "<option value='sorttext_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
 									}elseif($customFilter['ProfileCustomType'] == 10){
-										$all_html.= "<option value='3'>".$customFilter['ProfileCustomTitle']."</option>";
+										$all_html.= "<option value='sortdate2_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
 									}elseif($customFilter['ProfileCustomType'] == 3){
-										$all_html.= "<option value='3'>".$customFilter['ProfileCustomTitle']."</option>";
+										$all_html.= "<option value='sortdropdown_".$customID."_|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|'>".$customFilter['ProfileCustomTitle']."</option>";
+									}elseif($customFilter['ProfileCustomType'] == 7){
+										$all_html.= "<option value='sortmeasure_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
 									}
 								}
 					$all_html.='</select>
@@ -2023,6 +2026,7 @@ class RBAgency_Profile {
 
 				// Return
 				return $all_html;
+
 
 			} else {
 
@@ -2395,16 +2399,17 @@ class RBAgency_Profile {
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
 					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
 
-					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomDateValue,mu.ProfileCustomID,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowSearch = 2";
+					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomDateValue,mu.ProfileCustomID,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowFilter = 1";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 
 					foreach($customFilters as $customFilter){
-
+						$customIDPlus = $customFilter["ProfileCustomID"] + 100;
 						if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
-							$displayHTML .= '<input id="csnm'.$customFilter["ProfileCustomMuxID"].'" type="hidden" name="tt" class="csp_name" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
-						}
-						if($customFilter['ProfileCustomType'] == 10){
-							$displayHTML .= '<input id="cscr'.$customFilter["ProfileCustomMuxID"].'" type="hidden" class="csp_created" name="dd" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
+							$displayHTML .= '<input id="type_text'. $customIDPlus . '" type="hidden" class="type_text'.$customIDPlus.'" name="type_text"  value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+						}elseif($customFilter['ProfileCustomType'] == 10){
+							$displayHTML .= '<input id="type_text'.$customIDPlus.'" type="hidden" class="type_text'.$customIDPlus.'" name="type_text" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
+						}elseif($customFilter['ProfileCustomType'] == 3){
+							$displayHTML .= '<input id="type_text'.$customIDPlus.'" type="hidden" class="type_text'.$customIDPlus.'" name="type_text" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
 						}
 
 					}
@@ -2433,7 +2438,7 @@ class RBAgency_Profile {
 						}
 					}
 				}
-
+				print_r($arr_castingcart);
 				/* 
 				 * Determine primary image
 				 */
@@ -2589,14 +2594,14 @@ class RBAgency_Profile {
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 
 					foreach($customFilters as $customFilter){
-
+						$customIDPlus = $customFilter["ProfileCustomID"] + 100;
 						if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
-							$displayHTML .= '<input id="csnm'.$customFilter["ProfileCustomMuxID"].'" type="hidden" name="tt" class="csp_name" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+							$displayHTML .= '<input id="type_text'.$customIDPlus.'" type="hidden" class="type_text'.$customIDPlus.'"  name="type_text"  value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+						}elseif($customFilter['ProfileCustomType'] == 10){
+							$displayHTML .= '<input id="type_text'.$customIDPlus.'" type="hidden" class="type_text'.$customIDPlus.'" name="type_text" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
+						}elseif($customFilter['ProfileCustomType'] == 3){
+							$displayHTML .= '<input id="type_text'.$customIDPlus.'" type="hidden" class="type_text'.$customIDPlus.'" name="type_text" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
 						}
-						if($customFilter['ProfileCustomType'] == 10){
-							$displayHTML .= '<input id="cscr'.$customFilter["ProfileCustomMuxID"].'" type="hidden" name="dd" class="csp_created" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
-						}
-
 					}
 				}
 
