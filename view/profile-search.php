@@ -20,8 +20,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	}
 
 	//".(!$add_sidebar?"site-content":primary_class())."
-	echo "<div id=\"primary\" class=\"site-main  ".primary_class()."\">\n";
-	echo "	<div id=\"content\" role=\"main\" >\n";
+	echo "<div class=\"site-main  ".primary_class()."\">\n";
+	echo "	<div id=\"rbcontent\" role=\"main\" >\n";
 	echo "		<div id=\"profile-search\" "; echo post_class(); echo ">\n";
 
 	// P R I V A C Y FILTER ====================================================
@@ -139,13 +139,13 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	}
 
 	echo "		</div><!-- #profile-search -->\n"; // #profile-search
-	echo "	</div><!-- #content -->\n"; // #content
+	echo "	</div><!-- #rbcontent -->\n"; // #rbcontent
 	echo "</div><!-- #primary -->\n"; // #primary
 
 
 	if($add_sidebar && !in_array(get_query_var("type"),array("search-basic","search-advanced"))){
 	echo "<div id=\"secondary\" class=\"widget-area\">\n";
-	echo "	<div id=\"content\" role=\"main\" class=\"transparent\">\n";
+	echo "	<div id=\"rbwidgets\" role=\"main\" class=\"transparent\">\n";
 	echo "<aside id=\"text-3\" class=\"widget widget_text\">";
 	echo "<h3 class=\"widget-title\">Search Profiles</h3>";
 	echo "<div class=\"textwidget\">";
@@ -165,7 +165,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	echo "</div>";
 	echo "</aside>";
 	
-	echo "	</div><!-- #content -->\n"; // #content
+	echo "	</div><!-- #rbwidgets -->\n"; // #rbwidgets
 	echo "</div><!-- #secondary -->\n"; // #secondary
 	}
 
