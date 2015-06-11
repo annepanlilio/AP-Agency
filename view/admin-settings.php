@@ -2190,7 +2190,7 @@ echo "<div id=\"custom-fields\">";
 		}
 		$action = $_POST['action'];
 		switch($action) {
-	
+
 		// Add
 		case 'addRecord':
 			if($have_error){
@@ -2198,9 +2198,9 @@ echo "<div id=\"custom-fields\">";
 				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
-				echo " <div class=\"inside\"> ";	
+				echo " <div class=\"inside\"> ";
 			} else {
-		
+
 				// Create Record
 				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
 				$results = $wpdb->query($insert);
@@ -2212,10 +2212,10 @@ echo "<div id=\"custom-fields\">";
 				 * Selected
 				 */
 				$Types = "";
-				
+
 				/*
 				 * Set Types Here for each Custom fields.
-				 */ 
+				 */
 				$get_types = "SELECT * FROM ". table_agency_data_type;
 						
 				$result = $wpdb->get_results($get_types,ARRAY_A);
@@ -2401,7 +2401,7 @@ elseif (isset($_GET["deleteRecord"])) {
 		$queryDelete = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomID =  \"". $ProfileCustomID ."\"";
 		$resultsDelete = $wpdb->get_results($queryDelete,ARRAY_A);
 		foreach($resultsDelete as $dataDelete) {
-	
+
 			// Remove Record
 			$delete = "DELETE FROM " . table_agency_customfields . " WHERE ProfileCustomID = \"". $ProfileCustomID ."\"";
 			$results = $wpdb->query($delete);
@@ -2451,22 +2451,22 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 		}
 
-  } else {
-		
-			$ProfileCustomID			=	0;
-			$ProfileCustomTitle			=	"";
-			$ProfileCustomType			=	"";
-			$ProfileCustomOptions		=	"";
-			$ProfileCustomView			=	0;
-			$ProfileCustomOrder			=	0;
-			$ProfileCustomShowGender	=	0;
-			$ProfileCustomShowProfile	=	0;
-			$ProfileCustomShowSearch	=	0;
-			$ProfileCustomShowSearchSimple	=	0;
-			$ProfileCustomShowLogged	=	0;
-			$ProfileCustomShowRegistration=	0;
-			$ProfileCustomShowAdmin		=	0;
-			
+	} else {
+
+			$ProfileCustomID				= 0;
+			$ProfileCustomTitle				= "";
+			$ProfileCustomType				= "";
+			$ProfileCustomOptions			= "";
+			$ProfileCustomView				= 0;
+			$ProfileCustomOrder				= 0;
+			$ProfileCustomShowGender		= 0;
+			$ProfileCustomShowProfile		= 0;
+			$ProfileCustomShowSearch		= 0;
+			$ProfileCustomShowSearchSimple	= 0;
+			$ProfileCustomShowLogged		= 0;
+			$ProfileCustomShowRegistration	= 0;
+			$ProfileCustomShowAdmin			= 0;
+
 			echo "\n";
 		echo " 
 		<div class=\"postbox \">
@@ -2474,9 +2474,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		-->
 		<div class=\"inside\"> ";
 		if(isset($_GET["action"]) !== "editRecord"){
-		 	echo "<h3 class=\"hndle\" style=\"margin-top:-0px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>";
+			echo "<h3 class=\"hndle\" style=\"margin-top:-0px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>";
 		}
-		
 	}
 	if(isset($_GET["action"]) == "editRecord"){
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileCustomID=".$_GET["ProfileCustomID"]."&ConfigID=".$_GET["ConfigID"]."\">\n";
@@ -2552,7 +2551,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						</div>
 						<div class=\"rbfield rbcheckbox rbmulti\">
 							<label>Profile Type:</label>
-							<div>";						
+							<div>";
 							/*
 							 * get the proper fields on
 							 * profile types here
@@ -2571,50 +2570,47 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												 trim($typ['DataTypeTitle'])
 												 .'&nbsp;<br/>';
 								echo "</label></div>";
-							} 
-						echo	   "</div>
+							}
+						echo		"</div>
 						</div>
 						<div class=\"rbfield rbselect rbsingle\">
 							<label>Custom Order:</label>
 							<div>
 							<input type=\"text\" name=\"ProfileCustomOrder\" value=\"0\" />
 							</div>
-						</div>";	
-		
+						</div>";
+
 			 echo "<div id=\"objtype_customize\">\n";
 		echo "</div>\n";
-		
-		
+
 		}else{ //Edit/Update Field
 					$query1 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = $wpdb->get_results($query1,ARRAY_A);
 					$count1 = count($results1);
 					$pos = 0;
 					foreach($results1 as $data1) {
-						
-					
+
 						//get record from Clients to edit
 						$select_sql = "Select  * FROM " . table_agency_customfields_types . 
 						" WHERE ProfileCustomID= " . $data1["ProfileCustomID"];
-						
+
 						$select_sql = $wpdb->get_results($select_sql,ARRAY_A);// or die($wpdb->print_error());
-						
+
 						$fetch_type = current($select_sql);
-						
+
 						$array_type = explode(",",$fetch_type['ProfileCustomTypes']);
-						
+
 						$a = array();
-						
+
 						foreach($array_type as $t_arr){
-							 $$t_arr = true;
-							
+							$$t_arr = true;
 						}
-						
-						$pos ++;			
+
+						$pos ++;
 							$query2 = "SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID=".$data1["ProfileCustomID"]." AND ProfileID=".(isset($ProfileID)?$ProfileID:0)."";
 							$results2 = $wpdb->get_results($query2,ARRAY_A);
-									
-									  echo "<div class=\"rbfield rbselect rbsingle\">
+
+									echo "<div class=\"rbfield rbselect rbsingle\">
 											<label>Type*:</label>
 											<div>
 											<select class=\"objtype\" name=\"ProfileCustomType\">
@@ -2630,16 +2626,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											}else{
 												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Metric (cm/kg)</option>";
 											}
-										  echo "<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown (Multi-Select)</option>";;
-										  echo "<option value=\"10\" ". ($data1["ProfileCustomType"] == 10? 'selected=\"selected\"':'').">Date</option>";
-										  echo "<option value=\"11\" ". ($data1["ProfileCustomType"] == 11? 'selected=\"selected\"':'').">Link</option>";
-										
-										  echo"  </select>
-										   
+										echo "	<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown (Multi-Select)</option>";;
+										echo "	<option value=\"10\" ". ($data1["ProfileCustomType"] == 10? 'selected=\"selected\"':'').">Date</option>";
+										echo "	<option value=\"11\" ". ($data1["ProfileCustomType"] == 11? 'selected=\"selected\"':'').">Link</option>";
+										echo "</select>
 											</div>
-										 </div>";
-										 //	 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
-									
+										</div>";
+										//	 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
+
 										echo "  <div class=\"rbfield rbradio rbmulti\">
 												<label>Visibility*:</label>
 												<div>
@@ -2670,103 +2664,101 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													echo "<select name=\"ProfileCustomShowGender\">";
 													echo "<option value=\"\">All Gender</option>";
 													$queryShowGender = $wpdb->get_results($query,ARRAY_A);
-														 foreach($queryShowGender as $dataShowGender){
-															
+														foreach($queryShowGender as $dataShowGender){
+
 																echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data1["ProfileCustomShowGender"],$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
-															
-														 }
+
+														}
 													echo "</select>";
 													
-												echo "						
+												echo "
 													</div>
 												</div>
 
 											<div class=\"rbfield rbcheckbox rbmulti\">
 													<label>Profile Type:</label>
 													<div>";
+
+											/*
+											* get the proper fields on
+											* profile types here
+											*/
+											$ProfileCustomID = $_GET['ProfileCustomID'];
 											
-																						/*
-																						* get the proper fields on
-																						* profile types here
-																						*/
-																						$ProfileCustomID = $_GET['ProfileCustomID'];
-																						
-																						//get custom types
-																						$_sql = "SELECT ProfileCustomTypes FROM " . table_agency_customfields_types . 
-																							" WHERE ProfileCustomID = $ProfileCustomID";
-																						$x = $wpdb->get_row($_sql);// or die($wpdb->print_error());
+											//get custom types
+											$_sql = "SELECT ProfileCustomTypes FROM " . table_agency_customfields_types . 
+												" WHERE ProfileCustomID = $ProfileCustomID";
+											$x = $wpdb->get_row($_sql);// or die($wpdb->print_error());
 
-																						if(strpos($x->ProfileCustomTypes,",") > -1){
-																								$rTypes = explode(",",$x->ProfileCustomTypes);
-																						} else {
-																								$rTypes = $x->ProfileCustomTypes;
-																						}	
+											if(strpos($x->ProfileCustomTypes,",") > -1){
+													$rTypes = explode(",",$x->ProfileCustomTypes);
+											} else {
+													$rTypes = $x->ProfileCustomTypes;
+											}	
 
-																						$get_types = "SELECT * FROM ". table_agency_data_type;
+											$get_types = "SELECT * FROM ". table_agency_data_type;
 
-																						$result = $wpdb->get_results($get_types,ARRAY_A);
+											$result = $wpdb->get_results($get_types,ARRAY_A);
 
-																						foreach( $result as $typ){
-																						  $t = trim(str_replace(' ','_',$typ['DataTypeTitle']));                        
-																														$checked = '';
-																														if(is_array($rTypes)){
-																																if(in_array($t,$rTypes)){
-																																		$checked = 'checked="checked"';
-																																}
-																														} else {
-																																if($t == $rTypes){
-																																		$checked = 'checked="checked"';
-																																}
-																														}
+											foreach( $result as $typ){
+												$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));
+												$checked = '';
+												if(is_array($rTypes)){
+													if(in_array($t,$rTypes)){
+															$checked = 'checked="checked"';
+													}
+												} else {
+													if($t == $rTypes){
+															$checked = 'checked="checked"';
+													}
+												}
 
-																														echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
-																																$checked . '  />&nbsp;'.
-																																trim($typ['DataTypeTitle'])
-																																.'&nbsp;<br/>';
-																						} 
-													
+												echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
+														$checked . '  />&nbsp;'.
+														trim($typ['DataTypeTitle'])
+														.'&nbsp;<br/>';
+											}
+
 											echo "	</div>
 											</div>
-	
-												
+
 												<div class=\"rbfield rbtext rbsingle\">
 													<label>Custom Order*:</label>
 													<div>
 													<input type=\"text\" name=\"ProfileCustomOrder\"  value=\"".$data1["ProfileCustomOrder"]."\"/>
-													</div>													
+													</div>
 												</div>";
-					echo "<div id=\"obj_edit\" class=\"".$data1["ProfileCustomType"]."\">";				
-					
-								if($data1["ProfileCustomType"] == 1){ // text								 	
+								echo "<div id=\"obj_edit\" class=\"".$data1["ProfileCustomType"]."\">";
+
+								if($data1["ProfileCustomType"] == 1){ // text
 									echo "<div class=\"rbfield rbtext rbsingle\">";
-									echo "
-											<label>Title:</label>
+									echo "<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
-										echo "
-											  <div class=\"rbfield rbtext rbsingle\">
-												 <label>Value*:</label>
-												 <div><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></div>											  
-											  </div>";
-								 }elseif($data1['ProfileCustomType'] == 11){
-								 	echo "<div class=\"rbfield rbtext rbsingle\">";
+									echo "
+										<div class=\"rbfield rbtext rbsingle\">
+											<label>Value*:</label>
+											<div><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></div>
+										</div>";
+
+								} elseif($data1['ProfileCustomType'] == 11){
+									echo "<div class=\"rbfield rbtext rbsingle\">";
 									echo "
 											<label>Title*:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
 									echo "
-											  <div class=\"rbfield rbtext rbsingle\">
-												 <label>Value*:</label>
-												 <div><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></div>											  
-											  </div>";
-								 }
-							
-								 elseif($data1["ProfileCustomType"] == 3 || $data1["ProfileCustomType"] == 9){	  // Dropdown || Multi-Select
+											<div class=\"rbfield rbtext rbsingle\">
+												<label>Value*:</label>
+												<div><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></div>
+											</div>";
+
+								} elseif($data1["ProfileCustomType"] == 3 || $data1["ProfileCustomType"] == 9){	  // Dropdown || Multi-Select
 									 echo "<div class=\"rbfield rbselect rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
-											@list($option1,$option2) = @explode(":",$data1['ProfileCustomOptions']);	
+											@list($option1,$option2) = @explode(":",$data1['ProfileCustomOptions']);
 											
 											$data1 = explode("|",$option1);
 											$data2 = explode("|",$option2);
@@ -2782,110 +2774,88 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									echo '</ul>';
 									//echo "<div  id=\"editfield_add_more_options_1\"></div>";
 									echo "<div class=\"rbfield rbsingle\"><a href=\"javascript:;\" id=\"addmoreoption_1\" class=\"add-more-option\">add more option[+]</a></div>";
-											
+
 											if(!empty($data2) && !empty($option2)){
 												echo "<label>Label:</label><div><input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/></div>";
-											
 												$pos2 = 0;
 											echo '<div id="editfield_add_more_options_1">';
-											
 												foreach($data2 as $val2){
 													echo "<div class=\"rbfield rbtext rbsingle\">";
 													if($val2 != end($data2) && $val2 !=  $data2[0]){
-														 $pos2++;
-													 echo "<label>Option:</label><div><input type=\"text\" value=\"".$val2."\"  name=\"option2[]\"/></div>";
-													  if($pos2==1){
-														 echo "<input type=\"checkbox\" ".(end($data2)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_2\"/><span style=\"font-size:11px;\">(set as selected)</span>";	
-														
-														
-														echo "<a href=\"javascript:;\" id=\"addmoreoption_2\" class=\"add-more-option\">add more option[+]</a>";	
-														
-													   }
+														$pos2++;
+														echo "<label>Option:</label><div><input type=\"text\" value=\"".$val2."\"  name=\"option2[]\"/></div>";
+													if($pos2==1){
+														echo "<input type=\"checkbox\" ".(end($data2)=="yes" ? "checked=\"checked\"":"")." name=\"option_default_2\"/><span style=\"font-size:11px;\">(set as selected)</span>";
+														echo "<a href=\"javascript:;\" id=\"addmoreoption_2\" class=\"add-more-option\">add more option[+]</a>";
+														}
 													}
-													echo '</div>'; 
-											
+													echo '</div>';
 												}
-												echo '</div>'; 
-											
-												
-											} 
+												echo '</div>';
+											}
 
-												echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12' ).sortable();});</script>";
-									
+											echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12' ).sortable();});</script>";
 											echo "<div  id=\"editfield_add_more_options_2\"></div><br/>";
-									
-								}
-								  elseif($data1["ProfileCustomType"] == 4){	 //textbox
-								   
-									  $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
+
+								} elseif($data1["ProfileCustomType"] == 4){ //textbox
+										$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
+										echo "<div class=\"rbfield rbtext rbsingle\">
+												<label>Title:</label>
+												<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
+											</div>";
+										echo "<div class=\"rbfield rbtextarea rbsingle\">
+												<label>Value*:</label>
+												<div><textarea name=\"ProfileCustomOptions\"> ". $data1["ProfileCustomOptions"] ."</textarea></div>
+											</div>";
+
+								} elseif($data1["ProfileCustomType"] == 5){	 //checkbox
+
+										$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
+										$pos =0;
+
 										echo "<div class=\"rbfield rbtext rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
-										</div>";
-										echo "<div class=\"rbfield rbtextarea rbsingle\">
-											 <label>Value*:</label>
-											 <div><textarea name=\"ProfileCustomOptions\"> ". $data1["ProfileCustomOptions"] ."</textarea></div>
-										</div>";    
-								
-								 }
-								  elseif($data1["ProfileCustomType"] == 5){	 //checkbox
-								  
-								  $array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
-									   $pos =0;
-									 
-										 echo "<div class=\"rbfield rbtext rbsingle\">
-											 <label>Title:</label>
-											 <div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
-											 </div>";  
-											  echo "
-														   <ul  id=\"editfield_add_more_options_12\">
+											</div>";  
+										echo "
+											<ul  id=\"editfield_add_more_options_12\">
 														   <ul>
 														 ";
-										 foreach($array_customOptions_values as  $val){
-											   echo" <li rbfield rbtext rbsingle><label>Option:<label><div class=\"option\"><input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>";
-										 }
+										foreach($array_customOptions_values as  $val){
+											echo" <li rbfield rbtext rbsingle><label>Option:<label><div class=\"option\"><input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>";
+										}
 										echo "</ul>";
 										echo "</div>";
 										//echo "<div id=\"addcheckbox_field_12\"></div>";
 										//echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
 										//echo "<div  id=\"editfield_add_more_options_12\"><ul style=\"list-style:none;\"></ul></div><br/>";
 										echo "<div class=\"rbfield rbsingle\"><a href=\"javascript:;\" id=\"addmoreoption_1\" class=\"add-more-option\">add more option[+]</a></div>";
-										
 										//echo "<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(12);\" >add more[+]</a>";	
 										echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12' ).sortable();});</script>";
-											
-								 }
-								  elseif($data1["ProfileCustomType"] == 6){	 //radio button
+
+								} elseif($data1["ProfileCustomType"] == 6){	 //radio button
 									$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
-									   $pos =0;
-									   echo "<div class=\"rbfield rbtext rbsingle\">
+									$pos =0;
+									echo "<div class=\"rbfield rbtext rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
-											  
-											  echo "<ul id=\"editfield_add_more_options_12\" style=\"list-style:none;\">";
+									echo "<ul id=\"editfield_add_more_options_12\" style=\"list-style:none;\">";
 										 foreach($array_customOptions_values as  $val){
-											 if(!empty($val)){
-											  $pos++;	
-											  //echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
-											  echo" <li class=\"rbfield rbtext rbsingle\"><label>Option:</label> <div class=\"option\"><input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><div></li>";
-											   }
-												 
-											
-										 }
+											if(!empty($val)){
+												$pos++;
+												//echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
+												echo" <li class=\"rbfield rbtext rbsingle\"><label>Option:</label> <div class=\"option\"><input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><div></li>";
+											}
+								}
 
-													 echo "</ul>";
-												 
-										   //echo "<div id=\"addcheckbox_field_1\"></div>";
-										    //echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
+										echo "</ul>";
+										//echo "<div id=\"addcheckbox_field_1\"></div>";
+										//echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
 										//echo "<div  id=\"editfield_add_more_options_12\"><ul style=\"list-style:none;\"></ul></div><br/>";
 										echo "<div class=\"rbfield rbsingle\"><a href=\"javascript:;\" id=\"addmoreoption_1\" class=\"add-more-option\">add more option[+]</a></div>";
-											echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12' ).sortable();});</script>";
-											 
-								
-								
-								 }
-								 elseif ($data1["ProfileCustomType"] == 7) {	 ///metric/imperials
+										echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12' ).sortable();});</script>";
+								} elseif ($data1["ProfileCustomType"] == 7) { ///metric/imperials
 										echo "<div class=\"rbfield rbtext rbsingle\"><label>Title*:</label><div><input type='text' name='ProfileCustomTitle' value=\"".$data1["ProfileCustomTitle"]."\"/></div></div>";
 										if ($rb_agency_options_arr['rb_agency_option_unittype']==0) { //  Metric (cm/kg)
 											echo "<div class=\"rbfield rbtext rbmulti\"><label></label>";
@@ -2898,26 +2868,19 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											echo "<div><label><input type='radio' name='ProfileUnitType' value='2' ".checked($data1["ProfileCustomOptions"],2,false)."/>Pounds</label></div>";
 											echo "<div><label><input type='radio' name='ProfileUnitType' value='3' ".checked($data1["ProfileCustomOptions"],3,false)."/>Feet/Inches</label></div></div>";
 											echo "</div>";
-										} 										
-										
-								 }else if($data1["ProfileCustomType"] == 10){ // text
-									  echo "<tr>
+										}
+
+								}else if($data1["ProfileCustomType"] == 10){ // text
+									echo "<tr>
 											<td style=\"width:50px;\">Title:</td>
 											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
 										</tr>";
-									
-								 }
-							 
-						  
-					echo "</div>";				
+								}
+
+					echo "</div>";
 					}  //endwhile
-			
-			   
 		}
-						
-		
-	
-			
+
 			if ( $ProfileCustomID > 0) {
 			echo "<p class=\"submit rbfield\">\n";
 			echo "     <input type=\"hidden\" name=\"ProfileCustomID\" value=\"". $ProfileCustomID ."\" />\n";
@@ -2931,10 +2894,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 			echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 			echo "</p>\n";
-			} 
+			}
 			echo "</form>\n";
 	?>
-		  
 			</div>
 </div><!-- .inside -->
 </div><!-- .postbox -->
@@ -2957,19 +2919,19 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		else {
 			$sort = "ProfileCustomOrder";
 		}
-		
+
 		/******** Direction ************/
 		$dir = "";
 		if (isset($_GET['dir']) && !empty($_GET['dir'])){
 			$dir = $_GET['dir'];
 			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
-			} 
+				$sortDirection = "asc";
+			} else {
+				$sortDirection = "desc";
+			}
 		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
+			$sortDirection = "desc";
+			$dir = "asc";
 		}
 	
 		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=5\">\n";	

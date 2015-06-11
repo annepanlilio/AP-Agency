@@ -995,7 +995,7 @@ class RBAgency_Profile {
 						"promoted" => NULL,
 						"featured" => NULL,
 						"isactive" => NULL,
-						
+
 						"profilecasting" => NULL,
 						"stars" => NULL,
 						"favorite" => NULL,
@@ -1985,7 +1985,7 @@ class RBAgency_Profile {
 				/* 
 				 * wrap profile listing
 				 */
-					
+
 					$all_html .= '</div>'; // #results-info
 					$all_html .= '<div class="rbclear"></div>';
 					$all_html .= '<hr />';
@@ -2006,10 +2006,10 @@ class RBAgency_Profile {
 							// Casting and Favorite slide down
 							jQuery(".rb_profile_tool").hide();
 							jQuery("#profile-list .rbprofile-list").mouseover(function(){
-								'.$mouseoverfx.'							   
-						  	});
+								'.$mouseoverfx.'
+							});
 							jQuery("#profile-list .rbprofile-list").mouseout(function(){
-								'.$mouseoutfx.'								
+								'.$mouseoutfx.'
 							});
 						</script>';
 					}
@@ -3006,7 +3006,6 @@ class RBAgency_Profile {
 		if (function_exists( array($RBAgency_Profile, 'view_categories') ) ) { 
 			$atts = array('profilesearch_layout' => 'advanced');
 			view_categories($atts); }
-
 		*/
 
 		// Set It Up
