@@ -2343,7 +2343,6 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_count			= isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
 				$rb_agency_option_profilelist_perpage		= isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
 				$rb_agency_option_profilelist_sortby		= isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
-				$rb_agency_option_layoutprofilelist			= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
 				$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
 				$rb_agency_option_profilelist_expanddetails	= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
 				$rb_agency_option_locationtimezone			= isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
@@ -2383,9 +2382,14 @@ class RBAgency_Profile {
 			 */
 			$displayHTML ="";
 
-			$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
 
-			if($rb_agency_option_layoutprofilelistlayout == 0) { // Default Profile Layout
+			if($rb_agency_option_layoutprofilelistlayout == 0) {
+
+			/*
+			 * Default Profile Layout
+			 */
+
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
 
 				if(!$plain){
 					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
@@ -2433,9 +2437,7 @@ class RBAgency_Profile {
 					}
 				}
 
-				/* 
-				 * Determine primary image
-				 */
+				// Determine primary image
 				$images = "";
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 				if ($p_image){
@@ -2460,9 +2462,8 @@ class RBAgency_Profile {
 					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
 				}
 
-				/*
-				 * determine profile details
-				 */
+				// Determine profile details
+
 				$displayHTML .= "  <div class=\"profile-info\">\n";
 				$uid = rb_agency_get_current_userid();
 
@@ -2572,8 +2573,15 @@ class RBAgency_Profile {
 					}
 
 				$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
+				$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 
-			} elseif($rb_agency_option_layoutprofilelistlayout == 1){ // Profile Layout 02
+			} elseif($rb_agency_option_layoutprofilelistlayout == 1){
+
+			/*
+			 * Profile Layout 02
+			 */
+
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
 
 				$displayActions = "";
 				$type = get_query_var('type');
@@ -2599,9 +2607,7 @@ class RBAgency_Profile {
 					}
 				}
 
-				/* 
-				 * determine primary image
-				 */
+				// Determine primary image
 				$images = "";
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 				if ($p_image){
@@ -2620,9 +2626,28 @@ class RBAgency_Profile {
 				$displayHTML .= "  <div class=\"profile-info\">\n";
 				$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"scroll\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
 				$displayHTML .= "  </div><!-- .profile-info -->\n";
-			}
 
-			$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
+				$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
+
+			} elseif($rb_agency_option_layoutprofilelistlayout == 3){
+
+			/*
+			 * Voiceover Mode
+			 */
+
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" >\n";
+
+				$displayHTML .= "  <div class=\"profile-voiceover\">\n";
+				$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
+				$displayHTML .= "  </div><!-- .profile-voiceover -->\n";
+
+				$displayHTML .=" </div> <!-- .? --> \n";
+
+
+/* TODO: ADD VOICEOVER HTML HERE */
+
+
+			}
 
 			if(self::$error_debug){
 				self::$error_checking[] = array('search_formatted',$displayHTML);

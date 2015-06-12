@@ -84,7 +84,6 @@ class RBAgency_Init {
 						"rb_agency_option_galleryorder" => "1",
 						"rb_agency_option_gallerytype" => "1",
 						"rb_agency_option_layoutprofile" => "0",
-						"rb_agency_option_layoutprofilelist" => "0",
 						"rb_agency_option_layoutprofilelist_perrow" => "5",
 						"rb_agency_option_layoutprofilelistlayout" => "0",
 						"rb_agency_option_profilelist_sortby" => "1",

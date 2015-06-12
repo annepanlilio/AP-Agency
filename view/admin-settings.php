@@ -501,6 +501,7 @@ elseif ($ConfigID == 1) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		/*  NOT USED?
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile List Style', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
@@ -511,12 +512,14 @@ elseif ($ConfigID == 1) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		*/
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile List Layout', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelistlayout]\">\n";
 		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0, 0,false) ."> ". __("Default", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0, 1,false) ."> ". __("Custom Layout 01", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0, 2,false) ."> ". __("Voiceover (no image)", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
