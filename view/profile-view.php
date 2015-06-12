@@ -150,15 +150,17 @@
 	 * Customize Page Title
 	 */
 		// Override Title?
-		if ( ! function_exists('rb_agency_override_title') ) {
-
+		if ( !function_exists('rb_agency_override_title') ) {
 			// title tag implementation with backward compatibility
-			if ( ! function_exists( '_wp_render_title_tag' ) ) {
+			if ( !function_exists( '_wp_render_title_tag' ) ) {
 
 				add_filter('wp_title', 'rb_agency_override_title', 10, 2);
 					function rb_agency_override_title(){
 						global $ProfileContactDisplay;
-						return bloginfo('name') ." : ". $ProfileContactDisplay;
+
+						$title = $ProfileContactDisplay ." | ". bloginfo('name');
+
+						return $title;
 					}
 
 			} else { // WordPress 4.1 or greater
@@ -173,14 +175,13 @@
 					function custom_titles( $title, $sep ) {
 						global $ProfileContactDisplay;
 
-							$title = $title ." $sep ". $ProfileContactDisplay;
+						$title = $ProfileContactDisplay ." $sep ". $title;
 
 						return $title;
 					}
 			}
 
 		}
-
 
 
 	/*
