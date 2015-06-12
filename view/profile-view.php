@@ -122,7 +122,7 @@
 					$hideD = 1;
 				}
 
-				$ProfileAge 			= rb_agency_get_age($ProfileDateBirth,$arr_query);
+				$ProfileAge				= rb_agency_get_age($ProfileDateBirth,$arr_query);
 			} else {
 				$ProfileAge = "";
 			}

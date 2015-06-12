@@ -83,9 +83,8 @@
 				$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
 				$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
 				$newrules['get-state/(.*)$'] = 'index.php?type=getstate&country=$matches[1]';
-
-				$newrules['version-rb-agency'] = 'index.php?type=version'; // ping this page for version checker
-
+				$newrules['version-rb-agency'] = 'index.php?type=version';
+				$newrules['rb-agency-version'] = 'index.php?type=version';
 				$newrules['profile-favorite'] = 'index.php?type=favorite';
 				$newrules['model-polaroid/profile/(.*)'] = 'index.php?type=modelpolaroid&target=$matches[1]';
 				$newrules['logout'] = 'index.php?type=rblogout';

@@ -9,6 +9,8 @@ Author URI: http://rob.bertholf.com/
 Version: 2.4.5
 */
 $RBAGENCY_VERSION = "2.4.5";
+/* If you modify the plugin set the following to TRUE */
+$RBAGENCY_CUSTOM = FALSE;
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
@@ -61,6 +63,9 @@ See license.txt for full details.
 	// RB Agency Version
 	define("RBAGENCY_VERSION", $RBAGENCY_VERSION); // e.g. 1.0
 
+	// Are there custom modifications? If so, restrict upgrades.
+	define('RBAGENCY_CUSTOM', $RBAGENCY_CUSTOM);
+
 	// WordPress Version
 	if (!defined('RBAGENCY_VERSION_WP_MIN') )
 		define('RBAGENCY_VERSION_WP_MIN', '3.2');
@@ -97,8 +102,7 @@ See license.txt for full details.
 		define('RBAGENCY_TEXTDOMAIN', RBAGENCY_PLUGIN_NAME ); // 
 
 	if(!defined( 'RBAGENCY_SLUG'))
-	define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
-
+		define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
 
 
 // *************************************************************************************************** //
