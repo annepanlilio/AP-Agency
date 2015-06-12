@@ -175,13 +175,7 @@ See license.txt for full details.
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-App.php');
 		add_action( 'init', array('RBAgency_App', 'init'), 0, 1 );
 
-
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/BFI_Thumb.php');
-
-
-
-
-
 
 
 // *************************************************************************************************** //
@@ -189,22 +183,22 @@ See license.txt for full details.
 
 /*
  * Edit posts capabilities bypass for twentytwelve themes 
-*/
-function twentyeleven_option_page_capability( $capability ) {
-    return 'edit_posts';
-}
-add_filter( 'option_page_capability_baw-settings-group', 'twentyeleven_option_page_capability' );
+ */
+	function twentyeleven_option_page_capability( $capability ) {
+		return 'edit_posts';
+	}
+	add_filter( 'option_page_capability_baw-settings-group', 'twentyeleven_option_page_capability' );
 
 
 // *************************************************************************************************** //
 
 
-			/*
-			 * Internationalization
-			 */
+/*
+ * Internationalization
+ */
 
-				// Identify Folder for PO files
-				load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' );
+	// Identify Folder for PO files
+	load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' );
 
 
 // *************************************************************************************************** //
@@ -233,8 +227,6 @@ add_filter( 'option_page_capability_baw-settings-group', 'twentyeleven_option_pa
 	// Check Permalinks
 	add_action('admin_notices', array('RBAgency_Init', 'setup_check') );
 	add_action('admin_notices', array('RBAgency_Init', 'permalinks_check') );
-
-
 
 
 	// Set Dependencies

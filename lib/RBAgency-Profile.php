@@ -179,11 +179,10 @@ class RBAgency_Profile {
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 														$results2 = $wpdb->get_results($query,ARRAY_A);
 														foreach ($results2 as $key) {
-		
-																if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
-																		if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) {$selectedvalue = " selected"; } else {$selectedvalue = ""; }
-																} else {$selectedvalue = ""; }
-																echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>\n";
+															if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
+																	if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) {$selectedvalue = " selected"; } else {$selectedvalue = ""; }
+															} else {$selectedvalue = ""; }
+															echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>\n";
 														}
 						echo "						</select>\n";
 						echo "					</div>\n";
@@ -243,7 +242,6 @@ class RBAgency_Profile {
 						echo "						</div>\n";
 						echo "					</div>\n";
 						echo "				</div>\n";
-
 
 						//JS here..
 
@@ -731,8 +729,6 @@ class RBAgency_Profile {
 					echo "									jQuery('html, body').animate({scrollTop: 0 }, 'slow'); \n";
 					echo "			}\n";
 				echo "			</script>\n";
-
-
 				echo "		</div>\n";
 
 		}
@@ -1746,7 +1742,7 @@ class RBAgency_Profile {
 		public static function search_result_public($sql, $castingcart = '',$shortcode = false,$arr_query = array()){
 			global $wpdb;
 
-			/* 
+			/*
 			 * format profile list per profile
 			 */
 				$rb_agency_options_arr = get_option('rb_agency_options');
@@ -1782,7 +1778,6 @@ class RBAgency_Profile {
 					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_profilelist_perpage;
 					$limit = (int)$rb_agency_option_profilelist_perpage;
 				}
-
 
 				// Avoid double limits
 				$sql .= " LIMIT {$offset},{$limit}";
@@ -1903,8 +1898,8 @@ class RBAgency_Profile {
 							$availability = $data->status;
 						}
 					}
-
-					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false,$arr_query );
+// TODO: Array Fix
+					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query );
 
 					if($rb_agency_option_layoutprofilelistlayout == 1){
 						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
@@ -2338,37 +2333,36 @@ class RBAgency_Profile {
 			global $wpdb;
 
 			/* 
-			 * rb agency options
+			 * RB Agency Options
 			 */
-			$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_options_arr = get_option('rb_agency_options');
 
-			$rb_agency_option_profilelist_castingcart	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
-			$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-			$rb_agency_option_privacy					= isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
-			$rb_agency_option_profilelist_count			= isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
-			$rb_agency_option_profilelist_perpage		= isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
-			$rb_agency_option_profilelist_sortby		= isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
-			$rb_agency_option_layoutprofilelist			= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
-			$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
-			$rb_agency_option_profilelist_expanddetails	= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
-			$rb_agency_option_locationtimezone			= isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
-			$rb_agency_option_profilenaming				= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-			$rb_agency_option_profilelist_printpdf		= isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
-			$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
-			$rb_agency_option_detail_state 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
-			$rb_agency_option_show_email_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0;
-			$rb_agency_option_show_contact_search_result  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0;
-			$rb_agency_option_show_email_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0;
-			$rb_agency_option_show_contact_listing  = isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0;
-			$rb_agency_value_profilethumbwidth = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth']:180;
-			$rb_agency_value_profilethumbheight = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:230;
-			$rb_agency_option_layoutprofilelist_favcartdisp = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
+				$rb_agency_option_profilelist_castingcart	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
+				$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
+				$rb_agency_option_privacy					= isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
+				$rb_agency_option_profilelist_count			= isset($rb_agency_options_arr['rb_agency_option_profilelist_count']) ? $rb_agency_options_arr['rb_agency_option_profilelist_count']:0;
+				$rb_agency_option_profilelist_perpage		= isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage']) ?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
+				$rb_agency_option_profilelist_sortby		= isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
+				$rb_agency_option_layoutprofilelist			= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist']:0;
+				$rb_agency_option_layoutprofilelistlayout	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
+				$rb_agency_option_profilelist_expanddetails	= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) ? $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0;
+				$rb_agency_option_locationtimezone			= isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? (int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
+				$rb_agency_option_profilenaming				= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+				$rb_agency_option_profilelist_printpdf		= isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
+				$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
+				$rb_agency_option_detail_state 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
+				$rb_agency_option_show_email_search_result	= isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0;
+				$rb_agency_option_show_contact_search_result	= isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0;
+				$rb_agency_option_show_email_listing		= isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0;
+				$rb_agency_option_show_contact_listing		= isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0;
+				$rb_agency_value_profilethumbwidth			= isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth']:180;
+				$rb_agency_value_profilethumbheight			= isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:230;
+				$rb_agency_option_layoutprofilelist_favcartdisp	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
 
-
-			// TODO: Check Logic
-			$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "-";
-			$ProfileContactNameLast = isset($dataList["ProfileContactNameLast"]) ? $dataList["ProfileContactNameLast"]: "-";
-			$ProfileID = $dataList["ProfileID"];
+				// TODO: Check Logic
+				$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "-";
+				$ProfileContactNameLast = isset($dataList["ProfileContactNameLast"]) ? $dataList["ProfileContactNameLast"]: "-";
+				$ProfileID = $dataList["ProfileID"];
 
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
@@ -2385,7 +2379,7 @@ class RBAgency_Profile {
 				}
 
 			/* 
-			 * initialize html
+			 * Initialize html
 			 */
 			$displayHTML ="";
 
@@ -2438,7 +2432,7 @@ class RBAgency_Profile {
 						}
 					}
 				}
-				print_r($arr_castingcart);
+
 				/* 
 				 * Determine primary image
 				 */
