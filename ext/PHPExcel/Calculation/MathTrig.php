@@ -526,11 +526,11 @@ class PHPExcel_Calculation_MathTrig {
 	 */
 	public static function MDETERM($matrixValues) {
 		$matrixData = array();
-		if (!is_array($matrixValues)) { $matrixValues = array(array($matrixValues)); }
+		if (!is_array($matrixValues)) {$matrixValues = array(array($matrixValues)); }
 
 		$row = $maxColumn = 0;
 		foreach($matrixValues as $matrixRow) {
-			if (!is_array($matrixRow)) { $matrixRow = array($matrixRow); }
+			if (!is_array($matrixRow)) {$matrixRow = array($matrixRow); }
 			$column = 0;
 			foreach($matrixRow as $matrixCell) {
 				if ((is_string($matrixCell)) || ($matrixCell === null)) {
@@ -539,15 +539,15 @@ class PHPExcel_Calculation_MathTrig {
 				$matrixData[$column][$row] = $matrixCell;
 				++$column;
 			}
-			if ($column > $maxColumn) { $maxColumn = $column; }
+			if ($column > $maxColumn) {$maxColumn = $column; }
 			++$row;
 		}
-		if ($row != $maxColumn) { return PHPExcel_Calculation_Functions::VALUE(); }
+		if ($row != $maxColumn) {return PHPExcel_Calculation_Functions::VALUE(); }
 
 		try {
 			$matrix = new PHPExcel_Shared_JAMA_Matrix($matrixData);
 			return $matrix->det();
-		} catch (Exception $ex) {
+		}catch (Exception $ex) {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 	}	//	function MDETERM()
@@ -568,11 +568,11 @@ class PHPExcel_Calculation_MathTrig {
 	 */
 	public static function MINVERSE($matrixValues) {
 		$matrixData = array();
-		if (!is_array($matrixValues)) { $matrixValues = array(array($matrixValues)); }
+		if (!is_array($matrixValues)) {$matrixValues = array(array($matrixValues)); }
 
 		$row = $maxColumn = 0;
 		foreach($matrixValues as $matrixRow) {
-			if (!is_array($matrixRow)) { $matrixRow = array($matrixRow); }
+			if (!is_array($matrixRow)) {$matrixRow = array($matrixRow); }
 			$column = 0;
 			foreach($matrixRow as $matrixCell) {
 				if ((is_string($matrixCell)) || ($matrixCell === null)) {
@@ -581,15 +581,15 @@ class PHPExcel_Calculation_MathTrig {
 				$matrixData[$column][$row] = $matrixCell;
 				++$column;
 			}
-			if ($column > $maxColumn) { $maxColumn = $column; }
+			if ($column > $maxColumn) {$maxColumn = $column; }
 			++$row;
 		}
-		if ($row != $maxColumn) { return PHPExcel_Calculation_Functions::VALUE(); }
+		if ($row != $maxColumn) {return PHPExcel_Calculation_Functions::VALUE(); }
 
 		try {
 			$matrix = new PHPExcel_Shared_JAMA_Matrix($matrixData);
 			return $matrix->inverse()->getArray();
-		} catch (Exception $ex) {
+		}catch (Exception $ex) {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 	}	//	function MINVERSE()
@@ -604,12 +604,12 @@ class PHPExcel_Calculation_MathTrig {
 	 */
 	public static function MMULT($matrixData1,$matrixData2) {
 		$matrixAData = $matrixBData = array();
-		if (!is_array($matrixData1)) { $matrixData1 = array(array($matrixData1)); }
-		if (!is_array($matrixData2)) { $matrixData2 = array(array($matrixData2)); }
+		if (!is_array($matrixData1)) {$matrixData1 = array(array($matrixData1)); }
+		if (!is_array($matrixData2)) {$matrixData2 = array(array($matrixData2)); }
 
 		$rowA = 0;
 		foreach($matrixData1 as $matrixRow) {
-			if (!is_array($matrixRow)) { $matrixRow = array($matrixRow); }
+			if (!is_array($matrixRow)) {$matrixRow = array($matrixRow); }
 			$columnA = 0;
 			foreach($matrixRow as $matrixCell) {
 				if ((is_string($matrixCell)) || ($matrixCell === null)) {
@@ -624,7 +624,7 @@ class PHPExcel_Calculation_MathTrig {
 			$matrixA = new PHPExcel_Shared_JAMA_Matrix($matrixAData);
 			$rowB = 0;
 			foreach($matrixData2 as $matrixRow) {
-				if (!is_array($matrixRow)) { $matrixRow = array($matrixRow); }
+				if (!is_array($matrixRow)) {$matrixRow = array($matrixRow); }
 				$columnB = 0;
 				foreach($matrixRow as $matrixCell) {
 					if ((is_string($matrixCell)) || ($matrixCell === null)) {
@@ -642,7 +642,7 @@ class PHPExcel_Calculation_MathTrig {
 			}
 
 			return $matrixA->times($matrixB)->getArray();
-		} catch (Exception $ex) {
+		}catch (Exception $ex) {
 			return PHPExcel_Calculation_Functions::VALUE();
 		}
 	}	//	function MMULT()
@@ -908,9 +908,9 @@ class PHPExcel_Calculation_MathTrig {
 			$roman .= 'M';
 			$aValue -= 1000;
 		}
-		$m = self::_romanCut($aValue, 1000);	$aValue %= 1000;
-		$c = self::_romanCut($aValue, 100);		$aValue %= 100;
-		$t = self::_romanCut($aValue, 10);		$aValue %= 10;
+		$m = self::_romanCut($aValue, 1000);$aValue %= 1000;
+		$c = self::_romanCut($aValue, 100);$aValue %= 100;
+		$t = self::_romanCut($aValue, 10);$aValue %= 10;
 
 		return $roman.$mill[$m].$cent[$c].$tens[$t].$ones[$aValue];
 	}	//	function ROMAN()
@@ -1164,7 +1164,7 @@ class PHPExcel_Calculation_MathTrig {
 		$condition = PHPExcel_Calculation_Functions::_ifCondition($condition);
 		// Loop through arguments
 		foreach ($aArgs as $key => $arg) {
-			if (!is_numeric($arg)) { $arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
+			if (!is_numeric($arg)) {$arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
 			$testCondition = '='.$arg.$condition;
 			if (PHPExcel_Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
 				// Is it a value within our criteria

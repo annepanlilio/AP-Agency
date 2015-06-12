@@ -39,9 +39,9 @@ class PHPExcel_Calculation_Token_Stack {
 
 	public function push($type,$value,$reference=null) {
 		$this->_stack[$this->_count++] = array('type'		=> $type,
-											   'value'		=> $value,
-											   'reference'	=> $reference
-											  );
+												'value'		=> $value,
+												'reference'	=> $reference
+												);
 		if ($type == 'Function') {
 			$localeFunction = PHPExcel_Calculation::_localeFunc($value);
 			if ($localeFunction != $value) {

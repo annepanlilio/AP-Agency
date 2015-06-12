@@ -45,7 +45,7 @@ class PHPExcel_Chart_DataSeries
 	const TYPE_PIECHART			= 'pieChart';
 	const TYPE_PIECHART_3D		= 'pie3DChart';
 	const TYPE_DOUGHTNUTCHART	= 'doughnutChart';
-	const TYPE_DONUTCHART		= self::TYPE_DOUGHTNUTCHART;	//	Synonym
+	const TYPE_DONUTCHART		= self::TYPE_DOUGHTNUTCHART;//	Synonym
 	const TYPE_SCATTERCHART		= 'scatterChart';
 	const TYPE_SURFACECHART		= 'surfaceChart';
 	const TYPE_SURFACECHART_3D	= 'surface3DChart';
@@ -337,7 +337,7 @@ class PHPExcel_Chart_DataSeries
 	}
 
 	public function refresh(PHPExcel_Worksheet $worksheet) {
-	    foreach($this->_plotValues as $plotValues) {
+		 foreach($this->_plotValues as $plotValues) {
 			if ($plotValues !== NULL)
 				$plotValues->refresh($worksheet, TRUE);
 		}

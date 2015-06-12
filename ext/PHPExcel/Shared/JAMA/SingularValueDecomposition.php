@@ -427,10 +427,10 @@ class SingularValueDecomposition  {
 						$iter = 0;
 						--$p;
 						break;
-			} // end switch
-		} // end while
+			}// end switch
+		}// end while
 
-	} // end constructor
+	}// end constructor
 
 
 	/**

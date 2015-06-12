@@ -332,8 +332,8 @@ class PHPExcel_Reader_CSV implements PHPExcel_Reader_IReader
 		}
 
 		$escapeEnclosures = array( "\\" . $this->_enclosure,
-								   $this->_enclosure . $this->_enclosure
-								 );
+									$this->_enclosure . $this->_enclosure
+								);
 
 		// Set our starting row based on whether we're in contiguous mode or not
 		$currentRow = 1;

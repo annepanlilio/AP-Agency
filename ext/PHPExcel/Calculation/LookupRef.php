@@ -78,18 +78,18 @@ class PHPExcel_Calculation_LookupRef {
 		}
 
 		if ($sheetText > '') {
-			if (strpos($sheetText,' ') !== False) { $sheetText = "'".$sheetText."'"; }
+			if (strpos($sheetText,' ') !== False) {$sheetText = "'".$sheetText."'"; }
 			$sheetText .='!';
 		}
 		if ((!is_bool($referenceStyle)) || $referenceStyle) {
 			$rowRelative = $columnRelative = '$';
 			$column = PHPExcel_Cell::stringFromColumnIndex($column-1);
-			if (($relativity == 2) || ($relativity == 4)) { $columnRelative = ''; }
-			if (($relativity == 3) || ($relativity == 4)) { $rowRelative = ''; }
+			if (($relativity == 2) || ($relativity == 4)) {$columnRelative = ''; }
+			if (($relativity == 3) || ($relativity == 4)) {$rowRelative = ''; }
 			return $sheetText.$columnRelative.$column.$rowRelative.$row;
 		} else {
-			if (($relativity == 2) || ($relativity == 4)) { $column = '['.$column.']'; }
-			if (($relativity == 3) || ($relativity == 4)) { $row = '['.$row.']'; }
+			if (($relativity == 2) || ($relativity == 4)) {$column = '['.$column.']'; }
+			if (($relativity == 3) || ($relativity == 4)) {$row = '['.$row.']'; }
 			return $sheetText.'R'.$row.'C'.$column;
 		}
 	}	//	function CELL_ADDRESS()
@@ -110,7 +110,7 @@ class PHPExcel_Calculation_LookupRef {
 	 * @return	integer or array of integer
 	 */
 	public static function COLUMN($cellAddress=Null) {
-		if (is_null($cellAddress) || trim($cellAddress) === '') { return 0; }
+		if (is_null($cellAddress) || trim($cellAddress) === '') {return 0; }
 
 		if (is_array($cellAddress)) {
 			foreach($cellAddress as $columnKey => $value) {
@@ -128,7 +128,7 @@ class PHPExcel_Calculation_LookupRef {
 				$returnValue = array();
 				do {
 					$returnValue[] = (integer) PHPExcel_Cell::columnIndexFromString($startAddress);
-				} while ($startAddress++ != $endAddress);
+				}while ($startAddress++ != $endAddress);
 				return $returnValue;
 			} else {
 				$cellAddress = preg_replace('/[^a-z]/i','',$cellAddress);
@@ -184,7 +184,7 @@ class PHPExcel_Calculation_LookupRef {
 	 * @return	integer or array of integer
 	 */
 	public static function ROW($cellAddress=Null) {
-		if (is_null($cellAddress) || trim($cellAddress) === '') { return 0; }
+		if (is_null($cellAddress) || trim($cellAddress) === '') {return 0; }
 
 		if (is_array($cellAddress)) {
 			foreach($cellAddress as $columnKey => $rowValue) {
@@ -203,7 +203,7 @@ class PHPExcel_Calculation_LookupRef {
 				$returnValue = array();
 				do {
 					$returnValue[][] = (integer) $startAddress;
-				} while ($startAddress++ != $endAddress);
+				}while ($startAddress++ != $endAddress);
 				return $returnValue;
 			} else {
 				list($cellAddress) = explode(':',$cellAddress);
@@ -652,7 +652,7 @@ class PHPExcel_Calculation_LookupRef {
 	 */
 	public static function TRANSPOSE($matrixData) {
 		$returnMatrix = array();
-		if (!is_array($matrixData)) { $matrixData = array(array($matrixData)); }
+		if (!is_array($matrixData)) {$matrixData = array(array($matrixData)); }
 
 		$column = 0;
 		foreach($matrixData as $matrixRow) {
@@ -678,14 +678,14 @@ class PHPExcel_Calculation_LookupRef {
 
 
 	/**
-	* VLOOKUP
-	* The VLOOKUP function searches for value in the left-most column of lookup_array and returns the value in the same row based on the index_number.
-	* @param	lookup_value	The value that you want to match in lookup_array
-	* @param	lookup_array	The range of cells being searched
-	* @param	index_number	The column number in table_array from which the matching value must be returned. The first column is 1.
-	* @param	not_exact_match	Determines if you are looking for an exact match based on lookup_value.
-	* @return	mixed			The value of the found cell
-	*/
+	 * VLOOKUP
+	 * The VLOOKUP function searches for value in the left-most column of lookup_array and returns the value in the same row based on the index_number.
+	 * @param	lookup_value	The value that you want to match in lookup_array
+	 * @param	lookup_array	The range of cells being searched
+	 * @param	index_number	The column number in table_array from which the matching value must be returned. The first column is 1.
+	 * @param	not_exact_match	Determines if you are looking for an exact match based on lookup_value.
+	 * @return	mixed			The value of the found cell
+	 */
 	public static function VLOOKUP($lookup_value, $lookup_array, $index_number, $not_exact_match=true) {
 		$lookup_value	= PHPExcel_Calculation_Functions::flattenSingleValue($lookup_value);
 		$index_number	= PHPExcel_Calculation_Functions::flattenSingleValue($index_number);

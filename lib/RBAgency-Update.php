@@ -95,11 +95,11 @@ class RBAgency_Update {
 			$information = $this->getRemote_information();
 			return $information;
 		}
-		
+
 	/** 
-	* Return variable $false instead of explicitly returning boolean FALSE
-	* wordpress passes FALSE here by default
-	*/
+	 * Return variable $false instead of explicitly returning boolean FALSE
+	 * wordpress passes FALSE here by default
+	 */
             return $false;
 	}
  

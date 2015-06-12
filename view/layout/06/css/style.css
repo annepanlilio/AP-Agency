@@ -2,106 +2,106 @@
 /* CSS Document */
 
 /* Small Devices ------------ */
-@media only screen and (max-width: 767px) { /* Global Misc --- */
+@media only screen and (max-width: 767px) {/* Global Misc --- */
 
-	#logo { text-align:center; }
-	.model-polaroid .polaroid-area .column { padding-top: 20px; }
-	.model-polaroid .polaroid-area .column .print-polaroids { float:left; }
-	.model-profile .profile-area #model-pictures { padding: 20px 0; }
+	#logo {text-align:center; }
+	.model-polaroid .polaroid-area .column {padding-top: 20px; }
+	.model-polaroid .polaroid-area .column .print-polaroids {float:left; }
+	.model-profile .profile-area #model-pictures {padding: 20px 0; }
 
-	#polaroids { padding-top:30px; padding-right:15px; }
-	#polaroids .column { padding-right:15px!important; }  
+	#polaroids {padding-top:30px; padding-right:15px; }
+	#polaroids .column {padding-right:15px!important; }
 }
 
 /* Profile Layout Six */
-#layout6-slider { background: transparent; }
-#rblayout-six #layout6-slider { margin-bottom: 15px; }
-#rblayout-six h1.entry-title { float: left; margin: 0px; }
-#model-stats { margin-bottom: 30px; overflow: hidden; }
+#layout6-slider {background: transparent; }
+#rblayout-six #layout6-slider {margin-bottom: 15px; }
+#rblayout-six h1.entry-title {float: left; margin: 0px; }
+#model-stats {margin-bottom: 30px; overflow: hidden; }
 
 /* Category Template */
-.model-categories {  }
-.model-categories .model-filter { padding-bottom:20px; }
-.model-categories .model-filter .filters { float:right; }
-.model-categories .model-filter select { float:left; border: 1px solid #e6e6e6; padding: 2px; margin-left: 10px; }
-.model-categories .model-results { overflow:hidden; }
-.model-categories .model-results .model { width: 108px; height:168px; float:left; margin: 5px; }
-.model-categories .model-results .model .thumbnail { width: 99%; height:138px; border: 1px solid #e2e2e2; overflow:hidden; margin-bottom: 5px; }
-.model-categories .model-results .model .thumbnail:hover { border: 1px solid #aaa; }
-.model-categories .model-results .model .thumbnail img { height:100%; }
-.model-categories .model-results .model .name { width:100%; text-transform:uppercase; font-size: 11px; text-align:center; }
+.model-categories { }
+.model-categories .model-filter {padding-bottom:20px; }
+.model-categories .model-filter .filters {float:right; }
+.model-categories .model-filter select {float:left; border: 1px solid #e6e6e6; padding: 2px; margin-left: 10px; }
+.model-categories .model-results {overflow:hidden; }
+.model-categories .model-results .model {width: 108px; height:168px; float:left; margin: 5px; }
+.model-categories .model-results .model .thumbnail {width: 99%; height:138px; border: 1px solid #e2e2e2; overflow:hidden; margin-bottom: 5px; }
+.model-categories .model-results .model .thumbnail:hover {border: 1px solid #aaa; }
+.model-categories .model-results .model .thumbnail img {height:100%; }
+.model-categories .model-results .model .name {width:100%; text-transform:uppercase; font-size: 11px; text-align:center; }
 
 /* Polaroid Template */
-.model-polaroid {  }
-.model-polaroid .polaroid-filter {  padding-bottom:20px; }
-.model-polaroid .polaroid-filter .filters { float:right; }
-.model-polaroid .polaroid-filter select { float:left; border: 1px solid #e6e6e6; padding: 2px; margin-left: 10px; }
-.model-polaroid .polaroid-area { overflow:hidden; }
-.model-polaroid .polaroid-area .polaroid-info { background:#000; color:#fff; text-transform:uppercase; }
-.model-polaroid .polaroid-area .polaroid-info a { color:#fff; }
-.model-polaroid .polaroid-area .polaroid-info .model-name { padding: 20px; text-align:center; }
-.model-polaroid .polaroid-area .polaroid-info ul { list-style:none; margin:0; padding:0; display:block; }
-.model-polaroid .polaroid-area .polaroid-info ul li { float:left; width:100%; padding:3px 0; }
-.model-polaroid .polaroid-area .polaroid-info .model-stats label, .model-polaroid .polaroid-area .polaroid-info .model-stats span { float:left; width: 50%; }
-.model-polaroid .polaroid-area .polaroid-info .model-stats, .model-polaroid .polaroid-area .polaroid-info .model-links, .model-polaroid .polaroid-area .polaroid-info .model-nav { padding: 5%; overflow:hidden; font-size: 13px; }
-.model-polaroid .polaroid-area .polaroid-info .model-stats span { text-transform:none; }
-.model-polaroid .polaroid-area .polaroid-info .model-links { font-weight:bold; }
-.model-polaroid .polaroid-area .polaroid-info .model-nav ul li { float:left; display:inline; width: 33.333333333333333333333333333333%; font-size: 11px; text-align:center; line-height:14px; height: 30px; padding:0; }
-.model-polaroid .polaroid-area .polaroid-info .model-nav ul li.prev, .model-polaroid .polaroid-area .polaroid-info .model-nav ul li.next { line-height:30px; background: url(/wp-content/uploads/2012/10/arrow-nav.png) 5px 9px no-repeat; }
-.model-polaroid .polaroid-area .polaroid-info .model-nav ul li.next { background-position: 80px -24px;  }
-.model-polaroid .polaroid-area .polaroid-info .model-nav ul li a { color:#ccc; }
-.model-polaroid .polaroid-area .polaroid-info .model-nav ul li a:hover { color:#fff; }
-.model-polaroid .polaroid-area .polaroids .polaroid { float:left; width: 46%; margin: 2%; margin-top:0; height:260px; }
-.model-polaroid .polaroid-area .polaroids .polaroid .print { text-align: right; margin-top: 5px; float:right; }
-.model-polaroid .polaroid-area .polaroids .polaroid .print a { padding: 3px 5px 2px 5px; background:#000; color:#fff; font-size: 10px; text-transform:uppercase; float:right; }
-.model-polaroid .polaroid-area .polaroids .polaroid .polaroid-item { width:100%; background:#ccc; height:230px; }
-.model-polaroid .polaroid-area .polaroid { width:165px; margin-bottom:30px; overflow:hidden; }
-.model-polaroid .polaroid-area .polaroid-print h3 { text-transform:uppercase; margin-bottom:10px; }
-.model-polaroid .polaroid-area .polaroid-print .polaroid .print { text-align: right; margin-top: 5px; float:right; }
-.model-polaroid .polaroid-area .polaroid-print .polaroid .print a { padding: 3px 5px 2px 5px; background:#000; color:#fff; font-size: 10px; text-transform:uppercase; float:right; }
-.model-polaroid .polaroid-area .polaroid-print .polaroid .polaroid-item { width:163px; height:208px; border: 1px solid #ccc; overflow:hidden; }
-.model-polaroid .polaroid-area .polaroid-print .print-instruction { font-size: 11px; }
+.model-polaroid { }
+.model-polaroid .polaroid-filter { padding-bottom:20px; }
+.model-polaroid .polaroid-filter .filters {float:right; }
+.model-polaroid .polaroid-filter select {float:left; border: 1px solid #e6e6e6; padding: 2px; margin-left: 10px; }
+.model-polaroid .polaroid-area {overflow:hidden; }
+.model-polaroid .polaroid-area .polaroid-info {background:#000; color:#fff; text-transform:uppercase; }
+.model-polaroid .polaroid-area .polaroid-info a {color:#fff; }
+.model-polaroid .polaroid-area .polaroid-info .model-name {padding: 20px; text-align:center; }
+.model-polaroid .polaroid-area .polaroid-info ul {list-style:none; margin:0; padding:0; display:block; }
+.model-polaroid .polaroid-area .polaroid-info ul li {float:left; width:100%; padding:3px 0; }
+.model-polaroid .polaroid-area .polaroid-info .model-stats label, .model-polaroid .polaroid-area .polaroid-info .model-stats span {float:left; width: 50%; }
+.model-polaroid .polaroid-area .polaroid-info .model-stats, .model-polaroid .polaroid-area .polaroid-info .model-links, .model-polaroid .polaroid-area .polaroid-info .model-nav {padding: 5%; overflow:hidden; font-size: 13px; }
+.model-polaroid .polaroid-area .polaroid-info .model-stats span {text-transform:none; }
+.model-polaroid .polaroid-area .polaroid-info .model-links {font-weight:bold; }
+.model-polaroid .polaroid-area .polaroid-info .model-nav ul li {float:left; display:inline; width: 33.333333333333333333333333333333%; font-size: 11px; text-align:center; line-height:14px; height: 30px; padding:0; }
+.model-polaroid .polaroid-area .polaroid-info .model-nav ul li.prev, .model-polaroid .polaroid-area .polaroid-info .model-nav ul li.next {line-height:30px; background: url(/wp-content/uploads/2012/10/arrow-nav.png) 5px 9px no-repeat; }
+.model-polaroid .polaroid-area .polaroid-info .model-nav ul li.next {background-position: 80px -24px;}
+.model-polaroid .polaroid-area .polaroid-info .model-nav ul li a {color:#ccc; }
+.model-polaroid .polaroid-area .polaroid-info .model-nav ul li a:hover {color:#fff; }
+.model-polaroid .polaroid-area .polaroids .polaroid {float:left; width: 46%; margin: 2%; margin-top:0; height:260px; }
+.model-polaroid .polaroid-area .polaroids .polaroid .print {text-align: right; margin-top: 5px; float:right; }
+.model-polaroid .polaroid-area .polaroids .polaroid .print a {padding: 3px 5px 2px 5px; background:#000; color:#fff; font-size: 10px; text-transform:uppercase; float:right; }
+.model-polaroid .polaroid-area .polaroids .polaroid .polaroid-item {width:100%; background:#ccc; height:230px; }
+.model-polaroid .polaroid-area .polaroid {width:165px; margin-bottom:30px; overflow:hidden; }
+.model-polaroid .polaroid-area .polaroid-print h3 {text-transform:uppercase; margin-bottom:10px; }
+.model-polaroid .polaroid-area .polaroid-print .polaroid .print {text-align: right; margin-top: 5px; float:right; }
+.model-polaroid .polaroid-area .polaroid-print .polaroid .print a {padding: 3px 5px 2px 5px; background:#000; color:#fff; font-size: 10px; text-transform:uppercase; float:right; }
+.model-polaroid .polaroid-area .polaroid-print .polaroid .polaroid-item {width:163px; height:208px; border: 1px solid #ccc; overflow:hidden; }
+.model-polaroid .polaroid-area .polaroid-print .print-instruction {font-size: 11px; }
 
 /* Polaroids */
-#polaroids  { padding-right:0; }
-#polaroids .column { padding-bottom:30px; padding-right:0; }
-#polaroids .column h3 { text-transform:uppercase; color:#000; margin-bottom:15px; padding-left:20px; font-weight:bold;/* background: url(../images/bullet-round.png) no-repeat;*/ }
-#polaroids .column .polaroid { min-height:200px; background:#fff; display:block; text-align:center; }
+#polaroids  {padding-right:0; }
+#polaroids .column {padding-bottom:30px; padding-right:0; }
+#polaroids .column h3 {text-transform:uppercase; color:#000; margin-bottom:15px; padding-left:20px; font-weight:bold;/* background: url(../images/bullet-round.png) no-repeat;*/ }
+#polaroids .column .polaroid {min-height:200px; background:#fff; display:block; text-align:center; }
 
 /* Portfolio Template */
-#layout-header { padding-bottom: 30px; }
-#layout-header .name { float: left; margin: 0; }
-#layout-header .profile-filter { float: right; }
-#layout-header .profile-filter .filter { float: left; margin-left: 10px; }
-#rblayout-six .layout { padding-bottom: 30px; }
-#rblayout-six #profile-info { padding-top: 10px; padding-bottom: 10px; }
-#rblayout-six #profile-info a { text-decoration: none; }
-#rblayout-six #profile-info ul { list-style:none; margin:0; padding:0; display:block; }
-#rblayout-six #profile-info ul li { float:left; width:100%; margin: 0; padding: 3px 0; }
-#rblayout-six #profile-info #model-stats label, #rblayout-six #profile-info #model-stats span { float:left; width: 50%; }
-#rblayout-six #profile-info #model-stats span { text-transform:none; }
-#rblayout-six #model-links { font-weight:bold; overflow: hidden; }
-#rblayout-six #profile-info #model-nav { padding-top: 15px; }
-#rblayout-six #profile-info #model-nav li { float: left; width: 33.33333%; text-align: center; }
-#rblayout-six .flexslider { border-radius: 0px; border: none; box-shadow: none; }
-#layout6-slider { margin-bottom: 30px; }
-#rblayout-six #layout6-slider .slides { margin: 0px!important; }
-#rblayout-six #layout6-slider .slides li { text-align: center; }
-#layout6-slider .slides li img { max-height: 400px; display: inline-block; width: auto; }
-#layout6-slider .flex-direction-nav a { background-image: url(../images/slider_nav.png); background-repeat: no-repeat; width: 64px; height: 64px; }
+#layout-header {padding-bottom: 30px; }
+#layout-header .name {float: left; margin: 0; }
+#layout-header .profile-filter {float: right; }
+#layout-header .profile-filter .filter {float: left; margin-left: 10px; }
+#rblayout-six .layout {padding-bottom: 30px; }
+#rblayout-six #profile-info {padding-top: 10px; padding-bottom: 10px; }
+#rblayout-six #profile-info a {text-decoration: none; }
+#rblayout-six #profile-info ul {list-style:none; margin:0; padding:0; display:block; }
+#rblayout-six #profile-info ul li {float:left; width:100%; margin: 0; padding: 3px 0; }
+#rblayout-six #profile-info #model-stats label, #rblayout-six #profile-info #model-stats span {float:left; width: 50%; }
+#rblayout-six #profile-info #model-stats span {text-transform:none; }
+#rblayout-six #model-links {font-weight:bold; overflow: hidden; }
+#rblayout-six #profile-info #model-nav {padding-top: 15px; }
+#rblayout-six #profile-info #model-nav li {float: left; width: 33.33333%; text-align: center; }
+#rblayout-six .flexslider {border-radius: 0px; border: none; box-shadow: none; }
+#layout6-slider {margin-bottom: 30px; }
+#rblayout-six #layout6-slider .slides {margin: 0px!important; }
+#rblayout-six #layout6-slider .slides li {text-align: center; }
+#layout6-slider .slides li img {max-height: 400px; display: inline-block; width: auto; }
+#layout6-slider .flex-direction-nav a {background-image: url(../images/slider_nav.png); background-repeat: no-repeat; width: 64px; height: 64px; }
 #layout6-slider .flex-direction-nav a:before,
-#layout6-slider .flex-direction-nav a:after { content: ""; }
-#layout6-slider .flex-direction-nav a.flex-prev { background-position: 0 -64px }
-#layout6-slider .flex-direction-nav a.flex-next { background-position: -64px -64px; }
+#layout6-slider .flex-direction-nav a:after {content: ""; }
+#layout6-slider .flex-direction-nav a.flex-prev {background-position: 0 -64px }
+#layout6-slider .flex-direction-nav a.flex-next {background-position: -64px -64px; }
 
 #layout6-carousel {background: transparent;}
-#layout6-carousel .slides { margin: 0px; }
-#layout6-carousel .slides img { margin: 3px; width: auto; }
-#layout6-carousel .flex-direction-nav a { background-image: url(../images/carousel_nav.png); background-repeat: no-repeat; width: 27px; height: 27px; }
+#layout6-carousel .slides {margin: 0px; }
+#layout6-carousel .slides img {margin: 3px; width: auto; }
+#layout6-carousel .flex-direction-nav a {background-image: url(../images/carousel_nav.png); background-repeat: no-repeat; width: 27px; height: 27px; }
 #layout6-carousel .flex-direction-nav a:before,
-#layout6-carousel .flex-direction-nav a:after { content: ""; }
-#layout6-carousel .flex-direction-nav a.flex-prev {  }
-#layout6-carousel .flex-direction-nav a.flex-next { background-position: -27px 0; }
+#layout6-carousel .flex-direction-nav a:after {content: ""; }
+#layout6-carousel .flex-direction-nav a.flex-prev { }
+#layout6-carousel .flex-direction-nav a.flex-next {background-position: -27px 0; }
 
 
 
@@ -115,44 +115,44 @@
  * Demo and documentation: http://coffeescripter.com/code/ad-gallery/
  */
 .portfolio-gallery {}
-.portfolio-gallery, .portfolio-gallery * { margin: 0; padding: 0; }
-.portfolio-gallery .ad-image-wrapper { width: 100%; height: 500px; margin-bottom: 10px; position: relative; overflow: hidden; }
-.portfolio-gallery .ad-image-wrapper .ad-loader { position: absolute; z-index: 10; top: 48%; left: 48%; border: 1px solid #CCC; }
-.portfolio-gallery .ad-image-wrapper .ad-next { position: absolute; right: 0; top: 0; width: 25%; height: 100%; cursor: pointer; display: block; z-index: 200; }
-.portfolio-gallery .ad-image-wrapper .ad-prev { position: absolute; left: 0; top: 0; width: 25%; height: 100%; cursor: pointer; display: block; z-index: 200; }
-.portfolio-gallery .ad-image-wrapper .ad-prev, .portfolio-gallery .ad-image-wrapper .ad-next { /* Or else IE will hide it */ background: url(/wp-content/uploads/2012/10/trans.gif); }
-.portfolio-gallery .ad-image-wrapper .ad-prev .ad-prev-image, .portfolio-gallery .ad-image-wrapper .ad-next .ad-next-image { background: url(/wp-content/uploads/2012/10/ad_prev.png); width: 30px; height: 30px; display: none; position: absolute; top: 47%; left: 0; z-index: 101; }
-.portfolio-gallery .ad-image-wrapper .ad-next .ad-next-image { background: url(/wp-content/uploads/2012/10/ad_next.png); width: 30px; height: 30px; right: 0; left: auto; }
-.portfolio-gallery .ad-image-wrapper .ad-image { position: absolute; overflow: hidden; top: 0; left: 0; z-index: 9; }
-.portfolio-gallery .ad-image-wrapper .ad-image a img { border: 0; }
-.portfolio-gallery .ad-image-wrapper .ad-image .ad-image-description { position: absolute; bottom: 0px; left: 0px; padding: 7px; text-align: left; width: 100%; z-index: 2; background: url(/wp-content/uploads/2012/10/opa75.png); color: #000; }
-* html .portfolio-gallery .ad-image-wrapper .ad-image .ad-image-description { background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader (enabled=true, sizingMethod=scale, src='/wp-content/uploads/2012/10/opa75.png'); }
-.portfolio-gallery .ad-image-wrapper .ad-image .ad-image-description .ad-description-title { display: block; }
-.portfolio-gallery .ad-controls { height: 20px; }
-.portfolio-gallery .ad-info { float: left; }
-.portfolio-gallery .ad-slideshow-controls { float: right; display:none; }
-.portfolio-gallery .ad-slideshow-controls .ad-slideshow-start, .portfolio-gallery .ad-slideshow-controls .ad-slideshow-stop { padding-left: 5px; cursor: pointer; }
-.portfolio-gallery .ad-slideshow-controls .ad-slideshow-countdown { padding-left: 5px; font-size: 0.9em; }
-.portfolio-gallery .ad-slideshow-running .ad-slideshow-start { cursor: default; font-style: italic; }
-.portfolio-gallery .ad-nav { position: relative; }
-.portfolio-gallery .ad-forward, .portfolio-gallery .ad-back { position: absolute; top: 0; height: 100%; z-index: 10; width:27px; }
+.portfolio-gallery, .portfolio-gallery * {margin: 0; padding: 0; }
+.portfolio-gallery .ad-image-wrapper {width: 100%; height: 500px; margin-bottom: 10px; position: relative; overflow: hidden; }
+.portfolio-gallery .ad-image-wrapper .ad-loader {position: absolute; z-index: 10; top: 48%; left: 48%; border: 1px solid #CCC; }
+.portfolio-gallery .ad-image-wrapper .ad-next {position: absolute; right: 0; top: 0; width: 25%; height: 100%; cursor: pointer; display: block; z-index: 200; }
+.portfolio-gallery .ad-image-wrapper .ad-prev {position: absolute; left: 0; top: 0; width: 25%; height: 100%; cursor: pointer; display: block; z-index: 200; }
+.portfolio-gallery .ad-image-wrapper .ad-prev, .portfolio-gallery .ad-image-wrapper .ad-next {/* Or else IE will hide it */ background: url(/wp-content/uploads/2012/10/trans.gif); }
+.portfolio-gallery .ad-image-wrapper .ad-prev .ad-prev-image, .portfolio-gallery .ad-image-wrapper .ad-next .ad-next-image {background: url(/wp-content/uploads/2012/10/ad_prev.png); width: 30px; height: 30px; display: none; position: absolute; top: 47%; left: 0; z-index: 101; }
+.portfolio-gallery .ad-image-wrapper .ad-next .ad-next-image {background: url(/wp-content/uploads/2012/10/ad_next.png); width: 30px; height: 30px; right: 0; left: auto; }
+.portfolio-gallery .ad-image-wrapper .ad-image {position: absolute; overflow: hidden; top: 0; left: 0; z-index: 9; }
+.portfolio-gallery .ad-image-wrapper .ad-image a img {border: 0; }
+.portfolio-gallery .ad-image-wrapper .ad-image .ad-image-description {position: absolute; bottom: 0px; left: 0px; padding: 7px; text-align: left; width: 100%; z-index: 2; background: url(/wp-content/uploads/2012/10/opa75.png); color: #000; }
+* html .portfolio-gallery .ad-image-wrapper .ad-image .ad-image-description {background: none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader (enabled=true, sizingMethod=scale, src='/wp-content/uploads/2012/10/opa75.png'); }
+.portfolio-gallery .ad-image-wrapper .ad-image .ad-image-description .ad-description-title {display: block; }
+.portfolio-gallery .ad-controls {height: 20px; }
+.portfolio-gallery .ad-info {float: left; }
+.portfolio-gallery .ad-slideshow-controls {float: right; display:none; }
+.portfolio-gallery .ad-slideshow-controls .ad-slideshow-start, .portfolio-gallery .ad-slideshow-controls .ad-slideshow-stop {padding-left: 5px; cursor: pointer; }
+.portfolio-gallery .ad-slideshow-controls .ad-slideshow-countdown {padding-left: 5px; font-size: 0.9em; }
+.portfolio-gallery .ad-slideshow-running .ad-slideshow-start {cursor: default; font-style: italic; }
+.portfolio-gallery .ad-nav {position: relative; }
+.portfolio-gallery .ad-forward, .portfolio-gallery .ad-back {position: absolute; top: 0; height: 100%; z-index: 10; width:27px; }
 
 /* IE 6 doesn't like height: 100% */
- * html .portfolio-gallery .ad-forward, .portfolio-gallery .ad-back { height: 150px; }
-.portfolio-gallery .ad-back { cursor: pointer; left: 0px; display: block; background: url(../images/ad_scroll_back.png) 0px center no-repeat; }
-.portfolio-gallery .ad-forward { cursor: pointer; display: block; right: 0px; background: url(../images/ad_scroll_forward.png) 0px center no-repeat; }
-.portfolio-gallery .ad-nav .ad-thumbs { overflow: hidden; width: 90%; }
-.portfolio-gallery .ad-thumbs .ad-thumb-list { float: left; width: 9000px; list-style: none; }
-.portfolio-gallery .ad-thumbs li { float: left; padding-right: 5px; }
-.portfolio-gallery .ad-thumbs li a { display: block; }
-.portfolio-gallery .ad-thumbs li a img { border: 1px solid #ccc; display: block; }
-.portfolio-gallery .ad-thumbs li a.ad-active img { border: 1px solid #616161; }
-			
+ * html .portfolio-gallery .ad-forward, .portfolio-gallery .ad-back {height: 150px; }
+.portfolio-gallery .ad-back {cursor: pointer; left: 0px; display: block; background: url(../images/ad_scroll_back.png) 0px center no-repeat; }
+.portfolio-gallery .ad-forward {cursor: pointer; display: block; right: 0px; background: url(../images/ad_scroll_forward.png) 0px center no-repeat; }
+.portfolio-gallery .ad-nav .ad-thumbs {overflow: hidden; width: 90%; }
+.portfolio-gallery .ad-thumbs .ad-thumb-list {float: left; width: 9000px; list-style: none; }
+.portfolio-gallery .ad-thumbs li {float: left; padding-right: 5px; }
+.portfolio-gallery .ad-thumbs li a {display: block; }
+.portfolio-gallery .ad-thumbs li a img {border: 1px solid #ccc; display: block; }
+.portfolio-gallery .ad-thumbs li a.ad-active img {border: 1px solid #616161; }
+
 /* Can't do display none, since Opera won't load the images then */
-.ad-preloads { position: absolute; left: -9000px; top: -9000px;}
+.ad-preloads {position: absolute; left: -9000px; top: -9000px;}
 
 #content img.allimages_thumbs{width:106px; height:130px; margin:3px;}
-#content a.allimages_print, a.allimages_print:visited{ color:#FFF; width:200px;  }
-#content a.allimages_print:hover { color:#000 }
+#content a.allimages_print, a.allimages_print:visited{color:#FFF; width:200px;}
+#content a.allimages_print:hover {color:#000 }
 .allimages_div{margin-left:20px; float:left; width:63%;}
 .print_options{margin-left:20px; float:left; width:63%;}

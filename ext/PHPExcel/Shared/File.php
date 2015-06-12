@@ -36,11 +36,11 @@
 class PHPExcel_Shared_File
 {
 	/**
-	  * Verify if a file exists
-	  *
-	  * @param 	string	$pFilename	Filename
-	  * @return bool
-	  */
+		 * Verify if a file exists
+		 *
+		 * @param 	string	$pFilename	Filename
+		 * @return bool
+		 */
 	public static function file_exists($pFilename) {
 		// Sick construction, but it seems that
 		// file_exists returns strange values when
@@ -110,13 +110,13 @@ class PHPExcel_Shared_File
 
 		if ( !function_exists('sys_get_temp_dir')) {
 			if ($temp = getenv('TMP') ) {
-				if ((!empty($temp)) && (file_exists($temp))) { return realpath($temp); }
+				if ((!empty($temp)) && (file_exists($temp))) {return realpath($temp); }
 			}
 			if ($temp = getenv('TEMP') ) {
-				if ((!empty($temp)) && (file_exists($temp))) { return realpath($temp); }
+				if ((!empty($temp)) && (file_exists($temp))) {return realpath($temp); }
 			}
 			if ($temp = getenv('TMPDIR') ) {
-				if ((!empty($temp)) && (file_exists($temp))) { return realpath($temp); }
+				if ((!empty($temp)) && (file_exists($temp))) {return realpath($temp); }
 			}
 
 			// trick for creating a file in system's temporary dir

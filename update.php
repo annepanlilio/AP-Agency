@@ -38,14 +38,14 @@ function rb_agency_notify_installation(){
 
 	// Getting results
 	$result =  curl_exec($ch); // Getting jSON result string
-	$isReported = get_option("rb_agency_notify");   
+	$isReported = get_option("rb_agency_notify"); 
 /*
 	if($result){
-	
+
 		$message .= "RB Plugin was installed in the server that is not a member of or registered to the list of clients.". "\r\n\r\n";
-		$message .= sprintf('Domain: %s',$client_domain). "\r\n\r\n";  
-		$message .= sprintf('Date: %s',date('l jS \of F Y h:i:s A')) . "\r\n\r\n";  
-		$message .= sprintf('Admin Email: %s', get_option('admin_email')) . "\r\n";  
+		$message .= sprintf('Domain: %s',$client_domain). "\r\n\r\n";
+		$message .= sprintf('Date: %s',date('l jS \of F Y h:i:s A')) . "\r\n\r\n";
+		$message .= sprintf('Admin Email: %s', get_option('admin_email')) . "\r\n";
 
 		$headers = array();
 		$headers[] = 'Cc: Rob <rob@clearlym.com>';
@@ -75,7 +75,7 @@ class RBAgency_Update {
 		if(!$version_info["is_valid_key"] || version_compare(GFCommon::$version, $version_info["version"], '>=')){
 			unset($option->response[$plugin_path]);
 		}
-		else{
+		else {
 			$option->response[$plugin_path]->url = "http://www.gravityforms.com";
 			$option->response[$plugin_path]->slug = "gravityforms";
 			$option->response[$plugin_path]->package = str_replace("{KEY}", GFCommon::get_key(), $version_info["url"]);
@@ -154,7 +154,7 @@ class RBAgency_Update {
 		if ( is_wp_error( $raw_response ) || 200 != $raw_response['response']['code']){
 			$page_text = __("Oops!! Something went wrong.<br/>Please try again or <a href='http://www.gravityforms.com'>contact us</a>.", 'gravityforms');
 		}
-		else{
+		else {
 			$page_text = $raw_response['body'];
 			if(substr($page_text, 0, 10) != "<!--GFM-->")
 				$page_text = "";

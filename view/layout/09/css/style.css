@@ -1,32 +1,32 @@
 /* Profile Layout Nine */
-#rblayout-nine { padding-bottom: 60px; overflow: visible; }
-#scroller { margin-bottom: 60px; }
-#photo-scroller { width: 100%; height: 350px;font-size: 0; }
-#photo-scroller img { display: inline-block; max-height: 350px; }
+#rblayout-nine {padding-bottom: 60px; overflow: visible; }
+#scroller {margin-bottom: 60px; }
+#photo-scroller {width: 100%; height: 350px;font-size: 0; }
+#photo-scroller img {display: inline-block; max-height: 350px; }
 
 /*scroller overrides*/
 #photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft,
-#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonRight { width: 60px; height: 18px; background-image: url(../images/scroller-white.png); background-position: center top; background-repeat: no-repeat; }
-#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft { background-position: 0 0; }
-#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonRight { background-position: 0 -18px; }
-#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar { width: 30px; height: 14px; margin: 0px; background-image: url(../images/scroller-white.png); background-position: center top; background-repeat: no-repeat; background-position: 0 -36px; background-color: transparent; }
-#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal a+.mCSB_draggerContainer { margin: 2px 75px 0 75px!important; }
-#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_draggerRail { background-color: #fff; margin: 6px 0; }
-#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal { margin: 0 15px; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonRight {width: 60px; height: 18px; background-image: url(../images/scroller-white.png); background-position: center top; background-repeat: no-repeat; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft {background-position: 0 0; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonRight {background-position: 0 -18px; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger .mCSB_dragger_bar {width: 30px; height: 14px; margin: 0px; background-image: url(../images/scroller-white.png); background-position: center top; background-repeat: no-repeat; background-position: 0 -36px; background-color: transparent; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal a+.mCSB_draggerContainer {margin: 2px 75px 0 75px!important; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_draggerRail {background-color: #fff; margin: 6px 0; }
+#photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal {margin: 0 15px; }
 
-#rblayout-nine #info { text-align: center; }
-#rblayout-nine #info #name { text-transform: uppercase; margin: 15px 0px; }
-#rblayout-nine #stats li { display: inline-block; padding: 0 5px; font-weight: bold; }
-#rblayout-nine #stats li strong { font-weight: normal; }
-#rblayout-nine #links { width: 200px; padding: 0 15px; position: absolute; right: -200px; top: -20px; z-index: 5; text-align: left; }
-#rblayout-nine #links li a { text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
-#rblayout-nine #resultsGoHereAddtoCart { font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
+#rblayout-nine #info {text-align: center; }
+#rblayout-nine #info #name {text-transform: uppercase; margin: 15px 0px; }
+#rblayout-nine #stats li {display: inline-block; padding: 0 5px; font-weight: bold; }
+#rblayout-nine #stats li strong {font-weight: normal; }
+#rblayout-nine #links {width: 200px; padding: 0 15px; position: absolute; right: -200px; top: -20px; z-index: 5; text-align: left; }
+#rblayout-nine #links li a {text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
+#rblayout-nine #resultsGoHereAddtoCart {font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
 
 /* < 960 */
 @media screen and (max-width: 960px) {
-	#rblayout-nine #links { position: static; float: left; display: block; padding: 15px 0 15px 15px; margin-top: 15px; border-top: 3px solid #ccc; width: 100%; }
-	#rblayout-nine #links li { display: inline-block; margin: 0 5px; }
+	#rblayout-nine #links {position: static; float: left; display: block; padding: 15px 0 15px 15px; margin-top: 15px; border-top: 3px solid #ccc; width: 100%; }
+	#rblayout-nine #links li {display: inline-block; margin: 0 5px; }
 }
 @media screen and (max-width: 480px) {
-	#rblayout-nine #links li { display: block; margin: 0px; }
+	#rblayout-nine #links li {display: block; margin: 0px; }
 }

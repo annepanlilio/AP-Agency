@@ -33,9 +33,9 @@ class PHPExcel_Shared_JAMA_QRDecomposition {
 	private $m;
 
 	/**
-	*	Column dimension.
-	*	@var integer
-	*/
+	 *	Column dimension.
+	 *	@var integer
+	 */
 	private $n;
 
 	/**
@@ -180,7 +180,7 @@ class PHPExcel_Shared_JAMA_QRDecomposition {
 				}
 			}
 		}
-		*/
+		 */
 		return new PHPExcel_Shared_JAMA_Matrix($Q);
 	}	//	function getQ()
 

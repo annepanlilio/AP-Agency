@@ -150,7 +150,7 @@ class RBAgency_Admin {
 			rb_agency_casting_jobpostings();
 		}
 		public static function menu_castingcalendar(){
-			 rb_agency_casting_calendar();
+			rb_agency_casting_calendar();
 		}
 
 
@@ -210,9 +210,9 @@ class RBAgency_Admin {
 
 		// Add Admin Link to Edit Profile from Profile View
 		public static function link_profile_edit($profileID){
-						
+
 			if (current_user_can('level_10') && !is_admin()) {
-				
+
 				function prepare_tool($wp_toolbar){
 					$arr = array(
 						'id' => 'rb-agency-edit-profile',
@@ -241,7 +241,7 @@ class RBAgency_Admin {
 		if($rb_agencyinteract_option_profilemanage_toolbar==1) {
 			rb_agency_disableAdminToolbar(); 
 		}
-		*/
+		 */
 
 
 		// TODO: Review
@@ -249,9 +249,9 @@ class RBAgency_Admin {
 		/*
 		//add_filter( 'gettext', 'rb_agency_editTitleText', 10, 3 );
 		function rb_agency_editTitleText($string){
-			return "<span>".$string."<a href=\"javascript:;\" style=\"font-size:11px;color:blue;text-decoration:underline;\">Edit</a></span>";  
+			return "<span>".$string."<a href=\"javascript:;\" style=\"font-size:11px;color:blue;text-decoration:underline;\">Edit</a></span>";
 		}
-		*/
+		 */
 
 
 	// *************************************************************************************************** //
@@ -290,21 +290,21 @@ class RBAgency_Admin {
 				// Load Jquery if not registered
 				if ( ! wp_script_is( 'jquery', 'registered' ) )
 					wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
-				
-				 	wp_enqueue_script( 'jquery-ui-core' );
-				    wp_enqueue_script( 'jquery-ui-widget' );
-				    wp_enqueue_script( 'jquery-ui-mouse' );
-				    wp_enqueue_script( 'jquery-ui-accordion' );
-				    wp_enqueue_script( 'jquery-ui-autocomplete' );
-				    wp_enqueue_script( 'jquery-ui-slider' );
-				    wp_enqueue_script( 'jquery-ui-tabs' );
-				    wp_enqueue_script( 'jquery-ui-sortable' );
-				    wp_enqueue_script( 'jquery-ui-draggable' );
-				    wp_enqueue_script( 'jquery-ui-droppable' );
-				    wp_enqueue_script( 'jquery-ui-datepicker' );
-				    wp_enqueue_script( 'jquery-ui-resize' );
-				    wp_enqueue_script( 'jquery-ui-dialog' );
-				    wp_enqueue_script( 'jquery-ui-button' );
+
+					wp_enqueue_script( 'jquery-ui-core' );
+					 wp_enqueue_script( 'jquery-ui-widget' );
+					 wp_enqueue_script( 'jquery-ui-mouse' );
+					 wp_enqueue_script( 'jquery-ui-accordion' );
+					 wp_enqueue_script( 'jquery-ui-autocomplete' );
+					 wp_enqueue_script( 'jquery-ui-slider' );
+					 wp_enqueue_script( 'jquery-ui-tabs' );
+					 wp_enqueue_script( 'jquery-ui-sortable' );
+					 wp_enqueue_script( 'jquery-ui-draggable' );
+					 wp_enqueue_script( 'jquery-ui-droppable' );
+					 wp_enqueue_script( 'jquery-ui-datepicker' );
+					 wp_enqueue_script( 'jquery-ui-resize' );
+					 wp_enqueue_script( 'jquery-ui-dialog' );
+					 wp_enqueue_script( 'jquery-ui-button' );
 
 
 				//TODO: Refactor
@@ -312,7 +312,7 @@ class RBAgency_Admin {
 				<script type="text/javascript">
 				jQuery(function(){
 					jQuery(".rb-datepicker").each(function(){
-						jQuery(this).datepicker({ dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+						jQuery(this).datepicker({dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
 					})
 					jQuery( "input[id=rb_datepicker_from],input[id=rb_datepicker_to]").datepicker({
 						dateFormat: "yy-mm-dd",
@@ -325,7 +325,7 @@ class RBAgency_Admin {
 								var rMin = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 1); // Min Date = Selected + 1d
 								var rMax = new Date(dateMin.getFullYear(), dateMin.getMonth(),dateMin.getDate() + 31); // Max Date = Selected + 31d
 								jQuery('input[id=rb_datepicker_from]').datepicker("option","minDate",rMin);
-								jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);                    
+								jQuery('input[id=rb_datepicker_to]').datepicker("option","maxDate",rMax);            
 							}
 
 						}
@@ -334,14 +334,14 @@ class RBAgency_Admin {
 					jQuery( "input[id=rb_datepicker_from_bd],input[id=rb_datepicker_to_bd]").datepicker({
 
 						dateFormat: "yy-mm-dd"
-					
+
 					});
 				});
 				</script>
 
 				<?php
 
-				
+
 				// Load custom fields javascript
 				wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
 
@@ -405,8 +405,8 @@ class RBAgency_Admin {
 					echo "<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 					foreach( $profileDataTypes as $dataType) {
 						if (isset($_SESSION['ProfileType'])) {
-							if ($dataType["DataTypeID"] ==  $ProfileType) { $selectedvalue = " selected"; } else { $selectedvalue = ""; } 
-						} else { $selectedvalue = ""; }
+							if ($dataType["DataTypeID"] ==  $ProfileType) {$selectedvalue = " selected"; } else {$selectedvalue = ""; }
+						} else {$selectedvalue = ""; }
 						echo "<option value=\"". $dataType["DataTypeID"] ."\"".$selectedvalue.">". $dataType["DataTypeTitle"] ." ". __("Only", RBAGENCY_TEXTDOMAIN) ."</option>";
 					}
 					echo "</select></td></tr>\n";
@@ -415,7 +415,7 @@ class RBAgency_Admin {
 			echo "	<tr><td>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</td><td>";
 			echo "<select id=\"rb_agency_gender\" name=\"rb_agency_gender\">";
 			$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
-				
+
 				echo "<option value=\"\">All Gender</option>";
 				$queryShowGender = $wpdb->get_results($query,ARRAY_A);
 				foreach($queryShowGender as $dataShowGender){
@@ -423,7 +423,7 @@ class RBAgency_Admin {
 				}
 			echo "</select>";
 			echo "</td></tr>\n";
-			
+
 			echo "</table>\n";
 			echo "<p><input type=\"button\" onclick=\"create_profile_grid()\" value=\"". __("Insert Profile Grid", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
 			echo "<p><input type=\"button\" onclick=\"create_profile_search()\" value=\"". __("Insert Search Form", RBAGENCY_TEXTDOMAIN) ."\" /></p>\n";
@@ -443,7 +443,7 @@ class RBAgency_Admin {
 			// Can we show the ads? Or keep it clean?
 			$rb_agency_option_advertise = isset($rb_agency_options_arr['rb_agency_option_advertise']) ? $rb_agency_options_arr['rb_agency_option_advertise'] : 0;
 
-			if($rb_agency_option_advertise == 0) {  // Reversed it, now 1 = Hide Advertising
+			if($rb_agency_option_advertise == 0) { // Reversed it, now 1 = Hide Advertising
 
 			add_action('wp_dashboard_setup', 'rb_agency_add_dashboard' );
 				// Hoook into the 'wp_dashboard_setup' action to register our other functions
@@ -480,7 +480,7 @@ class RBAgency_Admin {
 					$rss = fetch_feed("http://rbplugin.com/category/wordpress/rbagency/feed/");
 					$num_items = 0;
 					// Checks that the object is created correctly 
-					if (!is_wp_error($rss)) { 
+					if (!is_wp_error($rss)) {
 
 						// Figure out how many total items there are, but limit it to 5. 
 						$maxitems = $rss->get_item_quantity($num_items); 

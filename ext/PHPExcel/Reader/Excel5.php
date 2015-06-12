@@ -31,30 +31,30 @@
 // trex005, and mmp11 (SourceForge.net)
 // http://sourceforge.net/projects/phpexcelreader/
 // Primary changes made by canyoncasa (dvc) for ParseXL 1.00 ...
-//	 Modelled moreso after Perl Excel Parse/Write modules
-//	 Added Parse_Excel_Spreadsheet object
-//		 Reads a whole worksheet or tab as row,column array or as
-//		 associated hash of indexed rows and named column fields
-//	 Added variables for worksheet (tab) indexes and names
-//	 Added an object call for loading individual woorksheets
-//	 Changed default indexing defaults to 0 based arrays
-//	 Fixed date/time and percent formats
-//	 Includes patches found at SourceForge...
-//		 unicode patch by nobody
-//		 unpack("d") machine depedency patch by matchy
-//		 boundsheet utf16 patch by bjaenichen
-//	 Renamed functions for shorter names
-//	 General code cleanup and rigor, including <80 column width
-//	 Included a testcase Excel file and PHP example calls
-//	 Code works for PHP 5.x
+//	Modelled moreso after Perl Excel Parse/Write modules
+//	Added Parse_Excel_Spreadsheet object
+//		Reads a whole worksheet or tab as row,column array or as
+//		associated hash of indexed rows and named column fields
+//	Added variables for worksheet (tab) indexes and names
+//	Added an object call for loading individual woorksheets
+//	Changed default indexing defaults to 0 based arrays
+//	Fixed date/time and percent formats
+//	Includes patches found at SourceForge...
+//		unicode patch by nobody
+//		unpack("d") machine depedency patch by matchy
+//		boundsheet utf16 patch by bjaenichen
+//	Renamed functions for shorter names
+//	General code cleanup and rigor, including <80 column width
+//	Included a testcase Excel file and PHP example calls
+//	Code works for PHP 5.x
 
 // Primary changes made by canyoncasa (dvc) for ParseXL 1.10 ...
 // http://sourceforge.net/tracker/index.php?func=detail&aid=1466964&group_id=99160&atid=623334
-//	 Decoding of formula conditions, results, and tokens.
-//	 Support for user-defined named cells added as an array "namedcells"
-//		 Patch code for user-defined named cells supports single cells only.
-//		 NOTE: this patch only works for BIFF8 as BIFF5-7 use a different
-//		 external sheet reference structure
+//	Decoding of formula conditions, results, and tokens.
+//	Support for user-defined named cells added as an array "namedcells"
+//		Patch code for user-defined named cells supports single cells only.
+//		NOTE: this patch only works for BIFF8 as BIFF5-7 use a different
+//		external sheet reference structure
 
 
 /** PHPExcel root directory */
@@ -527,7 +527,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			$res = $ole->read($pFilename);
 			return true;
 
-		} catch (Exception $e) {
+		}catch (Exception $e) {
 			return false;
 		}
 	}
@@ -562,10 +562,10 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			$code = self::_GetInt2d($this->_data, $this->_pos);
 
 			switch ($code) {
-				case self::XLS_Type_BOF:	$this->_readBof();		break;
-				case self::XLS_Type_SHEET:	$this->_readSheet();	break;
-				case self::XLS_Type_EOF:	$this->_readDefault();	break 2;
-				default:					$this->_readDefault();	break;
+				case self::XLS_Type_BOF:	$this->_readBof();break;
+				case self::XLS_Type_SHEET:	$this->_readSheet();break;
+				case self::XLS_Type_EOF:	$this->_readDefault();break 2;
+				default:					$this->_readDefault();break;
 			}
 		}
 
@@ -612,10 +612,10 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			$code = self::_GetInt2d($this->_data, $this->_pos);
 
 			switch ($code) {
-				case self::XLS_Type_BOF:        $this->_readBof();        break;
-				case self::XLS_Type_SHEET:      $this->_readSheet();      break;
-				case self::XLS_Type_EOF:        $this->_readDefault();    break 2;
-				default:                        $this->_readDefault();    break;
+				case self::XLS_Type_BOF:        $this->_readBof();break;
+				case self::XLS_Type_SHEET:      $this->_readSheet();break;
+				case self::XLS_Type_EOF:        $this->_readDefault();break 2;
+				default:                        $this->_readDefault();break;
 			}
 		}
 
@@ -660,9 +660,9 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 						$tmpInfo['totalRows'] = max($tmpInfo['totalRows'], $rowIndex);
 						$tmpInfo['lastColumnIndex'] = max($tmpInfo['lastColumnIndex'], $columnIndex);
 						break;
-					case self::XLS_Type_BOF:      $this->_readBof();          break;
-					case self::XLS_Type_EOF:      $this->_readDefault();      break 2;
-					default:                      $this->_readDefault();      break;
+					case self::XLS_Type_BOF:      $this->_readBof();  break;
+					case self::XLS_Type_EOF:      $this->_readDefault();break 2;
+					default:                      $this->_readDefault();break;
 				}
 			}
 
@@ -726,25 +726,25 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			$code = self::_GetInt2d($this->_data, $this->_pos);
 
 			switch ($code) {
-				case self::XLS_Type_BOF:			$this->_readBof();				break;
-				case self::XLS_Type_FILEPASS:		$this->_readFilepass();			break;
-				case self::XLS_Type_CODEPAGE:		$this->_readCodepage();			break;
-				case self::XLS_Type_DATEMODE:		$this->_readDateMode();			break;
-				case self::XLS_Type_FONT:			$this->_readFont();				break;
-				case self::XLS_Type_FORMAT:			$this->_readFormat();			break;
-				case self::XLS_Type_XF:				$this->_readXf();				break;
-				case self::XLS_Type_XFEXT:			$this->_readXfExt();			break;
-				case self::XLS_Type_STYLE:			$this->_readStyle();			break;
-				case self::XLS_Type_PALETTE:		$this->_readPalette();			break;
-				case self::XLS_Type_SHEET:			$this->_readSheet();			break;
-				case self::XLS_Type_EXTERNALBOOK:	$this->_readExternalBook();		break;
-				case self::XLS_Type_EXTERNNAME:		$this->_readExternName();		break;
-				case self::XLS_Type_EXTERNSHEET:	$this->_readExternSheet();		break;
-				case self::XLS_Type_DEFINEDNAME:	$this->_readDefinedName();		break;
-				case self::XLS_Type_MSODRAWINGGROUP:	$this->_readMsoDrawingGroup();	break;
-				case self::XLS_Type_SST:			$this->_readSst();				break;
-				case self::XLS_Type_EOF:			$this->_readDefault();			break 2;
-				default:							$this->_readDefault();			break;
+				case self::XLS_Type_BOF:			$this->_readBof();break;
+				case self::XLS_Type_FILEPASS:		$this->_readFilepass();break;
+				case self::XLS_Type_CODEPAGE:		$this->_readCodepage();break;
+				case self::XLS_Type_DATEMODE:		$this->_readDateMode();break;
+				case self::XLS_Type_FONT:			$this->_readFont();break;
+				case self::XLS_Type_FORMAT:			$this->_readFormat();break;
+				case self::XLS_Type_XF:				$this->_readXf();break;
+				case self::XLS_Type_XFEXT:			$this->_readXfExt();break;
+				case self::XLS_Type_STYLE:			$this->_readStyle();break;
+				case self::XLS_Type_PALETTE:		$this->_readPalette();break;
+				case self::XLS_Type_SHEET:			$this->_readSheet();break;
+				case self::XLS_Type_EXTERNALBOOK:	$this->_readExternalBook();break;
+				case self::XLS_Type_EXTERNNAME:		$this->_readExternName();break;
+				case self::XLS_Type_EXTERNSHEET:	$this->_readExternSheet();break;
+				case self::XLS_Type_DEFINEDNAME:	$this->_readDefinedName();break;
+				case self::XLS_Type_MSODRAWINGGROUP:	$this->_readMsoDrawingGroup();break;
+				case self::XLS_Type_SST:			$this->_readSst();break;
+				case self::XLS_Type_EOF:			$this->_readDefault();break 2;
+				default:							$this->_readDefault();break;
 			}
 		}
 
@@ -866,59 +866,59 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 				$code = self::_GetInt2d($this->_data, $this->_pos);
 
 				switch ($code) {
-					case self::XLS_Type_BOF:					$this->_readBof();						break;
-					case self::XLS_Type_PRINTGRIDLINES:			$this->_readPrintGridlines();			break;
-					case self::XLS_Type_DEFAULTROWHEIGHT:		$this->_readDefaultRowHeight();			break;
-					case self::XLS_Type_SHEETPR:				$this->_readSheetPr();					break;
-					case self::XLS_Type_HORIZONTALPAGEBREAKS:	$this->_readHorizontalPageBreaks();		break;
-					case self::XLS_Type_VERTICALPAGEBREAKS:		$this->_readVerticalPageBreaks();		break;
-					case self::XLS_Type_HEADER:					$this->_readHeader();					break;
-					case self::XLS_Type_FOOTER:					$this->_readFooter();					break;
-					case self::XLS_Type_HCENTER:				$this->_readHcenter();					break;
-					case self::XLS_Type_VCENTER:				$this->_readVcenter();					break;
-					case self::XLS_Type_LEFTMARGIN:				$this->_readLeftMargin();				break;
-					case self::XLS_Type_RIGHTMARGIN:			$this->_readRightMargin();				break;
-					case self::XLS_Type_TOPMARGIN:				$this->_readTopMargin();				break;
-					case self::XLS_Type_BOTTOMMARGIN:			$this->_readBottomMargin();				break;
-					case self::XLS_Type_PAGESETUP:				$this->_readPageSetup();				break;
-					case self::XLS_Type_PROTECT:				$this->_readProtect();					break;
-					case self::XLS_Type_SCENPROTECT:			$this->_readScenProtect();				break;
-					case self::XLS_Type_OBJECTPROTECT:			$this->_readObjectProtect();			break;
-					case self::XLS_Type_PASSWORD:				$this->_readPassword();					break;
-					case self::XLS_Type_DEFCOLWIDTH:			$this->_readDefColWidth();				break;
-					case self::XLS_Type_COLINFO:				$this->_readColInfo();					break;
-					case self::XLS_Type_DIMENSION:				$this->_readDefault();					break;
-					case self::XLS_Type_ROW:					$this->_readRow();						break;
-					case self::XLS_Type_DBCELL:					$this->_readDefault();					break;
-					case self::XLS_Type_RK:						$this->_readRk();						break;
-					case self::XLS_Type_LABELSST:				$this->_readLabelSst();					break;
-					case self::XLS_Type_MULRK:					$this->_readMulRk();					break;
-					case self::XLS_Type_NUMBER:					$this->_readNumber();					break;
-					case self::XLS_Type_FORMULA:				$this->_readFormula();					break;
-					case self::XLS_Type_SHAREDFMLA:				$this->_readSharedFmla();				break;
-					case self::XLS_Type_BOOLERR:				$this->_readBoolErr();					break;
-					case self::XLS_Type_MULBLANK:				$this->_readMulBlank();					break;
-					case self::XLS_Type_LABEL:					$this->_readLabel();					break;
-					case self::XLS_Type_BLANK:					$this->_readBlank();					break;
-					case self::XLS_Type_MSODRAWING:				$this->_readMsoDrawing();				break;
-					case self::XLS_Type_OBJ:					$this->_readObj();						break;
-					case self::XLS_Type_WINDOW2:				$this->_readWindow2();					break;
-					case self::XLS_Type_SCL:					$this->_readScl();						break;
-					case self::XLS_Type_PANE:					$this->_readPane();						break;
-					case self::XLS_Type_SELECTION:				$this->_readSelection();				break;
-					case self::XLS_Type_MERGEDCELLS:			$this->_readMergedCells();				break;
-					case self::XLS_Type_HYPERLINK:				$this->_readHyperLink();				break;
-					case self::XLS_Type_DATAVALIDATIONS:		$this->_readDataValidations();			break;
-					case self::XLS_Type_DATAVALIDATION:			$this->_readDataValidation();			break;
-					case self::XLS_Type_SHEETLAYOUT:			$this->_readSheetLayout();				break;
-					case self::XLS_Type_SHEETPROTECTION:		$this->_readSheetProtection();			break;
-					case self::XLS_Type_RANGEPROTECTION:		$this->_readRangeProtection();			break;
-					case self::XLS_Type_NOTE:					$this->_readNote();						break;
-					//case self::XLS_Type_IMDATA:				$this->_readImData();					break;
-					case self::XLS_Type_TXO:					$this->_readTextObject();				break;
-					case self::XLS_Type_CONTINUE:				$this->_readContinue();					break;
-					case self::XLS_Type_EOF:					$this->_readDefault();					break 2;
-					default:									$this->_readDefault();					break;
+					case self::XLS_Type_BOF:					$this->_readBof();break;
+					case self::XLS_Type_PRINTGRIDLINES:			$this->_readPrintGridlines();break;
+					case self::XLS_Type_DEFAULTROWHEIGHT:		$this->_readDefaultRowHeight();break;
+					case self::XLS_Type_SHEETPR:				$this->_readSheetPr();break;
+					case self::XLS_Type_HORIZONTALPAGEBREAKS:	$this->_readHorizontalPageBreaks();break;
+					case self::XLS_Type_VERTICALPAGEBREAKS:		$this->_readVerticalPageBreaks();break;
+					case self::XLS_Type_HEADER:					$this->_readHeader();break;
+					case self::XLS_Type_FOOTER:					$this->_readFooter();break;
+					case self::XLS_Type_HCENTER:				$this->_readHcenter();break;
+					case self::XLS_Type_VCENTER:				$this->_readVcenter();break;
+					case self::XLS_Type_LEFTMARGIN:				$this->_readLeftMargin();break;
+					case self::XLS_Type_RIGHTMARGIN:			$this->_readRightMargin();break;
+					case self::XLS_Type_TOPMARGIN:				$this->_readTopMargin();break;
+					case self::XLS_Type_BOTTOMMARGIN:			$this->_readBottomMargin();break;
+					case self::XLS_Type_PAGESETUP:				$this->_readPageSetup();break;
+					case self::XLS_Type_PROTECT:				$this->_readProtect();break;
+					case self::XLS_Type_SCENPROTECT:			$this->_readScenProtect();break;
+					case self::XLS_Type_OBJECTPROTECT:			$this->_readObjectProtect();break;
+					case self::XLS_Type_PASSWORD:				$this->_readPassword();break;
+					case self::XLS_Type_DEFCOLWIDTH:			$this->_readDefColWidth();break;
+					case self::XLS_Type_COLINFO:				$this->_readColInfo();break;
+					case self::XLS_Type_DIMENSION:				$this->_readDefault();break;
+					case self::XLS_Type_ROW:					$this->_readRow();break;
+					case self::XLS_Type_DBCELL:					$this->_readDefault();break;
+					case self::XLS_Type_RK:						$this->_readRk();break;
+					case self::XLS_Type_LABELSST:				$this->_readLabelSst();break;
+					case self::XLS_Type_MULRK:					$this->_readMulRk();break;
+					case self::XLS_Type_NUMBER:					$this->_readNumber();break;
+					case self::XLS_Type_FORMULA:				$this->_readFormula();break;
+					case self::XLS_Type_SHAREDFMLA:				$this->_readSharedFmla();break;
+					case self::XLS_Type_BOOLERR:				$this->_readBoolErr();break;
+					case self::XLS_Type_MULBLANK:				$this->_readMulBlank();break;
+					case self::XLS_Type_LABEL:					$this->_readLabel();break;
+					case self::XLS_Type_BLANK:					$this->_readBlank();break;
+					case self::XLS_Type_MSODRAWING:				$this->_readMsoDrawing();break;
+					case self::XLS_Type_OBJ:					$this->_readObj();break;
+					case self::XLS_Type_WINDOW2:				$this->_readWindow2();break;
+					case self::XLS_Type_SCL:					$this->_readScl();break;
+					case self::XLS_Type_PANE:					$this->_readPane();break;
+					case self::XLS_Type_SELECTION:				$this->_readSelection();break;
+					case self::XLS_Type_MERGEDCELLS:			$this->_readMergedCells();break;
+					case self::XLS_Type_HYPERLINK:				$this->_readHyperLink();break;
+					case self::XLS_Type_DATAVALIDATIONS:		$this->_readDataValidations();break;
+					case self::XLS_Type_DATAVALIDATION:			$this->_readDataValidation();break;
+					case self::XLS_Type_SHEETLAYOUT:			$this->_readSheetLayout();break;
+					case self::XLS_Type_SHEETPROTECTION:		$this->_readSheetProtection();break;
+					case self::XLS_Type_RANGEPROTECTION:		$this->_readRangeProtection();break;
+					case self::XLS_Type_NOTE:					$this->_readNote();break;
+					//case self::XLS_Type_IMDATA:				$this->_readImData();break;
+					case self::XLS_Type_TXO:					$this->_readTextObject();break;
+					case self::XLS_Type_CONTINUE:				$this->_readContinue();break;
+					case self::XLS_Type_EOF:					$this->_readDefault();break 2;
+					default:									$this->_readDefault();break;
 				}
 
 			}
@@ -1082,7 +1082,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 						//		Foo!$C$7:$J$66
 						//		Bar!$A$1:$IV$2
 
-						$explodes = explode('!', $range);	// FIXME: what if sheetname contains exclamation mark?
+						$explodes = explode('!', $range);// FIXME: what if sheetname contains exclamation mark?
 						$sheetName = $explodes[0];
 
 						if (count($explodes) == 2) {
@@ -1363,42 +1363,42 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			return;
 		}
 
-		//	offset: 0;	size: 2;	must be 0xFE 0xFF (UTF-16 LE byte order mark)
-		//	offset: 2;	size: 2;
-		//	offset: 4;	size: 2;	OS version
-		//	offset: 6;	size: 2;	OS indicator
-		//	offset: 8;	size: 16
-		//	offset: 24;	size: 4;	section count
+		//	offset: 0;size: 2;must be 0xFE 0xFF (UTF-16 LE byte order mark)
+		//	offset: 2;size: 2;
+		//	offset: 4;size: 2;OS version
+		//	offset: 6;size: 2;OS indicator
+		//	offset: 8;size: 16
+		//	offset: 24;size: 4;section count
 		$secCount = self::_GetInt4d($this->_documentSummaryInformation, 24);
 //		echo '$secCount = ',$secCount,'<br />';
 
-		// offset: 28;	size: 16;	first section's class id: 02 d5 cd d5 9c 2e 1b 10 93 97 08 00 2b 2c f9 ae
-		// offset: 44;	size: 4;	first section offset
+		// offset: 28;size: 16;first section's class id: 02 d5 cd d5 9c 2e 1b 10 93 97 08 00 2b 2c f9 ae
+		// offset: 44;size: 4;first section offset
 		$secOffset = self::_GetInt4d($this->_documentSummaryInformation, 44);
 //		echo '$secOffset = ',$secOffset,'<br />';
 
 		//	section header
-		//	offset: $secOffset;	size: 4;	section length
+		//	offset: $secOffset;size: 4;section length
 		$secLength = self::_GetInt4d($this->_documentSummaryInformation, $secOffset);
 //		echo '$secLength = ',$secLength,'<br />';
 
-		//	offset: $secOffset+4;	size: 4;	property count
+		//	offset: $secOffset+4;size: 4;property count
 		$countProperties = self::_GetInt4d($this->_documentSummaryInformation, $secOffset+4);
 //		echo '$countProperties = ',$countProperties,'<br />';
 
 		// initialize code page (used to resolve string values)
 		$codePage = 'CP1252';
 
-		//	offset: ($secOffset+8);	size: var
+		//	offset: ($secOffset+8);size: var
 		//	loop through property decarations and properties
 		for ($i = 0; $i < $countProperties; ++$i) {
 //			echo 'Property ',$i,'<br />';
-			//	offset: ($secOffset+8) + (8 * $i);	size: 4;	property ID
+			//	offset: ($secOffset+8) + (8 * $i);size: 4;property ID
 			$id = self::_GetInt4d($this->_documentSummaryInformation, ($secOffset+8) + (8 * $i));
 //			echo 'ID is ',$id,'<br />';
 
 			// Use value of property id as appropriate
-			// offset: 60 + 8 * $i;	size: 4;	offset from beginning of section (48)
+			// offset: 60 + 8 * $i;size: 4;offset from beginning of section (48)
 			$offset = self::_GetInt4d($this->_documentSummaryInformation, ($secOffset+12) + (8 * $i));
 
 			$type = self::_GetInt4d($this->_documentSummaryInformation, $secOffset + $offset);
@@ -1553,9 +1553,9 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 //			echo 'Note Author=',$noteAuthor,'<hr />';
 //
 			$this->_cellNotes[$noteObjID] = array('cellRef'		=> $cellAddress,
-												  'objectID'	=> $noteObjID,
-												  'author'		=> $noteAuthor
-												 );
+													'objectID'	=> $noteObjID,
+													'author'		=> $noteAuthor
+												);
 		} else {
 			$extension = false;
 			if ($cellAddress == '$B$65536') {
@@ -1622,7 +1622,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 				'format'	=> substr($text["recordData"],$text["spliceOffsets"][1],$cbRuns),
 				'alignment'	=> $grbitOpts,
 				'rotation'	=> $rot
-			 );
+			);
 
 //		echo '<b>_readTextObject()</b><br />';
 //		var_dump($this->_textObjects[$this->textObjRef]);
@@ -1664,7 +1664,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 				do {
 					$code = self::_GetInt2d($this->_data, $this->_pos);
 					$this->_readDefault();
-				} while ($code != self::XLS_Type_EOF && $this->_pos < $this->_dataSize);
+				}while ($code != self::XLS_Type_EOF && $this->_pos < $this->_dataSize);
 				break;
 		}
 	}
@@ -2431,10 +2431,10 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 
 		// offset: 4; size: 1; sheet state
 		switch (ord($recordData{4})) {
-			case 0x00: $sheetState = PHPExcel_Worksheet::SHEETSTATE_VISIBLE;    break;
-			case 0x01: $sheetState = PHPExcel_Worksheet::SHEETSTATE_HIDDEN;     break;
+			case 0x00: $sheetState = PHPExcel_Worksheet::SHEETSTATE_VISIBLE;break;
+			case 0x01: $sheetState = PHPExcel_Worksheet::SHEETSTATE_HIDDEN; break;
 			case 0x02: $sheetState = PHPExcel_Worksheet::SHEETSTATE_VERYHIDDEN; break;
-			default: $sheetState = PHPExcel_Worksheet::SHEETSTATE_VISIBLE;      break;
+			default: $sheetState = PHPExcel_Worksheet::SHEETSTATE_VISIBLE;break;
 		}
 
 		// offset: 5; size: 1; sheet type
@@ -2635,7 +2635,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 
 			try {
 				$formula = $this->_getFormulaFromStructure($formulaStructure);
-			} catch (Exception $e) {
+			}catch (Exception $e) {
 				$formula = '';
 			}
 
@@ -2794,7 +2794,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 						// this fragment compressed
 						$len = min($charsLeft, $limitpos - $pos);
 						for ($j = 0; $j < $len; ++$j) {
-							$retstr .= $recordData{$pos + $j} . chr(0);
+							$retstr .= $recordData{$pos + $j}. chr(0);
 						}
 						$charsLeft -= $len;
 						$isCompressed = false;
@@ -3782,7 +3782,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 					$formula = $this->_getFormulaFromStructure($formulaStructure); // get formula in human language
 					$cell->setValueExplicit('=' . $formula, PHPExcel_Cell_DataType::TYPE_FORMULA);
 
-				} catch (Exception $e) {
+				}catch (Exception $e) {
 					$cell->setValueExplicit($value, $dataType);
 				}
 			} else {
@@ -4299,7 +4299,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			// offset: 0; size: 8; cell range address of all cells containing this hyperlink
 			try {
 				$cellRange = $this->_readBIFF8CellRangeAddressFixed($recordData, 0, 8);
-			} catch (Exception $e) {
+			}catch (Exception $e) {
 				return;
 			}
 
@@ -4494,22 +4494,22 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 		// bit: 0-3; mask: 0x0000000F; type
 		$type = (0x0000000F & $options) >> 0;
 		switch ($type) {
-			case 0x00:	$type = PHPExcel_Cell_DataValidation::TYPE_NONE;		break;
-			case 0x01:	$type = PHPExcel_Cell_DataValidation::TYPE_WHOLE;		break;
-			case 0x02:	$type = PHPExcel_Cell_DataValidation::TYPE_DECIMAL;		break;
-			case 0x03:	$type = PHPExcel_Cell_DataValidation::TYPE_LIST;		break;
-			case 0x04:	$type = PHPExcel_Cell_DataValidation::TYPE_DATE;		break;
-			case 0x05:	$type = PHPExcel_Cell_DataValidation::TYPE_TIME;		break;
-			case 0x06:	$type = PHPExcel_Cell_DataValidation::TYPE_TEXTLENGTH;	break;
-			case 0x07:	$type = PHPExcel_Cell_DataValidation::TYPE_CUSTOM;		break;
+			case 0x00:	$type = PHPExcel_Cell_DataValidation::TYPE_NONE;break;
+			case 0x01:	$type = PHPExcel_Cell_DataValidation::TYPE_WHOLE;break;
+			case 0x02:	$type = PHPExcel_Cell_DataValidation::TYPE_DECIMAL;break;
+			case 0x03:	$type = PHPExcel_Cell_DataValidation::TYPE_LIST;break;
+			case 0x04:	$type = PHPExcel_Cell_DataValidation::TYPE_DATE;break;
+			case 0x05:	$type = PHPExcel_Cell_DataValidation::TYPE_TIME;break;
+			case 0x06:	$type = PHPExcel_Cell_DataValidation::TYPE_TEXTLENGTH;break;
+			case 0x07:	$type = PHPExcel_Cell_DataValidation::TYPE_CUSTOM;break;
 		}
 
 		// bit: 4-6; mask: 0x00000070; error type
 		$errorStyle = (0x00000070 & $options) >> 4;
 		switch ($errorStyle) {
-			case 0x00:	$errorStyle = PHPExcel_Cell_DataValidation::STYLE_STOP;			break;
-			case 0x01:	$errorStyle = PHPExcel_Cell_DataValidation::STYLE_WARNING;		break;
-			case 0x02:	$errorStyle = PHPExcel_Cell_DataValidation::STYLE_INFORMATION;	break;
+			case 0x00:	$errorStyle = PHPExcel_Cell_DataValidation::STYLE_STOP;break;
+			case 0x01:	$errorStyle = PHPExcel_Cell_DataValidation::STYLE_WARNING;break;
+			case 0x02:	$errorStyle = PHPExcel_Cell_DataValidation::STYLE_INFORMATION;break;
 		}
 
 		// bit: 7; mask: 0x00000080; 1= formula is explicit (only applies to list)
@@ -4531,14 +4531,14 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 		// bit: 20-23; mask: 0x00F00000; condition operator
 		$operator = (0x00F00000 & $options) >> 20;
 		switch ($operator) {
-			case 0x00: $operator = PHPExcel_Cell_DataValidation::OPERATOR_BETWEEN			;	break;
-			case 0x01: $operator = PHPExcel_Cell_DataValidation::OPERATOR_NOTBETWEEN		;	break;
-			case 0x02: $operator = PHPExcel_Cell_DataValidation::OPERATOR_EQUAL				;	break;
-			case 0x03: $operator = PHPExcel_Cell_DataValidation::OPERATOR_NOTEQUAL			;	break;
-			case 0x04: $operator = PHPExcel_Cell_DataValidation::OPERATOR_GREATERTHAN		;	break;
-			case 0x05: $operator = PHPExcel_Cell_DataValidation::OPERATOR_LESSTHAN			;	break;
-			case 0x06: $operator = PHPExcel_Cell_DataValidation::OPERATOR_GREATERTHANOREQUAL;	break;
-			case 0x07: $operator = PHPExcel_Cell_DataValidation::OPERATOR_LESSTHANOREQUAL	;	break;
+			case 0x00: $operator = PHPExcel_Cell_DataValidation::OPERATOR_BETWEEN			;break;
+			case 0x01: $operator = PHPExcel_Cell_DataValidation::OPERATOR_NOTBETWEEN		;break;
+			case 0x02: $operator = PHPExcel_Cell_DataValidation::OPERATOR_EQUAL				;break;
+			case 0x03: $operator = PHPExcel_Cell_DataValidation::OPERATOR_NOTEQUAL			;break;
+			case 0x04: $operator = PHPExcel_Cell_DataValidation::OPERATOR_GREATERTHAN		;break;
+			case 0x05: $operator = PHPExcel_Cell_DataValidation::OPERATOR_LESSTHAN			;break;
+			case 0x06: $operator = PHPExcel_Cell_DataValidation::OPERATOR_GREATERTHANOREQUAL;break;
+			case 0x07: $operator = PHPExcel_Cell_DataValidation::OPERATOR_LESSTHANOREQUAL	;break;
 		}
 
 		// offset: 4; size: var; title of the prompt box
@@ -4583,7 +4583,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			if ($type == PHPExcel_Cell_DataValidation::TYPE_LIST) {
 				$formula1 = str_replace(chr(0), ',', $formula1);
 			}
-		} catch (Exception $e) {
+		}catch (Exception $e) {
 			return;
 		}
 		$offset += $sz1;
@@ -4600,7 +4600,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 		$formula2 = pack('v', $sz2) . $formula2; // prepend the length
 		try {
 			$formula2 = $this->_getFormulaFromStructure($formula2);
-		} catch (Exception $e) {
+		}catch (Exception $e) {
 			return;
 		}
 		$offset += $sz2;
@@ -4812,7 +4812,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			for ($i = 0; $i < $cref; ++$i) {
 				try {
 					$cellRange = $this->_readBIFF8CellRangeAddressFixed(substr($recordData, 27 + 8 * $i, 8));
-				} catch (Exception $e) {
+				}catch (Exception $e) {
 					return;
 				}
 				$cellRanges[] = $cellRange;
@@ -5253,24 +5253,24 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 		$name = false; // initialize token name
 
 		switch ($id) {
-		case 0x03: $name = 'tAdd';		$size = 1;	$data = '+';	break;
-		case 0x04: $name = 'tSub';		$size = 1;	$data = '-';	break;
-		case 0x05: $name = 'tMul';		$size = 1;	$data = '*';	break;
-		case 0x06: $name = 'tDiv';		$size = 1;	$data = '/';	break;
-		case 0x07: $name = 'tPower';	$size = 1;	$data = '^';	break;
-		case 0x08: $name = 'tConcat';	$size = 1;	$data = '&';	break;
-		case 0x09: $name = 'tLT';		$size = 1;	$data = '<';	break;
-		case 0x0A: $name = 'tLE';		$size = 1;	$data = '<=';	break;
-		case 0x0B: $name = 'tEQ';		$size = 1;	$data = '=';	break;
-		case 0x0C: $name = 'tGE';		$size = 1;	$data = '>=';	break;
-		case 0x0D: $name = 'tGT';		$size = 1;	$data = '>';	break;
-		case 0x0E: $name = 'tNE';		$size = 1;	$data = '<>';	break;
-		case 0x0F: $name = 'tIsect';	$size = 1;	$data = ' ';	break;
-		case 0x10: $name = 'tList';		$size = 1;	$data = ',';	break;
-		case 0x11: $name = 'tRange';	$size = 1;	$data = ':';	break;
-		case 0x12: $name = 'tUplus';	$size = 1;	$data = '+';	break;
-		case 0x13: $name = 'tUminus';	$size = 1;	$data = '-';	break;
-		case 0x14: $name = 'tPercent';	$size = 1;	$data = '%';	break;
+		case 0x03: $name = 'tAdd';$size = 1;$data = '+';break;
+		case 0x04: $name = 'tSub';$size = 1;$data = '-';break;
+		case 0x05: $name = 'tMul';$size = 1;$data = '*';break;
+		case 0x06: $name = 'tDiv';$size = 1;$data = '/';break;
+		case 0x07: $name = 'tPower';$size = 1;$data = '^';break;
+		case 0x08: $name = 'tConcat';$size = 1;$data = '&';break;
+		case 0x09: $name = 'tLT';$size = 1;$data = '<';break;
+		case 0x0A: $name = 'tLE';$size = 1;$data = '<=';break;
+		case 0x0B: $name = 'tEQ';$size = 1;$data = '=';break;
+		case 0x0C: $name = 'tGE';$size = 1;$data = '>=';break;
+		case 0x0D: $name = 'tGT';$size = 1;$data = '>';break;
+		case 0x0E: $name = 'tNE';$size = 1;$data = '<>';break;
+		case 0x0F: $name = 'tIsect';$size = 1;$data = ' ';break;
+		case 0x10: $name = 'tList';$size = 1;$data = ',';break;
+		case 0x11: $name = 'tRange';$size = 1;$data = ':';break;
+		case 0x12: $name = 'tUplus';$size = 1;$data = '+';break;
+		case 0x13: $name = 'tUminus';$size = 1;$data = '-';break;
+		case 0x14: $name = 'tPercent';$size = 1;$data = '%';break;
 		case 0x15:	//	parenthesis
 			$name  = 'tParen';
 			$size  = 1;
@@ -5421,143 +5421,143 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			case  34: $function = 'TRUE'; 			$args = 0; 	break;
 			case  35: $function = 'FALSE'; 			$args = 0; 	break;
 			case  38: $function = 'NOT'; 			$args = 1; 	break;
-			case  39: $function = 'MOD'; 			$args = 2;	break;
-			case  40: $function = 'DCOUNT'; 		$args = 3;	break;
-			case  41: $function = 'DSUM'; 			$args = 3;	break;
-			case  42: $function = 'DAVERAGE'; 		$args = 3;	break;
-			case  43: $function = 'DMIN'; 			$args = 3;	break;
-			case  44: $function = 'DMAX'; 			$args = 3;	break;
-			case  45: $function = 'DSTDEV'; 		$args = 3;	break;
-			case  48: $function = 'TEXT'; 			$args = 2;	break;
-			case  61: $function = 'MIRR'; 			$args = 3;	break;
-			case  63: $function = 'RAND'; 			$args = 0;	break;
-			case  65: $function = 'DATE'; 			$args = 3;	break;
-			case  66: $function = 'TIME'; 			$args = 3;	break;
-			case  67: $function = 'DAY'; 			$args = 1;	break;
-			case  68: $function = 'MONTH'; 			$args = 1;	break;
-			case  69: $function = 'YEAR'; 			$args = 1;	break;
-			case  71: $function = 'HOUR'; 			$args = 1;	break;
-			case  72: $function = 'MINUTE'; 		$args = 1;	break;
-			case  73: $function = 'SECOND'; 		$args = 1;	break;
-			case  74: $function = 'NOW'; 			$args = 0;	break;
-			case  75: $function = 'AREAS'; 			$args = 1;	break;
-			case  76: $function = 'ROWS'; 			$args = 1;	break;
-			case  77: $function = 'COLUMNS'; 		$args = 1;	break;
-			case  83: $function = 'TRANSPOSE'; 		$args = 1;	break;
-			case  86: $function = 'TYPE'; 			$args = 1;	break;
-			case  97: $function = 'ATAN2'; 			$args = 2;	break;
-			case  98: $function = 'ASIN'; 			$args = 1;	break;
-			case  99: $function = 'ACOS'; 			$args = 1;	break;
-			case 105: $function = 'ISREF'; 			$args = 1;	break;
-			case 111: $function = 'CHAR'; 			$args = 1;	break;
-			case 112: $function = 'LOWER'; 			$args = 1;	break;
-			case 113: $function = 'UPPER'; 			$args = 1;	break;
-			case 114: $function = 'PROPER'; 		$args = 1;	break;
-			case 117: $function = 'EXACT'; 			$args = 2;	break;
-			case 118: $function = 'TRIM'; 			$args = 1;	break;
-			case 119: $function = 'REPLACE'; 		$args = 4;	break;
-			case 121: $function = 'CODE'; 			$args = 1;	break;
-			case 126: $function = 'ISERR'; 			$args = 1;	break;
-			case 127: $function = 'ISTEXT'; 		$args = 1;	break;
-			case 128: $function = 'ISNUMBER'; 		$args = 1;	break;
-			case 129: $function = 'ISBLANK'; 		$args = 1;	break;
-			case 130: $function = 'T'; 				$args = 1;	break;
-			case 131: $function = 'N'; 				$args = 1;	break;
-			case 140: $function = 'DATEVALUE'; 		$args = 1;	break;
-			case 141: $function = 'TIMEVALUE'; 		$args = 1;	break;
-			case 142: $function = 'SLN'; 			$args = 3;	break;
-			case 143: $function = 'SYD'; 			$args = 4;	break;
-			case 162: $function = 'CLEAN'; 			$args = 1;	break;
-			case 163: $function = 'MDETERM'; 		$args = 1;	break;
-			case 164: $function = 'MINVERSE'; 		$args = 1;	break;
-			case 165: $function = 'MMULT'; 			$args = 2;	break;
-			case 184: $function = 'FACT'; 			$args = 1;	break;
-			case 189: $function = 'DPRODUCT'; 		$args = 3;	break;
-			case 190: $function = 'ISNONTEXT'; 		$args = 1;	break;
-			case 195: $function = 'DSTDEVP'; 		$args = 3;	break;
-			case 196: $function = 'DVARP'; 			$args = 3;	break;
-			case 198: $function = 'ISLOGICAL'; 		$args = 1;	break;
-			case 199: $function = 'DCOUNTA'; 		$args = 3;	break;
-			case 207: $function = 'REPLACEB'; 		$args = 4;	break;
-			case 210: $function = 'MIDB'; 			$args = 3;	break;
-			case 211: $function = 'LENB'; 			$args = 1;	break;
-			case 212: $function = 'ROUNDUP'; 		$args = 2;	break;
-			case 213: $function = 'ROUNDDOWN'; 		$args = 2;	break;
-			case 214: $function = 'ASC'; 			$args = 1;	break;
-			case 215: $function = 'DBCS'; 			$args = 1;	break;
-			case 221: $function = 'TODAY'; 			$args = 0;	break;
-			case 229: $function = 'SINH'; 			$args = 1;	break;
-			case 230: $function = 'COSH'; 			$args = 1;	break;
-			case 231: $function = 'TANH'; 			$args = 1;	break;
-			case 232: $function = 'ASINH'; 			$args = 1;	break;
-			case 233: $function = 'ACOSH'; 			$args = 1;	break;
-			case 234: $function = 'ATANH'; 			$args = 1;	break;
-			case 235: $function = 'DGET'; 			$args = 3;	break;
-			case 244: $function = 'INFO'; 			$args = 1;	break;
-			case 252: $function = 'FREQUENCY'; 		$args = 2;	break;
-			case 261: $function = 'ERROR.TYPE'; 	$args = 1;	break;
-			case 271: $function = 'GAMMALN'; 		$args = 1;	break;
-			case 273: $function = 'BINOMDIST'; 		$args = 4;	break;
-			case 274: $function = 'CHIDIST'; 		$args = 2;	break;
-			case 275: $function = 'CHIINV'; 		$args = 2;	break;
-			case 276: $function = 'COMBIN'; 		$args = 2;	break;
-			case 277: $function = 'CONFIDENCE'; 	$args = 3;	break;
-			case 278: $function = 'CRITBINOM'; 		$args = 3;	break;
-			case 279: $function = 'EVEN'; 			$args = 1;	break;
-			case 280: $function = 'EXPONDIST'; 		$args = 3;	break;
-			case 281: $function = 'FDIST'; 			$args = 3;	break;
-			case 282: $function = 'FINV'; 			$args = 3;	break;
-			case 283: $function = 'FISHER'; 		$args = 1;	break;
-			case 284: $function = 'FISHERINV'; 		$args = 1;	break;
-			case 285: $function = 'FLOOR'; 			$args = 2;	break;
-			case 286: $function = 'GAMMADIST'; 		$args = 4;	break;
-			case 287: $function = 'GAMMAINV'; 		$args = 3;	break;
-			case 288: $function = 'CEILING'; 		$args = 2;	break;
-			case 289: $function = 'HYPGEOMDIST';	$args = 4;	break;
-			case 290: $function = 'LOGNORMDIST';	$args = 3;	break;
-			case 291: $function = 'LOGINV';			$args = 3;	break;
-			case 292: $function = 'NEGBINOMDIST';	$args = 3;	break;
-			case 293: $function = 'NORMDIST';		$args = 4;	break;
-			case 294: $function = 'NORMSDIST';		$args = 1;	break;
-			case 295: $function = 'NORMINV';		$args = 3;	break;
-			case 296: $function = 'NORMSINV';		$args = 1;	break;
-			case 297: $function = 'STANDARDIZE';	$args = 3;	break;
-			case 298: $function = 'ODD';			$args = 1;	break;
-			case 299: $function = 'PERMUT';			$args = 2;	break;
-			case 300: $function = 'POISSON';		$args = 3;	break;
-			case 301: $function = 'TDIST';			$args = 3;	break;
-			case 302: $function = 'WEIBULL';		$args = 4;	break;
-			case 303: $function = 'SUMXMY2';		$args = 2;	break;
-			case 304: $function = 'SUMX2MY2';		$args = 2;	break;
-			case 305: $function = 'SUMX2PY2';		$args = 2;	break;
-			case 306: $function = 'CHITEST';		$args = 2;	break;
-			case 307: $function = 'CORREL';			$args = 2;	break;
-			case 308: $function = 'COVAR';			$args = 2;	break;
-			case 309: $function = 'FORECAST';		$args = 3;	break;
-			case 310: $function = 'FTEST';			$args = 2;	break;
-			case 311: $function = 'INTERCEPT';		$args = 2;	break;
-			case 312: $function = 'PEARSON';		$args = 2;	break;
-			case 313: $function = 'RSQ';			$args = 2;	break;
-			case 314: $function = 'STEYX';			$args = 2;	break;
-			case 315: $function = 'SLOPE';			$args = 2;	break;
-			case 316: $function = 'TTEST';			$args = 4;	break;
-			case 325: $function = 'LARGE';			$args = 2;	break;
-			case 326: $function = 'SMALL';			$args = 2;	break;
-			case 327: $function = 'QUARTILE';		$args = 2;	break;
-			case 328: $function = 'PERCENTILE';		$args = 2;	break;
-			case 331: $function = 'TRIMMEAN';		$args = 2;	break;
-			case 332: $function = 'TINV';			$args = 2;	break;
-			case 337: $function = 'POWER';			$args = 2;	break;
-			case 342: $function = 'RADIANS';		$args = 1;	break;
-			case 343: $function = 'DEGREES';		$args = 1;	break;
-			case 346: $function = 'COUNTIF';		$args = 2;	break;
-			case 347: $function = 'COUNTBLANK';		$args = 1;	break;
-			case 350: $function = 'ISPMT';			$args = 4;	break;
-			case 351: $function = 'DATEDIF';		$args = 3;	break;
-			case 352: $function = 'DATESTRING';		$args = 1;	break;
-			case 353: $function = 'NUMBERSTRING';	$args = 2;	break;
-			case 360: $function = 'PHONETIC';		$args = 1;	break;
-			case 368: $function = 'BAHTTEXT';		$args = 1;	break;
+			case  39: $function = 'MOD'; 			$args = 2;break;
+			case  40: $function = 'DCOUNT'; 		$args = 3;break;
+			case  41: $function = 'DSUM'; 			$args = 3;break;
+			case  42: $function = 'DAVERAGE'; 		$args = 3;break;
+			case  43: $function = 'DMIN'; 			$args = 3;break;
+			case  44: $function = 'DMAX'; 			$args = 3;break;
+			case  45: $function = 'DSTDEV'; 		$args = 3;break;
+			case  48: $function = 'TEXT'; 			$args = 2;break;
+			case  61: $function = 'MIRR'; 			$args = 3;break;
+			case  63: $function = 'RAND'; 			$args = 0;break;
+			case  65: $function = 'DATE'; 			$args = 3;break;
+			case  66: $function = 'TIME'; 			$args = 3;break;
+			case  67: $function = 'DAY'; 			$args = 1;break;
+			case  68: $function = 'MONTH'; 			$args = 1;break;
+			case  69: $function = 'YEAR'; 			$args = 1;break;
+			case  71: $function = 'HOUR'; 			$args = 1;break;
+			case  72: $function = 'MINUTE'; 		$args = 1;break;
+			case  73: $function = 'SECOND'; 		$args = 1;break;
+			case  74: $function = 'NOW'; 			$args = 0;break;
+			case  75: $function = 'AREAS'; 			$args = 1;break;
+			case  76: $function = 'ROWS'; 			$args = 1;break;
+			case  77: $function = 'COLUMNS'; 		$args = 1;break;
+			case  83: $function = 'TRANSPOSE'; 		$args = 1;break;
+			case  86: $function = 'TYPE'; 			$args = 1;break;
+			case  97: $function = 'ATAN2'; 			$args = 2;break;
+			case  98: $function = 'ASIN'; 			$args = 1;break;
+			case  99: $function = 'ACOS'; 			$args = 1;break;
+			case 105: $function = 'ISREF'; 			$args = 1;break;
+			case 111: $function = 'CHAR'; 			$args = 1;break;
+			case 112: $function = 'LOWER'; 			$args = 1;break;
+			case 113: $function = 'UPPER'; 			$args = 1;break;
+			case 114: $function = 'PROPER'; 		$args = 1;break;
+			case 117: $function = 'EXACT'; 			$args = 2;break;
+			case 118: $function = 'TRIM'; 			$args = 1;break;
+			case 119: $function = 'REPLACE'; 		$args = 4;break;
+			case 121: $function = 'CODE'; 			$args = 1;break;
+			case 126: $function = 'ISERR'; 			$args = 1;break;
+			case 127: $function = 'ISTEXT'; 		$args = 1;break;
+			case 128: $function = 'ISNUMBER'; 		$args = 1;break;
+			case 129: $function = 'ISBLANK'; 		$args = 1;break;
+			case 130: $function = 'T'; 				$args = 1;break;
+			case 131: $function = 'N'; 				$args = 1;break;
+			case 140: $function = 'DATEVALUE'; 		$args = 1;break;
+			case 141: $function = 'TIMEVALUE'; 		$args = 1;break;
+			case 142: $function = 'SLN'; 			$args = 3;break;
+			case 143: $function = 'SYD'; 			$args = 4;break;
+			case 162: $function = 'CLEAN'; 			$args = 1;break;
+			case 163: $function = 'MDETERM'; 		$args = 1;break;
+			case 164: $function = 'MINVERSE'; 		$args = 1;break;
+			case 165: $function = 'MMULT'; 			$args = 2;break;
+			case 184: $function = 'FACT'; 			$args = 1;break;
+			case 189: $function = 'DPRODUCT'; 		$args = 3;break;
+			case 190: $function = 'ISNONTEXT'; 		$args = 1;break;
+			case 195: $function = 'DSTDEVP'; 		$args = 3;break;
+			case 196: $function = 'DVARP'; 			$args = 3;break;
+			case 198: $function = 'ISLOGICAL'; 		$args = 1;break;
+			case 199: $function = 'DCOUNTA'; 		$args = 3;break;
+			case 207: $function = 'REPLACEB'; 		$args = 4;break;
+			case 210: $function = 'MIDB'; 			$args = 3;break;
+			case 211: $function = 'LENB'; 			$args = 1;break;
+			case 212: $function = 'ROUNDUP'; 		$args = 2;break;
+			case 213: $function = 'ROUNDDOWN'; 		$args = 2;break;
+			case 214: $function = 'ASC'; 			$args = 1;break;
+			case 215: $function = 'DBCS'; 			$args = 1;break;
+			case 221: $function = 'TODAY'; 			$args = 0;break;
+			case 229: $function = 'SINH'; 			$args = 1;break;
+			case 230: $function = 'COSH'; 			$args = 1;break;
+			case 231: $function = 'TANH'; 			$args = 1;break;
+			case 232: $function = 'ASINH'; 			$args = 1;break;
+			case 233: $function = 'ACOSH'; 			$args = 1;break;
+			case 234: $function = 'ATANH'; 			$args = 1;break;
+			case 235: $function = 'DGET'; 			$args = 3;break;
+			case 244: $function = 'INFO'; 			$args = 1;break;
+			case 252: $function = 'FREQUENCY'; 		$args = 2;break;
+			case 261: $function = 'ERROR.TYPE'; 	$args = 1;break;
+			case 271: $function = 'GAMMALN'; 		$args = 1;break;
+			case 273: $function = 'BINOMDIST'; 		$args = 4;break;
+			case 274: $function = 'CHIDIST'; 		$args = 2;break;
+			case 275: $function = 'CHIINV'; 		$args = 2;break;
+			case 276: $function = 'COMBIN'; 		$args = 2;break;
+			case 277: $function = 'CONFIDENCE'; 	$args = 3;break;
+			case 278: $function = 'CRITBINOM'; 		$args = 3;break;
+			case 279: $function = 'EVEN'; 			$args = 1;break;
+			case 280: $function = 'EXPONDIST'; 		$args = 3;break;
+			case 281: $function = 'FDIST'; 			$args = 3;break;
+			case 282: $function = 'FINV'; 			$args = 3;break;
+			case 283: $function = 'FISHER'; 		$args = 1;break;
+			case 284: $function = 'FISHERINV'; 		$args = 1;break;
+			case 285: $function = 'FLOOR'; 			$args = 2;break;
+			case 286: $function = 'GAMMADIST'; 		$args = 4;break;
+			case 287: $function = 'GAMMAINV'; 		$args = 3;break;
+			case 288: $function = 'CEILING'; 		$args = 2;break;
+			case 289: $function = 'HYPGEOMDIST';$args = 4;break;
+			case 290: $function = 'LOGNORMDIST';$args = 3;break;
+			case 291: $function = 'LOGINV';$args = 3;break;
+			case 292: $function = 'NEGBINOMDIST';$args = 3;break;
+			case 293: $function = 'NORMDIST';$args = 4;break;
+			case 294: $function = 'NORMSDIST';$args = 1;break;
+			case 295: $function = 'NORMINV';$args = 3;break;
+			case 296: $function = 'NORMSINV';$args = 1;break;
+			case 297: $function = 'STANDARDIZE';$args = 3;break;
+			case 298: $function = 'ODD';$args = 1;break;
+			case 299: $function = 'PERMUT';$args = 2;break;
+			case 300: $function = 'POISSON';$args = 3;break;
+			case 301: $function = 'TDIST';$args = 3;break;
+			case 302: $function = 'WEIBULL';$args = 4;break;
+			case 303: $function = 'SUMXMY2';$args = 2;break;
+			case 304: $function = 'SUMX2MY2';$args = 2;break;
+			case 305: $function = 'SUMX2PY2';$args = 2;break;
+			case 306: $function = 'CHITEST';$args = 2;break;
+			case 307: $function = 'CORREL';$args = 2;break;
+			case 308: $function = 'COVAR';$args = 2;break;
+			case 309: $function = 'FORECAST';$args = 3;break;
+			case 310: $function = 'FTEST';$args = 2;break;
+			case 311: $function = 'INTERCEPT';$args = 2;break;
+			case 312: $function = 'PEARSON';$args = 2;break;
+			case 313: $function = 'RSQ';$args = 2;break;
+			case 314: $function = 'STEYX';$args = 2;break;
+			case 315: $function = 'SLOPE';$args = 2;break;
+			case 316: $function = 'TTEST';$args = 4;break;
+			case 325: $function = 'LARGE';$args = 2;break;
+			case 326: $function = 'SMALL';$args = 2;break;
+			case 327: $function = 'QUARTILE';$args = 2;break;
+			case 328: $function = 'PERCENTILE';$args = 2;break;
+			case 331: $function = 'TRIMMEAN';$args = 2;break;
+			case 332: $function = 'TINV';$args = 2;break;
+			case 337: $function = 'POWER';$args = 2;break;
+			case 342: $function = 'RADIANS';$args = 1;break;
+			case 343: $function = 'DEGREES';$args = 1;break;
+			case 346: $function = 'COUNTIF';$args = 2;break;
+			case 347: $function = 'COUNTBLANK';$args = 1;break;
+			case 350: $function = 'ISPMT';$args = 4;break;
+			case 351: $function = 'DATEDIF';$args = 3;break;
+			case 352: $function = 'DATESTRING';$args = 1;break;
+			case 353: $function = 'NUMBERSTRING';$args = 2;break;
+			case 360: $function = 'PHONETIC';$args = 1;break;
+			case 368: $function = 'BAHTTEXT';$args = 1;break;
 			default:
 				throw new Exception('Unrecognized function in formula');
 				break;
@@ -5574,94 +5574,94 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 			// offset: 2: size: 2; index to built-in sheet function
 			$index = self::_GetInt2d($formulaData, 2);
 			switch ($index) {
-			case   0: $function = 'COUNT';			break;
-			case   1: $function = 'IF';				break;
-			case   4: $function = 'SUM';			break;
-			case   5: $function = 'AVERAGE';		break;
-			case   6: $function = 'MIN';			break;
-			case   7: $function = 'MAX';			break;
-			case   8: $function = 'ROW';			break;
-			case   9: $function = 'COLUMN';			break;
-			case  11: $function = 'NPV';			break;
-			case  12: $function = 'STDEV';			break;
-			case  13: $function = 'DOLLAR';			break;
-			case  14: $function = 'FIXED';			break;
-			case  28: $function = 'LOOKUP';			break;
-			case  29: $function = 'INDEX';			break;
-			case  36: $function = 'AND';			break;
-			case  37: $function = 'OR';				break;
-			case  46: $function = 'VAR';			break;
-			case  49: $function = 'LINEST';			break;
-			case  50: $function = 'TREND';			break;
-			case  51: $function = 'LOGEST';			break;
-			case  52: $function = 'GROWTH';			break;
-			case  56: $function = 'PV';				break;
-			case  57: $function = 'FV';				break;
-			case  58: $function = 'NPER';			break;
-			case  59: $function = 'PMT';			break;
-			case  60: $function = 'RATE';			break;
-			case  62: $function = 'IRR';			break;
-			case  64: $function = 'MATCH';			break;
-			case  70: $function = 'WEEKDAY';		break;
-			case  78: $function = 'OFFSET';			break;
-			case  82: $function = 'SEARCH';			break;
-			case 100: $function = 'CHOOSE';			break;
-			case 101: $function = 'HLOOKUP';		break;
-			case 102: $function = 'VLOOKUP';		break;
-			case 109: $function = 'LOG';			break;
-			case 115: $function = 'LEFT';			break;
-			case 116: $function = 'RIGHT';			break;
-			case 120: $function = 'SUBSTITUTE';		break;
-			case 124: $function = 'FIND';			break;
-			case 125: $function = 'CELL';			break;
-			case 144: $function = 'DDB';			break;
-			case 148: $function = 'INDIRECT';		break;
-			case 167: $function = 'IPMT';			break;
-			case 168: $function = 'PPMT';			break;
-			case 169: $function = 'COUNTA';			break;
-			case 183: $function = 'PRODUCT';		break;
-			case 193: $function = 'STDEVP';			break;
-			case 194: $function = 'VARP';			break;
-			case 197: $function = 'TRUNC';			break;
-			case 204: $function = 'USDOLLAR';		break;
-			case 205: $function = 'FINDB';			break;
-			case 206: $function = 'SEARCHB';		break;
-			case 208: $function = 'LEFTB';			break;
-			case 209: $function = 'RIGHTB';			break;
-			case 216: $function = 'RANK';			break;
-			case 219: $function = 'ADDRESS';		break;
-			case 220: $function = 'DAYS360';		break;
-			case 222: $function = 'VDB';			break;
-			case 227: $function = 'MEDIAN';			break;
-			case 228: $function = 'SUMPRODUCT';		break;
-			case 247: $function = 'DB';				break;
-			case 255: $function = '';				break;
-			case 269: $function = 'AVEDEV';			break;
-			case 270: $function = 'BETADIST';		break;
-			case 272: $function = 'BETAINV';		break;
-			case 317: $function = 'PROB';			break;
-			case 318: $function = 'DEVSQ';			break;
-			case 319: $function = 'GEOMEAN';		break;
-			case 320: $function = 'HARMEAN';		break;
-			case 321: $function = 'SUMSQ';			break;
-			case 322: $function = 'KURT';			break;
-			case 323: $function = 'SKEW';			break;
-			case 324: $function = 'ZTEST';			break;
-			case 329: $function = 'PERCENTRANK';	break;
-			case 330: $function = 'MODE';			break;
-			case 336: $function = 'CONCATENATE';	break;
-			case 344: $function = 'SUBTOTAL';		break;
-			case 345: $function = 'SUMIF';			break;
-			case 354: $function = 'ROMAN';			break;
-			case 358: $function = 'GETPIVOTDATA';	break;
-			case 359: $function = 'HYPERLINK';		break;
-			case 361: $function = 'AVERAGEA';		break;
-			case 362: $function = 'MAXA';			break;
-			case 363: $function = 'MINA';			break;
-			case 364: $function = 'STDEVPA';		break;
-			case 365: $function = 'VARPA';			break;
-			case 366: $function = 'STDEVA';			break;
-			case 367: $function = 'VARA';			break;
+			case   0: $function = 'COUNT';break;
+			case   1: $function = 'IF';break;
+			case   4: $function = 'SUM';break;
+			case   5: $function = 'AVERAGE';break;
+			case   6: $function = 'MIN';break;
+			case   7: $function = 'MAX';break;
+			case   8: $function = 'ROW';break;
+			case   9: $function = 'COLUMN';break;
+			case  11: $function = 'NPV';break;
+			case  12: $function = 'STDEV';break;
+			case  13: $function = 'DOLLAR';break;
+			case  14: $function = 'FIXED';break;
+			case  28: $function = 'LOOKUP';break;
+			case  29: $function = 'INDEX';break;
+			case  36: $function = 'AND';break;
+			case  37: $function = 'OR';break;
+			case  46: $function = 'VAR';break;
+			case  49: $function = 'LINEST';break;
+			case  50: $function = 'TREND';break;
+			case  51: $function = 'LOGEST';break;
+			case  52: $function = 'GROWTH';break;
+			case  56: $function = 'PV';break;
+			case  57: $function = 'FV';break;
+			case  58: $function = 'NPER';break;
+			case  59: $function = 'PMT';break;
+			case  60: $function = 'RATE';break;
+			case  62: $function = 'IRR';break;
+			case  64: $function = 'MATCH';break;
+			case  70: $function = 'WEEKDAY';break;
+			case  78: $function = 'OFFSET';break;
+			case  82: $function = 'SEARCH';break;
+			case 100: $function = 'CHOOSE';break;
+			case 101: $function = 'HLOOKUP';break;
+			case 102: $function = 'VLOOKUP';break;
+			case 109: $function = 'LOG';break;
+			case 115: $function = 'LEFT';break;
+			case 116: $function = 'RIGHT';break;
+			case 120: $function = 'SUBSTITUTE';break;
+			case 124: $function = 'FIND';break;
+			case 125: $function = 'CELL';break;
+			case 144: $function = 'DDB';break;
+			case 148: $function = 'INDIRECT';break;
+			case 167: $function = 'IPMT';break;
+			case 168: $function = 'PPMT';break;
+			case 169: $function = 'COUNTA';break;
+			case 183: $function = 'PRODUCT';break;
+			case 193: $function = 'STDEVP';break;
+			case 194: $function = 'VARP';break;
+			case 197: $function = 'TRUNC';break;
+			case 204: $function = 'USDOLLAR';break;
+			case 205: $function = 'FINDB';break;
+			case 206: $function = 'SEARCHB';break;
+			case 208: $function = 'LEFTB';break;
+			case 209: $function = 'RIGHTB';break;
+			case 216: $function = 'RANK';break;
+			case 219: $function = 'ADDRESS';break;
+			case 220: $function = 'DAYS360';break;
+			case 222: $function = 'VDB';break;
+			case 227: $function = 'MEDIAN';break;
+			case 228: $function = 'SUMPRODUCT';break;
+			case 247: $function = 'DB';break;
+			case 255: $function = '';break;
+			case 269: $function = 'AVEDEV';break;
+			case 270: $function = 'BETADIST';break;
+			case 272: $function = 'BETAINV';break;
+			case 317: $function = 'PROB';break;
+			case 318: $function = 'DEVSQ';break;
+			case 319: $function = 'GEOMEAN';break;
+			case 320: $function = 'HARMEAN';break;
+			case 321: $function = 'SUMSQ';break;
+			case 322: $function = 'KURT';break;
+			case 323: $function = 'SKEW';break;
+			case 324: $function = 'ZTEST';break;
+			case 329: $function = 'PERCENTRANK';break;
+			case 330: $function = 'MODE';break;
+			case 336: $function = 'CONCATENATE';break;
+			case 344: $function = 'SUBTOTAL';break;
+			case 345: $function = 'SUMIF';break;
+			case 354: $function = 'ROMAN';break;
+			case 358: $function = 'GETPIVOTDATA';break;
+			case 359: $function = 'HYPERLINK';break;
+			case 361: $function = 'AVERAGEA';break;
+			case 362: $function = 'MAXA';break;
+			case 363: $function = 'MINA';break;
+			case 364: $function = 'STDEVPA';break;
+			case 365: $function = 'VARPA';break;
+			case 366: $function = 'STDEVA';break;
+			case 367: $function = 'VARA';break;
 			default:
 				throw new Exception('Unrecognized function in formula');
 				break;
@@ -5764,7 +5764,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 				$cellAddress = $this->_readBIFF8CellAddress(substr($formulaData, 3, 4));
 
 				$data = "$sheetRange!$cellAddress";
-			} catch (Exception $e) {
+			}catch (Exception $e) {
 				// deleted sheet reference
 				$data = '#REF!';
 			}
@@ -5783,7 +5783,7 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 				$cellRangeAddress = $this->_readBIFF8CellRangeAddress(substr($formulaData, 3, 8));
 
 				$data = "$sheetRange!$cellRangeAddress";
-			} catch (Exception $e) {
+			}catch (Exception $e) {
 				// deleted sheet reference
 				$data = '#REF!';
 			}
@@ -6703,13 +6703,13 @@ class PHPExcel_Reader_Excel5 implements PHPExcel_Reader_IReader
 	private static function _mapErrorCode($subData)
 	{
 		switch ($subData) {
-			case 0x00: return '#NULL!';		break;
-			case 0x07: return '#DIV/0!';	break;
-			case 0x0F: return '#VALUE!';	break;
-			case 0x17: return '#REF!';		break;
-			case 0x1D: return '#NAME?';		break;
-			case 0x24: return '#NUM!';		break;
-			case 0x2A: return '#N/A';		break;
+			case 0x00: return '#NULL!';break;
+			case 0x07: return '#DIV/0!';break;
+			case 0x0F: return '#VALUE!';break;
+			case 0x17: return '#REF!';break;
+			case 0x1D: return '#NAME?';break;
+			case 0x24: return '#NUM!';break;
+			case 0x2A: return '#N/A';break;
 			default: return false;
 		}
 	}

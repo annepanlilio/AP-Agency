@@ -20,9 +20,9 @@ $header='
       }
       //-->
     </script>
-	
+
 <style>
-	.image { width: 150px; height: 180px; margin-left:5px; margin-right:5px;}
+	.image {width: 150px; height: 180px; margin-left:5px; margin-right:5px;}
 </style>
 
 
@@ -30,18 +30,18 @@ $header='
 <body  style="background: #fff;">';
 if(!empty($type)){$type=' type="'.$type.'"';}
 
-	  $divisions = do_shortcode('[profile_list gender="'.$division.'" age_start="'.$ageStart.'" age_stop="'.$ageStop.'"'.$type.' paging="0"]'); 
-  		
-	 $scode = do_shortcode('[profile_list gender="'.$division.'" age_start="'.$ageStart.'" age_stop="'.$ageStop.'"'.$type.' paging="0"]');
- 	
-	 $divisions=trim(strip_tags($divisions,'<a>'));
-	 $divisions = preg_replace( '/\s+/', ' ', $divisions );
-	 $divisions = explode("<a" , $divisions);
-	 $ctr = 0;
-	 $array_info = array();
-	 foreach($divisions as $d){
-			 $d = trim ($d);
-			 if(strpos($d,'style="background-image:') != false){
+		$divisions = do_shortcode('[profile_list gender="'.$division.'" age_start="'.$ageStart.'" age_stop="'.$ageStop.'"'.$type.' paging="0"]'); 
+  
+	$scode = do_shortcode('[profile_list gender="'.$division.'" age_start="'.$ageStart.'" age_stop="'.$ageStop.'"'.$type.' paging="0"]');
+ 
+	$divisions=trim(strip_tags($divisions,'<a>'));
+	$divisions = preg_replace( '/\s+/', ' ', $divisions );
+	$divisions = explode("<a" , $divisions);
+	$ctr = 0;
+	$array_info = array();
+	foreach($divisions as $d){
+			$d = trim ($d);
+			if(strpos($d,'style="background-image:') != false){
 					// get the image url
 					$x = explode('style="background-image:' , $d);
 					$i = trim($x[1]);
@@ -55,20 +55,20 @@ if(!empty($type)){$type=' type="'.$type.'"';}
 					$name = trim($n[0]);
 					// load to array
 					$array_info[$name] = $img;
-			 }
-			 $ctr++;
-	 }
-	
-	   
-	  // $footerBlock="<img style='margin-top:60px;width:320px; height:67px;' src='".$rb_agency_option_agencylogo."'>";
-	   $footerBlock.='<img style="margin-top:60px;width:320px; height:67px;" src="'.$rb_agency_option_agencylogo.'">';
-	 
+			}
+			$ctr++;
+	}
+
+
+		// $footerBlock="<img style='margin-top:60px;width:320px; height:67px;' src='".$rb_agency_option_agencylogo."'>";
+		$footerBlock.='<img style="margin-top:60px;width:320px; height:67px;" src="'.$rb_agency_option_agencylogo.'">';
+
 		$perRow=5;
 		$perPage=10;
-	   $result = "<table border='0'><tr>";
+		$result = "<table border='0'><tr>";
 		foreach ($array_info as $key => $value) {
 			$value=trim($value);
-			
+
 			//get ratio size;
 			$size = getimagesize($value);
 			$srcwidth = $size[0]; 
@@ -76,22 +76,22 @@ if(!empty($type)){$type=' type="'.$type.'"';}
 			$targetwidth = 150;
 			$targetheight = 220;
 			$fLetterBox = true; //fit to window
-			
+
 			// scale to the target width
 			$scaleX1 = $targetwidth;
 			$scaleY1 = ($srcheight * $targetwidth) / $srcwidth;
-		
+
 			// scale to the target height
 			$scaleX2 = ($srcwidth * $targetheight) / $srcheight;
 			$scaleY2 = $targetheight;
-		
+
 			// now figure out which one we should use
 			$fScaleOnWidth = ($scaleX2 > $targetwidth);
 			if ($fScaleOnWidth) {
 				$fScaleOnWidth = $fLetterBox;
 			}
 			else {
-			   $fScaleOnWidth = !$fLetterBox;
+				$fScaleOnWidth = !$fLetterBox;
 			}
 			if ($fScaleOnWidth) {
 				$width = floor($scaleX1);
@@ -104,23 +104,23 @@ if(!empty($type)){$type=' type="'.$type.'"';}
 				$fScaleToTargetWidth = false;
 			}
 			$targetleft = floor((targetwidth - result.width) / 2);
-			$targettop = floor((targetheight - result.height) / 2);			
-			
-		    if(!empty($value)){
-				 $loopcntR++;
-				 $loopcntP++;
-			     $value="<div style='width:150px; height:220px; overflow:hidden;'><img class='image' style='width:".$width."px; height:".$height."px;' src='" . $value . "'/></div><br>" . $key;
-				 $result .= "<td align='center' width='150'>";
-				 $result .= "".$value."";
-				 $result .= "</td>";
-				 if($loopcntR==$perRow){
-					  $result .= "</tr>";
-				 	if($loopcntP==$perPage){$result .= "</table>$footerBlock<div style='page-break-before:always' /></div><table border='0'>"; $loopcntP=0;}
-				 	  $result .= "<tr>";$loopcntR=0;
-				 }
-				
+			$targettop = floor((targetheight - result.height) / 2);
+
+			if(!empty($value)){
+				$loopcntR++;
+				$loopcntP++;
+					$value="<div style='width:150px; height:220px; overflow:hidden;'><img class='image' style='width:".$width."px; height:".$height."px;' src='" . $value . "'/></div><br>" . $key;
+				$result .= "<td align='center' width='150'>";
+				$result .= "".$value."";
+				$result .= "</td>";
+				if($loopcntR==$perRow){
+						$result .= "</tr>";
+					if($loopcntP==$perPage){$result .= "</table>$footerBlock<div style='page-break-before:always' /></div><table border='0'>"; $loopcntP=0;}
+						$result .= "<tr>";$loopcntR=0;
+				}
+
 			}
-		}	
+		}
 		$result .= "</tr></table><br clear='all'>$footerBlock";
 
 $footer='</body>
@@ -136,7 +136,7 @@ elseif($ageStart==13 AND $ageStop==18 AND $division==1){$divisionName="Teen-Boys
 elseif($ageStart==13 AND $ageStop==18 AND $division==2){$divisionName="Teen-Girls";}
 elseif($ageStart==18 AND $ageStop==99 AND $division==1){$divisionName="Men";}
 elseif($ageStart==18 AND $ageStop==99 AND $division==2){$divisionName="Women";}
-else{$divisionName="Models";}
+else {$divisionName="Models";}
 
 
 //$paperDef="10x16"; // PDF ppaer size

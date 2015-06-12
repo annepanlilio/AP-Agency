@@ -6,12 +6,12 @@ global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
-	
+
 	// PDF layout style
     $pdf_style = "
     <style type=\"text/css\">
-    	#profile-list{background:#fff;}
-    	#profile-list .rbprofile-list {
+		#profile-list{background:#fff;}
+		#profile-list .rbprofile-list {
 			width: 35%;
 			padding: 10px 20px 20px 0px;
 			font-size: 14px;
@@ -39,7 +39,7 @@ global $wpdb;
 				background-repeat:no-repeat;
 			}
 			a{text-decoration:none;color:#000}
-			.details-email,.details,.details-merged{font-size:10px;  word-wrap:break-word;}
+			.details-email,.details,.details-merged{font-size:10px;word-wrap:break-word;}
 			.contact{display:block;font-size:10px;word-wrap:break-word;}
 	</style>";
 	// Call Header
@@ -54,11 +54,11 @@ global $wpdb;
 	// Call Footer
 	$footer='</body></html>';
     $footerBlock ='<img style="height:30px page-break-before:always" src="'.$rb_agency_option_agencylogo.'">';
-	 
+
 	// Catch Profile HTML elements
 	$profiles = isset($_GET["target"])?stripslashes($_GET["target"]):"";
 	$profiles = implode(",",array_filter(explode(",",$profiles)));
-	
+
 	$sql = "SELECT 
 					profile.ProfileID,
 					profile.ProfileGallery,
@@ -98,7 +98,7 @@ global $wpdb;
 			$results .= "<div style=\"clear:both;\"></div>";
 			$results .= $footerBlock; 
 			$results .= "<div style=\"clear:both;\"></div>";
-			
+
 		}
 		$i++;
 	}

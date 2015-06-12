@@ -145,13 +145,13 @@ class PHPExcel_Chart_Layout
 	 */
 	public function __construct($layout=array())
 	{
-		if (isset($layout['layoutTarget']))	{ $this->_layoutTarget	= $layout['layoutTarget'];	}
-		if (isset($layout['xMode']))		{ $this->_xMode			= $layout['xMode'];			}
-		if (isset($layout['yMode']))		{ $this->_yMode			= $layout['yMode'];			}
-		if (isset($layout['x']))			{ $this->_xPos			= (float) $layout['x'];		}
-		if (isset($layout['y']))			{ $this->_yPos			= (float) $layout['y'];		}
-		if (isset($layout['w']))			{ $this->_width			= (float) $layout['w'];		}
-		if (isset($layout['h']))			{ $this->_height		= (float) $layout['h'];		}
+		if (isset($layout['layoutTarget']))	{$this->_layoutTarget	= $layout['layoutTarget'];}
+		if (isset($layout['xMode']))		{$this->_xMode			= $layout['xMode'];}
+		if (isset($layout['yMode']))		{$this->_yMode			= $layout['yMode'];}
+		if (isset($layout['x']))			{$this->_xPos			= (float) $layout['x'];}
+		if (isset($layout['y']))			{$this->_yPos			= (float) $layout['y'];}
+		if (isset($layout['w']))			{$this->_width			= (float) $layout['w'];}
+		if (isset($layout['h']))			{$this->_height		= (float) $layout['h'];}
 	}
 
 	/**

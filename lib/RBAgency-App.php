@@ -18,7 +18,7 @@ class RBAgency_App {
 
 			// Ensure we are NOT in the admin section of wordpress
 			if( !is_admin() ) {
-				
+
 				// Add Styles to Admin Head Section 
 				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_style') );
 
@@ -47,7 +47,7 @@ class RBAgency_App {
 
 				// Get Custom CSS
 				$rb_agency_options_arr = get_option('rb_agency_layout_options');
-				
+
 				wp_register_style( 'rbagency-print-style', RBAGENCY_PLUGIN_URL .'assets/css/print.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-print-style' );
 
@@ -79,7 +79,7 @@ class RBAgency_App {
 
 						$rb_agency_value_stylesheet = $rb_agency_stylesheet_string;
 					}
-				
+
 				wp_add_inline_style( 'rbagency-print-style', $rb_agency_value_stylesheet );
 
 				wp_register_style( 'rbagency-formstyle',RBAGENCY_PLUGIN_URL .'assets/css/forms.css' );
@@ -124,7 +124,7 @@ class RBAgency_App {
 					site_url: "<?php echo get_bloginfo('url');?>"
 				}
 				</script>
-				
+
 				<?php
 
 				// TODO: Check Validity
@@ -133,7 +133,7 @@ class RBAgency_App {
 
 		// Get public footer scripts
 		public static function rbagency_footer_scripts(){
-			
+
 			wp_register_script( 'rb-customfields-search', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
 			wp_enqueue_script( 'rb-customfields-search' );
 			wp_register_script( 'rb-print-profile', RBAGENCY_PLUGIN_URL .'assets/js/rb-printProfiles.js' );
@@ -203,7 +203,7 @@ class RBAgency_App {
 			} elseif (rb_is_page("casting_dashboard")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'casting-dashboard';
-				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';			
+				$classes[] = is_user_logged_in() ? 'logged-in':'logged-out';
 			} elseif (rb_is_page("job_detail")) {
 				$classes[] = 'rbagency-casting';
 				$classes[] = 'job-detail';

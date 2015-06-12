@@ -268,8 +268,8 @@ class RBAgency_Init {
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(16, 'Experience', 	4, '', 0, 13, 0, 1, 1,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1,0, 0, 1, 0)");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(19, 'Date', 	    10, '', 0, 0, 0, 1, 1,0, 0, 1, 0)");
-				
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(19, 'Date', 		10, '', 0, 0, 0, 1, 1,0, 0, 1, 0)");
+
 					}
 
 				// Setup > Custom Field Types > Mux Values
@@ -608,7 +608,7 @@ class RBAgency_Init {
 			// Is it coming from the right referer?
 			$plugin = isset( $_REQUEST['plugin'] ) ? $_REQUEST['plugin'] : '';
 			check_admin_referer( "deactivate-plugin_{$plugin}" );
-			*/
+			 */
 			// TODO: Enhance
 
 		}
@@ -650,7 +650,7 @@ class RBAgency_Init {
 			array_splice($current, array_search( $thepluginfile, $current), 1 );
 			update_option('active_plugins', $current);
 			do_action('deactivate_' . $thepluginfile );
-			*/
+			 */
 
 			// Redirect back to Plugins
 			echo "<div style=\"padding:50px;font-weight:bold;\"><p>". __("Almost done...", RBAGENCY_TEXTDOMAIN) ."</p><h1>". __("please uninstall on plugins page.", RBAGENCY_TEXTDOMAIN) ."</h1><a href=\"plugins.php?deactivate=true\">". __("Please click here to complete the uninstallation process", RBAGENCY_TEXTDOMAIN) ."</a></h1></div>";

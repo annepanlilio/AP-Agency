@@ -97,8 +97,8 @@ class RBAgency_Common {
 	static function clean_string($string) {
 
 		// Remove trailing dingleberry
-		if (substr($string, -1) == ",") {  $string = substr($string, 0, strlen($string)-1); }
-		if (substr($string, 0, 1) == ",") { $string = substr($string, 1, strlen($string)-1); }
+		if (substr($string, -1) == ",") { $string = substr($string, 0, strlen($string)-1); }
+		if (substr($string, 0, 1) == ",") {$string = substr($string, 1, strlen($string)-1); }
 		// Just Incase
 		$string = str_replace(",,", ",", $string);
 
@@ -185,7 +185,7 @@ class RBAgency_Common {
 		if(!is_array($string)){
 			if(isset($_SESSION[$string]) && !empty($_SESSION[$string])){
 				return $_SESSION[$string];
-			}else{
+			} else {
 				return "";
 			}
 		}
@@ -215,7 +215,7 @@ class RBAgency_Common {
 		$filename = str_replace('--', '-', $filename);
 		if($tolower){
 			return strtolower($filename);
-		}else{
+		} else {
 			return $filename;
 		}
 	}
@@ -574,19 +574,19 @@ class RBAgency_Common {
 
 	/*
 	 *  Display: Print Profile
-	*/
-	
+	 */
+
 	static function print_profile($ProfileID = null,$ProfileGallery = null, $ProfileContactDisplay = null){
 
 		global $wpdb;
-		
+
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
 		$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 		$urlexploade = explode("/", $profileURLString);
 		$subview= isset($urlexploade[1])?$urlexploade[1]:"";
-		
+
 		if(isset($_POST['pdf_all_images']) && $_POST['pdf_all_images']!=""){
 			require_once(dirname(__FILE__).'/../theme/pdf-profile.php');
 			exit;
@@ -594,8 +594,8 @@ class RBAgency_Common {
 
 
 
-			  //to load profile page sub pages or just load the main profile page
-			if($subview=="images"){//show all images page  //MODS 2012-11-28 ?>
+				//to load profile page sub pages or just load the main profile page
+			if($subview=="images"){ //show all images page  //MODS 2012-11-28 ?>
 				<div class="allimages_div">
 					<script>  //JS to higlight selected images 
 						function selectImg(mid){
@@ -606,15 +606,15 @@ class RBAgency_Common {
 								img.style.filter       = "alpha(opacity=100)";
 								img.style.MozOpacity   = "100";
 								img.style.opacity      = "100";
-								img.style.KhtmlOpacity = "100";    
+								img.style.KhtmlOpacity = "100";
 								document.getElementById("p"+mid).value=0;
-							}else{
+							} else {
 								document.getElementById("p"+mid).value=1;
 								img = document.getElementById(mid);
 								img.style.filter       = "alpha(opacity=25)";
 								img.style.MozOpacity   = "0.25";
 								img.style.opacity      = "0.25";
-								img.style.KhtmlOpacity = "0.25";    
+								img.style.KhtmlOpacity = "0.25";
 							}
 
 						}
@@ -659,13 +659,13 @@ class RBAgency_Common {
 					</div><!-- allimages_div-->
 
 					<?php  //load lightbox for images
-					}elseif($subview=="lightbox"){//show all images page  //MODS 2012-11-28 ?>
+					} elseif($subview=="lightbox"){ //show all images page  //MODS 2012-11-28 ?>
 						<div class="allimages_div">
 						<span class="allimages_text"> <br /></span><br />
 						<form action="../print-images/" method="post" id="allimageform">
 						<input type="hidden" id="selected_image" name="selected_image" />
 						<?php  
-						
+
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
@@ -687,7 +687,7 @@ class RBAgency_Common {
 					</form>
 				</div><!-- allimages_div-->
 
-			<?php } elseif($subview=="polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
+			<?php } elseif($subview=="polaroids"){ //show all polaroids page  //MODS 2012-11-28 ?>
 
 				<div class="allimages_div">
 					<script>  //JS to higlight selected images 
@@ -699,15 +699,15 @@ class RBAgency_Common {
 								img.style.filter       = "alpha(opacity=100)";
 								img.style.MozOpacity   = "100";
 								img.style.opacity      = "100";
-								img.style.KhtmlOpacity = "100";    
+								img.style.KhtmlOpacity = "100";
 								document.getElementById("p"+mid).value=0;
-							}else{
+							} else {
 								document.getElementById("p"+mid).value=1;
 								img = document.getElementById(mid);
 								img.style.filter       = "alpha(opacity=25)";
 								img.style.MozOpacity   = "0.25";
 								img.style.opacity      = "0.25";
-								img.style.KhtmlOpacity = "0.25";    
+								img.style.KhtmlOpacity = "0.25";
 							}
 
 						}
@@ -716,7 +716,7 @@ class RBAgency_Common {
 					$queryImg = rb_agency_option_galleryorder_query("ProfileMediaID" ,$ProfileID,"Polaroid");
 					$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 					$countImg  = $wpdb->num_rows;
-						
+
 					if($countImg>0){
 
 					?>
@@ -742,10 +742,10 @@ class RBAgency_Common {
 
 						<!--	<input type="submit" value="Next, Select Print Format" />-->
 
-					</form> <?php }else{?>Sorry, there is no available polaroid images for this profile.<?php }?>
+					</form> <?php } else { ?>Sorry, there is no available polaroid images for this profile.<?php }?>
 				</div><!-- allimages_div-->
 
-			<?php } else if ($subview=="print-polaroids"){  //show print options
+			<?php } else if ($subview=="print-polaroids"){ //show print options
 
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 				$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
@@ -798,7 +798,7 @@ class RBAgency_Common {
 				</form>
 
 
-			<?php } else if($subview=="print-images") {  //show print options
+			<?php } else if($subview=="print-images") { //show print options
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 				$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 				$countImg  = $wpdb->num_rows;
@@ -812,7 +812,7 @@ class RBAgency_Common {
 				}
 				if(isset($withSelected) && $withSelected!=1){$selected="<input type='hidden' value='1' name='".$lasID."'>";}
 				?>
-				
+
 				<div class="print_options">
 					<span class="allimages_text">Select Print Format</span><br /><br />
 				</div> 
@@ -860,8 +860,8 @@ class RBAgency_Common {
 						<?php
 							}
 						?>
-						
-						
+
+
 						</div><!-- polariod -->
 					<center>
 						<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
@@ -870,7 +870,7 @@ class RBAgency_Common {
 						<input type="submit" value="Download PDF" name="pdf_all_images" />
 					</center>
 				</form>
-				
+
 			<?php } else { ?> 
 
 				<div id="profile-slide" class="rbcol-8 rbcolumn">
@@ -916,7 +916,7 @@ class RBAgency_Common {
 						</ul>
 					</div>
 				</div><!-- #portfolio-slide -->
-			
+
 			<?php }
 	}
 
@@ -940,8 +940,8 @@ class RBAgency_Common {
 
 		}
 	/**
-	* Converts array to http uri
-	*/		
+	 * Converts array to http uri
+	 */
 		public static function http_build_query($query_data){
 				$query_data = http_build_query(array_filter($query_data));
 				return $query_data;

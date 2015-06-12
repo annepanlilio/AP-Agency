@@ -20,7 +20,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 		wp_register_style( 'slider-style', RBAGENCY_PLUGIN_URL .'view/layout/06/css/flexslider.css' );
 		wp_enqueue_style( 'slider-style' );
 
-		wp_register_script( 'flexslider-js', RBAGENCY_PLUGIN_URL .'view/layout/06/js/jquery.flexslider-min.js', '', 1, true );		
+		wp_register_script( 'flexslider-js', RBAGENCY_PLUGIN_URL .'view/layout/06/js/jquery.flexslider-min.js', '', 1, true );
 		wp_enqueue_script( 'flexslider-js' );
 
 		wp_register_script( 'init-flexslider', RBAGENCY_PLUGIN_URL .'view/layout/06/js/init-flexslider.js', '', 1, true );
@@ -45,14 +45,14 @@ Large featured image and scrolling thumbnails
 <script type="text/javascript">
 	jQuery(document).ready(function() {
 
-	    jQuery('#division').change(function() {   
-	        var qString = 'sub=' +$(this).val();
-	        jQuery.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponse);
-	    });
+		jQuery('#division').change(function() {  
+			  var qString = 'sub=' +$(this).val();
+			  jQuery.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponse);
+		});
 
-	    function processResponse(data) {
-	        jQuery('#resultsGoHere').html(data);
-	    }
+		function processResponse(data) {
+			  jQuery('#resultsGoHere').html(data);
+		}
 
 	});
 </script>
@@ -107,9 +107,9 @@ Large featured image and scrolling thumbnails
 						<ul>
 							<?php
 							if (!empty($ProfileGender)) {
-								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
+								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	);
 								echo "<li class=\"rb_gender\" id=\"rb_gender\"><span class=\"title\">". __("Gender", RBAGENCY_TEXTDOMAIN). ":</span> <span>". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</span></li>\n";
-							}									
+							}
 							if (!empty($ProfileStatHeight)) {
 								if ($rb_agency_option_unittype == 0) { // Metric
 									echo "<li class=\"rb_height\" id=\"rb_height\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</li>\n";
@@ -127,7 +127,7 @@ Large featured image and scrolling thumbnails
 									echo "<li class=\"rb_weight\" id=\"rb_weight\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", RBAGENCY_TEXTDOMAIN). "</li>\n";
 								}
 							}
-									
+
 							// Insert Custom Fields
 							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $label_tag="span class='title'", $value_tag="span class='value'"); ?>
 						</ul>
@@ -145,11 +145,11 @@ Large featured image and scrolling thumbnails
 
 							// Resume
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
-											
-										
+
+
 							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
-							
+
 								if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
 									echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume</a></li>\n";
@@ -157,18 +157,18 @@ Large featured image and scrolling thumbnails
 							}
 							// Comp Card
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CompCard");
-											
-										
+
+
 							$resultsMedia=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countMedia  = $wpdb->num_rows;
 							$cpCount="";
 							if ($countMedia > 0) {
 								$cpCnt = 0;
 								foreach($resultsMedia as $dataMedia ){
-									$cpCnt++;  
+									$cpCnt++;
 									if($cpCnt == "2"){$cpCount="2nd";}
 									elseif($cpCnt == "3"){$cpCount="3rd";}
-									else{$cpCount="";}
+									else {$cpCount="";}
 
 									echo "<li class=\"item compcard\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download $cpCount Comp Card</a></li>\n";
 								}
@@ -193,7 +193,7 @@ Large featured image and scrolling thumbnails
 									$vdCnt++;
 									if($vdCnt == "2"){$vdCount="2nd";}
 									elseif($vdCnt == "3"){$vdCount="3rd";}
-									else{$vdCount="";}
+									else {$vdCount="";}
 									echo "<li class=\"item voice\"><a target='_blank' href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Listen to $vdCount Voice Demo</a></li>\n";
 								}
 							}
@@ -227,23 +227,23 @@ Large featured image and scrolling thumbnails
 							}
 							if(function_exists('rb_agency_casting_menu')){
 								echo rb_agency_get_new_miscellaneousLinks($ProfileID);
-							}			
+							}
 						echo "</ul>\n";?>                      
-	            
+			      
 					</div> <!-- .model-links -->
 
 					<div id="resultsGoHereAddtoCart"></div>
-	            	<div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", RBAGENCY_TEXTDOMAIN);?></a></div>
+			  		<div id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Casting Cart", RBAGENCY_TEXTDOMAIN);?></a></div>
 					<?php
 					//decides what division URL should be
-					$age = floor( (strtotime(date('Y-m-d')) - strtotime($ProfileDateBirth)) / 31556926);	 //calculate age
-					if($age > 17 AND $age <99 AND $ProfileGender==2){ $divisionDir="/women/";}
-					elseif($age > 17 AND $age <99 AND $ProfileGender==1){ $divisionDir="/men/";}
-					elseif($age > 12 AND $age <=17 AND $ProfileGender==2){ $divisionDir="/teen-girls/";}
-					elseif($age > 12 AND $age <=17 AND $ProfileGender==1){ $divisionDir="/teen-boys/";}
-					elseif($age > 1 AND $age <=12 AND $ProfileGender==2){ $divisionDir="/girls/";}
-					elseif($age > 1 AND $age <=12 AND $ProfileGender==1){ $divisionDir="/boys/";}
-					else{ $divisionDir="/";}
+					$age = floor( (strtotime(date('Y-m-d')) - strtotime($ProfileDateBirth)) / 31556926);//calculate age
+					if($age > 17 AND $age <99 AND $ProfileGender==2){$divisionDir="/women/";}
+					elseif($age > 17 AND $age <99 AND $ProfileGender==1){$divisionDir="/men/";}
+					elseif($age > 12 AND $age <=17 AND $ProfileGender==2){$divisionDir="/teen-girls/";}
+					elseif($age > 12 AND $age <=17 AND $ProfileGender==1){$divisionDir="/teen-boys/";}
+					elseif($age > 1 AND $age <=12 AND $ProfileGender==2){$divisionDir="/girls/";}
+					elseif($age > 1 AND $age <=12 AND $ProfileGender==1){$divisionDir="/boys/";}
+					else {$divisionDir="/";}
 					?>
 					<div id="model-nav">
 						<ul>
@@ -256,6 +256,6 @@ Large featured image and scrolling thumbnails
                  <?php RBAgency_Common::print_profile($ProfileID,$ProfileGallery, $ProfileContactDisplay); ?>
 		</div><!-- .rbcol-12 -->
 		<div class="rbclear"></div>
-		
+
 	</div><!-- #rblayout-six -->
 </div><!-- #rbprofile -->

@@ -23,8 +23,8 @@ class LagrangeInterpolation {
 	public function findPolynomialFactors($x, $y) {
 		$n = count($x);
 
-		$data = array();  // double[n][n];
-		$rhs  = array();  // double[n];
+		$data = array();// double[n][n];
+		$rhs  = array();// double[n];
 
 		for ($i = 0; $i < $n; ++$i) {
 			$v = 1;

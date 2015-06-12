@@ -47,8 +47,8 @@ class PHPExcel_RichText_TextElement implements PHPExcel_RichText_ITextElement
      */
     public function __construct($pText = '')
     {
-    	// Initialise variables
-    	$this->_text = $pText;
+		// Initialise variables
+		$this->_text = $pText;
     }
 
 	/**
@@ -86,10 +86,10 @@ class PHPExcel_RichText_TextElement implements PHPExcel_RichText_ITextElement
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-    	return md5(
-    		  $this->_text
-    		. __CLASS__
-    	);
+		return md5(
+				$this->_text
+			. __CLASS__
+		);
     }
 
 	/**

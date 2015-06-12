@@ -121,7 +121,7 @@ class PHPExcel_Chart_DataSeriesValues
 	 */
 	public function setDataType($dataType = self::DATASERIES_TYPE_NUMBER) {
 		if (!in_array($dataType, self::$_dataTypeValues)) {
-    		throw new PHPExcel_Chart_Exception('Invalid datatype for chart data series values');
+			throw new PHPExcel_Chart_Exception('Invalid datatype for chart data series values');
 		}
 		$this->_dataType = $dataType;
 
@@ -279,13 +279,13 @@ class PHPExcel_Chart_DataSeriesValues
 
 	public function refresh(PHPExcel_Worksheet $worksheet, $flatten = TRUE) {
         if ($this->_dataSource !== NULL) {
-        	$calcEngine = PHPExcel_Calculation::getInstance();
+    		$calcEngine = PHPExcel_Calculation::getInstance();
 			$newDataValues = PHPExcel_Calculation::_unwrapResult(
-			    $calcEngine->_calculateFormulaValue(
-			        '='.$this->_dataSource,
-			        NULL,
-			        $worksheet->getCell('A1')
-			    )
+				 $calcEngine->_calculateFormulaValue(
+				     '='.$this->_dataSource,
+				     NULL,
+				     $worksheet->getCell('A1')
+				 )
 			);
 			if ($flatten) {
 				$this->_dataValues = PHPExcel_Calculation_Functions::flattenArray($newDataValues);

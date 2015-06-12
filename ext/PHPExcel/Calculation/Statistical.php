@@ -63,8 +63,8 @@ class PHPExcel_Calculation_Statistical {
 
 
 	private static function _checkTrendArrays(&$array1,&$array2) {
-		if (!is_array($array1)) { $array1 = array($array1); }
-		if (!is_array($array2)) { $array2 = array($array2); }
+		if (!is_array($array1)) {$array1 = array($array1); }
+		if (!is_array($array2)) {$array2 = array($array2); }
 
 		$array1 = PHPExcel_Calculation_Functions::flattenArray($array1);
 		$array2 = PHPExcel_Calculation_Functions::flattenArray($array2);
@@ -177,7 +177,7 @@ class PHPExcel_Calculation_Statistical {
 		}
 		$h = 1.0 / $h;
 		$frac = $h;
-		$m	 = 1;
+		$m	= 1;
 		$delta = 0.0;
 		while ($m <= MAX_ITERATIONS && abs($delta-1.0) > PRECISION ) {
 			$m2 = 2 * $m;
@@ -229,7 +229,7 @@ class PHPExcel_Calculation_Statistical {
 	 * References:
 	 * <ol>
 	 * <li>W. J. Cody and K. E. Hillstrom, 'Chebyshev Approximations for the Natural
-	 *	 Logarithm of the Gamma Function,' Math. Comp. 21, 1967, pp. 198-203.</li>
+	 *	Logarithm of the Gamma Function,' Math. Comp. 21, 1967, pp. 198-203.</li>
 	 * <li>K. E. Hillstrom, ANL/AMD Program ANLC366S, DGAMMA/DLGAMA, May, 1969.</li>
 	 * <li>Hart, Et. Al., Computer Approximations, Wiley and sons, New York, 1968.</li>
 	 * </ol>
@@ -325,7 +325,7 @@ class PHPExcel_Calculation_Statistical {
 
 	// Rough estimate of the fourth root of logGamma_xBig
 	static $lg_frtbig = 2.25e76;
-	static $pnt68	 = 0.6796875;
+	static $pnt68	= 0.6796875;
 
 
 	if ($x == self::$_logGammaCache_x) {
@@ -449,7 +449,7 @@ class PHPExcel_Calculation_Statistical {
 							4 => -1.231739572450155,
 							5 => 1.208650973866179e-3,
 							6 => -5.395239384953e-6
-						  );
+							);
 
 		$y = $x = $data;
 		$tmp = $x + 5.5;
@@ -491,14 +491,14 @@ class PHPExcel_Calculation_Statistical {
 							4 => 1.383577518672690e+02,
 							5 => -3.066479806614716e+01,
 							6 => 2.506628277459239e+00
-						 );
+						);
 
 		static $b = array(	1 => -5.447609879822406e+01,
 							2 => 1.615858368580409e+02,
 							3 => -1.556989798598866e+02,
 							4 => 6.680131188771972e+01,
 							5 => -1.328068155288572e+01
-						 );
+						);
 
 		static $c = array(	1 => -7.784894002430293e-03,
 							2 => -3.223964580411365e-01,
@@ -506,17 +506,17 @@ class PHPExcel_Calculation_Statistical {
 							4 => -2.549732539343734e+00,
 							5 => 4.374664141464968e+00,
 							6 => 2.938163982698783e+00
-						 );
+						);
 
 		static $d = array(	1 => 7.784695709041462e-03,
 							2 => 3.224671290700398e-01,
 							3 => 2.445134137142996e+00,
 							4 => 3.754408661907416e+00
-						 );
+						);
 
 		//	Define lower and upper region break-points.
-		$p_low = 0.02425;			//Use lower region approx. below this
-		$p_high = 1 - $p_low;		//Use upper region approx. above this
+		$p_low = 0.02425;//Use lower region approx. below this
+		$p_high = 1 - $p_low;//Use upper region approx. above this
 
 		if (0 < $p && $p < $p_low) {
 			//	Rational approximation for lower region.
@@ -528,12 +528,12 @@ class PHPExcel_Calculation_Statistical {
 			$q = $p - 0.5;
 			$r = $q * $q;
 			return ((((($a[1] * $r + $a[2]) * $r + $a[3]) * $r + $a[4]) * $r + $a[5]) * $r + $a[6]) * $q /
-				   ((((($b[1] * $r + $b[2]) * $r + $b[3]) * $r + $b[4]) * $r + $b[5]) * $r + 1);
+					((((($b[1] * $r + $b[2]) * $r + $b[3]) * $r + $b[4]) * $r + $b[5]) * $r + 1);
 		} elseif ($p_high < $p && $p < 1) {
 			//	Rational approximation for upper region.
 			$q = sqrt(-2 * log(1 - $p));
 			return -((((($c[1] * $q + $c[2]) * $q + $c[3]) * $q + $c[4]) * $q + $c[5]) * $q + $c[6]) /
-					 (((($d[1] * $q + $d[2]) * $q + $d[3]) * $q + $d[4]) * $q + 1);
+					(((($d[1] * $q + $d[2]) * $q + $d[3]) * $q + $d[4]) * $q + 1);
 		}
 		//	If 0 < p < 1, return a null value
 		return PHPExcel_Calculation_Functions::NULL();
@@ -655,7 +655,7 @@ class PHPExcel_Calculation_Statistical {
 		if (abs($q) <= split1) {
 			$R = $const1 - $q * $q;
 			$z = $q * ((((((($a7 * $R + $a6) * $R + $a5) * $R + $a4) * $R + $a3) * $R + $a2) * $R + $a1) * $R + $a0) /
-					  ((((((($b7 * $R + $b6) * $R + $b5) * $R + $b4) * $R + $b3) * $R + $b2) * $R + $b1) * $R + 1);
+						((((((($b7 * $R + $b6) * $R + $b5) * $R + $b4) * $R + $b3) * $R + $b2) * $R + $b1) * $R + 1);
 		} else {
 			if ($q < 0) {
 				$R = $p;
@@ -668,12 +668,12 @@ class PHPExcel_Calculation_Statistical {
 			If ($R <= $split2) {
 				$R = $R - $const2;
 				$z = ((((((($c7 * $R + $c6) * $R + $c5) * $R + $c4) * $R + $c3) * $R + $c2) * $R + $c1) * $R + $c0) /
-					 ((((((($d7 * $R + $d6) * $R + $d5) * $R + $d4) * $R + $d3) * $R + $d2) * $R + $d1) * $R + 1);
+					((((((($d7 * $R + $d6) * $R + $d5) * $R + $d4) * $R + $d3) * $R + $d2) * $R + $d1) * $R + 1);
 			} else {
 			//	computation for p near 0 or 1.
 				$R = $R - $split2;
 				$z = ((((((($e7 * $R + $e6) * $R + $e5) * $R + $e4) * $R + $e3) * $R + $e2) * $R + $e1) * $R + $e0) /
-					 ((((((($f7 * $R + $f6) * $R + $f5) * $R + $f4) * $R + $f3) * $R + $f2) * $R + $f1) * $R + 1);
+					((((((($f7 * $R + $f6) * $R + $f5) * $R + $f4) * $R + $f3) * $R + $f2) * $R + $f1) * $R + 1);
 			}
 			if ($q < 0) {
 				$z = -$z;
@@ -849,7 +849,7 @@ class PHPExcel_Calculation_Statistical {
 		// Loop through arguments
 		$aCount = 0;
 		foreach ($aArgs as $key => $arg) {
-			if (!is_numeric($arg)) { $arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
+			if (!is_numeric($arg)) {$arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
 			$testCondition = '='.$arg.$condition;
 			if (PHPExcel_Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
 				if ((is_null($returnValue)) || ($arg > $returnValue)) {
@@ -1265,7 +1265,7 @@ class PHPExcel_Calculation_Statistical {
 		$condition = PHPExcel_Calculation_Functions::_ifCondition($condition);
 		// Loop through arguments
 		foreach ($aArgs as $arg) {
-			if (!is_numeric($arg)) { $arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
+			if (!is_numeric($arg)) {$arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
 			$testCondition = '='.$arg.$condition;
 			if (PHPExcel_Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
 				// Is it a value within our criteria
@@ -1358,8 +1358,8 @@ class PHPExcel_Calculation_Statistical {
 
 			$m = floor($trials * $probability);
 			++$TotalUnscaledProbability;
-			if ($m == $Guess) { ++$UnscaledPGuess; }
-			if ($m <= $Guess) { ++$UnscaledCumPGuess; }
+			if ($m == $Guess) {++$UnscaledPGuess; }
+			if ($m <= $Guess) {++$UnscaledCumPGuess; }
 
 			$PreviousValue = 1;
 			$Done = False;
@@ -1367,9 +1367,9 @@ class PHPExcel_Calculation_Statistical {
 			while ((!$Done) && ($k <= $trials)) {
 				$CurrentValue = $PreviousValue * ($trials - $k + 1) * $probability / ($k * (1 - $probability));
 				$TotalUnscaledProbability += $CurrentValue;
-				if ($k == $Guess) { $UnscaledPGuess += $CurrentValue; }
-				if ($k <= $Guess) { $UnscaledCumPGuess += $CurrentValue; }
-				if ($CurrentValue <= $EssentiallyZero) { $Done = True; }
+				if ($k == $Guess) {$UnscaledPGuess += $CurrentValue; }
+				if ($k <= $Guess) {$UnscaledCumPGuess += $CurrentValue; }
+				if ($CurrentValue <= $EssentiallyZero) {$Done = True; }
 				$PreviousValue = $CurrentValue;
 				++$k;
 			}
@@ -1380,9 +1380,9 @@ class PHPExcel_Calculation_Statistical {
 			while ((!$Done) && ($k >= 0)) {
 				$CurrentValue = $PreviousValue * $k + 1 * (1 - $probability) / (($trials - $k) * $probability);
 				$TotalUnscaledProbability += $CurrentValue;
-				if ($k == $Guess) { $UnscaledPGuess += $CurrentValue; }
-				if ($k <= $Guess) { $UnscaledCumPGuess += $CurrentValue; }
-				if ($CurrentValue <= $EssentiallyZero) { $Done = True; }
+				if ($k == $Guess) {$UnscaledPGuess += $CurrentValue; }
+				if ($k <= $Guess) {$UnscaledCumPGuess += $CurrentValue; }
+				if ($CurrentValue <= $EssentiallyZero) {$Done = True; }
 				$PreviousValue = $CurrentValue;
 				--$k;
 			}
@@ -1826,8 +1826,8 @@ class PHPExcel_Calculation_Statistical {
 				return PHPExcel_Calculation_Functions::NaN();
 			}
 			return PHPExcel_Calculation_MathTrig::COMBIN($populationSuccesses,$sampleSuccesses) *
-				   PHPExcel_Calculation_MathTrig::COMBIN($populationNumber - $populationSuccesses,$sampleNumber - $sampleSuccesses) /
-				   PHPExcel_Calculation_MathTrig::COMBIN($populationNumber,$sampleNumber);
+					PHPExcel_Calculation_MathTrig::COMBIN($populationNumber - $populationSuccesses,$sampleNumber - $sampleSuccesses) /
+					PHPExcel_Calculation_MathTrig::COMBIN($populationNumber,$sampleNumber);
 		}
 		return PHPExcel_Calculation_Functions::VALUE();
 	}	//	function HYPGEOMDIST()
@@ -1975,21 +1975,21 @@ class PHPExcel_Calculation_Statistical {
 		$bestFitLinear = trendClass::calculate(trendClass::TREND_LINEAR,$yValues,$xValues,$const);
 		if ($stats) {
 			return array( array( $bestFitLinear->getSlope(),
-						 		 $bestFitLinear->getSlopeSE(),
-						 		 $bestFitLinear->getGoodnessOfFit(),
-						 		 $bestFitLinear->getF(),
-						 		 $bestFitLinear->getSSRegression(),
-							   ),
-						  array( $bestFitLinear->getIntersect(),
-								 $bestFitLinear->getIntersectSE(),
-								 $bestFitLinear->getStdevOfResiduals(),
-								 $bestFitLinear->getDFResiduals(),
-								 $bestFitLinear->getSSResiduals()
-							   )
+								$bestFitLinear->getSlopeSE(),
+								$bestFitLinear->getGoodnessOfFit(),
+								$bestFitLinear->getF(),
+								$bestFitLinear->getSSRegression(),
+								),
+							array( $bestFitLinear->getIntersect(),
+								$bestFitLinear->getIntersectSE(),
+								$bestFitLinear->getStdevOfResiduals(),
+								$bestFitLinear->getDFResiduals(),
+								$bestFitLinear->getSSResiduals()
+								)
 						);
 		} else {
 			return array( $bestFitLinear->getSlope(),
-						  $bestFitLinear->getIntersect()
+							$bestFitLinear->getIntersect()
 						);
 		}
 	}	//	function LINEST()
@@ -2034,21 +2034,21 @@ class PHPExcel_Calculation_Statistical {
 		$bestFitExponential = trendClass::calculate(trendClass::TREND_EXPONENTIAL,$yValues,$xValues,$const);
 		if ($stats) {
 			return array( array( $bestFitExponential->getSlope(),
-						 		 $bestFitExponential->getSlopeSE(),
-						 		 $bestFitExponential->getGoodnessOfFit(),
-						 		 $bestFitExponential->getF(),
-						 		 $bestFitExponential->getSSRegression(),
-							   ),
-						  array( $bestFitExponential->getIntersect(),
-								 $bestFitExponential->getIntersectSE(),
-								 $bestFitExponential->getStdevOfResiduals(),
-								 $bestFitExponential->getDFResiduals(),
-								 $bestFitExponential->getSSResiduals()
-							   )
+								$bestFitExponential->getSlopeSE(),
+								$bestFitExponential->getGoodnessOfFit(),
+								$bestFitExponential->getF(),
+								$bestFitExponential->getSSRegression(),
+								),
+							array( $bestFitExponential->getIntersect(),
+								$bestFitExponential->getIntersectSE(),
+								$bestFitExponential->getStdevOfResiduals(),
+								$bestFitExponential->getDFResiduals(),
+								$bestFitExponential->getSSResiduals()
+								)
 						);
 		} else {
 			return array( $bestFitExponential->getSlope(),
-						  $bestFitExponential->getIntersect()
+							$bestFitExponential->getIntersect()
 						);
 		}
 	}	//	function LOGEST()
@@ -2209,7 +2209,7 @@ class PHPExcel_Calculation_Statistical {
 		$condition = PHPExcel_Calculation_Functions::_ifCondition($condition);
 		// Loop through arguments
 		foreach ($aArgs as $key => $arg) {
-			if (!is_numeric($arg)) { $arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
+			if (!is_numeric($arg)) {$arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
 			$testCondition = '='.$arg.$condition;
 			if (PHPExcel_Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
 				if ((is_null($returnValue)) || ($arg > $returnValue)) {
@@ -2371,7 +2371,7 @@ class PHPExcel_Calculation_Statistical {
 		$condition = PHPExcel_Calculation_Functions::_ifCondition($condition);
 		// Loop through arguments
 		foreach ($aArgs as $key => $arg) {
-			if (!is_numeric($arg)) { $arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
+			if (!is_numeric($arg)) {$arg = PHPExcel_Calculation::_wrapResult(strtoupper($arg)); }
 			$testCondition = '='.$arg.$condition;
 			if (PHPExcel_Calculation::getInstance()->_calculateFormulaValue($testCondition)) {
 				if ((is_null($returnValue)) || ($arg < $returnValue)) {
@@ -2402,7 +2402,7 @@ class PHPExcel_Calculation_Statistical {
 			}
 			if (!$found) {
 				$frequencyArray[] = array('value'		=> $datum,
-										  'frequency'	=>	1 );
+											'frequency'	=>	1 );
 			}
 		}
 
@@ -3248,7 +3248,7 @@ class PHPExcel_Calculation_Statistical {
 				$ti += 2;
 			}
 			$tsum *= $ts;
-			if (($degrees % 2) == 1) { $tsum = M_2DIVPI * ($tsum + $ttheta); }
+			if (($degrees % 2) == 1) {$tsum = M_2DIVPI * ($tsum + $ttheta); }
 			$tValue = 0.5 * (1 + $tsum);
 			if ($tails == 1) {
 				return 1 - abs($tValue);
@@ -3414,7 +3414,7 @@ class PHPExcel_Calculation_Statistical {
 		$aArgs = PHPExcel_Calculation_Functions::flattenArray(func_get_args());
 		$aCount = 0;
 		foreach ($aArgs as $arg) {
-			if (is_bool($arg)) { $arg = (integer) $arg; }
+			if (is_bool($arg)) {$arg = (integer) $arg; }
 			// Is it a numeric value?
 			if ((is_numeric($arg)) && (!is_string($arg))) {
 				$summerA += ($arg * $arg);
@@ -3509,7 +3509,7 @@ class PHPExcel_Calculation_Statistical {
 		$aArgs = PHPExcel_Calculation_Functions::flattenArray(func_get_args());
 		$aCount = 0;
 		foreach ($aArgs as $arg) {
-			if (is_bool($arg)) { $arg = (integer) $arg; }
+			if (is_bool($arg)) {$arg = (integer) $arg; }
 			// Is it a numeric value?
 			if ((is_numeric($arg)) && (!is_string($arg))) {
 				$summerA += ($arg * $arg);

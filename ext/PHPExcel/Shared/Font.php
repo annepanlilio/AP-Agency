@@ -52,8 +52,8 @@ class PHPExcel_Shared_Font
 	const CHARSET_ANSI_JAPANESE_SHIFTJIS	= 0x80;
 	const CHARSET_ANSI_KOREAN_HANGUL		= 0x81;
 	const CHARSET_ANSI_KOREAN_JOHAB			= 0x82;
-	const CHARSET_ANSI_CHINESE_SIMIPLIFIED	= 0x86;		//	gb2312
-	const CHARSET_ANSI_CHINESE_TRADITIONAL	= 0x88;		//	big5
+	const CHARSET_ANSI_CHINESE_SIMIPLIFIED	= 0x86;//	gb2312
+	const CHARSET_ANSI_CHINESE_TRADITIONAL	= 0x88;//	big5
 	const CHARSET_ANSI_GREEK				= 0xA1;
 	const CHARSET_ANSI_TURKISH				= 0xA2;
 	const CHARSET_ANSI_VIETNAMESE			= 0xA3;
@@ -150,40 +150,40 @@ class PHPExcel_Shared_Font
 	 */
 	public static $defaultColumnWidths = array(
 		'Arial' => array(
-			 1 => array('px' => 24, 'width' => 12.00000000),
-			 2 => array('px' => 24, 'width' => 12.00000000),
-			 3 => array('px' => 32, 'width' => 10.66406250),
-			 4 => array('px' => 32, 'width' => 10.66406250),
-			 5 => array('px' => 40, 'width' => 10.00000000),
-			 6 => array('px' => 48, 'width' =>  9.59765625),
-			 7 => array('px' => 48, 'width' =>  9.59765625),
-			 8 => array('px' => 56, 'width' =>  9.33203125),
-			 9 => array('px' => 64, 'width' =>  9.14062500),
+			1 => array('px' => 24, 'width' => 12.00000000),
+			2 => array('px' => 24, 'width' => 12.00000000),
+			3 => array('px' => 32, 'width' => 10.66406250),
+			4 => array('px' => 32, 'width' => 10.66406250),
+			5 => array('px' => 40, 'width' => 10.00000000),
+			6 => array('px' => 48, 'width' =>  9.59765625),
+			7 => array('px' => 48, 'width' =>  9.59765625),
+			8 => array('px' => 56, 'width' =>  9.33203125),
+			9 => array('px' => 64, 'width' =>  9.14062500),
 			10 => array('px' => 64, 'width' =>  9.14062500),
 		),
 		'Calibri' => array(
-			 1 => array('px' => 24, 'width' => 12.00000000),
-			 2 => array('px' => 24, 'width' => 12.00000000),
-			 3 => array('px' => 32, 'width' => 10.66406250),
-			 4 => array('px' => 32, 'width' => 10.66406250),
-			 5 => array('px' => 40, 'width' => 10.00000000),
-			 6 => array('px' => 48, 'width' =>  9.59765625),
-			 7 => array('px' => 48, 'width' =>  9.59765625),
-			 8 => array('px' => 56, 'width' =>  9.33203125),
-			 9 => array('px' => 56, 'width' =>  9.33203125),
+			1 => array('px' => 24, 'width' => 12.00000000),
+			2 => array('px' => 24, 'width' => 12.00000000),
+			3 => array('px' => 32, 'width' => 10.66406250),
+			4 => array('px' => 32, 'width' => 10.66406250),
+			5 => array('px' => 40, 'width' => 10.00000000),
+			6 => array('px' => 48, 'width' =>  9.59765625),
+			7 => array('px' => 48, 'width' =>  9.59765625),
+			8 => array('px' => 56, 'width' =>  9.33203125),
+			9 => array('px' => 56, 'width' =>  9.33203125),
 			10 => array('px' => 64, 'width' =>  9.14062500),
 			11 => array('px' => 64, 'width' =>  9.14062500),
 		),
 		'Verdana' => array(
-			 1 => array('px' => 24, 'width' => 12.00000000),
-			 2 => array('px' => 24, 'width' => 12.00000000),
-			 3 => array('px' => 32, 'width' => 10.66406250),
-			 4 => array('px' => 32, 'width' => 10.66406250),
-			 5 => array('px' => 40, 'width' => 10.00000000),
-			 6 => array('px' => 48, 'width' =>  9.59765625),
-			 7 => array('px' => 48, 'width' =>  9.59765625),
-			 8 => array('px' => 64, 'width' =>  9.14062500),
-			 9 => array('px' => 72, 'width' =>  9.00000000),
+			1 => array('px' => 24, 'width' => 12.00000000),
+			2 => array('px' => 24, 'width' => 12.00000000),
+			3 => array('px' => 32, 'width' => 10.66406250),
+			4 => array('px' => 32, 'width' => 10.66406250),
+			5 => array('px' => 40, 'width' => 10.00000000),
+			6 => array('px' => 48, 'width' =>  9.59765625),
+			7 => array('px' => 48, 'width' =>  9.59765625),
+			8 => array('px' => 64, 'width' =>  9.14062500),
+			9 => array('px' => 72, 'width' =>  9.00000000),
 			10 => array('px' => 72, 'width' =>  9.00000000),
 		),
 	);
@@ -192,7 +192,7 @@ class PHPExcel_Shared_Font
 	 * Set autoSize method
 	 *
 	 * @param string $pValue
-	 * @return	 boolean					Success or failure
+	 * @return	boolean					Success or failure
 	 */
 	public static function setAutoSizeMethod($pValue = self::AUTOSIZE_METHOD_APPROX)
 	{
@@ -280,7 +280,7 @@ class PHPExcel_Shared_Font
 			// Excel adds some padding, use 1.07 of the width of an 'n' glyph
 			$columnWidth += ceil(self::getTextWidthPixelsExact('0', $font, 0) * 1.07); // pixels incl. padding
 
-		} catch (Exception $e) {
+		}catch (Exception $e) {
 			// Width of text in pixels excl. padding, approximation
 			$columnWidth = self::getTextWidthPixelsApprox($cellText, $font, $rotation);
 
@@ -437,21 +437,21 @@ class PHPExcel_Shared_Font
 			case 'Arial':
 				$fontFile = (
 					$bold ? ($italic ? self::ARIAL_BOLD_ITALIC : self::ARIAL_BOLD)
-						  : ($italic ? self::ARIAL_ITALIC : self::ARIAL)
+							: ($italic ? self::ARIAL_ITALIC : self::ARIAL)
 				);
 				break;
 
 			case 'Calibri':
 				$fontFile = (
 					$bold ? ($italic ? self::CALIBRI_BOLD_ITALIC : self::CALIBRI_BOLD)
-						  : ($italic ? self::CALIBRI_ITALIC : self::CALIBRI)
+							: ($italic ? self::CALIBRI_ITALIC : self::CALIBRI)
 				);
 				break;
 
 			case 'Courier New':
 				$fontFile = (
 					$bold ? ($italic ? self::COURIER_NEW_BOLD_ITALIC : self::COURIER_NEW_BOLD)
-						  : ($italic ? self::COURIER_NEW_ITALIC : self::COURIER_NEW)
+							: ($italic ? self::COURIER_NEW_ITALIC : self::COURIER_NEW)
 				);
 				break;
 
@@ -464,7 +464,7 @@ class PHPExcel_Shared_Font
 			case 'Georgia':
 				$fontFile = (
 					$bold ? ($italic ? self::GEORGIA_BOLD_ITALIC : self::GEORGIA_BOLD)
-						  : ($italic ? self::GEORGIA_ITALIC : self::GEORGIA)
+							: ($italic ? self::GEORGIA_ITALIC : self::GEORGIA)
 				);
 				break;
 
@@ -475,7 +475,7 @@ class PHPExcel_Shared_Font
 			case 'Liberation Sans':
 				$fontFile = (
 					$bold ? ($italic ? self::LIBERATION_SANS_BOLD_ITALIC : self::LIBERATION_SANS_BOLD)
-						  : ($italic ? self::LIBERATION_SANS_ITALIC : self::LIBERATION_SANS)
+							: ($italic ? self::LIBERATION_SANS_ITALIC : self::LIBERATION_SANS)
 				);
 				break;
 
@@ -494,7 +494,7 @@ class PHPExcel_Shared_Font
 			case 'Palatino Linotype':
 				$fontFile = (
 					$bold ? ($italic ? self::PALATINO_LINOTYPE_BOLD_ITALIC : self::PALATINO_LINOTYPE_BOLD)
-						  : ($italic ? self::PALATINO_LINOTYPE_ITALIC : self::PALATINO_LINOTYPE)
+							: ($italic ? self::PALATINO_LINOTYPE_ITALIC : self::PALATINO_LINOTYPE)
 				);
 				break;
 
@@ -511,21 +511,21 @@ class PHPExcel_Shared_Font
 			case 'Times New Roman':
 				$fontFile = (
 					$bold ? ($italic ? self::TIMES_NEW_ROMAN_BOLD_ITALIC : self::TIMES_NEW_ROMAN_BOLD)
-						  : ($italic ? self::TIMES_NEW_ROMAN_ITALIC : self::TIMES_NEW_ROMAN)
+							: ($italic ? self::TIMES_NEW_ROMAN_ITALIC : self::TIMES_NEW_ROMAN)
 				);
 				break;
 
 			case 'Trebuchet MS':
 				$fontFile = (
 					$bold ? ($italic ? self::TREBUCHET_MS_BOLD_ITALIC : self::TREBUCHET_MS_BOLD)
-						  : ($italic ? self::TREBUCHET_MS_ITALIC : self::TREBUCHET_MS)
+							: ($italic ? self::TREBUCHET_MS_ITALIC : self::TREBUCHET_MS)
 				);
 				break;
 
 			case 'Verdana':
 				$fontFile = (
 					$bold ? ($italic ? self::VERDANA_BOLD_ITALIC : self::VERDANA_BOLD)
-						  : ($italic ? self::VERDANA_ITALIC : self::VERDANA)
+							: ($italic ? self::VERDANA_ITALIC : self::VERDANA)
 				);
 				break;
 

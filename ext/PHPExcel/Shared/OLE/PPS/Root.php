@@ -45,39 +45,39 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 		$this->_tempDir = PHPExcel_Shared_File::sys_get_temp_dir();
 
 		parent::__construct(
-		   null,
-		   PHPExcel_Shared_OLE::Asc2Ucs('Root Entry'),
-		   PHPExcel_Shared_OLE::OLE_PPS_TYPE_ROOT,
-		   null,
-		   null,
-		   null,
-		   $time_1st,
-		   $time_2nd,
-		   null,
-		   $raChild);
+			null,
+			PHPExcel_Shared_OLE::Asc2Ucs('Root Entry'),
+			PHPExcel_Shared_OLE::OLE_PPS_TYPE_ROOT,
+			null,
+			null,
+			null,
+			$time_1st,
+			$time_2nd,
+			null,
+			$raChild);
 	}
 
 	/**
-	* Method for saving the whole OLE container (including files).
-	* In fact, if called with an empty argument (or '-'), it saves to a
-	* temporary file and then outputs it's contents to stdout.
-	* If a resource pointer to a stream created by fopen() is passed
-	* it will be used, but you have to close such stream by yourself.
-	*
-	* @param string|resource $filename The name of the file or stream where to save the OLE container.
-	* @access public
-	* @return mixed true on success
-	*/
+	 * Method for saving the whole OLE container (including files).
+	 * In fact, if called with an empty argument (or '-'), it saves to a
+	 * temporary file and then outputs it's contents to stdout.
+	 * If a resource pointer to a stream created by fopen() is passed
+	 * it will be used, but you have to close such stream by yourself.
+	 *
+	 * @param string|resource $filename The name of the file or stream where to save the OLE container.
+	 * @access public
+	 * @return mixed true on success
+	 */
 	public function save($filename)
 	{
 		// Initial Setting for saving
 		$this->_BIG_BLOCK_SIZE  = pow(2,
-					  ((isset($this->_BIG_BLOCK_SIZE))? self::_adjust2($this->_BIG_BLOCK_SIZE)  : 9));
+						((isset($this->_BIG_BLOCK_SIZE))? self::_adjust2($this->_BIG_BLOCK_SIZE)  : 9));
 		$this->_SMALL_BLOCK_SIZE= pow(2,
-					  ((isset($this->_SMALL_BLOCK_SIZE))?  self::_adjust2($this->_SMALL_BLOCK_SIZE): 6));
+						((isset($this->_SMALL_BLOCK_SIZE))?  self::_adjust2($this->_SMALL_BLOCK_SIZE): 6));
 
 		if (is_resource($filename)) {
-		    $this->_FILEH_ = $filename;
+			 $this->_FILEH_ = $filename;
 		} else if ($filename == '-' || $filename == '') {
 			if ($this->_tmp_dir === NULL)
 				$this->_tmp_dir = PHPExcel_Shared_File::sys_get_temp_dir();
@@ -118,12 +118,12 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* Calculate some numbers
-	*
-	* @access public
-	* @param array $raList Reference to an array of PPS's
-	* @return array The array of numbers
-	*/
+	 * Calculate some numbers
+	 *
+	 * @access public
+	 * @param array $raList Reference to an array of PPS's
+	 * @return array The array of numbers
+	 */
 	public function _calcSize(&$raList)
 	{
 		// Calculate Basic Setting
@@ -136,7 +136,7 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 				$raList[$i]->Size = $raList[$i]->_DataLen();
 				if ($raList[$i]->Size < PHPExcel_Shared_OLE::OLE_DATA_SIZE_SMALL) {
 					$iSBcnt += floor($raList[$i]->Size / $this->_SMALL_BLOCK_SIZE)
-								  + (($raList[$i]->Size % $this->_SMALL_BLOCK_SIZE)? 1: 0);
+									+ (($raList[$i]->Size % $this->_SMALL_BLOCK_SIZE)? 1: 0);
 				} else {
 					$iBBcnt += (floor($raList[$i]->Size / $this->_BIG_BLOCK_SIZE) +
 						(($raList[$i]->Size % $this->_BIG_BLOCK_SIZE)? 1: 0));
@@ -147,7 +147,7 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 		$iSlCnt = floor($this->_BIG_BLOCK_SIZE / PHPExcel_Shared_OLE::OLE_LONG_INT_SIZE);
 		$iSBDcnt = floor($iSBcnt / $iSlCnt) + (($iSBcnt % $iSlCnt)? 1:0);
 		$iBBcnt +=  (floor($iSmallLen / $this->_BIG_BLOCK_SIZE) +
-					  (( $iSmallLen % $this->_BIG_BLOCK_SIZE)? 1: 0));
+						(( $iSmallLen % $this->_BIG_BLOCK_SIZE)? 1: 0));
 		$iCnt = count($raList);
 		$iBdCnt = $this->_BIG_BLOCK_SIZE / PHPExcel_Shared_OLE::OLE_PPS_SIZE;
 		$iPPScnt = (floor($iCnt/$iBdCnt) + (($iCnt % $iBdCnt)? 1: 0));
@@ -156,13 +156,13 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* Helper function for caculating a magic value for block sizes
-	*
-	* @access public
-	* @param integer $i2 The argument
-	* @see save()
-	* @return integer
-	*/
+	 * Helper function for caculating a magic value for block sizes
+	 *
+	 * @access public
+	 * @param integer $i2 The argument
+	 * @see save()
+	 * @return integer
+	 */
 	private static function _adjust2($i2)
 	{
 		$iWk = log($i2)/log(2);
@@ -170,13 +170,13 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* Save OLE header
-	*
-	* @access public
-	* @param integer $iSBDcnt
-	* @param integer $iBBcnt
-	* @param integer $iPPScnt
-	*/
+	 * Save OLE header
+	 *
+	 * @access public
+	 * @param integer $iSBDcnt
+	 * @param integer $iBBcnt
+	 * @param integer $iPPScnt
+	 */
 	public function _saveHeader($iSBDcnt, $iBBcnt, $iPPScnt)
 	{
 		$FILE = $this->_FILEH_;
@@ -225,13 +225,13 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 				. pack("V", 0x1000)
 				. pack("V", $iSBDcnt ? 0 : -2)                  //Small Block Depot
 				. pack("V", $iSBDcnt)
-		  );
+			);
 		// Extra BDList Start, Count
 		if ($iBdCnt < $i1stBdL) {
 			fwrite($FILE,
 					pack("V", -2)      // Extra BDList Start
 					. pack("V", 0)        // Extra BDList Count
-				  );
+					);
 		} else {
 			fwrite($FILE, pack("V", $iAll+$iBdCnt) . pack("V", $iBdExL));
 		}
@@ -249,12 +249,12 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* Saving big data (PPS's with data bigger than PHPExcel_Shared_OLE::OLE_DATA_SIZE_SMALL)
-	*
-	* @access public
-	* @param integer $iStBlk
-	* @param array &$raList Reference to array of PPS's
-	*/
+	 * Saving big data (PPS's with data bigger than PHPExcel_Shared_OLE::OLE_DATA_SIZE_SMALL)
+	 *
+	 * @access public
+	 * @param integer $iStBlk
+	 * @param array &$raList Reference to array of PPS's
+	 */
 	public function _saveBigData($iStBlk, &$raList)
 	{
 		$FILE = $this->_FILEH_;
@@ -299,11 +299,11 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* get small data (PPS's with data smaller than PHPExcel_Shared_OLE::OLE_DATA_SIZE_SMALL)
-	*
-	* @access public
-	* @param array &$raList Reference to array of PPS's
-	*/
+	 * get small data (PPS's with data smaller than PHPExcel_Shared_OLE::OLE_DATA_SIZE_SMALL)
+	 *
+	 * @access public
+	 * @param array &$raList Reference to array of PPS's
+	 */
 	public function _makeSmallData(&$raList)
 	{
 		$sRes = '';
@@ -319,7 +319,7 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 				}
 				if ($raList[$i]->Size < PHPExcel_Shared_OLE::OLE_DATA_SIZE_SMALL) {
 					$iSmbCnt = floor($raList[$i]->Size / $this->_SMALL_BLOCK_SIZE)
-								  + (($raList[$i]->Size % $this->_SMALL_BLOCK_SIZE)? 1: 0);
+									+ (($raList[$i]->Size % $this->_SMALL_BLOCK_SIZE)? 1: 0);
 					// Add to SBD
 					$jB = $iSmbCnt - 1;
 					for ($j = 0; $j < $jB; ++$j) {
@@ -356,11 +356,11 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* Saves all the PPS's WKs
-	*
-	* @access public
-	* @param array $raList Reference to an array with all PPS's
-	*/
+	 * Saves all the PPS's WKs
+	 *
+	 * @access public
+	 * @param array $raList Reference to an array with all PPS's
+	 */
 	public function _savePps(&$raList)
 	{
 		// Save each PPS WK
@@ -377,13 +377,13 @@ class PHPExcel_Shared_OLE_PPS_Root extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* Saving Big Block Depot
-	*
-	* @access public
-	* @param integer $iSbdSize
-	* @param integer $iBsize
-	* @param integer $iPpsCnt
-	*/
+	 * Saving Big Block Depot
+	 *
+	 * @access public
+	 * @param integer $iSbdSize
+	 * @param integer $iBsize
+	 * @param integer $iPpsCnt
+	 */
 	public function _saveBbd($iSbdSize, $iBsize, $iPpsCnt)
 	{
 		$FILE = $this->_FILEH_;

@@ -17,7 +17,7 @@
 		// Get Target Profile ID
 		$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
 		$urlexploade = explode("/", $profileURLString);
-		$profileURL=$urlexploade[0];  
+		$profileURL=$urlexploade[0];
 
 		//echo $profileURL;
 
@@ -52,7 +52,7 @@
 					}
 						wp_register_style( 'lightbox2', plugins_url('/ext/lightbox2/css/lightbox.css', dirname(__FILE__)) );
 						wp_enqueue_style( 'lightbox2' );
-					
+
 
 				} else {
 					// None
@@ -62,7 +62,7 @@
 
 			// Gallery Order
 			$rb_agency_option_galleryorder = isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-				if ($rb_agency_option_galleryorder == 1) { $orderBy = "ProfileMediaID DESC, ProfileMediaPrimary DESC"; } else { $orderBy = "ProfileMediaID ASC, ProfileMediaPrimary DESC"; }
+				if ($rb_agency_option_galleryorder == 1) {$orderBy = "ProfileMediaID DESC, ProfileMediaPrimary DESC"; } else {$orderBy = "ProfileMediaID ASC, ProfileMediaPrimary DESC"; }
 
 
 	/*
@@ -73,7 +73,7 @@
 
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", RBAGENCY_TEXTDOMAIN ));
-		
+
 		$count = count($results);
 		foreach($results as $data) {
 			$ProfileID					=$data['ProfileID'];
@@ -99,10 +99,10 @@
 			$ProfileContactPhoneHome	=stripslashes($data['ProfileContactPhoneHome']);
 			$ProfileContactPhoneCell	=stripslashes($data['ProfileContactPhoneCell']);
 			$ProfileContactPhoneWork	=stripslashes($data['ProfileContactPhoneWork']);
-			$ProfileGender    			=stripslashes($data['ProfileGender']);
-			$ProfileDateBirth	    	=stripslashes($data['ProfileDateBirth']);
+			$ProfileGender				=stripslashes($data['ProfileGender']);
+			$ProfileDateBirth			=stripslashes($data['ProfileDateBirth']);
 			if($rb_agency_option_profilelist_expanddetails_year || $rb_agency_option_profilelist_expanddetails_day || $rb_agency_option_profilelist_expanddetails_month){
-				
+
 					$HideAgeYear = get_user_meta($data['ProfileID'],"rb_agency_hide_age_year",true);
 					if($HideAgeYear == 1){
 						$arr_query['year_style'] = 'style="display:none!important;"';
@@ -118,9 +118,9 @@
 						$arr_query['day_style'] = 'style="display:none!important;"';
 						$hideD = 1;
 					}
-					
+
 				$ProfileAge 				= rb_agency_get_age($ProfileDateBirth,$arr_query);
-			}else{
+			} else {
 				$ProfileAge = "";
 			}
 			$ProfileLocationCity		=stripslashes($data['ProfileLocationCity']);
@@ -204,21 +204,21 @@
 		if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
 			$arr_under_dev = array("04","05");
 			$arr_custom_layout = array("06","07","08","09","10","11","12");
-		}else{
+		} else {
 			$arr_custom_pop_layout = array("04","05","06","07","08","09","10","11","12");
 			if(in_array($rb_agency_option_layoutprofile, $arr_custom_pop_layout)){
 				add_thickbox();
 				echo "<div id=\"rb-underdev-layout\" style=\"display:none\"><div style=\"text-align:center;\">This is a Custom Layout. <br/>Please contact RB Plugin Support for quote &amp; integration</div></div>";
-			    echo "<script type=\"text/javascript\">";
-			    echo "jQuery(window).load(function(){";
-			    echo 'tb_show("RB Plugin","#TB_inline?height=100&width=605&amp;inlineId=rb-underdev-layout&modal=true",null);';
-			    echo "});";
+				echo "<script type=\"text/javascript\">";
+				echo "jQuery(window).load(function(){";
+				echo 'tb_show("RB Plugin","#TB_inline?height=100&width=605&amp;inlineId=rb-underdev-layout&modal=true",null);';
+				echo "});";
 				echo "</script>";
 			}
 		}
 
 
-		
+
 		$enable_sidebar = ($rb_agency_option_profilelist_sidebar == 0) ? 'one-column' : ''; // check sidebar
 
 		echo "<div class=\"". $enable_sidebar ."\">\n";
@@ -227,13 +227,13 @@
 
 			// P R I V A C Y FILTER ====================================================
 			if ( ( $rb_agency_option_privacy >= 1 && isset($_SESSION['SearchMuxHash']) ) ||
-				 // Public
-				 ($rb_agency_option_privacy == 0) ||
+				// Public
+				($rb_agency_option_privacy == 0) ||
 
-				 ($rb_agency_option_privacy == 3) ||
+				($rb_agency_option_privacy == 3) ||
 
-				 ($rb_agency_option_privacy == 2) ||
-				 
+				($rb_agency_option_privacy == 2) ||
+
 				//admin users
 				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
 
@@ -242,7 +242,7 @@
 
 				//  Model list public. Must be logged to view profile information
 				($rb_agency_option_privacy == 1 && is_user_logged_in()) ||
-				
+
 				// View own profile
 				($ProfileUserLinked == $CurrentUser && is_user_logged_in())
 				) {
@@ -253,28 +253,28 @@
 					if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
 						echo "	<div id=\"rbprofile\">\n";
 						echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
-						 	  echo "This layout is under development.";
+								echo "This layout is under development.";
 						echo " 		</div>\n";
 						echo " 	</div>\n";
-						
-					}elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
+
+					} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
 						echo "	<div id=\"rbprofile\">\n";
 						echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
 									echo "Please contact RB Plugin Support for custom layouts.";
 						echo " 		</div>\n";
 						echo " 	</div>\n";
-					
-		 			}else{
+
+					} else {
 						include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 					}
 
 				} elseif(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
 					// Show it if it came from an email sent
-					 if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
-						 	  echo "This layout is under development.";
-					}elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
-						 	  echo "Please contact RB Plugin Support for custom layouts.";
-		 			}else{
+					if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
+								echo "This layout is under development.";
+					} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
+								echo "Please contact RB Plugin Support for custom layouts.";
+					} else {
 						include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 					}
 				} else {
@@ -282,19 +282,19 @@
 					echo "". __("Inactive Profile", RBAGENCY_TEXTDOMAIN) ."\n";
 				}
 			} else {
-			    if($rb_agency_option_privacy == 3 ){ // if casting only
-			    	if(is_user_logged_in()){
+				if($rb_agency_option_privacy == 3 ){ // if casting only
+					if(is_user_logged_in()){
 						rb_get_profiletype();
-					}else{
+					} else {
 						echo "	<div class='restricted'>\n";
 						if ( class_exists("RBAgencyCasting") ) {
 						echo "Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
-						}else{
+						} else {
 						echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
 						}
 						echo "  </div><!-- #content -->\n";
 					}
-			    }else{
+				} else {
 					// hold last model requested as session so we can return them where we found them 
 					$ProfileLastViewed = get_query_var('profile');
 					$profileviewed = get_query_var('target');

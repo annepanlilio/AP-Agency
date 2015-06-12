@@ -77,7 +77,7 @@ class PHPExcel_IOFactory
     /**
      *	Private constructor for PHPExcel_IOFactory
      */
-    private function __construct() { }
+    private function __construct() {}
 
     /**
      * Get search locations

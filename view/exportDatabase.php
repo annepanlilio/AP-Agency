@@ -9,18 +9,18 @@ global $wpdb;
 // *************************************************************************************************** //
 // Get Going
  if ( is_user_logged_in() ) {
-	  if ( is_super_admin() ) {
+		if ( is_super_admin() ) {
 	$result = $wpdb->get_results("SHOW COLUMNS FROM  ".$wpdb->prefix."agency_profile",ARRAY_A);
 	$i = 0;
 	$total_rows = $result->num_rows;
 	if ($total_rows > 0) {
-	 foreach($result as $row){
+	foreach($result as $row){
 		$csv_output .= $row['Field'].", ";
 		$i++;
-	  }
+		}
 	}
 	$csv_output .= "\n";
-	
+
 	$values = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."agency_profile");
 	foreach($values as $rowr) {
 		foreach ($rowr as $key=>$val) {
@@ -35,10 +35,10 @@ global $wpdb;
 			}
 		$csv_output .= $val.", ";
 		}
-		
-	  $csv_output .= "\n";
+
+		$csv_output .= "\n";
 	}
-	
+
 	$filename = $_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time());
 	header("Content-type: application/vnd.ms-excel");
 	header("Content-disposition: csv" . date("Y-m-d") . ".csv");

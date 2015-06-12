@@ -59,7 +59,7 @@ echo "				<div id=\"photos\">\n";
 						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-							if ($countImg > 1) { 
+							if ($countImg > 1) {
 								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
 							} else {
 								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
@@ -103,9 +103,9 @@ echo "					<ul>\n";
 							if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 								echo "<li   class=\"rel rb_contact\" id=\"rb_contact\">><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 							}
-echo "	  				</ul>\n"; // Close ul
-echo "	  			</div>\n"; // Close Stats
-echo "	  		</div>\n"; // Close .rbcol-3
+echo "						</ul>\n"; // Close ul
+echo "					</div>\n"; // Close Stats
+echo "				</div>\n"; // Close .rbcol-3
 
 echo "			<div class=\"rbcol-3 rbcolumn\">\n";
 echo "				<div id=\"links\">\n";
@@ -116,12 +116,12 @@ echo "				<div id=\"links\">\n";
 						include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
 
 
-echo "				</div>\n";  // Close Links
-echo "			</div>\n";  // Close .rbcol-3
+echo "				</div>\n";// Close Links
+echo "			</div>\n";// Close .rbcol-3
 
 echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 /*
-	                if($subview == ""){
+			          if($subview == ""){
 echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 
 							// images
@@ -135,7 +135,7 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 
 echo "					</div>\n"; // #photos
 					}*/
-					if ($subview == "images") {//show all images page  ?>
+					if ($subview == "images") { //show all images page  ?>
 						<div id="print-photos" class="profile-photos">
 							<script>  //JS to higlight selected images 
 								function selectImg(mid){
@@ -194,7 +194,7 @@ echo "					</div>\n"; // #photos
 
 					<?php
 
-					} elseif($subview == "polaroids"){//show all polaroids page  //MODS 2012-11-28 ?>
+					} elseif($subview == "polaroids"){ //show all polaroids page  //MODS 2012-11-28 ?>
 
 						<div id="polariods" class="profile-photos">
 							<script>  //JS to higlight selected images 
@@ -250,7 +250,7 @@ echo "					</div>\n"; // #photos
 
 					<?php
 
-					} else if ($subview == "print-polaroids"){  //show print options
+					} else if ($subview == "print-polaroids"){ //show print options
 
 						if(isset($_POST["print_type"])){
 							include_once(RBAGENCY_PLUGIN_DIR."theme/pdf-profile.php");
@@ -269,7 +269,7 @@ echo "					</div>\n"; // #photos
 						}
 						if($withSelected != 1){
 							$selected = "<input type='hidden' value='1' name='".$lasID."'>";
-						} ?>
+						}?>
 
 						<div class="print_options">
 							<span class="allimages_text">Select Print Format</span><br /><br />
@@ -311,7 +311,7 @@ echo "					</div>\n"; // #photos
 
 						if(isset($_POST["print_type"])){
 							include_once(RBAGENCY_PLUGIN_DIR."theme/pdf-profile.php");
-						} 
+						}
 
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 						$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
@@ -330,8 +330,8 @@ echo "					</div>\n"; // #photos
 
 						if($withSelected != 1){
 							$selected = "<input type='hidden' value='1' name='".$lasID."'>";
-						} ?>
-						
+						}?>
+
 						<div class="print_options">
 							<span class="allimages_text">Select Print Format</span><br /><br />
 						</div> 
@@ -392,7 +392,7 @@ echo "					</div>\n"; // #photos
 						</form>
 
 					<?php
-					} else if($subview == "print-images"){  //show print options
+					} else if($subview == "print-images"){ //show print options
 
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 						$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
@@ -407,7 +407,7 @@ echo "					</div>\n"; // #photos
 							$lasID=$dataImg['ProfileMediaID']; //make sure it will display picture even nothing weere selected
 						}
 
-						if($withSelected != 1){ $selected = "<input type='hidden' value='1' name='".$lasID."'>"; }
+						if($withSelected != 1){$selected = "<input type='hidden' value='1' name='".$lasID."'>"; }
 						?>
 
 						<div class="print_options">
@@ -470,7 +470,7 @@ echo "					</div>\n"; // #photos
 echo "				<div class=\"rbclear\"></div>\n"; // Clear All
 echo "			</div>\n"; // .rbcol-12
 echo "			<div class=\"rbclear\"></div>\n"; // Clear All
-echo "		</div>\n";  // Close Profile Zero
+echo "		</div>\n";// Close Profile Zero
 echo "		<div class=\"rbclear\"></div>\n"; // Clear All
-echo "	</div>\n";  // Close Profile
+echo "	</div>\n";// Close Profile
 ?>

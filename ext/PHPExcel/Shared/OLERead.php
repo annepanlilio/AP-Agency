@@ -112,8 +112,8 @@ class PHPExcel_Shared_OLERead {
 		}
 
 		for ($i = 0; $i < $bbdBlocks; ++$i) {
-			  $bigBlockDepotBlocks[$i] = self::_GetInt4d($this->data, $pos);
-			  $pos += 4;
+				$bigBlockDepotBlocks[$i] = self::_GetInt4d($this->data, $pos);
+				$pos += 4;
 		}
 
 		for ($j = 0; $j < $this->numExtensionBlocks; ++$j) {
@@ -187,7 +187,7 @@ class PHPExcel_Shared_OLERead {
 			$block = $this->props[$stream]['startBlock'];
 
 			while ($block != -2) {
-	  			$pos = $block * self::SMALL_BLOCK_SIZE;
+					$pos = $block * self::SMALL_BLOCK_SIZE;
 				$streamData .= substr($rootdata, $pos, self::SMALL_BLOCK_SIZE);
 
 				$block = $this->smallBlockChain[$block];
@@ -231,7 +231,7 @@ class PHPExcel_Shared_OLERead {
 			$block = $this->bigBlockChain[$block];
 		}
 		return $data;
-	 }
+	}
 
 	/**
 	 * Read entries in the directory stream.

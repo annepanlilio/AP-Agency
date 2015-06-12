@@ -124,31 +124,31 @@ class Benchmark {
 		$n = 8;
 		$t = 16;
 		$sum = 0;
-		echo "<b>Cholesky decomposition: $t random {$n}x{$n} matrices</b><br />";
+		echo "<b>Cholesky decomposition: $t random {$n}x{$n}matrices</b><br />";
 		$r = $this->displayStats($this->runCholesky($n, $t));
 		$sum += $r['mean'] * $n;
 
 		echo '<hr />';
 
-		echo "<b>Eigenvalue decomposition: $t random {$n}x{$n} matrices</b><br />";
+		echo "<b>Eigenvalue decomposition: $t random {$n}x{$n}matrices</b><br />";
 		$r = $this->displayStats($this->runEig($n, $t));
 		$sum += $r['mean'] * $n;
 
 		echo '<hr />';
 
-		echo "<b>LU decomposition: $t random {$n}x{$n} matrices</b><br />";
+		echo "<b>LU decomposition: $t random {$n}x{$n}matrices</b><br />";
 		$r = $this->displayStats($this->runLU($n, $t));
 		$sum += $r['mean'] * $n;
 
 		echo '<hr />';
 
-		echo "<b>QR decomposition: $t random {$n}x{$n} matrices</b><br />";
+		echo "<b>QR decomposition: $t random {$n}x{$n}matrices</b><br />";
 		$r = $this->displayStats($this->runQR($n, $t));
 		$sum += $r['mean'] * $n;
 
 		echo '<hr />';
 
-		echo "<b>Singular Value decomposition: $t random {$n}x{$n} matrices</b><br />";
+		echo "<b>Singular Value decomposition: $t random {$n}x{$n}matrices</b><br />";
 		$r = $this->displayStats($this->runSVD($n, $t));
 		$sum += $r['mean'] * $n;
 
@@ -160,7 +160,7 @@ class Benchmark {
 		$this->stat = new Base();
 	}	//	function Benchmark()
 
-}  // class Benchmark		(end MagicSquareExample)
+}// class Benchmark		(end MagicSquareExample)
 
 
 $benchmark = new Benchmark();
@@ -170,7 +170,7 @@ switch($_REQUEST['decomposition']) {
 		$m = array();
 		for ($i = 2; $i <= 8; $i *= 2) {
 			$t = 32 / $i;
-			echo "<b>Cholesky decomposition: $t random {$i}x{$i} matrices</b><br />";
+			echo "<b>Cholesky decomposition: $t random {$i}x{$i}matrices</b><br />";
 			$s = $benchmark->displayStats($benchmark->runCholesky($i, $t));
 			$m[$i] = $s['mean'];
 			echo "<br />";
@@ -185,7 +185,7 @@ switch($_REQUEST['decomposition']) {
 		$m = array();
 		for ($i = 2; $i <= 8; $i *= 2) {
 			$t = 32 / $i;
-			echo "<b>Eigenvalue decomposition: $t random {$i}x{$i} matrices</b><br />";
+			echo "<b>Eigenvalue decomposition: $t random {$i}x{$i}matrices</b><br />";
 			$s = $benchmark->displayStats($benchmark->runEig($i, $t));
 			$m[$i] = $s['mean'];
 			echo "<br />";
@@ -200,7 +200,7 @@ switch($_REQUEST['decomposition']) {
 		$m = array();
 		for ($i = 2; $i <= 8; $i *= 2) {
 			$t = 32 / $i;
-			echo "<b>LU decomposition: $t random {$i}x{$i} matrices</b><br />";
+			echo "<b>LU decomposition: $t random {$i}x{$i}matrices</b><br />";
 			$s = $benchmark->displayStats($benchmark->runLU($i, $t));
 			$m[$i] = $s['mean'];
 			echo "<br />";
@@ -215,7 +215,7 @@ switch($_REQUEST['decomposition']) {
 		$m = array();
 		for ($i = 2; $i <= 8; $i *= 2) {
 			$t = 32 / $i;
-			echo "<b>QR decomposition: $t random {$i}x{$i} matrices</b><br />";
+			echo "<b>QR decomposition: $t random {$i}x{$i}matrices</b><br />";
 			$s = $benchmark->displayStats($benchmark->runQR($i, $t));
 			$m[$i] = $s['mean'];
 			echo "<br />";
@@ -230,7 +230,7 @@ switch($_REQUEST['decomposition']) {
 		$m = array();
 		for($i = 2; $i <= 8; $i *= 2) {
 			$t = 32 / $i;
-			echo "<b>Singular value decomposition: $t random {$i}x{$i} matrices</b><br />";
+			echo "<b>Singular value decomposition: $t random {$i}x{$i}matrices</b><br />";
 			$s = $benchmark->displayStats($benchmark->runSVD($i, $t));
 			$m[$i] = $s['mean'];
 			echo "<br />";

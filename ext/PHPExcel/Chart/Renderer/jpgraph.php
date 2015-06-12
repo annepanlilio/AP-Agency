@@ -48,7 +48,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 										'mediumblue',		'magenta',		'sandybrown',	'cyan',
 										'firebrick1',		'forestgreen',	'deeppink4',	'darkolivegreen',
 										'goldenrod2'
-									  );
+										);
 
 	private static $_markSet = array(	'diamond'	=> MARK_DIAMOND,
 										'square'	=> MARK_SQUARE,
@@ -189,21 +189,21 @@ class PHPExcel_Chart_Renderer_jpgraph
 			$legendOverlay = $legend->getOverlay();
 			switch ($legendPosition) {
 				case 'r'	:
-					$this->_graph->legend->SetPos(0.01,0.5,'right','center');	//	right
+					$this->_graph->legend->SetPos(0.01,0.5,'right','center');//	right
 					$this->_graph->legend->SetColumns(1);
 					break;
 				case 'l'	:
-					$this->_graph->legend->SetPos(0.01,0.5,'left','center');	//	left
+					$this->_graph->legend->SetPos(0.01,0.5,'left','center');//	left
 					$this->_graph->legend->SetColumns(1);
 					break;
 				case 't'	:
-					$this->_graph->legend->SetPos(0.5,0.01,'center','top');	//	top
+					$this->_graph->legend->SetPos(0.5,0.01,'center','top');//	top
 					break;
 				case 'b'	:
-					$this->_graph->legend->SetPos(0.5,0.99,'center','bottom');	//	bottom
+					$this->_graph->legend->SetPos(0.5,0.99,'center','bottom');//	bottom
 					break;
 				default		:
-					$this->_graph->legend->SetPos(0.01,0.01,'right','top');	//	top-right
+					$this->_graph->legend->SetPos(0.01,0.01,'right','top');//	top-right
 					$this->_graph->legend->SetColumns(1);
 					break;
 			}
@@ -607,7 +607,7 @@ class PHPExcel_Chart_Renderer_jpgraph
 			$grouping = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotGrouping();
 			$exploded = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotStyle();
 			if ($groupID == 0) {
-		        $labelCount = count($this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotValuesByIndex(0)->getPointCount());
+			     $labelCount = count($this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotValuesByIndex(0)->getPointCount());
 				if ($labelCount > 0) {
 					$datasetLabels = $this->_chart->getPlotArea()->getPlotGroupByIndex($groupID)->getPlotCategoryByIndex(0)->getDataValues();
 					$datasetLabels = $this->_formatDataSetLabels($groupID, $datasetLabels, $labelCount);

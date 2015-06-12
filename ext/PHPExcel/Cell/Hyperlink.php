@@ -58,7 +58,7 @@ class PHPExcel_Cell_Hyperlink
      */
     public function __construct($pUrl = '', $pTooltip = '')
     {
-    	// Initialise member variables
+		// Initialise member variables
 		$this->_url 		= $pUrl;
 		$this->_tooltip 	= $pTooltip;
     }
@@ -118,10 +118,10 @@ class PHPExcel_Cell_Hyperlink
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-    	return md5(
-    		  $this->_url
-    		. $this->_tooltip
-    		. __CLASS__
-    	);
+		return md5(
+				$this->_url
+			. $this->_tooltip
+			. __CLASS__
+		);
     }
 }

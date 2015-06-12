@@ -13,7 +13,7 @@ global $wpdb;
  * Enable if we do not have a version number
 
 	// Upgrade from unknonwn version
-	if (!isset(get_option('rb_agency_version')) && empty(get_option('rb_agency_version'))) { 
+	if (!isset(get_option('rb_agency_version')) && empty(get_option('rb_agency_version'))) {
 		update_option('rb_agency_version', "1.8");
 	}
  */
@@ -35,16 +35,16 @@ global $wpdb;
  */
 
 	// Upgrade from 1.8
-	if (get_option('rb_agency_version') == "1.8" || get_option('rb_agency_version') == "1.8.1") { 
+	if (get_option('rb_agency_version') == "1.8" || get_option('rb_agency_version') == "1.8.1") {
 
 		$results = $wpdb->query("ALTER TABLE rb_agency_data_type ADD DataTypeTag VARCHAR(55)");
-		
+
 		$query = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM rb_agency_data_type";
 		$results = $wpdb->get_results($query,ARRAY_A) or die ( __("Cant load types", RBAGENCY_TEXTDOMAIN ));
 		foreach ($results as $data) {
 			if (!isset($data['DataTypeTag']) || empty($data['DataTypeTag'])) {
 				$DataTypeTag = RBAgency_Common::Format_StripChars($data['DataTypeTitle']);
-				
+
 				$update = "UPDATE rb_agency_data_type SET DataTypeTag='" . $wpdb->escape($DataTypeTag) . "' WHERE DataTypeID='". $data['DataTypeID'] ."'";
 				$updated = $wpdb->query($update);
 				echo "- Updated tag ". $DataTypeTag ."<br />\n";
@@ -70,8 +70,8 @@ global $wpdb;
 		rb_agency_addColumn("rb_agency_profile","ProfileIsPromoted","INT(10) NOT NULL DEFAULT '0'");
 
 		// Setup > Save Favorited
-		if ($wpdb->get_var("show tables like 'rb_agency_savedfavorite'") !=  "rb_agency_savedfavorite") { 
-			 $results = $wpdb->query("CREATE TABLE rb_agency_savedfavorite (
+		if ($wpdb->get_var("show tables like 'rb_agency_savedfavorite'") !=  "rb_agency_savedfavorite") {
+			$results = $wpdb->query("CREATE TABLE rb_agency_savedfavorite (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
 				SavedFavoriteTalentID VARCHAR(255),
@@ -87,7 +87,7 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "1.8.5") {
 
 		// Setup > Taxonomy: Gender
-		if ($wpdb->get_var("show tables like 'rb_agency_data_gender'") !=  "rb_agency_data_gender" ) { 
+		if ($wpdb->get_var("show tables like 'rb_agency_data_gender'") !=  "rb_agency_data_gender" ) {
 			$results = $wpdb->query("CREATE TABLE rb_agency_data_gender (
 				GenderID INT(10) NOT NULL AUTO_INCREMENT,
 				GenderTitle VARCHAR(255),
@@ -106,7 +106,7 @@ global $wpdb;
 
 		// Custom Order in Custom Fields
 		rb_agency_addColumn("rb_agency_customfields","ProfileCustomOrder","INT(10) NOT NULL DEFAULT '0'");
-		
+
 		// Updating version number!
 		update_option('rb_agency_version', "1.9");
 	}
@@ -120,7 +120,7 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "1.9") {
 
 		// Setup > Save Favorited
-		if ($wpdb->get_var("show tables like 'rb_agency_savedfavorite'") !=  "rb_agency_savedfavorite" ) { 
+		if ($wpdb->get_var("show tables like 'rb_agency_savedfavorite'") !=  "rb_agency_savedfavorite" ) {
 			$results = $wpdb->query("CREATE TABLE rb_agency_savedfavorite (
 				SavedFavoriteID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				SavedFavoriteProfileID VARCHAR(255),
@@ -130,7 +130,7 @@ global $wpdb;
 		}
 
 		// Add Casting Cart
-		if ($wpdb->get_var("show tables like 'rb_agency_castingcart'") != "rb_agency_castingcart" ) { 
+		if ($wpdb->get_var("show tables like 'rb_agency_castingcart'") != "rb_agency_castingcart" ) {
 			$results = $wpdb->query("CREATE TABLE rb_agency_castingcart (
 				CastingCartID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				CastingCartProfileID VARCHAR(255),
@@ -140,7 +140,7 @@ global $wpdb;
 		}
 
 		// Add Media Category
-		if ($wpdb->get_var("show tables like 'rb_agency_mediacategory'") != "rb_agency_mediacategory") { 
+		if ($wpdb->get_var("show tables like 'rb_agency_mediacategory'") != "rb_agency_mediacategory") {
 			$results = $wpdb->query("CREATE TABLE rb_agency_mediacategory (
 				MediaCategoryID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				MediaCategoryTitle VARCHAR(255),
@@ -151,7 +151,7 @@ global $wpdb;
 		}
 
 		// Add Custom Fields
-		if ($wpdb->get_var("show tables like 'rb_agency_customfields'") != "rb_agency_customfields") { 
+		if ($wpdb->get_var("show tables like 'rb_agency_customfields'") != "rb_agency_customfields") {
 			$results = $wpdb->query("CREATE TABLE rb_agency_customfields (
 				ProfileCustomID BIGINT(20) NOT NULL AUTO_INCREMENT,
 				ProfileCustomTitle VARCHAR(255),
@@ -179,7 +179,7 @@ global $wpdb;
 		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowLogged"," INT(10) NOT NULL DEFAULT '1'");
 		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowRegistration"," INT(10) NOT NULL DEFAULT '1'");
 		rb_agency_addColumn("rb_agency_customfields","ProfileCustomShowAdmin"," INT(10) NOT NULL DEFAULT '1'");
-		
+
 		// Populate Initial Values
 		$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM rb_agency_customfields WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
 		if ( !$data_custom_exists ) {
@@ -216,9 +216,9 @@ global $wpdb;
 		}
 
 		// Fix Gender compatibility
-		if ($wpdb->get_var("show tables like 'rb_agency_profile'") != "rb_agency_profile") { 
+		if ($wpdb->get_var("show tables like 'rb_agency_profile'") != "rb_agency_profile") {
 			$results = $wpdb->get_results("SELECT ProfileID, ProfileGender FROM rb_agency_profile ",ARRAY_A);
-		
+
 			foreach($results as $fetchData):
 				$fetchGender = $wpdb->get_row("SELECT GenderID, GenderTitle FROM rb_agency_data_gender WHERE  GenderTitle='".$fetchData["ProfileGender"]."'");
 				$count = $wpdb->num_rows;
@@ -251,7 +251,7 @@ global $wpdb;
 	}
 
 	// Upgrade from 1.9.1.1
-	if (get_option('rb_agency_version') == "1.9.1.1") {	
+	if (get_option('rb_agency_version') == "1.9.1.1") {
 		$resultsProfile =  $wpdb->get_results("SELECT * FROM rb_agency_profile",ARRAY_A);
 		foreach($resultsProfile as $f_Profile){
 			$ProfileID = $f_Profile["ProfileID"];
@@ -279,7 +279,7 @@ global $wpdb;
 						SELECT ProfileCustomID, '". $ProfileID."','".$f_Profile[$oldColumn]."'
 						FROM rb_agency_customfields
 						WHERE ProfileCustomTitle ='". $migrate_data."'";
-				 $wpdb->query($query);
+				$wpdb->query($query);
 			endforeach;
 		}// end while data fetch
 
@@ -311,7 +311,7 @@ global $wpdb;
 		$resultsProfile = $wpdb->get_results("SELECT * FROM rb_agency_profile",ARRAY_A); // Get all profiles
 		foreach($resultsProfile as $f_Profile){
 
-			$ProfileID = $f_Profile["ProfileID"];   // set the profile id
+			$ProfileID = $f_Profile["ProfileID"]; // set the profile id
 
 			$arr_profile_features = array(
 				"ProfileLanguage" => "Language",
@@ -331,7 +331,7 @@ global $wpdb;
 				// old column   to  custom fields 
 			foreach($arr_profile_features as $oldColumn => $migrate_data):
 
-				$qCustomFieldID = $wpdb->get_row("SELECT ProfileCustomID,ProfileCustomTitle FROM rb_agency_customfields WHERE ProfileCustomTitle = '".$migrate_data."'",ARRAY_A);	
+				$qCustomFieldID = $wpdb->get_row("SELECT ProfileCustomID,ProfileCustomTitle FROM rb_agency_customfields WHERE ProfileCustomTitle = '".$migrate_data."'",ARRAY_A);
 				$count = $wpdb->num_rows;
 				if($count > 0){
 					$fCustomFieldID = $qCustomFieldID;
@@ -339,10 +339,10 @@ global $wpdb;
 						$query1 ="UPDATE rb_agency_customfield_mux SET  ProfileCustomValue = '". $f_Profile[$oldColumn] ."' WHERE ProfileCustomID = '".$fCustomFieldID["ProfileCustomID"]."' AND ProfileID = '".$ProfileID ."'";
 						$q1 = $wpdb->query($query1) ;
 					}
-				} 
+				}
 			endforeach;
 		}// end while data fetch
-			
+
 		update_option('rb_agency_version', "1.9.2.1");
 	}
 
@@ -417,7 +417,7 @@ global $wpdb;
 	if (get_option('rb_agency_version') == "2.0.4") {
 
 		// Setup > Country
-		if ($wpdb->get_var("show tables like '". table_agency_data_country."'") != table_agency_data_country) { 
+		if ($wpdb->get_var("show tables like '". table_agency_data_country."'") != table_agency_data_country) {
 			$results = $wpdb->query("CREATE TABLE IF NOT EXISTS ". table_agency_data_country ." (
 			CountryID INT(10) NOT NULL AUTO_INCREMENT,
 			CountryTitle VARCHAR(255),
@@ -437,7 +437,7 @@ global $wpdb;
 		}
 
 		// Setup > States
-		if ($wpdb->get_var("show tables like '". table_agency_data_state."'") != table_agency_data_state) { 
+		if ($wpdb->get_var("show tables like '". table_agency_data_state."'") != table_agency_data_state) {
 			$results = $wpdb->query("CREATE TABLE IF NOT EXISTS ". table_agency_data_state ." (
 			StateID INT(20) NOT NULL AUTO_INCREMENT,
 			CountryID INT(20) NOT NULL,

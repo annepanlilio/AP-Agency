@@ -2,11 +2,11 @@
 
 class RBAgency_ProfileImage{
 
-	
+
 	// File and rotation
 	// TODO: Need to test and implement not found any referance for testing
 	function imageRotate($name,$imgsrc){
-	
+
 		$directoryPath = $_SERVER['DOCUMENT_ROOT']."/wp-content/uploads/profile-media/" ; 
 		$filename = $directoryPath.$name."/"$imgsrc;
 		$degrees = 90;

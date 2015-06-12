@@ -20,8 +20,8 @@
 		 */
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		if($rb_agency_options_arr == ""){
-				 $rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
-				 update_option('rb_agency_options',$rb_agency_options_arr);
+				$rb_agency_options_arr["rb_agency_options_showtooltip"] = 1;
+				update_option('rb_agency_options',$rb_agency_options_arr);
 		}
 
 		if( $rb_agency_options_arr != "" || is_array($rb_agency_options_arr)){
@@ -54,7 +54,7 @@
 								$(this).css("background","#EAF2FA");
 							}
 						});
-						<?php } ?>
+						<?php }?>
 					});
 					</script>
 					';

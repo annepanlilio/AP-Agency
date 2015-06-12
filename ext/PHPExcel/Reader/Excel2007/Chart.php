@@ -348,8 +348,8 @@ class PHPExcel_Reader_Excel2007_Chart
 		}
 
 		return array( 'formatCode'	=> $formatCode,
-					  'pointCount'	=> $pointCount,
-					  'dataValues'	=> $seriesVal
+						'pointCount'	=> $pointCount,
+						'dataValues'	=> $seriesVal
 					);
 	}	//	function _chartDataSeriesValues()
 
@@ -381,8 +381,8 @@ class PHPExcel_Reader_Excel2007_Chart
 		}
 
 		return array( 'formatCode'	=> $formatCode,
-					  'pointCount'	=> $pointCount,
-					  'dataValues'	=> $seriesVal
+						'pointCount'	=> $pointCount,
+						'dataValues'	=> $seriesVal
 					);
 	}	//	function _chartDataSeriesValuesMultiLevel()
 

@@ -84,8 +84,8 @@ class PHPExcel_Shared_OLE_ChainedBlockStream
 		// 25 is length of "ole-chainedblockstream://"
 		parse_str(substr($path, 25), $this->params);
 		if (!isset($this->params['oleInstanceId'],
-				   $this->params['blockId'],
-				   $GLOBALS['_OLE_INSTANCES'][$this->params['oleInstanceId']])) {
+					$this->params['blockId'],
+					$GLOBALS['_OLE_INSTANCES'][$this->params['oleInstanceId']])) {
 
 			if ($options & STREAM_REPORT_ERRORS) {
 				trigger_error('OLE stream not found', E_USER_WARNING);
@@ -166,7 +166,7 @@ class PHPExcel_Shared_OLE_ChainedBlockStream
 		if (version_compare(PHP_VERSION, '5.0', '>=') &&
 			version_compare(PHP_VERSION, '5.1', '<')) {
 
-		   $eof = !$eof;
+			$eof = !$eof;
 		}
 		return $eof;
 	}

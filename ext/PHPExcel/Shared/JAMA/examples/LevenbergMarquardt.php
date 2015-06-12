@@ -82,7 +82,7 @@ class LevenbergMarquardt {
 			$oos2[$i] = 1./($s[$i]*$s[$i]);
 		}
 		$iter = 0;
-		$term = 0;	// termination count test
+		$term = 0;// termination count test
 
 		do {
 			++$iter;
@@ -94,9 +94,9 @@ class LevenbergMarquardt {
 						if ($i == 0) $H[$r][$c] = 0.;
 						$xi = $x[$i];
 						$H[$r][$c] += ($oos2[$i] * $f->grad($xi, $a, $r) * $f->grad($xi, $a, $c));
-					}  //npts
-				} //c
-			} //r
+					}//npts
+				}//c
+			}//r
 
 			// boost diagonal towards gradient descent
 			for( $r = 0; $r < $nparm; ++$r)
@@ -109,7 +109,7 @@ class LevenbergMarquardt {
 					$xi = $x[$i];
 					$g[$r] += ($oos2[$i] * ($y[$i]-$f->val($xi,$a)) * $f->grad($xi, $a, $r));
 				}
-			} //npts
+			}//npts
 
 			// scale (for consistency with NR, not necessary)
 			if ($false) {
@@ -169,7 +169,7 @@ class LevenbergMarquardt {
 			//
 //			if (e1 > e0 || Double.isNaN(e1)) { // new location worse than before
 //				lambda *= 10.;
-//			} else {		// new location better, accept new parameters
+//			} else { // new location better, accept new parameters
 //				lambda *= 0.1;
 //				e0 = e1;
 //				// simply assigning a = na will not get results copied back to caller
@@ -177,7 +177,7 @@ class LevenbergMarquardt {
 //					if (vary[i]) a[i] = na[i];
 //				}
 //			}
-		} while(!$done);
+		}while(!$done);
 
 		return $lambda;
 	}	//	function solve()

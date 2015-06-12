@@ -126,8 +126,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the Y-Value for a specified value of X
 	 *
-	 * @param	 float		$xValue			X-Value
-	 * @return	 float						Y-Value
+	 * @param	float		$xValue			X-Value
+	 * @return	float						Y-Value
 	 */
 	public function getValueOfYForX($xValue) {
 		return False;
@@ -137,8 +137,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the X-Value for a specified value of Y
 	 *
-	 * @param	 float		$yValue			Y-Value
-	 * @return	 float						X-Value
+	 * @param	float		$yValue			Y-Value
+	 * @return	float						X-Value
 	 */
 	public function getValueOfXForY($yValue) {
 		return False;
@@ -148,7 +148,7 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the original set of X-Values
 	 *
-	 * @return	 float[]				X-Values
+	 * @return	float[]				X-Values
 	 */
 	public function getXValues() {
 		return $this->_xValues;
@@ -158,8 +158,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the Equation of the best-fit line
 	 *
-	 * @param	 int		$dp		Number of places of decimal precision to display
-	 * @return	 string
+	 * @param	int		$dp		Number of places of decimal precision to display
+	 * @return	string
 	 */
 	public function getEquation($dp=0) {
 		return False;
@@ -169,8 +169,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the Slope of the line
 	 *
-	 * @param	 int		$dp		Number of places of decimal precision to display
-	 * @return	 string
+	 * @param	int		$dp		Number of places of decimal precision to display
+	 * @return	string
 	 */
 	public function getSlope($dp=0) {
 		if ($dp != 0) {
@@ -183,8 +183,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the standard error of the Slope
 	 *
-	 * @param	 int		$dp		Number of places of decimal precision to display
-	 * @return	 string
+	 * @param	int		$dp		Number of places of decimal precision to display
+	 * @return	string
 	 */
 	public function getSlopeSE($dp=0) {
 		if ($dp != 0) {
@@ -197,8 +197,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the Value of X where it intersects Y = 0
 	 *
-	 * @param	 int		$dp		Number of places of decimal precision to display
-	 * @return	 string
+	 * @param	int		$dp		Number of places of decimal precision to display
+	 * @return	string
 	 */
 	public function getIntersect($dp=0) {
 		if ($dp != 0) {
@@ -211,8 +211,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the standard error of the Intersect
 	 *
-	 * @param	 int		$dp		Number of places of decimal precision to display
-	 * @return	 string
+	 * @param	int		$dp		Number of places of decimal precision to display
+	 * @return	string
 	 */
 	public function getIntersectSE($dp=0) {
 		if ($dp != 0) {
@@ -225,8 +225,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the goodness of fit for this regression
 	 *
-	 * @param	 int		$dp		Number of places of decimal precision to return
-	 * @return	 float
+	 * @param	int		$dp		Number of places of decimal precision to return
+	 * @return	float
 	 */
 	public function getGoodnessOfFit($dp=0) {
 		if ($dp != 0) {
@@ -247,8 +247,8 @@ class PHPExcel_Best_Fit
 	/**
 	 * Return the standard deviation of the residuals for this regression
 	 *
-	 * @param	 int		$dp		Number of places of decimal precision to return
-	 * @return	 float
+	 * @param	int		$dp		Number of places of decimal precision to return
+	 * @return	float
 	 */
 	public function getStdevOfResiduals($dp=0) {
 		if ($dp != 0) {

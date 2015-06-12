@@ -11,9 +11,9 @@ global $wpdb;
 		echo " <div id=\"profile-private\">\n";
 
 		// Get Profile
-		 $SearchMuxHash = get_query_var('target');
+		$SearchMuxHash = get_query_var('target');
 		if (isset($SearchMuxHash)) {
-			
+
 			// Get Identifier
 			$_SESSION['SearchMuxHash'] = $SearchMuxHash;
 			//$wpdb->query("ALTER TABLE  ". table_agency_searchsaved." ADD INDEX (`SearchProfileID`)");
@@ -24,10 +24,10 @@ global $wpdb;
 			$count =  $wpdb->num_rows;
 			/*$wpdb->show_errors();
 			$wpdb->print_error();
-			*/
+			 */
 			// Get Casting Cart ID
 			$castingcart_id = implode(",",array_unique(array_filter(explode(",",$data['SearchProfileID']))));
-			
+
 			$arr = (array)unserialize($data["SearchMuxCustomThumbnail"]);
 			$_SESSION["profilephotos_view"] = is_array($arr[0])?array_filter(array_unique($arr[0])):"";
 
@@ -36,7 +36,7 @@ global $wpdb;
 			$search_sql_query['standard'] = " profile.ProfileID IN(".(!empty($castingcart_id)?$castingcart_id:0).") ";
 			// Process Form Submission
 			echo $search_results = RBAgency_Profile::search_results($search_sql_query, 3);
-			
+
 			// echo  $formatted = RBAgency_Profile::search_formatted($search_array);
 
 		}

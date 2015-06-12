@@ -30,12 +30,12 @@
 class PHPExcel_Shared_OLE_PPS_File extends PHPExcel_Shared_OLE_PPS
 	{
 	/**
-	* The constructor
-	*
-	* @access public
-	* @param string $name The name of the file (in Unicode)
-	* @see OLE::Asc2Ucs()
-	*/
+	 * The constructor
+	 *
+	 * @access public
+	 * @param string $name The name of the file (in Unicode)
+	 * @see OLE::Asc2Ucs()
+	 */
 	public function __construct($name)
 	{
 		parent::__construct(
@@ -52,22 +52,22 @@ class PHPExcel_Shared_OLE_PPS_File extends PHPExcel_Shared_OLE_PPS
 	}
 
 	/**
-	* Initialization method. Has to be called right after OLE_PPS_File().
-	*
-	* @access public
-	* @return mixed true on success
-	*/
+	 * Initialization method. Has to be called right after OLE_PPS_File().
+	 *
+	 * @access public
+	 * @return mixed true on success
+	 */
 	public function init()
 	{
 		return true;
 	}
 
 	/**
-	* Append data to PPS
-	*
-	* @access public
-	* @param string $data The data to append
-	*/
+	 * Append data to PPS
+	 *
+	 * @access public
+	 * @param string $data The data to append
+	 */
 	public function append($data)
 	{
 		$this->_data .= $data;

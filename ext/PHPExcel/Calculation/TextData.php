@@ -150,10 +150,10 @@ class PHPExcel_Calculation_TextData {
 
 		$character = $characters;
 		if ((function_exists('mb_strlen')) && (function_exists('mb_substr'))) {
-			if (mb_strlen($characters, 'UTF-8') > 1) { $character = mb_substr($characters, 0, 1, 'UTF-8'); }
+			if (mb_strlen($characters, 'UTF-8') > 1) {$character = mb_substr($characters, 0, 1, 'UTF-8'); }
 			return self::_uniord($character);
 		} else {
-			if (strlen($characters) > 0) { $character = substr($characters, 0, 1); }
+			if (strlen($characters) > 0) {$character = substr($characters, 0, 1); }
 			return ord($character);
 		}
 	}	//	function ASCIICODE()
@@ -212,7 +212,7 @@ class PHPExcel_Calculation_TextData {
 			return money_format('%.'.$decimals.'n',$value);
 		} else {
 			$round = pow(10,abs($decimals));
-			if ($value < 0) { $round = 0-$round; }
+			if ($value < 0) {$round = 0-$round; }
 			$value = PHPExcel_Calculation_MathTrig::MROUND($value,$round);
 			//	The implementation of money_format used if the standard PHP function is not available can't handle decimal places of 0,
 			//		so we display to 1 dp and chop off that character and the decimal separator using substr
@@ -311,7 +311,7 @@ class PHPExcel_Calculation_TextData {
 		$decimals = floor($decimals);
 
 		$valueResult = round($value,$decimals);
-		if ($decimals < 0) { $decimals = 0; }
+		if ($decimals < 0) {$decimals = 0; }
 		if (!$no_commas) {
 			$valueResult = number_format($valueResult,$decimals);
 		}

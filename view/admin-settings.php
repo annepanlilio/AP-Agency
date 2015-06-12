@@ -19,14 +19,14 @@ global $wpdb;
 	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php");
 
 // Get Current Page
-	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){ 
+	if(!isset($_REQUEST['ConfigID']) && empty($_REQUEST['ConfigID'])){
 		$ConfigID = 0;
 	} else {
 		$ConfigID = $_REQUEST['ConfigID']; 
 	}
 
 	// Get State to be deleted
-	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){ 
+	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){
 		$delState = 0;
 	} else {
 		$delState = $_REQUEST['delstate']; 
@@ -224,93 +224,93 @@ elseif ($ConfigID == 1) {
 
 		// Set Default Values
 		$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_option_agencyname'])?$rb_agency_options_arr['rb_agency_option_agencyname']:0;
-			if (empty($rb_agency_value_agencyname)) { $rb_agency_value_agencyname = get_bloginfo('name'); }
+			if (empty($rb_agency_value_agencyname)) {$rb_agency_value_agencyname = get_bloginfo('name'); }
 		$rb_agency_value_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
-			if (empty($rb_agency_value_agencyemail)) { $rb_agency_value_agencyemail = get_bloginfo('admin_email'); }
+			if (empty($rb_agency_value_agencyemail)) {$rb_agency_value_agencyemail = get_bloginfo('admin_email'); }
 		$rb_agency_value_maxwidth = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxwidth'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxwidth']:0;
-			if (empty($rb_agency_value_maxwidth)) { $rb_agency_value_maxwidth = "1000"; }
+			if (empty($rb_agency_value_maxwidth)) {$rb_agency_value_maxwidth = "1000"; }
 		$rb_agency_value_maxheight = isset($rb_agency_options_arr['rb_agency_option_agencyimagemaxheight'])?$rb_agency_options_arr['rb_agency_option_agencyimagemaxheight']:0;
-			if (empty($rb_agency_value_maxheight)) { $rb_agency_value_maxheight = "800"; }
+			if (empty($rb_agency_value_maxheight)) {$rb_agency_value_maxheight = "800"; }
 			$rb_agency_value_profilethumbwidth = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth']:0;
-			if (empty($rb_agency_value_profilethumbwidth)) { $rb_agency_value_profilethumbwidth = "180"; }
+			if (empty($rb_agency_value_profilethumbwidth)) {$rb_agency_value_profilethumbwidth = "180"; }
 		$rb_agency_value_profilethumbheight = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:0;
-			if (empty($rb_agency_value_profilethumbheight)) { $rb_agency_value_profilethumbheight = "230"; }
+			if (empty($rb_agency_value_profilethumbheight)) {$rb_agency_value_profilethumbheight = "230"; }
 		$rb_agency_option_locationcountry = isset($rb_agency_options_arr['rb_agency_option_locationcountry'])?$rb_agency_options_arr['rb_agency_option_locationcountry']:0;
-			if (empty($rb_agency_option_locationcountry)) { $rb_agency_option_locationcountry = "US"; }
+			if (empty($rb_agency_option_locationcountry)) {$rb_agency_option_locationcountry = "US"; }
 		$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage'])?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
-			if (empty($rb_agency_option_profilelist_perpage)) { $rb_agency_option_profilelist_perpage = "20"; }
+			if (empty($rb_agency_option_profilelist_perpage)) {$rb_agency_option_profilelist_perpage = "20"; }
 		$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:0;
-			if (empty($rb_agency_option_layoutprofilelist_perrow)) { $rb_agency_option_layoutprofilelist_perrow = "5"; }
+			if (empty($rb_agency_option_layoutprofilelist_perrow)) {$rb_agency_option_layoutprofilelist_perrow = "5"; }
 		$rb_agency_option_layoutprofilelist_favcartdisp = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
-			if (empty($rb_agency_option_layoutprofilelist_favcartdisp)) { $rb_agency_option_layoutprofilelist_favcartdisp = "0"; }
+			if (empty($rb_agency_option_layoutprofilelist_favcartdisp)) {$rb_agency_option_layoutprofilelist_favcartdisp = "0"; }
 			$rb_agency_option_layoutprofilelist_favcartfx = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0;
-			if (empty($rb_agency_option_layoutprofilelist_favcartfx)) { $rb_agency_option_layoutprofilelist_favcartfx = "0"; }
+			if (empty($rb_agency_option_layoutprofilelist_favcartfx)) {$rb_agency_option_layoutprofilelist_favcartfx = "0"; }
 		$rb_agency_option_persearch = isset($rb_agency_options_arr['rb_agency_option_persearch'])?$rb_agency_options_arr['rb_agency_option_persearch']:0;
-			if (empty($rb_agency_option_persearch)) { $rb_agency_option_persearch = "100"; }
+			if (empty($rb_agency_option_persearch)) {$rb_agency_option_persearch = "100"; }
 		$rb_agency_option_showcontactpage = isset($rb_agency_options_arr['rb_agency_option_showcontactpage'])?$rb_agency_options_arr['rb_agency_option_showcontactpage']:0;
-			if (empty($rb_agency_option_showcontactpage)) { $rb_agency_option_showcontactpage = "0"; }
+			if (empty($rb_agency_option_showcontactpage)) {$rb_agency_option_showcontactpage = "0"; }
 		$rb_agency_option_profilelist_favorite = isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
-			if (empty($rb_agency_option_profilelist_favorite)) { $rb_agency_option_profilelist_favorite = "1"; }
+			if (empty($rb_agency_option_profilelist_favorite)) {$rb_agency_option_profilelist_favorite = "1"; }
 		$rb_agency_option_profilelist_castingcart = isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
-			if (empty($rb_agency_option_profilelist_castingcart)) { $rb_agency_option_profilelist_castingcart = "1"; }		
+			if (empty($rb_agency_option_profilelist_castingcart)) {$rb_agency_option_profilelist_castingcart = "1"; }
 		$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy'])?$rb_agency_options_arr['rb_agency_option_privacy']:0;
-			if (empty($rb_agency_option_privacy)) { $rb_agency_option_privacy = "0"; }
+			if (empty($rb_agency_option_privacy)) {$rb_agency_option_privacy = "0"; }
 		// Profile Search Options
 		$rb_agency_option_formshow_location = isset($rb_agency_options_arr['rb_agency_option_formshow_location']) ?$rb_agency_options_arr['rb_agency_option_formshow_location']:0;
-			if (empty($rb_agency_option_formshow_location)) { $rb_agency_option_formshow_location = "1"; }
+			if (empty($rb_agency_option_formshow_location)) {$rb_agency_option_formshow_location = "1"; }
 		$rb_agency_option_formshow_name = isset($rb_agency_options_arr['rb_agency_option_formshow_name']) ?$rb_agency_options_arr['rb_agency_option_formshow_name']:0;
-			if (empty($rb_agency_option_formshow_name)) { $rb_agency_option_formshow_name = "1"; }
+			if (empty($rb_agency_option_formshow_name)) {$rb_agency_option_formshow_name = "1"; }
 		$rb_agency_option_formshow_type = isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0;
-			if (empty($rb_agency_option_formshow_type)) { $rb_agency_option_formshow_type = "1"; }
+			if (empty($rb_agency_option_formshow_type)) {$rb_agency_option_formshow_type = "1"; }
 		$rb_agency_option_formshow_gender = isset($rb_agency_options_arr['rb_agency_option_formshow_gender']) ? $rb_agency_options_arr['rb_agency_option_formshow_gender']:0;
-			if (empty($rb_agency_option_formshow_gender)) { $rb_agency_option_formshow_gender = "1"; }
+			if (empty($rb_agency_option_formshow_gender)) {$rb_agency_option_formshow_gender = "1"; }
 		$rb_agency_option_formshow_age = isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0;
-			if (empty($rb_agency_option_formshow_age)) { $rb_agency_option_formshow_age = "1"; }
+			if (empty($rb_agency_option_formshow_age)) {$rb_agency_option_formshow_age = "1"; }
 		$rb_agency_option_form_clearvalues = isset($rb_agency_options_arr['rb_agency_option_form_clearvalues'])?$rb_agency_options_arr['rb_agency_option_form_clearvalues']:0;
-			if (empty($rb_agency_option_form_clearvalues)) { $rb_agency_option_form_clearvalues = 0; }
+			if (empty($rb_agency_option_form_clearvalues)) {$rb_agency_option_form_clearvalues = 0; }
 
 		$rb_agency_option_adminprint_hidden = isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0;
-			if (empty($rb_agency_option_adminprint_hidden)) { $rb_agency_option_adminprint_hidden = 0; }
+			if (empty($rb_agency_option_adminprint_hidden)) {$rb_agency_option_adminprint_hidden = 0; }
 
 
 
 
 		$rb_agency_option_image_compression = isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0;
-			if (empty($rb_agency_option_image_compression)) { $rb_agency_option_image_compression = 100; }
+			if (empty($rb_agency_option_image_compression)) {$rb_agency_option_image_compression = 100; }
 
 		$rb_agency_option_formshow_displayname = isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0;
-			if (empty($rb_agency_option_formshow_displayname)) { $rb_agency_option_formshow_displayname = "1"; }
+			if (empty($rb_agency_option_formshow_displayname)) {$rb_agency_option_formshow_displayname = "1"; }
 
 		$rb_agency_option_formshow_birthdate = isset($rb_agency_options_arr['rb_agency_option_formshow_birthdate'])?$rb_agency_options_arr['rb_agency_option_formshow_birthdate']:0;
-			if (empty($rb_agency_option_formshow_birthdate)) { $rb_agency_option_formshow_birthdate = "1"; }
+			if (empty($rb_agency_option_formshow_birthdate)) {$rb_agency_option_formshow_birthdate = "1"; }
 
 		$rb_agency_option_form_sidebar = isset($rb_agency_options_arr['rb_agency_option_form_sidebar'])?$rb_agency_options_arr['rb_agency_option_form_sidebar']:0;
-			if (empty($rb_agency_option_form_sidebar)) { $rb_agency_option_form_sidebar = "1"; }
+			if (empty($rb_agency_option_form_sidebar)) {$rb_agency_option_form_sidebar = "1"; }
 
 		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-			if (empty($rb_agency_option_profilenaming)) { $rb_agency_option_profilenaming = "0"; }
+			if (empty($rb_agency_option_profilenaming)) {$rb_agency_option_profilenaming = "0"; }
 		//
 		$rb_agency_option_profilelist_sidebar = isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0;
-			if (empty($rb_agency_option_profilelist_sidebar)) { $rb_agency_option_profilelist_sidebar = "0"; }
+			if (empty($rb_agency_option_profilelist_sidebar)) {$rb_agency_option_profilelist_sidebar = "0"; }
 		// EasyTxt
 		$rb_agency_value_easytxtkey = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtkey'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtkey']:0;
-			if (empty($rb_agency_value_easytxtkey)) { $rb_agency_value_easytxtkey = ""; }
+			if (empty($rb_agency_value_easytxtkey)) {$rb_agency_value_easytxtkey = ""; }
 		$rb_agency_value_easytxtsecret = isset($rb_agency_options_arr['rb_agency_option_agency_easytxtsecret'])?$rb_agency_options_arr['rb_agency_option_agency_easytxtsecret']:0;
-			if (empty($rb_agency_value_easytxtsecret)) { $rb_agency_value_easytxtsecret = ""; }
+			if (empty($rb_agency_value_easytxtsecret)) {$rb_agency_value_easytxtsecret = ""; }
 		$rb_agency_value_easytxturl = isset($rb_agency_options_arr['rb_agency_option_agency_easytxturl'])?$rb_agency_options_arr['rb_agency_option_agency_easytxturl']:0;
-			if (empty($rb_agency_value_easytxturl)) { $rb_agency_value_easytxturl = ""; }
+			if (empty($rb_agency_value_easytxturl)) {$rb_agency_value_easytxturl = ""; }
 
 		// Terms of Conditions
 		$rb_agency_option_model_toc = isset($rb_agency_options_arr['rb_agency_option_agency_model_toc'])?$rb_agency_options_arr['rb_agency_option_agency_model_toc']:"";
-			if (empty($rb_agency_option_model_toc)) { $rb_agency_option_model_toc = "/models-terms-of-conditions"; }
+			if (empty($rb_agency_option_model_toc)) {$rb_agency_option_model_toc = "/models-terms-of-conditions"; }
 		$rb_agency_option_casting_toc = isset($rb_agency_options_arr['rb_agency_option_agency_casting_toc'])?$rb_agency_options_arr['rb_agency_option_agency_casting_toc']:"";
-			if (empty($rb_agency_option_casting_toc)) { $rb_agency_option_casting_toc = "/casting-terms-of-conditions"; }
+			if (empty($rb_agency_option_casting_toc)) {$rb_agency_option_casting_toc = "/casting-terms-of-conditions"; }
 		//Sort by Date
 		$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_agency_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_agency_profilelist_sortbydate']:"";
-			if (empty($rb_agency_option_profilelist_sortbydate)) { $rb_agency_option_profilelist_sortbydate = 0; }
+			if (empty($rb_agency_option_profilelist_sortbydate)) {$rb_agency_option_profilelist_sortbydate = 0; }
 		// Hide advanced search button
 		$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
-		
+
 		$rb_agency_option_inactive_profile_on_update = isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])? $rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0;
 	/*
 	 * Form
@@ -362,20 +362,20 @@ elseif ($ConfigID == 1) {
 		echo " </tr>\n";
 		}
 		if ( is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) {
-		
+
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Models/Profiles Terms of Conditions Link', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_agency_model_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_model_toc'])?$rb_agency_options_arr['rb_agency_option_model_toc']:$rb_agency_option_model_toc) ."\" /></td>\n";
 		echo " </tr>\n";
 		}
-		
+
 		if ( class_exists("RBAgencyCasting") ) {
-		
+
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Casting Terms of Conditions Link', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_casting_toc]\" value=\"". (isset($rb_agency_options_arr['rb_agency_option_casting_toc'])?$rb_agency_options_arr['rb_agency_option_casting_toc']:$rb_agency_option_casting_toc) ."\" /></td>\n";
 		echo " </tr>\n";
-		
+
 		}
 		/*
 		 * Agency Internationalization
@@ -398,7 +398,7 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Server Timezone', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_locationtimezone]\">\n";
-		  $rb_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
+			$rb_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
 		echo "       <option value=\"+12\" ". selected($rb_locationtimezone, "+12",false) ."> UTC+12</option>\n";
 		echo "       <option value=\"+11\" ". selected($rb_locationtimezone, "+11",false) ."> UTC+11</option>\n";
 		echo "       <option value=\"+10\" ". selected($rb_locationtimezone, "+10",false) ."> UTC+10</option>\n";
@@ -457,27 +457,27 @@ elseif ($ConfigID == 1) {
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_contact_search_result]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0, 1,false)."/> Show Contact Number in Search Results<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_email_listing]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0, 1,false)."/> Show Email Address in Listing<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_contact_listing]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0, 1,false)."/> Show Contact Number in Listing<br />\n";
-		
+
 		if ( class_exists("RBAgencyCasting") ) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite'])?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0, 1,false)."/> ". __("Enable Model Favorites", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		}
-		
+
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sidebar]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sidebar'])?$rb_agency_options_arr['rb_agency_option_profilelist_sidebar']:0, 1,false)."/> ". __("Show Sidebar", RBAGENCY_TEXTDOMAIN) ."<br />\n";
-		
+
 		if ( class_exists("RBAgencyCasting") ) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_castingcart]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'])?$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0, 1,false)."/> ". __("Show Casting Cart", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		}
-		
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'])?$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0, 1,false)."/> ". __("Show Thumbs Slide", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
-		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_bday'])?$rb_agency_options_arr['rb_agency_option_profilelist_bday']:0, 1,false)."/> ". __("Show Birthday With Months", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'])?$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0, 1,false)."/> ". __("Show Print and Download PDF Link", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_thumbsslide]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide'])?$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0, 1,false)."/> ". __("Show Thumbs Slide", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_bday]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_bday'])?$rb_agency_options_arr['rb_agency_option_profilelist_bday']:0, 1,false)."/> ". __("Show Birthday With Months", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_printpdf]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf'])?$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0, 1,false)."/> ". __("Show Print and Download PDF Link", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		if(function_exists('rb_agency_interact_menu')){
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_subscription'])?$rb_agency_options_arr['rb_agency_option_profilelist_subscription']:"", 1,false)."/> ". __("Show Manage Your Subscription", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_subscription]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_subscription'])?$rb_agency_options_arr['rb_agency_option_profilelist_subscription']:"", 1,false)."/> ". __("Show Manage Your Subscription", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		}
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0, 1,false)."/> ". __("Show Social Buttons", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showcountrycode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showcountrycode'])?$rb_agency_options_arr['rb_agency_option_showcountrycode']:0, 1,false)."/> ". __("Show Country as Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showstatecode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0, 1,false)."/> ". __("Show as State Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortbydate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']:0, 1,false)."/> ". __("Sort by Date", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0, 1,false)."/> ". __("Show Social Buttons", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showcountrycode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showcountrycode'])?$rb_agency_options_arr['rb_agency_option_showcountrycode']:0, 1,false)."/> ". __("Show Country as Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showstatecode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0, 1,false)."/> ". __("Show as State Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortbydate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']:0, 1,false)."/> ". __("Sort by Date", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 				echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -485,7 +485,7 @@ elseif ($ConfigID == 1) {
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_profilelist_perpage]\" value=\"". $rb_agency_option_profilelist_perpage ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Profiles Per Row', RBAGENCY_TEXTDOMAIN) ."</th>\n";		
+		echo "   <th scope=\"row\">". __('Profiles Per Row', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist_perrow]\">\n";
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:0, 1,false) ."> ". __("1", RBAGENCY_TEXTDOMAIN) ."</option>\n";
@@ -528,7 +528,7 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0, 0,false) ."> ". __("Default", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0, 1,false) ."> ". __("Image Overlay", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
-		echo "	 </td>\n";
+		echo "	</td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Favorite and Casting Effect', RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -538,7 +538,7 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0, 1,false) ."> ". __("Fade", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0, 2,false) ."> ". __("Slide", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
-		echo "	 </td>\n";
+		echo "	</td>\n";
 		echo " </tr>\n";
 		}
 
@@ -592,15 +592,15 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Resize Images', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
-				 _e('Maximum Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" /><br />\n";
-				 _e('Maximum Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
+				_e('Maximum Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxwidth]\" value=\"". $rb_agency_value_maxwidth ."\" style=\"width: 80px;\" /><br />\n";
+				_e('Maximum Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyimagemaxheight]\" value=\"". $rb_agency_value_maxheight ."\" style=\"width: 80px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile Thumbnails', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
-				 _e('Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbwidth]\" value=\"". $rb_agency_value_profilethumbwidth ."\" style=\"width: 80px;\" /><br />\n";
-				 _e('Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbheight]\" value=\"". $rb_agency_value_profilethumbheight ."\" style=\"width: 80px;\" />\n";
+				_e('Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbwidth]\" value=\"". $rb_agency_value_profilethumbwidth ."\" style=\"width: 80px;\" /><br />\n";
+				_e('Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbheight]\" value=\"". $rb_agency_value_profilethumbheight ."\" style=\"width: 80px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -656,7 +656,7 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 2,false) ."> ". __("Layout 02 - Profile View with Scrolling Thumbnails and Primary Image", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"3\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 3,false) ."> ". __("Layout 03 - Extended Profile View", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"4\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 4,false) ."> ". __("Layout 04 - Direct Contact Layout (NOTE: Includes Phone Number of Model)", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", RBAGENCY_TEXTDOMAIN) ."</option>\n";		
+		echo "       <option value=\"5\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 5,false) ."> ". __("Layout 05 - Fun Animated Gallery", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"6\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 6,false) ."> ". __("Layout 06 - Profile View with Big Images & Scrolling Thumbnails", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"7\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 7,false) ."> ". __("Layout 07 - Profile View with Big Images, Scrolling Thumbnails & Video Player Embed", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"8\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 8,false) ."> ". __("Layout 08 - Booklet", RBAGENCY_TEXTDOMAIN) ."</option>\n";
@@ -711,19 +711,19 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('URL', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
-				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxturl]\" value=\"". $rb_agency_value_easytxturl ."\" style=\"width: 180px;\" />\n";
+				echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxturl]\" value=\"". $rb_agency_value_easytxturl ."\" style=\"width: 180px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('API Key', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
-				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtkey]\" value=\"". $rb_agency_value_easytxtkey ."\" style=\"width: 180px;\" />\n";
+				echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtkey]\" value=\"". $rb_agency_value_easytxtkey ."\" style=\"width: 180px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('API Secret', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
-				 echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtsecret]\" value=\"". $rb_agency_value_easytxtsecret ."\" style=\"width: 180px;\" />\n";
+				echo "<input name=\"rb_agency_options[rb_agency_option_agency_easytxtsecret]\" value=\"". $rb_agency_value_easytxtsecret ."\" style=\"width: 180px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -784,13 +784,13 @@ elseif ($ConfigID == 11) {
 	$rb_agencyinteract_options_arr = get_option('rb_agencyinteract_options');
 
 	$rb_agencyinteract_option_redirect_custom_login = isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']) ?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_custom_login']:0;
-	
+
 
 
 	echo "<h3>". __("Interactive Settings", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
 		echo "<form method=\"post\" action=\"options.php\">\n";
 		settings_fields( 'rb-agencyinteract-settings-group' ); 
-		
+
 		echo "<table class=\"form-table\">\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Database Version', RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -814,7 +814,7 @@ elseif ($ConfigID == 11) {
 
 	/*
 	 * Interact Settings
-	*/
+	 */
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Login Settings', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
@@ -830,7 +830,7 @@ elseif ($ConfigID == 11) {
 		echo "   <td>\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time']:"", 1,false)."/> ". __("Redirect to /profile-member/account/", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time']:"", 0,false)."/> ". __("Redirect to custom( e.g. /welcome/ ):", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
-		echo "	   <input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url']:"")."\"/>	";
+		echo "		<input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_first_time_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_first_time_url']:"")."\"/>	";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -838,7 +838,7 @@ elseif ($ConfigID == 11) {
 		echo "   <td>\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin']:"", 1,false)."/> ". __("Redirect to /profile-member/account/(default)", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin']:"", 0,false)."/> ". __("Redirect to custom( e.g. /welcome/ ):", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
-		echo "	   <input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_url']:"")."\"/>	";
+		echo "		<input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_url']:"")."\"/>	";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " </tr>\n";
@@ -850,7 +850,7 @@ elseif ($ConfigID == 11) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 
-		
+
 
 
 		echo " <tr valign=\"top\">\n";
@@ -892,7 +892,7 @@ elseif ($ConfigID == 11) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-		*/
+		 */
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Delete Options', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
@@ -902,7 +902,7 @@ elseif ($ConfigID == 11) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 
-	
+
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('New Profile Approval', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
@@ -949,8 +949,8 @@ elseif ($ConfigID == 11) {
 		echo " </tr>\n";
 		echo "</table>\n";
 		echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
-		 
-		 echo "</form>\n";
+
+		echo "</form>\n";
 
 
 
@@ -982,22 +982,22 @@ elseif ($ConfigID == 12) {
 		}
 		$action = $_POST['action'];
 		switch($action) {
-	
+
 		// Add
 		case 'addRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
-		
+
 				// Create Record
 				$insert = "INSERT INTO " . table_agencyinteract_subscription_rates . " (SubscriptionRateTitle,SubscriptionRateType,SubscriptionRateText,SubscriptionRatePrice,SubscriptionRateTerm) VALUES ('" . esc_sql($SubscriptionRateTitle) . "','" . esc_sql($SubscriptionRateType) . "','" . esc_sql($SubscriptionRateText) . "','" . esc_sql($SubscriptionRatePrice) . "','" . esc_sql($SubscriptionRateTerm) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
-				
+
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 			}
 		break;
-	
+
 		// Manage
 		case 'editRecord':
 			if($have_error){
@@ -1018,48 +1018,48 @@ elseif ($ConfigID == 12) {
 		// Delete bulk
 		case 'deleteRecord':
 			foreach($_POST as $SubscriptionRateID) {
-			  if (is_numeric($SubscriptionRateID)) {
+				if (is_numeric($SubscriptionRateID)) {
 				// Verify Record
 				$queryDelete = "SELECT SubscriptionRateID, SubscriptionRateTitle FROM ". table_agencyinteract_subscription_rates ." WHERE SubscriptionRateID =  \"". $SubscriptionRateID ."\"";
 				$resultsDelete = $wpdb->get_results($queryDelete,ARRAY_A);
 				foreach($resultsDelete as $dataDelete) {
-			
+
 					// Remove Record
 					$delete = "DELETE FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID = \"". $SubscriptionRateID ."\"";
 					$results = $wpdb->query($delete);
-					
+
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['SubscriptionRateTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-						
-				} // while
-			  } // it was numeric
-			} // for each
+
+				}// while
+				}// it was numeric
+			}// for each
 		break;
-		
-		} // Switch
-		
-  } // Action Post
+
+		}// Switch
+
+  }// Action Post
   elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
-	
+
 	$SubscriptionRateID = $_GET['SubscriptionRateID'];
-	  if (is_numeric($SubscriptionRateID)) {
+		if (is_numeric($SubscriptionRateID)) {
 		// Verify Record
 		$queryDelete = "SELECT SubscriptionRateID, SubscriptionRateTitle FROM ". table_agencyinteract_subscription_rates ." WHERE SubscriptionRateID =  \"". $SubscriptionRateID ."\"";
 		$resultsDelete =  $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
 		foreach ($resultsDelete as $dataDelete) {
-	
+
 			// Remove Record
 			$delete = "DELETE FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID = \"". $SubscriptionRateID ."\"";
 			$results = $wpdb->query($delete);
-			
+
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['SubscriptionRateTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-				
-		} // is there record?
-	  } // it was numeric
+
+		}// is there record?
+		}// it was numeric
   }
   elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$SubscriptionRateID = $_GET['SubscriptionRateID'];
-		
+
 		if ( $SubscriptionRateID > 0) {
 			$query = "SELECT * FROM " . table_agencyinteract_subscription_rates . " WHERE SubscriptionRateID='$SubscriptionRateID'";
 			$results =  $wpdb->get_results($wpdb->prepare($query ), ARRAY_A);
@@ -1071,26 +1071,26 @@ elseif ($ConfigID == 12) {
 				$SubscriptionRateText	=$data['SubscriptionRateText'];
 				$SubscriptionRatePrice	=$data['SubscriptionRatePrice'];
 				$SubscriptionRateTerm	=$data['SubscriptionRateTerm'];
-			} 
-		
+			}
+
 			echo "<h3 class=\"title\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>\n";
 			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
-	
+
 		} else {
-		
+
 			$SubscriptionRateID		= 0;
 			$SubscriptionRateTitle	="";
 			$SubscriptionRateType	="";
 			$SubscriptionRateText	="";
 			$SubscriptionRatePrice	= 0;
 			$SubscriptionRateTerm	= 1;
-			
-			
+
+
 			echo "<h3>". sprintf(__("Create New  %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
-		} // Has Subscription rate or not
-  } // Edit record
-		
+		}// Has Subscription rate or not
+  }// Edit record
+
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page'] ."&ConfigID=". $ConfigID) ."\">\n";
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
@@ -1101,7 +1101,7 @@ elseif ($ConfigID == 12) {
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Type", RBAGENCY_TEXTDOMAIN) ." *:</th>\n";
 	echo "        <td><select id=\"SubscriptionRateType\" name=\"SubscriptionRateType\">\n";
-	echo "			  <option value=\"0\"". selected(0, $SubscriptionRateType) .">Standard</option>\n";
+	echo "				<option value=\"0\"". selected(0, $SubscriptionRateType) .">Standard</option>\n";
 	echo "          </select></td>\n";
 	echo "    </tr>\n";
 	echo "    <tr valign=\"top\">\n";
@@ -1115,13 +1115,13 @@ elseif ($ConfigID == 12) {
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Subscription Duration", RBAGENCY_TEXTDOMAIN) ." *:</th>\n";
 	echo "        <td><select id=\"SubscriptionRateTerm\" name=\"SubscriptionRateTerm\">\n";
-	echo "			  <option value=\"1\"". selected(1, $SubscriptionRateTerm) .">1 Month</option>\n";
-	echo "			  <option value=\"2\"". selected(2, $SubscriptionRateTerm) .">2 Months</option>\n";
-	echo "			  <option value=\"3\"". selected(3, $SubscriptionRateTerm) .">3 Months</option>\n";
-	echo "			  <option value=\"6\"". selected(6, $SubscriptionRateTerm) .">6 Months</option>\n";
-	echo "			  <option value=\"12\"". selected(12, $SubscriptionRateTerm) .">1 Year</option>\n";
-	echo "			  <option value=\"24\"". selected(24, $SubscriptionRateTerm) .">2 Years</option>\n";
-	echo "			  <option value=\"36\"". selected(36, $SubscriptionRateTerm) .">3 Years</option>\n";
+	echo "				<option value=\"1\"". selected(1, $SubscriptionRateTerm) .">1 Month</option>\n";
+	echo "				<option value=\"2\"". selected(2, $SubscriptionRateTerm) .">2 Months</option>\n";
+	echo "				<option value=\"3\"". selected(3, $SubscriptionRateTerm) .">3 Months</option>\n";
+	echo "				<option value=\"6\"". selected(6, $SubscriptionRateTerm) .">6 Months</option>\n";
+	echo "				<option value=\"12\"". selected(12, $SubscriptionRateTerm) .">1 Year</option>\n";
+	echo "				<option value=\"24\"". selected(24, $SubscriptionRateTerm) .">2 Years</option>\n";
+	echo "				<option value=\"36\"". selected(36, $SubscriptionRateTerm) .">3 Years</option>\n";
 	echo "          </select></td>\n";
 	echo "    </tr>\n";
 	echo "  </tbody>\n";
@@ -1139,11 +1139,11 @@ elseif ($ConfigID == 12) {
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
-	} 
+	}
 	echo "</form>\n";
-	
+
 	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
-	
+
 		/******** Sort Order ************/
 		$sort = "";
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
@@ -1158,16 +1158,16 @@ elseif ($ConfigID == 12) {
 		if (isset($_GET['dir']) && !empty($_GET['dir'])){
 			$dir = $_GET['dir'];
 			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
-			} 
+				$sortDirection = "asc";
+				} else {
+				$sortDirection = "desc";
+			}
 		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
+				$sortDirection = "desc";
+				$dir = "asc";
 		}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=rb_agency_settings&ConfigID=12") ."\">\n";	
+
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=rb_agency_settings&ConfigID=12") ."\">\n";
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -1188,7 +1188,7 @@ elseif ($ConfigID == 12) {
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
-	
+
 		$query = "SELECT * FROM ". table_agencyinteract_subscription_rates ." ORDER BY $sort $dir";
 		$results =  $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
@@ -1199,10 +1199,10 @@ elseif ($ConfigID == 12) {
 		echo "        <td class=\"column\">". stripslashes($data['SubscriptionRateTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;SubscriptionRateID=". $SubscriptionRateID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;SubscriptionRateID=". $SubscriptionRateID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;SubscriptionRateID=". $SubscriptionRateID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
-		echo "        <td class=\"column\">"; if ($data['SubscriptionRateType'] == 0) { echo "Standard"; } echo "</td>\n";
+		echo "        <td class=\"column\">"; if ($data['SubscriptionRateType'] == 0) {echo "Standard"; }echo "</td>\n";
 		echo "        <td class=\"column\">$". $data['SubscriptionRatePrice'] ." / ". $data['SubscriptionRateTerm'] ." Month Term</td>\n";
 		echo "        <td class=\"column\">". $data['SubscriptionRateText'] ."</td>\n";
 		echo "    </tr>\n";
@@ -1219,7 +1219,7 @@ elseif ($ConfigID == 12) {
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
 		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
-		
+
 		echo "</form>\n";
 
 
@@ -1359,7 +1359,7 @@ elseif ($ConfigID == 3) {
 		// Delete bulk
 		case 'deleteRecord':
 			foreach($_POST as $GenderID) {
-			  if (is_numeric($GenderID)) {
+				if (is_numeric($GenderID)) {
 				// Verify Record
 				$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
 				$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
@@ -1367,15 +1367,15 @@ elseif ($ConfigID == 3) {
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";
 					$results = $wpdb->query($delete);
-					
+
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-						
-				} // while
-			  } // it was numeric
-			} // for each
+
+				}// while
+				}// it was numeric
+			}// for each
 		break;
 
-		} // Switch
+		}// Switch
 
 
 	} elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
@@ -1387,15 +1387,15 @@ elseif ($ConfigID == 3) {
 			$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  %d ";
 			$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete, $GenderID ), ARRAY_A);
 			foreach ($resultsDelete as $dataDelete) {
-			
+
 				// Remove Record
 				$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = %d";
 				$results = $wpdb->query($wpdb->prepare($delete,$GenderID));
-				
+
 				echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-					
-			} // is there record?
-		} // it was numeric
+
+			}// is there record?
+		}// it was numeric
 
 	/*
 	 * Edit Record
@@ -1458,9 +1458,9 @@ elseif ($ConfigID == 3) {
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
-	} 
+	}
 	echo "</form>\n";
-	
+
 	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 
 	/******** Sort Order ************/
@@ -1471,22 +1471,22 @@ elseif ($ConfigID == 3) {
 	else {
 		$sort = "GenderTitle";
 	}
-	
+
 	/******** Direction ************/
 	$dir = "";
 	if (isset($_GET['dir']) && !empty($_GET['dir'])){
 		$dir = $_GET['dir'];
 		if ($dir == "desc" || !isset($dir) || empty($dir)){
-		   $sortDirection = "asc";
-		   } else {
-		   $sortDirection = "desc";
-		} 
+			$sortDirection = "asc";
+			} else {
+			$sortDirection = "desc";
+		}
 	} else {
-		   $sortDirection = "desc";
-		   $dir = "asc";
+			$sortDirection = "desc";
+			$dir = "asc";
 	}
 
-	echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
+	echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 	echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 	echo "<thead>\n";
 	echo "    <tr class=\"thead\">\n";
@@ -1507,14 +1507,14 @@ elseif ($ConfigID == 3) {
 	$count = $wpdb->num_rows;
 	foreach ($results as $data) {
 			$GenderID	=$data['GenderID'];
-		
-		
+
+
 	echo "    <tr>\n";
 	echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $GenderID ."\" name=\"". $GenderID ."\" value=\"". $GenderID ."\" /></th>\n";
 	echo "        <td class=\"column\">". stripslashes($data['GenderTitle']) ."\n";
 	echo "          <div class=\"row-actions\">\n";
 	echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
-	echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+	echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;GenderID=". $GenderID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 	echo "          </div>\n";
 	echo "        </td>\n";
 	echo "    </tr>\n";
@@ -1532,25 +1532,25 @@ elseif ($ConfigID == 3) {
 	echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
 	echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 	echo "</p>\n";
-	
+
 	echo "</form>\n";
 
 
 
 } elseif ($ConfigID == 4) {
 // *************************************************************************************************** //
-// Setup Profile Categories	
+// Setup Profile Categories
 	/** Identify Labels **/
 	define("LabelPlural", __("Profile Types", RBAGENCY_TEXTDOMAIN));
 	define("LabelSingular", __("Profile Type", RBAGENCY_TEXTDOMAIN));
   /* Initial Registration [RESPOND TO POST] ***********/ 
   if ( isset($_POST['action']) ) {
-	
+
 		$DataTypeID 	= $_POST['DataTypeID'];
 		$DataTypeTitle 	= $_POST['DataTypeTitle'];
 		$DataTypeTag 	= $_POST['DataTypeTag'];
 		$DataTypeOldTitle = $_POST["oldTitle"];
-			if (empty($DataTypeTag)) { $DataTypeTag = RBAgency_Common::format_stripchars($DataTypeTitle); }
+			if (empty($DataTypeTag)) {$DataTypeTag = RBAgency_Common::format_stripchars($DataTypeTitle); }
 		// Error checking
 		$error = "";
 		$have_error = false;
@@ -1560,22 +1560,22 @@ elseif ($ConfigID == 3) {
 		}
 		$action = $_POST['action'];
 		switch($action) {
-	
+
 		// Add
 		case 'addRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
 			} else {
-		
+
 				// Create Record
 				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag) VALUES ('" . esc_sql($DataTypeTitle) . "','" . esc_sql($DataTypeTag) . "')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
-				
+
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 			}
 		break;
-	
+
 		// Manage
 		case 'editRecord':
 			if($have_error){
@@ -1587,17 +1587,17 @@ elseif ($ConfigID == 3) {
 								DataTypeTag='" . esc_sql($DataTypeTag) . "' 
 							WHERE DataTypeID='$DataTypeID'";
 				$updated = $wpdb->query($update);
-			
+
 				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".esc_sql($DataTypeOldTitle)."', ProfileCustomTypes) > 0;";
 				$result =  $wpdb->get_results($update_customfields,ARRAY_A);
-				  $total = count($result);
+					$total = count($result);
 
 				foreach($result as $d){
-					  $ptype = $d["ProfileCustomTypes"];
-					  $nptype = str_replace($DataTypeOldTitle, $DataTypeTitle, $ptype);
-					  $wpdb->query("UPDATE ". table_agency_customfields_types ."  SET ProfileCustomTypes='".$nptype."' WHERE ProfileCustomID='".$d["ProfileCustomID"]."'");
+						$ptype = $d["ProfileCustomTypes"];
+						$nptype = str_replace($DataTypeOldTitle, $DataTypeTitle, $ptype);
+						$wpdb->query("UPDATE ". table_agency_customfields_types ."  SET ProfileCustomTypes='".$nptype."' WHERE ProfileCustomID='".$d["ProfileCustomID"]."'");
 				}
-				
+
 				echo "Updated $total custom fields assigned to this Profile Type<br/>";
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"); 
 			}
@@ -1605,7 +1605,7 @@ elseif ($ConfigID == 3) {
 		// Delete bulk
 		case 'deleteRecord':
 			foreach($_POST as $DataTypeID) {
-			  if (is_numeric($DataTypeID)) {
+				if (is_numeric($DataTypeID)) {
 				// Verify Record
 				$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  \"". $DataTypeID ."\"";
 				$resultsDelete =$wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
@@ -1614,39 +1614,39 @@ elseif ($ConfigID == 3) {
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = \"". $DataTypeID ."\"";
 					$results = $wpdb->query($delete);
-					
+
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['DataTypeTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-						
-				} // while
-			  } // it was numeric
-			} // for each
+
+				}// while
+				}// it was numeric
+			}// for each
 		break;
-		
-		} // Switch
-		
-  } // Action Post
+
+		}// Switch
+
+  }// Action Post
   elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
-	
+
 	$DataTypeID = $_GET['DataTypeID'];
-	  if (is_numeric($DataTypeID)) {
+		if (is_numeric($DataTypeID)) {
 		// Verify Record
 		$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  '%s'";
 		$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete,$DataTypeID), ARRAY_A);
 		foreach ($resultsDelete as $dataDelete) {
-		
+
 			// Remove Record
 			$delete = "DELETE FROM " . table_agency_data_type . " WHERE DataTypeID = '%s'";
 			$results = $wpdb->query($wpdb->prepare($delete,$DataTypeID));
-			
+
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['DataTypeTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-				
-		} // is there record?
-	  } // it was numeric
+
+		}// is there record?
+		}// it was numeric
   }
   elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$DataTypeID = $_GET['DataTypeID'];
-		
+
 		if ( $DataTypeID > 0) {
 			$query = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeID='%s'";
 			$results = $wpdb->get_results($wpdb->prepare($query,$DataTypeID), ARRAY_A);
@@ -1656,17 +1656,17 @@ elseif ($ConfigID == 3) {
 				$DataTypeTitle	=stripslashes($data['DataTypeTitle']);
 				$DataTypeTitle = str_replace(' ', '_', $DataTypeTitle);
 				$DataTypeTag	=$data['DataTypeTag'];
-			} 
-		
+			}
+
 			echo "<h3 class=\"title\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>\n";
 			echo "<p>". sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
 		}
   } else {
-		
+
 			$DataTypeID		= 0;
 			$DataTypeTitle	="";
 			$DataTypeTag	="";
-			
+
 			echo "<h3>". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
   }
@@ -1682,7 +1682,7 @@ elseif ($ConfigID == 3) {
 	echo "        <th scope=\"row\">". __("Slug", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 	echo "        <td><input type=\"text\" id=\"DataTypeTag\" name=\"DataTypeTag\" value=\"". $DataTypeTag ."\" /></td>\n";
 	echo "    </tr>\n";
-	} 
+	}
 	echo "  </tbody>\n";
 	echo "</table>\n";
 	if ( $DataTypeID > 0) {
@@ -1699,11 +1699,11 @@ elseif ($ConfigID == 3) {
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Create Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
-	} 
+	}
 	echo "</form>\n";
-	
+
 	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
-	
+
 		/******** Sort Order ************/
 		$sort = "";
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
@@ -1712,22 +1712,22 @@ elseif ($ConfigID == 3) {
 		else {
 			$sort = "DataTypeTitle";
 		}
-		
+
 		/******** Direction ************/
 		$dir = "";
 		if (isset($_GET['dir']) && !empty($_GET['dir'])){
 			$dir = $_GET['dir'];
 			if ($dir == "desc" || !isset($dir) || empty($dir)){
-			   $sortDirection = "asc";
-			   } else {
-			   $sortDirection = "desc";
-			} 
+				$sortDirection = "asc";
+				} else {
+				$sortDirection = "desc";
+			}
 		} else {
-			   $sortDirection = "desc";
-			   $dir = "asc";
+				$sortDirection = "desc";
+				$dir = "asc";
 		}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";	
+
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -1744,7 +1744,7 @@ elseif ($ConfigID == 3) {
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
-	
+
 		$query = "SELECT * FROM ". table_agency_data_type ." ORDER BY $sort $dir";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
@@ -1755,7 +1755,7 @@ elseif ($ConfigID == 3) {
 		echo "        <td class=\"column\">". stripslashes($data['DataTypeTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
 		echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
@@ -1774,9 +1774,9 @@ elseif ($ConfigID == 3) {
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
 		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
-		
+
 		echo "</form>\n";
-}	 // End	
+}	// End
 
 elseif ($ConfigID == 7){
 
@@ -1797,12 +1797,12 @@ if(isset($_POST['country_add'])) {
 		$error .= "<b><i>". __("Country code is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 		$have_error = true;
 	}
-	
+
 	if($have_error){
 		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating country, please ensure you have filled out all required fields", 		RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-	} 
-	else{				
-		
+	}
+	else {
+
 		$wpdb->insert( 
 		table_agency_data_country, 
 		array( 
@@ -1844,7 +1844,7 @@ if(isset($_POST["editaction"])){
 			) 
 		);
 	}
-		
+
 	}
  ?>
 <form method="post" name="add_country" id="add_country" action="<?php echo admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=7"; ?>">
@@ -1861,14 +1861,14 @@ if(isset($_POST["editaction"])){
 </form>
 <?php 
 // Get Country to be deleted
-	if(!isset($_REQUEST['delcountry']) && empty($_REQUEST['delcountry'])){ 
+	if(!isset($_REQUEST['delcountry']) && empty($_REQUEST['delcountry'])){
 		$delCountry = 0;
 	} else {
 	$delCountry = $_REQUEST['delcountry']; 
 	// Remove Records from country and states
 	$deleteCountry = "DELETE FROM " . table_agency_data_country . " WHERE CountryID = \"". $delCountry ."\"";
 	$resultsCountry = $wpdb->query($deleteCountry);
-	 $deleteState= "DELETE FROM " . table_agency_data_state . " WHERE CountryID = \"". $delCountry ."\"";
+	$deleteState= "DELETE FROM " . table_agency_data_state . " WHERE CountryID = \"". $delCountry ."\"";
 	$resultsState = $wpdb->query($deleteState);
 	echo '<span class="msg">Country has been deleted successfully</span>';
 	}
@@ -1899,7 +1899,7 @@ if(isset($_POST['state_add'])) {
 	$CountryID  = $_POST['CountryID'];
 	$StateTitle  = $_POST['StateTitle'];
 	$StateCode  = $_POST['StateCode'];
-	
+
 	// Error checking
 	$error = "";
 	$have_error = false;
@@ -1915,11 +1915,11 @@ if(isset($_POST['state_add'])) {
 		$error .= "<b><i>". __("State code is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 		$have_error = true;
 	}
-	
+
 	if($have_error){
 		echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating state, please ensure you have filled out all required fields", 		RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-	} 
-	else{				
+	}
+	else {
 		$wpdb->insert( 
 		table_agency_data_state, 
 		array( 
@@ -1941,8 +1941,8 @@ if(isset($_POST['state_add'])) {
 <div class="country_in"><select name="CountryID" ><option value="-1">Select Country</option><?php 
 foreach($myrows as $result) {
  ?>
-<option <?php if(isset($_POST['CountryID']) && $_POST['CountryID']==$result->CountryID){?>selected="selected"<?php }?> value="<?php echo (isset($result->CountryID)?$result->CountryID:""); ?>"><?php echo (isset($result->CountryTitle)?$result->CountryTitle:""); ?></option>
-<?php } ?>
+<option <?php if(isset($_POST['CountryID']) && $_POST['CountryID']==$result->CountryID){ ?>selected="selected"<?php }?> value="<?php echo (isset($result->CountryID)?$result->CountryID:""); ?>"><?php echo (isset($result->CountryTitle)?$result->CountryTitle:""); ?></option>
+<?php }?>
 </select></div>
 <div class="country_txt" style="width:6%;"><span>State Name</span></div>
 <div class="country_in"><input type="text" name="StateTitle" value="<?php echo (isset($_POST['StateTitle'])?$_POST['StateTitle']:"");?>" size="27">
@@ -1957,14 +1957,14 @@ foreach($myrows as $result) {
 
 <?php
 // Get Country to be deleted
-	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){ 
+	if(!isset($_REQUEST['delstate']) && empty($_REQUEST['delstate'])){
 		$delState = 0;
 	} else {
 		$delState = $_REQUEST['delstate']; 
 		// Remove Record
 		$deleteState = "DELETE FROM " . table_agency_data_state . " WHERE StateID = \"". $delState ."\"";
 		$results = $wpdb->query($deleteState);
-		
+
 		echo '<span class="msg">State has been deleted successfully</span>';
 	}
 echo '<table>';
@@ -1990,7 +1990,7 @@ foreach($getCountry as $countryRs) {
 echo '</table>';
 ?>
 </div>
-<?php } 
+<?php }
 
 
 // *************************************************************************************************** //
@@ -2007,10 +2007,10 @@ echo "<div id=\"custom-fields\">";
 	define("LabelSingular", __("Custom Field", RBAGENCY_TEXTDOMAIN));
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
-	
+
 	?>
 
-	  <style type="text/css">
+		<style type="text/css">
 		.widefat td{
 			vertical-align: top !important;
 		}
@@ -2019,20 +2019,20 @@ echo "<div id=\"custom-fields\">";
 			padding-left: 10px;
 			border-bottom: 1px solid #F1F1F1;
 		}
-	  </style>
+		</style>
   
 	<?php
 	//restore preset
 	if(isset($_GET['restore']) && ($_GET['restore'] == 'RestorePreset')){
 				//delete initial values ProfileCustomID 1 to 18
-				$presets = "'ethnicity','skin tone','hair color','eye color','height','weight','shirt','waist','hips','shoe size','suit','inseam','dress','bust','union','experience','language','booking'";	
+				$presets = "'ethnicity','skin tone','hair color','eye color','height','weight','shirt','waist','hips','shoe size','suit','inseam','dress','bust','union','experience','language','booking'";
 				$delete = "DELETE FROM " . table_agency_customfields . " WHERE LOWER(ProfileCustomTitle) IN(".$presets.")";
 				$wpdb->query($delete);
 				//repopulate
 				$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
 				if ( !$data_custom_exists ) {
 						// Assume the rest dont exist either
-						
+
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (1, 'Ethnicity', 	3, '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|', 0, 2, 0, 1, 1,0,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (2, 'Skin Tone', 	3, '|Fair|Medium|Dark|', 0, 2, 0, 1, 1,0,0, 0, 1, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (3, 'Hair Color', 	3, '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|', 0, 3, 0, 1, 1,0, 0,0, 1, 0)");
@@ -2053,13 +2053,13 @@ echo "<div id=\"custom-fields\">";
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1,0,0, 0, 1, 0)");
 				}
 
-		 echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>Restored.</strong> successfully restored custom fields preset values!", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". (isset($lastid)?$lastid:0) ."\">") .".</a></p><p>".(isset($error)?$error:"")."</p></div>"); 
+		echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>Restored.</strong> successfully restored custom fields preset values!", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". (isset($lastid)?$lastid:0) ."\">") .".</a></p><p>".(isset($error)?$error:"")."</p></div>"); 
 
 	}
-		
+
 	/* Initial Registration [RESPOND TO POST] ***********/ 
 	if ( isset($_POST['action']) ) {
-		
+
 		$ProfileCustomID			= isset($_POST['ProfileCustomID'])?$_POST['ProfileCustomID']:"";
 		$ProfileCustomTitle			= isset($_POST['ProfileCustomTitle'])?$_POST['ProfileCustomTitle']:"";
 		$ProfileCustomType			= isset($_POST['ProfileCustomType']) ?$_POST['ProfileCustomType']:"";
@@ -2068,7 +2068,7 @@ echo "<div id=\"custom-fields\">";
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
 		$ProfileCustomShowProfile  	= isset($_POST['ProfileCustomShowProfile'])?(int)$_POST['ProfileCustomShowProfile']:0;
-		
+
 		$ProfileCustomShowSearch  	= isset($_POST['ProfileCustomShowSearch']) ? (int)$_POST['ProfileCustomShowSearch'] : 0;
 		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
 		$ProfileCustomShowRegistration= isset($_POST['ProfileCustomShowRegistration'])?(int)$_POST['ProfileCustomShowRegistration']:0;
@@ -2079,7 +2079,7 @@ echo "<div id=\"custom-fields\">";
 		//use for filter
 		$ProfileCustomShowFilter   	= isset($_POST['ProfileCustomShowFilter'])?(int)$_POST['ProfileCustomShowFilter']:0;
 
-		
+
 		/*
 		 * Set profile types here
 		 */
@@ -2097,10 +2097,10 @@ echo "<div id=\"custom-fields\">";
 		if($ProfileCustomPrivacy==3){
 			$ProfileCustomShowLogged = "0";
 			$ProfileCustomShowAdmin  = "0";
-		}elseif($ProfileCustomPrivacy==2){
+		} elseif($ProfileCustomPrivacy==2){
 			$ProfileCustomShowLogged = "0";
 			$ProfileCustomShowAdmin  = "1";
-		}else{
+		} else {
 			$ProfileCustomShowLogged = "1";
 			$ProfileCustomShowAdmin  = "0";
 		}
@@ -2109,17 +2109,17 @@ echo "<div id=\"custom-fields\">";
 		if($ProfileCustomType == 1){ //Text
 			//...
 		} elseif ($ProfileCustomType == 3 || $ProfileCustomType == 9){ //Dropdown || Multi-Select
-			 $label_option ="";
-			 $option = "";
-			 $label_option2 = "";
-			 $option2 = "";
+			$label_option ="";
+			$option = "";
+			$label_option2 = "";
+			$option2 = "";
 			if(!empty($_POST["option"]) && isset($_POST["option"])){
 				foreach($_POST["option"] as $key => $val){
 					if(!empty($val)){
 						$option .= stripslashes($val)."|";
 					}
 				}
-				$label_option = "".(isset($_POST["option_label"])?$_POST["option_label"]:"")."|".$option;  //
+				$label_option = "".(isset($_POST["option_label"])?$_POST["option_label"]:"")."|".$option;//
 			}
 			if(!empty($_POST["option2"]) && isset($_POST["option2"])){
 				foreach($_POST["option2"] as $key2 => $val2){
@@ -2127,49 +2127,49 @@ echo "<div id=\"custom-fields\">";
 						$option2 .= stripslashes($val2)."|";
 					}
 				}
-				$label_option2 = ":".$_POST["option_label2"]."|".$option2;  //
+				$label_option2 = ":".$_POST["option_label2"]."|".$option2;//
 			}
 			$ProfileCustomOptions = $label_option.$label_option2; 
-		}elseif($ProfileCustomType == 4){ //TextArea
+		} elseif($ProfileCustomType == 4){ //TextArea
 			$ProfileCustomOptions = $_POST["ProfileCustomOptions"];
-		}elseif($ProfileCustomType == 5){ //Checkbox
+		} elseif($ProfileCustomType == 5){ //Checkbox
 			$pos = 0;
 			foreach($_POST["option"] as $key => $val){
 				if(!empty($_POST["option"]) && $_POST["option"] !=""  && !empty($val)){
-					$pos++;		
-					if($pos!= count($_POST["option"])){ 
+					$pos++;
+					if($pos!= count($_POST["option"])){
 						$ProfileCustomOptions .= stripslashes($val)."|";
-					}else{
+					} else {
 						$ProfileCustomOptions .= stripslashes($val);
 					}
 				}
 			}
-		}elseif($ProfileCustomType == 6){ //RadioButton
+		} elseif($ProfileCustomType == 6){ //RadioButton
 			$pos = 0;
 				foreach($_POST["option"] as $key => $val){
 				if(!empty($_POST["option"])  && $_POST["option"] !="" && !empty($val)){
-					$pos++;	
-					if($pos!= count($_POST["option"])){ 
+					$pos++;
+					if($pos!= count($_POST["option"])){
 						$ProfileCustomOptions .= $val."|";
-					}else{
+					} else {
 						$ProfileCustomOptions .= $val;
 					}
 				}
 			}
-		}elseif($ProfileCustomType == 7){ //Metric & Imperial
+		} elseif($ProfileCustomType == 7){ //Metric & Imperial
 			$ProfileCustomOptions = $_POST["ProfileUnitType"];
 		}/*elseif ($ProfileCustomType == 8){ //Dropdown
-			 $label_option ="";
-			 $option = "";
-			 $label_option2 = "";
-			 $option2 = "";
+			$label_option ="";
+			$option = "";
+			$label_option2 = "";
+			$option2 = "";
 			if(!empty($_POST["multiple"]) && isset($_POST["multiple"])){
 				foreach($_POST["multiple"] as $key => $val){
 					if(!empty($val)){
 						$option .= $val."|";
 					}
 				}
-				$label_option = "".$_POST["option_label"]."|".$option;  //
+				$label_option = "".$_POST["option_label"]."|".$option;//
 			}
 			if(!empty($_POST["option2"]) && isset($_POST["option2"])){
 				foreach($_POST["option2"] as $key2 => $val2){
@@ -2177,12 +2177,12 @@ echo "<div id=\"custom-fields\">";
 						$option2 .= $val2."|";
 					}
 				}
-				$label_option2 = ":".$_POST["option_label2"]."|".$option2;  //
+				$label_option2 = ":".$_POST["option_label2"]."|".$option2;//
 			}
 			$ProfileCustomOptions = $label_option.$label_option2; 
 		}*/
 		// Error checking
-	
+
 		$have_error = false;
 		if(trim($ProfileCustomTitle) == ""){
 			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
@@ -2217,13 +2217,13 @@ echo "<div id=\"custom-fields\">";
 				 * Set Types Here for each Custom fields.
 				 */
 				$get_types = "SELECT * FROM ". table_agency_data_type;
-						
+
 				$result = $wpdb->get_results($get_types,ARRAY_A);
-						
+
 				foreach($result as $typ){
 					$profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);
 					$profiletyp = str_replace(' ', '_', $profiletyp);
-					if($_POST[$profiletyp]) { $Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ; }
+					if($_POST[$profiletyp]) {$Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ; }
 				}
 
 				$Types = rtrim($Types, ",");
@@ -2236,27 +2236,27 @@ echo "<div id=\"custom-fields\">";
 							$check_results = $wpdb->get_results($check_sql,ARRAY_A);
 
 							$count_check = count($check_results);
-							
+
 							if($count_check == 0){
 								//create record in Custom Clients
 								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
 								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes) 
 								VALUES (" . $lastid . ",'" 
-										  . esc_sql($ProfileCustomTitle) . "','" 
-										  . $Types . "')";
-								
+											. esc_sql($ProfileCustomTitle) . "','" 
+											. $Types . "')";
+
 								$results_client = $wpdb->query($insert_client);
 							} else {
 								//update if already existing 
 								$update = "UPDATE " . table_agency_customfields_types . " 
-										  SET 
-										  ProfileCustomTypes='" . $Types . "' 
-										  WHERE ProfileCustomID = ".$lastid;
+											SET 
+											ProfileCustomTypes='" . $Types . "' 
+											WHERE ProfileCustomID = ".$lastid;
 								$updated = $wpdb->query($update);
 							}
 
 				}
-				
+
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
 				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\">";
@@ -2269,10 +2269,10 @@ echo "<div id=\"custom-fields\">";
 		case 'editRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>"); 
-				 echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>
 						<div class=\"postbox\">";
-				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
-				 echo" <div class=\"inside\"> ";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
+				echo" <div class=\"inside\"> ";
 			} else {
 				$update = "UPDATE " . table_agency_customfields . " 
 							SET 
@@ -2310,10 +2310,10 @@ echo "<div id=\"custom-fields\">";
 					$t = 'ProfileType' . trim($typ['DataTypeTitle']);$t = str_replace(' ', '_', $t);
 					$n = trim($typ['DataTypeTitle']);
 					$n = str_replace(' ', '_', $n);
-					if($$t) { 
+					if($$t) {
 						$$n = true;
 						$Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ; 
-					} else { 
+					} else {
 						$$n = false;
 					}
 				}
@@ -2331,15 +2331,15 @@ echo "<div id=\"custom-fields\">";
 								$insert_client = "INSERT INTO " . table_agency_customfields_types . 
 								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes) 
 								VALUES (" . $ProfileCustomID . ",'" 
-										  . esc_sql($ProfileCustomTitle) . "','" 
-										  . $Types . "')";
+											. esc_sql($ProfileCustomTitle) . "','" 
+											. $Types . "')";
 								$results_client = $wpdb->query($insert_client);
 							} else {
 								//update if already existing 
 								$update = "UPDATE " . table_agency_customfields_types . " 
-										  SET 
-										  ProfileCustomTypes='" . $Types . "' 
-										  WHERE ProfileCustomID = ".$ProfileCustomID;
+											SET 
+											ProfileCustomTypes='" . $Types . "' 
+											WHERE ProfileCustomID = ".$ProfileCustomID;
 								$updated = $wpdb->query($update);
 							}
 
@@ -2349,7 +2349,7 @@ echo "<div id=\"custom-fields\">";
 						 * Delete if there is no selections
 						 */
 						$delete = "DELETE FROM " . table_agency_customfields_types . " 
-								  WHERE ProfileCustomID = ".$ProfileCustomID;
+									WHERE ProfileCustomID = ".$ProfileCustomID;
 						$deleted = $wpdb->query($delete);
 				}
 
@@ -2357,8 +2357,8 @@ echo "<div id=\"custom-fields\">";
 				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
 						echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;</h3>
 						<div class=\"postbox\">";
-				 echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
-				 echo" <div class=\"inside\"> ";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
+				echo" <div class=\"inside\"> ";
 			}
 		break;
 		// Delete bulk
@@ -2373,7 +2373,7 @@ echo "<div id=\"custom-fields\">";
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_customfields . " WHERE ProfileCustomID = \"". $ProfileCustomID ."\"";
 					$results = $wpdb->query($delete);
-					
+
 					// Rmove from Custom Types
 					$delete_sql = "DELETE FROM " . table_agency_customfields_types . 
 					" WHERE ProfileCustomID='$ProfileCustomID'";
@@ -2381,18 +2381,18 @@ echo "<div id=\"custom-fields\">";
 
 					echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 
-				} // while
-			  } // it was numeric
-			} // for each
+				}// while
+				}// it was numeric
+			}// for each
 					echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 					echo " <div class=\"postbox\">";
 					echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 					echo " <div class=\"inside\"> ";
 		break;
 
-		} // Switch
+		}// Switch
 
-} // Action Post
+}// Action Post
 elseif (isset($_GET["deleteRecord"])) {
 
 	$ProfileCustomID = $_GET['ProfileCustomID'];
@@ -2410,20 +2410,20 @@ elseif (isset($_GET["deleteRecord"])) {
 			$delete_sql = "DELETE FROM " . table_agency_customfields_types . 
 			" WHERE ProfileCustomID='$ProfileCustomID'";
 			$deleted = $wpdb->query($delete_sql) or die($wpdb->print_error());
-			
+
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-			echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	
+			echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
 			<div class=\"postbox\">
 			<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>
 			<div class=\"inside\"> ";
 
-		} // is there record?
-	} // it was numeric
+		}// is there record?
+	}// it was numeric
 }
 elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$action = $_GET['action'];
 		$ProfileCustomID = $_GET['ProfileCustomID'];
-		
+
 		if ( $ProfileCustomID > 0) {
 			$query = "SELECT * FROM " . table_agency_customfields . " WHERE ProfileCustomID='$ProfileCustomID'";
 			$results = $wpdb->get_results($query,ARRAY_A);
@@ -2443,8 +2443,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomShowSearchSimple=	$data['ProfileCustomShowSearchSimple'];
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 			}
-		
-		echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>	
+
+		echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
 				<div class=\"postbox\">";
 		echo "<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
 		echo "<div class=\"inside\"> ";
@@ -2470,7 +2470,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			echo "\n";
 		echo " 
 		<div class=\"postbox \">
-		<!--	 <h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>
+		<!--	<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>
 		-->
 		<div class=\"inside\"> ";
 		if(isset($_GET["action"]) !== "editRecord"){
@@ -2479,18 +2479,18 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 	}
 	if(isset($_GET["action"]) == "editRecord"){
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ProfileCustomID=".$_GET["ProfileCustomID"]."&ConfigID=".$_GET["ConfigID"]."\">\n";
-	}else{
+	} else {
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 	}
 	echo "<div id=\"new-customfields\" class=\"rbform\">\n";
-		if(!isset($_GET["action"])){  // Create new Field		
+		if(!isset($_GET["action"])){ // Create new Field
 			echo "
 						<div class=\"rbfield rbselect rbsingle\">
 							<label>Type*:</label>
 							<div>";
 								if($rb_agency_options_arr['rb_agency_option_unittype']==1){
 										echo"	<select class=\"objtype\" name=\"ProfileCustomType\" id=\"1\">";
-								}else{
+								} else {
 									echo"	<select class=\"objtype\" name=\"ProfileCustomType\" id=\"0\">";
 								}
 								echo"<option value=\"\">---</option>
@@ -2503,7 +2503,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									<option value=\"11\">Link</option>";
 									if($rb_agency_options_arr['rb_agency_option_unittype']==1){
 										echo"     <option value=\"7\" id=\"1\">Imperial (ft/in/lb)</option>";
-									}else{
+									} else {
 										echo"     <option value=\"7\" id=\"0\">Metric (cm/kg)</option>";
 									}
 									echo "<option value=\"9\">Dropdown (Multi-Select)</option>";
@@ -2539,13 +2539,13 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							echo "<select name=\"ProfileCustomShowGender\">";
 							echo "<option value=\"\">All Gender</option>";
 							$queryShowGender = $wpdb->get_results($query,ARRAY_A);
-								 foreach($queryShowGender as $dataShowGender){
-									 if(isset($data1["ProfileCustomShowGender"])){
+								foreach($queryShowGender as $dataShowGender){
+									if(isset($data1["ProfileCustomShowGender"])){
 										echo "<option value=\"".$dataShowGender["GenderID"]."\" selected=\"selected\">".$dataShowGender["GenderTitle"]."</option>";
-									 }else{
+									} else {
 										echo "<option value=\"".$dataShowGender["GenderID"]."\">".$dataShowGender["GenderTitle"]."</option>";
-									 }
-								 }
+									}
+								}
 							echo "</select>";
 							echo "</div>
 						</div>
@@ -2556,19 +2556,19 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							 * get the proper fields on
 							 * profile types here
 							 */
-							
+
 							$get_types = "SELECT * FROM ". table_agency_data_type;
-							
+
 							$result = $wpdb->get_results($get_types,ARRAY_A);
-							
+
 							foreach( $result as $typ){
 								echo "<div><label>";
-											$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));    
-											$checked = 'checked="checked"';                    
+											$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));
+											$checked = 'checked="checked"';            
 											echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' . 
-												 $checked . '  />&nbsp;'.
-												 trim($typ['DataTypeTitle'])
-												 .'&nbsp;<br/>';
+												$checked . '  />&nbsp;'.
+												trim($typ['DataTypeTitle'])
+												.'&nbsp;<br/>';
 								echo "</label></div>";
 							}
 						echo		"</div>
@@ -2580,10 +2580,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							</div>
 						</div>";
 
-			 echo "<div id=\"objtype_customize\">\n";
+			echo "<div id=\"objtype_customize\">\n";
 		echo "</div>\n";
 
-		}else{ //Edit/Update Field
+		} else { //Edit/Update Field
 					$query1 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = $wpdb->get_results($query1,ARRAY_A);
 					$count1 = count($results1);
@@ -2616,14 +2616,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											<select class=\"objtype\" name=\"ProfileCustomType\">
 											<option value=\"\">---</option>
 											<option value=\"1\" ". ($data1["ProfileCustomType"] == 1 ? 'selected=\"selected\"':'').">Single Line Text</option>
-											
+
 											<option value=\"3\" ". ($data1["ProfileCustomType"] == 3 ? 'selected=\"selected\"':'').">Dropdown</option>
 											<option value=\"4\" ". ($data1["ProfileCustomType"] == 4 ? 'selected=\"selected\"':'').">Textbox</option>
 											<option value=\"5\" ". ($data1["ProfileCustomType"] == 5 ? 'selected=\"selected\"':'').">Checkbox</option>
 											<option value=\"6\" ". ($data1["ProfileCustomType"] == 6 ? 'selected=\"selected\"':'').">Radio Button</option>";
 											if($rb_agency_options_arr['rb_agency_option_unittype']==1){
 												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Imperial (ft/in/lb)</option>";
-											}else{
+											} else {
 												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Metric (cm/kg)</option>";
 											}
 										echo "	<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown (Multi-Select)</option>";;
@@ -2632,7 +2632,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 										echo "</select>
 											</div>
 										</div>";
-										//	 <a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
+										//	<a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
 
 										echo "  <div class=\"rbfield rbradio rbmulti\">
 												<label>Visibility*:</label>
@@ -2641,7 +2641,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													<div><label><input type=\"radio\" name=\"ProfileCustomView\" value=\"1\" ". ($data1["ProfileCustomView"] == 1 ? 'checked=\"checked\"':'')." /> <strong>". __("Private", RBAGENCY_TEXTDOMAIN) ."</strong><br/></label><small>". __("Visible in Registration, Profile Management & Admin CRM", RBAGENCY_TEXTDOMAIN) ."</small></div>
 													<div><label><input type=\"radio\" name=\"ProfileCustomView\" value=\"2\" ". ($data1["ProfileCustomView"] == 2 ? 'checked=\"checked\"':'')." /> <strong>". __("Restricted", RBAGENCY_TEXTDOMAIN) ."</strong><br/></label><small>". __("Only visible in Admin CRM", RBAGENCY_TEXTDOMAIN) ."</small></div>
 												</div>
-											
+
 												</div>
 												<div class=\"rbfield rbcheckbox rbmulti\">
 													<label>Custom View*:</label>
@@ -2659,7 +2659,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Gender*:</label>
 													<div>";
-													
+
 													$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 													echo "<select name=\"ProfileCustomShowGender\">";
 													echo "<option value=\"\">All Gender</option>";
@@ -2670,7 +2670,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 														}
 													echo "</select>";
-													
+
 												echo "
 													</div>
 												</div>
@@ -2680,11 +2680,11 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													<div>";
 
 											/*
-											* get the proper fields on
-											* profile types here
-											*/
+											 * get the proper fields on
+											 * profile types here
+											 */
 											$ProfileCustomID = $_GET['ProfileCustomID'];
-											
+
 											//get custom types
 											$_sql = "SELECT ProfileCustomTypes FROM " . table_agency_customfields_types . 
 												" WHERE ProfileCustomID = $ProfileCustomID";
@@ -2694,7 +2694,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													$rTypes = explode(",",$x->ProfileCustomTypes);
 											} else {
 													$rTypes = $x->ProfileCustomTypes;
-											}	
+											}
 
 											$get_types = "SELECT * FROM ". table_agency_data_type;
 
@@ -2753,22 +2753,22 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<div><input type=\"text\" name=\"ProfileCustomOptions\" value=\"". $data1["ProfileCustomOptions"] ."\" /></div>
 											</div>";
 
-								} elseif($data1["ProfileCustomType"] == 3 || $data1["ProfileCustomType"] == 9){	  // Dropdown || Multi-Select
-									 echo "<div class=\"rbfield rbselect rbsingle\">
+								} elseif($data1["ProfileCustomType"] == 3 || $data1["ProfileCustomType"] == 9){ // Dropdown || Multi-Select
+									echo "<div class=\"rbfield rbselect rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
 											@list($option1,$option2) = @explode(":",$data1['ProfileCustomOptions']);
-											
+
 											$data1 = explode("|",$option1);
 											$data2 = explode("|",$option2);
-									 echo "<ul id=\"editfield_add_more_options_12\">";
+									echo "<ul id=\"editfield_add_more_options_12\">";
 										$pos = 0;
 										foreach($data1 as $val1){
-											
+
 											if($val1 != end($data1) && $val1 != $data1[0]){
-											 $pos++;
-											 echo "<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\"  value=\"".htmlspecialchars($val1)."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></div></li>";
+											$pos++;
+											echo "<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\"  value=\"".htmlspecialchars($val1)."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></div></li>";
 											}
 										}
 									echo '</ul>';
@@ -2808,7 +2808,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<div><textarea name=\"ProfileCustomOptions\"> ". $data1["ProfileCustomOptions"] ."</textarea></div>
 											</div>";
 
-								} elseif($data1["ProfileCustomType"] == 5){	 //checkbox
+								} elseif($data1["ProfileCustomType"] == 5){ //checkbox
 
 										$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										$pos =0;
@@ -2816,11 +2816,11 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 										echo "<div class=\"rbfield rbtext rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
-											</div>";  
+											</div>";
 										echo "
 											<ul  id=\"editfield_add_more_options_12\">
-														   <ul>
-														 ";
+															<ul>
+														";
 										foreach($array_customOptions_values as  $val){
 											echo" <li rbfield rbtext rbsingle><label>Option:<label><div class=\"option\"><input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>";
 										}
@@ -2830,10 +2830,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 										//echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
 										//echo "<div  id=\"editfield_add_more_options_12\"><ul style=\"list-style:none;\"></ul></div><br/>";
 										echo "<div class=\"rbfield rbsingle\"><a href=\"javascript:;\" id=\"addmoreoption_1\" class=\"add-more-option\">add more option[+]</a></div>";
-										//echo "<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(12);\" >add more[+]</a>";	
+										//echo "<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(12);\" >add more[+]</a>";
 										echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12' ).sortable();});</script>";
 
-								} elseif($data1["ProfileCustomType"] == 6){	 //radio button
+								} elseif($data1["ProfileCustomType"] == 6){ //radio button
 									$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 									$pos =0;
 									echo "<div class=\"rbfield rbtext rbsingle\">
@@ -2841,7 +2841,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
 									echo "<ul id=\"editfield_add_more_options_12\" style=\"list-style:none;\">";
-										 foreach($array_customOptions_values as  $val){
+										foreach($array_customOptions_values as  $val){
 											if(!empty($val)){
 												$pos++;
 												//echo"&nbsp;Value:<input type=\"text\" name=\"label[]\" value=\"". $val."\" />";
@@ -2851,7 +2851,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 										echo "</ul>";
 										//echo "<div id=\"addcheckbox_field_1\"></div>";
-										//echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";	
+										//echo"<a href=\"javascript:void(0);\" style=\"font-size:12px;color:#069;text-decoration:underline;cursor:pointer;text-align:right;\" onclick=\"add_more_checkbox_field(1);\" >add more[+]</a>";
 										//echo "<div  id=\"editfield_add_more_options_12\"><ul style=\"list-style:none;\"></ul></div><br/>";
 										echo "<div class=\"rbfield rbsingle\"><a href=\"javascript:;\" id=\"addmoreoption_1\" class=\"add-more-option\">add more option[+]</a></div>";
 										echo "<script type=\"text/javascript\">jQuery(document).ready(function(){jQuery( '#editfield_add_more_options_12' ).sortable();});</script>";
@@ -2862,7 +2862,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											echo "<div><div><label><input type='radio' name='ProfileUnitType' value='1'  ".checked($data1["ProfileCustomOptions"],1,false)."/>cm</label></div></div>";
 											echo "<div><div><label><input type='radio' name='ProfileUnitType' value='2'  ".checked($data1["ProfileCustomOptions"],2,false)."/>kg</label></div></div>";
 											echo "</div>";
-										} elseif ($rb_agency_options_arr['rb_agency_option_unittype']==1) { //  Imperial (in/lb)											
+										} elseif ($rb_agency_options_arr['rb_agency_option_unittype']==1) { //  Imperial (in/lb)
 											echo "<div class=\"rbfield rbradio rbmulti\"><label></label>";
 											echo "<div><div><label><input type='radio' name='ProfileUnitType' value='1' ".checked($data1["ProfileCustomOptions"],1,false)." />Inches</label></div>";
 											echo "<div><label><input type='radio' name='ProfileUnitType' value='2' ".checked($data1["ProfileCustomOptions"],2,false)."/>Pounds</label></div>";
@@ -2870,7 +2870,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											echo "</div>";
 										}
 
-								}else if($data1["ProfileCustomType"] == 10){ // text
+								} else if($data1["ProfileCustomType"] == 10){ // text
 									echo "<tr>
 											<td style=\"width:50px;\">Title:</td>
 											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
@@ -2878,7 +2878,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								}
 
 					echo "</div>";
-					}  //endwhile
+					}//endwhile
 		}
 
 			if ( $ProfileCustomID > 0) {
@@ -2903,14 +2903,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 <div class="all-custom_fields">
 <style type="text/css">
 	#rb-cfield tr td {
-	  border-bottom: 2px dotted #ccc;
+		border-bottom: 2px dotted #ccc;
 	}
 </style>
 	<?php
-	
+
 	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 	echo " <span>Select a custom field to record.</span>";
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<a style=\"float: right;  margin-top: -20px;\" class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a>";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;<a style=\"float: right;margin-top: -20px;\" class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a>";
 		/******** Sort Order ************/
 		$sort = "";
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
@@ -2933,8 +2933,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			$sortDirection = "desc";
 			$dir = "asc";
 		}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=5\">\n";	
+
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=5\">\n";
 		echo "<table id=\"rb-cfield\" cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -2963,20 +2963,20 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
-	
+
 		$query = "SELECT main.*, 
-				  a.ProfileCustomTypes
-				  FROM ". table_agency_customfields ." main
-				  LEFT JOIN ". table_agency_customfields_types ." a 
-				  ON a.ProfileCustomID = main.ProfileCustomID 
-				  ORDER BY $sort $dir";
-				 
+					a.ProfileCustomTypes
+					FROM ". table_agency_customfields ." main
+					LEFT JOIN ". table_agency_customfields_types ." a 
+					ON a.ProfileCustomID = main.ProfileCustomID 
+					ORDER BY $sort $dir";
+
 		$results = $wpdb->get_results($query,ARRAY_A) or die ( __($wpdb->print_error(), RBAGENCY_TEXTDOMAIN ));
 		$count = count($results);
-		   
-		 $rb_agency_options_arr = get_option('rb_agency_options');
+
+		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
-		
+
 		foreach ($results as $data) {
 			$ProfileCustomID	=$data['ProfileCustomID'];
 		echo "    <tr>\n";
@@ -2984,67 +2984,67 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "        <td class=\"column\">". stripslashes($data['ProfileCustomTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </td>\n";
-		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1){ echo "Text"; } elseif($data['ProfileCustomType'] == 11){ echo "Link"; }elseif ($data['ProfileCustomType'] == 2 ){ echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) { echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) { echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) { echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) { echo "Textarea"; }elseif ($data['ProfileCustomType'] == 9) { echo "Dropdown(Multi-Select)"; }  elseif ($data['ProfileCustomType'] == 7) { if($rb_agency_options_arr['rb_agency_option_unittype']==1){ if($data['ProfileCustomOptions']==1){echo "Imperial(in)";}elseif($data['ProfileCustomOptions']==2){echo "Imperial(lb)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } else{ if($data['ProfileCustomOptions']==2){echo "Metric(cm)";}elseif($data['ProfileCustomOptions']==2){echo "Metric(kg)";}elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";} } }elseif ($data['ProfileCustomType'] == 10 ){ echo "Date"; }  echo "</td>\n";
-				
-			
-			  $measurements_label = "";
-			  
+		echo "        <td class=\"column\">"; if ($data['ProfileCustomType'] == 1){echo "Text"; } elseif($data['ProfileCustomType'] == 11){echo "Link"; } elseif ($data['ProfileCustomType'] == 2 ){echo "Search Layout"; } elseif ($data['ProfileCustomType'] == 5) {echo "Checkbox"; } elseif ($data['ProfileCustomType'] == 6) {echo "Radio"; } elseif ($data['ProfileCustomType'] == 3) {echo "Dropdown"; } elseif ($data['ProfileCustomType'] == 4) {echo "Textarea"; } elseif ($data['ProfileCustomType'] == 9) {echo "Dropdown(Multi-Select)"; } elseif ($data['ProfileCustomType'] == 7) {if($rb_agency_options_arr['rb_agency_option_unittype']==1){if($data['ProfileCustomOptions']==1){echo "Imperial(in)";} elseif($data['ProfileCustomOptions']==2){echo "Imperial(lb)";} elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";}} else {if($data['ProfileCustomOptions']==2){echo "Metric(cm)";} elseif($data['ProfileCustomOptions']==2){echo "Metric(kg)";} elseif($data['ProfileCustomOptions']==3){echo "Imperial(in/ft)";}}} elseif ($data['ProfileCustomType'] == 10 ){echo "Date"; }echo "</td>\n";
+
+
+				$measurements_label = "";
+
 			if ($data['ProfileCustomType'] == 7) { //measurements field type
-					   if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
+						if($rb_agency_option_unittype ==0){ // 0 = Metrics(ft/kg)
 						if($data['ProfileCustomOptions'] == 1){
-							
-							   $measurements_label  ="cm";
-						}elseif($data['ProfileCustomOptions'] == 2){
-							
-							 $measurements_label  ="Kg";
-						}elseif($data['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="Feet/Inches";
+
+								$measurements_label  ="cm";
+						} elseif($data['ProfileCustomOptions'] == 2){
+
+							$measurements_label  ="Kg";
+						} elseif($data['ProfileCustomOptions'] == 3){
+							$measurements_label  ="Feet/Inches";
 						}
-					}elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+					} elseif($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
 						if($data['ProfileCustomOptions'] == 1){
 							$measurements_label  ="Inches";
-						   
-						}elseif($data['ProfileCustomOptions'] == 2){
-							
-						  $measurements_label  ="Pounds";
-						}elseif($data['ProfileCustomOptions'] == 3){
-						  $measurements_label  ="(Feet/Inches)";
+
+						} elseif($data['ProfileCustomOptions'] == 2){
+
+							$measurements_label  ="Pounds";
+						} elseif($data['ProfileCustomOptions'] == 3){
+							$measurements_label  ="(Feet/Inches)";
 						}
 					}
-					
-			 }
-		if($data['ProfileCustomType'] == 7 ) {echo " <td class=\"column\">".$measurements_label."</td>\n"; } else{ echo "        <td class=\"column\">".str_replace("|",",",$data['ProfileCustomOptions'])."</td>\n"; }
-		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) { echo "Public"; } elseif ($data['ProfileCustomView'] == 1) { echo "Private"; } elseif ($data['ProfileCustomView'] == 2) { echo "Custom"; } echo "</td>\n";
-		 echo "        <td class=\"column\">".$data['ProfileCustomOrder']."</td>\n";
-		 $queryGender = $wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender']."",ARRAY_A); 
-		 $fetchGender = current($queryGender);
-		 $countGender = count($queryGender);
-		 if($countGender > 0){
-			echo "        <td class=\"column\">".$fetchGender["GenderTitle"]."</td>\n";
-		 }else{
-			echo "        <td class=\"column\">All Gender</td>\n";
-		 }
 
-		 $custom_views="";
-		 if($data["ProfileCustomShowRegistration"]==1){
+			}
+		if($data['ProfileCustomType'] == 7 ) {echo " <td class=\"column\">".$measurements_label."</td>\n"; } else {echo "        <td class=\"column\">".str_replace("|",",",$data['ProfileCustomOptions'])."</td>\n"; }
+		echo "        <td class=\"column\">"; if ($data['ProfileCustomView'] == 0) {echo "Public"; } elseif ($data['ProfileCustomView'] == 1) {echo "Private"; } elseif ($data['ProfileCustomView'] == 2) {echo "Custom"; }echo "</td>\n";
+		echo "        <td class=\"column\">".$data['ProfileCustomOrder']."</td>\n";
+		$queryGender = $wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender']."",ARRAY_A); 
+		$fetchGender = current($queryGender);
+		$countGender = count($queryGender);
+		if($countGender > 0){
+			echo "        <td class=\"column\">".$fetchGender["GenderTitle"]."</td>\n";
+		} else {
+			echo "        <td class=\"column\">All Gender</td>\n";
+		}
+
+		$custom_views="";
+		if($data["ProfileCustomShowRegistration"]==1){
 			$custom_views ="Registration<br/>";
-		 }
-		 if($data["ProfileCustomShowSearch"]==1){
+		}
+		if($data["ProfileCustomShowSearch"]==1){
 			$custom_views .="Advanced<br/>";
-		 }
-		 if($data["ProfileCustomShowSearchSimple"]==1){
+		}
+		if($data["ProfileCustomShowSearchSimple"]==1){
 			$custom_views .="Simple<br/>";
-		 }
-		 if($data["ProfileCustomShowProfile"]==1){
+		}
+		if($data["ProfileCustomShowProfile"]==1){
 			$custom_views .="Profile";
-		 }
-		 
-		 echo "        <td class=\"column\">".$custom_views."</td>\n";
-		 echo "        <td class=\"column\">".str_replace(",","<br/>",str_replace('_',' ',$data["ProfileCustomTypes"]))."</td>\n";
-		 
+		}
+
+		echo "        <td class=\"column\">".$custom_views."</td>\n";
+		echo "        <td class=\"column\">".str_replace(",","<br/>",str_replace('_',' ',$data["ProfileCustomTypes"]))."</td>\n";
+
 		echo "    </tr>\n";
 		}
 		if ($count < 1) {
@@ -3059,7 +3059,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
 		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
-		
+
 		echo "</form>\n";
 echo "</div>";
 echo "</div><!-- #custom-fields -->";
@@ -3077,7 +3077,7 @@ echo "</div><!-- #custom-fields -->";
 			break;
 		// Add Record
 		case "addRecord":
-			 $wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder,MediaCategoryLinkType,MediaCategoryFileType) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."','".$_POST["MediaCategoryLinkType"]."','".$_POST["MediaCategoryFileType"]."') ");
+			$wpdb->query("INSERT INTO ".table_agency_data_media." (MediaCategoryID,MediaCategoryTitle,MediaCategoryGender,MediaCategoryOrder,MediaCategoryLinkType,MediaCategoryFileType) VALUES('','".$_POST["MediaCategoryTitle"]."','".$_POST["MediaCategoryGender"]."','".$_POST["MediaCategoryOrder"]."','".$_POST["MediaCategoryLinkType"]."','".$_POST["MediaCategoryFileType"]."') ");
 			break;
 		}
 	}
@@ -3109,58 +3109,58 @@ echo "</div><!-- #custom-fields -->";
 			"link",
 			"button",
 			"embed"
-	 );
+	);
 
  echo "<div>\n";
 			// Add new Record
 		if(isset($_GET["action"]) =="editRecord"){
-		 
-		 echo "  <h3 class=\"title\">". __("Edit Record", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
-		 
-		 $query = "SELECT * FROM ". table_agency_data_media ." WHERE MediaCategoryID='%s'";
-		 $data = $wpdb->get_row($wpdb->prepare($query,$_GET["MediaCategoryID"]),ARRAY_A,0 );
-		 $count =$wpdb->num_rows;
-		
-		 echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ConfigID=6&MediaCategoryID=".$_GET["MediaCategoryID"]."\">\n";
-		}else{
-			 echo "  <h3 class=\"title\">". __("Add New Record", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
-		  echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=6\">\n";
+
+		echo "  <h3 class=\"title\">". __("Edit Record", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
+
+		$query = "SELECT * FROM ". table_agency_data_media ." WHERE MediaCategoryID='%s'";
+		$data = $wpdb->get_row($wpdb->prepare($query,$_GET["MediaCategoryID"]),ARRAY_A,0 );
+		$count =$wpdb->num_rows;
+
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&ConfigID=6&MediaCategoryID=".$_GET["MediaCategoryID"]."\">\n";
+		} else {
+			echo "  <h3 class=\"title\">". __("Add New Record", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
+			echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=6\">\n";
 		}
-		
-		 echo "<table>";
-		 echo "<tr>";
-		 echo "<td>Label:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".(isset($data["MediaCategoryTitle"])?$data["MediaCategoryTitle"]:"")."\" style=\"width:500px;\" /></td>\n";
-		 echo "</tr>";
-		 
-		 echo "<tr>";
-		 echo "<td>File Type:</td>";
-		 echo "<td>";
-		 echo "<select name='MediaCategoryFileType'>";
-		 echo "<option value=\"\">-Choose-</option>";
-		
-		 foreach ($arr_media_category_fileType as $key) {
-			 echo "<option value=\"".$key."\" ".selected($key,isset($data["MediaCategoryFileType"])?$data["MediaCategoryFileType"]:0).">".$key."</option>";
-		 }
 
-		 echo "</select>";
-		 echo "</td>";
-		 echo "</tr>";
+		echo "<table>";
+		echo "<tr>";
+		echo "<td>Label:</td><td><input type=\"text\" name=\"MediaCategoryTitle\" value=\"".(isset($data["MediaCategoryTitle"])?$data["MediaCategoryTitle"]:"")."\" style=\"width:500px;\" /></td>\n";
+		echo "</tr>";
 
-		 echo "<tr>";
-		 echo "<td>Link Type:</td>";
-		 echo "<td>";
-		 echo "<select name='MediaCategoryLinkType'>";
-		  echo "<option value=\"\">-Choose-</option>";
-		
-		 foreach ($arr_media_category_linkType as $key) {
-			 echo "<option value=\"".$key."\"  ".selected($key,isset($data["MediaCategoryLinkType"])?$data["MediaCategoryLinkType"]:0).">".$key."</option>";
-		 }
-		 echo "</select>";
-		 echo "</td>";
-		 echo "</tr>";
-		 echo "<tr>";
-		 echo "<td>Gender:</td><td>\n";
-		 $query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+		echo "<tr>";
+		echo "<td>File Type:</td>";
+		echo "<td>";
+		echo "<select name='MediaCategoryFileType'>";
+		echo "<option value=\"\">-Choose-</option>";
+
+		foreach ($arr_media_category_fileType as $key) {
+			echo "<option value=\"".$key."\" ".selected($key,isset($data["MediaCategoryFileType"])?$data["MediaCategoryFileType"]:0).">".$key."</option>";
+		}
+
+		echo "</select>";
+		echo "</td>";
+		echo "</tr>";
+
+		echo "<tr>";
+		echo "<td>Link Type:</td>";
+		echo "<td>";
+		echo "<select name='MediaCategoryLinkType'>";
+			echo "<option value=\"\">-Choose-</option>";
+
+		foreach ($arr_media_category_linkType as $key) {
+			echo "<option value=\"".$key."\"  ".selected($key,isset($data["MediaCategoryLinkType"])?$data["MediaCategoryLinkType"]:0).">".$key."</option>";
+		}
+		echo "</select>";
+		echo "</td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>Gender:</td><td>\n";
+		$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 					echo "<select name=\"MediaCategoryGender\">";
 					echo "<option value=\"\">All Gender</option>";
 					$queryShowGender = $wpdb->get_results($query, ARRAY_A);
@@ -3169,28 +3169,28 @@ echo "</div><!-- #custom-fields -->";
 					}
 					echo "</select>";
 					echo "<br/>";
-		 echo "</td>";
-		 echo "</tr>";
-		 echo "<td>Order:</td><td><input type=\"text\" name=\"MediaCategoryOrder\" value=\"".(0+(isset($data["MediaCategoryOrder"])?$data["MediaCategoryOrder"]:0))."\" /></td>\n";
-		 echo "<tr>";
-		 echo "<td>";
-		 echo "<p class=\"submit\">\n";
-		 if(isset($_GET["action"]) =="editRecord"){
+		echo "</td>";
+		echo "</tr>";
+		echo "<td>Order:</td><td><input type=\"text\" name=\"MediaCategoryOrder\" value=\"".(0+(isset($data["MediaCategoryOrder"])?$data["MediaCategoryOrder"]:0))."\" /></td>\n";
+		echo "<tr>";
+		echo "<td>";
+		echo "<p class=\"submit\">\n";
+		if(isset($_GET["action"]) =="editRecord"){
 			echo "    <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-		  
-		 }else{
+
+		} else {
 			echo "    <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
-			 
-		 }
-		 echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Submit", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
-		 echo "</p>\n";
-		 echo "</td>";
-		 echo "<tr>";
-		 echo "<table>";
-		 echo "</form>\n";
-		 // All Records
-		 echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
-			
+
+		}
+		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Submit", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "</p>\n";
+		echo "</td>";
+		echo "<tr>";
+		echo "<table>";
+		echo "</form>\n";
+		// All Records
+		echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
+
 				/******** Sort Order ************/
 				$sort = "";
 				if (isset($_GET['sort']) && !empty($_GET['sort'])){
@@ -3199,22 +3199,22 @@ echo "</div><!-- #custom-fields -->";
 				else {
 					$sort = "MediaCategoryOrder";
 				}
-				
+
 				/******** Direction ************/
 				$dir = "";
 				if (isset($_GET['dir']) && !empty($_GET['dir'])){
 					$dir = $_GET['dir'];
 					if ($dir == "desc" || !isset($dir) || empty($dir)){
-					   $sortDirection = "asc";
-					   } else {
-					   $sortDirection = "desc";
-					} 
+						$sortDirection = "asc";
+						} else {
+						$sortDirection = "desc";
+					}
 				} else {
-					   $sortDirection = "desc";
-					   $dir = "asc";
+						$sortDirection = "desc";
+						$dir = "asc";
 				}
-	
-		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=6\">\n";	
+
+		echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=6\">\n";
 		echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 		echo "<thead>\n";
 		echo "    <tr class=\"thead\">\n";
@@ -3226,7 +3226,7 @@ echo "</div><!-- #custom-fields -->";
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=MediaCategoryOrder&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Order", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
-		
+
 		echo "<tfoot>\n";
 		echo "    <tr class=\"thead\">\n";
 		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
@@ -3237,9 +3237,9 @@ echo "</div><!-- #custom-fields -->";
 		echo "        <th class=\"column\" scope=\"col\">". __("Order", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
-		
+
 		echo "<tbody>\n";
-	
+
 		$query = "SELECT * FROM ". table_agency_data_media ." ORDER BY $sort $dir";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
@@ -3250,20 +3250,20 @@ echo "</div><!-- #custom-fields -->";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryTitle']) ."\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;MediaCategoryID=". $MediaCategoryID."&amp;ConfigID=6\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ", RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) { return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;MediaCategoryID=". $MediaCategoryID ."&amp;ConfigID=6\"  onclick=\"if ( confirm('". __("You are about to delete this ", RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
 		echo "          </div>\n";
 		echo "        </th>\n";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryFileType']) ."</th>\n";
 		echo "        <th class=\"column\">". stripslashes($data['MediaCategoryLinkType']) ."</th>\n";
-	
-		 $queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s'"; 
-		 $fetchGender = $wpdb->get_row($wpdb->prepare( $queryGender,$data['MediaCategoryGender']),ARRAY_A,0 	 );
-		 $countGender = $wpdb->num_rows;
-		 if($countGender > 0){
+
+		$queryGender = "SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s'"; 
+		$fetchGender = $wpdb->get_row($wpdb->prepare( $queryGender,$data['MediaCategoryGender']),ARRAY_A,0 	);
+		$countGender = $wpdb->num_rows;
+		if($countGender > 0){
 			echo "        <th class=\"column\">".$fetchGender["GenderTitle"]."</th>\n";
-		 }else{
+		} else {
 			echo "        <th class=\"column\">All Gender</th>\n";
-		 }
+		}
 		echo "        <th class=\"column\">"; echo $data["MediaCategoryOrder"]; echo "</th>\n";
 		echo "    </tr>\n";
 		}
@@ -3280,7 +3280,7 @@ echo "</div><!-- #custom-fields -->";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
 		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
-		
+
 		echo "</form>\n";
  
  echo "</div>\n";
@@ -3290,7 +3290,7 @@ echo "</div><!-- #custom-fields -->";
 
 
 
-} 
+}
 
 //manage counrty and states
 elseif ($ConfigID == 99) {
@@ -3305,6 +3305,6 @@ elseif ($ConfigID == 99) {
 		echo "	<div><a href=\"?page=". $_GET["page"] ."&ConfigID=99&action=uninstall\">Yes! Uninstall</a></div>\n";
 
 	}
-}	 // End	
+}	// End
 echo "</div>\n";
 ?>

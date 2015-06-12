@@ -50,22 +50,22 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 			</div>
 		</div>
 		<div class="rbclear"></div>
-	    <div class="rbcol-12 rbcolumn">
-		    <div id="photobook">		    	
-	            <?php
+		<div class="rbcol-12 rbcolumn">
+			<div id="photobook">
+			      <?php
 
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-				 $resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 						$countImg =$wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-						  	echo "<div class=\"page\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=300&h=450&zc=3\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
+								echo "<div class=\"page\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=300&h=450&zc=3\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
 						}
 				?>
-		    </div><!-- .rbcol-12 -->
-	    </div><!-- #photobook -->
-	    <div class="rbclear"></div>
-	    <div class="rbcol-12 rbcolumn">
-		    <div id="photobook-pagination" class="">
+			</div><!-- .rbcol-12 -->
+		</div><!-- #photobook -->
+		<div class="rbclear"></div>
+		<div class="rbcol-12 rbcolumn">
+			<div id="photobook-pagination" class="">
 				<a href="" id="prev-page">Previous page</a>
 				<a href="" id="next-page">Next Page</a>
 			</div>
@@ -76,7 +76,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				<?php
 				// Insert Custom Fields
 				rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,$label_tag="em", $value_tag="strong");
-				?>			
+				?>
 			</ul>
 
 			<?php 
@@ -87,26 +87,26 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 			if($countMedia > 0) {
 				echo "<div id=\"videos\">";
 				echo "<h4>Videos</h4>";
-				
+
 				foreach ($resultsMedia  as $dataMedia) {
 					if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 						// if($dataMedia['ProfileVideoType'] == "" || $dataMedia['ProfileVideoType'] == "youtube"){
 						// 	$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><a href=\"http://www.youtube.com/watch?v=" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" .$dataMedia["ProfileMediaTitle"]."</a></div></div>\n";
-						// }elseif($dataMedia['ProfileVideoType'] == "vimeo"){
+						// } elseif($dataMedia['ProfileVideoType'] == "vimeo"){
 						// 	$json = file_get_contents('http://vimeo.com/api/v2/video/'.$dataMedia['ProfileMediaURL'].'.json');
 						// 	$data = json_decode($json,true);
 						// 		$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" .$dataMedia["ProfileMediaTitle"]."</a></div></div>\n";
 						// 	}
-						// } 
+						// }
 						$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><div class=\"video-info\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<br/>" .$dataMedia["ProfileMediaTitle"]."</div><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Watch Video</a></div></div>\n";
 					}
 				}
 					echo $outVideoMedia;
-				
+
 				echo "</div><!-- #videos -->";
 			}
 			?>
-			
+
 		</div>
 		<div class="rbcol-12 rbcolumn">
 			<a href="" title=""></a>

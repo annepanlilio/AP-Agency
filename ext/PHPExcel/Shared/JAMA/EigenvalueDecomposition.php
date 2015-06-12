@@ -49,21 +49,21 @@ class EigenvalueDecomposition {
 	private $V = array();
 
 	/**
-	*	Array for internal storage of nonsymmetric Hessenberg form.
-	*	@var array
-	*/
+	 *	Array for internal storage of nonsymmetric Hessenberg form.
+	 *	@var array
+	 */
 	private $H = array();
 
 	/**
-	*	Working storage for nonsymmetric algorithm.
-	*	@var array
-	*/
+	 *	Working storage for nonsymmetric algorithm.
+	 *	@var array
+	 */
 	private $ort;
 
 	/**
-	*	Used for complex scalar division.
-	*	@var float
-	*/
+	 *	Used for complex scalar division.
+	 *	@var float
+	 */
 	private $cdivr;
 	private $cdivi;
 
@@ -249,7 +249,7 @@ class EigenvalueDecomposition {
 					$this->e[$l] = $s * $p;
 					$this->d[$l] = $c * $p;
 				// Check for convergence.
-				} while (abs($this->e[$l]) > $eps * $tst1);
+				}while (abs($this->e[$l]) > $eps * $tst1);
 			}
 			$this->d[$l] = $this->d[$l] + $f;
 			$this->e[$l] = 0.0;
@@ -627,10 +627,10 @@ class EigenvalueDecomposition {
 							$this->V[$i][$k] = $this->V[$i][$k] - $p;
 							$this->V[$i][$k+1] = $this->V[$i][$k+1] - $p * $q;
 						}
-					}  // ($s != 0)
-				}  // k loop
-			}  // check convergence
-		}  // while ($n >= $low)
+					}// ($s != 0)
+				}// k loop
+			}// check convergence
+		}// while ($n >= $low)
 
 		// Backsubstitute to find vectors of upper triangular form
 		if ($norm == 0.0) {
@@ -745,10 +745,10 @@ class EigenvalueDecomposition {
 								$this->H[$j][$n]   = $this->H[$j][$n] / $t;
 							}
 						}
-					} // end else
-				} // end for
-			} // end else for complex case
-		} // end for
+					}// end else
+				}// end for
+			}// end else for complex case
+		}// end for
 
 		// Vectors of isolated roots
 		for ($i = 0; $i < $nn; ++$i) {
@@ -769,7 +769,7 @@ class EigenvalueDecomposition {
 				$this->V[$i][$j] = $z;
 			}
 		}
-	} // end hqr2
+	}// end hqr2
 
 
 	/**

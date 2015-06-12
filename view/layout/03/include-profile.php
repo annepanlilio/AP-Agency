@@ -31,26 +31,26 @@ jQuery(document).ready(function(){
 
 	// tab functionality
 	jQuery(".maintab").click(function(){
-		   var idx = this.id;
-		   var elem = "." + idx;
-		   var elem_id = "#" + idx;
-		   if ((idx=="row-all")){
+			var idx = this.id;
+			var elem = "." + idx;
+			var elem_id = "#" + idx;
+			if ((idx=="row-all")){
 					jQuery(".tab").hide();
-					jQuery(".tab").show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
+					jQuery(".tab").show().css({opacity: 0.0 }).stop().animate({opacity: 1.0 }, 2000);
 					jQuery(".tab-active").removeClass("tab-active").addClass("tab-inactive");
 			} else {
-				  if(idx=="row-bookings"){
+					if(idx=="row-bookings"){
 						var url = "<?php echo get_permalink(get_page_by_title('booking')); ?>";
 						window.location = url;
-				  } else {
-						  jQuery(".tab-active").removeClass("tab-active").addClass("tab-inactive");
-						  jQuery(".tab").css({ opacity: 1.0 }).stop().animate({ opacity: 0.0 }, 2000).hide();
-						  jQuery(elem).show().css({ opacity: 0.0 }).stop().animate({ opacity: 1.0 }, 2000);
-						  jQuery(elem_id).removeClass("tab-inactive").addClass("tab-active");
-				  }
-		   }
+					} else {
+							jQuery(".tab-active").removeClass("tab-active").addClass("tab-inactive");
+							jQuery(".tab").css({opacity: 1.0 }).stop().animate({opacity: 0.0 }, 2000).hide();
+							jQuery(elem).show().css({opacity: 0.0 }).stop().animate({opacity: 1.0 }, 2000);
+							jQuery(elem_id).removeClass("tab-inactive").addClass("tab-active");
+					}
+			}
 	});
-	
+
 });
 </script>
 <?php
@@ -86,16 +86,16 @@ echo "				<div class=\"rbcol-4 rbcolumn\">\n";
 
 						echo "</div> <!-- #profile-picture -->\n";
 
-							
+
 						/*  Use this instead of text;
 						 *  this will display heart and star for favorite and casting respectively.
 						 *  This can update database for favorites and casting cart
 						 */
 						echo '<input type="hidden" id="aps12-id" value="'. $ProfileID .' - ' .rb_agency_get_current_userid().'">';
-						
+
 						if(function_exists('rb_agency_casting_menu')){
 							echo rb_agency_get_new_miscellaneousLinks($ProfileID);
-						} 
+						}
 echo '					<div id="resultsGoHereAddtoCart"></div>';
 echo "				</div> <!-- #profile-picture -->\n";
 
@@ -103,15 +103,15 @@ echo "				</div> <!-- #profile-picture -->\n";
 echo "				<div class=\"rbcol-5 rbcolumn\">\n";
 echo "					<div id=\"profile-info\">\n";
 
-echo "	      				<h1>". $ProfileContactDisplay ."</h1>\n";
-echo "	      				<p>\n";
+echo "							<h1>". $ProfileContactDisplay ."</h1>\n";
+echo "							<p>\n";
 								if (isset($ProfileDateBirth)) {
 echo "								<span class=\"age\">". rb_agency_get_age($ProfileDateBirth) ."</span>\n";
 								}
 								if (isset($ProfileLocationCity)) {
 echo "								from <span class=\"state\"> ".rb_agency_getStateTitle($ProfileLocationState,true)."</span>\n";
 								}
-echo "	      				</p>\n";
+echo "							</p>\n";
 echo "						<ul>\n";
 
 
@@ -133,14 +133,14 @@ echo "				<div class=\"rbcol-3 rbcolumn\">\n";
 echo "					<div id=\"profile-actions\">\n";
 
 
-echo "	      				<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong> Profile Views</p>\n";
+echo "							<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong> Profile Views</p>\n";
 
 							// added this links to be positioned here in substitute
 							// for the favorited label
-echo '	      				<div id="profile-links">';
+echo '							<div id="profile-links">';
 							if(function_exists('rb_agency_casting_menu')){
 								echo rb_agency_get_new_miscellaneousLinks($ProfileID);
-							} 		
+							}
 echo '						</div>';
 
 echo "					</div> <!-- #profile-actions -->\n";
@@ -158,7 +158,7 @@ echo " 								<a href=\"#space\">\n";
 echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">All</div></div></div>\n";
 echo " 								</a>\n";
 echo " 							</div>\n";
-								    $queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+									$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 									$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 									$countImg  = $wpdb->num_rows;
 
@@ -193,8 +193,8 @@ echo " 							<div class=\"maintab tab-right tab-inactive\" id=\"row-downloads\"
 echo " 								<a href=\"javascript:;\">\n";
 echo " 									<div class=\"subMenuTabBG\"><div class=\"subMenuTabBorders\"><div class=\"subMenuTabText\">Downloads</div></div></div>\n";
 echo " 								</a>\n";
-echo " 							</div>\n";	
-echo "	   					</div>\n";
+echo " 							</div>\n";
+echo "							</div>\n";
 echo " 					</div>\n"; // end #tabs
 echo " 				</div>\n"; // twelve rbcolumn 2
 
@@ -206,7 +206,7 @@ echo " 							<div class=\"tab-panel\">\n";
 
 									// images
 									foreach($resultsImg as $dataImg ){
-										if ($countImg > 1) { 
+										if ($countImg > 1) {
 											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
 										} else {
 											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a></div>\n";
@@ -219,7 +219,7 @@ echo " 						<div class=\"row-physical tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
 echo "								<ul>";
 										if (!empty($ProfileGender)) {
-											$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
+											$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	);
 											echo "<li><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 										}
 
@@ -254,7 +254,7 @@ echo " 							<div class=\"tab-panel\">\n";
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
-										
+
 										}
 									}
 
@@ -293,11 +293,11 @@ echo " 							<div class=\"tab-panel\">\n";
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
-										
-										
+
+
 										}
 									}
-echo "							</div>\n"; // .tab-panel								
+echo "							</div>\n"; // .tab-panel
 echo "						</div>\n"; // twelve rbcolumn videos
 
 echo "						<div class=\"row-experience tab\">\n";
@@ -311,7 +311,7 @@ echo "							<div class=\"tab-panel\">\n";
 											echo "		<h3>". $data1['ProfileCustomTitle'] ."</h3>\n";
 											echo "		<p id=\"ProfileCustomID". $data1['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data1['ProfileCustomID'] 
 												."\" class=\"ProfileExperience\">". nl2br($data1['ProfileCustomValue']) ."</p>\n";
-											echo "	  </div>\n";
+											echo "		</div>\n";
 										}
 									}
 echo "							</div>\n"; // .tab-panel
@@ -398,13 +398,13 @@ echo "							<div class=\"tab-panel\">\n";
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
 											$outLinkComCard .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
 
-										} else{
+										} else {
 
 											/*$outCustomMediaLink .= $dataMedia['ProfileMediaType'] .": <a href=\"".
-										 	RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
+											RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] .
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
-										 	"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
-										 	$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
+											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
+											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
 											$outCustomMediaLink .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
 
 										}
@@ -442,11 +442,11 @@ echo "						</div>\n"; // Download Tab
 
 echo "						<div class=\"rbclear\"></div>\n"; // Clear All
 
-echo "					</div>\n";  // Close Tab Panels
-echo "				</div>\n";  // Close Tab Panels
-echo "			</div>\n";  // Close RB Tabs
-echo "		</div>\n";  // Close Profile Layout
-echo "	</div>\n";  // Close Profile
+echo "					</div>\n";// Close Tab Panels
+echo "				</div>\n";// Close Tab Panels
+echo "			</div>\n";// Close RB Tabs
+echo "		</div>\n";// Close Profile Layout
+echo "	</div>\n";// Close Profile
 echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 
 ?>

@@ -10,7 +10,7 @@ get_currentuserinfo();
 <div class="wrap">
 	<?php 
 	// Include Admin Menu
-	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php");  ?>
+	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php");?>
 
 	<div id="welcome-panel" class="welcome-panel">
 		<div class="welcome-panel-content">
@@ -28,7 +28,7 @@ get_currentuserinfo();
 							echo "<a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
 
 							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender, ARRAY_A);
-							$queryGenderCount = $wpdb->num_rows;						
+							$queryGenderCount = $wpdb->num_rows;
 
 							foreach($queryGenderResult as $fetchGender){
 								echo "<a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", RBAGENCY_TEXTDOMAIN) ."</a><br/>\n";
@@ -39,8 +39,8 @@ get_currentuserinfo();
 
 							if($queryGenderCount < 1){
 								echo "". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a><br/>", RBAGENCY_TEXTDOMAIN) ."\n";
-							} 
-							
+							}
+
 							if(function_exists('rb_agency_interact_menu')){
 							echo "<a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
 							}
@@ -75,17 +75,17 @@ get_currentuserinfo();
 					<div class="handlediv" title="Click to toggle"><br></div>
 					<h3 class="hndle" ><span><?php echo __("Quick Search", RBAGENCY_TEXTDOMAIN ) ?></span></h3>
 					<div class="inside" style="padding: 35px;">
-					  <ul>
-					  <li style="width:100%;">
+						<ul>
+						<li style="width:100%;">
 						<?php
 						if (current_user_can("manage_options")) {
 
 							$form = RBAgency_Profile::search_form('', '', 0, 1);
 							echo $form;
 
-						} // Editor
+						}// Editor
 						?>
-					  </li>
+						</li>
 					</ul>
 					</div>
 				</div>
@@ -113,7 +113,7 @@ get_currentuserinfo();
 									<?php 
 									if ($data['ProfileDateUpdated'] <> "0000-00-00 00:00:00" && isset($data['ProfileDateUpdated']) && !empty($data['ProfileDateUpdated'])){ ?>
 									<span class="add-new-h2">Updated <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateUpdated'])); ?></span>
-									<?php } ?>
+									<?php }?>
 								</li><?php
 							}
 							if ($count < 1) {
@@ -136,7 +136,7 @@ get_currentuserinfo();
 							$query = "SELECT ProfileID, ProfileContactNameFirst, ProfileContactNameLast, ProfileDateViewLast, ProfileStatHits FROM ". table_agency_profile ." ORDER BY ProfileDateViewLast DESC LIMIT 0,10";
 							$results=  $wpdb->get_results($query, ARRAY_A);
 							$count = $wpdb->num_rows;
-							foreach ($results as $data ) { 
+							foreach ($results as $data ) {
 								?>
 								<li>
 									<a href="?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $data['ProfileID']; ?>"><?php echo stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']); ?></a>
@@ -144,10 +144,10 @@ get_currentuserinfo();
 									<?php 
 									if ($data['ProfileDateViewLast'] <> "0000-00-00 00:00:00" && isset($data['ProfileDateViewLast']) && !empty($data['ProfileDateViewLast'])){ ?>
 									<span class="add-new-h2">Last viewed <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateViewLast'])); ?></span>
-									<?php } ?>
+									<?php }?>
 								</li><?php
 							}
-							
+
 							if ($count < 1) {
 								echo "". __("There are currently no profiles added", RBAGENCY_TEXTDOMAIN) . ".";
 							}

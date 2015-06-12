@@ -464,7 +464,7 @@ class Base {/*{{{*/
     }/*}}}*/
 
     /**
-     * Calculates SUM { xi }
+     * Calculates SUM {xi }
      * Handles cummulative data sets correctly
      *
      * @access  public
@@ -486,7 +486,7 @@ class Base {/*{{{*/
     }/*}}}*/
 
     /**
-     * Calculates SUM { (xi)^2 }
+     * Calculates SUM {(xi)^2 }
      * Handles cummulative data sets correctly
      *
      * @access  public
@@ -508,7 +508,7 @@ class Base {/*{{{*/
     }/*}}}*/
 
     /**
-     * Calculates SUM { (xi)^n }
+     * Calculates SUM {(xi)^n }
      * Handles cummulative data sets correctly
      *
      * @access  public
@@ -536,7 +536,7 @@ class Base {/*{{{*/
     }/*}}}*/
 
     /**
-     * Calculates PROD { (xi) }, (the product of all observations)
+     * Calculates PROD {(xi) }, (the product of all observations)
      * Handles cummulative data sets correctly
      *
      * @access  public
@@ -556,7 +556,7 @@ class Base {/*{{{*/
     }/*}}}*/
 
     /**
-     * Calculates PROD { (xi)^n }, which is the product of all observations
+     * Calculates PROD {(xi)^n }, which is the product of all observations
      * Handles cummulative data sets correctly
      *
      * @access  public
@@ -1029,7 +1029,7 @@ class Base {/*{{{*/
      *
      * The definition of a sample central moment is:
      *
-     *     m{n} = 1/N * SUM { (xi - avg)^n }
+     *     m{n}= 1/N * SUM {(xi - avg)^n }
      *
      * where: N = sample size, avg = sample mean.
      *
@@ -1065,7 +1065,7 @@ class Base {/*{{{*/
      *
      * The definition of a sample central moment is:
      *
-     *     m{n} = 1/N * SUM { xi^n }
+     *     m{n}= 1/N * SUM {xi^n }
      *
      * where: N = sample size, avg = sample mean.
      *
@@ -1413,7 +1413,7 @@ class Base {/*{{{*/
     // private methods
 
     /**
-     * Utility function to calculate: SUM { (xi - mean)^n }
+     * Utility function to calculate: SUM {(xi - mean)^n }
      *
      * @access private
      * @param   numeric $power  the exponent
@@ -1501,7 +1501,7 @@ class Base {/*{{{*/
     }/*}}}*/
 
     /**
-     * Utility function to calculate: SUM { | xi - mean | }
+     * Utility function to calculate: SUM {| xi - mean | }
      *
      * @access  private
      * @param   optional    double   $mean   the mean value for the set or population

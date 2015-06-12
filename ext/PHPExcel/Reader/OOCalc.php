@@ -616,7 +616,7 @@ class PHPExcel_Reader_OOCalc implements PHPExcel_Reader_IReader
 													break;
 											case 'date' :
 													$type = PHPExcel_Cell_DataType::TYPE_NUMERIC;
-												    $dateObj = new DateTime($cellDataOfficeAttributes['date-value'], $GMT);
+													 $dateObj = new DateTime($cellDataOfficeAttributes['date-value'], $GMT);
 													$dateObj->setTimeZone($timezoneObj);
 													list($year,$month,$day,$hour,$minute,$second) = explode(' ',$dateObj->format('Y m d H i s'));
 													$dataValue = PHPExcel_Shared_Date::FormattedPHPToExcel($year,$month,$day,$hour,$minute,$second);

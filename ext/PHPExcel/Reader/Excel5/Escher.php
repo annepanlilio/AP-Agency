@@ -112,25 +112,25 @@ class PHPExcel_Reader_Excel5_Escher
 			$fbt = PHPExcel_Reader_Excel5::_GetInt2d($this->_data, $this->_pos + 2);
 
 			switch ($fbt) {
-				case self::DGGCONTAINER:	$this->_readDggContainer();		break;
-				case self::DGG:				$this->_readDgg();				break;
-				case self::BSTORECONTAINER:	$this->_readBstoreContainer();	break;
-				case self::BSE:				$this->_readBSE();				break;
-				case self::BLIPJPEG:		$this->_readBlipJPEG();			break;
-				case self::BLIPPNG:			$this->_readBlipPNG();			break;
-				case self::OPT:				$this->_readOPT();				break;
-				case self::TERTIARYOPT:		$this->_readTertiaryOPT();		break;
-				case self::SPLITMENUCOLORS:	$this->_readSplitMenuColors();	break;
-				case self::DGCONTAINER:		$this->_readDgContainer();		break;
-				case self::DG:				$this->_readDg();				break;
-				case self::SPGRCONTAINER:	$this->_readSpgrContainer();	break;
-				case self::SPCONTAINER:		$this->_readSpContainer();		break;
-				case self::SPGR:			$this->_readSpgr();				break;
-				case self::SP:				$this->_readSp();				break;
-				case self::CLIENTTEXTBOX:	$this->_readClientTextbox();	break;
-				case self::CLIENTANCHOR:	$this->_readClientAnchor();		break;
-				case self::CLIENTDATA:		$this->_readClientData();		break;
-				default:					$this->_readDefault();			break;
+				case self::DGGCONTAINER:	$this->_readDggContainer();break;
+				case self::DGG:				$this->_readDgg();break;
+				case self::BSTORECONTAINER:	$this->_readBstoreContainer();break;
+				case self::BSE:				$this->_readBSE();break;
+				case self::BLIPJPEG:		$this->_readBlipJPEG();break;
+				case self::BLIPPNG:			$this->_readBlipPNG();break;
+				case self::OPT:				$this->_readOPT();break;
+				case self::TERTIARYOPT:		$this->_readTertiaryOPT();break;
+				case self::SPLITMENUCOLORS:	$this->_readSplitMenuColors();break;
+				case self::DGCONTAINER:		$this->_readDgContainer();break;
+				case self::DG:				$this->_readDg();break;
+				case self::SPGRCONTAINER:	$this->_readSpgrContainer();break;
+				case self::SPCONTAINER:		$this->_readSpContainer();break;
+				case self::SPGR:			$this->_readSpgr();break;
+				case self::SP:				$this->_readSp();break;
+				case self::CLIENTTEXTBOX:	$this->_readClientTextbox();break;
+				case self::CLIENTANCHOR:	$this->_readClientAnchor();break;
+				case self::CLIENTDATA:		$this->_readClientData();break;
+				default:					$this->_readDefault();break;
 			}
 		}
 

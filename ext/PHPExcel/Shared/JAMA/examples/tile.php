@@ -49,19 +49,19 @@ function tile(&$X, $rowWise, $colWise){
 
       // reset the column-index to zero to avoid reference to out-of-bound index in xArray[][]
 
-      if($countColumn == $n) { $countColumn = 0; }
+      if($countColumn == $n) {$countColumn = 0; }
 
-    } // end for
+    }// end for
 
     ++$countRow;
 
     // reset the row-index to zero to avoid reference to out-of-bound index in xArray[][]
 
-    if($countRow == $m) { $countRow = 0; }
+    if($countRow == $m) {$countRow = 0; }
 
     $result[$i] = $holder;
 
-  } // end for
+  }// end for
 
   return new Matrix($result);
 

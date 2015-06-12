@@ -2,15 +2,15 @@
 class RBAgency_Casting {
 
 	/*
-	* Casting Cart
-	* Process Actions
-	*/
+	 * Casting Cart
+	 * Process Actions
+	 */
 
 		public static function cart_process(){
 
 			/*
-			* Setup Requirements
-			*/
+			 * Setup Requirements
+			 */
 
 			// Protect and defend the cart string!
 				$cartString = "";
@@ -32,7 +32,7 @@ class RBAgency_Casting {
 					}
 
 				} elseif ($action == "cartEmpty") {
-					
+
 					// Throw the baby out with the bathwater
 					unset($_SESSION['cartArray']);
 
@@ -61,15 +61,15 @@ class RBAgency_Casting {
 
 
 	/*
-	* Casting Cart - Add to Cart
-	* @return str $cartString
-	*/
+	 * Casting Cart - Add to Cart
+	 * @return str $cartString
+	 */
 
 		public static function cart_process_add(){
 
 			$cartString = "";
 
-        	// Get String
+    		// Get String
 			if(isset($_REQUEST["ProfileID"]) && count($_REQUEST["ProfileID"]) > 0) {
 				foreach($_REQUEST["ProfileID"] as $value) {
 					$cartString .= $value .",";
@@ -96,9 +96,9 @@ class RBAgency_Casting {
 
 
 	/*
-	* Casting Cart - Remove from Cart
-	* @return str $cartString
-	*/
+	 * Casting Cart - Remove from Cart
+	 * @return str $cartString
+	 */
 
 		public static function cart_process_remove($id){
 
@@ -121,21 +121,21 @@ class RBAgency_Casting {
 
 
 	/*
-	* Show Casting Cart
-	*/
+	 * Show Casting Cart
+	 */
 
 		public static function cart_show(){
-			
+
 			global $wpdb;
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-				
+
 
 			if (isset($_SESSION['cartArray']) && !empty($_SESSION['cartArray'])) {
 
 				$cartArray = $_SESSION['cartArray'];
 
-				
+
 
 					$cartString = implode(",", array_filter(array_unique($cartArray)));
 					$cartString = RBAgency_Common::clean_string($cartString);
@@ -143,10 +143,10 @@ class RBAgency_Casting {
 				// Show Cart  
 				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY profile.ProfileID ORDER BY profile.ProfileContactNameFirst ASC";
 				//$query = "SELECT profile.ProfileID, profile.ProfileGallery, profile.*, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID,  (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID IN(".$cartString.") AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile GROUP BY profile.ProfileID";
-					
+
 				$results = $wpdb->get_results($query,ARRAY_A);// or  die( "<a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("No profile selected. Try again", RBAGENCY_TEXTDOMAIN) ."</a>"); //die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
 				$count = count($results);
-				
+
 				echo "<div class=\"empty-cart\"><a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("Empty Cart", RBAGENCY_TEXTDOMAIN) ."</a></div>";
 				echo "<div class=\"in-cart\">". __("Currently", RBAGENCY_TEXTDOMAIN) ." <strong>". $count ."</strong> ". __("in Cart", RBAGENCY_TEXTDOMAIN) ."</div>";
 				echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0;\" class=\"profile\">";
@@ -188,7 +188,7 @@ class RBAgency_Casting {
 					if(isset($arr_thumbnail[$data["ProfileID"]])){
 						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
 						echo "<img class=\"img-".$data['ProfileID']."\" style=\"width: 100px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
-					}else{
+					} else {
 						echo "<img class=\"img-".$data['ProfileID']."\" style=\"width: 100px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></div>\n";
 					}
 					echo "    <div style=\"float: left; width: 100px; height: 100px; overflow: scroll-y; margin-left: 10px; line-height: 11px; font-size: 9px; \">\n";
@@ -201,12 +201,12 @@ class RBAgency_Casting {
 					echo "    </div>";
 					echo "    <div style=\"position: absolute; z-index: 20; top: 120px; left: 200px; width: 20px; height: 20px; overflow: hidden; \"><a href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\"><img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\" /></a></div>";
 					echo "    <div style=\"clear: both; \"></div>";
-					echo "	 <a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a>";
-					echo " 	 <input type=\"hidden\" id=\"thumbnail-".$data['ProfileID']."\"  name=\"thumbnail[".$data['ProfileID']."]\" value=\"\"/>";
+					echo "	<a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a>";
+					echo " 	<input type=\"hidden\" id=\"thumbnail-".$data['ProfileID']."\"  name=\"thumbnail[".$data['ProfileID']."]\" value=\"\"/>";
 					echo "  </div>";
 				}
 				echo "  <div style=\"clear: both;\"></div>\n";
-				
+
 
 				add_thickbox();
 
@@ -230,7 +230,7 @@ class RBAgency_Casting {
 										type: 'POST',
 										dataType: 'json',
 										url: '<?php echo admin_url('admin-ajax.php'); ?>',
-										data: { 
+										data: {
 											'action': 'rb_agency_profile_photos', 
 											'profileID': id, 
 										},
@@ -249,7 +249,7 @@ class RBAgency_Casting {
 													jQuery.ajax({
 														type: 'POST',
 														url: '<?php echo admin_url('admin-ajax.php'); ?>',
-														data: { 
+														data: {
 															'action': 'rb_agency_save_profile_photos', 
 															'profilephotos': arr_thumbnails, 
 														},
@@ -287,7 +287,7 @@ class RBAgency_Casting {
 				$cartString = implode(",", array_unique($cartArray));
 				$cartString = RBAgency_Common::clean_string($cartString);
 
-				
+
 				echo "<div class=\"boxblock\" style=\"width:100%\" >";
 					echo "<h3>Add to existing Job</h3>";
 					echo "<div class=\"innerr\" style=\"padding: 10px;\">";
@@ -350,11 +350,11 @@ class RBAgency_Casting {
 				echo "</div><!-- .boxblock -->";
 				echo "</div>";
 				echo "<script type=\"text/javascript\">\n";
-				echo "function openWindow(url){ \n";
+				echo "function openWindow(url){\n";
 				echo " window.open(url,'mywindow'+Math.random(),'width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes');";
 				echo "}\n";
 				echo "</script>\n";
-				} // Is Cart Empty 
+				}// Is Cart Empty 
 
 			} else {
 
@@ -367,11 +367,11 @@ class RBAgency_Casting {
 
 
 	/*
-	* Casting Cart - Send Email Process
-	*/
+	 * Casting Cart - Send Email Process
+	 */
 
 		public static function cart_send_process(){
-			
+
 			$isSent = false;
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
@@ -387,14 +387,14 @@ class RBAgency_Casting {
 			$SearchMuxHash			= RBAgency_Common::generate_random_string(8);
 			$SearchMuxToName		= $_POST["MassEmailRecipient"];
 			$SearchMuxToEmail		= $_POST["MassEmailRecipient"];
-			
+
 			$SearchMuxEmailToBcc	= $_POST['MassEmailBccEmail'];
 			$SearchMuxSubject		= $_POST['MassEmailSubject'];
 			$SearchMuxMessage		= isset($_POST['SearchMuxMessage'])?preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\/\- \s\t\n\r\0\x0B]/u','',$_POST['SearchMuxMessage']):"";
 			$SearchMuxMessage 		= preg_replace('/\n(\s*\n)+/', '</p><p>', $SearchMuxMessage);
 			$SearchMuxCustomValue	='';
 			$cartArray = $_SESSION['cartArray'];
-			
+
 			$cartString = implode(",", array_filter(array_unique($cartArray)));
 			$cartString = rb_agency_cleanString($cartString);
 			$cartProfileMedia = isset($_SESSION["profilephotos"]) ? serialize($_SESSION["profilephotos"]):"";
@@ -431,7 +431,7 @@ class RBAgency_Casting {
 			$results = $wpdb->query($insert); 
 			$SearchID = $results; 
 
-							$profileimage = "";  
+							$profileimage = "";
 							$profileimage .='<p><div style="overflow:hidden;min-height: 170px;">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
 							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
@@ -456,13 +456,13 @@ class RBAgency_Casting {
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
-								$profileimage .= "<div style=\"color:#020202;float: left; max-width: 100px; height: 175px; margin: 2px; overflow:hidden;  \">";
-								$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";								
+								$profileimage .= "<div style=\"color:#020202;float: left; max-width: 100px; height: 175px; margin: 2px; overflow:hidden;\">";
+								$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
 								$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
 									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&a=t&w=100&h=130\" /></div>\n";
-								}else{
+								} else {
 									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."&a=t&w=100&h=130\" /></a>";
 								}
 								$profileimage .=  $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
@@ -481,7 +481,7 @@ class RBAgency_Casting {
 			if(!empty($SearchMuxFromEmail)){
 				$rb_agency_option_agencyemail = $SearchMuxFromEmail;
 			}
-			
+
 			$headers[] = 'From: "'.$rb_agency_value_agencyname.'" <'. $rb_agency_value_agencyemail .'>';
 
 			/*if(!empty($expMail)){
@@ -490,7 +490,7 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bccEmail;
 				}
 			}*/
-			
+
 			//For Bcc emails
 			if(!empty($MassEmailBccEmail)){
 				$bccMail = explode(";",$MassEmailBccEmail);
@@ -506,7 +506,7 @@ class RBAgency_Casting {
 			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
 			$url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
-			if($isSent){?>
+			if($isSent){ ?>
 			<script type="text/javascript"> 
 				window.location="<?php echo $url;?>";
 			</script>
@@ -519,18 +519,18 @@ class RBAgency_Casting {
 
 			//TODO : need to verify above method used or not 
 		public static function cart_email_send_process(){
-			
+
 			$isSent = false;
 			$email_error=  "" ; 
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_option_agencyname'])?$rb_agency_options_arr['rb_agency_option_agencyname']:"";
 			$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
-		   $rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-			
+			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+
 			$SearchID			= isset($_GET['SearchID']) ? $_GET['SearchID']: "";
 			if(!isset($_POST["resend"]) && empty($_POST["resend"])){
-			   $SearchMuxHash	= RBAgency_Common::generate_random_string(8);
-			}else{
+				$SearchMuxHash	= RBAgency_Common::generate_random_string(8);
+			} else {
 				$SearchMuxHash = isset($_GET["SearchMuxHash"])?$_GET["SearchMuxHash"]:"";
 			}
 			$SearchMuxFromName		= isset($_POST["SearchMuxFromName"])?$_POST["SearchMuxFromName"]:"";
@@ -543,16 +543,16 @@ class RBAgency_Casting {
 			$SearchMuxMessage 		= preg_replace('/\n(\s*\n)+/', '</p><p>', $SearchMuxMessage);
 			$SearchMuxCustomValue	='';
 			$cartArray = isset($_SESSION['cartArray'])?$_SESSION['cartArray']:array();
-			
+
 			$cartString = implode(",", array_unique($cartArray));
 			$cartString = rb_agency_cleanString($cartString);
 			$cartProfileMedia = isset($_SESSION["profilephotos"]) ? serialize($_SESSION["profilephotos"]):"";
 
-			
+
 			global $wpdb;
 			//$wpdb->query("INSERT INTO " . table_agency_searchsaved." (SearchProfileID,SearchTitle) VALUES('".$cartString."','".$SearchMuxSubject."')") or die($wpdb->print_error());
-					
-		  //$lastid = $wpdb->insert_id;
+
+			//$lastid = $wpdb->insert_id;
 		if(!isset($_GET["resend"])){
 						// Create Record
 						$insert = "INSERT INTO " . table_agency_searchsaved_mux ." 
@@ -577,11 +577,11 @@ class RBAgency_Casting {
 								'" . esc_sql($SearchMuxCustomValue) ."',
 								'" . $cartProfileMedia . "'
 								)";
-							$results = $wpdb->query($insert);  
-							
-			} // end is not resend / is new
+							$results = $wpdb->query($insert);
 
-							$profileimage = "";  
+			}// end is not resend / is new
+
+							$profileimage = "";
 							$profileimage .='<div id="searchsaved-emailsent" class="searchsaved-profiles">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
 							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
@@ -607,18 +607,18 @@ class RBAgency_Casting {
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
-								$profileimage .= "<div class=\"saved-profile\" style=\"float: left; margin: 0 10px 15px 0;\">";  // inline css for email
+								$profileimage .= "<div class=\"saved-profile\" style=\"float: left; margin: 0 10px 15px 0;\">";// inline css for email
 								$profileimage .= "<div class=\"thumbnail\">\n";
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
 									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 									$profileimage .= "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&w=150&h=200&a=t\"/></a>";
-								} else {									
+								} else {
 									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
 									$profileimage .= "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."&w=150&h=200&a=t\"/></a>";
 								}
 								$profileimage .= "</div>\n";
-								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);								
+								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 								$profileimage .= "</div>\n";
 							}
 							$profileimage .="</div>";
@@ -635,9 +635,9 @@ class RBAgency_Casting {
 			if(!empty($SearchMuxToName)){
 				$SearchMuxToEmail = $SearchMuxToName." <".$SearchMuxToEmail.">";
 			}
-			
+
 			$headers[]  = 'From: '.$rb_agency_value_agencyname.' <'. $rb_agency_option_agencyemail .'>' . "\r\n";
-			
+
 			//For Bcc emails
 			if(!empty($SearchMuxBccEmail)){
 				$bccMail = explode(";",$SearchMuxBccEmail);
@@ -668,19 +668,19 @@ class RBAgency_Casting {
 					$email_error .= "</div>";
 					$email_error .= "</div>";
 				}
-			/*}else{
+			/*} else {
 				$email_error .= "Error sending email.";
 			}*/
 			return $email_error ;
 		}
 
 	/*
-	* Form to Send Casting Cart
-	*/
+	 * Form to Send Casting Cart
+	 */
 
 		public static function cart_send_form(){
 			global $wpdb;
-		
+
 		if(isset($_POST["SendEmail"])){
 			// Process Form
 			$isSent = RBAgency_Casting::cart_send_process();
@@ -700,12 +700,12 @@ class RBAgency_Casting {
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_value_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
 				$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
-				// Search Results	
+				// Search Results
 				if($_GET["action"] == "massEmail" && !isset($_GET["SearchID"])){
 					$query = "SELECT profile.*  FROM ". table_agency_profile ." profile WHERE profile.ProfileID > 0 ".$cartQuery;
 					$results2 = $wpdb->get_results($query,ARRAY_A);
 					$count =count($results2);
-				}else{
+				} else {
 					$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 					$data =  $wpdb->get_row($query);
 					$profile_list  = (isset($data->SearchProfileID)? implode(",",array_filter( array_unique( explode(",",$data->SearchProfileID) ) ) ):"''");
@@ -726,7 +726,7 @@ class RBAgency_Casting {
 					}
 
 				}
-			
+
 				// Email
 				//echo "Email starts";
 				echo "<div style=\"clear:both;\"></div>";
@@ -734,7 +734,7 @@ class RBAgency_Casting {
 				echo "     <div class=\"boxblock\">\n";
 				echo "        <h3>". __("Compose Email", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 				echo "        <div class=\"inner\">\n";
-				
+
 				echo "          <strong>Recipient:</strong><br/><textarea name=\"MassEmailRecipient\" style=\"width:100%;\">".$rb_agency_value_agencyemail."</textarea><br/>";
 				echo "          <strong>Bcc:</strong><br/><textarea name=\"MassEmailBccEmail\" style=\"width:100%;\">".$recipient."</textarea><br/>";
 				echo "          <strong>Subject:</strong> <br/><input type=\"text\" name=\"MassEmailSubject\" style=\"width:100%\"/>";
@@ -748,7 +748,7 @@ class RBAgency_Casting {
 				}
 				$editor_id = 'MassEmailMessage';
 				wp_editor( $content, $editor_id,array("wpautop"=>false,"tinymce"=>true) );
-				
+
 				echo "          <input type=\"submit\" value=\"". __("Send Email", RBAGENCY_TEXTDOMAIN) . "\" name=\"SendEmail\"class=\"button-primary\" />\n";
 				echo "        </div>\n";
 				echo "     </div>\n";
@@ -762,17 +762,17 @@ class RBAgency_Casting {
 
 		public static function sendEmailCastingAvailability($Talents_Display_Name,$Availability,$Job_Name,$link){
 			// Mail it
-		   $headers[]  = 'MIME-Version: 1.0';
+			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			$headers[]  = 'From: '. get_bloginfo("name") .' <noreply@'.get_bloginfo("siteurl").'>' . "\r\n";
-				
+
 
 			$MassEmailMessage	= "Hi, \n\n".$Talents_Display_Name." has changed the job availability to \"".$Availability."\" for the job \"".$Job_Name."\"."
 								. "\nClick here to review your casting cart: ".$link
 								.  "\n\n-".get_bloginfo("name");
 			$isSent = wp_mail(get_bloginfo('admin_email'), get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
-			
+
 	}
 
 }

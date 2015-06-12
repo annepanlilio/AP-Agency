@@ -54,7 +54,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 				}
 			}
 		echo '			</header>';
-		
+
 		/*
 		 * IF: Search Results
 		 */
@@ -68,7 +68,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 					if ( is_array($value) && !empty($value) ){
 						$is_array_empty = array_filter($_REQUEST[$key]);
 						if(empty($is_array_empty)){
-							 unset( $_REQUEST[$key] ); // Why unset custom fields? we have an array_filter
+							unset( $_REQUEST[$key] ); // Why unset custom fields? we have an array_filter
 						}
 					} else {
 						if ( !isset($value) || empty ($value) ){
@@ -111,17 +111,17 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 			if (!isset($_POST['form_mode']) && !isset($_GET["form_action"])) {
 					echo RBAgency_Profile::search_form('', '', $type, 0);
 			}
-		
+
 	} else {
 
 			if($rb_agency_option_privacy == 3 ){
 				if(is_user_logged_in()){
 					rb_get_profiletype();
-				}else{
+				} else {
 					echo "	<div class='restricted'>\n";
 					if ( class_exists("RBAgencyCasting") ) {
 						echo "<h2>Page restricted. Only Admin & Casting Agents can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.</h2>";
-					}else{
+					} else {
 						echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
 					}
 					echo "	</div><!-- .restricted -->\n";
@@ -132,7 +132,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 
 				} else {
 					rb_loginform(rb_current_url());
-					
+
 				}
 			}
 
@@ -156,15 +156,15 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 	echo "<aside id=\"text-3\" class=\"widget widget_text\">";
 	echo "<h3 class=\"widget-title\">Featured Profile</h3>";
 	echo "<div class=\"textwidget\">";
-	if (class_exists('RBAgency_Profile')) { 
+	if (class_exists('RBAgency_Profile')) {
 				$atts = array(/*'type' => $type,*/"count"=> 1);
 				echo RBAgency_Profile::view_featured($atts);
-	}else {
+	} else {
 				echo "Invalid Function (Profile Search)";
 	}
 	echo "</div>";
 	echo "</aside>";
-	
+
 	echo "	</div><!-- #rbwidgets -->\n"; // #rbwidgets
 	echo "</div><!-- #secondary -->\n"; // #secondary
 	}

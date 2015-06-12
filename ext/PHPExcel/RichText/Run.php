@@ -47,9 +47,9 @@ class PHPExcel_RichText_Run extends PHPExcel_RichText_TextElement implements PHP
      */
     public function __construct($pText = '')
     {
-    	// Initialise variables
-    	$this->setText($pText);
-    	$this->_font = new PHPExcel_Style_Font();
+		// Initialise variables
+		$this->setText($pText);
+		$this->_font = new PHPExcel_Style_Font();
     }
 
 	/**
@@ -79,11 +79,11 @@ class PHPExcel_RichText_Run extends PHPExcel_RichText_TextElement implements PHP
 	 * @return string	Hash code
 	 */
 	public function getHashCode() {
-    	return md5(
-    		  $this->getText()
-    		. $this->_font->getHashCode()
-    		. __CLASS__
-    	);
+		return md5(
+				$this->getText()
+			. $this->_font->getHashCode()
+			. __CLASS__
+		);
     }
 
 	/**

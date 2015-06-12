@@ -89,7 +89,7 @@
             $file_out = $this->html_contruct();
             $this->rb_stream($file_out);
             
-        }	 
+        }
 
        /*
         * file stream and response
@@ -97,7 +97,7 @@
         private function rb_stream($file=NULL){
 
             $generate_file = $this->generate_file($file);
-            $this->rb_render_redirect($generate_file);  
+            $this->rb_render_redirect($generate_file);
             
             $this->response($this->rendered_action);
                 
@@ -170,7 +170,7 @@
                 $htm = '';
                 if(strtolower($d->ProfileCustomTitle) == "height"){
                    $heightraw = $d->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-	           $val = $heightfeet."ft ".$heightinch." in"; 
+			     $val = $heightfeet."ft ".$heightinch." in"; 
                 } else {
                    $val = $d->ProfileCustomValue; 
                 }
@@ -264,7 +264,7 @@
                           $new_temp[] = $this->table_($temp_htm, $margin);
                           break;
                   endswitch;
-           }    
+           }
            
            return $new_temp;
        }
@@ -291,7 +291,7 @@
            $htm = '  <tr>' . PHP_EOL . $htm . '  </tr>' . PHP_EOL;
            
            return $htm;
-       }       
+       }
        
       /*
        * tr wrapper
@@ -320,7 +320,7 @@
                foreach($result as $r){
                    return get_bloginfo('wpurl') . "/wp-content/uploads/profile-media/" . $r->ProfileGallery ."/".$image;
                }
-            } 
+            }
            
        }
        
@@ -346,7 +346,7 @@
                      " WHERE ProfileID = " . $id . " AND ProfileMediaType = 'Image'";
              $result = $this->wp->get_results($query);
             return (count($result) > 0) ?  $result : false; 
-        }                    
+        }
        
        /*
         * natural html parts
@@ -360,7 +360,7 @@
                                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                                 <meta name="Robots" content="noindex, nofollow" />
                             <style>
-                                table { border-collapse: collapse; }
+                                table {border-collapse: collapse; }
                             </style>
                             </head>
                             <body>';
@@ -378,7 +378,7 @@
         private function get_size_p($image=NULL,$wd=NULL, $ht=NULL){
 
                 $result = array('width'=> 0, 'height' => 0, 'fscaleToTargetWidth'=> true,'targetleft'=>0, 'targettop'=>0);
-               	$size = getimagesize($image);
+           		$size = getimagesize($image);
 		$srcwidth = $size[0]; 
 		$srcheight = $size[1]; 
 		$targetwidth = $wd;

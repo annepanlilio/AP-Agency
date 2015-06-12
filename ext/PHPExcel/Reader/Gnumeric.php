@@ -363,7 +363,7 @@ class PHPExcel_Reader_Gnumeric implements PHPExcel_Reader_IReader
 		//	Document Properties are held differently, depending on the version of Gnumeric
 		if (isset($namespacesMeta['office'])) {
 			$officeXML = $xml->children($namespacesMeta['office']);
-		    $officeDocXML = $officeXML->{'document-meta'};
+			 $officeDocXML = $officeXML->{'document-meta'};
 			$officeDocMetaXML = $officeDocXML->meta;
 
 			foreach($officeDocMetaXML as $officePropertyData) {
@@ -485,7 +485,7 @@ class PHPExcel_Reader_Gnumeric implements PHPExcel_Reader_IReader
 				if (isset($sheet->PrintInformation->Margins)) {
 					foreach($sheet->PrintInformation->Margins->children('gnm',TRUE) as $key => $margin) {
 						$marginAttributes = $margin->attributes();
-						$marginSize = 72 / 100;	//	Default
+						$marginSize = 72 / 100;//	Default
 						switch($marginAttributes['PrefUnit']) {
 							case 'mm' :
 								$marginSize = intval($marginAttributes['Points']) / 100;
@@ -542,18 +542,18 @@ class PHPExcel_Reader_Gnumeric implements PHPExcel_Reader_IReader
 					if (((string) $cell) > '') {
 
 						$this->_expressions[$ExprID] = array( 'column'	=> $cellAttributes->Col,
-															  'row'		=> $cellAttributes->Row,
-															  'formula'	=> (string) $cell
+																'row'		=> $cellAttributes->Row,
+																'formula'	=> (string) $cell
 															);
 //						echo 'NEW EXPRESSION ',$ExprID,'<br />';
 					} else {
 						$expression = $this->_expressions[$ExprID];
 
 						$cell = $this->_referenceHelper->updateFormulaReferences( $expression['formula'],
-																				  'A1',
-																				  $cellAttributes->Col - $expression['column'],
-																				  $cellAttributes->Row - $expression['row'],
-																				  $worksheetName
+																					'A1',
+																					$cellAttributes->Col - $expression['column'],
+																					$cellAttributes->Row - $expression['row'],
+																					$worksheetName
 																				);
 //						echo 'SHARED EXPRESSION ',$ExprID,'<br />';
 //						echo 'New Value is ',$cell,'<br />';

@@ -35,8 +35,8 @@
  */
 class PHPExcel_ReferenceHelper
 {
-	/**	Constants				*/
-	/**	Regular Expressions		*/
+	/**	Constants				 */
+	/**	Regular Expressions		 */
 	const REFHELPER_REGEXP_CELLREF		= '((\w*|\'[^!]*\')!)?(?<![:a-z\$])(\$?[a-z]{1,3}\$?\d+)(?=[^:!\d\'])';
 	const REFHELPER_REGEXP_CELLRANGE	= '((\w*|\'[^!]*\')!)?(\$?[a-z]{1,3}\$?\d+):(\$?[a-z]{1,3}\$?\d+)';
 	const REFHELPER_REGEXP_ROWRANGE		= '((\w*|\'[^!]*\')!)?(\$?\d+):(\$?\d+)';
@@ -137,8 +137,8 @@ class PHPExcel_ReferenceHelper
 				if ($cell->getDataType() == PHPExcel_Cell_DataType::TYPE_FORMULA) {
 					// Formula should be adjusted
 					$pSheet->getCell($newCoordinates)
-						   ->setValue($this->updateFormulaReferences($cell->getValue(),
-						   					$pBefore, $pNumCols, $pNumRows, $pSheet->getTitle()));
+							->setValue($this->updateFormulaReferences($cell->getValue(),
+												$pBefore, $pNumCols, $pNumRows, $pSheet->getTitle()));
 				} else {
 					// Formula should not be adjusted
 					$pSheet->getCell($newCoordinates)->setValue($cell->getValue());
@@ -149,7 +149,7 @@ class PHPExcel_ReferenceHelper
 
 			} else {
 				/*	We don't need to update styles for rows/columns before our insertion position,
-						but we do still need to adjust any formulae	in those cells					*/
+						but we do still need to adjust any formulae	in those cells					 */
 				if ($cell->getDataType() == PHPExcel_Cell_DataType::TYPE_FORMULA) {
 					// Formula should be adjusted
 					$cell->setValue($this->updateFormulaReferences($cell->getValue(),
@@ -351,7 +351,7 @@ class PHPExcel_ReferenceHelper
 								$autoFilter->shiftColumn(PHPExcel_Cell::stringFromColumnIndex($endColRef-1),PHPExcel_Cell::stringFromColumnIndex($toColRef-1));
 								--$endColRef;
 								--$toColRef;
-							} while ($startColRef <= $endColRef);
+							}while ($startColRef <= $endColRef);
 						} else {
 							//	For delete, we shuffle from beginning to end to avoid overwriting
 							$startColID = PHPExcel_Cell::stringFromColumnIndex($startCol-1);
@@ -361,7 +361,7 @@ class PHPExcel_ReferenceHelper
 								$autoFilter->shiftColumn($startColID,$toColID);
 								++$startColID;
 								++$toColID;
-							} while ($startColID != $endColID);
+							}while ($startColID != $endColID);
 						}
 					}
 				}
@@ -651,11 +651,11 @@ class PHPExcel_ReferenceHelper
 			list($newColumn, $newRow) = PHPExcel_Cell::coordinateFromString( $pCellReference );
 
 			// Verify which parts should be updated
-			$updateColumn = (($newColumn{0} != '$') && ($beforeColumn{0} != '$') &&
-							 PHPExcel_Cell::columnIndexFromString($newColumn) >= PHPExcel_Cell::columnIndexFromString($beforeColumn));
+			$updateColumn = (($newColumn{0}!= '$') && ($beforeColumn{0}!= '$') &&
+							PHPExcel_Cell::columnIndexFromString($newColumn) >= PHPExcel_Cell::columnIndexFromString($beforeColumn));
 
-			$updateRow = (($newRow{0} != '$') && ($beforeRow{0} != '$') &&
-						  $newRow >= $beforeRow);
+			$updateRow = (($newRow{0}!= '$') && ($beforeRow{0}!= '$') &&
+							$newRow >= $beforeRow);
 
 			// Create new column reference
 			if ($updateColumn) {

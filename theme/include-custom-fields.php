@@ -7,10 +7,10 @@ $query1 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, Profil
 
 $query2 = "SELECT ProfileGender,ProfileUserLinked  FROM ".table_agency_profile." WHERE ProfileUserLinked = '".rb_agency_get_current_userid()."' ";
 					$results2 =  $wpdb->get_results($query2,ARRAY_A);
-				      $dataList2 = current($results2); 
+						$dataList2 = current($results2); 
 					$count2 = count($results2);
-					
-foreach($results1 as $data1) { 
+
+foreach($results1 as $data1) {
        
 	if($data1["ProfileCustomShowSearch"] == 1 || $data1["ProfileCustomShowProfile"] == 1  ){ // Show on Search Page or Profile Page
 
@@ -23,9 +23,9 @@ foreach($results1 as $data1) {
 					// Show custom fields for admins only.
 					#DEBUG
 					#echo "ShowGender";
-					if($data1["ProfileCustomShowAdmin"] == 1 && current_user_can("level_10") ){ 
+					if($data1["ProfileCustomShowAdmin"] == 1 && current_user_can("level_10") ){
 						RBAgency_Profile::view_custom_fields($data1);
-						
+
 						#DEBUG!
 						#echo "-1";
 					}
@@ -37,7 +37,7 @@ foreach($results1 as $data1) {
 					}
 				} else { // not in search page
 					// Show custom fields for admins only.
-					if($data1["ProfileCustomShowAdmin"] == 1 && is_user_logged_in()  && current_user_can("level_10") ){ 
+					if($data1["ProfileCustomShowAdmin"] == 1 && is_user_logged_in()  && current_user_can("level_10") ){
 						RBAgency_Profile::view_custom_fields($data1);
 						#DEBUG!
 						#echo "-3";
@@ -47,30 +47,30 @@ foreach($results1 as $data1) {
 						RBAgency_Profile::view_custom_fields($data1);
 						#DEBUG!
 						#echo "-4";
-					}						
+					}
 				}
-			} // if user is logged
+			}// if user is logged
 			if($isSearchPage == 1 && $data1["ProfileCustomShowSearch"] == 1 && $data1["ProfileCustomShowLogged"] ==0){ // In Search  page
 				#DEBUG! 
 				#echo "is Search Page";
 				if($data1["ProfileCustomShowGender"] == $dataList2["ProfileGender"]){ // Depends on Current LoggedIn User's Gender
-				 	// Show custom fields for admins only.
+					// Show custom fields for admins only.
 					#DEBUG
 					#echo "ShowGender";
-					if($data1["ProfileCustomShowAdmin"] == 1 && current_user_can("level_10") ){ 
+					if($data1["ProfileCustomShowAdmin"] == 1 && current_user_can("level_10") ){
 						RBAgency_Profile::view_custom_fields($data1);
 						#DEBUG!
 						#echo "-1";
 					}
 					// Show custom fields for logged in users - below admin level.
-					else{
-					 	RBAgency_Profile::view_custom_fields($data1);
+					else {
+						RBAgency_Profile::view_custom_fields($data1);
 						#DEBUG!
 						#echo "-2";
 					}
 				} else { // not in search page
 					// Show custom fields for admins only.
-					if($data1["ProfileCustomShowAdmin"] == 1 && is_user_logged_in()  && current_user_can("level_10") ){ 
+					if($data1["ProfileCustomShowAdmin"] == 1 && is_user_logged_in()  && current_user_can("level_10") ){
 						RBAgency_Profile::view_custom_fields($data1);
 						#DEBUG!
 						#echo "-3";
@@ -80,23 +80,23 @@ foreach($results1 as $data1) {
 						RBAgency_Profile::view_custom_fields($data1);
 						#DEBUG!
 						#echo "-4";
-					}						
+					}
 				}
 			}
 
-		}   // End - Show on Search Page or Profile Page
-		else {  // For non-loggedin users
+		}// End - Show on Search Page or Profile Page
+		else { // For non-loggedin users
 			if($isSearchPage == 1 && $data1["ProfileCustomShowSearch"] == 1 && $data1["ProfileCustomShowLogged"] == 0){ // In Search  page
-			 	// Show custom fields to public
-			 	if($data1["ProfileCustomShowLogged"] == 0 && !is_user_logged_in()){
+				// Show custom fields to public
+				if($data1["ProfileCustomShowLogged"] == 0 && !is_user_logged_in()){
 				RBAgency_Profile::view_custom_fields($data1);
 				#DEBUG!
 				//echo "-7";
 			}
 
 			} elseif ($isSearchpage == 0 && $data1["ProfileCustomShowProfile"] == 1  && $data1["ProfileCustomShowLogged"] == 0){ //Profile Page
-			  	// Show custom fields to public
-			 	if(!is_user_logged_in()){
+					// Show custom fields to public
+				if(!is_user_logged_in()){
 					RBAgency_Profile::view_custom_fields($data1);
 					#DEBUG!
 					//echo "-8";
@@ -104,8 +104,8 @@ foreach($results1 as $data1) {
 			}
 		}
 	}
-	
-		
+
+
 }
 
 

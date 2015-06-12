@@ -26,7 +26,7 @@ echo "<div id=\"profile-links\">\n";
 
 // View Photos and Print Photos
 	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 3){
-		
+
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 		$countImg  = $wpdb->num_rows;
@@ -37,7 +37,7 @@ echo "<div id=\"profile-links\">\n";
 		}
 	}
 
-// Polaroid	
+// Polaroid
 	if(isset($rb_agency_options_arr["rb_agency_option_layoutprofile"]) && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 2 && $rb_agency_options_arr["rb_agency_option_layoutprofile"] != 3){
 		$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Polaroid");
 		$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);

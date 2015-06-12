@@ -72,7 +72,7 @@ class PHPExcel_Reader_Excel2007_Theme
     public function __construct($themeName,$colourSchemeName,$colourMap)
     {
 		// Initialise values
-    	$this->_themeName			= $themeName;
+		$this->_themeName			= $themeName;
 		$this->_colourSchemeName	= $colourSchemeName;
 		$this->_colourMap			= $colourMap;
     }
@@ -102,7 +102,7 @@ class PHPExcel_Reader_Excel2007_Theme
      * @return string
      */
     public function getColourByIndex($index=0) {
-    	if (isset($this->_colourMap[$index])) {
+		if (isset($this->_colourMap[$index])) {
 			return $this->_colourMap[$index];
 		}
 		return null;

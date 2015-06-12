@@ -42,7 +42,7 @@ class PHPExcel_Shared_Excel5
 	 * @param PHPExcel_Worksheet $sheet The sheet
 	 * @param integer $col The column
 	 * @return integer The width in pixels
-	*/
+	 */
 	public static function sizeCol($sheet, $col = 'A')
 	{
 		// default font of the workbook
@@ -197,24 +197,24 @@ class PHPExcel_Shared_Excel5
 	 * Calculate the vertices that define the position of the image as required by
 	 * the OBJ record.
 	 *
-	 *		 +------------+------------+
-	 *		 |	 A	  |	  B	 |
+	 *		+------------+------------+
+	 *		|	A		|		B	|
 	 *   +-----+------------+------------+
-	 *   |	 |(x1,y1)	 |			|
-	 *   |  1  |(A1)._______|______	  |
-	 *   |	 |	|			  |	 |
-	 *   |	 |	|			  |	 |
+	 *   |	|(x1,y1)	|			|
+	 *   |  1  |(A1)._______|______		|
+	 *   |	|	|				|	|
+	 *   |	|	|				|	|
 	 *   +-----+----|	BITMAP	|-----+
-	 *   |	 |	|			  |	 |
-	 *   |  2  |	|______________.	 |
-	 *   |	 |			|		(B2)|
-	 *   |	 |			|	 (x2,y2)|
+	 *   |	|	|				|	|
+	 *   |  2  |	|______________.	|
+	 *   |	|			|		(B2)|
+	 *   |	|			|	(x2,y2)|
 	 *   +---- +------------+------------+
 	 *
 	 * Example of a bitmap that covers some of the area from cell A1 to cell B2.
 	 *
 	 * Based on the width and height of the bitmap we need to calculate 8 vars:
-	 *	 $col_start, $row_start, $col_end, $row_end, $x1, $y1, $x2, $y2.
+	 *	$col_start, $row_start, $col_end, $row_end, $x1, $y1, $x2, $y2.
 	 * The width and height of the cells are also variable and have to be taken into
 	 * account.
 	 * The values of $col_start and $row_start are passed in from the calling
@@ -224,15 +224,15 @@ class PHPExcel_Shared_Excel5
 	 * The vertices are expressed as a percentage of the underlying cell width as
 	 * follows (rhs values are in pixels):
 	 *
-	 *	   x1 = X / W *1024
-	 *	   y1 = Y / H *256
-	 *	   x2 = (X-1) / W *1024
-	 *	   y2 = (Y-1) / H *256
+	 *		x1 = X / W *1024
+	 *		y1 = Y / H *256
+	 *		x2 = (X-1) / W *1024
+	 *		y2 = (Y-1) / H *256
 	 *
-	 *	   Where:  X is distance from the left side of the underlying cell
-	 *			   Y is distance from the top of the underlying cell
-	 *			   W is the width of the cell
-	 *			   H is the height of the cell
+	 *		Where:  X is distance from the left side of the underlying cell
+	 *				Y is distance from the top of the underlying cell
+	 *				W is the width of the cell
+	 *				H is the height of the cell
 	 *
 	 * @param PHPExcel_Worksheet $sheet
 	 * @param string $coordinates E.g. 'A1'
@@ -252,8 +252,8 @@ class PHPExcel_Shared_Excel5
 		$y1 = $offsetY;
 
 		// Initialise end cell to the same as the start cell
-		$col_end	= $col_start;  // Col containing lower right corner of object
-		$row_end	= $row_start;  // Row containing bottom right corner of object
+		$col_end	= $col_start;// Col containing lower right corner of object
+		$row_end	= $row_start;// Row containing bottom right corner of object
 
 		// Zero the specified offset if greater than the cell dimensions
 		if ($x1 >= self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex($col_start))) {
@@ -263,8 +263,8 @@ class PHPExcel_Shared_Excel5
 			$y1 = 0;
 		}
 
-		$width	  = $width  + $x1 -1;
-		$height	 = $height + $y1 -1;
+		$width		= $width  + $x1 -1;
+		$height	= $height + $y1 -1;
 
 		// Subtract the underlying cell widths to find the end cell of the image
 		while ($width >= self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex($col_end))) {
@@ -294,8 +294,8 @@ class PHPExcel_Shared_Excel5
 		}
 
 		// Convert the pixel values to the percentage value expected by Excel
-		$x1 = $x1	 / self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex($col_start))   * 1024;
-		$y1 = $y1	 / self::sizeRow($sheet, $row_start + 1)   *  256;
+		$x1 = $x1	/ self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex($col_start))   * 1024;
+		$y1 = $y1	/ self::sizeRow($sheet, $row_start + 1)   *  256;
 		$x2 = ($width + 1)  / self::sizeCol($sheet, PHPExcel_Cell::stringFromColumnIndex($col_end))	 * 1024; // Distance to right side of object
 		$y2 = ($height + 1) / self::sizeRow($sheet, $row_end + 1)	 *  256; // Distance to bottom of object
 

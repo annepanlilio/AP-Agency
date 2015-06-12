@@ -56,7 +56,7 @@ class RBAgency_Extends {
 			}
 			// retrieve active profiles only
 			$atts['isactive'] = 1;
-			
+
 			// Get Options
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
@@ -86,10 +86,10 @@ class RBAgency_Extends {
 					echo "<div class='restricted'>\n";
 						if ( class_exists("RBAgencyCasting") ) {
 						echo "Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
-						}else{
+						} else {
 						echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
 						}
-						
+
 					echo "</div><!-- #content -->\n";
 				}
 			}
@@ -151,7 +151,7 @@ class RBAgency_Extends {
 				echo "	<div class='restricted'>\n";
 				if ( class_exists("RBAgencyCasting") ) {
 						echo "Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
-				}else{
+				} else {
 						echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
 				}
 				echo "  </div><!-- #content -->\n";
@@ -181,7 +181,7 @@ class RBAgency_Extends {
 			return $output_string;
 		}
 
-} // End class RBAgency_Extends
+}// End class RBAgency_Extends
 
 
 	// *************************************************************************************************** //
@@ -221,15 +221,15 @@ class profile_featured_widget extends WP_Widget {
 		// Get Settings from Widget
 		extract($args, EXTR_SKIP);
 			$type = $instance['type'];
-				if ( empty( $type ) ) { $type = 1; };
+				if ( empty( $type ) ) {$type = 1; };
 			$count = $instance['count'];
-				if ( empty( $count ) ) { $count = 1; };
+				if ( empty( $count ) ) {$count = 1; };
 
 		echo $before_widget;
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 		}
-		if (class_exists('RBAgency_Profile')) { 
+		if (class_exists('RBAgency_Profile')) {
 			$atts = array('type' => $type,"count"=> $count);
 			echo RBAgency_Profile::view_featured($atts);
 		} else {
@@ -286,7 +286,7 @@ class profile_featured_widget extends WP_Widget {
 
 		return $instance;
 	}
-} // class profile_featured_widget_construct
+}// class profile_featured_widget_construct
 
 
 /*
@@ -324,13 +324,13 @@ class profile_search_widget extends WP_Widget {
 			$rb_agency_option_formhide_advancedsearch_button = isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0;
 
 		if ( $rb_agency_option_privacy == 0 || is_user_logged_in()) {
-				
+
 			echo $args['before_widget'];
 			if ( ! empty( $instance['title'] ) ) {
 				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 			}
 			// Show Search Form
-			if (class_exists('RBAgency_Profile')) { 
+			if (class_exists('RBAgency_Profile')) {
 				echo RBAgency_Profile::search_form('', '', $type, 0);
 			} else {
 				echo "Invalid Function (Profile Search)";
@@ -381,4 +381,4 @@ class profile_search_widget extends WP_Widget {
 
 		return $instance;
 	}
-} // class profile_featured_widget_construct
+}// class profile_featured_widget_construct

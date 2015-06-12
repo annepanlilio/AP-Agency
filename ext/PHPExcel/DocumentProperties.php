@@ -440,10 +440,10 @@ class PHPExcel_DocumentProperties
 	 */
 	public function setCustomProperty($propertyName,$propertyValue='',$propertyType=NULL) {
 		if (($propertyType === NULL) || (!in_array($propertyType,array(self::PROPERTY_TYPE_INTEGER,
-																	   self::PROPERTY_TYPE_FLOAT,
-																	   self::PROPERTY_TYPE_STRING,
-																	   self::PROPERTY_TYPE_DATE,
-																	   self::PROPERTY_TYPE_BOOLEAN)))) {
+																		self::PROPERTY_TYPE_FLOAT,
+																		self::PROPERTY_TYPE_STRING,
+																		self::PROPERTY_TYPE_DATE,
+																		self::PROPERTY_TYPE_BOOLEAN)))) {
 			if ($propertyValue === NULL) {
 				$propertyType = self::PROPERTY_TYPE_STRING;
 			} elseif (is_float($propertyValue)) {

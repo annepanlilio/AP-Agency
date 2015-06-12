@@ -49,8 +49,8 @@ $profileURL = get_query_var('target'); //$_REQUEST["profile"];
 		$ProfileContactPhoneHome	=stripslashes($data['ProfileContactPhoneHome']);
 		$ProfileContactPhoneCell	=stripslashes($data['ProfileContactPhoneCell']);
 		$ProfileContactPhoneWork	=stripslashes($data['ProfileContactPhoneWork']);
-		$ProfileGender    			=stripslashes($data['ProfileGender']);
-		$ProfileDateBirth	    	=stripslashes($data['ProfileDateBirth']);
+		$ProfileGender				=stripslashes($data['ProfileGender']);
+		$ProfileDateBirth			=stripslashes($data['ProfileDateBirth']);
 		$ProfileAge 				= rb_agency_get_age($ProfileDateBirth);
 		$ProfileLocationCity		=stripslashes($data['ProfileLocationCity']);
 		$ProfileLocationState		=stripslashes($data['ProfileLocationState']);
@@ -62,10 +62,10 @@ $profileURL = get_query_var('target'); //$_REQUEST["profile"];
 		$ProfileStatHairColor		=stripslashes($data['ProfileStatHairColor']);
 		$ProfileStatHeight			=stripslashes($data['ProfileStatHeight']);
 		$ProfileStatWeight			=stripslashes($data['ProfileStatWeight']);
-		$ProfileStatBust	        =stripslashes($data['ProfileStatBust']);
-		$ProfileStatWaist	    	=stripslashes($data['ProfileStatWaist']);
-		$ProfileStatHip	        	=stripslashes($data['ProfileStatHip']);
-		$ProfileStatShoe		    =stripslashes($data['ProfileStatShoe']);
+		$ProfileStatBust			  =stripslashes($data['ProfileStatBust']);
+		$ProfileStatWaist			=stripslashes($data['ProfileStatWaist']);
+		$ProfileStatHip			  	=stripslashes($data['ProfileStatHip']);
+		$ProfileStatShoe			=stripslashes($data['ProfileStatShoe']);
 		$ProfileStatDress			=stripslashes($data['ProfileStatDress']);
 		$ProfileUnion				=stripslashes($data['ProfileUnion']);
 		$ProfileDateUpdated			=stripslashes($data['ProfileDateUpdated']);
@@ -78,7 +78,7 @@ $profileURL = get_query_var('target'); //$_REQUEST["profile"];
 // Process Form
 if ($_POST["contact-action"] == "contact") {
 	if (!empty($_POST["contact-your-email"])) {
-		
+
 		$ContactToName		=$_POST["contact-your-name"];
 		$ContactToEmail		=$_POST["contact-your-email"];
 		$ContactDate		=$_POST["contact-your-date"];
@@ -90,23 +90,23 @@ if ($_POST["contact-action"] == "contact") {
 		$ContactMessage = '
 			<html>
 				<head>
-				  	<title>'. $ContactSubject .'</title>
+						<title>'. $ContactSubject .'</title>
 				</head>
 				<body>
-				  	<p>Contact request for <a href="'. get_bloginfo("url") .'/profile/'. $profileURL .'/">'. $ProfileContactDisplay .'/</a></p>
-				  	<p>From '. $ContactToName .' ('. $ContactToEmail .')</a> for '. $ContactDate .'</p>
-				  	<p>'. $ContactMessage .'</p>
+						<p>Contact request for <a href="'. get_bloginfo("url") .'/profile/'. $profileURL .'/">'. $ProfileContactDisplay .'/</a></p>
+						<p>From '. $ContactToName .' ('. $ContactToEmail .')</a> for '. $ContactDate .'</p>
+						<p>'. $ContactMessage .'</p>
 				</body>
 			</html>
 			';
 		// To send HTML mail, the Content-type header must be set
 		//$headers .= 'To: '. $SearchMuxToName .' <'. $SearchMuxToEmail .'>' . "\r\n";
-		
+
 		add_filter('wp_mail_content_type','rb_agency_set_content_type');
 			function rb_agency_set_content_type($content_type){
 				return 'text/html';
 			}
-		
+
 		// Mail it
 		$headers  = 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -114,21 +114,21 @@ if ($_POST["contact-action"] == "contact") {
 			$headers .= 'BCC: '.$ProfileContactEmail.''. "\r\n";
 		}
 		$headers .= 'From: '. $ContactToName .' <'. $ContactToEmail .'>' . "\r\n";
-		
+
 		wp_mail($rb_agency_option_agencyemail, $ContactSubject, $ContactMessage, $headers);
-		
+
 		$alert = "<div id=\"message\" class=\"updated\"><p>Email sent successfully!</p></div>";
 	}
 
 }
-	
+
 	// Change Title
 	add_filter('wp_title', 'rb_agency_override_title', 10, 2);
 		function rb_agency_override_title(){
 			global $ProfileContactDisplay;
 			return bloginfo('name') ." > Contact ". $ProfileContactDisplay ."";
 		}
-	
+
 	// Remove All Known Scripts which effect
 	add_action( 'wp_print_scripts', 'rb_agency_deregister_scripts', 100 );
 		function rb_agency_deregister_scripts() {
@@ -172,32 +172,32 @@ if ($_POST["contact-action"] == "contact") {
 			get_sidebar(); 
 		echo "	</div>\n";
 	}
-	
+
 	echo "<div id=\"container\" class=\"one-column\">\n";
 	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
 	if ($count > 0) {
-		if ( ( $rb_agency_option_privacy > 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) { 
-			//if (isset($_SESSION['SearchMuxHash'])) { echo "Permission Granted"; }
-			
-		  	// Ok, but whats the status of the profile?
-		  	if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
-			  
-			  	// Did they submit the form?
-			  	if ($_POST) {
+		if ( ( $rb_agency_option_privacy > 1 && is_user_logged_in() ) || ( $rb_agency_option_privacy > 1 && isset($_SESSION['SearchMuxHash']) ) || ($rb_agency_option_privacy == 0) ) {
+			//if (isset($_SESSION['SearchMuxHash'])) {echo "Permission Granted"; }
+
+				// Ok, but whats the status of the profile?
+				if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
+
+					// Did they submit the form?
+					if ($_POST) {
 					echo $alert;
-			  	} else {
-				
-					include ("include-profile-contact.php");				 
-			  	}
-			 	
-		  	} else {
+					} else {
+
+					include ("include-profile-contact.php");
+					}
+
+				} else {
 				echo "". __("Inactive Profile", RBAGENCY_TEXTDOMAIN) ."\n";
-		  	}
+				}
 		} else {
 			// hold last model requested as session so we can return them where we found them 
 			$ProfileLastViewed = get_query_var('profile');
 			$_SESSION['ProfileLastViewed'] = $ProfileLastViewed;
-			include("include-login.php"); 	
+			include("include-login.php"); 
 		}
 	} else {
 		// There is no record found.

@@ -4,10 +4,10 @@
 		<a href="http://rbplugin.com" class="add-new-h2">Base Version <?php echo get_option('rb_agency_version'); ?></a>
 		<?php if (function_exists('rb_agency_interact_menu') && get_option('RBAGENCY_interact_VERSION')) { ?>
 		<a href="http://rbplugin.com" class="add-new-h2">Interact Version <?php echo get_option("RBAGENCY_interact_VERSION"); ?></a>
-		<?php } ?>
+		<?php }?>
 		<?php if (function_exists('rb_agency_casting_menu') && get_option('RBAGENCY_casting_VERSION')) { ?>
 		<a href="http://rbplugin.com" class="add-new-h2">Casting Cart Version <?php echo get_option('RBAGENCY_casting_VERSION'); ?></a>
-		<?php } ?>
+		<?php }?>
 	</h2>
 	<?php // TODO: Display new version available ?>
 	<?php $rb_remote_version = rb_get_remote_version();?>
@@ -21,14 +21,14 @@
 	$action = 'upgrade-plugin';
 	$slug = 'rb-agency';
 	$update_url = wp_nonce_url(
-	    add_query_arg(
-	        array(
-	            'action' => $action,
-	            'plugin' => $slug
-	        ),
-	        admin_url( 'update.php' )
-	    ),
-	    $action.'_'.$slug
+		add_query_arg(
+			  array(
+			      'action' => $action,
+			      'plugin' => $slug
+			  ),
+			  admin_url( 'update.php' )
+		),
+		$action.'_'.$slug
 	);
 	?>
 	<a href="<?php echo $update_url;?>">update now</a>.
@@ -39,10 +39,10 @@
 		if(get_option('rb_agency_version') <> RBAGENCY_VERSION) {
 		echo "Upgrade Needed";
 		}
-		
-		if( isset( $_GET['page'] ) ) {  
+
+		if( isset( $_GET['page'] ) ) { 
 			$active_page = isset( $_GET['page'] ) ? $_GET['page'] : 'display_options';
-		} // end if  
+		}// end if  
 	?>
 
 	<h2 class="nav-tab-wrapper">
@@ -55,7 +55,7 @@
 
 	<?php
 	if ($active_page == 'rb_agency_settings'){
-	echo "  <p id=\"settings-menu\">\n";	
+	echo "  <p id=\"settings-menu\">\n";
 	$purl = $_SERVER["REQUEST_URI"];
 	for ($i=0; $i<=7;$i++){
 		$button_state[$i] = $purl == '/wp-admin/admin.php?page=rb_agency_settings&ConfigID='.$i.'' ? 'button-primary' : 'button-secondary';

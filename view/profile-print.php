@@ -54,10 +54,10 @@ global $wpdb;
 		}
 
 		#fullpage table td {
-			 border: none;
+			border: none;
 		}
-		#fullpage .box {	
-			height: 860px;		
+		#fullpage .box {
+			height: 860px;
 			overflow: hidden;
 		}
 		#fullpage #print_actions {
@@ -257,14 +257,14 @@ if ($_GET['cD'] == "0") {
 				$selectedYearMax = date($format, strtotime('-'. $ProfileDateBirth_max-1 .' year'. $date));
 				$filter .= " AND profile.ProfileDateBirth >= '$selectedYearMax'";
 			}
-			
+
 			// Filter Models Already in Cart
 			if (isset($_SESSION['cartArray'])) {
 				$cartArray = $_SESSION['cartArray'];
 				$cartString = implode(",", $cartArray);
 				$filter .=  " AND profile.ProfileID NOT IN (". $cartString .")";
 			}
-			
+
 			// Show Cart
 			$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media $filter  GROUP BY  profile.ProfileID ORDER BY profile.ProfileContactDisplay ASC";
 			$results = $wpdb->get_results($query,ARRAY_A);// or die ( __("Error, query failed", RBAGENCY_TEXTDOMAIN ));
@@ -295,8 +295,8 @@ if ($_GET['cD'] == "0") {
 		} else {
 			echo "<p>Nothing to display.  <a href=\"javascript:window.opener='x';window.close();\">Close</a></div></p>";
 			$hasQuery = false;
-		}		
-				
+		}
+
 		if ($hasQuery) {
 		echo "<table class=\"profile-print\">";
 
@@ -309,7 +309,7 @@ if ($_GET['cD'] == "0") {
 				} else {
 					$ii++;
 					if ($ii % 3 == 1) {
-					 echo "<tr>";
+					echo "<tr>";
 					}
 				}
 
@@ -370,12 +370,12 @@ if ($_GET['cD'] == "0") {
 								echo "<div><strong>". __("Phone Work", RBAGENCY_TEXTDOMAIN) .":</strong> ". $data['ProfileContactPhoneWork'] ."</div>\n";
 							}
 						}
-						/*	
+						/*
 						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
 						//}
-							*/
+							 */
 						//$resultsCustomPrivate =  $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle, c.ProfileCustomOrder, c.ProfileCustomView, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder DESC", $ProfileID ));
 						//foreach  ($resultsCustomPrivate as $resultCustomPrivate) {
 						//	echo "				<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". $resultCustomPrivate->ProfileCustomValue ."</div>\n";
@@ -393,7 +393,7 @@ if ($_GET['cD'] == "0") {
 							if(!empty($resultCustomPrivate->ProfileCustomValue ) || !empty($resultCustomPrivate->ProfileCustomDateValue )){
 								if($resultCustomPrivate->ProfileCustomType == 10){
 									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustomPrivate->ProfileCustomDateValue))) ."</div>\n";
-								}else{
+								} else {
 									echo "<div><strong>". $resultCustomPrivate->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustomPrivate->ProfileCustomValue) ."</div>\n";
 								}
 							}
@@ -405,13 +405,13 @@ if ($_GET['cD'] == "0") {
 							if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
 								if($resultCustom->ProfileCustomType == 10){
 									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
-								}else{
+								} else {
 									echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
 								}
 							}
 						}
 
-					} // End Private Fields
+					}// End Private Fields
 
 
 					/*
@@ -440,7 +440,7 @@ if ($_GET['cD'] == "0") {
 							'height'=>475
 						);
 						$image_src = bfi_thumb( $image_path, $bfi_params );
-						
+
 						//echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."&h=475\" />";
 						echo "<img src=\"". $image_src."\" />\n";
 						echo "<br>";
@@ -449,18 +449,18 @@ if ($_GET['cD'] == "0") {
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image", 99, true);
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
-							
+
 							$i = 0;
 							foreach($resultsImg as $dataImg ){
 								if ($i < $countImg) {
 									$image_path = RBAGENCY_UPLOADDIR . $dataImg["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'];
-									
+
 									if($dataImg['ProfileMediaPrimary'] != 1){
 										//echo $dataImg['ProfileMediaURL']."<br>";
 										//echo "<img src=\"".$image_src ."\" />\n";
 										if($countImg <= 4){
-											$imgSize = '&h=120';											
-										}elseif($countImg > 4){
+											$imgSize = '&h=120';
+										} elseif($countImg > 4){
 											$imgSize = '&h=128';
 											$width = "width='60'";
 										}
@@ -489,7 +489,7 @@ if ($_GET['cD'] == "0") {
 							if (!empty($data['ProfileGender'])) {
 								if(RBAgency_Common::profile_meta_gendertitle($data['ProfileGender'])){
 									echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> ".rb_agency_getGenderTitle($data['ProfileGender'])."</div>\n";
-								}else{
+								} else {
 									echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN) .":</strong> --</div>\n";
 								}
 							}
@@ -500,7 +500,7 @@ if ($_GET['cD'] == "0") {
 								if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
 									if($resultCustom->ProfileCustomType == 10){
 										echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". date("F d, Y",strtotime(stripcslashes($resultCustom->ProfileCustomDateValue))) ."</div>\n";
-									}else{
+									} else {
 										echo "<div><strong>". $resultCustom->ProfileCustomTitle ."<span class=\"divider\">:</span></strong> ". stripcslashes($resultCustom->ProfileCustomValue) ."</div>\n";
 									}
 								}
@@ -519,7 +519,7 @@ if ($_GET['cD'] == "0") {
 					}
 
 					echo " </div>";
-				} // elseif (layout style is another value......) {
+				}// elseif (layout style is another value......) {
 
 				echo "</td>";
 
@@ -534,7 +534,7 @@ if ($_GET['cD'] == "0") {
 			}
 			echo "<div style=\"clear: both;\"></div>";
 		echo "</table>";
-		
+
 		?>
 	</div> <!-- #print_wrapper -->
 </body>

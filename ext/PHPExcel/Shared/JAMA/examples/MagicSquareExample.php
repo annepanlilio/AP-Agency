@@ -68,7 +68,7 @@ class MagicSquareExample {
         }
       }
 
-      $t = $M[$k][0];  $M[$k][0]  = $M[$k+$p][0];  $M[$k+$p][0]  = $t;
+      $t = $M[$k][0];$M[$k][0]  = $M[$k+$p][0];$M[$k+$p][0]  = $t;
       $t = $M[$k][$k]; $M[$k][$k] = $M[$k+$p][$k]; $M[$k+$p][$k] = $t;
 
     }

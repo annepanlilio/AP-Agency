@@ -33,14 +33,14 @@ Custom Layout: Shake it like a polaroid picture
 			});
 
 			$(document).ready(function(){
-			         setTimeout(
+					   setTimeout(
 						function(){
 							$('#pp_thumbContainer div.album').click();
 						}
 					,800);
-					
+
 					$(\"#pp_back\").click(function(){
-							  setTimeout(
+								setTimeout(
 								function(){
 									$('#pp_thumbContainer div.album').click();
 								}
@@ -63,7 +63,7 @@ Custom Layout: Shake it like a polaroid picture
 			width:960px;
 			min-height:400px;
 			float:left;
-		
+
 		}
 		.rel
 		{
@@ -74,7 +74,7 @@ Custom Layout: Shake it like a polaroid picture
 			float:left; width:200px;
 			margin-top:12px;
 		}
-		
+
 		.stats div
 		{
 			margin-top:12px;
@@ -87,7 +87,7 @@ Custom Layout: Shake it like a polaroid picture
 
 	echo "<div id=\"profile\">\n";
 	echo " <div id=\"rblayout-four\" class=\"rblayout\">\n";
-				
+
 		//=============================================================================================
 		//    Statistics with Name and Info
 		//=============================================================================================
@@ -97,12 +97,12 @@ Custom Layout: Shake it like a polaroid picture
 	echo "				<div style=\"float:left; width:900px;min-height:200px; font-family:Arial Narrow, Helvetica, sans-serif; font-size:18px; color:#877; border:1px solid #999; margin-top:12px;\">\n";
 	echo "					<div class=\"stats\" >\n";
  // Social Link
-	 rb_agency_getSocialLinks();
+	rb_agency_getSocialLinks();
  			if (!empty($ProfileGender)) {
-			$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	 );
+			$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	);
 			echo "<div><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</div>\n";
 		}
-	
+
 		if (!empty($ProfileStatHeight)) {
 			if ($rb_agency_option_unittype == 0) { // Metric
 				echo "<div class=\"rel\"><strong>". __("Height", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatHeight ." ". __("cm", RBAGENCY_TEXTDOMAIN). "" ."</div>\n";
@@ -120,18 +120,18 @@ Custom Layout: Shake it like a polaroid picture
 				echo "<div class=\"rel\"><strong>". __("Weight", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileStatWeight ." ". __("lb", RBAGENCY_TEXTDOMAIN). "</div>\n";
 			}
 		}
-		
+
 
 		// Insert Custom Fields
 		rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
 
-	          	if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
-		    		echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
+					if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
+					echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
 			}
 	echo "					</div>\n";
-	echo "				</div>\n";	
-	echo "		</div>	\n";	
+	echo "				</div>\n";
+	echo "		</div>	\n";
 
 
 
@@ -141,32 +141,32 @@ Custom Layout: Shake it like a polaroid picture
 		//=============================================================================================
 
 	echo "		<div id=\"pp_gallery\" class=\"pp_gallery\">\n";
-	echo "		  <div id=\"pp_loading\" class=\"pp_loading\"></div>\n";
-	echo "		  <div id=\"pp_next\" class=\"pp_next\"></div>\n";
-	echo "		  <div id=\"pp_prev\" class=\"pp_prev\"></div>\n";
-	echo "		  <div id=\"pp_thumbContainer\">\n";
+	echo "			<div id=\"pp_loading\" class=\"pp_loading\"></div>\n";
+	echo "			<div id=\"pp_next\" class=\"pp_next\"></div>\n";
+	echo "			<div id=\"pp_prev\" class=\"pp_prev\"></div>\n";
+	echo "			<div id=\"pp_thumbContainer\">\n";
 
-	echo "		  <div class=\"album\">\n";
+	echo "			<div class=\"album\">\n";
 
 			// images
-		
+
 			$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 			$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 			$countImg  = $wpdb->num_rows;
 			foreach($resultsImg as $dataImg ){
-	echo "		  	<div class=\"content\">\n";
-	echo "		  		<img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" />\n";
-	echo "		  		<span>". $ProfileContactDisplay ."</span>\n";
-	echo "		  	</div>\n";
+	echo "				<div class=\"content\">\n";
+	echo "					<img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" />\n";
+	echo "					<span>". $ProfileContactDisplay ."</span>\n";
+	echo "				</div>\n";
 			}
 
 
-	
-	
-	echo "  		<div class=\"descr\">". $ProfileContactDisplay ." Photos</div>\n";
-	echo "		  </div>\n";
 
-	echo "		  <div id=\"pp_back\" class=\"pp_back\">Reset</div>\n";
+
+	echo "  		<div class=\"descr\">". $ProfileContactDisplay ." Photos</div>\n";
+	echo "			</div>\n";
+
+	echo "			<div id=\"pp_back\" class=\"pp_back\">Reset</div>\n";
 	echo "		</div>\n";
 	echo "		</div>\n";
 	echo "  </div>\n";
@@ -178,9 +178,9 @@ Custom Layout: Shake it like a polaroid picture
 
 	echo "  <div style=\"clear: both;\"></div>\n"; // Clear All
 
-	echo " </div>\n";  // Close Profile Layout
-	echo "</div>\n";  // Close Profile
+	echo " </div>\n";// Close Profile Layout
+	echo "</div>\n";// Close Profile
 	echo "<div style=\"clear: both;\"></div>\n"; // Clear All
-	
-	
+
+
 ?>

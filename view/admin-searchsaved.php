@@ -13,7 +13,7 @@ $siteurl = get_option('siteurl');
 		$rb_agency_option_agencyemail	= $rb_agency_options_arr['rb_agency_option_agencyemail'];
 		$rb_agency_option_agencyheader	= $rb_agency_options_arr['rb_agency_option_agencyheader'];
 		$rb_agency_option_profilenaming	= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-				
+
 	// Declare Hash
 	$SearchMuxHash			=  isset($_GET["SearchMuxHash"]) && !empty($_GET["SearchMuxHash"]) ?$_GET["SearchMuxHash"]:""; // Set Hash
 
@@ -91,8 +91,8 @@ $siteurl = get_option('siteurl');
 
 	} elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	/* 
-	* Delete Email
-	*/
+	 * Delete Email
+	 */
 
 		$SearchID = $_GET['SearchID'];
 
@@ -108,8 +108,8 @@ $siteurl = get_option('siteurl');
 		}
 	} elseif ((isset($_GET['action']) && $_GET['action'] == "emailCompose") && isset($_GET['SearchID'])) {
 	/* 
-	* Compose Email
-	*/
+	 * Compose Email
+	 */
 
 		$SearchID = $_GET['SearchID'];
 
@@ -122,47 +122,47 @@ $siteurl = get_option('siteurl');
 		<div id="searchsaved" style="width:500px; float:left;" class="rbform">
 		<h2><?php echo __("Search Saved", RBAGENCY_TEXTDOMAIN); ?></h2>
 		<br />
-		 <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
-		  <input type="hidden" name="action" value="cartEmail" />
-		  <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
-		  <div class="rbfield"><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
-		  <div class="rbfield"><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
-		  <div class="rbfield"><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
-		  
-		  <div class="rbfield"><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
-		  
-		  <div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
-		  <div class="rbfield"><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
-			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){ echo @$dataSearchSavedMux["SearchMuxMessage"];}else{echo @"Click the following link (or copy and paste it into your browser): [link-place-holder]";} ?></textarea>
-			</div>
-		  <div class="submit rbfield rbsubmit">
-			  <input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
-			  <input type="hidden" name="action" value="emailSend" />
-			  <?php if(isset($_GET["resend"])):?>
-			  <input type="hidden" name="resend" value="true" />
-			  <?php endif; ?>
-			  <input type="submit" name="submit" value="Send Email" class="button-primary" />
-		  </div>
+		<form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page'])."&SearchID=".$_GET['SearchID']."&SearchMuxHash=".$_GET["SearchMuxHash"]; ?>">
+			<input type="hidden" name="action" value="cartEmail" />
+			<div class="rbfield"><label for="SearchMuxToEmail"><strong>From Name:(Leave as blank to use admin name)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromName" name="SearchMuxFromName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+			<div class="rbfield"><label for="SearchMuxToEmail"><strong>From Email:(Leave as blank to use admin email)</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxFromEmail" name="SearchMuxFromEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
+			<div class="rbfield"><label for="SearchMuxToName"><strong>Send to Name:</strong></label><br/><input style="width:300px;" type="text" id="SearchMuxToName" name="SearchMuxToName" value="<?php echo $dataSearchSavedMux["SearchMuxToName"]; ?>" /></div>
+			<div class="rbfield"><label for="SearchMuxToEmail"><strong>Send to Email:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxToEmail" name="SearchMuxToEmail" value="<?php echo $dataSearchSavedMux["SearchMuxToEmail"]; ?>" /></div>
 
-		 </form>
+			<div class="rbfield"><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
+
+			<div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
+			<div class="rbfield"><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] )</strong></label><br/>
+			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){echo @$dataSearchSavedMux["SearchMuxMessage"];} else {echo @"Click the following link (or copy and paste it into your browser): [link-place-holder]";}?></textarea>
+			</div>
+			<div class="submit rbfield rbsubmit">
+				<input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
+				<input type="hidden" name="action" value="emailSend" />
+				<?php if(isset($_GET["resend"])):?>
+				<input type="hidden" name="resend" value="true" />
+				<?php endif; ?>
+				<input type="submit" name="submit" value="Send Email" class="button-primary" />
+			</div>
+
+		</form>
 		</div>
 		<?php
 
 		$profile_list = implode(",",array_unique(array_filter(explode(",",$data->SearchProfileID))));
-		
+
 		$query ="SELECT * FROM ". table_agency_profile ." profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
 				.(isset($profile_list)? $profile_list:"''").")  GROUP BY profile.ProfileID  ORDER BY ProfileContactNameFirst ASC";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
-		
+
 		if(empty($data->SearchMuxCustomThumbnail) && isset($_SESSION["profilephotos"])){
 			$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
-		}else{
+		} else {
 			$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
 		}
 		?>
-		
+
 		<div style="padding:10px;max-width:580px;float:left;">
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
 				<div id="searchsaved-email" class="searchsaved-profiles">
@@ -215,20 +215,20 @@ $siteurl = get_option('siteurl');
 		</div>
 		<?php
 
-	}elseif ((isset($_GET['action']) && $_GET['action'] == "edit") && isset($_GET['SearchID'])) {
+	} elseif ((isset($_GET['action']) && $_GET['action'] == "edit") && isset($_GET['SearchID'])) {
 	?>
 	<div style="clear:both"></div>
 	<div class="wrap" style="min-width: 1020px;">
 		<div id="rb-overview-icon" class="icon32"></div>
 		<h2>Profile Search &raquo; Edit</h2>
-		
-	  <?php
+
+		<?php
 		// Save Search title
 		if(isset($_POST["SearchTitle"])){
 			if(!empty($_POST["SearchTitle"])){
-			  $wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",$_POST["SearchTitle"],$_GET["SearchID"]));
+				$wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",$_POST["SearchTitle"],$_GET["SearchID"]));
 				echo "Updated successfully!";
-			}else{
+			} else {
 				echo "Title field is required.";
 			}
 		}
@@ -331,7 +331,7 @@ $siteurl = get_option('siteurl');
 					?>
 				</div> <!-- #searchsaved-edit -->
 			</form>
-			
+
 		</div>
 		</div> 
 		<script type="text/javascript">
@@ -344,7 +344,7 @@ $siteurl = get_option('siteurl');
 					jQuery(this).removeAttr("checked");
 					jQuery(this).prop("checked",true);
 					arr.push(jQuery(this).val());
-					}else{
+					} else {
 					jQuery(this).prop("checked",true);
 					jQuery(this).removeAttr("checked");
 					arr = [];
@@ -354,11 +354,11 @@ $siteurl = get_option('siteurl');
 		});
 	</script>
 	<?php 
-	}else {
+	} else {
 
 	/* 
-	* View
-	*/
+	 * View
+	 */
 
 		?>
 		<div style="clear:both"></div>
@@ -381,16 +381,16 @@ $siteurl = get_option('siteurl');
 					<h3 class="title">Save Search and Email</h3>
 
 
-				  <form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
-				  <table class="form-table">
-				  <tbody>
-					  <tr valign="top">
-						  <th scope="row">Group Title:</th>
-						  <td>
-							  <input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo isset($CastingCompany)?$CastingCompany:""; ?>" />
-						  </td>
-					  </tr>
-					  <tr valign="top">
+					<form method="post" enctype="multipart/form-data" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
+					<table class="form-table">
+					<tbody>
+						<tr valign="top">
+							<th scope="row">Group Title:</th>
+							<td>
+								<input type="text" id="SearchTitle" name="SearchTitle" value="<?php echo isset($CastingCompany)?$CastingCompany:""; ?>" />
+							</td>
+						</tr>
+						<tr valign="top">
 							<th scope="row">Profiles:</th>
 							<td>
 								<div id="searchsaved-save" class="searchsaved-profiles">
@@ -472,7 +472,7 @@ $siteurl = get_option('siteurl');
 					echo "Session expired. Please search again.";
 
 				}
-		} // End Serach Save
+		}// End Serach Save
 
 
 	?>
@@ -556,9 +556,9 @@ $siteurl = get_option('siteurl');
 
 		<div class="tablenav">
 			<div class='tablenav-pages'>
-			 <?php
+			<?php
 				if($items > 0) {
-					echo $p->show();  // Echo out the list of paging. 
+					echo $p->show();// Echo out the list of paging. 
 				}
 				?>
 			</div>
@@ -587,7 +587,7 @@ $siteurl = get_option('siteurl');
 		</thead>
 		</table>
 
-		<form method="post" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">	
+		<form method="post" action="<?php echo admin_url("admin.php?page=". $_GET['page']); ?>">
 		<table cellspacing="0" class="widefat fixed">
 		<thead>
 			<tr class="thead">
@@ -615,7 +615,7 @@ $siteurl = get_option('siteurl');
 		//$query2 = "SELECT search.SearchID, search.SearchTitle, search.SearchProfileID, search.SearchOptions, search.SearchDate FROM ". table_agency_searchsaved_mux ." searchsent LEFT JOIN ". table_agency_searchsaved ." search ON searchsent.SearchID = search.SearchID ". $filter  ." ORDER BY $sort $dir $limit";
 		$results2 = $wpdb->get_results($query2, ARRAY_A);
 		$count2 = $wpdb->num_rows;
-		
+
 		foreach ($results2 as $data2) {
 			$SearchID = $data2['SearchID'];
 			$SearchTitle = stripslashes($data2['SearchTitle']);
@@ -644,13 +644,13 @@ $siteurl = get_option('siteurl');
 					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
 					<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID."&SearchMuxHash=".RBAgency_Common::generate_random_string(8); ?>">Email Client</a> | </span>
 				<?php
-				}else{
+				} else {
 				?>
 						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=edit&SearchID=<?php echo $SearchID;?>">Edit</a> | </span>
 						<span class="send"><a href="admin.php?page=<?php echo $_GET['page']; ?>&action=emailCompose&SearchID=<?php echo $SearchID; ?>&SearchMuxHash=<?php echo $results3[0]['SearchMuxHash'];?>&resend=true">Email Client</a> | </span>
-				<?php } ?>
+				<?php }?>
 						<span class="send"><a href="admin.php?page=rb_agency_search&action=massEmail&SearchID=<?php echo $SearchID;?>">Mass Email Profiles</a> | </span>
-						<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) { return true;}return false;">Delete</a></span>
+						<span class="delete"><a class='submitdelete' title='Delete this Record' href='<?php echo admin_url("admin.php?page=". $_GET['page']); ?>&amp;action=deleteRecord&amp;SearchID=<?php echo $SearchID; ?>' onclick="if ( confirm('You are about to delete this record\'\n \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;">Delete</a></span>
 				</div>
 			</td>
 			<td>
@@ -699,14 +699,14 @@ $siteurl = get_option('siteurl');
 		<?php
 				}
 		?>
-		<?php } ?>
+		<?php }?>
 		</tbody>
 	</table>
 	<div class="tablenav">
 		<div class='tablenav-pages'>
 			<?php 
 			if($items > 0) {
-				echo $p->show();  // Echo out the list of paging. 
+				echo $p->show();// Echo out the list of paging. 
 			}
 			?>
 		</div>
@@ -714,9 +714,9 @@ $siteurl = get_option('siteurl');
 
 	<p class="submit">
 		<input type="hidden" value="deleteRecord" name="action" />
-		<input type="submit" value="<?php echo __('Delete','rb_agency_profiles'); ?>" class="button-primary" name="submit" />		
+		<input type="submit" value="<?php echo __('Delete','rb_agency_profiles'); ?>" class="button-primary" name="submit" />
 	</p>
 	</form>
 	<?php 
-	} // End All
+	}// End All
 	?>

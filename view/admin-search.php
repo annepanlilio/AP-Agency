@@ -14,7 +14,7 @@
 		$rb_agency_option_unittype =  isset($rb_agency_options_arr['rb_agency_option_unittype']) ?$rb_agency_options_arr['rb_agency_option_unittype']:1;
 		$rb_agency_option_persearch = isset($rb_agency_options_arr['rb_agency_option_persearch'])?(int)$rb_agency_options_arr['rb_agency_option_persearch']:1;
 		$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?(int)$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
-		if ($rb_agency_option_persearch < 0) { $rb_agency_option_persearch = 100; }
+		if ($rb_agency_option_persearch < 0) {$rb_agency_option_persearch = 100; }
 
 // *************************************************************************************************** //
 /* 
@@ -54,7 +54,7 @@
 		// TODO::>> ??????
 		$cartHTML= RBAgency_Casting::cart_send_form();
 		if($cartHTML!=1)
-			echo $cartHTML;	// search result
+			echo $cartHTML;// search result
 		}
 
 
@@ -91,7 +91,7 @@
 					} else {
 						echo "<h2>Please try again</h2><strong>". __("Please enter at least one value to search.", RBAGENCY_TEXTDOMAIN) ."</strong>\n";
 					}
-				
+
 				echo "<div style=\"clear:both;\"></div>";
 			echo "</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
@@ -120,7 +120,7 @@
 		if (isset($_SESSION['cartArray']) || isset($_POST["action"]) && $_POST["action"] == "cartAdd" && $_POST["action"] !== "massEmail" || isset($_REQUEST["action"]) && @$_REQUEST["action"] == "cartEmpty") {
 
 			echo "<div id=\"casting-cart\" class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
-			echo " <div class=\"boxblock\">\n";			
+			echo " <div class=\"boxblock\">\n";
 			echo "   <div class=\"inner\">\n";
 			echo "   	<h2>". __("Casting Cart", RBAGENCY_TEXTDOMAIN) ."</h2>\n";
 
@@ -149,7 +149,7 @@
 			echo "      <div class=\"inner\">\n";
 
 			return RBAgency_Profile::search_form('', '', 1, 1);
-			
+
 			echo "      </div><!-- .inner -->\n";
 			echo "     </div><!-- .boxblock -->\n";
 			echo "    </div><!-- .boxblock-container -->\n";
