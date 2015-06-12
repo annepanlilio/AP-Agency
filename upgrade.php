@@ -755,12 +755,13 @@ global $wpdb;
 		$wpdb->query("DROP TABLE wp_agency_customfield_mux_temp");
 	}
 
-	// 2.4.4
+	// 2.4.5
 	if (substr(get_option('rb_agency_version'), 0, 3) == "2.4") {
-		// No database changes in 2.4.3
+
+		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowFilter","INT(10)");
 
 		// Updating version number!
-		update_option('rb_agency_version', "2.4.4");
+		update_option('rb_agency_version', "2.4.5");
 	}
 
 
