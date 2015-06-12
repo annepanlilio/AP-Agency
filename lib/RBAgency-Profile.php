@@ -174,7 +174,7 @@ class RBAgency_Profile {
 						echo "				<div class=\"rbfield rbselect rbsingle rb_profiletype\" id=\"rb_profiletype\">\n";
 						echo "					<label for=\"type\">". __("Type", RBAGENCY_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
-						echo "						<select name=\"profiletype\" id=\"type\">\n";       
+						echo "						<select name=\"profiletype\" id=\"type\">\n";
 						echo "							<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 														$results2 = $wpdb->get_results($query,ARRAY_A);
@@ -2545,12 +2545,12 @@ class RBAgency_Profile {
 								$displayHTML .= "<span class=\"details-contact-website contact\"><a href=\"".$dataList["ProfileContactWebsite"]."\" target=\"_blank\" rel=\"nofollow\">".($type == "rb-pdf"?$dataList["ProfileContactWebsite"]:"Visit Website")."</a></span>";
 							}
 						} else {
-							$displayEmailListing = $arr_query['show_email_listing'] == true ? 1 :$rb_agency_option_show_email_listing;
+							$displayEmailListing = isset($arr_query['show_email_listing']) && $arr_query['show_email_listing'] == true ? 1 :$rb_agency_option_show_email_listing;
 							if($displayEmailListing == 1){
 								if(!empty($dataList["ProfileContactEmail"]))
 								$displayHTML .= "<span class=\"details-email contact\"><label>Email:</label> <a href=\"mailto:". $dataList["ProfileContactEmail"] ."\">". $dataList["ProfileContactEmail"] ."</a></span>";
 							}
-							$displayContactListing = $arr_query['show_contact_listing'] == true ? 1 :$rb_agency_option_show_contact_listing;
+							$displayContactListing = isset($arr_query['show_contact_listing']) && $arr_query['show_contact_listing'] == true ? 1 :$rb_agency_option_show_contact_listing;
 							if($displayContactListing == 1){
 								if(!empty($dataList["ProfileContactPhoneWork"]))
 								$displayHTML .= "<span class=\"details-contact-phonework contact\"><label>Phone Work:</label> ". $dataList["ProfileContactPhoneWork"] ."</span>";
