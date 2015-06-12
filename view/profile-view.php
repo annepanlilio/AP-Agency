@@ -103,23 +103,26 @@
 			$ProfileDateBirth			=stripslashes($data['ProfileDateBirth']);
 			if($rb_agency_option_profilelist_expanddetails_year || $rb_agency_option_profilelist_expanddetails_day || $rb_agency_option_profilelist_expanddetails_month){
 
-					$HideAgeYear = get_user_meta($data['ProfileID'],"rb_agency_hide_age_year",true);
-					if($HideAgeYear == 1){
-						$arr_query['year_style'] = 'style="display:none!important;"';
-						$hideY = 1;
-					}
-					$HideAgeMonth = get_user_meta($data['ProfileID'],"rb_agency_hide_age_month",true);
-					if($HideAgeMonth == 1){
-						$arr_query['month_style'] = 'style="display:none!important;"';
-						$hideM = 1;
-					}
-					$HideAgeDay = get_user_meta($data['ProfileID'],"rb_agency_hide_age_day",true);
-					if($HideAgeDay == 1){
-						$arr_query['day_style'] = 'style="display:none!important;"';
-						$hideD = 1;
-					}
+				$arr_query = array();
+				$arr_query = null;
 
-				$ProfileAge 				= rb_agency_get_age($ProfileDateBirth,$arr_query);
+				$HideAgeYear = get_user_meta($data['ProfileID'],"rb_agency_hide_age_year",true);
+				if($HideAgeYear == 1){
+					$arr_query['year_style'] = 'style="display:none!important;"';
+					$hideY = 1;
+				}
+				$HideAgeMonth = get_user_meta($data['ProfileID'],"rb_agency_hide_age_month",true);
+				if($HideAgeMonth == 1){
+					$arr_query['month_style'] = 'style="display:none!important;"';
+					$hideM = 1;
+				}
+				$HideAgeDay = get_user_meta($data['ProfileID'],"rb_agency_hide_age_day",true);
+				if($HideAgeDay == 1){
+					$arr_query['day_style'] = 'style="display:none!important;"';
+					$hideD = 1;
+				}
+
+				$ProfileAge 			= rb_agency_get_age($ProfileDateBirth,$arr_query);
 			} else {
 				$ProfileAge = "";
 			}

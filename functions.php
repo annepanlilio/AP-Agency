@@ -383,15 +383,15 @@
 	 *
 	 * @param string $p_strDate
 	 */
-	function rb_agency_get_age($p_strDate,$attrs = array()) {
+	function rb_agency_get_age($p_strDate, $attrs = array() ) {
 	//Get Age Option if it should display with months included
 
-
 			$sc = shortcode_atts( array(
-				     'show_age_year' => false,
-				     'show_age_month' => false,
-				     'show_age_day' => false,
-				 ), $attrs );
+				'show_age_year' => false,
+				'show_age_month' => false,
+				'show_age_day' => false,
+				), $attrs );
+
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		//$detail_year = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
 		//$detail_month = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
@@ -400,8 +400,6 @@
 		$detail_year_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0;
 		$detail_month_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0;
 		$detail_day_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
-
-
 
 		if(!empty($sc['show_age_year'])){
 			$detail_year = $sc['show_age_year'] == "true" ? 1 : 0;
@@ -420,9 +418,6 @@
 		}
 
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
-
-
-
 
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";

@@ -1898,7 +1898,7 @@ class RBAgency_Profile {
 							$availability = $data->status;
 						}
 					}
-// TODO: Array Fix
+
 					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query );
 
 					if($rb_agency_option_layoutprofilelistlayout == 1){
@@ -2499,31 +2499,31 @@ class RBAgency_Profile {
 					$displayHTML .= "<span class=\"details-age\">". $ProfileDateBirth ."</span>";
 					}
 
+					if($dataList["ProfileLocationState"]!=""){
 
-						if($dataList["ProfileLocationState"]!=""){
-
-							if(!empty($arr_query['show_state'])){
-								$detailState = $arr_query['show_state'] == "true" ? 1 : 0;
-							} else {
-								$detailState = $rb_agency_option_detail_state;
-							}
-
-							$HideState = get_user_meta($dataList['ProfileID'],"rb_agency_hide_state",true);
-							if($HideState == 1){
-								$state_style = 'style="display:none!important;"';
-							} else {
-								$state_style = "";
-							}
-
-							$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false,$arr_query);
-
-							//$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
-							if($detailState == 1){
-								$displayHTML .= "<span class=\"details-state\" ".$state_style.">". $stateTitle ."</span>";
-							}
-
+						if(!empty($arr_query['show_state'])){
+							$detailState = $arr_query['show_state'] == "true" ? 1 : 0;
+						} else {
+							$detailState = $rb_agency_option_detail_state;
 						}
-						$type = get_query_var("type");
+
+						$HideState = get_user_meta($dataList['ProfileID'],"rb_agency_hide_state",true);
+						if($HideState == 1){
+							$state_style = 'style="display:none!important;"';
+						} else {
+							$state_style = "";
+						}
+
+						$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false,$arr_query);
+
+						//$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
+						if($detailState == 1){
+							$displayHTML .= "<span class=\"details-state\" ".$state_style.">". $stateTitle ."</span>";
+						}
+
+					}
+
+					$type = get_query_var("type");
 					$displayHTML .= "</span>";
 					if(is_user_logged_in()){
 						if(in_array($type,array("search-basic","search-advanced","search-basic","search-result",'rb-pdf')) || $plain){
@@ -2644,7 +2644,7 @@ class RBAgency_Profile {
 			$ProfileCustomValue = $data1['ProfileCustomValue'];
 			$ProfileCustomDateValue = $data1['ProfileCustomDateValue'];
 
-			if($ProfileCustomType!=4)	{
+			if($ProfileCustomType!=4) {
 
 			/*
 			 * Opening of Field or Div
