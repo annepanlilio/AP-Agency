@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: June 4, 2015
+Last updated: June 13, 2015
 */
 
 /* Global Style */
@@ -84,6 +84,28 @@ Last updated: June 4, 2015
   	background: #000;
 }
 
+/* Voiceover */
+#profile-list.voiceover {
+	margin: 0 -1px;
+}
+#profile-categories a {
+	font-size: large;
+	font-weight: bold;
+	margin-right: 15px;
+}
+#profile-list .profile-voiceover {
+	padding: 10px;
+}
+#profile-list .profile-voiceover .rbprofile-list {
+	padding: 1px;
+	margin-bottom: 2px;
+}
+#profile-list .profile-voiceover > a {
+	padding: 3px;
+	border-radius: 2px;
+}
+
+/* Profiles Per Row */
 #profile-list.one-profiles .rbprofile-list {
 	width: 100%;
 	padding-right: 0px;
