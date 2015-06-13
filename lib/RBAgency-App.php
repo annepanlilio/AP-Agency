@@ -47,6 +47,9 @@ class RBAgency_App {
 
 				// Get Custom CSS
 				$rb_agency_options_arr = get_option('rb_agency_layout_options');
+				
+				$rb_agency_options_arr = get_option('rb_agency_options');
+				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
 
 				wp_register_style( 'rbagency-print-style', RBAGENCY_PLUGIN_URL .'assets/css/print.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-print-style' );
@@ -94,6 +97,11 @@ class RBAgency_App {
 
 				wp_register_style( 'rbagency-fontawesome', RBAGENCY_PLUGIN_URL .'ext/fontawesome/css/font-awesome.min.css');
 				wp_enqueue_style( 'rbagency-fontawesome' );
+
+				if($rb_agency_option_layoutprofileviewmode == 1){
+					wp_register_style( 'rba-magnific-popup', RBAGENCY_PLUGIN_URL .'assets/css/magnific-popup.css');
+					wp_enqueue_style( 'rba-magnific-popup' );
+				}
 			}
 		}
 
@@ -111,6 +119,7 @@ class RBAgency_App {
 
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyname'];
+			
 			$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
 
 				?>
@@ -133,11 +142,22 @@ class RBAgency_App {
 
 		// Get public footer scripts
 		public static function rbagency_footer_scripts(){
+			
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
 
 			wp_register_script( 'rb-customfields-search', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
 			wp_enqueue_script( 'rb-customfields-search' );
 			wp_register_script( 'rb-print-profile', RBAGENCY_PLUGIN_URL .'assets/js/rb-printProfiles.js' );
 			wp_enqueue_script( 'rb-print-profile' );
+
+			if($rb_agency_option_layoutprofileviewmode == 1){
+				wp_register_script( 'rba-magnific-popup-js', RBAGENCY_PLUGIN_URL .'assets/js/jquery.magnific-popup.min.js' );
+				wp_enqueue_script( 'rba-magnific-popup-js' );
+
+				wp_register_script( 'rba-initmagnific-popup-js', RBAGENCY_PLUGIN_URL .'assets/js/initmagnific.js' );
+				wp_enqueue_script( 'rba-initmagnific-popup-js' );				
+			}
 		}
 
 
