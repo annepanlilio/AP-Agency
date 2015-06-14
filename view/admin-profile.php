@@ -690,6 +690,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 
 	$ProfileID = $_GET['ProfileID'];
+
 	// Verify Record
 	$queryDelete = "SELECT * FROM " . table_agency_profile . " WHERE ProfileID =  '%d'";
 	$resultsDelete=  $wpdb->get_results($wpdb->prepare($queryDelete, $ProfileID),ARRAY_A);
@@ -703,7 +704,11 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 		$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = \"" . $ProfileID . "\"";
 		$results = $wpdb->query($delete);
 
-		wp_delete_user($dataDelete["ProfileUserLinked"]);
+		// Remove User if Exists
+		if ($dataDelete["ProfileUserLinked"] > 0) {
+			// TODO: Check if admin user, do not delete admin user accounts
+			wp_delete_user($dataDelete["ProfileUserLinked"]);
+		}
 
 		if (isset($ProfileGallery)) {
 			// Remove Folder
