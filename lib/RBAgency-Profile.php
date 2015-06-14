@@ -2646,10 +2646,13 @@ class RBAgency_Profile {
 
 				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list\">\n";
 
-				$displayHTML .= "  <div class=\"profile-voiceover\">\n";
-				$displayHTML .= "     <strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
-				$displayHTML .= "     <a href=\"\" title=\"\" class=\"icon-website rb-icon\"><img src=\"".RBAGENCY_PLUGIN_URL ."assets/img/icon-website.png\" alt=\"\" /></a><a href=\"\" title=\"\" clas=\"\"><i class=\"fa fa-play\"></i></a>\n";
-				$displayHTML .= "  </div><!-- .profile-voiceover -->\n";
+				$displayHTML .= "	<div class=\"profile-voiceover\">\n";
+				$displayHTML .= "   	<strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
+				$displayHTML .= "     	<ul class=\"links\">";
+				$displayHTML .= "			<li><a href=\"\" title=\"\" class=\"icon-website rb-icon\"><img src=\"".RBAGENCY_PLUGIN_URL ."assets/img/icon-website.png\" alt=\"\" /></a></li>";
+				$displayHTML .= "			<li><a href=\"\" title=\"\" clas=\"\"><i class=\"fa fa-play\"></i></a></li>\n";
+				$displayHTML .= "		</ul><!-- .links -->\n";
+				$displayHTML .= "	</div><!-- .profile-voiceover -->\n";
 
 				$displayHTML .=" </div> <!-- .? --> \n";
 
