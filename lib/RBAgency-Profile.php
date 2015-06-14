@@ -2446,7 +2446,7 @@ class RBAgency_Profile {
 					$profile_list_class = "slide-panel";
 				}
 
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style\" >\n";
 
 				if(!$plain){
 					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
