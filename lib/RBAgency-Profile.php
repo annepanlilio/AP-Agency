@@ -1835,8 +1835,17 @@ class RBAgency_Profile {
 				}
 				$all_html.="	</div>";
 				$all_html .= $paginate->show();
-				$all_html.="	</div>"; // #results-options
+				$all_html.="	</div><!-- #results-options -->"; // #results-options
 				$type = get_query_var('type');
+
+
+				// Profile Types
+				
+				$all_html.="<ul class=\"profile-types\">";				
+				$all_html.="	<li><a href=\"\" title=\"\">Women</a></li>";
+				$all_html.="	<li><a href=\"\" title=\"\">Men</a></li>";
+				$all_html.="	<li><a href=\"\" title=\"\">Youth</a></li>";
+				$all_html.="</ul>";
 
 				$all_html.='<div id="results-info">';
 

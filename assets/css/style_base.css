@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: June 14, 2015
+Last updated: June 15, 2015
 */
 
 /* Global Style */
@@ -526,6 +526,11 @@ img.fillheight {
 #rbquick-search .rbsearch-form .search-field.multi input { float: left; }
 #rbquick-search .rbsearch-form .search-field.multi input { width: 100px; }
 
+/*Profile Types Filter*/
+.profile-types { margin: 0; float: right; list-style: none; }
+.profile-types li { margin-right: 15px;	display: inline-block; }
+.profile-types li:last-child { margin-right: 0; }
+
 
 /** Sign In - Register **/
 #rbsignin-register { text-align: center; vertical-align: top; }
@@ -583,7 +588,7 @@ img.fillheight {
   .rbcolumn:before, .rbcolumn:after { content: ""; display: table; }
   .rbcolumn:after, { clear: both; }
 }
-rb_profile_tool #profile-list { margin-top: 10px; }
+.rb_profile_tool #profile-list { margin-top: 10px; }
 #profile-list .rb_profile_tool a { text-decoration: none; font-size: 70%; }
 .rb_profile_tool a.active.favorite { color:#ccc; }
 .rb_profile_tool a.active.castingcart { color:#ccc; }
