@@ -1840,14 +1840,36 @@ class RBAgency_Profile {
 				$type = get_query_var('type');
 
 
-				// Profile Types
-				if($rb_agency_option_profilelist_showprofiletypeslinks ==1){
+				// Profile Types right side
+				if($rb_agency_option_profilelist_showprofiletypeslinks == 1 && $rb_agency_option_layoutprofilelistlayout != 1){
+
 					$all_html.="<ul class=\"profile-types\">";
-					$all_html.="	<li><a href=\"\" title=\"\">Women</a></li>";
-					$all_html.="	<li><a href=\"\" title=\"\">Men</a></li>";
-					$all_html.="	<li><a href=\"\" title=\"\">Youth</a></li>";
+					$queryPType = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
+					$resultsPType = $wpdb->get_results($queryPType,ARRAY_A);
+					$result_count = count($resultsPType);
+					echo $result_count;
+					$ctr = 0;
+					foreach ($resultsPType as $PTypekey) {
+						if($ctr < 3) {
+							$all_html.= "<li id=\"". $PTypekey["DataTypeID"] ."\"><a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". $PTypekey["DataTypeTitle"] ."\">". $PTypekey["DataTypeTitle"] ."</a></li>\n";
+						}
+						if($ctr == 2) {
+							$all_html.= "<li class=\"more-types\">";
+							$all_html.= "	<i class=\"fa fa-angle-double-down\"></i>";
+							$all_html.= "	<ul>";
+						}
+						if($ctr > 2) {							
+							$all_html.= "		<li id=\"". $PTypekey["DataTypeID"] ."\"><a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". $PTypekey["DataTypeTitle"] ."\">". $PTypekey["DataTypeTitle"] ."</a></li>\n";
+						}
+						if($ctr+1 == $result_count){
+							$all_html.= "	</ul>";
+							$all_html.= "</li>";
+						}
+					$ctr++;					
+					}
 					$all_html.="</ul>";
-				}				
+				}
+				
 
 				$all_html.='<div id="results-info">';
 
@@ -2015,16 +2037,16 @@ class RBAgency_Profile {
 					$all_html .= '<div class="rbclear"></div>';
 					$all_html .= '<hr />';
 
-					if($rb_agency_option_layoutprofilelistlayout == 1){
-						$all_html .= "<div id=\"profile-categories\">";
-						$all_html .= "	<a href=\"#\" title=\"\">Commercial</a>";
-						$all_html .= "	<a href=\"#\" title=\"\">Narration/Industrial</a>";
-						$all_html .= "	<a href=\"#\" title=\"\">Character Animation</a>";
-						$all_html .= "	<a href=\"#\" title=\"\">Promo</a>";
-						$all_html .= "	<a href=\"#\" title=\"\">Imaging</a>";
-						$all_html .= "	<a href=\"#\" title=\"\">Audio Book</a>";
-						$all_html .= "	<a href=\"#\" title=\"\">Spanish</a>";
-						$all_html .= "</div>";
+					// Profile Types Voiceover
+					if($rb_agency_option_profilelist_showprofiletypeslinks == 1 && $rb_agency_option_layoutprofilelistlayout == 1){
+
+						$all_html.="<div id=\"profile-categories\">";
+						$queryPType = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
+						$resultsPType = $wpdb->get_results($queryPType,ARRAY_A);
+						foreach ($resultsPType as $PTypekey) {					
+							$all_html.= "<a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". $PTypekey["DataTypeTitle"] ."\">". $PTypekey["DataTypeTitle"] ."</a>\n";
+						}
+						$all_html.="</div>";
 					}
 
 					$all_html .= "<div id='profile-list' class='".$profile_listlayout_classes."'>".$profile_list."</div>";
