@@ -1753,6 +1753,7 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_count = isset($rb_agency_options_arr["rb_agency_option_profilelist_count"])?$rb_agency_options_arr["rb_agency_option_profilelist_count"]:0;
 				$rb_agency_option_layoutprofilelistlayout = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
 				$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:5;
+				$rb_agency_option_profilelist_showprofiletypeslinks = isset($rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks']) ? $rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks']:0;
 				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
 				$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
@@ -1840,12 +1841,13 @@ class RBAgency_Profile {
 
 
 				// Profile Types
-				
-				$all_html.="<ul class=\"profile-types\">";				
-				$all_html.="	<li><a href=\"\" title=\"\">Women</a></li>";
-				$all_html.="	<li><a href=\"\" title=\"\">Men</a></li>";
-				$all_html.="	<li><a href=\"\" title=\"\">Youth</a></li>";
-				$all_html.="</ul>";
+				if($rb_agency_option_profilelist_showprofiletypeslinks ==1){
+					$all_html.="<ul class=\"profile-types\">";
+					$all_html.="	<li><a href=\"\" title=\"\">Women</a></li>";
+					$all_html.="	<li><a href=\"\" title=\"\">Men</a></li>";
+					$all_html.="	<li><a href=\"\" title=\"\">Youth</a></li>";
+					$all_html.="</ul>";
+				}				
 
 				$all_html.='<div id="results-info">';
 
@@ -2455,7 +2457,7 @@ class RBAgency_Profile {
 					$profile_list_class = "slide-panel";
 				}
 
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style\" >\n";
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
 
 				if(!$plain){
 					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
