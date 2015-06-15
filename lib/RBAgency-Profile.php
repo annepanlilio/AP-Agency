@@ -1847,8 +1847,8 @@ class RBAgency_Profile {
 					$queryPType = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 					$resultsPType = $wpdb->get_results($queryPType,ARRAY_A);
 					$result_count = count($resultsPType);
-					echo $result_count;
 					$ctr = 0;
+
 					foreach ($resultsPType as $PTypekey) {
 						if($ctr < 3) {
 							$all_html.= "<li id=\"". $PTypekey["DataTypeID"] ."\"><a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". $PTypekey["DataTypeTitle"] ."\">". $PTypekey["DataTypeTitle"] ."</a></li>\n";
