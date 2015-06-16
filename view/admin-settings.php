@@ -239,8 +239,6 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_option_locationcountry)) {$rb_agency_option_locationcountry = "US"; }
 		$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage'])?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
 			if (empty($rb_agency_option_profilelist_perpage)) {$rb_agency_option_profilelist_perpage = "20"; }
-		$rb_agency_option_profilelist_showprofiletypeslinks = isset($rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks'])?$rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks']:0;
-			if (empty($rb_agency_option_profilelist_showprofiletypeslinks)) {$rb_agency_option_profilelist_showprofiletypeslinks = 0; }
 		$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:0;
 			if (empty($rb_agency_option_layoutprofilelist_perrow)) {$rb_agency_option_layoutprofilelist_perrow = "5"; }
 		$rb_agency_option_layoutprofilelist_favcartdisp = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
@@ -449,7 +447,6 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Display Options', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_count]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_count'])?$rb_agency_options_arr['rb_agency_option_profilelist_count']:0, 1,false)."/> ". __("Show Model Count", RBAGENCY_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_showprofiletypeslinks]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks'])?$rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks']:0, 1,false)."/> ". __("Show Profile Types Links", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0, 1,false)."/> ". __("Show Sort Options", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0, 1,false)."/> ". __("Expanded Model Details", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_year]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0, 1,false)."/> ". __("Show Age(Year)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
@@ -479,8 +476,9 @@ elseif ($ConfigID == 1) {
 		}
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0, 1,false)."/> ". __("Show Social Buttons", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showcountrycode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showcountrycode'])?$rb_agency_options_arr['rb_agency_option_showcountrycode']:0, 1,false)."/> ". __("Show Country as Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showstatecode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0, 1,false)."/> ". __("Show as State Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";		
-		echo "   </td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showstatecode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0, 1,false)."/> ". __("Show as State Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortbydate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']:0, 1,false)."/> ". __("Sort by Date", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+				echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profiles Per Page', RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -2093,6 +2091,8 @@ echo "<div id=\"custom-fields\">";
 		//use for filter
 		$ProfileCustomShowFilter   	= isset($_POST['ProfileCustomShowFilter'])?(int)$_POST['ProfileCustomShowFilter']:0;
 
+		$ProfileCustomShowCastingJob = isset($_POST['ProfileCustomShowCastingJob'])?(int)$_POST['ProfileCustomShowCastingJob']: 0;
+		$ProfileCustomShowCastingRegister = isset($_POST['ProfileCustomShowCastingRegister'])?(int)$_POST['ProfileCustomShowCastingRegister']:0;
 
 		/*
 		 * Set profile types here
@@ -2216,9 +2216,12 @@ echo "<div id=\"custom-fields\">";
 			} else {
 
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
+
+				//add_option("rb_agency_ProfileCustomShowCastingJob_".$lastid, $ProfileCustomShowCastingJob);
+				//add_option("rb_agency_ProfileCustomShowCastingRegister_".$lastid, $ProfileCustomShowCastingJob);
 
 				/*
 				 * Add to Custom Client
@@ -2302,10 +2305,19 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomShowLogged=" . esc_sql($ProfileCustomShowLogged) . " ,
 								ProfileCustomShowRegistration=" . esc_sql($ProfileCustomShowRegistration) . " ,
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
-								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " 
+								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " ,
+								ProfileCustomShowCastingJob=" . esc_sql($ProfileCustomShowCastingJob) . " ,
+								ProfileCustomShowCastingRegister=" . esc_sql($ProfileCustomShowCastingRegister) . " 
+
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = $wpdb->query($update);
-
+				
+				//$upd_casting_job = update_option("rb_agency_ProfileCustomShowCastingJob_".$ProfileCustomID, $ProfileCustomShowCastingJob);
+				//$upd_casting_register = update_option("rb_agency_ProfileCustomShowCastingRegister_".$ProfileCustomID, $ProfileCustomShowCastingRegister);
+				
+				//add_option("rb_agency_ProfileCustomShowCastingJob_".$ProfileCustomID, $ProfileCustomShowCastingJob);
+				//add_option("rb_agency_ProfileCustomShowCastingRegister_".$ProfileCustomID, $ProfileCustomShowCastingRegister);
+				
 				/*
 				 * Check if There is Custom client
 				 * to be updated
@@ -2456,6 +2468,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomShowRegistration=	$data['ProfileCustomShowRegistration'];
 				$ProfileCustomShowSearchSimple=	$data['ProfileCustomShowSearchSimple'];
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
+				$ProfileCustomShowCastingJob		=	$data['ProfileCustomShowCastingJob'];
+				$ProfileCustomShowCastingRegister		=	$data['ProfileCustomShowCastingRegister'];
 			}
 
 		echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
@@ -2480,7 +2494,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			$ProfileCustomShowLogged		= 0;
 			$ProfileCustomShowRegistration	= 0;
 			$ProfileCustomShowAdmin			= 0;
-
+			$ProfileCustomShowCastingJob	= 0;
+			$ProfileCustomShowCastingRegister= 0;
 			echo "\n";
 		echo " 
 		<div class=\"postbox \">
@@ -2540,6 +2555,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingJob\" value=\"1\" /> Show on Casting Job</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingRegister\" value=\"1\" /> Show on Casting Registration</label></div>
 							</div>
 						</div>
 						<div class=\"rbfield rbselect rbsingle\">
@@ -2602,6 +2619,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 					$results1 = $wpdb->get_results($query1,ARRAY_A);
 					$count1 = count($results1);
 					$pos = 0;
+					
 					foreach($results1 as $data1) {
 
 						//get record from Clients to edit
@@ -2664,6 +2682,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowSearchSimple"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile View</label></div>
+														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingJob\" value=\"1\" ". ($data1["ProfileCustomShowCastingJob"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Job</label></div>
+														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingRegister\" value=\"1\" ". ($data1["ProfileCustomShowCastingRegister"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Registration</label></div>
 													</div>
 												</div>
 												<div class=\"rbfield rbselect rbsingle\">
