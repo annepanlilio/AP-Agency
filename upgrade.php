@@ -759,10 +759,13 @@ global $wpdb;
 	if (substr(get_option('rb_agency_version'), 0, 3) == "2.4") {
 
 		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowFilter","INT(10)");
-
+		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingJob","INT(10)");
+		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingRegister","INT(10)");
 		// Updating version number!
 		update_option('rb_agency_version', "2.4.5");
 	}
+
+
 
 
 ?>
