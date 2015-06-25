@@ -10,6 +10,30 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 ## Change Log
 
+### 2.4.6
+* added the ability to hide expanded model details (age and state) on selected profile or profiles
+* fixed - not all folders are getting renamed when switched to auto-generated ID settings
+* fixed - not all folders are getting created after import for auto-generated ID settings
+* fixed - uploaded polaroid not showing in manage profile (admin crm)
+* fixed - thumbnails in casting cart received via email are broken
+* fixed - one profile is excluded when exporting profile database
+* fixed - download pdf in profile view not working
+* created shortcodes to display age and state which can be added in pages. e.g. [profile_list show_age_year="true" * show_age_month="true" show_age_day="true" show_state="true"]
+* fixed - no value entered but showing January 01, 1970
+* fixed - bulk delete of photos not working
+* fixed - conflict between new imports and existing profiles, photos missing on existing profiles when imported profiles are scanned.
+* fixed - mass email (admin crm)
+* fixed - custom field “date” is not getting imported
+* created new custom field type “link”
+* fixed - profiles in casting cart link is not in alphabetical order
+* fixed - custom fields without value still shows labels
+* added the ability to add any custom fields to the Sort Filter in profile listing, created a setting where user can enable/disable
+* drag and drop re-order of photos
+* added new search setting “birthdate”
+* logo for pdfs and print are now pulled from the link entered in the settings
+* added the ability to create custom fields for casting jobs
+* added the ability to create custom fields for casting registration
+
 ### 2.4.3
 * Added Custom URL's to Profiles
 * Show hidden fields in Quick Print
