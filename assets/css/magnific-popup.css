@@ -388,6 +388,9 @@ img.mfp-img {
   margin-right: 5%;
   float: left;
 }
+.profile-popup .profile-photo img {
+  max-width: 100%;
+}
 .profile-popup .info {
   width: 30%;
   float: left;
