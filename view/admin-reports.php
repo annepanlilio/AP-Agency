@@ -184,6 +184,25 @@ if ($ConfigID == 0) {
 
 	echo "</div>\n";
 
+
+			$active = get_option('active_plugins');
+	foreach($active as $act){
+
+		if(preg_match('/rb-agency-casting\.php/',$act)){
+			echo "<hr />\n";
+
+			echo "<div class=\"boxlinkgroup\">\n";
+			echo "  <h2>". __("Import Casting Jobs Data", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+			echo " <form action=\"".RBAGENCY_PLUGIN_URL."view/download_castingjobs_data.php\" method=\"post\">";
+			echo "    <div class=\"boxlink\">\n";
+			echo "      <button class=\"button-primary\" title=\"". __("Export Now", RBAGENCY_TEXTDOMAIN) . "\">". __("Export Now", RBAGENCY_TEXTDOMAIN) . "</button><br />\n";
+			echo "      <p>". __("Download casting jobs data.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
+			echo "    </div>\n";
+			echo "</div>\n";
+		}
+
+	}
+
 }
 elseif ($ConfigID == 1) {
 //////////////////////////////////////////////////////////////////////////////////// ?>
