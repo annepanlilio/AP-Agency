@@ -38,6 +38,7 @@ global $wpdb;
 			float: left;
 		}.profile-print .profile-pic img {
 			max-width: 100%;
+			vertical-align: top;
 		}.profile-print .info {
 			width: 65%;
 			float: left;
@@ -415,7 +416,7 @@ if ($_GET['cD'] == "0") {
 
 
 					/*
-					 * Option 2
+					 * Option 2 "Quick Print - One Profile per Page"
 					 */
 					$profile_image = "";
 					if ($_GET['cD'] == "2") {
@@ -452,7 +453,7 @@ if ($_GET['cD'] == "0") {
 
 							$i = 0;
 							foreach($resultsImg as $dataImg ){
-								if ($i < $countImg) {
+								if ($i < 4) {
 									$image_path = RBAGENCY_UPLOADDIR . $dataImg["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'];
 
 									if($dataImg['ProfileMediaPrimary'] != 1){
