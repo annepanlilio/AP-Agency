@@ -17,7 +17,7 @@ function get_casting_contact_display($casting_user_link_id){
 	$query = "SELECT * FROM ". $wpdb->prefix."agency_casting WHERE CastingUserLinked = ".$casting_user_link_id;
 	$casting_contacts = $wpdb->get_results($query,ARRAY_A);
 	foreach($casting_contacts as $casting_contact)
-		return $casting_contact["CastingContactDisplay"];
+		return $casting_contact["CastingContactNameFirst"]." ".$casting_contact["CastingContactNameLast"];
 }
 
 function get_casting_job_type($casting_job_type_id){
@@ -25,7 +25,15 @@ function get_casting_job_type($casting_job_type_id){
 	$query = "SELECT * FROM ". $wpdb->prefix."agency_casting_job_type WHERE Job_Type_ID = ".$casting_job_type_id;
 	$casting_contacts = $wpdb->get_results($query,ARRAY_A);
 	foreach($casting_contacts as $casting_contact)
-		return $casting_contact["CastingContactDisplay"];
+		return $casting_contact["Job_Type_Title"];
+}
+
+function get_custom_field_title($custom_field_id){
+	global $wpdb;
+	$query = "SELECT * FROM ". $wpdb->prefix."agency_customfields WHERE ProfileCustomID = ".$custom_field_id;
+	$custom_titles = $wpdb->get_results($query,ARRAY_A);
+	foreach($custom_titles as $custom_title)
+		return $custom_title["ProfileCustomTitle"];
 }
 
 if(isset($_POST)) {
@@ -51,6 +59,14 @@ if(isset($_POST)) {
 		'CastingJobAuditionTime',
 		'CastingJobAuditionVenue'
 	);
+
+	global $wpdb;
+	$query = "SELECT * FROM ". $wpdb->prefix."agency_customfields WHERE ProfileCustomShowCastingJob = 1 ORDER BY ProfileCustomOrder ASC";
+	$custom_headers = $wpdb->get_results($query,ARRAY_A);
+	foreach($custom_headers as $custom_header){
+		array_push($fixed_headers,$custom_header["ProfileCustomTitle"]);
+	}	
+
 	$objPHPExcel->getActiveSheet()->fromArray(array($fixed_headers),NULL,'A'.$rowNumber);
 }
 
@@ -71,9 +87,20 @@ foreach($casting_jobs as $casting_job){
 		$data['CastingJobAuditionDateEnd'] = $casting_job['Job_Audition_Date_End'];
 		$data['CastingJobAuditionTime'] = $casting_job['Job_Audition_Time'];
 		$data['CastingJobAuditionVenue']  = $casting_job['Job_Audition_Venue'];
+		
+		$query_custom_field_values = "SELECT DISTINCT(Customfield_ID),Customfield_value,Job_ID FROM ".$wpdb->prefix."agency_casting_job_customfields WHERE Job_ID = ".$casting_job["Job_ID"];
+		$custom_field_results = $wpdb->get_results($query_custom_field_values,ARRAY_A);
+		
+		$data_custom = array();
+		foreach($custom_field_results as $custom_field_result){
+			$custom_value = $custom_field_result['Customfield_value'];
+			array_push($data_custom,$custom_value);
+		}
 
-		$objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);
+	$objPHPExcel->getActiveSheet()->fromArray(array(array_merge($data,$data_custom)),NULL,'A'.$rowNumber);
+		
 }
+
 
 $extension = ".xls";
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,  "Excel5");
@@ -91,3 +118,5 @@ ob_clean();
 flush();
 readfile(str_replace('.php', '.'.$extension, __FILE__));
 unlink(str_replace('.php', '.'.$extension, __FILE__));
+
+
