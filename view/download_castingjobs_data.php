@@ -11,6 +11,23 @@ $query_agency_orders = "SELECT * FROM ". $wpdb->prefix."agency_casting_job";
 $casting_jobs = $wpdb->get_results($query_agency_orders,ARRAY_A);
 $rowNumber = 1;
 
+
+function get_casting_contact_display($casting_user_link_id){
+	global $wpdb;
+	$query = "SELECT * FROM ". $wpdb->prefix."agency_casting WHERE CastingUserLinked = ".$casting_user_link_id;
+	$casting_contacts = $wpdb->get_results($query,ARRAY_A);
+	foreach($casting_contacts as $casting_contact)
+		return $casting_contact["CastingContactDisplay"];
+}
+
+function get_casting_job_type($casting_job_type_id){
+	global $wpdb;
+	$query = "SELECT * FROM ". $wpdb->prefix."agency_casting_job_type WHERE Job_Type_ID = ".$casting_job_type_id;
+	$casting_contacts = $wpdb->get_results($query,ARRAY_A);
+	foreach($casting_contacts as $casting_contact)
+		return $casting_contact["CastingContactDisplay"];
+}
+
 if(isset($_POST)) {
 	require_once('../ext/PHPExcel.php');
 	require_once('../ext/PHPExcel/IOFactory.php');
@@ -36,10 +53,11 @@ if(isset($_POST)) {
 	);
 	$objPHPExcel->getActiveSheet()->fromArray(array($fixed_headers),NULL,'A'.$rowNumber);
 }
+
 $data = array();
 foreach($casting_jobs as $casting_job){
 		$rowNumber++;
-		$data['CastingJobAgencyProducer'] = $casting_job['Job_UserLinked'];
+		$data['CastingJobAgencyProducer'] = get_casting_contact_display($casting_job['Job_UserLinked']);
 		$data['CastingJobJobTitle'] = $casting_job['Job_Title'];
 		$data['CastingJobDescription'] = $casting_job['Job_Text'];
 		$data['CastingJobOffer'] = $casting_job['Job_Offering'];
@@ -47,7 +65,7 @@ foreach($casting_jobs as $casting_job){
 		$data['CastingjobjobDateEnd'] = $casting_job['Job_Date_End'];
 		$data['CastingJobLocation'] = $casting_job['Job_Location'];
 		$data['CastingJobRegion'] = $casting_job['Job_Region'];
-		$data['CastingJobjobType'] = $casting_job['Job_Type'];
+		$data['CastingJobjobType'] = get_casting_job_type($casting_job['Job_Type']);
 		$data['CastingJobJobVisibility'] = $casting_job['Job_Visibility'];
 		$data['CastingJobAuditionDateStart'] = $casting_job['Job_Audition_Date_Start'];
 		$data['CastingJobAuditionDateEnd'] = $casting_job['Job_Audition_Date_End'];
