@@ -16,8 +16,16 @@ function get_casting_contact_display($casting_user_link_id){
 	global $wpdb;
 	$query = "SELECT * FROM ". $wpdb->prefix."agency_casting WHERE CastingUserLinked = ".$casting_user_link_id;
 	$casting_contacts = $wpdb->get_results($query,ARRAY_A);
-	foreach($casting_contacts as $casting_contact)
-		return $casting_contact["CastingContactNameFirst"]." ".$casting_contact["CastingContactNameLast"];
+	if($wpdb->num_rows == 0){
+		return false;
+	}else{
+		$casting_name = null;
+		foreach($casting_contacts as $casting_contact){
+			$casting_name = $casting_contact["CastingContactNameFirst"]." ".$casting_contact["CastingContactNameLast"];
+		}
+		return $casting_name;
+	}
+	
 }
 
 function get_casting_job_type($casting_job_type_id){
@@ -72,6 +80,9 @@ if(isset($_POST)) {
 
 $data = array();
 foreach($casting_jobs as $casting_job){
+	if(get_casting_contact_display($casting_job['Job_UserLinked']) === false){
+
+	}else{
 		$rowNumber++;
 		$data['CastingJobAgencyProducer'] = get_casting_contact_display($casting_job['Job_UserLinked']);
 		$data['CastingJobJobTitle'] = $casting_job['Job_Title'];
@@ -97,7 +108,9 @@ foreach($casting_jobs as $casting_job){
 			array_push($data_custom,$custom_value);
 		}
 
-	$objPHPExcel->getActiveSheet()->fromArray(array(array_merge($data,$data_custom)),NULL,'A'.$rowNumber);
+		$objPHPExcel->getActiveSheet()->fromArray(array(array_merge($data,$data_custom)),NULL,'A'.$rowNumber);
+	}
+		
 		
 }
 
