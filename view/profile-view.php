@@ -75,13 +75,13 @@
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", RBAGENCY_TEXTDOMAIN ));
 
 		$count = count($results);
-		foreach($results as $data) {
-			$ProfileID					=$data['ProfileID'];
-			$ProfileUserLinked			=$data['ProfileUserLinked'];
-			$ProfileGallery				=stripslashes($data['ProfileGallery']);
-			$ProfileContactDisplay		=stripslashes($data['ProfileContactDisplay']);
-			$ProfileContactNameFirst	=stripslashes($data['ProfileContactNameFirst']);
-			$ProfileContactNameLast		=stripslashes($data['ProfileContactNameLast']);
+		foreach($results as $rbdata) {
+			$ProfileID					=$rbdata['ProfileID'];
+			$ProfileUserLinked			=$rbdata['ProfileUserLinked'];
+			$ProfileGallery				=stripslashes($rbdata['ProfileGallery']);
+			$ProfileContactDisplay		=stripslashes($rbdata['ProfileContactDisplay']);
+			$ProfileContactNameFirst	=stripslashes($rbdata['ProfileContactNameFirst']);
+			$ProfileContactNameLast		=stripslashes($rbdata['ProfileContactNameLast']);
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {
@@ -93,30 +93,30 @@
 				} elseif ($rb_agency_option_profilenaming == 5) {
 					$ProfileContactDisplay = $ProfileContactNameLast;
 				}
-			$ProfileContactEmail		=stripslashes($data['ProfileContactEmail']);
-			$ProfileType				=$data['ProfileType'];
-			$ProfileContactWebsite		=stripslashes($data['ProfileContactWebsite']);
-			$ProfileContactPhoneHome	=stripslashes($data['ProfileContactPhoneHome']);
-			$ProfileContactPhoneCell	=stripslashes($data['ProfileContactPhoneCell']);
-			$ProfileContactPhoneWork	=stripslashes($data['ProfileContactPhoneWork']);
-			$ProfileGender				=stripslashes($data['ProfileGender']);
-			$ProfileDateBirth			=stripslashes($data['ProfileDateBirth']);
+			$ProfileContactEmail		=stripslashes($rbdata['ProfileContactEmail']);
+			$ProfileType				=$rbdata['ProfileType'];
+			$ProfileContactWebsite		=stripslashes($rbdata['ProfileContactWebsite']);
+			$ProfileContactPhoneHome	=stripslashes($rbdata['ProfileContactPhoneHome']);
+			$ProfileContactPhoneCell	=stripslashes($rbdata['ProfileContactPhoneCell']);
+			$ProfileContactPhoneWork	=stripslashes($rbdata['ProfileContactPhoneWork']);
+			$ProfileGender				=stripslashes($rbdata['ProfileGender']);
+			$ProfileDateBirth			=stripslashes($rbdata['ProfileDateBirth']);
 			if($rb_agency_option_profilelist_expanddetails_year || $rb_agency_option_profilelist_expanddetails_day || $rb_agency_option_profilelist_expanddetails_month){
 
 				$arr_query = array();
 				$arr_query = null;
 
-				$HideAgeYear = get_user_meta($data['ProfileID'],"rb_agency_hide_age_year",true);
+				$HideAgeYear = get_user_meta($rbdata['ProfileID'],"rb_agency_hide_age_year",true);
 				if($HideAgeYear == 1){
 					$arr_query['year_style'] = 'style="display:none!important;"';
 					$hideY = 1;
 				}
-				$HideAgeMonth = get_user_meta($data['ProfileID'],"rb_agency_hide_age_month",true);
+				$HideAgeMonth = get_user_meta($rbdata['ProfileID'],"rb_agency_hide_age_month",true);
 				if($HideAgeMonth == 1){
 					$arr_query['month_style'] = 'style="display:none!important;"';
 					$hideM = 1;
 				}
-				$HideAgeDay = get_user_meta($data['ProfileID'],"rb_agency_hide_age_day",true);
+				$HideAgeDay = get_user_meta($rbdata['ProfileID'],"rb_agency_hide_age_day",true);
 				if($HideAgeDay == 1){
 					$arr_query['day_style'] = 'style="display:none!important;"';
 					$hideD = 1;
@@ -126,14 +126,14 @@
 			} else {
 				$ProfileAge = "";
 			}
-			$ProfileLocationCity		=stripslashes($data['ProfileLocationCity']);
-			$ProfileLocationState		=stripslashes($data['ProfileLocationState']);
-			$ProfileLocationZip			=stripslashes($data['ProfileLocationZip']);
-			$ProfileLocationCountry		=stripslashes($data['ProfileLocationCountry']);
-			$ProfileDateUpdated			=stripslashes($data['ProfileDateUpdated']);
-			$ProfileIsActive			=stripslashes($data['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
-			$ProfileStatHits			=stripslashes($data['ProfileStatHits']);
-			$ProfileDateViewLast		=stripslashes($data['ProfileDateViewLast']);
+			$ProfileLocationCity		=stripslashes($rbdata['ProfileLocationCity']);
+			$ProfileLocationState		=stripslashes($rbdata['ProfileLocationState']);
+			$ProfileLocationZip			=stripslashes($rbdata['ProfileLocationZip']);
+			$ProfileLocationCountry		=stripslashes($rbdata['ProfileLocationCountry']);
+			$ProfileDateUpdated			=stripslashes($rbdata['ProfileDateUpdated']);
+			$ProfileIsActive			=stripslashes($rbdata['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
+			$ProfileStatHits			=stripslashes($rbdata['ProfileStatHits']);
+			$ProfileDateViewLast		=stripslashes($rbdata['ProfileDateViewLast']);
 
 			// Update Stats
 			$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
