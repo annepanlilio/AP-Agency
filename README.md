@@ -21,7 +21,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 * created shortcodes to display age and state which can be added in pages. e.g. [profile_list show_age_year="true" * show_age_month="true" show_age_day="true" show_state="true"]
 * fixed - no value entered but showing January 01, 1970
 * fixed - bulk delete of photos not working
-* fixed - conflict between new imports and existing profiles, photos missing on existing profiles when imported profiles are scanned.
+* fixed - conflict between new imports and existing profiles, photos missing on existing profiles when imported profiles are scanned
 * fixed - mass email (admin crm)
 * fixed - custom field “date” is not getting imported
 * created new custom field type “link”
