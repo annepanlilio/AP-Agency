@@ -1246,10 +1246,11 @@ elseif ($ConfigID == 2) {
 /*
  * Manage Style
  */
+		
 
 		// Get Group
 		$rb_agency_options_arr = get_option('rb_agency_layout_options');
-
+		
 		// Set Default Values
 		$rb_agency_value_stylesheet = $rb_agency_options_arr['rb_agency_value_stylesheet'];
 			// Open File & Get Base Style if not exists
@@ -1306,7 +1307,7 @@ elseif ($ConfigID == 2) {
 		echo "   <td><textarea name=\"rb_agency_layout_options[rb_agency_option_stylefooter]\">". $rb_agency_value_stylefooter ."</textarea></td>\n";
 		echo " </tr>\n";
 		echo "</table>\n";
-		echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
+		echo "<input type=\"submit\" name=\"save_css\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";
 		echo "<input type=\"hidden\" name=\"rb_agency_layout_options[rb_agency_options_showtooltip]\" value=\"1\"/>";
 		echo "</form>\n";
 
@@ -2096,6 +2097,7 @@ echo "<div id=\"custom-fields\">";
 
 		$ProfileCustomShowCastingJob = isset($_POST['ProfileCustomShowCastingJob'])?(int)$_POST['ProfileCustomShowCastingJob']: 0;
 		$ProfileCustomShowCastingRegister = isset($_POST['ProfileCustomShowCastingRegister'])?(int)$_POST['ProfileCustomShowCastingRegister']:0;
+		$ProfileCustomShowCastingManager = isset($_POST['ProfileCustomShowCastingManager'])?(int)$_POST['ProfileCustomShowCastingManager']:0;
 
 		/*
 		 * Set profile types here
@@ -2219,7 +2221,7 @@ echo "<div id=\"custom-fields\">";
 			} else {
 
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -2310,7 +2312,9 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
 								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " ,
 								ProfileCustomShowCastingJob=" . esc_sql($ProfileCustomShowCastingJob) . " ,
-								ProfileCustomShowCastingRegister=" . esc_sql($ProfileCustomShowCastingRegister) . " 
+								ProfileCustomShowCastingRegister=" . esc_sql($ProfileCustomShowCastingRegister) . " ,
+								ProfileCustomShowCastingManager=" . esc_sql($ProfileCustomShowCastingManager) . " 
+
 
 							WHERE ProfileCustomID='$ProfileCustomID'";
 				$updated = $wpdb->query($update);
@@ -2473,6 +2477,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomShowAdmin		=	$data['ProfileCustomShowAdmin'];
 				$ProfileCustomShowCastingJob		=	$data['ProfileCustomShowCastingJob'];
 				$ProfileCustomShowCastingRegister		=	$data['ProfileCustomShowCastingRegister'];
+				$ProfileCustomShowCastingManager		=	$data['ProfileCustomShowCastingManager'];
 			}
 
 		echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5'>Add New Custom Field</a></h3>
@@ -2499,6 +2504,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			$ProfileCustomShowAdmin			= 0;
 			$ProfileCustomShowCastingJob	= 0;
 			$ProfileCustomShowCastingRegister= 0;
+			$ProfileCustomShowCastingManager= 0;
 			echo "\n";
 		echo " 
 		<div class=\"postbox \">
@@ -2560,6 +2566,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingJob\" value=\"1\" /> Show on Casting Job</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingRegister\" value=\"1\" /> Show on Casting Registration</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingManager\" value=\"1\" /> Show on Casting Manager</label></div>
 							</div>
 						</div>
 						<div class=\"rbfield rbselect rbsingle\">
@@ -2687,6 +2694,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile View</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingJob\" value=\"1\" ". ($data1["ProfileCustomShowCastingJob"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Job</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingRegister\" value=\"1\" ". ($data1["ProfileCustomShowCastingRegister"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Registration</label></div>
+														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingManager\" value=\"1\" ". ($data1["ProfileCustomShowCastingManager"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Manager</label></div>
 													</div>
 												</div>
 												<div class=\"rbfield rbselect rbsingle\">

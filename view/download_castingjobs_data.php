@@ -18,14 +18,9 @@ function get_casting_contact_display($casting_user_link_id){
 	$casting_contacts = $wpdb->get_results($query,ARRAY_A);
 	if($wpdb->num_rows == 0){
 		return false;
-	}else{
-		$casting_name = null;
-		foreach($casting_contacts as $casting_contact){
-			$casting_name = $casting_contact["CastingContactNameFirst"]." ".$casting_contact["CastingContactNameLast"];
-		}
-		return $casting_name;
 	}
-	
+	foreach($casting_contacts as $casting_contact)
+		return $casting_contact["CastingContactNameFirst"]." ".$casting_contact["CastingContactNameLast"];
 }
 
 function get_casting_job_type($casting_job_type_id){
@@ -80,7 +75,7 @@ if(isset($_POST)) {
 
 $data = array();
 foreach($casting_jobs as $casting_job){
-	if(get_casting_contact_display($casting_job['Job_UserLinked']) === false){
+	if(get_casting_contact_display($casting_job['Job_UserLinked']) == false){
 
 	}else{
 		$rowNumber++;
@@ -99,7 +94,7 @@ foreach($casting_jobs as $casting_job){
 		$data['CastingJobAuditionTime'] = $casting_job['Job_Audition_Time'];
 		$data['CastingJobAuditionVenue']  = $casting_job['Job_Audition_Venue'];
 		
-		$query_custom_field_values = "SELECT DISTINCT(Customfield_ID),Customfield_value,Job_ID FROM ".$wpdb->prefix."agency_casting_job_customfields WHERE Job_ID = ".$casting_job["Job_ID"];
+		$query_custom_field_values = "SELECT DISTINCT(Customfield_ID),Customfield_value,Job_ID FROM ".$wpdb->prefix."agency_casting_job_customfields jcust INNER JOIN ".$wpdb->prefix."agency_customfields cust ON jcust.Customfield_ID = cust.ProfileCustomID WHERE jcust.Job_ID = ".$casting_job["Job_ID"]." AND cust.ProfileCustomShowCastingJob = 1 ORDER BY cust.ProfileCustomOrder ASC";
 		$custom_field_results = $wpdb->get_results($query_custom_field_values,ARRAY_A);
 		
 		$data_custom = array();
@@ -108,7 +103,7 @@ foreach($casting_jobs as $casting_job){
 			array_push($data_custom,$custom_value);
 		}
 
-		$objPHPExcel->getActiveSheet()->fromArray(array(array_merge($data,$data_custom)),NULL,'A'.$rowNumber);
+	$objPHPExcel->getActiveSheet()->fromArray(array(array_merge($data,$data_custom)),NULL,'A'.$rowNumber);
 	}
 		
 		
