@@ -26,8 +26,9 @@ if (isset($urlexploade[1])){
 
 # rb_agency_option_galleryorder
 $rb_agency_options_arr = get_option('rb_agency_options');
-	$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
+$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
 $rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
+$rb_agency_option_profile_thumb_caption = isset($rb_agency_options_arr['rb_agency_option_profile_thumb_caption'])?$rb_agency_options_arr['rb_agency_option_profile_thumb_caption']:0;
 
 
 echo "	<div id=\"rbprofile\">\n";
@@ -154,7 +155,12 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 							$countImg = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
 								if($primary_image_handler != $dataImg['ProfileMediaURL']){
-									echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a></div>\n";
+									echo "<div class=\"photo\">";
+									echo "	<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a>";
+									if($rb_agency_option_profile_thumb_caption ==1) {
+										echo "	<br><small>".$dataImg['ProfileMediaURL']."</small>\n";
+									}
+									echo "</div>\n";
 								}
 							}
 

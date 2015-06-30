@@ -235,6 +235,8 @@ elseif ($ConfigID == 1) {
 			if (empty($rb_agency_value_profilethumbwidth)) {$rb_agency_value_profilethumbwidth = "180"; }
 		$rb_agency_value_profilethumbheight = isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:0;
 			if (empty($rb_agency_value_profilethumbheight)) {$rb_agency_value_profilethumbheight = "230"; }
+		$rb_agency_option_profile_thumb_caption = isset($rb_agency_options_arr['rb_agency_option_profile_thumb_caption'])?$rb_agency_options_arr['rb_agency_option_profile_thumb_caption']:0;
+			if (empty($rb_agency_option_profile_thumb_caption)) {$rb_agency_option_profile_thumb_caption = 0; }			
 		$rb_agency_option_locationcountry = isset($rb_agency_options_arr['rb_agency_option_locationcountry'])?$rb_agency_options_arr['rb_agency_option_locationcountry']:0;
 			if (empty($rb_agency_option_locationcountry)) {$rb_agency_option_locationcountry = "US"; }
 		$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr['rb_agency_option_profilelist_perpage'])?$rb_agency_options_arr['rb_agency_option_profilelist_perpage']:0;
@@ -618,6 +620,12 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"55\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 55,false) ."> ". __("Medium Quality", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"40\" ". selected(isset($rb_agency_options_arr['rb_agency_option_image_compression'])?$rb_agency_options_arr['rb_agency_option_image_compression']:0, 40,false) ."> ". __("Low Quality", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profile Thumbnails Caption', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profile_thumb_caption]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profile_thumb_caption'])?$rb_agency_options_arr['rb_agency_option_profile_thumb_caption']:0, 1,false)."/> Show Image Caption<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -2655,23 +2663,23 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									echo "<div class=\"rbfield rbselect rbsingle\">
 											<label>Type*:</label>
 											<div>
-											<select class=\"objtype\" name=\"ProfileCustomType\">
-											<option value=\"\">---</option>
-											<option value=\"1\" ". ($data1["ProfileCustomType"] == 1 ? 'selected=\"selected\"':'').">Single Line Text</option>
+												<select class=\"objtype\" name=\"ProfileCustomType\">
+												<option value=\"\">---</option>
+												<option value=\"1\" ". ($data1["ProfileCustomType"] == 1 ? 'selected=\"selected\"':'').">Single Line Text</option>
 
-											<option value=\"3\" ". ($data1["ProfileCustomType"] == 3 ? 'selected=\"selected\"':'').">Dropdown</option>
-											<option value=\"4\" ". ($data1["ProfileCustomType"] == 4 ? 'selected=\"selected\"':'').">Textbox</option>
-											<option value=\"5\" ". ($data1["ProfileCustomType"] == 5 ? 'selected=\"selected\"':'').">Checkbox</option>
-											<option value=\"6\" ". ($data1["ProfileCustomType"] == 6 ? 'selected=\"selected\"':'').">Radio Button</option>";
-											if($rb_agency_options_arr['rb_agency_option_unittype']==1){
-												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Imperial (ft/in/lb)</option>";
-											} else {
-												echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Metric (cm/kg)</option>";
-											}
-										echo "	<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown (Multi-Select)</option>";;
-										echo "	<option value=\"10\" ". ($data1["ProfileCustomType"] == 10? 'selected=\"selected\"':'').">Date</option>";
-										echo "	<option value=\"11\" ". ($data1["ProfileCustomType"] == 11? 'selected=\"selected\"':'').">Link</option>";
-										echo "</select>
+												<option value=\"3\" ". ($data1["ProfileCustomType"] == 3 ? 'selected=\"selected\"':'').">Dropdown</option>
+												<option value=\"4\" ". ($data1["ProfileCustomType"] == 4 ? 'selected=\"selected\"':'').">Textbox</option>
+												<option value=\"5\" ". ($data1["ProfileCustomType"] == 5 ? 'selected=\"selected\"':'').">Checkbox</option>
+												<option value=\"6\" ". ($data1["ProfileCustomType"] == 6 ? 'selected=\"selected\"':'').">Radio Button</option>";
+												if($rb_agency_options_arr['rb_agency_option_unittype']==1){
+													echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Imperial (ft/in/lb)</option>";
+												} else {
+													echo"     <option value=\"7\" ". ($data1["ProfileCustomType"] == 7 ? 'selected=\"selected\"':'').">Metric (cm/kg)</option>";
+												}
+											echo "	<option value=\"9\" ". ($data1["ProfileCustomType"] == 9? 'selected=\"selected\"':'').">Dropdown (Multi-Select)</option>";;
+											echo "	<option value=\"10\" ". ($data1["ProfileCustomType"] == 10? 'selected=\"selected\"':'').">Date</option>";
+											echo "	<option value=\"11\" ". ($data1["ProfileCustomType"] == 11? 'selected=\"selected\"':'').">Link</option>";
+											echo "</select>
 											</div>
 										</div>";
 										//	<a href=\"javascript:;\"  style=\"font-size:12px;color:#069;". ($data1["ProfileCustomType"] == 3 ? '':'display:none;')."\" class=\"add_more_object\" id=\"add_more_object_show\">add another dropdown list to compare(min/max)</a>
@@ -2770,14 +2778,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<div class=\"rbfield rbtext rbsingle\">
 													<label>Custom Order*:</label>
 													<div>
-													<input type=\"text\" name=\"ProfileCustomOrder\"  value=\"".$data1["ProfileCustomOrder"]."\"/>
+														<input type=\"text\" name=\"ProfileCustomOrder\"  value=\"".$data1["ProfileCustomOrder"]."\"/>
 													</div>
 												</div>";
 								echo "<div id=\"obj_edit\" class=\"".$data1["ProfileCustomType"]."\">";
 
 								if($data1["ProfileCustomType"] == 1){ // text
 									echo "<div class=\"rbfield rbtext rbsingle\">";
-									echo "<label>Title:</label>
+									echo "	<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
 									echo "
@@ -2813,7 +2821,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 											if($val1 != end($data1) && $val1 != $data1[0]){
 											$pos++;
-											echo "<li class=\"rbfield rbtext rbsingle\"><label>Option:</label><div class=\"option\"><input type=\"text\"  value=\"".htmlspecialchars($val1)."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></div></li>";
+											echo "<li class=\"rbfield rbtext rbsingle\"><label>Option:</label>";
+											echo "	<div class=\"option\"><input type=\"text\"  value=\"".htmlspecialchars($val1)."\" name=\"option[]\"/><a href='javascript:;' class='del_opt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a><br></div>";
+											echo "</li>";
 											}
 										}
 									echo '</ul>';
@@ -2821,7 +2831,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 									echo "<div class=\"rbfield rbsingle\"><a href=\"javascript:;\" id=\"addmoreoption_1\" class=\"add-more-option\">add more option[+]</a></div>";
 
 											if(!empty($data2) && !empty($option2)){
-												echo "<label>Label:</label><div><input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/></div>";
+												echo "<div class=\"rbfield rbsingle\"><label>Label:</label><div><input type=\"text\" name=\"option_label2\" value=\"".current($data2)."\" /><br/></div></div>";
 												$pos2 = 0;
 											echo '<div id="editfield_add_more_options_1">';
 												foreach($data2 as $val2){
@@ -2863,14 +2873,14 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 											</div>";
 										echo "
-											<ul  id=\"editfield_add_more_options_12\">
-															<ul>
+											<ul id=\"editfield_add_more_options_12\">
 														";
 										foreach($array_customOptions_values as  $val){
-											echo" <li rbfield rbtext rbsingle><label>Option:<label><div class=\"option\"><input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div></li>";
+											echo" <li class=\"rbfield rbtext rbsingle\"><label>Option:</label>";
+											echo "	<div class=\"option\"><input type=\"text\" name=\"option[]\" value=\"". htmlspecialchars($val)."\" /><a href='javascript:;' class='del_cboxopt' title='Delete Option' style='color:red; text-decoration:none'>&nbsp;[ - ]</a></div>";
+											echo "</li>";
 										}
 										echo "</ul>";
-										echo "</div>";
 										//echo "<div id=\"addcheckbox_field_12\"></div>";
 										//echo "<br/><a href=\"javascript:;\"  id=\"addmoreoption_1\">add more option[+]</a>";
 										//echo "<div  id=\"editfield_add_more_options_12\"><ul style=\"list-style:none;\"></ul></div><br/>";
@@ -2922,8 +2932,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 										</tr>";
 								}
 
-					echo "</div>";
+					
 					}//endwhile
+					echo "</div><!-- #obj_edit -->";
 		}
 
 			if ( $ProfileCustomID > 0) {
