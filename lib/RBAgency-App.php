@@ -47,10 +47,10 @@ class RBAgency_App {
 
 				// Get Custom CSS
 				$rb_agency_options_arr = get_option('rb_agency_layout_options');
-				
+				$rb_agency_value_stylesheet = isset($rb_agency_options_arr['rb_agency_value_stylesheet']) ? $rb_agency_options_arr['rb_agency_value_stylesheet']:0;
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
-				$rb_agency_value_stylesheet = isset($rb_agency_options_arr['rb_agency_value_stylesheet']) ? $rb_agency_options_arr['rb_agency_value_stylesheet']:0;
+				
 
 				wp_register_style( 'rbagency-print-style', RBAGENCY_PLUGIN_URL .'assets/css/print.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-print-style' );

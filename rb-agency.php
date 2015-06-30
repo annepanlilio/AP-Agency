@@ -141,6 +141,10 @@ See license.txt for full details.
 		define("table_agency_searchsaved_mux", "{$wpdb->prefix}agency_searchsaved_mux");
 	if (!defined("table_agency_savedfavorite"))
 		define("table_agency_savedfavorite", "{$wpdb->prefix}agency_savedfavorite");
+	if (!defined("table_agency_casting_job_customfields"))
+		define("table_agency_casting_job_customfields", "{$wpdb->prefix}agency_casting_job_customfields");
+	if (!defined("table_agency_casting_register_customfields"))
+		define("table_agency_casting_register_customfields", "{$wpdb->prefix}agency_casting_register_customfields");
 
 // *************************************************************************************************** //
 

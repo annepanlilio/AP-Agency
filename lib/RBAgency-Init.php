@@ -241,9 +241,33 @@ class RBAgency_Init {
 					ProfileCustomShowLogged INT(10) NOT NULL DEFAULT '1',
 					ProfileCustomShowRegistration INT(10) NOT NULL DEFAULT '1',
 					ProfileCustomShowAdmin INT(10) NOT NULL DEFAULT '1',
+					ProfileCustomShowCastingJob INT(10) NOT NULL DEFAULT '0',
+					ProfileCustomShowCastingRegister INT(10) NOT NULL DEFAULT '0',
+					ProfileCustomShowCastingManager INT(10) NOT NULL DEFAULT '0',
 					PRIMARY KEY (ProfileCustomID)
 					);";
 				dbDelta($sql);
+
+				// Profile Custom Field Types
+				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_casting_job_customfields." (
+					ID BIGINT(20) NOT NULL AUTO_INCREMENT,
+					Job_ID INT(10),
+					Customfield_ID INT(10) NOT NULL DEFAULT '0',
+					Customfield_value INT(10) NOT NULL DEFAULT '0',
+					Customfield_type INT(10) NOT NULL DEFAULT '0'
+					PRIMARY KEY (ProfileCustomID)
+					);";
+				dbDelta($sql);
+
+				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_casting_register_customfields." (
+					ID BIGINT(20) NOT NULL AUTO_INCREMENT,
+					CastingID INT(10),
+					Customfield_ID INT(10) NOT NULL DEFAULT '0',
+					Customfield_value INT(10) NOT NULL DEFAULT '0',
+					Customfield_type INT(10) NOT NULL DEFAULT '0'
+					PRIMARY KEY (ProfileCustomID)
+					);";
+				dbDelta($sql);				
 
 				// Populate Initial Values
 					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
