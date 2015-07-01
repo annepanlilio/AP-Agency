@@ -1754,6 +1754,7 @@ class RBAgency_Profile {
 				$rb_agency_option_layoutprofilelistlayout = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
 				$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:5;
 				$rb_agency_option_profilelist_showprofiletypeslinks = isset($rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks']) ? $rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks']:0;
+				$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
 				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
 				$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
@@ -1975,6 +1976,8 @@ class RBAgency_Profile {
 					$rb_agency_option_layoutprofilelistlayout = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0;
 					$rb_agency_option_layoutprofilelist_favcartfx = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartfx']:0;
 					$rb_agency_option_layoutprofilelist_perrow = isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_perrow']:5;
+					$rb_agency_value_profilethumbwidth			= isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbwidth']:180;
+				$rb_agency_value_profilethumbheight			= isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:230;
 					$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
 				/* 
@@ -2096,6 +2099,37 @@ class RBAgency_Profile {
 					if(self::$error_debug){
 						self::$error_checking[] = array('search_result_public',$all_html);
 						echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
+					}
+
+					if($rb_agency_option_profilelist_thumbsslide == 1){
+						$rb_agency_value_profilethumbheight = $rb_agency_value_profilethumbheight -20;
+						$all_html .='<style type="text/css">
+										#profile-list .rbprofile-list .image { height: '.$rb_agency_value_profilethumbheight.'px; }
+									</style>';
+						$all_html .='<script type="text/javascript">
+						
+										var interval = "";
+
+										jQuery(".rbprofile-list .image a img:first").addClass("active");
+
+										function cycleImages(elem){											
+											var active = jQuery(elem).find(".active");
+											var next = (active.next().length > 0) ? active.next() : jQuery(elem).find("img:first");
+											next.css("z-index",2); //move the next image up the pile
+											active.fadeOut(500,function(){ //fade out the top image
+											active.css("z-index",1).show().removeClass("active");//reset the z-index and unhide the image
+												next.css("z-index",3).addClass("active"); //make the next image the top one
+											});
+										}
+
+										jQuery(".rbprofile-list .image").mouseout(function(){
+											clearInterval(interval);
+											jQuery(this).find("img").removeClass("active");
+											jQuery(this).find("img").css("z-index",1);
+											jQuery(this).find("img.primary").css("z-index",4).addClass("active");
+										});
+						
+									</script>';
 					}
 
 				// Return
@@ -2416,6 +2450,7 @@ class RBAgency_Profile {
 			 */
 				$rb_agency_options_arr = get_option('rb_agency_options');
 
+				$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				$rb_agency_option_profilelist_castingcart	= isset($rb_agency_options_arr['rb_agency_option_profilelist_castingcart']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_castingcart']:0;
 				$rb_agency_option_profilelist_favorite		= isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite']) ? (int)$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0;
 				$rb_agency_option_privacy					= isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
@@ -2531,12 +2566,33 @@ class RBAgency_Profile {
 				$images = "";
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 				if ($p_image){
+
+					$displayHTML .="<div class=\"image\">";
+					$displayHTML .= "<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_list_class."\">";
+
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
-						if($rb_agency_option_profilelist_thumbsslide==1){ //show profile sub thumbs for thumb slide on hover
-							$images = rb_agency_profileimages($dataList["ProfileID"]);
-							$images = str_replace("{PHOTO_PATH}",RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"]."/", $images);
-						}
-						$displayHTML .="<div  class=\"image\">";
+						if($rb_agency_option_profilelist_thumbsslide == 1){ //show profile sub thumbs for thumb slide on hover
+							// $images = rb_agency_profileimages($dataList["ProfileID"]); not working
+							//$images = str_replace("{PHOTO_PATH}",RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"]."/", $images);
+							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+							$countImg = $wpdb->num_rows;
+
+							foreach($resultsImg as $dataImg ){
+								if ($countImg > 1) {									
+									$images .= " <img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
+								}
+							}
+
+							$displayHTML .= '<script type="text/javascript">
+
+												jQuery("#rbprofile-'.$dataList["ProfileID"].' .image").mouseover(function(){												
+													var elem = jQuery(this);
+													interval = setInterval(function(){cycleImages(jQuery("#rbprofile-'.$dataList["ProfileID"].' .image"))}, 1000);												  
+												});
+											</script>
+											';
+						}						
 
 						// Favorite and Casting Display - Image Overlay
 						if($rb_agency_option_layoutprofilelist_favcartdisp == 1) {
@@ -2549,11 +2605,13 @@ class RBAgency_Profile {
 							$profile_link = RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"];
 						}
 
-						$displayHTML .="	<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_list_class."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" /></a>".$images."";
-						$displayHTML .="</div>\n";
+						$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";						
 					} else {
-						$displayHTML .="<div  class=\"image\">"."<a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" title=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"".$profile_list_class."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></a>".$images."</div>\n";
+						$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
 					}
+
+					$displayHTML .="</a></div>";
+
 				} else {
 					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
 				}

@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: June 16, 2015
+Last updated: July 1, 2015
 */
 
 /* Global Style */
@@ -31,7 +31,9 @@ Last updated: June 16, 2015
 	line-height: normal;
 }
 #profile-list .rbprofile-list .image {
+	width: 100%;
 	position: relative;
+	overflow: hidden;
 }
 #profile-list .rbprofile-list .image img {
 	border: none;
