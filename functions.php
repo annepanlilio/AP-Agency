@@ -3333,7 +3333,11 @@
 	/*
 	 * load script for printing profile pdf 
 	 */
-	function rb_load_profile_pdf($row = 0, $logo = NULL){ ?>
+	function rb_load_profile_pdf($row = 0, $logo = NULL){
+
+	$profile_name = get_current_profile_info("ProfileContactDisplay");
+	$file_name = str_replace(" ", "", $profile_name); ?>
+	
 
 	<!-- ajax submit login -->
 	<script type="text/javascript">
@@ -3347,10 +3351,11 @@
 				data: {
 					pid : <?php echo get_current_profile_info("ProfileID"); ?>, 
 					row : <?php echo $row; ?>, 
-					logo : "<?php echo $logo; ?>"},
+					logo : "<?php echo $logo; ?>",
+					filename : "<?php echo $file_name; ?>"},
 				success: function(response){
 					if (response){
-							jQuery('#print_pr_pdf').text("PRINT PDF");
+						jQuery('#print_pr_pdf').text("PRINT PDF");
 						var lnk = response;
 						var st = lnk.indexOf("http");
 						lnk =  lnk.substring(st);

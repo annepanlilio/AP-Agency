@@ -6,7 +6,8 @@
   $profileID = (int)$_REQUEST['pid'];
   $img_row = (int)$_REQUEST['row'];
   $logo = $_REQUEST['logo'];
-  $print = new rb_print_pdf($profileID,$img_row,$logo);
+  $filename = $_REQUEST['filename'];
+  $print = new rb_print_pdf($profileID,$img_row,$logo,$filename);
   $print->rb_out_pdf();
  
 
@@ -20,7 +21,10 @@
         */
         
         # profile id 
-        protected $profile_ID; 
+        protected $profile_ID;
+
+        # PDF filename
+        protected $filename;
         
         # dompdf action link
         protected $rendered_action;
@@ -65,9 +69,10 @@
        /*
         * our constructor 
         */
-        public function __construct($ID,$img_row,$logo) {
+        public function __construct($ID,$img_row,$logo,$filename) {
             
             $this->profile_ID = $ID;
+            $this->PDF_filename = $filename;
             require_once( "../../../../wp-config.php" );
             require_once( "../../../../wp-includes/wp-db.php" );
             $this->wp = new wpdb( DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
@@ -130,7 +135,7 @@
             if(is_null($file)) return false;
             
             $add = plugins_url("rb-agency/ext/dompdf/");
-            $this->rendered_action = $add. 'dompdf.php?base_path='.$this->bse_path.'&options[Attachment]=0&input_file='.$file.'&view=FitH&statusbar=0&messages=0&navpanes=0';
+            $this->rendered_action = $add. 'dompdf.php?base_path='.$this->bse_path.'&options[Attachment]=0&input_file='.$file.'&view=FitH&statusbar=0&messages=0&navpanes=0&output_filed='.$this->PDF_filename.'_ModelCard.pdf';
         }
         
        /*
