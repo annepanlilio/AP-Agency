@@ -174,19 +174,22 @@
             foreach($data as $d){
                 $htm = '';
                 if(strtolower($d->ProfileCustomTitle) == "height"){
-                   $heightraw = $d->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-			     $val = $heightfeet."ft ".$heightinch." in"; 
+                  $heightraw = $d->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
+			            $val = $heightfeet."ft ".$heightinch." in"; 
                 } else {
-                   $val = $d->ProfileCustomValue; 
+                  $val = $d->ProfileCustomValue; 
                 }
-                $name = $d->ProfileContactDisplay;
-                $htm .="        <td>";
-                $htm .= $d->ProfileCustomTitle;
-                $htm .="</td>";
-                $htm .="<td>";
-                $htm .= $val;
-                $htm .="</td>" . PHP_EOL;
-                $temp_htm[] = $htm;
+
+                if(!empty($val)){
+                  $name = $d->ProfileContactDisplay;
+                  $htm .="<td>";
+                  $htm .=   $d->ProfileCustomTitle;
+                  $htm .="</td>";
+                  $htm .="<td>";
+                  $htm .=   (!empty($val)) ? $val : "empty";
+                  $htm .="</td>" . PHP_EOL;
+                  $temp_htm[] = $htm;
+                }
             }
             
             $tr_htm = $this->wrapper($temp_htm, 1, "tr", NULL);
@@ -214,8 +217,8 @@
                 $htm = "";
                 $im = $this->get_image_url($i->ProfileMediaURL);
                 $size = $this->get_size_p($im,$this->img_width, $this->img_height);
-                $htm .="        <td style='float:left;'>";
-                $htm .="<img src='".$im."' style='width:".$size[0]."px; height:".$size[1]."px'/>";
+                $htm .="<td style='float:left;'>";
+                $htm .="  <img src='".$im."' style='width:".$size[0]."px; height:".$size[1]."px'/>";
                 $htm .="</td>".PHP_EOL;
                 $temp_htm[] = $htm; 
             }
