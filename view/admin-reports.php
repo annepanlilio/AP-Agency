@@ -1341,8 +1341,8 @@ elseif ($ConfigID == 80) {
 		{
 			$error_message = "Empty file!";
 		}
-		/*echo print_r($_FILES['source_file']);
-		die;*/
+		
+		$usrAgnt=$_SERVER['HTTP_USER_AGENT'];
 		if($_FILES['source_file']['type'] == 'application/octet-stream' || $_FILES['source_file']['type'] == 'application/vnd.ms-excel' || $_FILES['source_file']['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || ($_FILES['source_file']['type'] == 'application/download' && strpos($usrAgnt, 'Ubuntu') !== false) ) /*CSV and Excel files -- Update: added fix for FF Ubuntu*/
 		{
 			$return_result = $obj_csv->match_column_and_table(); /*Display colunm head*/
