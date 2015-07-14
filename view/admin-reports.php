@@ -1341,8 +1341,9 @@ elseif ($ConfigID == 80) {
 		{
 			$error_message = "Empty file!";
 		}
-		//echo $_FILES['source_file']['type'];die;
-		if($_FILES['source_file']['type'] == 'application/octet-stream' || $_FILES['source_file']['type'] == 'application/vnd.ms-excel' || $_FILES['source_file']['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') /*CSV and Excel files*/
+		/*echo print_r($_FILES['source_file']);
+		die;*/
+		if($_FILES['source_file']['type'] == 'application/octet-stream' || $_FILES['source_file']['type'] == 'application/vnd.ms-excel' || $_FILES['source_file']['type'] == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || ($_FILES['source_file']['type'] == 'application/download' && strpos($usrAgnt, 'Ubuntu') !== false) ) /*CSV and Excel files -- Update: added fix for FF Ubuntu*/
 		{
 			$return_result = $obj_csv->match_column_and_table(); /*Display colunm head*/
 
@@ -2442,8 +2443,15 @@ class RBAgencyCSVXLSImpoterPlugin {
 			}
 		}
 
-
-
+		//check if it is a date
+		function checkIfDate($date) {
+			$tempDate = explode('-', $date);
+			if (checkdate($tempDate[1], $tempDate[2], $tempDate[0])) { //checkdate(month, day, year)
+			return true;
+			} else {
+				return false;
+			}
+		}
 
 		foreach ($arr_import_data  as &$vv) {
 
@@ -2510,15 +2518,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 														}
 													}
 
-													//check if it is a date
-													function checkIfDate($date) {
-														$tempDate = explode('-', $date);
-														if (checkdate($tempDate[1], $tempDate[2], $tempDate[0])) { //checkdate(month, day, year)
-														return true;
-														} else {
-															return false;
-														}
-													}
+													
 
 													$p_table_fields = "";
 													$p_table_values = "";
