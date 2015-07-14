@@ -135,7 +135,11 @@ global $wpdb;
 						if($cfield["ProfileCustomType"] == 10){
 								$ProfileCustomValue = !empty($sub_value['ProfileCustomDateValue']) ? $sub_value['ProfileCustomDateValue'] : $sub_value['ProfileCustomValue'];
 						} elseif($cfield["ProfileCustomType"] == 7){
-								$ProfileCustomValue = rb_get_imperial_metrics($sub_value['ProfileCustomValue'],$cfield['ProfileCustomOptions']);
+								if($sub_value['ProfileCustomValue'] > 0){
+									$ProfileCustomValue = rb_get_imperial_metrics($sub_value['ProfileCustomValue'],$cfield['ProfileCustomOptions']);
+								}else{
+									$ProfileCustomValue = "";
+								}
 						} elseif($cfield["ProfileCustomType"] == 4 || $cfield["ProfileCustomType"] == 1){
 								$ProfileCustomValue =  $sub_value['ProfileCustomValue'];
 						} elseif(empty($sub_value['ProfileCustomDateValue'])){
