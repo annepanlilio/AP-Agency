@@ -45,11 +45,15 @@ global $wpdb;
 			      }
             }
 
-            $limit_template = isset($_POST["export-profile"]) && !empty($_POST["export-profile"])?" LIMIT ".str_replace("-",",",$_POST["export-profile"]):"";
-            
-            if(isset($_POST["export-profile"]) && $_POST["export-profile"] == "template"){
+           if(isset($_POST["export-profile"]) && $_POST["export-profile"] == "template"){
         		$limit_template = "LIMIT 1";
+            }elseif(isset($_POST["export-profile"]) && $_POST["export-profile"] != "template" && !empty($_POST["export-profile"]) ){
+            	$limit_values = explode("-",$_POST["export-profile"]);
+            	// $limit_offset = ( intval($limit_values[0]) < 100) ? $limit_values[0] : $limit_values[0];
+            	$limit_offset = $limit_values[0];
+        		$limit_template = " LIMIT ".$limit_offset.", 100";
             }
+            
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
 			/*Profile data*/
 			$row_data = array();
@@ -204,7 +208,7 @@ global $wpdb;
 			$profile_name = explode("-",$_POST["export-profile"]);
 			$from = $profile_name[0]+1;
 			$to = ($profile_name[1] == 100) ? 100 : ($profile_name[1] < 100 ? $profile_name[1] : $profile_name[1] - 100);
-			$fname = is_numeric($profile_name[1]) ? ($from."-".(($to+$from)-1)) : $_POST["export-profile"];
+			$fname = is_numeric($profile_name[1]) ? ($from."-".$profile_name[1]) : $_POST["export-profile"];
 			$profile_paginate = isset($_POST["export-profile"]) && !empty($_POST["export-profile"]) ? "-profiles-".$fname : "-profiles-".$fname;
           
 			header("Pragma: public");
