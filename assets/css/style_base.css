@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: July 1, 2015
+Last updated: July 17, 2015
 */
 
 /* Global Style */
@@ -63,27 +63,27 @@ Last updated: July 1, 2015
 #profile-list .details-age > span {
 	white-space: nowrap;
 }
-#profile-list .rbprofile-list .profile-info h3.name {
+#profile-list .rbprofile-list .profile-info .name {
 	margin: 0;
-	font-size: medium;
 	overflow: hidden;
 	line-height: normal;	
 }
-#profile-list .rbprofile-list .profile-info h3.name a {
-	white-space: nowrap;
+#profile-list .rbprofile-list .profile-info .name a {
 	text-decoration: none;
 	display: inline-block;
 }
-#profile-list .profilelist-style-0 .profile-info {
+#profile-list .name-pos-1 .name {
 	position: absolute;
 	left: 0px;
 	right: 0px;
 	bottom: 0px;
 	padding: 10px;
+	z-index: 5;
+	background: rgba(0,0,0,0.7)
 }
-#profile-list .profilelist-style-1 .profile-info {	
+#profile-list .name-pos-2 .profile-info {	
 	padding: 10px;
-  	background: #000;
+	background: rgba(0,0,0,0.7)
 }
 
 /* Voiceover */
@@ -151,6 +151,9 @@ Last updated: July 1, 2015
 	width: 11.11111111111111%;
 }#profile-list.ten-profiles .rbprofile-list {
 	width: 10%;
+}
+#profile-list.four-profiles .thumbslide .image img {
+	position: absolute;
 }
 #profile-list.two-profiles .rbprofile-list:nth-child(even) {
 	padding-right: 0px;

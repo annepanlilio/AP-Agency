@@ -2472,6 +2472,7 @@ class RBAgency_Profile {
 				$rb_agency_value_profilethumbheight			= isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:230;
 				$rb_agency_option_layoutprofilelist_favcartdisp	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
 				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
+				$rb_agency_option_layoutprofilenamepos = isset($rb_agency_options_arr['rb_agency_option_layoutprofilenamepos']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilenamepos']:0;
 
 				// TODO: Check Logic
 				$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "-";
@@ -2506,15 +2507,24 @@ class RBAgency_Profile {
 			 * Default Profile Layout
 			 */
 
-				if($rb_agency_option_layoutprofileviewmode == 0) {
-					$profile_list_class = "default";
-				} elseif($rb_agency_option_layoutprofileviewmode == 1) {
-					$profile_list_class = "profile-popup";
-				} else {
-					$profile_list_class = "slide-panel";
+				$profile_list_class = "rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout;
+
+				if($rb_agency_option_profilelist_thumbsslide == 1){
+					$profile_list_class .= " name-pos-".$rb_agency_option_layoutprofilenamepos;
+				}
+				if($rb_agency_option_profilelist_thumbsslide == 1){
+					$profile_list_class .= " thumbslide";
 				}
 
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout." profilelist-style-".$rb_agency_option_layoutprofilelist."\" >\n";
+				if($rb_agency_option_layoutprofileviewmode == 0) {
+					$profile_link_class = "default";
+				} elseif($rb_agency_option_layoutprofileviewmode == 1) {
+					$profile_link_class = "profile-popup";
+				} else {
+					$profile_link_class = "slide-panel";
+				}
+
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class."\" >\n";
 
 				if(!$plain){
 					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
@@ -2540,6 +2550,8 @@ class RBAgency_Profile {
 
 				$displayActions = "";
 				$type = get_query_var('type');
+
+				$profile_name = "<strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
 
 				if(!$plain && class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
 					$displayActions = "<div class=\"rb_profile_tool\">";
@@ -2567,8 +2579,9 @@ class RBAgency_Profile {
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 				if ($p_image){
 
-					$displayHTML .="<div class=\"image\">";
-					$displayHTML .= "<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_list_class."\">";
+					$displayHTML .="<div class=\"image\">";					
+
+					$displayHTML .= "<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_link_class."\">";
 
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 						if($rb_agency_option_profilelist_thumbsslide == 1){ //show profile sub thumbs for thumb slide on hover
@@ -2610,22 +2623,30 @@ class RBAgency_Profile {
 						$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
 					}
 
-					$displayHTML .="</a></div>";
+					$displayHTML .="</a>";
+
+					if($rb_agency_option_layoutprofilenamepos == 1) {
+						$displayHTML .= $profile_name;
+					}
+
+					$displayHTML .="</div>";
 
 				} else {
 					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
-				}
+				}				
 
 				// Determine profile details
 
 				$displayHTML .= "  <div class=\"profile-info\">\n";
 				$uid = rb_agency_get_current_userid();
 
+				if($rb_agency_option_layoutprofilenamepos == 0 || $rb_agency_option_layoutprofilenamepos == 2) {
+					$displayHTML .= $profile_name;
+				}				
+
 				if(get_query_var('type') == "casting" && $uid > 0){
 					$displayHTML .= "<input type=\"checkbox\" name=\"profileid\" value=\"".$dataList["ProfileID"]."\"/>";
 				}
-				$displayHTML .= "     <h3 class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"".$profile_list_class."\">". stripslashes($ProfileContactDisplay) ."</a></h3>\n";
-
 
 				if ($rb_agency_option_profilelist_expanddetails) {
 					$displayHTML .= "<div class=\"details\">";
