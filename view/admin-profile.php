@@ -877,6 +877,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsActive = stripslashes($data['ProfileIsActive']);
 			$ProfileIsFeatured = stripslashes($data['ProfileIsFeatured']);
 			$ProfileIsPromoted = stripslashes($data['ProfileIsPromoted']);
+			$ProfileIsPrivate = stripslashes($data['ProfileIsPrivate']);
 			$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 			$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
 		}
@@ -925,6 +926,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsActive = $_POST['ProfileIsActive']; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 			$ProfileIsFeatured = $_POST['ProfileIsFeatured'];
 			$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
+			$ProfileIsPrivate = $_POST['ProfileIsPrivate'];
 			$ProfileStatHits = $_POST['ProfileStatHits'];
 
 			// Get Primary Image
@@ -1253,6 +1255,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "        <th scope=\"row\">" . __("Promotion", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
 							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked(isset($ProfileIsFeatured)?$ProfileIsFeatured:0, 1, false) . " /> Featured<br />\n";
+							echo "        </td>\n";
+							echo "    </tr>\n";
+							echo "    <tr valign=\"top\">\n";
+							echo "        <th scope=\"row\">" . __("Set this Profile to Private", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
+							echo "        <td>\n";
+							echo "          <input type=\"checkbox\" name=\"ProfileIsPrivate\" id=\"ProfileIsPrivate\" value=\"1\"". checked(isset($ProfileIsPrivate)?$ProfileIsPrivate:0, 1, false) . " /> Featured<br />\n";
 							echo "        </td>\n";
 							echo "    </tr>\n";
 							/*

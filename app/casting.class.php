@@ -585,7 +585,7 @@ class RBAgency_Casting {
 							$profileimage .='<div id="searchsaved-emailsent" class="searchsaved-profiles">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
 							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
-							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".implode(",",array_filter(array_unique(explode(",",$data['SearchProfileID'])))).") GROUP BY(profile.ProfileID)";
+							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".implode(",",array_filter(array_unique(explode(",",$data['SearchProfileID'])))).") GROUP BY(profile.ProfileContactNameFirst)";
 							$results = $wpdb->get_results($query,ARRAY_A);
 							$count = count($results);
 							$arr_thumbnail = (array)unserialize($cartProfileMedia);
