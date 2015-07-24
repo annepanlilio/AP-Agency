@@ -152,7 +152,7 @@ $siteurl = get_option('siteurl');
 
 		$query ="SELECT * FROM ". table_agency_profile ." profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
-				.(isset($profile_list)? $profile_list:"''").")  GROUP BY profile.ProfileID  ORDER BY ProfileContactNameFirst ASC";
+				.(isset($profile_list)? $profile_list:"''").")  GROUP BY profile.ProfileContactNameFirst";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 
