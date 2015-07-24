@@ -4105,6 +4105,99 @@
 	add_action( 'wp_head', 'load_datetime_basic_search' );
 
 
+add_action( 'widgets_init', 'rblogin_widget' );
+
+
+function rblogin_widget() {
+	register_widget( 'RBLogin_Widget' );
+}
+
+class RBLogin_Widget extends WP_Widget {
+
+	function RBLogin_Widget() {
+		$widget_ops = array( 'classname' => 'rblogin', 'description' => __('A widget that displays the authors name ', 'rblogin') );		
+		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rblogin-widget' );		
+		$this->WP_Widget( 'rblogin-widget', __('RB Login Widget', 'rblogin'), $widget_ops, $control_ops );
+	}
+	
+	function widget( $args, $instance ) {
+		extract( $args );
+
+		//Our variables from the widget settings.
+		$title = apply_filters('widget_title', $instance['title'] );
+		$mt_li = $instance['mt-li'];
+		$ap_li = $instance['ap-li'];
+
+		if (class_exists('RBAgencyInteract') || class_exists('RBAgencyCasting') ) {
+
+			echo $before_widget;
+
+			// Display the widget title 
+			if ( $title )
+				echo $before_title . $title . $after_title;
+
+			echo "<ul class=\"nav-menu\">";
+
+			if(!is_user_logged_in()){
+
+				include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+				// check if rb interact is active
+				if (class_exists('RBAgencyInteract') ) {
+					echo "<li><a href=\"/profile-login/\" title=\"".$mt_li."\">".$mt_li."</a></li>";
+				}
+				// check if rb casting is active
+				if (class_exists('RBAgencyCasting'))  {
+					echo "<li><a href=\"/casting-login/\" title=\"".$ap_li."\">".$ap_li."</a></li>";
+				}
+			} else {
+				echo "<li><a href=\"".wp_logout_url()."\" title=\"Log Out\">Log Out</a></li>";
+			}
+
+			echo "</ul>";
+
+			echo $after_widget;
+		}
+	}
+
+	//Update the widget 
+	 
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
+
+		//Strip tags from title and name to remove HTML 
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['mt-li'] = strip_tags( $new_instance['mt-li'] );
+		$instance['ap-li'] = strip_tags( $new_instance['ap-li'] );
+
+		return $instance;
+	}
+
+	
+	function form( $instance ) {
+
+		//Set up some default widget settings.
+		$defaults = array( 'title' => __('', 'rblogin'), 'mt-li' => __('Login | Register as Model/Talent', 'rblogin'), 'ap-li' => __('Login | Register as Casting Agent/Producer', 'rblogin') );
+		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+
+		<div class="widget-content">
+			<p>
+				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'rblogin'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id( 'mt-li' ); ?>"><?php _e('Link Text for Model/Talent', 'rblogin'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'mt-li' ); ?>" name="<?php echo $this->get_field_name( 'mt-li' ); ?>" value="<?php echo $instance['mt-li']; ?>" style="width:100%;" />
+			</p>
+			<p>
+				<label for="<?php echo $this->get_field_id( 'ap-li' ); ?>"><?php _e('Link Text for Casting Agent/Producer', 'rblogin'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'ap-li' ); ?>" name="<?php echo $this->get_field_name( 'ap-li' ); ?>" value="<?php echo $instance['ap-li']; ?>" style="width:100%;" />
+			</p>
+		</div>
+
+	<?php
+	}
+}
 
 
     
