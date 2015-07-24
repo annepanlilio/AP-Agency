@@ -85,7 +85,7 @@ class RBAgency_Extends {
 				} else {
 					echo "<div class='restricted'>\n";
 						if ( class_exists("RBAgencyCasting") ) {
-						echo "Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
+						echo "Page restricted. Only Admin & Casting Agent can view this page.<br />Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
 						} else {
 						echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
 						}
