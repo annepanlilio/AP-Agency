@@ -1811,14 +1811,19 @@ class RBAgency_Profile {
 					$query = " SELECT * FROM " .  table_agency_customfields . " WHERE ProfileCustomShowFilter = 1 ORDER BY ProfileCustomOrder ASC";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 
+					$query_gender = "SELECT * FROM ".table_agency_data_gender;
+					$results_genders = $wpdb->get_results($query_gender,ARRAY_A);
+
 					$all_html.='
 							<select id="sort_by">
-								<option value="">Sort List</option>
-								1<option value="sortage">Age</option>
-								2<option value="sortname">Name</option>
-								3<option value="sortdate">Date Joined</option>
-								2<option value="sortname">Display Name</option>';
+								<option value="1">Sort List</option>
+								<option value="sortage">Age</option>
+								<option value="sortname">Name</option>
+								<option value="sortdate">Date Joined</option>
+								<option value="sortname">Display Name</option>';
+								$customFilters = array_merge($customFilters,$results_genders);
 								foreach($customFilters as $customFilter){
+									
 									$customID = $customFilter['ProfileCustomID'] + 100; 
 									if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4){
 										$all_html.= "<option value='sorttext_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
@@ -1828,8 +1833,13 @@ class RBAgency_Profile {
 										$all_html.= "<option value='sortdropdown_".$customID."_|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|'>".$customFilter['ProfileCustomTitle']."</option>";
 									} elseif($customFilter['ProfileCustomType'] == 7){
 										$all_html.= "<option value='sortmeasure_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
+									} else {
+										$all_html.= "<option value='gender_".$customFilter['GenderID']."'>".$customFilter['GenderTitle']."</option>";
 									}
 								}
+
+								
+
 					$all_html.='</select>
 							<select id="sort_option">
 								<option value="">Sort Options</option>
