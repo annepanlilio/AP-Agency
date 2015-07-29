@@ -2565,12 +2565,14 @@ class RBAgency_Profile {
 
 				if(!$plain && class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"profilecastingcart") <= -1){
 					$displayActions = "<div class=\"rb_profile_tool\">";
-					if($rb_agency_option_profilelist_favorite && $type != "casting"){
+					// if($rb_agency_option_profilelist_favorite && $type != "casting"){
+					if($rb_agency_option_profilelist_favorite){
 						$displayActions .= "<div id=\"profile-favorite\" class=\"favorite\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."\" attr-id=\"".$dataList["ProfileID"]."\" class=\"".(in_array($dataList["ProfileID"], $arr_favorites)?"active":"inactive")." favorite\"><i class=\"fa fa-heart\"></i> <span>".(in_array($dataList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")."</span></a></div>";
 					}
 					$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 
-					if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
+					// if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
+					if($rb_agency_option_profilelist_castingcart && !empty($p_image)){
 						$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\"".(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")." castingcart\"><i class=\"fa fa-star\"></i> <span>".(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")."</span></a></div>";
 					}
 					$displayActions .= "</div>";
