@@ -258,10 +258,12 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 						$update = $wpdb->query("UPDATE " . table_agency_profile . " SET ProfileContactDisplay='" . $ProfileContactDisplay . "', ProfileGallery='" . $ProfileGallery . "' WHERE ProfileID='" . $ProfileID . "'");
 						$updated = $wpdb->query($update);
+
+						//Generate folder
+						rb_agency_createdir($ProfileContactDisplay);
 					}
 
-					//Generate folder
-					rb_agency_createdir($ProfileContactDisplay);
+					
 
 					// Add Custom Field Values stored in Mux
 					foreach ($_POST as $key => $value) {
