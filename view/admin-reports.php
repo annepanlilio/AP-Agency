@@ -2338,18 +2338,24 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 			foreach ($arr_headers as $key ) {
 					if(substr($key, 0, 7) != "Profile" && substr($key,0,2) != "ID"){
-						echo '<tr><th><label>'.str_replace("_"," ",$key).'</label></th>';
+						$key = str_replace("'",'',$key);
+						echo '<tr><th><label>'.str_replace("_"," ",stripcslashes($key)).'</label></th>';
 						echo '<td><select name = "select'.$pos.'">';
 						foreach ($custom_fields as $custom_fields_result) {
 							$custom_field_id = intval($custom_fields_result->ProfileCustomID);
 							$custom_field_title = $custom_fields_result->ProfileCustomTitle;
-							if($custom_field_title == str_replace("_"," ",$key)){
+							$custom_field_title = str_replace("'",'',$custom_field_title);
+							$custom_field_title = stripcslashes($custom_field_title);
+							$key = str_replace("'",'',$key);
+							$key = str_replace("_"," ",stripcslashes($key));	
+							if($custom_field_title == $key){
 								$is_default = ' selected="selected" ';
 							}
 							else {
 								$is_default =''; 
 							}
-							echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
+							
+							echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.stripcslashes($custom_field_title).'</option>';
 						}
 						echo '</select>';
 						echo '</td></tr>';

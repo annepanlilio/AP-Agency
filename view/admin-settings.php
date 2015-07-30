@@ -2785,6 +2785,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 								if($data1["ProfileCustomType"] == 1){ // text
 									echo "<div class=\"rbfield rbtext rbsingle\">";
+									$data1["ProfileCustomTitle"] = str_replace("'",'',$data1["ProfileCustomTitle"]);
+									$data1["ProfileCustomTitle"] = str_replace("_"," ",stripcslashes($data1["ProfileCustomTitle"]));
 									echo "	<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 										</div>";
@@ -2807,6 +2809,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											</div>";
 
 								} elseif($data1["ProfileCustomType"] == 3 || $data1["ProfileCustomType"] == 9){ // Dropdown || Multi-Select
+									$data1["ProfileCustomTitle"] = str_replace("'",'',$data1["ProfileCustomTitle"]);
+									$data1["ProfileCustomTitle"] = str_replace("_"," ",stripcslashes($data1["ProfileCustomTitle"]));
 									echo "<div class=\"rbfield rbselect rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
@@ -2854,6 +2858,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 								} elseif($data1["ProfileCustomType"] == 4){ //textbox
 										$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
+										$data1["ProfileCustomTitle"] = str_replace("'",'',$data1["ProfileCustomTitle"]);
+										$data1["ProfileCustomTitle"] = str_replace("_"," ",stripcslashes($data1["ProfileCustomTitle"]));
 										echo "<div class=\"rbfield rbtext rbsingle\">
 												<label>Title:</label>
 												<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
@@ -2867,7 +2873,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 										$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 										$pos =0;
-
+										$data1["ProfileCustomTitle"] = str_replace("'",'',$data1["ProfileCustomTitle"]);
+										$data1["ProfileCustomTitle"] = str_replace("_"," ",stripcslashes($data1["ProfileCustomTitle"]));
 										echo "<div class=\"rbfield rbtext rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
@@ -2891,6 +2898,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								} elseif($data1["ProfileCustomType"] == 6){ //radio button
 									$array_customOptions_values = explode("|",$data1['ProfileCustomOptions']);
 									$pos =0;
+									$data1["ProfileCustomTitle"] = str_replace("'",'',$data1["ProfileCustomTitle"]);
+									$data1["ProfileCustomTitle"] = str_replace("_"," ",stripcslashes($data1["ProfileCustomTitle"]));
 									echo "<div class=\"rbfield rbtext rbsingle\">
 											<label>Title:</label>
 											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
@@ -2926,6 +2935,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 										}
 
 								} else if($data1["ProfileCustomType"] == 10){ // text
+									$data1["ProfileCustomTitle"] = str_replace("'",'',$data1["ProfileCustomTitle"]);
+									$data1["ProfileCustomTitle"] = str_replace("_"," ",stripcslashes($data1["ProfileCustomTitle"]));
 									echo "<tr>
 											<td style=\"width:50px;\">Title:</td>
 											<td><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></td>
@@ -3037,7 +3048,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			$ProfileCustomID	=$data['ProfileCustomID'];
 		echo "    <tr>\n";
 		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $ProfileCustomID ."\" name=\"". $ProfileCustomID ."\" value=\"". $ProfileCustomID ."\" /></th>\n";
-		echo "        <td class=\"column\">". stripslashes($data['ProfileCustomTitle']) ."\n";
+		echo "        <td class=\"column\">".  str_replace("'",'',stripslashes($data['ProfileCustomTitle'])) ."\n";
 		echo "          <div class=\"row-actions\">\n";
 		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
 		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;ProfileCustomID=". $ProfileCustomID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
