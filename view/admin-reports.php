@@ -1267,6 +1267,7 @@ elseif ($ConfigID == 81)
 	$to = 0;
 	$count = isset($_GET["count"]) && !empty($_GET["count"])?$_GET["count"]:100;
 	$last = round($total_profiles->total_profiles/$count);
+	$last = $last == 0 ? 1 : $last;
 	$loop_count = $count;
 	$x = 0;
 	$last = $total_profiles->total_profiles > 100 ? $last + 1 : $last;
