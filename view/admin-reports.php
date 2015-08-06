@@ -122,7 +122,7 @@ if ($ConfigID == 0) {
 
 	echo "<div class=\"boxlinkgroup\">\n";
 	echo "  <h2>". __("Importing Records", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
-	echo "  <p>". __("The following tools will help import records.  DO NOT USE THESE TOOLS IF YOU ALREADY HAVE DATA LOADED", RBAGENCY_TEXTDOMAIN) . "</p>\n";
+	echo "  <p>". __("The following tools will help import records.", RBAGENCY_TEXTDOMAIN) . "</p>\n";
 	echo "    <div class=\"boxlink\">\n";
 	echo "      <h3>". __("Step 1", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
 	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=81\" title=\"". __("Export Now", RBAGENCY_TEXTDOMAIN) . "\">". __("Export Now", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
@@ -716,8 +716,8 @@ elseif ($ConfigID == 4) {
 						echo "This profile has no images loaded.";
 					} else {
 						foreach ($results4a as $data4a) {
-							//echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". $dirURL."/". $data4a['ProfileMediaURL'] ."&w=150&h=150\"  style=\"width: 150px;\" /></div>\n";
-							echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". $image_src."\"  style=\"width: 150px;\" /></div>\n";
+							echo "<div style=\"width: 150px; float: left; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". $dirURL."/". $data4a['ProfileMediaURL'] ."&w=150\"  style=\"width: 150px;\" /></div>\n";
+							//echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". $image_src."\"  style=\"width: 150px;\" /></div>\n";
 						}
 						echo "<div style=\"clear: both;\"></div>\n";
 					}
@@ -1263,6 +1263,7 @@ elseif ($ConfigID == 81)
 	echo " <form action=\"".RBAGENCY_PLUGIN_URL."view/export-Profile-Database.php\" method=\"post\">";
 	echo "<input checked=\"checked\" type=\"radio\" name=\"export-profile\" value=\"template\">Download Template<br/>";
 	$total_profiles = $wpdb->get_row("SELECT count(*) as total_profiles FROM ".table_agency_profile."");
+	
 	$from = 1;
 	$to = 0;
 	$count = isset($_GET["count"]) && !empty($_GET["count"])?$_GET["count"]:100;
