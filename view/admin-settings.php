@@ -2046,17 +2046,10 @@ echo "<div id=\"custom-fields\">";
 	<?php
 	//restore preset
 	if(isset($_GET['restore']) && ($_GET['restore'] == 'RestorePreset')){
-				//delete initial values ProfileCustomID 1 to 18
-        /*
-				$presets = "'ethnicity','skin tone','hair color','eye color','height','weight','shirt','waist','hips','shoe size','suit','inseam','dress','bust','union','experience','language','booking',date";
-        
-				$presets = "'Contract Date','Visa Number','Ethnicity','Skin Tone','Hair Color','Eye Color','Weight','Shirt Size','Waist','Hips','Inseam','Suit Size','Inseam','Dress Size','Bust','Union','Experience','Language','Chest','Bra Cup Size','Expertise','Height','Best Way to Contact You'";*/
-        
-
-				$presets = "'Ethnicity','Skin Tone','Hair Color','Eye Color','Height','Weight','Bust','Bra Cup Size','Chest','Waist','Hips','Suit Size','Inseam','Shirt Size','Suit Size','Dress Size','Shoe Size','Expertise','Language','Union','Best Way to Contact You','Contract Date','Visa Number'";
-        
-        
-				$delete = "DELETE FROM " . table_agency_customfields . " WHERE LOWER(ProfileCustomTitle) IN(".$presets.")";
+			//delete initial values ProfileCustomID 1 to 18
+				$presets = "'ethnicity','skin tone','hair color','eye color','height','weight','shirt','waist','hips','shoe size','suit','inseam','dress','bust','union','experience','language','booking'";	
+				//$delete = "DELETE FROM " . table_agency_customfields . " WHERE LOWER(ProfileCustomTitle) IN(".$presets.")";
+				$delete = "DELETE FROM " . table_agency_customfields ;
 				$wpdb->query($delete);
 				//repopulate
 				$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
@@ -2103,7 +2096,9 @@ $insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(21,
 $insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(22, 'Contract Date', 	10, '', 0, 22, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");  
 $insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(23, 'Visa Number', 	4, '', 0, 23, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");   
 //junjavier : edit end                     
-                
+             
+
+
 						$results = $wpdb->query($insert);
 				}
 
