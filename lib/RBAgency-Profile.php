@@ -1517,6 +1517,7 @@ class RBAgency_Profile {
 					profile.ProfileContactNameFirst,
 					profile.ProfileContactNameLast,
 					profile.ProfileDateBirth,
+					profile.ProfileGender,
 					profile.ProfileDateCreated,
 					profile.ProfileLocationState,
 					profile.ProfileLocationCountry,
@@ -1651,6 +1652,7 @@ class RBAgency_Profile {
 								profile.ProfileContactNameLast,
 								profile.ProfileDateBirth,
 								profile.ProfileIsActive,
+								profile.ProfileGender,
 								profile.ProfileLocationState,
 								profile.ProfileID as pID,
 								cart.CastingCartTalentID,
@@ -1705,7 +1707,7 @@ class RBAgency_Profile {
 			 */
 				case 4:
 					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where_array['standard'] . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileGender,profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where_array['standard'] . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 					break;
 			}
 
@@ -1816,25 +1818,24 @@ class RBAgency_Profile {
 
 					$all_html.='
 							<select id="sort_by">
-								<option value="1">Sort List</option>
-								<option value="sortage">Age</option>
-								<option value="sortname">Name</option>
-								<option value="sortdate">Date Joined</option>
-								<option value="sortname">Display Name</option>';
+								<option value="0">Sort List</option>
+								<option value="1">Age</option>
+								<option value="2">Name</option>
+								<option value="3">Date Joined</option>
+								<option value="2">Display Name</option>
+								<option value="50">Gender</option>';
 								$customFilters = array_merge($customFilters,$results_genders);
 								foreach($customFilters as $customFilter){
 									
 									$customID = $customFilter['ProfileCustomID'] + 100; 
 									if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4){
-										$all_html.= "<option value='sorttext_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
+										$all_html.= "<option value='1'>".$customFilter['ProfileCustomTitle']."</option>";
 									} elseif($customFilter['ProfileCustomType'] == 10){
-										$all_html.= "<option value='sortdate2_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
+										$all_html.= "<option value='3'>".$customFilter['ProfileCustomTitle']."</option>";
 									} elseif($customFilter['ProfileCustomType'] == 3){
 										$all_html.= "<option value='sortdropdown_".$customID."_|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|'>".$customFilter['ProfileCustomTitle']."</option>";
 									} elseif($customFilter['ProfileCustomType'] == 7){
-										$all_html.= "<option value='sortmeasure_".$customID."'>".$customFilter['ProfileCustomTitle']."</option>";
-									} else {
-										$all_html.= "<option value='gender_".$customFilter['GenderID']."'>".$customFilter['GenderTitle']."</option>";
+										$all_html.= "<option value='2'>".$customFilter['ProfileCustomTitle']."</option>";
 									}
 								}
 
@@ -2534,13 +2535,30 @@ class RBAgency_Profile {
 					$profile_link_class = "slide-panel";
 				}
 
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class."\" >\n";
+				$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class." ".$PGENDER."\" >\n";
 
 				if(!$plain){
 					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
 					$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
 					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+					
+
+					
+					
+					//foreach($profile_genders as $profile_gender)
+
+						/**if($dataList["ProfileGender"] == '1'){
+							$displayHTML .= '<input id="male'.$dataList["ProfileID"].'" type="hidden" class="p_gender_male" value="Male">';
+						}elseif($dataList["ProfileGender"] == '2'){
+							$displayHTML .= '<input id="female'.$dataList["ProfileID"].'" type="hidden" class="p_gender_female" value="Female">';
+						}**/
+					$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
+					$displayHTML .= '<input id="gender'.$dataList["ProfileID"].'" type="hidden" class="p_gender" value="'.$PGENDER.'">';
+					
+					
+
 
 					$query = " SELECT mu.ProfileCustomMuxID,mu.ProfileCustomDateValue,mu.ProfileCustomID,mu.ProfileCustomValue,c.ProfileCustomType FROM " .  table_agency_customfield_mux . " mu INNER JOIN ".table_agency_customfields." c ON mu.ProfileCustomID = c.ProfileCustomID WHERE mu.ProfileID = ".$dataList['ProfileID']." AND c.ProfileCustomShowFilter = 1";
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
@@ -2760,6 +2778,7 @@ class RBAgency_Profile {
 					}
 
 				$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
+
 				$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 
 			} elseif($rb_agency_option_layoutprofilelistlayout == 1){

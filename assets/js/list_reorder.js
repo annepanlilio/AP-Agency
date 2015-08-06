@@ -3,7 +3,7 @@
  * jquery attach to sorting dropdown 
  */
 jQuery(document).ready(function(){
-    
+   
         /*
          * create element if not exist
          */
@@ -15,7 +15,7 @@ jQuery(document).ready(function(){
         jQuery("#sort_by option[value='']").attr("selected", "selected");
         
     jQuery("#sort_by, #sort_option").change(function(){
-
+                
                 var manage = new manage_elem(jQuery("#sort_by").val(),jQuery("#profile-list"),jQuery("#hidden_div"));
                    manage.current_custom_date_id(jQuery("#sort_by").val());
                 
@@ -28,7 +28,8 @@ jQuery(document).ready(function(){
                         
                         manage.start_sorting(jQuery(this)); 
                 
-                }                            
+                }
+                                         
 
     });
 
@@ -101,7 +102,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     var options;
 
                     setting = setting.split("_")[0];
-
+                    console.log(setting);
                     if(setting == 1) {
                           options = {
                                  1 : 'Youngest to Oldest',
@@ -117,12 +118,17 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                  1 : 'Ascending',
                                  2 : 'Descending'
                           };
-                    } else if(setting > 3){ // custom date
+                    } else if(setting > 3 && setting < 50){ // custom date
                          options = {
                                  1 : 'Ascending',
                                  2 : 'Descending'
                           };
-                    } else {
+                    } else if(setting == 50){
+                         options = {
+                                 1 : 'Male',
+                                 2 : 'Female'
+                         }
+                    }else {
                           options = {
                                  '' : 'Sort Options'
                           }
@@ -228,6 +234,18 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         if(t1 == '25' && t2 == '2'){
                             return '27';
                         }
+                        if(t1 == '50' && t2 == '1'){
+                            
+                            return '501';
+                        }
+                        if(t1 == '50' && t2 == '2'){
+                            
+                            return '502';
+                        } 
+                        if(t1 == '0'){
+                            return '0';
+                        }
+
                         return "";
                 
             }
@@ -270,7 +288,10 @@ function manage_elem(typ1, main_elm, hidden_elm){
                        ///console.log("split 1:"+sort_typ.split("_")[1]);
                         ///console.log("split 2:"+sort_typ.split("_")[2]);
                         // age sorting youngest to oldest   
+            
             if(sort_typ == '1') {
+                 jQuery(".Female").show();
+               jQuery(".Male").show();
                 jQuery("#hidden_div").find(".p_birth").each(function(){
                     srt_arr.push(jQuery(this).val());
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -280,6 +301,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
             
                         // name sorting ascending   
             } else if (sort_typ == '2') {
+                 jQuery(".Female").show();
+               jQuery(".Male").show();
                 jQuery("#hidden_div").find(".p_name").each(function(){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -288,6 +311,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                 
                         // member registered sorting descending         
             } else if (sort_typ == '3') {
+                 jQuery(".Female").show();
+               jQuery(".Male").show();
                 jQuery("#hidden_div").find(".p_created").each(function(){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -297,6 +322,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         
                         // member registered sorting ascending   
             } else if (sort_typ == '4') {
+                 jQuery(".Female").show();
+               jQuery(".Male").show();
                 jQuery("#hidden_div").find(".p_created").each(function(){
                             srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -305,6 +332,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                 
                         // age sorting oldest to youngest 
             } else if (sort_typ == '5') {
+                 jQuery(".Female").show();
+               jQuery(".Male").show();
                 jQuery("#hidden_div").find(".p_birth").each(function(){
                             srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -314,6 +343,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                       
             // member registered sorting descending         
                 } else if (sort_typ == '6') {
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                 jQuery("#hidden_div").find(".p_name").each(function(){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -323,6 +354,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 
 
                }else if (sort_typ.split("_")[0] == 7) {  // duedate sorting descending 
+                 jQuery(".Female").show();
+               jQuery(".Male").show();
                                
                             jQuery("#hidden_div").find(".p_duedate#du"+sort_typ.split("_")[1]+"_"+sort_typ.split("_")[2]).each(function(){
                                 srt_arr.push(jQuery(this).val());   
@@ -333,6 +366,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     srt_arr.reverse();
                                    
                 } else if (sort_typ.split("_")[0] == 8) {  // duedate sorting ascending  
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                                 
                                 jQuery("#hidden_div").find(".p_duedate#du"+sort_typ.split("_")[1]+"_"+sort_typ.split("_")[2]).each(function(){
                            
@@ -344,6 +379,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                     
                           
                 } else if (sort_typ == '9') {
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                     jQuery("#hidden_div").find(".p_duedate").each(function(){
                         srt_arr.push(jQuery(this).val());   
                                             srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -353,6 +390,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                             
                             // member registered sorting ascending   
                 } else if (sort_typ == '10') {
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                     jQuery("#hidden_div").find(".p_duedate").each(function(){
                                 srt_arr.push(jQuery(this).val());   
                                             srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -362,6 +401,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                             // age sorting oldest to youngest 
                 // Custom Date
                 } else if (sort_typ == '11') {
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                     jQuery("#hidden_div").find("#"+current_custom_date_id+".p_customdate").each(function(){
                                 srt_arr.push(jQuery(this).val());   
                                             srt_arr_assoc[jQuery(this).attr('data-custom-date')] = jQuery(this).val();
@@ -370,7 +411,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                     
                             // age sorting oldest to youngest 
                 } else if (sort_typ == '12') {
-                   
+                    jQuery(".Female").show();
+               jQuery(".Male").show();
                     jQuery("#hidden_div").find("#"+current_custom_date_id+".p_customdate").each(function(){
                                  srt_arr.push(jQuery(this).val());   
                                  
@@ -381,6 +423,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                          
                             
                 }else if (sort_typ == '24') {
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                      jQuery("#hidden_div").find(".csp_name").each(function(){
                                 srt_arr.push(jQuery(this).val());   
                                             srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -391,6 +435,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                      
                         // member registered sorting descending         
                 }else if (sort_typ == '25') {
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                  jQuery("#hidden_div").find(".csp_name").each(function(){
 
                         srt_arr.push(jQuery(this).val());   
@@ -401,6 +447,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                 
                         // member registered sorting descending         
                 }else if (sort_typ == '26') {
+                     jQuery(".Female").show();
+               jQuery(".Male").show();
                  jQuery("#hidden_div").find(".csp_created").each(function(){
                             srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -409,6 +457,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         
                         // member registered sorting ascending   
             } else if (sort_typ == '27') {
+                 jQuery(".Female").show();
+               jQuery(".Male").show();
                jQuery("#hidden_div").find(".csp_created").each(function(){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
@@ -416,7 +466,37 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 srt_arr.sort();
                                 srt_arr.reverse();
                                 
-                        // age sorting oldest to youngest 
+                       
+            }else if (sort_typ.split("_")[0] == '501') {
+               jQuery(".Female").hide();
+               jQuery(".Male").show();
+               jQuery("#hidden_div").find(".p_gender").each(function(){
+                    srt_arr.push(jQuery(this).val());   
+                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                });
+                
+                srt_arr.sort(); 
+                srt_arr.reverse();                                   
+                        
+            }else if(sort_typ.split("_")[0] == '502'){
+               jQuery(".Female").show();
+               jQuery(".Male").hide();
+                jQuery("#hidden_div").find(".p_gender").each(function(){
+                    srt_arr.push(jQuery(this).val());   
+                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                });
+                
+                srt_arr.sort();
+
+                //alert("Show Females!");
+            }else if(sort_typ.split("_")[0] == '0'){
+
+                jQuery(".Female").show();
+                jQuery(".Male").show();
+                jQuery("#hidden_div").find(".p_gender").each(function(){
+                    srt_arr.push(jQuery(this).val());   
+                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                });
             }
                    ////console.log(total_items);
                    
@@ -540,7 +620,47 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         }
 
 
-                                }                                     
+                                } else if(sort_typ == '501') {
+                                      if(prc.check_instance_in_array(value)){
+                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent();
+                                            prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_gender");
+                                                counted.push(value);
+                                            }
+                                        } 
+
+
+
+                                }  else if(sort_typ == '502') {
+                                        if(prc.check_instance_in_array(value)){
+                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent();
+                                            prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_gender");
+                                                counted.push(value);
+                                            }
+                                        }
+
+                                        
+
+
+                                } else if(sort_typ == '0'){
+                                    jQuery(".Female").show();
+                                    jQuery(".Male").show();
+                                     if(prc.check_instance_in_array(value)){
+                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent();
+                                            prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_gender");
+                                                counted.push(value);
+                                            }
+                                        }
+
+                                }                                  
                                         
                                  ////console.log(value);
 
