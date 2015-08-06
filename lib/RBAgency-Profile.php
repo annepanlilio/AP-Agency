@@ -2662,7 +2662,7 @@ class RBAgency_Profile {
 					$displayHTML .="</div>";
 
 				} else {
-					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
+					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
 				}				
 
 				// Determine profile details
@@ -2701,6 +2701,7 @@ class RBAgency_Profile {
 						$arr_query['day_style'] = "";
 					}
 					$ProfileDateBirth = rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query);
+
 					if(!empty($ProfileDateBirth)){
 					$displayHTML .= "<span class=\"details-age\">". $ProfileDateBirth ."</span>";
 					}
