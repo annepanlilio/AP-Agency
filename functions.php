@@ -387,6 +387,10 @@
 	function rb_agency_get_age($p_strDate, $attrs = array() ) {
 	//Get Age Option if it should display with months included
 
+		if($p_strDate == "0000-00-00"){
+			return "";
+		}
+
 			$sc = shortcode_atts( array(
 				'show_age_year' => false,
 				'show_age_month' => false,
