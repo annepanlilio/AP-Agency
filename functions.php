@@ -1363,8 +1363,10 @@
 
 
 					if($ProfileCustomType == 9){
-						$expertiseToArray = explode("|",$ProfileCustomValue);
-						$expertiseToArray = explode(",",$ProfileCustomValue);
+						
+						$expertiseToArrayNotComma = explode("|",$ProfileCustomValue);
+						$expertiseToArrayComma = explode(",",$ProfileCustomValue);
+						$expertiseToArray = array_merge($expertiseToArrayComma,$expertiseToArrayNotComma);
 					}
 
 					echo "<label class=\"dropdown\">".$data[0]."</label>";
@@ -1373,6 +1375,7 @@
 
 					if($ProfileCustomType == 9){
 							foreach($data as $val1){
+								
 								if(in_array(trim(stripcslashes($val1),'"'),$expertiseToArray)){
 									$isSelected = "selected=\"selected\"";
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
