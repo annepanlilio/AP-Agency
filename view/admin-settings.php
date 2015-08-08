@@ -2067,15 +2067,37 @@ echo "<div id=\"custom-fields\">";
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (4, 'Eye Color', 	3, '|Blue|Brown|Hazel|Green|Black|', 0, 4, 0, 1, 1,0, 0,0, 1, 0, 0, 0, 0)"); 
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (5, 'Height', 		7, '3', 0, 5, 0, 1, 1,0, 0, 0, 1, 0, 0, 0, 0)");                    
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (6, 'Weight', 		7, '2', 0, 6, 0, 1, 1,0, 0, 0, 1, 0, 0, 0, 0)");
-                   	$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (7, 'Bust', 		7, '1', 0, 7, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                    
-            		$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(8, 'Bra Cup Size', 3, '|AA|A|B|C|CC|D|DD|E|F|FF|G|GG|H|HH|I|J|JJ|K|KK|L|LL|M|N|', 0, 8, 2, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                      
-           			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (9, 'Chest', 		7, '1', 0, 9, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                        
+                   	
+                   	$GenderFemales1 = $wpdb->get_results("SELECT * FROM ".table_agency_data_gender." WHERE GenderTitle = 'Female'",ARRAY_A);
+                   	foreach($GenderFemales1 as $GenderFemale1){
+                   		$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (7, 'Bust', 		7, '1', 0, 7, ".$GenderFemale1['GenderID'].", 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
+                   		$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(8, 'Bra Cup Size', 3, '|AA|A|B|C|CC|D|DD|E|F|FF|G|GG|H|HH|I|J|JJ|K|KK|L|LL|M|N|', 0, 8, ".$GenderFemale1['GenderID'].", 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
+                   	}
+                   	                    
+            		$GenderMales1 = $wpdb->get_results("SELECT * FROM ".table_agency_data_gender." WHERE GenderTitle = 'Male'",ARRAY_A);
+                   	foreach($GenderMales1 as $GenderMale1){                      
+           				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (9, 'Chest', 		7, '1', 0, 9, ".$GenderMale1['GenderID'].", 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                        
+					}
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (10, 'Waist', 		7, '1', 0, 10, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
-            		$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (11, 'Hips', 		7, '1', 0, 11, 2, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                    
-					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(12, 'Inseam', 		7, '1', 0, 12, 1, 1, 1,0, 0, 0, 1, 0, 0, 0, 0)");
-        			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (13, 'Shirt Size', 3, '|2XS|XS|S|M|L|XL|2XL|3XL', 0, 13, 1, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                     
-					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(14, 'Suit Size', 3, '|36S|37S|38S|39S|40S|41S|42S|43S|44S|45S|46S|36R|38R|40R|42R|44R|46R|48R|50R|52R|54R|40L|42L|44L|46L|48L|50L|52L|54L|', 0, 14, 1, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                       
-        			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(15, 'Dress Size', 	3, '|2|4|6|8|10|12|14|16|18|', 0, 15, 2, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");   
+            		
+            		$GenderFemales2 = $wpdb->get_results("SELECT * FROM ".table_agency_data_gender." WHERE GenderTitle = 'Female'",ARRAY_A);
+                   	foreach($GenderFemales2 as $GenderFemale2){
+                   		$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (11, 'Hips', 		7, '1', 0, 11, ".$GenderFemale2['GenderID'].", 1, 1,0,0, 0, 1, 0, 0, 0, 0)"); 
+                   	}
+
+            		$GenderMales2 = $wpdb->get_results("SELECT * FROM ".table_agency_data_gender." WHERE GenderTitle = 'Male'",ARRAY_A);
+                   	foreach($GenderMales2 as $GenderMale2){                      
+           				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(12, 'Inseam', 		7, '1', 0, 12, ".$GenderMale2['GenderID'].", 1, 1,0, 0, 0, 1, 0, 0, 0, 0)");
+           				$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES (13, 'Shirt Size', 3, '|2XS|XS|S|M|L|XL|2XL|3XL', 0, 13, ".$GenderMale2['GenderID'].", 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                     
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(14, 'Suit Size', 3, '|36S|37S|38S|39S|40S|41S|42S|43S|44S|45S|46S|36R|38R|40R|42R|44R|46R|48R|50R|52R|54R|40L|42L|44L|46L|48L|50L|52L|54L|', 0, 14, ".$GenderMale2['GenderID'].", 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
+					}                   
+					
+        			                       
+        			$GenderFemales3 = $wpdb->get_results("SELECT * FROM ".table_agency_data_gender." WHERE GenderTitle = 'Female'",ARRAY_A);
+                   	foreach($GenderFemales3 as $GenderFemale3){
+                   		$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(15, 'Dress Size', 	3, '|2|4|6|8|10|12|14|16|18|', 0, 15, ".$GenderFemale3['GenderID'].", 1, 1,0,0, 0, 1, 0, 0, 0, 0)"); 
+                   	}
+
         			$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(16, 'Shoe Size', 	7, '1', 0, 16, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                    
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Expertise', 	9, '|Modeling|Acting|Singing|Dancing|', 0, 17, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");   
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Experience', 	4, '', 0, 18, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");                      
