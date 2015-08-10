@@ -2609,6 +2609,12 @@ class RBAgency_Profile {
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 				if ($p_image){
 
+					if($rb_agency_option_layoutprofileviewmode == 1) {
+						$profile_link = "#profile-id";
+					} else {
+						$profile_link = RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"];
+					}
+					
 					$displayHTML .="<div class=\"image\">";					
 
 					$displayHTML .= "<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_link_class."\">";
