@@ -3343,6 +3343,8 @@
 	function rb_load_profile_pdf($row = 0, $logo = NULL){
 
 	$profile_name = get_current_profile_info("ProfileContactDisplay");
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
 	$file_name = str_replace(" ", "", $profile_name); ?>
 	
 
@@ -3358,7 +3360,8 @@
 				data: {
 					pid : <?php echo get_current_profile_info("ProfileID"); ?>, 
 					row : <?php echo $row; ?>, 
-					logo : "<?php echo $logo; ?>",
+					logo : "<?php echo get_site_url().$rb_agency_option_agencylogo; ?>",
+					//logo : "<?php echo $logo; ?>",
 					filename : "<?php echo $file_name; ?>"},
 				success: function(response){
 					if (response){
