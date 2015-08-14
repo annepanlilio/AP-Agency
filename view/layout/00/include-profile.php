@@ -75,9 +75,8 @@ echo "				<div id=\"stats\">\n";
 echo "					<h2>". $ProfileContactDisplay ."</h2>\n";
 echo "					<ul>\n";
 
-							if (!empty($ProfileGender)) {
-								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 );
-								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
+							if (!empty($ProfileAge)) {
+								echo "<li class=\"rb_age\" id=\"rb_age\"><strong>". __("Age", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileAge. "</li>\n";
 							}
 							
 							if (!empty($ProfileGender)) {
