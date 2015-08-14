@@ -749,7 +749,11 @@ elseif ($ConfigID == 1) {
 		echo " </tr>\n";
 
 
+		include_once (RBAGENCY_PLUGIN_DIR ."view/admin-sidebutton.php");
 
+		
+		
+		
 		//Commented by @Gaurav as We will be creating this as a separate plugin
 		// Member Contact form link
 		/*echo " <tr valign=\"top\">\n";
