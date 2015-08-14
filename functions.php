@@ -4093,7 +4093,7 @@
 
 	function load_admin_js(){
 		if(is_admin()){
-			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
+			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		}
 	}
 	add_action( 'init', 'load_admin_js' );
