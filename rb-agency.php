@@ -185,6 +185,9 @@ See license.txt for full details.
 
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/BFI_Thumb.php');
 
+	
+	include_once(RBAGENCY_PLUGIN_DIR.'ext/upload-multi.php');
+	
 
 // *************************************************************************************************** //
 
