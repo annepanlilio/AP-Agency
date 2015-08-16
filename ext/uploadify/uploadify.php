@@ -18,7 +18,7 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	
 	// Validate the file type
-	$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
+	//$fileTypes = array('jpg','jpeg','gif','png'); // File extensions
 	$fileParts = pathinfo($_FILES['Filedata']['name']);	
 	$targetPath = $rootFolder . $image_path;
 	
@@ -30,10 +30,10 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 	$_t_filename =  $modelID .'-'. $modelType .'-'. $randstring . '.' . $fileParts['extension'];
 	$targetFile  = rtrim($targetPath,'/') . '/' . $_t_filename;
 	
-	if (in_array($fileParts['extension'],$fileTypes)) {
+	//if (in_array($fileParts['extension'],$fileTypes)) {
 		move_uploaded_file($tempFile,$targetFile);
 		echo $image_path .'/'. $_t_filename;
-	} else {
+	/* } else {
 		echo 'Invalid file type.';
-	}
+	} */
 }

@@ -28,7 +28,7 @@ function rb_agency_profilesphoto_script() {
 
 
 add_action('admin_print_scripts', 'rb_agency_profilesphoto_script');
-add_action('admin_footer', 'rb_agency_profilesphoto_admin_foot');
+/* add_action('admin_footer', 'rb_agency_profilesphoto_admin_foot');
 
 function rb_agency_profilesphoto_admin_foot(){
 
@@ -39,7 +39,7 @@ function rb_agency_profilesphoto_admin_foot(){
 			
 		</script>';
 	}
-}
+} */
 
 
 add_action('wp_ajax_profilesphoto_save','profilesphoto_save');
