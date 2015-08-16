@@ -1797,6 +1797,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<div class="inside">
 							<div class="main">
 								<?php
+								
+								
+								include_once(RBAGENCY_PLUGIN_DIR .'view/include-photouploadmulti.php');
+								
+								
+								
 											// Upload Images
 								echo "      <p>" . __("Upload new media using the forms below", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 								if(isset($errorValidation['profileMedia'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['profileMedia']."</p>\n";}
