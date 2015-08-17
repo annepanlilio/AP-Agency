@@ -109,7 +109,13 @@ $siteurl = get_option('siteurl');
 		}
 
 
-	} elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
+	} elseif ((isset($_GET['action']) && $_GET['action'] == "generateEcards")) {
+	
+		include(RBAGENCY_PLUGIN_DIR ."view/include-ecard-create.php");
+	
+	
+	}
+	elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	/* 
 	 * Delete Email
 	 */
