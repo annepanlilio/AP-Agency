@@ -892,7 +892,13 @@ elseif ($ConfigID == 11) {
 		echo "		<input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin_agent_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent_url']:"")."\"/>	";
 		echo "   </td>\n";
 		echo " </tr>\n";
-		
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Switch Sidebar', RBAGENCY_interact_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_switch_sidebar_agent]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent']:"", 1,false)."/> ". __("Use default interact sidebar", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_switch_sidebar_agent]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent']:"", 0,false)."/> ". __("Use theme widget sidebar", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
 
 
 		
