@@ -26,7 +26,7 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 	if(!is_dir($targetPath))mkdir($targetPath);
 
 	 
-	$randstring = time();
+	$randstring = time().rand(1000,999999);
 	$_t_filename =  $modelID .'-'. $modelType .'-'. $randstring . '.' . $fileParts['extension'];
 	$targetFile  = rtrim($targetPath,'/') . '/' . $_t_filename;
 	

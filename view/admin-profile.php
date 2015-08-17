@@ -1563,36 +1563,33 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "<div>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
 								}
 
-								echo "      <div style=\"clear: both;\"></div>\n";
-								echo '<a href="javascript:confirm_mass_gallery_delete();">Delete Selected Images</a>';
-								echo '<script language="javascript">';
-								echo 'function confirm_mass_gallery_delete(){';
-								//echo 'jQuery(document).ready(function() {';
-								echo "var mas_del_ids = '&';";
-								echo 'jQuery("input:checkbox[name=massgaldel]:checked").each(function() {';
-								echo "if(mas_del_ids != '&'){";
-								echo "mas_del_ids += '&';";
-								echo '}';
-
-								echo "mas_del_ids += 'targetids[]='+jQuery(this).val();";
-								//echo "});";
-
-								echo "if( mas_del_ids != '&'){";
-								echo 'if(confirm("Do you want to delete all the selected images?")){';
-
-								echo "urlmassdelete = '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=massphotodelete' + mas_del_ids;";
-								echo 'document.location = urlmassdelete;';
-								echo '}
-								}
-								else {
-									alert("You have to select images to delete");
-								}
-							});
-
-							}
-							</script>';
-
 							?>
+							
+							<div style="clear: both;"></div>
+								<a href="javascript:confirm_mass_gallery_delete();">Delete Selected Images</a>
+								
+								<script language="javascript">
+								function confirm_mass_gallery_delete(){
+									var mas_del_ids = '&';
+									jQuery("input:checkbox[name=massgaldel]:checked").each(function() {
+										if(mas_del_ids != '&'){
+											mas_del_ids += '&';
+										}
+									mas_del_ids += 'targetids[]='+jQuery(this).val();
+									});
+									
+									if( mas_del_ids != '&'){
+										if(confirm("Do you want to delete all the selected images?")){
+
+											urlmassdelete = '<?php echo admin_url("admin.php?page=" . $_GET['page']);?>&action=editRecord&ProfileID=<?php echo $ProfileID;?>&actionsub=massphotodelete' + mas_del_ids;
+											document.location = urlmassdelete;
+										}
+									}else {
+										alert("You have to select images to delete");
+									}
+								}
+								</script>
+								
 							</div>
 						</div>
 					</div>
