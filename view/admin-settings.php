@@ -841,7 +841,7 @@ elseif ($ConfigID == 11) {
 	 * Interact Settings
 	 */
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Login Settings', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Login Settings (Model/Talent)', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Redirect for Login', RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -877,6 +877,33 @@ elseif ($ConfigID == 11) {
 
 
 
+	/*
+	 * Interact Settings - Casting Agent
+	 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Login Settings (Casting Agent)', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
+		echo " </tr>\n";
+		
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Redirect users after login', RBAGENCY_interact_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin_agent]\" value=\"1\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent']:"", 1,false)."/> ". __("Redirect to /casting-dashboard/(default)", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin_agent]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent']:"", 0,false)."/> ". __("Redirect to custom( e.g. /welcome/ ):", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
+		echo "		<input type=\"text\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_redirect_afterlogin_agent_url]\" value=\"".(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent_url'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_redirect_afterlogin_agent_url']:"")."\"/>	";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		
+
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
