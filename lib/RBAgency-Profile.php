@@ -1699,7 +1699,7 @@ class RBAgency_Profile {
 											LIMIT 1
 											)
 											AS
-								ProfileMediaURL  FROM ".table_agency_profile." AS profile WHERE ".$sql_where_array['standard']."  GROUP BY(profile.ProfileContactNameFirst) ";
+								ProfileMediaURL  FROM ".table_agency_profile." AS profile WHERE ".$sql_where_array['standard']."  GROUP BY(profile.ProfileID) ";
 					break;
 
 			/* 

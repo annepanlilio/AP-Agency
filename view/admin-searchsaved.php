@@ -80,8 +80,28 @@ $siteurl = get_option('siteurl');
 			// Email
 			case 'emailSend':
 
+				
+
 				if (!empty($SearchID)) {
 					echo RBAgency_Casting::cart_email_send_process();
+					
+					/* 
+					
+					?>
+					
+					<script>
+					jQuery(function() {
+						jQuery.post("<?=admin_url("admin-ajax.php")?>", 
+						{
+						ProfileMediaType: 'Image', 
+						action:'sendcastmail'
+						})
+					.done(function(data) {
+						console.log(data);
+					});
+					});
+					</script>
+					<?php */
 				}
 
 			break;
@@ -152,7 +172,8 @@ $siteurl = get_option('siteurl');
 
 		$query ="SELECT * FROM ". table_agency_profile ." profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
-				.(isset($profile_list)? $profile_list:"''").")  GROUP BY profile.ProfileContactNameFirst";
+				.(isset($profile_list)? $profile_list:"''").") GROUP BY profile.ProfileID";
+				//.(isset($profile_list)? $profile_list:"''").")  GROUP BY profile.ProfileContactNameFirst";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 
@@ -164,6 +185,7 @@ $siteurl = get_option('siteurl');
 		?>
 
 		<div style="padding:10px;max-width:580px;float:left;">
+		
 			<b>Preview: <?php echo  $count." Profile(s)"; ?></b>
 				<div id="searchsaved-email" class="searchsaved-profiles">
 					<?php

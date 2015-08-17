@@ -1,4 +1,5 @@
 <?php
+
 class RBAgency_Casting {
 
 	/*
@@ -585,7 +586,7 @@ class RBAgency_Casting {
 							$profileimage .='<div id="searchsaved-emailsent" class="searchsaved-profiles">';
 							$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"%d\"";
 							$data =  $wpdb->get_row($wpdb->prepare($query,$SearchID),ARRAY_A );
-							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".implode(",",array_filter(array_unique(explode(",",$data['SearchProfileID'])))).") GROUP BY(profile.ProfileContactNameFirst)";
+							$query = "SELECT * FROM (SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst ASC) as profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".implode(",",array_filter(array_unique(explode(",",$data['SearchProfileID'])))).") GROUP BY(profile.ProfileID)";
 							$results = $wpdb->get_results($query,ARRAY_A);
 							$count = count($results);
 							$arr_thumbnail = (array)unserialize($cartProfileMedia);
@@ -649,8 +650,23 @@ class RBAgency_Casting {
 			$SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
 			$SearchMuxMessage = $SearchMuxMessage;
-			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  make_clickable(stripcslashes($SearchMuxMessage)), $headers);
+			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage, $headers);
+			
+			//$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage);
+			
+			//wp_mail('jenner.alagao@gmail.com','tesd','my message here');
+			/* 
+			echo "----$SearchMuxToEmail-----$SearchMuxSubject0000000000000$SearchMuxMessage";
+			
+			if($isSent){
+			echo 'good send';
+			}else{
+				echo 'error send';
+			}
+			print_r($headers);
 
+			
+			echo $SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage, $headers; */
 			//var_dump(array($headers,$SearchMuxToEmail,$SearchMuxSubject, $SearchMuxSubject, $SearchMuxHash));
 			//if($isSent){
 				if(!empty($SearchMuxFromEmail)){
