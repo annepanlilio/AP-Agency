@@ -5,98 +5,147 @@
 
 
 
-
-
-	<div class="wrap">	
-		<h2>Add New Team Logo
-			<a href="/wp-admin/admin.php?page=rb_agency_search" class="add-new-h2">Back to List</a>
-			</h2>			
-	<br/> 	
-	<br/>
+<div class="wrap">
+ 
+    <?php screen_icon(); ?>
+ 
+    <h2><?php echo __("Create e-Cards", RBAGENCY_TEXTDOMAIN);?>
+        <a href="/wp-admin/admin.php?page=rb_agency_search" class="add-new-h2">Back</a>
+    </h2>
+	 
+	 
+	<style>
+	input{outline-width: 0px; outline-style: none;}
+	input{border-radius: 3px;border: 1px solid #dfdfdf;background-color: #ffffff;color: #333333;}
+	input:focus{box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);border-color: #aaaaaa;}
+	label.error{clear: both;display:block;color:#900000;background-color:#ffebe8;border:0px solid #cc0000;padding: 2px 4px;
+	margin-right:5px;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;font-style:italic}
+	input.error{color:#900000;background-color:#ffebe8;}
+	</style>
+	<div class="below-h2" style="display:none;" id="message"></div>
+	
 	
 
-
-<style>
-input{outline-width: 0px; outline-style: none;}
-input{border-radius: 3px;border: 1px solid #dfdfdf;background-color: #ffffff;color: #333333;}
-input:focus{box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);border-color: #aaaaaa;}
-
-</style>
-<div class="below-h2" style="display:none;" id="message"></div>
-
-<form method="POST" id="users-form" action="<?=admin_url("admin-ajax.php")?>">
-
-
-<div id="dashboard-widgets" class="metabox-holder columns-1">
-
-			<!-- Row 2: Column Left Start -->
-
-			<div id="postbox-container-3" class="postbox-container">
-				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-
-					<div id="dashboard_media" class="postbox">
-					<div class="handlediv" title="Click to toggle"><br></div>
-						<h3 class="hndle"><span>Media &amp; Links</span></h3>
-					<div class="inside">
-							<div class="main">
-	<table class="form-table" style="width:550px">
-		<tbody>
-			<tr class="form-field form-required">
-				<th scope="row" style="width:200px;"><label for="team">Team<span class="description">(required)</span></label></th>
-				<td><input name="team" type="text" id="team" size="30" value="" placeholder="Miami Heat" class="required" /></td>
-			</tr>
-			<tr class="form-field form-required">
-				<th scope="row"><label for="team_abbr">Team Abbr <span class="description"></span></label></th>
-			</tr>
+    <form name="my_form" method="post">
+        <input type="hidden" name="action" value="some-action">
+        <?php wp_nonce_field( 'some-action-nonce' );
+ 
+        /* Used to save closed meta boxes and their order */
+        wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false );
+        wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
+ 
+        <div id="poststuff">
+ 
+            <div id="post-body" class="metabox-holder columns-1">
+ 
+                <div id="post-body-content">
+                    <!-- #post-body-content -->
+                </div>
+ 
+ 
+                <?
+                
+			 	$cartArray = isset($_SESSION['cartArray'])?$_SESSION['cartArray']:array();
+				$cartString = implode(",", array_unique($cartArray));
 			
-			
-			<?
-			/* <tr class="form-field form-required">
-				<th scope="row"><label for="photo">Photo</label></th>
-				<td>
+				$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY profile.ProfileID ORDER BY profile.ProfileID ASC";
+				$results = $wpdb->get_results($query,ARRAY_A);
+				$count = count($results);
 				
-					<?
-					$_photo = '';
-					$photoURL = teamphoto_info($teamPhoto->ID,'photo');
-					if(!empty($photoURL)){
-						$_photo = TEAMPHOTO_UPLOAD_URL .'/'. stripcslashes($photoURL);
-					}else{
-						$_photo=TEAMPHOTO_URL_PLUG.'/no-photo.png';
-					}
-					?>
-					Current:<br/>
-					<div class="image-place-cur" id="image-place-cur" style="overflow: hidden;float: left; margin: 0 10px 0 0;height: 150px;width:150px; background:#fff url(<?=$_photo;?>) no-repeat center;">
-					</div>
 					
-					<div class="image-place" id="image-place" style="overflow: hidden;float:left; margin: 0;height: 150px;width:150px; background:#fff none no-repeat center;">
+				foreach($results as $model){
+					?>
+                
+                <div id="postbox-container-1" class="postbox-container">
+	                <div id="normal-sortables-1" class="meta-box-sortables ui-sortable">
+						<div id="dashboard_media" class="postbox">
+							<div class="handlediv" title="Click to toggle"><br></div>
+							<h3 class="hndle"><span><?php echo $model['ProfileContactDisplay'];?></span></h3>
+							<div class="inside">
+								<div class="main">
+								
+								<? //print_r($model);?>
+								
+								<a href="/profile/<?php echo $model['ProfileGallery'];?>" target="_blank">View Profile</a>
+								
+								
+									<table class="form-table">
+										<tbody>
+											<tr class="form-field form-required">
+												<th scope="row" style="width:150px;"><label for="team">Select Photos <span class="description">(Max 4)</span></label></th>
+												<td>
+												
+												<?
+												
+												$rb_agency_options_arr = get_option('rb_agency_options');
+												$order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+						
+												$ProfileID = $model['ProfileID'];
+												$ProfileGallery = $model['ProfileGallery'];
+												
+												$image_type =array('Image','Polaroid','Headshot');
+												
+												foreach($image_type as $display_imagetype){
+													$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,$display_imagetype);
+													$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+													$countImg =$wpdb->num_rows;
+									
+													foreach($resultsImg as $dataImg ){
+														$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+														$bfi_params = array(
+															'crop'=>true,
+															'width'=>106,
+															'height'=>130
+														);
+														$image_src = bfi_thumb( $image_path, $bfi_params );
+		
+														echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
+														echo "<img src=\"". $image_src."\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
+													}
+												}
+												//$queryImg = rb_agency_option_galleryorder_query("ProfileMediaID" ,$ProfileID,"Polaroid");
+
+																	
+																	
+											?>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="clear:both;">
-					<input name="photo" type="text" id="photo" value="<?=$teamPhoto->photo;?>" style="visibility:hidden" />
-					<input id="file_upload" name="file_upload" type="file" multiple="true">
-			
-					<div id="queue"></div>
-				</td>
-			</tr> */?>
-			
-		</tbody>
-	</table>
+                </div>
+                
+                <?php } ?>
+                
+                <p class="submit">
+					<input id="submit" class="button-primary" type="submit" value="<?php echo __("Download e-Cards", RBAGENCY_TEXTDOMAIN);?>" name="submit">
+					<img alt="" class="ajax-loading" src="<?=WP_HOME.'/wp-admin'?>/images/wpspin_light.gif">
+					<input type="hidden" name="action" value="<?=$form_event_action;?>">
+					<input type="hidden" name="ID" value="x" >
+				</p>
+				
+				
+            </div> <!-- #post-body -->
+ 
+        </div> <!-- #poststuff -->
+ 
+    </form>
+    <div style="clear:both;"> </div>
+</div><!-- .wrap -->
+
+
+
+
+
 	
 	
 	
 	
-					</div>
-					</div>
-					</div>
-					</div>
-					</div>
-					</div>
-	<p class="submit">
-		<input id="submit" class="button-primary" type="submit" value="Save Team Info" name="submit">
-		<img alt="" class="ajax-loading" src="<?=WP_HOME.'/wp-admin'?>/images/wpspin_light.gif">
-		<input type="hidden" name="action" value="<?=$form_event_action;?>">
-		<input type="hidden" name="ID" value="x" >
-	</p>
-</form>
+	
+	
 		<?
 		/* <script>
 		<?php $timestamp = time();?>
@@ -158,11 +207,6 @@ input:focus{box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);border-color: #aaaaaa;}
 		 */?>
 		
 		
-<style>
-	label.error{clear: both;display:block;color:#900000;background-color:#ffebe8;border:0px solid #cc0000;padding: 2px 4px;
-	margin-right:5px;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;font-style:italic}
-	input.error{color:#900000;background-color:#ffebe8;}
-</style>
 <script>
 	/* 
   jQuery(document).ready(function() {
@@ -251,4 +295,3 @@ input:focus{box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);border-color: #aaaaaa;}
 </script>
 
 
-</div>
