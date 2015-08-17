@@ -85,6 +85,7 @@
 												
 												$image_type =array('Image','Polaroid','Headshot');
 												
+												echo '<select name="model-'. $ProfileID .'" ProfileID="'. $ProfileID .'" class="model-pics image-picker show-html" data-limit="4" multiple="multiple">';
 												foreach($image_type as $display_imagetype){
 													$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,$display_imagetype);
 													$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
@@ -99,15 +100,27 @@
 														);
 														$image_src = bfi_thumb( $image_path, $bfi_params );
 		
-														echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
-														echo "<img src=\"". $image_src."\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
+														//echo '<div style="margin:4px; float:left;width:115px;height:150px;"><a class="allimages_print" href="javascript:void(0)" onClick="selectImg('.$dataImg["ProfileMediaID"].')">';
+														//echo "<img src=\"". $image_src."\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
+														
+														echo '<option data-img-src="'. $image_src .'" value="'. $dataImg["ProfileMediaID"] .'">'. $dataImg["ProfileMediaID"] .'</option>';
 													}
 												}
+												echo '</select>';
 												//$queryImg = rb_agency_option_galleryorder_query("ProfileMediaID" ,$ProfileID,"Polaroid");
 
-																	
+												flush();
 																	
 											?>
+
+										
+										<script>
+										    jQuery(document).ready(function() {
+												jQuery("select").imagepicker({limit: 4,show_label: false});
+                                            });
+										</script>	
+										
+										
 												</td>
 											</tr>
 										</tbody>
@@ -120,6 +133,8 @@
                 
                 <?php } ?>
                 
+                <div style="clear:both;"> </div>
+                <div id="msg-handler-submit"></div>
                 <p class="submit">
 					<input id="submit" class="button-primary" type="submit" value="<?php echo __("Download e-Cards", RBAGENCY_TEXTDOMAIN);?>" name="submit">
 					<img alt="" class="ajax-loading" src="<?=WP_HOME.'/wp-admin'?>/images/wpspin_light.gif">
@@ -208,34 +223,43 @@
 		
 		
 <script>
-	/* 
-  jQuery(document).ready(function() {
 	
-	jQuery.validator.addMethod("checkteamphoto_Availability",function(value,element){
-		var team = jQuery("#team").val();
-		var league = jQuery("#league").val();
-		ret = jQuery.ajax({
-			url: "<?=admin_url("admin-ajax.php")?>",
-			type: "POST",
-			async: false,
-			data: "action=teamphoto_check&field=team&ID=<?=$teamPhoto->ID;?>&val="+team+"&field2=league&val2="+league,
-			success: function(output) {
-				if(output=='true'){
-					return true;}else{return false;}
-			}
+  jQuery(document).ready(function() {
+		
+	jQuery("#submit").on( "click", function() {
+		jQuery('#msg-handler-submit').empty();
+		jQuery('#msg-handler-submit').append('<p>');
+		jQuery('#msg-handler-submit').addClass('error');
+		jQuery.each( jQuery("select"), function( i, val ) {
+	
+	
+			jQuery('#msg-handler-submit').append('ProfileID=');
+			jQuery('#msg-handler-submit').append(jQuery(this).attr('ProfileID'));
+			jQuery('#msg-handler-submit').append('  -- ');
+			
+			//jQuery('#msg-handler-submit').append(jQuery(this).data('picker').selected_values());
+			var selectedPics = jQuery(this).data('picker').selected_values();
+			jQuery.each( selectedPics, function( i,v ) {
+			jQuery('#msg-handler-submit').append(' , ' + v);
+			});
+			
+			jQuery('#msg-handler-submit').append('<br/><br/>');
 		});
-		if(ret.responseText=='true'){
-			return true;}else{ return false;
-		}
-	},"Sorry, Team already exist in selected League.");
-	// handles Form submission
-	jQuery("#users-form").validate({
-		rules:{
-			team:{required:true, checkteamphoto_Availability:true}
-		},
-		onkeyup: false,
-		onclick: false
-	});
+	   //console.log(jQuery("select").data('picker').selected_values());
+	 // var imgPickerObj = jQuery("select").imagepicker();
+	  //console.log(imgPickerObj.selected_values());
+	 
+	 jQuery('#msg-handler-submit').append('not yet ready');
+	 jQuery('#msg-handler-submit').append('</p>');
+	 return false;
+	 });
+	 
+	
+  });
+	
+	
+	 
+	 /* 
 	
 	function userBeforeSubmit(){
 		jQuery("#wpcontent .ajax-loading").css('visibility','visible');

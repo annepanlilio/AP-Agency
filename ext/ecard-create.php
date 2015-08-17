@@ -28,8 +28,8 @@ function wptuts_add_screen_meta_boxes() {
     /* Enqueue WordPress' script for handling the meta boxes */
     wp_enqueue_script('postbox');
     
-   wp_enqueue_style( 'image-picker-css', RBAGENCY_PLUGIN_DIR.'ext/image-picker/image-picker.css');
-   wp_enqueue_script( 'image-picker-js', RBAGENCY_PLUGIN_DIR.'ext/image-picker/image-picker.min.js');
+   wp_enqueue_style( 'image-picker-css', RBAGENCY_PLUGIN_URL .'ext/image-picker/image-picker.css');
+   wp_enqueue_script( 'image-picker-js', RBAGENCY_PLUGIN_URL .'ext/image-picker/image-picker.min.js');
     
     
     
