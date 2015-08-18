@@ -1637,6 +1637,14 @@
 			if( $resultCustom->ProfileCustomID != 16 ):
 
 			if(!empty($resultCustom->ProfileCustomValue )){
+			
+				// do not allow the space of any non numeric if the single char found. 
+				$_strVal = $resultCustom->ProfileCustomValue;
+				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+					continue;
+				}
+			
+			
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1){
@@ -1708,6 +1716,12 @@
 
 			if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
 
+				// do not allow the space of any non numeric if the single char found. 
+				$_strVal = $resultCustom->ProfileCustomValue;
+				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+					continue;
+				}
+				
 				/*
 				TODO:  REMOVE
 				// Create Label for Measurement
@@ -1843,6 +1857,14 @@
 
 			if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
 
+			
+			
+				// do not allow the space of any non numeric if the single char found. 
+				$_strVal = $resultCustom->ProfileCustomValue;
+				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+					continue;
+				}
+				
 						$resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
 
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
@@ -1982,6 +2004,15 @@
 		foreach ($resultsCustom as $resultCustom) {
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){
 				if(!empty($resultCustom->ProfileCustomValue )){
+				
+				
+					// do not allow the space of any non numeric if the single char found. 
+					$_strVal = $resultCustom->ProfileCustomValue;
+					if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+						continue;
+					}
+				
+				
 					if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 						if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 							if($resultCustom->ProfileCustomOptions == 1){
@@ -2057,7 +2088,13 @@
 		foreach ($resultsCustom as $resultCustom) {
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){
 				if(!empty($resultCustom->ProfileCustomValue )){
-
+					
+					// do not allow the space of any non numeric if the single char found. 
+					$_strVal = $resultCustom->ProfileCustomValue;
+					if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+						continue;
+					}
+					
 					// Lets not do this...
 					$measurements_label = "";
 					if ($resultCustom->ProfileCustomTitle == 'Experience(s)'){
@@ -2084,6 +2121,13 @@
 		$resultsCustom = $wpdb->get_results($query,ARRAY_A);
 		foreach ($resultsCustom as $resultCustom) {
 			if(!empty($resultCustom->ProfileCustomValue )){
+			
+				// do not allow the space of any non numeric if the single char found. 
+				$_strVal = $resultCustom->ProfileCustomValue;
+				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+					continue;
+				}
+				
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1){
@@ -2152,6 +2196,12 @@
 		$total_rows = $wpdb->num_rows;
 		foreach ($resultsCustom as $resultCustom) {
 			if(!empty($resultCustom["ProfileCustomValue"] )){
+			
+				// do not allow the space of any non numeric if the single char found. 
+				$_strVal = $resultCustom["ProfileCustomValue"];
+				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+					continue;
+				}
 
 				if ($resultCustom["ProfileCustomType"] == 7) { //measurements field type
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
