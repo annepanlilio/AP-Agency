@@ -56,7 +56,7 @@
 				foreach($results as $model){
 					?>
                 
-                <div id="postbox-container-1" class="postbox-container">
+                <div id="postbox-container-<?php echo $model['ProfileID'];?>" class="postbox-container">
 	                <div id="normal-sortables-1" class="meta-box-sortables ui-sortable">
 						<div id="dashboard_media" class="postbox">
 							<div class="handlediv" title="Click to toggle"><br></div>
@@ -83,9 +83,9 @@
 												$ProfileID = $model['ProfileID'];
 												$ProfileGallery = $model['ProfileGallery'];
 												
-												$image_type =array('Image','Polaroid','Headshot');
+												$image_type =array('Image','Polaroid');//,'Headshot' exclude headshot
 												
-												echo '<select name="model-'. $ProfileID .'" ProfileID="'. $ProfileID .'" class="model-pics image-picker show-html" data-limit="4" multiple="multiple">';
+												echo '<select name="model-'. $ProfileID .'"  modelName="'.$model['ProfileContactDisplay'].'" ProfileID="'. $ProfileID .'" class="model-pics image-picker show-html" data-limit="4" multiple="multiple">';
 												foreach($image_type as $display_imagetype){
 													$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,$display_imagetype);
 													$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
@@ -114,12 +114,12 @@
 											?>
 
 										
-										<script>
-										    jQuery(document).ready(function() {
-												jQuery("select").imagepicker({limit: 4,show_label: false});
-                                            });
-										</script>	
-										
+												<script>
+												    jQuery(document).ready(function() {
+														jQuery("select").imagepicker({limit: 4,show_label: false});
+		                                            });
+												</script>	
+												
 										
 												</td>
 											</tr>
@@ -153,168 +153,85 @@
 
 
 
-
-
-	
-	
-	
-	
-	
-	
-		<?
-		/* <script>
-		<?php $timestamp = time();?>
-		$(function() {
-			var img_path;
-			
-			$('#file_upload').uploadify({
-				'formData'     : {
-					'timestamp' : '<?php echo $timestamp;?>',
-					'sport'		: '_temp',
-					'id'		: '<?=$teamPhoto->ID;?>',
-					'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
-				},
-				'onUploadSuccess' : function(file, data, response){
-					img_path = data;
-					saveimage_temp_ajax();
-				},
-				'multi'    : false,
-				'buttonClass' : 'button-primary',
-				'removeTimeout' : 0,
-				'buttonText' : 'Browse image...',
-				'swf'      : '<?=TEAMPHOTO_URL_PLUG;?>/uploadify/uploadify.swf',
-				'uploader' : '<?=TEAMPHOTO_URL_PLUG;?>/uploadify/uploadify.php'
-			});
-			
-			function saveimage_temp_ajax() {
-	$.post("<?=site_url().'/wp-admin/admin-ajax.php'?>", {imgpath:img_path,action:'teamphoto_saveimg_temp',sport:'<?=$_clean_sport;?>'})
-		.done(function(data) {
-			if( data== 'error'){
-				$('#message').addClass('error');
-				$('#message').html('<p>Error uploading image</p>');
-			}else{
-				$('#message').addClass('updated');
-				$('#message').html('<p>Thumbnail successfully uploaded - but not yet saved.</p>');
-				
-				$parentDIV = $('#image-place');
-				
-				$parentDIV.fadeTo('fast', 0.1,function(){
-					d = new Date();
-					jQuery(this).css('background-image','url(<?=TEAMPHOTO_UPLOAD_URL;?>'+data+'?'+d.getTime()+')');
-					jQuery(this).fadeIn(1000);
-				});
-				$parentDIV.animate({opacity: 1}).css('opacity','1');
-				
-				$('#photo').val(data);
-			}
-			$('#message').fadeIn(function(){
-				$parentDIV.css('opacity','1');
-			});
-	});
-	
-  return true;
-			}
-			
-			
-			
-		});
-		</script>	
-		 */?>
-		
-		
 <script>
 	
   jQuery(document).ready(function() {
 		
 	jQuery("#submit").on( "click", function() {
+	
+		var errorMsg = [];
+		var postModel = [];
 		jQuery('#msg-handler-submit').empty();
 		jQuery('#msg-handler-submit').append('<p>');
-		jQuery('#msg-handler-submit').addClass('error');
+		jQuery('#msg-handler-submit').addClass('updated');
 		jQuery.each( jQuery("select"), function( i, val ) {
 	
-	
-			jQuery('#msg-handler-submit').append('ProfileID=');
-			jQuery('#msg-handler-submit').append(jQuery(this).attr('ProfileID'));
-			jQuery('#msg-handler-submit').append('  -- ');
+			var modelName = jQuery(this).attr('modelName');
+			var ProfileID = jQuery(this).attr('ProfileID');
 			
-			//jQuery('#msg-handler-submit').append(jQuery(this).data('picker').selected_values());
 			var selectedPics = jQuery(this).data('picker').selected_values();
-			jQuery.each( selectedPics, function( i,v ) {
-			jQuery('#msg-handler-submit').append(' , ' + v);
-			});
 			
-			jQuery('#msg-handler-submit').append('<br/><br/>');
+			var total = selectedPics.length;
+		/* 	jQuery.each( selectedPics, function( i,v ) {
+				jQuery('#msg-handler-submit').append(' , ' + v);
+			});
+			 */
+			
+			var temp = {};
+            temp[ProfileID] = selectedPics;
+			postModel.push(temp);
+			
+			//jQuery('#msg-handler-submit').append(' (total = '+total +')<br/><br/>');
+			if(total < 1){
+				errorMsg.push('<a href="#postbox-container-'+ProfileID+'" class="smoothscroll">'+modelName +'</a> doesn\'t have selected photo.');
+			}
+			//jQuery('#msg-handler-submit').append('<br/><br/>');
 		});
+		
+		
+		if(errorMsg.length > 0){
+			jQuery('#msg-handler-submit').append('<b>Error:</b><br/>');
+			jQuery.each( errorMsg, function( i,v ) {
+				jQuery('#msg-handler-submit').append(v+'<br/>');
+			});
+	        jQuery('#msg-handler-submit').append('</p>');
+			return false;
+		}else{
+			jQuery('#msg-handler-submit').append('<b>Success:</b> Please wait...<br/>');
+			
+			//console.log(postModel);
+			
+			jQuery.post("<?=site_url().'/wp-admin/admin-ajax.php'?>", {pics:postModel , action:'generatepdfEcard'})
+			.done(function(data) {
+				if( data== 'error'){
+					jQuery('#msg-handler-submit').html('<p>Error generating ecard</p>');
+				}else{
+					window.open(data, '_blank');
+				}
+			});
+			jQuery('#msg-handler-submit').append('</p>');
+			return false;
+		}
+		
 	   //console.log(jQuery("select").data('picker').selected_values());
 	 // var imgPickerObj = jQuery("select").imagepicker();
 	  //console.log(imgPickerObj.selected_values());
 	 
-	 jQuery('#msg-handler-submit').append('not yet ready');
+	 //jQuery('#msg-handler-submit').append('not yet ready');
 	 jQuery('#msg-handler-submit').append('</p>');
 	 return false;
 	 });
 	 
 	
+	jQuery('.smoothscroll').live('click', function(){
+		var targetID = jQuery(this).attr('href');
+        jQuery('html, body').animate({scrollTop: jQuery(targetID).offset().top}, 'slow');
+        return false;
+    });
+
+		
   });
 	
-	
-	 
-	 /* 
-	
-	function userBeforeSubmit(){
-		jQuery("#wpcontent .ajax-loading").css('visibility','visible');
-		jQuery('#message').fadeOut();
-		jQuery('#message').removeClass('updated');
-		jQuery('#message').removeClass('error');
-	}
-	function userSuccess(){ 
-		jQuery("#wpcontent .ajax-loading").css('visibility','hidden'); 
-		jQuery('#message').fadeIn();
-	}
-	
-	// Form submission - ajax
-	jQuery("#users-form").submit(function(){
-		if(jQuery(this).valid() == false){
-			jQuery('#message').fadeOut();
-			return false;
-		}
-		
-		userBeforeSubmit();
-		jQuery.ajax({
-			type: "post",
-			url: "<?=admin_url("admin-ajax.php")?>",
-			data: jQuery('#users-form').serialize(),
-			success: function(result){
-				response = jQuery.parseJSON(result);
-				jQuery('#message').addClass(response['class']);
-				jQuery("#message").html('<p>'+response['text']+'</p>');
-				
-				
-				var the_new_photo = response['photo'];
-				jQuery("#photo").val(the_new_photo);
-				
-				if(the_new_photo != ''){
-					$parentDIV = $('#image-place-cur');
-					$parentDIV.fadeTo('fast', 0.1,function(){
-						d = new Date();
-						jQuery(this).css('background-image','url(<?=TEAMPHOTO_UPLOAD_URL;?>'+the_new_photo+'?'+d.getTime()+')');
-						jQuery(this).fadeIn(1000);
-						$('#image-place').fadeOut();
-					});
-					$parentDIV.animate({opacity: 1}).css('opacity','1');
-				}
-				
-				
-
-				userSuccess();
-				return false;
-			}
-		});
-		return false;
-	});
- 
- });
- */
 
 </script>
 
