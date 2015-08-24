@@ -234,9 +234,9 @@
 				// Public
 				($rb_agency_option_privacy == 0) ||
 
-				($rb_agency_option_privacy == 3) ||
+				($rb_agency_option_privacy == 3 && is_user_logged_in()) ||
 
-				($rb_agency_option_privacy == 2) ||
+				($rb_agency_option_privacy == 2 && is_user_logged_in()) ||
 
 				//admin users
 				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
