@@ -1640,10 +1640,10 @@ class RBAgency_Profile {
 								if($uid > 0){
 									//$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d  AND cart.CastingJobID <= 0 ",rb_agency_get_current_userid());
 									//$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d AND (cart.CastingJobID IS NULL OR cart.CastingJobID <= 0 )",rb_agency_get_current_userid());
-									echo 'xxxxxxx';
+									//echo 'xxxxxxx';
 									$query_castingcartx = $wpdb->get_results($wpdb->prepare("DELETE FROM ". table_agency_castingcart));
 									
-									print_r($query_castingcartx);
+									//print_r($query_castingcartx);
 									
 									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
 								}
