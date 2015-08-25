@@ -108,13 +108,38 @@ $perPage=10;
 $w = 91;
 $fileFormat="_division";
 
+
+
+
+
+$header_logo = '';
+if(!empty($rb_agency_options_arr['rb_agency_option_agencylogo'])){
+	$size = getimagesize(site_url() . $rb_agency_options_arr['rb_agency_option_agencylogo']);
+	if (!$size){
+		$pdf_logo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+		$logo_height= getimagesize( $rb_agency_options_arr['rb_agency_option_agencylogo']);
+	}else{
+		$pdf_logo = site_url() . $rb_agency_options_arr['rb_agency_option_agencylogo'];
+		$logo_height = $size;
+	}
+	
+	$header_logo = 'logo='. $pdf_logo;
+	
+}
+
+
+
+
+
 $header.='
 	<style>
 	*,html{font-family: Arial, Tahoma;}
 	ul{list-style:none; }
 	#Experience{display:none;}
 	
-	
+	@page { margin: '. ((int)$logo_height[1] + 60) .'px 50px 50px 50px;}
+	#headerlogo { border:0px solid #d00; position: fixed; left: 0px; top: -'. ((int)$logo_height[1] + 40) .'px; right: 0px; height: '. (int)$logo_height[1] .'px; text-align: center; }
+
 	body{color:#000;font-size:11px;}
 	
 	h3{font-size:14px;font-weight:bold;border:0;margin:0;padding:0;}
@@ -130,6 +155,8 @@ $header.='
 
 	</head>
 	<body style="background: #fff;">
+	
+	<div id="headerlogo"><img src="'.$pdf_logo.'"></div>
 	';
 
 	
@@ -146,7 +173,11 @@ $cartString = implode(",",$modelProfiles);
 
 $rb_agency_options_arr = get_option('rb_agency_options');
 $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
-				
+
+
+
+
+
 	foreach($modelProfilesPhoto as $models){
 		foreach($models as $_models => $_model){
 			
@@ -204,7 +235,12 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					);
 					$image_src = bfi_thumb( $image_path, $bfi_params );
 
-					$table.="<img src=\"". site_url() . $image_src."\" class='model-pics' />";
+					$size = getimagesize(site_url() . $image_src);
+					if (!$size){
+						$table.="<img src=\"". $image_src."\" class='model-pics' />";
+					}else{
+						$table.="<img src=\"". site_url() . $image_src."\" class='model-pics' />";
+					}
 				}
 						
 						
@@ -292,8 +328,10 @@ $border='
 <div style="width:770px; height:760px; border:1px solid #000;">
 </div>';
 
-$htmlFile=rand(1,10000).time().date("ymd").".html"; 
 
+
+
+$htmlFile=rand(1,10000).time().date("ymd").".html"; 
 $ProfileContactDisplay = $rb_agency_options_arr['rb_agency_option_agencyname'] . '_eCard_'.date("Ymd").'_'.time('U');
 
 
@@ -302,7 +340,6 @@ $format="-Polaroids-1perpage-with-Info-";
 $pdfFile=str_replace(" ","-",$ProfileContactDisplay).".pdf";
 
 $path=RBAGENCY_PLUGIN_DIR."ext/dompdf/htmls/";
-
 //*include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
 $fp=fopen($path.$htmlFile,"w");
 fwrite($fp,$header);
@@ -312,7 +349,7 @@ fwrite($fp,$header);
 fwrite($fp,$table);
 fwrite($fp,$footer);
 fclose($fp);
-$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
+$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile.'&'.$header_logo;
 //*die($toRedirect);
 
 
