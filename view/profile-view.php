@@ -70,7 +70,6 @@
 	 */
 
 		global $wpdb;
-
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", RBAGENCY_TEXTDOMAIN ));
 
@@ -132,6 +131,7 @@
 			$ProfileLocationCountry		=stripslashes($rbdata['ProfileLocationCountry']);
 			$ProfileDateUpdated			=stripslashes($rbdata['ProfileDateUpdated']);
 			$ProfileIsActive			=stripslashes($rbdata['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
+			$isPrivate			        =stripslashes($rbdata['isPrivate']);
 			$ProfileStatHits			=stripslashes($rbdata['ProfileStatHits']);
 			$ProfileDateViewLast		=stripslashes($rbdata['ProfileDateViewLast']);
 
@@ -252,38 +252,47 @@
 				) {
 
 				// Ok, but whats the status of the profile?
-				if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
-					// If the profile is active or its your own profile or you are an admin, show it.
-					if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
-						echo "	<div id=\"rbprofile\">\n";
-						echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
-								echo "This layout is under development.";
-						echo " 		</div>\n";
-						echo " 	</div>\n";
-
-					} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
-						echo "	<div id=\"rbprofile\">\n";
-						echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
+				
+		
+				//check if the profile is in private
+				if(!empty($isPrivate) and !is_user_logged_in()){
+					echo "	<div class='restricted'>\n";
+						echo "Profile is in private settings. Please login to view this profile.<br />";
+					echo "  </div><!-- #content -->\n";
+				}else{
+					if ( ($ProfileIsActive == 1) || ($ProfileUserLinked == $CurrentUser) || current_user_can('level_10') ) {
+						// If the profile is active or its your own profile or you are an admin, show it
+						if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
+							echo "	<div id=\"rbprofile\">\n";
+							echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
+									echo "This layout is under development.";
+							echo " 		</div>\n";
+							echo " 	</div>\n";
+	
+						} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
+							echo "	<div id=\"rbprofile\">\n";
+							echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
+										echo "Please contact RB Plugin Support for custom layouts.";
+							echo " 		</div>\n";
+							echo " 	</div>\n";
+	
+						} else {
+							include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
+						}
+	
+					} elseif(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
+						// Show it if it came from an email sent
+						if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
+									echo "This layout is under development.";
+						} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
 									echo "Please contact RB Plugin Support for custom layouts.";
-						echo " 		</div>\n";
-						echo " 	</div>\n";
-
+						} else {
+							include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
+						}
 					} else {
-						include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
+						// Dont show it
+						echo "". __("Inactive Profile", RBAGENCY_TEXTDOMAIN) ."\n";
 					}
-
-				} elseif(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
-					// Show it if it came from an email sent
-					if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
-								echo "This layout is under development.";
-					} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
-								echo "Please contact RB Plugin Support for custom layouts.";
-					} else {
-						include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
-					}
-				} else {
-					// Dont show it
-					echo "". __("Inactive Profile", RBAGENCY_TEXTDOMAIN) ."\n";
 				}
 			} else {
 				if($rb_agency_option_privacy == 3 ){ // if casting only

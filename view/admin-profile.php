@@ -102,6 +102,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	$ProfileIsPromoted = isset($_POST['ProfileIsPromoted'])?$_POST['ProfileIsPromoted']:"";
 	$ProfileStatHits = isset($_POST['ProfileStatHits'])?$_POST['ProfileStatHits']:"";
 
+	$isPrivate = isset($_POST['isPrivate'])?$_POST['isPrivate']:"";
+	
 	// Get Primary Image
 	$ProfileMediaPrimaryID = isset($_POST['ProfileMediaPrimary'])?$_POST['ProfileMediaPrimary']:"";
 
@@ -213,6 +215,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileDateUpdated,
 							ProfileType,
 							ProfileIsActive,
+							isPrivate,
 							ProfileIsFeatured,
 							ProfileIsPromoted,
 							ProfileStatHits,
@@ -238,6 +241,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							now(),
 							'" . $ProfileType . "',
 							'" . esc_attr($ProfileIsActive) . "',
+							'" . esc_attr($isPrivate) . "',
 							'" . esc_attr($ProfileIsFeatured) . "',
 							'" . esc_attr($ProfileIsPromoted) . "',
 							'" . esc_attr($ProfileStatHits) . "',
@@ -329,6 +333,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileDateUpdated=now(),
 							ProfileType='" . $ProfileType . "',
 							ProfileIsActive='" . esc_attr($ProfileIsActive) . "',
+							isPrivate='" . esc_attr($isPrivate) . "',
 							ProfileIsFeatured='" . esc_attr($ProfileIsFeatured) . "',
 							ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
 							ProfileStatHits='" . esc_attr($ProfileStatHits) . "'
@@ -881,7 +886,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsPromoted = stripslashes($data['ProfileIsPromoted']);
 			$ProfileIsPrivate = stripslashes($data['ProfileIsPrivate']);
 			$ProfileStatHits = stripslashes($data['ProfileStatHits']);
+			
 			$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
+			$isPrivate = stripslashes($data['isPrivate']);
 		}
 
 		$caption_header = __("Edit", RBAGENCY_TEXTDOMAIN) . " " . LabelSingular;
@@ -926,6 +933,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				$ProfileType = implode(",", $ProfileType);
 			}
 			$ProfileIsActive = $_POST['ProfileIsActive']; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
+			$isPrivate = $_POST['isPrivate'];
 			$ProfileIsFeatured = $_POST['ProfileIsFeatured'];
 			$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
 			$ProfileIsPrivate = $_POST['ProfileIsPrivate'];
@@ -1262,7 +1270,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Set this Profile to Private", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
-							echo "          <input type=\"checkbox\" name=\"ProfileIsPrivate\" id=\"ProfileIsPrivate\" value=\"1\"". checked(isset($ProfileIsPrivate)?$ProfileIsPrivate:0, 1, false) . " /> Featured<br />\n";
+							
+									$CheckedIfPrivate = $isPrivate > 0 ? "checked" : "";
+							echo "          <input type=\"checkbox\" name=\"isPrivate\" id=\"isPrivate\" value=\"1\"". $CheckedIfPrivate . " />\n";
 							echo "        </td>\n";
 							echo "    </tr>\n";
 							/*
@@ -1711,6 +1721,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								text-transform: uppercase;
 								font-size: 9px;
 							}
+							.column-isPrivate{max-width: 100px;}
 							</style>
 							<?php 
 							echo '<div class="media-files">';
@@ -2374,6 +2385,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Category</th>\n";
 	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Images</th>\n";
 	echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\">Views</th>\n";
+	echo "        <th class=\"column-isPrivate\" id=\"isPrivate\" scope=\"col\">Private</th>\n";
 	echo "        <th class=\"column-ProfileDateViewLast\" id=\"ProfileDateViewLast\" scope=\"col\" style=\"width:100px;\">Last Viewed Date</th>\n";
 	echo "    </tr>\n";
 	echo " </thead>\n";
@@ -2398,6 +2410,21 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo " </tfoot>\n";
 	echo " <tbody>\n";
 
+	
+	//xyr code
+	//altering the main profile table for private fields...
+	$queryAlterCheck = "SELECT isPrivate FROM " . table_agency_profile ." LIMIT 1";
+	$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
+	$count_alter = $wpdb->num_rows;
+	if($count_alter == 0){
+		$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD isPrivate boolean NOT NULL default false";
+		$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
+		echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
+		exit;
+	}
+
+	
+	
 	$queryData1 = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . " ORDER BY $sort $dir $limit";
 	$resultsData1 = $wpdb->get_results($queryData1,ARRAY_A);
 	$count = $wpdb->num_rows;
@@ -2416,7 +2443,9 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
 		$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 		$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
-
+		
+		$isPrivate = stripslashes($data['isPrivate']);
+		
 		if ($rb_agency_option_profilenaming == 0) {
 			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
 		} elseif ($rb_agency_option_profilenaming == 1) {
@@ -2529,6 +2558,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		echo "        <td class=\"ProfileDetails column-ProfileDetails\">" . $DataTypeTitle . "</td>\n";
 		echo "        <td class=\"ProfileDetails column-ProfileDetails\">" . $profileImageCount . "</td>\n";
 		echo "        <td class=\"ProfileStatHits column-ProfileStatHits\">" . $ProfileStatHits . "</td>\n";
+		echo "        <td class=\"isPrivate column-isPrivate\">". (!empty($isPrivate) ? "<b>Private</b>": " ") . "</td>\n";
 		echo "        <td class=\"ProfileDateViewLast column-ProfileDateViewLast\" attr_lastview=\"".strtotime($ProfileDateViewLast)."\" attr_timezone=\"". $rb_agency_option_locationtimezone."\">\n";
 		echo "           " . rb_agency_makeago(rb_agency_convertdatetime($ProfileDateViewLast), $rb_agency_option_locationtimezone);
 		echo "        </td>\n";

@@ -1374,6 +1374,17 @@ class RBAgency_Profile {
 						$filter .= " AND profile.ProfileID NOT IN (". $exclude .")";
 					}
 
+					/*
+					 * Check if Private profile
+					 */
+					global $current_user;
+					if(!is_user_logged_in()){
+						$filter .= " AND profile.isPrivate=0 ";
+					}
+					//echo '-----------------' .$filter;
+					
+					
+					
 					// Debug
 					if(self::$error_debug){
 						self::$error_checking[] = array('search_generate_sqlwhere',$filter);
@@ -1497,7 +1508,7 @@ class RBAgency_Profile {
 
 			// Merge them
 			$sql_where = $sql_where_array['standard'] ." ". $sql_where_array['custom'];
-
+	
 			$sqlCasting_userID = "";
 
 			switch ($query_type) {
@@ -1738,7 +1749,7 @@ class RBAgency_Profile {
 
 					echo "<hr><div style='color: red;'>". $sql ."</div>";
 				}
-
+			
 			/*
 			 * Check if search is Admin or Public
 			 */
