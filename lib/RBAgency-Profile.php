@@ -1616,6 +1616,7 @@ class RBAgency_Profile {
 					// if(isset($user->user_level) && $user->user_level==10 AND get_query_var('target')!="casting") {
 					// 	$sqlCasting_userID = " cart.CastingCartTalentID = profile.ProfileID AND cart.CastingCartProfileID = '".get_query_var('target')."' ";
 					// } else {
+					
 						if(current_user_can("edit_posts")){
 							$sqlCasting_userID .= " cart.CastingCartTalentID = profile.ProfileID ";
 							if(isset($_GET["Job_ID"]) && !empty($_GET["Job_ID"])){
@@ -1634,19 +1635,24 @@ class RBAgency_Profile {
 								if($uid > 0){
 									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
 								}
+								
 								$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingJobID = %s",$_GET["Job_ID"]);
 							} else {
 								$uid = rb_agency_get_current_userid();
 								if($uid > 0){
 									//$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d  AND cart.CastingJobID <= 0 ",rb_agency_get_current_userid());
-									//$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d AND (cart.CastingJobID IS NULL OR cart.CastingJobID <= 0 )",rb_agency_get_current_userid());
+									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d AND (cart.CastingJobID IS NULL OR cart.CastingJobID <= 0 )",rb_agency_get_current_userid());
 									//echo 'xxxxxxx';
-									$query_castingcartx = $wpdb->get_results($wpdb->prepare("DELETE FROM ". table_agency_castingcart));
+									//$query_castingcartx = $wpdb->get_results($wpdb->prepare("DELETE FROM ". table_agency_castingcart));
 									
 									//print_r($query_castingcartx);
 									
-									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
+									//$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d",rb_agency_get_current_userid());
 								}
+								
+								
+								//echo $sqlCasting_userID;
+								//AND (cart.CastingJobID IS NULL OR cart.CastingJobID <= 0 )
 							}
 						}
 					//}
@@ -1736,7 +1742,6 @@ class RBAgency_Profile {
 			/*
 			 * Check if search is Admin or Public
 			 */
-
 				if(is_admin()){
 					return self::search_result_admin( $sql, $arr_query );
 				} else {
@@ -1918,6 +1923,7 @@ class RBAgency_Profile {
 				$castingcart_results = array();
 				if(function_exists("rb_agency_get_miscellaneousLinks")){
 					//$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."'");
+					//$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."' GROUP BY CastingCartProfileID ");
 					$castingcart_results = $wpdb->get_results("SELECT CastingCartTalentID FROM ".table_agency_castingcart." WHERE CastingCartProfileID = '".rb_agency_get_current_userid()."' AND (CastingJobID<= 0 OR CastingJobID IS NULL) ");
 				}
 
@@ -2463,7 +2469,6 @@ class RBAgency_Profile {
 		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = '',$plain = false,$arr_query = array()){
 
 			global $wpdb;
-
 			/* 
 			 * RB Agency Options
 			 */
