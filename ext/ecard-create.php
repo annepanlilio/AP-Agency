@@ -110,9 +110,6 @@ $fileFormat="_division";
 
 
 
-
-
-$header_logo = '';
 if(!empty($rb_agency_options_arr['rb_agency_option_agencylogo'])){
 	$size = getimagesize(site_url() . $rb_agency_options_arr['rb_agency_option_agencylogo']);
 	if (!$size){
@@ -122,9 +119,6 @@ if(!empty($rb_agency_options_arr['rb_agency_option_agencylogo'])){
 		$pdf_logo = site_url() . $rb_agency_options_arr['rb_agency_option_agencylogo'];
 		$logo_height = $size;
 	}
-	
-	$header_logo = 'logo='. $pdf_logo;
-	
 }
 
 
@@ -349,7 +343,7 @@ fwrite($fp,$header);
 fwrite($fp,$table);
 fwrite($fp,$footer);
 fclose($fp);
-$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile.'&'.$header_logo;
+$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
 //*die($toRedirect);
 
 
