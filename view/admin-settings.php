@@ -912,7 +912,7 @@ elseif ($ConfigID == 11) {
 		
 
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process (Model/ Talent)', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
 		echo " </tr>\n";
 			echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Email Confirmation', RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -984,6 +984,46 @@ elseif ($ConfigID == 11) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 
+		
+		
+		
+		
+		
+		
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process (Casting Agent)', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('New Profile Approval', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_casting_option_registerapproval]\">\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_registerapproval']:"", 0,false) ."> ". __("Manually Approved", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_registerapproval'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_registerapproval']:"", 1,false) ."> ". __("Automatically Approved", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Default State For Registered Users', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agencyinteract_options[rb_agencyinteract_casting_option_default_registered_users]\">\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users']:"", 1,false) ."> ". __("Active", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"0\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users']:"", 0,false) ."> ". __("Inactive", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users']:"", 2,false) ."> ". __("Archive", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"3\" ". selected(isset($rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_casting_option_default_registered_users']:"", 3,false) ."> ". __("Pending Approval", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Membership Subscription', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
 		echo " </tr>\n";
