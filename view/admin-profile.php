@@ -309,9 +309,18 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 			if (!empty($ProfileContactNameFirst) && !empty($ProfileID)) {
 
 				if($have_error == false){
+						// no need to pending this account because your the admin.
 						if($rb_agency_option_inactive_profile_on_update == 1){
-							$ProfileIsActive = 3;
-						}
+							//
+							if(is_user_logged_in() && current_user_can( 'edit_posts' )){
+							
+							}else{
+								$ProfileIsActive = 3;
+							}
+						} 
+						/* 
+						echo 'settings pending';
+						*/
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET 
 							ProfileGallery='" . esc_attr($ProfileGallery) . "',
