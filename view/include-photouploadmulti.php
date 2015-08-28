@@ -30,6 +30,7 @@
 				'onUploadSuccess' : function(file, data, response){
 					img_path = data;
 					saveimage_temp_ajax();
+					$('#gallery-no-image').fadeOut();
 				},
 				'multi'    : true,
 				'fileTypeExts' : '*.gif; *.jpg; *.png',

@@ -353,6 +353,17 @@
 	function rb_agency_makeago($timestamp, $offset = null){
 		// Ensure the Timestamp is not null
 		if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
+			
+			
+			/* if(function_exists('rb_days_diff')){
+				//from rb-interact
+				$dat_up = date("Y-m-d H:i:s", strtotime( $timestamp ));
+				$time_ago = rb_days_diff($dat_up ,'',true);
+				
+				print_r($time_ago);
+				return 'wow'.$time_ago->day;
+			} */
+				
 			// Offset Math
 			$timezone_offset = (int)$offset;
 			$time_altered =  strtotime("now") -  ($timezone_offset *60 *60);
@@ -379,6 +390,9 @@
 		}
 	}
 
+	
+	
+	
 	/**
 	 * Get Profile's Age
 	 *

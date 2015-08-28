@@ -1579,12 +1579,15 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								<?php 
 								// No records?
 								if ($countImg < 1) {
-									echo "<div>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
+									echo "<div class='item gallery-item ui-sortable-handle' id='gallery-no-image'>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
 								}
 
 							?>
 							
 							<div style="clear: both;"></div>
+							<style>
+								.main .gallery-item{width:100px; height: 200px;overflow:hidden;}
+							</style>
 								<a href="javascript:confirm_mass_gallery_delete();">Delete Selected Images</a>
 								
 								<script language="javascript">
