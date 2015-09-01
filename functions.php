@@ -4207,8 +4207,8 @@ function date_difference($date1,$date2, $differenceFormat = '%a'){
 
 function expired_profile_notification($data){
 	$to = $data["send_to"];
-	$subject = $data["subject"];
-	$message = __($data["profile_name"]." due date is expired. Time to update this profile user.");
+	$subject = get_option('blogname')." ". $data["subject"]." Expiry Notification";
+	$message = __($data["profile_name"]." ".$subject." is expired. Time to update this profile user.");
 	wp_mail( $to, $subject, $message );
 }
 
