@@ -4219,9 +4219,14 @@ function rb_send_notif_due_date_reached(){
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	if($rb_agency_options_arr['rb_agency_option_notify_due_date'] > 0){
 		//send notif
-		
-		$CustomFields = array('Due Date','Contract Date');
+		$qq = $wpdb->query("SELECT * FROM ".$wpdb->prefix."agency_customfields WHERE ProfileCustomType = 10");
+		$qresults = $wpdb->get_results($qq,ARRAY_A);
 
+		$CustomFields = array();
+		foreach($qresults as $qres){
+			$CustomFields[] = $qres['ProfileCustomTitle'];
+		}
+		
 		foreach($CustomFields as $CustomField){
 			$q2 = "SELECT * FROM ".$wpdb->prefix."agency_customfields cu INNER JOIN ".
 				   $wpdb->prefix."agency_customfield_mux mu ON mu.ProfileCustomID = cu.ProfileCustomID INNER JOIN ".
