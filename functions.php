@@ -4196,6 +4196,60 @@ function rblogin_widget() {
 	register_widget( 'RBLogin_Widget' );
 }
 
+function date_difference($date1,$date2, $differenceFormat = '%a'){
+	$datetime1 = date_create($date1);
+    $datetime2 = date_create($date2);
+    
+    $interval = date_diff($datetime1, $datetime2);
+    
+    return $interval->format($differenceFormat);
+}
+
+function expired_profile_notification($data){
+	$to = $data["send_to"];
+	$subject = $data["subject"];
+	$message = __($data["profile_name"]." due date is expired. Time to update this profile user.");
+	wp_mail( $to, $subject, $message );
+}
+
+
+//Send notification to admin when expecting models reached her due date
+function rb_send_notif_due_date_reached(){
+	global $wpdb;
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	if($rb_agency_options_arr['rb_agency_option_notify_due_date'] > 0){
+		//send notif
+		
+		$CustomFields = array('Due Date','Contract Date');
+
+		foreach($CustomFields as $CustomField){
+			$q2 = "SELECT * FROM ".$wpdb->prefix."agency_customfields cu INNER JOIN ".
+				   $wpdb->prefix."agency_customfield_mux mu ON mu.ProfileCustomID = cu.ProfileCustomID INNER JOIN ".
+				   $wpdb->prefix."agency_profile pr ON pr.ProfileID = mu.ProfileID ".
+				   "WHERE cu.ProfileCustomTitle = '".$CustomField."'";
+			$result2 = $wpdb->get_results($q2,ARRAY_A);
+
+			//loop and send mail
+			foreach($result2 as $res2)
+			{
+				$diff=date_difference(date("Y-m-d"),$res2['ProfileCustomDateValue']);
+
+				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0){
+					$data["send_to"] = get_option("admin_email");
+					$data["profile_name"] = $res2['ProfileContactDisplay'];	
+					$data["subject"] = $res2['ProfileCustomTitle'];
+					expired_profile_notification($data);
+				}
+
+			}
+		}		
+
+	}else{
+		//do nothing
+	}
+}
+add_action('init','rb_send_notif_due_date_reached');
+
 class RBLogin_Widget extends WP_Widget {
 
 	function RBLogin_Widget() {
