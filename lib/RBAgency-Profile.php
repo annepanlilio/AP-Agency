@@ -2039,6 +2039,45 @@ class RBAgency_Profile {
 					// Profile List Layout "Voiceover (no image)"
 					if($rb_agency_option_layoutprofilelistlayout == 1){
 						$profile_listlayout_class[] = 'voiceover';
+						
+						global $wpdb;
+						$querys = "SELECT * FROM ". table_agency_data_media;
+						$results = $wpdb->get_results($querys, ARRAY_A);
+						$count = $wpdb->num_rows;
+						
+						$_mediaCateg = array();
+						foreach ($results as $data) {
+							$MediaCategoryID = $data['MediaCategoryLinkType'] .'_'.$data['MediaCategoryFileType'] .'_'. $data['MediaCategoryID'];
+							$_mediaCateg[$MediaCategoryID] = $data['MediaCategoryTitle'];
+						}
+						
+						//print_r($results);
+						
+						/* $_allMedLink = '';
+						foreach ($_mediaCateg as $data => $val) {
+							$_allMedLink .= '<li><a href="#" media-cate-id="'.$data.'">'.$val.'</li>';
+						} */
+						
+						$all_html.='
+						<audio id="voice-over-player" src="/test/audio.ogg" controls>
+							<p>Your browser does not support the <code>audio</code> element.</p>
+						</audio>
+						
+						<ul class="media-categories-link">
+							'.$_allMedLink.'
+						</ul>
+						
+						
+						
+	<style>
+	ul.media-categories-link{widh:95%;}
+	ul.media-categories-link li{list-style:none;display: inline-block; margin: 8px 2px;}
+		ul.media-categories-link li a{background: #eee;padding: 5px;}
+		ul.media-categories-link li a.active {background: #bbb;color:#fff;}
+</style>
+						';
+						
+						
 					// Profile List Layout "Default"
 					} else {
 						$profile_listlayout_class[] = 'default';
@@ -2495,6 +2534,10 @@ class RBAgency_Profile {
 				wp_enqueue_script( 'fancybox-init', RBAGENCY_PLUGIN_URL .'ext/fancybox/fancybox.init.js', array( 'jquery-latest', 'fancybox-jquery' ));
 				wp_enqueue_script( 'fancybox-init' );
 				
+				wp_enqueue_script( 'voiceover-init', RBAGENCY_PLUGIN_URL .'assets/js/voiceover.init.js', array( 'jquery-latest'));
+				wp_enqueue_script( 'voiceover-init' );
+				
+				
 				
 	
 	
@@ -2923,18 +2966,80 @@ class RBAgency_Profile {
 			/*
 			 * Voiceover Mode
 			 */
+			 
+			 
+			 
+				$querys = "SELECT * FROM ". table_agency_data_media;
+				$results = $wpdb->get_results($querys, ARRAY_A);
+				$count = $wpdb->num_rows;
+				
+				$_allMedLinkSQL = array();
+				
+				
+				foreach ($results as $data) {
+					$_allMedLinkSQL[] = "'$data[MediaCategoryTitle]'";
+				}
+				
+				$_allMediaSQL = implode(', ',$_allMedLinkSQL);
+		        $_allMediaSQL  = ' , '. $_allMediaSQL;
+			 
+			 //$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType = \"VoiceDemo\" ";
+			  
+			 //
+			 
+			 $queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType 
+			        NOT IN ('Link','Image','Demo Reel','Video Monologue','Video Slate','SoundCloud','Resume','Headshot','Polaroid','CompCard')";
+			 
+							$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
+							$countMedia = $wpdb->num_rows;
+							$outVideoMedia = "";
+							$outLinkVoiceDemo = "";
+							$outLinkResume = "";
+							$outLinkHeadShot = "";
+							$outLinkPolaroid = "";
+							$outLinkComCard = "";
+							$outCustomMediaLink = "";
+							$outSoundCloud = "";
+							
+							
+							$voicedemo_links = '';
+							$_mp3typeClass = array();
+							foreach ($resultsMedia  as $dataMedia) {
+								
+								//custom database mp3 type.
+								if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false){
+								
+									
+									//button_mp3_7
+								}
+								
+								$_mp3typeClass[] = sanitize_title($dataMedia['ProfileMediaType']);
+								
+								$mp3link = RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"]. "/" . $dataMedia['ProfileMediaURL'];
+								$voicedemo_links .= '
+									<ul class="links '.sanitize_title($dataMedia['ProfileMediaType']).'" style="clear:both; margin: 2px 0;">
+										
+										<li>'.sanitize_title($dataMedia['ProfileMediaType']).' <a href="'.$mp3link.'" title="" class="mp3-link icon-website rb-icon">
+											<img src="'.RBAGENCY_PLUGIN_URL .'assets/img/icon-website.png" alt="" /></a>
+										</li>
+										<li>
+											<a href="#" title="" class="play-button" voicelink="'.$mp3link.'"><i class="fa fa-play"></i></a>
+										</li>
+									</ul>
+									<!-- .links -->';
+								
+							}
+							//print_r($resultsMedia);
+			                $_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
+			                
 
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"rbprofile-list\">\n";
-
-				$displayHTML .= "	<div class=\"profile-voiceover\">\n";
-				$displayHTML .= "   	<strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
-				$displayHTML .= "     	<ul class=\"links\">";
-				$displayHTML .= "			<li><a href=\"\" title=\"\" class=\"icon-website rb-icon\"><img src=\"".RBAGENCY_PLUGIN_URL ."assets/img/icon-website.png\" alt=\"\" /></a></li>";
-				$displayHTML .= "			<li><a href=\"\" title=\"\" clas=\"\"><i class=\"fa fa-play\"></i></a></li>\n";
-				$displayHTML .= "		</ul><!-- .links -->\n";
-				$displayHTML .= "	</div><!-- .profile-voiceover -->\n";
-
-				$displayHTML .=" </div> <!-- .? --> \n";
+				$displayHTML .= '
+				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_mp3typeClassUniq.'">
+					<div class="profile-voiceover">
+					   	<strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
+						'. stripslashes($ProfileContactDisplay) .'</a></strong>'.$voicedemo_links .'
+					</div><!-- .profile-voiceover -->
+				</div> <!-- .? -->';
 
 
 /* TODO: ADD VOICEOVER HTML HERE */
