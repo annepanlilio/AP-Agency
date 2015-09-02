@@ -762,6 +762,7 @@ global $wpdb;
 		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingJob","INT(10)");
 		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingRegister","INT(10)");
 		rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingManager","INT(10)");
+		rb_agency_addColumn( table_agency_customfields,"ProfileCustomNotifyAdmin","INT(10)");
 		// Updating version number!
 		update_option('rb_agency_version', "2.4.5");
 	}

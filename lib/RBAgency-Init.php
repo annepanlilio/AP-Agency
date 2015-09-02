@@ -244,6 +244,7 @@ class RBAgency_Init {
 					ProfileCustomShowCastingJob INT(10) NOT NULL DEFAULT '0',
 					ProfileCustomShowCastingRegister INT(10) NOT NULL DEFAULT '0',
 					ProfileCustomShowCastingManager INT(10) NOT NULL DEFAULT '0',
+					ProfileCustomNotifyAdmin INT(10) NOT NULL DEFAULT '0',
 					PRIMARY KEY (ProfileCustomID)
 					);";
 				dbDelta($sql);

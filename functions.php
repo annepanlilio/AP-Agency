@@ -4217,9 +4217,10 @@ function expired_profile_notification($data){
 function rb_send_notif_due_date_reached(){
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
-	if($rb_agency_options_arr['rb_agency_option_notify_due_date'] > 0){
+	
+	
 		//send notif
-		$qq = $wpdb->query("SELECT * FROM ".$wpdb->prefix."agency_customfields WHERE ProfileCustomType = 10");
+		$qq = $wpdb->query("SELECT * FROM ".$wpdb->prefix."agency_customfields WHERE ProfileCustomType = 10 AND ProfileCustomNotifyAdmin = 1");
 		$qresults = $wpdb->get_results($qq,ARRAY_A);
 
 		$CustomFields = array();
@@ -4239,19 +4240,18 @@ function rb_send_notif_due_date_reached(){
 			{
 				$diff=date_difference(date("Y-m-d"),$res2['ProfileCustomDateValue']);
 
-				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0){
+				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0 && get_user_meta($res2['ProfileID'],'_user_expired',true) != 1){
 					$data["send_to"] = get_option("admin_email");
 					$data["profile_name"] = $res2['ProfileContactDisplay'];	
 					$data["subject"] = $res2['ProfileCustomTitle'];
 					expired_profile_notification($data);
+					add_user_meta( $res2['ProfileID'], '_user_expired', 1);
 				}
 
 			}
 		}		
 
-	}else{
-		//do nothing
-	}
+	
 }
 add_action('init','rb_send_notif_due_date_reached');
 
