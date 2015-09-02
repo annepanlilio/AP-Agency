@@ -321,6 +321,17 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						/* 
 						echo 'settings pending';
 						*/
+						//notify via email the user if his account was pending to activate.
+						(int)$currentStatus = $wpdb->get_var("SELECT ProfileIsActive FROM " . table_agency_profile ." WHERE ProfileID=$ProfileID");
+						if($currentStatus != 1){
+							//means account wasn't active
+							if($ProfileIsActive == 1){
+								//admin decide to activate the account.
+								wp_new_user_notification_approve($ProfileID);
+							}
+						}		
+						
+						
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET 
 							ProfileGallery='" . esc_attr($ProfileGallery) . "',

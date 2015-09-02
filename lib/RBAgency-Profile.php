@@ -2480,6 +2480,25 @@ class RBAgency_Profile {
 		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = '',$plain = false,$arr_query = array()){
 
 			global $wpdb;
+			
+				
+				wp_register_style( 'fancybox-style', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.css' );
+				wp_enqueue_style( 'fancybox-style' );
+	
+				wp_deregister_script( 'jquery-latest' ); 
+				wp_register_script( 'jquery-latest', "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
+				wp_enqueue_script( 'jquery-latest' );
+			
+				wp_enqueue_script( 'fancybox-jquery', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.pack.js', array( 'jquery-latest' ));
+				wp_enqueue_script( 'fancybox-jquery' );
+				
+				wp_enqueue_script( 'fancybox-init', RBAGENCY_PLUGIN_URL .'ext/fancybox/fancybox.init.js', array( 'jquery-latest', 'fancybox-jquery' ));
+				wp_enqueue_script( 'fancybox-init' );
+				
+				
+	
+	
+			
 			/* 
 			 * RB Agency Options
 			 */
@@ -2554,7 +2573,7 @@ class RBAgency_Profile {
 				if($rb_agency_option_layoutprofileviewmode == 0) {
 					$profile_link_class = "default";
 				} elseif($rb_agency_option_layoutprofileviewmode == 1) {
-					$profile_link_class = "profile-popup";
+					$profile_link_class = "profile-popup-fancybox";
 				} else {
 					$profile_link_class = "slide-panel";
 				}
@@ -2603,7 +2622,14 @@ class RBAgency_Profile {
 				$displayActions = "";
 				$type = get_query_var('type');
 
+				
+				
 				$profile_name = "<strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
+				
+				if($rb_agency_option_layoutprofileviewmode == 1) {
+					$profile_name = "<strong class=\"name\"><a href=\"#lightbox-fancy-".$dataList["ProfileID"] ."\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
+				} 
+				
 				
 				//admin icon settings 
 				if(!empty($rb_agency_options_arr['rb_agency_option_carticonurl'])){
@@ -2661,6 +2687,7 @@ class RBAgency_Profile {
 
 					if($rb_agency_option_layoutprofileviewmode == 1) {
 						$profile_link = "#profile-id";
+						$profile_link = '#lightbox-fancy-'.$dataList["ProfileID"];
 					} else {
 						$profile_link = RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"];
 					}
@@ -2835,8 +2862,61 @@ class RBAgency_Profile {
 					}
 
 				$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
-
 				$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
+				
+				
+				$_likeexp = $wpdb->esc_like('Experience');
+				$_likeexp = '%' . $_likeexp . '%';
+			$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT 
+				c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomView,
+				cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx 
+				LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID 
+				WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $dataList["ProfileID"] ."
+				AND c.ProfileCustomTitle LIKE %s
+				GROUP BY cx.ProfileCustomID",$_likeexp ));
+		
+		 //
+		//Experience
+		$ProfileExperience='';
+		foreach ($resultsCustom as $resultCustom) {
+			if(!empty($resultCustom->ProfileCustomValue )){
+				$ProfileExperience .= $resultCustom->ProfileCustomValue;
+			}
+		}
+				
+				
+				$outLinkResume = '';
+				$queryMedia = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = \"%s\" AND ProfileMediaType = \"Resume\"";
+				$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryMedia,$dataList["ProfileID"]),ARRAY_A);
+				
+				foreach($resultsMedia as $dataMedia ){
+					$outLinkResume = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $dataList["ProfileGallery"] ."/". $dataMedia['ProfileMediaURL'];
+				}
+				
+				$displayHTML .='
+				
+				<div style="display:none">
+				<div id="lightbox-fancy-'.$dataList["ProfileID"].'" class="profile-fancy white-popup">
+					<div class="profile-photo">
+						<img src="'. get_bloginfo("url").'/'.RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image .'" alt="'. stripslashes($ProfileContactDisplay) .'"  class="primary active" />
+						
+					</div>
+					
+					<div class="info">
+						<h3>'. stripslashes($ProfileContactDisplay).'</h3>
+						<p>'. stripslashes($ProfileExperience).'</p>
+						
+						
+						<a href="'. get_bloginfo("url").$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a>
+						<a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'" title="'.stripslashes($ProfileContactDisplay).'">More</a>
+						
+					</div>
+					
+				</div>
+				</div>
+				';
+				
+				
 
 			} elseif($rb_agency_option_layoutprofilelistlayout == 1){
 
@@ -2861,6 +2941,24 @@ class RBAgency_Profile {
 
 
 			}
+			
+			
+			$displayHTML .='
+			<style>
+				.profile-fancy .profile-photo {
+				  width: 65%;
+				  margin-right: 5%;
+				  float: left;
+				}
+				.profile-fancy .profile-photo img {
+				  max-width: 100%;
+				}
+				.profile-fancy .info {
+				  width: 30%;
+				  float: left;
+				}
+				</style>
+				';
 
 			if(self::$error_debug){
 				self::$error_checking[] = array('search_formatted',$displayHTML);

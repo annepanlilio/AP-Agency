@@ -15,6 +15,9 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_enqueue_style( 'scroller-style' );
 
 
+	wp_register_style( 'fancybox-style', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.css' );
+	wp_enqueue_style( 'fancybox-style' );
+	
 /*
  * Insert Script
  */
@@ -32,6 +35,11 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_register_script( 'init-scroller', RBAGENCY_PLUGIN_URL .'view/layout/09/js/init-scroller.js', '', 1, true );
 	wp_enqueue_script( 'init-scroller' );
 
+	wp_enqueue_script( 'fancybox-jquery', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.pack.js', array( 'jquery-latest' ));
+	wp_enqueue_script( 'fancybox-jquery' );
+	
+	wp_enqueue_script( 'fancybox-init', RBAGENCY_PLUGIN_URL .'ext/fancybox/fancybox.init.js', array( 'jquery-latest', 'fancybox-jquery' ));
+	wp_enqueue_script( 'fancybox-init' );
 
 /*
  * Layout 
