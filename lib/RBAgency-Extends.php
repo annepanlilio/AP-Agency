@@ -106,7 +106,6 @@ class RBAgency_Extends {
 					if(isset($atts['show_profile_type_filter']) or $atts['show_profile_type_filter'] == true){
 					
 					
-						
 						$all_profileType = "SELECT * FROM " . table_agency_data_type;
 						$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
 						
