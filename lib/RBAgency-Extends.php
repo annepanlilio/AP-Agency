@@ -5,7 +5,7 @@
  *
  * These are shortcode and widget specific functions
  */
-
+ 
 class RBAgency_Extends {
 
 	// *************************************************************************************************** //
