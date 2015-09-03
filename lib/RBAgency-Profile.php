@@ -1893,6 +1893,9 @@ class RBAgency_Profile {
 
 
 				// Profile Types right side
+				
+				global $_list_my_profiles;
+				//echo $_list_my_profiles.'xxxxxxxxxxx';
 				if($rb_agency_option_profilelist_showprofiletypeslinks == 1 && $rb_agency_option_layoutprofilelistlayout != 1){
 
 					$all_html.="<ul class=\"profile-types\">";
@@ -2052,19 +2055,10 @@ class RBAgency_Profile {
 					}
 
 					$profile_listlayout_class = array();
-
+					global $_list_my_profiles;
 					// Profile List Layout "Voiceover (no image)"
-					if($rb_agency_option_layoutprofilelistlayout == 1){
+					if($rb_agency_option_layoutprofilelistlayout == 1 or $_list_my_profiles=='voiceover'){
 						$profile_listlayout_class[] = 'voiceover';
-						
-						$all_html.='
-							<style>
-								ul.media-categories-link{widh:95%;}
-								ul.media-categories-link li{list-style:none;display: inline-block; margin: 8px 2px;}
-									ul.media-categories-link li a{background: #eee;padding: 5px;}
-									ul.media-categories-link li a.active {background: #bbb;color:#fff;}
-							</style>
-						';
 						
 						
 						$resultsP = $wpdb->get_results("SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
@@ -2142,7 +2136,10 @@ class RBAgency_Profile {
 					$all_html .= '</div>'; // #results-info
 					$all_html .= '<div class="rbclear"></div>';
 					$all_html .= '<hr />';
-
+					
+					
+					global $_list_my_profiles;
+				
 					// Profile Types Voiceover
 					if($rb_agency_option_profilelist_showprofiletypeslinks == 1 && $rb_agency_option_layoutprofilelistlayout == 1){
 
@@ -2623,7 +2620,15 @@ class RBAgency_Profile {
 			 */
 			$displayHTML ="";
 
-
+			global $_list_my_profiles;
+			// make shortcode as priority
+			if($_list_my_profiles == 'voiceover'){
+				$rb_agency_option_layoutprofilelistlayout = 1;
+			}else{
+				$_list_my_profiles == 'lightbox';
+				$rb_agency_option_layoutprofilelistlayout = 0;
+			}
+			
 			if($rb_agency_option_layoutprofilelistlayout == 0) {
 
 
@@ -2648,6 +2653,22 @@ class RBAgency_Profile {
 				} else {
 					$profile_link_class = "slide-panel";
 				}
+				
+				$_proftypeClass = array();
+							
+				$profiType = explode(',',$dataList["ProfileType"]);
+				if(is_array($profiType)){
+					foreach($profiType as $val){
+						$_proftypeClass[] = 'profile_type_'. $val;
+					}
+				}else{
+					$_proftypeClass[] = 'profile_type_'. $profiType;
+				}
+				$profile_list_class .= ' '. implode(' ', array_unique($_proftypeClass));
+				
+				
+				
+				
 
 				$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
 				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class." ".$PGENDER."\" >\n";
@@ -2989,7 +3010,8 @@ class RBAgency_Profile {
 				
 				
 
-			} elseif($rb_agency_option_layoutprofilelistlayout == 1){
+			}
+			elseif($rb_agency_option_layoutprofilelistlayout == 1){
 
 			/*
 			 * Voiceover Mode

@@ -62,6 +62,9 @@ class RBAgency_Extends {
 			// Get Options
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
+			$rb_agency_option_layoutprofilelistlayout = (int)$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'];
+
+								
 			// Can we show the pages?
 			if((is_user_logged_in() && $rb_agency_options_arr['rb_agency_option_privacy']==2)||
 			// Must be logged to view model list and profile information
@@ -75,62 +78,92 @@ class RBAgency_Extends {
 			{
 				// Return SQL string based on fields
 				
+				global $_list_my_profiles,$wpdb;
+				// Profile List Layout "Voiceover (no image)"
 				
-				//list_layout="lightbox"
-				if(isset($atts['list_layout']) and $atts['list_layout']=='voiceover'){
-					global $_list_my_profiles;
-					
-					$_list_my_profiles ='voiceover';
-					if(isset($atts['show_profile_type_filter']) or isset($atts['type'])){
-						global $wpdb;
-						
-						echo '
-						<audio id="voice-over-player" src="/test/audio.ogg" controls>
-							<p>Your browser does not support the <code>audio</code> element.</p>
-						</audio>
-						';
-					}
-							
-					if(isset($atts['type']) and is_numeric($atts['type'])){
-						$atts['profiletype'] = $atts['type'];
-					}elseif(isset($atts['type']) and !is_numeric($atts['type'])){
-						//means the profile is multiple select like 1,3,5,6
-						$_arrTypeAr = explode(',',$atts['type']);
-						//bec the exist script have waiting single quote on start and end==.. 
-						$_arrTypeTemp = str_replace(',','|',$atts['type']);
-						unset($atts['type']);
-						$atts['profileumltitype'] = $_arrTypeTemp;
-					}
+				//print_r($rb_agency_option_layoutprofilelistlayout);
+				//echo 'xxxxx';
 				
+				// make shortcode as priority
+			/* 	if($_list_my_profiles == 'voiceover'){
+					$rb_agency_option_layoutprofilelistlayout = 1;
+				}else{
+					$rb_agency_option_layoutprofilelistlayout = 0;
+				}
+				 */
 				
-					if(isset($atts['show_profile_type_filter']) or $atts['show_profile_type_filter'] == true){
-					
-					
-						$all_profileType = "SELECT * FROM " . table_agency_data_type;
-						$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
-						
-						$_allMedLink = '';
-						foreach($results_profileType as $key => $val){
-							$_te = 'profile_type_'. $val['DataTypeID'];
-							
-							if(is_array($_arrTypeAr)){
-								if(in_array($val['DataTypeID'],$_arrTypeAr)){
-									$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
-								}
-							}else{
-								$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
-							}
-						}
-						echo '
-						<ul class="media-categories-link">
-							<li><a href="#" media-cate-id="all">All</a></li>
-							'.$_allMedLink.'
-						</ul>
-						';
+				if(isset($atts['list_layout'])){
+					if($atts['list_layout']=='voiceover'){
+						$_list_my_profiles ='voiceover';
+					}else{
+						$_list_my_profiles ='lightbox';
 					}
 				}else{
-					//list_layout="lightbox"
+					if($rb_agency_option_layoutprofilelistlayout == 1){
+						$_list_my_profiles ='voiceover';
+					}else{
+						$_list_my_profiles ='lightbox';
+					}
 				}
+				
+				//echo $rb_agency_option_layoutprofilelistlayout.$_list_my_profiles;
+				//$rb_agency_options_arr = get_option('rb_agency_options');
+				
+				//print_r($rb_agency_options_arr);
+				//$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']
+				
+				 
+				if($_list_my_profiles =='voiceover'){
+					echo '
+					<audio id="voice-over-player" src="/test/audio.ogg" controls>
+						<p>Your browser does not support the <code>audio</code> element.</p>
+					</audio>
+					';
+				}
+				
+				if(isset($atts['type']) and is_numeric($atts['type'])){
+					$atts['profiletype'] = $atts['type'];
+				}elseif(isset($atts['type']) and !is_numeric($atts['type'])){
+					//means the profile is multiple select like 1,3,5,6
+					$_arrTypeAr = explode(',',$atts['type']);
+					//bec the exist script have waiting single quote on start and end==.. 
+					$_arrTypeTemp = str_replace(',','|',$atts['type']);
+					unset($atts['type']);
+					$atts['profileumltitype'] = $_arrTypeTemp;
+				}
+				
+				
+				if(isset($atts['show_profile_type_filter']) or $atts['show_profile_type_filter'] == true){
+				
+					$all_profileType = "SELECT * FROM " . table_agency_data_type;
+					$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
+					
+					$_allMedLink = '';
+					foreach($results_profileType as $key => $val){
+						$_te = 'profile_type_'. $val['DataTypeID'];
+						
+						if(is_array($_arrTypeAr)){
+							if(in_array($val['DataTypeID'],$_arrTypeAr)){
+								$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
+							}
+						}else{
+							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
+						}
+					}
+					echo '
+					<ul class="media-categories-link">
+						<li><a href="#" media-cate-id="all">All</a></li>
+						'.$_allMedLink.'
+					</ul>
+							<style>
+								ul.media-categories-link{widh:95%;}
+								ul.media-categories-link li{list-style:none;display: inline-block; margin: 8px 2px;}
+									ul.media-categories-link li a{background: #eee;padding: 5px;}
+									ul.media-categories-link li a.active {background: #bbb;color:#fff;}
+							</style>
+					';
+				}
+				
 				
 				
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($atts);
