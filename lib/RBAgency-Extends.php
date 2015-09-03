@@ -49,6 +49,7 @@ class RBAgency_Extends {
 			extract(shortcode_atts(array(
 					"mode" => null,
 					"show_profile_type_filter" => null,
+					"show_media_category_filter" => null,
 					"list_layout" => null,
 				), $atts));
 
@@ -156,10 +157,10 @@ class RBAgency_Extends {
 						'.$_allMedLink.'
 					</ul>
 							<style>
-								ul.media-categories-link{widh:95%;}
-								ul.media-categories-link li{list-style:none;display: inline-block; margin: 8px 2px;}
-									ul.media-categories-link li a{background: #eee;padding: 5px;}
-									ul.media-categories-link li a.active {background: #bbb;color:#fff;}
+								ul.media-categories-link,ul.media-categories-link2{widh:95%;}
+								ul.media-categories-link li,ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 8px 2px;}
+									ul.media-categories-link li au,ul.media-categories-link2 li a{background: #eee;padding: 5px;}
+									ul.media-categories-link li a.active,ul.media-categories-link2 li a.active {background: #bbb;color:#fff;}
 							</style>
 					';
 				}
