@@ -47,13 +47,15 @@ class RBAgency_Extends {
 
 			// Get Shortcode Attributes
 			extract(shortcode_atts(array(
-					"mode" => null
+					"mode" => null,
+					"show_profile_type_filter" => null
 
 				), $atts));
 
 			if(empty($atts)){
 				$atts[1] = 1;
 			}
+			
 			// retrieve active profiles only
 			$atts['isactive'] = 1;
 
@@ -72,10 +74,62 @@ class RBAgency_Extends {
 			($rb_agency_options_arr['rb_agency_option_privacy'] == 3 && is_user_logged_in() && is_client_profiletype()))
 			{
 				// Return SQL string based on fields
+				
+				
+				if(isset($atts['show_profile_type_filter']) or isset($atts['type'])){
+					global $wpdb;
+					
+					echo '
+					<audio id="voice-over-player" src="/test/audio.ogg" controls>
+						<p>Your browser does not support the <code>audio</code> element.</p>
+					</audio>
+					';
+				}
+						
+				if(isset($atts['type']) and is_numeric($atts['type'])){
+					$atts['profiletype'] = $atts['type'];
+				}elseif(isset($atts['type']) and !is_numeric($atts['type'])){
+					//means the profile is multiple select like 1,3,5,6
+					$_arrTypeAr = explode(',',$atts['type']);
+					//bec the exist script have waiting single quote on start and end==.. 
+					$_arrTypeTemp = str_replace(',','|',$atts['type']);
+					unset($atts['type']);
+					$atts['profileumltitype'] = $_arrTypeTemp;
+				}
+				
+				
+				if(isset($atts['show_profile_type_filter']) or $atts['show_profile_type_filter'] == true){
+				
+				
+					
+					$all_profileType = "SELECT * FROM " . table_agency_data_type;
+					$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
+					
+					$_allMedLink = '';
+					foreach($results_profileType as $key => $val){
+						$_te = 'profile_type_'. $val['DataTypeID'];
+						
+						if(is_array($_arrTypeAr)){
+							if(in_array($val['DataTypeID'],$_arrTypeAr)){
+								$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
+							}
+						}else{
+							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
+						}
+					}
+					echo '
+					<ul class="media-categories-link">
+						<li><a href="#" media-cate-id="all">All</a></li>
+						'.$_allMedLink.'
+					</ul>
+					';
+				}
+				
+				
 				$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($atts);
 				// Conduct Search
 				$shortcode = true;
-
+				
 				echo RBAgency_Profile::search_results($search_sql_query, 0, false, $atts, $shortcode);
 
 			} else {

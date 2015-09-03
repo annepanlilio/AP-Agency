@@ -242,6 +242,17 @@ class RBAgency_Profile {
 						echo "						</div>\n";
 						echo "					</div>\n";
 						echo "				</div>\n";
+						
+						echo '<script type="text/javascript">
+						jQuery(document).ready(function($){
+							jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
+								dateFormat: "yy-mm-dd"
+							});
+							jQuery( "input[id=rb_datepicker_to_bd]").datepicker({
+								dateFormat: "yy-mm-dd"
+							});
+						});
+						</script>';
 
 						//JS here..
 
@@ -975,6 +986,7 @@ class RBAgency_Profile {
 						"displayname" => NULL,
 						// General
 						"profiletype" => NULL,
+						"profileumltitype" => NULL,
 						"gender" => NULL,
 						"datebirth_min" => NULL,
 						"datebirth_max" => NULL,
@@ -1106,6 +1118,11 @@ class RBAgency_Profile {
 					if (isset($promoted)){
 						$filter .= " AND profile.ProfileIsPromoted = '1' ";
 					}
+					
+					if (isset($profileumltitype)){
+						$filter .= " AND profile.ProfileType REGEXP '($profileumltitype)'";
+					}
+					
 
 					// Set CustomFields search
 					if(isset($atts) && !empty($atts)){
@@ -1398,7 +1415,6 @@ class RBAgency_Profile {
 						"standard" => $filter,
 						"custom" => $filter2,
 					);
-
 					return $filter_array;
 
 			} else {
@@ -1519,6 +1535,7 @@ class RBAgency_Profile {
 					$sql = "SELECT 
 					profile.ProfileID,
 					profile.ProfileGallery,
+					profile.ProfileType,
 					profile.ProfileContactEmail,
 					profile.ProfileContactPhoneCell,
 					profile.ProfileContactPhoneWork,
@@ -2040,43 +2057,54 @@ class RBAgency_Profile {
 					if($rb_agency_option_layoutprofilelistlayout == 1){
 						$profile_listlayout_class[] = 'voiceover';
 						
-						global $wpdb;
-						$querys = "SELECT * FROM ". table_agency_data_media;
-						$results = $wpdb->get_results($querys, ARRAY_A);
-						$count = $wpdb->num_rows;
-						
-						$_mediaCateg = array();
-						foreach ($results as $data) {
-							$MediaCategoryID = $data['MediaCategoryLinkType'] .'_'.$data['MediaCategoryFileType'] .'_'. $data['MediaCategoryID'];
-							$_mediaCateg[$MediaCategoryID] = $data['MediaCategoryTitle'];
-						}
-						
-						//print_r($results);
-						
-						/* $_allMedLink = '';
-						foreach ($_mediaCateg as $data => $val) {
-							$_allMedLink .= '<li><a href="#" media-cate-id="'.$data.'">'.$val.'</li>';
-						} */
-						
 						$all_html.='
-						<audio id="voice-over-player" src="/test/audio.ogg" controls>
-							<p>Your browser does not support the <code>audio</code> element.</p>
-						</audio>
-						
-						<ul class="media-categories-link">
-							'.$_allMedLink.'
-						</ul>
-						
-						
-						
-	<style>
-	ul.media-categories-link{widh:95%;}
-	ul.media-categories-link li{list-style:none;display: inline-block; margin: 8px 2px;}
-		ul.media-categories-link li a{background: #eee;padding: 5px;}
-		ul.media-categories-link li a.active {background: #bbb;color:#fff;}
-</style>
+							<style>
+								ul.media-categories-link{widh:95%;}
+								ul.media-categories-link li{list-style:none;display: inline-block; margin: 8px 2px;}
+									ul.media-categories-link li a{background: #eee;padding: 5px;}
+									ul.media-categories-link li a.active {background: #bbb;color:#fff;}
+							</style>
 						';
 						
+						
+						$resultsP = $wpdb->get_results("SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
+						INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle",ARRAY_A);
+						
+						$_titleattr = '';$_allMedLink = '';
+						foreach($resultsP as $key => $val){
+							$_te = 'custom_mp3_'. $val['MediaCategoryID'];
+							$_titleattr .='jQuery("li.'.$_te.' a.play-button").attr("title","'. $val['MediaCategoryTitle'] .'");'."\n";
+						/* 	$_typeClass = sanitize_title_with_dashes($dataMedia['ProfileMediaType']);
+								$_typeClass = str_replace('/','', $_typeClass);
+								 */
+							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['MediaCategoryTitle'].'</li>';
+						}
+						
+						//rbcustommedia_audio-book_button_mp3_7
+						$all_html.='
+						<script>
+							// change the title of play button 
+							jQuery(document).ready(function($){
+								jQuery("li.voicedemo a.play-button").attr("title","Voice Demo");
+								'. $_titleattr .'
+							});
+						</script>
+						';
+						
+						if(isset($show_media_category)){
+						$all_html.='
+						<ul class="media-categories-link">
+							<li><a href="#" media-cate-id="all">All</a></li>
+							<li><a href="#" media-cate-id="voicedemo">Voice Demo</a></li>
+							'.$_allMedLink.'
+						</ul>
+						';
+						}
+						
+						//$queryPType = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
+
+											
+				 
 						
 					// Profile List Layout "Default"
 					} else {
@@ -2987,6 +3015,8 @@ class RBAgency_Profile {
 			  
 			 //
 			 
+			 
+			 
 			 $queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType 
 			        NOT IN ('Link','Image','Demo Reel','Video Monologue','Video Slate','SoundCloud','Resume','Headshot','Polaroid','CompCard')";
 			 
@@ -3002,45 +3032,67 @@ class RBAgency_Profile {
 							$outSoundCloud = "";
 							
 							
-							$voicedemo_links = '';
+							
+							
+							$voicedemo_links = '<ul class="links" style="clear:both; margin: 2px 0;">';
+							if(!empty($dataList["ProfileContactWebsite"])){
+								$voicedemo_links .= '<li class="site_link"><a href="'.$dataList["ProfileContactWebsite"].'" title="Site Link" class="mp3-link icon-website rb-icon" target="_blank">
+									<img src="'.RBAGENCY_PLUGIN_URL .'assets/img/icon-website.png" alt="" /></a>
+									</li>';
+							}
+							//<li>'.sanitize_title($dataMedia['ProfileMediaType']).' <a href="'.$mp3link.'" title="" class="mp3-link icon-website rb-icon">
+									
 							$_mp3typeClass = array();
 							foreach ($resultsMedia  as $dataMedia) {
-								
+							
+								$_typeClass = sanitize_title_with_dashes($dataMedia['ProfileMediaType']);
+								$_typeClass = str_replace('/','', $_typeClass);
+							
 								//custom database mp3 type.
 								if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false){
-								
-									
-									//button_mp3_7
+									//we need to get only the ID.
+									//rbcustommedia_audio-book_button_mp3_71
+									$_revType = strrev($dataMedia['ProfileMediaType']); // 17_3pm_nottub..
+									$explTyep = explode('_',$_revType); //17 - 3pm - nottub
+									$_typeID = strrev($explTyep[0]); //71
+									$_typeClass = 'custom_mp3_' . $_typeID;
 								}
 								
-								$_mp3typeClass[] = sanitize_title($dataMedia['ProfileMediaType']);
-								
+								$_mp3typeClass[] = $_typeClass;
 								$mp3link = RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"]. "/" . $dataMedia['ProfileMediaURL'];
-								$voicedemo_links .= '
-									<ul class="links '.sanitize_title($dataMedia['ProfileMediaType']).'" style="clear:both; margin: 2px 0;">
-										
-										<li>'.sanitize_title($dataMedia['ProfileMediaType']).' <a href="'.$mp3link.'" title="" class="mp3-link icon-website rb-icon">
-											<img src="'.RBAGENCY_PLUGIN_URL .'assets/img/icon-website.png" alt="" /></a>
-										</li>
-										<li>
-											<a href="#" title="" class="play-button" voicelink="'.$mp3link.'"><i class="fa fa-play"></i></a>
-										</li>
-									</ul>
-									<!-- .links -->';
 								
+								$voicedemo_links .= "\n";
+								$voicedemo_links .= '<li class="'.$_typeClass.'"><a href="#" title="" alt="" class="play-button" voicelink="'.$mp3link.'"><i class="fa fa-play"></i></a></li>';
 							}
-							//print_r($resultsMedia);
-			                $_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
+							
+							$voicedemo_links .= '</ul><!-- .links -->';
+							
+							$_proftypeClass = array();
+							
+							$profiType = explode(',',$dataList["ProfileType"]);
+							if(is_array($profiType)){
+								foreach($profiType as $val){
+									$_proftypeClass[] = 'profile_type_'. $val;
+								}
+							}else{
+								$_proftypeClass[] = 'profile_type_'. $profiType;
+							}
+							$_profiletypeClassUniq = implode(' ', array_unique($_proftypeClass));
+			                //$_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
+			                //$displayHTML .= 'profile_type_'. $dataList["ProfileType"];
 			                
 
 				$displayHTML .= '
-				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_mp3typeClassUniq.'">
+				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'">
 					<div class="profile-voiceover">
 					   	<strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
 						'. stripslashes($ProfileContactDisplay) .'</a></strong>'.$voicedemo_links .'
 					</div><!-- .profile-voiceover -->
 				</div> <!-- .? -->';
-
+				
+				
+				
+				
 
 /* TODO: ADD VOICEOVER HTML HERE */
 
