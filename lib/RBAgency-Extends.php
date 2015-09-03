@@ -48,8 +48,8 @@ class RBAgency_Extends {
 			// Get Shortcode Attributes
 			extract(shortcode_atts(array(
 					"mode" => null,
-					"show_profile_type_filter" => null
-
+					"show_profile_type_filter" => null,
+					"list_layout" => null,
 				), $atts));
 
 			if(empty($atts)){
@@ -76,53 +76,61 @@ class RBAgency_Extends {
 				// Return SQL string based on fields
 				
 				
-				if(isset($atts['show_profile_type_filter']) or isset($atts['type'])){
-					global $wpdb;
+				//list_layout="lightbox"
+				if(isset($atts['list_layout']) and $atts['list_layout']=='voiceover'){
+					global $_list_my_profiles;
 					
-					echo '
-					<audio id="voice-over-player" src="/test/audio.ogg" controls>
-						<p>Your browser does not support the <code>audio</code> element.</p>
-					</audio>
-					';
-				}
+					$_list_my_profiles ='voiceover';
+					if(isset($atts['show_profile_type_filter']) or isset($atts['type'])){
+						global $wpdb;
 						
-				if(isset($atts['type']) and is_numeric($atts['type'])){
-					$atts['profiletype'] = $atts['type'];
-				}elseif(isset($atts['type']) and !is_numeric($atts['type'])){
-					//means the profile is multiple select like 1,3,5,6
-					$_arrTypeAr = explode(',',$atts['type']);
-					//bec the exist script have waiting single quote on start and end==.. 
-					$_arrTypeTemp = str_replace(',','|',$atts['type']);
-					unset($atts['type']);
-					$atts['profileumltitype'] = $_arrTypeTemp;
-				}
+						echo '
+						<audio id="voice-over-player" src="/test/audio.ogg" controls>
+							<p>Your browser does not support the <code>audio</code> element.</p>
+						</audio>
+						';
+					}
+							
+					if(isset($atts['type']) and is_numeric($atts['type'])){
+						$atts['profiletype'] = $atts['type'];
+					}elseif(isset($atts['type']) and !is_numeric($atts['type'])){
+						//means the profile is multiple select like 1,3,5,6
+						$_arrTypeAr = explode(',',$atts['type']);
+						//bec the exist script have waiting single quote on start and end==.. 
+						$_arrTypeTemp = str_replace(',','|',$atts['type']);
+						unset($atts['type']);
+						$atts['profileumltitype'] = $_arrTypeTemp;
+					}
 				
 				
-				if(isset($atts['show_profile_type_filter']) or $atts['show_profile_type_filter'] == true){
-				
-				
+					if(isset($atts['show_profile_type_filter']) or $atts['show_profile_type_filter'] == true){
 					
-					$all_profileType = "SELECT * FROM " . table_agency_data_type;
-					$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
 					
-					$_allMedLink = '';
-					foreach($results_profileType as $key => $val){
-						$_te = 'profile_type_'. $val['DataTypeID'];
 						
-						if(is_array($_arrTypeAr)){
-							if(in_array($val['DataTypeID'],$_arrTypeAr)){
+						$all_profileType = "SELECT * FROM " . table_agency_data_type;
+						$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
+						
+						$_allMedLink = '';
+						foreach($results_profileType as $key => $val){
+							$_te = 'profile_type_'. $val['DataTypeID'];
+							
+							if(is_array($_arrTypeAr)){
+								if(in_array($val['DataTypeID'],$_arrTypeAr)){
+									$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
+								}
+							}else{
 								$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
 							}
-						}else{
-							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
 						}
+						echo '
+						<ul class="media-categories-link">
+							<li><a href="#" media-cate-id="all">All</a></li>
+							'.$_allMedLink.'
+						</ul>
+						';
 					}
-					echo '
-					<ul class="media-categories-link">
-						<li><a href="#" media-cate-id="all">All</a></li>
-						'.$_allMedLink.'
-					</ul>
-					';
+				}else{
+					//list_layout="lightbox"
 				}
 				
 				
