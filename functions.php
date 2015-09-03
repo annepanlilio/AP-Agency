@@ -4228,7 +4228,7 @@ function rb_send_notif_due_date_reached(){
 		foreach($qresults as $qres){
 			$CustomFields[] = $qres['ProfileCustomTitle'];
 		}
-		//print_r($CustomFields);
+		
 		foreach($CustomFields as $CustomField){
 			$q2 = "SELECT * FROM ".$wpdb->prefix."agency_customfields cu INNER JOIN ".
 				   $wpdb->prefix."agency_customfield_mux mu ON mu.ProfileCustomID = cu.ProfileCustomID INNER JOIN ".
@@ -4239,7 +4239,11 @@ function rb_send_notif_due_date_reached(){
 			//loop and send mail
 			foreach($result2 as $res2)
 			{
-				$diff=date_difference(date("Y-m-d"),$res2['ProfileCustomDateValue']);
+				if($res2['ProfileCustomDateValue'] != '0000-00-00'){
+					$diff=date_difference(date("Y-m-d"),$res2['ProfileCustomDateValue']);
+				}else{
+					$diff = 0;
+				}			
 
 				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0 && get_user_meta($res2['ProfileID'],'_user_expired',true) == 0 && get_option("ProfileCustomNotifyAdmin_".$res2['ProfileCustomID']) == 1){
 					$data["send_to"] = get_option("admin_email");
