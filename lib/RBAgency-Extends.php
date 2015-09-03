@@ -145,25 +145,53 @@ class RBAgency_Extends {
 						
 						if(is_array($_arrTypeAr)){
 							if(in_array($val['DataTypeID'],$_arrTypeAr)){
-								$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
+								$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</a></li>';
 							}
 						}else{
-							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</li>';
+							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</a></li>';
 						}
 					}
+					
 					echo '
 					<ul class="media-categories-link">
 						<li><a href="#" media-cate-id="all">All</a></li>
 						'.$_allMedLink.'
-					</ul>
-							<style>
-								ul.media-categories-link,ul.media-categories-link2{widh:95%;}
-								ul.media-categories-link li,ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 8px 2px;}
-									ul.media-categories-link li au,ul.media-categories-link2 li a{background: #eee;padding: 5px;}
-									ul.media-categories-link li a.active,ul.media-categories-link2 li a.active {background: #bbb;color:#fff;}
-							</style>
-					';
+					</ul>';
 				}
+				
+				
+				if(isset($atts['show_media_category_filter']) or $atts['show_media_category_filter'] == true){
+				
+					$resultsP = $wpdb->get_results("SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
+					INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle",ARRAY_A);
+					
+					$_titleattr = '';
+					$_allMedLink = '';
+					foreach($resultsP as $key => $val){
+						$_te = 'custom_mp3_'. $val['MediaCategoryID'];
+						$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['MediaCategoryTitle'].'</a></li>';
+					}
+					echo '
+					<ul class="media-categories-link2">
+						<li><a href="#" media-cate-id="all">All</a></li>
+						<li><a href="#" media-cate-id="voicedemo">Voice Demo</a></li>
+						'.$_allMedLink.'
+					</ul>
+					';
+					
+				}
+				echo '
+				<style>
+					ul.media-categories-link, ul.media-categories-link2{widh:95%;}
+					ul.media-categories-link li,ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 8px 2px;}
+						ul.media-categories-link li a,ul.media-categories-link2 li a{background: #eee;padding: 5px;}
+						ul.media-categories-link li a.active,ul.media-categories-link2 li a.active {background: #bbb;color:#fff;}
+						
+					ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 3px 1px;}
+					ul.media-categories-link2 li a{font-size:0.8em;background: #eee;padding: 4px;}	
+				</style>
+				';
+				
 				
 				
 				

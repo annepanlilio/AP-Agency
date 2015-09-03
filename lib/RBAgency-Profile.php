@@ -2064,14 +2064,13 @@ class RBAgency_Profile {
 						$resultsP = $wpdb->get_results("SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
 						INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle",ARRAY_A);
 						
-						$_titleattr = '';$_allMedLink = '';
+						$_titleattr = '';
 						foreach($resultsP as $key => $val){
 							$_te = 'custom_mp3_'. $val['MediaCategoryID'];
 							$_titleattr .='jQuery("li.'.$_te.' a.play-button").attr("title","'. $val['MediaCategoryTitle'] .'");'."\n";
 						/* 	$_typeClass = sanitize_title_with_dashes($dataMedia['ProfileMediaType']);
 								$_typeClass = str_replace('/','', $_typeClass);
 								 */
-							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['MediaCategoryTitle'].'</li>';
 						}
 						
 						//rbcustommedia_audio-book_button_mp3_7
@@ -2084,16 +2083,6 @@ class RBAgency_Profile {
 							});
 						</script>
 						';
-						
-						if(isset($show_media_category)){
-						$all_html.='
-						<ul class="media-categories-link">
-							<li><a href="#" media-cate-id="all">All</a></li>
-							<li><a href="#" media-cate-id="voicedemo">Voice Demo</a></li>
-							'.$_allMedLink.'
-						</ul>
-						';
-						}
 						
 						//$queryPType = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 
@@ -3100,7 +3089,7 @@ class RBAgency_Profile {
 								$_proftypeClass[] = 'profile_type_'. $profiType;
 							}
 							$_profiletypeClassUniq = implode(' ', array_unique($_proftypeClass));
-			                //$_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
+			                $_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
 			                //$displayHTML .= 'profile_type_'. $dataList["ProfileType"];
 			                
 

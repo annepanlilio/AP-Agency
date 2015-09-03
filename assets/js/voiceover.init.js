@@ -23,6 +23,11 @@ jQuery(document).ready(function($) {
 		$(this).addClass("active");
 		var classDisplay = $(this).attr('media-cate-id');
 		
+		//trigger the media category select All
+		$("ul.media-categories-link2 li a").removeClass("active");
+		$("ul.media-categories-link2 li a[media-cate-id='all']").addClass("active");
+		
+		
 		//console.log(classDisplay);
 		if(classDisplay == 'all'){
 			$('.rbprofile-list').show();
@@ -30,10 +35,62 @@ jQuery(document).ready(function($) {
 		}else{
 			$('.rbprofile-list').hide();
 			$('.rbprofile-list.'+classDisplay).show();
-			//$('.profile-voiceover ul.links li:NOT(.site_link)').hide();
-			//$('.profile-voiceover ul.links li.'+classDisplay).show();
+			$('.profile-voiceover ul.links li').show();
+		}
+		
+		
+		
+		
+		return false;
+	});
+	
+	$("ul.media-categories-link2 li a").on('click',function(){
+	
+		var requestMediaCat = $("ul.media-categories-link li a[class='active']").attr('media-cate-id');
+		if (requestMediaCat === undefined ){
+			//trigger the main as all.. 
+			$("ul.media-categories-link li a[media-cate-id='all']").addClass("active");
+			requestMediaCat = 'all';
+		}
+		console.log(requestMediaCat);
+		
+		$("ul.media-categories-link2 li a").removeClass("active");
+		$(this).addClass("active");
+		var classDisplay = $(this).attr('media-cate-id');
+		
+		//console.log(classDisplay);
+		if(classDisplay == 'all'){
+			if(requestMediaCat == 'all'){
+				$('.rbprofile-list').show();
+				$('.profile-voiceover ul.links li').show();
+			}else{
+				$('.rbprofile-list.'+requestMediaCat).show();
+				$('.rbprofile-list.'+requestMediaCat+' .profile-voiceover ul.links li').show();
+			}
+		}else{
+		
+			$('.rbprofile-list').hide();
+			
+			if(requestMediaCat == 'all'){
+				$('.rbprofile-list.'+classDisplay).show();
+				$('.profile-voiceover ul.links li:NOT(.site_link)').hide();
+				$('.profile-voiceover ul.links li.'+classDisplay).show();
+			}else{
+				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay).show();
+				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay+' .profile-voiceover ul.links li:NOT(.site_link)').hide();
+				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay+' .profile-voiceover ul.links li.'+classDisplay).show();
+			}
+			console.log(classDisplay);
+		
+			
+			//
+			//
+			//
 		}
 		return false;
 	});
+	
+	
+	
 	
 });
