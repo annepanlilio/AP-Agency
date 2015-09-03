@@ -4160,8 +4160,9 @@
 			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/admin.css', __FILE__ ) );
 			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/forms.css', __FILE__ ) );
 			wp_enqueue_style('rbagency-datepicker', plugins_url( '/assets/css/jquery-ui/jquery-ui.css', __FILE__ ) );
-				wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
+			wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
 		}
+		
 	}
 	add_action('init','load_admin_css');
 
@@ -4169,19 +4170,20 @@
 		if(is_admin()){
 			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		}
+		//wp_enqueue_script('jquery-ui-datepicker', RBAGENCY_PLUGIN_URL .'/js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core') );
 	}
 	add_action( 'init', 'load_admin_js' );
 
 	function load_datetime_basic_search(){
 		echo '<script type="text/javascript">
-				jQuery(function(){
+				jQuery(document).ready(function($){
 
-					jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
+					/* jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
 						dateFormat: "yy-mm-dd"
 					});
 					jQuery( "input[id=rb_datepicker_to_bd]").datepicker({
 						dateFormat: "yy-mm-dd"
-					});
+					}); */
 
 				});
 				</script>';
@@ -4249,9 +4251,8 @@ function rb_send_notif_due_date_reached(){
 				}
 
 			}
-		}		
 
-	
+		}
 }
 add_action('init','rb_send_notif_due_date_reached');
 
