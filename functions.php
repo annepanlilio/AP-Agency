@@ -4160,9 +4160,8 @@
 			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/admin.css', __FILE__ ) );
 			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/forms.css', __FILE__ ) );
 			wp_enqueue_style('rbagency-datepicker', plugins_url( '/assets/css/jquery-ui/jquery-ui.css', __FILE__ ) );
-			wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
+				wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
 		}
-		
 	}
 	add_action('init','load_admin_css');
 
@@ -4170,20 +4169,19 @@
 		if(is_admin()){
 			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		}
-		//wp_enqueue_script('jquery-ui-datepicker', RBAGENCY_PLUGIN_URL .'/js/jquery.ui.datepicker.min.js', array('jquery', 'jquery-ui-core') );
 	}
 	add_action( 'init', 'load_admin_js' );
 
 	function load_datetime_basic_search(){
 		echo '<script type="text/javascript">
-				jQuery(document).ready(function($){
+				jQuery(function(){
 
-					/* jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
+					jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
 						dateFormat: "yy-mm-dd"
 					});
 					jQuery( "input[id=rb_datepicker_to_bd]").datepicker({
 						dateFormat: "yy-mm-dd"
-					}); */
+					});
 
 				});
 				</script>';
@@ -4222,14 +4220,14 @@ function rb_send_notif_due_date_reached(){
 	
 	
 		//send notif
-		$qq = $wpdb->query("SELECT * FROM ".$wpdb->prefix."agency_customfields WHERE ProfileCustomType = 10 AND ProfileCustomNotifyAdmin = 1");
+		$qq = "SELECT * FROM ".$wpdb->prefix."agency_customfields WHERE ProfileCustomType = 10";
 		$qresults = $wpdb->get_results($qq,ARRAY_A);
 
 		$CustomFields = array();
 		foreach($qresults as $qres){
 			$CustomFields[] = $qres['ProfileCustomTitle'];
 		}
-		
+		print_r($CustomFields);
 		foreach($CustomFields as $CustomField){
 			$q2 = "SELECT * FROM ".$wpdb->prefix."agency_customfields cu INNER JOIN ".
 				   $wpdb->prefix."agency_customfield_mux mu ON mu.ProfileCustomID = cu.ProfileCustomID INNER JOIN ".
@@ -4242,7 +4240,7 @@ function rb_send_notif_due_date_reached(){
 			{
 				$diff=date_difference(date("Y-m-d"),$res2['ProfileCustomDateValue']);
 
-				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0 && get_user_meta($res2['ProfileID'],'_user_expired',true) != 1){
+				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0 && get_user_meta($res2['ProfileID'],'_user_expired',true) == 1 && get_option("ProfileCustomNotifyAdmin_".$res2['ProfileCustomID']) == 1){
 					$data["send_to"] = get_option("admin_email");
 					$data["profile_name"] = $res2['ProfileContactDisplay'];	
 					$data["subject"] = $res2['ProfileCustomTitle'];
@@ -4251,8 +4249,9 @@ function rb_send_notif_due_date_reached(){
 				}
 
 			}
+		}		
 
-		}
+	
 }
 add_action('init','rb_send_notif_due_date_reached');
 
