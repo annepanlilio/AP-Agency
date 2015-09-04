@@ -318,7 +318,7 @@ elseif ($ConfigID == 1) {
 		$rb_agency_option_inactive_profile_on_update = isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])? $rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0;
 		
 		//Auto-send notification when due date or contract reached
-		$rb_agency_option_notify_due_date = isset($rb_agency_options_arr['rb_agency_option_notify_due_date'])? $rb_agency_options_arr['rb_agency_option_notify_due_date']:0;
+		//$rb_agency_option_notify_due_date = isset($rb_agency_options_arr['rb_agency_option_notify_due_date'])? $rb_agency_options_arr['rb_agency_option_notify_due_date']:0;
 
 
 
@@ -596,15 +596,15 @@ elseif ($ConfigID == 1) {
 		/*
 		 *  Auto-send notification when due date or contract reached (send it to admin and agency )
 		 */
-		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Notifications', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
-		echo " </tr>\n";
-		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Notify admin when due date reached', RBAGENCY_TEXTDOMAIN) ."</th>\n";
-		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_notify_due_date]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_notify_due_date'])?$rb_agency_options_arr['rb_agency_option_notify_due_date']:0, 1,false)."/> This will notify the admin when an expecting model reached her due date. <br />\n";
-		echo "   </td>\n";
-		echo " </tr>\n";
+		//echo " <tr valign=\"top\">\n";
+		//echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Notifications', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
+		//echo " </tr>\n";
+		//echo " <tr valign=\"top\">\n";
+		//echo "   <th scope=\"row\">". __('Notify admin when due date reached', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		//echo "   <td>\n";
+		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_notify_due_date]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_notify_due_date'])?$rb_agency_options_arr['rb_agency_option_notify_due_date']:0, 1,false)."/> This will notify the admin when an expecting model reached her due date. <br />\n";
+		//echo "   </td>\n";
+		//echo " </tr>\n";
 		
 		/*
 		 * Image Handling
