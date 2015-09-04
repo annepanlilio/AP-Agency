@@ -2988,11 +2988,11 @@ class RBAgency_Profile {
 					
 					<div class="info">
 						<h3>'. stripslashes($ProfileContactDisplay).'</h3>
-						<p>'. stripslashes($ProfileExperience).'</p>
-						
-						
-						<a href="'. get_bloginfo("url").$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a>
-						<a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'" title="'.stripslashes($ProfileContactDisplay).'">More</a>
+						<p>'. stripslashes($ProfileExperience).'</p>						
+						<ul>
+							<li><a href="'. get_bloginfo("url").$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a></li>
+							<li><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'" title="'.stripslashes($ProfileContactDisplay).'">More</a></li>
+						</ul>
 						
 					</div>
 					
@@ -3140,6 +3140,9 @@ class RBAgency_Profile {
 				.profile-fancy .info p,
 				.profile-fancy .info a {
 					font-size: medium;
+				}
+				.profile-fancy .info ul {
+					list-style: none;
 				}
 				</style>
 				';
