@@ -173,8 +173,45 @@ class RBAgency_Extends {
 				
 				if(isset($atts['show_media_category_filter']) or $atts['show_media_category_filter'] == true){
 				
-					$resultsP = $wpdb->get_results("SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
-					INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle",ARRAY_A);
+		/*		
+				get all the media files.
+		inner join the profile and query based of user filter.. 
+		group my media type. 
+		-- now you can get all unique media type.. where only available to list custom list. :)
+		
+		*/
+		
+					/* if(isset($atts['profileumltitype'])){
+						$_medSQLCustom = "SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
+						INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle
+						INNER JOIN ".table_agency_profile." as pro
+						";
+					
+					}elseif(isset($atts['type'])){
+						$_medSQLCustom = "SELECT med.*,dat.*,pro.* FROM ".table_agency_data_media ." as med
+						INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle
+						INNER JOIN ".table_agency_profile." as pro ON dat.ProfileID = pro.ProfileID
+						where FIND_IN_SET('". $atts['type'] ."', pro.ProfileType)
+						";
+						
+			            echo " single type.";
+					}else{
+						$_medSQLCustom = "SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
+							INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle";
+					}
+					$resultsP = $wpdb->get_results($_medSQLCustom,ARRAY_A);
+					
+					print_r($wpdb->last_error);
+					print_r($resultsP);
+					
+					
+					
+					exit;
+					
+					
+					 */
+					
+					$resultsP = $wpdb->get_results($_medSQLCustom,ARRAY_A);
 					
 					$_titleattr = '';
 					$_allMedLink = '';
