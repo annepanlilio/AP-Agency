@@ -4228,7 +4228,7 @@ function rb_send_notif_due_date_reached(){
 		foreach($qresults as $qres){
 			$CustomFields[] = $qres['ProfileCustomTitle'];
 		}
-		print_r($CustomFields);
+		//print_r($CustomFields);
 		foreach($CustomFields as $CustomField){
 			$q2 = "SELECT * FROM ".$wpdb->prefix."agency_customfields cu INNER JOIN ".
 				   $wpdb->prefix."agency_customfield_mux mu ON mu.ProfileCustomID = cu.ProfileCustomID INNER JOIN ".
