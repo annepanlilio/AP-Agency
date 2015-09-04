@@ -2613,8 +2613,10 @@ class RBAgency_Profile {
 			// make shortcode as priority
 			if($_list_my_profiles == 'voiceover'){
 				$rb_agency_option_layoutprofilelistlayout = 1;
+			}elseif($_list_my_profiles == 'lightbox'){
+				$rb_agency_option_layoutprofilelistlayout = 0;
+				$rb_agency_option_layoutprofileviewmode = 1; // bypass admin setting and change to popup / lightbox
 			}else{
-				$_list_my_profiles == 'lightbox';
 				$rb_agency_option_layoutprofilelistlayout = 0;
 			}
 			
@@ -3114,7 +3116,7 @@ class RBAgency_Profile {
 			$displayHTML .='
 			<style>
 				.profile-fancy .profile-photo {
-				  width: 65%;
+				  width: 60%;
 				  margin-right: 5%;
 				  float: left;
 				}
@@ -3122,8 +3124,15 @@ class RBAgency_Profile {
 				  max-width: 100%;
 				}
 				.profile-fancy .info {
-				  width: 30%;
+				  width: 35%;
 				  float: left;
+				}
+				.profile-fancy .info h3 {
+					margin-bottom: 15px;
+				}
+				.profile-fancy .info p,
+				.profile-fancy .info a {
+					font-size: medium;
 				}
 				</style>
 				';
