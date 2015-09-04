@@ -105,6 +105,7 @@ Last updated: July 17, 2015
 }
 #profile-list.voiceover .profile-voiceover {
 	padding: 5px 6px;
+	position: relative;
 	background: #eee;
 }
 #profile-list.voiceover .profile-voiceover ul {
@@ -114,6 +115,13 @@ Last updated: July 17, 2015
 }
 #profile-list.voiceover .profile-voiceover ul li {
 	display: inline-block;
+}
+#profile-list.voiceover .profile-voiceover ul li i.fa-bars {
+	float: left;
+	margin-left: 5px;
+	padding: 3px 5px;
+	background: #ddd;
+	border-radius: 3px;
 }
 #profile-list.voiceover .profile-voiceover ul li a {
 	display: inline-block;
@@ -127,6 +135,22 @@ Last updated: July 17, 2015
 #profile-list.voiceover .profile-voiceover ul li a i,
 #profile-list.voiceover .profile-voiceover ul li a img {
 	float: left;
+}
+#profile-list.voiceover .profile-voiceover ul li.voices ul {
+	left: 0;
+	right: 0;
+	top: 100%;
+	z-index: 2;
+	height: auto;
+	padding: 5px;
+	display: none;
+	background: #fff;
+	position: absolute;
+	border-radius: 3px;
+	border: 1px solid #ddd;
+}
+#profile-list.voiceover .profile-voiceover ul li.voices ul li {
+	font-size: small;
 }
 
 /* Profiles Per Row */
