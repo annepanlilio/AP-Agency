@@ -96,8 +96,10 @@ class RBAgency_Extends {
 				if(isset($atts['list_layout'])){
 					if($atts['list_layout']=='voiceover'){
 						$_list_my_profiles ='voiceover';
-					}else{
+					}elseif($atts['list_layout']=='lightbox'){
 						$_list_my_profiles ='lightbox';
+					}else{
+						$_list_my_profiles ='';
 					}
 				}else{
 					if($rb_agency_option_layoutprofilelistlayout == 1){

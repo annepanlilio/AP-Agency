@@ -4,9 +4,11 @@ jQuery(document).ready(function($) {
 		'transitionIn'	:	'elastic',
 		'transitionOut'	:	'elastic',
 		'speedIn'		:	600, 
-		'speedOut'		:	200, 
-		'overlayShow'	:	true,
-		'hideOnContentClick': false
+		'scrolling'		: 'no',
+		'autoDimensions'	: false,
+		'width'         		: 350,
+		'height'        		: 'auto'
+		//'hideOnContentClick': false
 	});
 	
 });

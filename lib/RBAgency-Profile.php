@@ -2613,8 +2613,10 @@ class RBAgency_Profile {
 			// make shortcode as priority
 			if($_list_my_profiles == 'voiceover'){
 				$rb_agency_option_layoutprofilelistlayout = 1;
+			}elseif($_list_my_profiles == 'lightbox'){
+				$rb_agency_option_layoutprofilelistlayout = 0;
+				$rb_agency_option_layoutprofileviewmode = 1; // bypass admin setting and change to popup / lightbox
 			}else{
-				$_list_my_profiles == 'lightbox';
 				$rb_agency_option_layoutprofilelistlayout = 0;
 			}
 			
