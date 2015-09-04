@@ -4208,7 +4208,7 @@ function date_difference($date1,$date2, $differenceFormat = '%a'){
 function expired_profile_notification($data){
 	$to = $data["send_to"];
 	$subject = get_option('blogname')." ". $data["subject"]." Expiry Notification";
-	$message = __($data["profile_name"]." ".$subject." is expired. Time to update this profile user.");
+	$message = __($data["profile_name"]." ".$data["subject"]." has expired. Time to update this profile user.");
 	wp_mail( $to, $subject, $message );
 }
 
@@ -4240,7 +4240,7 @@ function rb_send_notif_due_date_reached(){
 			{
 				$diff=date_difference(date("Y-m-d"),$res2['ProfileCustomDateValue']);
 
-				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0 && get_user_meta($res2['ProfileID'],'_user_expired',true) == 1 && get_option("ProfileCustomNotifyAdmin_".$res2['ProfileCustomID']) == 1){
+				if(!empty($res2['ProfileCustomDateValue']) && $diff > 0 && get_user_meta($res2['ProfileID'],'_user_expired',true) == 0 && get_option("ProfileCustomNotifyAdmin_".$res2['ProfileCustomID']) == 1){
 					$data["send_to"] = get_option("admin_email");
 					$data["profile_name"] = $res2['ProfileContactDisplay'];	
 					$data["subject"] = $res2['ProfileCustomTitle'];
