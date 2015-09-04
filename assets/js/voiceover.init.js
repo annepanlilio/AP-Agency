@@ -1,8 +1,24 @@
 jQuery(document).ready(function($) {
 
+
+	
+	var audioPlayerJS
+    audiojs.events.ready(function() {
+        audioPlayerJS = audiojs.createAll();
+    });
+  
+  
 	$(".mp3-link").on('click',function(){
 		//data-profileid
 	});
+
+	$("#profile-list.voiceover .profile-voiceover ul li.voices").mouseover(function(){
+		$(this).find('ul').stop().slideDown("slow");
+	});
+	$("#profile-list.voiceover .profile-voiceover ul li.voices").mouseout(function(){
+		$(this).find('ul').stop().slideUp("slow");
+	});
+	
 	
 	$(".play-button").on('click',function(){
 		var audioPlayer = document.getElementById('voice-over-player');     
@@ -14,6 +30,7 @@ jQuery(document).ready(function($) {
 	    //audio[0].play(); changed based on Sprachprofi's comment below
 	    audioPlayer.oncanplaythrough = audioPlayer.play();
 	    console.log('request to play');
+	    audioPlayerJS[0].play()
 	    return false;
 	});
 	

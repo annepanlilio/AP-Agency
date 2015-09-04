@@ -116,7 +116,7 @@ class RBAgency_Extends {
 				 
 				if($_list_my_profiles =='voiceover'){
 					echo '
-					<audio id="voice-over-player" src="/test/audio.ogg" controls>
+					<audio id="voice-over-player" controls style="visibility:hidden">
 						<p>Your browser does not support the <code>audio</code> element.</p>
 					</audio>
 					';
@@ -189,7 +189,20 @@ class RBAgency_Extends {
 						
 					ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 3px 1px;}
 					ul.media-categories-link2 li a{font-size:0.8em;background: #eee;padding: 4px;}	
+					
+					  .audiojs { height: 22px; background: #555; margin: 10px 0 15px 0;
+					    -webkit-box-shadow: none; -moz-box-shadow: none;  -o-box-shadow: none; box-shadow:none;}
+				      .audiojs .play-pause { width: 25px; height: 20px; padding: 0px 8px 0px 0px;border-color:rgba(0,0,0,0.3);  }
+				      .audiojs p { width: 25px; height: 20px; margin: -3px 0px 0px -1px; }
+				      .audiojs .scrubber { rgba(50,50,50,0.8); width: 310px; height: 10px; margin: 5px; }
+				      .audiojs .progress { height: 10px; width: 0px; background: #ccc;}
+				      .audiojs .loaded { height: 10px; background: rgba(0,0,0,0.7); }
+				      .audiojs .time { float: left; height: 25px; line-height: 25px;border-color:rgba(0,0,0,0.3); }
+				      .audiojs .error-message { height: 24px;line-height: 24px; }
+				      .audiojs .loading{background-position: -2px -1px}
+				      /*background: rgba(0, 0, 0, 0) url("/wp-content/plugins/rb-agency/ext/audiojs/player-graphics.gif") no-repeat scroll -2px -1px;*/
 				</style>
+				
 				';
 				
 				

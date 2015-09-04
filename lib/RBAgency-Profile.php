@@ -2551,9 +2551,10 @@ class RBAgency_Profile {
 				wp_enqueue_script( 'voiceover-init', RBAGENCY_PLUGIN_URL .'assets/js/voiceover.init.js', array( 'jquery-latest'));
 				wp_enqueue_script( 'voiceover-init' );
 				
+				wp_enqueue_script( 'audiojs', RBAGENCY_PLUGIN_URL .'ext/audiojs/audio.min.js', array( 'jquery-latest'));
+				wp_enqueue_script( 'audiojs' );
 				
 				
-	
 	
 			
 			/* 
@@ -3054,10 +3055,12 @@ class RBAgency_Profile {
 									</li>';
 							}
 							//<li>'.sanitize_title($dataMedia['ProfileMediaType']).' <a href="'.$mp3link.'" title="" class="mp3-link icon-website rb-icon">
-									
-							$_mp3typeClass = array();
-							foreach ($resultsMedia  as $dataMedia) {
 							
+							$voicedemo_links .= (count($resultsMedia) > 1) ? '<li class="voices"><i class="fa fa-bars"></i><ul>' : '';	// add dropdown for multiple audio
+							$_mp3typeClass = array();
+							$audios = 0;
+							foreach ($resultsMedia  as $dataMedia) {
+								$audios++;
 								$_typeClass = sanitize_title_with_dashes($dataMedia['ProfileMediaType']);
 								$_typeClass = str_replace('/','', $_typeClass);
 							
@@ -3069,15 +3072,19 @@ class RBAgency_Profile {
 									$explTyep = explode('_',$_revType); //17 - 3pm - nottub
 									$_typeID = strrev($explTyep[0]); //71
 									$_typeClass = 'custom_mp3_' . $_typeID;
+									$_mediaTypeArr = explode("_", $dataMedia['ProfileMediaType']);
+									$_typeLabel = $_mediaTypeArr[1];									
 								}
 								
 								$_mp3typeClass[] = $_typeClass;
 								$mp3link = RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"]. "/" . $dataMedia['ProfileMediaURL'];
 								
-								$voicedemo_links .= "\n";
-								$voicedemo_links .= '<li class="'.$_typeClass.'"><a href="#" title="" alt="" class="play-button" voicelink="'.$mp3link.'"><i class="fa fa-play"></i></a></li>';
+								$voicedemo_links .= "\n";								
+								$voicedemo_links .= '<li class="'.$_typeClass.'"><a href="#" title="" alt="" class="play-button" voicelink="'.$mp3link.'"><i class="fa fa-play"></i></a></li>';								
 							}
-							
+
+							$voicedemo_links .= (count($resultsMedia) > 1) ? '</ul></li>' : ''; // close for multiple audio dropdown
+
 							$voicedemo_links .= '</ul><!-- .links -->';
 							
 							$_proftypeClass = array();
@@ -3116,7 +3123,7 @@ class RBAgency_Profile {
 			$displayHTML .='
 			<style>
 				.profile-fancy .profile-photo {
-				  width: 65%;
+				  width: 60%;
 				  margin-right: 5%;
 				  float: left;
 				}
@@ -3124,8 +3131,15 @@ class RBAgency_Profile {
 				  max-width: 100%;
 				}
 				.profile-fancy .info {
-				  width: 30%;
+				  width: 35%;
 				  float: left;
+				}
+				.profile-fancy .info h3 {
+					margin-bottom: 15px;
+				}
+				.profile-fancy .info p,
+				.profile-fancy .info a {
+					font-size: medium;
 				}
 				</style>
 				';
