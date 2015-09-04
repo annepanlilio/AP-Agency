@@ -4213,6 +4213,7 @@ function expired_profile_notification($data){
 }
 
 
+
 //Send notification to admin when expecting models reached her due date
 function rb_send_notif_due_date_reached(){
 	global $wpdb;
