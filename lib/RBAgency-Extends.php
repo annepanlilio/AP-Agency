@@ -139,24 +139,35 @@ class RBAgency_Extends {
 					$all_profileType = "SELECT * FROM " . table_agency_data_type;
 					$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
 					
-					$_allMedLink = '';
+					$_allMedType = array();
 					foreach($results_profileType as $key => $val){
 						$_te = 'profile_type_'. $val['DataTypeID'];
-						
-						if(is_array($_arrTypeAr)){
-							if(in_array($val['DataTypeID'],$_arrTypeAr)){
-								$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</a></li>';
-							}
-						}else{
-							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['DataTypeTitle'].'</a></li>';
+						$_allMedType[$val['DataTypeID']] = array(
+							'DataTypeTitle' => $val['DataTypeTitle'] ,
+							'ID' => $_te
+						);
+					}
+					if(is_array($_arrTypeAr)){
+						$_allMedLink='';
+						foreach($_arrTypeAr as $key){
+							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_allMedType[$key]['ID'].'">'.$_allMedType[$key]['DataTypeTitle'].'</a></li>';
 						}
+						
+						echo '
+						<ul class="media-categories-link">
+							<li><a href="#" media-cate-id="all">All</a></li>
+							'.$_allMedLink.'
+						</ul>';
+						
+					}else{
+						//not found. no need to display the filter profile
+						echo '';
 					}
 					
-					echo '
-					<ul class="media-categories-link">
-						<li><a href="#" media-cate-id="all">All</a></li>
-						'.$_allMedLink.'
-					</ul>';
+					
+					
+					
+					
 				}
 				
 				
