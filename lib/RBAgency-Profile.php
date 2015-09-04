@@ -3116,7 +3116,7 @@ class RBAgency_Profile {
 			$displayHTML .='
 			<style>
 				.profile-fancy .profile-photo {
-				  width: 65%;
+				  width: 60%;
 				  margin-right: 5%;
 				  float: left;
 				}
@@ -3124,8 +3124,15 @@ class RBAgency_Profile {
 				  max-width: 100%;
 				}
 				.profile-fancy .info {
-				  width: 30%;
+				  width: 35%;
 				  float: left;
+				}
+				.profile-fancy .info h3 {
+					margin-bottom: 15px;
+				}
+				.profile-fancy .info p,
+				.profile-fancy .info a {
+					font-size: medium;
 				}
 				</style>
 				';
