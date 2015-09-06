@@ -128,7 +128,7 @@ class RBAgency_Extends {
 					//means the profile is multiple select like 1,3,5,6
 					$_arrTypeAr = explode(',',$atts['type']);
 					//bec the exist script have waiting single quote on start and end==.. 
-					$_arrTypeTemp = str_replace(',','|',$atts['type']);
+					$_arrTypeTemp = $atts['type'];
 					unset($atts['type']);
 					$atts['profileumltitype'] = $_arrTypeTemp;
 				}

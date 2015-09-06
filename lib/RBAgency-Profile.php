@@ -1120,7 +1120,16 @@ class RBAgency_Profile {
 					}
 					
 					if (isset($profileumltitype)){
-						$filter .= " AND profile.ProfileType REGEXP '($profileumltitype)'";
+						//$filter .= " AND profile.ProfileType REGEXP '($profileumltitype)'";
+						
+						$_t_Filter = array();
+						$arrayProfMul = explode(',',$profileumltitype);
+						foreach($arrayProfMul as $kayv){
+							$_t_Filter[]= " (FIND_IN_SET('". $kayv ."', profile.ProfileType) > 0) ";
+						}
+						$filter .= " AND (". implode('OR',$_t_Filter) .") ";
+						
+
 					}
 					
 
@@ -1800,7 +1809,7 @@ class RBAgency_Profile {
 				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
 				$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
-				$results = $wpdb->get_results($sql,ARRAY_A);
+				$results = $wpdb->get_results($sql,ARRAY_A);//echo 'error'.$sql;print_r($wpdb->last_error);
 				$profile_list = "";
 				$all_html = "";
 				// $all_html.='<div id="rbfilter-sort">';
@@ -3103,7 +3112,7 @@ class RBAgency_Profile {
 			                
 
 				$displayHTML .= '
-				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'">
+				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'" mp3_type="'.$_mp3typeClassUniq.'">
 					<div class="profile-voiceover">
 					   	<strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
 						'. stripslashes($ProfileContactDisplay) .'</a></strong>'.$voicedemo_links .'

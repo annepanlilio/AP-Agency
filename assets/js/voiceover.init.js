@@ -130,4 +130,45 @@ jQuery(document).ready(function($) {
 	
 	
 	
+	var mediaTypeActive = [];
+	$('.rbprofile-list[data-profileid]').each(function() {
+		var data = $(this).attr('mp3_type');
+		var array_data = data.split(' ');
+		
+		/* $.each( array_data, function( key, value ){
+            
+		}); */
+        $.merge(mediaTypeActive, array_data);
+		//console.log($(this).attr('mp3_type'));
+		
+		//
+	});	
+	//console.log(mediaTypeActive);
+	//function(i,e){ if($.inArray(e,mediaTypeActive)===-1) mediaTypeActive.push(e) ;});
+	
+	
+	$.merge(mediaTypeActive, ['all']);
+	var onlymediaShow= mediaTypeActive.unique();
+	//$('.media-categories-link2').
+	
+	
+	console.log(onlymediaShow);
+	//default All - hu kers if on=bject exist or not.. jquery can handle it.
+	$("ul.media-categories-link li a[media-cate-id='all']").addClass("active");
+	
+	
 });
+Array.prototype.unique =
+  function() {
+    var a = [];
+    var l = this.length;
+    for(var i=0; i<l; i++) {
+      for(var j=i+1; j<l; j++) {
+        // If this[i] is found later in the array
+        if (this[i] === this[j])
+          j = ++i;
+      }
+      a.push(this[i]);
+    }
+    return a;
+  };
