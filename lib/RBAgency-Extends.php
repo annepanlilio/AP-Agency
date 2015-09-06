@@ -210,8 +210,10 @@ class RBAgency_Extends {
 					
 					
 					 */
+					$resultsP = $wpdb->get_results("SELECT med.*,dat.* FROM ".table_agency_data_media ." as med
+					INNER JOIN ".table_agency_data_type." as dat ON med.MediaCategoryTitle = dat.DataTypeTitle",ARRAY_A);
 					
-					$resultsP = $wpdb->get_results($_medSQLCustom,ARRAY_A);
+					//$resultsP = $wpdb->get_results($_medSQLCustom,ARRAY_A);
 					
 					$_titleattr = '';
 					$_allMedLink = '';
