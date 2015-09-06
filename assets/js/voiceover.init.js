@@ -1,13 +1,15 @@
 jQuery(document).ready(function($) {
 
-
-	
-	var audioPlayerJS
+	var audioPlayerJS;
     audiojs.events.ready(function() {
         audioPlayerJS = audiojs.createAll();
     });
-  
-  
+    
+    //listener for audio
+    function PlayPause(){
+        $(".play-button").html('<i class="fa fa-play"></i>');
+    }
+    
 	$(".mp3-link").on('click',function(){
 		//data-profileid
 	});
@@ -21,16 +23,34 @@ jQuery(document).ready(function($) {
 	
 	
 	$(".play-button").on('click',function(){
-		var audioPlayer = document.getElementById('voice-over-player');     
+		var audioPlayer = document.getElementById('voice-over-player');    
         var sourceUrl = $(this).attr("voicelink");
 	    audioPlayer.pause();
-	    audioPlayer.src = sourceUrl;
-	    audioPlayer.load();//suspends and restores all audio element
-	
-	    //audio[0].play(); changed based on Sprachprofi's comment below
-	    audioPlayer.oncanplaythrough = audioPlayer.play();
-	    console.log('request to play');
-	    audioPlayerJS[0].play()
+	    
+	    
+	    
+	    //check if pause or play
+	    var audioContent = $(this).html();
+	    if(audioContent == '<i class="fa fa-pause"></i>'){
+	        console.log('request pause');
+	        audioPlayerJS[0].pause();
+	        PlayPause();
+	    }else{
+	    
+		    audioPlayer.src = sourceUrl;
+		    audioPlayer.load();//suspends and restores all audio element
+		
+		    //audio[0].play(); changed based on Sprachprofi's comment below
+		    audioPlayer.oncanplaythrough = audioPlayer.play();
+		    
+	        console.log('request to play');
+	        audioPlayerJS[0].play();
+	        
+	        PlayPause();
+		    $(this).html('<i class="fa fa-pause"></i>');
+	        audioPlayer.addEventListener('ended', PlayPause, false);
+	    }
+	    
 	    return false;
 	});
 	
