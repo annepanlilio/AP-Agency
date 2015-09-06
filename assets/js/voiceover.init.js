@@ -89,7 +89,7 @@ jQuery(document).ready(function($) {
 			$("ul.media-categories-link li a[media-cate-id='all']").addClass("active");
 			requestMediaCat = 'all';
 		}
-		console.log(requestMediaCat);
+		//console.log(requestMediaCat);
 		
 		$("ul.media-categories-link2 li a").removeClass("active");
 		$(this).addClass("active");
@@ -117,7 +117,7 @@ jQuery(document).ready(function($) {
 				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay+' .profile-voiceover ul.links li:NOT(.site_link)').hide();
 				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay+' .profile-voiceover ul.links li.'+classDisplay).show();
 			}
-			console.log(classDisplay);
+			//console.log(classDisplay);
 		
 			
 			//
@@ -149,12 +149,21 @@ jQuery(document).ready(function($) {
 	
 	$.merge(mediaTypeActive, ['all']);
 	var onlymediaShow= mediaTypeActive.unique();
-	//$('.media-categories-link2').
+	//
 	
 	
 	console.log(onlymediaShow);
+	//hide some media tab if not in all profiles listed
+	$('.media-categories-link2 li a').each(function() {
+		var mediaID = $(this).attr('media-cate-id');
+		if(jQuery.inArray(mediaID, onlymediaShow) == -1){
+			//$(this).parent().hide();
+		}
+	});
+	
 	//default All - hu kers if on=bject exist or not.. jquery can handle it.
 	$("ul.media-categories-link li a[media-cate-id='all']").addClass("active");
+	$("ul.media-categories-link2 li a[media-cate-id='all']").addClass("active");
 	
 	
 });
