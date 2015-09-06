@@ -43,7 +43,7 @@ jQuery(document).ready(function($) {
 		    //audio[0].play(); changed based on Sprachprofi's comment below
 		    audioPlayer.oncanplaythrough = audioPlayer.play();
 		    
-	        console.log('request to play');
+	        //console.log('request to play');
 	        audioPlayerJS[0].play();
 	        
 	        PlayPause();
@@ -117,12 +117,6 @@ jQuery(document).ready(function($) {
 				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay+' .profile-voiceover ul.links li:NOT(.site_link)').hide();
 				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay+' .profile-voiceover ul.links li.'+classDisplay).show();
 			}
-			//console.log(classDisplay);
-		
-			
-			//
-			//
-			//
 		}
 		return false;
 	});
@@ -143,21 +137,13 @@ jQuery(document).ready(function($) {
 		
 		//
 	});	
-	//console.log(mediaTypeActive);
-	//function(i,e){ if($.inArray(e,mediaTypeActive)===-1) mediaTypeActive.push(e) ;});
-	
-	
 	$.merge(mediaTypeActive, ['all']);
 	var onlymediaShow= mediaTypeActive.unique();
-	//
-	
-	
-	console.log(onlymediaShow);
 	//hide some media tab if not in all profiles listed
 	$('.media-categories-link2 li a').each(function() {
 		var mediaID = $(this).attr('media-cate-id');
 		if(jQuery.inArray(mediaID, onlymediaShow) == -1){
-			//$(this).parent().hide();
+			$(this).parent().hide();
 		}
 	});
 	
@@ -181,3 +167,8 @@ Array.prototype.unique =
     }
     return a;
   };
+  
+  
+  
+  
+  
