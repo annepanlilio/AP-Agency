@@ -104,6 +104,8 @@ Last updated: July 17, 2015
 	margin-bottom: 0;
 }
 #profile-list.voiceover .profile-voiceover {
+	float: left;
+	width: 100%;
 	padding: 5px 6px;
 	position: relative;
 	background: #eee;
@@ -114,7 +116,7 @@ Last updated: July 17, 2015
 	padding: 0;
 }
 #profile-list.voiceover .profile-voiceover ul li {
-	display: inline-block;
+	float: left;
 }
 #profile-list.voiceover .profile-voiceover ul li i.fa-bars {
 	float: left;
@@ -124,13 +126,18 @@ Last updated: July 17, 2015
 	border-radius: 3px;
 }
 #profile-list.voiceover .profile-voiceover ul li a {
-	display: inline-block;
+	float: left;
+	margin-bottom: 0;
 	padding: 3px 5px;
 	background: #ddd;
 	border-radius: 3px;
+	display: inline-block;
 }
 #profile-list.voiceover .profile-voiceover ul li:last-child {
 	margin-right: 0;
+}
+#profile-list.voiceover .profile-voiceover ul.links > li:last-child {
+	float: right;
 }
 #profile-list.voiceover .profile-voiceover ul li a i,
 #profile-list.voiceover .profile-voiceover ul li a img {
@@ -629,3 +636,6 @@ img.fillheight {
 .rb_profile_tool a.inactive.favorite strong, .rb_profile_tool  a.active.favorite strong:hover { color:#dd1818; }
 .rb_profile_tool a.inactive.castingcart strong, .rb_profile_tool  a.active.castingcart strong:hover { color:#ffda18; }
 #profile-single-view.rb_profile_tool span { font-size:13px; }
+.audiojs { position: absolute;
+    top: -60px;
+    right: 0; }

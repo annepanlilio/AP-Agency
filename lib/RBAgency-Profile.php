@@ -1898,6 +1898,7 @@ class RBAgency_Profile {
 				$all_html.="	</div>";
 				$all_html .= $paginate->show();
 				$all_html.="	</div><!-- #results-options -->"; // #results-options
+				
 				$type = get_query_var('type');
 
 
@@ -2133,7 +2134,7 @@ class RBAgency_Profile {
 
 					$all_html .= '</div>'; // #results-info
 					$all_html .= '<div class="rbclear"></div>';
-					$all_html .= '<hr />';
+					// $all_html .= '<hr />';
 					
 					
 					global $_list_my_profiles;
@@ -2673,6 +2674,7 @@ class RBAgency_Profile {
 
 				$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
 				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class." ".$PGENDER."\" >\n";
+				$displayHTML .= "	<div class=\"profile-box\" >\n";
 
 				if(!$plain){
 					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
@@ -2955,6 +2957,7 @@ class RBAgency_Profile {
 					}
 
 				$displayHTML .=" </div> <!-- .profile-info - profile-class --> \n";
+				$displayHTML .=" </div> <!-- .profile-box --> \n";
 				$displayHTML .=" </div> <!-- .rbprofile-list --> \n";
 				
 				
@@ -3057,7 +3060,7 @@ class RBAgency_Profile {
 							
 							
 							
-							$voicedemo_links = '<ul class="links" style="clear:both; margin: 2px 0;">';
+							$voicedemo_links = '<ul class="links">';
 							if(!empty($dataList["ProfileContactWebsite"])){
 								$voicedemo_links .= '<li class="site_link"><a href="'.$dataList["ProfileContactWebsite"].'" title="Site Link" class="mp3-link icon-website rb-icon" target="_blank">
 									<img src="'.RBAGENCY_PLUGIN_URL .'assets/img/icon-website.png" alt="" /></a>

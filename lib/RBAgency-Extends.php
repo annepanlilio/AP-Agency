@@ -152,10 +152,10 @@ class RBAgency_Extends {
 						foreach($_arrTypeAr as $key){
 							$_allMedLink .= '<li><a href="#" media-cate-id="'.$_allMedType[$key]['ID'].'">'.$_allMedType[$key]['DataTypeTitle'].'</a></li>';
 						}
-						
-						echo '
+						echo'<hr />';
+						echo '						
 						<ul class="media-categories-link">
-							<li><a href="#" media-cate-id="all">All</a></li>
+							<li><a href="#" media-cate-id="all" class="active">All</a></li>
 							'.$_allMedLink.'
 						</ul>';
 						
@@ -221,6 +221,7 @@ class RBAgency_Extends {
 						$_te = 'custom_mp3_'. $val['MediaCategoryID'];
 						$_allMedLink .= '<li><a href="#" media-cate-id="'.$_te.'">'.$val['MediaCategoryTitle'].'</a></li>';
 					}
+					echo'<hr />';
 					echo '
 					<ul class="media-categories-link2">
 						<li><a href="#" media-cate-id="all">All</a></li>
@@ -232,15 +233,15 @@ class RBAgency_Extends {
 				}
 				echo '
 				<style>
-					ul.media-categories-link, ul.media-categories-link2{widh:95%;}
+					ul.media-categories-link, ul.media-categories-link2{margin: 0!important;padding: 15px 0;}
 					ul.media-categories-link li,ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 8px 2px;}
 						ul.media-categories-link li a,ul.media-categories-link2 li a{background: #eee;padding: 5px;}
-						ul.media-categories-link li a.active,ul.media-categories-link2 li a.active {background: #bbb;color:#fff;}
+						ul.media-categories-link li a.active,ul.media-categories-link2 li a.active {color:#333;}
 						
 					ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 3px 1px;}
-					ul.media-categories-link2 li a{font-size:0.8em;background: #eee;padding: 4px;}	
+					ul.media-categories-link2 li a{background: #eee;padding: 4px;}	
 					
-					  .audiojs { height: 22px; background: #555; margin: 10px 0 15px 0;
+					  .audiojs { height: 22px; background: #555; margin: 10px 0 15px 0;position: absolute; top: -60px; right: 0;
 					    -webkit-box-shadow: none; -moz-box-shadow: none;  -o-box-shadow: none; box-shadow:none;}
 				      .audiojs .play-pause { width: 25px; height: 20px; padding: 0px 8px 0px 0px;border-color:rgba(0,0,0,0.3);  }
 				      .audiojs p { width: 25px; height: 20px; margin: -3px 0px 0px -1px; }
