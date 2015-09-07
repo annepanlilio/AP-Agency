@@ -4259,7 +4259,7 @@ function rb_send_notif_due_date_reached(){
 					$data = array();
 					unset($data);
 					
-					$data["send_to"] = 'legend_slash@yahoo.com';
+					$data["send_to"] = get_option("admin_email");
 					$data["profile_name"] = $res2['ProfileContactDisplay'];	
 					$data["subject"] = rbagency_get_customfield_title($res2['ProfileCustomID']);
 					expired_profile_notification($data);
@@ -4315,7 +4315,7 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 		foreach($results as $res2){
 			$profileContactDisplay = $res2["ProfileContactDisplay"];
 		}
-		$data["send_to"] = 'legend_slash@yahoo.com';
+		$data["send_to"] = get_option("admin_email");
 		$data["profile_name"] = $profileContactDisplay;	
 		$data["subject"] = rbagency_get_customfield_title($pcID);
 		expired_profile_notification($data);
