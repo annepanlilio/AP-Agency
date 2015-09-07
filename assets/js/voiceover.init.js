@@ -14,11 +14,10 @@ jQuery(document).ready(function($) {
 		//data-profileid
 	});
 
-	$("#profile-list.voiceover .profile-voiceover ul li.voices").mouseover(function(){
-		$(this).find('ul').stop().slideDown("slow");
-	});
-	$("#profile-list.voiceover .profile-voiceover ul li.voices").mouseout(function(){
-		$(this).find('ul').stop().slideUp("slow");
+	$(".site_link.hover-audio").mouseover(function(){
+		$(this).find('ul').stop().slideDown();
+	}).mouseout(function(){
+		$(this).find('ul').stop().slideUp();
 	});
 	
 	
@@ -67,10 +66,10 @@ jQuery(document).ready(function($) {
 		
 		//console.log(classDisplay);
 		if(classDisplay == 'all'){
-			$('.rbprofile-list').show();
+			$('.rbprofile-list[data-profileid]').show();
 			//$('.profile-voiceover ul.links li').show();
 		}else{
-			$('.rbprofile-list').hide();
+			$('.rbprofile-list[data-profileid]').hide();
 			$('.rbprofile-list.'+classDisplay).show();
 			$('.profile-voiceover ul.links li').show();
 		}
@@ -98,7 +97,7 @@ jQuery(document).ready(function($) {
 		//console.log(classDisplay);
 		if(classDisplay == 'all'){
 			if(requestMediaCat == 'all'){
-				$('.rbprofile-list').show();
+				$('.rbprofile-list[data-profileid]').show();
 				$('.profile-voiceover ul.links li').show();
 			}else{
 				$('.rbprofile-list.'+requestMediaCat).show();
@@ -106,7 +105,7 @@ jQuery(document).ready(function($) {
 			}
 		}else{
 		
-			$('.rbprofile-list').hide();
+			$('.rbprofile-list[data-profileid]').hide();
 			
 			if(requestMediaCat == 'all'){
 				$('.rbprofile-list.'+classDisplay).show();

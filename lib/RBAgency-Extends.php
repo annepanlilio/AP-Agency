@@ -252,6 +252,25 @@ class RBAgency_Extends {
 				      .audiojs .error-message { height: 24px;line-height: 24px; }
 				      .audiojs .loading{background-position: -2px -1px}
 				      /*background: rgba(0, 0, 0, 0) url("/wp-content/plugins/rb-agency/ext/audiojs/player-graphics.gif") no-repeat scroll -2px -1px;*/
+				      
+				    .site_link.hover-audio ul {
+ left: 0;
+ right: 0;
+ top: 100%;
+ z-index: 2;
+ height: auto;
+ padding: 5px;
+ display: none;
+ background: #fff;
+ position: absolute;
+ border-radius: 3px;
+ border: 1px solid #ddd;
+}
+.site_link.hover-audio ul li {
+ font-size: small;
+}
+				      
+				      
 				</style>
 				
 				';
