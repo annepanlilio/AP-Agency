@@ -2201,6 +2201,11 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 		if( strtolower($get_ext) == 'csv' )  /*If uploaded file is a CSV*/
 		{
+		
+			if(!is_writable($new_upload_path)){
+				echo "The upload directory was not writable. please check the CHMOD of <b>$new_upload_path</b>";
+			}
+			
 			if(move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path))
 			{
 				$file_name = $target_path;
@@ -2672,6 +2677,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 	 */
 	function form() {
 		if(isset($_POST['read'])){
+		
+			print_r($_POST);
 			$this->match_column_and_table();
 		}
 		else
@@ -2684,8 +2691,8 @@ class RBAgencyCSVXLSImpoterPlugin {
 			<div class="wrap">
 				<h2>Import CSV</h2>
 				<form class="add:the-list: validate" method="post" enctype="multipart/form-data" action="">
-					<p><label for="csv_import">Only CSV Files are accepted</label><br/></p>
-					<input name="csv_import" id="csv_import" type="file" value="" aria-required="true" /></p>
+					<p><label for="source_file">Only CSV Files are accepted</label><br/></p>
+					<input name="source_file" id="source_file" type="file" value="" /></p>
 					<p class="submit"><input type="submit" class="button" name="read" value=" Read Column Headings " /></p>
 				</form>
 			</div>
