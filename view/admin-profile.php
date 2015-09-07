@@ -2440,10 +2440,18 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
 	$count_alter = $wpdb->num_rows;
 	if($count_alter == 0){
-		$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD isPrivate boolean NOT NULL default false";
-		$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
-		echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
-		exit;
+	
+		//check again if theres a record or none.
+		$queryAlterCheckC = "SELECT * FROM " . table_agency_profile;
+		$resultsDataAlterXC = $wpdb->get_results($queryAlterCheckC,ARRAY_A);
+		$count_alterc = $wpdb->num_rows;
+		if($count_alterc > 0){
+			$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD isPrivate boolean NOT NULL default false";
+			$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
+			//echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
+			
+			//exit;
+		}
 	}
 
 	
