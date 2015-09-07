@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: July 17, 2015
+Last updated: September 07, 2015
 */
 
 /* Global Style */
@@ -108,7 +108,6 @@ Last updated: July 17, 2015
 	width: 100%;
 	padding: 5px 6px;
 	position: relative;
-	background: #eee;
 }
 #profile-list.voiceover .profile-voiceover ul {
 	float: right;
@@ -129,7 +128,6 @@ Last updated: July 17, 2015
 	float: left;
 	margin-bottom: 0;
 	padding: 3px 5px;
-	background: #ddd;
 	border-radius: 3px;
 	display: inline-block;
 }
@@ -639,3 +637,12 @@ img.fillheight {
 .audiojs { position: absolute;
     top: -60px;
     right: 0; }
+ul.media-categories-link { position: absolute; top: -85px; right: 0; }
+ul.media-categories-link,
+ul.media-categories-link2 { list-style: none; margin: 0; padding: 15px 0; }
+ul.media-categories-link li,
+ul.media-categories-link2 li { display: inline-block; }
+ul.media-categories-link li a { padding: 5px 10px; }
+ul.media-categories-link2 li a { padding: 5px; }
+#profile-list.voiceover .profile-voiceover ul li.hover-audio ul { padding-top: 5px; }
+#profile-list.voiceover .profile-voiceover ul li.hover-audio a { margin-bottom: 5px; }

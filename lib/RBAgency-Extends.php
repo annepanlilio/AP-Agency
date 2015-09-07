@@ -233,19 +233,12 @@ class RBAgency_Extends {
 				}
 				echo '
 				<style>
-					ul.media-categories-link, ul.media-categories-link2{margin: 0!important;padding: 15px 0;}
-					ul.media-categories-link li,ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 8px 2px;}
-						ul.media-categories-link li a,ul.media-categories-link2 li a{background: #eee;padding: 5px;}
-						ul.media-categories-link li a.active,ul.media-categories-link2 li a.active {color:#333;}
-						
-					ul.media-categories-link2 li{list-style:none;display: inline-block; margin: 3px 1px;}
-					ul.media-categories-link2 li a{background: #eee;padding: 4px;}	
 					
 					  .audiojs { height: 22px; background: #555; margin: 10px 0 15px 0;position: absolute; top: -60px; right: 0;
-					    -webkit-box-shadow: none; -moz-box-shadow: none;  -o-box-shadow: none; box-shadow:none;}
+					    -webkit-box-shadow: none; -moz-box-shadow: none;  -o-box-shadow: none; box-shadow:none;width:225px;}
 				      .audiojs .play-pause { width: 25px; height: 20px; padding: 0px 8px 0px 0px;border-color:rgba(0,0,0,0.3);  }
 				      .audiojs p { width: 25px; height: 20px; margin: -3px 0px 0px -1px; }
-				      .audiojs .scrubber { rgba(50,50,50,0.8); width: 310px; height: 10px; margin: 5px; }
+				      .audiojs .scrubber { rgba(50,50,50,0.8); width: 80px; height: 10px; margin: 5px; }
 				      .audiojs .progress { height: 10px; width: 0px; background: #ccc;}
 				      .audiojs .loaded { height: 10px; background: rgba(0,0,0,0.7); }
 				      .audiojs .time { float: left; height: 25px; line-height: 25px;border-color:rgba(0,0,0,0.3); }
