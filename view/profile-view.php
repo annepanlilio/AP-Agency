@@ -20,6 +20,34 @@
 		$profileURL=$urlexploade[0];
 
 		//echo $profileURL;
+		
+		
+		global $wpdb;
+		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
+		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A);
+		
+		
+		if(!$results){
+		
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			if(!empty($rb_agency_options_arr['rb_agency_option_404profile'])){
+				wp_redirect(home_url().$rb_agency_options_arr['rb_agency_option_404profile']);
+				exit;
+			}
+			echo $rb_header = RBAgency_Common::rb_header();
+			$enable_sidebar = ($rb_agency_option_profilelist_sidebar == 0) ? 'one-column' : ''; // check sidebar
+
+			echo "<div class=\"". $enable_sidebar ."\">
+			   <div id=\"rbcontent\">
+					<div class='restricted'>
+						". __("Profile not found", RBAGENCY_TEXTDOMAIN) ."
+					</div><!-- #content -->
+			   </div>
+			</div>\n";
+
+			echo $rb_footer = RBAgency_Common::rb_footer();
+			exit;
+		}
 
 	/*
 	 * Get Preferences
@@ -79,10 +107,10 @@
 	 * Get Profile
 	 */
 
-		global $wpdb;
+	/* 	global $wpdb;
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A) or die ( __("No Profile Found.", RBAGENCY_TEXTDOMAIN ));
-
+ */
 		$count = count($results);
 		foreach($results as $rbdata) {
 			$ProfileID					=$rbdata['ProfileID'];

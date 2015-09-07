@@ -387,6 +387,15 @@ elseif ($ConfigID == 1) {
 		echo " </tr>\n";
 
 		}
+		
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('404 Profile Link', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_404profile]\" value=\"". $rb_agency_options_arr['rb_agency_option_404profile'] ."\" />
+			<i>(default blank)
+			ex: <b>/404-profile</b></i>
+			</td>\n";
+		echo " </tr>\n";
+		
 		/*
 		 * Agency Internationalization
 		 */
