@@ -3068,7 +3068,7 @@ class RBAgency_Profile {
 							}
 							//<li>'.sanitize_title($dataMedia['ProfileMediaType']).' <a href="'.$mp3link.'" title="" class="mp3-link icon-website rb-icon">
 							
-							$voicedemo_links .= (count($resultsMedia) > 1) ? '<li class="site_link hover-audio"><i class="fa fa-bars"></i><ul>' : '';	// add dropdown for multiple audio
+							$voicedemo_links .= (count($resultsMedia) > 1) ? '<li class="site_link spacer-voice"></li><li class="site_link hover-audio"><i class="fa fa-bars"></i><ul>' : '';    // add dropdown for multiple audio
 							$_mp3typeClass = array();
 							$audios = 0;
 							foreach ($resultsMedia  as $dataMedia) {

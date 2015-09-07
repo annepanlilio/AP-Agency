@@ -13,15 +13,14 @@ jQuery(document).ready(function($) {
 	$(".mp3-link").on('click',function(){
 		//data-profileid
 	});
-
-	$(".site_link.hover-audio").mouseover(function(){
-		$(this).find('ul').stop().slideDown();
-	}).mouseout(function(){
-		$(this).find('ul').stop().slideUp();
+	
+	$(".site_link.hover-audio").hover(function() {
+        $(this).find('ul').stop().slideDown();
+    }, function() {
+        $(this).find('ul').stop().slideUp();
 	});
-	
-	
-	$(".play-button").on('click',function(){
+
+	$(".links").on('click','.play-button',function(){
 		var audioPlayer = document.getElementById('voice-over-player');    
         var sourceUrl = $(this).attr("voicelink");
 	    audioPlayer.pause();
@@ -55,6 +54,9 @@ jQuery(document).ready(function($) {
 	
 	
 	$("ul.media-categories-link li a").on('click',function(){
+		//clear all spacer for multiple audio
+		resethoverMedia();
+		
 		$("ul.media-categories-link li a").removeClass("active");
 		$(this).addClass("active");
 		var classDisplay = $(this).attr('media-cate-id');
@@ -76,9 +78,15 @@ jQuery(document).ready(function($) {
 		
 		
 		
-		
 		return false;
 	});
+	
+	function resethoverMedia(){
+	
+		jQuery('.profile-voiceover li.site_link.spacer-voice').html('');
+		jQuery('.profile-voiceover li.site_link.hover-audio').show();
+		jQuery('.profile-voiceover li.site_link.hover-audio i').show();
+	}
 	
 	$("ul.media-categories-link2 li a").on('click',function(){
 	
@@ -117,6 +125,20 @@ jQuery(document).ready(function($) {
 				$('.rbprofile-list.'+requestMediaCat+'.'+classDisplay+' .profile-voiceover ul.links li.'+classDisplay).show();
 			}
 		}
+		
+		
+		
+		resethoverMedia();
+		//console.log(classDisplay);
+		if(classDisplay != 'all'){
+			jQuery('.profile-voiceover li.site_link.hover-audio ul > li[style="display: block;"],[style="display: inline-block;"]').each(function (i) {
+			//jQuery('.profile-voiceover li.site_link.hover-audio ul > li:visible').each(function (i) {
+				$(this).parent().parent().siblings('li.spacer-voice').append($(this).html());
+				//console.log($(this).html());
+			});
+			jQuery('.profile-voiceover li.site_link.hover-audio').hide();
+		}
+		
 		return false;
 	});
 	
