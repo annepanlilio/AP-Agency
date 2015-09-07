@@ -2371,6 +2371,19 @@ echo "<div id=\"custom-fields\">";
 			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
+		/* 
+			// patch for error
+			$sql = "ALTER TABLE ".table_agency_customfields." ADD ProfileCustomNotifyAdmin INT(10)";
+			$wpdb->query($sql);
+			
+			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowFilter","INT(10)");
+			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingJob","INT(10)");
+			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingRegister","INT(10)");
+			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingManager","INT(10)");
+			rb_agency_addColumn( table_agency_customfields,"ProfileCustomNotifyAdmin","INT(10)");
+			
+			
+			echo 'success patch'; */
 		$action = $_POST['action'];
 		switch($action) {
 
@@ -2446,7 +2459,7 @@ echo "<div id=\"custom-fields\">";
 
 				}
 
-				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully! You may now %s Load Information to the record", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". $lastid ."\">") .".</a></p><p>".$error."</p></div>"); 
+				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully!", RBAGENCY_TEXTDOMAIN), LabelSingular) .".</a></p><p>".$error."</p></div>"); 
 				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
@@ -2558,7 +2571,7 @@ echo "<div id=\"custom-fields\">";
 				}
 
 
-				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>updated</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
+				echo "<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>edited</strong> successfully", RBAGENCY_TEXTDOMAIN), LabelSingular) ."!</p><p>".$error."</p></div>"; 
 						echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;</h3>
 						<div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
