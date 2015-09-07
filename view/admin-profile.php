@@ -402,6 +402,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								$profilecustomfield_date = explode("_",$key);
 
 								if(count($profilecustomfield_date) == 2){ // customfield date
+									rb_send_notif_due_date_reached_edit($ProfileID,$ProfileCustomID,$value);
 									$value = !empty($value) ? date("y-m-d h:i:s",strtotime($value)) : "";
 									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
 								} else {
@@ -2440,18 +2441,10 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
 	$count_alter = $wpdb->num_rows;
 	if($count_alter == 0){
-	
-		//check again if theres a record or none.
-		$queryAlterCheckC = "SELECT * FROM " . table_agency_profile;
-		$resultsDataAlterXC = $wpdb->get_results($queryAlterCheckC,ARRAY_A);
-		$count_alterc = $wpdb->num_rows;
-		if($count_alterc > 0){
-			$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD isPrivate boolean NOT NULL default false";
-			$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
-			//echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
-			
-			//exit;
-		}
+		$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD isPrivate boolean NOT NULL default false";
+		$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
+		echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
+		exit;
 	}
 
 	
