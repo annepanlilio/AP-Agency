@@ -4280,6 +4280,15 @@ function rblogin_widget() {
 	register_widget( 'RBLogin_Widget' );
 }
 
+function date_difference($date1,$date2, $differenceFormat = '%a'){
+	$datetime1 = date_create($date1);
+    $datetime2 = date_create($date2);
+    
+    $interval = date_diff($datetime1, $datetime2);
+    
+    return $interval->format($differenceFormat);
+}
+
 function expired_profile_notification($data){
 	$to = $data["send_to"];
 	$subject = get_option('blogname')." ". $data["subject"]." Expiry Notification";
@@ -4350,8 +4359,8 @@ function rb_send_notif_due_date_reached(){
 					$data = array();
 					unset($data);
 					
-					//$data["send_to"] = get_option("admin_email");
-					$data["send_to"] = 'legend_slash@yahoo.com';
+					$data["send_to"] = get_option("admin_email");
+					//$data["send_to"] = 'legend_slash@yahoo.com';
 					$data["profile_name"] = $res2['ProfileContactDisplay'];	
 					$data["subject"] = rbagency_get_customfield_title($res2['ProfileCustomID']);
 					$data["expired_date"] = $res2['ProfileCustomDateValue'];
@@ -4423,8 +4432,8 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 		foreach($results as $res2){
 			$profileContactDisplay = $res2["ProfileContactDisplay"];
 		}
-		//$data["send_to"] = get_option("admin_email");
-		$data["send_to"] = 'legend_slash@yahoo.com';
+		$data["send_to"] = get_option("admin_email");
+		//$data["send_to"] = 'legend_slash@yahoo.com';
 		$data["profile_name"] = $profileContactDisplay;	
 		$data["subject"] = rbagency_get_customfield_title($pcID);
 		$data["expired_date"] = $value;
