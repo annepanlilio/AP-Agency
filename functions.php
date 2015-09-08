@@ -4322,7 +4322,7 @@ function rb_send_notif_due_date_reached(){
 			//loop and send mail
 			foreach($result2 as $res2)
 			{
-				if($res2['ProfileCustomDateValue'] != '0000-00-00'){
+				if($res2['ProfileCustomDateValue'] != '0000-00-00' || !empty($res2['ProfileCustomDate'])){
 					//$diff=date_difference($res2['ProfileCustomDateValue'],date("Y-m-d"));
 					$expired = $res2['ProfileCustomDateValue'] < date("Y-m-d") ? 1 : 0;
 				}else{
@@ -4365,6 +4365,10 @@ function rb_send_notif_due_date_reached(){
 function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$value){
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
+
+	if($value == ""){
+		return false;
+	}
 	
 	$expired = $value < date("Y-m-d") ? 1 : 0;	
 
@@ -4401,6 +4405,7 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 			$profileContactDisplay = $res2["ProfileContactDisplay"];
 		}
 		$data["send_to"] = get_option("admin_email");
+		//$data["send_to"] = 'legend_slash@yahoo.com';
 		$data["profile_name"] = $profileContactDisplay;	
 		$data["subject"] = rbagency_get_customfield_title($pcID);
 		expired_profile_notification($data);
