@@ -82,6 +82,7 @@
 				$newrules['profile-email'] = 'index.php?type=email';
 				$newrules['client-view/(.*)$'] = 'index.php?type=profilecastingcart&target=$matches[1]';
 				$newrules['profile/(.*)/contact'] = 'index.php?type=profilecontact&target=$matches[1]';
+				$newrules['profile/(.*)/cardphotos'] = 'index.php?type=cardphotos&target=$matches[1]';
 				$newrules['profile/(.*)$'] = 'index.php?type=profile&target=$matches[1]';
 				$newrules['get-state/(.*)$'] = 'index.php?type=getstate&country=$matches[1]';
 				$newrules['version-rb-agency'] = 'index.php?type=version';
@@ -160,7 +161,11 @@
 					} elseif (get_query_var( 'type' ) == "profilecontact") {
 					// Profile Contact Form
 						return dirname(__FILE__) . '/view/profile-contact.php';
-
+					
+					} elseif (get_query_var( 'type' ) == "cardphotos") {
+					// Profile Card Photos
+						return dirname(__FILE__) . '/view/profile-cardphotos.php';
+					
 					} elseif (get_query_var( 'type' ) == "rb-pdf") {
 					// Download Profiles PDF
 						return dirname(__FILE__) . '/view/profile-pdf.php';
@@ -2007,6 +2012,86 @@
 	 * @Returns Custom Fields excluding a title
 	 * @parm includes an array of title
 	/*/
+	
+		
+	function rb_agency_getProfileCustomFieldsArray($ProfileID, $ProfileGender) {
+	
+		global $wpdb;
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		// What is the unit of measurement?
+		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:"";
+	
+		$_allFields = array();
+	
+		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+		foreach ($resultsCustom as $resultCustom) {
+			// If a value exists...
+	
+			if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
+	
+				// do not allow the space of any non numeric if the single char found. 
+				$_strVal = $resultCustom->ProfileCustomValue;
+				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+					continue;
+				}
+				
+				$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
+				if ($resultCustom->ProfileCustomType == 3 || $resultCustom->ProfileCustomType == 7  || $resultCustom->ProfileCustomType == 9){
+						$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
+				}
+	
+				if( $resultCustom->ProfileCustomType == 5){
+							$resultCustom->ProfileCustomValue =  implode(", ",explode("|",$resultCustom->ProfileCustomValue));
+	
+				}
+			
+				if ($resultCustom->ProfileCustomType == 7){
+	
+					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
+						if($resultCustom->ProfileCustomOptions == 1 || $resultCustom->ProfileCustomOptions == 3){
+							$label = "cm";
+						} elseif($resultCustom->ProfileCustomOptions == 2){
+							$label = "kg";
+						}
+					} elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+						if($resultCustom->ProfileCustomOptions == 1){
+							$label = "in";
+						} elseif($resultCustom->ProfileCustomOptions == 2){
+							$label = "lbs";
+						} elseif($resultCustom->ProfileCustomOptions == 3){
+							$label = "ft/in";
+						}
+					}
+	
+					preg_match_all('/(\d+(\.\d+)?)/',$resultCustom->ProfileCustomValue, $matches);
+					$resultCustom->ProfileCustomValue = $matches[0][0];
+					$value = rb_get_imperial_metrics($resultCustom->ProfileCustomValue,$resultCustom->ProfileCustomOptions);
+					$_val = $value . $label;
+				
+				} else {
+					if ($resultCustom->ProfileCustomType == 10){
+						if(!empty($resultCustom->ProfileCustomDateValue) && $resultCustom->ProfileCustomDateValue !== "January 01, 1970"){
+							$_val = date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue));
+						}
+					} elseif(!empty($resultCustom->ProfileCustomValue)){
+						$_val = split_language(',',', ',$resultCustom->ProfileCustomValue);
+					}
+					
+					
+				}
+				if(!empty($_val)){
+					$_allFields[ sanitize_title($resultCustom->ProfileCustomTitle)] = array(
+						'title' => $resultCustom->ProfileCustomTitle,
+						'value' => $_val,
+					);
+				}
+	
+			}
+	
+		}
+		return $_allFields;
+	}
+	
 	function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude, $_echo = true) {
 
 		global $wpdb;
