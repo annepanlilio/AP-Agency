@@ -25,13 +25,14 @@
 		global $wpdb;
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A);
-		
-		
 		if(!$results){
 		
 			$rb_agency_options_arr = get_option('rb_agency_options');
-			if(!empty($rb_agency_options_arr['rb_agency_option_404profile'])){
-				wp_redirect(home_url().$rb_agency_options_arr['rb_agency_option_404profile']);
+			if($rb_agency_options_arr['rb_agency_option_404profile'] == 'home'){
+				wp_redirect(home_url());
+				exit;
+			}elseif(!empty($rb_agency_options_arr['rb_agency_option_404profile'])){
+				wp_redirect(home_url());
 				exit;
 			}
 			echo $rb_header = RBAgency_Common::rb_header();
