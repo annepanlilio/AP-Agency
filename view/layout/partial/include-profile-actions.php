@@ -68,7 +68,17 @@ echo "<div id=\"profile-links\">\n";
 			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Comp Card</a>\n";
 		}
 	}
-
+	
+// Card Photos
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CardPhotos");
+	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+	$countMedia = $wpdb->num_rows;
+	if ($countMedia > 0) {
+		//foreach($resultsImg as $dataMedia ){
+		echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/\"  class=\"cardphotos-link\">Download Model Card</a>\n";
+		//}
+	}
+	
 // Headshots
 	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
 	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);

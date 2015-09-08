@@ -318,7 +318,7 @@ $header='
 	}	
 		
 	$htmlFile=rand(1,10000).time().date("ymd").".html"; 
-	$_tempFilename = $ProfileContactNameFirst. '-'. substr($ProfileContactNameLast,0,1) .'-Card-'.$rb_agency_option_agencyname;
+	$_tempFilename = $ProfileContactNameFirst. '-'. substr($ProfileContactNameLast,0,1) .'-Model-Card-'.$rb_agency_option_agencyname;
 
 	$pdfFile=str_replace(" ","-",$_tempFilename).".pdf";
 

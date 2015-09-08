@@ -504,6 +504,16 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 												$have_error = true;
 											}
 										}
+										elseif ($uploadMediaType == "CardPhotos") {
+											// Add to database
+											if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+											} else {
+												$errorValidation['profileMedia'] = "<b><i>"._("Please upload an image file only",rb_agency_TEXTDOMAIN)."</i></b><br />";
+												$have_error = true;
+											}
+										} 
 										// Custom Media Categories
 										elseif (strpos($uploadMediaType,"rbcustommedia") !== false) {
 											// Add to database
@@ -1687,7 +1697,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$headshot_image_src = bfi_thumb( $headshot_image_path, $headshot_params );
 									$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 									//$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
-								} elseif ($dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
+								} elseif ($dataMedia['ProfileMediaType'] == "CardPhotos" || $dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
 									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'];
 									$polariod_params = array(
 										'crop'=>true,
@@ -1848,7 +1858,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "<option value=\"CompCard\">Comp Card</option>\n";
 									echo "<option value=\"Resume\">Resume</option>\n";
 									echo "<option value=\"VoiceDemo\">Voice Demo</option>\n";
-									echo "<option value=\"Polaroid\">Polaroid</option>";
+									echo "<option value=\"Polaroid\">Polaroid</option>\n";
+									echo "<option value=\"CardPhotos\">Card Photos</option>";
 									rb_agency_getMediaCategories($ProfileGender);
 									echo "</select>\n";
 									echo "</td>\n";
