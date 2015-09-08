@@ -4292,7 +4292,7 @@ function date_difference($date1,$date2, $differenceFormat = '%a'){
 function expired_profile_notification($data){
 	$to = $data["send_to"];
 	$subject = get_option('blogname')." ". $data["subject"]." Expiry Notification";
-	$message = __($data["profile_name"]." ".$data["subject"]." has expired. Time to update this profile user.");
+	$message = __($data["profile_name"]." ".$data["subject"]." ".$data["expired_date"]." has expired. Time to update this profile user.");
 	wp_mail( $to, $subject, $message );
 }
 
@@ -4347,6 +4347,7 @@ function rb_send_notif_due_date_reached(){
 					$data["send_to"] = get_option("admin_email");
 					$data["profile_name"] = $res2['ProfileContactDisplay'];	
 					$data["subject"] = rbagency_get_customfield_title($res2['ProfileCustomID']);
+					$data["expired_date"] = $res2['ProfileCustomDateValue'];
 					expired_profile_notification($data);
 					//echo $data["subject"] ." ".$value." ".$expired." ".get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true)."<br>";
 				}	
@@ -4408,6 +4409,7 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 		//$data["send_to"] = 'legend_slash@yahoo.com';
 		$data["profile_name"] = $profileContactDisplay;	
 		$data["subject"] = rbagency_get_customfield_title($pcID);
+		$data["expired_date"] = $value;
 		expired_profile_notification($data);
 		//echo $data["subject"] ." ".$value." ".$expired." ".get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true)."<br>";
 	}		
