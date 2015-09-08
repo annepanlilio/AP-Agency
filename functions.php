@@ -4280,15 +4280,6 @@ function rblogin_widget() {
 	register_widget( 'RBLogin_Widget' );
 }
 
-function date_difference($date1,$date2, $differenceFormat = '%a'){
-	$datetime1 = date_create($date1);
-    $datetime2 = date_create($date2);
-    
-    $interval = date_diff($datetime1, $datetime2);
-    
-    return $interval->format($differenceFormat);
-}
-
 function expired_profile_notification($data){
 	$to = $data["send_to"];
 	$subject = get_option('blogname')." ". $data["subject"]." Expiry Notification";
@@ -4313,16 +4304,20 @@ function rb_send_notif_due_date_reached(){
 		}
 		
 		foreach($CustomFields as $CustomField){
+
+			
+
 			$q2 = "SELECT * FROM ".$wpdb->prefix."agency_customfields cu INNER JOIN ".
 				   $wpdb->prefix."agency_customfield_mux mu ON mu.ProfileCustomID = cu.ProfileCustomID INNER JOIN ".
 				   $wpdb->prefix."agency_profile pr ON pr.ProfileID = mu.ProfileID ".
 				   "WHERE cu.ProfileCustomTitle = '".$CustomField."'";
 			$result2 = $wpdb->get_results($q2,ARRAY_A);
-
+			$x=0;
 			//loop and send mail
 			foreach($result2 as $res2)
 			{
-				if($res2['ProfileCustomDateValue'] != '0000-00-00' || !empty($res2['ProfileCustomDate'])){
+				$x++;
+				if($res2['ProfileCustomDateValue'] != '0000-00-00' || !empty($res2['ProfileCustomDateValue']) || $res2['ProfileCustomDateValue'] != ""){
 					//$diff=date_difference($res2['ProfileCustomDateValue'],date("Y-m-d"));
 					$expired = $res2['ProfileCustomDateValue'] < date("Y-m-d") ? 1 : 0;
 				}else{
@@ -4330,6 +4325,9 @@ function rb_send_notif_due_date_reached(){
 				}
 
 				
+				if($expired == 0 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 0){
+					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",0);
+				}
 
 				if($expired == 0 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 2){
 					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",0);
@@ -4339,19 +4337,34 @@ function rb_send_notif_due_date_reached(){
 					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",2);
 				}
 
-				if($expired > 0 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 2 && get_option("ProfileCustomNotifyAdmin_".$pcID) == 1){
+				if($expired == 0 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 3){
+					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",0);
+				}
+
+				if($expired == 1 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 3){
+					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",3);
+				}
+
+				if($res2['ProfileCustomDateValue'] != '0000-00-00' && !empty($res2['ProfileCustomDateValue']) && $expired > 0 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 2 && get_option("ProfileCustomNotifyAdmin_".$res2['ProfileCustomID']) == 1){
 		
 					$data = array();
 					unset($data);
 					
-					$data["send_to"] = get_option("admin_email");
+					//$data["send_to"] = get_option("admin_email");
+					$data["send_to"] = 'legend_slash@yahoo.com';
 					$data["profile_name"] = $res2['ProfileContactDisplay'];	
 					$data["subject"] = rbagency_get_customfield_title($res2['ProfileCustomID']);
 					$data["expired_date"] = $res2['ProfileCustomDateValue'];
-					expired_profile_notification($data);
-					//echo $data["subject"] ." ".$value." ".$expired." ".get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true)."<br>";
+					expired_profile_notification($data);				
+					//echo $data["subject"] ." ".$res2['ProfileCustomDateValue']." ".$expired." ".get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true)."<br>";
+					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",3);
 				}	
 
+				
+
+				if($x==10){
+					break;
+				}
 				
 				
 			}
@@ -4359,7 +4372,7 @@ function rb_send_notif_due_date_reached(){
 
 	
 }
-//add_action('init','rb_send_notif_due_date_reached');
+add_action('init','rb_send_notif_due_date_reached');
 
 
 //Send notification to admin when expecting models reached her due date
@@ -4378,12 +4391,9 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 	
 	
 
-	//$data["send_to"] = get_option("admin_email");
-	
-	//echo $res2['ProfileCustomTitle']." ".$res2['ProfileContactDisplay']." ".$res2['ProfileCustomDateValue']." ".$expired." ".get_user_meta($res2['ProfileID'],$res2['ProfileID']."_user_expired_sent",true)."<br>";
-	
-	
-	
+	if($expired == 0 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 0){
+		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",0);
+	}
 
 	if($expired == 0 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 2){
 		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",0);
@@ -4391,6 +4401,14 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 
 	if($expired == 1 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 0){
 		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",2);
+	}
+
+	if($expired == 0 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 3){
+		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",0);
+	}
+
+	if($expired == 1 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 3 ){
+		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",3);
 	}
 
 	if($expired > 0 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 2 && get_option("ProfileCustomNotifyAdmin_".$pcID) == 1){
@@ -4405,16 +4423,18 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 		foreach($results as $res2){
 			$profileContactDisplay = $res2["ProfileContactDisplay"];
 		}
-		$data["send_to"] = get_option("admin_email");
-		//$data["send_to"] = 'legend_slash@yahoo.com';
+		//$data["send_to"] = get_option("admin_email");
+		$data["send_to"] = 'legend_slash@yahoo.com';
 		$data["profile_name"] = $profileContactDisplay;	
 		$data["subject"] = rbagency_get_customfield_title($pcID);
 		$data["expired_date"] = $value;
 		expired_profile_notification($data);
 		//echo $data["subject"] ." ".$value." ".$expired." ".get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true)."<br>";
+		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",3);
 	}		
+	
 }
-//add_action('init','rb_send_notif_due_date_reached');
+
 
 function rbagency_get_customfield_title($id){
 	global $wpdb;
