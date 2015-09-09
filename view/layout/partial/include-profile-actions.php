@@ -75,7 +75,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		//foreach($resultsImg as $dataMedia ){
-		echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/\"  class=\"cardphotos-link\">Download Model Card</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".rb_get_profile_link_label()." Model Card</a>\n";
 		//}
 	}
 	

@@ -4103,17 +4103,25 @@
 	/**
 	 * Get Profile Media Open type
 	 */
-	function rb_get_profilemedia_link_opentype($url,$is_docs = false){
+	function rb_get_profilemedia_link_opentype($url,$is_docs = false,$ext_url=false){
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_profilemedia_links = isset($rb_agency_options_arr["rb_agency_option_profilemedia_links"])?$rb_agency_options_arr["rb_agency_option_profilemedia_links"]:2;
 
+		$_fullURL = RBAGENCY_UPLOADDIR . $url;
+		if($ext_url == true){
+			$_fullURL = $url;
+		}
+		
 		if($rb_agency_option_profilemedia_links == 2){
 			if($is_docs){
-				return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".RBAGENCY_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+				return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".$_fullURL."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 			} else {
-				return " href=\"javascript:;\" onclick=\"window.open('".RBAGENCY_UPLOADDIR.$url."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+				return " href=\"javascript:;\" onclick=\"window.open('".$_fullURL."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 			}
 		} elseif($rb_agency_option_profilemedia_links == 3){
+			if($ext_url == true){
+				return " href=\"".$url."\" ";
+			}
 			return " href=\"".RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$url."\" ";
 		}
 	}
