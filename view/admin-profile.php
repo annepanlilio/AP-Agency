@@ -919,6 +919,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 			
 			$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
+			$ProfileDateCreated = stripslashes($data['ProfileDateCreated']);
 			$isPrivate = stripslashes($data['isPrivate']);
 		}
 
@@ -1326,7 +1327,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      </td>\n";
 								echo "    </tr>\n";
 							}
-
+							
+							echo "    <tr valign=\"top\">\n";
+							echo "      <th scope=\"row\">" . __("Date Registered", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+							echo "      <td>\n";
+							echo "        " .$ProfileDateCreated;
+							echo "      </td>\n";
+							echo "    </tr>\n";
+ 
 
 							// Hidden Settings
 							if (isset($_GET["mode"]) && $_GET["mode"] == "override") {

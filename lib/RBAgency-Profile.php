@@ -1440,19 +1440,22 @@ class RBAgency_Profile {
 	 */
 
 		public static function search_generate_sqlorder($atts, $filter2 = ""){
-
+			global $wpdb;
 			$filter = "";
 
 			$rb_agency_options_arr = get_option("rb_agency_options");
 			// Sort by date 
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
 			$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
-
-			if($rb_agency_option_profilelist_sortbydate && !empty($filter2)){
-				$atts["sort"] = "cmux.ProfileCustomDateValue";
+			
+			//if($rb_agency_option_profilelist_sortbydate && !empty($filter2)){
+			//$atts["sort"] = "cmux.ProfileCustomDateValue";
+			if($rb_agency_option_profilelist_sortbydate){
+				$atts["sort"] = "profile.ProfileDateCreated DESC ";
 			} elseif(!isset($atts["sort"])){
 				$atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 			}
+			
 
 			if(!isset($_GET["limit"]) && isset($_GET["page"]) && $_GET["page"] == "rb_agency_search"){
 				$atts["limit"] = $rb_agency_option_persearch;
