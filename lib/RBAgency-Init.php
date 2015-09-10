@@ -255,8 +255,8 @@ class RBAgency_Init {
 					Job_ID INT(10),
 					Customfield_ID INT(10) NOT NULL DEFAULT '0',
 					Customfield_value INT(10) NOT NULL DEFAULT '0',
-					Customfield_type INT(10) NOT NULL DEFAULT '0'
-					PRIMARY KEY (ProfileCustomID)
+					Customfield_type INT(10) NOT NULL DEFAULT '0',
+					PRIMARY KEY (ID)
 					);";
 				dbDelta($sql);
 
@@ -265,8 +265,8 @@ class RBAgency_Init {
 					CastingID INT(10),
 					Customfield_ID INT(10) NOT NULL DEFAULT '0',
 					Customfield_value INT(10) NOT NULL DEFAULT '0',
-					Customfield_type INT(10) NOT NULL DEFAULT '0'
-					PRIMARY KEY (ProfileCustomID)
+					Customfield_type INT(10) NOT NULL DEFAULT '0',
+					PRIMARY KEY (ID)
 					);";
 				dbDelta($sql);				
 
