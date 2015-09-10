@@ -112,6 +112,35 @@ function profilesphoto_save(){
 }
 
 
+////  ajax saved inline edit videos
+
+add_action('wp_ajax_editvideo_inline_save','editvideo_inline_save');
+//add_action('wp_ajax_nopriv_editvideo_inline_save','editvideo_inline_save');
+function editvideo_inline_save(){
+	
+	global $wpdb;
+	//print_r($_POST);
+	$_id = $_POST['id'];
+	$_url = $_POST['url'];
+	$_medtype = $_POST['medtype'];
+	$_title = addslashes ($_POST['title'].'<br>'.$_POST['caption']);
+		
+	$update = $wpdb->query("UPDATE " . table_agency_profile_media . " SET 
+		ProfileMediaURL='" . $_url . "', 
+		ProfileMediaTitle='" . $_title . "', 
+		ProfileMediaType='" . $_medtype . "'
+		WHERE ProfileMediaID='".$_id."'"
+		);
+ //echo $wpdb->last_error;
+ 
+// echo $_medtype;
+ //echo $_title;
+ //return the thumbnail
+ echo rb_agency_get_videothumbnail($_url, $_medtype);
+	exit;
+}
+
+
 
 
 

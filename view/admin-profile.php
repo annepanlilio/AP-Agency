@@ -1675,9 +1675,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-									
-									$vidTitleCaption = explode('<br>',$dataMedia['ProfileMediaTitle']);
-									$outVideoMedia .= "<div class=\"media-file voice-demo\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'], $dataMedia['ProfileVideoType']) . "<br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
+									$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
+									$vidTitleCaption = explode('<br>',$clean_title);
+									$outVideoMedia .= "<div class=\"media-file voice-demo\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\"><span class=\"video-type\">" . $dataMedia['ProfileMediaType'] . "</span><br /><span class=\"video-thumb\">" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'], $dataMedia['ProfileVideoType']) . "</span><br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
 									[<a href=\"#inline-edit-video\" title=\"Edit Video Information\" ".
 										"video_type=\"" . $dataMedia['ProfileMediaType'] . 
 										"\" video_id=\"" . $dataMedia['ProfileMediaID'] . 
@@ -1744,7 +1744,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<div style="display:none" class="inline-edit-video">
 							<div style="" id="inline-edit-video">
 								<table class="rbform-table">
-										<td>
+										<td><br/>
 											<table>
 												<tr><td>Type:
 													</td><td><select name="profileMediaVType" class="profileMediaVType">
@@ -1755,13 +1755,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														<option value="IMDB"><?php echo __("IMDB", RBAGENCY_TEXTDOMAIN);?></option>
 													</select>
 												</td></tr>
-												<tr><td>Media URL: </td><td><input type='text' name='media_url'class='profilemedia_url' ></td></tr>
-												<tr><td>Title: </td><td><input type='text' name='media_title' class='profilemedia_title'></td></tr>
-												<tr><td>Caption </td><td><input type='text' name='media_caption' class='profilemedia_caption'></td></tr>
+												<tr><td>Media URL: </td><td><input type='text' name='media_url'class='profilemedia_url full-width-text' ></td></tr>
+												<tr><td>Title: </td><td><input type='text' name='media_title' class='profilemedia_title full-width-text'></td></tr>
+												<tr><td>Caption </td><td><input type='text' name='media_caption' class='profilemedia_caption full-width-text'></td></tr>
+												<tr><td>  </td><td><br><input type='button' value="Save Changes" name='save_media_inline' class='button-primary save_media_inline'></td></tr>
 											</table>
 										</td>
 										</tr>
-										</table><input type='text' name='media_id' class='profilemedia_id'>
+										</table><input type='hidden' name='media_id' class='profilemedia_id'>
 							</div>
 							</div>
 							<script>
@@ -1784,21 +1785,50 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									//profileMediaV
 									//profileMediaVType
 									//alert('eoe');
-									tb_show('Edit Video - NOT YET READY','#TB_inline?width=600&height=400&inlineId=inline-edit-video');
+									tb_show('Edit Video - NOT YET READY','#TB_inline?width=500&height=220&inlineId=inline-edit-video');
+									return false;
+								});	
+									
+								$('.save_media_inline').on('click',function(){
+									var v_id      = $( ".profilemedia_id" ).val();
+									var v_url     = $( ".profilemedia_url" ).val();
+									var v_title   = $( ".profilemedia_title" ).val();
+									var v_caption = $( ".profilemedia_caption" ).val();
+									var v_medtype = $( ".profileMediaVType" ).val();
+									
+									jQuery.post("<?php echo admin_url('admin-ajax.php');?>", {
+										id:      v_id,
+										url:     v_url,
+										title:   v_title,
+										caption: v_caption,
+										medtype: v_medtype, 
+										action: 'editvideo_inline_save'
+									}).done(function(data) {
+										/* if( data== 'error'){
+											$('#photo-message-div').addClass('error');
+											$('#photo-message-div').html('<p>Error uploading image</p>');
+										}else{
+											jQuery("#wrapper-sortable #gallery-sortable").append(data);
+										} */
+										$('span.video-title', '.media-file[video_place_id='+v_id+']').html(v_title);
+										$('span.video-caption', '.media-file[video_place_id='+v_id+']').html(v_caption);
+										$('span.video-type', '.media-file[video_place_id='+v_id+']').html(v_medtype);
+										$('span.video-thumb', '.media-file[video_place_id='+v_id+']').html(data);
+										console.log(data);
+									});
+									//process the ajax save and result
+							        tb_remove();
+							        console.log('saved');
 									return false;
 								});
 								
-								window.send_to_editor = function (html) {
-						            //var videourl = html.match(urlregexp)[1];
-						           // jQuery('#squeeze_video_rawsrc').val(videourl);
-						            tb_remove();
-						        }
 								
 							});
 								
 							</script>
 							
 							<style type="text/css">
+							input.full-width-text{width: 300px !important;}
 							.custom_media-box{
 								height: 108px;
 								background: #FFF;
@@ -1822,6 +1852,61 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								font-size: 9px;
 							}
 							.column-isPrivate{max-width: 100px;}
+							
+							
+							.media-files{
+								-webkit-column-count: 1;
+	-webkit-column-gap: 10px;
+	-webkit-column-fill: auto;
+	-moz-column-count: 1;
+	-moz-column-gap: 10px;
+	-moz-column-fill: auto;
+	column-count: 1;
+	column-gap: 15px;
+	column-fill: auto;
+							
+							}
+							.media-files .media-file{float:none!important;
+							display: inline-block;
+	margin: 0 2px 15px;
+	-webkit-column-break-inside: avoid;
+	-moz-column-break-inside: avoid;
+	column-break-inside: avoid;
+	padding: 15px;
+	padding-bottom: 5px;
+	background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
+	opacity: 1;
+	
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease;
+							
+							}
+							/* 
+@media (min-width: 960px) {
+	.media-files {
+		-webkit-column-count: 4;
+		-moz-column-count: 4;
+		column-count: 4;
+	}
+}
+
+@media (min-width: 1100px) {
+	.media-files{
+		-webkit-column-count: 5;
+		-moz-column-count: 5;
+		column-count: 5;
+	}
+} */
+	
+							
+							
+							
+							
+							
+							
+							
 							</style>
 							<?php 
 							echo '<div class="media-files">';
