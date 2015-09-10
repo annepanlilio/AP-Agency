@@ -4406,8 +4406,6 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 	
 	$pcID = str_replace("_date", "", $profile_custom_id);
 	
-	
-
 	if($expired == 0 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 0){
 		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",0);
 	}
@@ -4448,7 +4446,7 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 		expired_profile_notification($data);
 		//echo $data["subject"] ." ".$value." ".$expired." ".get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true)."<br>";
 		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",3);
-	}		
+	} 
 	
 }
 

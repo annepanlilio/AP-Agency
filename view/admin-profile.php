@@ -329,7 +329,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								//admin decide to activate the account.
 								wp_new_user_notification_approve($ProfileID);
 							}
-						}		
+						}
 						
 						
 						// Update Record
@@ -426,6 +426,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						} else {
 							$pi = 1;
 						}
+						
 
 						while ($i <= 10) {
 
@@ -573,7 +574,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							}
 						}
 
-						/* Set Primary Image */
+						// Set Primary Image
 						// TODO: Refactor
 						$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' AND ProfileMediaPrimary='1'";
 						$results = $wpdb->get_results($wpdb->prepare($results, $ProfileID),ARRAY_A);
@@ -1474,16 +1475,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "}\n";
 								echo "</script>\n";
 
-								echo "<script type='text/javascript'>\n";
-								//echo "Jquery(document).ready(function (){";
-
-									echo "function editLink(delMedia,mediaType) {\n";
-										echo "alert(delMedia);";
-									echo "}\n";
-
-								//echo "})";
-								echo "</script>\n";
-
 								// Mass delete
 								if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
 									$massmediaids = '';
@@ -1684,10 +1675,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-									$outVideoMedia .= "<div class=\"media-file voice-demo\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'], $dataMedia['ProfileVideoType']) . "<br /><span class='video-title'>".ucfirst($dataMedia["ProfileMediaTitle"])."</span><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
-									[<a href=\"javascript:editLink('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">EDIT</a>]
+									
+									$vidTitleCaption = explode('<br>',$dataMedia['ProfileMediaTitle']);
+									$outVideoMedia .= "<div class=\"media-file voice-demo\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\">" . $dataMedia['ProfileMediaType'] . "<br />" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'], $dataMedia['ProfileVideoType']) . "<br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
+									[<a href=\"#inline-edit-video\" title=\"Edit Video Information\" ".
+										"video_type=\"" . $dataMedia['ProfileMediaType'] . 
+										"\" video_id=\"" . $dataMedia['ProfileMediaID'] . 
+										"\" video_url=\"" . $dataMedia['ProfileMediaURL'] . 
+										"\" video_title=\"" . ucfirst($vidTitleCaption[0]) . 
+										"\" video_caption=\"" . $vidTitleCaption[1] . 
+										"\" class=\"prepare-edit-video\">EDIT</a>]
 									[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
-								} elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+								 }
+								 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 									$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
@@ -1740,6 +1740,64 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								}
 							}
 							?>
+							
+							<div style="display:none" class="inline-edit-video">
+							<div style="" id="inline-edit-video">
+								<table class="rbform-table">
+										<td>
+											<table>
+												<tr><td>Type:
+													</td><td><select name="profileMediaVType" class="profileMediaVType">
+														<option value="Video Slate"><?php echo __("Video Slate", RBAGENCY_TEXTDOMAIN);?></option>
+														<option value="Video Monologue"><?php echo __("Video Monologue", RBAGENCY_TEXTDOMAIN);?></option>
+														<option value="Demo Reel"><?php echo __("Demo Reel", RBAGENCY_TEXTDOMAIN);?></option>
+														<option value="SoundCloud"><?php echo __("SoundCloud", RBAGENCY_TEXTDOMAIN);?></option>
+														<option value="IMDB"><?php echo __("IMDB", RBAGENCY_TEXTDOMAIN);?></option>
+													</select>
+												</td></tr>
+												<tr><td>Media URL: </td><td><input type='text' name='media_url'class='profilemedia_url' ></td></tr>
+												<tr><td>Title: </td><td><input type='text' name='media_title' class='profilemedia_title'></td></tr>
+												<tr><td>Caption </td><td><input type='text' name='media_caption' class='profilemedia_caption'></td></tr>
+											</table>
+										</td>
+										</tr>
+										</table><input type='text' name='media_id' class='profilemedia_id'>
+							</div>
+							</div>
+							<script>
+								
+							jQuery(document).ready(function($){
+							
+								$('.prepare-edit-video').on('click',function(){
+									var vidID = $(this).attr('video_id');
+									var vidType = $(this).attr('video_type');
+									var vidtitle = $(this).attr('video_title');
+									var vidURL = $(this).attr('video_url');
+									var vidCap = $(this).attr('video_caption');
+									$('.profileMediaVType option[value="'+vidType+'"]','.inline-edit-video').prop('selected', true);
+									$('.profilemedia_title','.inline-edit-video').val(vidtitle);
+									$('.profilemedia_url','.inline-edit-video').val(vidURL);
+									$('.profilemedia_id','.inline-edit-video').val(vidID);
+									$('.profilemedia_caption','.inline-edit-video').val(vidCap);
+									
+									console.log(vidType);
+									//profileMediaV
+									//profileMediaVType
+									//alert('eoe');
+									tb_show('Edit Video - NOT YET READY','#TB_inline?width=600&height=400&inlineId=inline-edit-video');
+									return false;
+								});
+								
+								window.send_to_editor = function (html) {
+						            //var videourl = html.match(urlregexp)[1];
+						           // jQuery('#squeeze_video_rawsrc').val(videourl);
+						            tb_remove();
+						        }
+								
+							});
+								
+							</script>
+							
 							<style type="text/css">
 							.custom_media-box{
 								height: 108px;
