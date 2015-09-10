@@ -1785,7 +1785,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									//profileMediaV
 									//profileMediaVType
 									//alert('eoe');
-									tb_show('Edit Video - NOT YET READY','#TB_inline?width=500&height=220&inlineId=inline-edit-video');
+									tb_show('Edit Video','#TB_inline?width=500&height=220&inlineId=inline-edit-video');
 									return false;
 								});	
 									
