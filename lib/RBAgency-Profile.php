@@ -2760,16 +2760,20 @@ class RBAgency_Profile {
 					}
 					$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 
-					// if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
-					if($rb_agency_option_profilelist_castingcart && !empty($p_image)){
-						$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\""
-							.(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
-							."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\""
-							.(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")
-							." castingcart\">$cartIcon <span>"
-							.(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
-							."</span></a></div>";
+					
+					if(!isset($_GET["Job_ID"])){
+						// if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
+						if($rb_agency_option_profilelist_castingcart && !empty($p_image)){
+							$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\""
+								.(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
+								."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\""
+								.(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")
+								." castingcart\">$cartIcon <span>"
+								.(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
+								."</span></a></div>";
+						}
 					}
+					
 					$displayActions .= "</div>";
 
 					if(!empty($casting_availability)){
