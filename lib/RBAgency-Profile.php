@@ -242,19 +242,9 @@ class RBAgency_Profile {
 						echo "						</div>\n";
 						echo "					</div>\n";
 						echo "				</div>\n";
-						
-						echo '<script type="text/javascript">
-						jQuery(document).ready(function($){
-							jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
-								dateFormat: "yy-mm-dd"
-							});
-							jQuery( "input[id=rb_datepicker_to_bd]").datepicker({
-								dateFormat: "yy-mm-dd"
-							});
-						});
-						</script>';
 
 						//JS here..
+						wp_enqueue_script( 'datepicker', RBAGENCY_PLUGIN_URL .'assets/js/datepicker.init.js', array('jquery'));
 
 				}
 
@@ -2554,26 +2544,7 @@ class RBAgency_Profile {
 
 			global $wpdb;
 			
-				
-				wp_register_style( 'fancybox-style', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.css' );
-				wp_enqueue_style( 'fancybox-style' );
-	
-				wp_deregister_script( 'jquery-latest' ); 
-				wp_register_script( 'jquery-latest', "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
-				wp_enqueue_script( 'jquery-latest' );
-			
-				wp_enqueue_script( 'fancybox-jquery', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.pack.js', array( 'jquery-latest' ));
-				wp_enqueue_script( 'fancybox-jquery' );
-				
-				wp_enqueue_script( 'fancybox-init', RBAGENCY_PLUGIN_URL .'ext/fancybox/fancybox.init.js', array( 'jquery-latest', 'fancybox-jquery' ));
-				wp_enqueue_script( 'fancybox-init' );
-				
-				wp_enqueue_script( 'voiceover-init', RBAGENCY_PLUGIN_URL .'assets/js/voiceover.init.js', array( 'jquery-latest'));
-				wp_enqueue_script( 'voiceover-init' );
-				
-				wp_enqueue_script( 'audiojs', RBAGENCY_PLUGIN_URL .'ext/audiojs/audio.min.js', array( 'jquery-latest'));
-				wp_enqueue_script( 'audiojs' );
-				
+
 				
 	
 			
@@ -2650,20 +2621,36 @@ class RBAgency_Profile {
 			 */
 
 				$profile_list_class = "rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout;
-				$profile_list_class .= " name-pos-".$rb_agency_option_layoutprofilenamepos;
 
-				if($rb_agency_option_profilelist_thumbsslide == 1){					
+				if($rb_agency_option_profilelist_thumbsslide == 1){
+					$profile_list_class .= " name-pos-".$rb_agency_option_layoutprofilenamepos;
+				}
+				if($rb_agency_option_profilelist_thumbsslide == 1){
 					$profile_list_class .= " thumbslide";
 				}
 
 				if($rb_agency_option_layoutprofileviewmode == 0) {
 					$profile_link_class = "default";
 				} elseif($rb_agency_option_layoutprofileviewmode == 1) {
+
 					$profile_link_class = "profile-popup-fancybox";
+					
+					wp_register_style( 'fancybox-style', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.css' );
+					wp_enqueue_style( 'fancybox-style' );	
+				
+					// wp_register_script( 'jquery-latest', "https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
+					// wp_enqueue_script( 'jquery-latest' );
+				
+					wp_enqueue_script( 'fancybox-jquery', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.pack.js', array( 'jquery' ));
+					wp_enqueue_script( 'fancybox-jquery' );
+					
+					wp_enqueue_script( 'fancybox-init', RBAGENCY_PLUGIN_URL .'ext/fancybox/fancybox.init.js', array( 'jquery', 'fancybox-jquery' ));
+					wp_enqueue_script( 'fancybox-init' );	
+					
+
 				} else {
 					$profile_link_class = "slide-panel";
 				}
-
 				
 				$_proftypeClass = array();
 							
@@ -2675,8 +2662,11 @@ class RBAgency_Profile {
 				}else{
 					$_proftypeClass[] = 'profile_type_'. $profiType;
 				}
-
 				$profile_list_class .= ' '. implode(' ', array_unique($_proftypeClass));
+				
+				
+				
+				
 
 				$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
 				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class." ".$PGENDER."\" >\n";
@@ -3030,6 +3020,12 @@ class RBAgency_Profile {
 			/*
 			 * Voiceover Mode
 			 */
+
+				wp_enqueue_script( 'voiceover-init', RBAGENCY_PLUGIN_URL .'assets/js/voiceover.init.js', array( 'jquery'));
+				wp_enqueue_script( 'voiceover-init' );
+				
+				wp_enqueue_script( 'audiojs', RBAGENCY_PLUGIN_URL .'ext/audiojs/audio.min.js', array( 'jquery'));
+				wp_enqueue_script( 'audiojs' );
 			 
 			 
 			 
