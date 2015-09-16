@@ -28,6 +28,7 @@
 		echo " </tr>\n";
 		
 	
+		if ( class_exists("RBAgencyCasting") ) {
 		
 		echo " <tr valign=\"top\" id=\"CartFavIconSettings\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Cart and Favorite Icon Setting', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
@@ -52,6 +53,7 @@
 			echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><br/></th>\n";
 		echo " </tr>\n";
+		}
 		
 		
 		echo " <tr valign=\"top\" id=\"CardPhotoSettings\">\n";
