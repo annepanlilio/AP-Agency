@@ -523,7 +523,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                 if(sort_typ == '1'  || sort_typ == '5'){
                                         
                                         if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_birth[value='"+value+"']").parent();
+                                            var cloned = jQuery("#hidden_div").find(".p_birth[value='"+value+"']").parent('.profile-box').parent('.rbprofile-list');
                                             prc.clone_em(cloned);
                                         } else {
                                             if(prc.not_in_array(counted,value)){
@@ -534,7 +534,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         
                                 } else if(sort_typ == '2'  || sort_typ == '6') {
                                         if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_name[value=\""+value+"\"]").parent();
+                                            var cloned = jQuery("#hidden_div").find(".p_name[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
                                             prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
@@ -546,7 +546,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
 
                                 } else if(sort_typ == '3'  || sort_typ == '4') {
                                         if(prc.check_instance_in_array(value)){
-                                                var cloned = jQuery("#hidden_div").find(".p_created[value='"+value+"']").parent();
+                                                var cloned = jQuery("#hidden_div").find(".p_created[value='"+value+"']").parent('.profile-box').parent('.rbprofile-list');
                                                 prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
@@ -559,7 +559,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                 }else if(sort_typ == '8' || sort_typ == '7'){
                                    
                                         if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_duedate#du"+sort_typ_date+"_"+sort_typ_id).parent();
+                                            var cloned = jQuery("#hidden_div").find(".p_duedate#du"+sort_typ_date+"_"+sort_typ_id).parent('.profile-box').parent('.rbprofile-list');
                                              prc.clone_em(cloned);
                                         } else {
                                             if(prc.not_in_array(counted,value) ){
@@ -570,7 +570,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         
                                 }else if(sort_typ == '9' || sort_typ == '10' ) {
                                         if(prc.check_instance_in_array(value)){
-                                                var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent();
+                                                var cloned = jQuery("#hidden_div").find(".p_duedate[value='"+value+"']").parent('.profile-box').parent('.rbprofile-list');
                                                 prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
@@ -582,7 +582,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
 
                                 }else if(sort_typ == '11' || sort_typ == '12' ) {
                                        if(prc.check_instance_in_array(value)){
-                                                var cloned = jQuery("#hidden_div").find(".p_customdate[value='"+value+"'][id='"+current_custom_date_id+"']").parent();
+                                                var cloned = jQuery("#hidden_div").find(".p_customdate[value='"+value+"'][id='"+current_custom_date_id+"']").parent('.profile-box').parent('.rbprofile-list');
                                                 prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
@@ -595,7 +595,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
 
                                 } else if(sort_typ == '24' || sort_typ == '25') {
                                         if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".csp_name[value=\""+value+"\"]").parent();
+                                            var cloned = jQuery("#hidden_div").find(".csp_name[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
                                             prc.clone_em(cloned);
                                            
                                        } else {
@@ -609,7 +609,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                 }else if(sort_typ == '26'  || sort_typ == '27') {
 
                                         if(prc.check_instance_in_array(value)){
-                                                var cloned = jQuery("#hidden_div").find(".csp_created[value='"+value+"']").parent();
+                                                var cloned = jQuery("#hidden_div").find(".csp_created[value='"+value+"']").parent('.profile-box').parent('.rbprofile-list');
                                                 prc.clone_em(cloned);
                                                 
                                        } else {
@@ -622,7 +622,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
 
                                 } else if(sort_typ == '501') {
                                       if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent();
+                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
                                             prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
@@ -635,7 +635,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
 
                                 }  else if(sort_typ == '502') {
                                         if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent();
+                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
                                             prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
@@ -651,7 +651,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                     jQuery(".Female").show();
                                     jQuery(".Male").show();
                                      if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent();
+                                            var cloned = jQuery("#hidden_div").find(".p_gender[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
                                             prc.clone_em(cloned);
                                        } else {
                                             if(prc.not_in_array(counted,value)){
@@ -736,7 +736,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 */
                  prc.clone_em_all = function(vl,cls){
                       jQuery("#hidden_div").find("."+cls+"[value='"+vl+"']").each(function(){
-                           var $cloned = jQuery(this).parent().clone();
+                           var $cloned = jQuery(this).parent('.profile-box').parent('.rbprofile-list').clone();
                            main_elm.append($cloned);
                      });
                             

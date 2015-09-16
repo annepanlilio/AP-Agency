@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: September 07, 2015
+Last updated: September 16, 2015
 */
 
 /* Global Style */
@@ -31,7 +31,7 @@ Last updated: September 07, 2015
 	line-height: normal;
 }
 #profile-list .rbprofile-list .image {
-	width: 100%;
+	float: left;
 	position: relative;
 	overflow: hidden;
 }
@@ -41,16 +41,16 @@ Last updated: September 07, 2015
 	box-shadow: none;
 	max-width: 100%;
 }
-#profile-list .rbprofile-list .image .rb_profile_tool {
+#profile-list .rbprofile-list .image .name {
 	position: absolute;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	padding: 5px;
-	background: rgba(255,255,255,0.8);
 }
 #profile-list .rbprofile-list .profile-info {
 	padding: 5px 0px;
+	clear: both;
 }
 #profile-list .rbprofile-list .profile-info .details {
 	font-size: small;
@@ -186,6 +186,9 @@ Last updated: September 07, 2015
 }
 #profile-list.two-profiles .rbprofile-list:nth-child(even) {
 	padding-right: 0px;
+}
+#profile-list.one-profiles .rbprofile-list .profile-box {
+	float: left;
 }
 
 /*Profile List Layout 01*/
