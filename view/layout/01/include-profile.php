@@ -158,7 +158,7 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 									echo "<div class=\"photo\">";
 									echo "	<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a>";
 									if($rb_agency_option_profile_thumb_caption ==1) {
-										echo "	<br><small>".$dataImg['ProfileMediaURL']."</small>\n";
+										echo "	<small>".$dataImg['ProfileMediaURL']."</small>\n";
 									}
 									echo "</div>\n";
 								}
