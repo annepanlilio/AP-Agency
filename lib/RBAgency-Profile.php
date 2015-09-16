@@ -1300,8 +1300,8 @@ class RBAgency_Profile {
 										if(!empty($val)){
 											// Is there a single value?
 											if(strpos($val,",") === false){
-												$filter2 .= $open_st . $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val."%") . $close_st;
-
+												//$filter2 .= $open_st . $wpdb->prepare(" ProfileCustomValue LIKE %s","%".$val."%") . $close_st;
+												$filter2 .= $open_st . $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0",$val) . $close_st;
 											// Are there multiple values?
 											} else {
 
@@ -1314,7 +1314,8 @@ class RBAgency_Profile {
 
 													if($like!="") {
 														$val2 = addslashes(addslashes($like));
-														$sr_data .= $wpdb->prepare(" ProfileCustomValue LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),"%".$val2."%",$like);
+														//$sr_data .= $wpdb->prepare(" ProfileCustomValue LIKE %s OR  FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),"%".$val2."%",$like);
+														$sr_data .= $wpdb->prepare(" FIND_IN_SET(%s,ProfileCustomValue) > 0".(($i <= $likecounter)?" OR ":""),$like);
 													}
 
 												}
