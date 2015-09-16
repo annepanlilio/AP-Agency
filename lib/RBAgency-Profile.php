@@ -2643,11 +2643,9 @@ class RBAgency_Profile {
 			 */
 
 				$profile_list_class = "rbprofile-list -list-layout-".$rb_agency_option_layoutprofilelistlayout;
+				$profile_list_class .= " name-pos-".$rb_agency_option_layoutprofilenamepos;
 
-				if($rb_agency_option_profilelist_thumbsslide == 1){
-					$profile_list_class .= " name-pos-".$rb_agency_option_layoutprofilenamepos;
-				}
-				if($rb_agency_option_profilelist_thumbsslide == 1){
+				if($rb_agency_option_profilelist_thumbsslide == 1){					
 					$profile_list_class .= " thumbslide";
 				}
 
@@ -2658,6 +2656,7 @@ class RBAgency_Profile {
 				} else {
 					$profile_link_class = "slide-panel";
 				}
+
 				
 				$_proftypeClass = array();
 							
@@ -2669,11 +2668,8 @@ class RBAgency_Profile {
 				}else{
 					$_proftypeClass[] = 'profile_type_'. $profiType;
 				}
+
 				$profile_list_class .= ' '. implode(' ', array_unique($_proftypeClass));
-				
-				
-				
-				
 
 				$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
 				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class." ".$PGENDER."\" >\n";
