@@ -649,3 +649,11 @@ ul.media-categories-link li a { padding: 5px 10px; }
 ul.media-categories-link2 li a { padding: 5px; }
 #profile-list.voiceover .profile-voiceover ul li.hover-audio ul { padding-top: 5px; }
 #profile-list.voiceover .profile-voiceover ul li.hover-audio a { margin-bottom: 5px; }
+
+.profile-fancy .profile-photo { width: 60%; margin-right: 5%; float: left; }
+.profile-fancy .profile-photo img { max-width: 100%; }
+.profile-fancy .info { width: 35%; float: left; }
+.profile-fancy .info h3 { margin-bottom: 15px; }
+.profile-fancy .info p,
+.profile-fancy .info a { font-size: medium; }
+.profile-fancy .info ul { list-style: none; }
