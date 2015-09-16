@@ -7,6 +7,8 @@
 	/*
 		 * EasyText API
 		 */
+
+if ( class_exists("RBAgencyCasting") ) {
 		echo " <tr valign=\"top\" id=\"CastingDashboardSetting\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Casting Dashboard Setting', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
 		echo " </tr>\n";
@@ -27,13 +29,9 @@
 		echo "   <th scope=\"row\" colspan=\"2\"><br/></th>\n";
 		echo " </tr>\n";
 		
-	
-		if ( class_exists("RBAgencyCasting") ) {
-		
 		echo " <tr valign=\"top\" id=\"CartFavIconSettings\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Cart and Favorite Icon Setting', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
 		echo " </tr>\n";
-		
 		
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Cart Icon URL', rb_agency_TEXTDOMAIN) ."</th>\n";
@@ -67,7 +65,7 @@
 			. __("full url(include http:// ) / exact Height: 100px width: 200px;", rb_agency_TEXTDOMAIN) ."<br />\n";	
 	
 		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('Logo URL', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <th scope=\"row\">". __('Model Card Layout', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
 		
 		echo " <select name=\"rb_agency_options[rb_agency_option_cardphoto_layout]\">\n";
