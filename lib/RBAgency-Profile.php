@@ -1448,6 +1448,7 @@ class RBAgency_Profile {
 			// Sort by date 
 			$rb_agency_option_profilelist_sortbydate = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']) ? $rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']: 0;
 			$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
+			if ($rb_agency_option_persearch < 0) {$rb_agency_option_persearch = 100; }
 			
 			//if($rb_agency_option_profilelist_sortbydate && !empty($filter2)){
 			//$atts["sort"] = "cmux.ProfileCustomDateValue";
@@ -1496,10 +1497,14 @@ class RBAgency_Profile {
 
 				if ( (isset($limit) && !empty($limit)) && strpos($filter, 'LIMIT') == 0  ){
 					//$filter .= " LIMIT 0, $limit ";
-				}
+					if(is_admin()){
+						$filter .= " LIMIT ".$limit;
+					}
+				
 				// Show top 100
-				if(is_admin() && !isset($_GET["limit"])){
-					$filter .= " LIMIT 101";
+				//if(is_admin() && !isset($_GET["limit"]))
+					
+				
 				}
 
 				// Debug
@@ -2356,6 +2361,7 @@ class RBAgency_Profile {
 					} else {
 						$checkboxDisable ="";
 					}
+					
 					$displayHtml .=  "        <tr class=\"".$statusClass."\">\n";
 					$displayHtml .=  "            <th class=\"check-column\" scope=\"row\" >\n";
 					$displayHtml .=  "                <input ".$checkboxDisable." type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
