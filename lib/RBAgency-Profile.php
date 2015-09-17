@@ -1981,6 +1981,7 @@ class RBAgency_Profile {
 				}
 
 				$profilesPerRow = 1;
+				$slidePanelID = $rb_agency_option_layoutprofilelist_perrow;
 
 				// Loop through Profiles
 				foreach($results as $profile) {
@@ -1999,29 +2000,22 @@ class RBAgency_Profile {
 						}
 					}
 
-					$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query );
-
+					
+					
+					
 					if($rb_agency_option_layoutprofileviewmode == 2 && $rb_agency_option_layoutprofilelistlayout !=1){
 						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
-							$profile_list .="	<div class=\"info-panel\"> \n";
-							$profile_list .="		<div class=\"profile-pic\"> \n";
-							$profile_list .="		<img src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/female_model-01.jpg\" alt=\"Profile Pic\"> \n";
-							$profile_list .="		</div> <!-- .profile-pic --> \n";
-							$profile_list .="		<div class=\"info\"> \n";
-							$profile_list .="			<h2>Profile Name</h2> \n";
-							$profile_list .="			<ul class=\"stats\"> \n";
-							$profile_list .="			<li><strong>Gender<span>:</span></strong> Female</li> \n";
-							$profile_list .="			<li><strong>Ethnicity:</strong>  White</li> \n";
-							$profile_list .="			<li><strong>Skin Colour:</strong> White</li> \n";
-							$profile_list .="			<li><strong>Height (cm):</strong> 172</li> \n";
-							$profile_list .="			<li><strong>Hair Colour:</strong> Blonde</li> \n";
-							$profile_list .="			</ul> <!-- .stats --> \n";
-							$profile_list .="			<div class=\"owl-carousel\"> \n";
-							$profile_list .="			</div> <!-- .info --> \n";
-							$profile_list .="		</div> <!-- .info --> \n";
+							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID );
+							
+							$profile_list .="	<div class=\"info-panel\" id='slide-panel_". $profilesPerRow ."' > \n";
 							$profile_list .="	</div> <!-- .info-panel --> \n";
+							$slidePanelID += $rb_agency_option_layoutprofilelist_perrow;
+						}else{
+							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID);
 						}
 						$profilesPerRow++;
+					}else{
+						$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query );
 					}
 
 				}// End Loop
@@ -2188,7 +2182,47 @@ class RBAgency_Profile {
 							});
 						</script>';
 					}
+					
+					//slide panel script
+					if($rb_agency_option_layoutprofileviewmode == 2 && $rb_agency_option_layoutprofilelistlayout !=1){
+					
+					$all_html .= '
+					<script type="text/javascript">
+						jQuery(document).ready(function($) {
+						
+						
+							jQuery(".slide-panel-link").on("click", function(){
+							
+								var profID = $(this).attr("profile_id");
+								var panel_target_ID = $(this).attr("href");
+								
+								$(".info-panel[id!="+panel_target_ID+"]").slideUp();
+								
+								$.post( "'.admin_url('admin-ajax.php').'", { id: profID, action: "get_profileInfo" })
+							        .done(function( data ) {
+							        
+							        $(panel_target_ID).html(data);
+							        $(panel_target_ID).slideDown();
+							    });
+	    
+								
+								
+							});
+						});
+							
+					</script>
+					
+					<style>
+					.info-panel{
+						background:#fff;
+						display:none;
+						height: 450px; overflow:hidden;border:1px solid #ddd;
+					}
+					</style>
+					
+					';
 
+					}
 					$type = get_query_var("type");
 					// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
 					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
@@ -2540,7 +2574,7 @@ class RBAgency_Profile {
 		 * Format Profile
 		 * Create list from IDs
 		 */
-		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = '',$plain = false,$arr_query = array()){
+		public static function search_formatted($dataList,$arr_favorites = array(),$arr_castingcart = array(), $casting_availability = '',$plain = false,$arr_query = array(),$_panelID=0){
 
 			global $wpdb;
 			
@@ -2779,18 +2813,30 @@ class RBAgency_Profile {
 				$images = "";
 				$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 				if ($p_image){
-
 					if($rb_agency_option_layoutprofileviewmode == 1) {
+						$profile_link = "#profile-id";
+						$profile_link = '#lightbox-fancy-'.$dataList["ProfileID"];
+					} elseif($rb_agency_option_layoutprofileviewmode == 2) {
 						$profile_link = "#profile-id";
 						$profile_link = '#lightbox-fancy-'.$dataList["ProfileID"];
 					} else {
 						$profile_link = RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"];
 					}
 					
+					
+					
 					$displayHTML .="<div class=\"image\">";					
 
-					$displayHTML .= "<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_link_class."\">";
 
+
+					
+						//slide panel trigger to image/ profile image
+					if($rb_agency_option_layoutprofileviewmode == 2) {
+						$displayHTML .= '<a href="#slide-panel_'.$_panelID.'" class="slide-panel-link" profile_id="'.$dataList["ProfileID"].'">';
+					}else{
+						$displayHTML .= "<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_link_class."\">";
+					}
+						
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
 						if($rb_agency_option_profilelist_thumbsslide == 1){ //show profile sub thumbs for thumb slide on hover
 							// $images = rb_agency_profileimages($dataList["ProfileID"]); not working
@@ -2801,12 +2847,11 @@ class RBAgency_Profile {
 
 							foreach($resultsImg as $dataImg ){
 								if ($countImg > 1) {									
-									$images .= " <img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
+									$images .= "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
 								}
 							}
 
 							$displayHTML .= '<script type="text/javascript">
-
 												jQuery("#rbprofile-'.$dataList["ProfileID"].' .image").mouseover(function(){												
 													var elem = jQuery(this);
 													interval = setInterval(function(){cycleImages(jQuery("#rbprofile-'.$dataList["ProfileID"].' .image"))}, 1000);												  
@@ -2840,8 +2885,16 @@ class RBAgency_Profile {
 					$displayHTML .="</div>";
 
 				} else {
-					$displayHTML .= "<div class=\"image image-broken\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"></div>\n";
-				}				
+					
+					$images = "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
+					
+					//slide panel trigger to image/ profile image
+					if($rb_agency_option_layoutprofileviewmode == 2) {
+						$images = '<a href="#slide-panel_'.$_panelID.'" class="slide-panel-link" profile_id="'.$dataList["ProfileID"].'">'.$images.'</a>';
+						
+					}
+					$displayHTML .= "<div class=\"image image-broken\">".$images ."</div>\n";
+				}
 
 				// Determine profile details
 
