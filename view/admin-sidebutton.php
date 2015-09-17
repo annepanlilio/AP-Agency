@@ -16,12 +16,12 @@ if ( class_exists("RBAgencyCasting") ) {
 		echo "   <th scope=\"row\">". __('Buttons to Display', rb_agency_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
 		
-		
-	echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_castingbutton_postnewjob]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_castingbutton_postnewjob'])?$rb_agency_options_arr['rb_agency_option_castingbutton_postnewjob']:0, 1,false)."/> ". __("Post a New Job", rb_agency_TEXTDOMAIN) ."<br />\n";	
-	echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_castingbutton_viewjobposting]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_castingbutton_viewjobposting'])?$rb_agency_options_arr['rb_agency_option_castingbutton_viewjobposting']:0, 1,false)."/> ". __("View Your Job Postings", rb_agency_TEXTDOMAIN) ."<br />\n";	
-	echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_castingbutton_viewapplicants]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_castingbutton_viewapplicants'])?$rb_agency_options_arr['rb_agency_option_castingbutton_viewapplicants']:0, 1,false)."/> ". __("View Your Applicants", rb_agency_TEXTDOMAIN) ."<br />\n";	
-
-		
+			
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_castingbutton_postnewjob]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_castingbutton_postnewjob'])?$rb_agency_options_arr['rb_agency_option_castingbutton_postnewjob']:0, 1,false)."/> ". __("Post a New Job", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_castingbutton_viewjobposting]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_castingbutton_viewjobposting'])?$rb_agency_options_arr['rb_agency_option_castingbutton_viewjobposting']:0, 1,false)."/> ". __("View Your Job Postings", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_castingbutton_viewapplicants]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_castingbutton_viewapplicants'])?$rb_agency_options_arr['rb_agency_option_castingbutton_viewapplicants']:0, 1,false)."/> ". __("View Your Applicants", rb_agency_TEXTDOMAIN) ."<br />\n";	
+	
+			
 
 		echo "   </td>\n";
 		echo " </tr>\n";
@@ -48,9 +48,10 @@ if ( class_exists("RBAgencyCasting") ) {
 		echo " </tr>\n";
 		
 		
-			echo " <tr valign=\"top\">\n";
+		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><br/></th>\n";
 		echo " </tr>\n";
+		
 		}
 		
 		
