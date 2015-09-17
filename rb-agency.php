@@ -8,7 +8,7 @@ Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
 Version: 2.4.5
 */
-$RBAGENCY_VERSION = "2.4.5";
+$RBAGENCY_VERSION = "2.4.7";
 /* If you modify the plugin set the following to TRUE */
 $RBAGENCY_CUSTOM = FALSE;
 /*
