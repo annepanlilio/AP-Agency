@@ -10,6 +10,41 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 ## Change Log
 
+### 2.4.7
+* new image setting - if enabled, it will show filenames as photo caption of each photo in profile view.
+* fixed - show thumbs slide setting. all photos slide when hovered if this option is enabled.
+* fixed - Restore Preset Custom Fields
+* fixed - Sort List and Sort Options
+* added Gender as one of the Sort Options
+* fixed - data for Date custom field is not getting loaded
+* fixed - broken images when setting primary photo using the exporter tool
+* fixed - date is not populated when using importer tool
+* fixed - the email notification received by admin when someone registers contains html.
+* fixed - i saved 2 profiles in casting  cart but only 1 is showing in preview.
+* fixed - casting agent is not receiving the casting cart email
+* fixed - age is not showing in frontend full profile view when using layout 00.
+* fixed - dropdown multi-select is showing even if no value.
+* fixed - profile should not be accessible by non-logged in users if setting is "Must be logged in to view model list, profile information, and search forms."
+* added the Set this Profile to Private function; added another column in manage profile. even if profile listing is set to public, admin can set specific profiles to private.
+* new feature - create e-cards wher admin can select upto 4 photos for each profile  and download as pdf
+* created a setting so admin can replace the icon to whatever icon they want.
+* new profile listing layout - lightbox and voice over (no image)
+* shortcode created - ability to use 2 list layout at the same time for different pages.
+* added the ability to redirect deleted profiles to custom url
+* new download model card option with 2 layout options
+* expiry notification settings
+* fixed - when admin is editing the profile, the status changes back to pending for approval, admin must be able to change status to inactive, active but not visible, and archive.
+* fixed - sort by date (joined)
+* video title and caption are now editable by admin
+* fixed - html codes in email notifications
+* fixed - when sorting e.g. by age, the thumbnail layout is off
+* fixed - profile per row settings not working
+* fixed - name over image is not updating
+* fixed - name under image with color is not updating
+* fixed - if a profile is added by admin in the Talents Shortlisted by Admin section or in the Client's Casting Cart the profile should not get automatically be emailed of the job, unless the admin clicks on the “Resend notifcation to selected shortlisted talents” checkbox
+* fixed - search issue - when searching for asian, other ethnicities shows up e.g. caucasian, african american, etc.
+* fixed - maximum records returned in backend search is not working
+
 ### 2.4.6
 * added the ability to hide expanded model details (age and state) on selected profile or profiles
 * fixed - not all folders are getting renamed when switched to auto-generated ID settings
