@@ -1939,23 +1939,7 @@ class RBAgency_Profile {
 
 				if ($rb_agency_option_profilelist_count && (!in_array(get_query_var("type"), array("favorite","casting"))) ){
 					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
-				}
-
-			if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1){
-
-
-				$all_html.="<div class=\"rb-cart-links\">";
-
-				if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] == 1){
-					$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
-				}
-
-				if($rb_agency_options_arr['rb_agency_option_profilelist_favorite'] == 1){
-					$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
-				}
-
-				$all_html.="</div>";
-			}
+				}			
 
 			if ($count > 0){
 
@@ -2054,6 +2038,22 @@ class RBAgency_Profile {
 						$all_html .= "<div id=\"profile-results-info-countrecord\">\n";
 						$all_html .=  __("Displaying", RBAGENCY_TEXTDOMAIN) ." <strong><span class='count-display'>". (isset($count)?$count:0) ."</span></strong> ". __("of", RBAGENCY_TEXTDOMAIN) ." <span class='items-display'>". (isset($items)?$items:0) ."</span> ". __(" records", RBAGENCY_TEXTDOMAIN) ."\n";
 						$all_html .= "</div>\n";
+					}
+
+					if(class_exists("RBAgencyCasting") && is_user_logged_in() && strpos($type,"casting") <= -1 && strpos($type,"favorite") <= -1){
+
+
+						$all_html.="<div class=\"rb-cart-links\">";
+
+						if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] == 1){
+							$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
+						}
+
+						if($rb_agency_options_arr['rb_agency_option_profilelist_favorite'] == 1){
+							$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
+						}
+
+						$all_html.="</div>";
 					}
 
 					if($rb_agency_option_profilelist_printpdf == 1){
