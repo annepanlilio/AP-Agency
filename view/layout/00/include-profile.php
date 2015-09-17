@@ -38,6 +38,8 @@ if (isset($urlexploade[1])){
 	$subview = "";
 }
 
+$rb_agency_option_profile_thumb_caption = isset($rb_agency_options_arr['rb_agency_option_profile_thumb_caption'])?$rb_agency_options_arr['rb_agency_option_profile_thumb_caption']:0;
+
 
 /*
  * Layout 
@@ -60,7 +62,12 @@ echo "				<div id=\"photos\">\n";
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							if ($countImg > 1) {
-								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
+								echo "<div class=\"photo\">";
+								echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a>";
+								if($rb_agency_option_profile_thumb_caption ==1) {
+									echo "	<small>".$dataImg['ProfileMediaURL']."</small>\n";
+								}
+								echo "</div>\n";
 							} else {
 								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\"/></a></div>\n";
 							}
