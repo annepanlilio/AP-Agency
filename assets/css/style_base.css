@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: September 16, 2015
+Last updated: September 17, 2015
 */
 
 /* Global Style */
@@ -230,6 +230,7 @@ Last updated: September 16, 2015
 }
 #results-info {
 	float: right;
+	text-align: right;
 }
 .rbsort {
 	margin-bottom: 10px;
