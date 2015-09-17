@@ -1,7 +1,7 @@
 # RB Agency
 Model and Talent Agency CRM management and scheduling tool.
 
-### Current Version 2.4.3
+### Current Version 2.4.7
 
 ## Installation
 
