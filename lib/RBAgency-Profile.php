@@ -3042,20 +3042,28 @@ class RBAgency_Profile {
 					$outLinkResume = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $dataList["ProfileGallery"] ."/". $dataMedia['ProfileMediaURL'];
 				}
 				
+				
+				$imageURL = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image ."&w=300&h=420&a=t";
+
 				$displayHTML .='
 				
 				<div style="display:none">
 				<div id="lightbox-fancy-'.$dataList["ProfileID"].'" class="profile-fancy white-popup">
-					<div class="profile-photo">
-						<img src="'. RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image .'" alt="'. stripslashes($ProfileContactDisplay) .'"  class="primary active" />
+					<div class="profile-photo" style="float: left;">
+						<img src="'.$imageURL .'" alt="'. stripslashes($ProfileContactDisplay) .'"  class="primary active" />
 						
 					</div>
 					
-					<div class="info">
+					<div class="info" style="display-inline-block;margin-left: 335px;">
 						<h3>'. stripslashes($ProfileContactDisplay).'</h3>
 						<p>'. stripslashes($ProfileExperience).'</p>						
 						<ul>
-							<li><a href="'. get_bloginfo("url").$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a></li>
+							<li><a href="'. get_bloginfo("url").$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a></li>';
+							
+							if(!empty($dataList["ProfileContactWebsite"])){
+								$displayHTML .='<li><a href="'.$dataList["ProfileContactWebsite"].'" title="Website" target="_blank">Website</li>';
+							}
+				$displayHTML .='
 							<li><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'" title="'.stripslashes($ProfileContactDisplay).'">More</a></li>
 						</ul>
 						
