@@ -29,10 +29,10 @@
 		
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			if($rb_agency_options_arr['rb_agency_option_404profile'] == 'home'){
-				wp_redirect(home_url());
+				wp_redirect(home_url(), 301);
 				exit;
 			}elseif(!empty($rb_agency_options_arr['rb_agency_option_404profile'])){
-				wp_redirect(home_url());
+				wp_redirect(home_url(), 301);
 				exit;
 			}
 			echo $rb_header = RBAgency_Common::rb_header();
