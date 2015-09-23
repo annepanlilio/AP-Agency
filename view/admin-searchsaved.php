@@ -550,15 +550,18 @@ $siteurl = get_option('siteurl');
 
 
 		//Paginate
-		$sqldata  = "SELECT count(*) as num_itms FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  ." GROUP BY search.SearchID"; // number of total rows in the database
+		$sqldata = "SELECT count(*) as num_itms FROM ". table_agency_searchsaved ." search ". $filter;
+		//$sqldata  = "SELECT count(*) as num_itms FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = search.SearchID ". $filter  ." GROUP BY search.SearchID"; // number of total rows in the database
 		$results =  $wpdb->get_row($sqldata);
 		$items =$results->num_itms; // number of total rows in the database
 		if($items > 0) {
 
 			$p = new RBAgency_Pagination;
 			$p->items($items);
-			$p->limit(10); // Limit entries per page
-			$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .(isset($query)?$query:""));
+			
+			$_limitset = isset($_GET['limit'])?$_GET['limit']:10;
+			$p->limit($_limitset); // Limit entries per page
+			$p->target("admin.php?page=". (isset($_GET['page'])?$_GET['page']:"") .(isset($query)?$query:"") . "&".(isset($_GET['limit'])? 'limit='.$_GET['limit']:""));
 			$p->currentPage(isset($_GET[isset($p->paging)?$p->paging:0])?$_GET[$p->paging]:0); // Gets and validates the current page
 			$p->calculate(); // Calculates what to show
 			$p->parameterName('paging');
