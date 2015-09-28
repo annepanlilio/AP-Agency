@@ -529,6 +529,11 @@ class RBAgency_Casting {
 			$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 
+			$rb_agency_option_castingcart_email_age = isset($rb_agency_options_arr['rb_agency_option_castingcart_email_age']) ?$rb_agency_options_arr['rb_agency_option_castingcart_email_age']:0;
+			$detail_year_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?true:false;
+			$detail_month_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?true:false;
+			$detail_day_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?true:false;
+			
 			$SearchID			= isset($_GET['SearchID']) ? $_GET['SearchID']: "";
 			if(!isset($_POST["resend"]) && empty($_POST["resend"])){
 				$SearchMuxHash	= RBAgency_Common::generate_random_string(8);
@@ -621,6 +626,11 @@ class RBAgency_Casting {
 								}
 								$profileimage .= "</div>\n";
 								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+								
+								if($rb_agency_option_castingcart_email_age == 1){
+									$profileimage .= "<br>". rb_agency_get_age($data2['ProfileDateBirth'], array('email_month' =>$detail_month_op,'email_day' =>$detail_day_op,'email_year' =>$detail_year_op)) ."</span>";
+								}
+								
 								$profileimage .= "</div>\n";
 							}
 							$profileimage .="</div>";
@@ -653,21 +663,6 @@ class RBAgency_Casting {
 			$SearchMuxMessage = $SearchMuxMessage;
 			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage, $headers);
 			
-			//$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage);
-			
-			//wp_mail('jenner.alagao@gmail.com','tesd','my message here');
-			/* 
-			echo "----$SearchMuxToEmail-----$SearchMuxSubject0000000000000$SearchMuxMessage";
-			
-			if($isSent){
-			echo 'good send';
-			}else{
-				echo 'error send';
-			}
-			print_r($headers);
-
-			
-			echo $SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage, $headers; */
 			//var_dump(array($headers,$SearchMuxToEmail,$SearchMuxSubject, $SearchMuxSubject, $SearchMuxHash));
 			//if($isSent){
 				if(!empty($SearchMuxFromEmail)){

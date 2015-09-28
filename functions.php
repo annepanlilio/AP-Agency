@@ -413,6 +413,9 @@
 				'show_age_year' => false,
 				'show_age_month' => false,
 				'show_age_day' => false,
+				'email_month' => true,
+			    'email_day' => true,
+			    'email_year' => true,
 				), $attrs );
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
@@ -487,7 +490,7 @@
 				$months = $months - 12;
 				$years++;
 			}
-			if($detail_year == 1 || is_admin()){
+			if($detail_year == 1 || is_admin() && $sc['email_year']==true){
 				if($years == 0){
 					$years = "";
 				} else {
@@ -495,7 +498,7 @@
 						$label_y = "<span ".$attrs['year_style'].">" . $years . " yr(s)</span>";
 				}
 			}
-			if($detail_month == 1|| is_admin()){
+			if($detail_month == 1|| is_admin() && $sc['email_month']==true){
 
 				if($months == 0){
 					$label_m = "";
@@ -503,7 +506,7 @@
 					$label_m = "<span ".$attrs['month_style'].">" .(($months<12)?$months:11) . " mo(s)</span>";
 				}
 			}
-			if($detail_day == 1|| is_admin()){
+			if($detail_day == 1|| is_admin() && $sc['email_day']==true){
 				$label_d = "<span ".$attrs['day_style'].">" . (($days<31)?$days:30)." day(s)</span>";
 			}
 

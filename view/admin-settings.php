@@ -540,6 +540,7 @@ elseif ($ConfigID == 1) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		
 		if ( class_exists("RBAgencyCasting") ) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Favorite and Casting Display', RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -601,6 +602,14 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_adminprint_hidden]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0, 1,false)."/> Show Hidden Contact Details in Quick Print<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Casting cart Email', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_castingcart_email_age]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_castingcart_email_age'])?$rb_agency_options_arr['rb_agency_option_castingcart_email_age']:0, 1,false)."/> ". __("Display Age", RBAGENCY_TEXTDOMAIN) ."<br />\n";	
+		echo "   </td>\n";
+		echo " </tr>\n";
+		
 
 		/*
 		 *  Auto-send notification when due date or contract reached (send it to admin and agency )
