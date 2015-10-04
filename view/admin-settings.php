@@ -500,6 +500,21 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortbydate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']:0, 1,false)."/> ". __("Sort by Date", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		
+		
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Profile Default Sort', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist_sortdefault]\">\n";
+		echo "       <option value=\"ProfileContactNameFirst\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileContactNameFirst') ."> ". __("First Name", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"ProfileContactNameLast\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileContactNameLast') ."> ". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"ProfileDateBirth\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileDateBirth') ."> ". __("Birthdate", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"ProfileDateCreated\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileDateCreated') ."> ". __("Date Joined", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		
+		
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profiles Per Page', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td><input name=\"rb_agency_options[rb_agency_option_profilelist_perpage]\" value=\"". $rb_agency_option_profilelist_perpage ."\" /></td>\n";
@@ -521,6 +536,8 @@ elseif ($ConfigID == 1) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		
+		
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile List Style', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";

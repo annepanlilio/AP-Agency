@@ -1407,7 +1407,19 @@ class RBAgency_Profile {
 						self::$error_checking[] = array('search_generate_sqlwhere',$filter);
 						echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 					}
+					
+					//sort inject by admin settings
+					//echo 'inject sorting here';
+					
+					$_sortBy = $rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'];
+					if(empty($_sortBy )) $_sortBy = 'ProfileContactNameFirst';
+/* ProfileContactNameFirst
+ProfileContactNameLasttdefault
+ProfileDateBirth
+ProfileDateCreated */
 
+
+					$atts['sort'] = 'profile.'.$_sortBy;
 					self::search_generate_sqlorder($atts,$filter2);
 
 					// Store SQL and Custom Fields SQL 
@@ -1691,7 +1703,7 @@ class RBAgency_Profile {
 								//AND (cart.CastingJobID IS NULL OR cart.CastingJobID <= 0 )
 							}
 						}
-					//}
+					//} 
 
 					// Execute the query showing casting cart
 					$sql = "SELECT profile.ProfileID,
@@ -1781,6 +1793,7 @@ class RBAgency_Profile {
 				if(is_admin()){
 					return self::search_result_admin( $sql, $arr_query );
 				} else {
+				
 					return self::search_result_public( $sql, $castingcart, $shortcode, $arr_query );
 				}
 
@@ -1893,6 +1906,49 @@ class RBAgency_Profile {
 							<select id="sort_option">
 								<option value="">Sort Options</option>
 							</select>';
+						
+						
+					//default srt
+					
+					
+					/* $_array_srt = array(
+					
+					[] => ,
+					[] => ,
+					[] => ,
+					[] => ,
+					);
+					$all_html.='
+					<script>
+					jQuery(document).ready(function($){
+					
+						<option value="0">Sort List</option>
+								<option value="1">Age</option>
+								<option value="2">Name</option>
+								<option value="3">Date Joined</option>
+								<option value="2">Display Name</option>
+								<option value="50">Gender</option>
+								
+								ProfileContactNameFirst
+								ProfileContactNameLasttdefault
+								ProfileDateBirth
+								ProfileDateCreated
+								
+							 $("#sort_by").val("val2");
+
+		                var manage = new manage_elem(jQuery("#sort_by").val(),jQuery("#profile-list"),jQuery("#hidden_div"));
+		                   manage.current_custom_date_id(jQuery("#sort_by").val());
+		                
+		
+		                if(jQuery(this).attr(\'id\') == \'sort_by\'){
+		                        manage.update_option_fields(jQuery(this).val(),jQuery("#sort_option"),manage.start_sorting);
+		                } else {
+		                        manage.start_sorting(jQuery(this)); 
+		                }  
+							 
+					});
+					</script>		 
+							 '; */
 				}
 				$all_html.="	</div>";
 				$all_html .= $paginate->show();
