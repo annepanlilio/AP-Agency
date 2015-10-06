@@ -508,6 +508,8 @@ elseif ($ConfigID == 1) {
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist_sortdefault]\">\n";
 		echo "       <option value=\"ProfileContactNameFirst\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileContactNameFirst') ."> ". __("First Name", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"ProfileContactNameLast\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileContactNameLast') ."> ". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"ProfileContactDisplay\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileContactDisplay') ."> ". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"ProfileID\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileID') ."> ". __("Auto-Generated ID", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"ProfileDateBirth\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileDateBirth') ."> ". __("Birthdate", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"ProfileDateCreated\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileDateCreated') ."> ". __("Date Joined", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";

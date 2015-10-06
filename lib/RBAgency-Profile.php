@@ -1408,16 +1408,9 @@ class RBAgency_Profile {
 						echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 					}
 					
-					//sort inject by admin settings
-					//echo 'inject sorting here';
-					
+					//ORDER BY came from admin settings
 					$_sortBy = $rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'];
 					if(empty($_sortBy )) $_sortBy = 'ProfileContactNameFirst';
-/* ProfileContactNameFirst
-ProfileContactNameLasttdefault
-ProfileDateBirth
-ProfileDateCreated */
-
 
 					$atts['sort'] = 'profile.'.$_sortBy;
 					self::search_generate_sqlorder($atts,$filter2);
