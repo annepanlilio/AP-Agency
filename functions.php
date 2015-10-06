@@ -445,6 +445,42 @@
 
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
 
+			$age = date_diff(date_create($p_strDate), date_create('now'));
+		
+			$years = $age->y;
+			$months = $age->m;
+			$days = $age->d;
+			
+			$label_y = "";
+			$label_m = "";
+			$label_d = "";
+		
+			if($detail_year == 1 || is_admin() && $sc['email_year']==true){
+				if($years == 0){
+					$years = "";
+				} else {
+					$label_y = "<span ".$attrs['year_style'].">" . $years . " yr(s)</span>";
+				}
+			}
+			if($detail_month == 1|| is_admin() && $sc['email_month']==true){
+
+				if($months == 0){
+					$label_m = "";
+				} else {
+					$label_m = "<span ".$attrs['month_style'].">" .(($months<12)?$months:11) . " mo(s)</span>";
+				}
+			}
+			if($detail_day == 1|| is_admin() && $sc['email_day']==true){
+				if($days == 0){
+					$label_d = "";
+				}else{
+					$label_d = "<span ".$attrs['day_style'].">" . (($days<31)?$days:30) ." day(s)</span>";
+				}
+			}
+			
+			return implode(" ",array($label_y,$label_m,$label_d));
+			/* 
+		
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
 			$localtime = getdate();
@@ -510,7 +546,7 @@
 				$label_d = "<span ".$attrs['day_style'].">" . (($days<31)?$days:30)." day(s)</span>";
 			}
 
-			return  implode(" ",array($label_y,$label_m,$label_d));
+			return  implode(" ",array($label_y,$label_m,$label_d)); */
 
 		// Or just do it the old way
 		} else {
