@@ -12,6 +12,11 @@ if(strpos(get_site_url(),'localhost') !== false){
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? get_site_url().$rb_agency_options_arr['rb_agency_option_agencylogo'] : "";
 }
 
+//check if http include
+if(strpos(rb_agency_option_agencylogo,'http') !== false){
+	$rb_agency_option_agencylogo =  get_site_url(). $rb_agency_option_agencylogo;
+}
+
 $toLandScape = "";
 $ul_css = "";
 $additionalCss = "";
@@ -507,7 +512,29 @@ $p = str_replace("theme","ext",plugin_dir_path(__FILE__));
 $path=$p."dompdf/htmls/";
 
 //*include("/wp-content/plugins/rb-agency/dompdf/htmls/test.txt");
+
 $fp=fopen($path.$htmlFile,"w");
+/* 
+$_server_path = $_SERVER['DOCUMENT_ROOT'];
+preg_match_all('/src="([^"]*)"/i',$table, $result); 
+
+foreach($result[1] as $_img){
+	//preg_match_all('/(alt|title|src)=("[^"]*")/i',$img_tag, $img[$img_tag]);
+	//preg_match_all('/(src)=("[^"]*")/i',$img_tag, $img[$img_tag]);
+	echo realpath($_img).'<br/>';
+} */
+
+//img works if we use the server path - not the URL... but its depend on the server.. :)
+$_server_path = dirname(dirname(dirname(dirname(__DIR__))));
+$table = str_replace( get_site_url(),$_server_path,$table);
+
+
+
+
+
+
+
+
 //fwrite($fp,$header);
 //*fwrite($fp,$border);
 if($_POST["print_option"] == 1 || $_POST['print_option'] == 3){
