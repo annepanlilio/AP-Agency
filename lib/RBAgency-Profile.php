@@ -3091,6 +3091,10 @@ class RBAgency_Profile {
 					$outLinkResume = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $dataList["ProfileGallery"] ."/". $dataMedia['ProfileMediaURL'];
 				}
 				
+				//check if http include
+				if(strpos($outLinkResume,'http') === false){
+					$outLinkResume =  get_bloginfo("url"). $outLinkResume;
+				}
 				
 				$imageURL = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image ."&w=300&h=420&a=t";
 
@@ -3107,7 +3111,7 @@ class RBAgency_Profile {
 						<h3>'. stripslashes($ProfileContactDisplay).'</h3>
 						<p>'. stripslashes($ProfileExperience).'</p>						
 						<ul>
-							<li><a href="'. get_bloginfo("url").$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a></li>';
+							<li><a href="' .$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a></li>';
 							
 							if(!empty($dataList["ProfileContactWebsite"])){
 								$displayHTML .='<li><a href="'.$dataList["ProfileContactWebsite"].'" title="Website" target="_blank">Website</li>';

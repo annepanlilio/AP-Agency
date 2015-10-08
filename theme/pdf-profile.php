@@ -13,9 +13,9 @@ if(strpos(get_site_url(),'localhost') !== false){
 }
 
 //check if http include
-if(strpos(rb_agency_option_agencylogo,'http') !== false){
+/* if(strpos(rb_agency_option_agencylogo,'http') === false){
 	$rb_agency_option_agencylogo =  get_site_url(). $rb_agency_option_agencylogo;
-}
+} */
 
 $toLandScape = "";
 $ul_css = "";
