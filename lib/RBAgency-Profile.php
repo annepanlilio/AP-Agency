@@ -3110,12 +3110,16 @@ class RBAgency_Profile {
 					<div class="info" style="display-inline-block;margin-left: 335px;">
 						<h3>'. stripslashes($ProfileContactDisplay).'</h3>
 						<p>'. stripslashes($ProfileExperience).'</p>						
-						<ul>
-							<li><a href="' .$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a></li>';
+						<ul>';
+
+						if(strpos($outLinkResume,'.pdf') !== false){
+							$displayHTML .= '<li><a href="' .$outLinkResume.'" title="Download Resume" target="_blank">Download Resume</a></li>';
+						}
 							
-							if(!empty($dataList["ProfileContactWebsite"])){
-								$displayHTML .='<li><a href="'.$dataList["ProfileContactWebsite"].'" title="Website" target="_blank">Website</li>';
-							}
+						if(!empty($dataList["ProfileContactWebsite"])){
+							$displayHTML .='<li><a href="'.$dataList["ProfileContactWebsite"].'" title="Website" target="_blank">Website</li>';
+						}
+						
 				$displayHTML .='
 							<li><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'" title="'.stripslashes($ProfileContactDisplay).'">More</a></li>
 						</ul>
