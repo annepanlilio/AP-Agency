@@ -1413,6 +1413,8 @@ class RBAgency_Profile {
 					if(empty($_sortBy )) $_sortBy = 'ProfileContactNameFirst';
 
 					$atts['sort'] = 'profile.'.$_sortBy;
+					if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= ' DESC';
+					
 					self::search_generate_sqlorder($atts,$filter2);
 
 					// Store SQL and Custom Fields SQL 
@@ -1786,6 +1788,7 @@ class RBAgency_Profile {
 				if(is_admin()){
 					return self::search_result_admin( $sql, $arr_query );
 				} else {
+				
 				
 					return self::search_result_public( $sql, $castingcart, $shortcode, $arr_query );
 				}
