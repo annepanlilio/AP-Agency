@@ -1064,21 +1064,23 @@ class RBAgency_Profile {
 						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
 					}*/
 					// By birthdate
-					if(isset($atts['rb_datepicker_from_bd'])){
+					if(isset($atts['rb_datepicker_from_bd']) and empty($age_max)){
 						$birthdate_from = $atts['rb_datepicker_from_bd'];
 						$filter .= " AND profile.ProfileDateBirth >= '$birthdate_from'";
 					}
-					if(isset($atts['rb_datepicker_to_bd'])){
+					
+					if(isset($atts['rb_datepicker_to_bd']) and empty($age_min)){
 						$birthdate_to = $atts['rb_datepicker_to_bd'];
 						$filter .= " AND profile.ProfileDateBirth <= '$birthdate_to'";
 					}
+					
 					// Age by Number
 					if (isset($age_min) && !empty($age_min)){
-						$minyear = date('Y-m-d', strtotime('-'. $age_min - 1 .' year'. $date));
+						$minyear = date('Y-m-d', strtotime('-'. ($age_min) .' year'. $date));
 						$filter .= " AND profile.ProfileDateBirth <= '$minyear'";
 					}
 					if (isset($age_max) && !empty($age_max)){
-						$maxyear = date('Y-m-d', strtotime('-'. $age_max - 2 .' year'. $date));
+						$maxyear = date('Y-m-d', strtotime('-'. ($age_max+1) .' year'. $date));
 						$filter .= " AND profile.ProfileDateBirth >= '$maxyear'";
 					}
 
