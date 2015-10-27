@@ -739,7 +739,9 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"9\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 9,false) ."> ". __("Layout 09 - Large Scroller", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"10\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 10,false) ."> ". __("Layout 10 - Profile View with Thumbnails, Primary Image & Video Player Embed", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"11\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 11,false) ."> ". __("Layout 11 - Profile View with Thumbnails, Primary Image, Print Photos & Print Polaroids", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-			$x=12;
+		echo "       <option value=\"12\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 12,false) ."> ". __("Layout 12 - Profile View with Thumbnails, Primary Image, Print Photos & Print Polaroids", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"13\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, 13,false) ."> ". __("Layout 13 - Primary Image with scrolling thumbnails and thumbnail gallery", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+			$x=13;
 			while($x<=15) {
 				if (file_exists(RBAGENCY_PLUGIN_DIR .'view/layout/'. sprintf("%02s", $x) .'/include-profile.php')) {
 				echo "       <option value=\"". $x ."\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0, $x,false) ."> ". __("Layout ", RBAGENCY_TEXTDOMAIN). $x ."</option>\n";

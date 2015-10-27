@@ -246,9 +246,9 @@
 
 		if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
 			$arr_under_dev = array("04","05");
-			$arr_custom_layout = array("06","07","08","09","10","11","12");
+			$arr_custom_layout = array("07","08","10","11","12","13");
 		} else {
-			$arr_custom_pop_layout = array("04","05","06","07","08","09","10","11","12");
+			$arr_custom_pop_layout = array("04","05","07","08","10","11","12","13");
 			if(in_array($rb_agency_option_layoutprofile, $arr_custom_pop_layout)){
 				add_thickbox();
 				echo "<div id=\"rb-underdev-layout\" style=\"display:none\"><div style=\"text-align:center;\">This is a Custom Layout. <br/>Please contact RB Plugin Support for quote &amp; integration</div></div>";
