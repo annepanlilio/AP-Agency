@@ -66,7 +66,12 @@
 			$rb_agency_option_profilelist_expanddetails_day = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0;
 			// Layout Type
 			$rb_agency_option_layoutprofile = isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0;
-				$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
+			$rb_agency_option_layoutprofile = sprintf("%02s", $rb_agency_option_layoutprofile);
+
+			// Profile View Layout Control
+			$rb_agency_option_under_dev_layout = isset($rb_agency_options_arr['rb_agency_option_under_dev_layout'])? $rb_agency_options_arr['rb_agency_option_under_dev_layout']:"04,05";
+			$rb_agency_option_custom_layout = isset($rb_agency_options_arr['rb_agency_option_custom_layout'])? $rb_agency_options_arr['rb_agency_option_custom_layout']:"07,08,10,11,12,13";
+			$rb_agency_option_popup_layout = isset($rb_agency_options_arr['rb_agency_option_popup_layout'])? $rb_agency_options_arr['rb_agency_option_popup_layout']:"04,05,07,08,10,11,12,13";
 
 			// Gallery Type
 			$rb_agency_option_gallerytype = isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0;
@@ -244,17 +249,17 @@
 		$arr_under_dev = array();
 		$arr_custom_layout = array();
 
-		if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
-			$arr_under_dev = array("04","05");
-			$arr_custom_layout = array("07","08","10","11","12","13");
-		} else {
-			$arr_custom_pop_layout = array("04","05","07","08","10","11","12","13");
+		if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) { // Outside Demo Site
+			$arr_under_dev = explode(",", $rb_agency_option_under_dev_layout);
+			$arr_custom_layout = explode(",", $rb_agency_option_custom_layout);
+		} else {  // Demo Site
+			$arr_custom_pop_layout = explode(",", $rb_agency_option_popup_layout);
 			if(in_array($rb_agency_option_layoutprofile, $arr_custom_pop_layout)){
 				add_thickbox();
 				echo "<div id=\"rb-underdev-layout\" style=\"display:none\"><div style=\"text-align:center;\">This is a Custom Layout. <br/>Please contact RB Plugin Support for quote &amp; integration</div></div>";
 				echo "<script type=\"text/javascript\">";
 				echo "jQuery(window).load(function(){";
-				echo 'tb_show("RB Plugin","#TB_inline?height=100&width=605&amp;inlineId=rb-underdev-layout&modal=true",null);';
+				echo 'tb_show("RB Plugin","#TB_inline?height=100&width=605&amp;inlineId=rb-underdev-layout",null);';
 				echo "});";
 				echo "</script>";
 			}
@@ -263,6 +268,8 @@
 
 
 		$enable_sidebar = ($rb_agency_option_profilelist_sidebar == 0) ? 'one-column' : ''; // check sidebar
+
+
 
 		echo "<div class=\"". $enable_sidebar ."\">\n";
 		echo "    <div id=\"rbcontent\">\n";
@@ -303,14 +310,14 @@
 						// If the profile is active or its your own profile or you are an admin, show it
 						if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
 							echo "	<div id=\"rbprofile\">\n";
-							echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
+							echo "		<div id=\"rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
 									echo "This layout is under development.";
 							echo " 		</div>\n";
 							echo " 	</div>\n";
 	
 						} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
 							echo "	<div id=\"rbprofile\">\n";
-							echo "		<div id=\"rblayout-one rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
+							echo "		<div id=\"rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
 										echo "Please contact RB Plugin Support for custom layouts.";
 							echo " 		</div>\n";
 							echo " 	</div>\n";
