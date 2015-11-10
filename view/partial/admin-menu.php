@@ -9,6 +9,17 @@
 		<a href="http://rbplugin.com" class="add-new-h2">Casting Cart Version <?php echo get_option('RBAGENCY_casting_VERSION'); ?></a>
 		<?php }?>
 	</h2>
+	
+	<?
+	if(isset($_GET['confirm_version'])){
+		$_oldVersion = get_update_option("rb_agency_version");
+		update_option("rb_agency_version", RBAGENCY_VERSION);
+		update_option("rb_agency_version_old", $_oldVersion);
+		
+		//upgrade SQL should be here..
+		
+	}
+	?>
 	<?php // TODO: Display new version available ?>
 	<?php $rb_remote_version = rb_get_remote_version();?>
 	<?php if($rb_remote_version <> get_option('rb_agency_version') && $rb_remote_version > get_option('rb_agency_version')):?>
@@ -31,7 +42,8 @@
 		$action.'_'.$slug
 	);
 	?>
-	<a href="<?php echo $update_url;?>">update now</a>.
+	
+	<a href="<?php echo $update_url;?>">update now</a>. Otherwise, <a href="?page=rb_agency_menu&confirm_version">confirmed <?=RBAGENCY_VERSION;?></a> im running the latest version.
 	</div>
 	<?php endif; ?>
 	<?php 

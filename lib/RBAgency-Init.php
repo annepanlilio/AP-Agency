@@ -247,6 +247,8 @@ class RBAgency_Init {
 					ProfileCustomNotifyAdmin INT(10) NOT NULL DEFAULT '0',
 					PRIMARY KEY (ProfileCustomID)
 					);";
+					
+					
 				dbDelta($sql);
 
 				// Profile Custom Field Types
@@ -270,6 +272,11 @@ class RBAgency_Init {
 					);";
 				dbDelta($sql);				
 
+				
+				// we need to drop that column so the custom preset will have default have
+				$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomNotifyAdmin");
+	
+				
 				// Populate Initial Values
 					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
 					if ( !$data_custom_exists ) {
@@ -331,6 +338,10 @@ class RBAgency_Init {
 					$insert = "INSERT INTO " . table_agency_customfields_types . " VALUES " . implode(",",$insert_arr);
 					$insert = $wpdb->query($insert);
 				}
+				
+				//restore the dropped columns
+				$wpdb->query("ALTER TABLE ".table_agency_customfields." ADD ProfileCustomNotifyAdmin int(10) DEFAULT 0");
+			
 
 				// Setup > Search Saved
 				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_searchsaved ." (

@@ -2232,6 +2232,10 @@ echo "<div id=\"custom-fields\">";
 				$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
         
 				if ( !$data_custom_exists ) {
+					// jenner - to fixed junjavier error due num of colunms.. hahaha
+					$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomNotifyAdmin");
+					
+			
 						// Assume the rest dont exist either
 			//junjavier :edit started
 
@@ -2308,7 +2312,10 @@ echo "<div id=\"custom-fields\">";
              		$insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (22 , 22 , 'Contract Date', 'Model,Talent')");
              		$insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (23 , 23 , 'Visa Number', 'Model,Talent')");
 					$results_types = $wpdb->query($insert_types);
-
+					
+					// jenner - to fixed junjavier error due num of colunms.. hahaha
+					$wpdb->query("ALTER TABLE ".table_agency_customfields." ADD ProfileCustomNotifyAdmin int(10) DEFAULT 0");
+			
 				}
 
 		echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>Restored.</strong> successfully restored custom fields preset values!", RBAGENCY_TEXTDOMAIN), LabelSingular, "<a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&action=editRecord&LoginTypeID=". (isset($lastid)?$lastid:0) ."\">") .".</a></p><p>".(isset($error)?$error:"")."</p></div>"); 

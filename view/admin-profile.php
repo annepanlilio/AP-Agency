@@ -2604,9 +2604,9 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	$count_alter = $wpdb->num_rows;
 	if($count_alter == 0){
 		$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD isPrivate boolean NOT NULL default false";
-		$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
+		/* $resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
 		echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
-		exit;
+		exit; */
 	}
 
 	

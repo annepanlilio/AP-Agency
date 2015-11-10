@@ -767,7 +767,13 @@ global $wpdb;
 		update_option('rb_agency_version', "2.4.5");
 	}
 
-
+	if (substr(get_option('rb_agency_version'), 0, 5) == "2.4.5") {
+		//private profile settings
+		rb_agency_addColumn( table_agency_profile,"isPrivate","boolean NOT NULL default false");
+		
+		// Updating version number!
+		update_option('rb_agency_version', "2.4.5");
+	}
 
 
 ?>
