@@ -83,6 +83,31 @@ if ( class_exists("RBAgencyCasting") ) {
 		
 		
 		
+		
+		
+		if ( is_plugin_active( 'rb-agency-interact/rb-agency-interact.php' ) ) {
+
+		echo " <tr valign=\"top\" id=\"EmailSettings\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Email Settings', rb_agency_TEXTDOMAIN) ."</h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Notify Admin', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+		
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_notify_admin_new_user]\" value=\"1\" ". 
+			checked(isset($rb_agency_options_arr['rb_agency_option_notify_admin_new_user'])?$rb_agency_options_arr['rb_agency_option_notify_admin_new_user']:0, 1,false) ."\" /> "
+			. __("If new user registered", rb_agency_TEXTDOMAIN) ."<br />\n";	
+	
+	
+		echo "   </td>\n";
+		echo " </tr>\n";
+			echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><br/></th>\n";
+		echo " </tr>\n";
+		
+		
+		}
+		
 			
 		
 ?>
