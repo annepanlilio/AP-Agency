@@ -1415,7 +1415,7 @@ class RBAgency_Profile {
 					if(empty($_sortBy )) $_sortBy = 'ProfileContactNameFirst';
 
 					$atts['sort'] = 'profile.'.$_sortBy;
-					if($_sortBy == 'ProfileDateBirth' ) $atts['dir'] = ' DESC';
+					if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= ' DESC';
 					
 					self::search_generate_sqlorder($atts,$filter2);
 
@@ -3007,10 +3007,13 @@ class RBAgency_Profile {
 						}
 
 						$stateTitle =  rb_agency_getStateTitle($dataList["ProfileLocationState"],false,$arr_query);
+						$cityTitle =  rb_agency_getCityTitle($dataList['ProfileID']);
 
 						//$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
 						if($detailState == 1){
 							$displayHTML .= "<span class=\"details-state\" ".$state_style.">". $stateTitle ."</span>";
+						} else {
+							$displayHTML .= "<span class=\"details-city\">". $cityTitle ."</span>";
 						}
 
 					}

@@ -1637,6 +1637,27 @@
 	}
 
 	/*/
+	 *   ================ Get City Title ===================
+	 *   @returns City Title
+	/*/   
+	function rb_agency_getCityTitle($profile_id=""){
+
+		global $wpdb;
+		$rb_agency_options_arr 				= get_option('rb_agency_options');
+		$rb_agency_option_showstatecode  	= isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0;
+		$rb_agency_option_profilelist_expanddetails_state = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;		
+
+		$return = "";
+
+		$query ="SELECT ProfileLocationCity FROM ". table_agency_profile ." WHERE ProfileID = " . (is_numeric($profile_id)?$profile_id:0);
+		$result = $wpdb->get_row($query);
+		$return = isset($result->ProfileLocationCity)?$result->ProfileLocationCity:"";
+
+		return $return;
+
+	}
+
+	/*/
 	 *   ================ Get Profile Gender for each user ===================
 	 *   @returns GenderTitle
 	/*/   
