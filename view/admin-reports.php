@@ -1629,6 +1629,26 @@ elseif ($ConfigID == 14) {
 								$wpdb->query($wpdb->prepare($pmSql,$fID["ProfileID"]));
 								uninstall_dummy_profile($gallery);
 				}// endforeach
+				
+				//remove the profile based on ID saved on DB.. jenner fixed.
+				$dummy_profile_ids = get_option("rb_agency_dummy_profiles");
+				if(isset($dummy_profile_ids) && !empty($dummy_profile_ids)){
+					$getGallery="SELECT ProfileID,ProfileGallery,ProfileContactNameFirst,ProfileContactNameLast FROM ".table_agency_profile ." WHERE ProfileID IN(".$dummy_profile_ids.") ";
+					$results = $wpdb->get_results($getGallery);	
+					foreach ($results as $k) {
+						$ProfileID = $k->ProfileID;
+						$ProfileGalleryFixed = RBAgency_Common::format_stripchars( $ProfileContactDisplay); 
+						$pSql="DELETE FROM ".table_agency_profile ." WHERE ProfileID = '%d' ";
+						$wpdb->query($wpdb->prepare($pSql,$ProfileID));
+						$pmSql="DELETE FROM ".table_agency_profile_media ." WHERE ProfileID = '%d' ";
+						$wpdb->query($wpdb->prepare($pmSql,$ProfileID));
+						$pmSql="DELETE FROM ".table_agency_customfield_mux ." WHERE ProfileID = '%d' ";
+						$wpdb->query($wpdb->prepare($pmSql,$ProfileID));
+					}
+					delete_option("rb_agency_dummy_profiles");
+				}
+				 
+				 
 
 				} else {
 				$dummy_profile_ids = get_option("rb_agency_dummy_profiles");
