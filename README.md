@@ -10,6 +10,8 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 ## Change Log
 
+### 2.4.8
+
 ### 2.4.7
 * new image setting - if enabled, it will show filenames as photo caption of each photo in profile view.
 * fixed - show thumbs slide setting. all photos slide when hovered if this option is enabled.
@@ -45,6 +47,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 * fixed - search issue - when searching for asian, other ethnicities shows up e.g. caucasian, african american, etc.
 * fixed - maximum records returned in backend search is not working
 * fixed - Layout 01 - Print Photos > PDF Download
+* Removed "Short Order Tag" Server Dependency
 
 ### 2.4.6
 * added the ability to hide expanded model details (age and state) on selected profile or profiles
