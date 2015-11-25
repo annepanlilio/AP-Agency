@@ -401,24 +401,30 @@ if($hideAgeLabel == true){
 				 } else {
 				 	$imgStyle = "";
 
+					
+					
 				 	$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+
 					$bfi_params = array(
 						'crop'=>true,
 						'height'=>$h,
 						'width'=>$w
 					);
 					$image_src = bfi_thumb( $image_path, $bfi_params );
+					
+					$_imgpath_upload = '';
+					//be sure to add the full url
+					if(strpos($image_src, get_bloginfo('url'))=== false){
+						$_imgpath_upload = get_bloginfo('url');
+					}
 
-				 	$imgURL = $image_src; 
+				 	$imgURL = $_imgpath_upload. $image_src; 
 				 }
 
 			//$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
 
 
 				$allImages.= "<td valign='top'><img ".$imgStyle." id='".$dataImg["ProfileMediaID"]."' src='".$imgURL."' alt='' class='allimages_thumbs' /></td>\n";
-
-
-
 
 
 				//src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\"
