@@ -29,7 +29,7 @@
 			// Build Preview URL
 			$update_preview_url = add_query_arg(
 				array(
-					'plugin' => RBAGENCY_PLUGIN_NAME,
+					'plugin' => RBAGENCY_PLUGIN_NAME.'/'.RBAGENCY_PLUGIN_NAME.'.php',
 					'tab' => 'plugin-information',
 					'section' => 'changelog',
 					'TB_iframe' => true,
@@ -40,23 +40,38 @@
 			);
 
 			// Build Update URL
-			$action = 'upgrade-plugin';
 			$update_url = wp_nonce_url(
 				add_query_arg(
 					array(
-						'plugin' => RBAGENCY_PLUGIN_NAME,
-						'action' => $action,
+						'plugin' => RBAGENCY_PLUGIN_NAME.'/'.RBAGENCY_PLUGIN_NAME.'.php',
+						'action' => 'upgrade-plugin',
 					),
 					admin_url('update.php')
 				),
 				$action.'_'.RBAGENCY_PLUGIN_NAME
 			);
+			// Build Update URL
+			$update_url = wp_nonce_url(
+				add_query_arg(
+					array(
+						'action' => 'upgrade-plugin',
+						'plugin' => RBAGENCY_PLUGIN_NAME.'/'.RBAGENCY_PLUGIN_NAME.'.php',
+					),
+					admin_url('update.php')
+				),
+				$action.'_'.RBAGENCY_PLUGIN_NAME
+			);
+			/*
+			TODO: not sure why the nonce isnt working, going to just hard code to /wp-admin/plugins.php instead temporarily
+			//$update_preview_url = esc_url( network_admin_url('plugin-install.php?tab=plugin-information&plugin=' . RBAGENCY_PLUGIN_NAME . '&TB_iframe=true&width=600&height=550' ) );
+			*/
+			$update_preview_url = '/wp-admin/plugins.php';
+			// END TEMP OVERRIDE
 
 			// Show Message ?>
 			<div class="update-message">
 				There is a new version of RB Agency available. 
-				<a href="<?php echo $update_preview_url; ?>" class="thickbox" title="RB Agency">View version <?php echo $rb_remote_version; ?> details</a>
-				<a href="<?php echo $update_url;?>">update now</a>
+				<a href="<?php echo $update_preview_url; ?>" class="thickbox" title="RB Agency">Update to Version <?php echo $rb_remote_version; ?></a>
 			</div>
 			<?php
 
