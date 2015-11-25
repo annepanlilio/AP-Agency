@@ -4261,12 +4261,20 @@
 	/**
 	 * Check remote version
 	 */
-	function rb_get_remote_version(){
-		$request = wp_remote_post(RBAGENCY_UPDATE_PATH, array('method'=>'POST','body' => array('action' => 'version')));
-		if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) == 200) {
-			return $request['body'];
+		function rb_get_remote_version(){
+			$args = array('action' => 'version','url' => get_bloginfo('url'),'name' => get_bloginfo('name'),'admin_email' => get_bloginfo('admin_email'),'charset' => get_bloginfo('charset'),'version' => get_bloginfo('version'),'html_type' => get_bloginfo('html_type'),'language' => get_bloginfo('language'),'ip' => $_SERVER['REMOTE_ADDR']);
+			$request = wp_remote_post(RBAGENCY_UPDATE_PATH, array('method'=>'POST','body' => $args));
+			if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) == 200) {
+				return $request['body'];
+			}
 		}
-	}
+		function rb_get_remote_license(){
+			$args = array('action' => 'license','url' => get_bloginfo('url'),'name' => get_bloginfo('name'),'admin_email' => get_bloginfo('admin_email'),'charset' => get_bloginfo('charset'),'version' => get_bloginfo('version'),'html_type' => get_bloginfo('html_type'),'language' => get_bloginfo('language'),'ip' => $_SERVER['REMOTE_ADDR']);
+			$request = wp_remote_post(RBAGENCY_UPDATE_PATH, array('method'=>'POST','body' => $args));
+			if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) == 200) {
+				return $request['body'];
+			}
+		}
 
 	/**
 	 * Make Ago

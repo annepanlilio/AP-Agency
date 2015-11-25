@@ -43,20 +43,6 @@ See license.txt for full details.
 // *************************************************************************************************** //
 
 /*
- * License
- */
-
-	//If you hardcode a RB Agency License Key here, it will automatically populate on activation.
-	$RBAGENCY_LICENSE = "";
-	define('RBAGENCY_LICENSE', $RBAGENCY_LICENSE);
-
-	if(!defined( 'RBAGENCY_UPDATE_PATH'))
-	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/rb-agency' );
-
-
-// *************************************************************************************************** //
-
-/*
  * Declare Global Constants
  */
 
@@ -103,6 +89,17 @@ See license.txt for full details.
 
 	if(!defined( 'RBAGENCY_SLUG'))
 		define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
+
+/*
+ * License
+ */
+
+	// If you hardcode a RB Agency License Key here, it will automatically populate on activation.
+	$RBAGENCY_LICENSE = "";
+	define('RBAGENCY_LICENSE', $RBAGENCY_LICENSE);
+
+	if(!defined( 'RBAGENCY_UPDATE_PATH'))
+	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/'. RBAGENCY_PLUGIN_NAME );
 
 
 // *************************************************************************************************** //
