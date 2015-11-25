@@ -37,12 +37,12 @@
 				'buttonClass' : 'button-primary',
 				'removeTimeout' : 0,
 				'buttonText' : 'Browse image...',
-				'swf'      : '<?=RBAGENCY_PLUGIN_URL;?>ext/uploadify/uploadify.swf',
-				'uploader' : '<?=RBAGENCY_PLUGIN_URL;?>ext/uploadify/uploadify.php'
+				'swf'      : '<?php echo RBAGENCY_PLUGIN_URL;?>ext/uploadify/uploadify.swf',
+				'uploader' : '<?php echo RBAGENCY_PLUGIN_URL;?>ext/uploadify/uploadify.php'
 			});
 			
 			function saveimage_temp_ajax() {
-				jQuery.post("<?=admin_url("admin-ajax.php")?>", 
+				jQuery.post("<?php echo admin_url("admin-ajax.php")?>", 
 					{
 					imgpath:img_path,
 					ProfileID: <?php echo $ProfileID;?>,
@@ -63,7 +63,7 @@
 						$parentDIV = $('#image-place');
 						$parentDIV.fadeTo('fast', 0.1,function(){
 							d = new Date();
-							jQuery(this).css('background-image','url(<?=TEAMPHOTO_UPLOAD_URL;?>'+data+'?'+d.getTime()+')');
+							jQuery(this).css('background-image','url(<?php echo TEAMPHOTO_UPLOAD_URL;?>'+data+'?'+d.getTime()+')');
 							jQuery(this).fadeIn(1000);
 						});
 						$parentDIV.animate({opacity: 1}).css('opacity','1');

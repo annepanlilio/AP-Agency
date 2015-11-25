@@ -204,9 +204,9 @@ $ProfileGallery = $resultsModelList['ProfileGallery'];
         ?>
         
 	</div>
-	<a href="#" class="close-btn"><img src="<?=RBAGENCY_PLUGIN_URL;?>assets/img/remove.png"/></a>
+	<a href="#" class="close-btn"><img src="<?php echo RBAGENCY_PLUGIN_URL;?>assets/img/remove.png"/></a>
 	<div class="model-info">
-		<b><?=$ProfileContactDisplay;?></b>
+		<b><?php echo $ProfileContactDisplay;?></b>
 		asdasdasdasda asd ad  sdf sdf sdf sdf sf
 		<ul class="model-details">
 			<li>details: <b>test</b></li>

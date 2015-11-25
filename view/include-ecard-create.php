@@ -137,8 +137,8 @@
                 <div id="msg-handler-submit"></div>
                 <p class="submit">
 					<input id="submit" class="button-primary" type="submit" value="<?php echo __("Download e-Cards", RBAGENCY_TEXTDOMAIN);?>" name="submit">
-					<img alt="" class="ajax-loading" src="<?=WP_HOME.'/wp-admin'?>/images/wpspin_light.gif">
-					<input type="hidden" name="action" value="<?=$form_event_action;?>">
+					<img alt="" class="ajax-loading" src="<?php echo WP_HOME.'/wp-admin'?>/images/wpspin_light.gif">
+					<input type="hidden" name="action" value="<?php echo $form_event_action;?>">
 					<input type="hidden" name="ID" value="x" >
 				</p>
 				
@@ -201,7 +201,7 @@
 			
 			//console.log(postModel);
 			
-			jQuery.post("<?=site_url().'/wp-admin/admin-ajax.php'?>", {pics:postModel , action:'generatepdfEcard'})
+			jQuery.post("<?php echo site_url().'/wp-admin/admin-ajax.php'?>", {pics:postModel , action:'generatepdfEcard'})
 			.done(function(data) {
 				if( data== 'error'){
 					jQuery('#msg-handler-submit').html('<p>Error generating ecard</p>');
