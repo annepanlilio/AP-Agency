@@ -44,6 +44,7 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 * fixed - if a profile is added by admin in the Talents Shortlisted by Admin section or in the Client's Casting Cart the profile should not get automatically be emailed of the job, unless the admin clicks on the “Resend notifcation to selected shortlisted talents” checkbox
 * fixed - search issue - when searching for asian, other ethnicities shows up e.g. caucasian, african american, etc.
 * fixed - maximum records returned in backend search is not working
+* fixed - Layout 01 - Print Photos > PDF Download
 
 ### 2.4.6
 * added the ability to hide expanded model details (age and state) on selected profile or profiles
