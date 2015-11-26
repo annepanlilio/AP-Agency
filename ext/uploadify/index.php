@@ -66,12 +66,12 @@
 			$_photo=TEAMPHOTO_URL_PLUG.'/no-photo.png';
 		}
 	?>
-	<div class="image-place" style="border: 0px solid #bbb; float: left;height: 150px;width:150px; background:#fff url(<?=$_photo;?>) no-repeat center;" class="alignleft">
+	<div class="image-place" style="border: 0px solid #bbb; float: left;height: 150px;width:150px; background:#fff url(<?php echo $_photo;?>) no-repeat center;" class="alignleft">
 		
 	</div>
 	<div class="alignright" style=" width: 430px;float:right;">
-		<h3><?=$_clean_team;?></h3>
-		ID: <b><?=$_GET['id'];?></b><br/>
+		<h3><?php echo $_clean_team;?></h3>
+		ID: <b><?php echo $_GET['id'];?></b><br/>
 		Sport: <b><?php echo $_sport;?></b><br/>
 		Team: <b><?php echo $_clean_team;?></b><br/>
 		
@@ -108,7 +108,7 @@
 			});
 		
 			function saveimage_ajax() {
-	$.post("<?=site_url().'/wp-admin/admin-ajax.php'?>", {imgpath:img_path,ID:'<?php echo $_clean_id;?>',action:'teamphoto_saveimg',sport:'<?=$_clean_sport;?>'})
+	$.post("<?php echo site_url().'/wp-admin/admin-ajax.php'?>", {imgpath:img_path,ID:'<?php echo $_clean_id;?>',action:'teamphoto_saveimg',sport:'<?php echo $_clean_sport;?>'})
 		.done(function(data) {
 			$message_res = jQuery('#message', window.parent.document);
 			$message_res.fadeOut();
@@ -122,15 +122,15 @@
 				$message_res.html('<p>Thumbnail successfully updated.</p>');
 				
 				d = new Date();
-				$parentDIV = $('#photo-div-<?=$_clean_id;?>', window.parent.document);
+				$parentDIV = $('#photo-div-<?php echo $_clean_id;?>', window.parent.document);
 				$parentDIV.fadeTo('fast', 0.1,function(){
-					//jQuery(this).css('background-image','url(<?=$upload_dir['baseurl'];?>/teams/icehockey/19.jpg)');
-					jQuery(this).css('background-image','url(<?=$upload_dir['baseurl'];?>'+data+'?'+d.getTime()+')');
+					//jQuery(this).css('background-image','url(<?php echo $upload_dir['baseurl'];?>/teams/icehockey/19.jpg)');
+					jQuery(this).css('background-image','url(<?php echo $upload_dir['baseurl'];?>'+data+'?'+d.getTime()+')');
 				});
 				$parentDIV.animate({opacity: 1}).css('opacity','1');
 				
-				//var the_td = jQuery('#row_<?=$_clean_id?>', window.parent.document);		
-				$the_tr = $('#row-<?=$_clean_id?>', window.parent.document);		
+				//var the_td = jQuery('#row_<?php echo $_clean_id?>', window.parent.document);		
+				$the_tr = $('#row-<?php echo $_clean_id?>', window.parent.document);		
 				//var the_tr = jQuery(the_td).parent(); 
 				$the_tr.each(function(){
 					jQuery(this).find('td').css('background-color','#ffffba');				

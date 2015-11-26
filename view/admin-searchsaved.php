@@ -91,7 +91,7 @@ $siteurl = get_option('siteurl');
 					
 					<script>
 					jQuery(function() {
-						jQuery.post("<?=admin_url("admin-ajax.php")?>", 
+						jQuery.post("<?php echo admin_url("admin-ajax.php")?>", 
 						{
 						ProfileMediaType: 'Image', 
 						action:'sendcastmail'

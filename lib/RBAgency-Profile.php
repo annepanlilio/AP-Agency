@@ -2654,6 +2654,7 @@ class RBAgency_Profile {
 				$rb_agency_option_profilenaming				= isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 				$rb_agency_option_profilelist_printpdf		= isset($rb_agency_options_arr['rb_agency_option_profilelist_printpdf']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_printpdf']:0;
 				$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
+				$rb_agency_option_detail_city 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_city'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_city']:0;
 				$rb_agency_option_detail_state 				= isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
 				$rb_agency_option_show_email_search_result	= isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0;
 				$rb_agency_option_show_contact_search_result	= isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0;
@@ -3012,9 +3013,20 @@ class RBAgency_Profile {
 						//$displayHTML .= "<span class=\"divider\">".(rb_agency_get_age($dataList["ProfileDateBirth"],$arr_query)>0 && !empty($stateTitle)?", ":" ")."</span>";
 						if($detailState == 1){
 							$displayHTML .= "<span class=\"details-state\" ".$state_style.">". $stateTitle ."</span>";
-						} else {
+						}/*  else {
 							$displayHTML .= "<span class=\"details-city\">". $cityTitle ."</span>";
 						}
+						 */
+						if(!empty($cityTitle)){
+							$detailCity = $rb_agency_option_detail_city;
+							if($detailCity == 1){
+								$displayHTML .= "<span class=\"details-city\">". $cityTitle ."</span>";
+							}
+						}
+						
+						
+						
+						
 
 					}
 

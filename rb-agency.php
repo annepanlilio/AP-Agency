@@ -6,9 +6,9 @@ Plugin URI: http://rbplugin.com/wordpress/model-talent-agency-software/
 Description: With this plugin you can easily manage models profiles and information.
 Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
-Version: 2.4.7
+Version: 2.4.8
 */
-$RBAGENCY_VERSION = "2.4.7";
+$RBAGENCY_VERSION = "2.4.8";
 /* If you modify the plugin set the following to TRUE */
 $RBAGENCY_CUSTOM = FALSE;
 /*
@@ -39,20 +39,6 @@ See license.txt for full details.
 		header('HTTP/1.1 403 Forbidden');
 		exit();
 	}
-
-// *************************************************************************************************** //
-
-/*
- * License
- */
-
-	//If you hardcode a RB Agency License Key here, it will automatically populate on activation.
-	$RBAGENCY_LICENSE = "";
-	define('RBAGENCY_LICENSE', $RBAGENCY_LICENSE);
-
-	if(!defined( 'RBAGENCY_UPDATE_PATH'))
-	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/rb-agency' );
-
 
 // *************************************************************************************************** //
 
@@ -103,6 +89,17 @@ See license.txt for full details.
 
 	if(!defined( 'RBAGENCY_SLUG'))
 		define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
+
+/*
+ * License
+ */
+
+	// If you hardcode a RB Agency License Key here, it will automatically populate on activation.
+	$RBAGENCY_LICENSE = "";
+	define('RBAGENCY_LICENSE', $RBAGENCY_LICENSE);
+
+	if(!defined( 'RBAGENCY_UPDATE_PATH'))
+	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/'. RBAGENCY_PLUGIN_NAME );
 
 
 // *************************************************************************************************** //
