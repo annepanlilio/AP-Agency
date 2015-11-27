@@ -310,6 +310,9 @@
 			$lang = $locale;
 		}
 		
+		if( isset( $_GET['lang'])){
+			$lang = $_GET['lang'];
+		}
 		if(is_admin()){
 			return $locale;
 		}
