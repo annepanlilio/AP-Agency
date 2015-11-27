@@ -50,6 +50,7 @@ class RBAgency_Extends {
 					"mode" => null,
 					"show_profile_type_filter" => null,
 					"show_media_category_filter" => null,
+					"profiles_row" => null,
 					"list_layout" => null,
 				), $atts));
 
@@ -79,7 +80,7 @@ class RBAgency_Extends {
 			{
 				// Return SQL string based on fields
 				
-				global $_list_my_profiles,$wpdb;
+				global $_profiles_row, $_list_my_profiles,$wpdb;
 				// Profile List Layout "Voiceover (no image)"
 				
 				//print_r($rb_agency_option_layoutprofilelistlayout);
@@ -98,13 +99,20 @@ class RBAgency_Extends {
 						$_list_my_profiles ='voiceover';
 					}elseif($atts['list_layout']=='lightbox'){
 						$_list_my_profiles ='lightbox';
+					}elseif($atts['list_layout']=='landscape'){
+						$_list_my_profiles ='landscape';
 					}else{
 						$_list_my_profiles ='';
 					}
+					
 				}else{
 					if($rb_agency_option_layoutprofilelistlayout == 1){
 						$_list_my_profiles ='voiceover';
 					}
+				}
+				
+				if(isset($atts['profiles_row']) and is_numeric($atts['profiles_row'])){
+					$_profiles_row = $atts['profiles_row'];
 				}
 				
 				//echo $rb_agency_option_layoutprofilelistlayout.$_list_my_profiles;

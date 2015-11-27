@@ -562,6 +562,7 @@ elseif ($ConfigID == 1) {
 		echo "     <select name=\"rb_agency_options[rb_agency_option_layoutprofilelistlayout]\">\n";
 		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0, 0,false) ."> ". __("Default", RBAGENCY_TEXTDOMAIN) ."</option>\n";		
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0, 1,false) ."> ". __("Voice Over (no image)", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']:0, 2,false) ."> ". __("Landscape", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";

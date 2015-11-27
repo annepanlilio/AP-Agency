@@ -1957,8 +1957,31 @@ class RBAgency_Profile {
 
 				// Profile Types right side
 				
-				global $_list_my_profiles;
+				global $_list_my_profiles,$_profiles_row;
 				//echo $_list_my_profiles.'xxxxxxxxxxx';
+				
+				
+				//$all_html.="bef = $rb_agency_option_layoutprofilelist_perrow";
+				//bypass per row by short code
+				if(isset($_profiles_row) and is_numeric($_profiles_row)){
+					$rb_agency_option_layoutprofilelist_perrow = $_profiles_row;
+				}
+				//bypass profile list
+				if(isset($_list_my_profiles)){
+					if($_list_my_profiles == 'voiceover'){
+						$rb_agency_option_layoutprofilelistlayout = 1;
+					}elseif($_list_my_profiles == 'lightbox'){
+						$rb_agency_option_layoutprofilelistlayout = 0;
+					}elseif($_list_my_profiles == 'landscape'){
+						$rb_agency_option_layoutprofilelistlayout = 2;
+					}else{
+						$rb_agency_option_layoutprofilelistlayout = 0;
+					}
+					
+				}
+				
+				
+				
 				if($rb_agency_option_profilelist_showprofiletypeslinks == 1 && $rb_agency_option_layoutprofilelistlayout != 1){
 
 					$all_html.="<ul class=\"profile-types\">";
@@ -2039,7 +2062,7 @@ class RBAgency_Profile {
 					}
 
 					
-					
+					//$profile_list .= $rb_agency_option_layoutprofileviewmode.' - sssset'.$rb_agency_option_layoutprofilelistlayout;
 					
 					if($rb_agency_option_layoutprofileviewmode == 2 && $rb_agency_option_layoutprofilelistlayout !=1){
 						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
@@ -2077,6 +2100,26 @@ class RBAgency_Profile {
 				$rb_agency_value_profilethumbheight			= isset($rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight'])?$rb_agency_options_arr['rb_agency_option_agencyprofilethumbheight']:230;
 					$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
+					
+					
+					
+					//bypass per row by short code
+				if(isset($_profiles_row) and is_numeric($_profiles_row)){
+					$rb_agency_option_layoutprofilelist_perrow = $_profiles_row;
+				}
+				//bypass profile list
+				if(isset($_list_my_profiles)){
+					if($_list_my_profiles == 'voiceover'){
+						$rb_agency_option_layoutprofilelistlayout = 1;
+					}elseif($_list_my_profiles == 'lightbox'){
+						$rb_agency_option_layoutprofilelistlayout = 0;
+					}elseif($_list_my_profiles == 'landscape'){
+						$rb_agency_option_layoutprofilelistlayout = 2;
+					}else{
+						$rb_agency_option_layoutprofilelistlayout = 0;
+					}
+					
+				}
 				/* 
 				 * this is the upper header html of the profile list
 				 */
@@ -2112,7 +2155,7 @@ class RBAgency_Profile {
 					}
 
 					$profile_listlayout_class = array();
-					global $_list_my_profiles;
+					global $_list_my_profiles,$_profiles_row;
 					// Profile List Layout "Voiceover (no image)"
 					if($rb_agency_option_layoutprofilelistlayout == 1 or $_list_my_profiles=='voiceover'){
 						$profile_listlayout_class[] = 'voiceover';
@@ -2184,7 +2227,7 @@ class RBAgency_Profile {
 					// $all_html .= '<hr />';
 					
 					
-					global $_list_my_profiles;
+					global $_list_my_profiles,$_profiles_row;
 				
 					// Profile Types Voiceover
 					if($rb_agency_option_profilelist_showprofiletypeslinks == 1 && $rb_agency_option_layoutprofilelistlayout == 1){
@@ -2690,18 +2733,24 @@ class RBAgency_Profile {
 			 */
 			$displayHTML ="";
 
-			global $_list_my_profiles;
-			// make shortcode as priority
-			if($_list_my_profiles == 'voiceover'){
-				$rb_agency_option_layoutprofilelistlayout = 1;
-			}elseif($_list_my_profiles == 'lightbox'){
-				$rb_agency_option_layoutprofilelistlayout = 0;
-				$rb_agency_option_layoutprofileviewmode = 1; // bypass admin setting and change to popup / lightbox
-			}else{
-				$rb_agency_option_layoutprofilelistlayout = 0;
-			}
+			global $_list_my_profiles,$_profiles_row;
 			
-			if($rb_agency_option_layoutprofilelistlayout == 0) {
+			//$rb_agency_option_layoutprofilelistlayout = 0;
+			// make shortcode as priority
+			if(isset($_list_my_profiles)){
+				if($_list_my_profiles == 'voiceover'){
+					$rb_agency_option_layoutprofilelistlayout = 1;
+				}elseif($_list_my_profiles == 'lightbox'){
+					$rb_agency_option_layoutprofilelistlayout = 0;
+					$rb_agency_option_layoutprofileviewmode = 1; // bypass admin setting and change to popup / lightbox
+				}elseif($_list_my_profiles == 'landscape'){
+					$rb_agency_option_layoutprofilelistlayout = 2;
+					//$rb_agency_option_layoutprofileviewmode = 1; // bypass admin setting and change to popup / lightbox
+				}
+			}
+						
+						
+			if($rb_agency_option_layoutprofilelistlayout == 0 || $rb_agency_option_layoutprofilelistlayout == 2 ) {
 
 
 
@@ -2883,7 +2932,6 @@ class RBAgency_Profile {
 					$displayHTML .="<div class=\"image\">";					
 
 
-
 					
 						//slide panel trigger to image/ profile image
 					if($rb_agency_option_layoutprofileviewmode == 2) {
@@ -2900,6 +2948,9 @@ class RBAgency_Profile {
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
 
+							
+							
+							
 							foreach($resultsImg as $dataImg ){
 								if ($countImg > 1) {									
 									$images .= "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
@@ -2926,7 +2977,14 @@ class RBAgency_Profile {
 							$profile_link = RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"];
 						}
 
-						$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+						
+						//landscape settings
+						if($rb_agency_option_layoutprofilelistlayout == 2){
+							$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbheight."&h=".$rb_agency_value_profilethumbwidth."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+						}else{
+							$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+						}
+						
 					} else {
 						$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
 					}
