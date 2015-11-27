@@ -302,64 +302,72 @@
 	 */
 
 	add_filter( 'locale', 'rb_language_init' );
-	function rb_language_init( $locale ){
-		$lang = '';
-		if( isset( $_COOKIE['rb_language'])){
-			$lang = $_COOKIE['rb_language'];
-		}else{
-			$lang = $locale;
+	if(!function_exists('rb_language_init')){
+		function rb_language_init( $locale ){
+			$lang = '';
+			if( isset( $_COOKIE['rb_language'])){
+				$lang = $_COOKIE['rb_language'];
+			}else{
+				$lang = $locale;
+			}
+			
+			if( isset( $_GET['lang'])){
+				$lang = $_GET['lang'];
+				
+				
+			}
+			if(is_admin()){
+				return $locale;
+			}
+			return $lang;
 		}
-		
-		if( isset( $_GET['lang'])){
-			$lang = $_GET['lang'];
-		}
-		if(is_admin()){
-			return $locale;
-		}
-		return $lang;
 	}
 
 	add_action( 'wp_footer', 'rb_language_foot');
-	function rb_language_foot(){
-		echo '
-		<script>
-			function rb_setLanguage(lang_set){
-				rb_setCookie("rb_language",lang_set,7);
-				window.location.reload(false); 
-				return false;
-			}
-			function rb_setCookie(cname, cvalue, exdays) {
-				var d = new Date();
-				d.setTime(d.getTime() + (exdays*24*60*60*1000));
-				var expires = "expires="+d.toUTCString();
-				document.cookie = cname + "=" + cvalue + "; " + expires;
-			}
-		</script>
-		';
-	}
-
-	function rb_language_userflag($title = 'Language: ',$_glue = ' | ',$_size=20, $_echo = true){
-		
-		$_lang_set = array(
-			'en_GB' => array(
-				'English',
-				'data:image/gif;base64,R0lGODlhLgAhAOYAAOAEG+AGHCYmbwkJXAwMXjQ0eVNTjUREg2FhlulNXehCU+QnOt8KEvCJjz09fvKTnvSlrephZuQ0O/vb3/zp6+tcah4eauY9SYmJsQoKXeAFHGdnmvOfqG1tnltbknZ2pOAFG3Jyom1tn3V1pCwtdHFyoS0tdC0sdOENI3Jyof39/fOep3JxoVtakvf39/b29vHx8eEMIeINIiwsdN4TJ9wNIuEMItUEGtUFG9cGHPGPmHd2pEdHhUhIhvzr7fvY3DQzeScncPzl6O/v72BglkFBguZARkdHhOdHUudKVIaGr0VEg0pKh/SpsUBAgOIdJfWutSEhbPKSnepSYfB/iuENIj09fzc3emlpm+1qd3x8qOU2SN0PJPDw8PKXoVlZkIKCrd0QJBoaaHFxoTMzeDExduxwdDo6fOU9Q+QuNSkpcnBwoB0davz8/FBQi/vd4eELIdICF+c/UOUxPnZ3pCMjbeEHHUxMiOIPJdECF+ACGf///wAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAuACEAAAf/gHeCg4SFhoQJiYqLjI1MGHsYkpGTkpCWlJcYDZydnp+fST1KHx8jpx90pjulra0jrxyys7MrtLQrTVRHYCEhe2Mpv74peywsJXshKckhJc970dLT1NVLWiId2h3Z3NvZ3dvcItXl5kUfexvr6uzrG+3w7+0Q9fb3+PdQOk5rCP8AAwoc+C+CwYMIEyI0Y8QBFg8e9kCM2AKixIoSLU70UKGjx48gP2aRc4aIgZMoU6pceZKCy5cwY8L0IeTKlz2DcArSeYenz53mgkoj4+aA0aNIkyo1OqGp06dQn775UYaHAwd7rmLVmvVq161aL4gdS7YsWSRzTFgpwLat27dw/9lKmEu3rt26aNKoAbKHBIkZe06YONHXBIm+gvfMGIz4gePHkCND9iIliIDLmDNr3oxZqOc6FkLvCW1htGjSpkuTLu05aBQCsGPLnk07toLbuHPr1j2FTYY9GYIDFx78d/HhxjMwWM68uXPnT8QMmE69uvXr1Bdo3869e/ctKlqLH09NRRvy6MWroCHDjvv38OPLn09fvgwaXKpoCBBAg//+/AXIn3/7CVhggQP2tx+BA8IRRg0xgADAhACAYGGFFGY4oYQZSughhxuGOGEMNbiQ3olBufACiixS80IONugh44w01mjjjTjaaEMOOKCQ449ABokCDjf4GOSRSMqIwigNMLTo5B4wdPFki0PkgceVWGap5ZZcdtllHHmEKeaYZJZp5plo5hEIADs='
-			),
-			'pt_BR' => array(
-				'Español',
-				'data:image/gif;base64,R0lGODlhLgAhAOYAAMTLzXzCnoLEo5inlNsXHVuyhuuChdTk0eLl2BmUVaF6U2R1XMbZux6WWSGXW90hJ+NGS3CNbTGfZzmibPHRz7ndzYpZGIRnKGWmQ5m/iGK1i02re+6Tlevz6+A5PeZbX9C0q8Oai5xqOJNyR3NKC9weJLeqmoibi8PKqup6fbK8lswVGqeSaP35+dCvmtwcIReSVIleKHSkZ+VUWXS+mPfv7RWITep0eEapdlSvgb3LuuRNUdwaIOE/ROt+gelvctMaIPfy7t8yNxiNUUKmc9wrMI1tMVCufs7Fs+RRVvf69+7u7pTNsOZiZuhobW+8lGi5kD+lcW2lxKeLXWSUWM4hJqNrPX6JioRhHqRWDdvPvujBu+hnatPErkiKM93VyI6CXouLZedeY5W0ajlbKJJnMJF2ZI6xwseZfI10Pqq1oW67lOdkae7697OfdObu4u7u5Lp+XqSvmqW1iKiynKCMYo/LraCXfbeJaKnBq6XNt7PPqvf089sWHBaSU////yH5BAAAAAAALAAAAAAuACEAAAf/gAWCg4SFf4eIiYp/bB+Oj5CQBUyUlZaWi5mIHJydnp4fBXYCpKWmpZqaBqusrawcHzl2AbS1trWpmT67vL28HDM5ArfEtLmLKcnKy8oGM0cCNNLT1NPHijfZ2tvaBklHAU/i4+Tj14k/6err6j5JGzRQ8vP08+eITvn6+/o3OxtrNAgcSHDgvUNNEipcqPDHDhxQCkkUdPBPpIuOuEDAoSGHx48gP2pqkWmGyZMoT4qBQCTHhpcwY8JcxMdFHDQUFO3YybMnzxk9ohzBQbSo0aKI2hwAMUKBCCNlXCSCQLWq1ao7guKIwrWr165J8+BREKOMkQsxtiDqwbat27YQ/3pMmEu3rt1DfIJ0oEP2ApYYFqzUOOShsOHDiCdIWMy4ceNDQXToQSDCAhYjMbBg0XJIiOfPoEF7kOCgtOnTp/90aFFhQJwRJEjUQTIizZcOSh7o3s2btxAJDYILHz78QIYtISqEsBKbhBskLBDIOFCiuvXr138T3y4cDooaC06A0NJlihEsLL4gUNECu3vrRUhz3/4nAwMEERYsiHAHjBozFMiQwR/vufdAEQ40kMCCwiUQnIML/oHAHAgAIMUAYZARQQRyTNjBHy+EKOKIIpaAoAMLpqiiiocggIEOZyyQhQVXAICCFwgcwsOOPPbIYwkPJLjikBEecoAKY2RwwpoJMlDBwBuI+CjljkA+SOSKiSjBAAMmmLAHA4oQIOaYZI5ZnYMwpKnmmmpWVOabYpYABAwNsGlnmm7CWaacQzTgx5+ABgpoRX0UauihhvLpgKCM/kkoopD28QAQQyzaqKCPRnroAyvYYOmlgx6kKaKcegpqoJmOKmmnqLVqWkW9xbpbpzbUauutty6h66689rpEFSsEK+ywwwYCADs='
-			),
-			
-		);
-			
-		$_echoLanguage = array();
-		foreach($_lang_set as $_key => $_val){
-			$_echoLanguage[] = 
-			'<a href="#'.$_key.'" onclick="javascript:rb_setLanguage(\''.$_key.'\');" title="'.$_val[0].'"><img style="height:'.$_size.'px" src="'.$_val[1].'"></a>';
+	if(!function_exists('rb_language_foot')){
+		function rb_language_foot(){
+			echo '
+			<script>
+				function rb_setLanguage(lang_set){
+					rb_setCookie("rb_language",lang_set,7);
+					window.location.reload(false); 
+					return false;
+				}
+				function rb_setCookie(cname, cvalue, exdays) {
+					var d = new Date();
+					d.setTime(d.getTime() + (exdays*24*60*60*1000));
+					var expires = "expires="+d.toUTCString();
+					document.cookie = cname + "=" + cvalue + "; " + expires;
+				}
+			</script>
+			';
 		}
-		if($_echo == true)
-			$title .implode($_glue, $_echoLanguage);
-		return $title .implode($_glue, $_echoLanguage);
+	}
+	
+	if(!function_exists('rb_language_userflag')){
+		function rb_language_userflag($title = 'Language: ',$_glue = ' | ',$_size=20, $_echo = true){
+			
+			$_lang_set = array(
+				'en_GB' => array(
+					'English',
+					'data:image/gif;base64,R0lGODlhLgAhAOYAAOAEG+AGHCYmbwkJXAwMXjQ0eVNTjUREg2FhlulNXehCU+QnOt8KEvCJjz09fvKTnvSlrephZuQ0O/vb3/zp6+tcah4eauY9SYmJsQoKXeAFHGdnmvOfqG1tnltbknZ2pOAFG3Jyom1tn3V1pCwtdHFyoS0tdC0sdOENI3Jyof39/fOep3JxoVtakvf39/b29vHx8eEMIeINIiwsdN4TJ9wNIuEMItUEGtUFG9cGHPGPmHd2pEdHhUhIhvzr7fvY3DQzeScncPzl6O/v72BglkFBguZARkdHhOdHUudKVIaGr0VEg0pKh/SpsUBAgOIdJfWutSEhbPKSnepSYfB/iuENIj09fzc3emlpm+1qd3x8qOU2SN0PJPDw8PKXoVlZkIKCrd0QJBoaaHFxoTMzeDExduxwdDo6fOU9Q+QuNSkpcnBwoB0davz8/FBQi/vd4eELIdICF+c/UOUxPnZ3pCMjbeEHHUxMiOIPJdECF+ACGf///wAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAuACEAAAf/gHeCg4SFhoQJiYqLjI1MGHsYkpGTkpCWlJcYDZydnp+fST1KHx8jpx90pjulra0jrxyys7MrtLQrTVRHYCEhe2Mpv74peywsJXshKckhJc970dLT1NVLWiId2h3Z3NvZ3dvcItXl5kUfexvr6uzrG+3w7+0Q9fb3+PdQOk5rCP8AAwoc+C+CwYMIEyI0Y8QBFg8e9kCM2AKixIoSLU70UKGjx48gP2aRc4aIgZMoU6pceZKCy5cwY8L0IeTKlz2DcArSeYenz53mgkoj4+aA0aNIkyo1OqGp06dQn775UYaHAwd7rmLVmvVq161aL4gdS7YsWSRzTFgpwLat27dw/9lKmEu3rt26aNKoAbKHBIkZe06YONHXBIm+gvfMGIz4gePHkCND9iIliIDLmDNr3oxZqOc6FkLvCW1htGjSpkuTLu05aBQCsGPLnk07toLbuHPr1j2FTYY9GYIDFx78d/HhxjMwWM68uXPnT8QMmE69uvXr1Bdo3869e/ctKlqLH09NRRvy6MWroCHDjvv38OPLn09fvgwaXKpoCBBAg//+/AXIn3/7CVhggQP2tx+BA8IRRg0xgADAhACAYGGFFGY4oYQZSughhxuGOGEMNbiQ3olBufACiixS80IONugh44w01mjjjTjaaEMOOKCQ449ABokCDjf4GOSRSMqIwigNMLTo5B4wdPFki0PkgceVWGap5ZZcdtllHHmEKeaYZJZp5plo5hEIADs='
+				),
+				'pt_BR' => array(
+					'Español',
+					'data:image/gif;base64,R0lGODlhLgAhAOYAAMTLzXzCnoLEo5inlNsXHVuyhuuChdTk0eLl2BmUVaF6U2R1XMbZux6WWSGXW90hJ+NGS3CNbTGfZzmibPHRz7ndzYpZGIRnKGWmQ5m/iGK1i02re+6Tlevz6+A5PeZbX9C0q8Oai5xqOJNyR3NKC9weJLeqmoibi8PKqup6fbK8lswVGqeSaP35+dCvmtwcIReSVIleKHSkZ+VUWXS+mPfv7RWITep0eEapdlSvgb3LuuRNUdwaIOE/ROt+gelvctMaIPfy7t8yNxiNUUKmc9wrMI1tMVCufs7Fs+RRVvf69+7u7pTNsOZiZuhobW+8lGi5kD+lcW2lxKeLXWSUWM4hJqNrPX6JioRhHqRWDdvPvujBu+hnatPErkiKM93VyI6CXouLZedeY5W0ajlbKJJnMJF2ZI6xwseZfI10Pqq1oW67lOdkae7697OfdObu4u7u5Lp+XqSvmqW1iKiynKCMYo/LraCXfbeJaKnBq6XNt7PPqvf089sWHBaSU////yH5BAAAAAAALAAAAAAuACEAAAf/gAWCg4SFf4eIiYp/bB+Oj5CQBUyUlZaWi5mIHJydnp4fBXYCpKWmpZqaBqusrawcHzl2AbS1trWpmT67vL28HDM5ArfEtLmLKcnKy8oGM0cCNNLT1NPHijfZ2tvaBklHAU/i4+Tj14k/6err6j5JGzRQ8vP08+eITvn6+/o3OxtrNAgcSHDgvUNNEipcqPDHDhxQCkkUdPBPpIuOuEDAoSGHx48gP2pqkWmGyZMoT4qBQCTHhpcwY8JcxMdFHDQUFO3YybMnzxk9ohzBQbSo0aKI2hwAMUKBCCNlXCSCQLWq1ao7guKIwrWr165J8+BREKOMkQsxtiDqwbat27YQ/3pMmEu3rt1DfIJ0oEP2ApYYFqzUOOShsOHDiCdIWMy4ceNDQXToQSDCAhYjMbBg0XJIiOfPoEF7kOCgtOnTp/90aFFhQJwRJEjUQTIizZcOSh7o3s2btxAJDYILHz78QIYtISqEsBKbhBskLBDIOFCiuvXr138T3y4cDooaC06A0NJlihEsLL4gUNECu3vrRUhz3/4nAwMEERYsiHAHjBozFMiQwR/vufdAEQ40kMCCwiUQnIML/oHAHAgAIMUAYZARQQRyTNjBHy+EKOKIIpaAoAMLpqiiiocggIEOZyyQhQVXAICCFwgcwsOOPPbIYwkPJLjikBEecoAKY2RwwpoJMlDBwBuI+CjljkA+SOSKiSjBAAMmmLAHA4oQIOaYZI5ZnYMwpKnmmmpWVOabYpYABAwNsGlnmm7CWaacQzTgx5+ABgpoRX0UauihhvLpgKCM/kkoopD28QAQQyzaqKCPRnroAyvYYOmlgx6kKaKcegpqoJmOKmmnqLVqWkW9xbpbpzbUauutty6h66689rpEFSsEK+ywwwYCADs='
+				),
+				
+			);
+				
+			$_echoLanguage = array();
+			foreach($_lang_set as $_key => $_val){
+				$_echoLanguage[] = 
+				'<a href="#'.$_key.'" onclick="javascript:rb_setLanguage(\''.$_key.'\'); return false;" title="'.$_val[0].'"><img style="height:'.$_size.'px" src="'.$_val[1].'"></a>';
+			}
+			if($_echo == true)
+				echo $title .implode($_glue, $_echoLanguage);
+			return $title .implode($_glue, $_echoLanguage);
+		}
 	}
 	 
 	 
