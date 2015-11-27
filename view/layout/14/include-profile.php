@@ -45,9 +45,10 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 		<div class="rbclear"></div>
 		<div class="rbcol-12 rbcolumn">
 			<ul id="profile-info">
+
 				<?php
 				// Insert Custom Fields
-				rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,$label_tag="strong", $value_tag="span");
+				rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender,array('Experience','Skills and Qualities','Skills'));
 				?>
 			</ul>
 		</div><!-- #photobook -->
@@ -106,10 +107,19 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 								// 	}
 								// }
 								// $outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><div class=\"video-info\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<br/>" .$dataMedia["ProfileMediaTitle"]."</div><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Watch Video</a></div></div>\n";
-								$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Watch Video</a></div></div>\n";
+								// $outVideoMedia .= "<div class=\"video-col\"><div class=\"video\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<a href=\"" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Watch Video</a></div></div>\n";
+
+
+								$vidurl = $dataMedia['ProfileMediaURL'];
+								$embed = substr(strrchr($vidurl, '='), 1);								
+								$embedid = "https://www.youtube.com/embed/".$embed;
+								if(strpos($vidurl,'youtube') !== false ){
+									$outVideoMedia .="<div class=\"video-col\"><div class=\"video\"><iframe width=\"100%\" height=\"315\" src=\"".$embedid."?controls=0&showinfo=0\" frameborder=\"0\" allowfullscreen></iframe></div></div>";
+								}
+								
 							}
 						}
-							echo $outVideoMedia;
+						echo $outVideoMedia;
 
 						echo "</div><!-- #videos -->";
 					} else {
@@ -118,7 +128,74 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					?>
 				</div>
 
-				<div id="biography" class="tab-content">
+
+
+				<?php
+				$column = 0;
+				$_profile_Experience = '';
+				$_profile_SkillsQualities = '';
+				$_profile_Skills = '';
+
+				$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, 
+				cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx 
+				LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." 
+				GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
+
+				foreach ($resultsCustom as $resultCustom) {
+					if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){
+						if(!empty($resultCustom->ProfileCustomValue )){
+							if(strpos($resultCustom->ProfileCustomTitle,'Experience') !== false){
+								$_profile_Experience = $resultCustom->ProfileCustomValue;
+							}elseif(strpos($resultCustom->ProfileCustomTitle,'Skills and Qualities') !== false){
+								$_profile_SkillsQualities = $resultCustom->ProfileCustomValue;
+							}
+							elseif(strpos($resultCustom->ProfileCustomTitle,'Skills') !== false){
+								$_profile_Skills = $resultCustom->ProfileCustomValue;
+							}
+						}
+					}
+				}
+
+				// For dynamic columns
+				if(!empty($_profile_Skills)) $column ++;
+				if(!empty($_profile_Experience)) $column ++;
+				if(!empty($_profile_SkillsQualities)) $column ++;
+				?>
+
+				<div id="biography" class="tab-content col-<?php echo $column; ?>">
+					
+					<?php 
+					if(!empty($_profile_Skills)) {
+						echo '
+						<div class="column">
+							<div class="box">
+								<h3>SKILLS</h3>
+								'. $_profile_Skills .'
+							</div>
+						</div> ';
+					}
+
+					if(!empty($_profile_Experience)) {
+						echo '
+						<div class="column">
+							<div class="box">
+								<h3>MODEL EXPRIENCE</h3>
+								'. $_profile_Experience .'
+							</div>
+						</div> ';
+					}
+
+					if(!empty($_profile_SkillsQualities)){
+						echo '
+						<div class="column">
+							<div class="box">
+								<h3>SKILLS AND&nbsp;QUALITIES</h3>
+								'. $_profile_SkillsQualities .'
+							</div>
+						</div> ';
+					}					
+						
+					/* 
 					<div class="description">
 						<h3>MODEL EXPRIENCE</h3>
 						<h4>2014</h4>
@@ -145,10 +222,26 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 							<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;&nbsp; Confidence, self-reliance and discipline</li>
 							<li><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;&nbsp; The ability to cope with criticism and rejection</li>
 						</ul>
-					</div>
+					</div> 
+					*/
+							
+					?>
+					
+					
+					
 				</div>
+				<div style="clear:both;"></div>
 			</div><!--End tabs container-->
 		
 		</div><!--End tabs-->
+		<div style="clear:both;"></div>
+		<?php if(is_user_logged_in()) : ?>
+		<div class="rbcol-12 rbcolumn">
+			<div id="view-portfolio">
+				<br><a href="http://dev.bajatalent.com/wp-admin/admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $ProfileID; ?>" title="" target="_blank">View User Portfolio</a>
+			</div>
+		</div><!-- .rbcol-12 -->
+		<?php endif; ?>
 	</div><!-- #rblayout-eight -->
 </div><!-- #profile -->
+

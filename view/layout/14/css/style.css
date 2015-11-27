@@ -4,7 +4,7 @@
 
 .tabs-menu {
     clear: both;
-    margin-left: 0px;
+    margin: 30px 0!important;
     text-align: center;
 }
 
@@ -36,6 +36,7 @@
 .tabs-menu li a {
   padding: 10px 20px;
   background: #151515;
+  display: inline-block;
   color: #fff!important;
   text-decoration: none;
   text-transform: uppercase;
@@ -50,10 +51,31 @@
     padding: 20px;
     display: none;
 }
-.tab-content .description {
-  width: 46%;
+.tab-content .column {
   float: left;
-  padding: 0 2%;
+}
+.tab-content .column .box {
+  padding: 0 15px;
+}
+#biography.col-2 .column {
+  width: 50%;  
+}
+#biography.col-3 .column {
+  width: 33.33333333333333%;
+}
+#biography.col-3 .column h3 {
+  margin-bottom: 24px;
+}
+#biography.col-3 .column p {
+  margin-bottom: 24px;
+  padding-bottom: 0;
+}
+#biography.col-3 .column ul {
+  margin-left: 22px;
+  list-style-image: url(../images/bullet-check.png);
+}
+#biography.col-3 .column ul li {
+  padding-left: 5px;
 }
 
 .tab-content#portfolio {
@@ -89,3 +111,5 @@
 #videos .video-col .video {  
   padding: 0 7px;
 }
+#view-portfolio { text-align: center; }
+#view-portfolio a { padding: 15px 30px; background-color: #de4a4a; color: #fff; }
