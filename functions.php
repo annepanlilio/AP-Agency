@@ -3587,7 +3587,7 @@
 		}
 
 	// 5/15/2013 sverma@ Home page
-	function featured_homepage_profile($count){
+	function featured_homepage_profile($count,$type){
 		global $wpdb;
 		$dataList = array();
 		$query = "SELECT profile.*,
@@ -3598,8 +3598,9 @@
 
 		FROM ". table_agency_profile ." profile 
 		WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."
-		AND profile.ProfileIsFeatured = 1  
-		ORDER BY RAND() LIMIT 0,".$count;
+		AND profile.ProfileIsFeatured = 1
+		AND FIND_IN_SET(".$type.",profile.ProfileType) <> 0
+		ORDER BY profile.ProfileContactDisplay LIMIT 0,".$count;
 
 		$result = $wpdb->get_results($query,ARRAY_A);
 		$i=0;
@@ -3609,6 +3610,19 @@
 		}
 		return $dataList ;
 
+	}
+
+
+	function get_profiletype_id($label){
+		global $wpdb;
+		$check_type = "SELECT DataTypeID FROM ". table_agency_data_type ." WHERE DataTypeTitle = %s";
+			$check_query = $wpdb->get_results($wpdb->prepare($check_type, $label),ARRAY_A);// OR die($wpdb->print_error());
+			if(count($check_query) > 0){
+				$fetch = current($check_query);
+				return $fetch['DataTypeID'];
+			} else {
+				return false;
+			}
 	}
 
 	function primary_class(){
