@@ -245,7 +245,7 @@
 	/*
 	 * Notify for under development layouts
 	 */
-		$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com');
+		$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com', 'demo5.modelingagencysoftware.com', 'demo6.modelingagencysoftware.com');
 		$arr_under_dev = array();
 		$arr_custom_layout = array();
 
