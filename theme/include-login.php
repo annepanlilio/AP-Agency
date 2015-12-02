@@ -63,8 +63,60 @@ echo "          </form>\n";
 
 	}
 
+	
+	
+	
+if(isset($rb_agencyinteract_option_switch_sidebar) && $rb_agencyinteract_option_switch_sidebar == 1){
+			echo "        <div id=\"rbsign-up\" class=\"inline-block\">\n";
+			if (( current_user_can("create_users") || $rb_agencyinteract_option_registerallow == 1)) {
+
+				echo "          <div id=\"talent-register\" class=\"register\">\n";
+				echo "            <h1>". __("Not a member", RBAGENCY_interact_TEXTDOMAIN). "?</h1>\n";
+				echo "            <h3>". __("Talent", RBAGENCY_interact_TEXTDOMAIN). " - ". __("Register here", RBAGENCY_interact_TEXTDOMAIN). "</h3>\n";
+				echo "            <ul>\n";
+				echo "              <li>". __("Create your free profile page", RBAGENCY_interact_TEXTDOMAIN). "</li>\n";
+				echo "              <li>". __("Apply to Auditions & Jobs", RBAGENCY_interact_TEXTDOMAIN). "</li>\n";
+				echo "            </ul>\n";
+				echo "              <input type=\"button\" onClick=\"location.href='". get_bloginfo("wpurl") ."/profile-register/'\" value=\"". __("Register Now", RBAGENCY_interact_TEXTDOMAIN). "\" />\n";
+				echo "          </div> <!-- talent-register -->\n";
+				echo "          <div class=\"clear line\"></div>\n";
+
+						/*
+						 * Casting Integratino
+						 */
+						/*
+						if (function_exists('rb_agency_casting_menu')) {
+								echo "          <div id=\"agent-register\" class=\"register\">\n";
+								echo "            <h3>". __("Casting Agents & Producers", RBAGENCY_interact_TEXTDOMAIN). "</h3>\n";
+								echo "            <ul>\n";
+								echo "              <li>". __("List Auditions & Jobs free", RBAGENCY_interact_TEXTDOMAIN). "</li>\n";
+								echo "              <li>". __("Contact People in the Talent Directory", RBAGENCY_interact_TEXTDOMAIN). "</li>\n";
+								echo "              <li><a href=\"". get_bloginfo("wpurl") ."/casting-register/\" class=\"rb_button\">". __("Register as Agent / Producer", RBAGENCY_interact_TEXTDOMAIN). "</a></li>\n";
+								echo "            </ul>\n";
+								echo "          </div> <!-- talent-register -->\n";
+						}*/
+
+				}
+			echo "        </div> <!-- rbsign-up -->\n";
+}
+else {
+	echo "        <div id=\"rbsign-up\" class=\"inline-block\">\n";
+	echo "          <div id=\"talent-register\" class=\"register\">\n";
+	if ( dynamic_sidebar('rb-agency-interact-login-sidebar') ) :endif; 
+	echo "          </div> <!-- talent-register -->\n";
+	echo "          <div class=\"clear line\"></div>\n";
+	echo "        </div> <!-- rbsign-up -->\n";
+
+}
+	
 echo "        </div> <!-- rbsign-in -->\n";
+
+global $_viewcasting_login;
+if($_viewcasting_login == true){
+	include(RBAGENCY_PLUGIN_DIR .'theme/include-login-casting.php');
+}
 
 echo "      <div class=\"clear line\"></div>\n";
 echo "      </div>\n";
+	
 ?>

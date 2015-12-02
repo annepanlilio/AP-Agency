@@ -358,6 +358,18 @@
 					$ProfileLastViewed = get_query_var('profile');
 					$profileviewed = get_query_var('target');
 					$_SESSION['ProfileLastViewed'] = $profileviewed;
+					
+					global $_viewcasting_login;
+					if(defined("table_agency_casting")){
+						$_viewcasting_login = true;
+					}
+					
+					$registration = get_option( 'rb_agencyinteract_options' );
+	$rb_agencyinteract_option_registerallow = isset($registration["rb_agencyinteract_option_registerallow"]) ?$registration["rb_agencyinteract_option_registerallow"]:"";
+	$rb_agencyinteract_option_registerallowAgentProducer = isset($registration['rb_agencyinteract_option_registerallowAgentProducer'])?$registration['rb_agencyinteract_option_registerallowAgentProducer']:0;
+	$rb_agencyinteract_option_switch_sidebar = isset($registration["rb_agencyinteract_option_switch_sidebar"])?(int)$registration["rb_agencyinteract_option_switch_sidebar"]:"";
+
+	
 					include(RBAGENCY_PLUGIN_DIR .'theme/include-login.php');
 				}
 			}
