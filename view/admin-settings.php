@@ -698,9 +698,9 @@ elseif ($ConfigID == 1) {
 		echo " <tr style=\"display:none;\" valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile View Control', RBAGENCY_TEXTDOMAIN) ."</th>\n";		
 		echo "   <td>\n";
-		echo "		<input name=\"rb_agency_options[rb_agency_option_under_dev_layout]\" value=\"". $rb_agency_option_under_dev_layout ."\" /><small>Under Dev Layout</small><br>\n";
-		echo "   	<input name=\"rb_agency_options[rb_agency_option_custom_layout]\" value=\"". $rb_agency_option_custom_layout ."\" /><small>Custom Layout</small><br>\n";
-		echo "   	<input name=\"rb_agency_options[rb_agency_option_popup_layout]\" value=\"". $rb_agency_option_popup_layout ."\" /><small>Pop-up Layout</small>\n";
+		echo "		<input name=\"rb_agency_options[rb_agency_option_under_dev_layout]\" value=\"". $rb_agency_option_under_dev_layout ."\" /><small>Enable Under Dev Layout</small><br>\n";
+		echo "   	<input name=\"rb_agency_options[rb_agency_option_custom_layout]\" value=\"". $rb_agency_option_custom_layout ."\" /><small>Enable Custom Layout</small><br>\n";
+		echo "   	<input name=\"rb_agency_options[rb_agency_option_popup_layout]\" value=\"". $rb_agency_option_popup_layout ."\" /><small>Enable Pop-up Layout</small>\n";
 		echo " 	</td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
