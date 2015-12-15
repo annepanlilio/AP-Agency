@@ -1452,7 +1452,8 @@ class RBAgency_Profile {
 			//if($rb_agency_option_profilelist_sortbydate && !empty($filter2)){
 			//$atts["sort"] = "cmux.ProfileCustomDateValue";
 			if($rb_agency_option_profilelist_sortbydate){
-				$atts["sort"] = "profile.ProfileDateCreated DESC ";
+				$atts["sort"] = "profile.ProfileDateCreated ";
+				$atts["dir"] = "DESC";
 			} elseif(!isset($atts["sort"])){
 				$atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 			}
