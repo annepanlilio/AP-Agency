@@ -1418,7 +1418,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							// ProfileCustomView = 1 , Private
 							if (isset($_GET["ProfileGender"])) {
 								$ProfileGender = $_GET["ProfileGender"];
-								rb_custom_fields(0, 0, $ProfileGender, true);
+								// -1 make sure that theres no exist profile in DB
+								rb_custom_fields(0, -1, $ProfileGender, true);
 							} else {
 								rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 
