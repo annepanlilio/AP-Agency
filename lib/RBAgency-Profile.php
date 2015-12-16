@@ -1855,7 +1855,15 @@ class RBAgency_Profile {
 				$target = $query;
 				$paginate->items($items);
 				$paginate->limit($limit);
-				$paginate->target($_SERVER["REQUEST_URI"],$target);
+				
+				
+				if( is_front_page() or is_home()){
+					$_url_link = '?';
+				}else{
+					$_url_link = $_SERVER["REQUEST_URI"];
+				}
+				
+				$paginate->target($_url_link,$target);
 				$paginate->currentPage(!empty($paging)?$paging:1);
 
 

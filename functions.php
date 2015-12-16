@@ -1157,6 +1157,9 @@
 						return "$this->target&$this->parameterName=$id";
 				}
 
+			} elseif( is_front_page() or is_home()){
+				//make sure pagination will works perfectly in homepage
+				return "$this->target&$this->parameterName=$id";
 			} else {
 
 				// We are in Page
