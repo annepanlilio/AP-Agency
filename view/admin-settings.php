@@ -2397,7 +2397,7 @@ echo "<div id=\"custom-fields\">";
 			$option2 = "";
 			if(!empty($_POST["option"]) && isset($_POST["option"])){
 				foreach($_POST["option"] as $key => $val){
-					if(!empty($val)){
+					if(!empty($val) or is_numeric($val)){
 						$option .= stripslashes($val)."|";
 					}
 				}
@@ -2405,7 +2405,7 @@ echo "<div id=\"custom-fields\">";
 			}
 			if(!empty($_POST["option2"]) && isset($_POST["option2"])){
 				foreach($_POST["option2"] as $key2 => $val2){
-					if(!empty($val2)){
+					if(!empty($val2) or is_numeric($val2)){
 						$option2 .= stripslashes($val2)."|";
 					}
 				}
