@@ -521,11 +521,27 @@
 
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
 
-			$age = date_diff(date_create($p_strDate), date_create('now'));
-		
-			$years = $age->y;
-			$months = $age->m;
-			$days = $age->d;
+			
+			if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
+				$age = date_diff(date_create($p_strDate), date_create('now'));
+				
+				$years = $age->y;
+				$months = $age->m;
+				$days = $age->d;
+				
+			}else{
+				
+				global $wpdb;
+				$age_year = $wpdb->get_var("SELECT TIMESTAMPDIFF(YEAR, '{$p_strDate}', now()) AS age");
+				$age_month = $wpdb->get_var("SELECT TIMESTAMPDIFF(MONTH, '{$p_strDate}', now()) % 12 age");
+				$age_day = $wpdb->get_var("SELECT FLOOR(TIMESTAMPDIFF(DAY, '{$p_strDate}', now())% 30.4375) AS age");
+				
+				$years = $age_year;
+				$months = $age_month;
+				$days = $age_day;
+				
+			}
+			
 			
 			$label_y = "";
 			$label_m = "";

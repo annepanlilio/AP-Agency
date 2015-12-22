@@ -26,6 +26,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 # rb_agency_option_galleryorder
 $rb_agency_options_arr = get_option('rb_agency_options');
 $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
+$display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender']) ? $rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:false;
 ?>
 <div id="rbprofile">
 	<div id="rblayout-seven" class="rblayout">
@@ -36,7 +37,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 					<?php echo " <h1>". $ProfileContactDisplay ."</h1>\n"; ?>
 					<ul>
 						<?php
-						if (!empty($ProfileGender)) {
+						if (!empty($ProfileGender) and $display_gender == true) {
 							$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	);
 							echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<b class=\"divider\">:</b></strong> ". $fetchGenderData["GenderTitle"] . "</li>\n";
 						}

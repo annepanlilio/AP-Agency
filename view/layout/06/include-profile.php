@@ -34,7 +34,7 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 # rb_agency_option_galleryorder
 $rb_agency_options_arr = get_option('rb_agency_options');
 $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
-
+$display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender']) ? $rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:false;
 /*
 Large featured image and scrolling thumbnails
 */
@@ -106,7 +106,7 @@ Large featured image and scrolling thumbnails
 					<div id="model-stats">
 						<ul>
 							<?php
-							if (!empty($ProfileGender)) {
+							if (!empty($ProfileGender) and $display_gender == true) {
 								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	);
 								echo "<li class=\"rb_gender\" id=\"rb_gender\"><span class=\"title\">". __("Gender", RBAGENCY_TEXTDOMAIN). ":</span> <span>". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</span></li>\n";
 							}

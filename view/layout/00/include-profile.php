@@ -56,6 +56,8 @@ echo "				<div id=\"photos\">\n";
 						$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 
 						$order = isset($rb_agency_options_arr['rb_agency_option_galleryorder']) ? $rb_agency_options_arr['rb_agency_option_galleryorder']:0;
+						
+						$display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender']) ? $rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:false;
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 
 						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
@@ -86,7 +88,7 @@ echo "					<ul>\n";
 								echo "<li class=\"rb_age\" id=\"rb_age\"><strong>". __("Age", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". $ProfileAge. "</li>\n";
 							}
 							
-							if (!empty($ProfileGender)) {
+							if (!empty($ProfileGender) and $display_gender == true) {
 								$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 );
 								echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span >:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 							}

@@ -826,6 +826,16 @@ elseif ($ConfigID == 1) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+		
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Display Options', rb_agency_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+			
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_viewdisplay_gender]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender'])?$rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:0, 1,false)."/> ". __("Show Gender", rb_agency_TEXTDOMAIN) ."<br />\n";	
+		
+		echo "   </td>\n";
+		echo " </tr>\n";
+		
 
 		/*
 		 * EasyText API

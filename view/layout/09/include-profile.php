@@ -52,6 +52,9 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 $row = 4 ;
 $rb_agency_options_arr = get_option('rb_agency_options');
 $logo = $rb_agency_options_arr['rb_agency_option_agencylogo'];
+
+$display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender']) ? $rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:false;
+
 rb_load_profile_pdf($row,$logo);
 
 echo "	<div id=\"rbprofile\">\n";
@@ -86,7 +89,7 @@ echo "						<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 echo "						<div id=\"stats\" class=\"rbcol-12 rbcolumn\">\n";
 echo "							<ul>\n";
 
-								if (!empty($ProfileGender)) {
+								if (!empty($ProfileGender) and $display_gender == true) {
 									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	);
 									$count = $wpdb->num_rows;
 									if($count > 0){

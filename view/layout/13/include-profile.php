@@ -85,7 +85,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 
 $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
-
+$display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender']) ? $rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:false;
 
 echo "	<div id=\"rbprofile\">\n";
 
@@ -140,7 +140,7 @@ echo "							<ul>\n";
 
 
 
-								if (!empty($ProfileGender)) {
+								if (!empty($ProfileGender) and $display_gender == true) {
 
 									$fetchGenderData=  $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A);
 

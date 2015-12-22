@@ -26,6 +26,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 $rb_agency_option_profile_thumb_caption = isset($rb_agency_options_arr['rb_agency_option_profile_thumb_caption'])?$rb_agency_options_arr['rb_agency_option_profile_thumb_caption']:0;
 
+$display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender']) ? $rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:false;
+
 ?>
 <script type="text/javascript">
 
@@ -230,7 +232,7 @@ echo " 						</div>\n"; // twelve rbcolumn photos
 echo " 						<div class=\"row-physical tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
 echo "								<ul>";
-										if (!empty($ProfileGender)) {
+										if (!empty($ProfileGender) and $display_gender == true) {
 											$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A,0 	);
 											echo "<li><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 										}
