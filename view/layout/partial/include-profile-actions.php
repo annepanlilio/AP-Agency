@@ -6,8 +6,9 @@
 // Social Link
 echo "<div id=\"profile-social\">";
 	rb_agency_getSocialLinks();
-
 echo "</div>";
+
+
 echo "<div id=\"profile-casting-link\">";
 	if(is_user_logged_in()){
 		if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
