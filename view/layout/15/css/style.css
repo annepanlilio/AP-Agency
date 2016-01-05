@@ -7,7 +7,7 @@
 #rbprofile #stats > br { display: none; }
 #rbprofile #links ul li { border-bottom: none; padding: 0; float: left; width: 100%; }
 #stats table, #stats td { border-style: solid; border-width: 1px; }
-#stats td { padding: 5px 10px; }
+#stats td { padding: 5px 10px; word-break: break-word; }
 #rbprofile #stats ul li strong,
 #rblayout-fifteen #info-links h2 { margin: 10px 0; }
 @media only screen and (min-width: 767px) {
