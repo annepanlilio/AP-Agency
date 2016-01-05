@@ -35,7 +35,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 $display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender']) ? $rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:false;
 
 echo "	<div id=\"rbprofile\">\n";
-echo " 		<div id=\"rblayout-two\" class=\"rblayout\">\n";
+echo " 		<div id=\"rblayout-fifteen\" class=\"rblayout\">\n";
 
 echo "  		<div class=\"rbcol-5 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
@@ -80,25 +80,23 @@ echo "				</div><!-- #scroller -->\n";
 echo "				<div class=\"rbclear\"></div>\n";
 
 echo "				<div id=\"info-links\">\n";
-echo "						<div id=\"name\" class=\"rbcol-12 rbcolumn\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
-
  
 echo "						<div class=\"rbcol-6 rbcolumn\">\n";
-echo "							<div id=\"stats\">\n";
-	echo "							<ul>\n";
-
+echo "						<h2>". $ProfileContactDisplay ."</h2>\n";
+echo "							<div id=\"stats\">";
 									if (!empty($ProfileGender) and $display_gender == true) {
 										$fetchGenderData=  $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A);
 										$count  = $wpdb->num_rows;
 										if($count > 0){
-												echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
+											echo "<tr class=\"rb_gender\" id=\"rb_gender\"><td>". __("Gender", RBAGENCY_TEXTDOMAIN). " :</td><td>". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</td></tr>\n";
 										}
 									}
 
 									// Insert Custom Fields
-									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-echo "								</ul>\n";
-echo "							</div>\n"; // #stats
+									$title_to_exclude = array("Available for");
+									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=true, $title_to_exclude, $label_tag="td", $value_tag="td");
+
+echo "							</div> <!-- #stats -->\n"; 
 echo "				<div id=\"soundcloud\">";
 						$querySC = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"SoundCloud\" ORDER BY $orderBy";
 						$resultsSC=  $wpdb->get_results($wpdb->prepare($querySC, $ProfileID),ARRAY_A);

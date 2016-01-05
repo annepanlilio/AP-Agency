@@ -1,16 +1,20 @@
 /* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
 
-#rblayout-two .mCSB_container a img { max-height: 150px; float: left; margin: 0px 3px; }
-#rblayout-two .mCSB_container a:first-child img { margin-left: 0px }
-#rblayout-two .mCSB_container a:last-child img { margin-right: 0px; }
+#rblayout-fifteen .mCSB_container a img { max-height: 150px; float: left; margin: 0px 3px; }
+#rblayout-fifteen .mCSB_container a:first-child img { margin-left: 0px }
+#rblayout-fifteen .mCSB_container a:last-child img { margin-right: 0px; }
 .rbcolumn #profile-social .addthis_toolbox { background: none; float: left; margin-top: 15px; }
-#rbprofile #links ul li { border-bottom: none; padding: 0; }
-#rbprofile #links h2 { padding-top: 0; margin-top: 0; }
+#rbprofile #stats > br { display: none; }
+#rbprofile #links ul li { border-bottom: none; padding: 0; float: left; width: 100%; }
+#stats table, #stats td { border-style: solid; border-width: 1px; }
+#stats td { padding: 5px 10px; }
+#rbprofile #stats ul li strong,
+#rblayout-fifteen #info-links h2 { margin: 10px 0; }
 @media only screen and (min-width: 767px) {
-  #rblayout-two .rbcol-5 { float: right; }
-  #rblayout-two #info-links { margin: 0px -15px; }
+  #rblayout-fifteen .rbcol-5 { float: right; }
+  #rblayout-fifteen #info-links { margin: 0px -15px; }
 }
-#rblayout-two #scroller { padding: 7px; background: #e9e9e9; }
+#rblayout-fifteen #scroller { padding: 7px; background: #e9e9e9; }
 
 /* basic scrollbar styling */
 /* vertical scrollbar */
@@ -187,6 +191,6 @@
   opacity:0.9;
   filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
 }
-#rblayout-two{ margin-top: 40px;}
+#rblayout-fifteen{ margin-top: 40px;}
 
 .mCustomScrollBox{ height:auto!important;}

@@ -1874,7 +1874,7 @@
 	 * ======================== Get Custom Fields ===============
 	 * @Returns Custom Fields
 	/*/
-	function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $label_tag="strong", $value_tag="span", $echo = true, $is_print = false) {
+	function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=true, $title_to_exclude, $label_tag="strong", $value_tag="span", $echo = true, $is_print = false) {
 
 		global $wpdb;
 		$rb_agency_options_arr = get_option('rb_agency_options');
@@ -1882,6 +1882,12 @@
 			$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:"";
 
 				$display = "";
+				$row_tag = "";
+
+				if($table) {
+					$display .="<table>";
+					$row_tag = "tr";
+				}
 
 		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 		foreach ($resultsCustom as $resultCustom) {
@@ -1966,7 +1972,7 @@
 						/*if($resultCustom->ProfileCustomOptions == 3){
 						 */
 							$value = rb_get_imperial_metrics($resultCustom->ProfileCustomValue,$resultCustom->ProfileCustomOptions);
-							$display .= "<li class=\"height-".$resultCustom->ProfileCustomValue." profilecustomid_".$resultCustom->ProfileCustomID." ctype_1_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">".$value."</".$value_tag."></li>\n";
+							$display .= "<".$row_tag." class=\"height-".$resultCustom->ProfileCustomValue." profilecustomid_".$resultCustom->ProfileCustomID." ctype_1_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">".$value."</".$value_tag."></".$row_tag.">\n";
 						/*} elseif($resultCustom->ProfileCustomOptions == 2){ // kg
 							$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_2_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 						} elseif($resultCustom->ProfileCustomOptions == 1){
@@ -1984,36 +1990,39 @@
 					else {
 						if ($resultCustom->ProfileCustomType == 4){
 							if(!empty($resultCustom->ProfileCustomValue)){
-								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."><br/> <".$value_tag.">". nl2br($resultCustom->ProfileCustomValue) ."</".$value_tag."></li>\n";
+								$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."><br/> <".$value_tag.">". nl2br($resultCustom->ProfileCustomValue) ."</".$value_tag."></".$row_tag.">\n";
 							}
 						} elseif($resultCustom->ProfileCustomType == 11){
 							if(!empty($resultCustom->ProfileCustomValue)){
-								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"blank\">Click Here</a></li>\n";
+								$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"blank\">Click Here</a></".$row_tag.">\n";
 							}
 						} elseif ($resultCustom->ProfileCustomType == 10){
 
 							if(!empty($resultCustom->ProfileCustomDateValue) && $resultCustom->ProfileCustomDateValue !== "January 01, 1970"){
-								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</".$value_tag."></li>\n";
+								$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</".$value_tag."></".$row_tag.">\n";
 							}
 						} elseif($resultCustom->ProfileCustomType == 9) {
 
 							//print_r($resultCustom->ProfileCustomValue);
 
 							if(!empty($resultCustom->ProfileCustomValue)){
-								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</".$value_tag."></li>\n";
+								$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</".$value_tag."></".$row_tag.">\n";
 							}
 
 						} else {
 							//if(!empty($resultCustom->ProfileCustomValue)){
 							if(strlen($resultCustom->ProfileCustomValue) >= 1 && !is_numeric($resultCustom->ProfileCustomValue) || is_numeric($resultCustom->ProfileCustomValue)){
-								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</".$value_tag."></li>\n";
+								$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."> <".$value_tag.">". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</".$value_tag."></".$row_tag.">\n";
 							}
 						}
 					}
-				}
 
+				}
 			}
 
+		}
+		if($table) {
+			$display .="</table>";
 		}
 					if($echo){
 						echo $display;
