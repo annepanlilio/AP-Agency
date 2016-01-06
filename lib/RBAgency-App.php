@@ -181,7 +181,7 @@ class RBAgency_App {
 		public static function rb_agency_insertbodyclass($classes) {
 			// Remove Blog
 			if (rb_is_page("rb_profile")) {
-				$classes[] = 'rbagency-profile';
+				$classes[] = is_user_logged_in() ? 'rbagency-profile':'profile-login';
 			} elseif (rb_is_page("rb_category")) {
 				$classes[] = 'rbagency-category';
 			} elseif (rb_is_page("rb_register")) {

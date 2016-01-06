@@ -63,7 +63,7 @@ echo "          </form>\n";
 
 	}
 
-	
+echo "        </div> <!-- rbsign-in -->\n";	
 	
 	
 if(isset($rb_agencyinteract_option_switch_sidebar) && $rb_agencyinteract_option_switch_sidebar == 1){
@@ -109,7 +109,6 @@ else {
 
 }
 	
-echo "        </div> <!-- rbsign-in -->\n";
 
 global $_viewcasting_login;
 if($_viewcasting_login == true){
