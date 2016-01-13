@@ -91,7 +91,7 @@ show_admin_bar( false ); // hide wp admin bar
 		$ul_css="width:100%;";
 	} elseif($_POST['print_option']==3){
 		if($chrome){
-			$widthAndHeight='style="width:222px; height:270px;"';
+			$widthAndHeight='style="width:215px; height:270px;"';
 			$ul_css="width:100%;";
 			// $model_info_width="width:202px; height:270px;";
 		} else {
@@ -150,7 +150,7 @@ ul li{list-style:none;}
 .lg-photos-info .group.first {width: 450px; }
 .lg-photos-info .allimages_thumbs {width: 450px; }
 
-.md-photos-info #model_info {height: auto; width: 222px; }
+.md-photos-info #model_info {height: auto; width: 215px; }
 .md-photos-info #model_info h1 {margin-top: 0; }
 .md-photos-info .group.first {width: 690px; }
 .md-photos-info > img:nth-of-type(4) {margin-left: 0; }
@@ -180,7 +180,7 @@ ul li{list-style:none;}
 		<div id="model_info">
 			<h1><?php echo $ProfileContactDisplay; ?></h1>
 				<ul id="info">
-				<?php rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);?>
+				<?php rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false);?>
 				<script type="text/javascript">
  
 				function count(){

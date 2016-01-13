@@ -127,7 +127,7 @@ echo "						<ul>\n";
 								}
 
 								// Insert Custom Fields
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false);
 
 echo "						</ul>\n"; // Close Stats ul
 echo "					</div>\n"; // #stats

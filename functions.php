@@ -1885,8 +1885,10 @@
 				$row_tag = "";
 
 				if($table) {
-					$display .="<table>";
+					$display .= "<table>";
 					$row_tag = "tr";
+				} else {
+					$row_tag = "li";
 				}
 
 		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
