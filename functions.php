@@ -1991,6 +1991,9 @@
 							}*/
 						} 
 						else {
+							
+							$resultCustom->ProfileCustomTitle = stripslashes($resultCustom->ProfileCustomTitle);
+							
 							if ($resultCustom->ProfileCustomType == 4){
 								if(!empty($resultCustom->ProfileCustomValue)){
 									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."><br/> <".$value_tag.">". nl2br($resultCustom->ProfileCustomValue) ."</".$value_tag."></".$row_tag.">\n";
