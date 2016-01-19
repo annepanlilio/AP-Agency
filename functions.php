@@ -1993,6 +1993,9 @@
 							}*/
 						} 
 						else {
+							
+							$resultCustom->ProfileCustomTitle = stripslashes($resultCustom->ProfileCustomTitle);
+							
 							if ($resultCustom->ProfileCustomType == 4){
 								if(!empty($resultCustom->ProfileCustomValue)){
 									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."><br/> <".$value_tag.">". nl2br($resultCustom->ProfileCustomValue) ."</".$value_tag."></".$row_tag.">\n";
@@ -2121,16 +2124,16 @@
 					if ($resultCustom->ProfileCustomType == 7){
 						if($resultCustom->ProfileCustomOptions == 3){
 							$heightraw = $resultCustom->ProfileCustomValue; $heightfeet = floor($heightraw/12); $heightinch = $heightraw - floor($heightfeet*12);
-							$html .=  "<li  class=\"options_2\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
+							$html .=  "<li  class=\"options_2\"><strong>".  stripslashes($resultCustom->ProfileCustomTitle) .$measurements_label.":</strong> ".$heightfeet."ft ".$heightinch." in</li>\n";
 						} else {
-							$html .=  "<li  class=\"options_2\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+							$html .=  "<li  class=\"options_2\"><strong>".  stripslashes($resultCustom->ProfileCustomTitle) .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 						}
 					} elseif($resultCustom->ProfileCustomType == 11){
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle ."</strong>:</".$label_tag.">&nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"_blank\">Click Here</a></li>\n";
 					} elseif ($resultCustom->ProfileCustomType == 10){
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 					} else {
-						$html .=  "<li  class=\"options_2\"><strong>". $resultCustom->ProfileCustomTitle .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
+						$html .=  "<li  class=\"options_2\"><strong>".  stripslashes($resultCustom->ProfileCustomTitle) .$measurements_label.":</strong> ". $resultCustom->ProfileCustomValue ."</li>\n";
 					}
 				} elseif (isset($resultCustom->ProfileCustomView) && $resultCustom->ProfileCustomView == "0") { // TODO: Why is admin view showing? (Rob)
 					if ($resultCustom->ProfileCustomType == 7){

@@ -433,7 +433,7 @@ class RBAgency_Profile {
 											echo "</div>\n";
 							 */
 								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
-								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". $ProfileCustomTitle ."</label>\n";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". stripslashes($ProfileCustomTitle) ."</label>\n";
 								echo "<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".(isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:"")."\" /></div>";
 								echo "</div>\n";
 
@@ -442,7 +442,7 @@ class RBAgency_Profile {
 						 */
 						} elseif($ProfileCustomType == 5) {
 								echo "<div class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
-								echo "<label>". $ProfileCustomTitle ."</label>\n";
+								echo "<label>". stripslashes($ProfileCustomTitle) ."</label>\n";
 								echo "<div>\n";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 								foreach($array_customOptions_values as $val){
