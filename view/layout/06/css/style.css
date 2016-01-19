@@ -78,7 +78,6 @@
 #rblayout-six #profile-info a {text-decoration: none; }
 #rblayout-six #profile-info ul {list-style:none; margin:0; padding:0; display:block; }
 #rblayout-six #profile-info ul li {float:left; width:100%; margin: 0; padding: 3px 0; }
-#rblayout-six #profile-info #model-stats label, #rblayout-six #profile-info #model-stats span {float:left; width: 50%; }
 #rblayout-six #profile-info #model-stats span {text-transform:none; }
 #rblayout-six #model-links {font-weight:bold; overflow: hidden; }
 #rblayout-six #profile-info #model-nav {padding-top: 15px; }

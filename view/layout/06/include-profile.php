@@ -129,7 +129,7 @@ Large featured image and scrolling thumbnails
 							}
 
 							// Insert Custom Fields
-							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $label_tag="span class='title'", $value_tag="span class='value'"); ?>
+							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender); ?>
 						</ul>
 					</div>
 

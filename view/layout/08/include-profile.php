@@ -75,7 +75,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 			<ul id="profile-info">
 				<?php
 				// Insert Custom Fields
-				rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,$label_tag="em", $value_tag="strong");
+				rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 				?>
 			</ul>
 

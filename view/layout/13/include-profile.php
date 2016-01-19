@@ -158,7 +158,7 @@ echo "							<ul>\n";
 
 								// Insert Custom Fields
 
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $label_tag="strong class='label'", $value_tag="span  class='value'");
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 
 echo "								</ul>\n";
 
