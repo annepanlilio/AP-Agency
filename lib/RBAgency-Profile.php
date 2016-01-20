@@ -3021,12 +3021,14 @@ class RBAgency_Profile {
 				// Determine profile details
 
 				$displayHTML .= "  <div class=\"profile-info\">\n";
+				
+					
 				$uid = rb_agency_get_current_userid();
 
 				if($rb_agency_option_layoutprofilenamepos == 0 || $rb_agency_option_layoutprofilenamepos == 2) {
 					$displayHTML .= $profile_name;
-				}				
-
+				}
+				
 				if(get_query_var('type') == "casting" && $uid > 0){
 					$displayHTML .= "<input type=\"checkbox\" name=\"profileid\" value=\"".$dataList["ProfileID"]."\"/>";
 				}
@@ -3090,10 +3092,6 @@ class RBAgency_Profile {
 								$displayHTML .= "<span class=\"details-city\">". $cityTitle ."</span>";
 							}
 						}
-						
-						
-						
-						
 
 					}
 
@@ -3138,6 +3136,17 @@ class RBAgency_Profile {
 						}
 					}
 					$displayHTML .= "</div>\n";
+				}
+					
+				$enabled_options = RBAgency_Profile::getEnabledCustomColumns($dataList['ProfileID'],$dataList['ProfileGender']);
+				
+				if(count($enabled_options) > 0)
+				{
+					$displayHTML .= "<div class='enabled_custom_option_container details'>";
+					
+						$displayHTML .= "<div class='custom_options_title'>
+						<span>".$enabled_options."</span></div>";				
+					    $displayHTML .= "</div>";
 				}
 
 					// Favorite and Casting Display - Default
@@ -3748,6 +3757,139 @@ class RBAgency_Profile {
 			echo __("No Categories Found", RBAGENCY_TEXTDOMAIN);
 		}
 	}
+	
+	function getEnabledCustomColumns($ProfileID, $ProfileGender, $table=false, $label_tag="strong", $value_tag="span", $echo = false, $is_print = false) {
+
+		global $wpdb;
+		$rb_agency_options_arr = get_option('rb_agency_options');
+			// What is the unit of measurement?
+			$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:"";
+
+				$display = "";
+				$row_tag = "";
+
+				if($table) {
+					$display .="<table>";
+					$row_tag = "tr";
+				} else {
+					$row_tag = "li";
+				}
+
+		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, c.ProfileCustomDisplayExDetails,cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomDisplayExDetails = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+		foreach ($resultsCustom as $resultCustom) {
+
+				if(
+					(strlen($resultCustom->ProfileCustomValue) >= 1 && !is_numeric($resultCustom->ProfileCustomValue)) ||
+					(is_numeric($resultCustom->ProfileCustomValue)) || 
+						(!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01" 
+							&& $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
+								
+					// do not allow the space of any non numeric if the single char found. 
+					$_strVal = $resultCustom->ProfileCustomValue;
+					if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
+						continue;
+					}
+					
+					
+					$measurements_label = ""; 
+					$label = "";
+
+							$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
+					if ($resultCustom->ProfileCustomType == 3 || $resultCustom->ProfileCustomType == 7  || $resultCustom->ProfileCustomType == 9){
+							$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
+					}
+
+					if( $resultCustom->ProfileCustomType == 5){
+								$resultCustom->ProfileCustomValue =  implode(", ",explode("|",$resultCustom->ProfileCustomValue));
+
+					}
+					if (rb_agency_filterfieldGender($resultCustom->ProfileCustomID, $ProfileGender) || $is_print){
+						if ($resultCustom->ProfileCustomType == 7){
+
+							if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
+								if($resultCustom->ProfileCustomOptions == 1 || $resultCustom->ProfileCustomOptions == 3){
+									$label = "cm";
+								} elseif($resultCustom->ProfileCustomOptions == 2){
+									$label = "kg";
+								}
+							} elseif ($rb_agency_option_unittype ==1){ //1 = Imperial(in/lb)
+								if($resultCustom->ProfileCustomOptions == 1){
+									$label = "in";
+								} elseif($resultCustom->ProfileCustomOptions == 2){
+									$label = "lbs";
+								} elseif($resultCustom->ProfileCustomOptions == 3){
+									$label = "ft/in";
+								}
+							}
+
+							preg_match_all('/(\d+(\.\d+)?)/',$resultCustom->ProfileCustomValue, $matches);
+							$resultCustom->ProfileCustomValue = $matches[0][0];
+
+							$measurements_label = "<span class=\"label options-".$resultCustom->ProfileCustomOptions."\">". $label ." </span>";
+
+							/*if($resultCustom->ProfileCustomOptions == 3){
+							 */
+								$value = rb_get_imperial_metrics($resultCustom->ProfileCustomValue,$resultCustom->ProfileCustomOptions);
+								$display .= "<".$row_tag." class=\"height-".$resultCustom->ProfileCustomValue." profilecustomid_".$resultCustom->ProfileCustomID." ctype_1_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"> ".$value."</".$row_tag.">\n";
+							/*} elseif($resultCustom->ProfileCustomOptions == 2){ // kg
+								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_2_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>:</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+							} elseif($resultCustom->ProfileCustomOptions == 1){
+								if( $rb_agency_option_unittype == 1 ){ //cm/in
+											$heightraw = $resultCustom->ProfileCustomValue; 
+											$heightfeet = $heightraw; // * 2.54;
+											$resultCustom->ProfileCustomValue = (int)$heightfeet;
+								}
+
+								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_3_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>:</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
+							} else {
+								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_4_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>:</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
+							}*/
+						} 
+						else {
+							
+							$resultCustom->ProfileCustomTitle = stripslashes($resultCustom->ProfileCustomTitle);
+							
+							if ($resultCustom->ProfileCustomType == 4){
+								if(!empty($resultCustom->ProfileCustomValue)){
+									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"> ". nl2br($resultCustom->ProfileCustomValue) ."</".$row_tag.">\n";
+								}
+							} elseif($resultCustom->ProfileCustomType == 11){
+								if(!empty($resultCustom->ProfileCustomValue)){
+									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"> : &nbsp;<a href=".$resultCustom->ProfileCustomValue." target=\"blank\">Click Here</a></".$row_tag.">\n";
+								}
+							} elseif ($resultCustom->ProfileCustomType == 10){
+
+								if(!empty($resultCustom->ProfileCustomDateValue) && $resultCustom->ProfileCustomDateValue !== "January 01, 1970"){
+									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"> ". date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)) ."</".$row_tag.">\n";
+								}
+							} elseif($resultCustom->ProfileCustomType == 9) {
+
+								//print_r($resultCustom->ProfileCustomValue);
+
+								if(!empty($resultCustom->ProfileCustomValue)){
+									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"> ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</".$row_tag.">\n";
+								}
+
+							} else {
+								//if(!empty($resultCustom->ProfileCustomValue)){
+								if(strlen($resultCustom->ProfileCustomValue) >= 1 && !is_numeric($resultCustom->ProfileCustomValue) || is_numeric($resultCustom->ProfileCustomValue)){
+									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_7_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"> ". split_language(',',', ',$resultCustom->ProfileCustomValue) ."</".$row_tag.">\n";
+								}
+							}
+						}
+
+					}
+				}
+			
+
+		}
+		if($table) {
+			$display .="</table>";
+		}
+		return $display;
+					
+	}
+	
 
 
 }

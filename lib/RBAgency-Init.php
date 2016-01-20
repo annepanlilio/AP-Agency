@@ -248,8 +248,8 @@ class RBAgency_Init {
 					PRIMARY KEY (ProfileCustomID)
 					);";
 					
-					
 				dbDelta($sql);
+				
 
 				// Profile Custom Field Types
 				$sql = "CREATE TABLE IF NOT EXISTS ". table_agency_casting_job_customfields." (
@@ -275,7 +275,9 @@ class RBAgency_Init {
 				
 				// we need to drop that column so the custom preset will have default have
 				$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomNotifyAdmin");
-	
+				
+				$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomDisplayExDetails");
+				
 				
 				// Populate Initial Values
 					$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT ProfileCustomTitle FROM " . table_agency_customfields . " WHERE ProfileCustomTitle = %s", 'Ethnicity' ) );
@@ -341,6 +343,8 @@ class RBAgency_Init {
 				
 				//restore the dropped columns
 				$wpdb->query("ALTER TABLE ".table_agency_customfields." ADD ProfileCustomNotifyAdmin int(10) DEFAULT 0");
+				
+				$wpdb->query("ALTER TABLE ".table_agency_customfields." ADD ProfileCustomDisplayExDetails int(10) DEFAULT 0");
 			
 
 				// Setup > Search Saved

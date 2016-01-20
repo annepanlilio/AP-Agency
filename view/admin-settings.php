@@ -2248,7 +2248,7 @@ echo "<div id=\"custom-fields\">";
 				if ( !$data_custom_exists ) {
 					// jenner - to fixed junjavier error due num of colunms.. hahaha
 					$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomNotifyAdmin");
-					
+					$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomDisplayExDetails");
 			
 						// Assume the rest dont exist either
 			//junjavier :edit started
@@ -2329,6 +2329,8 @@ echo "<div id=\"custom-fields\">";
 					
 					// jenner - to fixed junjavier error due num of colunms.. hahaha
 					$wpdb->query("ALTER TABLE ".table_agency_customfields." ADD ProfileCustomNotifyAdmin int(10) DEFAULT 0");
+					
+					$wpdb->query("ALTER TABLE ".table_agency_customfields." ADD ProfileCustomDisplayExDetails int(10) DEFAULT 0");
 			
 				}
 
@@ -2362,6 +2364,9 @@ echo "<div id=\"custom-fields\">";
 		$ProfileCustomShowCastingRegister = isset($_POST['ProfileCustomShowCastingRegister'])?(int)$_POST['ProfileCustomShowCastingRegister']:0;
 		$ProfileCustomShowCastingManager = isset($_POST['ProfileCustomShowCastingManager'])?(int)$_POST['ProfileCustomShowCastingManager']:0;
 		//$ProfileCustomNotifyAdmin = isset($_POST['ProfileCustomNotifyAdmin'])?(int)$_POST['ProfileCustomNotifyAdmin']:0;
+		
+		$ProfileCustomDisplayExDetails   	= isset($_POST['ProfileCustomDisplayExDetails'])?(int)$_POST['ProfileCustomDisplayExDetails']:0;
+		
 
 		/*
 		 * Set profile types here
@@ -2498,7 +2503,7 @@ echo "<div id=\"custom-fields\">";
 			} else {
 
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager,ProfileCustomDisplayExDetails) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."','". esc_sql($ProfileCustomDisplayExDetails)."')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -2594,10 +2599,11 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " ,
 								ProfileCustomShowCastingJob=" . esc_sql($ProfileCustomShowCastingJob) . " ,
 								ProfileCustomShowCastingRegister=" . esc_sql($ProfileCustomShowCastingRegister) . " ,
-								ProfileCustomShowCastingManager=" . esc_sql($ProfileCustomShowCastingManager) . " 
-
-
+								ProfileCustomShowCastingManager=" . esc_sql($ProfileCustomShowCastingManager) . ",
+								ProfileCustomDisplayExDetails=" . esc_sql($ProfileCustomDisplayExDetails) . "
 							WHERE ProfileCustomID='$ProfileCustomID'";
+							
+							
 				$updated = $wpdb->query($update);
 				
 				$ProfileCustomNotifyAdmin = isset($_POST['ProfileCustomNotifyAdmin']) ? 1 : 0;
@@ -2860,6 +2866,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" /> Click to enable</div>
 						</div>
 						<div class=\"rbfield rbselect rbsingle\">
+							<label>Display as Expanded Profile Detail:</label>
+							<div><label><input type=\"checkbox\" name=\"ProfileCustomDisplayExDetails\" value=\"1\" />Click to enable</label></div>
+						</div>
+						<div class=\"rbfield rbselect rbsingle\">
 							<label>Gender*:</label>
 							<div>";
 							$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
@@ -2986,6 +2996,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Use as sort filter:</label>
 													<div><input type='checkbox' name=\"ProfileCustomShowFilter\" value=\"1\" ". ($data1['ProfileCustomShowFilter'] == 1 ? 'checked=\"checked\"':'')."/> Click to enable</div>
+												</div>
+												<div class=\"rbfield rbselect rbsingle\">
+													<label>Display as Expanded Profile Detail:</label>
+													<div><label><input type=\"checkbox\" name=\"ProfileCustomDisplayExDetails\" value=\"1\" ". ($data1["ProfileCustomDisplayExDetails"] == 1 ? 'checked=\"checked\"':'')."/> Click to enable</label></div>
 												</div>
 												<div class=\"rbfield rbselect rbsingle\">
 													<label>Gender*:</label>
@@ -3215,12 +3229,13 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											echo "</div>";
 										}
 
-								} else if($data1["ProfileCustomType"] == 10){ // text
+								} else if($data1["ProfileCustomType"] == 10){
+									// text
 									$data1["ProfileCustomTitle"] = str_replace("'",'',$data1["ProfileCustomTitle"]);
 									$data1["ProfileCustomTitle"] = str_replace("_"," ",stripcslashes($data1["ProfileCustomTitle"]));
 									echo "<div class=\"rbfield rbtext rbsingle\">
 											<label>Title:</label>
-											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"xxxx".$data1["ProfileCustomTitle"]."\"/></div>
+											<div><input type=\"text\" name=\"ProfileCustomTitle\" value=\"".$data1["ProfileCustomTitle"]."\"/></div>
 											</div>";
 											$NofityAdmin = get_option("ProfileCustomNotifyAdmin_".$data1['ProfileCustomID']);
 											$NotifyAdminSelected = is_numeric($NofityAdmin) && $NofityAdmin == 1 ? "checked" : "";
