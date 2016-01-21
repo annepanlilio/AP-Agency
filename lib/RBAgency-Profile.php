@@ -1832,8 +1832,9 @@ class RBAgency_Profile {
 				$all_html.='	<div class="rbsort">';
 
 				// RB Agency default paging variables
-				$page = get_query_var("paging");
+				$page = get_query_var("page");
 				$paging = get_query_var("paging");
+				
 				$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
 				$limit = (int)$rb_agency_option_persearch;
 
