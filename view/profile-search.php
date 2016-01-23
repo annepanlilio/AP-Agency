@@ -19,8 +19,18 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		$type = 0;
 	}
 	
+	if(( get_query_var( 'type' ) == "search-basic" || get_query_var( 'type' ) == "search-results"))
+	{
+		$search_fields = array('sort','dir','limit','perpage','page','override_privacy','namefirst','namelast','displayname','profiletype','gender','datebirth_min',
+					   'datebirth_max','age_min','age_max','city','state','zip','country','isactive','rb_datepicker_from_bd','rb_datepicker_to_bd'
+				);
+		foreach($search_fields as $search_field)
+		{
+			unset($_SESSION[$search_field]);
+		}
+	}
 	
-
+	
 	//".(!$add_sidebar?"site-content":primary_class())."
 	echo "<div class=\"site-main  ".primary_class()."\">\n";
 	echo "	<div id=\"rbcontent\" role=\"main\" >\n";
@@ -46,7 +56,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		 * Set Title
 		 */
 		echo '			<header class="entry-header">';
-			if (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") {
+			if ( (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") || isset($_REQUEST["page"]))  {
 				echo "			<h1 class=\"entry-title\">". __("Search Results", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
 			} else {
 				if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == 0 ) ){
@@ -79,8 +89,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 						}
 					}
 				}
-				unset( $_REQUEST['search_profiles'] );
-				unset( $_REQUEST['form_mode'] );
+				//unset( $_REQUEST['search_profiles'] );
+				//unset( $_REQUEST['form_mode'] );
 				// Keep form_action
 				$is_paging = get_query_var("page") ? get_query_var("page"):get_query_var("paging");
 				// Check something was entered in the form
@@ -92,7 +102,11 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 					//var_dump($search_array);
 					$search_array = RBAgency_Profile::search_process();
 					$search_array["limit"] = $rb_agency_option_persearch;
-
+					
+					if(isset($_REQUEST['page']) && count($search_array) < 3 )
+					{
+						$search_array = $_SESSION ;
+					}
 					
 					// Return SQL string based on fields
 					$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
@@ -118,7 +132,8 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		 * Search Form
 		 */
 			// // Show Search Form
-			if (!isset($_POST['form_mode']) && !isset($_GET["form_action"])) {
+			
+			if (!isset($_POST['form_mode']) && !isset($_GET["form_action"]) && !isset($_GET["page"]) ) {
 					echo RBAgency_Profile::search_form('', '', $type, 0);
 			}
 

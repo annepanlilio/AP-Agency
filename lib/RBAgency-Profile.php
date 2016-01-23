@@ -1833,7 +1833,7 @@ class RBAgency_Profile {
 
 				// RB Agency default paging variables
 				$page = get_query_var("page");
-				$paging = get_query_var("paging");
+				$paging = get_query_var("page");
 				
 				$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
 				$limit = (int)$rb_agency_option_persearch;
