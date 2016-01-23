@@ -19,7 +19,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		$type = 0;
 	}
 	
-	if(( get_query_var( 'type' ) == "search-basic" || get_query_var( 'type' ) == "search-results"))
+	if( get_query_var( 'type' ) == "search-basic" || get_query_var( 'type' ) == "search-results" || get_query_var( 'type' ) == "search-advanced" )
 	{
 		$search_fields = array('sort','dir','limit','perpage','page','override_privacy','namefirst','namelast','displayname','profiletype','gender','datebirth_min',
 					   'datebirth_max','age_min','age_max','city','state','zip','country','isactive','rb_datepicker_from_bd','rb_datepicker_to_bd'
