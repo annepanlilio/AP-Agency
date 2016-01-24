@@ -110,6 +110,22 @@ echo "				<div id=\"soundcloud\">";
 echo "				</div>";
 echo "						</div>\n"; // .rbcol-6
 
+echo "					<div class=\"rbcol-6 rbcolumn\">\n";
+echo "						<div id=\"links\">\n";
+echo "							<h2>Availabile for:</h2>";
+echo "							<ul>";
+
+									// Insert Custom Fields
+									$array_do = $wpdb->get_results($wpdb->prepare("SELECT cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d AND cx.ProfileCustomID = 24 GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+									$ProfileCustomValue = $array_do[0]->ProfileCustomValue;
+									$array_ProfileCustomValue = explode( ',', $ProfileCustomValue );
+									foreach ($array_ProfileCustomValue as $value) {
+										echo "<li>". $value ."</li>";
+									}
+
+echo "							</ul>";
+echo "						</div>\n";// #links
+echo "					</div>\n";// .rbcol-6 ?>
 
 
 <?php
