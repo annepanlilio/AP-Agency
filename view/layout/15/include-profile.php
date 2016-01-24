@@ -25,7 +25,7 @@ Text:   Stats and Availability with Primary Photo and Thumbnails
 
 
 /*
- * Layout 
+ * Layout
  */
 
 # rb_agency_option_galleryorder
@@ -80,7 +80,7 @@ echo "				</div><!-- #scroller -->\n";
 echo "				<div class=\"rbclear\"></div>\n";
 
 echo "				<div id=\"info-links\">\n";
- 
+
 echo "						<div class=\"rbcol-6 rbcolumn\">\n";
 echo "						<h2>". $ProfileContactDisplay ."</h2>\n";
 echo "							<div id=\"stats\">";
@@ -96,7 +96,7 @@ echo "							<div id=\"stats\">";
 									$title_to_exclude = array("Available for");
 									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=true, $title_to_exclude, $label_tag="td", $value_tag="td");
 
-echo "							</div> <!-- #stats -->\n"; 
+echo "							</div> <!-- #stats -->\n";
 echo "				<div id=\"soundcloud\">";
 						$querySC = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"SoundCloud\" ORDER BY $orderBy";
 						$resultsSC=  $wpdb->get_results($wpdb->prepare($querySC, $ProfileID),ARRAY_A);
@@ -110,34 +110,6 @@ echo "				<div id=\"soundcloud\">";
 echo "				</div>";
 echo "						</div>\n"; // .rbcol-6
 
-echo "					<div class=\"rbcol-6 rbcolumn\">\n";
-echo "						<div id=\"links\">\n";
-echo "							<h2>Availabile for:</h2>";
-echo "							<ul>
-									<li>Bachelor Parties</li>
-									<li>Blow Bangs</li>
-									<li>Blowjob</li>
-									<li>Boy / Boy / Girl</li>
-									<li>Boy / Boy / Girl / Anal</li>
-									<li>Boy / Girl</li>
-									<li>Boy / Girl / Anal</li>
-									<li>Boy / Girl / Girl</li>
-									<li>Boy / Girl / Girl / Anal</li>
-									<li>Bukkake</li>
-									<li>Deep Throat</li>
-									<li>Double Penetration</li>
-									<li>Facial</li>
-									<li>Fetish</li>
-									<li>Foot Jobs</li>
-									<li>Gang Bangs</li>
-									<li>Girl / Girl / Anal</li>
-									<li>Group</li>
-									<li>Handjob</li>
-									<li>Hosting</li>
-									<li>Interracial</li>
-								</ul>";
-echo "						</div>\n";// #links
-echo "					</div>\n";// .rbcol-6 ?>
 
 
 <?php
