@@ -112,11 +112,14 @@ echo "						</div>\n"; // .rbcol-6
 
 echo "					<div class=\"rbcol-6 rbcolumn\">\n";
 echo "						<div id=\"links\">\n";
-echo "							<h2>Availabile for:</h2>";
+echo "							<h2>Available for:</h2>";
 echo "							<ul>";
 
+									// Specify Hard Coded Custom Field ID#
+									$customFieldID = 24;
+
 									// Insert Custom Fields
-									$array_do = $wpdb->get_results($wpdb->prepare("SELECT cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d AND cx.ProfileCustomID = 24 GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+									$array_do = $wpdb->get_results($wpdb->prepare("SELECT cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d AND cx.ProfileCustomID = ". $customFieldID ." GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 									$ProfileCustomValue = $array_do[0]->ProfileCustomValue;
 									$array_ProfileCustomValue = explode( ',', $ProfileCustomValue );
 									foreach ($array_ProfileCustomValue as $value) {
