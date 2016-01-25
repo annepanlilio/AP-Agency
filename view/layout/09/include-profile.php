@@ -17,15 +17,15 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 	wp_register_style( 'fancybox-style', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.css' );
 	wp_enqueue_style( 'fancybox-style' );
-	
+
 /*
  * Insert Script
  */
-	wp_deregister_script( 'jquery-latest' ); 
+	wp_deregister_script( 'jquery-latest' );
 	wp_register_script( 'jquery-latest', "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
 	wp_enqueue_script( 'jquery-latest' );
 
-	wp_deregister_script( 'lightbox2' ); 
+	wp_deregister_script( 'lightbox2' );
 	wp_enqueue_script( 'lightbox2-footer', RBAGENCY_PLUGIN_URL .'ext/lightbox2/js/lightbox-2.6.min.js', array( 'jquery-latest' ));
 	wp_enqueue_script( 'lightbox2-footer' );
 
@@ -37,12 +37,12 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 
 	wp_enqueue_script( 'fancybox-jquery', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.pack.js', array( 'jquery-latest' ));
 	wp_enqueue_script( 'fancybox-jquery' );
-	
+
 	wp_enqueue_script( 'fancybox-init', RBAGENCY_PLUGIN_URL .'ext/fancybox/fancybox.init.js', array( 'jquery-latest', 'fancybox-jquery' ));
 	wp_enqueue_script( 'fancybox-init' );
 
 /*
- * Layout 
+ * Layout
  */
 
 # rb_agency_option_galleryorder
@@ -85,7 +85,7 @@ echo "						<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 
 							// Social Link
 							rb_agency_getSocialLinks();
- 
+
 echo "						<div id=\"stats\" class=\"rbcol-12 rbcolumn\">\n";
 echo "							<ul>\n";
 
@@ -97,9 +97,9 @@ echo "							<ul>\n";
 									}
 								}
 
-
 								// Insert Custom Fields
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+								$title_to_exclude = array("");
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null, $label_tag="strong", $value_tag="span");
 
 
 echo "							</ul>\n";
@@ -132,7 +132,7 @@ echo "						<ul>\n";
 													document.getElementById('resultsGoHereAddtoCart').style.display="block";
 													document.getElementById('view_casting_cart').style.display="block";
 													document.getElementById('resultsGoHereAddtoCart').textContent=data;
-													setTimeout('document.getElementById(\'resultsGoHereAddtoCart\').style.display="none";',3000); 
+													setTimeout('document.getElementById(\'resultsGoHereAddtoCart\').style.display="none";',3000);
 													//setTimeout('document.getElementById(\'view_casting_cart\').style.display="none";',3000);
 													setTimeout('document.getElementById(\'casting_cart_li\').style.display="none";',3000);
 												}

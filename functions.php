@@ -1,6 +1,6 @@
 <?php
 
-	/* 
+	/*
 	 * Debug Mode - $RB_DEBUG_MODE = true;
 	 */
 		if(isset($RB_DEBUG_MODE)){
@@ -135,8 +135,8 @@
 				if ( get_query_var( 'type' ) ) {
 					//echo get_query_var( 'type' );
 
-					if (get_query_var( 'type' ) == "search-basic" || 
-						get_query_var( 'type' ) == "search-result" || 
+					if (get_query_var( 'type' ) == "search-basic" ||
+						get_query_var( 'type' ) == "search-result" ||
 						get_query_var( 'type' ) == "search-advanced" ) {
 
 						// Public Profile Search
@@ -161,11 +161,11 @@
 					} elseif (get_query_var( 'type' ) == "profilecontact") {
 					// Profile Contact Form
 						return dirname(__FILE__) . '/view/profile-contact.php';
-					
+
 					} elseif (get_query_var( 'type' ) == "cardphotos") {
 					// Profile Card Photos
 						return dirname(__FILE__) . '/view/profile-cardphotos.php';
-					
+
 					} elseif (get_query_var( 'type' ) == "rb-pdf") {
 					// Download Profiles PDF
 						return dirname(__FILE__) . '/view/profile-pdf.php';
@@ -176,11 +176,11 @@
 
 					} elseif (get_query_var( 'type' ) == "version") {
 					// Have a dedicated route to ping latest version
-						return dirname(__FILE__) . '/version.php'; 
+						return dirname(__FILE__) . '/version.php';
 
 					} elseif (get_query_var( 'type' ) == "getstate") {
 					// TODO: Remove this, get states through wp-ajax url.
-						return RBAGENCY_PLUGIN_DIR . '/view/partial/get-state.php'; 
+						return RBAGENCY_PLUGIN_DIR . '/view/partial/get-state.php';
 
 					} elseif (get_query_var( 'type' ) == "rblogout") {
 					// TODO: Custom /logout/ uri to catch the user and redirect to a login form.
@@ -188,7 +188,7 @@
 
 					//model polaroid
 					} elseif(get_query_var('type') == 'modelpolaroid'){
-						return RBAGENCY_PLUGIN_DIR . 'view/model-polaroid.php'; 
+						return RBAGENCY_PLUGIN_DIR . 'view/model-polaroid.php';
 					}
 				}
 				return $template;
@@ -209,12 +209,12 @@
 		echo "<p><strong>$message</strong></p></div>";
 	}
 
-	/** 
-		 * Call rb_agency_adminmessage() when showing other admin 
+	/**
+		 * Call rb_agency_adminmessage() when showing other admin
 		 * messages. The message only gets shown in the admin
-		 * area, but not on the frontend of your WordPress site. 
+		 * area, but not on the frontend of your WordPress site.
 		 */
-	add_action('admin_notices', 'rb_agency_adminmessage'); 
+	add_action('admin_notices', 'rb_agency_adminmessage');
 		function rb_agency_adminmessage() {
 
 			// Are Permalinks Enabled?
@@ -295,7 +295,7 @@
 		}
 
 
-		
+
 	/**
 	 * Hook Current Langauge
 	 *
@@ -310,11 +310,11 @@
 			}else{
 				$lang = $locale;
 			}
-			
+
 			if( isset( $_GET['lang'])){
 				$lang = $_GET['lang'];
-				
-				
+
+
 			}
 			if(is_admin()){
 				return $locale;
@@ -330,7 +330,7 @@
 			<script>
 				function rb_setLanguage(lang_set){
 					rb_setCookie("rb_language",lang_set,7);
-					window.location.reload(false); 
+					window.location.reload(false);
 					return false;
 				}
 				function rb_setCookie(cname, cvalue, exdays) {
@@ -343,10 +343,10 @@
 			';
 		}
 	}
-	
+
 	if(!function_exists('rb_language_userflag')){
 		function rb_language_userflag($title = 'Language: ',$_glue = ' | ',$_size=20, $_echo = true){
-			
+
 			$_lang_set = array(
 				'en_GB' => array(
 					'English',
@@ -356,12 +356,12 @@
 					'Español',
 					'data:image/gif;base64,R0lGODlhLgAhAOYAAMTLzXzCnoLEo5inlNsXHVuyhuuChdTk0eLl2BmUVaF6U2R1XMbZux6WWSGXW90hJ+NGS3CNbTGfZzmibPHRz7ndzYpZGIRnKGWmQ5m/iGK1i02re+6Tlevz6+A5PeZbX9C0q8Oai5xqOJNyR3NKC9weJLeqmoibi8PKqup6fbK8lswVGqeSaP35+dCvmtwcIReSVIleKHSkZ+VUWXS+mPfv7RWITep0eEapdlSvgb3LuuRNUdwaIOE/ROt+gelvctMaIPfy7t8yNxiNUUKmc9wrMI1tMVCufs7Fs+RRVvf69+7u7pTNsOZiZuhobW+8lGi5kD+lcW2lxKeLXWSUWM4hJqNrPX6JioRhHqRWDdvPvujBu+hnatPErkiKM93VyI6CXouLZedeY5W0ajlbKJJnMJF2ZI6xwseZfI10Pqq1oW67lOdkae7697OfdObu4u7u5Lp+XqSvmqW1iKiynKCMYo/LraCXfbeJaKnBq6XNt7PPqvf089sWHBaSU////yH5BAAAAAAALAAAAAAuACEAAAf/gAWCg4SFf4eIiYp/bB+Oj5CQBUyUlZaWi5mIHJydnp4fBXYCpKWmpZqaBqusrawcHzl2AbS1trWpmT67vL28HDM5ArfEtLmLKcnKy8oGM0cCNNLT1NPHijfZ2tvaBklHAU/i4+Tj14k/6err6j5JGzRQ8vP08+eITvn6+/o3OxtrNAgcSHDgvUNNEipcqPDHDhxQCkkUdPBPpIuOuEDAoSGHx48gP2pqkWmGyZMoT4qBQCTHhpcwY8JcxMdFHDQUFO3YybMnzxk9ohzBQbSo0aKI2hwAMUKBCCNlXCSCQLWq1ao7guKIwrWr165J8+BREKOMkQsxtiDqwbat27YQ/3pMmEu3rt1DfIJ0oEP2ApYYFqzUOOShsOHDiCdIWMy4ceNDQXToQSDCAhYjMbBg0XJIiOfPoEF7kOCgtOnTp/90aFFhQJwRJEjUQTIizZcOSh7o3s2btxAJDYILHz78QIYtISqEsBKbhBskLBDIOFCiuvXr138T3y4cDooaC06A0NJlihEsLL4gUNECu3vrRUhz3/4nAwMEERYsiHAHjBozFMiQwR/vufdAEQ40kMCCwiUQnIML/oHAHAgAIMUAYZARQQRyTNjBHy+EKOKIIpaAoAMLpqiiiocggIEOZyyQhQVXAICCFwgcwsOOPPbIYwkPJLjikBEecoAKY2RwwpoJMlDBwBuI+CjljkA+SOSKiSjBAAMmmLAHA4oQIOaYZI5ZnYMwpKnmmmpWVOabYpYABAwNsGlnmm7CWaacQzTgx5+ABgpoRX0UauihhvLpgKCM/kkoopD28QAQQyzaqKCPRnroAyvYYOmlgx6kKaKcegpqoJmOKmmnqLVqWkW9xbpbpzbUauutty6h66689rpEFSsEK+ywwwYCADs='
 				),
-				
+
 			);
-				
+
 			$_echoLanguage = array();
 			foreach($_lang_set as $_key => $_val){
-				$_echoLanguage[] = 
+				$_echoLanguage[] =
 				'<a href="#'.$_key.'" onclick="javascript:rb_setLanguage(\''.$_key.'\'); return false;" title="'.$_val[0].'"><img style="height:'.$_size.'px" src="'.$_val[1].'"></a>';
 			}
 			if($_echo == true)
@@ -369,8 +369,8 @@
 			return $title .implode($_glue, $_echoLanguage);
 		}
 	}
-	 
-	 
+
+
 	/**
 	 * Identify Current Langauge
 	 *
@@ -433,17 +433,17 @@
 	function rb_agency_makeago($timestamp, $offset = null){
 		// Ensure the Timestamp is not null
 		if (isset($timestamp) && !empty($timestamp) && ($timestamp <> "0000-00-00 00:00:00") && ($timestamp <> "943920000")) {
-			
-			
+
+
 			/* if(function_exists('rb_days_diff')){
 				//from rb-interact
 				$dat_up = date("Y-m-d H:i:s", strtotime( $timestamp ));
 				$time_ago = rb_days_diff($dat_up ,'',true);
-				
+
 				print_r($time_ago);
 				return 'wow'.$time_ago->day;
 			} */
-				
+
 			// Offset Math
 			$timezone_offset = (int)$offset;
 			$time_altered =  strtotime("now") -  ($timezone_offset *60 *60);
@@ -470,9 +470,9 @@
 		}
 	}
 
-	
-	
-	
+
+
+
 	/**
 	 * Get Profile's Age
 	 *
@@ -521,32 +521,32 @@
 
 		if ((isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']) && $rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'] == true) || is_admin()) {
 
-			
+
 			if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
 				$age = date_diff(date_create($p_strDate), date_create('now'));
-				
+
 				$years = $age->y;
 				$months = $age->m;
 				$days = $age->d;
-				
+
 			}else{
-				
+
 				global $wpdb;
 				$age_year = $wpdb->get_var("SELECT TIMESTAMPDIFF(YEAR, '{$p_strDate}', now()) AS age");
 				$age_month = $wpdb->get_var("SELECT TIMESTAMPDIFF(MONTH, '{$p_strDate}', now()) % 12 age");
 				$age_day = $wpdb->get_var("SELECT FLOOR(TIMESTAMPDIFF(DAY, '{$p_strDate}', now())% 30.4375) AS age");
-				
+
 				$years = $age_year;
 				$months = $age_month;
 				$days = $age_day;
-				
+
 			}
-			
-			
+
+
 			$label_y = "";
 			$label_m = "";
 			$label_d = "";
-		
+
 			if($detail_year == 1 || is_admin() && $sc['email_year']==true){
 				if($years == 0){
 					$years = "";
@@ -569,10 +569,10 @@
 					$label_d = "<span ".$attrs['day_style'].">" . (($days<31)?$days:30) ." day(s)</span>";
 				}
 			}
-			
+
 			return implode(" ",array($label_y,$label_m,$label_d));
-			/* 
-		
+			/*
+
 			@list($Y,$m,$d) = @explode("-",$p_strDate);
 			$dob = "$d-$m-$Y";
 			$localtime = getdate();
@@ -798,7 +798,7 @@
 	 * Generate Folder Name
 	 *
 	 * @param $ID - record id, $first = first name, $last - last name, $display - contact display
-	 * @return - formatted folder name 
+	 * @return - formatted folder name
 	 */
 	function generate_foldername($ID = NULL, $first, $last, $display){
 
@@ -818,7 +818,7 @@
 				$ProfileGalleryFixed = $last;
 		}
 
-		return RBAgency_Common::format_stripchars($ProfileGalleryFixed); 
+		return RBAgency_Common::format_stripchars($ProfileGalleryFixed);
 	}
 
 	/**
@@ -901,7 +901,7 @@
 		$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
 
 		if ( //Must be logged to view model list and profile information
-		($rb_agency_option_privacy == 2 && is_user_logged_in()) || 
+		($rb_agency_option_privacy == 2 && is_user_logged_in()) ||
 
 		// Model list public. Must be logged to view profile information
 		($rb_agency_option_privacy == 1 && is_user_logged_in()) ||
@@ -921,13 +921,13 @@
 				 */
 					$queryList = "SELECT profile.*,
 
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
-					WHERE profile.ProfileID = media.ProfileID 
-					AND media.ProfileMediaType = \"Image\" 
-					AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL 
-					FROM ". table_agency_profile ." profile 
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media
+					WHERE profile.ProfileID = media.ProfileID
+					AND media.ProfileMediaType = \"Image\"
+					AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL
+					FROM ". table_agency_profile ." profile
 					WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."
-					AND profile.ProfileIsFeatured = 1  
+					AND profile.ProfileIsFeatured = 1
 					ORDER BY RAND() LIMIT 0,$count";
 
 
@@ -982,7 +982,7 @@
 
 
 	// *************************************************************************************************** //
-	// Image Resizing 
+	// Image Resizing
 	if (!class_exists('rb_agency_image')) {
 	class rb_agency_image {
 
@@ -1095,7 +1095,7 @@
 		/*Default values*/
 		var $total_pages = -1;//items
 		var $limit = NULL;
-		var $target = ""; 
+		var $target = "";
 		var $uriExtend = "";
 		var $page = 1;
 		var $adjacents = 2;
@@ -1215,7 +1215,7 @@
 				$p = trim($this->prevI.' <span>'.$this->prevT .'</span>');
 
 				/* Setup vars for query. */
-				if($this->page) 
+				if($this->page)
 					$start = ($this->page - 1) * $this->limit;//first item to display on this page
 				else
 					$start = 0;                   			//if no page var is given, set start to 0
@@ -1226,8 +1226,8 @@
 				$lastpage = ceil($this->total_pages/$this->limit);//lastpage is = total pages / items per page, rounded up.
 				$lpm1 = $lastpage - 1;            			//last page minus 1
 
-				/* 
-					Now we apply our rules and draw the pagination object. 
+				/*
+					Now we apply our rules and draw the pagination object.
 					We're actually saving the code to a variable in case we want to draw it more than once.
 				 */
 
@@ -1302,10 +1302,10 @@
 
 	// retrieving data type title
 	// if rb-interact is not installed
-	if ( !function_exists('retrieve_title') ) { 
+	if ( !function_exists('retrieve_title') ) {
 		function retrieve_title($id=0) {
 			global $wpdb;
-					/* 
+					/*
 			 * return title
 			 */
 			$check_type = "SELECT DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID = %d";
@@ -1331,7 +1331,7 @@
 			$ptype = $fetchID["ProfileType"];
 			if(strpos($ptype,",") > -1){
 				$t = explode(",",$ptype);
-				$ptype = ""; 
+				$ptype = "";
 				foreach($t as $val){
 					$ptyp[] = str_replace(" ","_",retrieve_title($val));
 				}
@@ -1413,7 +1413,7 @@
 	}
 
 	// *************************************************************************************************** //
-	// Custom Fields TEMPLATE 
+	// Custom Fields TEMPLATE
 	function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 
 		global $wpdb;
@@ -1434,7 +1434,7 @@
 
 			/* Pull data from post so data will not lost @Satya 12/12/2013 */
 			if($ProfileCustomValue=="" && isset($_POST)){
-				$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ; 
+				$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ;
 				if (isset($_POST[$customindex]) && is_array($_POST[$customindex])) {
 					$ProfileCustomValue = implode(",", $_POST[$customindex]);
 				} else {
@@ -1468,10 +1468,10 @@
 				}
 				$isTextArea = "";
 				if($ProfileCustomType == 4){
-					$isTextArea ="textarea-field"; 
+					$isTextArea ="textarea-field";
 				}
 			echo "  <tr valign=\"top rbfunc\" data-val=\"".htmlentities($ProfileCustomValue)."\" class=\"".$isTextArea."\">\n";
-			echo "    <th scope=\"row\"><div class=\"box\">". stripcslashes($data3['ProfileCustomTitle'])." ".$measurements_label."</div></th>\n"; 
+			echo "    <th scope=\"row\"><div class=\"box\">". stripcslashes($data3['ProfileCustomTitle'])." ".$measurements_label."</div></th>\n";
 			echo "    <td>\n";
 
 				if ($ProfileCustomType == 1) { //TEXT
@@ -1515,7 +1515,7 @@
 
 
 					if($ProfileCustomType == 9){
-						
+
 						$expertiseToArrayNotComma = explode("|",$ProfileCustomValue);
 						$expertiseToArrayComma = explode(",",$ProfileCustomValue);
 						$expertiseToArray = array_merge($expertiseToArrayComma,$expertiseToArrayNotComma);
@@ -1527,7 +1527,7 @@
 
 					if($ProfileCustomType == 9){
 							foreach($data as $val1){
-								
+
 								if(in_array(trim(stripcslashes($val1),'"'),$expertiseToArray)){
 									$isSelected = "selected=\"selected\"";
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
@@ -1596,7 +1596,7 @@
 						}
 						if(!empty($val)){
 							echo "<label class=\"checkbox\" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode) && !empty($val)){echo "checked=\"checked\""; }echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
-							echo "". $val."</label><br />";                       
+							echo "". $val."</label><br />";
 						}
 					}
 					echo "</fieldset>";
@@ -1617,10 +1617,10 @@
 
 					if($data3['ProfileCustomOptions']==3){
 						if($rb_agency_option_unittype == 1){
-							// 
+							//
 							echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\">\n";
 							echo "  <option value=\"\">--</option>\n";
-							// 
+							//
 							$i=12;
 							$heightraw = 0;
 							$heightfeet = 0;
@@ -1634,7 +1634,7 @@
 							}
 							echo " </select>\n";
 						} else {
-						// 
+						//
 						preg_match_all('/(\d+(\.\d+)?)/',$ProfileCustomValue, $matches);
 						$ProfileCustomValue = isset($matches[0][0])?$matches[0][0]:"";
 						echo "  <input type=\"text\" id=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" />\n";
@@ -1663,7 +1663,7 @@
 	 *   ================ Get Country Title ===================
 	 *   @returns Country Title
 	 *   @returns Country Code if $country_code = true
-	/*/   
+	/*/
 	function rb_agency_getCountryTitle($country_id="",$contry_code = false){
 
 		global $wpdb;
@@ -1697,7 +1697,7 @@
 	 *   ================ Get State Title ===================
 	 *   @returns State Title
 	 *   @returns State Code if $state_code = true
-	/*/   
+	/*/
 	function rb_agency_getStateTitle($state_id="",$state_code = false){
 
 		global $wpdb;
@@ -1734,13 +1734,13 @@
 	/*/
 	 *   ================ Get City Title ===================
 	 *   @returns City Title
-	/*/   
+	/*/
 	function rb_agency_getCityTitle($profile_id=""){
 
 		global $wpdb;
 		$rb_agency_options_arr 				= get_option('rb_agency_options');
 		$rb_agency_option_showstatecode  	= isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0;
-		$rb_agency_option_profilelist_expanddetails_state = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;		
+		$rb_agency_option_profilelist_expanddetails_state = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0;
 
 		$return = "";
 
@@ -1755,7 +1755,7 @@
 	/*/
 	 *   ================ Get Profile Gender for each user ===================
 	 *   @returns GenderTitle
-	/*/   
+	/*/
 	function rb_agency_getGenderTitle($ProfileGenderID){
 		global $wpdb;
 		$query = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID='%s'";
@@ -1776,7 +1776,7 @@
 	 *   @returns GenderTitle
 	/*/
 	function rb_agency_filterfieldGender($ProfileCustomID, $ProfileGenderID, $Privacy = true){
-		global $wpdb; 
+		global $wpdb;
 
 		if($Privacy){
 			$query = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 AND ProfileCustomID = %d AND ProfileCustomShowGender IN(%s,'') ";
@@ -1810,14 +1810,14 @@
 			if( $resultCustom->ProfileCustomID != 16 ):
 
 			if(!empty($resultCustom->ProfileCustomValue )){
-			
-				// do not allow the space of any non numeric if the single char found. 
+
+				// do not allow the space of any non numeric if the single char found.
 				$_strVal = $resultCustom->ProfileCustomValue;
 				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 					continue;
 				}
-			
-			
+
+
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1){
@@ -1891,6 +1891,9 @@
 					$row_tag = "li";
 				}
 
+				if (!isset($row_tag) || empty($row_tag)) { $row_tag = "li"; }
+				if (!isset($label_tag) || empty($label_tag)) { $label_tag = "span"; }
+
 		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 		foreach ($resultsCustom as $resultCustom) {
 
@@ -1898,20 +1901,20 @@
 
 				// If a value exists...
 				//if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
-			
+
 				if(
 					(strlen($resultCustom->ProfileCustomValue) >= 1 && !is_numeric($resultCustom->ProfileCustomValue)) ||
-					//(!empty($resultCustom->ProfileCustomValue) && !is_numeric($resultCustom->ProfileCustomValue)) || 
-					(is_numeric($resultCustom->ProfileCustomValue)) || 
-						(!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01" 
+					//(!empty($resultCustom->ProfileCustomValue) && !is_numeric($resultCustom->ProfileCustomValue)) ||
+					(is_numeric($resultCustom->ProfileCustomValue)) ||
+						(!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"
 							&& $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
-								
-					// do not allow the space of any non numeric if the single char found. 
+
+					// do not allow the space of any non numeric if the single char found.
 					$_strVal = $resultCustom->ProfileCustomValue;
 					if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 						continue;
 					}
-					
+
 					/*
 					TODO:  REMOVE
 					// Create Label for Measurement
@@ -1938,7 +1941,7 @@
 
 					// Lets not do this...
 					 */
-					$measurements_label = ""; 
+					$measurements_label = "";
 					$label = "";
 
 							$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
@@ -1982,7 +1985,7 @@
 								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_2_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ".$resultCustom->ProfileCustomValue." ". $measurements_label ."</li>\n";
 							} elseif($resultCustom->ProfileCustomOptions == 1){
 								if( $rb_agency_option_unittype == 1 ){ //cm/in
-											$heightraw = $resultCustom->ProfileCustomValue; 
+											$heightraw = $resultCustom->ProfileCustomValue;
 											$heightfeet = $heightraw; // * 2.54;
 											$resultCustom->ProfileCustomValue = (int)$heightfeet;
 								}
@@ -1991,11 +1994,11 @@
 							} else {
 								$display .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_4_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". $resultCustom->ProfileCustomValue ." ". $measurements_label ."</li>\n";
 							}*/
-						} 
+						}
 						else {
-							
+
 							$resultCustom->ProfileCustomTitle = stripslashes($resultCustom->ProfileCustomTitle);
-							
+
 							if ($resultCustom->ProfileCustomType == 4){
 								if(!empty($resultCustom->ProfileCustomValue)){
 									$display .="<".$row_tag." class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_5_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\" style=\"list-style: none;\"><".$label_tag.">". $resultCustom->ProfileCustomTitle ." : </".$label_tag."><br/> <".$value_tag.">". nl2br($resultCustom->ProfileCustomValue) ."</".$value_tag."></".$row_tag.">\n";
@@ -2056,14 +2059,14 @@
 
 			if(!empty($resultCustom->ProfileCustomValue ) || !empty($resultCustom->ProfileCustomDateValue )){
 
-			
-			
-				// do not allow the space of any non numeric if the single char found. 
+
+
+				// do not allow the space of any non numeric if the single char found.
 				$_strVal = $resultCustom->ProfileCustomValue;
 				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 					continue;
 				}
-				
+
 						$resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
 
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
@@ -2193,41 +2196,41 @@
 	 * @Returns Custom Fields excluding a title
 	 * @parm includes an array of title
 	/*/
-	
-		
+
+
 	function rb_agency_getProfileCustomFieldsArray($ProfileID, $ProfileGender) {
-	
+
 		global $wpdb;
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		// What is the unit of measurement?
 		$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype']) ? $rb_agency_options_arr['rb_agency_option_unittype']:"";
-	
+
 		$_allFields = array();
-	
+
 		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 		foreach ($resultsCustom as $resultCustom) {
 			// If a value exists...
-	
+
 			if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
-	
-				// do not allow the space of any non numeric if the single char found. 
+
+				// do not allow the space of any non numeric if the single char found.
 				$_strVal = $resultCustom->ProfileCustomValue;
 				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 					continue;
 				}
-				
+
 				$resultCustom->ProfileCustomValue = stripslashes($resultCustom->ProfileCustomValue);
 				if ($resultCustom->ProfileCustomType == 3 || $resultCustom->ProfileCustomType == 7  || $resultCustom->ProfileCustomType == 9){
 						$resultCustom->ProfileCustomValue =  implode(", ",explode(",",$resultCustom->ProfileCustomValue));
 				}
-	
+
 				if( $resultCustom->ProfileCustomType == 5){
 							$resultCustom->ProfileCustomValue =  implode(", ",explode("|",$resultCustom->ProfileCustomValue));
-	
+
 				}
-			
+
 				if ($resultCustom->ProfileCustomType == 7){
-	
+
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1 || $resultCustom->ProfileCustomOptions == 3){
 							$label = "cm";
@@ -2243,12 +2246,12 @@
 							$label = "ft/in";
 						}
 					}
-	
+
 					preg_match_all('/(\d+(\.\d+)?)/',$resultCustom->ProfileCustomValue, $matches);
 					$resultCustom->ProfileCustomValue = $matches[0][0];
 					$value = rb_get_imperial_metrics($resultCustom->ProfileCustomValue,$resultCustom->ProfileCustomOptions);
 					$_val = $value . $label;
-				
+
 				} else {
 					if ($resultCustom->ProfileCustomType == 10){
 						if(!empty($resultCustom->ProfileCustomDateValue) && $resultCustom->ProfileCustomDateValue !== "January 01, 1970"){
@@ -2257,8 +2260,8 @@
 					} elseif(!empty($resultCustom->ProfileCustomValue)){
 						$_val = split_language(',',', ',$resultCustom->ProfileCustomValue);
 					}
-					
-					
+
+
 				}
 				if(!empty($_val)){
 					$_allFields[ sanitize_title($resultCustom->ProfileCustomTitle)] = array(
@@ -2266,13 +2269,13 @@
 						'value' => $_val,
 					);
 				}
-	
+
 			}
-	
+
 		}
 		return $_allFields;
 	}
-	
+
 	function rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude, $_echo = true) {
 
 		global $wpdb;
@@ -2283,15 +2286,15 @@
 		foreach ($resultsCustom as $resultCustom) {
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){
 				if(!empty($resultCustom->ProfileCustomValue )){
-				
-				
-					// do not allow the space of any non numeric if the single char found. 
+
+
+					// do not allow the space of any non numeric if the single char found.
 					$_strVal = $resultCustom->ProfileCustomValue;
 					if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 						continue;
 					}
-				
-				
+
+
 					if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 						if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 							if($resultCustom->ProfileCustomOptions == 1){
@@ -2347,15 +2350,15 @@
 				}
 			}
 		}
-		
+
 		if($_echo == true){
 			echo $_out;
 		}else{
 			return $_out;
 		}
-		
-		
-		
+
+
+
 	}
 
 	function rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, $title_to_exclude) {
@@ -2367,13 +2370,13 @@
 		foreach ($resultsCustom as $resultCustom) {
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){
 				if(!empty($resultCustom->ProfileCustomValue )){
-					
-					// do not allow the space of any non numeric if the single char found. 
+
+					// do not allow the space of any non numeric if the single char found.
 					$_strVal = $resultCustom->ProfileCustomValue;
 					if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 						continue;
 					}
-					
+
 					// Lets not do this...
 					$measurements_label = "";
 					if ($resultCustom->ProfileCustomTitle == 'Experience(s)'){
@@ -2400,13 +2403,13 @@
 		$resultsCustom = $wpdb->get_results($query,ARRAY_A);
 		foreach ($resultsCustom as $resultCustom) {
 			if(!empty($resultCustom->ProfileCustomValue )){
-			
-				// do not allow the space of any non numeric if the single char found. 
+
+				// do not allow the space of any non numeric if the single char found.
 				$_strVal = $resultCustom->ProfileCustomValue;
 				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 					continue;
 				}
-				
+
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1){
@@ -2475,8 +2478,8 @@
 		$total_rows = $wpdb->num_rows;
 		foreach ($resultsCustom as $resultCustom) {
 			if(!empty($resultCustom["ProfileCustomValue"] )){
-			
-				// do not allow the space of any non numeric if the single char found. 
+
+				// do not allow the space of any non numeric if the single char found.
 				$_strVal = $resultCustom["ProfileCustomValue"];
 				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 					continue;
@@ -2630,7 +2633,7 @@
 
 	/*/
 	 *  PHP Profiler DEBUG MODE
-	/*/ 
+	/*/
 	function rb_agency_checkExecution() {
 
 		global $RB_DEBUG_MODE;
@@ -2674,7 +2677,7 @@
 
 	/*/
 	 *   Profile Extend Social Links
-	/*/ 
+	/*/
 	function rb_agency_getSocialLinks(){
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
@@ -2704,7 +2707,7 @@
 
 		$sql="SELECT ProfileGallery FROM ".table_agency_profile." WHERE 1 AND ProfileGender ='$type'  AND ProfileType ='1' ";
 
-		//filter division 
+		//filter division
 		if($division=="/women/"){$ageStart=17;$ageLimit=99;}
 		elseif($division=="/men/"){$ageStart=17;$ageLimit=99;}
 		elseif($division=="/teen-girls/"){$ageStart=12;$ageLimit=27;}
@@ -2717,7 +2720,7 @@
 		";
 		$tempSql=$sql;
 
-		//end filter 
+		//end filter
 		if($nextprev=="next"){
 			$sql.=" AND  ProfileGallery > '$ppage' ORDER BY ProfileContactNameFirst ASC"; // to get next record
 		} else {
@@ -2763,7 +2766,7 @@
 	}
 
 	/* function that lists users for generating login/password */
-	function rb_display_profile_list(){ 
+	function rb_display_profile_list(){
 		global $wpdb;
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_locationtimezone 		= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
@@ -2868,7 +2871,7 @@
 		echo "  <div class=\"tablenav-pages\">\n";
 
 		if($items > 0) {
-			echo $p->show();// Echo out the list of paging. 
+			echo $p->show();// Echo out the list of paging.
 		}
 
 		echo "  </div>\n";
@@ -2944,9 +2947,9 @@
 				}
 				$i++;
 				if ($i % 2 == 0) {
-						$rowColor = " style='background: #fcfcfc'"; 
+						$rowColor = " style='background: #fcfcfc'";
 				} else {
-						$rowColor = " "; 
+						$rowColor = " ";
 				}?>
 				<tr <?php echo $rowColor ?>>
 				<th class="check-column" scope="row"><input type="checkbox" value="<?php echo $ProfileID ?>" id="<?php echo $ProfileID ?>" data-firstname="<?php echo $ProfileContactNameFirst ?>" data-lastname="<?php echo $ProfileContactNameLast ?>" data-email="<?php echo $ProfileContactEmail ?>" class="administrator"  name="<?php echo $ProfileID ?>"/></th>
@@ -2959,7 +2962,7 @@
 				<td>
 					<div id="ch_<?php echo $ProfileID ?>"></div>
 					<input id="l_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Login" value="<?php echo (!empty($userlogin)) ? $userlogin : ""; ?>" /><br />
-					<input id="p_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Password" value="<?php echo (!empty($userpass)) ? $userpass : "";?>" />         
+					<input id="p_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Password" value="<?php echo (!empty($userpass)) ? $userpass : "";?>" />
 				</td>
 				<td></td>
 				</tr>
@@ -3086,7 +3089,7 @@
 					type: 'post',
 					data: {
 						action: 'write_email_cnt',
-						email_message: emailContent 
+						email_message: emailContent
 					},
 					success: function(){
 						$('#popup').fadeOut('fast',function(){
@@ -3190,10 +3193,10 @@
 						login : login,
 						password : password,
 						email : email
-						}; 
+						};
 				});
 
-					//console.log(usersLP); 
+					//console.log(usersLP);
 					$.ajax({
 					url: ajaxurl, // pointed to admin-ajax.php
 					type: 'post',
@@ -3240,7 +3243,7 @@
 		echo "  <div class='tablenav-pages'>\n";
 
 		if($items > 0) {
-				echo $p->show();// Echo out the list of paging. 
+				echo $p->show();// Echo out the list of paging.
 		}
 
 		echo "  </div>\n";
@@ -3266,20 +3269,20 @@
 
 		//if ( $user_id ) {
 			//$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
-			//$user_id = wp_create_user( $login, $random_password, $email ); 
+			//$user_id = wp_create_user( $login, $random_password, $email );
 			if(!email_exists($email)){
 
 				$random_password = $password; //wp_generate_password( 8, true );
-				$user_id = wp_create_user( $login, $random_password, $email ); 
+				$user_id = wp_create_user( $login, $random_password, $email );
 				wp_set_password( $random_password, $user_id );
 
 				// updating some information we have in wp_users
-				$wpdb->update( 
-						'wp_users', 
-						array( 'display_name' => $profile_row[0]->ProfileContactDisplay ), 
-						array( 'ID' => $user_id ), 
-						array( '%s' ), 
-						array( '%d' ) 
+				$wpdb->update(
+						'wp_users',
+						array( 'display_name' => $profile_row[0]->ProfileContactDisplay ),
+						array( 'ID' => $user_id ),
+						array( '%s' ),
+						array( '%d' )
 				);
 
 				// inserting some information we have in wp_usermeta
@@ -3351,16 +3354,16 @@
 				if(!email_exists($profile_row[0]->ProfileContactEmail)){
 
 				$random_password = $user_lp['password']; //wp_generate_password( 8, true );
-				$user_id = wp_create_user( $user_lp['login'], $random_password, $profile_row[0]->ProfileContactEmail ); 
+				$user_id = wp_create_user( $user_lp['login'], $random_password, $profile_row[0]->ProfileContactEmail );
 				wp_set_password( $random_password, $user_id );
 
 				// updating some information we have in wp_users
-				$wpdb->update( 
-						'wp_users', 
-						array( 'display_name' => $profile_row[0]->ProfileContactDisplay ), 
-						array( 'ID' => $user_id ), 
-						array( '%s' ), 
-						array( '%d' ) 
+				$wpdb->update(
+						'wp_users',
+						array( 'display_name' => $profile_row[0]->ProfileContactDisplay ),
+						array( 'ID' => $user_id ),
+						array( '%s' ),
+						array( '%d' )
 				);
 
 				// inserting some information we have in wp_usermeta
@@ -3409,17 +3412,17 @@
 	/*		$user_id = username_exists( $profile_row[0]->ProfileContactDisplay );
 			if ( !$user_id and email_exists($user_email) == false ) {
 				$random_password = wp_generate_password( $length=12, $include_standard_special_chars=false );
-				$user_id = wp_create_user( $user_lp['login'], $random_password, $user_lp['email'] ); 
+				$user_id = wp_create_user( $user_lp['login'], $random_password, $user_lp['email'] );
 				if(is_numeric($user_id)){
 					wp_set_password( $user_lp['password'], $user_id );
 
 					// updating some information we have in wp_users
-					$wpdb->update( 
-							'wp_users', 
-							array( 'display_name' => $profile_row[0]->ProfileContactDisplay ), 
-							array( 'ID' => $user_id ), 
-							array( '%s' ), 
-							array( '%d' ) 
+					$wpdb->update(
+							'wp_users',
+							array( 'display_name' => $profile_row[0]->ProfileContactDisplay ),
+							array( 'ID' => $user_id ),
+							array( '%s' ),
+							array( '%d' )
 					);
 
 					// inserting some information we have in wp_usermeta
@@ -3431,7 +3434,7 @@
 					update_user_meta( $user_id, 'user_login_info', $user_info_arr);
 
 					// linking the user ID with profile ID
-					$wpdb->update( 
+					$wpdb->update(
 						table_agency_profile,
 						array( 'ProfileUserLinked' => $user_id ),
 						array( 'ProfileID' => $profile_row[0]->ProfileID ),
@@ -3446,7 +3449,7 @@
 				} else {
 					//print_r($user_id);
 				}
-			}*/   
+			}*/
 		}
 
 		if($success){
@@ -3522,7 +3525,7 @@
 	 * featured widget profile
 	 *
 	 * @parm: none
-	 * @return:  
+	 * @return:
 	 * Profile Name = array[0];
 	 * Gender = array[1];
 	 * Custom Fields = array[2];
@@ -3541,14 +3544,14 @@
 
 					$q = "SELECT profile.*,
 
-					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
-					WHERE profile.ProfileID = media.ProfileID 
-					AND media.ProfileMediaType = \"Image\" 
-					AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL 
+					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media
+					WHERE profile.ProfileID = media.ProfileID
+					AND media.ProfileMediaType = \"Image\"
+					AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL
 
-					FROM ". table_agency_profile ." profile 
+					FROM ". table_agency_profile ." profile
 					WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."
-					AND profile.ProfileIsFeatured = 1  
+					AND profile.ProfileIsFeatured = 1
 					ORDER BY RAND() LIMIT 0,$count";
 
 					$r = $wpdb->get_results($q,ARRAY_A);
@@ -3564,7 +3567,7 @@
 						 * per profile
 						 */
 						$get_custom = 'SELECT * FROM ' . table_agency_customfield_mux .
-										' WHERE ProfileID = %d'; 
+										' WHERE ProfileID = %d';
 
 						$result = $wpdb->get_results($wpdb->prepare($get_custom,$dataList["ProfileID"]),ARRAY_A);
 
@@ -3584,7 +3587,7 @@
 						foreach ($result as $custom) {
 
 							$get_title = 'SELECT ProfileCustomTitle FROM ' . table_agency_customfields .
-							' WHERE ProfileCustomID = ' . $custom["ProfileCustomID"] ; 
+							' WHERE ProfileCustomID = ' . $custom["ProfileCustomID"] ;
 
 							$result2 = $wpdb->get_results($get_title,ARRAY_A);
 
@@ -3636,12 +3639,12 @@
 		global $wpdb;
 		$dataList = array();
 		$query = "SELECT profile.*,
-		(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media 
-		WHERE profile.ProfileID = media.ProfileID 
-		AND media.ProfileMediaType = \"Image\" 
-		AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL 
+		(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media
+		WHERE profile.ProfileID = media.ProfileID
+		AND media.ProfileMediaType = \"Image\"
+		AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL
 
-		FROM ". table_agency_profile ." profile 
+		FROM ". table_agency_profile ." profile
 		WHERE profile.ProfileIsActive = 1 ".(isset($sql) ? $sql : "") ."
 		AND profile.ProfileIsFeatured = 1
 		AND FIND_IN_SET(".$type.",profile.ProfileType) <> 0
@@ -3691,7 +3694,7 @@
 	}
 
 	/*
-	 * load script for printing profile pdf 
+	 * load script for printing profile pdf
 	 */
 	function rb_load_profile_pdf($row = 0, $logo = NULL){
 
@@ -3699,7 +3702,7 @@
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo'])?$rb_agency_options_arr['rb_agency_option_agencylogo']:get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/img/logo_example.jpg";
 	$file_name = str_replace(" ", "", $profile_name); ?>
-	
+
 
 	<!-- ajax submit login -->
 	<script type="text/javascript">
@@ -3711,8 +3714,8 @@
 				dataType: 'html',
 				url: '<?php echo plugins_url("rb-agency/theme/print_profile_pdf.php"); ?>',
 				data: {
-					pid : <?php echo get_current_profile_info("ProfileID"); ?>, 
-					row : <?php echo $row; ?>, 
+					pid : <?php echo get_current_profile_info("ProfileID"); ?>,
+					row : <?php echo $row; ?>,
 					logo : "<?php echo get_site_url().$rb_agency_option_agencylogo; ?>",
 					//logo : "<?php echo $logo; ?>",
 					filename : "<?php echo $file_name; ?>"},
@@ -3730,13 +3733,13 @@
 			});
 		});
 	});
-	</script>        
+	</script>
 
-	<?php        
+	<?php
 	}
 
 	/*
-	 * current profile. 
+	 * current profile.
 	 * this is for files when profile ID is not available
 	 * specially "header files"
 	 * to get the current profile info not user info
@@ -3848,7 +3851,7 @@
 			return false;
 	}
 	/*
-	 *	Rb Agency login checker 
+	 *	Rb Agency login checker
 	 */
 	function rb_agency_log(){
 		check_ajax_referer( 'ajax-login-nonce', 'security' );
@@ -3865,7 +3868,7 @@
 		die();
 	}
 	/*
-	 *	Rb Agency Search Profile via Ajax 
+	 *	Rb Agency Search Profile via Ajax
 	 */
 	function rb_agency_search_profile(){
 
@@ -3879,7 +3882,7 @@
 	add_action('wp_ajax_rb_agency_search_profile', 'rb_agency_search_profile');
 	add_action('wp_ajax_nopriv_rb_agency_search_profile', 'rb_agency_search_profile');
 	/*
-	 *	Rb Agency Get Profile Photos via Ajax 
+	 *	Rb Agency Get Profile Photos via Ajax
 	 */
 	function rb_agency_profile_photos(){
 
@@ -3893,7 +3896,7 @@
 	add_action('wp_ajax_rb_agency_profile_photos', 'rb_agency_profile_photos');
 	add_action('wp_ajax_nopriv_rb_agency_profile_photos', 'rb_agency_profile_photos');
 	/*
-	 *	Rb Agency Save Profile Photos via Ajax 
+	 *	Rb Agency Save Profile Photos via Ajax
 	 */
 	function rb_agency_save_profile_photos(){
 
@@ -3918,7 +3921,7 @@
 	add_action('wp_ajax_nopriv_rb_agency_save_profile_photos', 'rb_agency_save_profile_photos');
 
 	/*
-	 *	Rb Agency Clear Search filter session via Ajax 
+	 *	Rb Agency Clear Search filter session via Ajax
 	 */
 	function rb_agency_clear_casting_array(){
 		if (!session_id()) {
@@ -3936,7 +3939,7 @@
 	/*
 	 * Add action hook if interact is inactive
 	 */
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if(!function_exists('rb_agency_interact_menu')){
 		add_action('wp_ajax_rb_agency_log', 'rb_agency_log');
 		add_action('wp_ajax_nopriv_rb_agency_log', 'rb_agency_log');
@@ -3963,9 +3966,9 @@
 						dataType: 'json',
 						url: '<?php echo admin_url('admin-ajax.php'); ?>',
 						data: {
-							'action': 'rb_agency_log', 
-							'username': jQuery('#username').val(), 
-							'password': jQuery('#password').val(), 
+							'action': 'rb_agency_log',
+							'username': jQuery('#username').val(),
+							'password': jQuery('#password').val(),
 							'security': jQuery('#security').val() },
 						success: function(data){
 							if (data.loggedin == true){
@@ -3985,7 +3988,7 @@
 			echo '	<div id="rbsignin-register" class="rbinteract">';
 			echo '        <div id="rbsign-in" class="inline-block">';
 			echo '          <h1>'. __("Sign in", rb_agencyinteract_TEXTDOMAIN). '</h1>';
-			echo '          <p class="status" style="display:none"></p>'; 
+			echo '          <p class="status" style="display:none"></p>';
 			echo '          <form name="loginform" id="login_ajax" action="login" method="post">';
 			echo '            <div class="field-row">';
 			echo '              <label for="user-name">'. __("Username", rb_agencyinteract_TEXTDOMAIN). '</label><input type="text" name="user-name" value="'. wp_specialchars( $_POST['user-name'], 1 ) .'" id="username" />';
@@ -4035,7 +4038,7 @@
 
 		if($type == "casting" || $type == "favorite" ){
 
-			if ( ($rb_agency_option_privacy == 2) || 
+			if ( ($rb_agency_option_privacy == 2) ||
 
 				// Model list public. Must be logged to view profile information
 				($rb_agency_option_privacy == 1) ||
@@ -4282,7 +4285,7 @@
 	}
 
 	/**
-	 * Get Profile media Link Label 
+	 * Get Profile media Link Label
 	 */
 	function rb_get_profile_link_label(){
 		$rb_agency_options_arr = get_option('rb_agency_options');
@@ -4306,7 +4309,7 @@
 		if($ext_url == true){
 			$_fullURL = $url;
 		}
-		
+
 		if($rb_agency_option_profilemedia_links == 2){
 			if($is_docs){
 				return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".$_fullURL."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
@@ -4373,7 +4376,7 @@
 				} else { //inches only
 					return $value.($label? " ". __("in", RBAGENCY_TEXTDOMAIN):"");
 				}
-			} elseif($sub_unit == 2){ // lb 
+			} elseif($sub_unit == 2){ // lb
 				return $value.($label?" ".__("lb",RBAGENCY_TEXTDOMAIN):"");
 			}
 			return $value;
@@ -4494,9 +4497,9 @@ function rblogin_widget() {
 function date_difference($date1,$date2, $differenceFormat = '%a'){
 	$datetime1 = date_create($date1);
     $datetime2 = date_create($date2);
-    
+
     $interval = date_diff($datetime1, $datetime2);
-    
+
     return $interval->format($differenceFormat);
 }
 
@@ -4512,8 +4515,8 @@ function expired_profile_notification($data){
 function rb_send_notif_due_date_reached(){
 	global $wpdb;
 	$rb_agency_options_arr = get_option('rb_agency_options');
-	
-	
+
+
 		//send notif
 		$qq = "SELECT * FROM ".$wpdb->prefix."agency_customfields WHERE ProfileCustomType = 10";
 		$qresults = $wpdb->get_results($qq,ARRAY_A);
@@ -4522,10 +4525,10 @@ function rb_send_notif_due_date_reached(){
 		foreach($qresults as $qres){
 			$CustomFields[] = $qres['ProfileCustomTitle'];
 		}
-		
+
 		foreach($CustomFields as $CustomField){
 
-			
+
 
 			$q2 = "SELECT * FROM ".$wpdb->prefix."agency_customfields cu INNER JOIN ".
 				   $wpdb->prefix."agency_customfield_mux mu ON mu.ProfileCustomID = cu.ProfileCustomID INNER JOIN ".
@@ -4544,7 +4547,7 @@ function rb_send_notif_due_date_reached(){
 					$expired = 0;
 				}
 
-				
+
 				if($expired == 0 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 0){
 					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",0);
 				}
@@ -4566,31 +4569,31 @@ function rb_send_notif_due_date_reached(){
 				}
 
 				if($res2['ProfileCustomDateValue'] != '0000-00-00' && !empty($res2['ProfileCustomDateValue']) && $expired > 0 && get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true) == 2 && get_option("ProfileCustomNotifyAdmin_".$res2['ProfileCustomID']) == 1){
-		
+
 					$data = array();
 					unset($data);
-					
+
 					$data["send_to"] = get_option("admin_email");
 					//$data["send_to"] = 'legend_slash@yahoo.com';
-					$data["profile_name"] = $res2['ProfileContactDisplay'];	
+					$data["profile_name"] = $res2['ProfileContactDisplay'];
 					$data["subject"] = rbagency_get_customfield_title($res2['ProfileCustomID']);
 					$data["expired_date"] = $res2['ProfileCustomDateValue'];
-					expired_profile_notification($data);				
+					expired_profile_notification($data);
 					//echo $data["subject"] ." ".$res2['ProfileCustomDateValue']." ".$expired." ".get_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",true)."<br>";
 					update_user_meta($res2['ProfileID'],$res2['ProfileCustomID']."_".$res2['ProfileID']."_user_expired_sent",3);
-				}	
+				}
 
-				
+
 
 				if($x==10){
 					break;
 				}
-				
-				
-			}
-		}		
 
-	
+
+			}
+		}
+
+
 }
 add_action('init','rb_send_notif_due_date_reached');
 
@@ -4603,12 +4606,12 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 	if($value == ""){
 		return false;
 	}
-	
-	$expired = $value < date("Y-m-d") ? 1 : 0;	
 
-	
+	$expired = $value < date("Y-m-d") ? 1 : 0;
+
+
 	$pcID = str_replace("_date", "", $profile_custom_id);
-	
+
 	if($expired == 0 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 0){
 		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",0);
 	}
@@ -4630,7 +4633,7 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 	}
 
 	if($expired > 0 && get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true) == 2 && get_option("ProfileCustomNotifyAdmin_".$pcID) == 1){
-		
+
 		$data = array();
 		unset($data);
 		$q = "SELECT * FROM ".$wpdb->prefix."agency_profile WHERE ProfileID = ".$ProfileID;
@@ -4643,14 +4646,14 @@ function rb_send_notif_due_date_reached_edit($ProfileID,$profile_custom_id,$valu
 		}
 		$data["send_to"] = get_option("admin_email");
 		//$data["send_to"] = 'legend_slash@yahoo.com';
-		$data["profile_name"] = $profileContactDisplay;	
+		$data["profile_name"] = $profileContactDisplay;
 		$data["subject"] = rbagency_get_customfield_title($pcID);
 		$data["expired_date"] = $value;
 		expired_profile_notification($data);
 		//echo $data["subject"] ." ".$value." ".$expired." ".get_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",true)."<br>";
 		update_user_meta($ProfileID,$pcID."_".$ProfileID."_user_expired_sent",3);
-	} 
-	
+	}
+
 }
 
 
@@ -4661,17 +4664,17 @@ function rbagency_get_customfield_title($id){
 
 	foreach($results2 as $res2)
 		return $res2["ProfileCustomTitle"];
-	
+
 }
 
 class RBLogin_Widget extends WP_Widget {
 
 	function RBLogin_Widget() {
-		$widget_ops = array( 'classname' => 'rblogin', 'description' => __('A widget that displays the authors name ', 'rblogin') );		
-		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rblogin-widget' );		
+		$widget_ops = array( 'classname' => 'rblogin', 'description' => __('A widget that displays the authors name ', 'rblogin') );
+		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rblogin-widget' );
 		$this->WP_Widget( 'rblogin-widget', __('RB Login Widget', 'rblogin'), $widget_ops, $control_ops );
 	}
-	
+
 	function widget( $args, $instance ) {
 		extract( $args );
 
@@ -4684,7 +4687,7 @@ class RBLogin_Widget extends WP_Widget {
 
 			echo $before_widget;
 
-			// Display the widget title 
+			// Display the widget title
 			if ( $title )
 				echo $before_title . $title . $after_title;
 
@@ -4712,12 +4715,12 @@ class RBLogin_Widget extends WP_Widget {
 		}
 	}
 
-	//Update the widget 
-	 
+	//Update the widget
+
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		//Strip tags from title and name to remove HTML 
+		//Strip tags from title and name to remove HTML
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['mt-li'] = strip_tags( $new_instance['mt-li'] );
 		$instance['ap-li'] = strip_tags( $new_instance['ap-li'] );
@@ -4725,7 +4728,7 @@ class RBLogin_Widget extends WP_Widget {
 		return $instance;
 	}
 
-	
+
 	function form( $instance ) {
 
 		//Set up some default widget settings.
@@ -4752,5 +4755,5 @@ class RBLogin_Widget extends WP_Widget {
 }
 
 
-    
+
 ?>
