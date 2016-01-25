@@ -3,10 +3,10 @@
 	$registration = get_option( 'rb_agencyinteract_options' );
 	$rb_agencyinteract_option_registerallow = isset($registration["rb_agencyinteract_option_registerallow"]) ? $registration["rb_agencyinteract_option_registerallow"]:0;
 	$rb_agencyinteract_option_registerallowAgentProducer = isset($registration['rb_agencyinteract_option_registerallowAgentProducer'])?$registration['rb_agencyinteract_option_registerallowAgentProducer']:0;
-	
+
 	$rb_agencyinteract_option_switch_sidebar_agent = isset($registration["rb_agencyinteract_option_switch_sidebar_agent"])?(int)$registration["rb_agencyinteract_option_switch_sidebar_agent"]:"";
 
-	
+
 // Last Profile Viewed
 	$profileviewed = str_replace('/profile','',$_SERVER["REQUEST_URI"]);
 
@@ -36,12 +36,12 @@ echo "
 	echo "              <input type=\"submit\" value=\"". __("Sign In", RBAGENCY_interact_TEXTDOMAIN). "\" /><br />\n";
 	echo "            </div>\n";
 	echo "          </form>\n";
-	
-	
+
+
 	if(isset($rb_agencyinteract_option_switch_sidebar_agent) && $rb_agencyinteract_option_switch_sidebar_agent == 1){
 
 		if (( current_user_can("create_users") || $rb_agencyinteract_option_registerallow == 1)) {
-	
+
 				/*	echo "        <div id=\"rbsign-up\" class=\"inline-block\">\n";
 					echo "          <div id=\"talent-register\" class=\"register\">\n";
 					echo "            <h1>". __("Not a member", RBAGENCY_interact_TEXTDOMAIN). "?</h1>\n";
@@ -56,35 +56,36 @@ echo "
 					echo "          <div id=\"talent-register\" class=\"register\">\n";
 					echo "            <h1>". __("Not a member", RBAGENCY_interact_TEXTDOMAIN). "?</h1>\n";
 
-					echo "<h3>Client - Register here</h3>
-					<ul>
-						<li>Create your free profile page</li>
-						<li>List Auditions & Jobs Free free</li>
-						<li>Contact People in the talent Directory</li>
-					</ul>
-					<input type=\"button\" onclick=\"location.href='/casting-register'\" value=\"Register Now\">
-					
+					echo "<h3>". __("Client - Register here", RBAGENCY_interact_TEXTDOMAIN). "</h3>";
+					echo "<ul>";
+					echo "	<li>". __("Create your free profile page", RBAGENCY_casting_TEXTDOMAIN). "</li>";
+					echo "	<li>". __("List Auditions & Jobs Free", RBAGENCY_casting_TEXTDOMAIN). "</li>";
+					echo "	<li>". __("Contact People in the talent Directory", RBAGENCY_casting_TEXTDOMAIN). "</li>";
+					echo "</ul>";
+
+					<input type=\"button\" onclick=\"location.href='/casting-register'\" value=\"". __("Register Now", RBAGENCY_casting_TEXTDOMAIN). "\">
+
 					";
-					
+
 					echo "          </div> <!-- talent-register -->\n";
 					echo "          <div class=\"clear line\"></div>\n";
 					echo "        </div> <!-- rbsign-up -->\n";
-	
+
 					echo "        </div> <!-- rbsign-up -->\n";
 		}
 	}
 	else {
 		echo "        <div id=\"rbsign-up\" class=\"inline-block\">\n";
 		echo "          <div id=\"talent-register\" class=\"register\">\n";
-		if ( dynamic_sidebar('rb-agency-casting-login-sidebar') ) :endif; 
+		if ( dynamic_sidebar('rb-agency-casting-login-sidebar') ) :endif;
 		echo "          </div> <!-- talent-register -->\n";
 		echo "          <div class=\"clear line\"></div>\n";
 		echo "        </div> <!-- rbsign-up -->\n";
-	
+
 	}
-	
-	
-	
+
+
+
 	echo "		</div> <!-- rbsign-in2 -->";
-	
+
 ?>
