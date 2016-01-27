@@ -3889,8 +3889,6 @@
 	
 	
 	function rb_agency_search_profile(){
-		
-
 
 		global $wpdb;
 		$data = isset($_REQUEST['value'])?trim($_REQUEST['value']):"";
@@ -3898,19 +3896,19 @@
 		$and_selected_critarea_for_gender = '' ; 
 		
 		$custom_field_and = '' ;
+		
 		if(!empty($data))
 		{
+			$data_custom_types = convert_custom_types($data);
 			if(!empty($data_custom_types['gender']))
 			{
 				$gender = $data_custom_types['gender'] ;
-				$and_selected_critarea_for_gender .= "AND profile.ProfileGender = '".$gender."'" . ' ';
+				$and_selected_critarea_for_gender = "AND profile.ProfileGender = '".$gender."'" . ' ';
 			}
 			
-			$data_custom_types = convert_custom_types($data);
-			$selected_critarea_for_gender = $data_custom_types['gender'];
+			unset($data_custom_types['gender']);
 			if(count($data_custom_types) > 0)
 			{
-				unset($data_custom_types['gender']);
 				
 				foreach($data_custom_types as $key=>$data_custom_type)
 				{
@@ -3929,14 +3927,10 @@
 
 		//$results = $wpdb->get_results("SELECT gender.*, media.ProfileMediaURL, profile.ProfileGallery,profile.ProfileDateBirth, profile.ProfileID, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileGender FROM ".table_agency_profile." as profile INNER JOIN ".table_agency_data_gender." as gender ON gender.GenderID = profile.ProfileGender INNER JOIN ".table_agency_profile_media." as media ON (media.ProfileID = profile.ProfileID AND media.ProfileMediaType = 'Image') GROUP BY ProfileID ORDER BY ProfileContactNameFirst",ARRAY_A);
 		
-		$results = $wpdb->get_results("SELECT gender.*, media.ProfileMediaURL, profile.ProfileGallery,profile.ProfileDateBirth, profile.ProfileID, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileGender ,profile.ProfileIsActive  , customfield.ProfileCustomMuxID , customfield.ProfileCustomID , customfield.ProfileID , customfield.ProfileCustomValue FROM ".table_agency_profile." as profile INNER JOIN ".table_agency_data_gender." as gender ON gender.GenderID = profile.ProfileGender LEFT JOIN ".table_agency_profile_media." as media ON (media.ProfileID = profile.ProfileID AND media.ProfileMediaType = 'Image') INNER JOIN ".table_agency_customfield_mux." as customfield ON (profile.ProfileID = customfield.ProfileID) WHERE profile.ProfileIsActive = 1 ".$and_selected_critarea_for_gender." ".$custom_field_and." GROUP BY profile.ProfileID ORDER BY profile.ProfileContactNameFirst",ARRAY_A);
-		
-		
-			
+		$results = $wpdb->get_results("SELECT gender.*, media.ProfileMediaURL, profile.ProfileGallery,profile.ProfileDateBirth, profile.ProfileID, profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileGender ,profile.ProfileIsActive  , customfield.ProfileCustomMuxID , customfield.ProfileCustomID , customfield.ProfileID , customfield.ProfileCustomValue FROM ".table_agency_profile." as profile LEFT JOIN ".table_agency_customfield_mux." as customfield ON (profile.ProfileID = customfield.ProfileID) LEFT JOIN ".table_agency_profile_media." as media ON (media.ProfileID = profile.ProfileID AND media.ProfileMediaType = 'Image') INNER JOIN ".table_agency_data_gender." as gender ON gender.GenderID = profile.ProfileGender WHERE profile.ProfileIsActive = 1 ".$and_selected_critarea_for_gender." ".$custom_field_and." GROUP BY profile.ProfileID ORDER BY profile.ProfileContactNameFirst",ARRAY_A);
 		
 		echo json_encode($results);
-	
-		
+
 		die();
 	}
 	add_action('wp_ajax_rb_agency_search_profile', 'rb_agency_search_profile');
