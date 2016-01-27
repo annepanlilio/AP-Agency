@@ -1,14 +1,13 @@
-<?php
-	global $user_ID;
-	global $wpdb;
+<?php 
+	global $user_ID; 
+    global $wpdb;
 		include (dirname(__FILE__) ."/../app/casting.class.php");
 
-
-// GET HEADER
+// GET HEADER  
 	echo $rb_header = RBAgency_Common::rb_header();
 
-				$Job_ID = "";
-				$Job_Title = "";
+				$Job_ID = ""; 
+				$Job_Title = ""; 
 				$Job_Text = "";
 				$Job_Date_Start = "";
 				$Job_Date_End = "";
@@ -25,18 +24,18 @@
 				$Job_Audition_Venue = "";
 				$Job_Audition_Time = "";
 
-				  $castingcartJobHash = get_query_var("target");
-				  $castingcartProfileHash = get_query_var("value");
+			      $castingcartJobHash = get_query_var("target");
+			      $castingcartProfileHash = get_query_var("value");
 
-
-		   if(isset($castingcartJobHash)){
+				  
+           if(isset($castingcartJobHash)){
 
 			$sql =  "SELECT * FROM ".table_agency_casting_job." WHERE Job_Talents_Hash= %s ";
 			$data = current($wpdb->get_results($wpdb->prepare($sql, $castingcartJobHash)));
 
 			if(!empty($data)){
-				$Job_ID = $data->Job_ID;
-				$Job_Title = $data->Job_Title;
+				$Job_ID = $data->Job_ID; 
+				$Job_Title = $data->Job_Title; 
 				$Job_Text = $data->Job_Text;
 				$Job_Date_Start = $data->Job_Date_Start;
 				$Job_Date_End = $data->Job_Date_End;
@@ -69,7 +68,7 @@
 			$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID = %d ORDER BY profile.ProfileContactNameFirst ASC";
 
 			$data = current($wpdb->get_results($wpdb->prepare($query,$profile_access_id["CastingProfileHashProfileID"]), ARRAY_A));
-
+			
 			$_profileID = $profile_access_id["CastingProfileHashProfileID"];
 
 				// Is submitted
@@ -93,7 +92,7 @@
 							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."') AS tmp
 							WHERE NOT EXISTS (
 								SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'
-							) LIMIT 1;";
+							) LIMIT 1;"; 
 					} else {
 							$query = "UPDATE ".table_agency_castingcart_availability." SET CastingAvailabilityStatus = '".esc_attr($availability)."' WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'";
 					}
@@ -115,7 +114,7 @@
 						RBAgency_Casting::sendEmailCastingAvailability($data["ProfileContactDisplay"],$Availability,$Job_Title,$link);
 
 						echo ('<div id="message" class="updated" style="width:50%;margin:auto;"><p>Submitted successfully!</p></div>');
-
+				 
 		}
 						$result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$Job_ID,$data["ProfileID"]));
 			$has_submitted = $wpdb->num_rows;
@@ -127,36 +126,58 @@
 
 			?>
 			<style type="text/css">
-			   input[disabled=disabled]{
-				   color: #B4AAAA;
-			   }
-			   .job-details td{
-					   border:1px solid #ccc;
-					   padding:10px;
-			   }
+               input[disabled=disabled]{
+           		color: #B4AAAA;
+               }
+               .job-details td{
+           			border:1px solid #ccc;
+           			padding:10px;
+               }
 			</style>
 
 				<div style="width:100%;max-width:450px;">
+				
+				<div id="examplePopup1" style="display:none">
+					<div>
+						<h2>Youve submitted your availability.</h2>
+					</div>
+					
+				</div>
+				
+				 
 
-				<?php if($count2 > 0):?>
-				<h2>You've submitted your availability.</h2>
-			<?php else: ?>
+
+				<?php if($count2 > 0):
+				if(isset($_REQUEST['availability']))
+				{
+				?>
+				<script type="text/javascript">
+					jQuery(document).ready(function(){
+						alert('You have submitted your availability.');
+					});
+				</script>
+				<!--<h2>You've submitted your availability.</h2>-->
+			<?php
+				}
+				else
+				{ }
+			else: ?>
 				<h2>You've been submitted for a job.</h2>
 			<?php endif;?>
 				<strong>We are simply confirming that you are "Available" or "Not Available" for the job dates.</strong>
 				<div style="clear:both;"></div>
 
-
+ 
 				<table class="job-details" style="margin-top:20px;width:100%;">
-
+				
 				<form method="post" action="">
-
-					  <tr>
-						<td colspan="2">
-										  <div style="width:95%;height:220px;padding:10px;text-align:center;background:#ccc;overflow:hidden;">
+				
+				      <tr>
+				        <td colspan="2">
+				    					  <div style="width:95%;height:220px;padding:10px;text-align:center;background:#ccc;overflow:hidden;">
 									  <?php if(!empty($data['ProfileMediaURL'])):?>
 									  <?php
-											 $image_path = RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'];
+									 		$image_path = RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'];
 										$bfi_params = array(
 											'crop'=>true,
 											'width'=>180,
@@ -164,135 +185,28 @@
 										);
 										$image_src = bfi_thumb( $image_path, $bfi_params );
 									  ?>
-									  <?php
+									  <?php 
 									  echo "<img style=\"width: 50%;height:99.9% \" src=\"".$image_src ."\" />";
 									  //echo "<img style=\"width: 50%;height:99.9% \" src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $data["ProfileGallery"] ."/". $data['ProfileMediaURL'] ."&w=180&h=220\" />"; ?>
 									  <?php else:?>
-											  No Image Available.
+									  		No Image Available.
 									  <?php endif; ?>
 									  </div>
 									  <h2><?php echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?></h2>
-
+									 
 
 						</td>
 						</tr>
-					  <tr>
-					  <td style="text-align:right;padding-right:5px;">
-						<input type="submit" name="availability" <?php echo isset($availability->status) && $availability->status == "available"?"disabled=\"disabled\"":"" ?> value="Yes, Available" class="button-primary"/>
+  					<tr>
+				      <td style="text-align:right;padding-right:5px;">
+						<input type="submit" name="availability" <?php echo isset($availability->status) && $availability->status == "available"?"disabled=\"disabled\"":"" ?> value="Yes, Available" class=" button-primary"/>
+						
+					
 						</td>
 						<td>
-					   <input type="submit" name="availability"  <?php echo isset($availability->status) && $availability->status != "available"?"disabled=\"disabled\"":"" ?>  value="No, not Available" class="button-primary" />
-					   </td>
-					   </tr>
-
-					   <?php
-
-					   $_AudioFileURL = $profile_access_id["CastingProfile_audio"];
-
-					   $target_dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
-					   if(!is_dir($target_dir)){
-						   mkdir($target_dir);
-					   }
-					   $_valid_name = str_replace(' ','-', basename($_FILES["fileToUpload"]["name"]));
-					   $_filename = $_profileID . '-'. $_valid_name;
-					   $target_file = $target_dir . $_filename;
-					   $uploadOk = 1;
-					   $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-					   // Check if image file is a actual image or fake image
-					   if(isset($_POST["submitMP3"])) {
-
-						   $type = $_FILES["fileToUpload"]["type"];
-						   $size = $_FILES["fileToUpload"]["size"];
-
-						   $valid_mp3_mimes = array(
-							   'audio/mpeg',
-							   'audio/x-mpeg',
-							   'audio/mp3',
-							   'audio/wav',
-							   'audio/ogg',
-							   'audio/x-mp3',
-							   'audio/mpeg3',
-							   'audio/x-mpeg3',
-							   'audio/x-mpeg-3',
-							   'audio/mpg',
-							   'audio/x-mpg',
-							   'audio/x-mpegaudio',
-						   );
-						   if( ( in_array($type, $valid_mp3_mimes)) && ($size < 20000000)) {
-							   $uploadOk = 1;
-						   } else {
-							   $uploadOk = 0;
-						   }
-
-					   }
-
-					   // Delete file audio
-					   if(isset($_POST["deleteMP3"])) {
-						   $_deleteFle = $target_dir.$_AudioFileURL;
-
-						   $results = $wpdb->update(table_agency_castingcart_availability,
-									   array('CastingProfile_audio' => ''),
-									   array('CastingAvailabilityProfileID' => $data["ProfileID"],'CastingJobID' => $Job_ID)
-								   );
-						   $_AudioFileURL = '';
-					   }
-					   ?>
-					   <tr>
-						   <td  style="text-align:right;padding-right:5px;">MP3 Audition</td>
-						   <td><?php
-
-							   // Check if $uploadOk is set to 0 by an error
-							   if(isset($_POST["submitMP3"])) {
-								   if( $uploadOk == 0) {
-									   echo "Sorry, Invalid audio file.";
-								   // if everything is ok, try to upload file
-								   } else {
-									   //remove the prev file first
-									   $_deleteFle = $target_dir.$_AudioFileURL;
-									   unset($_deleteFle);
-									   if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-										   echo "Upload Success <br/>";
-										   $data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(CastingProfile_audio) FROM " . table_agency_castingcart_availability));
-										   if ( !$data_custom_exists ) {
-											   $wpdb->query("ALTER TABLE ".table_agency_castingcart_availability." ADD `CastingProfile_audio` VARCHAR(255) NOT NULL AFTER `CastingJobID`");
-										   }
-										   $results = $wpdb->update(table_agency_castingcart_availability,
-											   array('CastingProfile_audio' => $_filename),
-											   array('CastingAvailabilityProfileID' => $data["ProfileID"],'CastingJobID' => $Job_ID)
-										   );
-
-										   $_AudioFileURL = $_filename;
-
-									   } else {
-										   echo "Error Uploading";
-									   }
-								   }
-							   }
-
-							   $_file_FullURL = site_url() . RBAGENCY_UPLOADREL . '_casting-jobs/'. $_AudioFileURL;
-
-							   if(!empty($_AudioFileURL)){
-								   echo '<a href="'.$_file_FullURL.'" target="_blank">Download</a>';
-
-								   echo '<form action="" method="post" >
-										   <input type="submit" value="Delete" name="deleteMP3">
-									   </form>
-									   ';
-							   }else{
-								   if(isset($availability->status) && $availability->status == "available"){ ?>
-									   <form action="" method="post" enctype="multipart/form-data">
-										   Select Audio File: <br/>
-										   <input type="file" name="fileToUpload" id="fileToUpload">
-										   <input type="submit" value="Upload Audio" name="submitMP3">
-									   </form>
-								   <?php
-								   }else{
-									   echo "You must be available to upload audio file.";
-
-								   }
-							   }
-						   ?></td>
-					   </tr>
+				   	<input type="submit" name="availability"  <?php echo isset($availability->status) && $availability->status != "available"?"disabled=\"disabled\"":"" ?>  value="No, not Available" class="button-primary" />
+				   	</td>
+				   	</tr>
 
 				  <?php if(!empty( $Job_Title )):?>
 						<tr>
@@ -370,27 +284,167 @@
 						<td><?php echo $Job_Text; ?></td>
 						</tr>
 					<?php endif;?>
-				  <tr>
-					 <td colspan="2" style="text-align:center;">
-						 <?php if(!empty($Job_Location)){ ?>
+                  <tr>
+                     <td colspan="2" style="text-align:center;">
+                 		<?php if(!empty($Job_Location)){ ?>
 								Location:<br/>
 								<?php echo $Job_Location; ?><br/>
 							  <?php //echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
 						<?php }?>
 					</td>
 					</tr>
-
+					
 				<input type="hidden" name="action" value="availability">
 				</form>
+				
+					
+					<?php
+					
+				$_AudioFileURL = $profile_access_id["CastingProfile_audio"];
+				
+				$target_dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
+				if(!is_dir($target_dir)){
+					mkdir($target_dir);
+				}
+				$_valid_name = str_replace(' ','-', basename($_FILES["fileToUpload"]["name"]));
+				$_filename = $_profileID . '-'. $_valid_name;
+				$target_file = $target_dir . $_filename;
+				$uploadOk = 1;
+				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+				// Check if image file is a actual image or fake image
+				if(isset($_POST["submitMP3"])) {
+					
+					$type = $_FILES["fileToUpload"]["type"];
+					$size = $_FILES["fileToUpload"]["size"];
+					
+					$valid_mp3_mimes = array(
+						'audio/mpeg',
+						'audio/x-mpeg',
+						'audio/mp3',
+						'audio/wav',
+						'audio/ogg',
+						'audio/x-mp3',
+						'audio/mpeg3',
+						'audio/x-mpeg3',
+						'audio/x-mpeg-3',
+						'audio/mpg',
+						'audio/x-mpg',
+						'audio/x-mpegaudio',
+					);
+					if( ( in_array($type, $valid_mp3_mimes)) && ($size < 20000000)) {
+						$uploadOk = 1;
+					} else {
+						$uploadOk = 0;
+					}
+			
+				}
+				
+				//delete file audio
+				if(isset($_POST["deleteMP3"])) {
+					$_deleteFle = $target_dir.$_AudioFileURL;
+					
+					$results = $wpdb->update(table_agency_castingcart_availability,
+								array('CastingProfile_audio' => ''),
+								array('CastingAvailabilityProfileID' => $data["ProfileID"],'CastingJobID' => $Job_ID)
+							);
+					$_AudioFileURL = '';
+				}
+				
+				
+				
+					
+					
+					?>
+					
+					
+					<tr>
+						<td  style="text-align:right;padding-right:5px;">MP3 Audition</td>
+						<td><?php 
+				
+							// Check if $uploadOk is set to 0 by an error
+							if(isset($_POST["submitMP3"])) {
+								if( $uploadOk == 0) {
+									echo "Sorry, Invalid audio file.";
+								// if everything is ok, try to upload file
+								} else {
+									//remove the prev file first
+									$_deleteFle = $target_dir.$_AudioFileURL;
+									unset($_deleteFle);
+									if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+										echo "Upload Success <br/>";
+										?>
+										<script type="text/javascript">
+											jQuery(document).ready(function(){
+												alert('File successfully uploaded!');
+											});
+											</script>
+										<?php
+										$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(CastingProfile_audio) FROM " . table_agency_castingcart_availability));
+										if ( !$data_custom_exists ) {
+											$wpdb->query("ALTER TABLE ".table_agency_castingcart_availability." ADD `CastingProfile_audio` VARCHAR(255) NOT NULL AFTER `CastingJobID`");
+										}
+										$results = $wpdb->update(table_agency_castingcart_availability,
+											array('CastingProfile_audio' => $_filename),
+											array('CastingAvailabilityProfileID' => $data["ProfileID"],'CastingJobID' => $Job_ID)
+										);
+										
+										$_AudioFileURL = $_filename;
+										
+									} else {
+										echo "Error Uploading";
+									}
+								}
+							}
 
 
-
+			
+							$_file_FullURL = site_url() . RBAGENCY_UPLOADREL . '_casting-jobs/'. $_AudioFileURL;
+							
+							if(!empty($_AudioFileURL)){
+								$rb_agency_options_arr = get_option('rb_agency_options');
+								$rb_agency_option_profilemedia_links = $rb_agency_options_arr['rb_agency_option_profilemedia_links'] ;
+								if($rb_agency_option_profilemedia_links == 2)
+								{
+									echo '<a href="'.$_file_FullURL.'" target="_blank">Play</a>';	
+								}
+								else{
+									$_file_URL = '_casting-jobs/'. $_AudioFileURL;
+									$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$_file_URL ;
+									echo '<a type="button" class="button-primary" href="'.$force_download_url.'">Download</a>';	
+								}
+								
+								
+								echo '<form action="" method="post" >
+										<input type="submit" value="Delete" name="deleteMP3">
+									</form>
+									';
+							}else{
+								
+								if(isset($availability->status) && $availability->status == "available"){ ?>
+								
+									<form action="" method="post" enctype="multipart/form-data">
+										Select Audio File: <br/>
+										<input type="file" name="fileToUpload" id="fileToUpload">
+										<input type="submit" value="Upload Audio" name="submitMP3">
+										
+									</form>
+								
+								<?php 
+								}else{
+									echo "You must be available to upload audio file.";
+									
+								}
+							}
+							
+						?></td>
+					</tr>
+						
 				</table>
 			</div>
-
+				
 				<?php
-
-
+				
+				
 			/*} else {
 				echo "You're not allowed to view this Job.";
 			}*/
@@ -399,6 +453,6 @@
 	echo "  </div>\n";
 	echo "</div>\n";
 
-	echo $rb_footer = RBAgency_Common::rb_footer();
+	echo $rb_footer = RBAgency_Common::rb_footer(); 
 
 	?>
