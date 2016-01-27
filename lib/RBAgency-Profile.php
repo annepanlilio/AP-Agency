@@ -1944,15 +1944,15 @@ class RBAgency_Profile {
 
 							 $("#sort_by").val("val2");
 
-		                var manage = new manage_elem(jQuery("#sort_by").val(),jQuery("#profile-list"),jQuery("#hidden_div"));
-		                   manage.current_custom_date_id(jQuery("#sort_by").val());
+						var manage = new manage_elem(jQuery("#sort_by").val(),jQuery("#profile-list"),jQuery("#hidden_div"));
+						   manage.current_custom_date_id(jQuery("#sort_by").val());
 
 
-		                if(jQuery(this).attr(\'id\') == \'sort_by\'){
-		                        manage.update_option_fields(jQuery(this).val(),jQuery("#sort_option"),manage.start_sorting);
-		                } else {
-		                        manage.start_sorting(jQuery(this));
-		                }
+						if(jQuery(this).attr(\'id\') == \'sort_by\'){
+								manage.update_option_fields(jQuery(this).val(),jQuery("#sort_option"),manage.start_sorting);
+						} else {
+								manage.start_sorting(jQuery(this));
+						}
 
 					});
 					</script>
@@ -2306,11 +2306,11 @@ class RBAgency_Profile {
 								$(".info-panel[id!="+panel_target_ID+"]").slideUp();
 
 								$.post( "'.admin_url('admin-ajax.php').'", { id: profID, action: "get_profileInfo" })
-							        .done(function( data ) {
+									.done(function( data ) {
 
-							        $(panel_target_ID).html(data);
-							        $(panel_target_ID).slideDown();
-							    });
+									$(panel_target_ID).html(data);
+									$(panel_target_ID).slideDown();
+								});
 
 
 
@@ -2958,12 +2958,13 @@ class RBAgency_Profile {
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
 
-
-
-
 							foreach($resultsImg as $dataImg ){
 								if ($countImg > 1) {
-									$images .= "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
+									if ($rb_agency_option_usetimthumb) {
+										$images .= "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
+									} else {
+										$images .= "<img src=\"".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
+									}
 								}
 							}
 
@@ -2990,13 +2991,25 @@ class RBAgency_Profile {
 
 						//landscape settings
 						if($rb_agency_option_layoutprofilelistlayout == 2){
-							$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbheight."&h=".$rb_agency_value_profilethumbwidth."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							if ($rb_agency_option_usetimthumb) {
+								$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbheight."&h=".$rb_agency_value_profilethumbwidth."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							} else {
+								$displayHTML .="<img src=\"".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							}
 						}else{
-							$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							if ($rb_agency_option_usetimthumb) {
+								$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							} else {
+								$displayHTML .="<img src=\"".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							}
 						}
 
 					} else {
-						$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
+						if ($rb_agency_option_usetimthumb) {
+							$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
+						} else {
+							$displayHTML .="<img src=\"".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
+						}
 					}
 
 					$displayHTML .="</a>";
@@ -3009,12 +3022,16 @@ class RBAgency_Profile {
 
 				} else {
 
-					$images = "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
+					if ($rb_agency_option_usetimthumb) {
+						$images = "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
+					} else {
+						$images = "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
+					}
+
 
 					//slide panel trigger to image/ profile image
 					if($rb_agency_option_layoutprofileviewmode == 2) {
 						$images = '<a href="#slide-panel_'.$_panelID.'" class="slide-panel-link" profile_id="'.$dataList["ProfileID"].'">'.$images.'</a>';
-
 					}
 					$displayHTML .= "<div class=\"image image-broken\">".$images ."</div>\n";
 				}
@@ -3147,7 +3164,7 @@ class RBAgency_Profile {
 
 						$displayHTML .= "<div class='custom_options_title'>
 						<span>".$enabled_options."</span></div>";
-					    $displayHTML .= "</div>";
+						$displayHTML .= "</div>";
 				}
 
 					// Favorite and Casting Display - Default
@@ -3193,7 +3210,11 @@ class RBAgency_Profile {
 					$outLinkResume =  get_bloginfo("url"). $outLinkResume;
 				}
 
-				$imageURL = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image ."&w=300&h=420&a=t";
+				if ($rb_agency_option_usetimthumb) {
+					$imageURL = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image ."&w=300&h=420&a=t";
+				} else {
+					$imageURL = get_bloginfo("url")."/".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image;
+				}
 
 				$displayHTML .='
 
@@ -3256,7 +3277,7 @@ class RBAgency_Profile {
 				}
 
 				$_allMediaSQL = implode(', ',$_allMedLinkSQL);
-		        $_allMediaSQL  = ' , '. $_allMediaSQL;
+				$_allMediaSQL  = ' , '. $_allMediaSQL;
 
 			 //$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType = \"VoiceDemo\" ";
 
@@ -3265,7 +3286,7 @@ class RBAgency_Profile {
 
 
 			 $queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType
-			        NOT IN ('Link','Image','Demo Reel','Video Monologue','Video Slate','SoundCloud','Resume','Headshot','Polaroid','CompCard')";
+					NOT IN ('Link','Image','Demo Reel','Video Monologue','Video Slate','SoundCloud','Resume','Headshot','Polaroid','CompCard')";
 
 							$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia, $ProfileID),ARRAY_A);
 							$countMedia = $wpdb->num_rows;
@@ -3331,14 +3352,14 @@ class RBAgency_Profile {
 								$_proftypeClass[] = 'profile_type_'. $profiType;
 							}
 							$_profiletypeClassUniq = implode(' ', array_unique($_proftypeClass));
-			                $_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
-			                //$displayHTML .= 'profile_type_'. $dataList["ProfileType"];
+							$_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
+							//$displayHTML .= 'profile_type_'. $dataList["ProfileType"];
 
 
 				$displayHTML .= '
 				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'" mp3_type="'.$_mp3typeClassUniq.'">
 					<div class="profile-voiceover">
-					   	<strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
+						   <strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
 						'. stripslashes($ProfileContactDisplay) .'</a></strong>'.$voicedemo_links .'
 					</div><!-- .profile-voiceover -->
 				</div> <!-- .? -->';
