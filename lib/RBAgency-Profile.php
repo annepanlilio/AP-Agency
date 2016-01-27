@@ -2718,6 +2718,7 @@ class RBAgency_Profile {
 				$rb_agency_option_layoutprofilelist_favcartdisp	= isset($rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp'])?$rb_agency_options_arr['rb_agency_option_layoutprofilelist_favcartdisp']:0;
 				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
 				$rb_agency_option_layoutprofilenamepos = isset($rb_agency_options_arr['rb_agency_option_layoutprofilenamepos']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilenamepos']:0;
+				$rb_agency_option_usetimthumb = isset($rb_agency_options_arr['$rb_agency_option_usetimthumb']) ? $rb_agency_options_arr['$rb_agency_option_usetimthumb']:1;
 
 				// TODO: Check Logic
 				$ProfileContactNameFirst = isset($dataList["ProfileContactNameFirst"]) ? $dataList["ProfileContactNameFirst"]: "-";
