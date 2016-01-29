@@ -310,14 +310,17 @@ class RBAgency_Extends {
 
 	/*
 	 * Profile Search
-	 * Shortcode: [profile_search type="simple|advanced"]
+	 * Shortcode: [profile_search type="simple|advanced" mode="normal|ajax"]
+	 * Default type = simple
+	 * Default mode = normal
 	 */
 
 		public static function profile_search_shortcode($atts, $content = null){
 
 			// Get Shortcode Attributes
 			extract(shortcode_atts(array(
-				"type" => 0
+				"type" => 0,
+				"mode" => 'normal',
 			), $atts));
 
 			ob_start();
@@ -333,6 +336,13 @@ class RBAgency_Extends {
 				$type = 1;
 			}
 
+			if($mode != "normal" && $mode != "ajax")
+			{
+				$mode = "normal";
+			}
+			
+			
+
 			if (  // Public
 				($rb_agency_option_privacy == 0) ||
 				//Admin users
@@ -344,7 +354,9 @@ class RBAgency_Extends {
 				// Select Type
 				$isSearchPage = 1;
 				if(!isset($_POST['form_mode'])){
-					echo RBAgency_Profile::search_form('', '', $type, 0);
+					
+					echo RBAgency_Profile::search_form('', '', $type, 0,$mode);
+					
 				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
 						echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
