@@ -66,8 +66,12 @@
 			$profile_access_id = $wpdb->get_row("SELECT * FROM ".table_agency_castingcart_profile_hash." WHERE CastingProfileHash = '".$castingcartProfileHash."' # AND CastingProfileHashJobID ='".$castingcartJobHash."' ",ARRAY_A);
 
 			$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID = %d ORDER BY profile.ProfileContactNameFirst ASC";
+			
+			$query2 = "SELECT  * FROM ". table_agency_profile ." WHERE ProfileID = %d ORDER BY ProfileContactNameFirst ASC";
 
 			$data = current($wpdb->get_results($wpdb->prepare($query,$profile_access_id["CastingProfileHashProfileID"]), ARRAY_A));
+			
+			$data2 = current($wpdb->get_results($wpdb->prepare($query2,$profile_access_id["CastingProfileHashProfileID"]), ARRAY_A));
 			
 			$_profileID = $profile_access_id["CastingProfileHashProfileID"];
 
@@ -110,8 +114,16 @@
 						$wpdb->query($query);
 
 						$link = get_bloginfo("url")."/profile-casting/?Job_ID=".$Job_ID;
+						
+						
+						$ProfileContactDisplay = $data2["ProfileContactDisplay"];
+						if($ProfileContactDisplay == '')
+						{
+							$ProfileContactDisplay = $data2["ProfileContactNameFirst"].' '.$data2["ProfileContactNameLast"];;
+						}
+						
 
-						RBAgency_Casting::sendEmailCastingAvailability($data["ProfileContactDisplay"],$Availability,$Job_Title,$link);
+						RBAgency_Casting::sendEmailCastingAvailability($ProfileContactDisplay,$Availability,$Job_Title,$link);
 
 						echo ('<div id="message" class="updated" style="width:50%;margin:auto;"><p>Submitted successfully!</p></div>');
 				 

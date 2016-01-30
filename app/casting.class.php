@@ -774,15 +774,22 @@ class RBAgency_Casting {
 
 		public static function sendEmailCastingAvailability($Talents_Display_Name,$Availability,$Job_Name,$link){
 			// Mail it
+			
+			$rb_agency_options_arr = get_option('rb_agency_options');
+			$agency_name = $rb_agency_options_arr['rb_agency_option_agencyname'];
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
 			$headers[]  = 'From: '. get_bloginfo("name") .' <noreply@'.get_bloginfo("siteurl").'>' . "\r\n";
 
-
-			$MassEmailMessage	= "Hi, \n\n".$Talents_Display_Name." has changed the job availability to \"".$Availability."\" for the job \"".$Job_Name."\"."
-								. "\nClick here to review your casting cart: ".$link
-								.  "\n\n-".get_bloginfo("name");
+			
+			$MassEmailMessage	= "Hi Administrator,<br><br>".$Talents_Display_Name." has changed the job availability to \"".$Availability."\" for the job \"".$Job_Name."\"."
+								."<br><br>Click here to review your casting cart: <a href='".$link."'>".$link ."</a><br><br>";
+			$MassEmailMessage	.= "Regards,<br>";
+			$MassEmailMessage .= $agency_name."<br>"; 
+			$MassEmailMessage .= "<a href='".get_option('home')."'>".get_option('home') ."</a><br><br>";
+			$MassEmailMessage .= '<img src="'.site_url().$rb_agency_options_arr['rb_agency_option_agencylogo'].'" width="200">';
+			
 			$isSent = wp_mail(get_bloginfo('admin_email'), get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
 
 	}
