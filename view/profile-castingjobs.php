@@ -165,7 +165,7 @@
 				?>
 				<script type="text/javascript">
 					jQuery(document).ready(function(){
-						alert('You have submitted your availability.');
+						alert('Availability submitted! Please upload mp3 audio file to continue.');
 					});
 				</script>
 				<!--<h2>You've submitted your availability.</h2>-->
@@ -377,17 +377,28 @@
 							if(isset($_POST["submitMP3"])) {
 								if( $uploadOk == 0) {
 									echo "Sorry, Invalid audio file.";
+									?>
+									<script type="text/javascript">
+											jQuery(document).ready(function(){
+												alert("Sorry, Invalid audio file.");
+											});
+									</script>
+									<?php
+									
 								// if everything is ok, try to upload file
 								} else {
 									//remove the prev file first
 									$_deleteFle = $target_dir.$_AudioFileURL;
 									unset($_deleteFle);
 									if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+										$redirect_after_upload = site_url()."/profile-login/";
 										echo "Upload Success <br/>";
 										?>
 										<script type="text/javascript">
 											jQuery(document).ready(function(){
-												alert('File successfully uploaded!');
+												alert('Availability and audio file submitted!');
+												window.location.href = "<?php echo $redirect_after_upload ;?>";
+												
 											});
 											</script>
 										<?php
