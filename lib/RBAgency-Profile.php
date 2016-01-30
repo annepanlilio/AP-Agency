@@ -2651,8 +2651,8 @@ class RBAgency_Profile {
 										return false;
 									} else {
 										if(no_image > 0){
-											alert("Profiles without photo cannot be added to casting cart. Please unselect to continue or try another search.");
-											return false;
+											//alert("Profiles without photo cannot be added to casting cart. Please unselect to continue or try another search.");
+											//return false;
 										}
 										return true;
 									}
