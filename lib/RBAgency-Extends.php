@@ -95,11 +95,11 @@ class RBAgency_Extends {
 				 */
 				
 				if(isset($atts['list_layout'])){
-					if($atts['list_layout']=='voiceover'){
+					if($atts['list_layout']=='Voice Over'){
 						$_list_my_profiles ='voiceover';
-					}elseif($atts['list_layout']=='lightbox'){
+					}elseif($atts['list_layout']=='Default'){
 						$_list_my_profiles ='lightbox';
-					}elseif($atts['list_layout']=='landscape'){
+					}elseif($atts['list_layout']=='Landscape'){
 						$_list_my_profiles ='landscape';
 					}else{
 						$_list_my_profiles ='';
