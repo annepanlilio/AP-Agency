@@ -220,97 +220,7 @@
 				   	</td>
 				   	</tr>
 
-				  <?php if(!empty( $Job_Title )):?>
-						<tr>
-						<td style="text-align:right;padding-right:5px;">Job Title:</td>
-						<td><?php echo $Job_Title; ?></td>
-						</tr>
-					<?php endif;?>
-					<?php if(!empty( $Job_Type )):?>
-						<tr>
-						<td style="text-align:right;padding-right:5px;">Job Type:</td>
-						<td>
-						<?php $get_job_type = $wpdb->get_results("SELECT * FROM " . table_agency_casting_job_type);
-									if(count($get_job_type)){
-										foreach($get_job_type as $jtype){
-											if($jtype->Job_Type_ID == $Job_Type){
-												echo $jtype->Job_Type_Title;
-											}
-										}
-									}
-					?>
-						</td>
-						</tr>
-				<?php endif;?>
-					<?php if(!empty($Job_Date_Start)):?>
-						<tr>
-						<td style="text-align:right;padding-right:5px;">Job Date Start:</td>
-						<td><?php echo date("M d, Y",strtotime($Job_Date_Start)); ?></td>
-						</tr>
-					<?php endif;?>
-						<?php if(!empty($Job_Date_End)):?>
-						<tr>
-						<td style="text-align:right;padding-right:5px;">Job Date End:</td>
-						<td><?php echo date("M d, Y",strtotime($Job_Date_End)); ?></td>
-						</tr>
-					<?php endif;?>
-
-
-					<?php if(!empty($Job_Audition_Date_Start)):?>
-						<tr>
-						<td style="text-align:right;padding-right:5px;">Audition Date Start:</td>
-						<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_Start)); ?></td>
-						</tr>
-					<?php endif;?>
-						<?php if(!empty($Job_Audition_Date_End)):?>
-						<tr>
-						<td style="text-align:right;padding-right:5px;">Audition Date End:</td>
-						<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_End)); ?></td>
-						</tr>
-					<?php endif;?>
-					<?php if(!empty($Job_Audition_Venue)):?>
-						<tr>
-						<td style="text-align:right;padding-right:5px;">Auditon Venue:</td>
-						<td><?php echo $Job_Audition_Venue; ?></td>
-						</tr>
-					<?php endif;?>
-					<?php if(!empty($Job_Audition_Time)):?>
-					<tr>
-						<td style="text-align:right;padding-right:5px;">Audition Time</td>
-						<td><?php echo $Job_Audition_Time; ?></td>
-						</tr>
-					<?php endif;?>
-
-
-
-					<?php if(!empty($Job_Offering)):?>
-					<tr>
-						<td  style="text-align:right;padding-right:5px;">Role Fee($)</td>
-						<td><?php echo $Job_Offering; ?></td>
-						</tr>
-					<?php endif;?>
-
-					<?php if(!empty($Job_Text)):?>
-						<tr>
-						<td  style="text-align:right;padding-right:5px;">Description</td>
-						<td><?php echo $Job_Text; ?></td>
-						</tr>
-					<?php endif;?>
-                  <tr>
-                     <td colspan="2" style="text-align:center;">
-                 		<?php if(!empty($Job_Location)){ ?>
-								Location:<br/>
-								<?php echo $Job_Location; ?><br/>
-							  <?php //echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
-						<?php }?>
-					</td>
-					</tr>
-					
-				<input type="hidden" name="action" value="availability">
-				</form>
-				
-					
-					<?php
+				   	<?php
 					
 				$_AudioFileURL = $profile_access_id["CastingProfile_audio"];
 				
@@ -461,6 +371,98 @@
 							
 						?></td>
 					</tr>
+					
+				  <?php if(!empty( $Job_Title )):?>
+						<tr>
+						<td style="text-align:right;padding-right:5px;">Job Title:</td>
+						<td><?php echo $Job_Title; ?></td>
+						</tr>
+					<?php endif;?>
+					<?php if(!empty( $Job_Type )):?>
+						<tr>
+						<td style="text-align:right;padding-right:5px;">Job Type:</td>
+						<td>
+						<?php $get_job_type = $wpdb->get_results("SELECT * FROM " . table_agency_casting_job_type);
+									if(count($get_job_type)){
+										foreach($get_job_type as $jtype){
+											if($jtype->Job_Type_ID == $Job_Type){
+												echo $jtype->Job_Type_Title;
+											}
+										}
+									}
+					?>
+						</td>
+						</tr>
+				<?php endif;?>
+					<?php if(!empty($Job_Date_Start)):?>
+						<tr>
+						<td style="text-align:right;padding-right:5px;">Job Date Start:</td>
+						<td><?php echo date("M d, Y",strtotime($Job_Date_Start)); ?></td>
+						</tr>
+					<?php endif;?>
+						<?php if(!empty($Job_Date_End)):?>
+						<tr>
+						<td style="text-align:right;padding-right:5px;">Job Date End:</td>
+						<td><?php echo date("M d, Y",strtotime($Job_Date_End)); ?></td>
+						</tr>
+					<?php endif;?>
+
+
+					<?php if(!empty($Job_Audition_Date_Start)):?>
+						<tr>
+						<td style="text-align:right;padding-right:5px;">Audition Date Start:</td>
+						<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_Start)); ?></td>
+						</tr>
+					<?php endif;?>
+						<?php if(!empty($Job_Audition_Date_End)):?>
+						<tr>
+						<td style="text-align:right;padding-right:5px;">Audition Date End:</td>
+						<td><?php echo date("M d, Y",strtotime($Job_Audition_Date_End)); ?></td>
+						</tr>
+					<?php endif;?>
+					<?php if(!empty($Job_Audition_Venue)):?>
+						<tr>
+						<td style="text-align:right;padding-right:5px;">Auditon Venue:</td>
+						<td><?php echo $Job_Audition_Venue; ?></td>
+						</tr>
+					<?php endif;?>
+					<?php if(!empty($Job_Audition_Time)):?>
+					<tr>
+						<td style="text-align:right;padding-right:5px;">Audition Time</td>
+						<td><?php echo $Job_Audition_Time; ?></td>
+						</tr>
+					<?php endif;?>
+
+
+
+					<?php if(!empty($Job_Offering)):?>
+					<tr>
+						<td  style="text-align:right;padding-right:5px;">Role Fee($)</td>
+						<td><?php echo $Job_Offering; ?></td>
+						</tr>
+					<?php endif;?>
+
+					<?php if(!empty($Job_Text)):?>
+						<tr>
+						<td  style="text-align:right;padding-right:5px;">Description</td>
+						<td><?php echo $Job_Text; ?></td>
+						</tr>
+					<?php endif;?>
+                  <tr>
+                     <td colspan="2" style="text-align:center;">
+                 		<?php if(!empty($Job_Location)){ ?>
+								Location:<br/>
+								<?php echo $Job_Location; ?><br/>
+							  <?php //echo do_shortcode("[pw_map address='". $Job_Location."']"); ?>
+						<?php }?>
+					</td>
+					</tr>
+					
+				<input type="hidden" name="action" value="availability">
+				</form>
+				
+					
+					
 						
 				</table>
 			</div>
