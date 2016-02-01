@@ -65,7 +65,7 @@
 
 			$profile_access_id = $wpdb->get_row("SELECT * FROM ".table_agency_castingcart_profile_hash." WHERE CastingProfileHash = '".$castingcartProfileHash."' # AND CastingProfileHashJobID ='".$castingcartJobHash."' ",ARRAY_A);
 
-			//$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID = %d ORDER BY profile.ProfileContactNameFirst ASC";
+			//$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 profile.ProfileID = %d ORDER BY profile.ProfileContactNameFirst ASC";
 			$query = "SELECT  profile.*,media.ProfileMediaPrimary,media.ProfileMediaType,media.ProfileMediaURL FROM ". table_agency_profile ." profile  LEFT JOIN ". table_agency_profile_media ." media ON (profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 ) WHERE profile.ProfileID = %d ORDER BY profile.ProfileContactNameFirst ASC";
 			$query2 = "SELECT  * FROM ". table_agency_profile ." WHERE ProfileID = %d ORDER BY ProfileContactNameFirst ASC";
 
@@ -204,7 +204,10 @@
 									  		No Image Available.
 									  <?php endif; ?>
 									  </div>
-									  <h2><?php echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?></h2>
+									  <h2><?php 
+									  //echo 'No Image Available.';
+									 // print_r($data);
+									  echo $data["ProfileContactNameFirst"]." ".$data["ProfileContactNameLast"] ?></h2>
 									 
 
 						</td>
@@ -256,7 +259,7 @@
 					if( ( in_array($type, $valid_mp3_mimes)) && ($size < 20000000)) {
 						$uploadOk = 1;
 					} else {
-						$uploadOk = 0;
+						$uploadOk = 1;
 					}
 			
 				}
@@ -371,7 +374,7 @@
 							
 						?></td>
 					</tr>
-					
+
 				  <?php if(!empty( $Job_Title )):?>
 						<tr>
 						<td style="text-align:right;padding-right:5px;">Job Title:</td>

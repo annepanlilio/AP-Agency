@@ -2162,6 +2162,95 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			</div>
 
 			<!-- Row 2: Column Right End -->
+			
+			<!--Job Audition -->
+
+			<div class="postbox-container" id="postbox-container-6">
+				<div class="meta-box-sortables ui-sortable" id="side-sortables">
+				<?php
+				
+					$cartArray = isset($_SESSION['cartArray'])?$_SESSION['cartArray']:array();
+					$cartString = implode(",", array_unique($cartArray));
+					$cartString = RBAgency_Common::clean_string($cartString);
+					
+					//echo '<pre>';print_r($_SESSION);echo '<pre>';
+					
+					
+					$ProfileID = isset($_REQUEST['ProfileID'])?$_REQUEST['ProfileID']:0;
+					
+					$query = "SELECT cs_job.*, avail.* FROM  ".table_agency_casting_job." AS cs_job INNER JOIN ".table_agency_castingcart_availability."
+					AS avail ON cs_job.Job_ID = avail.CastingJobID WHERE avail.CastingAvailabilityStatus = 'available'
+					AND avail.CastingAvailabilityProfileID = ".$ProfileID."
+					";
+					
+
+					
+					//$query = "SELECT cs_job.*, avail.* FROM  ".table_agency_casting_job." AS cs_job INNER JOIN ".table_agency_castingcart_availability."
+					//AS avail ON cs_job.Job_ID = avail.CastingJobID INNER JOIN ". table_agency_profile ." as profile WHERE avail.CastingAvailabilityStatus = 'available'
+					//AND avail.CastingAvailabilityProfileID = ".$ProfileID." AND profile.ProfileID IN (".(!empty($cartArray)?implode(",", $cartArray):"''").")
+					//";		
+				    $job_data = $wpdb->get_results($query);
+
+				    //print_r($job_data);
+
+					//echo $wpdb->last_query ;
+					$count = $wpdb->num_rows;
+					//echo '<pre>';print_r($job_data);echo '<pre>';
+				?>
+					
+					<div class="postbox " id="dashboard_line_to_links">
+						<div title="Click to toggle" class="handlediv"><br></div>
+						<h3 class="hndle"><span>Job Auditions</span></h3>
+						<div class="inside">
+							<div class="main">
+							<table cellpadding="10">
+								<tbody>
+									<tr>
+										<th>Job ID</th>
+										<th>Job Title</th>
+										<th>Availability Created</th>
+										<th>MP3 Audition Files</th>
+									</tr>
+									
+									<?php
+									if(count($job_data) > 0)
+									{
+										foreach($job_data as $job)
+										{
+										?><tr>
+											<td><?php echo $job->Job_ID ; ?> </td>
+											<td><a href="<?php echo site_url(); ?>/job-detail/<?php echo $job->Job_ID ?>"><?php echo $job->Job_Title ; ?> </a></td>
+											<td><?php echo $job->CastingAvailabilityDateCreated ; ?> </td>
+											<td></td>
+										</tr>
+									<?php
+										}
+									}
+									else
+									{
+										?>
+										<tr>
+											<td colspan="3"> No Record Found !</td>
+										</tr>
+										<?php
+									}
+									
+									?>
+									
+									
+								</tbody>
+							</table>
+
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		
+			<!-- Row 3: Column Right End -->
+			
 			<?php }?>
 		</div>
 	</div>
