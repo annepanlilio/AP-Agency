@@ -111,6 +111,12 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 					// Return SQL string based on fields
 					$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
 
+					if(!empty($search_sql_query['custom'])){
+						unset($_SESSION['custom_search']);
+						$_SESSION['custom_search'] = $search_sql_query['custom'];
+					}
+
+					$search_sql_query['custom'] = $_SESSION['custom_search'];
 					
 					// Conduct Search
 					echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
