@@ -2179,8 +2179,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					$ProfileID = isset($_REQUEST['ProfileID'])?$_REQUEST['ProfileID']:0;
 					
 					$query = "SELECT cs_job.*, avail.* FROM  ".table_agency_casting_job." AS cs_job INNER JOIN ".table_agency_castingcart_availability."
-					AS avail ON cs_job.Job_ID = avail.CastingJobID WHERE avail.CastingAvailabilityStatus = 'available'
-					AND avail.CastingAvailabilityProfileID = ".$ProfileID."
+					AS avail ON cs_job.Job_ID = avail.CastingJobID WHERE avail.CastingAvailabilityProfileID = ".$ProfileID."
 					";
 					
 
@@ -2260,7 +2259,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													$prepared = $wpdb->prepare($query,$_GET['ProfileID'],$job->Job_ID);
 													$availability = current($wpdb->get_results($prepared));
 
-													echo $availability->status;
+													if($availability->status == 'notavailable'){
+														echo 'Not Available';
+													}else{
+														echo ucfirst($availability->status);
+													}
 												?>
 
 											</td>
