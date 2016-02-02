@@ -2208,22 +2208,65 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									<tr>
 										<th>Job ID</th>
 										<th>Job Title</th>
-										<th>Availability Created</th>
+										<th>Date Confirmed</th>
 										<th>MP3 Audition Files</th>
+										<th>Availability</th>
 									</tr>
+									<?php
+									//audio files
+									$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
+									$files = scandir($dir, 0);
 									
+									$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
+
+
+
+									?>
 									<?php
 									if(count($job_data) > 0)
 									{
 										foreach($job_data as $job)
 										{
+											
 										?><tr>
 											<td><?php echo $job->Job_ID ; ?> </td>
 											<td><a href="<?php echo site_url(); ?>/job-detail/<?php echo $job->Job_ID ?>"><?php echo $job->Job_Title ; ?> </a></td>
 											<td><?php echo $job->CastingAvailabilityDateCreated ; ?> </td>
-											<td></td>
+											<td>
+												<?php 
+												for($i = 0; $i < count($files); $i++){
+												$parsedFile = explode('-',$files[$i]);
+
+													if($parsedFile[0] == $job->Job_ID && $_GET['ProfileID'] == $parsedFile[1]){
+														$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
+														if($medialink_option == 2){
+															//open in new window and play
+															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank">'.$mp3_file.'</a>';
+														}elseif($medialink_option == 3){
+															//open in new window and download
+															$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".'_casting-jobs/'.$files[$i];
+															echo '<a href="'.$force_download_url.'" target="_blank">'.$mp3_file.'</a>';
+														}
+														
+													}
+												}
+												?>
+
+											</td>
+											<td>
+												<?php
+
+													$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+													$prepared = $wpdb->prepare($query,$_GET['ProfileID'],$job->Job_ID);
+													$availability = current($wpdb->get_results($prepared));
+
+													echo $availability->status;
+												?>
+
+											</td>
 										</tr>
 									<?php
+											
 										}
 									}
 									else

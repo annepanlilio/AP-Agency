@@ -182,7 +182,7 @@
  
 				<table class="job-details" style="margin-top:20px;width:100%;">
 				
-				<form method="post" action="">
+				<form method="post" action="" enctype="multipart/form-data">
 				
 				      <tr>
 				        <td colspan="2">
@@ -232,7 +232,7 @@
 					mkdir($target_dir);
 				}
 				$_valid_name = str_replace(' ','-', basename($_FILES["fileToUpload"]["name"]));
-				$_filename = $_profileID . '-'. $_valid_name;
+				$_filename = $Job_ID.'-'.$_profileID . '-'. $_valid_name;
 				$target_file = $target_dir . $_filename;
 				$uploadOk = 1;
 				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -259,7 +259,7 @@
 					if( ( in_array($type, $valid_mp3_mimes)) && ($size < 20000000)) {
 						$uploadOk = 1;
 					} else {
-						$uploadOk = 1;
+						$uploadOk = 0;
 					}
 			
 				}
