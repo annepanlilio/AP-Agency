@@ -2213,10 +2213,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									</tr>
 									<?php
 									//audio files
-									$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
-									$files = scandir($dir, 0);
 									
-									$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 
 
 
@@ -2233,6 +2230,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											<td><?php echo $job->CastingAvailabilityDateCreated ; ?> </td>
 											<td>
 												<?php 
+
+												$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
+												$files = scandir($dir, 0);
+												
+												$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
+
 												for($i = 0; $i < count($files); $i++){
 												$parsedFile = explode('-',$files[$i]);
 
@@ -2240,11 +2243,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
 														if($medialink_option == 2){
 															//open in new window and play
-															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank">'.$mp3_file.'</a>';
+															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank">'.$mp3_file.'</a><br>';
 														}elseif($medialink_option == 3){
 															//open in new window and download
 															$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".'_casting-jobs/'.$files[$i];
-															echo '<a href="'.$force_download_url.'" target="_blank">'.$mp3_file.'</a>';
+															echo '<a href="'.$force_download_url.'" target="_blank">'.$mp3_file.'</a><br>';
 														}
 														
 													}
