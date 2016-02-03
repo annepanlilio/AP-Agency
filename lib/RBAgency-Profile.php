@@ -3346,12 +3346,34 @@ class RBAgency_Profile {
 			                $_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
 			                //$displayHTML .= 'profile_type_'. $dataList["ProfileType"];
 			                
+			                $voicedemolinks = '';
+												$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
+												$files = scandir($dir, 0);
+												
+												$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
+
+												for($i = 0; $i < count($files); $i++){
+												$parsedFile = explode('-',$files[$i]);
+
+													if($parsedFile[0] == $_GET['Job_ID'] && $dataList["ProfileID"] == $parsedFile[1]){
+														$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
+														if($medialink_option == 2){
+															//open in new window and play
+															$voicedemolinks .= '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" title="'.$files[$i].'">Play MP3 File</a><br>';
+														}elseif($medialink_option == 3){
+															//open in new window and download
+															$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".'_casting-jobs/'.$files[$i];
+															$voicedemolinks .= '<a href="'.$force_download_url.'" target="_blank" title="'.$files[$i].'">Download MP3 File</a><br>';
+														}
+														
+													}
+												}
 
 				$displayHTML .= '
 				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'" mp3_type="'.$_mp3typeClassUniq.'">
 					<div class="profile-voiceover">
 					   	<strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
-						'. stripslashes($ProfileContactDisplay) .'</a></strong>'.$voicedemo_links .'
+						'. stripslashes($ProfileContactDisplay) .'</a></strong>'.$voicedemolinks .'
 					</div><!-- .profile-voiceover -->
 				</div> <!-- .? -->';
 				
