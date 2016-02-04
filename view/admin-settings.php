@@ -200,6 +200,15 @@ if ($ConfigID == 0) {
 	echo "</div>\n";
 	echo "<hr />\n";
 
+		// S2Member
+	echo "<div class=\"boxlinkgroup\">\n";
+	echo "  <h2>". __("S2member", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+	echo "  <p>". __("Settings for s2member plugin", RBAGENCY_TEXTDOMAIN) . "</p>\n";
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=100\" title=\"". __("s2member", RBAGENCY_TEXTDOMAIN) . "\">". __("s2member", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "    </div>\n";
+	echo "</div>\n";
+	
 	// Uninstall
 	echo "<div class=\"boxlinkgroup\">\n";
 	echo "  <h2>". __("Uninstall", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
@@ -3769,13 +3778,13 @@ elseif ($ConfigID == 100){
 	echo "<p>Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i></p>";
 	echo "<textarea name=\"rbagency_paypal_button_code\" class=\"rbagency_paypal_button_code\" rows=\"10\" cols=\"60\">".stripslashes($paypalBtnCode)."</textarea><br>";
 	echo "<p>Insert message after registration.</p>";
-	echo "<textarea name=\"rbagency_initial_message_after_registration\">".$rbagency_initial_message_after_registration."</textarea>";
+	echo "<textarea name=\"rbagency_initial_message_after_registration\" class=\"rbagency_initial_message_after_registration\" rows=\"7\" cols=\"60\">".$rbagency_initial_message_after_registration."</textarea>";
 	echo "<p>Insert email notification that willl be send after registration.</p>";
-	echo "<textarea name=\"rbagency_initial_email_after_registration\">".$rbagency_initial_email_after_registration."</textarea>";
+	echo "<textarea name=\"rbagency_initial_email_after_registration\" class=\"rbagency_initial_email_after_registration\" rows=\"7\" cols=\"60\">".$rbagency_initial_email_after_registration."</textarea>";
 	echo "<p>Insert message that willl appear after finishing steps 1-3.</p>";
-	echo "<textarea name=\"rbagency_message_after_steps\">".$rbagency_message_after_steps."</textarea>";
+	echo "<textarea name=\"rbagency_message_after_steps\" class=\"rbagency_message_after_steps\" rows=\"7\" cols=\"60\">".$rbagency_message_after_steps."</textarea>";
 	echo "<p>Insert message that willl appear after payment.</p>";
-	echo "<textarea name=\"rbagency_message_after_payment\">".$rbagency_message_after_payment."</textarea>";
+	echo "<textarea name=\"rbagency_message_after_payment\" class=\"rbagency_message_after_payment\" rows=\"7\" cols=\"60\">".$rbagency_message_after_payment."</textarea><br>";
 	echo '<input type="submit" name="save_s2member" value="Save Settings">';
 	echo '</form>';
 
@@ -3786,15 +3795,33 @@ elseif ($ConfigID == 100){
 		jQuery(".allow_free_s2member").attr('disabled','disabled');
 		if(jQuery(".use_s2member").is(':checked')){
 			jQuery(".rbagency_paypal_button_code").removeAttr('disabled');
+			jQuery(".rbagency_initial_message_after_registration").removeAttr('disabled');
+			jQuery(".rbagency_initial_email_after_registration").removeAttr('disabled');
+			jQuery(".rbagency_message_after_steps").removeAttr('disabled');
+			jQuery(".rbagency_message_after_payment").removeAttr('disabled');
 		}
 		jQuery(".use_s2member").click(function(){
 
 			if(jQuery(this).is(':checked')){
 				jQuery(".rbagency_paypal_button_code").removeAttr('disabled');
+				jQuery(".rbagency_initial_message_after_registration").removeAttr('disabled');
+				jQuery(".rbagency_initial_email_after_registration").removeAttr('disabled');
+				jQuery(".rbagency_message_after_steps").removeAttr('disabled');
+				jQuery(".rbagency_message_after_payment").removeAttr('disabled');
 			}else{
 
 				jQuery(".rbagency_paypal_button_code").attr('disabled','disabled');
 				jQuery(".rbagency_paypal_button_code").val('');
+
+				jQuery(".rbagency_initial_message_after_registration").attr('disabled','disabled');
+				jQuery(".rbagency_initial_email_after_registration").attr('disabled','disabled');
+				jQuery(".rbagency_message_after_steps").attr('disabled','disabled');
+				jQuery(".rbagency_message_after_payment").attr('disabled','disabled');
+
+				jQuery(".rbagency_initial_message_after_registration").val('');
+				jQuery(".rbagency_initial_email_after_registration").val('');
+				jQuery(".rbagency_message_after_steps").val('');
+				jQuery(".rbagency_message_after_payment").val('');
 			}
 		});
 	});
