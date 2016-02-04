@@ -1427,7 +1427,7 @@ class RBAgency_Profile {
 					if(empty($_sortBy )) $_sortBy = 'ProfileContactNameFirst';
 
 					$atts['sort'] = 'profile.'.$_sortBy;
-					if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= ' DESC';
+					if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= '';
 					
 					self::search_generate_sqlorder($atts,$filter2);
 
