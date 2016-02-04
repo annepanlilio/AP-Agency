@@ -3685,5 +3685,122 @@ elseif ($ConfigID == 99) {
 
 	}
 }	// End
+
+elseif ($ConfigID == 100){
+
+	if(isset($_POST['save_s2member'])){
+
+		$use = get_option('rbagency_use_s2member');
+		if(empty($use)){
+			add_option('use_s2member',false);
+		}
+		$button_code = get_option('rbagency_paypal_button_code');
+		if(empty($button_code)){
+			add_option('rbagency_paypal_button_code',stripslashes($_POST['rbagency_paypal_button_code']));
+		}
+
+		$rbagency_initial_message_after_registration_b = get_option('rbagency_initial_message_after_registration');
+		if(empty($rbagency_initial_message_after_registration_b)){
+			add_option('rbagency_initial_message_after_registration',stripslashes($_POST['rbagency_initial_message_after_registration']));
+		}
+
+		$rbagency_initial_email_after_registration_b = get_option('rbagency_initial_email_after_registration');
+		if(empty($rbagency_initial_email_after_registration_b)){
+			add_option('rbagency_initial_email_after_registration',stripslashes($_POST['rbagency_initial_email_after_registration']));
+		}
+
+		$rbagency_message_after_steps_b = get_option('rbagency_message_after_steps');
+		if(empty($rbagency_message_after_steps_b)){
+			add_option('rbagency_initial_email_after_registration',stripslashes($_POST['rbagency_message_after_steps']));
+		}
+			
+		if(isset($_POST['use_s2member'])){
+			update_option('rbagency_use_s2member',true);
+		}elseif(!isset($_POST['use_s2member'])){
+			update_option('rbagency_use_s2member',false);
+		}
+
+		if(!empty($_POST['rbagency_paypal_button_code'])){
+			update_option('rbagency_paypal_button_code',stripslashes($_POST['rbagency_paypal_button_code']));
+		}elseif(empty($_POST['rbagency_paypal_button_code'])){
+			update_option('rbagency_paypal_button_code','');
+		}
+
+		if(!empty($_POST['rbagency_initial_message_after_registration'])){
+			update_option('rbagency_initial_message_after_registration',stripslashes($_POST['rbagency_initial_message_after_registration']));
+		}elseif(empty($_POST['rbagency_initial_message_after_registration'])){
+			update_option('rbagency_initial_message_after_registration','');
+		}
+
+		if(!empty($_POST['rbagency_initial_email_after_registration'])){
+			update_option('rbagency_initial_email_after_registration',stripslashes($_POST['rbagency_initial_email_after_registration']));
+		}elseif(empty($_POST['rbagency_initial_email_after_registration'])){
+			update_option('rbagency_initial_email_after_registration','');
+		}
+
+		if(!empty($_POST['rbagency_message_after_steps'])){
+			update_option('rbagency_message_after_steps',stripslashes($_POST['rbagency_message_after_steps']));
+		}elseif(empty($_POST['rbagency_message_after_steps'])){
+			update_option('rbagency_message_after_steps','');
+		}
+
+		if(!empty($_POST['rbagency_message_after_payment'])){
+			update_option('rbagency_message_after_payment',stripslashes($_POST['rbagency_message_after_payment']));
+		}elseif(empty($_POST['rbagency_message_after_payment'])){
+			update_option('rbagency_message_after_payment','');
+		}
+
+		//echo $_POST['rbagency_paypal_button_code'];
+
+	}
+
+	$useS2member = get_option('rbagency_use_s2member');
+	$paypalBtnCode = get_option('rbagency_paypal_button_code');
+
+	$check_use = $useS2member == true ? "checked" : "";
+
+	$rbagency_initial_message_after_registration = get_option('rbagency_initial_message_after_registration');
+	$rbagency_initial_email_after_registration = get_option('rbagency_initial_email_after_registration');
+	$rbagency_message_after_steps = get_option('rbagency_message_after_steps');
+	$rbagency_message_after_payment = get_option('rbagency_message_after_payment');
+
+	echo '<form action="'.admin_url("admin.php?page=". $_GET['page']."&ConfigID=".$_GET['ConfigID']) .'" method="POST">';
+	echo "<input type=\"checkbox\" name=\"use_s2member\" class=\"use_s2member\" $check_use>&nbsp;Use S2member Plugin.<br>";
+	echo "<p>Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i></p>";
+	echo "<textarea name=\"rbagency_paypal_button_code\" class=\"rbagency_paypal_button_code\" rows=\"10\" cols=\"60\">".stripslashes($paypalBtnCode)."</textarea><br>";
+	echo "<p>Insert message after registration.</p>";
+	echo "<textarea name=\"rbagency_initial_message_after_registration\">".$rbagency_initial_message_after_registration."</textarea>";
+	echo "<p>Insert email notification that willl be send after registration.</p>";
+	echo "<textarea name=\"rbagency_initial_email_after_registration\">".$rbagency_initial_email_after_registration."</textarea>";
+	echo "<p>Insert message that willl appear after finishing steps 1-3.</p>";
+	echo "<textarea name=\"rbagency_message_after_steps\">".$rbagency_message_after_steps."</textarea>";
+	echo "<p>Insert message that willl appear after payment.</p>";
+	echo "<textarea name=\"rbagency_message_after_payment\">".$rbagency_message_after_payment."</textarea>";
+	echo '<input type="submit" name="save_s2member" value="Save Settings">';
+	echo '</form>';
+
+
+	?>
+	<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery(".allow_free_s2member").attr('disabled','disabled');
+		if(jQuery(".use_s2member").is(':checked')){
+			jQuery(".rbagency_paypal_button_code").removeAttr('disabled');
+		}
+		jQuery(".use_s2member").click(function(){
+
+			if(jQuery(this).is(':checked')){
+				jQuery(".rbagency_paypal_button_code").removeAttr('disabled');
+			}else{
+
+				jQuery(".rbagency_paypal_button_code").attr('disabled','disabled');
+				jQuery(".rbagency_paypal_button_code").val('');
+			}
+		});
+	});
+	</script>
+
+<?php 
+}
 echo "</div>\n";
 ?>
