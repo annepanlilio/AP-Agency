@@ -1482,7 +1482,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$massmediaids = implode(",", $_GET['targetids']);
 
 									//get all the images
-									$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+									$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND (ProfileMediaType = 'Image' OR ProfileMediaType = 'dvd' OR ProfileMediaType = 'magazine')";
 									$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID),ARRAY_A);
 									$countImgConfirm = $wpdb->num_roAws;
 									$mass_image_data = array();
@@ -1492,7 +1492,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									//delete all the images from database
 									$massmediaids = implode(",", array_keys($mass_image_data));
 
-									$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image' ";
+									$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND (ProfileMediaType = 'Image' OR ProfileMediaType = 'dvd' OR ProfileMediaType = 'magazine') ";
 									$resultsMassImageDelete = $wpdb->query($queryMassImageDelete);
 									//delete images on the disk
 									$dirURL = RBAGENCY_UPLOADPATH . $ProfileGallery;
@@ -2108,6 +2108,215 @@ function rb_display_manage($ProfileID, $errorValidation) {
 				</div>
 			</div>
 
+
+<!--box cover gallary-->
+<div id="postbox-container-3" class="postbox-container">
+				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+ 
+					<div class="postbox" style="display:none;">
+						<div class="inside">
+						<?php
+						echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
+						echo "     <input type=\"hidden\" name=\"ProfileUserLinked\" value=\"" . $ProfileUserLinked. "\" />\n";
+						echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
+						echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+						?>
+						</div>
+					</div>
+
+
+					
+
+					<div id="dashboard_gallery" class="postbox">
+						<div class="handlediv" title="Click to toggle"><br></div>
+						<h3 class="hndle"><span>Box Cover</span></h3>
+
+						
+
+
+						<div class="inside">
+							<div class="upload-form">
+								<?php include_once(RBAGENCY_PLUGIN_DIR .'view/include-boxcoverupload.php'); ?>
+							</div>
+							<div class="main">
+							<?php
+								echo "<script type='text/javascript'>\n";
+								echo "function confirmDelete(delMedia,mediaType) {\n";
+								echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
+								echo "  document.location= '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=photodelete&targetid='+delMedia;";
+								echo "  }\n";
+								echo "}\n";
+								echo "</script>\n";
+
+								// Mass delete
+								if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
+									$massmediaids = '';
+									$massmediaids = implode(",", $_GET['targetids']);
+
+									//get all the images
+									$queryImgConfirm = "SELECT ProfileMediaID,ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID = %d AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image'";
+									$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID),ARRAY_A);
+									$countImgConfirm = $wpdb->num_roAws;
+									$mass_image_data = array();
+									foreach ($resultsImgConfirm as $dataImgConfirm) {
+										$mass_image_data[$dataImgConfirm['ProfileMediaID']] = $dataImgConfirm['ProfileMediaURL'];
+									}
+									//delete all the images from database
+									$massmediaids = implode(",", array_keys($mass_image_data));
+
+									$queryMassImageDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($massmediaids) AND ProfileMediaType = 'Image' ";
+									$resultsMassImageDelete = $wpdb->query($queryMassImageDelete);
+									//delete images on the disk
+									$dirURL = RBAGENCY_UPLOADPATH . $ProfileGallery;
+									foreach ($mass_image_data as $mid => $ProfileMediaURL) {
+										if (!unlink($dirURL . "/" . $ProfileMediaURL)) {
+											echo ("<div id=\"message\" class=\"error\"><p>" . __("Error removing", RBAGENCY_TEXTDOMAIN) . " <strong>" . $ProfileMediaURL . "</strong>. " . __("File did not exist.", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+										} else {
+											echo ("<div id=\"message\" class=\"updated\"><p>File <strong>'. $ProfileMediaURL .'</strong> " . __("successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+										}
+									}
+								}
+
+								// Are we deleting?
+								if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "photodelete") {
+									$deleteTargetID = $_GET["targetid"];
+
+									// Verify Record
+									$queryImgConfirm = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaID =  '%d'";
+									$resultsImgConfirm = $wpdb->get_results($wpdb->prepare($queryImgConfirm, $ProfileID, $deleteTargetID),ARRAY_A);
+									$countImgConfirm = $wpdb->num_rows;
+									foreach ($resultsImgConfirm  as $dataImgConfirm) {
+
+										$ProfileMediaID = $dataImgConfirm['ProfileMediaID'];
+										$ProfileMediaType = $dataImgConfirm['ProfileMediaType'];
+										$ProfileMediaURL = $dataImgConfirm['ProfileMediaURL'];
+
+										// Remove Record
+										$delete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaID=$ProfileMediaID";
+										$results = $wpdb->query($delete);
+
+										if ($ProfileMediaType == "Demo Reel" || $ProfileMediaType == "Demo Reel" || $ProfileMediaType == "Video Monologue" || $ProfileMediaType == "Video Slate") {
+											echo ("<div id=\"message\" class=\"updated\"><p>File <strong>'. $ProfileMediaURL .'</strong> " . __("successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+										} else {
+											// Remove File
+											$dirURL = RBAGENCY_UPLOADPATH . $ProfileGallery;
+											if (!unlink($dirURL . "/" . $ProfileMediaURL)) {
+												echo ("<div id=\"message\" class=\"error\"><p>" . __("Error removing", RBAGENCY_TEXTDOMAIN) . " <strong>" . $ProfileMediaURL . "</strong>. " . __("File did not exist.", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+											} else {
+												echo ("<div id=\"message\" class=\"updated\"><p>File <strong>'. $ProfileMediaURL .'</strong> " . __("successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+											}
+										}
+									}// is there record?
+								}
+								
+
+								$rb_agency_options_arr = get_option('rb_agency_options');
+								$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
+								$queryImg = rb_agency_option_galleryorder_query_boxcover($order ,$ProfileID,"magazine");
+								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+								$countImg =$wpdb->num_rows;
+								$massDelete = "";
+
+								
+								echo "<div id='wrapper-sortable'><div id='boxcover-gallery-sortable' style='list-style:none;'>";
+								foreach ($resultsImg as $dataImg) {
+
+									if ($dataImg['ProfileMediaPrimary']) {
+											$toggleClass = " primary";
+											$isChecked = " checked";
+											$isCheckedText = " Primary";
+											if ($countImg == 1) {
+												$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
+												$massDelete = '<input type="checkbox" name="massgaldel_boxcover" value="' . $dataImg['ProfileMediaID'] . '"> Select';
+											} else {
+												$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
+												$massDelete = '<input type="checkbox" name="massgaldel_boxcover" value="' . $dataImg['ProfileMediaID'] . '"> Select';
+											}
+										} else {
+											$toggleClass = "";
+											$isChecked = "";
+											$isCheckedText = " Set Primary";
+											$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
+											$massDelete = '<input type="checkbox" name="massgaldel_boxcover" value="' . $dataImg['ProfileMediaID'] . '"> Select';
+										}
+										echo "<div class=\"item gallery-item".$toggleClass."\">\n";
+
+										echo $toDelete;
+										// <img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+										$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'];
+										$params = array(
+											'width' => 100,
+											'height' => 150
+										);
+										$profile_image_src = bfi_thumb( $image_path, $params );
+										echo "  <div class=\"photo\"><img src=\"" . $profile_image_src ."\"/></div>\n";
+										//echo "  <div class=\"photo\"><img src=\"" . get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "&a=t&w=100&h=150\"/></div>\n";
+										echo "		<div class=\"item-order\" style='display:none;'>Order: <input type=\"hidden\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
+										echo "<div class=\"boxcover-category\">".strtoupper($dataImg['ProfileMediaType'])."</div>";
+										//echo "  	<div class=\"make-primary\"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "</div>";
+										echo "		<div>".$massDelete."</div>";
+										echo "  </div>\n";
+									
+								}
+
+								echo "</div></div>";
+								?>
+								<script type="text/javascript">
+								jQuery(document).ready(function(){
+									jQuery("#wrapper-sortable #boxcover-gallery-sortable").sortable(
+										{item:'.item',
+										cursor:'move',
+										update: function( event, ui ) {
+												jQuery("#wrapper-sortable #boxcover-gallery-sortable .item").each(function(i,d){
+													jQuery(this).find("input[type=hidden]").val(i);
+												});
+										}
+									});
+									jQuery("#wrapper-sortable #boxcover-gallery-sortable").disableSelection();
+								});
+								</script>
+								<?php 
+								// No records?
+								if ($countImg < 1) {
+									echo "<div class='item gallery-item ui-sortable-handle' id='gallery-no-image'>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
+								}
+
+							?>
+							
+							<div style="clear: both;"></div>
+							<style>
+								.main .gallery-item{width:100px; height: 200px;overflow:hidden;}
+							</style>
+								<a href="javascript:confirm_mass_gallery_delete_boxcover();">Delete Selected Images</a>
+								
+								<script language="javascript">
+								function confirm_mass_gallery_delete_boxcover(){
+									var mas_del_ids = '&';
+									jQuery("input:checkbox[name=massgaldel_boxcover]:checked").each(function() {
+										if(mas_del_ids != '&'){
+											mas_del_ids += '&';
+										}
+									mas_del_ids += 'targetids[]='+jQuery(this).val();
+									});
+									
+									if( mas_del_ids != '&'){
+										if(confirm("Do you want to delete all the selected images?")){
+
+											urlmassdelete = '<?php echo admin_url("admin.php?page=" . $_GET['page']);?>&action=editRecord&ProfileID=<?php echo $ProfileID;?>&actionsub=massphotodelete' + mas_del_ids;
+											document.location = urlmassdelete;
+										}
+									}else {
+										alert("You have to select images to delete");
+									}
+								}
+								</script>
+								
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
 
 
 			<!--Expanded Model Detail-->

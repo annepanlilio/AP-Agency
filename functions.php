@@ -4807,5 +4807,74 @@ class RBLogin_Widget extends WP_Widget {
 	<?php
 	}
 }
+
+
+function box_cover_dvd( $atts ) {
+
+
+	global $wpdb;
+
+	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'dvd'";
+	
+	$resultsImg = $wpdb->get_results($query,ARRAY_A);
+
+	$output = "";
+	$output = "<ul>";
+	foreach ($resultsImg as $dataImg) {
+		$output .="<li style='float:left;list-style-type: none;padding: 20px;'>";
+		$image_path = RBAGENCY_UPLOADDIR . $dataImg['ProfileGallery'] . "/" . $dataImg['ProfileMediaURL'];
+		$params = array(
+			'crop' => false 
+		);
+		$profile_image_src = bfi_thumb( $image_path, $params );
+		$output .= "<a class='example-image-link' href='".$profile_image_src."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . $profile_image_src ."\" class='example-image'/></a>";
+		$output .= "<p>".$dataImg['ProfileContactNameFirst'].' '.$dataImg['ProfileContactNameLast'].'</p>';
+		$output .= "</li>";
+	}
+	$output .= "</ul>";
+
+	return $output;
+}
+add_shortcode( 'box-cover-dvd', 'box_cover_dvd' );
+
+
+function box_cover_magazine( $atts ) {
+
+	
+
+	global $wpdb;
+
+	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'magazine'";
+	
+	$resultsImg = $wpdb->get_results($query,ARRAY_A);
+
+	$output = "";
+
+	$output .= "<ul>";
+	foreach ($resultsImg as $dataImg) {
+		$output .="<li style='float:left;list-style-type: none;padding: 20px;'>";
+		$image_path = RBAGENCY_UPLOADDIR . $dataImg['ProfileGallery'] . "/" . $dataImg['ProfileMediaURL'];
+		$params = array(
+			'crop' => false 
+		);
+		$profile_image_src = bfi_thumb( $image_path, $params );
+		$output .= "<a class='example-image-link' href='".$profile_image_src."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . $profile_image_src ."\" class='example-image'/></a>";
+		$output .= "<p>".$dataImg['ProfileContactNameFirst'].' '.$dataImg['ProfileContactNameLast'].'</p>';
+		$output .= "</li>";
+	}
+	$output .= "</ul>";
+
+	return $output;
+}
+add_shortcode( 'box-cover-magazine', 'box_cover_magazine' );
+
+function wpdocs_theme_name_scripts() {
+    wp_enqueue_style( 'lightbox2-style', site_url()."/wp-content/plugins/rb-agency/ext/lightbox2/css/lightbox.css", NULL,'4.4.4');
+    wp_enqueue_script( 'script-name', site_url()."/wp-content/plugins/rb-agency/ext/lightbox2/js/lightbox-2.6.min.js", array());
+    //wp_enqueue_script( 'scripts-custom2', 'http://360modelsagency.com/wp-content/plugins/rb-agency/ext/lightbox2/custom');
+}
+add_action( 'wp_enqueue_scripts', 'wpdocs_theme_name_scripts' );
+ 
+
     
 ?>

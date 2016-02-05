@@ -53,7 +53,7 @@ function profilesphoto_save(){
 	$uploadMediaType = trim($_POST['ProfileMediaType']);
 	
 	
-	$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image'";
+	$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND (ProfileMediaType = 'Image' OR ProfileMediaType = 'dvd' OR ProfileMediaType = 'magazine' )";
 	$results = $wpdb->get_results($wpdb->prepare($results, $ProfileID),ARRAY_A);
 	if ($wpdb->num_rows > 0) {
 		$pi = $wpdb->num_rows +1;
