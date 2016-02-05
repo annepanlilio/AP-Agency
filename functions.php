@@ -4868,13 +4868,13 @@ function box_cover_magazine( $atts ) {
 }
 add_shortcode( 'box-cover-magazine', 'box_cover_magazine' );
 
-function wpdocs_theme_name_scripts() {
+function rbagency_lightbox_style_scripts() {
     wp_enqueue_style( 'lightbox2-style', site_url()."/wp-content/plugins/rb-agency/ext/lightbox2/css/lightbox.css", NULL,'4.4.4');
     wp_enqueue_script( 'script-name', site_url()."/wp-content/plugins/rb-agency/ext/lightbox2/js/lightbox-2.6.min.js", array());
     //wp_enqueue_script( 'scripts-custom2', 'http://360modelsagency.com/wp-content/plugins/rb-agency/ext/lightbox2/custom');
 }
-add_action( 'wp_enqueue_scripts', 'wpdocs_theme_name_scripts' );
+add_action( 'wp_enqueue_scripts', 'rbagency_lightbox_style_scripts' );
  
-
+ add_filter('ws_plugin__s2member_login_redirect', '__return_false');
     
 ?>
