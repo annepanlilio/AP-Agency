@@ -2109,8 +2109,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			</div>
 
 
-<!--box cover gallary-->
-<div id="postbox-container-3" class="postbox-container">
+			<!--box cover gallary-->
+			<div id="postbox-container-3" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
  
 					<div class="postbox" style="display:none;">
@@ -2212,7 +2212,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 								$rb_agency_options_arr = get_option('rb_agency_options');
 								$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-								$queryImg = rb_agency_option_galleryorder_query_boxcover($order ,$ProfileID,"magazine");
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"magazine");
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg =$wpdb->num_rows;
 								$massDelete = "";
@@ -2311,12 +2311,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								}
 								</script>
 								
-							</div>
-						</div>
-					</div>
+							</div> <!-- .main -->
+						</div> <!-- .inside -->
+					</div> <!-- #dashboard_gallery -->
 
-				</div>
-			</div>
+				</div> <!-- #normal-sortables -->
+			</div> <!-- end box cover gallary-->
 
 
 			<!--Expanded Model Detail-->
