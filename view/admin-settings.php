@@ -681,8 +681,15 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile Thumbnails', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>";
-				_e('Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbwidth]\" value=\"". $rb_agency_value_profilethumbwidth ."\" style=\"width: 80px;\" /><br />\n";
+				_e('Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbwidth]\" value=\"". $rb_agency_value_profilethumbwidth ."\" style=\"width: 80px;\" />&nbsp;&nbsp;\n";
 				_e('Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agencyprofilethumbheight]\" value=\"". $rb_agency_value_profilethumbheight ."\" style=\"width: 80px;\" />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Box Cover Thumbnails', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>";
+				_e('Width', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agency_boxcover_thumbwidth]\" value=\"". $rb_agency_value_boxcover_thumbwidth ."\" style=\"width: 80px;\" />&nbsp;&nbsp;\n";
+				_e('Height', RBAGENCY_TEXTDOMAIN); echo ": <input name=\"rb_agency_options[rb_agency_option_agency_boxcover_thumbheight]\" value=\"". $rb_agency_value_boxcover_thumbheight ."\" style=\"width: 80px;\" />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
