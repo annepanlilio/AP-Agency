@@ -2212,7 +2212,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 								$rb_agency_options_arr = get_option('rb_agency_options');
 								$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"magazine");
+								$queryImg = rb_agency_option_galleryorder_boxcover_query($order ,$ProfileID,"magazine");
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg =$wpdb->num_rows;
 								$massDelete = "";

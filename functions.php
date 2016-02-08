@@ -4247,6 +4247,33 @@
 		return $queryImg ;
 	}
 
+	function rb_agency_option_galleryorder_boxcover_query($order,$profileID, $ProfileMediaType, $count = 99, $exclude_primary = false){
+		global $wpdb;
+
+		$queryImg = "";
+
+		if ($count > 0) {
+			$sql_count = " LIMIT ". $count;
+		} else {
+			$sql_count = "";
+		}
+
+		if ($sql_exclude_primary_image = true) {
+			//$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
+			$sql_exclude_primary_image = "";
+		} else {
+			$sql_exclude_primary_image = "";
+		}
+
+		if($order){
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND (ProfileMediaType = 'dvd' OR ProfileMediaType = 'magazine') ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC ". $sql_count, $profileID);
+		} else {
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND (ProfileMediaType = 'dvd' OR ProfileMediaType = 'magazine') ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY convert(`ProfileMediaOrder`, decimal)  ASC ". $sql_count, $profileID);
+		}
+
+		return $queryImg ;
+	}
+
 	/**
 	 * User group permission redirect
 	 */
