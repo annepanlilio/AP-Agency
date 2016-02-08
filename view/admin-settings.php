@@ -1151,6 +1151,22 @@ elseif ($ConfigID == 11) {
 
 
 
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Notification after registration', RBAGENCY_TEXTDOMAIN); echo " <i>(This will display on the website after registration.)</i></h2></th>\n";
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('If password is self-generated', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "   <textarea name=\"rb_agencyinteract_options[notification_password_self_generated]\" cols=\"60\" rows=\"10\">".(isset($rb_agencyinteract_options_arr['notification_password_self_generated'])?$rb_agencyinteract_options_arr['notification_password_self_generated']:"")."</textArea> ";
+		echo "   </td>\n";
+		
+		echo " </tr>\n";
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('If password is auto-generated(sent via email)', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "   <textarea name=\"rb_agencyinteract_options[notification_password_auto_generated]\" cols=\"60\" rows=\"10\">".(isset($rb_agencyinteract_options_arr['notification_password_auto_generated'])?$rb_agencyinteract_options_arr['notification_password_auto_generated']:"")." </textArea> ";
+		echo "   </td>\n";
+		echo " </tr>\n";
 
 
 
