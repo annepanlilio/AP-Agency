@@ -4818,7 +4818,7 @@ function box_cover_dvd( $atts ) {
 	$rb_agency_value_boxcover_thumbwidth 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth']:180;
 	$rb_agency_value_boxcover_thumbheight 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight']:230;
 
-	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'dvd'";	
+	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'dvd' ORDER BY profile.ProfileContactNameFirst ASC";	
 	$resultsImg = $wpdb->get_results($query,ARRAY_A);
 
 	$output = "";
@@ -4857,7 +4857,7 @@ function box_cover_magazine( $atts ) {
 	$rb_agency_value_boxcover_thumbwidth 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth']:180;
 	$rb_agency_value_boxcover_thumbheight 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight']:230;
 
-	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'magazine'";	
+	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'magazine' ORDER BY profile.ProfileContactNameFirst ASC";	
 	$resultsImg = $wpdb->get_results($query,ARRAY_A);
 
 	$output = "";
