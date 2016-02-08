@@ -4896,5 +4896,16 @@ function rbagency_lightbox_style_scripts() {
 add_action( 'wp_enqueue_scripts', 'rbagency_lightbox_style_scripts' );
  
  add_filter('ws_plugin__s2member_login_redirect', '__return_false');
-    
+ 
+ add_action( 'login_form_register', 'wpse45134_catch_register' );
+/**
+ * Redirects visitors to `wp-login.php?action=register` to 
+ * `site.com/register`
+ */
+function wpse45134_catch_register()
+{
+    wp_redirect( home_url( '/profile-register' ) );
+    exit(); // always call `exit()` after `wp_redirect`
+}
+
 ?>
