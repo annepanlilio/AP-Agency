@@ -4393,7 +4393,7 @@
 		
 		if($rb_agency_option_profilemedia_links == 2){
 			if($is_docs){
-				return " href=\"javascript:;\" onclick=\"window.open('http://docs.google.com/viewer?url=".$_fullURL."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
+				return " href=\"javascript:;\" onclick=\"window.open('https://docs.google.com/viewer?url=".$_fullURL."', '_blank', 'toolbar=0,menubar=0');\" ";
 			} else {
 				return " href=\"javascript:;\" onclick=\"window.open('".$_fullURL."', '_blank', 'toolbar=0,location=4,menubar=0');\" ";
 			}
