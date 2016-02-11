@@ -3820,13 +3820,13 @@
 			(strpos($uri,"/dashboard/") > -1 && $page == "rb_dashboard") ||
 			(strpos($uri,"/profile-category/") > -1 && $page == "rb_category") ||
 			(strpos($uri,"/profile-register/") > 1 && $page == "rb_register") ||
-			(strpos($uri,"/profile-search/") > -1 ||
-				strpos($uri,"/search/") > -1 ||
-				strpos($uri,"/search") > -1 &&
-				$page == "rb_search")	||
+			(strpos($uri,"/profile-search/") > -1 && $page == "profile_search")	||
+			(strpos($uri,"/search-basic/") > -1 && $page == "basic_search")	||
+			(strpos($uri,"/search-advanced/") > -1 && $page == "advanced_search") ||
 			(strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
 			(strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
 			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites") ||
+			(strpos($uri,"/search-results/") > -1 && $page == "search_results") ||
 			// RB Agency Casting Pages
 			(strpos($uri,"/casting-login/") > -1 && $page == "casting_login" ) ||
 			(strpos($uri,"/casting-register/") > -1 && $page == "casting_register" ) ||

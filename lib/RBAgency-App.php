@@ -186,10 +186,20 @@ class RBAgency_App {
 				$classes[] = 'rbagency-category';
 			} elseif (rb_is_page("rb_register")) {
 				$classes[] = 'rbagency-register';
-			} elseif (rb_is_page("rb_search")) {
+			} elseif (rb_is_page("profile_search")) {
 				$classes[] = 'rbagency-search';
+				$classes[] = 'profile-search';
+			} elseif (rb_is_page("basic_search")) {
+				$classes[] = 'rbagency-search';
+				$classes[] = 'basic-search';
+			} elseif (rb_is_page("advanced_search")) {
+				$classes[] = 'rbagency-search';
+				$classes[] = 'advanced-search';
 			} elseif (rb_is_page("rb_print")) {
 				$classes[] = 'rbagency-print';
+			} elseif (rb_is_page("search_results")) {
+				$classes[] = 'rbagency-search';
+				$classes[] = 'search-results';
 			}
 			// RB Agency Casting Pages
 			elseif (rb_is_page("casting_login")) {
