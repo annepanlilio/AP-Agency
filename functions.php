@@ -107,7 +107,7 @@
 				$query_vars[] = 'country';
 				// pagination
 				$query_vars[] = 'paging';
-
+				$query_vars[] = 'action';
 				return $query_vars;
 			}
 
