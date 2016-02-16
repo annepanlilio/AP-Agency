@@ -345,8 +345,11 @@
 								}
 								else{
 									$_file_URL = '_casting-jobs/'. $_AudioFileURL;
-									$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$_file_URL ;
-									echo '<a type="button" class="button-primary" href="'.$force_download_url.'">Download</a>';	
+									//$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$_file_URL ;
+									//echo '<a type="button" class="button-primary" href="'.$force_download_url.'">Download</a>';	
+
+									$force_download_url = wpfdl_dl($_file_URL ,get_option('wpfdl_token'),'dl');
+									echo '<a '.$force_download_url.' target="_blank">Play Audio</a><br>';
 								}
 								
 								
