@@ -1,5 +1,5 @@
 <?php
-
+	define('ADAccess', TRUE);
 	/* 
 	 * Debug Mode - $RB_DEBUG_MODE = true;
 	 */
@@ -107,7 +107,7 @@
 				$query_vars[] = 'country';
 				// pagination
 				$query_vars[] = 'paging';
-				$query_vars[] = 'action';
+
 				return $query_vars;
 			}
 
@@ -123,6 +123,7 @@
 				$query_vars[] = 'age_start';
 				$query_vars[] = 'age_stop';
 				$query_vars[] = 'ref';
+				$query_vars[] = 'jID';
 				return $query_vars;
 			}
 
@@ -3820,13 +3821,13 @@
 			(strpos($uri,"/dashboard/") > -1 && $page == "rb_dashboard") ||
 			(strpos($uri,"/profile-category/") > -1 && $page == "rb_category") ||
 			(strpos($uri,"/profile-register/") > 1 && $page == "rb_register") ||
-			(strpos($uri,"/profile-search/") > -1 && $page == "profile_search")	||
-			(strpos($uri,"/search-basic/") > -1 && $page == "basic_search")	||
-			(strpos($uri,"/search-advanced/") > -1 && $page == "advanced_search") ||
+			(strpos($uri,"/profile-search/") > -1 ||
+				strpos($uri,"/search/") > -1 ||
+				strpos($uri,"/search") > -1 &&
+				$page == "rb_search")	||
 			(strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
 			(strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
 			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites") ||
-			(strpos($uri,"/search-results/") > -1 && $page == "search_results") ||
 			// RB Agency Casting Pages
 			(strpos($uri,"/casting-login/") > -1 && $page == "casting_login" ) ||
 			(strpos($uri,"/casting-register/") > -1 && $page == "casting_register" ) ||
@@ -4401,7 +4402,13 @@
 			if($ext_url == true){
 				return " href=\"".$url."\" ";
 			}
-			return " href=\"".RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$url."\" ";
+			
+			//return " href=\"".RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$url."\" ";
+			//return " href=\"wp-content\plugins\wpfdl.php?dl=".$url."&token=".wpfdl_generate_token()."\" ";
+			//require_once(RBAGENCY_PLUGIN_URL.'/view/helper/rbdl.php');
+			return wpfdl_dl($url,get_option('wpfdl_token'),'dl');
+
+			
 		}
 	}
 
@@ -4937,5 +4944,7 @@ function wpse45134_catch_register()
     wp_redirect( home_url( '/profile-register' ) );
     exit(); // always call `exit()` after `wp_redirect`
 }
+
+
 
 ?>
