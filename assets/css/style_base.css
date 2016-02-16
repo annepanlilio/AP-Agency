@@ -1,6 +1,6 @@
 /*
 RB Agency Stylesheet
-Last updated: December 3, 2015
+Last updated: February 16, 2016
 */
 
 /* Global Style */
@@ -158,26 +158,36 @@ Last updated: December 3, 2015
 }
 
 /* Profiles Per Row */
-#profile-list.one-profiles .rbprofile-list {
+#profile-list.one-profiles .rbprofile-list,
+.boxcover.one-cols li {
 	width: 100%;
 	padding-right: 0px;
-}#profile-list.two-profiles .rbprofile-list {
+}#profile-list.two-profiles .rbprofile-list,
+.boxcover.two-cols li {
 	width: 50%;	
-}#profile-list.three-profiles .rbprofile-list {
+}#profile-list.three-profiles .rbprofile-list,
+.boxcover.three-cols li {
 	width: 33.33333333333333%;
-}#profile-list.four-profiles .rbprofile-list {
+}#profile-list.four-profiles .rbprofile-list,
+.boxcover.four-cols li {
 	width: 25%;
-}#profile-list.five-profiles .rbprofile-list {
+}#profile-list.five-profiles .rbprofile-list,
+.boxcover.five-cols li {
 	width: 20%;
-}#profile-list.six-profiles .rbprofile-list {
+}#profile-list.six-profiles .rbprofile-list,
+.boxcover.six-cols li {
 	width: 16.66666666666667%;
-}#profile-list.seven-profiles .rbprofile-list {
+}#profile-list.seven-profiles .rbprofile-list,
+.boxcover.seven-cols li {
 	width: 14.28571428571429%;
-}#profile-list.eight-profiles .rbprofile-list {
+}#profile-list.eight-profiles .rbprofile-list,
+.boxcover.eight-cols li {
 	width: 12.5%;
-}#profile-list.nine-profiles .rbprofile-list {
+}#profile-list.nine-profiles .rbprofile-list,
+.boxcover.nine-cols li {
 	width: 11.11111111111111%;
-}#profile-list.ten-profiles .rbprofile-list {
+}#profile-list.ten-profiles .rbprofile-list,
+.boxcover.ten-cols li {
 	width: 10%;
 }
 #profile-list.four-profiles .thumbslide .image img {

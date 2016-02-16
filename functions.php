@@ -3821,13 +3821,13 @@
 			(strpos($uri,"/dashboard/") > -1 && $page == "rb_dashboard") ||
 			(strpos($uri,"/profile-category/") > -1 && $page == "rb_category") ||
 			(strpos($uri,"/profile-register/") > 1 && $page == "rb_register") ||
-			(strpos($uri,"/profile-search/") > -1 ||
-				strpos($uri,"/search/") > -1 ||
-				strpos($uri,"/search") > -1 &&
-				$page == "rb_search")	||
+			(strpos($uri,"/profile-search/") > -1 && $page == "profile_search")	||
+			(strpos($uri,"/search-basic/") > -1 && $page == "basic_search")	||
+			(strpos($uri,"/search-advanced/") > -1 && $page == "advanced_search") ||
 			(strpos($uri,"/profile-print/") > -1 && $page == "rb_print") ||
 			(strpos($uri,"/profile-casting/") > -1 && $page == "rb_casting") ||
 			(strpos($uri,"/profile-favorites/") > -1 && $page == "rb_favorites") ||
+			(strpos($uri,"/search-results/") > -1 && $page == "search_results") ||
 			// RB Agency Casting Pages
 			(strpos($uri,"/casting-login/") > -1 && $page == "casting_login" ) ||
 			(strpos($uri,"/casting-register/") > -1 && $page == "casting_register" ) ||
@@ -4845,22 +4845,27 @@ class RBLogin_Widget extends WP_Widget {
 
 function box_cover_dvd( $atts ) {
 
-
 	global $wpdb;
+	$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
-	$rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_value_boxcover_thumbwidth 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth']:180;
-	$rb_agency_value_boxcover_thumbheight 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight']:230;
+	extract(shortcode_atts(array(
+		"thumbsize"=> "200,300",
+		"columns"=> 3
+	),$atts));
+
+	$output .= "thumbsize ".$thumbsize;
+
+	$image_size = explode(",", $thumbsize);
 
 	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'dvd' ORDER BY profile.ProfileContactNameFirst ASC";	
 	$resultsImg = $wpdb->get_results($query,ARRAY_A);
 
 	$output = "";
-	$output = "<ul>";
+	$output = "<ul class=\"boxcover boxcover-dvd ".$profiles_perrow[$columns-1]."-cols\">";
 	foreach ($resultsImg as $dataImg) {
-		$output .="<li style='float:left;list-style-type: none;padding: 20px;'>";
+		$output .="<li>";
 		$image_path = RBAGENCY_UPLOADDIR . $dataImg['ProfileGallery'] . "/" . $dataImg['ProfileMediaURL'];
-		
+
 		// BFI THUMB
 		// $params = array(
 		// 	'crop' => false,
@@ -4871,7 +4876,7 @@ function box_cover_dvd( $atts ) {
 		// $output .= "<a class='example-image-link' href='".$profile_image_src."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . $profile_image_src ."\" class='example-image'/></a>";
 		
 		// TIMTHUMB
-		$output .= "<a class='example-image-link' href='".$image_path."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=".$image_path."&w=".$rb_agency_value_boxcover_thumbwidth."&h=".$rb_agency_value_boxcover_thumbheight."&a=t\" class='example-image'/></a>";
+		$output .= "<a class='example-image-link' href='".$image_path."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=".$image_path."&w=".$image_size[0]."&h=".$image_size[1]."&a=t\" class='example-image'/></a>";
 
 		$output .= "<p>".$dataImg['ProfileContactNameFirst'].' '.$dataImg['ProfileContactNameLast'].'</p>';
 		$output .= "</li>";
@@ -4886,32 +4891,37 @@ add_shortcode( 'box-cover-dvd', 'box_cover_dvd' );
 function box_cover_magazine( $atts ) {
 
 	global $wpdb;
+	$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
 
-	$rb_agency_options_arr = get_option('rb_agency_options');
-	$rb_agency_value_boxcover_thumbwidth 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbwidth']:180;
-	$rb_agency_value_boxcover_thumbheight 	= isset($rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight'])?$rb_agency_options_arr['rb_agency_option_agency_boxcover_thumbheight']:230;
+	extract(shortcode_atts(array(
+		"thumbsize"=> "200,300",
+		"columns"=> 3		
+	),$atts));
+
+	$image_size = explode(",", $thumbsize);
+	
 
 	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'magazine' ORDER BY profile.ProfileContactNameFirst ASC";	
 	$resultsImg = $wpdb->get_results($query,ARRAY_A);
 
 	$output = "";
 
-	$output .= "<ul>";
+	$output .= "<ul class=\"boxcover boxcover-magazine ".$profiles_perrow[$columns-1]."-cols\">";
 	foreach ($resultsImg as $dataImg) {
-		$output .="<li style='float:left;list-style-type: none;padding: 20px;'>";
+		$output .="<li>";
 		$image_path = RBAGENCY_UPLOADDIR . $dataImg['ProfileGallery'] . "/" . $dataImg['ProfileMediaURL'];
-		
-		// BFI THUMB
+
+		// BFI THUMB SETTINGS
 		// $params = array(
 		// 	'crop' => false,
 		// 	'width' => $rb_agency_value_boxcover_thumbwidth,
 		// 	'height' => $rb_agency_value_boxcover_thumbheight
 		// );
 		// $profile_image_src = bfi_thumb( $image_path, $params );
-		// $output .= "<a class='example-image-link' href='".$profile_image_src."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . $profile_image_src ."\" class='example-image'/></a>";
-		
+		// $output .= "<a class='example-image-link' href='".$profile_image_src."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . $profile_image_src ."\" class='example-image'/></a>";				
+
 		// TIMTHUMB
-		$output .= "<a class='example-image-link' href='".$image_path."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=".$image_path."&w=".$rb_agency_value_boxcover_thumbwidth."&h=".$rb_agency_value_boxcover_thumbheight."&a=t\" class='example-image'/></a>";
+		$output .= "<a class='example-image-link' href='".$image_path."' data-lightbox='example-set' data-title='The next image in the set is preloaded as you're viewing.'> <img src=\"" . RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=".$image_path."&w=".$image_size[0]."&h=".$image_size[1]."&a=t\" class='example-image'/></a>";
 
 		$output .= "<p>".$dataImg['ProfileContactNameFirst'].' '.$dataImg['ProfileContactNameLast'].'</p>';
 		$output .= "</li>";
