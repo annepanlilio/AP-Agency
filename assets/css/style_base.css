@@ -17,7 +17,6 @@ Last updated: February 16, 2016
 /* Profile Results */
 #profile-list {
 	font-size: 0;
-	margin: 0 -7px;
 	clear: both;
 }
 #profile-list .rbprofile-list {
@@ -158,6 +157,25 @@ Last updated: February 16, 2016
 }
 
 /* Profiles Per Row */
+.boxcover {
+	margin: 0;
+	list-style: none;
+}
+.boxcover li {
+	float: left;
+}
+.boxcover.one-cols li,
+.boxcover.two-cols li:nth-child(2n+0),
+.boxcover.three-cols li:nth-child(3n+0),
+.boxcover.four-cols li:nth-child(4n+0),
+.boxcover.five-cols li:nth-child(5n+0),
+.boxcover.six-cols li:nth-child(6n+0),
+.boxcover.seven-cols li:nth-child(7n+0),
+.boxcover.eight-cols li:nth-child(8n+0),
+.boxcover.nine-cols li:nth-child(9n+0),
+.boxcover.ten-cols li:nth-child(10n+0) {
+	padding-right: 0;
+}
 #profile-list.one-profiles .rbprofile-list,
 .boxcover.one-cols li {
 	width: 100%;

@@ -4850,12 +4850,12 @@ function box_cover_dvd( $atts ) {
 
 	extract(shortcode_atts(array(
 		"thumbsize"=> "200,300",
-		"columns"=> 3
+		"columns"=> 3,
+		"spacing"=> 3
 	),$atts));
 
-	$output .= "thumbsize ".$thumbsize;
-
 	$image_size = explode(",", $thumbsize);
+	boxcover_styles($spacing); // Spacing CSS
 
 	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'dvd' ORDER BY profile.ProfileContactNameFirst ASC";	
 	$resultsImg = $wpdb->get_results($query,ARRAY_A);
@@ -4895,11 +4895,12 @@ function box_cover_magazine( $atts ) {
 
 	extract(shortcode_atts(array(
 		"thumbsize"=> "200,300",
-		"columns"=> 3		
+		"columns"=> 3,
+		"spacing"=> 3
 	),$atts));
 
 	$image_size = explode(",", $thumbsize);
-	
+	boxcover_styles($spacing); // Spacing CSS	
 
 	$query = "SELECT media.*,profile.* FROM ".table_agency_profile_media." AS media INNER JOIN ".table_agency_profile." AS profile ON profile.ProfileID = media.ProfileID WHERE media.ProfileMediaType = 'magazine' ORDER BY profile.ProfileContactNameFirst ASC";	
 	$resultsImg = $wpdb->get_results($query,ARRAY_A);
@@ -4931,6 +4932,14 @@ function box_cover_magazine( $atts ) {
 	return $output;
 }
 add_shortcode( 'box-cover-magazine', 'box_cover_magazine' );
+
+
+function boxcover_styles($spacing){
+	$output = "<style id=\"boxcover-styles\" type=\"text/css\"> .boxcover li { padding-right: ".$spacing."px; } </style>";
+
+	echo $output;
+}
+add_action('wp_head','boxcover_styles');
 
 function rbagency_lightbox_style_scripts() {
     if(get_query_var('type') == 'profile'){
