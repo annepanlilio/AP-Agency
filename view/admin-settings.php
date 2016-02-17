@@ -3772,6 +3772,13 @@ elseif ($ConfigID == 100){
 			update_option('rbagency_message_after_payment','');
 		}
 
+
+		if(!empty($_POST['rbagency_message_below_paypal_btns'])){
+			update_option('rbagency_message_below_paypal_btns',stripslashes($_POST['rbagency_message_below_paypal_btns']));
+		}elseif(empty($_POST['rbagency_message_below_paypal_btns'])){
+			update_option('rbagency_message_below_paypal_btns','');
+		}
+
 		//echo $_POST['rbagency_paypal_button_code'];
 
 	}
@@ -3783,7 +3790,8 @@ elseif ($ConfigID == 100){
 	$rbagency_initial_email_after_registration = get_option('rbagency_initial_email_after_registration');
 	$rbagency_message_after_steps = get_option('rbagency_message_after_steps');
 	$rbagency_message_after_payment = get_option('rbagency_message_after_payment');
-
+	$rbagency_message_below_paypal_btns = get_option('rbagency_message_below_paypal_btns');
+	
 	echo '<form action="'.admin_url("admin.php?page=". $_GET['page']."&ConfigID=".$_GET['ConfigID']) .'" method="POST">';
 	echo "<input type=\"checkbox\" name=\"use_s2member\" class=\"use_s2member\" $check_use>&nbsp;Use S2member Plugin.<br>";
 
@@ -3815,7 +3823,16 @@ elseif ($ConfigID == 100){
 	echo "<textarea name=\"rbagency_message_after_steps\" class=\"rbagency_message_after_steps\" rows=\"7\" cols=\"60\">".$rbagency_message_after_steps."</textarea>";
 	echo "<p>Insert message that willl appear after payment.</p>";
 	echo "<textarea name=\"rbagency_message_after_payment\" class=\"rbagency_message_after_payment\" rows=\"7\" cols=\"60\">".$rbagency_message_after_payment."</textarea><br>";
+	
+
+	echo "<br><br><br>";
+
+	echo "<h2>Message that will display above the paypal buttons</h2>";
+	echo "<textarea name=\"rbagency_message_below_paypal_btns\" class=\"rbagency_message_below_paypal_btns\" rows=\"7\" cols=\"60\">".$rbagency_message_below_paypal_btns."</textarea><br>";
 	echo '<input type="submit" name="save_s2member" value="Save Settings">';
+	
+	
+
 	echo '</form>';
 
 
