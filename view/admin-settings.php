@@ -3725,6 +3725,7 @@ elseif ($ConfigID == 100){
 			add_option("subscription_title_$idx",false);
 			add_option("subscription_description_$idx",false);
 			add_option("subscription_paypal_btn_$idx",false);
+			add_option("subscription_discount_coupon_$idx",false);
 		}
 			
 
@@ -3741,6 +3742,10 @@ elseif ($ConfigID == 100){
 				if($k == "subscription_paypal_btn_$idx"){
 					$btn = !empty($_POST["subscription_paypal_btn_$idx"]) ? stripslashes($_POST["subscription_paypal_btn_$idx"]) : "";
 					update_option("subscription_paypal_btn_$idx",$btn);
+				}
+				if($k == "subscription_discount_coupon_$idx"){
+					$btn = !empty($_POST["subscription_discount_coupon_$idx"]) ? stripslashes($_POST["subscription_discount_coupon_$idx"]) : "";
+					update_option("subscription_discount_coupon_$idx",$btn);
 				}
 			}
 			
@@ -3802,6 +3807,7 @@ elseif ($ConfigID == 100){
 		$subscription_title = get_option("subscription_title_$idx");
 		$subscription_description = get_option("subscription_description_$idx");
 		$subscription_paypal_btn = get_option("subscription_paypal_btn_$idx");
+		$subscription_discount_coupon = get_option("subscription_discount_coupon_$idx");
 
 		echo "Subscription Title<br>";
 		echo "<input type=\"text\" name=\"subscription_title_$idx\" value=\"".$subscription_title."\"><br><br>";
@@ -3809,6 +3815,8 @@ elseif ($ConfigID == 100){
 		echo "<textarea name=\"subscription_description_$idx\" class=\"subscription_description_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_description)."</textarea><br><br>";
 		echo "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i></br>";
 		echo "<textarea name=\"subscription_paypal_btn_$idx\" class=\"subscription_paypal_btn_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_paypal_btn)."</textarea><br><br>";
+		echo "Apply discount coupon. <i></br>";
+		echo "<textarea name=\"subscription_discount_coupon_$idx\" class=\"subscription_discount_coupon_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_discount_coupon)."</textarea><br><br>";
 	}
 	
 	echo "<br><br><br>";
