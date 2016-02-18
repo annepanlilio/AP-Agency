@@ -463,7 +463,7 @@
 						<?php }?>
 					</td>
 					</tr>
-					
+					<?php rb_agency_detail_profile_castingjob($Job_ID); ?>
 				<input type="hidden" name="action" value="availability">
 				</form>
 				
