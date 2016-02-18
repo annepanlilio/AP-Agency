@@ -2837,6 +2837,7 @@
 			$filter .= " OR profile.ProfileContactNameLast LIKE '%". $searchTerm ."%'";
 			$filter .= " OR profile.ProfileLocationCity LIKE '%". $searchTerm ."%'";
 			$filter .= " OR profile.ProfileContactEmail LIKE '%". $searchTerm ."%'";
+			$filter .= " OR users_tbl.user_login LIKE '%". $searchTerm ."%'";
 		}
 
 		//Paginate
@@ -2917,12 +2918,13 @@
 			<?php
 	//Search starts
 			if(!isset($_POST['search_profiles'])){
-				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
+				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID LEFT JOIN ".$users_table." users_tbl ON users_tbl.user_email = profile.ProfileContactEmail "  . $filter  ." ORDER BY $sort $dir $limit";
 			}
 			else
 			{
-
-				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ." ORDER BY $sort $dir $limit";
+				
+				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID LEFT JOIN ".$users_table." users_tbl ON users_tbl.user_email = profile.ProfileContactEmail "  . $filter  ." ORDER BY $sort $dir $limit";
+				//echo $query;
 			}
 
 			$results2 = $wpdb->get_results($query,ARRAY_A);
