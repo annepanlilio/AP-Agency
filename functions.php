@@ -2834,9 +2834,9 @@
 		if(isset($_POST['search_profiles'])){
 			$searchTerm=$_POST['search_profiles'];
 			$filter .= " AND profile.ProfileContactNameFirst LIKE '%". $searchTerm ."%'";
-			$filter .= "OR profile.ProfileContactNameLast LIKE '%". $searchTerm ."%'";
-			$filter .= "OR profile.ProfileLocationCity='%". $searchTerm ."'";
-			$filter .= "OR profile.ProfileContactEmail='%". $searchTerm ."'";
+			$filter .= " OR profile.ProfileContactNameLast LIKE '%". $searchTerm ."%'";
+			$filter .= " OR profile.ProfileLocationCity LIKE '%". $searchTerm ."%'";
+			$filter .= " OR profile.ProfileContactEmail LIKE '%". $searchTerm ."%'";
 		}
 
 		//Paginate
