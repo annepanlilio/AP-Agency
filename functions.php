@@ -3461,7 +3461,9 @@
 		$admin_email = get_bloginfo('admin_email');
 		$site_name = get_bloginfo("name");
 
-		$headers = 'From: '.$site_name.' <' . $admin_email . '>\r\n';
+		//$headers = 'From: '.$site_name.' <' . $admin_email . '>\r\n';
+
+		$headers = 'From: '. $site_name .' <'. $admin_email .'>' . "\r\n";
 
 		$subject = 'Your new Login and Password';
 
