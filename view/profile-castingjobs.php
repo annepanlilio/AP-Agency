@@ -58,8 +58,7 @@
 
 
 
-	echo "<div id=\"container\" class=\"one-column\">\n";
-	echo "    <div id=\"content\" role=\"main\" class=\"transparent\">\n";
+	echo "<div id=\"rbcontent\">\n";
 
 			$has_permission = explode(",",$Job_Talents_Hash);
 
@@ -78,12 +77,15 @@
 				// Is submitted
 
 
+				
 
+				
 		if(isset($_POST["action"]) && $_POST["action"] == "availability"){
+
 				$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
-							$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
-						$availability = current($wpdb->get_results($prepared));
-								$count2 = $wpdb->num_rows;
+				$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
+				$availability = current($wpdb->get_results($prepared));
+				$count2 = $wpdb->num_rows;
 
 					$availability = "available";
 					$Availability = "Available";
@@ -91,27 +93,40 @@
 						$availability = "notavailable";
 						$Availability = "Not Available";
 					}
+
 					if($count2 <= 0){
-							$query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
+						//echo "INSERT record";
+						$query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID) VALUES('".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."')";
+							/**$query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
 							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."') AS tmp
 							WHERE NOT EXISTS (
 								SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'
-							) LIMIT 1;"; 
+							) LIMIT 1;"; **/
+						$wpdb->query($query);
+						//echo $query;
+						$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+						$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
+						$availability = current($wpdb->get_results($prepared));
+						//echo $availability->status;
 					} else {
-							$query = "UPDATE ".table_agency_castingcart_availability." SET CastingAvailabilityStatus = '".esc_attr($availability)."' WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'";
+						//echo "update record";
+						$query = "UPDATE ".table_agency_castingcart_availability." SET CastingAvailabilityStatus = '".esc_attr($availability)."' WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'";
+						$wpdb->query($query);
 					}
+
+
 
 					if($availability == "available"){
 						$wpdb->get_results("SELECT * FROM ".table_agency_casting_job_application." WHERE Job_ID='".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."'");
 						$is_applied = $wpdb->num_rows;
 						if($is_applied <= 0){
-							$wpdb->query("INSERT INTO  " . table_agency_casting_job_application . " (Job_ID, Job_UserLinked,Job_UserProfileID) VALUES('".$Job_ID."','".$data["ProfileUserLinked"]."','".$data["ProfileID"]."') ");
+							//$wpdb->query("INSERT INTO  " . table_agency_casting_job_application . " (Job_ID, Job_UserLinked,Job_UserProfileID) VALUES('".$Job_ID."','".$data["ProfileUserLinked"]."','".$data["ProfileID"]."') ");
 						}
 					} else {
-							$wpdb->query("DELETE FROM  " . table_agency_casting_job_application . " WHERE Job_ID = '".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."' ");
+							//$wpdb->query("DELETE FROM  " . table_agency_casting_job_application . " WHERE Job_ID = '".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."' ");
 					}
 
-						$wpdb->query($query);
+						
 
 						$link = get_bloginfo("url")."/profile-casting/?Job_ID=".$Job_ID;
 						
@@ -128,14 +143,21 @@
 						echo ('<div id="message" class="updated" style="width:50%;margin:auto;"><p>Submitted successfully!</p></div>');
 				 
 		}
-						$result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$Job_ID,$data["ProfileID"]));
+				/**
+				$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
+				$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
+				$availability = current($wpdb->get_results($prepared));
+				**/
+			$result = $wpdb->get_results($wpdb->prepare("SELECT * FROM ".table_agency_castingcart_availability." WHERE CastingJobID = %d AND CastingAvailabilityProfileID = %d",$Job_ID,$data["ProfileID"]));
 			$has_submitted = $wpdb->num_rows;
 
 				$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
-							$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
-						$availability = current($wpdb->get_results($prepared));
-								$count2 = $wpdb->num_rows;
+				$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
+				$availability = current($wpdb->get_results($prepared));
+				$count2 = $wpdb->num_rows;
 
+
+								
 			?>
 			<style type="text/css">
                input[disabled=disabled]{
@@ -174,6 +196,10 @@
 				else
 				{ }
 			else: ?>
+			<?
+
+				
+			?>
 				<h2>You've been submitted for a job.</h2>
 			<?php endif;?>
 				<strong>We are simply confirming that you are "Available" or "Not Available" for the job dates.</strong>
@@ -241,6 +267,8 @@
 					
 					$type = $_FILES["fileToUpload"]["type"];
 					$size = $_FILES["fileToUpload"]["size"];
+
+					//print_r($_FILES['fileToUpload']);
 					
 					$valid_mp3_mimes = array(
 						'audio/mpeg',
@@ -283,7 +311,7 @@
 					
 					
 					<tr>
-						<td  style="text-align:right;padding-right:5px;">MP3 Audition</td>
+						<td  style="text-align:right;padding-right:5px;">MP3 Audition <?php //echo "<h1>SAMPLE TXT</h1>"; ?></td>
 						<td><?php 
 				
 							// Check if $uploadOk is set to 0 by an error
@@ -345,11 +373,8 @@
 								}
 								else{
 									$_file_URL = '_casting-jobs/'. $_AudioFileURL;
-									//$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$_file_URL ;
-									//echo '<a type="button" class="button-primary" href="'.$force_download_url.'">Download</a>';	
-
-									$force_download_url = wpfdl_dl($_file_URL ,get_option('wpfdl_token'),'dl');
-									echo '<a '.$force_download_url.' target="_blank">Play Audio</a><br>';
+									$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$_file_URL ;
+									echo '<a type="button" class="button-primary" href="'.$force_download_url.'">Download</a>';	
 								}
 								
 								
@@ -359,9 +384,12 @@
 									';
 							}else{
 								
-								if(isset($availability->status) && $availability->status == "available"){ ?>
+								if(isset($availability->status) && $availability->status == "available"){ 
+
+									
+									?>
 								
-									<form action="" method="post" enctype="multipart/form-data">
+									<form enctype="multipart/form-data" action="" method="post" >
 										Select Audio File: <br/>
 										<input type="file" name="fileToUpload" id="fileToUpload">
 										<input type="submit" value="Upload Audio" name="submitMP3">
@@ -463,7 +491,9 @@
 						<?php }?>
 					</td>
 					</tr>
-					<?php rb_agency_detail_profile_castingjob($Job_ID); ?>
+					<?php rb_agency_detail_profile_castingjob($Job_ID); 
+					
+					?>
 				<input type="hidden" name="action" value="availability">
 				</form>
 				
@@ -481,9 +511,11 @@
 			}*/
 
 
-	echo "  </div>\n";
-	echo "</div>\n";
+
+	echo "</div><!-- #rbcontent -->\n";
 
 	echo $rb_footer = RBAgency_Common::rb_footer(); 
+
+	clearstatcache();
 
 	?>
