@@ -1,4 +1,4 @@
-<?
+<?php
 		// Sync if version #s are off
 		if(get_option('rb_agency_version') <> RBAGENCY_VERSION) {
 			update_option("rb_agency_version", RBAGENCY_VERSION);

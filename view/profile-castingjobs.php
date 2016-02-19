@@ -95,7 +95,6 @@
 					}
 
 					if($count2 <= 0){
-						//echo "INSERT record";
 						$query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID) VALUES('".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."')";
 							/**$query = "INSERT INTO ".table_agency_castingcart_availability." (CastingAvailabilityProfileID, CastingAvailabilityStatus, CastingAvailabilityDateCreated, CastingJobID)
 							SELECT * FROM (SELECT '".$data["ProfileID"]."','".esc_attr($availability)."','".date("y-m-d h:i:s")."','".$Job_ID."') AS tmp
@@ -103,13 +102,8 @@
 								SELECT CastingAvailabilityProfileID, CastingJobID FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'
 							) LIMIT 1;"; **/
 						$wpdb->query($query);
-						//echo $query;
-						$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
-						$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
-						$availability = current($wpdb->get_results($prepared));
-						//echo $availability->status;
+						
 					} else {
-						//echo "update record";
 						$query = "UPDATE ".table_agency_castingcart_availability." SET CastingAvailabilityStatus = '".esc_attr($availability)."' WHERE CastingAvailabilityProfileID='".$data["ProfileID"]."' AND CastingJobID='".$Job_ID."'";
 						$wpdb->query($query);
 					}
@@ -120,10 +114,10 @@
 						$wpdb->get_results("SELECT * FROM ".table_agency_casting_job_application." WHERE Job_ID='".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."'");
 						$is_applied = $wpdb->num_rows;
 						if($is_applied <= 0){
-							//$wpdb->query("INSERT INTO  " . table_agency_casting_job_application . " (Job_ID, Job_UserLinked,Job_UserProfileID) VALUES('".$Job_ID."','".$data["ProfileUserLinked"]."','".$data["ProfileID"]."') ");
+							$wpdb->query("INSERT INTO  " . table_agency_casting_job_application . " (Job_ID, Job_UserLinked,Job_UserProfileID) VALUES('".$Job_ID."','".$data["ProfileUserLinked"]."','".$data["ProfileID"]."') ");
 						}
 					} else {
-							//$wpdb->query("DELETE FROM  " . table_agency_casting_job_application . " WHERE Job_ID = '".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."' ");
+							$wpdb->query("DELETE FROM  " . table_agency_casting_job_application . " WHERE Job_ID = '".$Job_ID."' AND Job_UserLinked = '".$data["ProfileUserLinked"]."' ");
 					}
 
 						
@@ -143,6 +137,9 @@
 						echo ('<div id="message" class="updated" style="width:50%;margin:auto;"><p>Submitted successfully!</p></div>');
 				 
 		}
+
+		
+		
 				/**
 				$query = "SELECT CastingAvailabilityStatus as status FROM ".table_agency_castingcart_availability." WHERE CastingAvailabilityProfileID = %d AND CastingJobID = %d";
 				$prepared = $wpdb->prepare($query,$data["ProfileID"],$Job_ID);
@@ -171,25 +168,37 @@
 
 				<div style="width:100%;max-width:450px;">
 				
-				<div id="examplePopup1" style="display:none">
-					<div>
-						<h2>Youve submitted your availability.</h2>
-					</div>
-					
-				</div>
 				
+				
+				<script type="text/javascript">
+				 jQuery(function() {
+				    jQuery( "#dialog" ).dialog(
+				    		{ width: 900 }
+				    	);
+				  });
+				  </script>
 				 
+				  <style>
+				  .ui-dialog{ left:220px!important;top:80px!important;}
+				  </style>
 
+				<?php 	
 
-				<?php if($count2 > 0):
+				//for testing
+				
+				if($count2 > 0):
 				if(isset($_REQUEST['availability']))
 				{
 				?>
-				<script type="text/javascript">
-					jQuery(document).ready(function(){
-						alert('Availability submitted! Please upload mp3 audio file to continue.');
-					});
-				</script>
+				<div id="dialog" title="Availability submitted! Please upload mp3 audio file to continue.">
+				  <form enctype="multipart/form-data" action="" method="post" >
+										Select Audio File: <br/>
+										<input type="file" name="fileToUpload" id="fileToUpload">
+										<input type="submit" value="Upload Audio" name="submitMP3">
+										
+									</form>
+				</div>
+				
 				<!--<h2>You've submitted your availability.</h2>-->
 			<?php
 				}
@@ -202,7 +211,21 @@
 			?>
 				<h2>You've been submitted for a job.</h2>
 			<?php endif;?>
-				<strong>We are simply confirming that you are "Available" or "Not Available" for the job dates.</strong>
+
+			<?php 
+
+			$rb_casting_settings_message_confirming_availability_status = get_option("rb_casting_settings_message_confirming_availability_status");
+
+			?>
+				<strong>
+					<?php
+					if(empty($rb_casting_settings_message_confirming_availability_status)){
+						echo 'We are simply confirming that you are "Available" or "Not Available" for the job dates.';
+					}else{
+						echo $rb_casting_settings_message_confirming_availability_status;
+					}
+					?>
+				</strong>
 				<div style="clear:both;"></div>
 
  
@@ -311,7 +334,7 @@
 					
 					
 					<tr>
-						<td  style="text-align:right;padding-right:5px;">MP3 Audition <?php //echo "<h1>SAMPLE TXT</h1>"; ?></td>
+						<td  style="text-align:right;padding-right:5px;">MP3 Audition </td>
 						<td><?php 
 				
 							// Check if $uploadOk is set to 0 by an error
@@ -333,6 +356,7 @@
 									unset($_deleteFle);
 									if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 										$redirect_after_upload = site_url()."/profile-login/";
+						
 										echo "Upload Success <br/>";
 										?>
 										<script type="text/javascript">
@@ -386,15 +410,12 @@
 								
 								if(isset($availability->status) && $availability->status == "available"){ 
 
+
+									//former upload form here
 									
 									?>
 								
-									<form enctype="multipart/form-data" action="" method="post" >
-										Select Audio File: <br/>
-										<input type="file" name="fileToUpload" id="fileToUpload">
-										<input type="submit" value="Upload Audio" name="submitMP3">
-										
-									</form>
+									
 								
 								<?php 
 								}else{
@@ -516,6 +537,6 @@
 
 	echo $rb_footer = RBAgency_Common::rb_footer(); 
 
-	clearstatcache();
+	
 
 	?>

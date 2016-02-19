@@ -209,6 +209,17 @@ if ($ConfigID == 0) {
 	echo "    </div>\n";
 	echo "</div>\n";
 	
+	if(class_exists("RBAgencyCasting")){
+			// rb casting
+			echo "<div class=\"boxlinkgroup\">\n";
+			echo "  <h2>". __("Casting Settings", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
+			echo "  <p>". __("Settings for casting agent", RBAGENCY_TEXTDOMAIN) . "</p>\n";
+			echo "    <div class=\"boxlink\">\n";
+			echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=101\" title=\"". __("s2member", RBAGENCY_TEXTDOMAIN) . "\">". __("Casting Settings", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+			echo "    </div>\n";
+			echo "</div>\n";
+	}
+	
 	// Uninstall
 	echo "<div class=\"boxlinkgroup\">\n";
 	echo "  <h2>". __("Uninstall", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
@@ -3883,6 +3894,23 @@ elseif ($ConfigID == 100){
 	</script>
 
 <?php 
+}elseif($ConfigID == 101){
+
+	$default_message_availability = "We are simply confirming that you are 'Available' or 'Not Available' for the job dates.";
+
+	add_option('rb_casting_settings_message_confirming_availability_status',$default_message_availability);
+	
+	if(isset($_POST['save_casting_settings'])){
+
+		$rb_casting_settings_message_confirming_availability_post = !empty($_POST['rb_casting_settings_message_confirming_availability_post']) ? $_POST['rb_casting_settings_message_confirming_availability_post'] : '';
+		update_option('rb_casting_settings_message_confirming_availability_status',$rb_casting_settings_message_confirming_availability_post);
+	}
+	$rb_casting_settings_message_confirming_availability_status_display = get_option('rb_casting_settings_message_confirming_availability_status');
+	echo '<form action="'.admin_url("admin.php?page=". $_GET['page']."&ConfigID=".$_GET['ConfigID']) .'" method="POST">';
+	echo '<p>Message that will appear at the top of confirming availability page. </p>';
+	echo "<textarea name=\"rb_casting_settings_message_confirming_availability_post\" class=\"rb_casting_settings_message_confirming_availability_post\" rows=\"7\" cols=\"60\">".$rb_casting_settings_message_confirming_availability_status_display."</textarea><br>";
+	echo '<input type="submit" name="save_casting_settings" value="Save Settings">';
+	echo '</form>';
 }
 echo "</div>\n";
 ?>

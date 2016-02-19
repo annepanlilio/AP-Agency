@@ -23,7 +23,11 @@ jQuery(document).ready(function(){
 		if(!is_dir (RBAGENCY_UPLOADPATH .$ProfileGallery)){
 			$ProfileGallery = rb_agency_createdir($ProfileGallery);
 		}
-		
+		if(strpos(site_url(),'localhost') !== false){
+			$rbupload_path = str_replace('\\', '/', RBAGENCY_UPLOADPATH);
+		}else{
+			$rbupload_path = RBAGENCY_UPLOADPATH;
+		}
 		
 		?>
 		
@@ -34,7 +38,7 @@ jQuery(document).ready(function(){
 			$('#file_upload_boxcover').uploadify({
 					'formData'     : {
 						'timestamp' : '<?php echo $timestamp;?>',
-						'uploadPath': '<?php echo RBAGENCY_UPLOADPATH ?>',
+						'uploadPath': '<?php echo $rbupload_path; ?>',
 						'modelID'	: '<?php echo $ProfileGallery;?>',
 						'modelType'	:  'photo',
 						'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'

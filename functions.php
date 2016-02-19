@@ -3,11 +3,6 @@
 	/* 
 	 * Debug Mode - $RB_DEBUG_MODE = true;
 	 */
-		if(isset($RB_DEBUG_MODE)){
-			ini_set('display_errors', 'On');
-		} else {
-			error_reporting(0);
-		}
 
 
 	/*
@@ -76,7 +71,8 @@
 				$newrules['profile-category/(.*)'] = 'index.php?type=category&target=$matches[1]';
 				$newrules['profile-category'] = 'index.php?type=category&target=all';
 				$newrules['profile-casting/jobs/(.*)/(.*)$'] = 'index.php?type=castingjobs&target=$matches[1]&value=$matches[2]';
-				$newrules['profile-casting/(.*)$'] = 'index.php?type=casting&target=$matches[1]';
+				$newrules['profile-casting/jobs/(.*)$'] = 'index.php?type=castingjobs&target=$matches[1]';
+				
 				$newrules['profile-print'] = 'index.php?type=print';
 				$newrules['profile-pdf'] = 'index.php?type=rb-pdf';
 				$newrules['profile-email'] = 'index.php?type=email';
@@ -91,6 +87,7 @@
 				$newrules['model-polaroid/profile/(.*)'] = 'index.php?type=modelpolaroid&target=$matches[1]';
 				$newrules['logout'] = 'index.php?type=rblogout';
 
+				
 				return $newrules + $rules;
 			}
 
@@ -107,7 +104,6 @@
 				$query_vars[] = 'country';
 				// pagination
 				$query_vars[] = 'paging';
-
 				return $query_vars;
 			}
 
@@ -124,6 +120,7 @@
 				$query_vars[] = 'age_stop';
 				$query_vars[] = 'ref';
 				$query_vars[] = 'jID';
+				
 				return $query_vars;
 			}
 
@@ -190,7 +187,7 @@
 					//model polaroid
 					} elseif(get_query_var('type') == 'modelpolaroid'){
 						return RBAGENCY_PLUGIN_DIR . 'view/model-polaroid.php'; 
-					}
+					} 
 				}
 				return $template;
 			}
@@ -4552,13 +4549,16 @@
 			wp_enqueue_style('rbagency-datepicker', plugins_url( '/assets/css/jquery-ui/jquery-ui.css', __FILE__ ) );
 				wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
 		}
+		wp_enqueue_style('rbagency-datepicker', plugins_url( '/assets/css/jquery-ui/jquery-ui.css', __FILE__ ) );
 	}
 	add_action('init','load_admin_css');
 
 	function load_admin_js(){
 		if(is_admin()){
 			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
+			
 		}
+		wp_enqueue_script( 'jquery-ui', RBAGENCY_PLUGIN_URL .'assets/js/jquery-ui.js', array( 'jquery' ) );
 	}
 	add_action( 'init', 'load_admin_js' );
 

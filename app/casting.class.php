@@ -795,6 +795,14 @@ class RBAgency_Casting {
 			
 			$isSent = wp_mail(get_bloginfo('admin_email'), get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
 
+			if(strpos(site_url(),'localhost')!==false){
+				$content = $MassEmailMessage;
+				$fp = fopen(RBAGENCY_UPLOADDIR."myText.txt","wb");
+				fwrite($fp,$content);
+				fclose($fp);
+			}
+	
+
 	}
 
 }
