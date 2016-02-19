@@ -4556,9 +4556,10 @@
 	function load_admin_js(){
 		if(is_admin()){
 			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
-			
+		}else{
+			wp_enqueue_script( 'jquery-ui', RBAGENCY_PLUGIN_URL .'assets/js/jquery-ui.js', array( 'jquery' ) );
 		}
-		wp_enqueue_script( 'jquery-ui', RBAGENCY_PLUGIN_URL .'assets/js/jquery-ui.js', array( 'jquery' ) );
+		
 	}
 	add_action( 'init', 'load_admin_js' );
 
