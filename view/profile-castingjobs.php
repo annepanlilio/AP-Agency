@@ -209,7 +209,7 @@
 
 				
 			?>
-				<h2>You've been submitted for a job.</h2>
+				
 			<?php endif;?>
 
 			<?php 
@@ -220,9 +220,10 @@
 				<strong>
 					<?php
 					if(empty($rb_casting_settings_message_confirming_availability_status)){
+						echo "<h2>You've been submitted for a job</h2>";
 						echo 'We are simply confirming that you are "Available" or "Not Available" for the job dates.';
 					}else{
-						echo $rb_casting_settings_message_confirming_availability_status;
+						echo nl2br($rb_casting_settings_message_confirming_availability_status);
 					}
 					?>
 				</strong>

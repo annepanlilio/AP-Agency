@@ -3895,8 +3895,9 @@ elseif ($ConfigID == 100){
 
 <?php 
 }elseif($ConfigID == 101){
-
-	$default_message_availability = "We are simply confirming that you are 'Available' or 'Not Available' for the job dates.";
+	$default_message_availability = "";
+	$default_message_availability .= "<h2>You've been submitted for a job.</h2>";
+	$default_message_availability .=" We are simply confirming that you are 'Available' or 'Not Available' for the job dates.";
 
 	add_option('rb_casting_settings_message_confirming_availability_status',$default_message_availability);
 	
