@@ -1872,7 +1872,7 @@
 	 * ======================== Get Custom Fields ===============
 	 * @Returns Custom Fields
 	/*/
-	function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, $title_to_exclude, $label_tag="strong", $value_tag="span", $echo = true, $is_print = false) {
+	function rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, $title_to_exclude = array(), $label_tag="strong", $value_tag="span", $echo = true, $is_print = false) {
 
 		global $wpdb;
 		$rb_agency_options_arr = get_option('rb_agency_options');
