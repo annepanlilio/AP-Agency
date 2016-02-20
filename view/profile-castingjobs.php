@@ -362,13 +362,22 @@
 										?>
 										<script type="text/javascript">
 											jQuery(document).ready(function(){
-												alert('Availability and audio file submitted!');
-												window.location.href = "<?php echo $redirect_after_upload ;?>";
+
+												var answer = confirm("Do you want to redirect to login page?")
+												if (answer){
+												       //some code
+												       window.location.href = "<?php echo $redirect_after_upload ;?>";
+												}
+												else{
+												        //some code
+												}
+												//alert('Availability and audio file submitted!');
+												
 												
 											});
 											</script>
 										<?php
-										$data_custom_exists = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(CastingProfile_audio) FROM " . table_agency_castingcart_availability));
+										$data_custom_exists = $wpdb->get_var( "SELECT COUNT(CastingProfile_audio) FROM " . table_agency_castingcart_availability);
 										if ( !$data_custom_exists ) {
 											$wpdb->query("ALTER TABLE ".table_agency_castingcart_availability." ADD `CastingProfile_audio` VARCHAR(255) NOT NULL AFTER `CastingJobID`");
 										}
@@ -389,8 +398,35 @@
 			
 							$_file_FullURL = site_url() . RBAGENCY_UPLOADREL . '_casting-jobs/'. $_AudioFileURL;
 							
-							if(!empty($_AudioFileURL)){
-								$rb_agency_options_arr = get_option('rb_agency_options');
+							
+							$profileID = $_profileID;
+							$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
+							$files = scandir($dir, 0);
+							
+							$rb_agency_options_arr = get_option('rb_agency_options');									
+							$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
+							$_mp3 = "";
+							for($i = 0; $i < count($files); $i++){
+								$parsedFile = explode('-',$files[$i]);
+
+									if($parsedFile[0] == $Job_ID && $profileID == $parsedFile[1]){
+										//$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
+										  
+										   if($medialink_option == 2){
+												//open in new window and play
+												$_mp3 = '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank">Play Audio</a><br>';
+											}elseif($medialink_option == 3){
+													
+												$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
+												$_mp3 = '<a '.$force_download_url.' target="_blank">Play Audio</a><br>';
+											}
+																	
+										}
+								}
+
+							if(!empty($_mp3)){
+
+								/**$rb_agency_options_arr = get_option('rb_agency_options');
 								$rb_agency_option_profilemedia_links = $rb_agency_options_arr['rb_agency_option_profilemedia_links'] ;
 								if($rb_agency_option_profilemedia_links == 2)
 								{
@@ -400,8 +436,9 @@
 									$_file_URL = '_casting-jobs/'. $_AudioFileURL;
 									$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".$_file_URL ;
 									echo '<a type="button" class="button-primary" href="'.$force_download_url.'">Download</a>';	
-								}
+								}**/
 								
+								echo $_mp3;
 								
 								echo '<form action="" method="post" >
 										<input type="submit" value="Delete" name="deleteMP3">
