@@ -3903,7 +3903,7 @@ elseif ($ConfigID == 100){
 	
 	if(isset($_POST['save_casting_settings'])){
 
-		$rb_casting_settings_message_confirming_availability_post = !empty($_POST['rb_casting_settings_message_confirming_availability_post']) ? $_POST['rb_casting_settings_message_confirming_availability_post'] : '';
+		$rb_casting_settings_message_confirming_availability_post = !empty($_POST['rb_casting_settings_message_confirming_availability_post']) ? stripslashes($_POST['rb_casting_settings_message_confirming_availability_post']) : '';
 		update_option('rb_casting_settings_message_confirming_availability_status',$rb_casting_settings_message_confirming_availability_post);
 	}
 	$rb_casting_settings_message_confirming_availability_status_display = get_option('rb_casting_settings_message_confirming_availability_status');

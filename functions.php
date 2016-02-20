@@ -2765,7 +2765,7 @@
 		global $wpdb;
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$rb_agency_option_locationtimezone 		= (int)$rb_agency_options_arr['rb_agency_option_locationtimezone'];
-
+		
 		echo "<div class=\"wrap\">\n";
 		echo "  <h3 class=\"title\">". __("Profiles List", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 
@@ -2838,7 +2838,8 @@
 		}
 
 		//Paginate
-		$wpdb->get_results("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID ". $filter  ."",ARRAY_A); // number of total rows in the database
+
+		$wpdb->get_results("SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID LEFT JOIN ".$wpdb->prefix."users users_tbl ON users_tbl.user_email = profile.ProfileContactEmail ". $filter  ."",ARRAY_A); // number of total rows in the database
 		$items = $wpdb->num_rows;
 		if($items > 0) {
 			$p = new RBAgency_Pagination;
@@ -2915,13 +2916,14 @@
 			<?php
 	//Search starts
 			if(!isset($_POST['search_profiles'])){
-				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID LEFT JOIN ".$users_table." users_tbl ON users_tbl.user_email = profile.ProfileContactEmail "  . $filter  ." ORDER BY $sort $dir $limit";
+				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID LEFT JOIN ".$wpdb->prefix."users users_tbl ON users_tbl.user_email = profile.ProfileContactEmail "  . $filter  ." ORDER BY $sort $dir $limit";
+				//echo $query;
 			}
 			else
 			{
 				
-				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID LEFT JOIN ".$users_table." users_tbl ON users_tbl.user_email = profile.ProfileContactEmail "  . $filter  ." ORDER BY $sort $dir $limit";
-				//echo $query;
+				$query = "SELECT * FROM ". table_agency_profile ." profile LEFT JOIN ". table_agency_data_type ." profiletype ON profile.ProfileType = profiletype.DataTypeID LEFT JOIN ".$wpdb->prefix."users users_tbl ON users_tbl.user_email = profile.ProfileContactEmail "  . $filter  ." ORDER BY $sort $dir $limit";
+				
 			}
 
 			$results2 = $wpdb->get_results($query,ARRAY_A);
@@ -2958,8 +2960,8 @@
 				<td><a href="javascript:void(0)" class="email_lp button-primary" disabled="disabled" data-id="<?php echo $ProfileID ?>" id="em_<?php echo $ProfileID ?>" data-email="<?php echo $ProfileContactEmail ?>">Send Email</a></td>
 				<td>
 					<div id="ch_<?php echo $ProfileID ?>"></div>
-					<input id="l_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Login" value="<?php echo (!empty($userlogin)) ? $userlogin : ""; ?>" /><br />
-					<input id="p_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Password" value="<?php echo (!empty($userpass)) ? $userpass : "";?>" />         
+					<input id="l_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Login" value="<?php echo (!empty($userlogin)) ? $userlogin : ""; ?>" disabled/><br />
+					<input id="p_<?php echo $ProfileID ?>" style="width:100px;" type="text" placeholder="Password" value="<?php echo (!empty($userpass)) ? $userpass : "";?>" disabled/>         
 				</td>
 				<td></td>
 				</tr>
