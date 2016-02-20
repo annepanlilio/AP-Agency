@@ -330,6 +330,11 @@
 								array('CastingAvailabilityProfileID' => $data["ProfileID"],'CastingJobID' => $Job_ID)
 							);
 					$_AudioFileURL = '';
+					if(isset($_POST['mp3_file']) && !empty($_POST['mp3_file'])){
+						$unlink = RBAGENCY_casting_UPLOADPATH."/_casting-jobs/".$_POST['mp3_file'];
+						unlink($unlink);
+					}
+					
 				}
 				
 				
@@ -416,14 +421,16 @@
 							$rb_agency_options_arr = get_option('rb_agency_options');									
 							$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 							$_mp3 = "";
+							$_mp3_file = "";
 							for($i = 0; $i < count($files); $i++){
 								$parsedFile = explode('-',$files[$i]);
 
 									if($parsedFile[0] == $Job_ID && $profileID == $parsedFile[1]){
 										//$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
-										  
+										   $_mp3_file = $files[$i];
 										   if($medialink_option == 2){
 												//open in new window and play
+
 												$_mp3 = '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank">Play Audio</a><br>';
 											}elseif($medialink_option == 3){
 													
@@ -451,6 +458,7 @@
 								echo $_mp3;
 								
 								echo '<form action="" method="post" >
+										<input type="text" name="mp3_file" value="'.$_mp3_file.'">
 										<input type="submit" value="Delete" name="deleteMP3">
 									</form>
 									';
@@ -463,7 +471,12 @@
 									
 									?>
 								
-									
+									<form action="" method="post" enctype="multipart/form-data">
+										Select Audio File: <br/>
+										<input type="file" name="fileToUpload" id="fileToUpload">
+										<input type="submit" value="Upload Audio" name="submitMP3">
+										
+									</form>
 								
 								<?php 
 								}else{
