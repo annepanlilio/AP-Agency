@@ -331,7 +331,7 @@
 							);
 					$_AudioFileURL = '';
 					if(isset($_POST['mp3_file']) && !empty($_POST['mp3_file'])){
-						$unlink = RBAGENCY_casting_UPLOADPATH."/_casting-jobs/".$_POST['mp3_file'];
+						$unlink = RBAGENCY_casting_UPLOADPATH."_casting-jobs/".$_POST['mp3_file'];
 						unlink($unlink);
 					}
 					
