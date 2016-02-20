@@ -458,7 +458,7 @@
 								echo $_mp3;
 								
 								echo '<form action="" method="post" >
-										<input type="text" name="mp3_file" value="'.$_mp3_file.'">
+										<input type="hidden" name="mp3_file" value="'.$_mp3_file.'">
 										<input type="submit" value="Delete" name="deleteMP3">
 									</form>
 									';
