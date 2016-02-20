@@ -175,6 +175,9 @@
 				    jQuery( "#dialog" ).dialog(
 				    		{ width: 900 }
 				    	);
+				    jQuery( "#dialog-2" ).dialog(
+				    		{ width: 900 }
+				    	);
 				  });
 				  </script>
 				 
@@ -198,6 +201,8 @@
 										
 									</form>
 				</div>
+
+				
 				
 				<!--<h2>You've submitted your availability.</h2>-->
 			<?php
@@ -356,25 +361,30 @@
 									$_deleteFle = $target_dir.$_AudioFileURL;
 									unset($_deleteFle);
 									if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+										
 										$redirect_after_upload = site_url()."/profile-login/";
-						
+
+										if (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'on') {
+											    $redirect_same_page = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+											}else{
+												$redirect_same_page = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+											}
+
 										echo "Upload Success <br/>";
 										?>
-										<script type="text/javascript">
-											jQuery(document).ready(function(){
+										<div id="dialog-2" title="Do you want to redirect to login page?">
+										  <button id="yes-redirection" onclick="redirect_to_login();">Yes</button>
+										  <button id="cancel-redirection" onclick="close_dialog();">Close</button>
+										</div>
 
-												var answer = confirm("Do you want to redirect to login page?")
-												if (answer){
-												       //some code
-												       window.location.href = "<?php echo $redirect_after_upload ;?>";
+										<script type="text/javascript">
+												function redirect_to_login(){
+												return window.location.href = "<?php echo $redirect_after_upload; ?>";
 												}
-												else{
-												        //some code
+
+												function close_dialog(){
+													return window.location.href = "<?php echo $redirect_same_page; ?>";
 												}
-												//alert('Availability and audio file submitted!');
-												
-												
-											});
 											</script>
 										<?php
 										$data_custom_exists = $wpdb->get_var( "SELECT COUNT(CastingProfile_audio) FROM " . table_agency_castingcart_availability);
@@ -578,3 +588,5 @@
 	
 
 	?>
+
+	
