@@ -317,89 +317,61 @@ if($hideAgeLabel == true){
 					';
 }
 
-	$modelInfo .= rb_agency_getProfileCustomFields($ProfileID, $ProfileGender,"strong","span",false,true).'
+	$modelInfo .= rb_agency_getProfileCustomFields_print($ProfileID, $ProfileGender,false,$title_to_exclude="","strong","span",false,true).'
 				</ul>
 			</div>'."\n";
 
 	//trim more infom
-	$modelInfo=str_replace("<li>","<tr><td valign='top'>",$modelInfo);
-	$modelInfo=str_replace("</li>","</td></tr>",$modelInfo);
-	$modelInfo=str_replace("<ul>","<table>",$modelInfo);
-	$modelInfo=str_replace("</ul>","</table>",$modelInfo);
-	$modelInfo=str_replace("strong>","<strong>",$modelInfo); 
-	$modelInfo=str_replace("</label>","</label>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$modelInfo);
+$modelInfo=str_replace("<li","<tr><td",$modelInfo);
+		$modelInfo=str_replace("</li>","</td></tr>",$modelInfo);
+		$modelInfo=str_replace("<ul>","<table>",$modelInfo);
+		$modelInfo=str_replace("</ul>","</table>",$modelInfo);  
+		$modelInfo=str_replace("</label>","</label>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$modelInfo);  
+		
+		if($_POST['print_type']=="print-polaroids"){$printType="Polaroid";}
+			else{$printType="Image";}
 
-		if($_POST['print_type']=="print-polaroids")
-		{
-			$printType="Polaroid";
-		} else {
-			$printType="Image";
-		}
+			if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
+				$pdf_image_id=$_POST['pdf_image_id'];
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
 
-		if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
-			$pdf_image_id=$_POST['pdf_image_id'];
-			$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
+			}
+			elseif(!empty($orderBy)) {
+				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
+			}else{
+					$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
+			
+			
+			}
+					$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+					$countImg = count($resultsImg);
+					$totalCount = 0;
+					foreach($resultsImg as $dataImg){$totalCount++;
+				
+					if($printType!="Polaroid"){ 
+						 if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){
+							 
+							 $allImages.="<td>$modelInfo</td>";
+							$cnt=1;  $cnt2=1; 
+						 }
+					 }
+							 
+					 //  if($_POST[$dataImg['ProfileMediaID']]==1){  - for the mean time as the were missed conception
+						   $cnt++;
+						   $cnt2++;
+						   
+					// $allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></td>\n";
+					//style="width:450px; height:650px;"
+					$timthumbHW=str_replace('style="width:',"&w=",$widthAndHeight);
+					$timthumbHW=str_replace('px; height:',"&h=",$timthumbHW);
+					$timthumbHW=str_replace('px;"',"",$timthumbHW);
+					$timthumbHW=str_replace('px"',"",$timthumbHW);
+					
 
-		}
-		elseif(!empty($orderBy)) {
-			$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
-		} else {
-			$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
-		}
-				$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
-				$countImg = count($resultsImg);
-				$totalCount = 0;
-				foreach($resultsImg as $dataImg){$totalCount++;
-
-				if($printType!="Polaroid"){
-
-					if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){
-
-						$allImages.="<td valign='top'>$modelInfo</td>";
-						$cnt=1;$cnt2=1; 
-					}
-				}
-
-				// if($_POST[$dataImg['ProfileMediaID']]==1){ - for the mean time as the were missed conception
-					$cnt++;
-					$cnt2++;
 
 
-				// $allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></td>\n";
-				//style="width:450px; height:650px;"
-
-				 $timthumbHW=str_replace('style="width:',"&w=",$widthAndHeight);
-				 $timthumbHW=str_replace('px; height:',"&h=",$timthumbHW);
-
-				$timthumbHW=str_replace('px;"',"",$timthumbHW);
-				$timthumbHW=str_replace('px"',"",$timthumbHW);
-
-				@list($width, $height) = getimagesize(get_bloginfo("url").RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']);
-				 if($width > 600 ){
-				 	$countTotalImage = count($dataImg);
-				 	$imgURL = get_bloginfo("url"). RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
-				 	if($_POST['print_option'] == 1  && $totalCount == 1){ // Print Large Photos
-				 		$imgStyle = "style='width:100%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == 3 && $totalCount == 2) { // Print Medium Size Photos
-				 		$imgStyle = "style='width:20%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == 3 && $totalCount >= 3) { // Print Medium Size Photos
-				 		$imgStyle = "style='width:20%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == 1 && $totalCount >= 3) {
-				 		$imgStyle = "style='width:50%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == 1 && $totalCount == 2) {
-				 		$imgStyle = "style='width:50%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == '1-1' && $totalCount > 2) { // Print Large Photos Without Model Info
-				 		$imgStyle = "style='width:25%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == '3-1' && $totalCount > 2) { // Print Medium Size Photos Without Model Info
-				 		$imgStyle = "style='width:25%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == '11' && $totalCount > 2) {
-				 		$imgStyle = "style='width:20%;height:auto;padding-top:0px;'";
-				 	} elseif($_POST['print_option'] == '12' && $totalCount > 2) {
-				 		$imgStyle = "style='width:100%;height:auto;padding-top:0px;'";
-				 	}
-				 
-				 } else {
-				 	$imgStyle = "";
+			//$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
+				 $imgStyle = "";
 
 					
 					
@@ -419,15 +391,11 @@ if($hideAgeLabel == true){
 					}
 
 				 	$imgURL = $_imgpath_upload. $image_src; 
-				 }
-
-			//$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
-
 
 				$allImages.= "<td valign='top'><img ".$imgStyle." id='".$dataImg["ProfileMediaID"]."' src='".$imgURL."' alt='' class='allimages_thumbs' /></td>\n";
 
 
-				//src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\"
+			//src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\"
 
 					if($cnt==$col){$allImages.="</tr></table>\n";
 						if($cnt2==$perPage){
