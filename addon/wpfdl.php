@@ -69,7 +69,7 @@ function wpfdl_dl($url,$token){
 		update_option("wpfdl_dl_".$url."_".$token,$url);
 	}
 	
-	$dl = " href=\"wp-content\plugins\wpfdl.php?dl=".$url."&token=".$token."&action=dl\" ";
+	$dl = " href=\"wp-content\plugins\wpfdl\wpfdl.php?dl=".$url."&token=".$token."&action=dl\" ";
 	return $dl;
 }
 
