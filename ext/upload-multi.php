@@ -578,7 +578,7 @@ jQuery(".rb_profile_tool2 a.castingcart2").click(function(){
 		});
 
 </script>
-<?
+<?php
 	exit;
 }
 

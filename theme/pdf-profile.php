@@ -374,7 +374,7 @@ if($hideAgeLabel == true){
 				$timthumbHW=str_replace('px;"',"",$timthumbHW);
 				$timthumbHW=str_replace('px"',"",$timthumbHW);
 
-				list($width, $height) = getimagesize(get_bloginfo("url").RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']);
+				@list($width, $height) = getimagesize(get_bloginfo("url").RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']);
 				 if($width > 600 ){
 				 	$countTotalImage = count($dataImg);
 				 	$imgURL = get_bloginfo("url"). RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
@@ -553,5 +553,5 @@ fclose($fp);
 $toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
 //*die($toRedirect);
 
-
+//echo $toRedirect;
 wp_redirect($toRedirect); exit();
