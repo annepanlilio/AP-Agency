@@ -561,3 +561,60 @@ msgstr ""
 #: Plugin\rb-agency/theme/include-client-layout2.php:193
 msgid "Shoe Size"
 msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3815
+msgid "Use S2member Plugin"
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3827
+msgid "Paypal Button"
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3830
+msgid "Amount"
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3832
+msgid "Description"
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3834
+msgid "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i>"
+msgstr ""
+
+
+#: Plugin\rb-agency/view/admin-settings.php:3841
+msgid "Registration Notifications"
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3843
+msgid "Insert message after registration."
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3845
+msgid "Insert email notification that willl be send after registration."
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3847
+msgid "Insert message that willl appear after finishing steps 1-3."
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3849
+msgid "Insert message that willl appear after payment."
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:3921
+msgid "Message that will appear at the top of confirming availability page."
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:1159
+msgid "Notification after registration"
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:1162
+msgid "If password is self-generated"
+msgstr ""
+
+#: Plugin\rb-agency/view/admin-settings.php:1169
+msgid "If password is auto-generated(sent via email)"
+msgstr ""
