@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-02-23 13:35+0800\n"
+"PO-Revision-Date: 2016-02-24 15:52-0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -13,8 +13,8 @@ msgstr ""
 "X-Poedit-Basepath: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: it_IT\n"
-"X-Generator: Poedit 1.8.6\n"
+"Language: en_US\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-SearchPath-0: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:99
@@ -310,11 +310,6 @@ msgstr ""
 msgid "The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
 msgstr ""
 
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:103
-#: Plugin\rb-agency/admin/taxonomy.php:312
-msgid "Description"
-msgstr ""
-
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:105
 msgid "The description is not prominent by default, however some themes may show it."
 msgstr ""
@@ -581,7 +576,6 @@ msgstr ""
 #: Plugin\rb-agency/view/admin-settings.php:3834
 msgid "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i>"
 msgstr ""
-
 
 #: Plugin\rb-agency/view/admin-settings.php:3841
 msgid "Registration Notifications"
