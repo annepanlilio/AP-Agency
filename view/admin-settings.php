@@ -3734,9 +3734,11 @@ elseif ($ConfigID == 100){
 		
 		for($idx=1;$idx<4;$idx++){
 			add_option("subscription_title_$idx",false);
+			add_option("subscription_amount_$idx",'');
 			add_option("subscription_description_$idx",false);
 			add_option("subscription_paypal_btn_$idx",false);
-			add_option("subscription_discount_coupon_$idx",false);
+
+			add_option("subscription_type_$idx",false);
 		}
 			
 
@@ -3746,6 +3748,10 @@ elseif ($ConfigID == 100){
 					$title = !empty($_POST["subscription_title_$idx"]) ? stripslashes($_POST["subscription_title_$idx"]) : "";
 					update_option("subscription_title_$idx",$title);
 				}
+				if($k == "subscription_amount_$idx"){
+					$amount = !empty($_POST["subscription_amount_$idx"]) ? stripslashes($_POST["subscription_amount_$idx"]) : "";
+					update_option("subscription_amount_$idx",$amount);
+				}
 				if($k == "subscription_description_$idx"){
 					$description = !empty($_POST["subscription_description_$idx"]) ? stripslashes($_POST["subscription_description_$idx"]) : "";
 					update_option("subscription_description_$idx",$description);
@@ -3754,10 +3760,10 @@ elseif ($ConfigID == 100){
 					$btn = !empty($_POST["subscription_paypal_btn_$idx"]) ? stripslashes($_POST["subscription_paypal_btn_$idx"]) : "";
 					update_option("subscription_paypal_btn_$idx",$btn);
 				}
-				if($k == "subscription_discount_coupon_$idx"){
-					$btn = !empty($_POST["subscription_discount_coupon_$idx"]) ? stripslashes($_POST["subscription_discount_coupon_$idx"]) : "";
-					update_option("subscription_discount_coupon_$idx",$btn);
-				}
+				$t = !empty($_POST["subscription_title_$idx"]) ? stripslashes($_POST["subscription_title_$idx"]) : "";
+				$a = !empty($_POST["subscription_amount_$idx"]) ? stripslashes($_POST["subscription_amount_$idx"]) : "";
+				$stype = $a."==".$t;
+				update_option("subscription_type_$idx",$stype);
 			}
 			
 		}
@@ -3788,13 +3794,6 @@ elseif ($ConfigID == 100){
 			update_option('rbagency_message_after_payment','');
 		}
 
-
-		if(!empty($_POST['rbagency_message_below_paypal_btns'])){
-			update_option('rbagency_message_below_paypal_btns',stripslashes($_POST['rbagency_message_below_paypal_btns']));
-		}elseif(empty($_POST['rbagency_message_below_paypal_btns'])){
-			update_option('rbagency_message_below_paypal_btns','');
-		}
-
 		//echo $_POST['rbagency_paypal_button_code'];
 
 	}
@@ -3806,8 +3805,7 @@ elseif ($ConfigID == 100){
 	$rbagency_initial_email_after_registration = get_option('rbagency_initial_email_after_registration');
 	$rbagency_message_after_steps = get_option('rbagency_message_after_steps');
 	$rbagency_message_after_payment = get_option('rbagency_message_after_payment');
-	$rbagency_message_below_paypal_btns = get_option('rbagency_message_below_paypal_btns');
-	
+
 	echo '<form action="'.admin_url("admin.php?page=". $_GET['page']."&ConfigID=".$_GET['ConfigID']) .'" method="POST">';
 	echo "<input type=\"checkbox\" name=\"use_s2member\" class=\"use_s2member\" $check_use>&nbsp;Use S2member Plugin.<br>";
 
@@ -3816,18 +3814,20 @@ elseif ($ConfigID == 100){
 	for($idx=1;$idx < 4;$idx++){
 
 		$subscription_title = get_option("subscription_title_$idx");
+		$subscription_amount = get_option("subscription_amount_$idx");
 		$subscription_description = get_option("subscription_description_$idx");
 		$subscription_paypal_btn = get_option("subscription_paypal_btn_$idx");
-		$subscription_discount_coupon = get_option("subscription_discount_coupon_$idx");
+		$subscription_type = get_option("subscription_type_$idx");
 
+		//echo $subscription_type;
 		echo "Subscription Title<br>";
 		echo "<input type=\"text\" name=\"subscription_title_$idx\" value=\"".$subscription_title."\"><br><br>";
+		echo "Amount<br>";
+		echo "<input type=\"text\" name=\"subscription_amount_$idx\" value=\"".$subscription_amount."\"><br><br>";
 		echo "Description<br>";
 		echo "<textarea name=\"subscription_description_$idx\" class=\"subscription_description_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_description)."</textarea><br><br>";
 		echo "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i></br>";
 		echo "<textarea name=\"subscription_paypal_btn_$idx\" class=\"subscription_paypal_btn_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_paypal_btn)."</textarea><br><br>";
-		echo "Apply discount coupon. <i></br>";
-		echo "<textarea name=\"subscription_discount_coupon_$idx\" class=\"subscription_discount_coupon_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_discount_coupon)."</textarea><br><br>";
 	}
 	
 	echo "<br><br><br>";
@@ -3842,16 +3842,7 @@ elseif ($ConfigID == 100){
 	echo "<textarea name=\"rbagency_message_after_steps\" class=\"rbagency_message_after_steps\" rows=\"7\" cols=\"60\">".$rbagency_message_after_steps."</textarea>";
 	echo "<p>Insert message that willl appear after payment.</p>";
 	echo "<textarea name=\"rbagency_message_after_payment\" class=\"rbagency_message_after_payment\" rows=\"7\" cols=\"60\">".$rbagency_message_after_payment."</textarea><br>";
-	
-
-	echo "<br><br><br>";
-
-	echo "<h2>Message that will display above the paypal buttons</h2>";
-	echo "<textarea name=\"rbagency_message_below_paypal_btns\" class=\"rbagency_message_below_paypal_btns\" rows=\"7\" cols=\"60\">".$rbagency_message_below_paypal_btns."</textarea><br>";
 	echo '<input type="submit" name="save_s2member" value="Save Settings">';
-	
-	
-
 	echo '</form>';
 
 
