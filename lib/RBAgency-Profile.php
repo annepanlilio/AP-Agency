@@ -1906,6 +1906,7 @@ class RBAgency_Profile {
 								<option value="2">Display Name</option>
 								<option value="50">Gender</option>';
 								$customFilters = array_merge($customFilters,$results_genders);
+
 								foreach($customFilters as $customFilter){
 									
 									$customID = $customFilter['ProfileCustomID'] + 100; 
@@ -2833,10 +2834,19 @@ class RBAgency_Profile {
 				$displayHTML .= "	<div class=\"profile-box\" >\n";
 
 				if(!$plain){
-					$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
+
+					if(!empty($dataList["ProfileDateBirth"]) && $dataList["ProfileDateBirth"] !== '0000-00-00'){
+						$displayHTML .= '<input id="br'.$dataList["ProfileID"].'" type="hidden" class="p_birth" value="'.$dataList["ProfileDateBirth"].'">';
+					}
+					
 					$displayHTML .= '<input id="nm'.$dataList["ProfileID"].'" type="hidden" class="p_name" value="'.$dataList["ProfileContactDisplay"].'">';
+					
+					if(!empty($dataList["ProfileDueDate"]) && $dataList["ProfileDueDate"] !== '0000-00-00'){
+						$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+					}
+
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
-					$displayHTML .= '<input id="du'.$dataList["ProfileID"].'" type="hidden" class="p_duedate" value="'.(isset($dataList["ProfileDueDate"])?$dataList["ProfileDueDate"]:"").'">';
+					
 					
 
 					
@@ -2858,14 +2868,26 @@ class RBAgency_Profile {
 					$customFilters = $wpdb->get_results($query,ARRAY_A);
 
 					foreach($customFilters as $customFilter){
+
 						$customIDPlus = $customFilter["ProfileCustomID"] + 100;
+
 						if($customFilter['ProfileCustomType'] == 1 || $customFilter['ProfileCustomType'] == 4 || $customFilter['ProfileCustomType'] == 7){
-							$displayHTML .= '<input id="type_text'. $customIDPlus . '" type="hidden" class="type_text'.$customIDPlus.'" name="type_text"  value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+
+							$displayHTML .= '<input id="type_text_'. $dataList['ProfileID'] . '" type="hidden" class="type_text" name="type_text"  value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+
 						} elseif($customFilter['ProfileCustomType'] == 10){
-							$displayHTML .= '<input id="type_text'.$customIDPlus.'" type="hidden" class="type_text'.$customIDPlus.'" name="type_text" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
+							if($customFilter["ProfileCustomDateValue"] !== '0000-00-00' && !empty($customFilter["ProfileCustomDateValue"])){
+								$displayHTML .= '<input id="type_text_'.$dataList['ProfileID'].'" type="hidden" class="type_text" name="type_text" value="'.(isset($customFilter["ProfileCustomDateValue"])?$customFilter["ProfileCustomDateValue"]:"").'">';
+							}
+							
+
 						} elseif($customFilter['ProfileCustomType'] == 3){
-							$displayHTML .= '<input id="type_text'.$customIDPlus.'" type="hidden" class="type_text'.$customIDPlus.'" name="type_text" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+
+							$displayHTML .= '<input id="type_text_'.$dataList['ProfileID'].'" type="hidden" class="type_text" name="type_text" value="'.(isset($customFilter["ProfileCustomValue"])?$customFilter["ProfileCustomValue"]:"").'">';
+
 						}
+
+
 
 					}
 				}

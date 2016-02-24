@@ -3892,22 +3892,12 @@ elseif ($ConfigID == 100){
 				jQuery(".subscription_amount").attr('disabled','disabled');
 				jQuery(".subscription_description").attr('disabled','disabled');
 				jQuery(".subscription_paypal_btn").attr('disabled','disabled');
-
-				jQuery(".subscription_title").val('');
-				jQuery(".subscription_amount").val('');
-				jQuery(".subscription_description").val('');
-				jQuery(".subscription_paypal_btn").val('');
-
 				
 				jQuery(".rbagency_initial_message_after_registration").attr('disabled','disabled');
 				jQuery(".rbagency_initial_email_after_registration").attr('disabled','disabled');
 				jQuery(".rbagency_message_after_steps").attr('disabled','disabled');
 				jQuery(".rbagency_message_after_payment").attr('disabled','disabled');
 
-				jQuery(".rbagency_initial_message_after_registration").val('');
-				jQuery(".rbagency_initial_email_after_registration").val('');
-				jQuery(".rbagency_message_after_steps").val('');
-				jQuery(".rbagency_message_after_payment").val('');
 			}
 		});
 	});
