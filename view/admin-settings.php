@@ -3807,10 +3807,10 @@ elseif ($ConfigID == 100){
 	$rbagency_message_after_payment = get_option('rbagency_message_after_payment');
 
 	echo '<form action="'.admin_url("admin.php?page=". $_GET['page']."&ConfigID=".$_GET['ConfigID']) .'" method="POST">';
-	echo "<input type=\"checkbox\" name=\"use_s2member\" class=\"use_s2member\" $check_use>&nbsp;Use S2member Plugin.<br>";
+	echo "<br>";
+	echo "<h3><input type=\"checkbox\" name=\"use_s2member\" class=\"use_s2member\" $check_use>&nbsp;Use S2member Plugin</h3>.<br>";
 
-	echo "<h2>Paypal Buttons</h2>";
-
+	
 	for($idx=1;$idx < 4;$idx++){
 
 		$subscription_title = get_option("subscription_title_$idx");
@@ -3820,6 +3820,8 @@ elseif ($ConfigID == 100){
 		$subscription_type = get_option("subscription_type_$idx");
 
 		//echo $subscription_type;
+		echo "<div class=\"boxlinkgroup\">\n";
+		echo "<h2>Paypal Button $idx</h2>";
 		echo "Subscription Title<br>";
 		echo "<input type=\"text\" name=\"subscription_title_$idx\" value=\"".$subscription_title."\"><br><br>";
 		echo "Amount<br>";
@@ -3828,6 +3830,8 @@ elseif ($ConfigID == 100){
 		echo "<textarea name=\"subscription_description_$idx\" class=\"subscription_description_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_description)."</textarea><br><br>";
 		echo "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i></br>";
 		echo "<textarea name=\"subscription_paypal_btn_$idx\" class=\"subscription_paypal_btn_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_paypal_btn)."</textarea><br><br>";
+		echo "<hr></hr>";
+		echo "</div>";
 	}
 	
 	echo "<br><br><br>";
