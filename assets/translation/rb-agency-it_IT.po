@@ -3,155 +3,155 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2015-11-20 14:07+0800\n"
+"PO-Revision-Date: 2016-02-23 13:35+0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2\n"
-"X-Poedit-Basepath: C:\\Dropbox\\Users\\Rob\\Scripts\\RB Plugin\\rb-agency\n"
+"X-Poedit-Basepath: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: it_IT\n"
-"X-Generator: Poedit 1.8.1\n"
-"X-Poedit-SearchPath-0: C:\\Dropbox\\Users\\Rob\\Scripts\\RB Plugin\\rb-agency\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SearchPath-0: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:99
 msgid "RB Agency Updates"
-msgstr "Aggiornamento piattaforma"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:366
 msgid "Male"
-msgstr "Uomo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:368
 msgid "Female"
-msgstr "Femmina"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:397
 msgid "No Profiles Found"
-msgstr "Nessun profilo trovato"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:364
 #: Plugin\rb-agency/rb-agency.php:477
 msgid "Settings"
-msgstr "Impostazioni"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:373
 msgid "RB Agency"
-msgstr "RB Agency"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:386
 #: Plugin\rb-agency/rb-agency.php:388
 msgid "Generate Client List"
-msgstr "Genera lista clienti"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:434
 msgid "Any Profile Type"
-msgstr "Tipo profilo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:439
 msgid "Only"
-msgstr "Solo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:442
 msgid "Starting Age"
-msgstr "Avvio"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:443
 msgid "Ending Age"
-msgstr "Fine"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Gender"
-msgstr "Sesso"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Both Male &amp; Female"
-msgstr "Entrambi Uomini &amp; Donne"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Female Only"
-msgstr "Solo donne"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Male Only"
-msgstr "Solo uomini"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:446
 msgid "Insert Profile List"
-msgstr "Inserire lista profilo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:447
 msgid "Insert Search Form"
-msgstr "Cerca"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:456
 msgid "My Post Section Title"
-msgstr "Mio titolo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:471
 msgid "Agency"
-msgstr "Agenzia"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:472
 msgid "Overview"
-msgstr "Panorama"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
 msgid "Manage Profiles"
-msgstr "Gestisci profili"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
 msgid "Manage Profile"
-msgstr "Gestisci profilo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:474
 msgid "Search Profiles"
-msgstr "Ricerca Profilo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:475
 msgid "Saved Searches"
-msgstr "Ricerche salvate"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
 msgid "Tools &amp; Reports"
-msgstr "Impostazioni report"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
 msgid "Run Reports"
-msgstr "Avvia report"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:477
 msgid "Edit Settings"
-msgstr "Modifica impostazioni"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
 msgid "Almost done..."
-msgstr "Quasi finito..."
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
 msgid "One More Step"
-msgstr "Primo passo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
 msgid "Please click here to complete the uninstallation process"
-msgstr "Clicca qui per interrompere il processo"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
 msgid "New Casting added successfully!"
-msgstr "Nuovo casting è stato aggiunto"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
 #: Plugin\rb-agency/admin/client.php:107
 msgid "Update and add media"
-msgstr "Aggiorna e invia media"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:51
 #: Plugin\rb-agency/admin/client.php:109
 msgid "Error creating record, please ensure you have filled out all required fields."
-msgstr "Errore nell'inserimento, si prega di accertarsi di aver compilato tutti i campi obbligatori."
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:467
 #: Plugin\rb-agency/admin/client.php:1427
@@ -159,44 +159,40 @@ msgstr "Errore nell'inserimento, si prega di accertarsi di aver compilato tutti 
 #: Plugin\rb-agency/admin/taxonomy.php:220
 #: Plugin\rb-agency/admin/taxonomy.php:263
 msgid "Delete"
-msgstr "Cancella"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:107
 msgid "New Client added successfully!"
-msgstr "Nuovo cliente è stato aggiunto"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:405
 msgid "Client updated successfully!"
-msgstr "Cliente aggiornato"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:407
 msgid "Error updating record, please ensure you have filled out all required fields."
-msgstr "Errore durante l'aggiornamento, assicurarsi di aver compilato tutti i campi obbligatori."
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:419
 #: Plugin\rb-agency/admin/client.php:460
 msgid "Client deleted successfully!"
-msgstr "Cliente cancellato"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:457
 msgid "No valid record found."
-msgstr "Dato non trovato"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:468
 msgid "Back to Client List"
-msgstr "Torna alla lista clienti"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
 msgid "Edit Client"
-msgstr "Modifica cliente"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
-msgid "Country"
-msgstr "Regione"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
 msgid "Make changes in the form below to edit a Client."
-msgstr "Apportare modifiche al modulo sottostante per modificare un cliente"
+msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
 #: Plugin\rb-agency/admin/client.php:530
@@ -565,76 +561,3 @@ msgstr ""
 #: Plugin\rb-agency/theme/include-client-layout2.php:193
 msgid "Shoe Size"
 msgstr ""
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
-msgid "State"
-msgstr "Provincia"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
-msgid "City"
-msgstr "Città"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
-msgid "Street"
-msgstr "Indirizzo"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
-msgid "ZIP"
-msgstr "CAP"
-
-msgid "Welcome"
-msgstr "Bentornato"
-
-msgid "First Name"
-msgstr "Nome"
-
-msgid "Last Name"
-msgstr "Cognome"
-
-msgid "required"
-msgstr "richiesto"
-
-msgid "Company"
-msgstr "Societa"
-
-msgid "Street Address"
-msgstr "Indirizzo stradale"
-
-msgid "Home"
-msgstr "Abitazione"
-
-msgid "Work"
-msgstr "Ufficio"
-
-msgid "Leave blank to keep same"
-msgstr "Lasciare vuoto per mantenere lo stesso"
-
-msgid "Retype to Confirm"
-msgstr "Digitare nuovamente per confermare"
-
-msgid "Age"
-msgstr "età"
-
-msgid "Back to Overview"
-msgstr "Indietro"
-
-msgid "Any"
-msgstr "Qualsiasi"
-
-msgid "Any Gender"
-msgstr "Qualsiasi"
-
-msgid "Any Country"
-msgstr "Qualsiasi"
-
-msgid "Any State"
-msgstr "Qualsiasi"
-
-msgid "Empty Form"
-msgstr "Pulisci"
-
-msgid "Go to Advanced Search"
-msgstr "Ricerca  Avanzata"
-
-msgid "Go Back to My Dashboard"
-msgstr "Toma Indietro"

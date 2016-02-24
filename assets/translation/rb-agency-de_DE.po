@@ -2,2814 +2,562 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-03 11:12-1000\n"
-"PO-Revision-Date: 2012-04-03 11:12-1000\n"
+"POT-Creation-Date: 2011-12-28 02:40-1000\n"
+"PO-Revision-Date: 2016-02-23 13:35+0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2\n"
 "X-Poedit-Basepath: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
-"X-Textdomain-Support: yes\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de_DE\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-SearchPath-0: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/functions.php:68
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:99
 msgid "RB Agency Updates"
-msgstr "RB Agency Updates"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/functions.php:456
-#: Plugin/rb-agency/functions.php:803
-#: Plugin/rb-agency/functions.php:861
-msgid "No Profiles Found"
-msgstr "Keine Profile gefunden"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/functions.php:773
-#, fuzzy
-msgid "Displaying"
-msgstr "Vorname"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/functions.php:773
-msgid "of"
 msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/functions.php:773
-#, fuzzy
-msgid " records"
-msgstr "Alle Einträge"
-
-# @ default
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:382
-#: Plugin/rb-agency/rb-agency.php:498
-#: Plugin/rb-agency/admin/settings.php:9
-#: Plugin/rb-agency/admin/settings.php:42
-#: Plugin/rb-agency/admin/settings.php:62
-#: Plugin/rb-agency/admin/settings.php:136
-msgid "Settings"
-msgstr "Einstellungen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:391
-msgid "RB Agency"
-msgstr "RB Agency"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:404
-#: Plugin/rb-agency/rb-agency.php:406
-msgid "Insert Profiles"
-msgstr "Profile einfügen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:452
-#: Plugin/rb-agency/admin/overview.php:30
-#: Plugin/rb-agency/admin/search.php:613
-msgid "Any Profile Type"
-msgstr "Alle Profile"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:457
-msgid "Only"
-msgstr "Nur"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:460
-msgid "Starting Age"
-msgstr "Ab Alter"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:461
-msgid "Ending Age"
-msgstr "Bis  Alter"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:462
-#: Plugin/rb-agency/admin/overview.php:43
-#: Plugin/rb-agency/admin/profile.php:760
-#: Plugin/rb-agency/admin/search.php:365
-#: Plugin/rb-agency/admin/search.php:625
-msgid "Gender"
-msgstr "Geschlecht"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:462
-msgid "Both Male &amp; Female"
-msgstr "Beide Männlich & Weiblich"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:462
-msgid "Female Only"
-msgstr "Nur Weibliche"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:462
-msgid "Male Only"
-msgstr "Nur Männlich"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:464
-msgid "Insert Profile List"
-msgstr "Anlegen einer Liste von Profilen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:465
-msgid "Insert Search Form"
-msgstr "Anlegen des Suchformulars"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:474
-msgid "Profile"
-msgstr "Profile"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:489
-msgid "Agency"
-msgstr "Agentur"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:490
-#: Plugin/rb-agency/admin/settings.php:11
-msgid "Overview"
-msgstr "Überblick"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:491
-#: Plugin/rb-agency/admin/overview.php:135
-msgid "Manage Profiles"
-msgstr "Profile verwalten"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:493
-#, fuzzy
-msgid "Approve Pending Profiles"
-msgstr "Profilsuche"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:493
-#, fuzzy
-msgid "Approve Profiles"
-msgstr "Profile einfügen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:495
-#, fuzzy
-msgid "Search &amp; Send Profiles"
-msgstr "Profilsuche"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:495
-#: Plugin/rb-agency/admin/overview.php:137
-#: Plugin/rb-agency/admin/search.php:868
-msgid "Search Profiles"
-msgstr "Profilsuche"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:496
-msgid "Saved Searches"
-msgstr "gespeicherte Suchen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:497
-msgid "Tools &amp; Reports"
-msgstr "Tools & Berichte"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:498
-msgid "Edit Settings"
-msgstr "Settings bearbeiten"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:534
-msgid "Displays promoted profiles"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:535
-#, fuzzy
-msgid "RB Agency : Featured"
-msgstr "RB Agency Updates"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:570
-#: Plugin/rb-agency/rb-agency.php:621
-#, fuzzy
-msgid "Title:"
-msgstr "Titel"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:571
-msgid "Number Shown:"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:585
-msgid "Displays profile search fields"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:586
-#, fuzzy
-msgid "RB Agency : Search"
-msgstr "RB Agency"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:622
-#, fuzzy
-msgid "Type:"
-msgstr "Unit Typ"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:710
-msgid "Almost done..."
-msgstr "fast geschafft"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:710
-msgid "One More Step"
-msgstr "noch einen Schritt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/rb-agency.php:710
-msgid "Please click here to complete the uninstallation process"
-msgstr "Bitte hier klicken, um das Plugin zu deinstallieren"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/upgrade.php:39
-msgid "Cant load types"
-msgstr "Kann Profiltypen nicht laden"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/casting.php:49
-msgid "New Casting added successfully!"
-msgstr "Neues Casting angelegt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/casting.php:49
-#: Plugin/rb-agency/admin/profile.php:159
-msgid "Update and add media"
-msgstr "Daten und Media Update"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/casting.php:51
-#: Plugin/rb-agency/admin/profile.php:161
-msgid "Error creating record, please ensure you have filled out all required fields."
-msgstr "Error creating record, please ensure you have filled out all required fields."
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/casting.php:128
-#: Plugin/rb-agency/admin/overview.php:152
-#: Plugin/rb-agency/admin/overview.php:172
-#: Plugin/rb-agency/admin/profile.php:495
-#: Plugin/rb-agency/admin/search.php:492
-#: Plugin/rb-agency/admin/searchsaved.php:163
-#: Plugin/rb-agency/admin/settings.php:546
-#: Plugin/rb-agency/admin/settings.php:675
-#: Plugin/rb-agency/admin/settings.php:867
-#: Plugin/rb-agency/admin/settings.php:955
-#: Plugin/rb-agency/admin/settings.php:1093
-#: Plugin/rb-agency/admin/settings.php:1181
-#: Plugin/rb-agency/admin/settings.php:1318
-#: Plugin/rb-agency/admin/settings.php:1406
-#: Plugin/rb-agency/admin/settings.php:1543
-#: Plugin/rb-agency/admin/settings.php:1631
-#: Plugin/rb-agency/admin/settings.php:1771
-#: Plugin/rb-agency/admin/settings.php:1868
-#: Plugin/rb-agency/admin/settings.php:2014
-#: Plugin/rb-agency/admin/settings.php:2135
-msgid "Error, query failed"
-msgstr "Fehler, Suchanfrage falsch"
-
-# @ modelagency_casting
-# @ default
-# @ rb_agency_profiles
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/casting.php:467
-#: Plugin/rb-agency/admin/profile.php:1444
-#: Plugin/rb-agency/admin/profile.php:1493
-#: Plugin/rb-agency/admin/searchsaved.php:397
-#: Plugin/rb-agency/admin/settings.php:684
-#: Plugin/rb-agency/admin/settings.php:703
-#: Plugin/rb-agency/admin/settings.php:964
-#: Plugin/rb-agency/admin/settings.php:980
-#: Plugin/rb-agency/admin/settings.php:1190
-#: Plugin/rb-agency/admin/settings.php:1206
-#: Plugin/rb-agency/admin/settings.php:1415
-#: Plugin/rb-agency/admin/settings.php:1431
-#: Plugin/rb-agency/admin/settings.php:1640
-#: Plugin/rb-agency/admin/settings.php:1656
-#: Plugin/rb-agency/admin/settings.php:1877
-#: Plugin/rb-agency/admin/settings.php:1894
-#: Plugin/rb-agency/admin/settings.php:2144
-#: Plugin/rb-agency/admin/settings.php:2163
-msgid "Delete"
-msgstr "Löschen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:9
-#, fuzzy
-msgid "Dashboard"
-msgstr "Access Dashboard"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:10
-msgid "You are using version"
-msgstr "Du nutzt Version"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:17
-#: Plugin/rb-agency/admin/overview.php:117
-msgid "Quick Search"
-msgstr "Schnellsuche"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:28
-#: Plugin/rb-agency/admin/profile.php:1123
-#: Plugin/rb-agency/admin/profile.php:1126
-#: Plugin/rb-agency/admin/search.php:611
-msgid "Classification"
-msgstr "Profil Typ"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:45
-#: Plugin/rb-agency/admin/search.php:627
-msgid "Both Male and Female"
-msgstr "Beide Männlich & Weiblich"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:46
-#: Plugin/rb-agency/admin/profile.php:763
-#: Plugin/rb-agency/admin/search.php:628
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:366
 msgid "Male"
-msgstr "Männlich"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:47
-#: Plugin/rb-agency/admin/profile.php:764
-#: Plugin/rb-agency/admin/search.php:629
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:368
 msgid "Female"
-msgstr "Weiblich"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:52
-#: Plugin/rb-agency/admin/search.php:368
-#: Plugin/rb-agency/admin/search.php:634
-msgid "Age"
-msgstr "Alter"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:54
-#: Plugin/rb-agency/admin/overview.php:64
-#: Plugin/rb-agency/admin/overview.php:97
-#: Plugin/rb-agency/admin/overview.php:108
-#: Plugin/rb-agency/admin/search.php:636
-#: Plugin/rb-agency/admin/search.php:646
-#: Plugin/rb-agency/admin/search.php:680
-#: Plugin/rb-agency/admin/search.php:691
-#: Plugin/rb-agency/admin/search.php:766
-#: Plugin/rb-agency/admin/search.php:776
-#: Plugin/rb-agency/admin/search.php:785
-#: Plugin/rb-agency/admin/search.php:794
-msgid "Minimum"
-msgstr "Minimum"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:56
-#: Plugin/rb-agency/admin/overview.php:80
-#: Plugin/rb-agency/admin/overview.php:99
-#: Plugin/rb-agency/admin/overview.php:110
-#: Plugin/rb-agency/admin/search.php:638
-#: Plugin/rb-agency/admin/search.php:662
-#: Plugin/rb-agency/admin/search.php:682
-#: Plugin/rb-agency/admin/search.php:693
-#: Plugin/rb-agency/admin/search.php:768
-#: Plugin/rb-agency/admin/search.php:778
-#: Plugin/rb-agency/admin/search.php:787
-#: Plugin/rb-agency/admin/search.php:796
-msgid "Maximum"
-msgstr "Maximum"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:61
-#: Plugin/rb-agency/admin/profile.php:851
-#: Plugin/rb-agency/admin/profile.php:873
-#: Plugin/rb-agency/admin/search.php:398
-#: Plugin/rb-agency/admin/search.php:400
-#: Plugin/rb-agency/admin/search.php:643
-msgid "Height"
-msgstr "Größe"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:67
-#: Plugin/rb-agency/admin/search.php:649
-msgid "No Minimum"
-msgstr "Kein Minimum"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:83
-#: Plugin/rb-agency/admin/search.php:665
-msgid "No Maximum"
-msgstr "Kein Maximum"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:97
-#: Plugin/rb-agency/admin/overview.php:99
-#: Plugin/rb-agency/admin/profile.php:873
-#: Plugin/rb-agency/admin/search.php:680
-#: Plugin/rb-agency/admin/search.php:682
-msgid "cm"
-msgstr "cm"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:106
-#: Plugin/rb-agency/admin/profile.php:880
-#: Plugin/rb-agency/admin/search.php:405
-#: Plugin/rb-agency/admin/search.php:407
-#: Plugin/rb-agency/admin/search.php:689
-msgid "Weight"
-msgstr "Gewicht"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:118
-msgid "Advanced Search"
-msgstr "erweiterte Suche"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:131
-msgid "Actions"
-msgstr "Aktionen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:135
-msgid "Browse and edit existing profiles"
-msgstr "Anzeigen und verändern bestehender Profile"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:136
-msgid "Create New Profile"
-msgstr "Neues Profil erstellen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:136
-msgid "Create new profile"
-msgstr "Neues Profil erstellen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:137
-msgid "Find and send profiles by filtering by chriteria"
-msgstr "Finde und sende Profile mit Suchkriterien"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:144
-msgid "Recent Activity"
-msgstr "Zuletzt hinzugefügt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:149
-msgid "Recently Created/Modified Profiles"
-msgstr "Zuletzt hinzugefügte / veränderte  Profile"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:164
-#: Plugin/rb-agency/admin/overview.php:184
-msgid "There are currently no profiles added"
-msgstr "Zur Zeit keine Profile hinzugefügt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:169
-msgid "Recently Viewed Profiles"
-msgstr "Zuletzt gezeigte Profile"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/overview.php:201
-msgid "WordPress Plugins by "
-msgstr "WordPress Plugins by "
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:30
-msgid " must have a display name identified"
-msgstr "Displayname muss identifiziert werden"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:159
-msgid "New Profile added successfully!"
-msgstr "Neues Profil erfolgreich hinzugefügt"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:261
-msgid "Please upload an image file only"
 msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:295
-msgid "Please upload a PDF or image file only"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:397
+msgid "No Profiles Found"
 msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:311
-msgid "File did not upload!"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:364
+#: Plugin\rb-agency/rb-agency.php:477
+msgid "Settings"
 msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:361
-#, fuzzy
-msgid "Profile updated successfully"
-msgstr "Profil Update erfolgreich"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:373
+msgid "RB Agency"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:361
-msgid "Continue editing the record"
-msgstr "Profil weiter bearbeiten"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:386
+#: Plugin\rb-agency/rb-agency.php:388
+msgid "Generate Client List"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:363
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:434
+msgid "Any Profile Type"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:439
+msgid "Only"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:442
+msgid "Starting Age"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:443
+msgid "Ending Age"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
+msgid "Gender"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
+msgid "Both Male &amp; Female"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
+msgid "Female Only"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
+msgid "Male Only"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:446
+msgid "Insert Profile List"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:447
+msgid "Insert Search Form"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:456
+msgid "My Post Section Title"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:471
+msgid "Agency"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:472
+msgid "Overview"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
+msgid "Manage Profiles"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
+msgid "Manage Profile"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:474
+msgid "Search Profiles"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:475
+msgid "Saved Searches"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
+msgid "Tools &amp; Reports"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
+msgid "Run Reports"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:477
+msgid "Edit Settings"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
+msgid "Almost done..."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
+msgid "One More Step"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
+msgid "Please click here to complete the uninstallation process"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
+msgid "New Casting added successfully!"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
+#: Plugin\rb-agency/admin/client.php:107
+msgid "Update and add media"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:51
+#: Plugin\rb-agency/admin/client.php:109
+msgid "Error creating record, please ensure you have filled out all required fields."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:467
+#: Plugin\rb-agency/admin/client.php:1427
+#: Plugin\rb-agency/admin/searchsaved.php:394
+#: Plugin\rb-agency/admin/taxonomy.php:220
+#: Plugin\rb-agency/admin/taxonomy.php:263
+msgid "Delete"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:107
+msgid "New Client added successfully!"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:405
+msgid "Client updated successfully!"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:407
 msgid "Error updating record, please ensure you have filled out all required fields."
-msgstr "Error updating record, please ensure you have filled out all required fields."
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:394
-#: Plugin/rb-agency/admin/profile.php:399
-#, fuzzy
-msgid "Error removing:"
-msgstr "Fehler beim entfernen"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:419
+#: Plugin\rb-agency/admin/client.php:460
+msgid "Client deleted successfully!"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:404
-#, fuzzy
-msgid "No Valid Record Found."
-msgstr "Keine Einträge zur Suche gefunden"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:407
-#: Plugin/rb-agency/admin/profile.php:454
-msgid "Profile deleted successfully!"
-msgstr "Profile gelöscht"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:451
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:457
 msgid "No valid record found."
-msgstr "Keine Einträge zur Suche gefunden"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:489
-#, fuzzy
-msgid "Manage "
-msgstr "Sprache"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:468
+msgid "Back to Client List"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:490
-msgid "Back to "
-msgstr "zurück zu"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
+msgid "Edit Client"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:542
-#: Plugin/rb-agency/admin/profile.php:1442
-#: Plugin/rb-agency/admin/settings.php:683
-#: Plugin/rb-agency/admin/settings.php:963
-#: Plugin/rb-agency/admin/settings.php:1189
-#: Plugin/rb-agency/admin/settings.php:1414
-#: Plugin/rb-agency/admin/settings.php:1639
-#: Plugin/rb-agency/admin/settings.php:1876
-#: Plugin/rb-agency/admin/settings.php:2143
-#, fuzzy
-msgid "Edit"
-msgstr "Existiert"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
+msgid "Make changes in the form below to edit a Client."
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:543
-#, fuzzy
-msgid "Make changes in the form below to edit a"
-msgstr "Änderungen am Profil im Formular unten"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:543
-#: Plugin/rb-agency/admin/profile.php:557
-#: Plugin/rb-agency/admin/settings.php:558
-#: Plugin/rb-agency/admin/settings.php:571
-#: Plugin/rb-agency/admin/settings.php:875
-#: Plugin/rb-agency/admin/settings.php:884
-#: Plugin/rb-agency/admin/settings.php:1101
-#: Plugin/rb-agency/admin/settings.php:1110
-#: Plugin/rb-agency/admin/settings.php:1326
-#: Plugin/rb-agency/admin/settings.php:1335
-#: Plugin/rb-agency/admin/settings.php:1551
-#: Plugin/rb-agency/admin/settings.php:1560
-#: Plugin/rb-agency/admin/settings.php:1780
-#: Plugin/rb-agency/admin/settings.php:1789
-#: Plugin/rb-agency/admin/settings.php:2025
-#: Plugin/rb-agency/admin/settings.php:2037
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
+#: Plugin\rb-agency/admin/client.php:530
 msgid "Required fields are marked"
-msgstr "Pflichtfelder sind markiert"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:557
-#, fuzzy
-msgid "Fill in the form below to add a new"
-msgstr "Formular ausfüllen, um ein neues Profil anzulegen"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:529
+msgid "Add New Client"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:566
-#: Plugin/rb-agency/admin/search.php:294
-#: Plugin/rb-agency/admin/search.php:304
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:530
+msgid "Fill in the form below to add a new Client."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:535
 msgid "Contact Information"
-msgstr "Kontakt Infos"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:570
-#: Plugin/rb-agency/admin/settings.php:279
-#, fuzzy
-msgid "Display Name"
-msgstr "Vorname"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:578
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:548
 msgid "Gallery Folder"
-msgstr "Bildordner"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:582
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:552
 msgid "Folder"
-msgstr "Ordner"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:582
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:552
 msgid "Exists"
-msgstr "Existiert"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:586
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:555
 msgid "No Folder Exists"
-msgstr "Ordner existiert nicht"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:593
-#: Plugin/rb-agency/admin/profile.php:1324
-#: Plugin/rb-agency/admin/search.php:600
-msgid "First Name"
-msgstr "Vorname"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:599
-#: Plugin/rb-agency/admin/profile.php:1325
-#: Plugin/rb-agency/admin/search.php:605
-msgid "Last Name"
-msgstr "Nachname"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:606
-#, fuzzy
-msgid "Private Information"
-msgstr "Kontakt Infos"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:606
-msgid "The following information will NOT appear in public areas and is for administrative use only."
 msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:609
-msgid "Parent (if minor)"
-msgstr "Eltern (wenn benötigt)"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:615
-#, fuzzy
-msgid "Email Address"
-msgstr "Email Header"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:621
-#: Plugin/rb-agency/admin/search.php:371
-msgid "Birthdate"
-msgstr "Geburtstag"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:628
-#, fuzzy
-msgid "Street"
-msgstr "Stylesheet"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:634
-msgid "City"
-msgstr "Stadt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:640
-#, fuzzy
-msgid "State"
-msgstr "Statistiken"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:646
-msgid "Zip"
-msgstr "PLZ"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:652
-msgid "Country"
-msgstr "Land"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:712
-#, fuzzy
-msgid "Phone"
-msgstr "Schuhgröße"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:720
-#, fuzzy
-msgid "Website"
-msgstr "Gewicht"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:728
-#, fuzzy
-msgid "Social Media Profiles"
-msgstr "Profilsuche"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:731
-msgid "Facebook"
-msgstr "Facebook"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:737
-msgid "Twitter"
-msgstr "Twitter"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:743
-msgid "YouTube"
-msgstr "YouTube"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:749
-msgid "Flickr"
-msgstr "Flickr"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:757
-#, fuzzy
-msgid "Public Information"
-msgstr "Kontakt Infos"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:762
-msgid "Not Specified"
-msgstr "nicht angegeben"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:769
-#: Plugin/rb-agency/admin/search.php:382
-#: Plugin/rb-agency/admin/search.php:699
-#: Plugin/rb-agency/admin/settings.php:17
-#: Plugin/rb-agency/admin/settings.php:112
-#: Plugin/rb-agency/admin/settings.php:113
-msgid "Ethnicity"
-msgstr "Volkszugehörigkeit"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:784
-#: Plugin/rb-agency/admin/profile.php:804
-#: Plugin/rb-agency/admin/profile.php:824
-#: Plugin/rb-agency/admin/profile.php:844
-#: Plugin/rb-agency/admin/profile.php:1138
-msgid "No items to select"
-msgstr "keine Auswahl"
-
-# @ default
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:784
-#: Plugin/rb-agency/admin/profile.php:804
-#: Plugin/rb-agency/admin/profile.php:824
-#: Plugin/rb-agency/admin/profile.php:844
-#: Plugin/rb-agency/admin/profile.php:1138
-#, fuzzy
-msgid "Setup Options"
-msgstr "Einstellungen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:789
-#: Plugin/rb-agency/admin/search.php:716
-msgid "Skin Color"
-msgstr "Hautfarbe"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:809
-#: Plugin/rb-agency/admin/search.php:391
-#: Plugin/rb-agency/admin/search.php:732
-#: Plugin/rb-agency/admin/settings.php:15
-#: Plugin/rb-agency/admin/settings.php:100
-#: Plugin/rb-agency/admin/settings.php:101
-#: Plugin/rb-agency/admin/settings.php:993
-msgid "Eye Color"
-msgstr "Augenfarbe"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:829
-#: Plugin/rb-agency/admin/search.php:388
-#: Plugin/rb-agency/admin/search.php:748
-#: Plugin/rb-agency/admin/settings.php:16
-#: Plugin/rb-agency/admin/settings.php:106
-#: Plugin/rb-agency/admin/settings.php:107
-#: Plugin/rb-agency/admin/settings.php:1218
-msgid "Hair Color"
-msgstr "Haarfarbe"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:851
-msgid "In Inches"
-msgstr "In Inches"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:881
-msgid "In Pounds"
-msgstr "In Pounds"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:881
-msgid "In Kilo"
-msgstr "In Kilo"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:888
-msgid "Measurements"
-msgstr "Maßeinheiten"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:890
-#: Plugin/rb-agency/admin/search.php:764
-msgid "Chest"
-msgstr "Brustumfang"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:890
-#: Plugin/rb-agency/admin/search.php:764
-msgid "Bust"
-msgstr "Körpchengröße"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:892
-#: Plugin/rb-agency/admin/search.php:415
-#: Plugin/rb-agency/admin/search.php:774
-msgid "Waist"
-msgstr "Taille"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:894
-#: Plugin/rb-agency/admin/search.php:783
-msgid "Inseam"
-msgstr "Schrittlänge"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:894
-#: Plugin/rb-agency/admin/search.php:783
-msgid "Hips"
-msgstr "Hüftumfang"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:899
-#: Plugin/rb-agency/admin/search.php:426
-msgid "Shoe Size"
-msgstr "Schuhgröße"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:906
-msgid "Suit Size"
-msgstr "Konfektionsgröße"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:906
-msgid "Dress Size"
-msgstr "Kleidergröße Damen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:906
-#, fuzzy
-msgid "Suit"
-msgstr "Konfektionsgröße"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:920
-#, fuzzy
-msgid "Gallery"
-msgstr "Bildordner"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:953
-msgid "Error removing"
-msgstr "Fehler beim entfernen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:953
-msgid "File did not exist."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:955
-msgid "successfully removed"
-msgstr "erfolgreich entfernt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:986
-#, fuzzy
-msgid "There are no images loaded for this profile yet."
-msgstr "Zur Zeit keine Profile hinzugefügt"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:990
-msgid "Media"
-msgstr "Media"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:991
-msgid "The following downloadable files (pdf, audio file, etc.) are associated with this record"
-msgstr "Die folgenden Media-Dateien (pdf, audio, etc.) sind mit dem Profil verknüpft"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1004
-msgid "There is not any additional media linked"
-msgstr "Keine Mediendateien mit dem Profil verbunden"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1007
-msgid "Upload"
-msgstr "hochladen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1008
-msgid "Upload new media using the forms below"
-msgstr "Mediendateien hochlladen mit folgendem Formular"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1013
-msgid "Paste the YouTube video URL below"
-msgstr "füge den Youtube-Link ein"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1015
-#: Plugin/rb-agency/admin/profile.php:1016
-#: Plugin/rb-agency/admin/profile.php:1017
-msgid "Video Slate"
-msgstr "Video Vorschlagsliste"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1015
-#: Plugin/rb-agency/admin/profile.php:1016
-#: Plugin/rb-agency/admin/profile.php:1017
-msgid "Video Monologue"
-msgstr "Video Monolog"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1015
-#: Plugin/rb-agency/admin/profile.php:1016
-#: Plugin/rb-agency/admin/profile.php:1017
-msgid "Demo Reel"
-msgstr "Demo Aufnahme"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1079
-#, fuzzy
-msgid "There are no custom fields loaded"
-msgstr "Zur Zeit keine Profile hinzugefügt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1079
-#, fuzzy
-msgid "Setup Custom Fields"
-msgstr "Felder zeigen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1084
-#: Plugin/rb-agency/admin/search.php:295
-#: Plugin/rb-agency/admin/search.php:305
-msgid "Details"
-msgstr "Deteils"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1087
-msgid "Description"
-msgstr "Beschreibung"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1144
-#: Plugin/rb-agency/admin/search.php:855
-#, fuzzy
-msgid "Status"
-msgstr "Statistiken"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1146
-#, fuzzy
-msgid "Active"
-msgstr "Aktionen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1147
-msgid "Inactive"
-msgstr "Inaktiv"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1148
-msgid "Archived"
-msgstr "Archiviert"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1149
-msgid "Pending Approval"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1154
-#, fuzzy
-msgid "WordPress User"
-msgstr "WordPress Plugins by "
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1161
-msgid "Membership"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1171
-msgid "Date Updated"
-msgstr "Update des Datums"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1177
-#, fuzzy
-msgid "Profile Views"
-msgstr "Format des Profilnamen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1183
-#, fuzzy
-msgid "Profile Viewed Last"
-msgstr "Format des Profilnamen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1200
-msgid "Last updated on"
-msgstr "Letztes Update am"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1206
-#: Plugin/rb-agency/admin/settings.php:616
-#: Plugin/rb-agency/admin/settings.php:901
-#: Plugin/rb-agency/admin/settings.php:1127
-#: Plugin/rb-agency/admin/settings.php:1352
-#: Plugin/rb-agency/admin/settings.php:1577
-#: Plugin/rb-agency/admin/settings.php:1812
-#: Plugin/rb-agency/admin/settings.php:2076
-msgid "Update Record"
-msgstr "Update des Eintrags"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1211
-#: Plugin/rb-agency/admin/settings.php:622
-#: Plugin/rb-agency/admin/settings.php:907
-#: Plugin/rb-agency/admin/settings.php:1133
-#: Plugin/rb-agency/admin/settings.php:1358
-#: Plugin/rb-agency/admin/settings.php:1583
-#: Plugin/rb-agency/admin/settings.php:1818
-#: Plugin/rb-agency/admin/settings.php:2082
-msgid "Create Record"
-msgstr "Eintrag anlegen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1230
-#, fuzzy
-msgid "List"
-msgstr "Taille"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1232
-#: Plugin/rb-agency/admin/settings.php:627
-#: Plugin/rb-agency/admin/settings.php:913
-#: Plugin/rb-agency/admin/settings.php:1139
-#: Plugin/rb-agency/admin/settings.php:1364
-#: Plugin/rb-agency/admin/settings.php:1589
-#: Plugin/rb-agency/admin/settings.php:1824
-#: Plugin/rb-agency/admin/settings.php:2087
-msgid "All Records"
-msgstr "Alle Einträge"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1307
-#, fuzzy
-msgid "Create New Record"
-msgstr "Neues Profil erstellen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1323
-#, fuzzy
-msgid "Search By"
-msgstr "Suchergebnisse"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1326
-#: Plugin/rb-agency/admin/search.php:802
-#, fuzzy
-msgid "Location"
-msgstr "Aktionen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1328
-#: Plugin/rb-agency/admin/search.php:804
-#, fuzzy
-msgid "Any Location"
-msgstr "Aktionen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1339
-msgid "Category"
-msgstr "Kategorie"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1341
-msgid "Any Category"
-msgstr "Alle Kategorien"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1350
-#, fuzzy
-msgid "Filter"
-msgstr "Ordner"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1357
-msgid "Clear Filters"
-msgstr "Suchfilter löschen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1442
-#: Plugin/rb-agency/admin/settings.php:683
-#: Plugin/rb-agency/admin/settings.php:963
-#: Plugin/rb-agency/admin/settings.php:1189
-#: Plugin/rb-agency/admin/settings.php:1414
-#: Plugin/rb-agency/admin/settings.php:1639
-#: Plugin/rb-agency/admin/settings.php:1876
-#: Plugin/rb-agency/admin/settings.php:2143
-msgid "Edit this Record"
-msgstr "Diesen Eintrag bearbeiten"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1443
-msgid "View"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1444
-#, fuzzy
-msgid "You are about to delete the profile for "
-msgstr "willst Du es wirklich löschen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1444
-#: Plugin/rb-agency/admin/settings.php:684
-#: Plugin/rb-agency/admin/settings.php:964
-#: Plugin/rb-agency/admin/settings.php:1190
-#: Plugin/rb-agency/admin/settings.php:1415
-#: Plugin/rb-agency/admin/settings.php:1640
-#: Plugin/rb-agency/admin/settings.php:1877
-#: Plugin/rb-agency/admin/settings.php:2144
-msgid "Cancel"
-msgstr "Cancel"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1444
-#: Plugin/rb-agency/admin/settings.php:684
-#: Plugin/rb-agency/admin/settings.php:964
-#: Plugin/rb-agency/admin/settings.php:1190
-#: Plugin/rb-agency/admin/settings.php:1415
-#: Plugin/rb-agency/admin/settings.php:1640
-#: Plugin/rb-agency/admin/settings.php:1877
-#: Plugin/rb-agency/admin/settings.php:2144
-msgid "to stop"
-msgstr "stoppen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1444
-#: Plugin/rb-agency/admin/settings.php:684
-#: Plugin/rb-agency/admin/settings.php:964
-#: Plugin/rb-agency/admin/settings.php:1190
-#: Plugin/rb-agency/admin/settings.php:1415
-#: Plugin/rb-agency/admin/settings.php:1640
-#: Plugin/rb-agency/admin/settings.php:1877
-#: Plugin/rb-agency/admin/settings.php:2144
-msgid "OK"
-msgstr "OK"
-
-# @ modelagency_casting
-# @ default
-# @ rb_agency_profiles
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1444
-#: Plugin/rb-agency/admin/settings.php:684
-#: Plugin/rb-agency/admin/settings.php:964
-#: Plugin/rb-agency/admin/settings.php:1190
-#: Plugin/rb-agency/admin/settings.php:1415
-#: Plugin/rb-agency/admin/settings.php:1640
-#: Plugin/rb-agency/admin/settings.php:1877
-#: Plugin/rb-agency/admin/settings.php:2144
-#, fuzzy
-msgid "to delete"
-msgstr "Löschen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/profile.php:1444
-#: Plugin/rb-agency/admin/settings.php:684
-#: Plugin/rb-agency/admin/settings.php:964
-#: Plugin/rb-agency/admin/settings.php:1190
-#: Plugin/rb-agency/admin/settings.php:1415
-#: Plugin/rb-agency/admin/settings.php:1640
-#: Plugin/rb-agency/admin/settings.php:1877
-#: Plugin/rb-agency/admin/settings.php:2144
-msgid "Delete this Record"
-msgstr "Diesen Eintrag löschen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:25
-msgid "Interactive Reporting"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:26
-msgid "Run reports on membership and other usage."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:29
-#: Plugin/rb-agency/admin/reports.php:30
-#: Plugin/rb-agency/admin/reports.php:155
-msgid "Recent Payments"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:31
-msgid "Payments and membership renewals"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:39
-msgid "Initial Setup"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:40
-msgid "If you are doing the initial instal of RB Agency you this section will help you get your data inplace"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:46
-msgid "Data Integrity"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:47
-msgid "Once your data is in place use the tools below to check your records"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:50
-#: Plugin/rb-agency/admin/reports.php:51
-#, fuzzy
-msgid "Export Data"
-msgstr "Daten exportieren"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:52
-#, fuzzy
-msgid "Export databases"
-msgstr "Daten exportieren"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:56
-#: Plugin/rb-agency/admin/reports.php:57
-msgid "Check for Abnormalities"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:58
-msgid "Search profile records for fields which seem invalid"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:62
-msgid "Rename Profile Folder Names"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:63
-#, fuzzy
-msgid "Rename Folders"
-msgstr "Bildordner"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:64
-msgid "If you created model profiles while under 'First Last' or 'First L' and wish to switch to Display names or IDs you will have to rename the existing folders so that they do not have the models name in it"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:68
-#: Plugin/rb-agency/admin/reports.php:69
-#, fuzzy
-msgid "Resize Photos"
-msgstr "Fotos verkleinern"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:70
-msgid "Ensure files are not larger than approved size"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:70
-#, fuzzy
-msgid "Configure Sizes"
-msgstr "Kontakt Infos"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:74
-#, fuzzy
-msgid "Orphaned Profile Images"
-msgstr "Profile verwalten"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:75
-msgid "Remove Orphan Images From Database"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:76
-msgid "If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:80
-msgid "FTP Blank Folder Check"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:81
-msgid "Scan for Orphan Folders"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:82
-msgid "Check for any empty folders which do no have models assigned using this tool"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:89
-#, fuzzy
-msgid "Profile Management"
-msgstr "Format des Profilnamen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:90
-msgid "The following reports will help you manage your profile information"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:93
-#, fuzzy
-msgid "Inactive Users"
-msgstr "Inaktiv"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:94
-msgid "Check Inactive Users"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:95
-msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:99
-#: Plugin/rb-agency/admin/reports.php:100
-#: Plugin/rb-agency/admin/search.php:11
-#: Plugin/rb-agency/admin/search.php:592
-#, fuzzy
-msgid "Profile Search"
-msgstr "Profile"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:101
-msgid "You may search for profiles by using this tool"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:109
-#, fuzzy
-msgid "Importing Records"
-msgstr "Gesamte Profilanzahl"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:110
-msgid "The following tools will help import records.  DO NOT USE THESE TOOLS IF YOU ALREADY HAVE DATA LOADED"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:114
-msgid "Step 1"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:115
-msgid "Download Excel Template"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:116
-msgid "Download this template and load your profile data into this file to import into the database."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:120
-msgid "Step 2"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:121
-#, fuzzy
-msgid "Upload to Database"
-msgstr "Daten exportieren"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:122
-msgid "Upload the model profiles into the database."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:126
-msgid "Step 3"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:127
-#: Plugin/rb-agency/admin/reports.php:291
-msgid "Generate folder names for profiles"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:128
-#: Plugin/rb-agency/admin/reports.php:292
-msgid "Check that all profiles have folder names generated."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:133
-msgid "Step 4"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:134
-#, fuzzy
-msgid "Create folders for all profiles"
-msgstr "Neues Profil erstellen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:135
-msgid "Check that all profiles have folders created on the server."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:139
-msgid "Step 5"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:140
-msgid "Scan Folders for Images"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:141
-msgid "First upload images directly to folders via FTP then use this tool to sync the images to the database."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:145
-msgid "Step 6"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:146
-#, fuzzy
-msgid "Set Primary Profile Image"
-msgstr "Profilsuche"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:147
-msgid "Identify which image is the primary image for each profile."
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:773
-#: Plugin/rb-agency/admin/settings.php:267
-msgid "Resize Images"
-msgstr "Fotos verkleinern"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/reports.php:862
-msgid "Export Database"
-msgstr "Daten exportieren"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:293
-#: Plugin/rb-agency/admin/search.php:303
-msgid "ID"
-msgstr "ID"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:296
-#: Plugin/rb-agency/admin/search.php:306
-msgid "Stats"
-msgstr "Statistiken"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:297
-#: Plugin/rb-agency/admin/search.php:307
-msgid "Headshot"
-msgstr "Hauptfoto"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:385
-msgid "Skin Tone"
-msgstr "Hautfarbe"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:449
-#, fuzzy
-msgid "No profiles found with this criteria!"
-msgstr "Keine Profile mit diesen Kriterien gefunden"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:456
-#, fuzzy
-msgid "There aren't any Profiles loaded yet!"
-msgstr "Zur Zeit keine Profile hinzugefügt"
-
-# @ rb_agency_search
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:466
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/search.php:456
 msgid "Add to Casting Cart"
-msgstr "Zum Auswahlkatalog hinzufügen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:467
-#: Plugin/rb-agency/admin/search.php:468
-#: Plugin/rb-agency/admin/search.php:580
-#: Plugin/rb-agency/admin/search.php:581
-#, fuzzy
-msgid "Quick Print"
-msgstr "Schnellsuche"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:468
-#: Plugin/rb-agency/admin/search.php:581
-#, fuzzy
-msgid "Without Details"
-msgstr "Deteils"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:481
-msgid "Casting Cart"
-msgstr "Auswahlkatalog"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:495
-msgid "Empty Cart"
-msgstr "Katalog löschen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:496
-msgid "Currently"
-msgstr "derzeit"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:496
-msgid "in Cart"
-msgstr "im Katalog"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:502
-#, fuzzy
-msgid "There are currently no profiles in the casting cart"
-msgstr "Zur Zeit keine Profile hinzugefügt"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:559
-msgid "Remove from Cart"
-msgstr "aus dem Katalog entfernen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:577
-#, fuzzy
-msgid "Cart Actions"
-msgstr "Aktionen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:579
-#, fuzzy
-msgid "Save Search & Email"
-msgstr "gespeicherte Suchen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:702
-msgid "Any Ethnicity"
-msgstr "Volkszugehörigkeit"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:719
-msgid "Any Skin Color"
-msgstr "Alle Hautfarben"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:735
-msgid "Any Eye Color"
-msgstr "Alle Augenfarben"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:751
-msgid "Any Hair Color"
-msgstr "Alle Haarfarben"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:792
-msgid "Shoe"
-msgstr "Schuhgröße"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:857
-#: Plugin/rb-agency/admin/search.php:858
-msgid "Show only Active"
-msgstr "nur aktive zeigen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:859
-msgid "Show only Inactive"
-msgstr "nur inaktive zeigen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:860
-msgid "Show only Declassified"
-msgstr "nur unklassifizierte zeigen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:869
-msgid "Reset Form"
-msgstr "Formular zurücksetzten"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/search.php:870
-#, fuzzy
-msgid "Empty Form"
-msgstr "Formular zurücksetzten"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:12
-#: Plugin/rb-agency/admin/settings.php:41
-msgid "Features"
-msgstr "Funktionen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:13
-#: Plugin/rb-agency/admin/settings.php:47
-#: Plugin/rb-agency/admin/settings.php:48
-#, fuzzy
-msgid "Style"
-msgstr "Stylesheet"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:14
-#: Plugin/rb-agency/admin/settings.php:94
-#: Plugin/rb-agency/admin/settings.php:95
-#: Plugin/rb-agency/admin/settings.php:766
-#, fuzzy
-msgid "Skin Types"
-msgstr "Hautfarbe"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:18
-#: Plugin/rb-agency/admin/settings.php:82
-#: Plugin/rb-agency/admin/settings.php:83
-#, fuzzy
-msgid "Profile Categories"
-msgstr "Format des Profilnamen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:19
-#: Plugin/rb-agency/admin/settings.php:88
-#: Plugin/rb-agency/admin/settings.php:89
-#: Plugin/rb-agency/admin/settings.php:1906
-#, fuzzy
-msgid "Custom Fields"
-msgstr "Felder zeigen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:37
-#, fuzzy
-msgid "Configuration"
-msgstr "Kontakt Infos"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:38
-msgid "The following settings modify the core RB Agency settings."
 msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:43
-#: Plugin/rb-agency/admin/settings.php:63
-msgid "Access this area to manage all of the core settings including layout types, privacy settings and more"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:49
-msgid "Manage the stylesheet (CSS) controlling the category and profile layouts"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:57
-#: Plugin/rb-agency/admin/settings.php:61
-#: Plugin/rb-agency/admin/settings.php:62
-#: Plugin/rb-agency/admin/settings.php:365
-#, fuzzy
-msgid "Interactive Settings"
-msgstr "Einstellung der Ansicht für Profile"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:58
-msgid "These settings modify the behavior of the RB Agency Interactive plugin."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:67
-#: Plugin/rb-agency/admin/settings.php:68
-#, fuzzy
-msgid "Subscription Rates"
-msgstr "Beschreibung"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:69
-msgid "Manage the subscription rate tiers and descriptions"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:78
-#, fuzzy
-msgid "Customize Profile Fields"
-msgstr "Felder zeigen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:79
-msgid "You have full control over all drop downs and ability to add new custom fields of your own."
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:84
-msgid "Choose custom category types to classify profiles"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:90
-msgid "Add public and private custom fields"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:96
-msgid "Manage preset skin types"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:102
-msgid "Manage preset eye color choices"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:108
-msgid "Manage preset hair color choices"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:114
-msgid "Manage preset ethnicity choices"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:121
-#: Plugin/rb-agency/admin/settings.php:125
-msgid "Uninstall"
-msgstr "Uninstall"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:122
-msgid "Uninstall RB Agency software and completely remove all data"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:163
-#: Plugin/rb-agency/admin/settings.php:374
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:56
 msgid "Database Version"
-msgstr "Database Version"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:168
-#, fuzzy
-msgid "Agency Details"
-msgstr "Agentur Email Adresse"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:171
-msgid "Agency Name"
-msgstr "Agentur Name"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:175
-msgid "Agency Email"
-msgstr "Agentur Email Adresse"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:180
-#, fuzzy
-msgid "Location Options"
-msgstr "Aktionen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:183
-msgid "Default Country"
-msgstr "Länder Vorauswahl"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:187
-msgid "Server Timezone"
-msgstr "Zeitzone des Servers"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:221
-msgid "Unit Type"
-msgstr "Unit Typ"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:224
-msgid "Imperial"
-msgstr "Imperial"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:225
-msgid "Metric"
-msgstr "Meter"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:231
-#, fuzzy
-msgid "Profile List Options"
-msgstr "Anlegen einer Liste von Profilen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:234
-#: Plugin/rb-agency/admin/settings.php:378
-#, fuzzy
-msgid "Display"
-msgstr "Vorname"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:236
-msgid "Show Model Count"
-msgstr "zeige Model Aufrufe"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:237
-msgid "Show Sort Options"
-msgstr "Zeige Sortier-Optionen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:238
-msgid "Expanded Model Details"
-msgstr "Details der Komparsen erweitern"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:239
-msgid "Enable Model Favorites"
-msgstr "Model Favoriten aktivieren"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:240
-#, fuzzy
-msgid "Show Sidebar"
-msgstr "Schuhgröße"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:244
-#, fuzzy
-msgid "Profiles Per Page"
-msgstr "Profile"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:248
-#, fuzzy
-msgid "Profiles Max Per Search"
-msgstr "Profile"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:252
-msgid "Profile View Options"
-msgstr "Optionen zum Anzeigen der Profile"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:255
-msgid "Path to Contact Page"
-msgstr "Pfad zum Kontakt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:259
-msgid "Path to Logo"
-msgstr "Pfad zum Logo"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:263
-msgid "Email Header"
-msgstr "Email Header"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:269
-msgid "Maximum Width"
-msgstr "Maximales Gewicht"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:270
-msgid "Maximum Height"
-msgstr "Maximale Größe"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:274
-msgid "Profile Name Format"
-msgstr "Format des Profilnamen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:277
-#, fuzzy
-msgid "First Last"
-msgstr "Vorname"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:278
-#, fuzzy
-msgid "First L"
-msgstr "Vorname"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:280
-msgid "Auto Generated Record ID"
-msgstr "Automatische ID erstellen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:285
-msgid "Profile Layout Style"
-msgstr "Aussehen der Profile"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:288
-msgid "Profile View with Thumbnails"
-msgstr "Profile mit Miniaturfotos anzeigen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:289
-msgid "Profile View with Thumbnails and Primary Image"
-msgstr "Profile mit Miniaturfotos und Hauptfoto anzeigen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:290
-msgid "Profile View with Scrolling Thumbnails and Primary Image"
-msgstr "Profile mit Miniaturfotos Scrolling und Hauptfoto anzeigen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:291
-#, fuzzy
-msgid "Extended Profile View"
-msgstr "Profil ändern"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:292
-msgid "Direct Contact Layout (NOTE: Includes Phone Number of Model)"
-msgstr "Detailiertes Profil mit allen Infos zeigen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:294
-msgid "Custom Layout 5"
-msgstr "Eigenes Layout 5"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:297
-msgid "Custom Layout 6"
-msgstr "Eigenes Layout 6"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:303
-#, fuzzy
-msgid "Profile List Style"
-msgstr "Aussehen der Profile"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:306
-msgid "Name Over Image"
-msgstr "Name über Foto"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:307
-msgid "Name Under Image with Color"
-msgstr "farbiger Name unter Foto"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:308
-msgid "Name Under Image"
-msgstr "NAme unter Foto"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:313
-msgid "Image Gallery Type"
-msgstr "Darstellung der Fotos"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:316
-msgid "Slimbox Popup"
-msgstr "Slimbox Popup"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:317
-msgid "Pretty Photo"
 msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:318
-msgid "No Gallery, Deregister jQuery"
-msgstr "Keine Gallery, Deregister jQuery"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:319
-msgid "No Gallery"
-msgstr "Keine Gallerie"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:324
-msgid "Image Gallery Sort Order"
-msgstr "Sortierung der Fotos"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:327
-msgid "Show most recently uploaded first"
-msgstr "Zuletzt hinzugefügte zuerst"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:328
-msgid "Show chronological order"
-msgstr "Kronologische Ansicht"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:335
-msgid "Privacy Settings"
-msgstr "Einstellung der Ansicht für Profile"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:338
-msgid "Must be logged to view model list and profile information"
-msgstr "Komparsenliste und Informationen sichtbar wenn eingeloggt"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:339
-msgid "Model list public. Must be logged to view profile information"
-msgstr "Komparsenliste sichtbar, Informationen sichtbar wenn eingeloggt"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:340
-msgid "Model list and profile information public"
-msgstr "Komparsenliste und Informationen sichtbar für jeden"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:346
-msgid "Show Fields"
-msgstr "Felder zeigen"
-
-# @ default
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:354
-#: Plugin/rb-agency/admin/settings.php:425
-#: Plugin/rb-agency/admin/settings.php:757
-msgid "Save Changes"
-msgstr "Änderungen speichern"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:380
-msgid "Show Sidebar on Member Management/Login Pages"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:384
-msgid "Registration Process"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:387
-#, fuzzy
-msgid "New Profile Registration"
-msgstr "Anlegen einer Liste von Profilen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:393
-#, fuzzy
-msgid "New Profile Approval"
-msgstr "Neues Profil anlegen"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:396
-msgid "New profiles must be manually approved"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:397
-msgid "New profiles are automatically approved"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:402
-msgid "Membership Subscription"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:405
-#, fuzzy
-msgid "Notifications"
-msgstr "Profil Typ"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:411
-msgid "Embed Overview Page ID"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:415
-msgid "Embed Registration Page ID"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:419
-#, fuzzy
-msgid "PayPal Email Address"
-msgstr "Email Header"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:437
-#, fuzzy
-msgid "Subscription Tiers"
-msgstr "Beschreibung"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:438
-#, fuzzy
-msgid "Subscription Tier"
-msgstr "Beschreibung"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:454
-#: Plugin/rb-agency/admin/settings.php:779
-#: Plugin/rb-agency/admin/settings.php:1005
-#: Plugin/rb-agency/admin/settings.php:1230
-#: Plugin/rb-agency/admin/settings.php:1455
-#: Plugin/rb-agency/admin/settings.php:1682
-#: Plugin/rb-agency/admin/settings.php:1923
-msgid " name is required"
-msgstr "Der Name wird benötigt"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:509
-#: Plugin/rb-agency/admin/settings.php:533
-#: Plugin/rb-agency/admin/settings.php:830
-#: Plugin/rb-agency/admin/settings.php:854
-#: Plugin/rb-agency/admin/settings.php:1056
-#: Plugin/rb-agency/admin/settings.php:1080
-#: Plugin/rb-agency/admin/settings.php:1281
-#: Plugin/rb-agency/admin/settings.php:1305
-#: Plugin/rb-agency/admin/settings.php:1506
-#: Plugin/rb-agency/admin/settings.php:1530
-#: Plugin/rb-agency/admin/settings.php:1734
-#: Plugin/rb-agency/admin/settings.php:1758
-#: Plugin/rb-agency/admin/settings.php:1977
-#: Plugin/rb-agency/admin/settings.php:2001
-msgid " <strong>"
-msgstr " <strong>"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:571
-#: Plugin/rb-agency/admin/settings.php:884
-#: Plugin/rb-agency/admin/settings.php:1110
-#: Plugin/rb-agency/admin/settings.php:1335
-#: Plugin/rb-agency/admin/settings.php:1560
-#: Plugin/rb-agency/admin/settings.php:1789
-#: Plugin/rb-agency/admin/settings.php:2037
-#, fuzzy
-msgid "Make changes in the form below to edit a "
-msgstr "Änderungen am Profil im Formular unten"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:579
-#: Plugin/rb-agency/admin/settings.php:657
-#: Plugin/rb-agency/admin/settings.php:666
-#: Plugin/rb-agency/admin/settings.php:890
-#: Plugin/rb-agency/admin/settings.php:943
-#: Plugin/rb-agency/admin/settings.php:949
-#: Plugin/rb-agency/admin/settings.php:1116
-#: Plugin/rb-agency/admin/settings.php:1169
-#: Plugin/rb-agency/admin/settings.php:1175
-#: Plugin/rb-agency/admin/settings.php:1341
-#: Plugin/rb-agency/admin/settings.php:1394
-#: Plugin/rb-agency/admin/settings.php:1400
-#: Plugin/rb-agency/admin/settings.php:1566
-#: Plugin/rb-agency/admin/settings.php:1619
-#: Plugin/rb-agency/admin/settings.php:1625
-#: Plugin/rb-agency/admin/settings.php:1795
-#: Plugin/rb-agency/admin/settings.php:1854
-#: Plugin/rb-agency/admin/settings.php:1861
-#: Plugin/rb-agency/admin/settings.php:2043
-#: Plugin/rb-agency/admin/settings.php:2117
-#: Plugin/rb-agency/admin/settings.php:2126
-msgid "Title"
-msgstr "Titel"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:583
-#: Plugin/rb-agency/admin/settings.php:658
-#: Plugin/rb-agency/admin/settings.php:667
-#: Plugin/rb-agency/admin/settings.php:2047
-#: Plugin/rb-agency/admin/settings.php:2118
-#: Plugin/rb-agency/admin/settings.php:2127
-#, fuzzy
-msgid "Type"
-msgstr "Unit Typ"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:589
-#: Plugin/rb-agency/admin/settings.php:660
-msgid "Text"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:593
-msgid "Package Rate"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:597
-msgid "Subscription Duration"
-msgstr ""
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:659
-#: Plugin/rb-agency/admin/settings.php:668
-msgid "Rate/Term"
-msgstr ""
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:669
-#, fuzzy
-msgid "Price"
-msgstr "Profile"
-
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:684
-#: Plugin/rb-agency/admin/settings.php:964
-#: Plugin/rb-agency/admin/settings.php:1190
-#: Plugin/rb-agency/admin/settings.php:1415
-#: Plugin/rb-agency/admin/settings.php:1640
-#: Plugin/rb-agency/admin/settings.php:1877
-#: Plugin/rb-agency/admin/settings.php:2144
-msgid "You are about to delete this "
-msgstr "willst Du es wirklich löschen"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:696
-#: Plugin/rb-agency/admin/settings.php:973
-#: Plugin/rb-agency/admin/settings.php:1199
-#: Plugin/rb-agency/admin/settings.php:1424
-#: Plugin/rb-agency/admin/settings.php:1649
-#: Plugin/rb-agency/admin/settings.php:1887
-#: Plugin/rb-agency/admin/settings.php:2156
-#, fuzzy
-msgid "There aren't any records loaded yet"
-msgstr "Zur Zeit keine Profile hinzugefügt"
-
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:751
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:60
 msgid "Stylesheet"
-msgstr "Stylesheet"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:767
-#, fuzzy
-msgid "Skin Type"
-msgstr "Hautfarbe"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:64
+msgid "Agency Name"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:992
-#, fuzzy
-msgid "Eye Colors"
-msgstr "Augenfarbe"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:68
+msgid "Agency Email"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:1217
-#, fuzzy
-msgid "Hair Colors"
-msgstr "Haarfarbe"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:72
+msgid "Path to Logo"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:1442
-#, fuzzy
-msgid "Ethnicity Types"
-msgstr "Volkszugehörigkeit"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:76
+msgid "Email Header"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:1443
-#, fuzzy
-msgid "Ethnicity Type"
-msgstr "Volkszugehörigkeit"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:82
+msgid "Profile Layout Style"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:1667
-#, fuzzy
-msgid "Profile Types"
-msgstr "Alle Profile"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:93
+msgid "Image Gallery Type"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:1668
-#, fuzzy
-msgid "Profile Type"
-msgstr "Alle Profile"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:104
+msgid "Image Gallery Sort Order"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:1800
-#: Plugin/rb-agency/admin/settings.php:1855
-#: Plugin/rb-agency/admin/settings.php:1862
-msgid "Slug"
-msgstr "Ausgangsform"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:114
+msgid "Unit Type"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:1907
-#, fuzzy
-msgid "Custom Field"
-msgstr "Felder zeigen"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:124
+msgid "Privacy Settings"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:2057
-#, fuzzy
-msgid "Values"
-msgstr "Männlich"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:135
+msgid "Show Fields"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:2061
-msgid "Visbility"
-msgstr "Sichtbarkeit"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:148
+msgid "Save Changes"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:2119
-#: Plugin/rb-agency/admin/settings.php:2128
-#, fuzzy
-msgid "Options"
-msgstr "Aktionen"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:14
+#: Plugin\rb-agency/admin/taxonomy.php:35
+#: Plugin\rb-agency/admin/taxonomy.php:55
+#: Plugin\rb-agency/admin/taxonomy.php:122
+msgid "Cheatin&#8217; uh?"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/admin/settings.php:2120
-#: Plugin/rb-agency/admin/settings.php:2129
-msgid "Visibility"
-msgstr "Sichtbarkeit"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:75
+#: Plugin\rb-agency/admin/taxonomy.php:85
+msgid "Edit Tag"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:98
-#: Plugin/rb-agency/theme/include-profile-layout1.php:157
-#: Plugin/rb-agency/theme/include-profile-layout3.php:61
-msgid "Contact"
-msgstr "Kontakt"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:94
+#: Plugin\rb-agency/admin/taxonomy.php:300
+msgid "Tag name"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:112
-msgid "Access Dashboard"
-msgstr "Access Dashboard"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:98
+#: Plugin\rb-agency/admin/taxonomy.php:306
+msgid "Tag slug"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:148
-#: Plugin/rb-agency/theme/include-profile-layout1.php:51
-#: Plugin/rb-agency/theme/include-profile-layout2.php:179
-#: Plugin/rb-agency/theme/include-profile-layout3.php:149
-#: Plugin/rb-agency/theme/include-profile-layout4.php:53
-#: Plugin/rb-agency/theme/include-profile-layout5.php:102
-msgid "ft"
-msgstr "ft"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:100
+#: Plugin\rb-agency/admin/taxonomy.php:308
+msgid "The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:148
-#: Plugin/rb-agency/theme/include-profile-layout1.php:51
-#: Plugin/rb-agency/theme/include-profile-layout2.php:179
-#: Plugin/rb-agency/theme/include-profile-layout3.php:149
-#: Plugin/rb-agency/theme/include-profile-layout4.php:53
-#: Plugin/rb-agency/theme/include-profile-layout5.php:102
-msgid "in"
-msgstr "in"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:103
+#: Plugin\rb-agency/admin/taxonomy.php:312
+msgid "Description"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:153
-#: Plugin/rb-agency/theme/include-profile-layout1.php:56
-#: Plugin/rb-agency/theme/include-profile-layout2.php:184
-#: Plugin/rb-agency/theme/include-profile-layout3.php:154
-#: Plugin/rb-agency/theme/include-profile-layout4.php:58
-#: Plugin/rb-agency/theme/include-profile-layout5.php:107
-msgid "kg"
-msgstr "kg"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:105
+msgid "The description is not prominent by default, however some themes may show it."
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:155
-#: Plugin/rb-agency/theme/include-profile-layout1.php:58
-#: Plugin/rb-agency/theme/include-profile-layout2.php:186
-#: Plugin/rb-agency/theme/include-profile-layout3.php:156
-#: Plugin/rb-agency/theme/include-profile-layout4.php:60
-#: Plugin/rb-agency/theme/include-profile-layout5.php:109
-msgid "lb"
-msgstr "lb"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:156
+msgid "Tag added."
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:159
-#: Plugin/rb-agency/theme/include-profile-layout1.php:62
-#: Plugin/rb-agency/theme/include-profile-layout2.php:190
-#: Plugin/rb-agency/theme/include-profile-layout3.php:160
-#: Plugin/rb-agency/theme/include-profile-layout4.php:64
-#: Plugin/rb-agency/theme/include-profile-layout5.php:113
-msgid "Chest/Bust"
-msgstr "Chest/Bust"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:157
+msgid "Tag deleted."
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:166
-#: Plugin/rb-agency/theme/include-profile-layout1.php:69
-#: Plugin/rb-agency/theme/include-profile-layout2.php:197
-#: Plugin/rb-agency/theme/include-profile-layout3.php:167
-#: Plugin/rb-agency/theme/include-profile-layout4.php:71
-#: Plugin/rb-agency/theme/include-profile-layout5.php:120
-msgid "Hips/Inseam"
-msgstr "Hips/Inseam"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:158
+msgid "Tag updated."
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout0.php:170
-#: Plugin/rb-agency/theme/include-profile-layout1.php:73
-#: Plugin/rb-agency/theme/include-profile-layout2.php:201
-#: Plugin/rb-agency/theme/include-profile-layout3.php:171
-#: Plugin/rb-agency/theme/include-profile-layout4.php:75
-#: Plugin/rb-agency/theme/include-profile-layout5.php:124
-msgid "Suit/Dress Size"
-msgstr "Konfektionsgröße"
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:159
+msgid "Tag not added."
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout2.php:48
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:160
+msgid "Tag not updated."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:161
+msgid "Tags deleted."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:167
+#, php-format
+msgid "Search results for &#8220;%s&#8221;"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:179
+msgid "Search Tags"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:207
+msgid "&laquo;"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:208
+msgid "&raquo;"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:219
+#: Plugin\rb-agency/admin/taxonomy.php:262
+msgid "Bulk Actions"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:280
+msgid "Popular Tags"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:293
+msgid "Add a New Tag"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:302
+msgid "The name is how the tag appears on your site."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:314
+msgid "The description is not prominent by default; however, some themes may show it."
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:24
+#: Plugin\rb-agency/theme/include-client-layout1.php:24
+#: Plugin\rb-agency/theme/include-client-layout2.php:43
 msgid "Share"
-msgstr "teilen"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout4.php:35
-msgid "Nationality"
-msgstr "Nationalität"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:99
+#: Plugin\rb-agency/theme/include-client-layout1.php:99
+#: Plugin\rb-agency/theme/include-client-layout2.php:118
+msgid "Contact"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout4.php:104
-msgid "Call"
-msgstr "Anruf"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:112
+#: Plugin\rb-agency/theme/include-client-layout1.php:112
+#: Plugin\rb-agency/theme/include-client-layout2.php:131
+msgid "Access Dashboard"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-layout4.php:114
-#: Plugin/rb-agency/theme/include-profile-layout4.php:116
-msgid "Call Now"
-msgstr "jetzt anrufen"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:129
+#: Plugin\rb-agency/theme/include-client-layout1.php:129
+#: Plugin\rb-agency/theme/include-client-layout2.php:149
+msgid "Ethnicity"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-search.php:41
-#: Plugin/rb-agency/theme/include-profile-search.php:83
-#: Plugin/rb-agency/theme/include-profile-search.php:92
-#: Plugin/rb-agency/theme/include-profile-search.php:128
-#: Plugin/rb-agency/theme/include-profile-search.php:137
-#: Plugin/rb-agency/theme/include-profile-search.php:203
-#: Plugin/rb-agency/theme/include-profile-search.php:211
-#: Plugin/rb-agency/theme/include-profile-search.php:219
-#: Plugin/rb-agency/theme/include-profile-search.php:227
-#, fuzzy
-msgid "Min"
-msgstr "in"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:132
+#: Plugin\rb-agency/theme/include-client-layout1.php:132
+#: Plugin\rb-agency/theme/include-client-layout2.php:152
+msgid "Skin Tone"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/include-profile-search.php:43
-#: Plugin/rb-agency/theme/include-profile-search.php:85
-#: Plugin/rb-agency/theme/include-profile-search.php:108
-#: Plugin/rb-agency/theme/include-profile-search.php:130
-#: Plugin/rb-agency/theme/include-profile-search.php:139
-#: Plugin/rb-agency/theme/include-profile-search.php:205
-#: Plugin/rb-agency/theme/include-profile-search.php:213
-#: Plugin/rb-agency/theme/include-profile-search.php:221
-#: Plugin/rb-agency/theme/include-profile-search.php:229
-#, fuzzy
-msgid "Max"
-msgstr "Maximum"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:135
+#: Plugin\rb-agency/theme/include-client-layout1.php:135
+#: Plugin\rb-agency/theme/include-client-layout2.php:155
+msgid "Hair Color"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/view-category.php:32
-msgid "Directory"
-msgstr "Verzeichnis"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:138
+#: Plugin\rb-agency/theme/include-client-layout1.php:138
+#: Plugin\rb-agency/theme/include-client-layout2.php:158
+msgid "Eye Color"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/view-category.php:58
-#, fuzzy
-msgid "Filter Profiles"
-msgstr "Profil ändern"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:142
+#: Plugin\rb-agency/theme/include-client-layout0.php:147
+#: Plugin\rb-agency/theme/include-client-layout1.php:142
+#: Plugin\rb-agency/theme/include-client-layout1.php:147
+#: Plugin\rb-agency/theme/include-client-layout2.php:162
+#: Plugin\rb-agency/theme/include-client-layout2.php:167
+msgid "Height"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/view-profile-contact.php:186
-#: Plugin/rb-agency/theme/view-profile.php:203
-#, fuzzy
-msgid "Inactive Profile"
-msgstr "Profile einfügen"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:142
+#: Plugin\rb-agency/theme/include-client-layout1.php:142
+#: Plugin\rb-agency/theme/include-client-layout2.php:162
+msgid "cm"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/view-profile-contact.php:196
-#: Plugin/rb-agency/theme/view-profile.php:213
-#, fuzzy
-msgid "Invalid Profile"
-msgstr "Profile einfügen"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:147
+#: Plugin\rb-agency/theme/include-client-layout1.php:147
+#: Plugin\rb-agency/theme/include-client-layout2.php:167
+msgid "ft"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/view-profilesecure.php:37
-msgid "No search results found.  Please check link again."
-msgstr "Es gibt keine Suchergebnisse, Bitte den Suchlink erneut wählen"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:147
+#: Plugin\rb-agency/theme/include-client-layout1.php:147
+#: Plugin\rb-agency/theme/include-client-layout2.php:167
+msgid "in"
+msgstr ""
 
-# @ rb-agency
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/view-search.php:155
-msgid "Search Results"
-msgstr "Suchergebnisse"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:152
+#: Plugin\rb-agency/theme/include-client-layout0.php:154
+#: Plugin\rb-agency/theme/include-client-layout1.php:152
+#: Plugin\rb-agency/theme/include-client-layout1.php:154
+#: Plugin\rb-agency/theme/include-client-layout2.php:172
+#: Plugin\rb-agency/theme/include-client-layout2.php:174
+msgid "Weight"
+msgstr ""
 
-#: C:/Dropbox/Users/Rob/Scripts/RB
-#: Plugin/rb-agency/theme/view-search.php:173
-msgid "No search chriteria selected, please initiate your search."
-msgstr "Keine Suchkriterien gewählt, bitte Suche verfeinern"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:152
+#: Plugin\rb-agency/theme/include-client-layout1.php:152
+#: Plugin\rb-agency/theme/include-client-layout2.php:172
+msgid "kg"
+msgstr ""
 
-#~ msgid "Please try again"
-#~ msgstr "Bitte noch einmal versuchen"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:154
+#: Plugin\rb-agency/theme/include-client-layout1.php:154
+#: Plugin\rb-agency/theme/include-client-layout2.php:174
+msgid "lb"
+msgstr ""
 
-# @ rb-agency
-#~ msgid "Run Reports"
-#~ msgstr "Run Reports"
-# @ rb-agency
-#~ msgid "Back to Profile List"
-#~ msgstr "zurück zur Profil Liste"
-# @ rb-agency
-#, fuzzy
-#~ msgid "New record added successfully"
-#~ msgstr "Neues Profil erfolgreich hinzugefügt"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:158
+#: Plugin\rb-agency/theme/include-client-layout1.php:158
+#: Plugin\rb-agency/theme/include-client-layout2.php:178
+msgid "Chest"
+msgstr ""
 
-# @ rb-agency
-#, fuzzy
-#~ msgid ""
-#~ "Error creating record, please ensure you have filled out all required "
-#~ "fields"
-#~ msgstr ""
-#~ "Error creating record, please ensure you have filled out all required "
-#~ "fields."
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:158
+#: Plugin\rb-agency/theme/include-client-layout1.php:158
+#: Plugin\rb-agency/theme/include-client-layout2.php:178
+msgid "Bust"
+msgstr ""
 
-# @ rb-agency
-#, fuzzy
-#~ msgid "Record updated successfully"
-#~ msgstr "Profil Update erfolgreich"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:158
+#: Plugin\rb-agency/theme/include-client-layout1.php:158
+#: Plugin\rb-agency/theme/include-client-layout2.php:178
+msgid "Chest/Bust"
+msgstr ""
 
-# @ rb-agency
-#, fuzzy
-#~ msgid ""
-#~ "Error updating record, please ensure you have filled out all required "
-#~ "fields"
-#~ msgstr ""
-#~ "Error updating record, please ensure you have filled out all required "
-#~ "fields."
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:162
+#: Plugin\rb-agency/theme/include-client-layout1.php:162
+#: Plugin\rb-agency/theme/include-client-layout2.php:182
+msgid "Waist"
+msgstr ""
 
-# @ rb-agency
-#, fuzzy
-#~ msgid "Record deleted successfully"
-#~ msgstr "Profile gelöscht"
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:165
+#: Plugin\rb-agency/theme/include-client-layout1.php:165
+#: Plugin\rb-agency/theme/include-client-layout2.php:185
+msgid "Inseam"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:165
+#: Plugin\rb-agency/theme/include-client-layout1.php:165
+#: Plugin\rb-agency/theme/include-client-layout2.php:185
+msgid "Hips"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:165
+#: Plugin\rb-agency/theme/include-client-layout1.php:165
+#: Plugin\rb-agency/theme/include-client-layout2.php:185
+msgid "Hips/Inseam"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:169
+#: Plugin\rb-agency/theme/include-client-layout1.php:169
+#: Plugin\rb-agency/theme/include-client-layout2.php:189
+msgid "Suit Size"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:169
+#: Plugin\rb-agency/theme/include-client-layout1.php:169
+#: Plugin\rb-agency/theme/include-client-layout2.php:189
+msgid "Dress Size"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:169
+#: Plugin\rb-agency/theme/include-client-layout1.php:169
+#: Plugin\rb-agency/theme/include-client-layout2.php:189
+msgid "Suit/Dress Size"
+msgstr ""
+
+#: C:\Dropbox\Users\Rob\Scripts\RB
+#: Plugin\rb-agency/theme/include-client-layout0.php:173
+#: Plugin\rb-agency/theme/include-client-layout1.php:173
+#: Plugin\rb-agency/theme/include-client-layout2.php:193
+msgid "Shoe Size"
+msgstr ""
