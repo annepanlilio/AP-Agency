@@ -3723,22 +3723,25 @@ elseif ($ConfigID == 99) {
 }	// End
 
 elseif ($ConfigID == 100){
-
+	
+	add_option('rbagency_use_s2member',"");
+	
 	if(isset($_POST['save_s2member'])){
+		
 
-		$use = get_option('rbagency_use_s2member');
-		if(empty($use)){
-			add_option('use_s2member',false);
-			
+		if(isset($_POST['use_s2member'])){
+			update_option('rbagency_use_s2member',true);
+		}else{
+			update_option('rbagency_use_s2member',false);
 		}
 		
+		
 		for($idx=1;$idx<4;$idx++){
-			add_option("subscription_title_$idx",false);
-			add_option("subscription_amount_$idx",'');
-			add_option("subscription_description_$idx",false);
-			add_option("subscription_paypal_btn_$idx",false);
-
-			add_option("subscription_type_$idx",false);
+			add_option("subscription_title_$idx","");
+			add_option("subscription_amount_$idx","");
+			add_option("subscription_description_$idx","");
+			add_option("subscription_paypal_btn_$idx","");
+			add_option("subscription_type_$idx","");
 		}
 			
 
@@ -3794,12 +3797,13 @@ elseif ($ConfigID == 100){
 			update_option('rbagency_message_after_payment','');
 		}
 
-		//echo $_POST['rbagency_paypal_button_code'];
+		
 
 	}
 
 	$useS2member = get_option('rbagency_use_s2member');
 	$check_use = $useS2member == true ? "checked" : "";
+	$disable_inputs = $check_use == true ? '' : 'disabled';
 
 	$rbagency_initial_message_after_registration = get_option('rbagency_initial_message_after_registration');
 	$rbagency_initial_email_after_registration = get_option('rbagency_initial_email_after_registration');
@@ -3808,7 +3812,7 @@ elseif ($ConfigID == 100){
 
 	echo '<form action="'.admin_url("admin.php?page=". $_GET['page']."&ConfigID=".$_GET['ConfigID']) .'" method="POST">';
 	echo "<br>";
-	echo "<h3><input type=\"checkbox\" name=\"use_s2member\" class=\"use_s2member\" $check_use>&nbsp;Use S2member Plugin</h3>.<br>";
+	echo "<h3><input type=\"checkbox\" name=\"use_s2member\" class=\"use_s2member\" $check_use>&nbsp;". __("Use S2member Plugin", RBAGENCY_TEXTDOMAIN ). "</h3>.<br>";
 
 	
 	for($idx=1;$idx < 4;$idx++){
@@ -3819,33 +3823,31 @@ elseif ($ConfigID == 100){
 		$subscription_paypal_btn = get_option("subscription_paypal_btn_$idx");
 		$subscription_type = get_option("subscription_type_$idx");
 
-		//echo $subscription_type;
 		echo "<div class=\"boxlinkgroup\">\n";
-		echo "<h2>Paypal Button $idx</h2>";
-		echo "Subscription Title<br>";
-		echo "<input type=\"text\" name=\"subscription_title_$idx\" value=\"".$subscription_title."\"><br><br>";
-		echo "Amount<br>";
-		echo "<input type=\"text\" name=\"subscription_amount_$idx\" value=\"".$subscription_amount."\"><br><br>";
-		echo "Description<br>";
-		echo "<textarea name=\"subscription_description_$idx\" class=\"subscription_description_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_description)."</textarea><br><br>";
-		echo "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i></br>";
-		echo "<textarea name=\"subscription_paypal_btn_$idx\" class=\"subscription_paypal_btn_$idx\" rows=\"10\" cols=\"60\">".stripslashes($subscription_paypal_btn)."</textarea><br><br>";
-		echo "<hr></hr>";
+		echo "<h2>".__("Paypal Button", RBAGENCY_TEXTDOMAIN )." $idx</h2>";
+		echo __("Subscription Title", RBAGENCY_TEXTDOMAIN )."<br>";
+		echo "<input type=\"text\" name=\"subscription_title_$idx\" class=\"subscription_title\" value=\"".$subscription_title."\" $disable_inputs><br><br>";
+		echo __("Amount", RBAGENCY_TEXTDOMAIN )."<br>";
+		echo "<input type=\"text\" name=\"subscription_amount_$idx\" class=\"subscription_amount\" value=\"".$subscription_amount."\" $disable_inputs><br><br>";
+		echo __("Description", RBAGENCY_TEXTDOMAIN )."<br>";
+		echo "<textarea name=\"subscription_description_$idx\" class=\"subscription_description\" rows=\"10\" cols=\"60\" $disable_inputs>".stripslashes($subscription_description)."</textarea><br><br>";
+		echo __("Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i>", RBAGENCY_TEXTDOMAIN )."</br>";
+		echo "<textarea name=\"subscription_paypal_btn_$idx\" class=\"subscription_paypal_btn\" rows=\"10\" cols=\"60\" $disable_inputs>".stripslashes($subscription_paypal_btn)."</textarea><br><br>";
 		echo "</div>";
 	}
 	
 	echo "<br><br><br>";
 
-	echo "<h2>Registration Notifications</h2>";
+	echo "<h2>". __("Registration Notifications", RBAGENCY_TEXTDOMAIN )."</h2>";
 
-	echo "<p>Insert message after registration.</p>";
-	echo "<textarea name=\"rbagency_initial_message_after_registration\" class=\"rbagency_initial_message_after_registration\" rows=\"7\" cols=\"60\">".$rbagency_initial_message_after_registration."</textarea>";
-	echo "<p>Insert email notification that willl be send after registration.</p>";
-	echo "<textarea name=\"rbagency_initial_email_after_registration\" class=\"rbagency_initial_email_after_registration\" rows=\"7\" cols=\"60\">".$rbagency_initial_email_after_registration."</textarea>";
-	echo "<p>Insert message that willl appear after finishing steps 1-3.</p>";
-	echo "<textarea name=\"rbagency_message_after_steps\" class=\"rbagency_message_after_steps\" rows=\"7\" cols=\"60\">".$rbagency_message_after_steps."</textarea>";
-	echo "<p>Insert message that willl appear after payment.</p>";
-	echo "<textarea name=\"rbagency_message_after_payment\" class=\"rbagency_message_after_payment\" rows=\"7\" cols=\"60\">".$rbagency_message_after_payment."</textarea><br>";
+	echo "<p>".__("Insert message after registration.", RBAGENCY_TEXTDOMAIN )."</p>";
+	echo "<textarea name=\"rbagency_initial_message_after_registration\" class=\"rbagency_initial_message_after_registration\" rows=\"7\" cols=\"60\" $disable_inputs>".$rbagency_initial_message_after_registration."</textarea>";
+	echo "<p>".__("Insert email notification that willl be send after registration.", RBAGENCY_TEXTDOMAIN )."</p>";
+	echo "<textarea name=\"rbagency_initial_email_after_registration\" class=\"rbagency_initial_email_after_registration\" rows=\"7\" cols=\"60\" $disable_inputs>".$rbagency_initial_email_after_registration."</textarea>";
+	echo "<p>".__("Insert message that willl appear after finishing steps 1-3.", RBAGENCY_TEXTDOMAIN )."</p>";
+	echo "<textarea name=\"rbagency_message_after_steps\" class=\"rbagency_message_after_steps\" rows=\"7\" cols=\"60\" $disable_inputs>".$rbagency_message_after_steps."</textarea>";
+	echo "<p>".__("Insert message that willl appear after payment.", RBAGENCY_TEXTDOMAIN )."</p>";
+	echo "<textarea name=\"rbagency_message_after_payment\" class=\"rbagency_message_after_payment\" rows=\"7\" cols=\"60\" $disable_inputs>".$rbagency_message_after_payment."</textarea><br>";
 	echo '<input type="submit" name="save_s2member" value="Save Settings">';
 	echo '</form>';
 
@@ -3853,27 +3855,50 @@ elseif ($ConfigID == 100){
 	?>
 	<script type="text/javascript">
 	jQuery(document).ready(function(){
-		jQuery(".allow_free_s2member").attr('disabled','disabled');
+
+		//jQuery('').prop("checked",false);
 		if(jQuery(".use_s2member").is(':checked')){
+
+			jQuery(".subscription_title").removeAttr('disabled');
+			jQuery(".subscription_amount").removeAttr('disabled');
+			jQuery(".subscription_description").removeAttr('disabled');
+			jQuery(".subscription_paypal_btn").removeAttr('disabled');
+
 			jQuery(".rbagency_paypal_button_code").removeAttr('disabled');
 			jQuery(".rbagency_initial_message_after_registration").removeAttr('disabled');
 			jQuery(".rbagency_initial_email_after_registration").removeAttr('disabled');
 			jQuery(".rbagency_message_after_steps").removeAttr('disabled');
-			jQuery(".rbagency_message_after_payment").removeAttr('disabled');
+			jQuery(".rbagency_message_after_payment").removeAttr('disabled');			
 		}
+
 		jQuery(".use_s2member").click(function(){
 
 			if(jQuery(this).is(':checked')){
+
+				jQuery(".subscription_title").removeAttr('disabled');
+				jQuery(".subscription_amount").removeAttr('disabled');
+				jQuery(".subscription_description").removeAttr('disabled');
+				jQuery(".subscription_paypal_btn").removeAttr('disabled');
+
 				jQuery(".rbagency_paypal_button_code").removeAttr('disabled');
 				jQuery(".rbagency_initial_message_after_registration").removeAttr('disabled');
 				jQuery(".rbagency_initial_email_after_registration").removeAttr('disabled');
 				jQuery(".rbagency_message_after_steps").removeAttr('disabled');
 				jQuery(".rbagency_message_after_payment").removeAttr('disabled');
+			
 			}else{
 
-				jQuery(".rbagency_paypal_button_code").attr('disabled','disabled');
-				jQuery(".rbagency_paypal_button_code").val('');
+				jQuery(".subscription_title").attr('disabled','disabled');
+				jQuery(".subscription_amount").attr('disabled','disabled');
+				jQuery(".subscription_description").attr('disabled','disabled');
+				jQuery(".subscription_paypal_btn").attr('disabled','disabled');
 
+				jQuery(".subscription_title").val('');
+				jQuery(".subscription_amount").val('');
+				jQuery(".subscription_description").val('');
+				jQuery(".subscription_paypal_btn").val('');
+
+				
 				jQuery(".rbagency_initial_message_after_registration").attr('disabled','disabled');
 				jQuery(".rbagency_initial_email_after_registration").attr('disabled','disabled');
 				jQuery(".rbagency_message_after_steps").attr('disabled','disabled');
@@ -3891,8 +3916,8 @@ elseif ($ConfigID == 100){
 <?php 
 }elseif($ConfigID == 101){
 	$default_message_availability = "";
-	$default_message_availability .= "<h2>You've been submitted for a job.</h2>";
-	$default_message_availability .=" We are simply confirming that you are 'Available' or 'Not Available' for the job dates.";
+	$default_message_availability .= "<h2>".__("You've been submitted for a job.", RBAGENCY_TEXTDOMAIN )."</h2>";
+	$default_message_availability .= __(" We are simply confirming that you are 'Available' or 'Not Available' for the job dates.", RBAGENCY_TEXTDOMAIN );
 
 	add_option('rb_casting_settings_message_confirming_availability_status',$default_message_availability);
 	
@@ -3903,7 +3928,7 @@ elseif ($ConfigID == 100){
 	}
 	$rb_casting_settings_message_confirming_availability_status_display = get_option('rb_casting_settings_message_confirming_availability_status');
 	echo '<form action="'.admin_url("admin.php?page=". $_GET['page']."&ConfigID=".$_GET['ConfigID']) .'" method="POST">';
-	echo '<p>Message that will appear at the top of confirming availability page. </p>';
+	echo '<p>'.__("Message that will appear at the top of confirming availability page.", RBAGENCY_TEXTDOMAIN ).'</p>';
 	echo "<textarea name=\"rb_casting_settings_message_confirming_availability_post\" class=\"rb_casting_settings_message_confirming_availability_post\" rows=\"7\" cols=\"60\">".$rb_casting_settings_message_confirming_availability_status_display."</textarea><br>";
 	echo '<input type="submit" name="save_casting_settings" value="Save Settings">';
 	echo '</form>';
