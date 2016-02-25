@@ -207,7 +207,7 @@ See license.txt for full details.
  */
 
 	// Identify Folder for PO files
-	load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/translation/' );
+	load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/assets/translation/' );
 
 
 // *************************************************************************************************** //

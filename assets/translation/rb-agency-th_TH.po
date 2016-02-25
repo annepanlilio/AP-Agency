@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Basepath: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: en_US\n"
+"Language: th_TH\n"
 "X-Generator: Poedit 1.8.7\n"
 "X-Poedit-SearchPath-0: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 
