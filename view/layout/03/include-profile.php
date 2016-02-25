@@ -126,9 +126,6 @@ echo "						<ul>\n";
 								}
 echo "						</ul>\n";
 
-							// Social Link
-							rb_agency_getSocialLinks();
-
 echo "					</div> <!-- #profile-info -->\n";
 echo "				</div> <!-- .rbcol-5 -->\n";
 
@@ -137,11 +134,14 @@ echo "				<div class=\"rbcol-3 rbcolumn\">\n";
 echo "					<div id=\"profile-actions\">\n";
 
 
-echo "							<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong> Profile Views</p>\n";
+echo "						<p id=\"profile-views\"><strong>". $ProfileStatHits ."</strong> ".__("Profile Views", RBAGENCY_TEXTDOMAIN)."</p>\n";
+
+							// Social Link
+							rb_agency_getSocialLinks();
 
 							// added this links to be positioned here in substitute
 							// for the favorited label
-echo '							<div id="profile-links">';
+echo '						<div id="profile-links">';
 							if(function_exists('rb_agency_casting_menu')){
 								echo rb_agency_get_new_miscellaneousLinks($ProfileID);
 							}
@@ -259,12 +259,14 @@ echo " 							<div class=\"tab-panel\">\n";
 									if ($countMedia > 0) {
 											foreach($resultsMedia as $dataMedia ){
 											$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+											$profileVideoTitle = explode("<br>",$dataMedia['ProfileMediaTitle']);
 											//echo"<div class=\"video slate rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 											echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
 											echo "<div class=\"video-container\">\n";
 											echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
 											echo rb_agency_get_videothumbnail($profileVideoEmbed );
-											echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
+											// echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
+											echo "<br><span class=\"videotitle\">".__($profileVideoTitle[0], RBAGENCY_TEXTDOMAIN)."</span>";
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
@@ -279,12 +281,13 @@ echo " 							<div class=\"tab-panel\">\n";
 									if ($countMedia > 0) {
 										foreach($resultsMedia as $dataMedia ){
 											$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+											$profileVideoTitle = explode("<br>",$dataMedia['ProfileMediaTitle']);
 											//echo"<div class=\"video monologue rbcol-2 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 											echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
 											echo "<div class=\"video-container\">\n";
 											echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
 											echo rb_agency_get_videothumbnail($profileVideoEmbed );
-											echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
+											echo "<br><span class=\"videotitle\">".__($profileVideoTitle[0], RBAGENCY_TEXTDOMAIN)."</span>";
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
@@ -298,12 +301,13 @@ echo " 							<div class=\"tab-panel\">\n";
 									if ($countMedia > 0) {
 										foreach($resultsMedia as $dataMedia ){
 											$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
+											$profileVideoTitle = explode("<br>",$dataMedia['ProfileMediaTitle']);
 											//echo"<div class=\"video demoreel rbcol-2 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 											echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
 											echo "<div class=\"video-container\">\n";
 											echo "<a href=\"".$profileVideoEmbed."\" target=\"_blank\" rel=\"nofollow\">\n";
 											echo rb_agency_get_videothumbnail($profileVideoEmbed );
-											echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
+											echo "<br><span class=\"videotitle\">".__($profileVideoTitle[0], RBAGENCY_TEXTDOMAIN)."</span>";
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
@@ -419,7 +423,7 @@ echo "							<div class=\"tab-panel\">\n";
 											"\" target=\"_blank\">". $dataMedia['ProfileMediaTitle'] .
 											"</a> [<a href=\"javascript:confirmDelete('". $dataMedia['ProfileMediaID'] ."','".
 											$dataMedia['ProfileMediaType']."')\">DELETE</a>]\n";*/
-											$outCustomMediaLink .= "<a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a>\n";
+											$outCustomMediaLink .= "<li><a href=\"". RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=". $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"profile-link\">Download ".$dataMedia['ProfileMediaType'] ."</a></li>\n";
 
 										}
 	}
@@ -446,9 +450,7 @@ echo "							<div class=\"tab-panel\">\n";
 										echo '</li>';
 									}
 									if(!empty($outCustomMediaLink)){
-										echo '<li>';
 										echo $outCustomMediaLink;
-										echo '</li>';
 									}
 									echo '</ul>';
 echo "							</div>\n"; // .tab-panel
