@@ -889,7 +889,8 @@
 		global $wpdb;
 		extract(shortcode_atts(array(
 				"type" => 0,
-				"count" => 1
+				"count" => 1,
+				"thumbsize" => array(200,300)
 		), $atts));
 		if ($type == 1) { // Featured
 			$sqlWhere = " AND profile.ProfileIsPromoted=1";
@@ -934,9 +935,9 @@
 				foreach($resultsList as $dataList) {
 					echo "<div class=\"rbprofile-list\">\n";
 					if (isset($dataList["ProfileMediaURL"]) ) {
-					echo "  <div class=\"image\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"". RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."\" /></a></div>\n";
+						echo "  <div class=\"image\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\"><img src=\"".RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=". RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"] ."&w=".$thumbsize[0]."&h=".$thumbsize[1]."&a=t\" /></a></div>\n";
 					} else {
-					echo "  <div class=\"image image-broken\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
+						echo "  <div class=\"image image-broken\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\">No Image</a></div>\n";
 					}
 					echo "<div class=\"profile-info\">";
 							$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
