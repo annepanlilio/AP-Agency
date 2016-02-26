@@ -1092,6 +1092,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
+					<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">';
+							<script type="text/javascript">
+								jQuery(document).ready(function(){
+									jQuery( ".datepicker-bd" ).datepicker();
+									jQuery(".datepicker-bd").datepicker("option","dateFormat","yy-mm-dd");
+									jQuery(".datepicker-bd").datepicker("setDate", "<?php echo $ProfileDateBirth != '0000-00-00' ? $ProfileDateBirth : ''; ?>");
+
+
+								});
+							</script>
 					<div id="dashboard_private_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Private Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
@@ -1104,7 +1114,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Birthdate", RBAGENCY_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" value=\"" . (isset($ProfileDateBirth) && $ProfileDateBirth !== "0000-00-00"?$ProfileDateBirth:"") . "\" />\n";
+								
+								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" class=\"datepicker-bd\" value=\"" . $ProfileDateBirth . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
