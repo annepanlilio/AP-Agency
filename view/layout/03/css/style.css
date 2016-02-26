@@ -8,6 +8,14 @@
 	margin-bottom: 15px;
 }
 
+#profile-info {
+	padding: 15px;
+}
+#profile-info ul {
+	padding: 0;
+	list-style: none;
+}
+
 /*** added css for assessment - kat ***/
 #rbprofile #rb-tabs .subMenuTabText {
 	float: left;
@@ -34,4 +42,9 @@
 	list-style:none;
 }.tab-panel ul li {
 	list-style:none;
+}
+
+.rbcolumn .addthis_toolbox {
+	padding: 0;
+	background-color: transparent;
 }
