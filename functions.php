@@ -5144,5 +5144,46 @@ function wpse45134_catch_register()
 }
 
 
+	if ( !function_exists('wp_new_user_notification_approve') ) { 
+		function wp_new_user_notification_approve( $user_id) { 
+				global $wpdb;
+			
+			$user = new WP_User($user_id);
+				$rb_agency_interact_options_arr = get_option('rb_agencyinteract_options');
+				$rb_agencyinteract_option_registerapproval = isset($rb_agency_interact_options_arr['rb_agencyinteract_option_registerapproval'])?$rb_agency_interact_options_arr['rb_agencyinteract_option_registerapproval']:0;
+
+				if($user){
+					$user_login = stripslashes($user->user_login);
+					$user_email = stripslashes($user->user_email);
+
+					/*if($rb_agencyinteract_option_registerapproval == 0){
+						$new_pass = wp_generate_password();
+						wp_set_password( $new_pass, $user_id );
+						$user_pass = $new_pass;
+					}*/
+
+					$message  = __('Hi there,', RBAGENCY_interact_TEXTDOMAIN) . "\r\n\r\n";
+					$message .= sprintf(__('Congratulations! Your account is approved.', RBAGENCY_interact_TEXTDOMAIN), $user_login) . "\r\n"; 
+					//$message .= sprintf(__("Here's how to log in:"), get_option('blogname')) . "\r\n\r\n"; 
+					//$message .= get_option('home') ."/profile-login/\r\n"; 
+					//if($rb_agencyinteract_option_registerapproval == 1){ // automally approved
+					//			$message .= sprintf(__('Username: %s'), $user_login) . "\r\n"; 
+					//			$message .= sprintf(__('Password: %s'),  $user_pass) . "\r\n\r\n"; 
+					//}/*else { // manually approved
+					//			$message .= sprintf(__('Password: %s'),  "Your Password") . "\r\n\r\n"; 
+
+					//}
+					$message .= sprintf(__('If you have any problems, please contact us at %s.', RBAGENCY_interact_TEXTDOMAIN), get_option('admin_email')) . "\r\n\r\n"; 
+					$message .= __('Regards,', RBAGENCY_interact_TEXTDOMAIN)."\r\n";
+					$message .= get_option('blogname') . __(' Team') ."\r\n"; 
+					$message .= get_option('home') ."\r\n"; 
+
+					$headers = 'From: '. get_option('blogname') .' <'. get_option('admin_email') .'>' . "\r\n";
+					//wp_mail($user_email, sprintf(__('%s Congratulations! Your account is approved.'), get_option('blogname')), make_clickable($message), $headers);
+					wp_mail($user_email, sprintf(__('%s Congratulations! Your account is approved.'), get_option('blogname')), $message, $headers);
+				}
+		}
+	}
+
 
 ?>
