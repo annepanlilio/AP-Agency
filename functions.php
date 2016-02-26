@@ -4067,7 +4067,7 @@
 	function rb_agency_search_profile(){
 
 		global $wpdb;
-		$data = isset($_REQUEST['value'])?trim($_REQUEST['value']):"";
+		$data = isset($_POST['value'])?trim($_POST['value']):get_option('custom_fields_criteria');
 
 		$and_selected_critarea_for_gender = '' ; 
 		

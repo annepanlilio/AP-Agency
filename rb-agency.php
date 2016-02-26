@@ -109,6 +109,8 @@ See license.txt for full details.
  * Set Table Names
  */
 
+
+
 	// Profile Records
 	if (!defined("table_agency_profile"))
 		define("table_agency_profile", "{$wpdb->prefix}agency_profile");
