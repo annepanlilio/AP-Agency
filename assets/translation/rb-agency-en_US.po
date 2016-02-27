@@ -116,7 +116,7 @@ msgid "Saved Searches"
 msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
-msgid "Tools &amp; Reports"
+msgid "Tools & Reports"
 msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
@@ -611,4 +611,412 @@ msgstr ""
 
 #: Plugin\rb-agency/view/admin-settings.php:1169
 msgid "If password is auto-generated(sent via email)"
+msgstr ""
+
+
+msgid "Welcome to RB Agency!"
+msgstr ""
+
+msgid "We have added some resources below to help you get started."
+msgstr ""
+
+msgid "Quick Links"
+msgstr ""
+
+msgid "Create New Male"
+msgstr ""
+
+msgid "Create New Female"
+msgstr ""
+
+msgid "Quick Search"
+msgstr ""
+
+msgid "First Name"
+msgstr ""
+
+msgid "Last Name"
+msgstr ""
+
+msgid "Empty Form"
+msgstr ""
+
+msgid "Go to Advanced Search"
+msgstr ""
+
+msgid "Recently Updated Profiles"
+msgstr ""
+
+msgid "Recently Viewed Profiles"
+msgstr ""
+
+msgid "Last viewed"
+msgstr ""
+
+msgid "Views"
+msgstr ""
+
+msgid "Create New Profile"
+msgstr ""
+
+msgid "Filter Profiles"
+msgstr ""
+
+msgid "First Name:"
+msgstr ""
+
+msgid "Last Name:"
+msgstr ""
+
+msgid "Category:"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+msgid "Location
+msgstr ""
+
+msgid "Any Category"
+msgstr ""
+
+msgid "Any Status"
+msgstr ""
+
+msgid "Any Location"
+msgstr ""
+
+msgid "Any Gender"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Clear Filters"
+msgstr ""
+
+msgid "Age"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "State"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+msgid "Private"
+msgstr ""
+
+msgid "Last Viewed Date"
+msgstr ""
+
+
+msgid "Currently " . $items . " Profiles"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+msgid "Delete Profiles"
+msgstr ""
+
+msgid "Any"
+msgstr ""
+
+msgid "Min"
+msgstr ""
+
+
+msgid "Max"
+msgstr ""
+
+msgid "From"
+msgstr ""
+
+msgid "To"
+msgstr ""
+
+msgid "Birthdate"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Any Country"
+msgstr ""
+
+msgid "Any State"
+msgstr ""
+
+msgid "Zip"
+msgstr ""
+
+msgid "Initial Setup"
+msgstr ""
+
+msgid "If you are doing the initial instal of RB Agency you this section will help you get your data inplace"
+msgstr ""
+
+msgid "Data Integrity"
+msgstr ""
+
+msgid "Once your data is in place use the tools below to check your records"
+msgstr ""
+
+msgid "Export Data"
+msgstr ""
+
+msgid "Export databases"
+msgstr ""
+
+msgid "Check for Abnormalities"
+msgstr ""
+
+msgid "Search profile records for fields which seem invalid"
+msgstr ""
+
+msgid "Rename Profile Folder Names"
+msgstr ""
+
+msgid "If you created model profiles while under \"First Last\" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it."
+msgstr ""
+
+msgid "Resize Photos"
+msgstr ""
+
+msgid "Ensure files are not larger than approved size"
+msgstr ""
+
+msgid "Orphaned Profile Images"
+msgstr ""
+
+msgid "If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist."
+msgstr ""
+
+msgid "FTP Blank Folder Check"
+msgstr ""
+
+msgid "Check for any empty folders which do no have models assigned using this tool"
+msgstr ""
+
+msgid "Profile Data Migration"
+msgstr ""
+
+msgid "Search profile records for fields migration"
+msgstr ""
+
+msgid "Profile Management"
+msgstr ""
+
+msgid "The following reports will help you manage your profile information"
+msgstr ""
+
+msgid "Inactive Users"
+msgstr ""
+
+msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
+msgstr ""
+
+msgid "Profile Search"
+msgstr ""
+
+msgid "You may search for profiles by using this tool"
+msgstr ""
+
+msgid "Dummy Profiles with Sample Media"
+msgstr ""
+
+msgid "You may add dummy profiles by using this tool"
+msgstr ""
+
+msgid "Importing Records"
+msgstr ""
+
+msgid "The following tools will help import records."
+msgstr ""
+
+msgid "Download this template and load your profile data into this file to import into the database."
+msgstr ""
+
+msgid "Check for Profile Data Migration"
+msgstr ""
+
+msgid "Check Inactive Users"
+msgstr ""
+
+msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
+msgstr ""
+
+
+msgid "Generate Dummy Profiles with Media Content"
+msgstr ""
+
+msgid "Step 1"
+msgstr ""
+
+msgid "Export Now"
+msgstr ""
+
+msgid "Step 4"
+msgstr ""
+
+msgid "Create folders for all profiles"
+msgstr ""
+
+msgid "Check that all profiles have folders created on the server."
+msgstr ""
+
+msgid "Step 2"
+msgstr ""
+
+msgid "Import Data"
+msgstr ""
+
+msgid "Upload the model profiles into the database."
+msgstr ""
+
+msgid "Step 5"
+msgstr ""
+
+msgid "Scan Folders for Images/Media"
+msgstr ""
+
+msgid "First upload images directly to folders via FTP then use this tool to sync the images & media to the database."
+msgstr ""
+
+msgid "Step 3"
+msgstr ""
+
+msgid "Generate folder names for profiles"
+msgstr ""
+
+msgid "Check that all profiles have folder names generated."
+msgstr ""
+
+msgid "Step 6"
+msgstr ""
+
+msgid "Set Primary Profile Image"
+msgstr ""
+
+msgid "Identify which image is the primary image for each profile."
+msgstr ""
+
+msgid "Settings &raquo; Overview"
+msgstr ""
+
+msgid "Settings &raquo; Configuration"
+msgstr ""
+
+msgid "Settings &raquo; Style"
+msgstr ""
+
+msgid "Settings &raquo; Data &raquo; Gender"
+msgstr ""
+
+
+msgid "Settings &raquo; Data &raquo; Profile Types"
+msgstr ""
+
+msgid "Settings &raquo; Data &raquo; Custom Fields"
+msgstr ""
+
+
+msgid "Settings &raquo; Data &raquo; Media Types"
+msgstr ""
+
+
+msgid "Settings &raquo; Subscription"
+msgstr ""
+
+msgid "Settings &raquo; Uninstall"
+msgstr ""
+		
+msgid "Configuration"
+msgstr ""
+
+msgid "Configuration"
+msgstr ""
+
+msgid "Access this area to manage all of the core settings including layout types, privacy settings and more"
+msgstr ""
+
+msgid "Diagnostics"
+msgstr ""
+
+msgid "The following settings modify the core RB Agency settings."
+msgstr ""
+
+msgid "Features"
+msgstr ""
+
+msgid "Access this area to manage all of the core settings including layout types, privacy settings and more"
+msgstr ""
+
+msgid "Style"
+msgstr ""
+
+msgid "Manage the stylesheet (CSS) controlling the category and profile layouts"
+msgstr ""
+
+msgid "Profile Types"
+msgstr ""
+
+msgid "Custom Fields"
+msgstr ""
+
+msgid "Media Categories"
+msgstr ""
+
+msgid "Manage Locations"
+msgstr ""
+
+msgid "Locations"
+msgstr ""
+
+
+msgid "Customize Profile Fields"
+msgstr ""
+
+msgid "You have full control over all drop downs and ability to add new custom fields of your own."
+msgstr ""
+
+msgid "Profile Categories"
+msgstr ""
+
+msgid "Choose custom category types to classify profiles"
+msgstr ""
+
+msgid "Media Categories"
+msgstr ""
+
+msgid "Manage your media categories"
+msgstr ""
+
+
+msgid "Add public and private custom fields"
+msgstr ""
+
+msgid "Manage your Locations"
+msgstr ""
+
+msgid "Manage preset Gender choices"
+msgstr ""
+
+msgid "Settings for s2member plugin"
+msgstr ""
+
+msgid "Uninstall"
+msgstr ""
+
+msgid "Uninstall RB Agency software and completely remove all data"
 msgstr ""

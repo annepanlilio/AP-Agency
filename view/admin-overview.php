@@ -17,7 +17,7 @@ get_currentuserinfo();
 
 			<div class="welcome-panel-column-container">
 				<div class="welcome-panel-column">
-					<h3><?php echo __("Welcome to RB Agency", RBAGENCY_TEXTDOMAIN ) ?>!</h3>
+					<h3><?php echo __("Welcome to RB Agency!", RBAGENCY_TEXTDOMAIN ) ?></h3>
 					<p class="about-description"><?php echo __("We have added some resources below to help you get started.", RBAGENCY_TEXTDOMAIN ) ?></p>
 					<h4><?php echo __("Quick Links", RBAGENCY_TEXTDOMAIN ) ?></h4>
 					<div id="rbquick-links">
@@ -143,7 +143,7 @@ get_currentuserinfo();
 									<span class="add-new-h2"><?php echo $data['ProfileStatHits']; ?> <?php echo __("Views", RBAGENCY_TEXTDOMAIN ) ?></span>
 									<?php 
 									if ($data['ProfileDateViewLast'] <> "0000-00-00 00:00:00" && isset($data['ProfileDateViewLast']) && !empty($data['ProfileDateViewLast'])){ ?>
-									<span class="add-new-h2">Last viewed <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateViewLast'])); ?></span>
+									<span class="add-new-h2"><?php echo __("Last viewed", RBAGENCY_TEXTDOMAIN ) ?> <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateViewLast'])); ?></span>
 									<?php }?>
 								</li><?php
 							}

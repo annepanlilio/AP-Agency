@@ -38,56 +38,56 @@ global $wpdb;
 	switch ($ConfigID) {
 		// Overview
 		case 0:
-			echo "<h1>Settings &raquo; Overview</h1>";
+			echo "<h1>".__("Settings &raquo; Overview",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::Overview();
 			break;
 
 		// Settings
 		case 1:
-			echo "<h1>Settings &raquo; Configuration</h1>";
+			echo "<h1>".__("Settings &raquo; Configuration",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::Configuration();
 			break;
 
 		// Style
 		case 2:
-			echo "<h1>Settings &raquo; Style</h1>";
+			echo "<h1>".__("Settings &raquo; Style",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::Style();
 			break;
 
 		// Data: Gender
 		case 3:
-			echo "<h1>Settings &raquo; Data &raquo; Gender</h1>";
+			echo "<h1>".__("Settings &raquo; Data &raquo; Gender",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::DataGender();
 			break;
 
 		// Data: Profile Types
 		case 4:
-			echo "<h1>Settings &raquo; Data &raquo; Profile Types</h1>";
+			echo "<h1>".__("Settings &raquo; Data &raquo; Profile Types",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::DataProfileType();
 			break;
 
 		// Data: Custom Fields
 		case 5:
-			echo "<h1>Settings &raquo; Data &raquo; Custom Fields</h1><br />";
+			echo "<h1>".__("Settings &raquo; Data &raquo; Custom Fields",RBAGENCY_TEXTDOMAIN)."</h1><br />";
 			//return RBAgency_AdminSettings::DataCustomFields();
 			break;
 
 		// Data: Media Types
 		case 6:
-			echo "<h1>Settings &raquo; Data &raquo; Media Types</h1>";
+			echo "<h1>".__("Settings &raquo; Data &raquo; Media Types",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::DataMediaType();
 			break;
 
 		// Data: Media Types
 		case 12:
-			echo "<h1>Settings &raquo; Subscription</h1>";
+			echo "<h1>".__("Settings &raquo; Subscription",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::Uninstall();
 			break;
 
 
 		// Data: Media Types
 		case 99:
-			echo "<h1>Settings &raquo; Uninstall</h1>";
+			echo "<h1>".__("Settings &raquo; Uninstall",RBAGENCY_TEXTDOMAIN)."</h1>";
 			//return RBAgency_AdminSettings::Uninstall();
 			break;
 

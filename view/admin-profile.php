@@ -2832,10 +2832,10 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "              <input type=\"hidden\" name=\"page\" id=\"page\" value=\"" . $_GET['page'] . "\" />\n";
 	echo "              <input type=\"hidden\" name=\"type\" value=\"name\" />\n";
 	echo "              <p id=\"filter-profiles\">\n";
-	echo "              <span>" . __("<label>First Name:</label>", RBAGENCY_TEXTDOMAIN) . "<input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" /></span>\n";
-	echo "              <span>" . __("<label>Last Name:</label>", RBAGENCY_TEXTDOMAIN) . "<input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" /></span>\n";
+	echo "              <span><label>" . __("First Name:", RBAGENCY_TEXTDOMAIN) . "</label><input type=\"text\" name=\"ProfileContactNameFirst\" value=\"" . $selectedNameFirst . "\" /></span>\n";
+	echo "              <span><label>" . __("Last Name:", RBAGENCY_TEXTDOMAIN) . "</label><input type=\"text\" name=\"ProfileContactNameLast\" value=\"" . $selectedNameLast . "\" /></span>\n";
 
-	echo "              <span>" . __("<label>Category:</label>", RBAGENCY_TEXTDOMAIN) . "\n";
+	echo "              <span><label>" . __("Category:", RBAGENCY_TEXTDOMAIN) . "</label>\n";
 	echo "              <select name=\"ProfileType\">\n";
 	echo "                <option value=\"\">" . __("Any Category", RBAGENCY_TEXTDOMAIN) . "</option>";
 
@@ -2923,17 +2923,17 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	if($rb_agency_option_formshow_displayname == 1){
 	echo "        <th class=\"column-ProfileContactDisplay\" id=\"ProfileContactDisplay\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactDisplay&dir=" . $sortDirection."&".$build_query) . "\">Display Name</a></th>\n";
 	}
-	echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst,ProfileContactNameLast&dir=" . $sortDirection."&".$build_query) . "\">First Name</a></th>\n";
-	echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast,ProfileContactNameFirst&dir=" . $sortDirection."&".$build_query) . "\">Last Name</a></th>\n";
-	echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection."&".$build_query) . "\">Gender</a></th>\n";
-	echo "        <th class=\"column-ProfilesProfileDate\" id=\"ProfilesProfileDate\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileDateBirth&dir=" . $sortDirection."&".$build_query) . "\">Age</a></th>\n";
-	echo "        <th class=\"column-ProfileLocationCity\" id=\"ProfileLocationCity\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationCity&dir=" . $sortDirection."&".$build_query) . "\">City</a></th>\n";
-	echo "        <th class=\"column-ProfileLocationState\" id=\"ProfileLocationState\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationState&dir=" . $sortDirection."&".$build_query) . "\">State</a></th>\n";
-	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Category</th>\n";
-	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">Images</th>\n";
-	echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\">Views</th>\n";
-	echo "        <th class=\"column-isPrivate\" id=\"isPrivate\" scope=\"col\">Private</th>\n";
-	echo "        <th class=\"column-ProfileDateViewLast\" id=\"ProfileDateViewLast\" scope=\"col\" style=\"width:100px;\">Last Viewed Date</th>\n";
+	echo "        <th class=\"column-ProfileContactNameFirst\" id=\"ProfileContactNameFirst\" scope=\"col\" style=\"width:150px;\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameFirst,ProfileContactNameLast&dir=" . $sortDirection."&".$build_query) . "\">".__("First Name",RBAGENCY_TEXTDOMAIN)."</a></th>\n";
+	echo "        <th class=\"column-ProfileContactNameLast\" id=\"ProfileContactNameLast\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileContactNameLast,ProfileContactNameFirst&dir=" . $sortDirection."&".$build_query) . "\">".__("Last Name",RBAGENCY_TEXTDOMAIN)."</a></th>\n";
+	echo "        <th class=\"column-ProfileGender\" id=\"ProfileGender\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileGender&dir=" . $sortDirection."&".$build_query) . "\">".__("Gender",RBAGENCY_TEXTDOMAIN)."</a></th>\n";
+	echo "        <th class=\"column-ProfilesProfileDate\" id=\"ProfilesProfileDate\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileDateBirth&dir=" . $sortDirection."&".$build_query) . "\">".__("Age",RBAGENCY_TEXTDOMAIN)."</a></th>\n";
+	echo "        <th class=\"column-ProfileLocationCity\" id=\"ProfileLocationCity\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationCity&dir=" . $sortDirection."&".$build_query) . "\">".__("City",RBAGENCY_TEXTDOMAIN)."</a></th>\n";
+	echo "        <th class=\"column-ProfileLocationState\" id=\"ProfileLocationState\" scope=\"col\"><a href=\"" . admin_url("admin.php?page=" . $_GET['page'] . "&sort=ProfileLocationState&dir=" . $sortDirection."&".$build_query) . "\">".__("State",RBAGENCY_TEXTDOMAIN)."</a></th>\n";
+	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">".__("Category",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">".__("Images",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\">".__("Views",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column-isPrivate\" id=\"isPrivate\" scope=\"col\">".__("Private",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column-ProfileDateViewLast\" id=\"ProfileDateViewLast\" scope=\"col\" style=\"width:100px;\">".__("Last Viewed Date",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "    </tr>\n";
 	echo " </thead>\n";
 	echo " <tfoot>\n";
@@ -2943,16 +2943,16 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	if($rb_agency_option_formshow_displayname == 1){
 		echo "        <th class=\"column\" scope=\"col\">Display Name</th>\n";
 	}
-	echo "        <th class=\"column\" scope=\"col\">First Name</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Last Name</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Gender</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Age</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">City</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">State</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Category</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Images</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Views</th>\n";
-	echo "        <th class=\"column\" scope=\"col\">Last Viewed</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("First Name",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Last Name",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Gender",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Age",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("City",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("State",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Category",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Images",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Views",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Last Viewed",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "    </tr>\n";
 	echo " </tfoot>\n";
 	echo " <tbody>\n";
@@ -3145,7 +3145,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	// Show Actions
 	echo "<p class=\"submit\">\n";
 	echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
-	echo "  <input type=\"submit\" value=\"" . __('Delete Profiles') . "\" class=\"delete-profiles button-primary\" name=\"submit\" />   \n";
+	echo "  <input type=\"submit\" value=\"" . __('Delete Profiles',RBAGENCY_TEXTDOMAIN) . "\" class=\"delete-profiles button-primary\" name=\"submit\" />   \n";
 	echo "</p>\n";
 	echo "</form>\n";
 	echo "<script  type=\"text/javascript\">\n\n";
