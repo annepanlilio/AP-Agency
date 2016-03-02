@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-03-02 14:18-0800\n"
+"PO-Revision-Date: 2016-03-02 14:27-0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,139 +19,139 @@ msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:99
 msgid "RB Agency Updates"
-msgstr ""
+msgstr "RB Agency Updates"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:366
 msgid "Male"
-msgstr ""
+msgstr "Männlich"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:368
 msgid "Female"
-msgstr ""
+msgstr "Weiblich"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:397
 msgid "No Profiles Found"
-msgstr ""
+msgstr "Keine gefundene Profile"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:364
 #: Plugin\rb-agency/rb-agency.php:477
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:373
 msgid "RB Agency"
-msgstr ""
+msgstr "RB Agency"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:386
 #: Plugin\rb-agency/rb-agency.php:388
 msgid "Generate Client List"
-msgstr ""
+msgstr "Generieren Sie Kundenliste"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:434
 msgid "Any Profile Type"
-msgstr ""
+msgstr "Alle Profiltyp"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:439
 msgid "Only"
-msgstr ""
+msgstr "Nur"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:442
 msgid "Starting Age"
-msgstr ""
+msgstr "Ab Alter"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:443
 msgid "Ending Age"
-msgstr ""
+msgstr "Ending Alter"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Gender"
-msgstr ""
+msgstr "Geschlecht"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Both Male &amp; Female"
-msgstr ""
+msgstr "Beide Männer & Frauen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Female Only"
-msgstr ""
+msgstr "nur für Frauen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
 msgid "Male Only"
-msgstr ""
+msgstr "Männlich Nur"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:446
 msgid "Insert Profile List"
-msgstr ""
+msgstr "Legen Profilliste"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:447
 msgid "Insert Search Form"
-msgstr ""
+msgstr "Legen Suchformular"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:456
 msgid "My Post Section Title"
-msgstr ""
+msgstr "My Post Sektion Titel"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:471
 msgid "Agency"
-msgstr ""
+msgstr "Agentur"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:472
 msgid "Overview"
-msgstr ""
+msgstr "Überblick"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
 msgid "Manage Profiles"
-msgstr ""
+msgstr "Profile verwalten"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
 msgid "Manage Profile"
-msgstr ""
+msgstr "Profil verwalten"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:474
 msgid "Search Profiles"
-msgstr ""
+msgstr "Suchprofile"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:475
 msgid "Saved Searches"
-msgstr ""
+msgstr "Gespeicherte Suche"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
 msgid "Tools & Reports"
-msgstr ""
+msgstr "Tools & Berichte"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
 msgid "Run Reports"
-msgstr ""
+msgstr "Berichte ausführen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:477
 msgid "Edit Settings"
-msgstr ""
+msgstr "Einstellungen bearbeiten"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
 msgid "Almost done..."
-msgstr ""
+msgstr "Fast fertig..."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
 msgid "One More Step"
-msgstr ""
+msgstr "Noch ein Schritt"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
 msgid "Please click here to complete the uninstallation process"
-msgstr ""
+msgstr "Bitte klicken Sie hier, um die Installation abzuschließen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
 msgid "New Casting added successfully!"
-msgstr ""
+msgstr "New Casting erfolgreich hinzugefügt!"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
 #: Plugin\rb-agency/admin/client.php:107
 msgid "Update and add media"
-msgstr ""
+msgstr "Aktualisieren Sie und fügen Medien"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:51
 #: Plugin\rb-agency/admin/client.php:109
 msgid "Error creating record, please ensure you have filled out all required fields."
-msgstr ""
+msgstr "Das Fehlerprotokoll erstellen, stellen Sie sicher, Sie alle erforderlichen Felder ausgefüllt haben."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:467
 #: Plugin\rb-agency/admin/client.php:1427
@@ -159,81 +159,81 @@ msgstr ""
 #: Plugin\rb-agency/admin/taxonomy.php:220
 #: Plugin\rb-agency/admin/taxonomy.php:263
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:107
 msgid "New Client added successfully!"
-msgstr ""
+msgstr "Neuer Client erfolgreich hinzugefügt!"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:405
 msgid "Client updated successfully!"
-msgstr ""
+msgstr "Client erfolgreich aktualisiert!"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:407
 msgid "Error updating record, please ensure you have filled out all required fields."
-msgstr ""
+msgstr "Das Fehlerprotokoll zu aktualisieren, benutzen Sie bitte sicher, dass Sie alle erforderlichen Felder ausgefüllt haben."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:419
 #: Plugin\rb-agency/admin/client.php:460
 msgid "Client deleted successfully!"
-msgstr ""
+msgstr "Client erfolgreich gelöscht!"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:457
 msgid "No valid record found."
-msgstr ""
+msgstr "Kein gültiger Eintrag gefunden."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:468
 msgid "Back to Client List"
-msgstr ""
+msgstr "Zurück zur Referenzliste"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
 msgid "Edit Client"
-msgstr ""
+msgstr "edit Client"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
 msgid "Make changes in the form below to edit a Client."
-msgstr ""
+msgstr "Nehmen Sie Änderungen in der folgenden Form eines Clients zu bearbeiten."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
 #: Plugin\rb-agency/admin/client.php:530
 msgid "Required fields are marked"
-msgstr ""
+msgstr "erforderliche Felder sind markiert"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:529
 msgid "Add New Client"
-msgstr ""
+msgstr "Kunde hinzufügen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:530
 msgid "Fill in the form below to add a new Client."
-msgstr ""
+msgstr "Füllen Sie untenstehendes Formular ein neuer Client hinzuzufügen."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:535
 msgid "Contact Information"
-msgstr ""
+msgstr "Kontakt Informationen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:548
 msgid "Gallery Folder"
-msgstr ""
+msgstr "Galerie-Ordner"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:552
 msgid "Folder"
-msgstr ""
+msgstr "Mappe"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:552
 msgid "Exists"
-msgstr ""
+msgstr "existiert"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:555
 msgid "No Folder Exists"
-msgstr ""
+msgstr "Keine Ordner vorhanden"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/search.php:456
 msgid "Add to Casting Cart"
-msgstr ""
+msgstr "In den Casting Wagen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:56
 msgid "Database Version"
-msgstr ""
+msgstr "Datenbank-Version:"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:60
 msgid "Stylesheet"
@@ -241,47 +241,47 @@ msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:64
 msgid "Agency Name"
-msgstr ""
+msgstr "Agenturname"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:68
 msgid "Agency Email"
-msgstr ""
+msgstr "Agentur per E-Mail"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:72
 msgid "Path to Logo"
-msgstr ""
+msgstr "Pfad zum Logo"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:76
 msgid "Email Header"
-msgstr ""
+msgstr "E-Mail-Header"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:82
 msgid "Profile Layout Style"
-msgstr ""
+msgstr "Profil Layout Style"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:93
 msgid "Image Gallery Type"
-msgstr ""
+msgstr "Bildergalerie Art"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:104
 msgid "Image Gallery Sort Order"
-msgstr ""
+msgstr "Bildergalerie Sortierung"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:114
 msgid "Unit Type"
-msgstr ""
+msgstr "Gerätetyp"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:124
 msgid "Privacy Settings"
-msgstr ""
+msgstr "Datenschutzeinstellungen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:135
 msgid "Show Fields"
-msgstr ""
+msgstr "Felder anzeigen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:148
 msgid "Save Changes"
-msgstr ""
+msgstr "Änderungen speichern"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:14
 #: Plugin\rb-agency/admin/taxonomy.php:35
@@ -293,59 +293,59 @@ msgstr ""
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:75
 #: Plugin\rb-agency/admin/taxonomy.php:85
 msgid "Edit Tag"
-msgstr ""
+msgstr "Tag bearbeiten"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:94
 #: Plugin\rb-agency/admin/taxonomy.php:300
 msgid "Tag name"
-msgstr ""
+msgstr "Verlinke den Namen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:98
 #: Plugin\rb-agency/admin/taxonomy.php:306
 msgid "Tag slug"
-msgstr ""
+msgstr "Tag slug"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:100
 #: Plugin\rb-agency/admin/taxonomy.php:308
 msgid "The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
-msgstr ""
+msgstr "Die &#8220;slug&#8221; ist die URL-freundliche Version des Namens. Es ist in der Regel nur Kleinbuchstaben und enthält nur Buchstaben, Zahlen und Bindestriche."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:105
 msgid "The description is not prominent by default, however some themes may show it."
-msgstr ""
+msgstr "Die Beschreibung ist nicht prominent standardmäßig jedoch einige Themen es zeigen."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:156
 msgid "Tag added."
-msgstr ""
+msgstr "Tag hinzugefügt."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:157
 msgid "Tag deleted."
-msgstr ""
+msgstr "Tag gelöscht."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:158
 msgid "Tag updated."
-msgstr ""
+msgstr "Tag aktualisiert."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:159
 msgid "Tag not added."
-msgstr ""
+msgstr "Tag hinzugefügt."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:160
 msgid "Tag not updated."
-msgstr ""
+msgstr "Tag nicht aktualisiert."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:161
 msgid "Tags deleted."
-msgstr ""
+msgstr "Stichworte gelöscht."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:167
 #, php-format
 msgid "Search results for &#8220;%s&#8221;"
-msgstr ""
+msgstr "Suchergebnisse für &#8220;%s&#8221;"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:179
 msgid "Search Tags"
-msgstr ""
+msgstr "Suche Tags"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:207
 msgid "&laquo;"
@@ -358,11 +358,11 @@ msgstr ""
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:219
 #: Plugin\rb-agency/admin/taxonomy.php:262
 msgid "Bulk Actions"
-msgstr ""
+msgstr "Bulk-Aktionen"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:280
 msgid "Popular Tags"
-msgstr ""
+msgstr "Beliebte Schlagworte"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:293
 msgid "Add a New Tag"
@@ -370,32 +370,32 @@ msgstr ""
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:302
 msgid "The name is how the tag appears on your site."
-msgstr ""
+msgstr "Der Name ist wie der Tag auf Ihrer Website erscheint."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:314
 msgid "The description is not prominent by default; however, some themes may show it."
-msgstr ""
+msgstr "Die Beschreibung ist nicht prominent standardmäßig ; Allerdings zeigen einige Themen kann."
 
 #: C:\Dropbox\Users\Rob\Scripts\RB
 #: Plugin\rb-agency/theme/include-client-layout0.php:24
 #: Plugin\rb-agency/theme/include-client-layout1.php:24
 #: Plugin\rb-agency/theme/include-client-layout2.php:43
 msgid "Share"
-msgstr ""
+msgstr "Aktie"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB
 #: Plugin\rb-agency/theme/include-client-layout0.php:99
 #: Plugin\rb-agency/theme/include-client-layout1.php:99
 #: Plugin\rb-agency/theme/include-client-layout2.php:118
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB
 #: Plugin\rb-agency/theme/include-client-layout0.php:112
 #: Plugin\rb-agency/theme/include-client-layout1.php:112
 #: Plugin\rb-agency/theme/include-client-layout2.php:131
 msgid "Access Dashboard"
-msgstr ""
+msgstr "Zugang Armaturenbrett"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB
 #: Plugin\rb-agency/theme/include-client-layout0.php:129
@@ -559,176 +559,176 @@ msgstr ""
 
 #: Plugin\rb-agency/view/admin-settings.php:3815
 msgid "Use S2member Plugin"
-msgstr ""
+msgstr "Verwenden Sie S2Member Plugin"
 
 #: Plugin\rb-agency/view/admin-settings.php:3827
 msgid "Paypal Button"
-msgstr ""
+msgstr "PayPal-Button"
 
 #: Plugin\rb-agency/view/admin-settings.php:3830
 msgid "Amount"
-msgstr ""
+msgstr "Menge"
 
 #: Plugin\rb-agency/view/admin-settings.php:3832
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: Plugin\rb-agency/view/admin-settings.php:3834
 msgid "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i>"
-msgstr ""
+msgstr "Legen Sie die erzeugte Paypal-Button aus s2member Plugin. <i><b>(Taste zu erzeugen, gehe s2member (Pro) > Paypal Buttons) </ b></ i>"
 
 #: Plugin\rb-agency/view/admin-settings.php:3841
 msgid "Registration Notifications"
-msgstr ""
+msgstr "Registrierung Benachrichtigungen"
 
 #: Plugin\rb-agency/view/admin-settings.php:3843
 msgid "Insert message after registration."
-msgstr ""
+msgstr "Legen Nachricht nach der Anmeldung."
 
 #: Plugin\rb-agency/view/admin-settings.php:3845
 msgid "Insert email notification that willl be send after registration."
-msgstr ""
+msgstr "Legen Nachricht nach der Anmeldung."
 
 #: Plugin\rb-agency/view/admin-settings.php:3847
 msgid "Insert message that willl appear after finishing steps 1-3."
-msgstr ""
+msgstr "Legen Nachricht, die nach Abschluss der Schritte 1-3 erscheint."
 
 #: Plugin\rb-agency/view/admin-settings.php:3849
 msgid "Insert message that willl appear after payment."
-msgstr ""
+msgstr "Legen Nachricht, die nach der Zahlung angezeigt."
 
 #: Plugin\rb-agency/view/admin-settings.php:3921
 msgid "Message that will appear at the top of confirming availability page."
-msgstr ""
+msgstr "Nachricht, die an der Spitze der Bestätigung Verfügbarkeit Seite erscheint."
 
 #: Plugin\rb-agency/view/admin-settings.php:1159
 msgid "Notification after registration"
-msgstr ""
+msgstr "Mitteilung nach Anmeldung"
 
 #: Plugin\rb-agency/view/admin-settings.php:1162
 msgid "If password is self-generated"
-msgstr ""
+msgstr "Wenn Passwort ist selbsterzeugten"
 
 #: Plugin\rb-agency/view/admin-settings.php:1169
 msgid "If password is auto-generated(sent via email)"
-msgstr ""
+msgstr "Wenn Passwort automatisch generiert wird (per E-Mail gesendet)"
 
 msgid "Welcome to RB Agency!"
-msgstr ""
+msgstr "Willkommen bei RB Agency!"
 
 msgid "We have added some resources below to help you get started."
-msgstr ""
+msgstr "Wir haben einige Ressourcen unten kannst du den Einstieg zu erleichtern."
 
 msgid "Quick Links"
-msgstr ""
+msgstr "Nützliche Links"
 
 msgid "Create New Male"
-msgstr ""
+msgstr "Create New Männlich"
 
 msgid "Create New Female"
-msgstr ""
+msgstr "Create New Female"
 
 msgid "Quick Search"
-msgstr ""
+msgstr "Schnelle Suche"
 
 msgid "First Name"
-msgstr ""
+msgstr "Vorname"
 
 msgid "Last Name"
-msgstr ""
+msgstr "Familienname, Nachname"
 
 msgid "Empty Form"
-msgstr ""
+msgstr "leeres Formular"
 
 msgid "Go to Advanced Search"
-msgstr ""
+msgstr "Zum Erweiterte Suche"
 
 msgid "Recently Updated Profiles"
-msgstr ""
+msgstr "Kürzlich aktualisierte Profile"
 
 msgid "Recently Viewed Profiles"
-msgstr ""
+msgstr "Kürzlich angesehene Profile"
 
 msgid "Last viewed"
-msgstr ""
+msgstr "Zuletzt angesehen"
 
 msgid "Views"
-msgstr ""
+msgstr "Ansichten"
 
 msgid "Create New Profile"
-msgstr ""
+msgstr "Neues Profil erstellen"
 
 msgid "Filter Profiles"
-msgstr ""
+msgstr "Filterprofile"
 
 msgid "First Name:"
-msgstr ""
+msgstr "Vorname:"
 
 msgid "Last Name:"
-msgstr ""
+msgstr "Familienname, Nachname:"
 
 msgid "Category:"
-msgstr ""
+msgstr "Kategorie:"
 
 msgid "Status"
 msgstr ""
 
 msgid "Locatio"
-msgstr ""
+msgstr "Ort"
 
 msgid "Any Category"
-msgstr ""
+msgstr "jede Kategorie"
 
 msgid "Any Status"
-msgstr ""
+msgstr "jeder Stand"
 
 msgid "Any Location"
-msgstr ""
+msgstr "jeder Ort"
 
 msgid "Any Gender"
-msgstr ""
+msgstr "Alle Geschlecht"
 
 msgid "Filter"
 msgstr ""
 
 msgid "Clear Filters"
-msgstr ""
+msgstr "Filter löschen"
 
 msgid "Age"
-msgstr ""
+msgstr "Alter"
 
 msgid "City"
-msgstr ""
+msgstr "Stadt"
 
 msgid "State"
-msgstr ""
+msgstr "Bundesland"
 
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 msgid "Images"
-msgstr ""
+msgstr "Bilder"
 
 msgid "Private"
-msgstr ""
+msgstr "Privat"
 
 msgid "Last Viewed Date"
-msgstr ""
+msgstr "Zuletzt gesehen Datum"
 
 msgid "Currently \" . $items . \" Profiles"
-msgstr ""
+msgstr "Zur Zeit \" . $items . \" Profile"
 
 msgid "Next"
-msgstr ""
+msgstr "Nächster"
 
 msgid "Previous"
-msgstr ""
+msgstr "früher"
 
 msgid "Delete Profiles"
-msgstr ""
+msgstr "Profile löschen"
 
 msgid "Any"
-msgstr ""
+msgstr "Irgendein"
 
 msgid "Min"
 msgstr ""
@@ -737,265 +737,265 @@ msgid "Max"
 msgstr ""
 
 msgid "From"
-msgstr ""
+msgstr "Von"
 
 msgid "To"
-msgstr ""
+msgstr "Nach"
 
 msgid "Birthdate"
-msgstr ""
+msgstr "Geburtsdatum"
 
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 msgid "Any Country"
-msgstr ""
+msgstr "Beliebiges Land"
 
 msgid "Any State"
-msgstr ""
+msgstr "jeder Staat"
 
 msgid "Zip"
-msgstr ""
+msgstr "Reißverschluss"
 
 msgid "Initial Setup"
-msgstr ""
+msgstr "Ersteinrichtung"
 
 msgid "If you are doing the initial instal of RB Agency you this section will help you get your data inplace"
-msgstr ""
+msgstr "Wenn Sie die anfängliche instal von RB Agency tun werden Sie in diesem Abschnitt helfen Ihnen, Ihre Daten an Ort und Stelle erhalten"
 
 msgid "Data Integrity"
-msgstr ""
+msgstr "Datenintegrität"
 
 msgid "Once your data is in place use the tools below to check your records"
-msgstr ""
+msgstr "Sobald Ihre Daten an Ort und Stelle ist, die Werkzeuge verwenden unten Ihre Aufzeichnungen zu überprüfen"
 
 msgid "Export Data"
-msgstr ""
+msgstr "Daten exportieren"
 
 msgid "Export databases"
-msgstr ""
+msgstr "Export-Datenbanken"
 
 msgid "Check for Abnormalities"
-msgstr ""
+msgstr "Prüfen Sie, ob Abnormitäten"
 
 msgid "Search profile records for fields which seem invalid"
-msgstr ""
+msgstr "Suchprofil-Datensätze für Felder, die ungültige sim"
 
 msgid "Rename Profile Folder Names"
-msgstr ""
+msgstr "Profil umbenennen Ordnernamen"
 
 msgid "If you created model profiles while under \"First Last\" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it."
-msgstr ""
+msgstr "Wenn Sie Modellprofile erstellt werden, während unter \"First Last\" und wollen wechseln Namen anzeigen, IDs oder First L, sehen Sie die vorhandenen Ordner umbenennen müssen, damit sie nicht die Modelle Namen in ihm."
 
 msgid "Resize Photos"
-msgstr ""
+msgstr "Resize Fotos"
 
 msgid "Ensure files are not larger than approved size"
-msgstr ""
+msgstr "Stellen Sie sicher, Dateien nicht größer als genehmigt Größe"
 
 msgid "Orphaned Profile Images"
-msgstr ""
+msgstr "Verwaiste Profil Bilder"
 
 msgid "If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist."
-msgstr ""
+msgstr "Wenn aus irgendeinem Grund Sie leere Bilder werden immer angezeigt werden es sein kann, weil Bilder in der Datenbank hinzugefügt wurden, sondern haben über FTP entfernt. Mit diesem Tool können Sie alle Bilder in der Datenbank zu entfernen, die nicht physisch vorhanden sind."
 
 msgid "FTP Blank Folder Check"
-msgstr ""
+msgstr "FTP-Blank-Ordner-Prüfung"
 
 msgid "Check for any empty folders which do no have models assigned using this tool"
-msgstr ""
+msgstr "Prüfen Sie, ob leere Ordner, die keine Modelle mit diesem Werkzeug zugewiesen haben"
 
 msgid "Profile Data Migration"
-msgstr ""
+msgstr "Profil Datenmigration"
 
 msgid "Search profile records for fields migration"
-msgstr ""
+msgstr "Suchprofil -Datensätze für Felder Migration"
 
 msgid "Profile Management"
-msgstr ""
+msgstr "Profilverwaltung"
 
 msgid "The following reports will help you manage your profile information"
-msgstr ""
+msgstr "Die folgenden Berichte helfen Ihnen, Ihre Profilinformationen verwalten"
 
 msgid "Inactive Users"
-msgstr ""
+msgstr "Inaktive Benutzer"
 
 msgid "Profile Search"
-msgstr ""
+msgstr "Profil"
 
 msgid "You may search for profiles by using this tool"
-msgstr ""
+msgstr "Sie können mit Hilfe dieses Werkzeugs für Profile suchen"
 
 msgid "Dummy Profiles with Sample Media"
-msgstr ""
+msgstr "Dummy-Profile mit der Probe Medien"
 
 msgid "You may add dummy profiles by using this tool"
-msgstr ""
+msgstr "Sie können mit Hilfe dieses Werkzeugs Dummy-Profile hinzufügen"
 
 msgid "Importing Records"
-msgstr ""
+msgstr "Importieren von Datensätzen"
 
 msgid "The following tools will help import records."
-msgstr ""
+msgstr "Die folgenden Tools werden Daten importieren helfen."
 
 msgid "Download this template and load your profile data into this file to import into the database."
-msgstr ""
+msgstr "Diese Vorlage herunterladen und laden Sie Ihre Profildaten in diese Datei in die Datenbank zu importieren."
 
 msgid "Check for Profile Data Migration"
-msgstr ""
+msgstr "Überprüfen Sie für Profile Data Migration"
 
 msgid "Check Inactive Users"
-msgstr ""
+msgstr "Überprüfen Inaktive Benutzer"
 
 msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
-msgstr ""
+msgstr "Finden Sie Profile, die derzeit als inaktiv gesetzt sind. Mit diesem Tool können mehrere Benutzer aktiv zu setzen"
 
 msgid "Generate Dummy Profiles with Media Content"
-msgstr ""
+msgstr "Generieren Sie Dummy-Profile mit Medieninhalten"
 
 msgid "Step 1"
-msgstr ""
+msgstr "Schritt 1"
 
 msgid "Export Now"
-msgstr ""
+msgstr "Jetzt exportieren"
 
 msgid "Step 4"
-msgstr ""
+msgstr "Schritt 4"
 
 msgid "Create folders for all profiles"
-msgstr ""
+msgstr "Erstellen Sie Ordner für alle Profile"
 
 msgid "Check that all profiles have folders created on the server."
-msgstr ""
+msgstr "Überprüfen Sie, ob alle Profile haben Ordner auf dem Server erstellt."
 
 msgid "Step 2"
-msgstr ""
+msgstr "Schritt 2"
 
 msgid "Import Data"
-msgstr ""
+msgstr "Daten importieren"
 
 msgid "Upload the model profiles into the database."
-msgstr ""
+msgstr "Laden Sie die Modellprofile in die Datenbank."
 
 msgid "Step 5"
-msgstr ""
+msgstr "Schritt 5"
 
 msgid "Scan Folders for Images/Media"
-msgstr ""
+msgstr "Scanordner für Bilder / Medien"
 
 msgid "First upload images directly to folders via FTP then use this tool to sync the images & media to the database."
-msgstr ""
+msgstr "Erste Bilder direkt auf Ordner per FTP dann dieses Tool verwenden, um die Bilder und Medien in der Datenbank zu synchronisieren."
 
 msgid "Step 3"
-msgstr ""
+msgstr "Schritt 3"
 
 msgid "Generate folder names for profiles"
-msgstr ""
+msgstr "Generieren Sie Ordnernamen für Profile"
 
 msgid "Check that all profiles have folder names generated."
-msgstr ""
+msgstr "Überprüfen Sie, ob alle Profile Ordnernamen generiert haben."
 
 msgid "Step 6"
-msgstr ""
+msgstr "Schritt 6"
 
 msgid "Set Primary Profile Image"
-msgstr ""
+msgstr "Richten Sie den primären Profilbild"
 
 msgid "Identify which image is the primary image for each profile."
-msgstr ""
+msgstr "Identifizieren Sie, welches Bild das Primärbild für jedes Profil ist."
 
 msgid "Settings &raquo; Overview"
-msgstr ""
+msgstr "Einstellungen &raquo; Überblick"
 
 msgid "Settings &raquo; Configuration"
-msgstr ""
+msgstr "Einstellungen &raquo; Konfiguration"
 
 msgid "Settings &raquo; Style"
-msgstr ""
+msgstr "Einstellungen &raquo; Stil"
 
 msgid "Settings &raquo; Data &raquo; Gender"
-msgstr ""
+msgstr "Einstellungen &raquo; Data &raquo; Geschlecht"
 
 msgid "Settings &raquo; Data &raquo; Profile Types"
-msgstr ""
+msgstr "Einstellungen &raquo; Data &raquo; Profiltypen"
 
 msgid "Settings &raquo; Data &raquo; Custom Fields"
-msgstr ""
+msgstr "Einstellungen &raquo; Data &raquo; Benutzerdefinierte Felder"
 
 msgid "Settings &raquo; Data &raquo; Media Types"
-msgstr ""
+msgstr "Einstellungen &raquo; Data &raquo; Medientypen"
 
 msgid "Settings &raquo; Subscription"
-msgstr ""
+msgstr "Einstellungen &raquo; Abonnement"
 
 msgid "Settings &raquo; Uninstall"
-msgstr ""
+msgstr "Einstellungen &raquo; Deinstallieren"
 
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 msgid "Diagnostics"
-msgstr ""
+msgstr "Diagnose"
 
 msgid "The following settings modify the core RB Agency settings."
-msgstr ""
+msgstr "Die folgenden Einstellungen, die Kern RB Agency Einstellungen ändern."
 
 msgid "Features"
-msgstr ""
+msgstr "Eigenschaften"
 
 msgid "Access this area to manage all of the core settings including layout types, privacy settings and more"
-msgstr ""
+msgstr "Zugriff auf diesen Bereich alle Kerneinstellungen einschließlich Layout-Typen zu verwalten, die Datenschutzeinstellungen und vieles mehr"
 
 msgid "Style"
-msgstr ""
+msgstr "Stil"
 
 msgid "Manage the stylesheet (CSS) controlling the category and profile layouts"
-msgstr ""
+msgstr "Verwalten Sie das Stylesheet (CSS) Steuerung der Kategorie und Profil-Layouts"
 
 msgid "Profile Types"
-msgstr ""
+msgstr "Profiltypen"
 
 msgid "Custom Fields"
-msgstr ""
+msgstr "Benutzerdefinierte Felder"
 
 msgid "Manage Locations"
-msgstr ""
+msgstr "Standorte verwalten"
 
 msgid "Locations"
-msgstr ""
+msgstr "Standorte"
 
 msgid "Customize Profile Fields"
-msgstr ""
+msgstr "Benutzerdefinierte Profilfelder"
 
 msgid "You have full control over all drop downs and ability to add new custom fields of your own."
-msgstr ""
+msgstr "Sie haben die volle Kontrolle über alle Dropdown-Menüs und die Fähigkeit, neue benutzerdefinierte Felder Ihrer eigenen hinzuzufügen."
 
 msgid "Profile Categories"
-msgstr ""
+msgstr "Profil Kategorien"
 
 msgid "Choose custom category types to classify profiles"
-msgstr ""
+msgstr "Wählen Sie benutzerdefinierte Kategorietypen zu klassifizieren Profile"
 
 msgid "Media Categories"
-msgstr ""
+msgstr "Medien Kategorien"
 
 msgid "Manage your media categories"
-msgstr ""
+msgstr "Verwalten Sie Ihre Medienkategorien"
 
 msgid "Add public and private custom fields"
-msgstr ""
+msgstr "In öffentlichen und privaten benutzerdefinierte Felder"
 
 msgid "Manage your Locations"
-msgstr ""
+msgstr "Verwalten Sie Ihre Standorte"
 
 msgid "Manage preset Gender choices"
-msgstr ""
+msgstr "Verwalten voreingestellten Geschlecht Entscheidungen"
 
 msgid "Settings for s2member plugin"
-msgstr ""
+msgstr "Einstellungen für s2member Plugin"
 
 msgid "Uninstall"
-msgstr ""
+msgstr "Deinstallieren"
 
 msgid "Uninstall RB Agency software and completely remove all data"
-msgstr ""
+msgstr "Deinstallieren RB Agency Software und entfernen Sie alle Daten vollständig"
