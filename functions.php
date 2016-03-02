@@ -1,5 +1,5 @@
 <?php
-	define('ADAccess', TRUE);
+	
 	/* 
 	 * Debug Mode - $RB_DEBUG_MODE = true;
 	 */
@@ -4937,10 +4937,12 @@ function rbagency_get_customfield_title($id){
 
 class RBLogin_Widget extends WP_Widget {
 
-	function RBLogin_Widget() {
+	function __construct() {
 		$widget_ops = array( 'classname' => 'rblogin', 'description' => __('A widget that displays the authors name ', 'rblogin') );		
 		$control_ops = array( 'width' => 300, 'height' => 350, 'id_base' => 'rblogin-widget' );		
-		$this->WP_Widget( 'rblogin-widget', __('RB Login Widget', 'rblogin'), $widget_ops, $control_ops );
+		
+		//@$this->WP_Widget( 'rblogin-widget', __('RB Login Widget', 'rblogin'), $widget_ops, $control_ops );
+		parent::__construct('rblogin-widget', __('RB Login Widget', 'rblogin'), $widget_ops, $control_ops);
 	}
 	
 	function widget( $args, $instance ) {
