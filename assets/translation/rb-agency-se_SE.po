@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-02-24 15:50-0800\n"
+"PO-Revision-Date: 2016-03-02 14:19-0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -613,7 +613,6 @@ msgstr ""
 msgid "If password is auto-generated(sent via email)"
 msgstr ""
 
-
 msgid "Welcome to RB Agency!"
 msgstr ""
 
@@ -674,7 +673,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-msgid "Location
+msgid "Locatio"
 msgstr ""
 
 msgid "Any Category"
@@ -716,8 +715,7 @@ msgstr ""
 msgid "Last Viewed Date"
 msgstr ""
 
-
-msgid "Currently " . $items . " Profiles"
+msgid "Currently \" . $items . \" Profiles"
 msgstr ""
 
 msgid "Next"
@@ -734,7 +732,6 @@ msgstr ""
 
 msgid "Min"
 msgstr ""
-
 
 msgid "Max"
 msgstr ""
@@ -823,9 +820,6 @@ msgstr ""
 msgid "Inactive Users"
 msgstr ""
 
-msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
-msgstr ""
-
 msgid "Profile Search"
 msgstr ""
 
@@ -855,7 +849,6 @@ msgstr ""
 
 msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
 msgstr ""
-
 
 msgid "Generate Dummy Profiles with Media Content"
 msgstr ""
@@ -923,31 +916,22 @@ msgstr ""
 msgid "Settings &raquo; Data &raquo; Gender"
 msgstr ""
 
-
 msgid "Settings &raquo; Data &raquo; Profile Types"
 msgstr ""
 
 msgid "Settings &raquo; Data &raquo; Custom Fields"
 msgstr ""
 
-
 msgid "Settings &raquo; Data &raquo; Media Types"
 msgstr ""
-
 
 msgid "Settings &raquo; Subscription"
 msgstr ""
 
 msgid "Settings &raquo; Uninstall"
 msgstr ""
-		
-msgid "Configuration"
-msgstr ""
 
 msgid "Configuration"
-msgstr ""
-
-msgid "Access this area to manage all of the core settings including layout types, privacy settings and more"
 msgstr ""
 
 msgid "Diagnostics"
@@ -974,15 +958,11 @@ msgstr ""
 msgid "Custom Fields"
 msgstr ""
 
-msgid "Media Categories"
-msgstr ""
-
 msgid "Manage Locations"
 msgstr ""
 
 msgid "Locations"
 msgstr ""
-
 
 msgid "Customize Profile Fields"
 msgstr ""
@@ -1001,7 +981,6 @@ msgstr ""
 
 msgid "Manage your media categories"
 msgstr ""
-
 
 msgid "Add public and private custom fields"
 msgstr ""
