@@ -64,8 +64,8 @@ class RBAgency_Extends {
 			// Get Options
 			$rb_agency_options_arr = get_option('rb_agency_options');
 
-			$rb_agency_option_layoutprofilelistlayout = (int)$rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'];
-
+			$rb_agency_options_arr_rb_agency_option_layoutprofilelistlayout = !empty($rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelistlayout'] : '';
+			$rb_agency_option_layoutprofilelistlayout = $rb_agency_options_arr_rb_agency_option_layoutprofilelistlayout;
 								
 			// Can we show the pages?
 			if((is_user_logged_in() && $rb_agency_options_arr['rb_agency_option_privacy']==2)||
@@ -141,8 +141,8 @@ class RBAgency_Extends {
 					$atts['profileumltitype'] = $_arrTypeTemp;
 				}
 				
-				
-				if(isset($atts['show_profile_type_filter']) or $atts['show_profile_type_filter'] == true){
+				$show_profile_type_filter = isset($atts['show_profile_type_filter']) ? $atts['show_profile_type_filter'] : '';
+				if($show_profile_type_filter == true){
 				
 					$all_profileType = "SELECT * FROM " . table_agency_data_type;
 					$results_profileType = $wpdb->get_results($all_profileType,ARRAY_A);
@@ -179,7 +179,8 @@ class RBAgency_Extends {
 				}
 				
 				
-				if(isset($atts['show_media_category_filter']) or $atts['show_media_category_filter'] == true){
+				$show_media_category_filter = isset($atts['show_media_category_filter']) ? $atts['show_media_category_filter'] : '';
+				if($show_media_category_filter == true){
 				
 		/*		
 				get all the media files.

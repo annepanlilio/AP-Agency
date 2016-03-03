@@ -1423,7 +1423,7 @@ class RBAgency_Profile {
 					}
 					
 					//ORDER BY came from admin settings
-					$_sortBy = $rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'];
+					$_sortBy = !empty($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'] : '';
 					if(empty($_sortBy )) $_sortBy = 'ProfileContactNameFirst';
 
 					$atts['sort'] = 'profile.'.$_sortBy;
@@ -3815,7 +3815,7 @@ class RBAgency_Profile {
 		}
 	}
 	
-	function getEnabledCustomColumns($ProfileID, $ProfileGender, $table=false, $label_tag="strong", $value_tag="span", $echo = false, $is_print = false) {
+	public static function getEnabledCustomColumns($ProfileID, $ProfileGender, $table=false, $label_tag="strong", $value_tag="span", $echo = false, $is_print = false) {
 
 		global $wpdb;
 		$rb_agency_options_arr = get_option('rb_agency_options');
