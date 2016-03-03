@@ -7,7 +7,7 @@ Author: RB Agency
 Version: 0.0.1
 */
 if(!defined('ADAccess')) {
-   die('Direct access not permitted');
+  // die('Direct access not permitted');
 }
 
 $preset_token = wpfdl_generate_token();
