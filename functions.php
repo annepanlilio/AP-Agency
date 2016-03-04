@@ -5190,4 +5190,47 @@ function wpse45134_catch_register()
 	}
 
 
+add_action('wp_ajax_editauditiondemo', 'editauditiondemo');
+function editauditiondemo(){
+	$old = isset($_REQUEST['old_value']) ? $_REQUEST['old_value'] : '';
+	$new = isset($_REQUEST['new_value']) ? $_REQUEST['new_value'] : '';
+	$key = isset($_REQUEST['demo_name_key']) ? $_REQUEST['demo_name_key'] : '';
+	
+	//RENAME AUDITION DEMO
+	$auditiondemo_option = get_option($key);
+	if(empty($auditiondemo_option)){
+		add_option($key,$new);
+	}else{
+		update_option($key,$new);
+	}
+	die();
+}
+add_action('wp_ajax_editvoicedemo', 'editvoicedemo');
+function editvoicedemo(){
+	$old = isset($_REQUEST['old_value']) ? $_REQUEST['old_value'] : '';
+	$new = isset($_REQUEST['new_value']) ? $_REQUEST['new_value'] : '';
+	$key = isset($_REQUEST['demo_name_key']) ? $_REQUEST['demo_name_key'] : '';
+	
+	//RENAME VOICE DEMO
+	$voicedemo_option = get_option($key);
+	if(empty($voicedemo_option)){
+		add_option($key,$new);
+	}else{
+		update_option($key,$new);
+	}
+	die();
+}
+
+add_action('wp_ajax_deleteauditiondemo_func', 'deleteauditiondemo_func');
+function deleteauditiondemo_func(){
+	$auditiondemo_path = isset($_REQUEST['auditiondemo_path']) ? $_REQUEST['auditiondemo_path'] : '';
+	
+	if(file_exists(RBAGENCY_UPLOADPATH.'/'.$auditiondemo_path)){
+		unlink(RBAGENCY_UPLOADPATH.'/'.$auditiondemo_path);
+		echo json_encode(array('response'=>RBAGENCY_UPLOADPATH.'/'.$auditiondemo_path.' has been deleted!'));
+	}
+	
+	die();
+}
+
 ?>
