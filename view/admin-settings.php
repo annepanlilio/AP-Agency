@@ -785,7 +785,8 @@ elseif ($ConfigID == 1) {
 								"Profile View with Thumbnails, Primary Image, Print Photos & Print Polaroids", // 12
 								"Primary Image with scrolling thumbnails and thumbnail gallery", // 13
 								"Tabs", // 14
-								"Stats and Availability with Primary Photo and Thumbnails"); // 15
+								"Stats and Availability with Primary Photo and Thumbnails",//15
+								"Profile View with voice demos"); // 16
 
 		$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com', 'demo5.modelingagencysoftware.com', 'demo6.modelingagencysoftware.com');
 		$paid_layout = explode(",", $rb_agency_option_custom_layout);

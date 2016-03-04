@@ -1731,7 +1731,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 								 }
 								 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
-								 	$voicedemo = empty(get_option("voicedemo_".$dataMedia['ProfileMediaID'])) ? "RENAME" : get_option("voicedemo_".$dataMedia['ProfileMediaID']);
+								 	$voiceDemoProfileMediaID = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
+								 	$voicedemo = empty($voiceDemoProfileMediaID) ? "RENAME" : $voiceDemoProfileMediaID;
 									$outLinkVoiceDemo .= "<input type='hidden' id='voicedemohidden_".$dataMedia['ProfileMediaID']."' value='".$voicedemo."' >";
 									$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] &nbsp; <div id=\"".$dataMedia['ProfileMediaID']."\" class=\"rename-voice-demo\">".$voicedemo."</div></div>\n";
 									
@@ -2445,7 +2446,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					
 					$ProfileID = isset($_REQUEST['ProfileID'])?$_REQUEST['ProfileID']:0;
 					
-					$query = "SELECT cs_job.*, avail.* FROM  ".table_agency_casting_job." AS cs_job INNER JOIN ".table_agency_castingcart_availability."
+					$query = "SELECT cs_job.*, avail.* FROM  ".table_agency_casting_job." AS cs_job LEFT JOIN ".table_agency_castingcart_availability."
 					AS avail ON cs_job.Job_ID = avail.CastingJobID WHERE avail.CastingAvailabilityProfileID = ".$ProfileID."
 					";
 					
