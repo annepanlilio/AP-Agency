@@ -331,6 +331,37 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							}
 						}
 						
+						//RENAME VOICE DEMO
+						foreach($_POST as $k=>$v){
+							if(strpos($k,'voicedemo_') !== false){
+								$voicedemo_option = get_option($k);
+								if(empty($voicedemo_option)){
+									if(!empty($v)){
+										add_option($k,$v);
+									}									
+								}else{
+									if(!empty($v)){
+										update_option($k,$v);
+									}
+								}
+							}
+						}
+
+						//RENAME AUDITION DEMO
+						foreach($_POST as $k=>$v){
+							if(strpos($k,'auditiondemo_') !== false){
+								$voicedemo_option = get_option($k);
+								if(empty($voicedemo_option)){
+									if(!empty($v)){
+										add_option($k,$v);
+									}									
+								}else{
+									if(!empty($v)){
+										update_option($k,$v);
+									}
+								}
+							}
+						}
 						
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET 
@@ -1700,7 +1731,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
 								 }
 								 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
-									$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+								 	$voicedemo = empty(get_option("voicedemo_".$dataMedia['ProfileMediaID'])) ? "RENAME" : get_option("voicedemo_".$dataMedia['ProfileMediaID']);
+									$outLinkVoiceDemo .= "<input type='hidden' id='voicedemohidden_".$dataMedia['ProfileMediaID']."' value='".$voicedemo."' >";
+									$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] &nbsp; <div id=\"".$dataMedia['ProfileMediaID']."\" class=\"rename-voice-demo\">".$voicedemo."</div></div>\n";
+									
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
@@ -1752,7 +1786,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								}
 							}
 							?>
-							
+							<script type="text/javascript">
+							jQuery(document).ready(function(){
+								jQuery(".rename-voice-demo").click(function(){
+									jQuery(this).html('');
+									jQuery(this).append('<input type="text" id="voicedemo_'+jQuery(this).attr('id')+'" class="voicedemo_txt_'+jQuery(this).attr('id')+'" name="voicedemo_'+jQuery(this).attr('id')+'" style="width:112px;" value="'+jQuery("#voicedemohidden_"+jQuery(this).attr('id')).val()+'">');
+									jQuery("#voicedemo_"+jQuery(this).attr('id') ).focus();
+									
+								});
+
+
+								
+								
+							});
+							</script>
 							<div style="display:none" class="inline-edit-video">
 							<div style="" id="inline-edit-video">
 								<table class="rbform-table">
@@ -2464,12 +2511,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														//$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
 														if($medialink_option == 2){
 															//open in new window and play
-															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank">Play Audio</a><br>';
+															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+															$auditiondemo = empty($au) ? "Play Audio" : $au;
+															echo "<input type='hidden' id='auditiondemohidden_".(str_replace('.mp3','',$files[$i]))."' value='' >";
+															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" >'.$auditiondemo.'</a>&nbsp;<div id="'.(str_replace('.mp3','',$files[$i])).'" class="audition-mp3">Rename</div><br>';
 														}elseif($medialink_option == 3){
 															//open in new window and download															
+															
 
 															$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
-															echo '<a '.$force_download_url.' target="_blank">Play Audio</a><br>';
+															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+															$auditiondemo = empty($au) ? "Play Audio" : $au;
+															echo "<input type='hidden' id='auditiondemohidden_".(str_replace('.mp3','',$files[$i]))."' value='' >";
+															echo '<a '.$force_download_url.' target="_blank" >'.$auditiondemo.'</a>&nbsp;<div id="'.(str_replace('.mp3','',$files[$i])).'" class="audition-mp3">Rename</div><br>';
 														}
 														
 													}
@@ -2511,7 +2565,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									
 								</tbody>
 							</table>
+							<script type="text/javascript">
+							jQuery(document).ready(function(){
+								jQuery(".audition-mp3").click(function(){
+									jQuery(this).html('');
+									jQuery(this).append('<input type="text" id="auditiondemo_'+jQuery(this).attr('id')+'" class="auditiondemo_txt_'+jQuery(this).attr('id')+'" name="auditiondemo_'+jQuery(this).attr('id')+'" style="width:112px;" value="'+jQuery("#auditiondemohidden_"+jQuery(this).attr('id')).val()+'">');
+									jQuery("#auditiondemo_"+jQuery(this).attr('id') ).focus();
+									
+								});
 
+
+								
+								
+							});
+							</script>
 							</div>
 						</div>
 					</div>
