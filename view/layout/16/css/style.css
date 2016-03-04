@@ -1,0 +1,7 @@
+/* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
+
+#rblayout-one #profile-picture,
+#rblayout-one #links,
+#rblayout-one #stats {margin: 0px 0px 30px 0px; }
+#polaroids {margin-bottom: 30px; }
+.rblayout .profile-photos {margin-top: 15px; }
