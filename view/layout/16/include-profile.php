@@ -39,10 +39,16 @@ echo "				<header class=\"entry-header\">";
 echo "					<h1 class=\"entry-title\">". $ProfileContactDisplay ."</h1>";
 echo "				</header>";
 echo "			</div>\n"; // .rbcol-12
-echo "			<div class=\"rbcol-4 rbcolumn\">\n";
-echo "				<div id=\"profile-picture\"  class=\"lightbox-enabled\">\n";
-
-echo "<style>.audiojs{ position:relative!important;top:0px!important;}</style>";
+echo "			<div class=\"rbcol-8 rbcolumn\">\n";
+echo "				<div id=\"profile-audio\" >\n";
+echo "<h2>".__('Voice Demos')."</h2>";
+echo "<style>
+.entry-header{ float:right!important; }
+.entry-header h1{font-size:19px!important; }
+#profile-audio{ margin-left:-16px;margin-top:-125px;}
+.audiojs{ position:relative!important;top:0px!important; width:430px!important;}
+.audiojs .play-pause{ padding:4px 2px!important;}
+</style>";
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"VoiceDemo\"";
 						$resultsImg = $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
@@ -73,7 +79,10 @@ echo "<style>.audiojs{ position:relative!important;top:0px!important;}</style>";
 															echo $auditiondemo."<br>";
 															echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
 														}elseif($medialink_option == 3){
-															//open in new window and download
+															//open in new window and download															
+															
+
+															$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
 															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 															$auditiondemo = empty($au) ? "Play Audio" : $au;
 															echo $auditiondemo."<br>";
@@ -100,7 +109,7 @@ echo "				<div id=\"soundcloud\">";
 echo "				</div>";
 echo "			</div>\n"; // .rbcol-4
 
-echo "			<div class=\"rbcol-5 rbcolumn\">\n";
+echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-info\">\n";
 echo "					<div id=\"stats\">\n";
 echo "						<ul>\n";
