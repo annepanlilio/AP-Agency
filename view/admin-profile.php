@@ -83,6 +83,13 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	$ProfileContactPhoneHome = isset($_POST['ProfileContactPhoneHome'])?$_POST['ProfileContactPhoneHome']:"";
 	$ProfileContactPhoneCell = isset($_POST['ProfileContactPhoneCell'])?$_POST['ProfileContactPhoneCell']:"";
 	$ProfileContactPhoneWork = isset($_POST['ProfileContactPhoneWork'])?$_POST['ProfileContactPhoneWork']:"";
+
+	//socila media links
+	$ProfileContactLinkFacebook = isset($_POST['ProfileContactLinkFacebook'])?$_POST['ProfileContactLinkFacebook']:"";
+	$ProfileContactLinkTwitter = isset($_POST['ProfileContactLinkTwitter'])?$_POST['ProfileContactLinkTwitter']:"";
+	$ProfileContactLinkYouTube = isset($_POST['ProfileContactLinkYouTube'])?$_POST['ProfileContactLinkYouTube']:"";
+	$ProfileContactLinkFlickr = isset($_POST['ProfileContactLinkFlickr'])?$_POST['ProfileContactLinkFlickr']:"";
+
 	$ProfileLocationStreet = isset($_POST['ProfileLocationStreet'])?$_POST['ProfileLocationStreet']:"";
 	$ProfileLocationCity = RBAgency_Common::format_propercase(isset($_POST['ProfileLocationCity'])?$_POST['ProfileLocationCity']:"");
 	$ProfileLocationState = strtoupper(isset($_POST['ProfileLocationState'])?$_POST['ProfileLocationState']:"");
@@ -212,6 +219,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileContactPhoneHome, 
 							ProfileContactPhoneCell, 
 							ProfileContactPhoneWork,
+							ProfileContactLinkTwitter,
+							ProfileContactLinkFacebook,
+							ProfileContactLinkYoutube,
+							ProfileContactLinkFlickr,
 							ProfileDateUpdated,
 							ProfileType,
 							ProfileIsActive,
@@ -237,7 +248,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							'" . esc_attr($ProfileLocationCountry) . "',
 							'" . esc_attr($ProfileContactPhoneHome) . "',
 							'" . esc_attr($ProfileContactPhoneCell) . "',
-							'" . esc_attr($ProfileContactPhoneWork) . "',
+							'" . esc_attr($ProfileContactLinkTwitter) . "',
+							'" . esc_attr($ProfileContactLinkFacebook) . "',
+							'" . esc_attr($ProfileContactLinkYoutube) . "',
+							'" . esc_attr($ProfileContactLinkFlickr) . "',
 							now(),
 							'" . $ProfileType . "',
 							'" . esc_attr($ProfileIsActive) . "',
@@ -251,7 +265,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					$ProfileID = $wpdb->insert_id;
 					add_user_meta( $new_user, 'rb_agency_interact_profiletype',true);
 
+					
+
 					// Notify admin and user
+
 					if ($ProfileNotifyUser <> "yes" && function_exists('rb_agency_interact_menu')) {
 						wp_new_user_notification(isset($new_user)?$new_user:"", $ProfilePassword);
 					}
@@ -343,6 +360,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileContactPhoneHome='" . esc_attr($ProfileContactPhoneHome) . "',
 							ProfileContactPhoneCell='" . esc_attr($ProfileContactPhoneCell) . "',
 							ProfileContactPhoneWork='" . esc_attr($ProfileContactPhoneWork) . "',
+							ProfileContactLinkTwitter='" . esc_attr($ProfileContactLinkTwitter) . "',
+							ProfileContactLinkFacebook='" . esc_attr($ProfileContactLinkFacebook) . "',
+							ProfileContactLinkYoutube='" . esc_attr($ProfileContactLinkYouTube) . "',
+							ProfileContactLinkFlickr='" . esc_attr($ProfileContactLinkFlickr) . "',
 							ProfileGender='" . esc_attr($ProfileGender) . "',
 							ProfileDateBirth ='" . esc_attr($ProfileDateBirth) . "',
 							ProfileLocationStreet='" . esc_attr($ProfileLocationStreet) . "',
@@ -373,7 +394,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							wp_update_user( array( 'ID' => $ProfileUserLinked,  'user_email' => esc_attr($ProfileContactEmail) ) );
 							update_user_meta( $ProfileUserLinked, 'rb_agency_interact_profiletype',true);
 
+
 						}
+
+
+						
 
 						//Personal expanded detail
 						$hide_age_year = isset($_REQUEST['hide_age_year']) ? true : false;
@@ -1102,6 +1127,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 								});
 							</script>
+					
 					<div id="dashboard_private_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Private Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
@@ -1228,6 +1254,50 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
+
+					<!-- SOCIAL MEDIA LINKS -->
+					<div id="dashboard_social_media_links" class="postbox">
+						<div class="handlediv" title="Click to toggle"><br></div>
+						<h3 class="hndle"><span><?php echo  __("Social Media Links", RBAGENCY_TEXTDOMAIN); ?></span></h3>
+						<div class="inside">
+							<div class="main">
+								<?php
+
+								
+
+								echo " <table class=\"form-table\">\n";
+								// Private Information
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Facebook", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								
+								echo "          <input type=\"text\" id=\"ProfileContactLinkFacebook\" name=\"ProfileContactLinkFacebook\" class=\"ProfileContactLinkFacebook\" value=\"" . (isset($ProfileContactLinkFacebook)?$ProfileContactLinkFacebook:""). "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Twitter", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"text\" id=\"ProfileContactLinkTwitter\" name=\"ProfileContactLinkTwitter\" value=\"" . (isset($ProfileContactLinkTwitter)?$ProfileContactLinkTwitter:"") . "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Youtube", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"text\" id=\"ProfileContactLinkYouTube\" name=\"ProfileContactLinkYouTube\" value=\"" . (isset($ProfileContactLinkYouTube)?$ProfileContactLinkYouTube:"") . "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Flickr", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								echo "          <input type=\"text\" id=\"ProfileContactLinkFlickr\" name=\"ProfileContactLinkFlickr\" value=\"" . (isset($ProfileContactLinkFlickr)?$ProfileContactLinkFlickr:"") . "\" />\n";
+								echo "      </td>\n";
+								echo "    </tr>\n";
+								echo " </table>\n";
+
+								?>
+							</div>
+						</div>
+					</div>
 
 				</div>
 			</div>
