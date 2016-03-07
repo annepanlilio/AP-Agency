@@ -248,6 +248,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							'" . esc_attr($ProfileLocationCountry) . "',
 							'" . esc_attr($ProfileContactPhoneHome) . "',
 							'" . esc_attr($ProfileContactPhoneCell) . "',
+							'" . esc_attr($ProfileContactPhoneWork) . "',
 							'" . esc_attr($ProfileContactLinkTwitter) . "',
 							'" . esc_attr($ProfileContactLinkFacebook) . "',
 							'" . esc_attr($ProfileContactLinkYoutube) . "',
