@@ -3368,34 +3368,53 @@ class RBAgency_Profile {
 			                $_mp3typeClassUniq = implode(' ', array_unique($_mp3typeClass));
 			                //$displayHTML .= 'profile_type_'. $dataList["ProfileType"];
 			                
-			                $voicedemolinks = '';
-												$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
-												$files = scandir($dir, 0);
+			            $voicedemolinks = '';
+						$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
+						$files = scandir($dir, 0);
+						//print_r($files);
+						$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
+
+						for($i = 0; $i < count($files); $i++){
+						$parsedFile = explode('-',$files[$i]);
 												
-												$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
+						if($parsedFile[0] == $_GET['Job_ID'] && $dataList["ProfileID"] == $parsedFile[1]){
 
-												for($i = 0; $i < count($files); $i++){
-												$parsedFile = explode('-',$files[$i]);
+							//$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
+								if($medialink_option == 2){
+									//open in new window and play
+									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+									$auditiondemo = empty($au) ? "Play Audio" : $au;
+									$voicedemolinks .= $auditiondemo."<br>";
+									$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+								}elseif($medialink_option == 3){
+									//open in new window and download															
+															
 
-													if($parsedFile[0] == $_GET['Job_ID'] && $dataList["ProfileID"] == $parsedFile[1]){
-														$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
-														if($medialink_option == 2){
-															//open in new window and play
-															$voicedemolinks .= '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" title="'.$files[$i].'">Play MP3 File</a><br>';
-														}elseif($medialink_option == 3){
-															//open in new window and download
-															$force_download_url = RBAGENCY_PLUGIN_URL."ext/forcedownload.php?file=".'_casting-jobs/'.$files[$i];
-															$voicedemolinks .= '<a href="'.$force_download_url.'" target="_blank" title="'.$files[$i].'">Download MP3 File</a><br>';
-														}
+									//$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
+									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+									$auditiondemo = empty($au) ? "Play Audio" : $au;
+									$voicedemolinks .= $auditiondemo."<br>";
+									$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+								}
 														
-													}
-												}
+							}
+						}
 
 				$displayHTML .= '
-				<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'" mp3_type="'.$_mp3typeClassUniq.'">
+
+				<style>
+				.entry-header{ float:right!important; }
+				.entry-header h1{font-size:19px!important; }
+				#profile-audio{ margin-left:-16px;margin-top:-125px;}
+				.audiojs{ position:relative!important;top:0px!important;width:230px!important;}
+				.audiojs .play-pause{ padding:4px 2px!important;}
+				.audiojs .scrubber{ width:80px!important;}
+				</style>';
+
+				$displayHTML .= '<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'" mp3_type="'.$_mp3typeClassUniq.'">
 					<div class="profile-voiceover">
 					   	<strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
-						'. stripslashes($ProfileContactDisplay) .'</a></strong>'.$voicedemolinks .'
+						'. stripslashes($ProfileContactDisplay) .'</a></strong><br>'.$voicedemolinks .'
 					</div><!-- .profile-voiceover -->
 				</div> <!-- .? -->';
 				
