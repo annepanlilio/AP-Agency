@@ -1876,25 +1876,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$parsedFile = explode('-',$files[$i]);									
 								if($ProfileID == $parsedFile[1]){	
 
-								global $wpdb;
-								$sql = "SELECT * FROM ".$wpdb->prefix."agency_casting_job WHERE Job_ID = ".$parsedFile[0];
-								$r = $wpdb->get_results($sql);
-								$jobid = '';
-								foreach($r as $j){
-									$jobid = $j->Job_ID;
-								}
-									if($jobid == $parsedFile[0]){
-										$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-										$auditiondemo = empty($au) ? "Play Audio" : $au;
-	 									$path = '_casting-jobs/'.$files[$i];
+									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+									$auditiondemo = empty($au) ? "Play Audio" : $au;
+	 								$path = '_casting-jobs/'.$files[$i];
 
-	 									if($medialink_option == 2){
-											$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\"  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\" target=\"_blank\"><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a></div>\n";						
-										}elseif($medialink_option == 3){
-											$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
-											$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url."  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a ".$force_download_url." ><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a></div>\n";	
-										}
-									}										
+	 								if($medialink_option == 2){
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\"  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\" target=\"_blank\"><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a></div>\n";						
+									}elseif($medialink_option == 3){
+										$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url."  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a ".$force_download_url." ><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a></div>\n";	
+									}									
 										
 								}
 
