@@ -2887,9 +2887,9 @@
 
 		$output = "";
 		$output ='<style>
-		profile-social-media-links{margin-left:130px;} 
+		.profile-social-media-links{padding-top:5px;margin:0;}
 		.profile-social-media-links li{ padding:2px; float:left;}
-		.profile-social-media-links li img{ width:20px;}
+		.profile-social-media-links li img{ width:24px;}
 		.fa { font-size:22px!important;}
 		.fa-twitter-square{ 
 			color:#00B9EB; 
