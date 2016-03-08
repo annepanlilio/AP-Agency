@@ -369,11 +369,13 @@
 										
 										$redirect_after_upload = site_url()."/profile-login/";
 
+
 										if (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'on') {
-											    $redirect_same_page = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].'?st=done';
+											    $redirect_same_page = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].'?st=done'; // fixed after closing the dialog
 											}else{
-												$redirect_same_page = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].'?st=done';
+												$redirect_same_page = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].'?st=done'; // fixed after closing the dialog
 											}
+
 
 										echo "Upload Success <br/>";
 										?>
