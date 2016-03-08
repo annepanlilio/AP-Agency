@@ -61,6 +61,7 @@ $display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gen
 
 						// Insert Custom Fields
 						rb_agency_getNewProfileCustomFields($ProfileID, $ProfileGender); ?>
+						get_social_media_links($ProfileID);
 					</ul>
 				</div><!-- .portfolio-info -->
 			</div><!-- .portfolio-info -->
@@ -447,7 +448,10 @@ $display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gen
 				<?php
 				rb_agency_getSocialLinks();
 				$title_to_exclude = array("Experience");
-				print_r(rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, 'Experience(s):')); ?>
+				print_r(rb_agency_getProfileCustomFieldsExperienceDescription($ProfileID, $ProfileGender, 'Experience(s):')); 
+				get_social_media_links($ProfileID);
+				?>
+				
 			</div>
 		</div>
 		<div class="rbclear"></div>

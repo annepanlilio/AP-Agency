@@ -2039,6 +2039,8 @@
 					}
 	}
 
+	
+
 
 	//for pdf print
 	function rb_agency_getProfileCustomFields_print($ProfileID, $ProfileGender, $table=false, $title_to_exclude="", $label_tag="strong", $value_tag="span", $echo = true, $is_print = false) {
@@ -2846,7 +2848,7 @@
 	/*/
 	 *   Profile Extend Social Links
 	/*/ 
-	function rb_agency_getSocialLinks(){
+	function rb_agency_getSocialLinks($ProfileID){
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_showsocial = isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0;
@@ -2855,15 +2857,74 @@
 			echo "	<div class=\"social addthis_toolbox addthis_default_style\">\n";
 			echo "		<a href=\"http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4c4d7ce67dde9ce7\" class=\"addthis_button_compact\">". __("Share", RBAGENCY_TEXTDOMAIN). "</a>\n";
 			echo "		<span class=\"addthis_separator\">|</span>\n";
-			echo "		<a class=\"addthis_button_facebook\"></a>\n";
-			echo "		<a class=\"addthis_button_myspace\"></a>\n";
-			echo "		<a class=\"addthis_button_google\"></a>\n";
-			echo "		<a class=\"addthis_button_twitter\"></a>\n";
+			//echo "		<a class=\"addthis_button_facebook\"></a>\n";
+			//echo "		<a class=\"addthis_button_myspace\"></a>\n";
+			//echo "		<a class=\"addthis_button_google\"></a>\n";
+			//echo "		<a class=\"addthis_button_twitter\"></a>\n";
+			
 			echo "	</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
 		}
 
+		get_social_media_links($ProfileID);
+
 
 	}
+
+	function get_social_media_links($ProfileID = ""){
+
+		global $wpdb;
+
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_option_layoutprofile = isset($rb_agency_options_arr['rb_agency_option_layoutprofile'])?$rb_agency_options_arr['rb_agency_option_layoutprofile']:0;
+
+		$sql = "SELECT * FROM ".$wpdb->prefix."agency_profile WHERE ProfileID = %d";
+		$result = $wpdb->get_results($wpdb->prepare($sql,$ProfileID));
+
+		$twitter = get_user_meta( $ProfileID, 'ShowProfileContactLinkTwitter',true);
+		$facebook = get_user_meta( $ProfileID, 'ShowProfileContactLinkFacebook',true);
+		$youtube = get_user_meta( $ProfileID, 'ShowProfileContactLinkYouTube',true);
+		$flickr = get_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',true);
+
+		$output = "";
+		$output ='<style>
+		profile-social-media-links{margin-left:130px;} 
+		.profile-social-media-links li{ padding:2px; float:left;}
+		.profile-social-media-links li img{ width:20px;}
+		.fa { font-size:22px!important;}
+		.fa-twitter-square{ 
+			color:#00B9EB; 
+		}
+		.fa-facebook-square{
+			color:rgb(59, 89, 152);
+		}
+		.fa-youtube-square{
+			color:#CC181E;
+		}
+		</style>';
+		$output .= "<ul class='profile-social-media-links' style='list-style:none;'>";
+		foreach($result as $profile){
+			if($twitter == true){
+				$output .="<li><a href=".$profile->ProfileContactLinkTwitter." target='_blank'><img src='".site_url()."/wp-content/plugins/rb-agency/view/layout/".$rb_agency_option_layoutprofile."/images/twitter.png'></a></li>";
+			}
+			if($facebook == true){
+				$output .="<li><a href=".$profile->ProfileContactLinkFacebook." target='_blank'><img src='".site_url()."/wp-content/plugins/rb-agency/view/layout/".$rb_agency_option_layoutprofile."/images/facebook.png'></a></li>";
+			}
+			if($youtube == true){
+				$output .="<li><a href=".$profile->ProfileContactLinkYoutube." target='_blank'><img src='".site_url()."/wp-content/plugins/rb-agency/view/layout/".$rb_agency_option_layoutprofile."/images/youtube.png'></a></a></li>";
+			}
+			if($flickr == true){
+				$output .="<li><a href=".$profile->ProfileContactLinkFlickr." target='_blank'><img src='".site_url()."/wp-content/plugins/rb-agency/view/layout/".$rb_agency_option_layoutprofile."/images/flickr.png'></a></a></li>";
+			}			
+			
+		}
+
+		
+		$output .= "</ul>";	
+
+		echo $output;			
+	}
+
+
 
 	//get previous and next profile link
 	function linkPrevNext($ppage,$nextprev,$type="",$division=""){
@@ -5218,6 +5279,24 @@ function editvoicedemo(){
 	}else{
 		update_option($key,$new);
 	}
+
+	die();
+}
+
+add_action('wp_ajax_audeditvoicedemo', 'audeditvoicedemo');
+function audeditvoicedemo(){
+	$old = isset($_REQUEST['old_value']) ? $_REQUEST['old_value'] : '';
+	$new = isset($_REQUEST['new_value']) ? $_REQUEST['new_value'] : '';
+	$key = isset($_REQUEST['demo_name_key']) ? $_REQUEST['demo_name_key'] : '';
+	
+	//RENAME VOICE DEMO
+	$voicedemo_option = get_option($key);
+	if(empty($voicedemo_option)){
+		add_option($key,$new);
+	}else{
+		update_option($key,$new);
+	}
+	echo json_encode($_REQUEST);
 	die();
 }
 

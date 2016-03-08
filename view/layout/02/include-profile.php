@@ -104,7 +104,10 @@ echo "							<div id=\"stats\">\n";
 
 									// Insert Custom Fields
 									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+									get_social_media_links($ProfileID);
 echo "								</ul>\n";
+
+
 echo "							</div>\n"; // #stats
 echo "				<div id=\"soundcloud\">";
 						$querySC = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"SoundCloud\" ORDER BY $orderBy";

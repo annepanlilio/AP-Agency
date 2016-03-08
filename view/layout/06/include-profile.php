@@ -129,7 +129,8 @@ Large featured image and scrolling thumbnails
 							}
 
 							// Insert Custom Fields
-							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender); ?>
+							rb_agency_getProfileCustomFields($ProfileID, $ProfileGender); 
+							get_social_media_links($ProfileID);?>
 						</ul>
 					</div>
 

@@ -97,6 +97,7 @@ echo "						<ul>\n";
 
                            		// Insert Custom Fields
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
+								get_social_media_links($ProfileID);
 
 echo "						</ul>\n"; // Close Stats ul
 echo "					</div>\n"; // #stats

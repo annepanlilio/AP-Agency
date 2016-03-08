@@ -62,35 +62,35 @@ echo "<style>
 						}
 
 						$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
-												$files = scandir($dir, 0);
-												//print_r($files);
-												$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
+						$files = scandir($dir, 0);
+						//print_r($files);
+						$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 
-												for($i = 0; $i < count($files); $i++){
-												$parsedFile = explode('-',$files[$i]);
+						for($i = 0; $i < count($files); $i++){
+						$parsedFile = explode('-',$files[$i]);
 												
-													if($ProfileID == $parsedFile[1]){
+						if($ProfileID == $parsedFile[1]){
 
-														//$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
-														if($medialink_option == 2){
-															//open in new window and play
-															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															$auditiondemo = empty($au) ? "Play Audio" : $au;
-															echo $auditiondemo."<br>";
-															echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
-														}elseif($medialink_option == 3){
-															//open in new window and download															
+							//$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
+								if($medialink_option == 2){
+									//open in new window and play
+									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+									$auditiondemo = empty($au) ? "Play Audio" : $au;
+									echo $auditiondemo."<br>";
+									echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+								}elseif($medialink_option == 3){
+									//open in new window and download															
 															
 
-															$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
-															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															$auditiondemo = empty($au) ? "Play Audio" : $au;
-															echo $auditiondemo."<br>";
-															echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
-														}
+									$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
+									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+									$auditiondemo = empty($au) ? "Play Audio" : $au;
+									echo $auditiondemo."<br>";
+									echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+								}
 														
-													}
-												}
+							}
+						}
 
 echo "				</div>\n"; // #profile-picture
 echo "				<div id=\"soundcloud\">";
@@ -164,7 +164,7 @@ echo "						<ul>\n";
 
 								// Insert Custom Fields
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false);
-
+								get_social_media_links($ProfileID);
 echo "						</ul>\n"; // Close Stats ul
 echo "					</div>\n"; // #stats
 

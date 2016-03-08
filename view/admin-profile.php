@@ -285,7 +285,16 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						rb_agency_createdir($ProfileContactDisplay);
 					}
 
-					
+					//display on profile view
+					$ShowProfileContactLinkTwitter = isset($_POST['ShowProfileContactLinkTwitter']) ? true : false;
+					$ShowProfileContactLinkFacebook = isset($_POST['ShowProfileContactLinkFacebook']) ? true : false;
+					$ShowProfileContactLinkYouTube = isset($_POST['ShowProfileContactLinkYouTube']) ? true : false;
+					$ShowProfileContactLinkFlickr = isset($_POST['ShowProfileContactLinkFlickr']) ? true : false;
+
+					add_user_meta( $ProfileID, 'ShowProfileContactLinkTwitter',$ShowProfileContactLinkTwitter);
+					add_user_meta( $ProfileID, 'ShowProfileContactLinkFacebook',$ShowProfileContactLinkFacebook);
+					add_user_meta( $ProfileID, 'ShowProfileContactLinkYouTube',$ShowProfileContactLinkYouTube);
+					add_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',$ShowProfileContactLinkFlickr);
 
 					// Add Custom Field Values stored in Mux
 					foreach ($_POST as $key => $value) {
@@ -398,7 +407,16 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 						}
 
+					//display on profile view
+					$ShowProfileContactLinkTwitter = isset($_POST['ShowProfileContactLinkTwitter']) ? true : false;
+					$ShowProfileContactLinkFacebook = isset($_POST['ShowProfileContactLinkFacebook']) ? true : false;
+					$ShowProfileContactLinkYouTube = isset($_POST['ShowProfileContactLinkYouTube']) ? true : false;
+					$ShowProfileContactLinkFlickr = isset($_POST['ShowProfileContactLinkFlickr']) ? true : false;
 
+					update_user_meta( $ProfileID, 'ShowProfileContactLinkTwitter',$ShowProfileContactLinkTwitter);
+					update_user_meta( $ProfileID, 'ShowProfileContactLinkFacebook',$ShowProfileContactLinkFacebook);
+					update_user_meta( $ProfileID, 'ShowProfileContactLinkYouTube',$ShowProfileContactLinkYouTube);
+					update_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',$ShowProfileContactLinkFlickr);
 						
 
 						//Personal expanded detail
@@ -1265,6 +1283,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								<?php
 
 								
+								$CheckShowProfileContactLinkTwitter = get_user_meta( $ProfileID, 'ShowProfileContactLinkTwitter',true);
+								$CheckShowProfileContactLinkFacebook = get_user_meta( $ProfileID, 'ShowProfileContactLinkFacebook',true);
+								$CheckShowProfileContactLinkYouTube = get_user_meta( $ProfileID, 'ShowProfileContactLinkYouTube',true);
+								$CheckShowProfileContactLinkFlickr = get_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',true);
+								
 
 								echo " <table class=\"form-table\">\n";
 								// Private Information
@@ -1272,26 +1295,38 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <th scope=\"row\">" . __("Facebook", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
 								
-								echo "          <input type=\"text\" id=\"ProfileContactLinkFacebook\" name=\"ProfileContactLinkFacebook\" class=\"ProfileContactLinkFacebook\" value=\"" . (isset($ProfileContactLinkFacebook)?$ProfileContactLinkFacebook:""). "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactLinkFacebook\" name=\"ProfileContactLinkFacebook\" class=\"ProfileContactLinkFacebook\" value=\"" . (isset($ProfileContactLinkFacebook)?$ProfileContactLinkFacebook:""). "\" /><br>";
+								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkFacebook\" name=\"ShowProfileContactLinkFacebook\" class=\"ShowProfileContactLinkFacebook\"  ".($CheckShowProfileContactLinkFacebook == true ? "checked" : "")."/>".__('Show on Profile View')."\n";
 								echo "      </td>\n";
+								
 								echo "    </tr>\n";
+
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Twitter", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactLinkTwitter\" name=\"ProfileContactLinkTwitter\" value=\"" . (isset($ProfileContactLinkTwitter)?$ProfileContactLinkTwitter:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactLinkTwitter\" name=\"ProfileContactLinkTwitter\" value=\"" . (isset($ProfileContactLinkTwitter)?$ProfileContactLinkTwitter:"") . "\" /><br>";
+								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkTwitter\" name=\"ShowProfileContactLinkTwitter\" class=\"ShowProfileContactLinkTwitter\"  ".($CheckShowProfileContactLinkTwitter == true ? "checked" : "")." />".__('Show on Profile View')."\n";
 								echo "      </td>\n";
+		
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Youtube", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactLinkYouTube\" name=\"ProfileContactLinkYouTube\" value=\"" . (isset($ProfileContactLinkYouTube)?$ProfileContactLinkYouTube:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactLinkYouTube\" name=\"ProfileContactLinkYouTube\" value=\"" . (isset($ProfileContactLinkYouTube)?$ProfileContactLinkYouTube:"") . "\" /><br>";
+								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkYouTube\" name=\"ShowProfileContactLinkYouTube\" class=\"ShowProfileContactLinkYouTube\"  ".($CheckShowProfileContactLinkYouTube == true ? "checked" : "")."/>".__('Show on Profile View')."\n";
 								echo "      </td>\n";
+								
+								
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Flickr", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactLinkFlickr\" name=\"ProfileContactLinkFlickr\" value=\"" . (isset($ProfileContactLinkFlickr)?$ProfileContactLinkFlickr:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactLinkFlickr\" name=\"ProfileContactLinkFlickr\" value=\"" . (isset($ProfileContactLinkFlickr)?$ProfileContactLinkFlickr:"") . "\" /><br>";
+								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkFlickr\" name=\"ShowProfileContactLinkFlickr\" class=\"ShowProfileContactLinkFlickr\"  ".($CheckShowProfileContactLinkFlickr == true ? "checked" : "")."/>".__('Show on Profile View')."\n";
 								echo "      </td>\n";
+								
+								
+
 								echo "    </tr>\n";
 								echo " </table>\n";
 
@@ -2680,18 +2715,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														if($medialink_option == 2){
 															//open in new window and play
 															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															$auditiondemo = empty($au) ? "Play Audio" : $au;
-															echo "<input type='hidden' id='auditiondemohidden_".(str_replace('.mp3','',$files[$i]))."' value='' >";
-															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" >'.$auditiondemo.'</a>&nbsp;<div id="'.(str_replace('.mp3','',$files[$i])).'" class="audition-mp3">Rename</div><br>';
+															$auditiondemo = $au;
+															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.$auditiondemo.'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="voicedemo_"'.str_replace('.mp3','',$files[$i]).'" aud_voice_demo_name_val="'.$auditiondemo.'">Rename</a><br>';
 														}elseif($medialink_option == 3){
 															//open in new window and download															
 															
 
 															$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
 															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															$auditiondemo = empty($au) ? "Play Audio" : $au;
-															echo "<input type='hidden' id='auditiondemohidden_".(str_replace('.mp3','',$files[$i]))."' value='' >";
-															echo '<a '.$force_download_url.' target="_blank" >'.$auditiondemo.'</a>&nbsp;<div id="'.(str_replace('.mp3','',$files[$i])).'" class="audition-mp3">Rename</div><br>';
+															$auditiondemo = $au;
+															echo '<a '.$force_download_url.' target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.(str_replace('.mp3','',$files[$i])).'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="voicedemo_"'.str_replace('.mp3','',$files[$i]).'" aud_voice_demo_name_val="'.$auditiondemo.'">Rename</div><br>';
 														}
 														
 													}
@@ -2699,6 +2732,54 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												?>
 
 											</td>
+
+											<div id="aud-edit-voice-demo" style="display:none;">
+									 			 <input type="hidden" name="audvoicedemoname_key" class="audvoicedemoname_key" >
+												 <input type="hidden" name="audvoicedemoname_val" class="audvoicedemoname_val" >
+												 <input type="hidden" name="audnew_voicedemoname" class="audnew_voicedemoname" >
+												 <input type="hidden" name="audold_voicedemoname" class="audold_voicedemoname" >
+											     <p style="padding:15px;">Title:&nbsp;<input type="text" name="audvoicedemoname" class="audvoicedemoname" style="width:300px;">
+												 <input type='button' value="Save Changes" name='audupdate_voicedemoname' id="audvoicedemoname_id" class='button-primary audupdate_voicedemoname' ></p>
+											</div>
+											<script type="text/javascript">
+											jQuery(document).ready(function(){
+												//voice demo
+												jQuery('.aud-audition-mp3').click(function(){
+													var aud_voice_demo_name_key = jQuery(this).attr('aud_voice_demo_name_key');
+													var aud_voice_demo_name_val = jQuery(this).attr('aud_voice_demo_name_val');
+													
+													jQuery('.audvoicedemoname').val(aud_voice_demo_name_val);
+													jQuery('.audold_voicedemoname').val(aud_voice_demo_name_val);
+
+													jQuery('.audvoicedemoname_key').val(aud_voice_demo_name_key);
+													jQuery('.audvoicedemoname_val').val(aud_voice_demo_name_val);									
+
+													tb_show('Edit Audition Demo','#TB_inline?width=500&height=100&inlineId=aud-edit-voice-demo');
+													return false;
+												});
+												jQuery('.audvoicedemoname').keyup(function(){
+													jQuery('.audnew_voicedemoname').val(jQuery(this).val());
+												});
+												jQuery('.audupdate_voicedemoname').click(function(){
+													var new_val = jQuery('.audnew_voicedemoname').val();
+													var old_val = jQuery('.audold_voicedemoname').val();
+													var audvoicedemoname_key = jQuery('.audvoicedemoname_key').val();									
+													jQuery.post("<?php echo admin_url('admin-ajax.php');?>", {
+														demo_name_key:audvoicedemoname_key,
+														old_value: old_val,
+														new_value:new_val,
+														action: 'audeditvoicedemo'
+													}).done(function(data) {										
+														jQuery(".audvoicedemo-caption").html('');
+														jQuery(".audvoicedemo-caption").html(new_val);
+													});
+
+													tb_remove();
+													return false;
+												});
+											});
+											</script>						
+
 											<td>
 												<?php
 

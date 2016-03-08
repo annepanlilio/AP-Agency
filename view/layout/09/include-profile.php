@@ -100,7 +100,7 @@ echo "							<ul>\n";
 								// Insert Custom Fields
 								$title_to_exclude = array("");
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null, $label_tag="strong", $value_tag="span");
-
+								get_social_media_links($ProfileID);
 
 echo "							</ul>\n";
 echo "						</div>\n";

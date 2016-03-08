@@ -241,11 +241,14 @@ echo "								<ul>";
 										$title_to_exclude = array("Experience");
 										//rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender, $title_to_exclude);
 										rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-
+										get_social_media_links($ProfileID);
 										if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 											echo "<li class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 										}
+										
 echo "								</ul>";
+
+
 echo " 							</div>\n"; // .tab-panel
 echo " 						</div>\n"; // twelve rbcolumn physical
 

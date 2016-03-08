@@ -125,7 +125,7 @@ Custom Layout: Shake it like a polaroid picture
 
 		// Insert Custom Fields
 		rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-
+		get_social_media_links($ProfileID);
 
 					if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 					echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";

@@ -49,6 +49,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				<?php
 				// Insert Custom Fields
 				rb_agency_getProfileCustomFieldsExTitle($ProfileID, $ProfileGender,array('Experience','Skills and Qualities','Skills'));
+				get_social_media_links($ProfileID);
 				?>
 			</ul>
 		</div><!-- #photobook -->

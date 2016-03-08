@@ -52,10 +52,10 @@ echo "				<div id=\"profile-picture\">\n";
 						if($countImg == 0){
 							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=400&h=450&a=t\" alt=\"\">\n";
 						}
-
+						//get_social_media_links($ProfileID);
 echo "				</div> <!-- #profile-picture -->\n";
 echo "				<div id=\"profile-social\">";
-						rb_agency_getSocialLinks();
+						rb_agency_getSocialLinks($ProfileID);
 echo "				</div>";
 echo "			</div>\n"; // .rbcol-5
 
@@ -95,7 +95,7 @@ echo "							<div id=\"stats\">";
 									// Insert Custom Fields
 									$title_to_exclude = array("Available for");
 									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=true, $title_to_exclude, $label_tag="td", $value_tag="td");
-
+									
 echo "							</div> <!-- #stats -->\n";
 echo "				<div id=\"soundcloud\">";
 						$querySC = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"SoundCloud\" ORDER BY $orderBy";

@@ -42,7 +42,7 @@ echo "							<ul>\n";
 
 								// Insert Custom Fields
 								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-
+								get_social_media_links($ProfileID);
 								if (!empty($ProfileContactPhoneWork)) {
 									echo "<li class=\"rb_contact\" id=\"rb_phone_work\"><strong>". __("Phone", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". $ProfileContactPhoneWork . "</li>\n";
 								}
