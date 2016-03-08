@@ -1938,6 +1938,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}).done(function(data) {										
 										jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+auditiondemoname_key+']').html('');
 										jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+auditiondemoname_key+']').html(new_val);
+									
+										jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+auditiondemoname_key+']').html('');
+										jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+auditiondemoname_key+']').html(new_val);
 									});
 
 									tb_remove();
@@ -2714,14 +2717,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														if($medialink_option == 2){
 															//open in new window and play
 															$auditiondemo = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.$auditiondemo.'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="auditiondemo_'.trim(str_replace('.mp3','',$files[$i])).'" aud_voice_demo_name_val="'.trim($auditiondemo).'">&nbsp;[rename]</a><br>';
+															echo '<div class="media-file voice-demo" audaudiodemo_place_id="auditiondemo_'.str_replace('.mp3','',$files[$i]).'"><a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.$auditiondemo.'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="auditiondemo_'.trim(str_replace('.mp3','',$files[$i])).'" aud_voice_demo_name_val="'.trim($auditiondemo).'">&nbsp;[rename]</a></div><br>';
 														}elseif($medialink_option == 3){
 															//open in new window and download															
 															
 
 															$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
 															$auditiondemo = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															echo '<a '.$force_download_url.' target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.(str_replace('.mp3','',$files[$i])).'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="auditiondemo_'.str_replace('.mp3','',$files[$i]).'" aud_voice_demo_name_val="'.$auditiondemo.'">&nbsp;[rename]</div><br>';
+															echo '<div class="media-file voice-demo" audaudiodemo_place_id="auditiondemo_'.str_replace('.mp3','',$files[$i]).'"><a '.$force_download_url.' target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.(str_replace('.mp3','',$files[$i])).'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="auditiondemo_'.str_replace('.mp3','',$files[$i]).'" aud_voice_demo_name_val="'.$auditiondemo.'">&nbsp;[rename]</div></div><br>';
 														}
 														
 													}
@@ -2772,8 +2775,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														action: 'audeditvoicedemo'
 													}).done(function(data) {
 														console.log(data);										
-														jQuery(".audvoicedemo-caption").html('');
-														jQuery(".audvoicedemo-caption").html(new_val);
+														jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+audvoicedemoname_key+']').html('');
+														jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+audvoicedemoname_key+']').html(new_val);
+
+														jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+audvoicedemoname_key+']').html('');
+														jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+audvoicedemoname_key+']').html(new_val);
 													});
 
 													tb_remove();

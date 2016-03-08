@@ -370,9 +370,9 @@
 										$redirect_after_upload = site_url()."/profile-login/";
 
 										if (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'on') {
-											    $redirect_same_page = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+											    $redirect_same_page = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].'?st=done';
 											}else{
-												$redirect_same_page = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+												$redirect_same_page = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'].'?st=done';
 											}
 
 										echo "Upload Success <br/>";
@@ -441,7 +441,7 @@
 										}
 								}
 
-							if(!empty($_mp3)){
+							if(!empty($_mp3) || isset($_GET['st']) ){
 
 								/**$rb_agency_options_arr = get_option('rb_agency_options');
 								$rb_agency_option_profilemedia_links = $rb_agency_options_arr['rb_agency_option_profilemedia_links'] ;
