@@ -5,7 +5,7 @@
 
 // Social Link
 echo "<div id=\"profile-social\">";
-	rb_agency_getSocialLinks();
+	rb_agency_getSocialLinks($ProfileID);
 echo "</div>";
 
 
