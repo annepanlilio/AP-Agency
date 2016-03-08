@@ -816,6 +816,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 	rb_display_list();
 }
 
+
+
 // *************************************************************************************************** //
 // Show Edit Record
 elseif ((isset($_GET['action']) && $_GET['action'] == "editRecord") || (isset($_GET['action']) && $_GET['action'] == "add")) {
@@ -1777,6 +1779,38 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<div class="main">
 
 							<?php
+
+							if(isset($_GET['actionsub']) && $_GET['actionsub'] == 'del_media'){
+									//print_r($_GET['media_ids']);
+
+									$massmediaids = array();
+									$uploadedaudios = array();
+									foreach($_GET['media_ids'] as $k => $v){
+										if(is_numeric($v)){
+											$massmediaids[] = $v;
+										}else{
+											$uploadedaudios[] = $v;
+										}			
+									}
+
+									
+
+									$imploded_massmediaids = implode(',',$massmediaids);
+									$ProfileID = $_GET['ProfileID'];
+
+									$queryMassMediaDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($imploded_massmediaids) ";
+									$resultsMassMediaDelete = $wpdb->query($queryMassMediaDelete);
+
+									foreach($uploadedaudios as $k=>$v){
+										if(file_exists(RBAGENCY_UPLOADPATH.'/_casting-jobs/'.$v)){
+											unlink(RBAGENCY_UPLOADPATH.'/_casting-jobs/'.$v);										
+										}
+									}
+
+									//delete media files here upload in profile manager
+
+									echo ("<div id=\"message\" class=\"updated\"><p> " . __("Media files successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+								}	
 							echo "      <p>" . __("The following files (pdf, audio file, etc.) are associated with this record", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 
 							$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType <> \"Link\" AND ProfileMediaType <> \"Image\"";
@@ -1791,6 +1825,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$outCustomMediaLink = "";
 							$outSoundCloud = "";
 
+							echo "<style>.media-files-checkbox{ float:right; margin-top:5px;}</style>";
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 									$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
@@ -1803,21 +1838,21 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										"\" video_title=\"" . ucfirst($vidTitleCaption[0]) . 
 										"\" video_caption=\"" . $vidTitleCaption[1] . 
 										"\" class=\"prepare-edit-video\">EDIT</a>]
-									[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]</div>\n";
+									[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								 }
 								 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 								 	$voiceDemoProfileMediaID = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
-								 	$voicedemo = empty($voiceDemoProfileMediaID) ? "RENAME" : $voiceDemoProfileMediaID;
+								 	$voicedemo = empty($voiceDemoProfileMediaID) ? "TITLE" : $voiceDemoProfileMediaID;
 									
 									$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 									if($medialink_option == 2){
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" >&nbsp[EDIT]</a></div>\n";
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" >&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}elseif($medialink_option == 3){
 										$force_download_url = wpfdl_dl($ProfileGallery . "/" . $dataMedia['ProfileMediaURL'],get_option('wpfdl_token'),'dl');
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br> <a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" >&nbsp[EDIT]</a></div>\n";
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br> <a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" >&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
-									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 									$headshot_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'];
 									$headshot_params = array(
@@ -1830,7 +1865,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_y'=>'0'
 									);
 									$headshot_image_src = bfi_thumb( $headshot_image_path, $headshot_params );
-									$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+									$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									//$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "CardPhotos" || $dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
 									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'];
@@ -1844,17 +1879,17 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_y'=>'0'
 									);
 									$polariod_image_src = bfi_thumb( $polaroid_image_path, $polariod_params );
-									$outLinkPolaroid .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$polariod_image_src."\" /><br/><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+									$outLinkPolaroid .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$polariod_image_src."\" /><br/><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) {
 									$custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
 									$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
 									$custom_media_type = $custom_media_info[2];
 									$custom_media_id = $custom_media_info[4];
 									$query = current($wpdb->get_results("SELECT MediaCategoryTitle, MediaCategoryFileType FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
-									$outCustomMediaLink .= "<div class=\"media-file\"><span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) ." </span> <a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" class=\"custom_media-box-a\" target=\"_blank\"><div class=\"custom_media-box\"><span>" .  (isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."</span></div></a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+									$outCustomMediaLink .= "<div class=\"media-file\"><span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) ." </span> <a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" class=\"custom_media-box-a\" target=\"_blank\"><div class=\"custom_media-box\"><span>" .  (isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."</span></div></a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "SoundCloud") {
 									$outSoundCloud .= "<div style=\"width:600px;float:left;padding:10px;\">";
-									$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a></span> \n";
+									$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></span> \n";
 									$outSoundCloud .= "<object height=\"81\" width=\"100%\">";
 									$outSoundCloud .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"></param>";
 									$outSoundCloud .=  "<param name=\"allowscriptaccess\" value=\"always\"></param>";
@@ -1881,10 +1916,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	 								$path = '_casting-jobs/'.$files[$i];
 
 	 								if($medialink_option == 2){
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>".__('VoiceDemo')."</span><br /><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\"  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\" target=\"_blank\"><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a></div>\n";						
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>".__('VoiceDemo')."</span><br /><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\"  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a href=\"".site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i]."\" target=\"_blank\"><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$files[$i]."\"></div>\n";						
 									}elseif($medialink_option == 3){
 										$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>".__('VoiceDemo')."</span><br /><a ".$force_download_url."  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a ".$force_download_url." ><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a></div>\n";	
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>".__('VoiceDemo')."</span><br /><a ".$force_download_url."  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a ".$force_download_url." ><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$files[$i]."\"></div>\n";	
 									}									
 										
 								}
@@ -2213,7 +2248,36 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo '</div>';
 
 						echo '</div>';
+						echo '<br><br>';
+						echo '<div class="bulk_delete_media"><a href="javascript:bulkDeleteMediaLinks();">Delete Selected Media Files</a></div>';
 					echo '</div>';
+
+?>
+	<script type="text/javascript">
+
+	function bulkDeleteMediaLinks(){
+		var mas_del_ids = '&';
+		jQuery("input:checkbox[name=media_files]:checked").each(function() {
+			if(mas_del_ids != '&'){
+				mas_del_ids += '&';
+			}
+		mas_del_ids += 'media_ids[]='+jQuery(this).val();
+		});
+									
+		if( mas_del_ids != '&'){
+			if(confirm("Do you want to delete all the selected images?")){
+				//alert(mas_del_ids);
+				urlmassdelete = '<?php echo admin_url("admin.php?page=" . $_GET['page']);?>&action=editRecord&ProfileID=<?php echo $ProfileID;?>&actionsub=del_media' + mas_del_ids;
+				document.location = urlmassdelete;
+			}
+		}else {
+			alert("You have to select images to delete");
+		}
+	}
+	</script>
+<?php
+	
+				
 
 					/*
 					 * Get Links
