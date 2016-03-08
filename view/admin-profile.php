@@ -2688,6 +2688,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 
 									?>
+
 									<?php
 									if(count($job_data) > 0)
 									{
@@ -2714,29 +2715,31 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														//$mp3_file = str_replace(array($parsedFile[0].'-',$parsedFile[1].'-'),'',$files[$i]);
 														if($medialink_option == 2){
 															//open in new window and play
-															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															$auditiondemo = $au;
-															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.$auditiondemo.'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="voicedemo_"'.str_replace('.mp3','',$files[$i]).'" aud_voice_demo_name_val="'.$auditiondemo.'">Rename</a><br>';
+															$auditiondemo = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+															echo '<a href="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.$auditiondemo.'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="auditiondemo_'.trim(str_replace('.mp3','',$files[$i])).'" aud_voice_demo_name_val="'.trim($auditiondemo).'">&nbsp;[rename]</a><br>';
 														}elseif($medialink_option == 3){
 															//open in new window and download															
 															
 
 															$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
-															$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-															$auditiondemo = $au;
-															echo '<a '.$force_download_url.' target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.(str_replace('.mp3','',$files[$i])).'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="voicedemo_"'.str_replace('.mp3','',$files[$i]).'" aud_voice_demo_name_val="'.$auditiondemo.'">Rename</div><br>';
+															$auditiondemo = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
+															echo '<a '.$force_download_url.' target="_blank" class="audvoicedemo-caption">'.$auditiondemo.'</a>&nbsp;<a href="#aud-edit-voice-demo" id="'.(str_replace('.mp3','',$files[$i])).'" class="aud-audition-mp3 thickbox" aud_voice_demo_name_key="auditiondemo_'.str_replace('.mp3','',$files[$i]).'" aud_voice_demo_name_val="'.$auditiondemo.'">&nbsp;[rename]</div><br>';
 														}
 														
 													}
 												}
+												//echo "<pre>";
+												//print_r(get_alloptions());
+												//echo "</pre>";
 												?>
 
 											</td>
 
 											<div id="aud-edit-voice-demo" style="display:none;">
+
 									 			 <input type="hidden" name="audvoicedemoname_key" class="audvoicedemoname_key" >
 												 <input type="hidden" name="audvoicedemoname_val" class="audvoicedemoname_val" >
-												 <input type="hidden" name="audnew_voicedemoname" class="audnew_voicedemoname" >
+												 <input type="hidden" name="audnew_voicedemoname" class="audnew_voicedemoname">
 												 <input type="hidden" name="audold_voicedemoname" class="audold_voicedemoname" >
 											     <p style="padding:15px;">Title:&nbsp;<input type="text" name="audvoicedemoname" class="audvoicedemoname" style="width:300px;">
 												 <input type='button' value="Save Changes" name='audupdate_voicedemoname' id="audvoicedemoname_id" class='button-primary audupdate_voicedemoname' ></p>
@@ -2769,7 +2772,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														old_value: old_val,
 														new_value:new_val,
 														action: 'audeditvoicedemo'
-													}).done(function(data) {										
+													}).done(function(data) {
+														console.log(data);										
 														jQuery(".audvoicedemo-caption").html('');
 														jQuery(".audvoicedemo-caption").html(new_val);
 													});
