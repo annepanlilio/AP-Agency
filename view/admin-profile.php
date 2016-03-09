@@ -1781,8 +1781,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<?php
 
 							if(isset($_GET['actionsub']) && $_GET['actionsub'] == 'del_media'){
-									//print_r($_GET['media_ids']);
-
+									
+									global $wpdb;
 									$massmediaids = array();
 									$uploadedaudios = array();
 									foreach($_GET['media_ids'] as $k => $v){
@@ -1794,22 +1794,47 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}
 
 									
-
 									$imploded_massmediaids = implode(',',$massmediaids);
 									$ProfileID = $_GET['ProfileID'];
 
-									$queryMassMediaDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($imploded_massmediaids) ";
-									$resultsMassMediaDelete = $wpdb->query($queryMassMediaDelete);
-
-									foreach($uploadedaudios as $k=>$v){
-										if(file_exists(RBAGENCY_UPLOADPATH.'/_casting-jobs/'.$v)){
-											unlink(RBAGENCY_UPLOADPATH.'/_casting-jobs/'.$v);										
+									//delete media files here upload in profile manager
+									$media_urls = array();
+									$media_types = array();
+									foreach($massmediaids as $k=>$v){
+										$q = "SELECT ProfileMediaURL,ProfileMediaType FROM ". table_agency_profile_media ." WHERE ProfileID = $ProfileID AND ProfileMediaID = $v";
+										$res = $wpdb->get_results($q);
+										foreach($res as $r){
+											$media_urls[] = $r->ProfileMediaURL;
+											$media_types[] = $r->ProfileMediaType;
 										}
 									}
 
-									//delete media files here upload in profile manager
+									//delete from uploads folder
+									$dirURL = RBAGENCY_UPLOADPATH . $ProfileGallery;									
+									foreach($media_urls as $k=>$v){
+										@unlink($dirURL . "/" . $v);
+										if($media_types[$k] == 'Video Monologue' || $media_types[$k] == 'Demo Reel' || $media_types[$k] == 'Video Slate' || $media_types[$k] == 'SoundCloud' || $media_types[$k] == 'IMDB'){
+											echo ("<div id=\"message\" class=\"updated\"><p> " . __("Media link <b>".$v."</b> successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+										}else{
+											echo ("<div id=\"message\" class=\"updated\"><p> " . __("Media file <b>".$v."</b> successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+										}
+										
+									}
+									foreach($uploadedaudios as $k=>$v){
+										if(file_exists(RBAGENCY_UPLOADPATH.'/_casting-jobs/'.$v)){
+											unlink(RBAGENCY_UPLOADPATH.'/_casting-jobs/'.$v);
+											echo ("<div id=\"message\" class=\"updated\"><p> " . __("Media file <b>".$v."</b> successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");										
+										}
+									}
 
-									echo ("<div id=\"message\" class=\"updated\"><p> " . __("Media files successfully removed", RBAGENCY_TEXTDOMAIN) . ".</p></div>");
+									//delete from the database
+									$queryMassMediaDelete = "DELETE FROM " . table_agency_profile_media . " WHERE ProfileID = $ProfileID AND ProfileMediaID IN ($imploded_massmediaids) ";
+									$resultsMassMediaDelete = $wpdb->query($queryMassMediaDelete);
+
+									
+
+									
+								
 								}	
 							echo "      <p>" . __("The following files (pdf, audio file, etc.) are associated with this record", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 
@@ -1912,7 +1937,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if($ProfileID == $parsedFile[1]){	
 
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
-									$auditiondemo = empty($au) ? "Play Audio" : $au;
+									$auditiondemo = empty($au) ? "TITLE" : $au;
 	 								$path = '_casting-jobs/'.$files[$i];
 
 	 								if($medialink_option == 2){
@@ -2265,7 +2290,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		});
 									
 		if( mas_del_ids != '&'){
-			if(confirm("Do you want to delete all the selected images?")){
+			if(confirm("Do you want to delete all the selected media files?")){
 				//alert(mas_del_ids);
 				urlmassdelete = '<?php echo admin_url("admin.php?page=" . $_GET['page']);?>&action=editRecord&ProfileID=<?php echo $ProfileID;?>&actionsub=del_media' + mas_del_ids;
 				document.location = urlmassdelete;
