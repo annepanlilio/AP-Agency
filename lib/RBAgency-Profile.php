@@ -2218,7 +2218,11 @@ class RBAgency_Profile {
 					}
 
 					// Profile per row div class
-					$profile_listlayout_class[] = $profiles_perrow[$rb_agency_option_layoutprofilelist_perrow-1]."-profiles";
+					if($rb_agency_option_layoutprofilelistlayout == 1){
+						$profile_listlayout_class[] = "three-profiles";
+					} else {
+						$profile_listlayout_class[] = $profiles_perrow[$rb_agency_option_layoutprofilelist_perrow-1]."-profiles";
+					}
 
 					// Prepare div classes
 					$profile_listlayout_classes = array_unique($profile_listlayout_class);
