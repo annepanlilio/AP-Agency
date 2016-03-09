@@ -168,22 +168,18 @@
 
 				<div style="width:100%;max-width:450px;">
 				
-				
-				
 				<script type="text/javascript">
 				 jQuery(function() {
-				    jQuery( "#dialog" ).dialog(
-				    		{ width: 900 }
-				    	);
-				    jQuery( "#dialog-2" ).dialog(
-				    		{ width: 900 }
-				    	);
-				  });
-				  </script>
-				 
-				  <style>
-				  .ui-dialog{ left:220px!important;top:80px!important;}
-				  </style>
+				    jQuery( "#dialog" ).dialog({
+				    	width: 710,
+				    	modal: true
+				    })
+				    jQuery( "#dialog-2" ).dialog({
+				    	width: 440,
+				    	modal: true
+				    });
+				});
+				</script>
 
 				<?php 	
 
@@ -194,12 +190,11 @@
 				{
 				?>
 				<div id="dialog" title="Availability submitted! Please upload mp3 audio file to continue.">
-				  <form enctype="multipart/form-data" action="" method="post" >
-										Select Audio File: <br/>
-										<input type="file" name="fileToUpload" id="fileToUpload">
-										<input type="submit" value="Upload Audio" name="submitMP3">
-										
-									</form>
+				  	<form enctype="multipart/form-data" action="" method="post" >
+						Select Audio File: <br/>
+						<input type="file" name="fileToUpload" id="fileToUpload">
+						<input type="submit" value="Upload Audio" name="submitMP3" style="margin-top: 10px;">
+					</form>
 				</div>
 
 				
