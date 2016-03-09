@@ -104,7 +104,10 @@ echo "							<div id=\"stats\">\n";
 
 									// Insert Custom Fields
 									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
-									get_social_media_links($ProfileID);
+									if(function_exists('get_social_media_links')) {
+										get_social_media_links($ProfileID);
+									}
+									
 echo "								</ul>\n";
 
 
