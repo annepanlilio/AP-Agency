@@ -1,7 +1,30 @@
-/* Profile Layout with Thumbnails and Primary Image (include-profile-layout1.php) */
+/* Profile Layout with Thumbnails and Primary Image (include-profile-layout16.php) */
 
-#rblayout-one #profile-picture,
-#rblayout-one #links,
-#rblayout-one #stats {margin: 0px 0px 30px 0px; }
-#polaroids {margin-bottom: 30px; }
-.rblayout .profile-photos {margin-top: 15px; }
+h1.profile-name { font-size:24px; }
+.audiojs p { width:30px!important; }
+#profile-audio h1{ font-size:20px; margin-bottom:20px;}
+.audiojs{ position:relative!important;top:0px!important; width:100%!important;max-width:512px!important;}
+.audiojs .play-pause{ padding:4px 2px!important; width:30px!important;}
+.audiojs .scrubber { width:auto!important; margin-right: 110px; margin-left:40px!important; float: none!important; }
+.audiojs .time { position: absolute; right: 0; top: 0; }
+.rbcol-12 .profile-header { display: block; }
+.rbcol-4 .profile-header { display: none; }
+.rbcol-4 .profile-header h1 { margin-bottom: 15px; }
+
+@media (min-width: 544px) {
+	
+}
+
+@media (min-width: 768px) {
+	.rbcol-12 .profile-header { display: none; }
+	.rbcol-4 .profile-header { display: block; }
+	.rbcol-4 { float: right; }
+}
+
+@media (min-width: 992px) {
+  
+}
+
+@media (min-width: 1200px) {
+  
+}
