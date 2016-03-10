@@ -45,9 +45,11 @@ echo "<h2>".__('Voice Demos')."</h2>";
 echo "<style>
 .entry-header{ float:right!important; }
 .entry-header h1{font-size:19px!important; }
-#profile-audio{ margin-left:-16px;margin-top:-125px;}
-.audiojs{ position:relative!important;top:0px!important; width:430px!important;}
-.audiojs .play-pause{ padding:4px 2px!important;}
+.sc_player_container1{margin-top:-20px; display:block!important;}
+.sc_player_container1 .myButton_stop,.sc_player_container1 .myButton_play{display:block!important;}
+.sc_player_container1 .myButton_stop{margin-left:35px!important;margin-top:-32px!important;}
+.sc_player_container1 .myButton_play{margin-top:5px!important;}
+.demoname-border{ height:5px;}
 </style>";
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"VoiceDemo\"";
@@ -57,8 +59,11 @@ echo "<style>
 							$audiofile = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
 							$profileMediaID = get_option("voicedemo_".$dataImg['ProfileMediaID']);
 							$voicedemo = empty($profileMediaID) ? "" : $profileMediaID;
+							echo "<br>";
 							echo $voicedemo."<br>";
-							echo '<audio><source src="'.$audiofile.'" /></audio><br>';
+							echo "<hr class='demoname-border'>";
+							echo  do_shortcode('[sc_embed_player fileurl="'.$audiofile.'"]');
+							//echo '<audio><source src="'.$audiofile.'" /></audio><br>';
 						}
 
 						$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
@@ -76,8 +81,11 @@ echo "<style>
 									//open in new window and play
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 									$auditiondemo = empty($au) ? "Play Audio" : $au;
+									echo "<br>";
 									echo $auditiondemo."<br>";
-									echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+									echo "<hr class='demoname-border'>";
+									echo  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
+									//echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
 								}elseif($medialink_option == 3){
 									//open in new window and download															
 															
@@ -85,8 +93,11 @@ echo "<style>
 									$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 									$auditiondemo = empty($au) ? "Play Audio" : $au;
+									echo "<br>";
 									echo $auditiondemo."<br>";
-									echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+									echo "<hr class='demoname-border'>";
+									echo  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
+									//echo '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
 								}
 														
 							}
