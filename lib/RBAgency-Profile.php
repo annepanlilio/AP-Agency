@@ -3389,7 +3389,8 @@ class RBAgency_Profile {
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 									$auditiondemo = empty($au) ? "Play Audio" : $au;
 									$voicedemolinks .= $auditiondemo."<br>";
-									$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+									//$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+									$voicedemolinks .=  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
 								}elseif($medialink_option == 3){
 									//open in new window and download															
 															
@@ -3398,7 +3399,8 @@ class RBAgency_Profile {
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 									$auditiondemo = empty($au) ? "Play Audio" : $au;
 									$voicedemolinks .= $auditiondemo."<br>";
-									$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+									//$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
+									$voicedemolinks .=  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
 								}
 														
 							}
@@ -3407,12 +3409,10 @@ class RBAgency_Profile {
 				$displayHTML .= '
 
 				<style>
-				.entry-header{ float:right!important; }
-				.entry-header h1{font-size:19px!important; }
-				#profile-audio{ margin-left:-16px;margin-top:-125px;}
-				.audiojs{ position:relative!important;top:0px!important;width:230px!important;}
-				.audiojs .play-pause{ padding:4px 2px!important;}
-				.audiojs .scrubber{ width:80px!important;}
+				.sc_player_container1 {margin-top:5px; display:block!important;border-top:2px solid #BFC9CE; }
+				.sc_player_container1 .myButton_stop,.sc_player_container1 .myButton_play{display:block!important;}
+				.sc_player_container1 .myButton_stop{margin-left:35px!important;margin-top:-32px!important;}
+				.sc_player_container1 .myButton_play{margin-top:5px!important;}
 				</style>';
 
 				$displayHTML .= '<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'" mp3_type="'.$_mp3typeClassUniq.'">
