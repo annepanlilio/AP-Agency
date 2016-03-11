@@ -973,12 +973,9 @@ class RBAgency_Profile {
 			$rda = $wpdb->get_results($q1,ARRAY_A);
 			$qnumrows = $wpdb->num_rows;
 
-			if($count > 0){				
-				$queryAlter = "ALTER TABLE " . table_agency_profile ." MODIFY CustomOrder integer";
-				$res = $wpdb->query($queryAlter);				
-			}else{
+			if($count == 0){				
 				$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
-				$res = $wpdb->query($queryAlter);
+				$res = $wpdb->query($queryAlter);				
 			}
 
 			// Convert Input
