@@ -110,6 +110,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	$ProfileStatHits = isset($_POST['ProfileStatHits'])?$_POST['ProfileStatHits']:"";
 
 	$isPrivate = isset($_POST['isPrivate'])?$_POST['isPrivate']:"";
+	$CustomOrder = isset($_POST['CustomOrder']) ? $_POST['CustomOrder'] : '';
 	
 	// Get Primary Image
 	$ProfileMediaPrimaryID = isset($_POST['ProfileMediaPrimary'])?$_POST['ProfileMediaPrimary']:"";
@@ -199,6 +200,15 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					// Check Directory - create directory if does not exist, rename if does
 					$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
+					//add CustomOrder if missing
+					$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
+					$rda = $wpdb->get_results($q,ARRAY_A);
+					$count = $wpdb->num_rows;
+					if($count == 0){
+						$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default NULL";
+						$res = $wpdb->query($queryAlter);
+					}
+
 					// Create Record
 					$insert = "INSERT INTO " . table_agency_profile .
 						" (
@@ -230,7 +240,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileIsFeatured,
 							ProfileIsPromoted,
 							ProfileStatHits,
-							ProfileDateViewLast)" .
+							ProfileDateViewLast,
+							CustomOrder)" .
 						"VALUES (
 							'" . esc_attr($ProfileGallery) . "',
 							'" . esc_attr($ProfileContactDisplay) . "',
@@ -260,7 +271,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							'" . esc_attr($ProfileIsFeatured) . "',
 							'" . esc_attr($ProfileIsPromoted) . "',
 							'" . esc_attr($ProfileStatHits) . "',
-							'" . esc_attr($ProfileDateViewLast) . "'
+							'" . esc_attr($ProfileDateViewLast) . "',
+							'" . esc_attr($CustomOrder) . "'
 						)";
 					$results = $wpdb->query($insert);
 					$ProfileID = $wpdb->insert_id;
@@ -316,6 +328,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						}
 					}
 
+					
+
 					echo ('<div id="message" class="updated"><p>' . __("New Profile added successfully!", RBAGENCY_TEXTDOMAIN) . ' <a href="' . admin_url("admin.php?page=" . $_GET['page']) . '&action=editRecord&ProfileID=' . $ProfileID . '">' . __("Update and add media", RBAGENCY_TEXTDOMAIN) . '</a></p></div>');
 					// We can edit it now
 					// rb_display_manage($ProfileID);
@@ -358,6 +372,13 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							}
 						}
 						
+						$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
+						$rda = $wpdb->get_results($q,ARRAY_A);
+						$count = $wpdb->num_rows;
+						if($count == 0){
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default NULL";
+							$res = $wpdb->query($queryAlter);
+						}
 
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET 
@@ -387,7 +408,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							isPrivate='" . esc_attr($isPrivate) . "',
 							ProfileIsFeatured='" . esc_attr($ProfileIsFeatured) . "',
 							ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
-							ProfileStatHits='" . esc_attr($ProfileStatHits) . "'
+							CustomOrder='" . esc_attr($CustomOrder) . "'
 							WHERE ProfileID=$ProfileID";
 						$results = $wpdb->query($update);
 
@@ -406,6 +427,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 
 						}
+
+					
 
 					//display on profile view
 					$ShowProfileContactLinkTwitter = isset($_POST['ShowProfileContactLinkTwitter']) ? true : false;
@@ -968,6 +991,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
 			$ProfileDateCreated = stripslashes($data['ProfileDateCreated']);
 			$isPrivate = stripslashes($data['isPrivate']);
+			$CustomOrder = stripslashes($data['CustomOrder']);
 		}
 
 		$caption_header = __("Edit", RBAGENCY_TEXTDOMAIN) . " " . LabelSingular;
@@ -1017,6 +1041,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
 			$ProfileIsPrivate = $_POST['ProfileIsPrivate'];
 			$ProfileStatHits = $_POST['ProfileStatHits'];
+			$CustomOrder = $_POST['CustomOrder'];
 
 			// Get Primary Image
 			$ProfileMediaPrimaryID = $_POST['ProfileMediaPrimary'];
@@ -1417,6 +1442,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "        <th scope=\"row\">" . __("Promotion", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
 							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked(isset($ProfileIsFeatured)?$ProfileIsFeatured:0, 1, false) . " /> Featured<br />\n";
+							echo "        </td>\n";
+							echo "    </tr>\n";
+							echo "    <tr valign=\"top\">\n";
+							echo "        <th scope=\"row\">" . __("Custom Order", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
+							echo "        <td>\n";
+							echo "          <input type=\"text\" name=\"CustomOrder\" id=\"CustomOrder\" value=\"".(isset($CustomOrder) ? $CustomOrder : '')."\" /><br />\n";
 							echo "        </td>\n";
 							echo "    </tr>\n";
 							echo "    <tr valign=\"top\">\n";
@@ -3340,6 +3371,9 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">".__("Images",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\">".__("Views",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column-isPrivate\" id=\"isPrivate\" scope=\"col\">".__("Private",RBAGENCY_TEXTDOMAIN)."</th>\n";
+
+	echo "        <th class=\"column-CustomOrder\" id=\"CustomOrder\" scope=\"col\">".__("Custom Order",RBAGENCY_TEXTDOMAIN)."</th>\n";
+
 	echo "        <th class=\"column-ProfileDateViewLast\" id=\"ProfileDateViewLast\" scope=\"col\" style=\"width:100px;\">".__("Last Viewed Date",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "    </tr>\n";
 	echo " </thead>\n";
@@ -3378,6 +3412,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		exit; */
 	}
 
+
 	
 	
 	$queryData1 = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . " ORDER BY $sort $dir $limit";
@@ -3400,6 +3435,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
 		
 		$isPrivate = stripslashes($data['isPrivate']);
+		$CustomOrder = stripslashes($data['CustomOrder']);
 		
 		if ($rb_agency_option_profilenaming == 0) {
 			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
@@ -3514,6 +3550,12 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		echo "        <td class=\"ProfileDetails column-ProfileDetails\">" . $profileImageCount . "</td>\n";
 		echo "        <td class=\"ProfileStatHits column-ProfileStatHits\">" . $ProfileStatHits . "</td>\n";
 		echo "        <td class=\"isPrivate column-isPrivate\">". (!empty($isPrivate) ? "<b>Private</b>": " ") . "</td>\n";
+		
+			
+			if(isset($CustomOrder)){
+				echo "        <td class=\"CustomOrder column-CustomOrder\" id=\"CustomOrder\">".$CustomOrder."</td>\n";
+			}
+
 		echo "        <td class=\"ProfileDateViewLast column-ProfileDateViewLast\" attr_lastview=\"".strtotime($ProfileDateViewLast)."\" attr_timezone=\"". $rb_agency_option_locationtimezone."\">\n";
 		echo "           " . rb_agency_makeago(rb_agency_convertdatetime($ProfileDateViewLast), $rb_agency_option_locationtimezone);
 		echo "        </td>\n";

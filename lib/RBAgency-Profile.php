@@ -943,6 +943,20 @@ class RBAgency_Profile {
 				// Get Time Zone
 				$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
 
+			if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
+				$orderType = " profile.CustomOrder DESC ";
+			}else{
+				$orderType = "";
+			}
+
+			$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
+			$rda = $wpdb->get_results($q,ARRAY_A);
+			$count = $wpdb->num_rows;
+			if($count == 0){
+				$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default NULL";
+				$res = $wpdb->query($queryAlter);
+			}
+
 			// Convert Input
 			if(is_array($atts)) {
 
@@ -1424,9 +1438,15 @@ class RBAgency_Profile {
 					
 					//ORDER BY came from admin settings
 					$_sortBy = !empty($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'] : '';
-					if(empty($_sortBy )) $_sortBy = 'ProfileContactNameFirst';
-
-					$atts['sort'] = 'profile.'.$_sortBy;
+					if(empty($_sortBy )){
+						 $_sortBy = 'ProfileContactNameFirst';
+					}
+					if(empty($orderType)){
+						$atts['sort'] = 'profile.'.$_sortBy;
+					}else{
+						$atts['sort'] = $orderType;
+					}
+					
 					if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= ' DESC';
 					
 					self::search_generate_sqlorder($atts,$filter2);
@@ -1475,7 +1495,13 @@ class RBAgency_Profile {
 				$atts["limit"] = $rb_agency_option_persearch;
 			}
 
-			$filter .= " GROUP BY profile.ProfileID";
+			if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
+				$filter .= "";
+			}else{
+				$filter .= " GROUP BY profile.ProfileID";
+			}
+
+			
 
 
 			// Convert Input
@@ -1556,6 +1582,8 @@ class RBAgency_Profile {
 			$sql_where = $sql_where_array['standard'] ." ". $sql_where_array['custom'];
 	
 			$sqlCasting_userID = "";
+
+			
 
 			switch ($query_type) {
 			/* 
@@ -1800,6 +1828,7 @@ class RBAgency_Profile {
 			/*
 			 * Check if search is Admin or Public
 			 */
+			
 				if(is_admin()){
 					return self::search_result_admin( $sql, $arr_query );
 				} else {

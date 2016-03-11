@@ -542,6 +542,16 @@ elseif ($ConfigID == 1) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Search Results Sort', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <select name=\"rb_agency_options[rb_agency_option_search_results_sort]\">\n";
+		echo "       <option value=\"DefaultResult\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'DefaultResult') ."> ". __("Default", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"CustomOrder\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'CustomOrder') ."> ". __("Custom Order", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+
 
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profiles Per Page', RBAGENCY_TEXTDOMAIN) ."</th>\n";
