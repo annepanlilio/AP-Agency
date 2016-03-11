@@ -524,6 +524,8 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showcountrycode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showcountrycode'])?$rb_agency_options_arr['rb_agency_option_showcountrycode']:0, 1,false)."/> ". __("Show Country as Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showstatecode]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_showstatecode'])?$rb_agency_options_arr['rb_agency_option_showstatecode']:0, 1,false)."/> ". __("Show as State Code", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortbydate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortbydate'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortbydate']:0, 1,false)."/> ". __("Sort by Date", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_displayprofileratings]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_displayprofileratings'])?$rb_agency_options_arr['rb_agency_option_profilelist_displayprofileratings']:0, 1,false)."/> ". __("Show Profile Ratings", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_includesortingbyprofileratings]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_includesortingbyprofileratings'])?$rb_agency_options_arr['rb_agency_option_profilelist_includesortingbyprofileratings']:0, 1,false)."/> ". __("Include Sorting by Profile Ratings", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -548,6 +550,7 @@ elseif ($ConfigID == 1) {
 		echo "     <select name=\"rb_agency_options[rb_agency_option_search_results_sort]\">\n";
 		echo "       <option value=\"DefaultResult\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'DefaultResult') ."> ". __("Default", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"CustomOrder\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'CustomOrder') ."> ". __("Custom Order", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"ProfileRating\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'ProfileRating') ."> ". __("Profile Rating", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";

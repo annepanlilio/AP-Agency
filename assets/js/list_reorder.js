@@ -128,6 +128,11 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                  1 : 'Male',
                                  2 : 'Female'
                          }
+                    }else if(setting == 150){
+                         options = {
+                                 1 : 'Highest to Lowest',
+                                 2 : 'Lowest to Highest'
+                         }
                     }else {
                           options = {
                                  '' : 'Sort Options'
@@ -241,6 +246,14 @@ function manage_elem(typ1, main_elm, hidden_elm){
                         if(t1 == '50' && t2 == '2'){
                             
                             return '502';
+                        }
+                         if(t1 == '150' && t2 == '1'){
+                            
+                            return '151';
+                        } 
+                        if(t1 == '150' && t2 == '2'){
+                            
+                            return '152';
                         } 
                         if(t1 == '0'){
                             return '0';
@@ -497,6 +510,28 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
                 });
+            }else if (sort_typ.split("_")[0] == '151') {
+               jQuery(".Female").hide();
+               jQuery(".Male").show();
+               jQuery("#hidden_div").find(".p_rating").each(function(){
+                    srt_arr.push(jQuery(this).val());   
+                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                });
+                
+                srt_arr.sort(); 
+                srt_arr.reverse();                                   
+                        
+            }else if(sort_typ.split("_")[0] == '152'){
+               jQuery(".Female").show();
+               jQuery(".Male").hide();
+                jQuery("#hidden_div").find(".p_rating").each(function(){
+                    srt_arr.push(jQuery(this).val());   
+                                        srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
+                });
+                
+                srt_arr.sort();
+
+                //alert("Show Females!");
             }
                    ////console.log(total_items);
                    
@@ -640,6 +675,33 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                        } else {
                                             if(prc.not_in_array(counted,value)){
                                                 prc.clone_em_all(value,"p_gender");
+                                                counted.push(value);
+                                            }
+                                        }
+
+                                        
+
+
+                                }else if(sort_typ == '151') {
+                                      if(prc.check_instance_in_array(value)){
+                                            var cloned = jQuery("#hidden_div").find(".p_rating[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
+                                            prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_rating");
+                                                counted.push(value);
+                                            }
+                                        } 
+
+
+
+                                }  else if(sort_typ == '152') {
+                                        if(prc.check_instance_in_array(value)){
+                                            var cloned = jQuery("#hidden_div").find(".p_rating[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
+                                            prc.clone_em(cloned);
+                                       } else {
+                                            if(prc.not_in_array(counted,value)){
+                                                prc.clone_em_all(value,"p_rating");
                                                 counted.push(value);
                                             }
                                         }

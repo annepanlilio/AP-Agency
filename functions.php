@@ -5312,6 +5312,51 @@ function deleteauditiondemo_func(){
 	die();
 }
 
+function rate_profile(){
+
+		global $wpdb;
+
+		$profile_id = $_POST['profile_id'];
+		$profile_rating = $_POST['profile_rating'];
+
+		//check if ProfileRating col exists
+		$queryAlterCheck = "SELECT ProfileRating FROM " . table_agency_profile ." LIMIT 1";
+		$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
+		$count_alter = $wpdb->num_rows;
+		if($count_alter > 0){
+			$queryAlter = "ALTER TABLE " . table_agency_profile ." MODIFY ProfileRating varchar(20) default 0";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);			
+		}else{
+			$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileRating varchar(20) default 0";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}
+
+		$update = "UPDATE " . table_agency_profile .
+				" SET ProfileRating = " . $profile_rating . " WHERE ProfileID = " . $profile_id;
+
+		$wpdb->query($update);
+
+		die();
+	}
+add_action('wp_ajax_rate_profile', 'rate_profile');
+add_action('wp_ajax_rate_profile', 'rate_profile');
 
 
+function additional_columns(){
+	global $wpdb;
+
+	$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
+	$rda = $wpdb->get_results($q,ARRAY_A);
+	$count = $wpdb->num_rows;
+
+	$q1 = "SELECT * FROM ".table_agency_profile;
+	$rda = $wpdb->get_results($q1,ARRAY_A);
+	$qnumrows = $wpdb->num_rows;
+
+	if($count == 0){
+		$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
+		$res = $wpdb->query($queryAlter);
+	}
+}
+add_action('init','additional_columns');
 ?>

@@ -790,11 +790,25 @@ class RBAgency_Profile {
 						$filterArray['sort'] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 					}
 
+					$rb_agency_options_arr = get_option('rb_agency_options');
+					if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
+						$orderType = " profile.CustomOrder ASC ";
+					}elseif($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'ProfileRating'){
+						$orderType = " profile.ProfileRating DESC ";
+					}else{
+						$orderType = "";
+					}
+
 					// Sort Order
 					if (isset($_REQUEST['dir']) && !empty($_REQUEST['dir'])){
 						$filterArray['dir'] = $_REQUEST['dir'];
 					} else {
-						$filterArray['dir'] = "asc";
+						if(!empty($orderType)){
+							$filterArray['dir'] = '';
+						}else{
+							$filterArray['dir'] = "asc";
+						}
+						
 					}
 
 					// Limit total records returned
@@ -944,7 +958,9 @@ class RBAgency_Profile {
 				$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
 
 			if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
-				$orderType = " profile.CustomOrder DESC ";
+				$orderType = " profile.CustomOrder ASC ";
+			}elseif($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'ProfileRating'){
+				$orderType = " profile.ProfileRating DESC ";
 			}else{
 				$orderType = "";
 			}
@@ -952,8 +968,16 @@ class RBAgency_Profile {
 			$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
 			$rda = $wpdb->get_results($q,ARRAY_A);
 			$count = $wpdb->num_rows;
-			if($count == 0){
-				$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default NULL";
+
+			$q1 = "SELECT * FROM ".table_agency_profile;
+			$rda = $wpdb->get_results($q1,ARRAY_A);
+			$qnumrows = $wpdb->num_rows;
+
+			if($count > 0){				
+				$queryAlter = "ALTER TABLE " . table_agency_profile ." MODIFY CustomOrder integer";
+				$res = $wpdb->query($queryAlter);				
+			}else{
+				$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
 				$res = $wpdb->query($queryAlter);
 			}
 
@@ -1484,8 +1508,16 @@ class RBAgency_Profile {
 			//if($rb_agency_option_profilelist_sortbydate && !empty($filter2)){
 			//$atts["sort"] = "cmux.ProfileCustomDateValue";
 			if($rb_agency_option_profilelist_sortbydate){
-				$atts["sort"] = "profile.ProfileDateCreated ";
-				$atts["dir"] = "DESC";
+				if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'ProfileRating'){
+					$atts["sort"] = "profile.ProfileRating ";
+					$atts["dir"] = "DESC";
+				}elseif($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
+					$atts["sort"] = "profile.CustomOrder ";
+					$atts["dir"] = "ASC";
+				}else{
+					$atts["sort"] = "profile.ProfileDateCreated ";
+					$atts["dir"] = "DESC";
+				}				
 			} elseif(!isset($atts["sort"])){
 				$atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 			}
@@ -1495,7 +1527,7 @@ class RBAgency_Profile {
 				$atts["limit"] = $rb_agency_option_persearch;
 			}
 
-			if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
+			if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder' ||  $rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'ProfileRating'){
 				$filter .= "";
 			}else{
 				$filter .= " GROUP BY profile.ProfileID";
@@ -1608,6 +1640,7 @@ class RBAgency_Profile {
 					profile.ProfileLocationState,
 					profile.ProfileLocationCountry,
 					profile.ProfileIsActive,
+					profile.ProfileRating,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
 
 					// Do we need the custom fields table?
@@ -1657,6 +1690,7 @@ class RBAgency_Profile {
 					profile.ProfileContactPhoneHome,
 					profile.ProfileContactWebsite,
 					profile.ProfileType,
+					profile.ProfileRating,
 					(SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media  WHERE  profile.ProfileID = media.ProfileID  AND media.ProfileMediaType = \"Image\"  AND media.ProfileMediaPrimary = 1 LIMIT 1) AS ProfileMediaURL ";
 
 					// Do we need the custom fields table?
@@ -1756,6 +1790,7 @@ class RBAgency_Profile {
 								profile.ProfileID as pID,
 								cart.CastingCartTalentID,
 								cart.CastingCartTalentID,
+								profile.ProfileRating,
 								(SELECT media.ProfileMediaURL FROM ".
 											table_agency_profile_media ." media
 											WHERE
@@ -1806,7 +1841,7 @@ class RBAgency_Profile {
 			 */
 				case 4:
 					$sqlFavorite_userID  = " fav.SavedFavoriteTalentID = profile.ProfileID  AND fav.SavedFavoriteProfileID = '".rb_agency_get_current_userid()."' ";
-					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileGender,profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where_array['standard'] . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
+					$sql = "SELECT profile.ProfileID, profile.ProfileGallery, profile.ProfileGender,profile.ProfileContactNameFirst, profile.ProfileContactNameLast, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileRating,profile.ProfileIsActive, profile.ProfileLocationState, profile.ProfileID as pID, fav.SavedFavoriteTalentID, fav.SavedFavoriteProfileID, (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE " . $sql_where_array['standard'] . " AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile INNER JOIN  ".table_agency_savedfavorite." fav WHERE $sqlFavorite_userID AND profile.ProfileIsActive = 1 GROUP BY fav.SavedFavoriteTalentID";
 					break;
 			}
 
@@ -1828,7 +1863,8 @@ class RBAgency_Profile {
 			/*
 			 * Check if search is Admin or Public
 			 */
-			
+
+				//echo $sql;
 				if(is_admin()){
 					return self::search_result_admin( $sql, $arr_query );
 				} else {
@@ -1934,6 +1970,10 @@ class RBAgency_Profile {
 								<option value="3">Date Joined</option>
 								<option value="2">Display Name</option>
 								<option value="50">Gender</option>';
+							if($rb_agency_options_arr['rb_agency_option_profilelist_includesortingbyprofileratings'] == true){
+								$all_html .= '<option value="150">Ratings</option>';
+							}
+							
 								$customFilters = array_merge($customFilters,$results_genders);
 
 								foreach($customFilters as $customFilter){
@@ -2549,6 +2589,19 @@ class RBAgency_Profile {
 					$displayHtml .=  "                </div>\n";
 					$displayHtml .=  "                <div class=\"title\">\n";
 					$displayHtml .=  "            		<h2>". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) ."</h2>\n";
+					
+					//profile ratings
+					$link_bg = plugins_url('rb-agency/view/imgs/sprite.png');
+					$ProfileRating = !empty($data["ProfileRating"]) ? $data["ProfileRating"] : 0;
+					$displayHtml .= "        <div style='clear:both; margin-top:-10px;margin-bottom:15px;'>";
+					$displayHtml .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 1 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+					$displayHtml .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 2 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+					$displayHtml .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 3 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+					$displayHtml .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 4 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+					$displayHtml .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating == 5 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+					$displayHtml .= "        </div><br>";
+
+
 					$displayHtml .=  "                </div>\n";
 					$displayHtml .=  "                <div class=\"row-actions\">\n";
 					$displayHtml .=  "                    <span class=\"edit\"><a href=\"". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=editRecord&amp;ProfileID=". $ProfileID ."\" title=\"Edit this post\">Edit</a> | </span>\n";
@@ -2879,6 +2932,8 @@ class RBAgency_Profile {
 					}
 
 					$displayHTML .= '<input id="cr'.$dataList["ProfileID"].'" type="hidden" class="p_created" value="'.(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"").'">';
+
+					$displayHTML .= '<input id="rt'.$dataList["ProfileID"].'" type="hidden" class="p_rating" value="'.(isset($dataList["ProfileRating"])?$dataList["ProfileRating"]:0).'">';
 					
 					
 
@@ -2932,8 +2987,22 @@ class RBAgency_Profile {
 				
 				$profile_name = "<strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
 				
+				//Profile Rating
+					//if(isset($dataList["ProfileRating"]) && !empty($dataList["ProfileRating"])){
+						$link_bg = plugins_url('rb-agency/view/imgs/sprite.png');
+						$ProfileRating = !empty($dataList["ProfileRating"]) ? $dataList["ProfileRating"] : 0;
+						$Rating .= "        <div style='clear:both; margin-top:5px;margin-bottom:-5px;'>";
+						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 1 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 2 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 3 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 4 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating == 5 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "        </div><br>";
+					//}
+
 				if($rb_agency_option_layoutprofileviewmode == 1) {
 					$profile_name = "<strong class=\"name\"><a href=\"#lightbox-fancy-".$dataList["ProfileID"] ."\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
+				
 				} 
 				
 				
@@ -3096,6 +3165,11 @@ class RBAgency_Profile {
 				if($rb_agency_option_layoutprofilenamepos == 0 || $rb_agency_option_layoutprofilenamepos == 2) {
 					$displayHTML .= $profile_name;
 				}
+				//get profile rating and display
+				if($rb_agency_options_arr["rb_agency_option_profilelist_displayprofileratings"] == true){
+					$displayHTML .= $Rating;
+				}
+				
 				
 				if(get_query_var('type') == "casting" && $uid > 0){
 					$displayHTML .= "<input type=\"checkbox\" name=\"profileid\" value=\"".$dataList["ProfileID"]."\"/>";
@@ -3812,6 +3886,23 @@ class RBAgency_Profile {
 						// Add Favorite and Casting Cart links
 						rb_agency_get_miscellaneousLinks($dataList["ProfileID"]);
 					}
+
+					//Profile Rating
+					if(isset($dataList["ProfileRating"]) && !empty($dataList["ProfileRating"])){
+						$link_bg = plugins_url('rb-agency/view/imgs/sprite.png');
+						$ProfileRating = $dataList["ProfileRating"];
+						echo "        <div style='clear:both; margin-top:5px'>";
+						echo "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 1 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						echo "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 2 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						echo "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 3 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						echo "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 4 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						echo "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating == 5 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						echo "        </div>";
+					}
+					
+
+					
+
 					echo "  </div><!-- .profile-info -->\n";
 					echo "</div><!-- .rbprofile-list -->\n";
 				}

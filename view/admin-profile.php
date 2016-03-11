@@ -204,8 +204,13 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
 					$rda = $wpdb->get_results($q,ARRAY_A);
 					$count = $wpdb->num_rows;
+
+					$q1 = "SELECT * FROM ".table_agency_profile;
+					$rda = $wpdb->get_results($q1,ARRAY_A);
+					$qnumrows = $wpdb->num_rows;
+
 					if($count == 0){
-						$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default NULL";
+						$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
 						$res = $wpdb->query($queryAlter);
 					}
 
@@ -375,8 +380,13 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
 						$rda = $wpdb->get_results($q,ARRAY_A);
 						$count = $wpdb->num_rows;
+
+						$q1 = "SELECT * FROM ".table_agency_profile;
+						$rda = $wpdb->get_results($q1,ARRAY_A);
+						$qnumrows = $wpdb->num_rows;
+
 						if($count == 0){
-							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default NULL";
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
 							$res = $wpdb->query($queryAlter);
 						}
 
@@ -992,6 +1002,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileDateCreated = stripslashes($data['ProfileDateCreated']);
 			$isPrivate = stripslashes($data['isPrivate']);
 			$CustomOrder = stripslashes($data['CustomOrder']);
+			$ProfileRating = stripslashes($data['ProfileRating']);
 		}
 
 		$caption_header = __("Edit", RBAGENCY_TEXTDOMAIN) . " " . LabelSingular;
@@ -1447,9 +1458,65 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Custom Order", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
-							echo "          <input type=\"text\" name=\"CustomOrder\" id=\"CustomOrder\" value=\"".(isset($CustomOrder) ? $CustomOrder : '')."\" /><br />\n";
+
+										$q1 = "SELECT * FROM ".table_agency_profile;
+										$rda = $wpdb->get_results($q1,ARRAY_A);
+										$qnumrows = $wpdb->num_rows;
+										$customorder = $qnumrows > 1 && $CustomOrder == $qnumrows ? '' : $CustomOrder;
+
+							echo "          <input type=\"text\" name=\"CustomOrder\" id=\"CustomOrder\" value=\"".(isset($customorder) ? $customorder : '')."\" /><br />\n";
 							echo "        </td>\n";
 							echo "    </tr>\n";
+
+							//rate feature
+							echo "    <tr valign=\"top\">\n";
+							echo "        <th scope=\"row\">" . __("Rate Profile", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
+							echo "        <td>\n";
+							?>
+							<script type="text/javascript">
+							jQuery(document).ready(function(){
+									//hover stars
+									//rate profile
+
+									jQuery(".rate_profile").click(function(){
+										// TODO PATH INVALID
+										var loader = "<?php echo plugins_url('rb-agency/view/imgs/loader.gif'); ?>";
+										var check = "<?php echo plugins_url('rb-agency/view/imgs/check.png'); ?>";
+
+										jQuery(".loading").html("<img src='"+loader+"'>");
+
+										var profile_id = jQuery(".Profile_ID").val();
+
+										var rating = jQuery(".Profile_Rating").val();
+
+										
+										jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rate_profile",
+													'profile_id': profile_id,
+													'profile_rating': rating
+												},
+												success: function (results) {
+													jQuery(".loading").html("<img src='"+check+"'>");
+												}
+										});
+									});
+
+							});
+							</script>
+							<?php
+								
+
+			
+							
+							echo "			<input type=\"hidden\" class=\"Profile_ID\" value=\"".$ProfileID."\">";
+							echo "  		<input type=\"text\" class=\"Profile_Rating\" value=\"".$ProfileRating."\" style=\"width:50px;\"> ";
+							echo "			<input type='button' class='rate_profile' value='Rate' style='clear:both;'> <div class='loading' style='float:right; margin-right:15px; margin-top:5px; width:20px; height:20px'></div>";
+							echo "        </td>\n";
+							echo "    </tr>\n";
+
 							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Set this Profile to Private", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
