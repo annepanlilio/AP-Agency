@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-03-03 15:00-0800\n"
+"PO-Revision-Date: 2016-03-11 17:12-0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -839,3 +839,576 @@ msgstr "Deinstallieren"
 
 msgid "Uninstall RB Agency software and completely remove all data"
 msgstr "Deinstallieren RB Agency Software und entfernen Sie alle Daten vollständig"
+
+msgid "Interactive Settings"
+msgstr ""
+
+msgid "These settings modify the behavior of the RB Agency Interactive plugin."
+msgstr ""
+
+msgid "Subscription Rates"
+msgstr ""
+
+msgid "Show Sidebar on Member Management/Login Pages"
+msgstr ""
+
+msgid "Hide Toolbar on All Pages"
+msgstr ""
+
+msgid "Login Settings (Model/Talent)"
+msgstr ""
+
+msgid "Do Not Override Login Screen"
+msgstr ""
+
+msgid "Redirect to /profile-login/"
+msgstr ""
+
+msgid "Redirect to homepage"
+msgstr ""
+
+msgid "Redirect for Login"
+msgstr ""
+
+msgid "Redirect to /profile-member/account/"
+msgstr ""
+
+msgid "Redirect first time users"
+msgstr ""
+
+msgid "Redirect users after login(excluding new users)"
+msgstr ""
+
+msgid "Redirect to /profile-member/account/(default)"
+msgstr ""
+
+msgid "Switch Sidebar"
+msgstr ""
+
+msgid "Use default interact sidebar"
+msgstr ""
+
+msgid "Use theme widget sidebar"
+msgstr ""
+
+msgid "Login Settings (Casting Agent)"
+msgstr ""
+
+msgid "Redirect users after login"
+msgstr ""
+
+msgid "Redirect to /casting-dashboard/(default)"
+msgstr ""
+
+msgid "Redirect to custom( e.g. /welcome/ ):"
+msgstr ""
+
+msgid "Registration Process (Model/ Talent)"
+msgstr ""
+
+msgid "Email Confirmation"
+msgstr ""
+
+msgid "Password Auto-Generated (sent via email)"
+msgstr ""
+
+msgid "Password Self-Generated"
+msgstr ""
+
+msgid "Show User Registration when creating Profiles"
+msgstr ""
+
+msgid "Show Username field (if email confirmation is set to \"password auto-generated\""
+msgstr ""
+
+msgid "Show Username & Password fields (if email confirmation is set to \"password self-generated\""
+msgstr ""
+
+msgid "New Profile Registration"
+msgstr ""
+
+msgid "Users may register profiles (uncheck to prevent self registration)"
+msgstr ""
+
+msgid "Delete Options"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Yes (Allow users to permanently delete their profile)"
+msgstr ""
+
+msgid "Archive Only (Allow users to hide their profile)"
+msgstr ""
+
+msgid "New Profile Approval"
+msgstr ""
+
+msgid "Manually Approved"
+msgstr ""
+
+msgid "Automatically Approved"
+msgstr ""
+
+msgid "Default State For Registered Users"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Active - Not Visible On Website"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Archive"
+msgstr ""
+
+msgid "Pending Approval"
+msgstr ""
+
+msgid "Registration Process (Casting Agent)"
+msgstr ""
+
+msgid "Membership Subscription"
+msgstr ""
+
+msgid "Notifications"
+msgstr ""
+
+msgid "(Display Upsell Messages for Subscription)"
+msgstr ""
+
+msgid "Embed Overview Page ID"
+msgstr ""
+
+msgid "Embed Registration Page ID"
+msgstr ""
+
+msgid "PayPal Email Address"
+msgstr ""
+
+msgid "Website Details"
+msgstr ""
+
+msgid "Header Email"
+msgstr ""
+
+msgid "Remove Updates on Dashboard"
+msgstr ""
+
+msgid "Change the status to \"pending approval\" whenever a profile is updated"
+msgstr ""
+
+msgid "Default Profile Status"
+msgstr ""
+
+msgid "Send email to Models/Talents"
+msgstr ""
+
+msgid "allow casting agent to contact talent directly"
+msgstr ""
+
+msgid "only admin can send Job invites"
+msgstr ""
+
+msgid "Models/Profiles Terms of Conditions Link"
+msgstr ""
+
+msgid "Casting Terms of Conditions Link"
+msgstr ""
+
+msgid "404 Profile Link"
+msgstr ""
+
+msgid "Internationalization"
+msgstr ""
+
+msgid "Default Country"
+msgstr ""
+
+msgid "Server Timezone"
+msgstr ""
+
+msgid "Imperial"
+msgstr ""
+
+msgid "Metric"
+msgstr ""
+
+msgid "Profile List Options"
+msgstr ""
+
+msgid "Display Options"
+msgstr ""
+
+msgid "Show Model Count"
+msgstr ""
+
+msgid "Show Sort Options"
+msgstr ""
+
+msgid "Expanded Model Details"
+msgstr ""
+
+msgid "Show Age (Year)"
+msgstr ""
+
+msgid "Show Age (Month)"
+msgstr ""
+
+msgid "Show Age (Day)"
+msgstr ""
+
+msgid "Show City"
+msgstr ""
+
+msgid "Show State"
+msgstr ""
+
+msgid "Show Email Address in Search Results"
+msgstr ""
+
+msgid "Show Contact Number in Search Results"
+msgstr ""
+
+msgid "Show Email Address in Listing"
+msgstr ""
+
+msgid "Show Contact Number in Listing"
+msgstr ""
+
+msgid "Enable Model Favorites"
+msgstr ""
+
+msgid "Show Sidebar"
+msgstr ""
+
+msgid "Show Casting Cart"
+msgstr ""
+
+msgid "Show Thumbs Slide"
+msgstr ""
+
+msgid "Show Print and Download PDF Link"
+msgstr ""
+
+msgid "Show Manage Your Subscription"
+msgstr ""
+
+msgid "Show Social Buttons"
+msgstr ""
+
+msgid "Show Country as Code"
+msgstr ""
+
+msgid "Show as State Code"
+msgstr ""
+
+msgid "Sort by Date"
+msgstr ""
+
+msgid "Show Profile Ratings"
+msgstr ""
+
+msgid "Include Sorting by Profile Ratings"
+msgstr ""
+
+msgid "Profile Default Sort"
+msgstr ""
+
+msgid "Search Results Sort"
+msgstr ""
+
+msgid "Auto-Generated ID"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Custom Order"
+msgstr ""
+
+msgid "Profile Rating"
+msgstr ""
+
+msgid "Profiles Per Page"
+msgstr ""
+
+msgid "Profiles Per Row"
+msgstr ""
+
+msgid "Profile List Style"
+msgstr ""
+
+msgid "Name Under Image"
+msgstr ""
+
+msgid "Name Over Image"
+msgstr ""
+
+msgid "Name Under Image with Color"
+msgstr ""
+
+msgid "Voice Over (no image)"
+msgstr ""
+
+msgid "Landscape"
+msgstr ""
+
+msgid "Favorite and Casting Display"
+msgstr ""
+
+msgid "Image Overlay"
+msgstr ""
+
+msgid "Favorite and Casting Effect"
+msgstr ""
+
+msgid "No effect"
+msgstr ""
+
+msgid "Fade"
+msgstr ""
+
+msgid "Slide"
+msgstr ""
+
+msgid "Profile Search Options"
+msgstr ""
+
+msgid "Maximum Records Returned"
+msgstr ""
+
+msgid "Search Fields"
+msgstr ""
+
+msgid "Show Name Search Fields"
+msgstr ""
+
+msgid "Show Type Search Fields"
+msgstr ""
+
+msgid "Show Location Search Fields"
+msgstr ""
+
+msgid "Show Gender Search Fields"
+msgstr ""
+
+msgid "Show Age Search Fields"
+msgstr ""
+
+msgid "Show Display Name"
+msgstr ""
+
+msgid "Show Birthdate Fields"
+msgstr ""
+
+msgid "Hide Advanced Search button in Basic form &amp; search result"
+msgstr ""
+
+msgid "Do not retain search values in searches"
+msgstr ""
+
+msgid "Admin Casting Cart Options"
+msgstr ""
+
+msgid "Show Hidden Contact Details in Quick Print"
+msgstr ""
+
+msgid "Display Age"
+msgstr ""
+
+msgid "Admin Printing"
+msgstr ""
+
+msgid "Casting cart Email"
+msgstr ""
+
+msgid "Image Resizing"
+msgstr ""
+
+msgid "Use TimThumb"
+msgstr ""
+
+msgid "Image Handling"
+msgstr ""
+
+msgid "Resize Images"
+msgstr ""
+
+msgid "Maximum Width"
+msgstr ""
+
+msgid "Maximum Height"
+msgstr ""
+
+msgid "Profile Thumbnails"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Image Compression"
+msgstr ""
+
+msgid "Maximum Quality"
+msgstr ""
+
+msgid "Very High Quality"
+msgstr ""
+
+msgid "High Quality"
+msgstr ""
+
+msgid "Medium Quality"
+msgstr ""
+
+msgid "Low Quality"
+msgstr ""
+
+msgid "Profile Thumbnails Caption"
+msgstr ""
+
+msgid "Show Image Caption"
+msgstr ""
+
+msgid "Profile View Options"
+msgstr ""
+
+msgid "Enable Under Dev Layout"
+msgstr ""
+
+msgid "Enable Custom Layout"
+msgstr ""
+
+msgid "Enable Pop-up Layout"
+msgstr ""
+
+msgid "Profile View Mode"
+msgstr ""
+
+msgid "Pop up"
+msgstr ""
+
+msgid "Slide Down Panel"
+msgstr ""
+
+msgid "Model list public. Must be logged to view profile information"
+msgstr ""
+
+msgid "Model list and profile information public"
+msgstr ""
+
+msgid "Must be logged in to view model list, profile information, and search forms."
+msgstr ""
+
+msgid "Must be logged in to view Profile Listing and Search"
+msgstr ""
+
+msgid "Profile Name Format"
+msgstr ""
+
+msgid "First Last"
+msgstr ""
+
+msgid "First L"
+msgstr ""
+
+msgid "First"
+msgstr ""
+
+msgid "Last"
+msgstr ""
+
+msgid "Display Name"
+msgstr ""
+
+msgid "Auto Generated Record ID"
+msgstr ""
+
+msgid "Slimbox2"
+msgstr ""
+
+msgid "No Gallery"
+msgstr ""
+
+msgid "Show most recently uploaded first"
+msgstr ""
+
+msgid "Show chronological order"
+msgstr ""
+
+msgid "Profile Media Links"
+msgstr ""
+
+msgid "Open in a new window"
+msgstr ""
+
+msgid "Force Download"
+msgstr ""
+
+msgid "Show Gender"
+msgstr ""
+
+msgid "EasyTxt Integration"
+msgstr ""
+
+msgid "URL"
+msgstr ""
+
+msgid "API Key"
+msgstr ""
+
+msgid "API Secret"
+msgstr ""
+
+msgid "Casting Dashboard Setting"
+msgstr ""
+
+msgid "Buttons to Display"
+msgstr ""
+
+msgid "Post a New Job"
+msgstr ""
+
+msgid "View Your Job Postings"
+msgstr ""
+
+msgid "View Your Applicants"
+msgstr ""
+
+msgid "Cart and Favorite Icon Setting"
+msgstr ""
+
+msgid "Cart Icon URL"
+msgstr ""
+
+msgid "Leave blank for default"
+msgstr ""
+
+msgid "Favorite Icon URL"
+msgstr ""
+
+msgid "Card Photo Settings"
+msgstr ""
+
+msgid "Logo URL"
+msgstr ""
+
+msgid "full url(include http:// ) / exact Height: 100px width: 200px;"
+msgstr ""
+
+msgid "Model Card Layout"
+msgstr ""
+
+msgid "Layout 0"
+msgstr ""
+
+msgid "Layout 1"
+msgstr ""
