@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-03-11 17:12-0800\n"
+"PO-Revision-Date: 2016-03-11 17:30-0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -1411,4 +1411,58 @@ msgid "Layout 0"
 msgstr ""
 
 msgid "Layout 1"
+msgstr ""
+
+msgid "Subscription Tiers"
+msgstr ""
+
+msgid "Subscription Tier"
+msgstr ""
+
+msgid "Subscription Tier name is required"
+msgstr ""
+
+msgid "Error creating %s, please ensure you have filled out all required fields"
+msgstr ""
+
+msgid "%s <strong>added</strong> successfully! You may now %s Load Information to the record"
+msgstr ""
+
+msgid "%s <strong>updated</strong> successfully"
+msgstr ""
+
+msgid "Edit %s"
+msgstr ""
+
+msgid "Create New  %s"
+msgstr ""
+
+msgid "Make changes in the form below to edit a "
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Package Rate"
+msgstr ""
+
+msgid "Subscription Duration"
+msgstr ""
+
+msgid "Update Record"
+msgstr ""
+
+msgid "Create Record"
+msgstr ""
+
+msgid "All Records"
+msgstr ""
+
+msgid "Rate/Term"
+msgstr ""
+
+msgid "There aren't any records loaded yet"
 msgstr ""
