@@ -70,8 +70,8 @@
 
 			// Profile View Layout Control
 			$rb_agency_option_under_dev_layout = isset($rb_agency_options_arr['rb_agency_option_under_dev_layout'])? $rb_agency_options_arr['rb_agency_option_under_dev_layout']:"04,05";
-			$rb_agency_option_custom_layout = isset($rb_agency_options_arr['rb_agency_option_custom_layout'])? $rb_agency_options_arr['rb_agency_option_custom_layout']:"07,08,10,11,12,13";
-			$rb_agency_option_popup_layout = isset($rb_agency_options_arr['rb_agency_option_popup_layout'])? $rb_agency_options_arr['rb_agency_option_popup_layout']:"04,05,07,08,10,11,12,13";
+			$rb_agency_option_custom_layout = isset($rb_agency_options_arr['rb_agency_option_custom_layout'])? $rb_agency_options_arr['rb_agency_option_custom_layout']:"04,05,06,07,08,10,11,12,13,14,15,16";
+			$rb_agency_option_popup_layout = isset($rb_agency_options_arr['rb_agency_option_popup_layout'])? $rb_agency_options_arr['rb_agency_option_popup_layout']:"04,05,06,07,08,10,11,12,13,14,15,16";
 
 			// Gallery Type
 			$rb_agency_option_gallerytype = isset($rb_agency_options_arr['rb_agency_option_gallerytype'])?$rb_agency_options_arr['rb_agency_option_gallerytype']:0;
