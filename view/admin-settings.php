@@ -376,14 +376,14 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Show Fields', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_showsocial]\" value=\"1\" ".checked($rb_agency_options_arr['rb_agency_option_showsocial'], 1,false)."/> Extended Social Profiles<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> Remove Updates on Dashboard<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_advertise]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_advertise'])?$rb_agency_options_arr['rb_agency_option_advertise']:0, 1,false)."/> ".__("Remove Updates on Dashboard",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		if(function_exists('rb_agency_interact_menu')){
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Default Profile Status', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_inactive_profile_on_update]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])?$rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0, 1,false)."/> Change the status to \"pending approval\" whenever a profile is updated<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_inactive_profile_on_update]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])?$rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0, 1,false)."/> ".__("Change the status to \"pending approval\" whenever a profile is updated",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		}
@@ -391,8 +391,8 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Send email to Models/Talents', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_allowsendemail]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_allowsendemail'])?$rb_agency_options_arr['rb_agency_option_allowsendemail']:0, 1,false)."/> allow casting agent to contact talent directly<br />\n";
-		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_allowsendemail]\" value=\"2\" ".checked(isset($rb_agency_options_arr['rb_agency_option_allowsendemail'])?$rb_agency_options_arr['rb_agency_option_allowsendemail']:0, 2,false)."/> only admin can send Job invites<br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_allowsendemail]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_allowsendemail'])?$rb_agency_options_arr['rb_agency_option_allowsendemail']:0, 1,false)."/>".__("allow casting agent to contact talent directly",RBAGENCY_TEXTDOMAIN)." <br />\n";
+		echo "     <input type=\"radio\" name=\"rb_agency_options[rb_agency_option_allowsendemail]\" value=\"2\" ".checked(isset($rb_agency_options_arr['rb_agency_option_allowsendemail'])?$rb_agency_options_arr['rb_agency_option_allowsendemail']:0, 2,false)."/>".__("only admin can send Job invites",RBAGENCY_TEXTDOMAIN)." <br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		}
@@ -499,10 +499,10 @@ elseif ($ConfigID == 1) {
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_day]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_day']:0, 1,false)."/> ". __("Show Age (Day)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_city]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_city'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_city']:0, 1,false)."/> ". __("Show City", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_state]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_state']:0, 1,false)."/> ". __("Show State", RBAGENCY_TEXTDOMAIN) ."<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_email_search_result]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0, 1,false)."/> Show Email Address in Search Results<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_contact_search_result]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0, 1,false)."/> Show Contact Number in Search Results<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_email_listing]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0, 1,false)."/> Show Email Address in Listing<br />\n";
-		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_contact_listing]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0, 1,false)."/> Show Contact Number in Listing<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_email_search_result]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_email_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_email_search_result']:0, 1,false)."/> ". __("Show Email Address in Search Results", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_contact_search_result]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_contact_search_result'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_search_result']:0, 1,false)."/>". __("Show Contact Number in Search Results", RBAGENCY_TEXTDOMAIN) ." <br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_email_listing]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_email_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_email_listing']:0, 1,false)."/> ". __("Show Email Address in Listing", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_contact_listing]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_contact_listing'])?$rb_agency_options_arr['rb_agency_option_formshow_contact_listing']:0, 1,false)."/> ". __("Show Contact Number in Listing", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 
 		if ( class_exists("RBAgencyCasting") ) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_favorite]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_favorite'])?$rb_agency_options_arr['rb_agency_option_profilelist_favorite']:0, 1,false)."/> ". __("Enable Model Favorites", RBAGENCY_TEXTDOMAIN) ."<br />\n";
@@ -549,7 +549,7 @@ elseif ($ConfigID == 1) {
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_search_results_sort]\">\n";
 		echo "       <option value=\"DefaultResult\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'DefaultResult') ."> ". __("Default", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"CustomOrder\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'CustomOrder') ."> ". __("Custom Order", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		//echo "       <option value=\"CustomOrder\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'CustomOrder') ."> ". __("Custom Order", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"ProfileRating\" ". selected($rb_agency_options_arr['rb_agency_option_search_results_sort'],'ProfileRating') ."> ". __("Profile Rating", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
@@ -635,16 +635,16 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Search Fields', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_name]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_name'])?$rb_agency_options_arr['rb_agency_option_formshow_name']:0, 1,false)."/> Show Name Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_type]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0, 1,false)."/> Show Type Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_location]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_location'])?$rb_agency_options_arr['rb_agency_option_formshow_location']:0, 1,false)."/> Show Location Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_gender]\" value=\"1\" ".checked( isset($rb_agency_options_arr['rb_agency_option_formshow_gender'])?$rb_agency_options_arr['rb_agency_option_formshow_gender']:0, 1,false)."/> Show Gender Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_age]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0, 1,false)."/> Show Age Search Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_displayname]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0, 1,false)."/> Show Display Name<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_name]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_name'])?$rb_agency_options_arr['rb_agency_option_formshow_name']:0, 1,false)."/>".__("Show Name Search Fields",RBAGENCY_TEXTDOMAIN)." <br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_type]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_type'])?$rb_agency_options_arr['rb_agency_option_formshow_type']:0, 1,false)."/>".__("Show Type Search Fields",RBAGENCY_TEXTDOMAIN)." <br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_location]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_location'])?$rb_agency_options_arr['rb_agency_option_formshow_location']:0, 1,false)."/>".__("Show Location Search Fields",RBAGENCY_TEXTDOMAIN)." <br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_gender]\" value=\"1\" ".checked( isset($rb_agency_options_arr['rb_agency_option_formshow_gender'])?$rb_agency_options_arr['rb_agency_option_formshow_gender']:0, 1,false)."/> ".__("Show Gender Search Fields",RBAGENCY_TEXTDOMAIN)."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_age]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_age'])?$rb_agency_options_arr['rb_agency_option_formshow_age']:0, 1,false)."/> ".__("Show Age Search Fields",RBAGENCY_TEXTDOMAIN)."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_displayname]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_displayname'])?$rb_agency_options_arr['rb_agency_option_formshow_displayname']:0, 1,false)."/> ".__("Show Display Name",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		//echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_form_sidebar]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_form_sidebar'])?$rb_agency_options_arr['rb_agency_option_form_sidebar']:0, 1,false)."/> Add search form sidebar on search result(front-end only)<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_birthdate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_birthdate'])?$rb_agency_options_arr['rb_agency_option_formshow_birthdate']:0, 1,false)."/> Show Birthdate Fields<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formhide_advancedsearch_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0, 1,false)."/> Hide Advanced Search button in Basic form &amp; search result<br />\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_form_clearvalues]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_form_clearvalues'])?$rb_agency_options_arr['rb_agency_option_form_clearvalues']:0, 1,false)."/> Do not retain search values in searches<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formshow_birthdate]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formshow_birthdate'])?$rb_agency_options_arr['rb_agency_option_formshow_birthdate']:0, 1,false)."/> ".__("Show Birthdate Fields",RBAGENCY_TEXTDOMAIN)."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_formhide_advancedsearch_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button'])?$rb_agency_options_arr['rb_agency_option_formhide_advancedsearch_button']:0, 1,false)."/> ".__("Hide Advanced Search button in Basic form &amp; search result",RBAGENCY_TEXTDOMAIN)."<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_form_clearvalues]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_form_clearvalues'])?$rb_agency_options_arr['rb_agency_option_form_clearvalues']:0, 1,false)."/> ".__("Do not retain search values in searches",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -658,7 +658,7 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Admin Printing', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_adminprint_hidden]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0, 1,false)."/> Show Hidden Contact Details in Quick Print<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_adminprint_hidden]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_adminprint_hidden'])?$rb_agency_options_arr['rb_agency_option_adminprint_hidden']:0, 1,false)."/> ".__("Show Hidden Contact Details in Quick Print",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -689,7 +689,7 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Image Resizing', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_usetimthumb]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_usetimthumb'])?$rb_agency_options_arr['rb_agency_option_usetimthumb']:0, 1,false)."/> Use TimThumb<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_usetimthumb]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_usetimthumb'])?$rb_agency_options_arr['rb_agency_option_usetimthumb']:0, 1,false)."/> ".__("Use TimThumb",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -724,7 +724,7 @@ elseif ($ConfigID == 1) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile Thumbnails Caption', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profile_thumb_caption]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profile_thumb_caption'])?$rb_agency_options_arr['rb_agency_option_profile_thumb_caption']:0, 1,false)."/> Show Image Caption<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profile_thumb_caption]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profile_thumb_caption'])?$rb_agency_options_arr['rb_agency_option_profile_thumb_caption']:0, 1,false)."/> ".__("Show Image Caption",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
@@ -737,9 +737,9 @@ elseif ($ConfigID == 1) {
 		echo " <tr style=\"display:none;\" valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Profile View Control', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "		<input name=\"rb_agency_options[rb_agency_option_under_dev_layout]\" value=\"". $rb_agency_option_under_dev_layout ."\" /><small>Enable Under Dev Layout</small><br>\n";
-		echo "   	<input name=\"rb_agency_options[rb_agency_option_custom_layout]\" value=\"". $rb_agency_option_custom_layout ."\" /><small>Enable Custom Layout</small><br>\n";
-		echo "   	<input name=\"rb_agency_options[rb_agency_option_popup_layout]\" value=\"". $rb_agency_option_popup_layout ."\" /><small>Enable Pop-up Layout</small>\n";
+		echo "		<input name=\"rb_agency_options[rb_agency_option_under_dev_layout]\" value=\"". $rb_agency_option_under_dev_layout ."\" /><small>".__("Enable Under Dev Layout",RBAGENCY_TEXTDOMAIN)."</small><br>\n";
+		echo "   	<input name=\"rb_agency_options[rb_agency_option_custom_layout]\" value=\"". $rb_agency_option_custom_layout ."\" /><small>".__("Enable Custom Layout",RBAGENCY_TEXTDOMAIN)."</small><br>\n";
+		echo "   	<input name=\"rb_agency_options[rb_agency_option_popup_layout]\" value=\"". $rb_agency_option_popup_layout ."\" /><small>".__("Enable Pop-up Layout",RBAGENCY_TEXTDOMAIN)."</small>\n";
 		echo " 	</td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
@@ -1088,7 +1088,7 @@ elseif ($ConfigID == 11) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('New Profile Registration', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1,false)."/> Users may register profiles (uncheck to prevent self registration)<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_registerallow]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_registerallow'], 1,false)."/>".__("Users may register profiles (uncheck to prevent self registration)", RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		/*
@@ -1197,7 +1197,7 @@ elseif ($ConfigID == 11) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Notifications', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
-		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribeupsell]\" value=\"1\" "; checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell']:"", 1,false); echo "/> Display Upsell Messages for Subscription)<br />\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribeupsell]\" value=\"1\" "; checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribeupsell']:"", 1,false); echo "/> ".__("(Display Upsell Messages for Subscription)",RBAGENCY_TEXTDOMAIN)."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";

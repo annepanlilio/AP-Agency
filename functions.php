@@ -2848,7 +2848,7 @@
 	/*/
 	 *   Profile Extend Social Links
 	/*/ 
-	function rb_agency_getSocialLinks($ProfileID){
+	function rb_agency_getSocialLinks($ProfileID = ""){
 
 		$rb_agency_options_arr = get_option('rb_agency_options');
 			$rb_agency_option_showsocial = isset($rb_agency_options_arr['rb_agency_option_showsocial'])?$rb_agency_options_arr['rb_agency_option_showsocial']:0;

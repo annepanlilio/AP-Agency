@@ -128,7 +128,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                  1 : 'Male',
                                  2 : 'Female'
                          }
-                    }else if(setting == 150){
+                    }else if(setting == 151){
                          options = {
                                  1 : 'Highest to Lowest',
                                  2 : 'Lowest to Highest'
@@ -247,11 +247,11 @@ function manage_elem(typ1, main_elm, hidden_elm){
                             
                             return '502';
                         }
-                         if(t1 == '150' && t2 == '1'){
+                         if(t1 == '151' && t2 == '1'){
                             
                             return '151';
                         } 
-                        if(t1 == '150' && t2 == '2'){
+                        if(t1 == '151' && t2 == '2'){
                             
                             return '152';
                         } 
@@ -510,8 +510,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
                 });
-            }else if (sort_typ.split("_")[0] == '151') {
-               jQuery(".Female").hide();
+            }else if (sort_typ == '151') {
+               jQuery(".Female").show();
                jQuery(".Male").show();
                jQuery("#hidden_div").find(".p_rating").each(function(){
                     srt_arr.push(jQuery(this).val());   
@@ -519,18 +519,18 @@ function manage_elem(typ1, main_elm, hidden_elm){
                 });
                 
                 srt_arr.sort(); 
-                srt_arr.reverse();                                   
+                srt_arr.reverse();                    
                         
-            }else if(sort_typ.split("_")[0] == '152'){
+            }else if(sort_typ == '152'){
                jQuery(".Female").show();
-               jQuery(".Male").hide();
+               jQuery(".Male").show();
                 jQuery("#hidden_div").find(".p_rating").each(function(){
                     srt_arr.push(jQuery(this).val());   
                                         srt_arr_assoc[jQuery(this).attr('id')] = jQuery(this).val();
                 });
                 
                 srt_arr.sort();
-
+                
                 //alert("Show Females!");
             }
                    ////console.log(total_items);
@@ -682,21 +682,9 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                         
 
 
-                                }else if(sort_typ == '151') {
+                                }else if(sort_typ == '151' || sort_typ == '152') {
+                                 
                                       if(prc.check_instance_in_array(value)){
-                                            var cloned = jQuery("#hidden_div").find(".p_rating[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
-                                            prc.clone_em(cloned);
-                                       } else {
-                                            if(prc.not_in_array(counted,value)){
-                                                prc.clone_em_all(value,"p_rating");
-                                                counted.push(value);
-                                            }
-                                        } 
-
-
-
-                                }  else if(sort_typ == '152') {
-                                        if(prc.check_instance_in_array(value)){
                                             var cloned = jQuery("#hidden_div").find(".p_rating[value=\""+value+"\"]").parent('.profile-box').parent('.rbprofile-list');
                                             prc.clone_em(cloned);
                                        } else {
@@ -706,7 +694,6 @@ function manage_elem(typ1, main_elm, hidden_elm){
                                             }
                                         }
 
-                                        
 
 
                                 } else if(sort_typ == '0'){

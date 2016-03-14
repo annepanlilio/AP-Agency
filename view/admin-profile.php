@@ -1455,7 +1455,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked(isset($ProfileIsFeatured)?$ProfileIsFeatured:0, 1, false) . " /> Featured<br />\n";
 							echo "        </td>\n";
 							echo "    </tr>\n";
-							echo "    <tr valign=\"top\">\n";
+						/**	echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Custom Order", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
 
@@ -1466,7 +1466,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							echo "          <input type=\"text\" name=\"CustomOrder\" id=\"CustomOrder\" value=\"".(isset($customorder) ? $customorder : '')."\" /><br />\n";
 							echo "        </td>\n";
-							echo "    </tr>\n";
+							echo "    </tr>\n"; **/
 
 							//rate feature
 							echo "    <tr valign=\"top\">\n";
@@ -2027,7 +2027,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							//display audition demos
 							$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
-							$files = scandir($dir, 0);
+							@$files = scandir($dir, 0);
 									
 							$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];		
 							for($i = 0; $i < count($files); $i++){
@@ -2891,7 +2891,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												<?php 
 
 												$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
-												$files = scandir($dir, 0);
+												@$files = scandir($dir, 0);
 												//print_r($files);
 												$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 

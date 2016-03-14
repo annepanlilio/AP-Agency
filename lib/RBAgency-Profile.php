@@ -790,6 +790,7 @@ class RBAgency_Profile {
 						$filterArray['sort'] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 					}
 
+					$orderType = '';
 					$rb_agency_options_arr = get_option('rb_agency_options');
 					if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
 						$orderType = " profile.CustomOrder ASC ";
@@ -956,14 +957,8 @@ class RBAgency_Profile {
 			$rb_agency_options_arr = get_option('rb_agency_options');
 				// Get Time Zone
 				$rb_agency_option_locationtimezone = isset($rb_agency_options_arr['rb_agency_option_locationtimezone']) ? $rb_agency_options_arr['rb_agency_option_locationtimezone']:"";
+			
 
-			if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
-				$orderType = " profile.CustomOrder ASC ";
-			}elseif($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'ProfileRating'){
-				$orderType = " profile.ProfileRating DESC ";
-			}else{
-				$orderType = "";
-			}
 
 			$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
 			$rda = $wpdb->get_results($q,ARRAY_A);
@@ -1462,10 +1457,21 @@ class RBAgency_Profile {
 					if(empty($_sortBy )){
 						 $_sortBy = 'ProfileContactNameFirst';
 					}
+
+					if(isset($_POST['search_profiles'])){
+						if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
+							$orderType = " profile.CustomOrder ASC ";
+						}elseif($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'ProfileRating'){
+							$orderType = " profile.ProfileRating DESC ";
+						}else{
+							$orderType = "";
+						}
+					}
+						
 					if(empty($orderType)){
 						$atts['sort'] = 'profile.'.$_sortBy;
 					}else{
-						$atts['sort'] = $orderType;
+						$atts['sort'] = $orderType .',profile.'.$_sortBy;
 					}
 					
 					if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= ' DESC';
@@ -1505,16 +1511,8 @@ class RBAgency_Profile {
 			//if($rb_agency_option_profilelist_sortbydate && !empty($filter2)){
 			//$atts["sort"] = "cmux.ProfileCustomDateValue";
 			if($rb_agency_option_profilelist_sortbydate){
-				if($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'ProfileRating'){
-					$atts["sort"] = "profile.ProfileRating ";
-					$atts["dir"] = "DESC";
-				}elseif($rb_agency_options_arr['rb_agency_option_search_results_sort'] == 'CustomOrder'){
-					$atts["sort"] = "profile.CustomOrder ";
-					$atts["dir"] = "ASC";
-				}else{
-					$atts["sort"] = "profile.ProfileDateCreated ";
-					$atts["dir"] = "DESC";
-				}				
+				$atts["sort"] = "profile.ProfileDateCreated ";
+				$atts["dir"] = "DESC";
 			} elseif(!isset($atts["sort"])){
 				$atts["sort"] = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
 			}
@@ -1860,8 +1858,8 @@ class RBAgency_Profile {
 			/*
 			 * Check if search is Admin or Public
 			 */
-
-				//echo $sql;
+			//echo self::$order_by;
+				//echo self::$order_by;
 				if(is_admin()){
 					return self::search_result_admin( $sql, $arr_query );
 				} else {
@@ -1968,7 +1966,7 @@ class RBAgency_Profile {
 								<option value="2">Display Name</option>
 								<option value="50">Gender</option>';
 							if($rb_agency_options_arr['rb_agency_option_profilelist_includesortingbyprofileratings'] == true){
-								$all_html .= '<option value="150">Ratings</option>';
+								$all_html .= '<option value="151">Ratings</option>';
 							}
 							
 								$customFilters = array_merge($customFilters,$results_genders);

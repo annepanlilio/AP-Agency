@@ -323,6 +323,30 @@
 							echo " 	</div>\n";
 	
 						} else {
+							global $wpdb,$user_ID;
+							$user = new WP_User($user_ID);
+
+							//get profile data type
+							$sql = "SELECT * FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = $ProfileType";
+							$r = $wpdb->get_results($sql,ARRAY_A);
+							$dataType_title = "";
+
+							foreach($r as $result){
+								$dataType_title = $result["DataTypeTitle"];
+							}
+
+							//get user level
+							$sql2 = "SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'wp_user_level' AND user_id = ".$user->ID;
+							$r2 = $wpdb->get_results($sql2,ARRAY_A);
+							$user_level = "";
+							foreach($r2 as $result){
+								$user_level = $result["meta_value"];
+							}
+
+							//check if profile is logged in and talent or model
+							if(is_user_logged_in() && ( $dataType_title == 'Talent' || $dataType_title == 'Model') && $user_level < 7){
+								echo "<a href=\"".site_url()."/profile-member\" style=\"background-color: #000000;color: #ffffff;padding: 10px;position: absolute;margin-left: 730px;margin-top: 50px;z-index:1;\">My Dashboard</a><br>";
+							}
 							include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 						}
 	
@@ -333,6 +357,30 @@
 						} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
 									echo "Please contact RB Plugin Support for custom layouts.";
 						} else {
+							global $wpdb,$user_ID;
+							$user = new WP_User($user_ID);
+
+							//get profile data type
+							$sql = "SELECT * FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = $ProfileType";
+							$r = $wpdb->get_results($sql,ARRAY_A);
+							$dataType_title = "";
+
+							foreach($r as $result){
+								$dataType_title = $result["DataTypeTitle"];
+							}
+
+							//get user level
+							$sql2 = "SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'wp_user_level' AND user_id = ".$user->ID;
+							$r2 = $wpdb->get_results($sql2,ARRAY_A);
+							$user_level = "";
+							foreach($r2 as $result){
+								$user_level = $result["meta_value"];
+							}
+
+							//check if profile is logged in and talent or model
+							if(is_user_logged_in() && ( $dataType_title == 'Talent' || $dataType_title == 'Model') && $user_level < 7){
+								echo "<a href=\"".site_url()."/profile-member\" style=\"background-color: #000000;color: #ffffff;padding: 10px;position: absolute;margin-left: 730px;margin-top: 50px;z-index:1;\">My Dashboard</a><br>";
+							}
 							include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 						}
 					} else {

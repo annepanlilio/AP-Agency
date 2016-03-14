@@ -413,7 +413,7 @@
 							
 							$profileID = $_profileID;
 							$dir = RBAGENCY_UPLOADPATH ."_casting-jobs/";
-							$files = scandir($dir, 0);
+							@$files = scandir($dir, 0);
 							
 							$rb_agency_options_arr = get_option('rb_agency_options');									
 							$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
