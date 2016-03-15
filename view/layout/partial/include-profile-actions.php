@@ -2,6 +2,10 @@
 /*
  * Social Links
  */
+global $user_ID;
+
+$ProfileType = get_user_meta($user_ID,"rb_agency_interact_profiletype",true);
+profile_dashboard_link($user_ID,$ProfileType);
 
 // Social Link
 echo "<div id=\"profile-social\">";
