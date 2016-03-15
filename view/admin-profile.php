@@ -200,20 +200,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					// Check Directory - create directory if does not exist, rename if does
 					$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
-					//add CustomOrder if missing
-					$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
-					$rda = $wpdb->get_results($q,ARRAY_A);
-					$count = $wpdb->num_rows;
-
-					$q1 = "SELECT * FROM ".table_agency_profile;
-					$rda = $wpdb->get_results($q1,ARRAY_A);
-					$qnumrows = $wpdb->num_rows;
-
-					if($count == 0){
-						$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
-						$res = $wpdb->query($queryAlter);
-					}
-
+					
 					// Create Record
 					$insert = "INSERT INTO " . table_agency_profile .
 						" (
@@ -377,18 +364,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							}
 						}
 						
-						$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
-						$rda = $wpdb->get_results($q,ARRAY_A);
-						$count = $wpdb->num_rows;
-
-						$q1 = "SELECT * FROM ".table_agency_profile;
-						$rda = $wpdb->get_results($q1,ARRAY_A);
-						$qnumrows = $wpdb->num_rows;
-
-						if($count == 0){
-							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
-							$res = $wpdb->query($queryAlter);
-						}
+						
 
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET 
@@ -1455,7 +1431,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "          <input type=\"checkbox\" name=\"ProfileIsFeatured\" id=\"ProfileIsFeatured\" value=\"1\"". checked(isset($ProfileIsFeatured)?$ProfileIsFeatured:0, 1, false) . " /> Featured<br />\n";
 							echo "        </td>\n";
 							echo "    </tr>\n";
-						/**	echo "    <tr valign=\"top\">\n";
+							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Custom Order", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
 
@@ -1466,7 +1442,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							echo "          <input type=\"text\" name=\"CustomOrder\" id=\"CustomOrder\" value=\"".(isset($customorder) ? $customorder : '')."\" /><br />\n";
 							echo "        </td>\n";
-							echo "    </tr>\n"; **/
+							echo "    </tr>\n"; 
 
 							//rate feature
 							echo "    <tr valign=\"top\">\n";

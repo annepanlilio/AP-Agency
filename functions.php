@@ -4477,7 +4477,7 @@
 		}
 
 		if($order){
-			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaID ASC,ProfileMediaPrimary DESC ". $sql_count, $profileID, $ProfileMediaType);
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC ". $sql_count, $profileID, $ProfileMediaType);
 		} else {
 			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY convert(`ProfileMediaOrder`, decimal)  ASC ". $sql_count, $profileID, $ProfileMediaType);
 		}
@@ -5344,7 +5344,8 @@ add_action('wp_ajax_rate_profile', 'rate_profile');
 
 function additional_columns(){
 	global $wpdb;
-
+	
+	//CustomOrder
 	$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
 	$rda = $wpdb->get_results($q,ARRAY_A);
 	$count = $wpdb->num_rows;
@@ -5356,6 +5357,18 @@ function additional_columns(){
 	if($count == 0){
 		$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder integer default $qnumrows";
 		$res = $wpdb->query($queryAlter);
+	}
+
+	//ProfileRating
+	$queryAlterCheck = "SELECT ProfileRating FROM " . table_agency_profile ." LIMIT 1";
+	$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
+	$count_alter = $wpdb->num_rows;
+	if($count_alter > 0){
+		$queryAlter = "ALTER TABLE " . table_agency_profile ." MODIFY ProfileRating varchar(20) default 0";
+		$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);			
+	}else{
+		$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileRating varchar(20) default 0";
+		$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 	}
 }
 add_action('init','additional_columns');
