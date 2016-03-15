@@ -3,6 +3,7 @@
 #scroller {margin-bottom: 60px; position: static; width: auto; }
 #photo-scroller {width: 100%; height: 350px;font-size: 0; }
 #photo-scroller img {display: inline-block; max-height: 350px; }
+#rbprofile #info { overflow: hidden; }
 
 /*scroller overrides*/
 #photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft,

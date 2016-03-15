@@ -179,6 +179,41 @@ echo "						<ul>\n";
 echo "						</ul>\n";
 echo "					</div>\n";// Links
 echo "				</div> <!-- #info -->\n";//End Info
+
+					// Resume
+					$queryResume = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType IN('Resume')";
+					$resultsResume =  $wpdb->get_results($wpdb->prepare($queryResume),ARRAY_A);
+					$countResume = $wpdb->num_rows;
+
+					if($countResume > 0) {
+						echo "<div id=\"resume\">";
+						foreach ($resultsResume as $dataResume) {
+							echo "<div class=\"media-file resume\"><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataResume['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataResume['ProfileMediaTitle'] . "\">Resume &#8595;</a></div>";
+						}
+						echo "</div>";
+					}
+
+					// Videos
+					$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileVideoType IN('youtube','vimeo')";
+					$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+					$countMedia = $wpdb->num_rows;
+
+					if($countMedia > 0) {
+						echo "<div id=\"videos\">";
+						echo "<h5>On Camera Demo</h5>";
+						foreach ($resultsMedia  as $dataMedia) {
+							$vid_url = $dataMedia['ProfileMediaURL'];
+							$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
+							$vidTitleCaption = explode('<br>',$clean_title);
+							if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
+								$embed_string = substr($vid_url, strpos($vid_url, "=")+1);
+								$outVideoMedia .= "<div class=\"profile-video\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe><div>".$vidTitleCaption[0]."</div></div>";
+							}
+						}
+							echo $outVideoMedia;
+
+						echo "</div><!-- #videos -->";
+					}
 echo "			</div> <!-- #profile-l -->\n";
 echo "			<div class=\"rbclear\"></div>\n";
 echo " 		</div>\n";// Close Profile Layout
