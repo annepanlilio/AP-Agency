@@ -1951,18 +1951,30 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "<style>.media-files-checkbox{ float:right; margin-top:5px;}</style>";
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
+									
+									//this will determine the source of the video id if not full url 
+									$CleanVideoID = str_replace(array("https://vimeo.com/","https://www.youtube.com/watch?v="),"",$dataMedia['ProfileMediaURL']);
+									$headers = @get_headers("https://vimeo.com/".$CleanVideoID);
+									if(strpos($headers[0],'200')===false){
+										$FullVideoURL = "https://www.youtube.com/watch?v=".$CleanVideoID;
+									}else{
+										$FullVideoURL = "https://vimeo.com/".$CleanVideoID;
+									}
+									
 									$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
 									$vidTitleCaption = explode('<br>',$clean_title);
-									$outVideoMedia .= "<div class=\"media-file voice-demo\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\"><span class=\"video-type\">" . $dataMedia['ProfileMediaType'] . "</span><br /><span class=\"video-thumb\">" . rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'], $dataMedia['ProfileVideoType']) . "</span><br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
+									$outVideoMedia .= "<div class=\"media-file voice-demo\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\"><span class=\"video-type\">" . $dataMedia['ProfileMediaType'] . "</span><br /><span class=\"video-thumb\">" . rb_agency_get_videothumbnail($FullVideoURL, $dataMedia['ProfileVideoType']) . "</span><br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $FullVideoURL . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
 									[<a href=\"#inline-edit-video\" title=\"Edit Video Information\" ".
 										"video_type=\"" . $dataMedia['ProfileMediaType'] . 
 										"\" video_id=\"" . $dataMedia['ProfileMediaID'] . 
-										"\" video_url=\"" . $dataMedia['ProfileMediaURL'] . 
+										"\" video_url=\"" . $FullVideoURL . 
 										"\" video_title=\"" . ucfirst($vidTitleCaption[0]) . 
 										"\" video_caption=\"" . $vidTitleCaption[1] . 
 										"\" class=\"prepare-edit-video\">EDIT</a>]
 									[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
-								 }
+								 
+								
+								}
 								 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 								 	$voiceDemoProfileMediaID = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
 								 	$voicedemo = empty($voiceDemoProfileMediaID) ? "TITLE" : $voiceDemoProfileMediaID;
