@@ -16,10 +16,9 @@
 
 #rblayout-nine #info {text-align: center; }
 #rblayout-nine #info #name {text-transform: uppercase; margin: 15px 0px; }
-#rblayout-nine #stats li {display: inline-block; padding: 0 5px; font-weight: bold; }
+#rblayout-nine #stats li {display: inline-block; padding: 0 5px; }
 #rbprofile #rblayout-nine #stats li { margin-bottom: 5px; }
 #rblayout-nine #stats li br { display: none; }
-#rblayout-nine #stats li strong {font-weight: normal; }
 #rblayout-nine #links {width: 200px; padding: 0 15px; position: absolute; right: -200px; top: -20px; z-index: 5; text-align: left; }
 #rblayout-nine #links li a {text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
 #rblayout-nine #resultsGoHereAddtoCart {font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }

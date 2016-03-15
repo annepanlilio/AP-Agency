@@ -93,13 +93,13 @@ echo "							<ul>\n";
 									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	);
 									$count = $wpdb->num_rows;
 									if($count > 0){
-										echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
+										echo "<li class=\"rb_gender\" id=\"rb_gender\"><span>". __("Gender", RBAGENCY_TEXTDOMAIN). ": </span><strong>". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</strong></li>\n";
 									}
 								}
 
 								// Insert Custom Fields
 								$title_to_exclude = array("");
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null, $label_tag="strong", $value_tag="span");
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null, $label_tag="span", $value_tag="strong");
 								get_social_media_links($ProfileID);
 
 echo "							</ul>\n";
