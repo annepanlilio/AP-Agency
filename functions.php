@@ -4469,15 +4469,15 @@
 			$sql_count = "";
 		}
 
-		if ($sql_exclude_primary_image = true) {
-			//$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
+		if ($exclude_primary == true) {
+			$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
 			$sql_exclude_primary_image = "";
 		} else {
 			$sql_exclude_primary_image = "";
 		}
 
-		if($order){
-			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaID DESC,ProfileMediaPrimary DESC ". $sql_count, $profileID, $ProfileMediaType);
+		if($order == 1){
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC ". $sql_count, $profileID, $ProfileMediaType);
 		} else {
 			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY convert(`ProfileMediaOrder`, decimal)  ASC ". $sql_count, $profileID, $ProfileMediaType);
 		}
