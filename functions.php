@@ -457,7 +457,7 @@
 				$difference /= $lengths[$j];
 				$difference = round($difference);
 				if($difference != 1) $periods[$j].= "s";
-				$text = "$difference $periods[$j] ago";
+				$text = $difference." ".__($periods[$j] ." ago",RBAGENCY_TEXTDOMAIN);
 				if ($j > 10) {exit; }
 
 				return $text;

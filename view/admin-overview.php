@@ -45,7 +45,7 @@ get_currentuserinfo();
 							echo "<a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
 							}
 							echo "<a href='?page=rb_agency_searchsaved' class=\"button-primary\">". __("Saved Searches", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
-							echo "<a href='?page=rb_agency_reports' class=\"button-primary\">". __("Tools & Reports", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+							echo "<a href='?page=rb_agency_reports' class=\"button-primary\">". __("Tools &amp; Reports", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
 							echo "<a href='?page=rb_agency_settings' class=\"button-primary\">". __("Settings", RBAGENCY_TEXTDOMAIN) . "</a>";
 						}
 						?>
@@ -112,7 +112,7 @@ get_currentuserinfo();
 									<a href="?page=rb_agency_profiles&action=editRecord&ProfileID=<?php echo $data['ProfileID']; ?>"><?php echo stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) ?></a>
 									<?php 
 									if ($data['ProfileDateUpdated'] <> "0000-00-00 00:00:00" && isset($data['ProfileDateUpdated']) && !empty($data['ProfileDateUpdated'])){ ?>
-									<span class="add-new-h2">Updated <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateUpdated'])); ?></span>
+									<span class="add-new-h2"><?php echo __("Updated",RBAGENCY_TEXTDOMAIN); ?> <?php echo rb_agency_makeago(rb_agency_convertdatetime($data['ProfileDateUpdated'])); ?></span>
 									<?php }?>
 								</li><?php
 							}
@@ -170,7 +170,7 @@ get_currentuserinfo();
 <div class="wrap">
 	<div id="welcome-panel" class="welcome-panel">
 		<div class="welcome-panel-content">
-			<h1>Diagnostic Checks:</h1>
+			<h1><?php echo __('Diagnostic Checks:',RBAGENCY_TEXTDOMAIN); ?></h1>
 
 			<div class="welcome-panel-column-container">
 				<?php

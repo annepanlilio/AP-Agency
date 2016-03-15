@@ -40,7 +40,7 @@
 
 ?>
 		<div class="welcome-panel-column" style="width: 40%; ">
-			<h3><?php _e("WordPress Environment Check"); ?></h3>
+			<h3><?php _e("WordPress Environment Check",RBAGENCY_TEXTDOMAIN); ?></h3>
 
 				<table class="form-table" style="width: 100%">
 

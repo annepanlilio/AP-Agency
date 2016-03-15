@@ -374,7 +374,7 @@ class RBAgency_Profile {
 									}
 									if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
 										echo "<div>\n";
-										echo "		<label for=\"ProfileCustomLabel_min first\" style=\"text-align:right;\">". __("Min ", RBAGENCY_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
+										echo "		<label for=\"ProfileCustomLabel_min first\" style=\"text-align:right;\">". __("Min", RBAGENCY_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
 										echo "		<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" /></div>\n";
 										echo "</div>\n";
 										echo "<div>\n";

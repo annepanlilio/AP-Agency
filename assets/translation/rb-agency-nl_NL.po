@@ -1472,3 +1472,90 @@ msgstr ""
 
 msgid "Casting Agents"
 msgstr ""
+
+msgid "Manage Clients"
+msgstr ""
+
+msgid "Approve Clients"
+msgstr ""
+
+msgid "Approve Profiles"
+msgstr ""
+
+msgid "Client Searches"
+msgstr ""
+
+msgid "Job Types"
+msgstr ""
+
+msgid "Casting Jobs"
+msgstr ""
+
+msgid "Casting Calendar"
+msgstr ""
+
+msgid "Tools &amp; Reports"
+msgstr ""
+
+msgid "Tools"
+msgstr ""
+
+msgid "Create New "
+msgstr ""
+
+msgid "Approve profiles"
+msgstr ""
+
+msgid "days ago"
+msgstr ""
+
+msgid "day ago"
+msgstr ""
+
+msgid "secs ago"
+msgstr ""
+
+msgid "sec ago"
+msgstr ""
+
+msgid "mins ago"
+msgstr ""
+
+msgid "min ago"
+msgstr ""
+
+msgid "hrs ago"
+msgstr ""
+
+msgid "hr ago"
+msgstr ""
+
+msgid "weeks ago"
+msgstr ""
+
+msgid "week ago"
+msgstr ""
+
+msgid "months ago"
+msgstr ""
+
+msgid "month ago"
+msgstr ""
+
+msgid "years ago"
+msgstr ""
+
+msgid "years ago"
+msgstr ""
+
+msgid "decades ago"
+msgstr ""
+
+msgid "decade ago"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Diagnostic Checks:"
+msgstr ""
