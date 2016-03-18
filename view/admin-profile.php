@@ -2810,7 +2810,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			<!-- Row 2: Column Right End -->
 			
 			<!--Job Audition -->
+			<?php
 
+			if ( is_plugin_active( 'rb-agency-casting/rb-agency-casting.php' ) ) {
+  			
+			?>
 			<div class="postbox-container" id="postbox-container-6">
 				<div class="meta-box-sortables ui-sortable" id="side-sortables">
 				<?php
@@ -3012,7 +3016,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 				</div>
 			</div>
-		
+			<?php } ?>
 			<!-- Row 3: Column Right End -->
 			
 			<?php }?>
