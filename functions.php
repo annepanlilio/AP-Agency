@@ -5372,4 +5372,57 @@ function additional_columns(){
 	}
 }
 add_action('init','additional_columns');
+
+function insertNewCountries(){
+	global $wpdb;
+
+	$arr = array(
+		'BE' => 'Belgium',
+		'BG' => 'Bulgaria',
+		'CZ'=>'Czech Republic',
+		'DK' => 'Denmark',
+		'DE'=>'Germany',
+		'EE'=>'Estonia',
+		'IE'=>'Ireland',
+		'EL'=>'Greece',
+		'ES'=>'Spain',
+		'FR'=>'France',
+		'HR'=>'Croatia',
+		'IT'=>'Italy',
+		'CY'=>'Cyprus',
+		'LV'=>'Latvia',
+		'LT'=>'Lithuania',
+		'LU'=>'Luxembourg',
+		'HU'=>'Hungary',
+		'MT'=>'Malta',
+		'NL'=>'Netherlands',
+		'AT'=>'Austria',
+		'PL'=>'Poland',
+		'PT'=>'Portugal',
+		'RO'=>'Romania',
+		'SI'=>'Slovenia',
+		'SK'=>'Slovakia',
+		'FI'=>'Finland',
+		'SE'=>'Sweden'
+
+	);
+
+
+	$val_arr = array();
+	foreach($arr as $k=>$v){
+		$wpdb->get_results("SELECT * FROM ".$wpdb->prefix."agency_data_country WHERE CountryCode = '$k'");
+		if($wpdb->num_rows == 0){
+			$val_arr[] = "('".$v."','".$k."')";
+		}else{
+			$wpdb->query("DELETE FROM ".$wpdb->prefix."agency_data_country WHERE CountryCode = '$k'");
+			$val_arr[] = "('".$v."','".$k."')";
+		}		
+	}
+	$imploded_val = implode(',',$val_arr);
+	$sql = "INSERT INTO ".$wpdb->prefix."agency_data_country(CountryTitle,CountryCode) VALUES".$imploded_val;
+	$wpdb->query($sql);
+}
+
+add_action('init','insertNewCountries');
+
 ?>
