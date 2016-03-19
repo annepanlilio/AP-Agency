@@ -295,6 +295,18 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					$ShowProfileContactLinkYouTube = isset($_POST['ShowProfileContactLinkYouTube']) ? true : false;
 					$ShowProfileContactLinkFlickr = isset($_POST['ShowProfileContactLinkFlickr']) ? true : false;
 
+					//user meta social media
+					foreach($_POST['profile_social_media_name'] as $k=>$v){
+						if(!empty($v)){
+							add_user_meta($_GET['ProfileID'],'SocialMediaName_'.$v,$v);
+						}						
+					}
+					foreach($_POST['profile_social_media_url'] as $k=>$v){
+						if(!empty($v)){
+							add_user_meta($_GET['ProfileID'],'SocialMediaURL_'.$v,$v);
+						}						
+					}
+
 					add_user_meta( $ProfileID, 'ShowProfileContactLinkTwitter',$ShowProfileContactLinkTwitter);
 					add_user_meta( $ProfileID, 'ShowProfileContactLinkFacebook',$ShowProfileContactLinkFacebook);
 					add_user_meta( $ProfileID, 'ShowProfileContactLinkYouTube',$ShowProfileContactLinkYouTube);
@@ -400,6 +412,41 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 							update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
 							update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_pgender', esc_attr($ProfileGender));
+
+							//clear first the user meta social media name and links
+										global $wpdb;
+										$list = array(
+											'Facebook',
+											'Twitter',
+											'Instagram',
+											'Flickr',
+											'Google+',
+											'YouTube',
+											'Vimeo',
+											'LinkedIn',
+											'Friendster',
+											'hi5',
+											'MySpace',
+											'Custom');
+
+										foreach($list as $k=>$v){
+											$wpdb->query("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'SocialMediaURL_".$v."' AND user_id = ".$_GET['ProfileID']);
+											$wpdb->query("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'SocialMediaName_".$v."' AND user_id = ".$_GET['ProfileID']);
+										}
+							//user meta social media name
+							foreach($_POST['profile_social_media_name'] as $k=>$v){
+								if(!empty($v) && !empty($_POST['profile_social_media_url'][$k])){
+									add_user_meta($_GET['ProfileID'],'SocialMediaName_'.$v,$v);
+								}								
+							}
+
+							//user meta social media url
+							foreach($_POST['profile_social_media_url'] as $k=>$v){
+								if(!empty($v) && !empty($_POST['profile_social_media_name'][$k])){
+									add_user_meta($_GET['ProfileID'],'SocialMediaURL_'.$_POST['profile_social_media_name'][$k],$v);
+								}
+
+							}
 
 						if ($ProfileUserLinked > 0) {
 							/* Update WordPress user information. */
@@ -1294,63 +1341,111 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<h3 class="hndle"><span><?php echo  __("Social Media Links", RBAGENCY_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
 							<div class="main">
-								<?php
+								<table class="social-media-links-table">
+									<?php
+									$social_media_arr_list = array(
+													'Facebook',
+													'Twitter',
+													'Instagram',
+													'Flickr',
+													'Google+',
+													'YouTube',
+													'Vimeo',
+													'LinkedIn',
+													'Friendster',
+													'hi5',
+													'MySpace',
+													'Custom'
 
-								
-								$CheckShowProfileContactLinkTwitter = get_user_meta( $ProfileID, 'ShowProfileContactLinkTwitter',true);
-								$CheckShowProfileContactLinkFacebook = get_user_meta( $ProfileID, 'ShowProfileContactLinkFacebook',true);
-								$CheckShowProfileContactLinkYouTube = get_user_meta( $ProfileID, 'ShowProfileContactLinkYouTube',true);
-								$CheckShowProfileContactLinkFlickr = get_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',true);
-								
+													);
+									foreach($social_media_arr_list as $k=>$v){
+										$socialMediaName = get_user_meta($_GET['ProfileID'],'SocialMediaName_'.$v,true);
+										$socialMediaURL = get_user_meta($_GET['ProfileID'],'SocialMediaURL_'.$v,true);
 
-								echo " <table class=\"form-table\">\n";
-								// Private Information
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Facebook", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								
-								echo "          <input type=\"text\" id=\"ProfileContactLinkFacebook\" name=\"ProfileContactLinkFacebook\" class=\"ProfileContactLinkFacebook\" value=\"" . (isset($ProfileContactLinkFacebook)?$ProfileContactLinkFacebook:""). "\" /><br>";
-								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkFacebook\" name=\"ShowProfileContactLinkFacebook\" class=\"ShowProfileContactLinkFacebook\"  ".($CheckShowProfileContactLinkFacebook == true ? "checked" : "")."/>".__('Show on Profile View')."\n";
-								echo "      </td>\n";
-								
-								echo "    </tr>\n";
+										if(!empty($socialMediaName)){
+											echo "<tr class=\"social-media-links-row-".$socialMediaName."\">
+												<td><select name=\"profile_social_media_name[]\">
+													<option value=\"".$v."\" ".($socialMediaName == $v ? "selected" : "").">".$v."</option>";
+													foreach($social_media_arr_list as $k=>$v){
+														if($socialMediaName !== $v){
+															echo "<option value=\"".$v."\">".$v."</option>";
+														}														
+													}
+											echo "</select></td>
+												<td><input type=\"text\" name=\"profile_social_media_url[]\" class=\"profile_social-media-links-row-".$socialMediaName."\" value=\"".(!empty($socialMediaURL) ? $socialMediaURL : "")."\" style=\"width:220px;\">
+												<a class=\"button-primary remove-social-media\" id=\"social-media-links-row-".$socialMediaName."\" >remove</a>
+												</td>
+											</tr>";
+										}
+									}
+									
+									?>
+									<tr>
+										<td>
+											<select name="profile_social_media_name[]">
+												<?php 
+												$social_media_arr = array(
+													'Facebook',
+													'Twitter',
+													'Instagram',
+													'Flickr',
+													'Google+',
+													'YouTube',
+													'Vimeo',
+													'LinkedIn',
+													'Friendster',
+													'hi5',
+													'MySpace',
+													'Custom'
 
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Twitter", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactLinkTwitter\" name=\"ProfileContactLinkTwitter\" value=\"" . (isset($ProfileContactLinkTwitter)?$ProfileContactLinkTwitter:"") . "\" /><br>";
-								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkTwitter\" name=\"ShowProfileContactLinkTwitter\" class=\"ShowProfileContactLinkTwitter\"  ".($CheckShowProfileContactLinkTwitter == true ? "checked" : "")." />".__('Show on Profile View')."\n";
-								echo "      </td>\n";
-		
-								echo "    </tr>\n";
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Youtube", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactLinkYouTube\" name=\"ProfileContactLinkYouTube\" value=\"" . (isset($ProfileContactLinkYouTube)?$ProfileContactLinkYouTube:"") . "\" /><br>";
-								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkYouTube\" name=\"ShowProfileContactLinkYouTube\" class=\"ShowProfileContactLinkYouTube\"  ".($CheckShowProfileContactLinkYouTube == true ? "checked" : "")."/>".__('Show on Profile View')."\n";
-								echo "      </td>\n";
-								
-								
-								echo "    </tr>\n";
-								echo "    <tr valign=\"top\">\n";
-								echo "      <th scope=\"row\">" . __("Flickr", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactLinkFlickr\" name=\"ProfileContactLinkFlickr\" value=\"" . (isset($ProfileContactLinkFlickr)?$ProfileContactLinkFlickr:"") . "\" /><br>";
-								echo "          <input type=\"checkbox\" id=\"ShowProfileContactLinkFlickr\" name=\"ShowProfileContactLinkFlickr\" class=\"ShowProfileContactLinkFlickr\"  ".($CheckShowProfileContactLinkFlickr == true ? "checked" : "")."/>".__('Show on Profile View')."\n";
-								echo "      </td>\n";
-								
-								
+													);
+												echo "<option>".__("Select Social Media")."</option>";
+												foreach($social_media_arr as $k=>$v){
+													echo "<option value=\"".$v."\" >".$v."</option>";
+												}
+												 ?>
+											</select>
+										</td>
+										<td>
+											<input type="text" name="profile_social_media_url[]" placeholder="Insert URL here" style="width:220px;"/>
+										</td>
+									</tr>
 
-								echo "    </tr>\n";
-								echo " </table>\n";
 
-								?>
+								</table>
+
+								<input type="button" name="add_social" class="add_social" value="Add More"/>
+								<input type="button" name="remove_social" class="remove_social" value="Remove Field"/>
 							</div>
 						</div>
 					</div>
 
 				</div>
 			</div>
+			<script type="text/javascript">
+			jQuery(document).ready(function(){
+				var idx = 1;
+				jQuery('.add_social').click(function(){
+					var media_links_row = jQuery('.social-media-links-table tr:last').html();
+					jQuery('.social-media-links-table input:last').attr('class','social-media-links-input');
+					jQuery('.social-media-links-table').append('<tr>'+media_links_row+'</tr>');
+					jQuery('.social-media-links-table tr:last').attr('class','added_social-media-links-row');
+					idx++;
+					jQuery('.remove_social').removeAttr('disabled');
+				});
+
+				jQuery('.remove-social-media').on('click',function(){
+					jQuery(".social-media-links-table tr."+jQuery(this).attr('id')).remove();
+				});
+	
+				jQuery('.remove_social').click(function(){
+					jQuery('.social-media-links-table .added_social-media-links-row:last').remove();
+							
+				});
+
+				
+			});
+			</script>
 
 			<!-- Row 1: Column Left End -->
 
