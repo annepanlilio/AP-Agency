@@ -2871,6 +2871,76 @@
 	}
 
 	function get_social_media_links($ProfileID = ""){
+		global $wpdb;
+		$social_media_arr = array(
+			'Facebook',
+			'Twitter',
+			'Instagram',
+			'Flickr',
+			'Google+',
+			'YouTube',
+			'Vimeo',
+			'LinkedIn',
+			'Friendster',
+			'hi5',
+			'MySpace',
+			'Custom'
+		);
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$output = '';
+		$output .='<style>
+		.profile-social-media-links{margin-left:130px;} 
+		.profile-social-media-links li{ padding:2px; float:left;}
+		.profile-social-media-links li img{ width:20px;}
+		</style>';
+		$output .= "<ul class='profile-social-media-links' style='list-style:none;'>";
+		foreach($social_media_arr as $k=>$v){
+			$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$v,true);
+			$social_icon_filename = '';
+			if($v == 'Facebook'){
+				$social_icon_filename = 'fb.png';
+			}elseif($v == 'Twitter'){
+				$social_icon_filename = 'tw.png';
+			}elseif($v == 'Instagram'){
+				$social_icon_filename = 'instagram.png';
+			}elseif($v == 'Flickr'){
+				$social_icon_filename = 'flickr.png';
+			}elseif($v == 'Google+'){
+				$social_icon_filename = 'gplus.png';
+			}elseif($v == 'YouTube'){
+				$social_icon_filename = 'youtube.png';
+			}elseif($v == 'Vimeo'){
+				$social_icon_filename = 'vimeo.jpg';
+			}elseif($v == 'LinkedIn'){
+				$social_icon_filename = 'linkedin.png';
+			}elseif($v == 'Friendster'){
+				$social_icon_filename = 'friendster.png';
+			}elseif($v == 'hi5'){
+				$social_icon_filename = 'hi5.jpg';
+			}elseif($v == 'MySpace'){
+				$social_icon_filename = 'myspace.png';
+			}elseif($v == 'Custom'){
+				$social_icon_filename = '';
+			}
+			$widthForMySpace = $v == 'MySpace' ? "style='width:64px;height:64px;'" : "";
+			$socialMediaURL = get_user_meta($ProfileID,"SocialMediaURL_".$v,true);
+			$social_icon_path = site_url()."/wp-content/plugins/rb-agency/assets/img/social-icons/".$social_icon_filename;
+			if($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'] == 1){
+				$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
+			}elseif($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'] == 2){
+				$output .="<li><a href=".$socialMediaURL." target='_blank'>".$socialMediaURL."</li>";
+			}else{
+				$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
+			}		
+
+		}
+		$output .= "</ul>";	
+
+		echo $output;	
+		
+	}
+
+	function old_get_social_media_links($ProfileID = ""){
 
 		global $wpdb;
 
