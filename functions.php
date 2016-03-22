@@ -2937,7 +2937,8 @@
 			$output .= "<ul class='profile-social-media-links' style='list-style:none;'>";
 			foreach($social_media_arr as $k=>$v){
 				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$v,true);
-				$output ."<li><a href=".$socialMediaURL." target='_blank'>".$socialMediaURL."</a></li>";
+				$socialMediaName = get_user_meta($ProfileID,'SocialMediaName_'.$v,true);
+				$output ."<li>".$socialMediaName.": <a href=".$socialMediaURL." target='_blank'>".$socialMediaURL."</a></li>";
 			}
 			$output .= "</ul>";
 		}
