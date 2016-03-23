@@ -2927,10 +2927,13 @@
 				}elseif($v == 'Custom'){
 					$social_icon_filename = '';
 				}
-				$widthForMySpace = $v == 'MySpace' ? "style='width:64px;height:64px;'" : "";
+				$widthForMySpace = $v == 'MySpace' ? "style='width:20px;height:20px;'" : "";
 				$socialMediaURL = get_user_meta($ProfileID,"SocialMediaURL_".$v,true);
-				$social_icon_path = site_url()."/wp-content/plugins/rb-agency/assets/img/social-icons/".$social_icon_filename;
-				$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
+				if(!empty($socialMediaURL)){
+					$social_icon_path = site_url()."/wp-content/plugins/rb-agency/assets/img/social-icons/".$social_icon_filename;
+					$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
+				}
+				
 			}
 			$output .= "</ul>";
 		}elseif($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'] == 2){
