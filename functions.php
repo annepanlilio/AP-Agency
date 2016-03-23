@@ -2865,12 +2865,12 @@
 			echo "	</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
 		}
 
-		get_social_media_links($ProfileID);
+		//get_social_media_links($ProfileID);
 
 
 	}
 
-	function get_social_media_links($ProfileID = ""){
+function get_social_media_links($ProfileID = ""){
 		global $wpdb;
 		$social_media_arr = array(
 			'Facebook',
@@ -2890,9 +2890,9 @@
 		$output = '';
 		$output .='<style>
 		.profile-social-media-icons{margin-left:130px;} 
-		.profile-social-media-icons li{ padding:2px; float:left;}
+		.profile-social-media-icons li{ padding:2px; float:left;margin-top:5px;}
 		.profile-social-media-icons li img{ width:20px;}
-		.profile-social-media-links{margin-left:130px;} 
+		.profile-social-media-links{} 
 		.profile-social-media-links li{ padding:2px;}
 		.profile-social-media-links li img{ width:20px;}
 		</style>';
@@ -2933,7 +2933,6 @@
 					$social_icon_path = site_url()."/wp-content/plugins/rb-agency/assets/img/social-icons/".$social_icon_filename;
 					$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
 				}
-				
 			}
 			$output .= "</ul>";
 		}elseif($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'] == 2){
@@ -2941,7 +2940,48 @@
 			foreach($social_media_arr as $k=>$v){
 				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$v,true);
 				$socialMediaName = get_user_meta($ProfileID,'SocialMediaName_'.$v,true);
-				$output ."<li>".$socialMediaName.": <a href=".$socialMediaURL." target='_blank'>".$socialMediaURL."</a></li>";
+				if(!empty($socialMediaURL)){
+					$output .= "<li><strong>".$v."</strong>: <a href=".$socialMediaURL." target='_blank'>".$socialMediaURL."</a></li>";
+				}
+				
+			}
+			$output .= "</ul>";
+		}else{
+			$output .= "<ul class='profile-social-media-icons' style='list-style:none;'>";
+			foreach($social_media_arr as $k=>$v){
+				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$v,true);
+				$social_icon_filename = '';
+				if($v == 'Facebook'){
+					$social_icon_filename = 'fb.png';
+				}elseif($v == 'Twitter'){
+					$social_icon_filename = 'tw.png';
+				}elseif($v == 'Instagram'){
+					$social_icon_filename = 'instagram.png';
+				}elseif($v == 'Flickr'){
+					$social_icon_filename = 'flickr.png';
+				}elseif($v == 'Google+'){
+					$social_icon_filename = 'gplus.png';
+				}elseif($v == 'YouTube'){
+					$social_icon_filename = 'youtube.png';
+				}elseif($v == 'Vimeo'){
+					$social_icon_filename = 'vimeo.jpg';
+				}elseif($v == 'LinkedIn'){
+					$social_icon_filename = 'linkedin.png';
+				}elseif($v == 'Friendster'){
+					$social_icon_filename = 'friendster.png';
+				}elseif($v == 'hi5'){
+					$social_icon_filename = 'hi5.jpg';
+				}elseif($v == 'MySpace'){
+					$social_icon_filename = 'myspace.png';
+				}elseif($v == 'Custom'){
+					$social_icon_filename = '';
+				}
+				$widthForMySpace = $v == 'MySpace' ? "style='width:20px;height:20px;'" : "";
+				$socialMediaURL = get_user_meta($ProfileID,"SocialMediaURL_".$v,true);
+				if(!empty($socialMediaURL)){
+					$social_icon_path = site_url()."/wp-content/plugins/rb-agency/assets/img/social-icons/".$social_icon_filename;
+					$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
+				}
 			}
 			$output .= "</ul>";
 		}

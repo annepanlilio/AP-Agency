@@ -873,8 +873,8 @@ elseif ($ConfigID == 1) {
 		echo "   <th scope=\"row\">". __('Profile Media Display Option', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
 		echo "     <select name=\"rb_agency_options[rb_agency_option_profilemedia_links_displayoption]\">\n";
-		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 1,false) ."> ". __("Social Media Icon Display", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links']:0, 2,false) ."> ". __("Social Media Link Display", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption']:0, 1,false) ."> ". __("Social Media Icon Display", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'])?$rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption']:0, 2,false) ."> ". __("Social Media Link Display", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
