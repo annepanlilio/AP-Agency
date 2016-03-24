@@ -4699,6 +4699,9 @@ function get_social_media_links($ProfileID = ""){
 									} elseif(!empty($is_casting)) {
 										wp_logout();
 										wp_safe_redirect(get_bloginfo("url")."/casting-login/");
+									}else{
+										wp_logout();
+										wp_safe_redirect(get_bloginfo("url")."/profile-login/");
 									}
 								} else {
 									wp_logout();
