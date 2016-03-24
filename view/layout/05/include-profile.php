@@ -167,7 +167,7 @@ Custom Layout: Shake it like a polaroid picture
 	echo "  		<div class=\"descr\">". $ProfileContactDisplay ." Photos</div>\n";
 	echo "			</div>\n";
 
-	echo "			<div id=\"pp_back\" class=\"pp_back\">Reset</div>\n";
+	echo "			<div id=\"pp_back\" class=\"pp_back\">".__("Reset",RBAGENCY_TEXTDOMAIN)."</div>\n";
 	echo "		</div>\n";
 	echo "		</div>\n";
 	echo "  </div>\n";

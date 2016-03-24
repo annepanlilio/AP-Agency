@@ -66,18 +66,18 @@ Large featured image and scrolling thumbnails
 			<div class="profile-filter">
 				<div class="filter">
 					<select name="division" id="division">
-						<option value="">Select Division</option>
-						<option value="men">Men</option>
-						<option value="women">Women</option>
-						<option value="teen_girls">Teen Girls</option>
-						<option value="teen_boys">Teen Boys</option>
-						<option value="boys">Boys</option>
-						<option value="girls">Girls</option>
+						<option value=""><?php echo __("Select Division",RBAGENCY_TEXTDOMAIN); ?></option>
+						<option value="men"><?php echo __("Men",RBAGENCY_TEXTDOMAIN); ?></option>
+						<option value="women"><?php echo __("Women",RBAGENCY_TEXTDOMAIN); ?></option>
+						<option value="teen_girls"><?php echo __("Teen Girls",RBAGENCY_TEXTDOMAIN); ?></option>
+						<option value="teen_boys"><?php echo __("Teen Boys",RBAGENCY_TEXTDOMAIN); ?></option>
+						<option value="boys"><?php echo __("Boys",RBAGENCY_TEXTDOMAIN); ?></option>
+						<option value="girls"><?php echo __("Girls",RBAGENCY_TEXTDOMAIN); ?></option>
 					</select>
 				</div>
 				<div id="resultsGoHere"  class="filter">
 					<select>
-						<option>Select Division First</option>
+						<option><?php echo __("Select Division First",RBAGENCY_TEXTDOMAIN); ?></option>
 					</select>
 				</div>
 			</div>
@@ -153,7 +153,7 @@ Large featured image and scrolling thumbnails
 
 								if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume</a></li>\n";
+									echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">".__("Print Resume",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 								}
 							}
 							// Comp Card
@@ -171,7 +171,7 @@ Large featured image and scrolling thumbnails
 									elseif($cpCnt == "3"){$cpCount="3rd";}
 									else {$cpCount="";}
 
-									echo "<li class=\"item compcard\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Download $cpCount Comp Card</a></li>\n";
+									echo "<li class=\"item compcard\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">".(sprintf(__("Download %d Comp Card",RBAGENCY_TEXTDOMAIN),$cpCount))."</a></li>\n";
 								}
 							}
 							// Headshots
@@ -195,7 +195,7 @@ Large featured image and scrolling thumbnails
 									if($vdCnt == "2"){$vdCount="2nd";}
 									elseif($vdCnt == "3"){$vdCount="3rd";}
 									else {$vdCount="";}
-									echo "<li class=\"item voice\"><a target='_blank' href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Listen to $vdCount Voice Demo</a></li>\n";
+									echo "<li class=\"item voice\"><a target='_blank' href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">".(sprintf(__("Listen to %s Voice Demo",RBAGENCY_TEXTDOMAIN),$vdCount))."</a></li>\n";
 								}
 							}
 							//Video Slate
@@ -214,7 +214,7 @@ Large featured image and scrolling thumbnails
 							$countMedia  = $wpdb->num_rows;
 							if ($countMedia > 0) {
 								foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">Watch Video Monologue</a></li>\n";
+									echo "<li class=\"item video monologue\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" target=\"_blank\">".__("Watch Video Monologue",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 								}
 							}
 							//Demo Reel
@@ -249,7 +249,7 @@ Large featured image and scrolling thumbnails
 					<div id="model-nav">
 						<ul>
 							<li class="prev"><a href="<?php  get_bloginfo("url");?>/profile/<?php echo linkPrevNext($ProfileGallery,"previous",$ProfileGender,$divisionDir);?>/" title=""><?php echo __("Previous", RBAGENCY_TEXTDOMAIN)?></a> </li>
-							<li class="back"><a href="<?php  get_bloginfo("url");?>/divisions<?php echo $divisionDir;?>" title=""><?php echo __("Back to", RBAGENCY_TEXTDOMAIN)?><br />Division</a></li>
+							<li class="back"><a href="<?php  get_bloginfo("url");?>/divisions<?php echo $divisionDir;?>" title=""><?php echo __("Back to", RBAGENCY_TEXTDOMAIN)?><br /><?php echo __("Division",RBAGENCY_TEXTDOMAIN); ?></a></li>
 							<li class="next"><a href="<?php  get_bloginfo("url");?>/profile/<?php echo linkPrevNext($ProfileGallery,"next",$ProfileGender,$divisionDir);?>/" title=""><?php echo __("Next", RBAGENCY_TEXTDOMAIN)?></a>  </li>
 						</ul>
 					</div>
