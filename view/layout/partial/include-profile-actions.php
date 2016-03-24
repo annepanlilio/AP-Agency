@@ -5,7 +5,7 @@
 global $user_ID;
 
 $ProfileType = get_user_meta($user_ID,"rb_agency_interact_profiletype",true);
-profile_dashboard_link($user_ID,$ProfileType);
+//profile_dashboard_link($user_ID,$ProfileType);
 
 // Social Link
 echo "<div id=\"profile-social\">";
@@ -103,7 +103,8 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			$voicedemo = empty(get_option("voicedemo_".$dataMedia['ProfileMediaID'])) ? "RENAME" : get_option("voicedemo_".$dataMedia['ProfileMediaID']);
+			$optionProfileMedia = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
+			$voicedemo = empty($optionProfileMedia) ? "RENAME" : get_option("voicedemo_".$dataMedia['ProfileMediaID']);
 			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".$voicedemo."</a>\n";
 		}
 	}
