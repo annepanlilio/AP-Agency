@@ -155,7 +155,7 @@ echo "						<ul>\n";
 								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
 									foreach($resultsMedia as $dataMedia ){
-										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" ". $reltarget .">Watch ShowReel</a></li>\n";
+										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" ". $reltarget .">".__("Watch ShowReel",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 									}
 								}
 
@@ -169,12 +169,12 @@ echo "						<ul>\n";
 								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
 									foreach($resultsMedia as $dataMedia ){
-										echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">Print Resume PDF</a></li>\n";
+										echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">".__("Print Resume PDF",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 									}
 								}
 								//Contact Profile
 								if($rb_agency_option_showcontactpage==1){
-									echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></div>\n";
+									echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">".__("Click Here",RBAGENCY_TEXTDOMAIN)."</a></div>\n";
 								}
 echo "						</ul>\n";
 echo "					</div>\n";// Links
@@ -188,7 +188,7 @@ echo "				</div> <!-- #info -->\n";//End Info
 					if($countResume > 0) {
 						echo "<div id=\"resume\">";
 						foreach ($resultsResume as $dataResume) {
-							echo "<div class=\"media-file resume\"><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataResume['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataResume['ProfileMediaTitle'] . "\">Resume &#8595;</a></div>";
+							echo "<div class=\"media-file resume\"><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataResume['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataResume['ProfileMediaTitle'] . "\">".__("Resume &#8595;",RBAGENCY_TEXTDOMAIN)."</a></div>";
 						}
 						echo "</div>";
 					}

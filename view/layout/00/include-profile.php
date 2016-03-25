@@ -201,7 +201,7 @@ echo "					</div>\n"; // #photos
 								?>
 
 								<br clear="all" />
-								<input type="submit" value="<?php echo __("Next, Select Print Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-images/");'/> or 
+								<input type="submit" value="<?php echo __("Next, Select Print Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-images/");'/> <?php echo __("or",RBAGENCY_TEXTDOMAIN); ?> 
 								<input type="submit" value="<?php echo __("Next, Select PDF Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-pdf/");' />
 							</form>
 						</div><!-- allimages_div-->

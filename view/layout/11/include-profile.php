@@ -183,8 +183,8 @@ echo "					</div>\n"; // #photos
 								?>
 
 								<br clear="all" />
-								<input type="submit" value="Next, Select Print Format" onclick='jQuery("#allimageform").attr("action","../print-images/");'/> or 
-								<input type="submit" value="Next, Select PDF Format" onclick='jQuery("#allimageform").attr("action","../print-pdf/");' />
+								<input type="submit" value="<?php echo __("Next, Select Print Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-images/");'/><?php echo __("or",RBAGENCY_TEXTDOMAIN); ?>
+								<input type="submit" value="<?php echo __("Next, Select PDF Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-pdf/");' />
 							</form>
 						</div><!-- allimages_div-->
 
@@ -268,7 +268,7 @@ echo "					</div>\n"; // #photos
 						}?>
 
 						<div class="print_options">
-							<span class="allimages_text">Select Print Format</span><br /><br />
+							<span class="allimages_text"><?php echo __("Select Print Format",RBAGENCY_TEXTDOMAIN); ?></span><br /><br />
 						</div> 
 
 						<form action="" method="post" target="_blank">
@@ -279,14 +279,14 @@ echo "					</div>\n"; // #photos
 							<div id="polaroids" class="rbcol-8 rbcolumn">
 
 								<div class="rbcol-6 rbcolumn">
-									<input type="radio" value="11" name="print_option" checked="checked" /><h3>Four Polaroids Per Page</h3>
+									<input type="radio" value="11" name="print_option" checked="checked" /><h3><?php echo __("Four Polaroids Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-four-per-page.png" alt="" />
 									</div><!-- polariod -->
 								</div><!-- .six .rbcolumn -->
 
 								<div class="rbcol-6 rbcolumn">
-									<input type="radio" value="12" name="print_option" /><h3>One Polaroid Per Page</h3>
+									<input type="radio" value="12" name="print_option" /><h3><?php echo __("One Polaroid Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-one-per-page.png" alt="" />
 									</div><!-- polariod -->
@@ -296,8 +296,8 @@ echo "					</div>\n"; // #photos
 
 							<center>
 								<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
-								<input type="submit" value="Print Polaroids" name="print_all_images" />
-								<input type="submit" value="Download PDF Polaroids" name="pdf_all_images" />
+								<input type="submit" value="<?php echo __("Print Polaroids",RBAGENCY_TEXTDOMAIN); ?>" name="print_all_images" />
+								<input type="submit" value="<?php echo __("Download PDF Polaroids",RBAGENCY_TEXTDOMAIN); ?>" name="pdf_all_images" />
 							</center>
 						</form>
 
@@ -329,7 +329,7 @@ echo "					</div>\n"; // #photos
 						}?>
 
 						<div class="print_options">
-							<span class="allimages_text">Select Print Format</span><br /><br />
+							<span class="allimages_text"><?php echo __("Select Print Format",RBAGENCY_TEXTDOMAIN); ?></span><br /><br />
 						</div> 
 
 						<form action="" method="post">
@@ -339,14 +339,14 @@ echo "					</div>\n"; // #photos
 
 							<div id="polaroids" class="rbcol-8 rbcolumn">
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="1" name="print_option" checked="checked" /> Print Large Photos</h3>
+									<h3><input type="radio" value="1" name="print_option" checked="checked" /> <?php echo __("Print Large Photos",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-with-model-info.png" alt="" />
 									</div><!-- polariod -->
 								</div><!-- .six .rbcolumn -->
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="3" name="print_option" /> Print Medium Size Photos</h3>
+									<h3><input type="radio" value="3" name="print_option" /> <?php echo __("Print Medium Size Photos",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-with-model-info.png" alt="" />
 									</div><!-- polariod -->
@@ -354,14 +354,14 @@ echo "					</div>\n"; // #photos
 
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="1-1" name="print_option" /> Print Large Photos Without Model Info</h3>
+									<h3><input type="radio" value="1-1" name="print_option" /> <?php echo __("Print Large Photos Without Model Info",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-without-model-info.png" alt="" />
 									</div><!-- polariod -->
 								</div><!-- .six .rbcolumn -->
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="3-1" name="print_option" /> Print Medium Size Photos Without Model Info</h3>
+									<h3><input type="radio" value="3-1" name="print_option" /> <?php echo __("Print Medium Size Photos Without Model Info",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-without-model-info.png" alt="" />
 									</div><!-- polariod -->
@@ -383,7 +383,7 @@ echo "					</div>\n"; // #photos
 							</div><!-- polariod -->
 							<center>
 								<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
-								<input type="submit" value="Download PDF" name="pdf_all_images" />
+								<input type="submit" value="<?php echo __('Download PDF',RBAGENCY_TEXTDOMAIN); ?>" name="pdf_all_images" />
 							</center>
 						</form>
 
@@ -407,7 +407,7 @@ echo "					</div>\n"; // #photos
 						?>
 
 						<div class="print_options">
-							<span class="allimages_text">Select Print Format</span><br /><br />
+							<span class="allimages_text"><?php echo __("Select Print Format",RBAGENCY_TEXTDOMAIN); ?></span><br /><br />
 						</div> 
 
 						<form action="" method="post" target="_blank">
@@ -417,14 +417,14 @@ echo "					</div>\n"; // #photos
 
 							<div id="polaroids" class="rbcol-8 rbcolumn">
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="1" name="print_option" checked="checked" /> Print Large Photos</h3>
+									<h3><input type="radio" value="1" name="print_option" checked="checked" /> <?php echo __("Print Large Photos",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-with-model-info.png" alt="" />
 									</div><!-- polariod -->
 								</div><!-- .six .rbcolumn -->
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="3" name="print_option" /> Print Medium Size Photos</h3>
+									<h3><input type="radio" value="3" name="print_option" /> <?php echo __("Print Medium Size Photos",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-with-model-info.png" alt="" />
 									</div><!-- polariod -->
@@ -432,14 +432,14 @@ echo "					</div>\n"; // #photos
 
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="1-1" name="print_option" /> Print Large Photos Without Model Info</h3>
+									<h3><input type="radio" value="1-1" name="print_option" /> <?php echo __("Print Large Photos Without Model Info",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-large-photo-without-model-info.png" alt="" />
 									</div><!-- polariod -->
 								</div><!-- .six .rbcolumn -->
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="3-1" name="print_option" /> Print Medium Size Photos Without Model Info</h3>
+									<h3><input type="radio" value="3-1" name="print_option" /><?php echo __("Print Medium Size Photos Without Model Info",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-medium-photo-without-model-info.png" alt="" />
 									</div><!-- polariod -->
@@ -458,7 +458,7 @@ echo "					</div>\n"; // #photos
 							</div><!-- polariod -->
 							<center>
 								<!--<input style="" type="radio" value="5" name="print_option" />&nbsp;Print Division Headshots<br />    -->
-								<input type="submit" value="Print Pictures" name="print_all_images" />&nbsp;
+								<input type="submit" value="<?php echo __("Print Pictures",RBAGENCY_TEXTDOMAIN); ?>" name="print_all_images" />&nbsp;
 							</center>
 						</form>
 					<?php

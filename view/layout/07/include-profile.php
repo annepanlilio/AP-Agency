@@ -410,7 +410,7 @@ $display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gen
 				if ($countHeadshot > 0) {
 					foreach($resultsHeadshot as $dataHeadshot ){
 						$profileHeadshotUrl = $dataHeadshot['ProfileMediaURL'];
-						echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">Download Headshot</a></li>";
+						echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileHeadshotUrl.">".__("Download Headshot",RBAGENCY_TEXTDOMAIN)."</a></li>";
 					}
 				}
 
@@ -419,7 +419,7 @@ $display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gen
 				if ($countVoiceDemo > 0) {
 					foreach($resultsVoiceDemo as $dataVoiceDemo ){
 						$profileVoiceDemo = $dataVoiceDemo['ProfileMediaURL'];
-							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">Download VoiceDemo</a></li>";
+							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileVoiceDemo.">".__("Download VoiceDemo",RBAGENCY_TEXTDOMAIN)."</a></li>";
 						}
 				}
 				//CompCard
@@ -427,7 +427,7 @@ $display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gen
 				if ($countCompCard > 0) {
 					foreach($resultsCompCard as $dataCompCard ){
 						$profileCompCardUrl = $dataCompCard['ProfileMediaURL'];
-							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">Download CompCard</a></li>";
+							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileCompCardUrl.">".__("Download CompCard",RBAGENCY_TEXTDOMAIN)."</a></li>";
 						}
 				}
 				//Resume
@@ -435,7 +435,7 @@ $display_gender = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gen
 				if ($countResume > 0) {
 					foreach($resultsResume as $dataResume ){
 						$profileResumeUrl = $dataResume['ProfileMediaURL'];
-							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">Download Resume</a></li>";
+							echo "<li><a target='_blank' href=".RBAGENCY_UPLOADDIR.$ProfileGallery.'/'.$profileResumeUrl.">".__("Download Resume",RBAGENCY_TEXTDOMAIN)."</a></li>";
 						}
 				}
 				?>

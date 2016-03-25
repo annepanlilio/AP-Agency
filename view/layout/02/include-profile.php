@@ -201,7 +201,7 @@ if($subview=="images"){ //show all images page  //MODS 2012-11-28 ?>
 							echo "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=106&h=130\" alt=\"". $ProfileContactDisplay ."\" /></a><br /><input class=\"allImageCheck\" type=\"checkbox\" name=\"pdf_image_id[]\" value=\"".$dataImg['ProfileMediaID']."\"><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'></div>";
 						}
 						?> <br clear="all" />
-						<input type="submit" value="<?php echo __("Next, Select Print Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-images/");'/> or 
+						<input type="submit" value="<?php echo __("Next, Select Print Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-images/");'/><?php echo __("or",RBAGENCY_TEXTDOMAIN); ?>
 						<input type="submit" value="<?php echo __("Next, Select PDF Format",RBAGENCY_TEXTDOMAIN); ?>" onclick='jQuery("#allimageform").attr("action","../print-pdf/");' />
 					</form>
 					</div><!-- allimages_div-->

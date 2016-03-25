@@ -78,7 +78,7 @@ echo "					<ul>\n";
 								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
 									foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Print Resume</a></li>\n";
+									echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".__("Print Resume",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 									}
 							}
 							// Comp Card
@@ -88,7 +88,7 @@ echo "					<ul>\n";
 								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
 									foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item compcard\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Comp Card</a></li>\n";
+									echo "<li class=\"item compcard\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".__("Download Comp Card",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 									}
 							}
 							// Headshots
@@ -98,7 +98,7 @@ echo "					<ul>\n";
 								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
 									foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item headshot\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Download Headshot</a></li>\n";
+									echo "<li class=\"item headshot\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".__("Download Headshot",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 									}
 							}
 							//Voice Demo
@@ -107,12 +107,12 @@ echo "					<ul>\n";
 								$countMedia  = $wpdb->num_rows;
 								if ($countMedia > 0) {
 									foreach($resultsMedia as $dataMedia ){
-									echo "<li class=\"item voice\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">Listen to Voice Demo</a></li>\n";
+									echo "<li class=\"item voice\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\" class=\"rb_button\">".__("Listen to Voice Demo",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
 									}
 							}
 							//Contact Profile
 							if($rb_agency_option_showcontactpage==1){
-								echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\" class=\"rb_button\">Click Here</a></div>\n";
+								echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\" class=\"rb_button\">".__("Click Here",RBAGENCY_TEXTDOMAIN)."</a></div>\n";
 							}
 echo "					</ul>\n";
 echo "					</div>\n";// #links

@@ -105,8 +105,8 @@ function manage_elem(typ1, main_elm, hidden_elm){
                     console.log(setting);
                     if(setting == 1) {
                           options = {
-                                 1 : 'Youngest to Oldest',
-                                 2 : 'Oldest to Youngest'
+                                 1 : objectL10n.youngest_to_oldest,
+                                 2 : objectL10n.oldest_to_youngest,
                           };
                     } else if(setting == 2 ){
                           options = {
@@ -115,29 +115,29 @@ function manage_elem(typ1, main_elm, hidden_elm){
                           };
                     } else if(setting == 3 ){
                           options = {
-                                 1 : 'Ascending',
-                                 2 : 'Descending'
+                                 1 : objectL10n.ascending,
+                                 2 : objectL10n.descending
                           };
                     } else if(setting > 3 && setting < 50){ // custom date
                          options = {
-                                 1 : 'Ascending',
-                                 2 : 'Descending'
+                                1 : objectL10n.ascending,
+                                 2 : objectL10n.descending
                           };
                     } else if(setting == 50){
                          options = {
-                                 1 : 'Male',
-                                 2 : 'Female'
+                                 1 : objectL10n.male,
+                                 2 : objectL10n.female
                          }
                     }else if(setting == 151){
                          options = {
-                                 1 : 'Highest to Lowest',
-                                 2 : 'Lowest to Highest'
+                                 1 : objectL10n.highest_to_lowest,
+                                 2 : objectL10n.lowest_to_highest
                          }
                     }else {
                           options = {
-                                 '' : 'Sort Options'
+                                 '' : objectL10n.sort_options
                           }
-                    }            
+                    }               
 
                     jQuery.each(options, function(val, text) {
                             var sel = 0;

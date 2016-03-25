@@ -1959,14 +1959,14 @@ class RBAgency_Profile {
 
 					$all_html.='
 							<select id="sort_by">
-								<option value="0">Sort List</option>
-								<option value="1">Age</option>
-								<option value="2">Name</option>
-								<option value="3">Date Joined</option>
-								<option value="2">Display Name</option>
-								<option value="50">Gender</option>';
+								<option value="0">'.__("Sort List",RBAGENCY_TEXTDOMAIN).'</option>
+								<option value="1">'.__("Age",RBAGENCY_TEXTDOMAIN).'</option>
+								<option value="2">'.__("Name",RBAGENCY_TEXTDOMAIN).'</option>
+								<option value="3">'.__("Date Joined",RBAGENCY_TEXTDOMAIN).'</option>
+								<option value="2">'.__("Display Name",RBAGENCY_TEXTDOMAIN).'</option>
+								<option value="50">'.__("Gender",RBAGENCY_TEXTDOMAIN).'</option>';
 							if($rb_agency_options_arr['rb_agency_option_profilelist_includesortingbyprofileratings'] == true){
-								$all_html .= '<option value="151">Ratings</option>';
+								$all_html .= '<option value="151">'.__("Ratings",RBAGENCY_TEXTDOMAIN).'</option>';
 							}
 							
 								$customFilters = array_merge($customFilters,$results_genders);
@@ -1989,7 +1989,7 @@ class RBAgency_Profile {
 
 					$all_html.='</select>
 							<select id="sort_option">
-								<option value="">Sort Options</option>
+								<option value="">'.__("Sort Options",RBAGENCY_TEXTDOMAIN).'</option>
 							</select>';
 						
 						
@@ -2102,7 +2102,7 @@ class RBAgency_Profile {
 				$all_html.='<div id="results-info">';
 
 				if ($rb_agency_option_profilelist_count && (!in_array(get_query_var("type"), array("favorite","casting"))) ){
-					$all_html.='	<div class="rbtotal-results">Total Results : '.$items.' </div>';
+					$all_html.='	<div class="rbtotal-results">'.__("Total Results",RBAGENCY_TEXTDOMAIN).' : '.$items.' </div>';
 				}			
 
 			if ($count > 0){
@@ -2236,8 +2236,8 @@ class RBAgency_Profile {
 
 					if($rb_agency_option_profilelist_printpdf == 1){
 						$all_html.="<div class=\"results-links\">";
-						$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">Print</a> <span class=\"link-separate\">|</span> ";
-						$all_html.="<a href=\"javascript:;\" class=\"link-profile-pdf\">Download PDF</a>";
+						$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">".__("Print",RBAGENCY_TEXTDOMAIN)."</a> <span class=\"link-separate\">|</span> ";
+						$all_html.="<a href=\"javascript:;\" class=\"link-profile-pdf\">".__("Download PDF",RBAGENCY_TEXTDOMAIN)."</a>";
 						$all_html.="</div>";
 					}
 

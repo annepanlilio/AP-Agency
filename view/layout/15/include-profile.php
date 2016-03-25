@@ -102,7 +102,7 @@ echo "				<div id=\"soundcloud\">";
 						$resultsSC=  $wpdb->get_results($wpdb->prepare($querySC, $ProfileID),ARRAY_A);
 						$countSC  = $wpdb->num_rows;
 						if($countSC > 0){
-							echo "<h3>SoundCloud</h3>";
+							echo "<h3>".__("SoundCloud",RBAGENCY_TEXTDOMAIN)."</h3>";
 							foreach( $resultsSC as $dataSC ){
 								echo RBAgency_Common::rb_agency_embed_soundcloud($dataSC['ProfileMediaURL']);
 							}
@@ -112,7 +112,7 @@ echo "						</div>\n"; // .rbcol-6
 
 echo "					<div class=\"rbcol-6 rbcolumn\">\n";
 echo "						<div id=\"links\">\n";
-echo "							<h2>Available for:</h2>";
+echo "							<h2>".__("Available for:",RBAGENCY_TEXTDOMAIN)."</h2>";
 echo "							<ul>";
 
 									// Specify Hard Coded Custom Field ID#

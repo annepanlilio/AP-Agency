@@ -12,7 +12,7 @@ echo "</div>";
 echo "<div id=\"profile-casting-link\">";
 	if(is_user_logged_in()){
 		if(rb_get_casting_profileid() > 0 && !current_user_can("manage_options")){
-			$disp .= "<a href=\"".  get_bloginfo("wpurl") ."/casting-dashboard/\" rel=\"nofollow\" title=\"View Favorites\" class=\"btn btn-primary\">Go Back to My Account</a>";
+			$disp .= "<a href=\"".  get_bloginfo("wpurl") ."/casting-dashboard/\" rel=\"nofollow\" title=\"View Favorites\" class=\"btn btn-primary\">".__("Go Back to My Account",RBAGENCY_TEXTDOMAIN)."</a>";
 		}
 	}
 echo "</div>";
@@ -56,7 +56,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".rb_get_profile_link_label()." Resume</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".rb_get_profile_link_label()." ".__("Resume",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -66,7 +66,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Comp Card</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." ".__("Comp Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 	
@@ -76,7 +76,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		//foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".rb_get_profile_link_label()." Model Card</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".rb_get_profile_link_label()." ".__("Model Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		//}
 	}
 	
@@ -86,7 +86,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." Headshot</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." ".__("Headshot",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -98,7 +98,7 @@ echo "<div id=\"profile-links\">\n";
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
 			$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link slate\">Watch Video Slate</a>\n";
+			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link slate\">".__("Watch Video Slate",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -108,7 +108,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link monologue\">Watch Video Monologue</a>\n";
+			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link monologue\">".__("Watch Video Monologue",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -119,12 +119,12 @@ echo "<div id=\"profile-links\">\n";
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
 			if ( substr($dataMedia['ProfileMediaURL'], 0, 4) == "http" ) {
-				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+				echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">".__("Watch Demo Reel",RBAGENCY_TEXTDOMAIN)."</a>\n";
 			} else {
 				if ( $dataMedia['ProfileVideoType'] == "youtube") {
-					echo "<a href=\"https://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+					echo "<a href=\"https://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">".__("Watch Demo Reel",RBAGENCY_TEXTDOMAIN)."</a>\n";
 				} elseif ( $dataMedia['ProfileVideoType'] == "vimeo") {
-					echo "<a href=\"https://vimeo.com/". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">Watch Demo Reel</a>\n";
+					echo "<a href=\"https://vimeo.com/". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">".__("Watch Demo Reel",RBAGENCY_TEXTDOMAIN)."</a>\n";
 				}
 			}
 		}

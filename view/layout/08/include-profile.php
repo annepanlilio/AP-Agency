@@ -66,8 +66,8 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 		<div class="rbclear"></div>
 		<div class="rbcol-12 rbcolumn">
 			<div id="photobook-pagination" class="">
-				<a href="" id="prev-page">Previous page</a>
-				<a href="" id="next-page">Next Page</a>
+				<a href="" id="prev-page"><?php echo __("Previous page",RBAGENCY_TEXTDOMAIN); ?></a>
+				<a href="" id="next-page"><?php echo __("Next Page",RBAGENCY_TEXTDOMAIN); ?></a>
 			</div>
 		</div>
 		<div class="rbclear"></div>
@@ -99,7 +99,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 						// 		$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><a href=\"http://vimeo.com/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">" .$dataMedia["ProfileMediaTitle"]."</a></div></div>\n";
 						// 	}
 						// }
-						$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><div class=\"video-info\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<br/>" .$dataMedia["ProfileMediaTitle"]."</div><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">Watch Video</a></div></div>\n";
+						$outVideoMedia .= "<div class=\"video-col\"><div class=\"video\"><div class=\"video-info\">".rb_agency_get_videothumbnail($dataMedia['ProfileMediaURL'])."<br/>" .$dataMedia["ProfileMediaTitle"]."</div><a href=\"" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\">".__("Watch Video",RBAGENCY_TEXTDOMAIN)."</a></div></div>\n";
 					}
 				}
 					echo $outVideoMedia;

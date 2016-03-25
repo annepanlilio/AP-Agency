@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-03-18 11:40-0700\n"
+"PO-Revision-Date: 2016-03-25 12:52-0700\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -1558,4 +1558,226 @@ msgid "Type"
 msgstr ""
 
 msgid "Diagnostic Checks:"
+msgstr ""
+
+msgid "Next, Select Print Format"
+msgstr ""
+
+msgid "Next, Select PDF Format"
+msgstr ""
+
+msgid "Sorry, there is no available polaroid images for this profile."
+msgstr ""
+
+msgid "Select Print Format"
+msgstr ""
+
+msgid "Four Polaroids Per Page"
+msgstr ""
+
+msgid "One Polaroid Per Page"
+msgstr ""
+
+msgid "Print Polaroids"
+msgstr ""
+
+msgid "Download PDF Polaroids"
+msgstr ""
+
+msgid "Print Large Photos"
+msgstr ""
+
+msgid "Print Medium Size Photos"
+msgstr ""
+
+msgid "Print Large Photos Without Model Info"
+msgstr ""
+
+msgid "Print Medium Size Photos Without Model Info"
+msgstr ""
+
+msgid "Download PDF"
+msgstr ""
+
+msgid "Print Pictures"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Select Division"
+msgstr ""
+
+msgid "Men"
+msgstr ""
+
+msgid "Women"
+msgstr ""
+
+msgid "Teen Girls"
+msgstr ""
+
+msgid "Teen Boys"
+msgstr ""
+
+msgid "Boys"
+msgstr ""
+
+msgid "Girls"
+msgstr ""
+
+msgid "Select Division First"
+msgstr ""
+
+msgid "Print Photos"
+msgstr ""
+
+msgid "View Polaroids"
+msgstr ""
+
+msgid "View Slideshow"
+msgstr ""
+
+msgid "Download %d Comp Card"
+msgstr ""
+
+msgid "Download Headshot"
+msgstr ""
+
+msgid "Listen to %s Voice Demo"
+msgstr ""
+
+msgid "Watch Video Slate"
+msgstr ""
+
+msgid "Watch Video Monologue"
+msgstr ""
+
+msgid "Watch Demo Reel"
+msgstr ""
+
+msgid "View Casting Cart"
+msgstr ""
+
+msgid "Download VoiceDemo"
+msgstr ""
+
+msgid "Download CompCard"
+msgstr ""
+
+msgid "Download Resume"
+msgstr ""
+
+msgid "Previous page"
+msgstr ""
+
+msgid "Next Page"
+msgstr ""
+
+msgid "Watch Video"
+msgstr ""
+
+msgid "View Shortlist"
+msgstr ""
+
+msgid "Watch ShowReel"
+msgstr ""
+
+msgid "Print Resume PDF"
+msgstr ""
+
+msgid "Click Here"
+msgstr ""
+
+msgid "Resume &#8595;"
+msgstr ""
+
+msgid "Print Resume"
+msgstr ""
+
+msgid "Download Comp Card"
+msgstr ""
+
+msgid "Listen to Voice Demo"
+msgstr ""
+
+msgid "Available for:"
+msgstr ""
+
+msgid "SoundCloud"
+msgstr ""
+
+msgid "Please select photos to print. Maximum is 100 photos only"
+msgstr ""
+
+msgid "View Photos"
+msgstr ""
+
+msgid "Resume"
+msgstr ""
+
+msgid "Comp Card"
+msgstr ""
+
+msgid "Model Card"
+msgstr ""
+
+msgid "Headshot"
+msgstr ""
+
+msgid "Go Back to My Account"
+msgstr ""
+
+msgid "Sort List"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Date Joined"
+msgstr ""
+
+msgid "Ratings"
+msgstr ""
+
+msgid "Sort Options"
+msgstr ""
+
+msgid "Total Results"
+msgstr ""
+
+msgid "Displaying"
+msgstr ""
+
+msgid "of"
+msgstr ""
+
+msgid " records"
+msgstr ""
+
+msgid "Print"
+msgstr ""
+
+msgid "Watch"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "Youngest to Oldest"
+msgstr ""
+
+msgid "Oldest to Youngest"
+msgstr ""
+
+msgid "Ascending"
+msgstr ""
+
+msgid "Descending"
+msgstr ""
+
+msgid "Highest to Lowest"
+msgstr ""
+
+msgid "Lowest to Highest"
 msgstr ""
