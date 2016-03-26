@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-03-25 12:52-0700\n"
+"PO-Revision-Date: 2016-03-25 19:04+0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: de_DE\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.6\n"
 "X-Poedit-SearchPath-0: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
 
 #: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:99
@@ -1327,7 +1327,7 @@ msgid "Last"
 msgstr ""
 
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigen Name"
 
 msgid "Auto Generated Record ID"
 msgstr ""
@@ -1561,46 +1561,46 @@ msgid "Diagnostic Checks:"
 msgstr ""
 
 msgid "Next, Select Print Format"
-msgstr ""
+msgstr "Als nächstes wählen Sie das Druckformat"
 
 msgid "Next, Select PDF Format"
-msgstr ""
+msgstr "Als nächstes wählen Sie PDF- Format"
 
 msgid "Sorry, there is no available polaroid images for this profile."
 msgstr ""
 
 msgid "Select Print Format"
-msgstr ""
+msgstr "Wählen Sie das Druckformat"
 
 msgid "Four Polaroids Per Page"
-msgstr ""
+msgstr "Vier Polaroids pro Seite"
 
 msgid "One Polaroid Per Page"
-msgstr ""
+msgstr "Ein Polaroid pro Seite"
 
 msgid "Print Polaroids"
-msgstr ""
+msgstr "Drucken Polaroids"
 
 msgid "Download PDF Polaroids"
-msgstr ""
+msgstr "PDF herunterladen Polaroids"
 
 msgid "Print Large Photos"
-msgstr ""
+msgstr "Drucken Große Fotos"
 
 msgid "Print Medium Size Photos"
-msgstr ""
+msgstr "Drucken Medium Size Fotos"
 
 msgid "Print Large Photos Without Model Info"
-msgstr ""
+msgstr "Drucken von Fotos ohne große Model Info"
 
 msgid "Print Medium Size Photos Without Model Info"
-msgstr ""
+msgstr "Drucken Medium Size Fotos Ohne Model Info"
 
 msgid "Download PDF"
-msgstr ""
+msgstr "Herunterladen PDF"
 
 msgid "Print Pictures"
-msgstr ""
+msgstr "Drucken Bilder"
 
 msgid "Reset"
 msgstr ""
@@ -1630,10 +1630,10 @@ msgid "Select Division First"
 msgstr ""
 
 msgid "Print Photos"
-msgstr ""
+msgstr "Drucken Fotos"
 
 msgid "View Polaroids"
-msgstr ""
+msgstr "Aussicht Polaroids"
 
 msgid "View Slideshow"
 msgstr ""
@@ -1642,19 +1642,19 @@ msgid "Download %d Comp Card"
 msgstr ""
 
 msgid "Download Headshot"
-msgstr ""
+msgstr "Herunterladen Kopfschuss"
 
 msgid "Listen to %s Voice Demo"
 msgstr ""
 
 msgid "Watch Video Slate"
-msgstr ""
+msgstr "Uhr Video Slate"
 
 msgid "Watch Video Monologue"
-msgstr ""
+msgstr "Uhr Video Monologue"
 
 msgid "Watch Demo Reel"
-msgstr ""
+msgstr "Uhr Demo Reel"
 
 msgid "View Casting Cart"
 msgstr ""
@@ -1666,7 +1666,7 @@ msgid "Download CompCard"
 msgstr ""
 
 msgid "Download Resume"
-msgstr ""
+msgstr "Herunterladen Fortsetzen"
 
 msgid "Previous page"
 msgstr ""
@@ -1696,22 +1696,22 @@ msgid "Print Resume"
 msgstr ""
 
 msgid "Download Comp Card"
-msgstr ""
+msgstr "Herunterladen Comp Card"
 
 msgid "Listen to Voice Demo"
-msgstr ""
+msgstr "Hören nach Stimme Demo"
 
 msgid "Available for:"
 msgstr ""
 
 msgid "SoundCloud"
-msgstr ""
+msgstr "SoundCloud"
 
 msgid "Please select photos to print. Maximum is 100 photos only"
-msgstr ""
+msgstr "Bitte wählen Sie Fotos zu drucken. Maximal 100 Fotos nur"
 
 msgid "View Photos"
-msgstr ""
+msgstr "Aussicht Fotos"
 
 msgid "Resume"
 msgstr ""
@@ -1729,55 +1729,55 @@ msgid "Go Back to My Account"
 msgstr ""
 
 msgid "Sort List"
-msgstr ""
+msgstr "Sortieren Liste"
 
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 msgid "Date Joined"
-msgstr ""
+msgstr "Datum Beigetreten"
 
 msgid "Ratings"
-msgstr ""
+msgstr "Bewertungen"
 
 msgid "Sort Options"
-msgstr ""
+msgstr "Sortieren Optionen"
 
 msgid "Total Results"
-msgstr ""
+msgstr "Gesamt Ergebnisse"
 
 msgid "Displaying"
-msgstr ""
+msgstr "Anzeige"
 
 msgid "of"
-msgstr ""
+msgstr "von"
 
 msgid " records"
-msgstr ""
+msgstr "aufzeichnungen"
 
 msgid "Print"
-msgstr ""
+msgstr "Drucken"
 
 msgid "Watch"
-msgstr ""
+msgstr "Uhr"
 
 msgid "or"
-msgstr ""
+msgstr "oder"
 
 msgid "Youngest to Oldest"
-msgstr ""
+msgstr "Jüngster nach Älteste"
 
 msgid "Oldest to Youngest"
-msgstr ""
+msgstr "Älteste nach Jüngster"
 
 msgid "Ascending"
-msgstr ""
+msgstr "Aufsteigend"
 
 msgid "Descending"
-msgstr ""
+msgstr "Absteigend"
 
 msgid "Highest to Lowest"
-msgstr ""
+msgstr "Höchste nach Unterste"
 
 msgid "Lowest to Highest"
-msgstr ""
+msgstr "Unterste nach Höchste"

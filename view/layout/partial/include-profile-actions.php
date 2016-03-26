@@ -63,7 +63,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".rb_get_profile_link_label()." ".__("Resume",RBAGENCY_TEXTDOMAIN)."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".__("View Resume",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -73,7 +73,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." ".__("Comp Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".__("View Comp Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 	
@@ -83,7 +83,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		//foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".rb_get_profile_link_label()." ".__("Model Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".__("View Model Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		//}
 	}
 	
@@ -91,9 +91,9 @@ echo "<div id=\"profile-links\">\n";
 	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
 	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 	$countMedia = $wpdb->num_rows;
-	if ($countMedia > 0) {
+	if ($countMedia > 0) {javascript:;
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".rb_get_profile_link_label()." ".__("Headshot",RBAGENCY_TEXTDOMAIN)."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".__("View Headshot",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 

@@ -1129,10 +1129,10 @@
 		function showCounter($value=""){$this->showCounter=($value===true)?true:false;}
 		#to change the class name of the pagination div
 		function changeClass($value=""){$this->className=$value;}
-		function nextLabel($value){$this->nextT = $value;}
-		function nextIcon($value){$this->nextI = $value;}
-		function prevLabel($value){$this->prevT = $value;}
-		function prevIcon($value){$this->prevI = $value;}
+		function nextLabel($value){$this->nextT = __($value,RBAGENCY_TEXTDOMAIN);}
+		function nextIcon($value){$this->nextI = __($value,RBAGENCY_TEXTDOMAIN);}
+		function prevLabel($value){$this->prevT = __($value,RBAGENCY_TEXTDOMAIN);}
+		function prevIcon($value){$this->prevI = __($value,RBAGENCY_TEXTDOMAIN);}
 		#to change the class name of the pagination div
 		function parameterName($value=""){$this->parameterName=$value;}
 		#to change urlFriendly
