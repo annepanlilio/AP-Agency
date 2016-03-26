@@ -71,13 +71,18 @@ echo "<div id=\"profile-links\">\n";
 	}
 	
 // Card Photos
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_option_profilemedia_links = isset($rb_agency_options_arr["rb_agency_option_profilemedia_links"])?$rb_agency_options_arr["rb_agency_option_profilemedia_links"]:2;
+
 	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"CardPhotos");
 	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
-		//foreach($resultsImg as $dataMedia ){
+		if($rb_agency_option_profilemedia_links == 2){
 			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".__("View Model Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
-		//}
+		}else{
+			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".__("Download Model Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
+		}
 	}
 	
 // Headshots

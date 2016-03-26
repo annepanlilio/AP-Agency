@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-03-25 22:03-0700\n"
+"PO-Revision-Date: 2016-03-25 22:42-0700\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "MIME-Version: 1.0\n"
@@ -562,7 +562,7 @@ msgid "Next"
 msgstr "Nächster"
 
 msgid "Previous"
-msgstr "früher"
+msgstr "Früher"
 
 msgid "Delete Profiles"
 msgstr "Profile löschen"
@@ -1783,13 +1783,16 @@ msgid "Lowest to Highest"
 msgstr "Unterste nach Höchste"
 
 msgid "View Resume"
-msgstr ""
+msgstr "Aussicht Fortsetzen"
 
 msgid "View Comp Card"
-msgstr ""
+msgstr "Aussicht Comp Card"
 
 msgid "View Model Card"
-msgstr ""
+msgstr "Aussicht Model Card"
 
 msgid "View Headshot"
+msgstr "Aussicht Kopfschuss"
+
+msgid "Download Model Card"
 msgstr ""
