@@ -680,7 +680,7 @@
 	 *
 	 * @param string $videoID
 	 */
-	function rb_agency_get_videothumbnail($url, $host) {
+	function rb_agency_get_videothumbnail($url, $host = "") {
 	/*
 	TODO: Cleanup
 		$videoID = ltrim($videoID);
@@ -1803,7 +1803,7 @@
 		global $wpdb;
 		global $rb_agency_option_unittype;
 
-		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"), $ProfileID);
+		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID) );
 		foreach ($resultsCustom as $resultCustom) {
 
 			if( $resultCustom->ProfileCustomID != 16 ):

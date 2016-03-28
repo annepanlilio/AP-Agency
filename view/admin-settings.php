@@ -1180,22 +1180,36 @@ elseif ($ConfigID == 11) {
 		echo " </tr>\n";
 
 
-
+		$sample_msg = "<span style='font-size:9px;'>Hi there,<br><br>
+		Thanks for joining [agency_name]!<br><br>
+		Here's how to log in:<br><br>
+		Login: [login_url]<br>
+		Username: [username]<br>
+		Password: [password]<br><br>
+		If you have any problems, please contact us at [agency_email]<br><br>
+		Regards,<br>
+		[agency_name] Team<br>
+		[domain]</span>";
 
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Notification after registration', RBAGENCY_TEXTDOMAIN); echo " <i>(This will display on the website after registration.)</i></h2></th>\n";
+		
 		echo " </tr>\n";
-		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('If password is self-generated', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo " <tr valign=\"top\" >\n";
+		echo "   <th scope=\"row\" style=\"width:250px;\">". __('If password is self-generated', RBAGENCY_TEXTDOMAIN) ."<br>
+		".$sample_msg."
+		</th>\n";
 		echo "   <td>\n";
-		echo "   <textarea name=\"rb_agencyinteract_options[notification_password_self_generated]\" cols=\"60\" rows=\"10\">".(isset($rb_agencyinteract_options_arr['notification_password_self_generated'])?$rb_agencyinteract_options_arr['notification_password_self_generated']:"")."</textArea> ";
+		echo "   <textarea name=\"rb_agencyinteract_options[notification_password_self_generated]\" cols=\"60\" rows=\"10\" style=\"margin-top:-100px\">".(isset($rb_agencyinteract_options_arr['notification_password_self_generated'])?$rb_agencyinteract_options_arr['notification_password_self_generated']:"")."</textArea> ";
 		echo "   </td>\n";
 		
 		echo " </tr>\n";
-		echo " <tr valign=\"top\">\n";
-		echo "   <th scope=\"row\">". __('If password is auto-generated(sent via email)', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo " <tr valign=\"top\" >\n";
+		echo "   <th scope=\"row\" style=\"width:250px;\">". __('If password is auto-generated(sent via email)', RBAGENCY_TEXTDOMAIN) ."<br>
+		".$sample_msg."
+		</th>\n";
 		echo "   <td>\n";
-		echo "   <textarea name=\"rb_agencyinteract_options[notification_password_auto_generated]\" cols=\"60\" rows=\"10\">".(isset($rb_agencyinteract_options_arr['notification_password_auto_generated'])?$rb_agencyinteract_options_arr['notification_password_auto_generated']:"")." </textArea> ";
+		echo "   <textarea name=\"rb_agencyinteract_options[notification_password_auto_generated]\" cols=\"60\" rows=\"10\" style=\"margin-top:-100px\">".(isset($rb_agencyinteract_options_arr['notification_password_auto_generated'])?$rb_agencyinteract_options_arr['notification_password_auto_generated']:"")." </textArea> ";
 		echo "   </td>\n";
 		echo " </tr>\n";
 
