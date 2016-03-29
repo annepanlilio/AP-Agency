@@ -91,6 +91,11 @@ global $wpdb;
 			//return RBAgency_AdminSettings::Uninstall();
 			break;
 
+		case 8:
+			echo "<h1>".__("Settings &raquo; Data &raquo; Social Media",RBAGENCY_TEXTDOMAIN)."</h1>";
+			//return RBAgency_AdminSettings::Uninstall();
+			break;
+
 	}
 
 
@@ -3964,6 +3969,288 @@ elseif ($ConfigID == 100){
 	echo "<textarea name=\"rb_casting_settings_message_confirming_availability_post\" class=\"rb_casting_settings_message_confirming_availability_post\" rows=\"7\" cols=\"60\">".$rb_casting_settings_message_confirming_availability_status_display."</textarea><br>";
 	echo '<input type="submit" name="save_casting_settings" value="Save Settings">';
 	echo '</form>';
+} elseif($ConfigID == 8){
+
+	global $wpdb;
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+	// Table for social media
+	$sql = "CREATE TABLE IF NOT EXISTS ". $wpdb->prefix."agency_social_media (
+			ID BIGINT(20) NOT NULL AUTO_INCREMENT,
+			SocialMedia_Name VARCHAR(50),
+			SocialMedia_LinkType INT(10) NOT NULL DEFAULT '0',
+			SocialMedia_Order INT(10) DEFAULT NULL,
+			SocialMedia_Icon VARCHAR(255) DEFAULT NULL,
+			PRIMARY KEY (ID)
+			);";
+	dbDelta($sql);
+
+	if(isset($_POST["op_type"]) && $_POST["op_type"] == "addRecord"){
+		
+		$SocialMediaName = isset($_POST["social_media_label"]) ? $_POST["social_media_label"] : "";
+		$SocialMediaLinkType = isset($_POST["link_type"]) ? $_POST["link_type"] : 0;
+		$SocialMediaOrder = isset($_POST["social_media_order"]) ? $_POST["social_media_order"] : "";  
+
+		foreach($_POST as $k=>$v ){
+			if(empty($_POST["social_media_label"])){
+				$has_error[] = __("Social Media Label is required!");
+			}
+		}
+		//upload icon
+		$upload_dir_arr = wp_upload_dir();
+
+		$upload_dir = $upload_dir_arr["basedir"]."/social-media";
+		if(!is_dir($upload_dir)){
+			@mkdir($upload_dir, 0755);
+			@chmod($upload_dir, 0777);
+		}
+
+		$has_error = array();
+		
+		if(empty($_FILES['social_media_icon']['name'])){
+			$has_error[] = __("Social Media Icon required!");
+		}
+		$upload_path = $upload_dir; 
+		$target_path = $upload_path."/".basename( $_FILES['social_media_icon']['name']);
+		if(move_uploaded_file($_FILES['social_media_icon']['tmp_name'], $target_path)){
+			//do nothing
+		}else{
+			$has_error[] = __("Unable to upload icon!");
+		}
+
+		$SocialMediaIcon = "social-media/".basename( $_FILES['social_media_icon']['name']);
+
+		if(!empty($has_error)){
+			foreach($has_error as $err){
+				echo $err."<br>";
+			}
+		}else{
+			$sql = "INSERT INTO ".$wpdb->prefix."agency_social_media(SocialMedia_Name,SocialMedia_LinkType,SocialMedia_Order,SocialMedia_Icon) VALUES('%s',%d,%d,'%s')";
+			$inserted = $wpdb->query($wpdb->prepare($sql,$SocialMediaName,$SocialMediaLinkType,$SocialMediaOrder,$SocialMediaIcon));
+			if($inserted){
+				echo "<div id=\"message\" class=\"updated\"><p>".__("Record successfully added!",RBAGENCY_TEXTDOMAIN)."</p></div>";
+			}
+		}		
+
+	}elseif(isset($_POST["op_type"]) && $_POST["op_type"] == "editRecord"){
+
+		$SocialMedia_ID = isset($_POST["social_media_id"]) ? $_POST["social_media_id"] : "";
+		$SocialMedia_Name = isset($_POST["social_media_label"]) ? $_POST["social_media_label"] : "";
+		$SocialMedia_LinkType = isset($_POST["link_type"]) ? $_POST["link_type"] : "";
+		$SocialMedia_Order = isset($_POST["social_media_order"]) ? $_POST["social_media_order"] : "";
+		$SocialMedia_OldIcon = isset($_POST["old_social_media_icon"]) ? $_POST["old_social_media_icon"] : "";
+
+		$sql = "UPDATE ".$wpdb->prefix."agency_social_media SET 
+					SocialMedia_Name = '%s',
+					SocialMedia_LinkType = %d,
+					SocialMedia_Order = %d,
+					SocialMedia_Icon = '%s' 
+				WHERE ID = %d";
+		//update with the old icon
+		if(empty($_FILES['social_media_icon']['name'])){
+			$updated = $wpdb->query($wpdb->prepare($sql,$SocialMedia_Name,$SocialMedia_LinkType,$SocialMedia_Order,$SocialMedia_OldIcon,$SocialMedia_ID));
+			if($updated){
+				echo "<div id=\"message\" class=\"updated\"><p>".__("Record successfully updated!",RBAGENCY_TEXTDOMAIN)."</p></div>";
+			}
+		}else{
+			$upload_path = $upload_dir; 
+			$target_path = $upload_path."/".basename( $_FILES['social_media_icon']['name']);
+			move_uploaded_file($_FILES['social_media_icon']['tmp_name'], $target_path);
+			$SocialMediaIcon = "social-media/".basename( $_FILES['social_media_icon']['name']);
+
+			$updated = $wpdb->query($wpdb->prepare($sql,$SocialMedia_Name,$SocialMedia_LinkType,$SocialMedia_Order,$SocialMediaIcon,$SocialMedia_ID));
+			if($updated){
+				echo "<div id=\"message\" class=\"updated\"><p>".__("Record successfully updated!",RBAGENCY_TEXTDOMAIN)."</p></div>";
+			}
+		}
+
+
+	}elseif(isset($_POST["op_type"]) && $_POST["op_type"] == 'deleteRecord'){
+		$err_msg = array();
+		$suc_msg = array();
+		foreach($_POST["SocialMediaID"] as $k=>$v){
+			$deleted = $wpdb->query("DELETE FROM ".$wpdb->prefix."agency_social_media WHERE ID = ".$v);
+			if(!$deleted){
+				$err_msg[] = "<div id=\"message\" class=\"updated\"><p>".__("Error deleting record!",RBAGENCY_TEXTDOMAIN)."</p></div>";
+			}else{
+				$suc_msg[] = "<div id=\"message\" class=\"updated\"><p>".__($_POST["social_media_names"][$k]." successfully deleted!",RBAGENCY_TEXTDOMAIN)."</p></div>";
+			}
+		}
+		if(empty($err_msg)){
+			foreach($suc_msg as $msg){
+				echo $msg;
+			} 
+		}
+
+	}
+
+	if(isset($_GET["deleteRecord"])){
+		$deleted = $wpdb->query("DELETE FROM ".$wpdb->prefix."agency_social_media WHERE ID = ".$_GET["SocialMediaID"]);
+		if($deleted){
+			echo "<div id=\"message\" class=\"updated\"><p>".__("Record successfully deleted!",RBAGENCY_TEXTDOMAIN)."</p></div>";
+		}
+	}	
+
+	$link_type_arr = array("Button","Link Text","Icons");
+
+
+	if(!isset($_GET["action"])){
+		echo "<h3>".__("Add New Record",RBAGENCY_TEXTDOMAIN)."</h3>";
+		echo "<form enctype=\"multipart/form-data\" method=\"POST\">";
+		echo "<table>";
+		echo "<tr>";
+		echo "<td>".__("Label",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><input type=\"text\" name=\"social_media_label\"></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>".__("Link Type",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><select name=\"link_type\">";
+		echo "<option>".__("--Select Type--",RBAGENCY_TEXTDOMAIN)."</option>";
+		
+		foreach($link_type_arr as $k=>$v){
+			echo "<option value=\"".$k."\">".$v."</option>";
+		}
+		echo "</select></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>".__("Order",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><input type=\"text\" name=\"social_media_order\"></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>".__("Social Media Icon",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><input type=\"file\" name=\"social_media_icon\"></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td><input type=\"submit\" name=\"submit\" class=\"button-primary\" value=\"Submit\"></td>";
+		echo "<td></td>";
+		echo "</tr>";
+		echo "</table>";
+		echo "<input type=\"hidden\" name=\"op_type\" value=\"addRecord\">";
+		echo "</form>";
+	}else{
+		$socialMediaID = isset($_GET["SocialMediaID"]) ? $_GET["SocialMediaID"] : "";
+		
+		$_SocialMedia_Name = "";
+		$_SocialMedia_LinkType = "";
+		$_SocialMedia_Order = "";
+		$_SocialMedia_Icon = "";
+
+		$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."agency_social_media WHERE ID = ".$socialMediaID,ARRAY_A);
+		
+		foreach($results as $_social){
+			$_SocialMedia_Name = $_social["SocialMedia_Name"];
+			$_SocialMedia_LinkType = $_social["SocialMedia_LinkType"];
+			$_SocialMedia_Order = $_social["SocialMedia_Order"];
+			$_SocialMedia_Icon = $_social["SocialMedia_Icon"];
+		}
+
+		echo "<h3>".__("Edit Record",RBAGENCY_TEXTDOMAIN)."</h3>";
+		echo "<form enctype=\"multipart/form-data\" method=\"POST\">";
+		echo "<table>";
+		echo "<tr>";
+		echo "<td>".__("Label",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><input type=\"text\" name=\"social_media_label\" value=\"".$_SocialMedia_Name."\"></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>".__("Link Type",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><select name=\"link_type\">";
+		echo "<option>".__("--Select Type--",RBAGENCY_TEXTDOMAIN)."</option>";
+		
+		foreach($link_type_arr as $k=>$v){
+			$selected = $_SocialMedia_LinkType == $k ? "selected" : "";
+			echo "<option value=\"".$k."\" $selected>".$v."</option>";
+		}
+		echo "</select></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>".__("Order",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><input type=\"text\" name=\"social_media_order\" value=\"".$_SocialMedia_Order."\"></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td>".__("Social Media Icon",RBAGENCY_TEXTDOMAIN).":</td>";
+		echo "<td><input type=\"file\" name=\"social_media_icon\"></td>";
+		echo "</tr>";
+		echo "<tr>";
+		echo "<td><input type=\"submit\" name=\"submit\" class=\"button-primary\" value=\"Update\"></td>";
+		echo "<td></td>";
+		echo "</tr>";
+		echo "</table>";
+		echo "<input type=\"hidden\" name=\"op_type\" value=\"editRecord\">";
+		echo "<input type=\"hidden\" name=\"old_social_media_icon\" value=\"".$_SocialMedia_Icon."\">";
+		echo "<input type=\"hidden\" name=\"social_media_id\" value=\"".$socialMediaID."\">";
+		echo "</form>";
+
+	}
+	
+
+	echo "<div style=\"margin-top:20px;\">";
+	echo "<form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;ConfigID=8\">\n";
+	echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
+	echo "<thead>\n";
+	echo "    <tr class=\"thead\">\n";
+	echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Link Type", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Order", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+	echo "    </tr>\n";
+	echo "</thead>\n";
+
+	echo "<tfoot>\n";
+	echo "    <tr class=\"thead\">\n";
+	echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Link Type", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">". __("Order", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+	echo "    </tr>\n";
+	echo "</tfoot>\n";
+
+	echo "<tbody>\n";
+
+	$sql = "SELECT * FROM ".$wpdb->prefix."agency_social_media";
+	$results = $wpdb->get_results($sql,ARRAY_A);
+	$count = $wpdb->num_rows;
+
+	if($count > 0){
+		foreach($results as $social){
+			echo "<tr>";
+			echo "<th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $social["ID"] ."\" name=\"SocialMediaID[]\" value=\"". $social["ID"] ."\" /></th>\n";
+			echo "<th class=\"column\"><input type=\"hidden\" name=\"social_media_names[]\" value=\"".$social["SocialMedia_Name"]."\">".$social["SocialMedia_Name"]."\n";
+			echo "          <div class=\"row-actions\">\n";
+			echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;SocialMediaID=". $social["ID"]."&amp;ConfigID=8\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+			echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;deleteRecord&amp;SocialMediaID=". $social["ID"] ."&amp;ConfigID=8\"  onclick=\"if ( confirm('". __("You are about to delete this ", RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+			echo "          </div>\n";
+			echo "</th>";
+			$linkType = "";
+			foreach($link_type_arr as $k=>$v){
+				if($social["SocialMedia_LinkType"] == $k){
+					$linkType = $v;
+				}
+			}
+			echo "<th class=\"column\">".$linkType."</th>\n";
+			echo "<th class=\"column\">".$social["SocialMedia_Order"]."</th>\n";
+
+			echo "</tr>";
+		}
+	}else{
+		echo "    <tr>\n";
+		echo "        <td class=\"check-column\" scope=\"row\"></th>\n";
+		echo "        <td class=\"column\" colspan=\"3\"><p>". __("There aren't any records loaded yet", RBAGENCY_TEXTDOMAIN) . "!</p></td>\n";
+		echo "    </tr>\n";
+	}
+	
+
+	echo "</tbody>\n";
+	echo "</table>\n";
+
+	echo "<p class=\"submit\">\n";
+	echo "<input type=\"hidden\" name=\"op_type\" value=\"deleteRecord\">";
+	echo "<input type=\"submit\" name=\"submit_delete\" value=\"".__("Delete Selected",RBAGENCY_TEXTDOMAIN)."\" class=\"button-primary\">";
+	echo "</p>";
+	echo "</form>";
+	echo "</div>";
+
+
+
 }
 echo "</div>\n";
 ?>

@@ -415,26 +415,18 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 							//clear first the user meta social media name and links
 										global $wpdb;
-										$list = array(
-											'Facebook',
-											'Twitter',
-											'Instagram',
-											'Flickr',
-											'Google+',
-											'YouTube',
-											'Vimeo',
-											'LinkedIn',
-											'Friendster',
-											'hi5',
-											'MySpace',
-											'Custom');
-
+										$list = array();
+										$custom_social_media = rb_get_custom_social_media();
+										foreach($custom_social_media as $social){
+											array_push($list,$social["SocialMedia_Name"]);
+										}
 										foreach($list as $k=>$v){
 											$wpdb->query("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'SocialMediaURL_".$v."' AND user_id = ".$_GET['ProfileID']);
 											$wpdb->query("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key = 'SocialMediaName_".$v."' AND user_id = ".$_GET['ProfileID']);
 										}
 							//user meta social media name
 							foreach($_POST['profile_social_media_name'] as $k=>$v){
+								
 								if(!empty($v) && !empty($_POST['profile_social_media_url'][$k])){
 									add_user_meta($_GET['ProfileID'],'SocialMediaName_'.$v,$v);
 								}								
@@ -1343,25 +1335,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<div class="main">
 								<table class="social-media-links-table">
 									<?php
-									$social_media_arr_list = array(
-													'Facebook',
-													'Twitter',
-													'Instagram',
-													'Flickr',
-													'Google+',
-													'YouTube',
-													'Vimeo',
-													'LinkedIn',
-													'Friendster',
-													'hi5',
-													'MySpace',
-													'Custom'
+									$social_media_arr_list = array();
 
-													);
+									$custom_social_media = rb_get_custom_social_media();
+									foreach($custom_social_media as $social){
+										array_push($social_media_arr_list,$social["SocialMedia_Name"]);
+									}
 									foreach($social_media_arr_list as $k=>$v){
 										$socialMediaName = get_user_meta($_GET['ProfileID'],'SocialMediaName_'.$v,true);
 										$socialMediaURL = get_user_meta($_GET['ProfileID'],'SocialMediaURL_'.$v,true);
-
+										
 										if(!empty($socialMediaName)){
 											echo "<tr class=\"social-media-links-row-".$socialMediaName."\">
 												<td><select name=\"profile_social_media_name[]\">
@@ -1371,6 +1354,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 															echo "<option value=\"".$v."\">".$v."</option>";
 														}														
 													}
+													
 											echo "</select></td>
 												<td><input type=\"text\" name=\"profile_social_media_url[]\" class=\"profile_social-media-links-row-".$socialMediaName."\" value=\"".(!empty($socialMediaURL) ? $socialMediaURL : "")."\" style=\"width:220px;\">
 												<a class=\"button-primary remove-social-media\" id=\"social-media-links-row-".$socialMediaName."\" >remove</a>
@@ -1384,25 +1368,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										<td>
 											<select name="profile_social_media_name[]">
 												<?php 
-												$social_media_arr = array(
-													'Facebook',
-													'Twitter',
-													'Instagram',
-													'Flickr',
-													'Google+',
-													'YouTube',
-													'Vimeo',
-													'LinkedIn',
-													'Friendster',
-													'hi5',
-													'MySpace',
-													'Custom'
-
-													);
+												$social_media_arr = array();
+												$custom_social_media = rb_get_custom_social_media();
+												foreach($custom_social_media as $social){
+													array_push($social_media_arr,$social["SocialMedia_Name"]);
+												}
 												echo "<option>".__("Select Social Media")."</option>";
 												foreach($social_media_arr as $k=>$v){
 													echo "<option value=\"".$v."\" >".$v."</option>";
 												}
+												
 												 ?>
 											</select>
 										</td>

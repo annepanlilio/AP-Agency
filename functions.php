@@ -2872,20 +2872,16 @@
 
 function get_social_media_links($ProfileID = ""){
 		global $wpdb;
-		$social_media_arr = array(
-			'Facebook',
-			'Twitter',
-			'Instagram',
-			'Flickr',
-			'Google+',
-			'YouTube',
-			'Vimeo',
-			'LinkedIn',
-			'Friendster',
-			'hi5',
-			'MySpace',
-			'Custom'
-		);
+		$social_media_arr = array();
+		$icons = array();
+
+
+
+		$custom_social = rb_get_custom_social_media();
+		foreach($custom_social as $social){
+			array_push($social_media_arr,$social["SocialMedia_Name"]);			
+		}
+
 		$rb_agency_options_arr = get_option('rb_agency_options');
 		$output = '';
 		$output .='<style>
@@ -2897,94 +2893,30 @@ function get_social_media_links($ProfileID = ""){
 		.profile-social-media-links li img{ width:20px;}
 		</style>';
 
-		if($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'] == 1){
-			$output .= "<ul class='profile-social-media-icons' style='list-style:none;'>";
-			foreach($social_media_arr as $k=>$v){
-				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$v,true);
-				$social_icon_filename = '';
-				if($v == 'Facebook'){
-					$social_icon_filename = 'fb.png';
-				}elseif($v == 'Twitter'){
-					$social_icon_filename = 'tw.png';
-				}elseif($v == 'Instagram'){
-					$social_icon_filename = 'instagram.png';
-				}elseif($v == 'Flickr'){
-					$social_icon_filename = 'flickr.png';
-				}elseif($v == 'Google+'){
-					$social_icon_filename = 'gplus.png';
-				}elseif($v == 'YouTube'){
-					$social_icon_filename = 'youtube.png';
-				}elseif($v == 'Vimeo'){
-					$social_icon_filename = 'vimeo.jpg';
-				}elseif($v == 'LinkedIn'){
-					$social_icon_filename = 'linkedin.png';
-				}elseif($v == 'Friendster'){
-					$social_icon_filename = 'friendster.png';
-				}elseif($v == 'hi5'){
-					$social_icon_filename = 'hi5.jpg';
-				}elseif($v == 'MySpace'){
-					$social_icon_filename = 'myspace.png';
-				}elseif($v == 'Custom'){
-					$social_icon_filename = '';
-				}
-				$widthForMySpace = $v == 'MySpace' ? "style='width:20px;height:20px;'" : "";
-				$socialMediaURL = get_user_meta($ProfileID,"SocialMediaURL_".$v,true);
-				if(!empty($socialMediaURL)){
-					$social_icon_path = site_url()."/wp-content/plugins/rb-agency/assets/img/social-icons/".$social_icon_filename;
-					$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
+		$output .= "<h3>".__("Social Media Links",RBAGENCY_TEXTDOMAIN)."</h3>";
+		$output .= "<ul class='profile-social-media-icons' style='list-style:none;'>";
+			foreach($custom_social as $social){
+				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$social["SocialMedia_Name"],true);
+
+				//icons
+				$custom_social_icon_path = rb_get_custom_social_icon_by_name($social["SocialMedia_Name"]);
+				$social_icon_path = site_url()."/wp-content/uploads/".$custom_social_icon_path;
+				$socialMediaURL = get_user_meta($ProfileID,"SocialMediaURL_".$social["SocialMedia_Name"],true);
+				if(!empty($socialMediaURL)){					
+					$output .="<li><a href=".$socialMediaURL." target='_blank'>";
+					if($social["SocialMedia_LinkType"] == 0){
+						$output .= "<button class=\"button-primary\" style=\"height: 20px;padding: 3px;\">".$social["SocialMedia_Name"]."</button>";
+					}elseif($social["SocialMedia_LinkType"] == 1){
+						$output .= $social["SocialMedia_Name"];
+					}else{
+						$output .= "<img src='".$social_icon_path."' style='width:20px;height:20px;'>";
+					}
+					
+
+					$output .= "</a></li>";
 				}
 			}
-			$output .= "</ul>";
-		}elseif($rb_agency_options_arr['rb_agency_option_profilemedia_links_displayoption'] == 2){
-			$output .= "<ul class='profile-social-media-links' style='list-style:none;'>";
-			foreach($social_media_arr as $k=>$v){
-				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$v,true);
-				$socialMediaName = get_user_meta($ProfileID,'SocialMediaName_'.$v,true);
-				if(!empty($socialMediaURL)){
-					$output .= "<li><strong>".$v."</strong>: <a href=".$socialMediaURL." target='_blank'>".$socialMediaURL."</a></li>";
-				}
-				
-			}
-			$output .= "</ul>";
-		}else{
-			$output .= "<ul class='profile-social-media-icons' style='list-style:none;'>";
-			foreach($social_media_arr as $k=>$v){
-				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$v,true);
-				$social_icon_filename = '';
-				if($v == 'Facebook'){
-					$social_icon_filename = 'fb.png';
-				}elseif($v == 'Twitter'){
-					$social_icon_filename = 'tw.png';
-				}elseif($v == 'Instagram'){
-					$social_icon_filename = 'instagram.png';
-				}elseif($v == 'Flickr'){
-					$social_icon_filename = 'flickr.png';
-				}elseif($v == 'Google+'){
-					$social_icon_filename = 'gplus.png';
-				}elseif($v == 'YouTube'){
-					$social_icon_filename = 'youtube.png';
-				}elseif($v == 'Vimeo'){
-					$social_icon_filename = 'vimeo.jpg';
-				}elseif($v == 'LinkedIn'){
-					$social_icon_filename = 'linkedin.png';
-				}elseif($v == 'Friendster'){
-					$social_icon_filename = 'friendster.png';
-				}elseif($v == 'hi5'){
-					$social_icon_filename = 'hi5.jpg';
-				}elseif($v == 'MySpace'){
-					$social_icon_filename = 'myspace.png';
-				}elseif($v == 'Custom'){
-					$social_icon_filename = '';
-				}
-				$widthForMySpace = $v == 'MySpace' ? "style='width:20px;height:20px;'" : "";
-				$socialMediaURL = get_user_meta($ProfileID,"SocialMediaURL_".$v,true);
-				if(!empty($socialMediaURL)){
-					$social_icon_path = site_url()."/wp-content/plugins/rb-agency/assets/img/social-icons/".$social_icon_filename;
-					$output .="<li><a href=".$socialMediaURL." target='_blank'><img src='".$social_icon_path."' $widthForMySpace></a></li>";
-				}
-			}
-			$output .= "</ul>";
-		}
+		$output .= "</ul>";
 
 			
 
@@ -5564,5 +5496,47 @@ function insertNewCountries(){
 }
 
 add_action('init','insertNewCountries');
+
+
+function rb_get_custom_social_media(){
+	//create table first to avoid error
+	global $wpdb;
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+	// Table for social media
+	$sql = "CREATE TABLE IF NOT EXISTS ". $wpdb->prefix."agency_social_media (
+			ID BIGINT(20) NOT NULL AUTO_INCREMENT,
+			SocialMedia_Name VARCHAR(50),
+			SocialMedia_LinkType INT(10) NOT NULL DEFAULT '0',
+			SocialMedia_Order INT(10) DEFAULT NULL,
+			SocialMedia_Icon VARCHAR(255) DEFAULT NULL,
+			PRIMARY KEY (ID)
+			);";
+	dbDelta($sql);
+
+	$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."agency_social_media ORDER BY SocialMedia_Order ASC",ARRAY_A);
+	return $results;
+}
+
+function rb_get_custom_social_icon_by_name($socialMediaName){
+	//create table first to avoid error
+	global $wpdb;
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+	// Table for social media
+	$sql = "CREATE TABLE IF NOT EXISTS ". $wpdb->prefix."agency_social_media (
+			ID BIGINT(20) NOT NULL AUTO_INCREMENT,
+			SocialMedia_Name VARCHAR(50),
+			SocialMedia_LinkType INT(10) NOT NULL DEFAULT '0',
+			SocialMedia_Order INT(10) DEFAULT NULL,
+			SocialMedia_Icon VARCHAR(255) DEFAULT NULL,
+			PRIMARY KEY (ID)
+			);";
+	dbDelta($sql);
+
+	$results = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."agency_social_media WHERE SocialMedia_Name = '$socialMediaName'",ARRAY_A);
+	foreach($results as $result)
+		return $result["SocialMedia_Icon"];
+}
 
 ?>
