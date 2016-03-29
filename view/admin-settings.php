@@ -4007,16 +4007,19 @@ elseif ($ConfigID == 100){
 
 		$has_error = array();
 		
-		if(empty($_FILES['social_media_icon']['name'])){
-			$has_error[] = __("Social Media Icon required!");
+		if($SocialMediaLinkType == 2){
+			if(empty($_FILES['social_media_icon']['name'])){
+				$has_error[] = __("Social Media Icon required!");
+			}
+			$upload_path = $upload_dir; 
+			$target_path = $upload_path."/".basename( $_FILES['social_media_icon']['name']);
+			if(move_uploaded_file($_FILES['social_media_icon']['tmp_name'], $target_path)){
+				//do nothing
+			}else{
+				$has_error[] = __("Unable to upload icon!");
+			}
 		}
-		$upload_path = $upload_dir; 
-		$target_path = $upload_path."/".basename( $_FILES['social_media_icon']['name']);
-		if(move_uploaded_file($_FILES['social_media_icon']['tmp_name'], $target_path)){
-			//do nothing
-		}else{
-			$has_error[] = __("Unable to upload icon!");
-		}
+		
 
 		$SocialMediaIcon = "social-media/".basename( $_FILES['social_media_icon']['name']);
 
