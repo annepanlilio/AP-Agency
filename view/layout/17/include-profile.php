@@ -132,8 +132,10 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 								
 								// echo "<li><a href=\"/\" title=\"\">800 Casting Profile</a></li>";
 							echo "</ul>";
-						
-	echo "				<br><a href=\"".$booking_link."\" title=\"\" class=\"book-now\">".__("Book ".$ProfileContactNameFirst."", RBAGENCY_TEXTDOMAIN)."</a>\n"; // #photos
+							if($ProfileIsBooking == 1){
+								echo " <br><a href=\"".$booking_link."\" title=\"\" class=\"book-now\">".__("Book ".$ProfileContactNameFirst."", RBAGENCY_TEXTDOMAIN)."</a>\n"; // #photos
+							}
+	
 	echo "			</div>\n"; // #photos
 
 	echo "		</div>\n"; // .rbcol-6
