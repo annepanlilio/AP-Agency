@@ -231,6 +231,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							isPrivate,
 							ProfileIsFeatured,
 							ProfileIsPromoted,
+							ProfileIsBooking,
 							ProfileStatHits,
 							ProfileDateViewLast,
 							CustomOrder)" .
@@ -262,6 +263,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							'" . esc_attr($isPrivate) . "',
 							'" . esc_attr($ProfileIsFeatured) . "',
 							'" . esc_attr($ProfileIsPromoted) . "',
+							'" . esc_attr($ProfileIsBooking) . "',
 							'" . esc_attr($ProfileStatHits) . "',
 							'" . esc_attr($ProfileDateViewLast) . "',
 							'" . esc_attr($CustomOrder) . "'
@@ -406,6 +408,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							isPrivate='" . esc_attr($isPrivate) . "',
 							ProfileIsFeatured='" . esc_attr($ProfileIsFeatured) . "',
 							ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
+							ProfileIsBooking='" . esc_attr($ProfileIsBooking) . "',
 							CustomOrder='" . esc_attr($CustomOrder) . "'
 							WHERE ProfileID=$ProfileID";
 						$results = $wpdb->query($update);
@@ -1010,11 +1013,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsActive = stripslashes($data['ProfileIsActive']);
 			$ProfileIsFeatured = stripslashes($data['ProfileIsFeatured']);
 			$ProfileIsPromoted = stripslashes($data['ProfileIsPromoted']);
+			$ProfileIsBooking = stripslashes($data['ProfileBooking']);
 			$ProfileIsPrivate = stripslashes($data['ProfileIsPrivate']);
 			$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 			
 			$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
-			$ProfileDateCreated = stripslashes($data['ProfileDateCreated']);
+			$ProfileDateCreated = stripslashes($data['ProfileDateCreated']);			
 			$isPrivate = stripslashes($data['isPrivate']);
 			$CustomOrder = stripslashes($data['CustomOrder']);
 			$ProfileRating = stripslashes($data['ProfileRating']);
@@ -1065,6 +1069,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$isPrivate = $_POST['isPrivate'];
 			$ProfileIsFeatured = $_POST['ProfileIsFeatured'];
 			$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
+			$ProfileIsBooking = $_POST['ProfileIsBooking'];
 			$ProfileIsPrivate = $_POST['ProfileIsPrivate'];
 			$ProfileStatHits = $_POST['ProfileStatHits'];
 			$CustomOrder = $_POST['CustomOrder'];
@@ -1597,6 +1602,15 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <td>\n";
 							echo "        " .$ProfileDateCreated;
 							echo "      </td>\n";
+							echo "    </tr>\n";
+
+							echo "    <tr valign=\"top\">\n";
+							echo "        <th scope=\"row\">" . __("Enable Booking", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
+							echo "        <td>\n";
+							
+							$CheckedIfBook = $ProfileIsBooking > 0 ? "checked" : ""; // Check if profile booking is enabled
+							echo "          <input type=\"checkbox\" name=\"ProfileIsBooking\" id=\"ProfileIsBooking\" value=\"1\"". $CheckedIfBook . " />\n";							
+							echo "        </td>\n";
 							echo "    </tr>\n";
  
 
