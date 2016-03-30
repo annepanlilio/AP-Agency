@@ -426,6 +426,11 @@ elseif ($ConfigID == 1) {
 			</td>\n";
 		echo " </tr>\n";
 
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Booking Link', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_bookinglink]\" value=\"". $rb_agency_options_arr['rb_agency_option_bookinglink'] ."\" /></td>\n";
+		echo " </tr>\n";
+
 		/*
 		 * Agency Internationalization
 		 */
