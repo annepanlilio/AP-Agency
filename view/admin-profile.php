@@ -107,6 +107,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	$ProfileIsActive = isset($_POST['ProfileIsActive'])?$_POST['ProfileIsActive']:""; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileIsFeatured = isset($_POST['ProfileIsFeatured'])?$_POST['ProfileIsFeatured']:"";
 	$ProfileIsPromoted = isset($_POST['ProfileIsPromoted'])?$_POST['ProfileIsPromoted']:"";
+	$ProfileIsBooking = isset($_POST['ProfileIsBooking'])?$_POST['ProfileIsBooking']:"";
 	$ProfileStatHits = isset($_POST['ProfileStatHits'])?$_POST['ProfileStatHits']:"";
 
 	$isPrivate = isset($_POST['isPrivate'])?$_POST['isPrivate']:"";
@@ -1013,7 +1014,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsActive = stripslashes($data['ProfileIsActive']);
 			$ProfileIsFeatured = stripslashes($data['ProfileIsFeatured']);
 			$ProfileIsPromoted = stripslashes($data['ProfileIsPromoted']);
-			$ProfileIsBooking = stripslashes($data['ProfileBooking']);
+			$ProfileIsBooking = stripslashes($data['ProfileIsBooking']);
 			$ProfileIsPrivate = stripslashes($data['ProfileIsPrivate']);
 			$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 			
@@ -1606,10 +1607,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Enable Booking", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
-							echo "        <td>\n";
+							echo "        <td>\n";							
 							
-							$CheckedIfBook = $ProfileIsBooking > 0 ? "checked" : ""; // Check if profile booking is enabled
-							echo "          <input type=\"checkbox\" name=\"ProfileIsBooking\" id=\"ProfileIsBooking\" value=\"1\"". $CheckedIfBook . " />\n";							
+							echo "          <input type=\"checkbox\" name=\"ProfileIsBooking\" id=\"ProfileIsBooking\" value=\"1\"". checked(isset($ProfileIsBooking)?$ProfileIsBooking:0, 1, false) . " />\n";							
 							echo "        </td>\n";
 							echo "    </tr>\n";
  

@@ -72,7 +72,7 @@ echo "					<ul>\n";
 							if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 								echo "<li   class=\"rel rb_contact\" id=\"rb_contact\">><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 							}
-							if($ProfileIsBooking == 0 || $countLinks == 0){
+							if($ProfileIsBooking == 0 && $countLinks == 0){
 								echo "<li class=\"website\"><a href=\"".$ProfileContactWebsite."\" title=\"\" target=\"_blank\">".__($website, RBAGENCY_TEXTDOMAIN)."</a></li>";
 							}
 
