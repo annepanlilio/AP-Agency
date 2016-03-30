@@ -28,7 +28,7 @@ $resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 $countImg 	= $wpdb->num_rows;
 
 // IMDB
-$queryLinks 	= "SELECT ProfileMediaTitle, ProfileMediaURL FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType = \"Link\"";
+$queryLinks 	= "SELECT ProfileMediaType, ProfileMediaURL, ProfileMediaTitle FROM " . table_agency_profile_media . " WHERE ProfileID =  '%d' AND ProfileMediaType <> \"Image\"";
 $resultsLinks 	= $wpdb->get_results($wpdb->prepare($queryLinks, $ProfileID),ARRAY_A);
 $countLinks 	= $wpdb->num_rows;
 
@@ -115,22 +115,13 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 							
 								if ($countLinks > 0) {
 									foreach ($resultsLinks  as $dataLinks) {
-									echo "	<li>\n";
-									echo "		<a href='". $dataLinks['ProfileMediaURL'] ."' target='_blank'>". $dataLinks['ProfileMediaTitle'] ."</a>\n";
-									echo "	</li>\n";
+										$mediaLabel = ( $dataLinks['ProfileMediaTitle'] == 'IMDB') ? $dataLinks['ProfileMediaTitle'] : $dataLinks['ProfileMediaType'];
+										echo "	<li>\n";
+										echo "		<a href='". $dataLinks['ProfileMediaURL'] ."' target='_blank'>". $mediaLabel ."</a>\n";
+										echo "	</li>\n";
 									}
 								}
-								// Resume
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
-								$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-								$countMedia = $wpdb->num_rows;
-								if ($countMedia > 0) {
-									foreach($resultsImg as $dataMedia ){
-										echo "<li><a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".__("View Resume",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
-									}
-								}
-								
-								// echo "<li><a href=\"/\" title=\"\">800 Casting Profile</a></li>";
+
 							echo "</ul>";
 							if($ProfileIsBooking == 1){
 								echo " <br><a href=\"".$booking_link."\" title=\"\" class=\"book-now\">".__("Book ".$ProfileContactNameFirst."", RBAGENCY_TEXTDOMAIN)."</a>\n"; // #photos
