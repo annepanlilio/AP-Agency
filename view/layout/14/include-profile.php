@@ -91,7 +91,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				<div id="videos" class="tab-content">			    
 					<?php 
 					$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileVideoType IN('youtube','vimeo')";
-					$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+					$resultsMedia =  $wpdb->get_results($queryMedia,ARRAY_A);
 					$countMedia = $wpdb->num_rows;
 
 					if($countMedia > 0) {
