@@ -115,9 +115,9 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 							
 								if ($countLinks > 0) {
 									foreach ($resultsLinks  as $dataLinks) {
-										$mediaLabel = ( $dataLinks['ProfileMediaTitle'] == 'IMDB') ? $dataLinks['ProfileMediaTitle'] : $dataLinks['ProfileMediaType'];
+										$linkLabel = ( $dataLinks['ProfileMediaType'] == 'Link') ? $dataLinks['ProfileMediaTitle'] : $dataLinks['ProfileMediaType'];
 										echo "	<li>\n";
-										echo "		<a href='". $dataLinks['ProfileMediaURL'] ."' target='_blank'>". $mediaLabel ."</a>\n";
+										echo "		<a href='". $dataLinks['ProfileMediaURL'] ."' target='_blank'>". __($linkLabel, RBAGENCY_TEXTDOMAIN) ."</a>\n";
 										echo "	</li>\n";
 									}
 								}
