@@ -155,6 +155,7 @@ class RBAgency_Init {
 					ProfileIsActive INT(10) NOT NULL DEFAULT '0',
 					ProfileIsFeatured INT(10) NOT NULL DEFAULT '0',
 					ProfileIsPromoted INT(10) NOT NULL DEFAULT '0',
+					ProfileIsBooking INT(10) NOT NULL DEFAULT '0',
 					ProfileStatHits INT(10) NOT NULL DEFAULT '0',
 					PRIMARY KEY (ProfileID)
 					);";

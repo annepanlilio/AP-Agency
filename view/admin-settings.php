@@ -426,6 +426,11 @@ elseif ($ConfigID == 1) {
 			</td>\n";
 		echo " </tr>\n";
 
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Booking Link', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agency_options[rb_agency_option_bookinglink]\" value=\"". $rb_agency_options_arr['rb_agency_option_bookinglink'] ."\" /></td>\n";
+		echo " </tr>\n";
+
 		/*
 		 * Agency Internationalization
 		 */
@@ -804,7 +809,8 @@ elseif ($ConfigID == 1) {
 								"Primary Image with scrolling thumbnails and thumbnail gallery", // 13
 								"Tabs", // 14
 								"Stats and Availability with Primary Photo and Thumbnails",//15
-								"Profile View with voice demos"); // 16
+								"Profile View with voice demos", // 16
+								"Booking"); // 17
 
 		$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com', 'demo5.modelingagencysoftware.com', 'demo6.modelingagencysoftware.com');
 		$paid_layout = explode(",", $rb_agency_option_custom_layout);

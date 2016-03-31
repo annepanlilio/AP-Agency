@@ -175,6 +175,7 @@
 			$ProfileLocationCountry		=stripslashes($rbdata['ProfileLocationCountry']);
 			$ProfileDateUpdated			=stripslashes($rbdata['ProfileDateUpdated']);
 			$ProfileIsActive			=stripslashes($rbdata['ProfileIsActive']); // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
+			$ProfileIsBooking			=stripslashes($rbdata['ProfileIsBooking']); // 0 Hide Booking Button | 1 Show Booking Button
 			$isPrivate			        =stripslashes($rbdata['isPrivate']);
 			$ProfileStatHits			=stripslashes($rbdata['ProfileStatHits']);
 			$ProfileDateViewLast		=stripslashes($rbdata['ProfileDateViewLast']);

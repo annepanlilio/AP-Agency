@@ -1,0 +1,13 @@
+.profile-header { text-align: center; margin-bottom: 30px; }
+.profile-header h2 { margin-bottom: 15px; }
+#rbprofile #stats ul li { display: inline-block; margin: 0 10px 5px; position: relative; text-transform: uppercase; }
+#rbprofile #stats ul li:after { content: ""; position: absolute; right: -10px; top: 5px; height: 15px; width: 1px; background: #333; }
+#rbprofile #stats ul li:last-child:after { display: none; }
+#photos { margin: 0 -15px; }
+#photos .photo { float: left; width: 25%; padding: 0 15px 15px; box-sizing: border-box; }
+#photos.booking .photo { width: 50%; }
+#profile-actions { text-align: center; }
+#profile-actions ul { list-style: none; margin: 0 0 15px 0; }
+#profile-actions ul li { padding: 5px 0; }
+#profile-actions ul li.website { text-transform: uppercase; }
+#profile-actions a.book-now { font-weight: bold; font-size: 18px; text-transform: uppercase; padding: 10px 15px; border-color: #e70707; background-color: #FA5A5A; color: #fff; border-radius: 5px; }
