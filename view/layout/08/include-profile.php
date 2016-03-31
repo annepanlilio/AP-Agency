@@ -55,7 +55,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 			      <?php
 
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-				$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+				$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg =$wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 								echo "<div class=\"page\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=350&h=450&zc=3\" alt=\"". $ProfileContactDisplay ."\" /></div>\n";
@@ -82,7 +82,7 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
 			<?php 
 			$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileVideoType IN('youtube','vimeo')";
-			$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+			$resultsMedia =  $wpdb->get_results($queryMedia,ARRAY_A);
 			$countMedia = $wpdb->num_rows;
 
 			if($countMedia > 0) {

@@ -139,9 +139,9 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 
 				$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder, 
 				cx.ProfileCustomValue FROM ". table_agency_customfield_mux ." cx 
-				LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = ". $ProfileID ." 
-				GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC"));
-
+				LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND cx.ProfileID = %d 
+				GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+				$title_to_exclude = array();
 				foreach ($resultsCustom as $resultCustom) {
 					if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude)){
 						if(!empty($resultCustom->ProfileCustomValue )){
