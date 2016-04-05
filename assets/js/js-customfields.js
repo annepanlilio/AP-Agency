@@ -368,6 +368,7 @@ function populateStates(countryId,stateId){
 	console.log(ajax_url);
 	console.log(countryId);
 	console.log(stateId);
+	console.log(jQuery("#CastingCountry").val());
 	if(jQuery("#"+countryId).val()!=""){
 			jQuery("#"+stateId).show();
 			jQuery("#"+stateId).find("option:gt(0)").remove();
@@ -375,7 +376,7 @@ function populateStates(countryId,stateId){
 		jQuery.ajax({
 			type:'POST',
 			dataType : "json",
-	        data:{action:"get_state_ajax",country:jQuery("#"+countryId).val()},
+	        data:{action:"get_state_ajax",country:jQuery("#CastingCountry").val()},
 			url: ajax_url,
 			success:function(data) {		
 				jQuery("<option/>").attr("value", "").text("Select State").appendTo(jQuery("#"+stateId));	
