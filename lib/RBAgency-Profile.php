@@ -708,7 +708,7 @@ class RBAgency_Profile {
 				}
 				if($is_model_or_talent > 0){
 					echo "<div class=\"rbclear\"></div>\n";
-					echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">Go Back to My Dashboard</a></div>\n";
+					echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a></div>\n";
 				}
 				echo "			</form>\n";
 				echo "	<div class=\"rbclear\" style=\"clear:both;\"></div>\n";
