@@ -4858,6 +4858,7 @@ function get_social_media_links($ProfileID = ""){
 		wp_enqueue_script( 'audiojs', RBAGENCY_PLUGIN_URL .'assets/audiojs/audio.min.js', array( 'jquery' ) );
 	
 		wp_enqueue_script( 'script-handle', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array( 'jquery' ) );
+		wp_enqueue_script( 'script-handle2', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		wp_localize_script( 'script-handle', 'objectL10n', array(
 			'youngest_to_oldest' => esc_html__( 'Youngest to Oldest', RBAGENCY_TEXTDOMAIN ),
 			'oldest_to_youngest' => esc_html__( 'Oldest to Youngest', RBAGENCY_TEXTDOMAIN ),
@@ -4867,7 +4868,9 @@ function get_social_media_links($ProfileID = ""){
 			'female' => esc_html__( 'Female', RBAGENCY_TEXTDOMAIN ),
 			'highest_to_lowest' => esc_html__( 'Highest to Lowest', RBAGENCY_TEXTDOMAIN ),
 			'lowest_to_highest' => esc_html__( 'Lowest to Highest', RBAGENCY_TEXTDOMAIN ),
-			'sort_options' => esc_html__( 'Sort Options', RBAGENCY_TEXTDOMAIN )
+			'sort_options' => esc_html__( 'Sort Options', RBAGENCY_TEXTDOMAIN ),
+			'loading' => esc_html__('Loading...',RBAGENCY_TEXTDOMAIN),
+			'select_state' => esc_html__('Select State',RBAGENCY_TEXTDOMAIN)
 		) );
 	}
 	add_action( 'init', 'load_admin_js' );

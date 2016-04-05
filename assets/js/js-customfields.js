@@ -372,14 +372,14 @@ function populateStates(countryId,stateId){
 	if(jQuery("#"+countryId).val()!=""){
 			jQuery("#"+stateId).show();
 			jQuery("#"+stateId).find("option:gt(0)").remove();
-			jQuery("#"+stateId).find("option:first").text("Loading...");
+			jQuery("#"+stateId).find("option:first").text(objectL10n.loading);
 		jQuery.ajax({
 			type:'POST',
 			dataType : "json",
 	        data:{action:"get_state_ajax",country:jQuery("#CastingCountry").val()},
 			url: ajax_url,
 			success:function(data) {		
-				jQuery("<option/>").attr("value", "").text("Select State").appendTo(jQuery("#"+stateId));	
+				jQuery("<option/>").attr("value", "").text(objectL10n.select_state).appendTo(jQuery("#"+stateId));	
 	                        for (var i = 0; i < data.length; i++) {
 								jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#"+stateId));
 							}
