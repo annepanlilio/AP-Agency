@@ -1756,7 +1756,7 @@ class RBAgency_Profile {
 								$uid = rb_agency_get_current_userid();
 								if($uid > 0){
 									//$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d  AND cart.CastingJobID <= 0 ",rb_agency_get_current_userid());
-									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d AND (cart.CastingJobID IS NULL OR cart.CastingJobID <= 0 )",rb_agency_get_current_userid());
+									$sqlCasting_userID .= $wpdb->prepare(" AND cart.CastingCartProfileID = %d ",rb_agency_get_current_userid());
 									//echo 'xxxxxxx';
 									//$query_castingcartx = $wpdb->get_results($wpdb->prepare("DELETE FROM ". table_agency_castingcart));
 									
@@ -1810,6 +1810,7 @@ class RBAgency_Profile {
 								INNER JOIN  ".table_agency_castingcart." cart
 								WHERE $sqlCasting_userID
 								GROUP BY profile.ProfileID";
+
 					break;
 
 			/*
@@ -1858,6 +1859,8 @@ class RBAgency_Profile {
 			/*
 			 * Check if search is Admin or Public
 			 */
+
+			
 			//echo self::$order_by;
 				//echo self::$order_by;
 				if(is_admin()){
