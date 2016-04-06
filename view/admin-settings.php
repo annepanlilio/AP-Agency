@@ -1666,7 +1666,7 @@ elseif ($ConfigID == 3) {
 				if (is_numeric($GenderID)) {
 				// Verify Record
 				$queryDelete = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID =  \"". $GenderID ."\"";
-				$resultsDelete = $wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+				$resultsDelete = $wpdb->get_results($queryDelete, ARRAY_A);
 				foreach ($resultsDelete as $dataDelete) {
 					// Remove Record
 					$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = \"". $GenderID ."\"";

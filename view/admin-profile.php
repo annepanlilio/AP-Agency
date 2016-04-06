@@ -380,6 +380,13 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						}
 						
 						
+						//create ProfileIsBooking column if not exists
+						global $wpdb;
+						$wpdb->get_results("SELECT ProfileIsBooking FROM ".table_agency_profile." WHERE ProfileID = $ProfileID");
+						if($wpdb->num_rows == 0){
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileIsBooking boolean NOT NULL default 0";
+							$wpdb->query($queryAlter);
+						}
 
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET 
@@ -1672,7 +1679,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							if($ProfileGender==""){
 								$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"";
 							} elseif($ProfileGender1!=""){
-								$ProfileGender =$ProfileGender1 ;
+								$ProfileGender =$ProfileGender;
 							}
 
 							$query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
