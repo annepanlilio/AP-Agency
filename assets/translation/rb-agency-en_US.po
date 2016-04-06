@@ -1799,3 +1799,9 @@ msgstr ""
 
 msgid "Go Back to My Dashboard"
 msgstr ""
+
+msgid "Loading..."
+msgstr ""
+
+msgid "Select State"
+msgstr ""
