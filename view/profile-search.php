@@ -132,7 +132,6 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 				echo "<strong>". _e("No search criteria selected, please initiate your search.", RBAGENCY_TEXTDOMAIN) ."</strong>";
 			}
 			echo "	</div><!-- #profile-search-results -->\n"; // #profile-search-results
-			echo "	<hr />";
 
 		/*
 		 * Search Form
