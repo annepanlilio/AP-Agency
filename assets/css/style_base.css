@@ -234,6 +234,9 @@ Last updated: April 08, 2016
 	max-width: 100%;
 }
 
+/*Login Widgets*/
+.widget .rbform { overflow: hidden; }
+
 /* RBLinks */
 .rblinks {
 	clear: both;
@@ -424,6 +427,9 @@ Last updated: April 08, 2016
 }
 .rbsearch-form .search-field.single label, .rbsearch-form .search-field.multi legend {
 	font-weight: bold;
+}
+.rb-search-result-links {
+	margin-top: 15px;
 }
 
 /* Widget Form */
