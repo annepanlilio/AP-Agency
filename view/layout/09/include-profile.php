@@ -25,9 +25,10 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_register_script( 'jquery-latest', "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js");
 	wp_enqueue_script( 'jquery-latest' );
 
-	wp_deregister_script( 'lightbox2' );
-	wp_enqueue_script( 'lightbox2-footer', RBAGENCY_PLUGIN_URL .'ext/lightbox2/js/lightbox-2.6.min.js', array( 'jquery-latest' ));
-	wp_enqueue_script( 'lightbox2-footer' );
+	if(!wp_script_is('jquery-lightbox')) {
+		wp_enqueue_script( 'lightbox2-footer', RBAGENCY_PLUGIN_URL .'ext/lightbox2/js/lightbox-2.6.min.js', array( 'jquery-latest' ));
+		wp_enqueue_script( 'lightbox2-footer' );	
+	}	
 
 	wp_register_script( 'photo-scroller', RBAGENCY_PLUGIN_URL .'view/layout/09/js/jquery.mCustomScrollbar.concat.min.js', '', 1, true );
 	wp_enqueue_script( 'photo-scroller' );
@@ -60,7 +61,6 @@ rb_load_profile_pdf($row,$logo);
 echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-nine\" class=\"rblayout\">\n";
 
-echo "  		<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
 echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 						// Image Slider
@@ -81,7 +81,7 @@ echo "				</div><!-- #scroller -->\n";
 echo "				<div class=\"rbclear\"></div>\n";
 
 echo "				<div id=\"info\">\n";
-echo "						<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
+echo "					<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
 
 							// Social Link
 							rb_agency_getSocialLinks();
@@ -93,130 +93,77 @@ echo "							<ul>\n";
 									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	);
 									$count = $wpdb->num_rows;
 									if($count > 0){
-										echo "<li class=\"rb_gender\" id=\"rb_gender\"><span>". __("Gender", RBAGENCY_TEXTDOMAIN). ": </span><strong>". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</strong></li>\n";
+										echo "<li class=\"rb_gender\" id=\"rb_gender\"><span class=\"stat-label\">". __("Gender", RBAGENCY_TEXTDOMAIN). ": </span><span class=\"stat-value\">". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</span></li>\n";
 									}
 								}
 
 								// Insert Custom Fields
 								$title_to_exclude = array("");
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null, $label_tag="span", $value_tag="strong");
-								get_social_media_links($ProfileID);
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null);								
 
 echo "							</ul>\n";
 echo "						</div>\n";
-
-echo "					<div id=\"links\">\n";
-	/*
-					 * Include Action Icons
-					 */
-
-						//include (plugin_dir_path(dirname(__FILE__)) .'/partial/include-profile-actions.php');
-
-echo "						<ul>\n";
-
-
-
-								// Is Logged?
-								if (is_user_logged_in()) {
-
-									if(is_permitted('casting')){
-										if(checkCart(rb_agency_get_current_userid(),$ProfileID)==0 ){ //check if profile is in cart already ?>
-											<script>
-												function addtoCart(pid){
-													var qString = 'usage=addtocart&pid=' +pid;
-
-													$.post('<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/theme/sub_db_handler.php', qString, processResponseAddtoCart);
-													// alert(qString);
-												}
-												function processResponseAddtoCart(data) {
-													document.getElementById('resultsGoHereAddtoCart').style.display="block";
-													document.getElementById('view_casting_cart').style.display="block";
-													document.getElementById('resultsGoHereAddtoCart').textContent=data;
-													setTimeout('document.getElementById(\'resultsGoHereAddtoCart\').style.display="none";',3000);
-													//setTimeout('document.getElementById(\'view_casting_cart\').style.display="none";',3000);
-													setTimeout('document.getElementById(\'casting_cart_li\').style.display="none";',3000);
-												}
-											</script>
-										<?php
-											echo "<li id=\"casting_cart_li\" class=\"add to cart\"><a id=\"addtocart\" onclick=\"javascript:addtoCart('$ProfileID');\" href=\"javascript:void(0)\">". __("+ Shortlist", RBAGENCY_TEXTDOMAIN). "</a></li>\n";
-										} else {
-											echo "<li class=\"add to cart\">";
-											echo " <a href=\"".get_bloginfo('url')."/profile-casting/\">". __("View Shortlist", RBAGENCY_TEXTDOMAIN)."</a></li>\n";
-										}
-									}	//end if(checkCart(rb_agency_get_current_userid() ?>
-
-									<li id="resultsGoHereAddtoCart"></li>
-									<li id="view_casting_cart" style="display:none;"><a href="<?php echo get_bloginfo('url')?>/profile-casting/"><?php echo __("View Shortlist", RBAGENCY_TEXTDOMAIN);?></a></li>
-								<?php
-								}
-								//Demo Reel
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Demo Reel");
-								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
-								$countMedia  = $wpdb->num_rows;
-								if ($countMedia > 0) {
-									foreach($resultsMedia as $dataMedia ){
-										echo "<li class=\"item video demoreel\"><a href=\"http://www.youtube.com/watch?v=". $dataMedia['ProfileMediaURL'] ."\" ". $reltarget .">".__("Watch ShowReel",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
-									}
-								}
-
-								// print details of profiles
-								echo "<li class=\"item resume\"><a id='print_pr_pdf' href='javascript:;'>Print PDF</a></li>\n";
-
-								// Resume
-
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Resume");
-								$resultsMedia=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
-								$countMedia  = $wpdb->num_rows;
-								if ($countMedia > 0) {
-									foreach($resultsMedia as $dataMedia ){
-										echo "<li class=\"item resume\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."\">".__("Print Resume PDF",RBAGENCY_TEXTDOMAIN)."</a></li>\n";
-									}
-								}
-								//Contact Profile
-								if($rb_agency_option_showcontactpage==1){
-									echo "<div class=\"rel\"><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span class=\"divider\">:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">".__("Click Here",RBAGENCY_TEXTDOMAIN)."</a></div>\n";
-								}
-echo "						</ul>\n";
-echo "					</div>\n";// Links
 echo "				</div> <!-- #info -->\n";//End Info
 
-					// Resume
+					// Links
+					echo "<div id=\"links\">";
+					echo "<div class=\"row\">";
+					get_social_media_links($ProfileID);
+					echo "</div> <!-- .row -->";
+					echo "</div> <!-- #links -->";
+
+					// Files
 					$queryResume = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType IN('Resume')";
 					$resultsResume =  $wpdb->get_results($wpdb->prepare($queryResume),ARRAY_A);
 					$countResume = $wpdb->num_rows;
 
-					if($countResume > 0) {
-						echo "<div id=\"resume\">";
+					if($countResume > 0) {						
+						echo "<div id=\"files\">";
+						echo "<div class=\"row\">";
+						echo "<div class=\"col-md-12\">";
+						echo "<h3>Files</h3>";
 						foreach ($resultsResume as $dataResume) {
 							echo "<div class=\"media-file resume\"><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataResume['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataResume['ProfileMediaTitle'] . "\">".__("Resume &#8595;",RBAGENCY_TEXTDOMAIN)."</a></div>";
 						}
-						echo "</div>";
+						echo "</div> <!-- .col-md-12 -->";
+						echo "</div> <!-- #row -->";
+						echo "</div> <!-- #files -->";
 					}
 
 					// Videos
 					$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileVideoType IN('youtube','vimeo')";
 					$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
-					$countMedia = $wpdb->num_rows;
+					$countMedia = $wpdb->num_rows;					
+
+					$viditem_class = array("profile-video");
+					if($countMedia >= 3) {
+						$viditem_class[] = "col-md-4";
+					} else {
+						$viditem_class[] = "col-md-6";
+					}
+					$vidcol_class = implode(" ",$viditem_class);
 
 					if($countMedia > 0) {
 						echo "<div id=\"videos\">";
-						echo "<h5>On Camera Demo</h5>";
+						echo "<div class=\"row\">";
+						echo "<div class=\"col-md-12\"><h3>Videos</h3></div>";
 						foreach ($resultsMedia  as $dataMedia) {
 							$vid_url = $dataMedia['ProfileMediaURL'];
 							$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
 							$vidTitleCaption = explode('<br>',$clean_title);
 							if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 								$embed_string = substr($vid_url, strpos($vid_url, "=")+1);
-								$outVideoMedia .= "<div class=\"profile-video\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe><div>".$vidTitleCaption[0]."</div></div>";
+								$outVideoMedia .= "<div class=\"".$vidcol_class."\"><div class=\"video-wrapper\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe></div><div>".$vidTitleCaption[0]."</div></div>";
 							}
 						}
-							echo $outVideoMedia;
+						echo $outVideoMedia;
 
+						echo "</div><!-- .row -->";
 						echo "</div><!-- #videos -->";
 					}
-echo "			</div> <!-- #profile-l -->\n";
 echo "			<div class=\"rbclear\"></div>\n";
-echo " 		</div>\n";// Close Profile Layout
-echo "	</div>\n";// Close Profile
+
+echo " 		</div> <!-- .rblayout -->\n";
+echo "	</div> <!-- #rbprofile -->\n"; 
 echo "	<div class=\"rbclear\"></div>\n"; // Clear All
 ?>

@@ -1,9 +1,13 @@
 /* Profile Layout Nine */
+#rbprofile { padding-top: 30px; }
+.rblayout { padding: 0 15px; }
 #rblayout-nine {padding-bottom: 60px; overflow: visible; }
 #scroller {margin-bottom: 60px; position: static; width: auto; }
 #photo-scroller {width: 100%; height: 350px;font-size: 0; }
 #photo-scroller img {display: inline-block; max-height: 350px; }
 #rbprofile #info { overflow: hidden; }
+#rblayout-nine #links,
+#rblayout-nine #files { text-align: center; }
 
 /*scroller overrides*/
 #photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft,
@@ -20,15 +24,15 @@
 #rblayout-nine #stats li {display: inline-block; padding: 0 5px; }
 #rbprofile #rblayout-nine #stats li { margin-bottom: 5px; }
 #rblayout-nine #stats li br { display: none; }
-#rblayout-nine #links {width: 200px; padding: 0 15px; position: absolute; right: -200px; top: -20px; z-index: 5; text-align: left; }
-#rblayout-nine #links li a {text-decoration: none; font-size: 12px; text-transform: uppercase; font-weight: bold; }
 #rblayout-nine #resultsGoHereAddtoCart {font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
 
-/* < 960 */
-@media screen and (max-width: 960px) {
-	#rblayout-nine #links {position: static; float: left; display: block; padding: 15px 0 15px 15px; margin-top: 15px; border-top: 3px solid #ccc; width: 100%; }
-	#rblayout-nine #links li {display: inline-block; margin: 0 5px; }
+/*Links*/
+#rblayout-nine #links .profile-social-media-icons li { float: none; display: inline-block; border: none; }
+
+
+#rblayout-nine #stats li span.stat-label {
+	font-weight: bold;
 }
-@media screen and (max-width: 480px) {
-	#rblayout-nine #links li {display: block; margin: 0px; }
+#rblayout-nine #stats li span.stat-value {
+	font-weight: normal;
 }
