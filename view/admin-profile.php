@@ -507,9 +507,9 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								if(count($profilecustomfield_date) == 2){ // customfield date
 									rb_send_notif_due_date_reached_edit($ProfileID,$ProfileCustomID,$value);
 									$value = !empty($value) ? date("y-m-d h:i:s",strtotime($value)) : "";
-									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
+									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,stripslashes($value));
 								} else {
-									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,$value);
+									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,stripslashes($value));
 								}
 								$results1 = $wpdb->query($insert1);
 							}
