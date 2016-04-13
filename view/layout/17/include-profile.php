@@ -73,13 +73,15 @@ echo "					<ul>\n";
 								echo "<li   class=\"rel rb_contact\" id=\"rb_contact\">><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 							}
 							if($ProfileIsBooking == 0 && $countLinks == 0){
-								echo "<li class=\"website\"><a href=\"".$ProfileContactWebsite."\" title=\"\" target=\"_blank\">".__($website, RBAGENCY_TEXTDOMAIN)."</a></li>";
+								$site_label = ($website == "") ? $ProfileContactWebsite : $website;
+								echo "<li class=\"website\"><a href=\"".$ProfileContactWebsite."\" title=\"\" target=\"_blank\">".__($site_label, RBAGENCY_TEXTDOMAIN)."</a></li>";
 							}
 
 echo "					</ul>\n"; // Close ul
-						
-						// Insert Custom Fields
-						get_social_media_links($ProfileID);
+						if($ProfileIsBooking == 1 || $countLinks > 0){
+							// Insert Custom Fields
+							get_social_media_links($ProfileID);
+						}
 
 echo "				</div>\n"; // Close Stats
 echo "			</header>";
@@ -93,13 +95,13 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 					foreach($resultsImg as $dataImg ){
 						if ($countImg > 1) {
 							echo "<div class=\"photo\">";
-							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360&h=540&a=t\"/></a>";
+							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a>";
 							if($rb_agency_option_profile_thumb_caption ==1) {
 								echo "	<small>".__($dataImg['ProfileMediaURL'], RBAGENCY_TEXTDOMAIN)."</small>\n";
 							}
 							echo "</div>\n";
 						} else {
-							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360&h=540&a=t\"/></a></div>\n";
+							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a></div>\n";
 						}
 					}
 	echo "			</div>\n"; // #photos
@@ -139,13 +141,13 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 					foreach($resultsImg as $dataImg ){
 						if ($countImg > 1) {
 							echo "<div class=\"photo\">";
-							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360&h=540&a=t\"/></a>";
+							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a>";
 							if($rb_agency_option_profile_thumb_caption ==1) {
 								echo "	<small>".$dataImg['ProfileMediaURL']."</small>\n";
 							}
 							echo "</div>\n";
 						} else {
-							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360&h=540&a=t\"/></a></div>\n";
+							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a></div>\n";
 						}
 					}
 	echo "			</div>\n"; // #photos

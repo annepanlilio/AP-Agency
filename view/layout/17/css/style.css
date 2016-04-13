@@ -11,3 +11,4 @@
 #profile-actions ul li { padding: 5px 0; }
 #profile-actions ul li.website { text-transform: uppercase; }
 #profile-actions a.book-now { font-weight: bold; font-size: 18px; text-transform: uppercase; padding: 10px 15px; border-color: #e70707; background-color: #FA5A5A; color: #fff; border-radius: 5px; }
+#photos .photo:nth-child(4n+1) { clear: left; }
