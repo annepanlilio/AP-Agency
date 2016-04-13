@@ -1389,7 +1389,7 @@ elseif ($ConfigID == 12) {
 			$SubscriptionRateTerm	= 1;
 
 
-			echo "<h3>". sprintf(__("Create New  %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
+			echo "<h3>". sprintf(__("Create New  %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
 		}// Has Subscription rate or not
   }// Edit record
@@ -1971,7 +1971,7 @@ elseif ($ConfigID == 3) {
 			$DataTypeTitle	="";
 			$DataTypeTag	="";
 
-			echo "<h3>". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>\n";
+			echo "<h3>". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
   }
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
@@ -2590,7 +2590,7 @@ echo "<div id=\"custom-fields\">";
 		case 'addRecord':
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
-				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";
@@ -2659,7 +2659,7 @@ echo "<div id=\"custom-fields\">";
 				}
 
 				echo ("<div id=\"message\" class=\"updated\"><p>". sprintf(__("%s <strong>added</strong> successfully!", RBAGENCY_TEXTDOMAIN), LabelSingular) .".</a></p><p>".$error."</p></div>");
-				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";
@@ -2801,7 +2801,7 @@ echo "<div id=\"custom-fields\">";
 				}// while
 				}// it was numeric
 			}// for each
-					echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>	";
+					echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>	";
 					echo " <div class=\"postbox\">";
 					echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 					echo " <div class=\"inside\"> ";
@@ -2829,7 +2829,7 @@ elseif (isset($_GET["deleteRecord"])) {
 			$deleted = $wpdb->query($delete_sql) or die($wpdb->print_error());
 
 			echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['ProfileCustomTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
-			echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a></h3>
+			echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>
 			<div class=\"postbox\">
 			<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>
 			<div class=\"inside\"> ";
@@ -3376,7 +3376,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 
 	echo "  <h3 class=\"title\">". __("All Records", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 	echo " <span>Select a custom field to record.</span>";
-	echo "&nbsp;&nbsp;&nbsp;&nbsp;<a style=\"float: right;margin-top: -20px;\" class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset'>Restore Preset Custom Fields</a>";
+	echo "&nbsp;&nbsp;&nbsp;&nbsp;<a style=\"float: right;margin-top: -20px;\" class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a>";
 		/******** Sort Order ************/
 		$sort = "";
 		if (isset($_GET['sort']) && !empty($_GET['sort'])){
@@ -3524,7 +3524,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "</table>\n";
 		echo "<p class=\"submit\">\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
-		echo "    <input type=\"submit\" name=\"submit\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "    <input type=\"submit\" name=\"submit\" onclick=\"if ( confirm('You are about to delete the selected custom field(s).\'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\" value=\"". __("Delete", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
 		echo "</p>\n";
 
 		echo "</form>\n";
