@@ -93,15 +93,21 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 	echo "			<div id=\"photos\" class=\"booking\">\n";
 					
 					foreach($resultsImg as $dataImg ){
+
+						$img_url = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+						list($img_width, $img_height) = getimagesize($img_url);						
+						$orientation = ($img_width > $img_height) ? "landscape" : "";
+						$image_dimension = ($img_width > $img_height) ? "&h=460" : "&w=320&h=460"; // Ratio: 1.33
+
 						if ($countImg > 1) {
 							echo "<div class=\"photo\">";
-							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a>";
+							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a>";
 							if($rb_agency_option_profile_thumb_caption ==1) {
 								echo "	<small>".__($dataImg['ProfileMediaURL'], RBAGENCY_TEXTDOMAIN)."</small>\n";
 							}
 							echo "</div>\n";
 						} else {
-							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a></div>\n";
+							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a></div>\n";
 						}
 					}
 	echo "			</div>\n"; // #photos
@@ -139,15 +145,21 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 	echo "			<div id=\"photos\">\n";
 					
 					foreach($resultsImg as $dataImg ){
+
+						$img_url = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+						list($img_width, $img_height) = getimagesize($img_url);						
+						$orientation = ($img_width > $img_height) ? "landscape" : "";
+						$image_dimension = ($img_width > $img_height) ? "&h=460" : "&w=320&h=460"; // Ratio: 1.33
+						
 						if ($countImg > 1) {
 							echo "<div class=\"photo\">";
-							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a>";
+							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a>";
 							if($rb_agency_option_profile_thumb_caption ==1) {
 								echo "	<small>".$dataImg['ProfileMediaURL']."</small>\n";
 							}
 							echo "</div>\n";
 						} else {
-							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=360\"/></a></div>\n";
+							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a></div>\n";
 						}
 					}
 	echo "			</div>\n"; // #photos

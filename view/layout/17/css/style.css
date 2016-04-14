@@ -3,12 +3,12 @@
 #rbprofile #stats ul li { display: inline-block; margin: 0 10px 5px; position: relative; text-transform: uppercase; }
 #rbprofile #stats ul li:after { content: ""; position: absolute; right: -10px; top: 5px; height: 15px; width: 1px; background: #333; }
 #rbprofile #stats ul li:last-child:after { display: none; }
-#photos { margin: 0 -15px; }
-#photos .photo { float: left; width: 25%; padding: 0 15px 15px; box-sizing: border-box; }
-#photos.booking .photo { width: 50%; }
+#photos .photo { float: left; width: 25%; padding: 0 7px; box-sizing: border-box; margin-bottom: 15px; }
+#photos .photo.landscape { width: 50%; }
+#photos.booking .photo { width: 33.33333333333333%; }
+#photos.booking .photo.landscape { width: 66.66666666666667%; }
 #profile-actions { text-align: center; }
 #profile-actions ul { list-style: none; margin: 0 0 15px 0; }
 #profile-actions ul li { padding: 5px 0; }
 #profile-actions ul li.website { text-transform: uppercase; }
 #profile-actions a.book-now { font-weight: bold; font-size: 18px; text-transform: uppercase; padding: 10px 15px; border-color: #e70707; background-color: #FA5A5A; color: #fff; border-radius: 5px; }
-#photos .photo:nth-child(4n+1) { clear: left; }
