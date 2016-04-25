@@ -11,6 +11,21 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 ## Change Log
 
 ### 2.4.8
+* new feature - create your own custom media fields and add custom icons
+* new feature - added new preset countries
+* fixed - custom layout 9 - the setting is "display most recent uploaded file" but in profile view, the first photo that shows up is the first one uploaded.
+* fixed - broken thumbnail images in search results page
+* fixed - old videos embedded no longer compatible with latest version.
+* new feature - added a star rating feature
+* new feature - add a checkbox for bulk delete option for media & links section.
+* new feature - added ability for admin to rename the demos individually on the back end to show on the front end instead of just "Listen to Demo"
+* new feature - layout 03 - now showong video label instead of generic Video Slate, Demo Reel, Video Monologue
+* fixed - admin cannot update profile's status manually.
+* fixed - restore preset custom fields not working correctly.
+* fixed - the search facility of the plugin is throwing a MySQL error when trying to search
+* new feature - ability to set a custom field's value as expanded model detail under their names/thumbnails
+* fixed - pagination in search results page is not working
+* new feature - added a new section called Box/DVD Covers which can be use to feature magazines or dvd covers of the model/talent
 
 ### 2.4.7
 * new image setting - if enabled, it will show filenames as photo caption of each photo in profile view.
