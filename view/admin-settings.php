@@ -2520,9 +2520,9 @@ echo "<div id=\"custom-fields\">";
 				if(!empty($_POST["option"]) && $_POST["option"] !=""  && !empty($val)){
 					$pos++;
 					if($pos!= count($_POST["option"])){
-						$ProfileCustomOptions .= stripslashes($val)."|";
+						 $ProfileCustomOptions .= stripslashes($val)."|";
 					} else {
-						$ProfileCustomOptions .= stripslashes($val);
+						 $ProfileCustomOptions .= stripslashes($val);
 					}
 				}
 			}
@@ -2565,7 +2565,7 @@ echo "<div id=\"custom-fields\">";
 		}*/
 		// Error checking
 
-		$have_error = false;
+		//$have_error = false; alw
 		if(trim($ProfileCustomTitle) == ""){
 			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
@@ -2580,22 +2580,62 @@ echo "<div id=\"custom-fields\">";
 			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingRegister","INT(10)");
 			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingManager","INT(10)");
 			rb_agency_addColumn( table_agency_customfields,"ProfileCustomNotifyAdmin","INT(10)");
-
+				
 
 			echo 'success patch'; */
+			/* alw custom Duplicate option name added */
+			$ProfileCustomOptions2_new = array();
+			foreach($_POST["option"] as $key => $val){
+				if(!empty($_POST["option"]) && $_POST["option"] !=""  && !empty($val)){
+					$pos++;
+					if($pos!= count($_POST["option"])){
+						 array_push($ProfileCustomOptions2_new,stripslashes($val));
+					} else {
+						 array_push($ProfileCustomOptions2_new,stripslashes($val));
+					}
+				}
+			}
+			function has_dupes($array){
+				$dupe_array = array();
+				foreach($array as $val){
+					if(++$dupe_array[$val] > 1){
+					return true;
+					}
+				}
+				return false;
+			}
+			if(!has_dupes($ProfileCustomOptions2_new)){
+				
+			}else{
+				$error .= "<b><i>". __(LabelSingular ." Duplicate option name not allowed", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
+				$have_error = true;
+				$error_msg= 'Duplicate option';
+			}
+			
 		$action = $_POST['action'];
 		switch($action) {
 
 		// Add
 		case 'addRecord':
 			if($have_error){
+				/* alw custom Duplicate option error_msg added */
+				if($error_msg){ 
+					
+					echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>	";
+				echo " <div class=\"postbox\">";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
+				echo " <div class=\"inside\"> ";
+				
+				}else{
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";
-			} else {
-
+				}
+			}else {
+					
 				// Create Record
 				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager,ProfileCustomDisplayExDetails) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."','". esc_sql($ProfileCustomDisplayExDetails)."')";
 				$results = $wpdb->query($insert);
@@ -2668,12 +2708,22 @@ echo "<div id=\"custom-fields\">";
 
 		// Manage
 		case 'editRecord':
-			if($have_error){
+		
+			if($have_error){ 
+			/* alw custom Duplicate option error_msg added */
+				if($error_msg){ 
+					echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
+					echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>
+						<div class=\"postbox\">";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
+				echo" <div class=\"inside\"> ";
+				}else{
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 				echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>
 						<div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
 				echo" <div class=\"inside\"> ";
+				}
 			} else {
 
 				$update = "UPDATE " . table_agency_customfields . "
