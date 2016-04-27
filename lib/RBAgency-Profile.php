@@ -960,7 +960,7 @@ class RBAgency_Profile {
 
 
 			/*
-			$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMI 1";
+			$q = "SELECT CustomOrder FROM ". table_agency_profile ." LIMIT 1";
 			$rda = $wpdb->get_results($q,ARRAY_A);
 			$count = $wpdb->num_rows;
 
