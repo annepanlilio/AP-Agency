@@ -505,8 +505,15 @@ class RBAgency_Casting {
 						}
 				}
 			}
-
-			$MassEmailMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$MassEmailMessage);
+			//check if shortcode has thumbnail
+			$shortcodeIsLink = strpos($SearchMuxMessage,"[link-place-holder]");
+			if($shortcodeIsLink !== false){
+				$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>",$SearchMuxMessage);
+			}
+			$shortcodeIsThumbnail = strpos($SearchMuxMessage,"[thumbnail-place-holder]");
+			if($shortcodeIsThumbnail !== false){
+				$SearchMuxMessage = str_replace("[thumbnail-place-holder]",$profileimage ."<br/><br/>",$SearchMuxMessage);
+			}
 			$MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);

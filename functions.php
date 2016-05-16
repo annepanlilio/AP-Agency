@@ -444,7 +444,8 @@
 
 			// Offset Math
 			$timezone_offset = (int)$offset;
-			$time_altered =  strtotime("now") -  ($timezone_offset *60 *60);
+			//$time_altered =  strtotime("now") -  ($timezone_offset *60 *60);
+			$time_altered =  strtotime("now");
 			$difference = $time_altered - (int)$timestamp;
 
 			// Prepare Text
