@@ -992,7 +992,7 @@ class RBAgency_Profile {
 				/*
 				 * Get Search Chriteria
 				 */
-
+				global $_list_my_profiles;
 					// Support Legacy Naming Convention
 					if ( isset($atts["datebirth_min"]) && !empty($atts["datebirth_min"])) {
 						$atts["age_min"] = $atts["datebirth_min"];
@@ -1008,6 +1008,9 @@ class RBAgency_Profile {
 					}
 					if ( isset($atts["type"]) && !empty($atts["type"])) {
 						$atts["profiletype"] = $atts["type"];
+					}
+					if(isset($atts["list_layout"]) && !empty($atts["list_layout"])){
+						$_list_my_profiles = $atts["list_layout"];
 					}
 
 					// Exctract from Shortcode
@@ -1041,7 +1044,8 @@ class RBAgency_Profile {
 						"profilecasting" => NULL,
 						"stars" => NULL,
 						"favorite" => NULL,
-						"override_privacy" => NULL
+						"override_privacy" => NULL,
+						"list_layout" => NULL
 					), $atts));
 
 				/*
@@ -3082,8 +3086,10 @@ class RBAgency_Profile {
 						//slide panel trigger to image/ profile image
 					if($rb_agency_option_layoutprofileviewmode == 2) {
 						$displayHTML .= '<a href="#slide-panel_'.$_panelID.'" class="slide-panel-link" profile_id="'.$dataList["ProfileID"].'">';
-					}else{
+					}elseif($rb_agency_option_layoutprofileviewmode == 0){
 						$displayHTML .= "<a href=\"". $profile_link ."\" title=\"". stripslashes($ProfileContactDisplay) ."\" class=\"".$profile_link_class."\">";
+					}elseif($rb_agency_option_layoutprofileviewmode == 1){
+						$displayHTML .= "<a href=\"#lightbox-fancy-".$dataList["ProfileID"] ."\" class=\"".$profile_link_class."\">";
 					}
 
 					if(get_query_var('target')!="print" AND get_query_var('target')!="pdf"){
@@ -3491,9 +3497,9 @@ class RBAgency_Profile {
 									//open in new window and play
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 									$auditiondemo = empty($au) ? "Play Audio" : $au;
-									$voicedemolinks .= $auditiondemo."<br>";
+									$voicedemo_links .= $auditiondemo."<br>";
 									//$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
-									$voicedemolinks .=  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
+									$voicedemo_links .=  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
 								}elseif($medialink_option == 3){
 									//open in new window and download
 
@@ -3501,9 +3507,9 @@ class RBAgency_Profile {
 									//$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 									$auditiondemo = empty($au) ? "Play Audio" : $au;
-									$voicedemolinks .= $auditiondemo."<br>";
+									$voicedemo_links .= $auditiondemo."<br>";
 									//$voicedemolinks .= '<audio><source src="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'" /></audio><br>';
-									$voicedemolinks .=  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
+									$voicedemo_links .=  do_shortcode('[sc_embed_player fileurl="'.site_url().'/wp-content/uploads/profile-media/_casting-jobs/'.$files[$i].'"]');
 								}
 
 							}
@@ -3521,7 +3527,7 @@ class RBAgency_Profile {
 				$displayHTML .= '<div data-profileid="'.$dataList["ProfileID"].'" id="rbprofile-'.$dataList["ProfileID"].'" class="rbprofile-list '.$_profiletypeClassUniq.' '.$_mp3typeClassUniq.'" mp3_type="'.$_mp3typeClassUniq.'">
 					<div class="profile-voiceover">
 						   <strong class="name"><a href="'. RBAGENCY_PROFILEDIR . $dataList["ProfileGallery"] .'">
-						'. stripslashes($ProfileContactDisplay) .'</a></strong><br>'.$voicedemolinks .'
+						'. stripslashes($ProfileContactDisplay) .'</a></strong><br>'.$voicedemo_links .'
 					</div><!-- .profile-voiceover -->
 				</div> <!-- .? -->';
 
