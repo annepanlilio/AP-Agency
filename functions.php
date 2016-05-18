@@ -544,12 +544,15 @@
 			$label_y = "";
 			$label_m = "";
 			$label_d = "";
+			$year_style = isset($attrs['year_style']) ? $attrs['year_style'] : '';
+			$month_style = isset($attrs['month_style']) ? $attrs['month_style'] : '';
+			$day_style = isset($attrs['day_style']) ? $attrs['day_style'] : '';
 
 			if($detail_year == 1 || is_admin() && $sc['email_year']==true){
 				if($years == 0){
 					$years = "";
 				} else {
-					$label_y = "<span ".$attrs['year_style'].">" . $years . " yr(s)</span>";
+					$label_y = "<span ".$year_style.">" . $years . " yr(s)</span>";
 				}
 			}
 			if($detail_month == 1|| is_admin() && $sc['email_month']==true){
@@ -557,14 +560,14 @@
 				if($months == 0){
 					$label_m = "";
 				} else {
-					$label_m = "<span ".$attrs['month_style'].">" .(($months<12)?$months:11) . " mo(s)</span>";
+					$label_m = "<span ".$month_style.">" .(($months<12)?$months:11) . " mo(s)</span>";
 				}
 			}
 			if($detail_day == 1|| is_admin() && $sc['email_day']==true){
 				if($days == 0){
 					$label_d = "";
 				}else{
-					$label_d = "<span ".$attrs['day_style'].">" . (($days<31)?$days:30) ." day(s)</span>";
+					$label_d = "<span ".$day_style.">" . (($days<31)?$days:30) ." day(s)</span>";
 				}
 			}
 
