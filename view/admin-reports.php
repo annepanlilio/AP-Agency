@@ -168,7 +168,7 @@ if ($ConfigID == 0) {
 
 	echo "    <div class=\"boxlink\">\n";
 	echo "      <h3>". __("Step 5", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
-	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3&scan=run\" title=\"". __("Scan Folders for Images/Media", RBAGENCY_TEXTDOMAIN) . "\">". __("Scan Folders for Images/Media", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=3&scan=run&paging=1\" title=\"". __("Scan Folders for Images/Media", RBAGENCY_TEXTDOMAIN) . "\">". __("Scan Folders for Images/Media", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
 	echo "      <p>". __("First upload images directly to folders via FTP then use this tool to sync the images & media to the database.", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 	echo "    </div>\n";
 
@@ -425,9 +425,49 @@ elseif ($ConfigID == 3) {
 	<?php
 	global $wpdb;
 
-	$query3 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
+	$q = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
+	$r =$wpdb->get_results($q, ARRAY_A);
+
+	$to_paginate = $_GET;
+	$to_paginate = array_unique($to_paginate);
+	unset($to_paginate["page"]);
+	if(!empty($dir)){
+		unset($to_paginate["dir"]);
+	}
+	$build_query = http_build_query($to_paginate);
+	$items =$wpdb->num_rows;
+
+	$p = new RBAgency_Pagination;
+	$p->items($items);
+	$p->limit(100); // Limit entries per page
+	$p->target("admin.php?page=" . $_GET["page"] . $query."&".$build_query);
+	if(isset($p->paging)){
+		$p->currentPage($_GET[$p->paging]); // Gets and validates the current page
+	}
+	$p->calculate(); // Calculates what to show
+	$p->parameterName('paging');
+	$p->adjacents(1); //No. of page away from the current page
+
+	if (!isset($_GET['paging'])) {
+		$p->page = 1;
+	} else {
+		$p->page = $_GET['paging'];
+	}
+
+	//Query for limit paging
+	$limit = "LIMIT " . ($p->page - 1) * $p->limit . ", " . $p->limit;
+
+	$query3 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC $limit";
 	$results3 =$wpdb->get_results($query3, ARRAY_A);
 	$count3 =  $wpdb->num_rows;
+
+	echo "<div class=\"tablenav\">\n";
+	echo "  <div class='tablenav-pages'>\n";
+	if ($items > 0) {
+		echo $p->show();// Echo out the list of paging. 
+	}
+	echo "  </div>\n";
+	echo "</div>\n";
 
 	$query3a = "SELECT * FROM ". table_agency_profile_media ."";
 	$results3a = $wpdb->get_results($query3a, ARRAY_A);
@@ -636,6 +676,13 @@ elseif ($ConfigID == 3) {
 	if ($count3 < 1) {
 		echo "There are currently no profile records.";
 	}
+	echo "<div class=\"tablenav\">\n";
+	echo "  <div class='tablenav-pages'>\n";
+	if ($items > 0) {
+		echo $p->show();// Echo out the list of paging. 
+	}
+	echo "  </div>\n";
+	echo "</div>\n";
 	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=add' class='button-primary'>Add All Pending Changes</a>";
 	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=remove' class='button-primary'>Remove All Missing Files</a>";
 
