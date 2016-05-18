@@ -41,6 +41,13 @@ if ($ConfigID == 0) {
 	echo "<div class=\"boxlinkgroup\">\n";
 	echo "  <h2>". __("Initial Setup", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
 	echo "  <p>". __("If you are doing the initial instal of RB Agency you this section will help you get your data inplace", RBAGENCY_TEXTDOMAIN) . "</p>\n";
+
+	echo "    <div class=\"boxlink\">\n";
+	echo "      <h3>". __("Optmized Database", RBAGENCY_TEXTDOMAIN) . "</h3>\n";
+	echo "      <a class=\"button-primary\" href=\"?page=". $_GET["page"] ."&ConfigID=97\" title=\"". __("Add database indexes", RBAGENCY_TEXTDOMAIN) . "\">". __("Add database indexes", RBAGENCY_TEXTDOMAIN) . "</a><br />\n";
+	echo "      <p>". __("Add indexes to the database to decrease load time", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
+	echo "    </div>\n";
+
 	echo "</div>\n";
 	echo "<hr />\n";
 
@@ -2092,9 +2099,17 @@ elseif($ConfigID == '83'){
 		}
 
 }
+/*
+ * Add Index to Database
+ */
+elseif ($ConfigID == 97) {
+
+	$index = rb_agency_data_addindex();
+
+}
 elseif($ConfigID == '99'){
 
-		$active = get_option('active_plugins');
+	$active = get_option('active_plugins');
 	$found = false;
 	foreach($active as $act){
 		if(preg_match('/rb-agency-interact\.php/',$act)){
@@ -2115,8 +2130,12 @@ elseif($ConfigID == '99'){
 
 
 /******************************************************************************************/
-
-
+function rb_agency_data_addindex(){
+	global $wpdb;
+	$results = $wpdb->query("ALTER TABLE  ". table_agency_customfield_mux ." ADD INDEX (`ProfileID`)");
+	$results = $wpdb->query("ALTER TABLE  ". table_agency_profile_media ." ADD INDEX (`ProfileID`)");
+	echo 'Indexes added to Profile Media & Custom Fields.  This should increase loading times.';
+}
 
 function uninstall_dummy_profile($profile){
 
