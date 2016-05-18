@@ -298,7 +298,7 @@ elseif ($ConfigID == 2) {
 			<p><a class="button-primary" href="?page=rb_agency_reports&ConfigID=2&action=generate" title="Generate Missing Folders for Profiles">Generate Missing Folders for Profiles</a>  Clicking this button will generate folders for the following profiles:<p>
 			<?php
 			foreach ($arrayProfilesMissingFolders as $profileURL) {
-				echo $profileURL.", ";
+				echo $profileURL." <br />";
 			}
 		} else {
 			echo "Good to go! No changes needed!";
