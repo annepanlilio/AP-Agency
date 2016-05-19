@@ -5505,7 +5505,7 @@ function insertNewCountries(){
 	$wpdb->query($sql);
 }
 
-add_action('init','insertNewCountries');
+//add_action('init','insertNewCountries');
 
 
 function rb_get_custom_social_media(){
