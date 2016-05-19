@@ -2423,7 +2423,7 @@ class RBAgency_Profile {
 					$type = get_query_var("type");
 					// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
 					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
-						$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
+						$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">".__("Go Back to Basic Search",RBAGENCY_TEXTDOMAIN)."</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
 					}
 					if(self::$error_debug){
 						self::$error_checking[] = array('search_result_public',$all_html);
@@ -2473,7 +2473,7 @@ class RBAgency_Profile {
 					$no_rec_html = '<div class=\"rbclear\"></div>' . __("No Profiles Found", RBAGENCY_TEXTDOMAIN);
 					$no_rec_html .= '<div class=\"rbclear\"></div>';
 					if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
-					$no_rec_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">Go Back to Advanced Search</a></div>";
+					$no_rec_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
 					}
 					if(self::$error_debug){
 						self::$error_checking[] = array('search_result_public',$no_rec_html);
