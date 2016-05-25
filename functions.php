@@ -4862,7 +4862,7 @@ function get_social_media_links($ProfileID = ""){
 
 		wp_enqueue_script( 'script-handle', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array( 'jquery' ) );
 		wp_enqueue_script( 'script-handle2', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
-		wp_localize_script( 'script-handle', 'objectL10n', array(
+		wp_localize_script( 'script-handle2', 'objectL10n', array(
 			'youngest_to_oldest' => esc_html__( 'Youngest to Oldest', RBAGENCY_TEXTDOMAIN ),
 			'oldest_to_youngest' => esc_html__( 'Oldest to Youngest', RBAGENCY_TEXTDOMAIN ),
 			'ascending' => esc_html__( 'Ascending', RBAGENCY_TEXTDOMAIN ),

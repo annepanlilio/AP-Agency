@@ -271,7 +271,7 @@ class RBAgency_Profile {
 						echo "					<input type=\"hidden\" id=\"url\" value=\"". $location ."\">\n";
 						echo "					<label for=\"country\">". __("Country", RBAGENCY_TEXTDOMAIN) ."</label>\n";
 						echo "					<div>\n";
-						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStates(\"country\",\"state\");'>\n";
+						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStatesPublic(\"country\",\"state\");'>\n";
 						echo "							<option value=\"\">". __("Any Country", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 														$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
 														$result_query_get = $wpdb->get_results($query_get);
@@ -2473,7 +2473,7 @@ class RBAgency_Profile {
 					$no_rec_html = '<div class=\"rbclear\"></div>' . __("No Profiles Found", RBAGENCY_TEXTDOMAIN);
 					$no_rec_html .= '<div class=\"rbclear\"></div>';
 					if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
-					$no_rec_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">Go Back to Basic Search</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
+					$no_rec_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">".__("Go Back to Basic Search",RBAGENCY_TEXTDOMAIN)."</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
 					}
 					if(self::$error_debug){
 						self::$error_checking[] = array('search_result_public',$no_rec_html);
