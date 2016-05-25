@@ -5307,8 +5307,8 @@ function wpse45134_catch_register()
 						$user_pass = $new_pass;
 					}*/
 
-					$message  = __('Hi there,', RBAGENCY_casting_TEXTDOMAIN) . "<br><br>";
-					$message .= sprintf(__('Congratulations! Your account is approved.', RBAGENCY_casting_TEXTDOMAIN), $user_login) . "<br>";
+					$message  = __('Hi there,', RBAGENCY_interact_TEXTDOMAIN) . "<br><br>";
+					$message .= sprintf(__('Congratulations! Your account is approved.', RBAGENCY_interact_TEXTDOMAIN), $user_login) . "<br>";
 					//$message .= sprintf(__("Here's how to log in:"), get_option('blogname')) . "\r\n\r\n";
 					//$message .= get_option('home') ."/profile-login/\r\n";
 					//if($rb_agencyinteract_option_registerapproval == 1){ // automally approved
@@ -5318,15 +5318,25 @@ function wpse45134_catch_register()
 					//			$message .= sprintf(__('Password: %s'),  "Your Password") . "\r\n\r\n";
 
 					//}
-					$message .= sprintf(__('If you have any problems, please contact us at %s.', RBAGENCY_casting_TEXTDOMAIN), get_option('admin_email')) . "<br><br>";
-					$message .= __('Regards,', RBAGENCY_casting_TEXTDOMAIN)."<br>";
+					$message .= sprintf(__('If you have any problems, please contact us at %s.', RBAGENCY_interact_TEXTDOMAIN), get_option('admin_email')) . "<br><br>";
+					$message .= __('Regards,', RBAGENCY_interact_TEXTDOMAIN)."<br>";
 					$message .= get_option('blogname') . __(' Team') ."<br>";
 					$message .= get_option('home') ."<br>";
-					$message .= '<img src="'.get_option('home').$rb_agency_options_arr['rb_agency_option_agencylogo'].'" width="200">';
+					
+
+					
+					$find = strpos($rb_agency_options_arr['rb_agency_option_agencylogo'],"http");
+					
+					if($find !== false){
+						$message .= '<img src="'.$rb_agency_options_arr['rb_agency_option_agencylogo'].'" width="200">';
+					}else{
+						$message .= '<img src="'.get_option('home').$rb_agency_options_arr['rb_agency_option_agencylogo'].'" width="200">';
+					}
 
 					$headers = 'From: '. get_option('blogname') .' <'. get_option('admin_email') .'>' . "<br>";
 					//wp_mail($user_email, sprintf(__('%s Congratulations! Your account is approved.'), get_option('blogname')), make_clickable($message), $headers);
-					wp_mail($user_email, sprintf(__('%s Congratulations! Your account is approved.', RBAGENCY_casting_TEXTDOMAIN), get_option('blogname')), $message, $headers);
+					add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
+					wp_mail($user_email, sprintf(__('%s Congratulations! Your account is approved.', RBAGENCY_interact_TEXTDOMAIN), get_option('blogname')), $message, $headers);
 				}
 		}
 	}
