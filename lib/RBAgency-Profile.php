@@ -32,7 +32,7 @@ class RBAgency_Profile {
 	 * @param array $location	Where is it located? (0: Public, 1: Admin, 2)
 	 * @param string $mode		Form field should be show when select fields
 	 */
-		public static function search_form($atts ='', $args = '', $type = 0, $location = 0, $mode = "normal"){
+		public static function search_form($atts ='', $args = '', $type = 0, $location = 0, $mode = "normal",$profile_type = ""){
 
 			/*
 			 * Setup Requirements
@@ -311,11 +311,27 @@ class RBAgency_Profile {
 
 			// Query Fields
 				if(is_admin()){
-					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
+
+					if(!empty($profile_type)){
+						$ProfileType_txt = ucfirst($profile_type);
+						$field_sql = "SELECT cus.ProfileCustomID, cus.ProfileCustomTitle, cus.ProfileCustomType, cus.ProfileCustomOptions, cus.ProfileCustomShowSearch, cus.ProfileCustomShowSearchSimple
+									FROM ". table_agency_customfields ." cus INNER JOIN ".$wpdb->prefix."agency_customfields_types cus_types ON cus_types.ProfileCustomID = cus.ProfileCustomID WHERE cus.ProfileCustomView <= 2 AND FIND_IN_SET('".$ProfileType_txt."',cus_types.ProfileCustomTypes) ORDER BY cus.ProfileCustomOrder ASC";
+					}else{
+						$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
 									FROM ". table_agency_customfields ." WHERE ProfileCustomView <= 2 ORDER BY ProfileCustomOrder ASC";
+					}
+					
 				} else {
-					$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
+
+					if(!empty($profile_type)){
+						$ProfileType_txt = ucfirst($profile_type);
+						$field_sql = "SELECT cus.ProfileCustomID, cus.ProfileCustomTitle, cus.ProfileCustomType, cus.ProfileCustomOptions, cus.ProfileCustomShowSearch, cus.ProfileCustomShowSearchSimple
+									FROM ". table_agency_customfields ." cus INNER JOIN ".$wpdb->prefix."agency_customfields_types cus_types ON cus_types.ProfileCustomID = cus.ProfileCustomID WHERE cus.ProfileCustomView = 0 AND FIND_IN_SET('".$ProfileType_txt."',cus_types.ProfileCustomTypes) ORDER BY cus.ProfileCustomOrder ASC";
+					}else{
+						$field_sql = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType, ProfileCustomOptions, ProfileCustomShowSearch, ProfileCustomShowSearchSimple
 									FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC";
+					}
+					
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
 

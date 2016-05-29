@@ -322,6 +322,7 @@ class RBAgency_Extends {
 			extract(shortcode_atts(array(
 				"type" => 0,
 				"mode" => 'normal',
+				"profile-type" => ''
 			), $atts));
 
 			ob_start();
@@ -341,6 +342,8 @@ class RBAgency_Extends {
 			{
 				$mode = "normal";
 			}
+
+			$profile_type = !empty($atts['profile-type']) ? $atts['profile-type'] : "";
 			
 			
 
@@ -355,8 +358,7 @@ class RBAgency_Extends {
 				// Select Type
 				$isSearchPage = 1;
 				if(!isset($_POST['form_mode'])){
-					
-					echo RBAgency_Profile::search_form('', '', $type, 0,$mode);
+					echo RBAgency_Profile::search_form('', '', $type, 0,$mode,$profile_type);
 					
 				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
