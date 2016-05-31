@@ -926,16 +926,9 @@ class RBAgency_Common {
      */
 
 		public static function rb_agency_embed_soundcloud($url){
+			
 				$display = "";
-				$display .= "<object height=\"81\" width=\"100%\" type=\"application/x-shockwave-flash\" >";
-				$display .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".$url."\"></param>";
-				$display .=  "<param name=\"allowscriptaccess\" value=\"always\"></param>";
-				$display .=  "<embed";
-				$display .=  "src=\"http://player.soundcloud.com/player.swf?&url=".$url."\" ";
-				$display .=  "allowscriptaccess=\"always\" height=\"81\"  type=\"application/x-shockwave-flash\" width=\"100%\">";
-				$display .=  "</embed>";
-				$display .=  "</object>";
-
+				$display .= '<iframe width="100%" height="100" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url='.trim($url).'&amp;color=0066cc"></iframe>';
 				return $display;
 
 		}

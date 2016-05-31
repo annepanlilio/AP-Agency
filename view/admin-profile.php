@@ -2112,14 +2112,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								} elseif ($dataMedia['ProfileMediaType'] == "SoundCloud") {
 									$outSoundCloud .= "<div style=\"width:600px;float:left;padding:10px;\">";
 									$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></span> \n";
-									$outSoundCloud .= "<object height=\"81\" width=\"100%\">";
+									
+									$outSoundCloud .= RBAgency_Common::rb_agency_embed_soundcloud($dataMedia['ProfileMediaURL']);
+									/* $outSoundCloud .= "<object height=\"81\" width=\"100%\">";
 									$outSoundCloud .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"></param>";
 									$outSoundCloud .=  "<param name=\"allowscriptaccess\" value=\"always\"></param>";
 									$outSoundCloud .=  "<embed";
 									$outSoundCloud .=  "src=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"";
 									$outSoundCloud .=  "allowscriptaccess=\"always\" height=\"81\"  type=\"application/x-shockwave-flash\" width=\"100%\">";
 									$outSoundCloud .=  "</embed>";
-									$outSoundCloud .=  "</object>";
+									$outSoundCloud .=  "</object>"; */
 									$outSoundCloud .= "</div>";
 								}
 							}
