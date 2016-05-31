@@ -1450,6 +1450,24 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<div class="inside">
 							<div class="main">
 							<?php
+
+							//check for parentid column and level
+							$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+							$r = $wpdb->get_results($sql);
+							if(count($r) == 0){
+								//create column
+								$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeParentID INT(10) default 0";
+								$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+							}
+
+							$sql = "SELECT DataTypeLevel FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+							$r = $wpdb->get_results($sql);
+							if(count($r) == 0){
+								//create column
+								$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeLevel INT(10) default 0";
+								$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+							}
+
 							echo "<table class=\"form-table\">\n";
 							echo " <tbody>\n";
 
@@ -1459,7 +1477,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <fieldset>\n";
 							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
 
-							$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
+							$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 ORDER BY DataTypeTitle";
 							$results3=  $wpdb->get_results($query3,ARRAY_A);
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
@@ -1488,6 +1506,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
 									}
 								}
+
+								do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$data3['DataTypeID'],$action,$ProfileType);
 							}
 							echo "      </fieldset>\n";
 							if ($count3 < 1) {

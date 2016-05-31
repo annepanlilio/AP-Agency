@@ -179,12 +179,29 @@ class RBAgency_Profile {
 						echo "				</div>\n";
 				}
 
+				//check for parentid column and level
+				$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+				$r = $wpdb->get_results($sql);
+				if(count($r) == 0){
+					//create column
+					$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeParentID INT(10) default 0";
+					$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+				}
+
+				$sql = "SELECT DataTypeLevel FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+				$r = $wpdb->get_results($sql);
+				if(count($r) == 0){
+					//create column
+					$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeLevel INT(10) default 0";
+					$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+				}
+
 				// Show Classification
 				if ( ($rb_agency_option_formshow_type > 0) || isset($search_layout) && $search_layout == "admin" || ( isset($search_layout) &&  $search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
 						echo "				<div class=\"rbfield rbselect rbsingle rb_profiletype\" id=\"rb_profiletype\">\n";
 						echo "					<label for=\"type\">". __("Type", RBAGENCY_TEXTDOMAIN) . "</label>\n";
 						echo "					<div>";
-						echo "						<select name=\"profiletype\" id=\"type\">\n";
+						/**echo "						<select name=\"profiletype\" id=\"type\">\n";
 						echo "							<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 														$results2 = $wpdb->get_results($query,ARRAY_A);
@@ -194,7 +211,22 @@ class RBAgency_Profile {
 															} else {$selectedvalue = ""; }
 															echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>\n";
 														}
-						echo "						</select>\n";
+						echo "						</select>\n"; **/
+
+
+
+						$sql = "SELECT * FROM ".table_agency_data_type." WHERE DataTypeParentID = 0";
+						$result = $wpdb->get_results($sql,ARRAY_A);
+						foreach($result as $r){
+							echo "<label>";
+											$t = trim(str_replace(' ','_',$r['DataTypeTitle']));
+											echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+												trim($r['DataTypeTitle'])
+												.'&nbsp;<br/>';
+								echo "</label>"; 
+
+								do_action('rb_get_profile_type_childs_checkbox_ajax_display',$r["DataTypeID"],4);
+						}
 						echo "					</div>\n";
 						echo "				</div>\n";
 				}
@@ -956,6 +988,7 @@ class RBAgency_Profile {
 				self::$error_checking[] = array('search_process',$filterArray);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
+
 				return $filterArray;
 			}// If no post, ignore.
 
@@ -1101,9 +1134,15 @@ class RBAgency_Profile {
 					}
 
 					// Type
-					if (isset($profiletype) && !empty($profiletype)){
-						$filter .= " AND FIND_IN_SET('". $profiletype ."', profile.ProfileType) ";
+					//if (isset($profiletype) && !empty($profiletype)){
+					if(!empty($_POST['profiletype'])){
+						foreach($_POST['profiletype'] as $k=>$v){
+							$filter .= " AND FIND_IN_SET('".$_POST['profiletype'][$k]."', profile.ProfileType) ";
+						}						
 					}
+						
+						
+					//}
 
 					// Gender
 					if (isset($gender) && !empty($gender)){
@@ -1187,6 +1226,8 @@ class RBAgency_Profile {
 
 
 					}
+
+					
 
 
 					// Set CustomFields search
@@ -1678,6 +1719,7 @@ class RBAgency_Profile {
 						$sql .= "FROM ". table_agency_profile ." profile
 							WHERE ". $sql_where_array['standard'] ." ";
 					}
+					
 					$sql .= self::$order_by;
 
 					break;

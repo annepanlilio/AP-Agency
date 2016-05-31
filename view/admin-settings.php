@@ -1854,7 +1854,29 @@ elseif ($ConfigID == 3) {
 		$DataTypeTitle 	= $_POST['DataTypeTitle'];
 		$DataTypeTag 	= $_POST['DataTypeTag'];
 		$DataTypeOldTitle = $_POST["oldTitle"];
+		$DataTypeParentID = $_POST["DataTypeParentID"];
+
+
+
+		//check for parentid column and level
+		$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+		$r = $wpdb->get_results($sql);
+		if(count($r) == 0){
+			//create column
+			$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeParentID INT(10) default 0";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}
+
+		$sql = "SELECT DataTypeLevel FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+		$r = $wpdb->get_results($sql);
+		if(count($r) == 0){
+			//create column
+			$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeLevel INT(10) default 0";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}
+
 			if (empty($DataTypeTag)) {$DataTypeTag = RBAgency_Common::format_stripchars($DataTypeTitle); }
+		
 		// Error checking
 		$error = "";
 		$have_error = false;
@@ -1871,8 +1893,9 @@ elseif ($ConfigID == 3) {
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 			} else {
 
+				$DataTypeLevel = rb_get_parent_category_level($DataTypeParentID);
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag) VALUES ('" . esc_sql($DataTypeTitle) . "','" . esc_sql($DataTypeTag) . "')";
+				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag,DataTypeParentID,DataTypeLevel) VALUES ('" . esc_sql($DataTypeTitle) . "','" . esc_sql($DataTypeTag) . "',".$DataTypeParentID.",".$DataTypeLevel.")";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -1885,10 +1908,15 @@ elseif ($ConfigID == 3) {
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 			} else {
+
+				$DataTypeLevel = rb_get_parent_category_level($DataTypeParentID);
+
 				$update = "UPDATE " . table_agency_data_type . "
 							SET
 								DataTypeTitle='" . esc_sql($DataTypeTitle) . "',
-								DataTypeTag='" . esc_sql($DataTypeTag) . "'
+								DataTypeTag='" . esc_sql($DataTypeTag) . "',
+								DataTypeParentID = ".$DataTypeParentID.",
+								DataTypeLevel = ".$DataTypeLevel."
 							WHERE DataTypeID='$DataTypeID'";
 				$updated = $wpdb->query($update);
 
@@ -1911,8 +1939,8 @@ elseif ($ConfigID == 3) {
 			foreach($_POST as $DataTypeID) {
 				if (is_numeric($DataTypeID)) {
 				// Verify Record
-				$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  \"". $DataTypeID ."\"";
-				$resultsDelete =$wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+				$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  %d";
+				$resultsDelete =$wpdb->get_results($wpdb->prepare($queryDelete,$DataTypeID), ARRAY_A);
 
 				foreach ($resultsDelete as $dataDelete) {
 					// Remove Record
@@ -1974,12 +2002,48 @@ elseif ($ConfigID == 3) {
 			echo "<h3>". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
   }
-	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
+	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']."&action=editRecord&DataTypeID=".$_GET['DataTypeID']."&ConfigID=4") ."\">\n";
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Title", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 	echo "        <td><input type=\"text\" id=\"DataTypeTitle\" name=\"DataTypeTitle\" value=\"". $DataTypeTitle ."\" /></td>\n";
+	echo "    </tr>\n";
+	echo "    <tr valign=\"top\">\n";
+	echo "        <th scope=\"row\">". __("Parent", RBAGENCY_TEXTDOMAIN) .":</th>\n";
+	echo "        <td>";
+
+	if(isset($_GET["action"]) && $_GET["action"] == "editRecord"){
+
+		$sql = "SELECT DataTypeID,DataTypeTitle FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = 0";
+		$r = $wpdb->get_results($sql);
+		echo "<select name=\"DataTypeParentID\">";
+		echo "<option value=\"0\">--</option> ";
+		foreach($r as $result){
+
+			$parentIDPost = isset($_POST['DataTypeParentID']) ? $_POST['DataTypeParentID'] : "";
+			$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = %d";
+			$parent = $wpdb->get_row($wpdb->prepare($sql,$_GET["DataTypeID"]));
+			$selected = $parent->DataTypeParentID == $result->DataTypeID ? "selected" : "";	
+			echo "<option value=".$result->DataTypeID." $selected>".$result->DataTypeTitle. "</option>";
+			do_action('rb_get_profile_type_childs_dropdown_display',$result->DataTypeID,4);
+		}	
+		echo "</select>";
+
+	}else{
+		$sql = "SELECT * FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = 0";
+		$r = $wpdb->get_results($sql);
+		echo "<select name=\"DataTypeParentID\">";
+		echo "<option value=\"0\">--</option> ";
+		foreach($r as $result){
+			echo "<option value=".$result->DataTypeID.">".$result->DataTypeTitle."</option>";
+		}
+		echo "</select>";
+	}
+
+	
+	
+	echo "</td>\n";
 	echo "    </tr>\n";
 	if ( $DataTypeID > 0) {
 	echo "    <tr valign=\"top\">\n";
@@ -2049,7 +2113,7 @@ elseif ($ConfigID == 3) {
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
 
-		$query = "SELECT * FROM ". table_agency_data_type ." ORDER BY $sort $dir";
+		$query = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = 0 ORDER BY $sort $dir";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		foreach ($results as $data) {
@@ -2064,6 +2128,9 @@ elseif ($ConfigID == 3) {
 		echo "        </td>\n";
 		echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
 		echo "    </tr>\n";
+
+		do_action('profile_type_sub_categories',$data["DataTypeID"],4);
+
 		}
 		if ($count < 1) {
 		echo "    <tr>\n";
@@ -3038,7 +3105,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							 * profile types here
 							 */
 
-							$get_types = "SELECT * FROM ". table_agency_data_type;
+							$get_types = "SELECT * FROM ". table_agency_data_type." WHERE DataTypeParentID = 0";
 
 							$result = $wpdb->get_results($get_types,ARRAY_A);
 
@@ -3051,6 +3118,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												trim($typ['DataTypeTitle'])
 												.'&nbsp;<br/>';
 								echo "</label></div>";
+
+								do_action('rb_get_profile_type_childs_checkbox_display',$typ["DataTypeID"],4);
 							}
 						echo		"</div>
 						</div>
@@ -3185,7 +3254,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													$rTypes = $x->ProfileCustomTypes;
 											}
 
-											$get_types = "SELECT * FROM ". table_agency_data_type;
+											$get_types = "SELECT * FROM ". table_agency_data_type." WHERE DataTypeParentID = 0";
 
 											$result = $wpdb->get_results($get_types,ARRAY_A);
 
@@ -3206,6 +3275,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														$checked . '  />&nbsp;'.
 														trim($typ['DataTypeTitle'])
 														.'&nbsp;<br/>';
+
+												do_action('rb_get_profile_type_childs_checkbox_edit_display',$typ["DataTypeID"],4,$t);
 											}
 
 											echo "	</div>

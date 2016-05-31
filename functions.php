@@ -5593,7 +5593,7 @@ add_action("before_default_profile_type_list","rb_generate_new_profile_type_colu
 
 function rb_get_profile_type_childs($parentID,$ConfigID){
 	global $wpdb;
-	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID ORDER BY DataTypeOrder asc";
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
 	$childs = $wpdb->get_results($sql,ARRAY_A);
 	if($wpdb->num_rows > 0){
 		foreach($childs as $child){
@@ -5616,6 +5616,163 @@ function rb_get_profile_type_childs($parentID,$ConfigID){
 			do_action('profile_type_sub_categories',$child["DataTypeID"],$ConfigID);
 		}
 	}
+}
+
+function rb_get_profile_type_childs_dropdown($parentID,$ConfigID){
+	global $wpdb;
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+	$childs = $wpdb->get_results($sql,ARRAY_A);
+	if($wpdb->num_rows > 0){
+		foreach($childs as $child){
+			$dash = "";
+			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
+				$dash .= "-";
+			}
+			$childTitle = stripslashes($child['DataTypeTitle']);
+			echo "<option value=".$child["DataTypeID"].">".$dash.$childTitle. "</option>";
+
+			do_action('rb_get_profile_type_childs_dropdown_display',$child["DataTypeID"],$ConfigID);
+		}
+	}
+}
+add_action("rb_get_profile_type_childs_dropdown_display","rb_get_profile_type_childs_dropdown",11,2);
+
+function rb_get_profile_type_childs_checkbox($parentID,$ConfigID){
+	global $wpdb;
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+	$childs = $wpdb->get_results($sql,ARRAY_A);
+	if($wpdb->num_rows > 0){
+		foreach($childs as $child){
+			$dash = "";
+			$space ="";
+			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
+				$dash .= "-";
+				$space .="&nbsp;&nbsp;";
+			}
+			$childTitle = stripslashes($child['DataTypeTitle']);
+			echo "<div><label>";
+				$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
+				$checked = 'checked="checked"';
+				echo $space.'<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
+				$checked . '  />&nbsp;'.
+				trim($child['DataTypeTitle'])
+				.'&nbsp;<br/>';
+			echo "</label></div>";
+
+			do_action('rb_get_profile_type_childs_checkbox_display',$child["DataTypeID"],$ConfigID);
+		}
+	}
+}
+add_action("rb_get_profile_type_childs_checkbox_display","rb_get_profile_type_childs_checkbox",11,2);
+
+function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
+	global $wpdb;
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+	$childs = $wpdb->get_results($sql,ARRAY_A);
+	if($wpdb->num_rows > 0){
+		foreach($childs as $child){
+			$dash = "";
+			$space = "";
+			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
+				$dash .= "-";
+				$space .="&nbsp;&nbsp;";
+			}
+			$childTitle = stripslashes($child['DataTypeTitle']);
+
+			$sql = "SELECT * FROM ".$wpdb->prefix."agency_customfields_types WHERE FIND_IN_SET('".ucfirst($child["DataTypeTitle"])."',ProfileCustomTypes) > 0";
+			
+			$r = $wpdb->get_results($sql);
+			$checked = $wpdb->num_rows > 0 ? 'checked="checked"' : "";
+			$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
+			echo $space.'<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
+														$checked . '  />&nbsp;'.
+														trim($child['DataTypeTitle'])
+														.'&nbsp;<br/>';
+
+			do_action('rb_get_profile_type_childs_checkbox_edit_display',$child["DataTypeID"],$ConfigID,$t);
+		}
+	}
+}
+add_action("rb_get_profile_type_childs_checkbox_edit_display","rb_get_profile_type_childs_checkbox_edit",11,3);
+
+//for profile manage
+function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$ProfileType){
+	global $wpdb;
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+	$childs = $wpdb->get_results($sql,ARRAY_A);
+	if($wpdb->num_rows > 0){
+		foreach($childs as $child){
+			$dash = "";
+			$space ="";
+			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
+				$dash .= "-";
+				$space .="&nbsp;&nbsp;";
+			}
+			if ($action == "add") {
+									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\"";
+									if(is_array($ProfileType)){
+											if (in_array($child['DataTypeID'], $ProfileType)) {
+												echo " checked=\"checked\"";
+											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+									} else {
+											if ($child['DataTypeID'] == $ProfileType) {
+												echo " checked=\"checked\"";
+											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+									}
+								}
+								if ($action == "editRecord") {
+									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\"";
+									if(is_array($ProfileType)){
+											if (in_array($child['DataTypeID'], $ProfileType)) {
+												echo " checked=\"checked\"";
+											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+									} else {
+											if ($data3['DataTypeID'] == $ProfileType) {
+												echo " checked=\"checked\"";
+											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+									}
+								}
+
+			do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType);
+		}
+	}
+}
+add_action("rb_get_profile_type_childs_checkbox_display_profilemanage_display","rb_get_profile_type_childs_checkbox_profilemanage",11,3);
+
+function rb_get_profile_type_childs_checkbox_ajax($parentID,$ConfigID){
+	global $wpdb;
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+	$childs = $wpdb->get_results($sql,ARRAY_A);
+	if($wpdb->num_rows > 0){
+		foreach($childs as $child){
+			$space = "";
+			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
+				$space .= "&nbsp;&nbsp;";
+			}
+			$childTitle = stripslashes($child['DataTypeTitle']);
+			echo "<label style=\"display:none;\" class=\"CDataTypeID".$child['DataTypeParentID']."\">";
+				$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
+				echo $space.'<input type="checkbox" name="profiletype[]" value="'.$child['DataTypeID'].'" id="'.$child['DataTypeID'].'" myparent="'.$child['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+				trim($child['DataTypeTitle'])
+				.'&nbsp;<br/>';
+			echo "</label>";
+
+			do_action('rb_get_profile_type_childs_checkbox_ajax_display',$child["DataTypeID"],$ConfigID);
+		}
+	}
+}
+add_action("rb_get_profile_type_childs_checkbox_ajax_display","rb_get_profile_type_childs_checkbox_ajax",11,2);
+
+function rb_get_parent_category_level($parentID){
+	global $wpdb;
+	$sql = "SELECT DataTypeLevel FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = %d";
+	$result = $wpdb->get_row($wpdb->prepare($sql,$parentID));
+	if($parentID > 0){
+		return $result->DataTypeLevel+1;
+	}else{
+		return 0;
+	}
+	
 }
 
 function rb_get_parent_profile_type_level($profileTypeID){
@@ -5665,4 +5822,29 @@ function rb_get_child_profiletype_customfields($parentID){
 	}
 }
 add_action("after_child_profiletype_customfields","rb_get_child_profiletype_customfields",10,1);
+
+
+function rb_get_profile_type_childs_checkbox_ajax_register($parentID){
+	global $wpdb;
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+	$childs = $wpdb->get_results($sql,ARRAY_A);
+	if($wpdb->num_rows > 0){
+		foreach($childs as $child){
+			$space = "";
+			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
+				$space .= "&nbsp;&nbsp;";
+			}
+			$childTitle = stripslashes($child['DataTypeTitle']);
+			echo "<label style=\"display:none;\" class=\"CDataTypeID".$child['DataTypeParentID']."\">";
+				$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
+				echo $space.'<input type="checkbox" name="profiletype[]" value="'.$child['DataTypeID'].'" id="'.$child['DataTypeID'].'" myparent="'.$child['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+				trim($child['DataTypeTitle'])
+				.'&nbsp;<br/>';
+			echo "</label>";
+
+			do_action('rb_get_profile_type_childs_checkbox_ajax_register_display',$child["DataTypeID"]);
+		}
+	}
+}
+add_action("rb_get_profile_type_childs_checkbox_ajax_register_display","rb_get_profile_type_childs_checkbox_ajax_register",11,1);
 ?>

@@ -568,4 +568,18 @@ jQuery(function(){
 								}
 							});
 						}*/
+
+});
+
+
+jQuery(document).ready(function(){
+	jQuery(".DataTypeIDClassCheckbox").click(function(){
+		var mychild = jQuery(this).attr('id');
+		if (jQuery(this).is(':checked')) {
+			jQuery(".CDataTypeID"+mychild).show(500);
+			jQuery(".CDataTypeID"+mychild).removeAttr('style');
+		}else{
+			jQuery(".CDataTypeID"+mychild).hide(500);
+		}						
+	});
 });
