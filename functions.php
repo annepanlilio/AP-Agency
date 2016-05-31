@@ -2896,8 +2896,11 @@ function get_social_media_links($ProfileID = ""){
 		.profile-social-media-links li img{ width:20px;}
 		</style>';
 
-		$output .= "<h3>".__("Social Media Links",RBAGENCY_TEXTDOMAIN)."</h3>";
-		$output .= "<ul class='profile-social-media-icons' style='list-style:none;'>";
+		
+			$output .= "<h3>".__("Social Media Links",RBAGENCY_TEXTDOMAIN)."</h3>";
+			$output .= "<ul class='profile-social-media-icons' style='list-style:none;'>";
+			
+			$_have_social = false;
 			foreach($custom_social as $social){
 				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$social["SocialMedia_Name"],true);
 
@@ -2914,18 +2917,27 @@ function get_social_media_links($ProfileID = ""){
 					}else{
 						$output .= "<img src='".$social_icon_path."' style='width:20px;height:20px;'>";
 					}
+					
+					$_have_social = true;
 
 
 					$output .= "</a></li>";
 				}
 			}
-		$output .= "</ul>";
+			
+			
+			$output .= "</ul>";
+			
+			
+			if($_have_social == true){
+				echo $output;
+			}else{
+				echo ' ';
+			}
 
 
 
 
-
-		echo $output;
 
 	}
 
