@@ -2024,7 +2024,8 @@ elseif ($ConfigID == 3) {
 			$parent = $wpdb->get_row($wpdb->prepare($sql,$_GET["DataTypeID"]));
 			$selected = $parent->DataTypeParentID == $result->DataTypeID ? "selected" : "";	
 			echo "<option value=".$result->DataTypeID." $selected>".$result->DataTypeTitle. "</option>";
-			do_action('rb_get_profile_type_childs_dropdown_display',$result->DataTypeID,4);
+			// -- disable to nested child to be the parent
+			//do_action('rb_get_profile_type_childs_dropdown_display',$result->DataTypeID,4);
 		}	
 		echo "</select>";
 		
@@ -2136,18 +2137,42 @@ elseif ($ConfigID == 3) {
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
 		
-		//$query = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = 0 ORDER BY $sort $dir";
-		$query = "SELECT p.DataTypeID ,p.DataTypeParentID, GROUP_CONCAT(c.DataTypeParentID) AS TypeChildID ,p.DataTypeTitle, p.DataTypeTag, p.DataTypeGenderID FROM ". table_agency_data_type ." p 
-			left JOIN ". table_agency_data_type ." c ON p.DataTypeID=c.DataTypeParentID GROUP BY p.DataTypeID ORDER BY $sort $dir";
+		//repopulate - GENDER Controller
+		$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
+		if ( !$data_gender_exists ) {
+			$wpdb->query("ALTER TABLE ".table_agency_data_type." ADD DataTypeGenderID int(10) DEFAULT 0"); //zero means all gender
+		}
+		
+		//parent first
+		$query = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = 0 ORDER BY $sort $dir";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		
-		///probably issue of table column
-		if(!empty($wpdb->last_error)){
-			//repopulate
-			$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
-			if ( !$data_gender_exists ) {
-				$wpdb->query("ALTER TABLE ".table_agency_data_type." ADD DataTypeGenderID int(10) DEFAULT 0"); //zero means all gender
+		$_nestedData = array();
+		foreach ($results as $data) {
+			
+			// Add to main array
+			$_nestedData[] = $data;
+			
+			//get the Child if have
+			$queryChild = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = {$data['DataTypeID']} ORDER BY $sort $dir";
+			$resultsChild = $wpdb->get_results($queryChild, ARRAY_A);
+			if(!empty($resultsChild)){
+				foreach ($resultsChild as $dataChild) {
+					$_nestedData[] = $dataChild;
+					
+					//get the DEEP Child if have
+					/* $queryChildDeep = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = {$dataChild['DataTypeID']}";
+					$resultsChildDeep = $wpdb->get_results($queryChildDeep, ARRAY_A);
+					if(!empty($resultsChildDeep)){
+						foreach ($resultsChildDeep as $dataChildDeep) {
+							$dataChildDeep_En = $dataChildDeep;
+							$dataChildDeep_En['DataTypeTitle'] = ' - '.$dataChildDeep_En['DataTypeTitle'];
+							$_nestedData[] = $dataChildDeep_En;
+						}
+					} */
+					
+				}
 			}
 		}
 		
@@ -2172,99 +2197,85 @@ elseif ($ConfigID == 3) {
 			$db_CustomFields[ $data_CustomFields['ProfileCustomID']] = $data_CustomFields['ProfileCustomTitle'];
 		}
 		
-		foreach ($results as $data) {
+		foreach ($_nestedData as $data) {
+			
+			
 			$DataTypeID	=$data['DataTypeID'];
-		echo "    <tr>\n";
-		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $DataTypeID ."\" name=\"". $DataTypeID ."\" value=\"". $DataTypeID ."\" /></th>\n";
-		
-		if($data['TypeChildID'] > 0){
-			echo "        <td class=\"column\">-". stripslashes($data['DataTypeTitle']) ."\n";
-		}else{
-			echo "        <td class=\"column\">". stripslashes($data['DataTypeTitle']) ."\n";
-		}
-		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
-		echo "          </div>\n";
-		echo "        </td>\n";
-		echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
-		echo "        <td class=\"column\"><span id='DataGender-{$DataTypeID}'>". $db_gender[$data['DataTypeGenderID']]. "</span>";
-		
-		echo " - 
-			<a href='#' class='data-gender-edit ' genderID='".$data['DataTypeID']."'>Edit</a>
-			<div class='data-gender-edit-div hidden' id='data-gender-edit-div-".$data['DataTypeID']."'>";
-			echo "<select name='DataTypeGenderID' id=\"DataTypeGenderID-".$data['DataTypeID']."\" onchange='saveChangesDataGender(".$data['DataTypeID'].");'>";
-			echo "<option value=\"0\">All</option> ";
-			foreach ($results_gender as $result) {
-				$selected = $data['DataTypeGenderID'] == $result['GenderID'] ? "selected" : "";	
-				echo "<option value=\"".$result['GenderID']."\" $selected>".$result['GenderTitle']. "</option>";
+			echo "    <tr>\n";
+			echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $DataTypeID ."\" name=\"". $DataTypeID ."\" value=\"". $DataTypeID ."\" /></th>\n";
+			
+			if($data['DataTypeParentID'] > 0){
+				echo "        <td class=\"column\">-". stripslashes($data['DataTypeTitle']) ."\n";
+			}else{
+				echo "        <td class=\"column\">". stripslashes($data['DataTypeTitle']) ."\n";
 			}
-			echo "</select>";
-		echo "</div>";
-		
-		
-		echo "</td>\n";
-		echo "        <td class=\"column\">";
-		
-		
-		
-		echo "<a href='#' class='data-customfields-edit' dataTypeID='".$data['DataTypeID']."'>Click here to setup</a>
-			<div class='data-customfields-edit-div hidden' id='data-dataTypeID-edit-div-".$data['DataTypeID']."'>";
+			echo "          <div class=\"row-actions\">\n";
+			echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+			echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+			echo "          </div>\n";
+			echo "        </td>\n";
+			echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
+			echo "        <td class=\"column\"><span id='DataGender-{$DataTypeID}'>". $db_gender[$data['DataTypeGenderID']]. "</span>";
 			
-			echo "<i>Note: Changes immediately take effect</i><br/><br/>";
-			
-			
-		$query_cus = "SELECT main.*,
-					a.ProfileCustomTypes
-					FROM ". table_agency_customfields ." main
-					LEFT JOIN ". table_agency_customfields_types ." a
-					ON a.ProfileCustomID = main.ProfileCustomID
-					WHERE FIND_IN_SET('".$data['DataTypeTitle']."',ProfileCustomTypes)
-					";
-					
-		$results_cus = $wpdb->get_results($query_cus,ARRAY_A);
-		$edit_userCustomFields = array();
-		foreach ($results_cus as $dcus) {
-			$edit_userCustomFields[ $dcus['ProfileCustomID']] = $dcus['ProfileCustomTitle'];
-		}
-		//print_r($edit_userCustomFields);
-		foreach ($db_ProfileCustomFields as $data_CustomFields) {
-			//$db_CustomFields[ $data_CustomFields['ProfileCustomID']] = $data_CustomFields['ProfileCustomTitle'];
-			//$ptype_arr = isset($_POST["ProfileType"]) && !empty($_POST["ProfileType"])?$_POST["ProfileType"]: array();
-			
-			$checked = array_key_exists( $data_CustomFields['ProfileCustomID'], $edit_userCustomFields);
-			echo "<label>
-				<input name=\"inner-custom-fields[]\" value=\"".$data_CustomFields['ProfileCustomID']."\" ";
-				checked( $checked);
-				echo "type=\"checkbox\" class=\"inner-custom-fields-check\"  ProfileCustomID=\"".$data_CustomFields['ProfileCustomID']."\" dataTypeID=\"".$data['DataTypeID']."\" />
-				<span>" . $data_CustomFields['ProfileCustomTitle'] . "</span></label><br/>
-				";
-		}
-		
-		/* 
-
-		foreach ($results_cus as $data_cus) {
-			$ProfileCustomID	=$data_cus['ProfileCustomID'];
-			echo stripslashes($data_cus['ProfileCustomTitle']) ."<br/>\n";
-		}
-		
-			 */
+			echo " - 
+				<a href='#' class='data-gender-edit ' genderID='".$data['DataTypeID']."'>Edit</a>
+				<div class='data-gender-edit-div hidden' id='data-gender-edit-div-".$data['DataTypeID']."'>";
+				echo "<select name='DataTypeGenderID' id=\"DataTypeGenderID-".$data['DataTypeID']."\" onchange='saveChangesDataGender(".$data['DataTypeID'].");'>";
+				echo "<option value=\"0\">All</option> ";
+				foreach ($results_gender as $result) {
+					$selected = $data['DataTypeGenderID'] == $result['GenderID'] ? "selected" : "";	
+					echo "<option value=\"".$result['GenderID']."\" $selected>".$result['GenderTitle']. "</option>";
+				}
+				echo "</select>";
+			echo "</div>";
 			
 			
+			echo "</td>\n";
+			echo "        <td class=\"column\">";
+			
+			
+			
+			echo "<a href='#' class='data-customfields-edit' dataTypeID='".$data['DataTypeID']."'>Click here to setup</a>
+				<div class='data-customfields-edit-div hidden' id='data-dataTypeID-edit-div-".$data['DataTypeID']."'>";
 				
-			echo "
-			<p class='submit'>
-				<input type='button' name='customfield-cancel-btn' value='Done' class='button customfield-cancel-btn' dataTypeID='".$data['DataTypeID']."'>
-			</p>
-			";
-		echo "</div>";
-		
-		
-		
-		echo "</td>\n";
-		echo "    </tr>\n";
+				echo "<i>Note: Changes immediately take effect</i><br/><br/>";
+				
+				
+			$query_cus = "SELECT main.*,
+						a.ProfileCustomTypes
+						FROM ". table_agency_customfields ." main
+						LEFT JOIN ". table_agency_customfields_types ." a
+						ON a.ProfileCustomID = main.ProfileCustomID
+						WHERE FIND_IN_SET('".$data['DataTypeTitle']."',ProfileCustomTypes)
+						";
+						
+			$results_cus = $wpdb->get_results($query_cus,ARRAY_A);
+			$edit_userCustomFields = array();
+			foreach ($results_cus as $dcus) {
+				$edit_userCustomFields[ $dcus['ProfileCustomID']] = $dcus['ProfileCustomTitle'];
+			}
+			//print_r($edit_userCustomFields);
+			foreach ($db_ProfileCustomFields as $data_CustomFields) {
+				
+				$checked = array_key_exists( $data_CustomFields['ProfileCustomID'], $edit_userCustomFields);
+				echo "<label>
+					<input name=\"inner-custom-fields[]\" value=\"".$data_CustomFields['ProfileCustomID']."\" ";
+					checked( $checked);
+					echo "type=\"checkbox\" class=\"inner-custom-fields-check\"  ProfileCustomID=\"".$data_CustomFields['ProfileCustomID']."\" dataTypeID=\"".$data['DataTypeID']."\" />
+					<span>" . $data_CustomFields['ProfileCustomTitle'] . "</span></label><br/>
+					";
+			}
+					
+			echo "<p class='submit'>
+					<input type='button' name='customfield-cancel-btn' value='Done' class='button customfield-cancel-btn' dataTypeID='".$data['DataTypeID']."'>
+				</p>
+				";
+			echo "</div>";
+			
+			echo "</td>\n";
+			echo "    </tr>\n";
 
-		//do_action('profile_type_sub_categories',$data["DataTypeID"],4);
+			//do_action('profile_type_sub_categories',$data["DataTypeID"],4);
 
 		}
 		if ($count < 1) {
