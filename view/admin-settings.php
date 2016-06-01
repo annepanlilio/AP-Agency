@@ -2142,10 +2142,8 @@ elseif ($ConfigID == 3) {
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
 		
-		
-		
-		// alter table for new columns added GenderID/ Custom Fields
-		if ($count >= 1) {
+		///probably issue of table column
+		if(!empty($wpdb->last_error)){
 			//repopulate
 			$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
 			if ( !$data_gender_exists ) {
