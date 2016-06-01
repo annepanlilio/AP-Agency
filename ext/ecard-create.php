@@ -381,6 +381,39 @@ function sendcastmail(){
 }
 
 
+
+add_action('wp_ajax_generate_admin_cusfieldscheckbox','generate_admin_cusfieldscheckbox');
+add_action('wp_ajax_nopriv_generate_admin_cusfieldscheckbox','generate_admin_cusfieldscheckbox');
+function generate_admin_cusfieldscheckbox(){
+	
+	global $wpdb, $_POST;
+	
+	echo $_POST['DataID'];
+	$profileID =  $_POST['profileID'];
+	$ProfileGender =  $_POST['gender'];
+	$profile_types =  $_POST['profile_types'];
+	
+	//gender
+	//profile_types
+	
+	//get current profile types // safe for cancelling edit profile
+	$userProfilesDB = $wpdb->get_var("SELECT ProfileType FROM ".table_agency_profile ." WHERE ProfileID=".$profileID);
+	$userGenderDB = $wpdb->get_var("SELECT ProfileGender FROM ".table_agency_profile ." WHERE ProfileID=".$profileID);
+	
+	//temporary change the profile type of user
+	$wpdb->update(table_agency_profile, array('ProfileType' => $profile_types , 'ProfileGender' => $ProfileGender),array( 'ProfileID' => $profileID));
+	echo $wpdb->last_error;
+	//give the new set ung custom fields
+	rb_custom_fields(0, $profileID, $ProfileGender, true);
+	
+	//retrieve the tempo change on profiles (profile type and gender)
+	$wpdb->update(table_agency_profile, array('ProfileType' => $userProfilesDB , 'ProfileGender' => $userGenderDB),array( 'ProfileID' => $profileID));
+	exit;
+}
+
+
+
+
 add_action('wp_ajax_save_data_custom_field','save_data_custom_field');
 add_action('wp_ajax_nopriv_save_data_custom_field','save_data_custom_field');
 function save_data_custom_field(){

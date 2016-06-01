@@ -1202,7 +1202,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
-					<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">';
+					<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 							<script type="text/javascript">
 								jQuery(document).ready(function(){
 									jQuery( ".datepicker-bd" ).datepicker();
@@ -1483,7 +1483,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$action = @$_GET["action"];
 							foreach ($results3 as $data3) {
 								if ($action == "add") {
-									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\"";
+									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"";
 									if(is_array($ProfileType)){
 											if (in_array($data3['DataTypeID'], $ProfileType)) {
 												echo " checked=\"checked\"";
@@ -1495,7 +1495,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}
 								}
 								if ($action == "editRecord") {
-									echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\"";
+									echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"userProfileType\"";
 									if(is_array($ProfileType)){
 											if (in_array($data3['DataTypeID'], $ProfileType)) {
 												echo " checked=\"checked\"";
@@ -1556,6 +1556,41 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							jQuery(document).ready(function(){
 									//hover stars
 									//rate profile
+									
+									
+									jQuery("#ProfileGender").on("change",function(){
+										jQuery(".tbody-table-customfields").empty();
+										
+										var checkedVals = $('.userProfileType:checkbox:checked').map(function() {
+											return this.value;
+										}).get();
+										var userProfiles = checkedVals.join(",");
+										
+										console.log('update the custom fields - ' + userProfiles);
+										
+										jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "generate_admin_cusfieldscheckbox",
+													'profileID': <?php echo $ProfileID ;?>,
+													'profile_types': userProfiles,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													
+													jQuery(".tbody-table-customfields").html(results);
+													//console.log(results);
+												}
+										});
+									});
+									
+									// User Profile checkbox selection update the custom fields
+									jQuery(".userProfileType").on("click",function(){
+										jQuery("#ProfileGender").change();
+										console.log('update profile type');
+									});
+									
 
 									jQuery(".rate_profile").click(function(){
 										// TODO PATH INVALID
@@ -1688,7 +1723,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<div class="main">
 <?php
 							// Public Information
-							echo "    <table class=\"rbform-table\">\n";
+							echo "    <table class=\"rbform-table table-customfields\">\n";
 							echo "    <tr valign=\"top\">\n";
 							echo "      <th scope=\"row\">" . __("Gender", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 							echo "      <td>";
@@ -1718,6 +1753,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							}
 							echo "        </td>\n";
 							echo "    </tr>\n";
+							echo "  <tbody class=\"tbody-table-customfields\">\n";
 							// Load custom fields , Public  = 0, ProfileCustomGender = true
 							// ProfileCustomView = 1 , Private
 							if (isset($_GET["ProfileGender"])) {
