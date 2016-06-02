@@ -1375,7 +1375,8 @@
 				if(!isset($ptype)){
 					$ptype = "";
 				}
-				$ptype = str_replace(' ','_',$ptype);
+				$ptype = str_replace('_',' ',$ptype);
+				//$ptype = str_replace(' ','_',$ptype);
 				if($types != "" || $types != NULL){
 					if(strpos($types,",") > -1){
 						$types = explode(",",$types);
@@ -1386,9 +1387,7 @@
 							if(strpos($ptype,$types) > -1) $permit_type=true;
 					}
 				}
-
-
-
+				
 				if($permit_type || $all_permit){
 					if($ProfileGenderShow ==true){
 						if($data3["ProfileCustomShowGender"] == $ProfileGender ){ // Depends on Current LoggedIn User's Gender
@@ -5721,7 +5720,7 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 				$space .="&nbsp;&nbsp;";
 			}
 			if ($action == "add") {
-									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\"";
+									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"";
 									if(is_array($ProfileType)){
 											if (in_array($child['DataTypeID'], $ProfileType)) {
 												echo " checked=\"checked\"";
@@ -5733,7 +5732,7 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 									}
 								}
 								if ($action == "editRecord") {
-									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\"";
+									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" class=\"userProfileType\"";
 									if(is_array($ProfileType)){
 											if (in_array($child['DataTypeID'], $ProfileType)) {
 												echo " checked=\"checked\"";
