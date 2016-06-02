@@ -810,7 +810,8 @@ elseif ($ConfigID == 1) {
 								"Tabs", // 14
 								"Stats and Availability with Primary Photo and Thumbnails",//15
 								"Profile View with voice demos", // 16
-								"Booking"); // 17
+								"Booking", // 17
+								"Primary Image + Scrolling Thumbnails + Video Player"); // 18
 
 		$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com', 'demo5.modelingagencysoftware.com', 'demo6.modelingagencysoftware.com');
 		$paid_layout = explode(",", $rb_agency_option_custom_layout);
