@@ -365,20 +365,22 @@ function remove_more_option_field(objNum){
 function populateStates(countryId,stateId){
 	var url=jQuery("#url").val();
 	var ajax_url = (typeof(rb_ajaxurl)!=="undefined")? rb_ajaxurl: ajaxurl;
-	console.log(ajax_url);
-	console.log(countryId);
-	console.log(stateId);
-	console.log(jQuery("#CastingCountry").val());
-	if(jQuery("#"+countryId).val()!=""){
+	
+	var selCountry = jQuery("#"+countryId).val();
+	
+	if( selCountry !=""){
 			jQuery("#"+stateId).show();
 			jQuery("#"+stateId).find("option:gt(0)").remove();
 			jQuery("#"+stateId).find("option:first").text(objectL10n.loading);
 		jQuery.ajax({
 			type:'POST',
 			dataType : "json",
-	        data:{action:"get_state_ajax",country:jQuery("#CastingCountry").val()},
+	        data:{
+				action:"get_state_ajax",
+				'country': selCountry
+			},
 			url: ajax_url,
-			success:function(data) {		
+			success:function(data) {
 				jQuery("<option/>").attr("value", "").text(objectL10n.select_state).appendTo(jQuery("#"+stateId));	
 	                        for (var i = 0; i < data.length; i++) {
 								jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#"+stateId));
@@ -395,7 +397,7 @@ function populateStates(countryId,stateId){
 		jQuery("#"+stateId).find("option:gt(0)").remove();
 			
 	}
- }	
+ }
 
  function populateStatesPublic(countryId,stateId){
 	var url=jQuery("#url").val();
