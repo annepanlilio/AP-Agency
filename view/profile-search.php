@@ -114,6 +114,9 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 					if(!empty($search_sql_query['custom'])){
 						unset($_SESSION['custom_search']);
 						$_SESSION['custom_search'] = $search_sql_query['custom'];
+					}else{
+						unset($_SESSION['custom_search']);
+						$_SESSION['custom_search'] = '';
 					}
 
 					$search_sql_query['custom'] = $_SESSION['custom_search'];
