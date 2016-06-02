@@ -1199,8 +1199,8 @@ class RBAgency_Profile {
 
 					// Zip
 					if (isset($zip) && !empty($zip)){
-						$filter .= " AND profile.ProfileLocationZip = '". ucfirst($zip) ."'";
-					}
+						$filter .= " AND profile.ProfileLocationZip  LIKE '". ucfirst($zip) ."%'";
+					} 
 
 					// Country
 					if (isset($country) && !empty($country)){
@@ -1714,6 +1714,7 @@ class RBAgency_Profile {
 								". $sql_where_array['custom'] ."
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1)
+							GROUP BY profile.ProfileID
 							";
 					} else {
 						$sql .= "FROM ". table_agency_profile ." profile
