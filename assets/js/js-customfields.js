@@ -396,6 +396,42 @@ function populateStates(countryId,stateId){
 			
 	}
  }	
+
+ function populateStatesPublic(countryId,stateId){
+	var url=jQuery("#url").val();
+	var ajax_url = (typeof(rb_ajaxurl)!=="undefined")? rb_ajaxurl: ajaxurl;
+	console.log(ajax_url);
+	console.log(countryId);
+	console.log(stateId);
+	console.log(jQuery("#CastingCountry").val());
+	if(jQuery("#country").val()!=""){
+			jQuery("#state").show();
+			jQuery("#state").find("option:gt(0)").remove();
+			jQuery("#state").find("option:first").text(objectL10n.loading);
+		jQuery.ajax({
+			type:'POST',
+			dataType : "json",
+	        data:{action:"get_state_ajax",country:jQuery("#country").val()},
+			url: ajax_url,
+			success:function(data) {		
+				jQuery("<option/>").attr("value", "").text(objectL10n.select_state).appendTo(jQuery("#state"));	
+	                        for (var i = 0; i < data.length; i++) {
+								jQuery("<option/>").attr("value", data[i].StateID).text(data[i].StateTitle).appendTo(jQuery("#state"));
+							}
+				jQuery("#state").find("option:eq(0)").remove();
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
+		
+	}else{
+		jQuery("#"+stateId).find("option:gt(0)").remove();
+			
+	}
+ }
+
 function saveCountry(){
 	var countryTitle=jQuery("#countryTitle").val();
 	var countryCode=jQuery("#countryCode").val();
@@ -532,4 +568,18 @@ jQuery(function(){
 								}
 							});
 						}*/
+
+});
+
+
+jQuery(document).ready(function(){
+	jQuery(".DataTypeIDClassCheckbox").click(function(){
+		var mychild = jQuery(this).attr('id');
+		if (jQuery(this).is(':checked')) {
+			jQuery(".CDataTypeID"+mychild).show(500);
+			jQuery(".CDataTypeID"+mychild).removeAttr('style');
+		}else{
+			jQuery(".CDataTypeID"+mychild).hide(500);
+		}						
+	});
 });

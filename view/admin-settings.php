@@ -1854,7 +1854,23 @@ elseif ($ConfigID == 3) {
 		$DataTypeTitle 	= $_POST['DataTypeTitle'];
 		$DataTypeTag 	= $_POST['DataTypeTag'];
 		$DataTypeOldTitle = $_POST["oldTitle"];
+		$DataTypeParentID = $_POST["DataTypeParentID"];
+		
+		$DataTypeGenderID = $_POST["DataTypeGenderID"];
+
+
+
+		//check for parentid column
+		$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+		$r = $wpdb->get_results($sql);
+		if(count($r) == 0){
+			//create column
+			$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeParentID varchar(20) default 0";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}
+
 			if (empty($DataTypeTag)) {$DataTypeTag = RBAgency_Common::format_stripchars($DataTypeTitle); }
+		
 		// Error checking
 		$error = "";
 		$have_error = false;
@@ -1871,8 +1887,9 @@ elseif ($ConfigID == 3) {
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 			} else {
 
+				$DataTypeLevel = rb_get_parent_category_level($DataTypeParentID);
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag) VALUES ('" . esc_sql($DataTypeTitle) . "','" . esc_sql($DataTypeTag) . "')";
+				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag,DataTypeParentID,DataTypeLevel) VALUES ('" . esc_sql($DataTypeTitle) . "','" . esc_sql($DataTypeTag) . "',".$DataTypeParentID.",".$DataTypeLevel.")";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -1885,12 +1902,20 @@ elseif ($ConfigID == 3) {
 			if($have_error){
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 			} else {
+
+				$DataTypeLevel = rb_get_parent_category_level($DataTypeParentID);
+
 				$update = "UPDATE " . table_agency_data_type . "
 							SET
 								DataTypeTitle='" . esc_sql($DataTypeTitle) . "',
-								DataTypeTag='" . esc_sql($DataTypeTag) . "'
+								DataTypeTag='" . esc_sql($DataTypeTag) . "',
+								DataTypeParentID = ".$DataTypeParentID.",
+								DataTypeLevel = ".$DataTypeLevel.",
+								DataTypeGenderID = ".$DataTypeGenderID."
 							WHERE DataTypeID='$DataTypeID'";
 				$updated = $wpdb->query($update);
+				
+				//echo $wpdb->last_error;
 
 				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".esc_sql($DataTypeOldTitle)."', ProfileCustomTypes) > 0;";
 				$result =  $wpdb->get_results($update_customfields,ARRAY_A);
@@ -1911,8 +1936,8 @@ elseif ($ConfigID == 3) {
 			foreach($_POST as $DataTypeID) {
 				if (is_numeric($DataTypeID)) {
 				// Verify Record
-				$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  \"". $DataTypeID ."\"";
-				$resultsDelete =$wpdb->get_results($wpdb->prepare($queryDelete), ARRAY_A);
+				$queryDelete = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." WHERE DataTypeID =  %d";
+				$resultsDelete =$wpdb->get_results($wpdb->prepare($queryDelete,$DataTypeID), ARRAY_A);
 
 				foreach ($resultsDelete as $dataDelete) {
 					// Remove Record
@@ -1960,6 +1985,7 @@ elseif ($ConfigID == 3) {
 				$DataTypeTitle	=stripslashes($data['DataTypeTitle']);
 				$DataTypeTitle = str_replace(' ', '_', $DataTypeTitle);
 				$DataTypeTag	=$data['DataTypeTag'];
+				$DataTypeGenderID	=$data['DataTypeGenderID'];
 			}
 
 			echo "<h3 class=\"title\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>\n";
@@ -1974,12 +2000,70 @@ elseif ($ConfigID == 3) {
 			echo "<h3>". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>\n";
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
   }
-	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
+	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']."&action=editRecord&DataTypeID=".$_GET['DataTypeID']."&ConfigID=4") ."\">\n";
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Title", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 	echo "        <td><input type=\"text\" id=\"DataTypeTitle\" name=\"DataTypeTitle\" value=\"". $DataTypeTitle ."\" /></td>\n";
+	echo "    </tr>\n";
+	echo "    <tr valign=\"top\">\n";
+	echo "        <th scope=\"row\">". __("Parent", RBAGENCY_TEXTDOMAIN) .":</th>\n";
+	echo "        <td>";
+
+	if(isset($_GET["action"]) && $_GET["action"] == "editRecord"){
+
+		$sql = "SELECT DataTypeID,DataTypeTitle FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = 0";
+		$r = $wpdb->get_results($sql);
+		echo "<select name=\"DataTypeParentID\">";
+		echo "<option value=\"0\">--</option> ";
+		foreach($r as $result){
+
+			$parentIDPost = isset($_POST['DataTypeParentID']) ? $_POST['DataTypeParentID'] : "";
+			$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = %d";
+			$parent = $wpdb->get_row($wpdb->prepare($sql,$_GET["DataTypeID"]));
+			$selected = $parent->DataTypeParentID == $result->DataTypeID ? "selected" : "";	
+			echo "<option value=".$result->DataTypeID." $selected>".$result->DataTypeTitle. "</option>";
+			// -- disable to nested child to be the parent
+			//do_action('rb_get_profile_type_childs_dropdown_display',$result->DataTypeID,4);
+		}	
+		echo "</select>";
+		
+		echo "</td>\n";
+		echo "    </tr>\n";
+		
+		echo "    <tr valign=\"top\">\n";
+		echo "        <th scope=\"row\">". __("Gender", RBAGENCY_TEXTDOMAIN) .":</th>\n";
+		echo "        <td>";
+			
+		//echo 'xxx'.$DataTypeGenderID;
+		$results_gender = $wpdb->get_results("SELECT * FROM ". table_agency_data_gender);
+		echo "<select name=\"DataTypeGenderID\">";
+		echo "<option value=\"0\">All</option> ";
+		foreach ($results_gender as $result) {
+			$selected = $DataTypeGenderID == $result->GenderID ? "selected" : "";	
+			echo "<option value=".$result->GenderID." $selected>".$result->GenderTitle. "</option>";
+		}
+		echo "</select>";
+		
+
+	}else{
+		$sql = "SELECT * FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = 0";
+		$r = $wpdb->get_results($sql);
+		echo "<select name=\"DataTypeParentID\">";
+		echo "<option value=\"0\">--</option> ";
+		foreach($r as $result){
+			echo "<option value=".$result->DataTypeID.">".$result->DataTypeTitle."</option>";
+		}
+		echo "</select>";
+	}
+	
+	
+	
+
+	
+	
+	echo "</td>\n";
 	echo "    </tr>\n";
 	if ( $DataTypeID > 0) {
 	echo "    <tr valign=\"top\">\n";
@@ -2038,6 +2122,8 @@ elseif ($ConfigID == 3) {
 		echo "        <th class=\"manage-column column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=DataTypeTitle&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 		echo "        <th class=\"column\" scope=\"col\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&sort=DataTypeTag&dir=". $sortDirection ."&ConfigID=". $ConfigID ."\">". __("Slug", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Gender", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Custom Fields", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</thead>\n";
 		echo "<tfoot>\n";
@@ -2045,25 +2131,152 @@ elseif ($ConfigID == 3) {
 		echo "        <th class=\" columnmanage-column cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Title", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "        <th class=\"column\" scope=\"col\">". __("Slug", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Gender", RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "        <th class=\"column\" scope=\"col\">". __("Custom Fields", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "    </tr>\n";
 		echo "</tfoot>\n";
 		echo "<tbody>\n";
-
-		$query = "SELECT * FROM ". table_agency_data_type ." ORDER BY $sort $dir";
+		
+		//repopulate - GENDER Controller
+		$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
+		if ( !$data_gender_exists ) {
+			$wpdb->query("ALTER TABLE ".table_agency_data_type." ADD DataTypeGenderID int(10) DEFAULT 0"); //zero means all gender
+		}
+		
+		//parent first
+		$query = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = 0 ORDER BY $sort $dir";
 		$results = $wpdb->get_results($query, ARRAY_A);
 		$count = $wpdb->num_rows;
+		
+		$_nestedData = array();
 		foreach ($results as $data) {
+			
+			// Add to main array
+			$_nestedData[] = $data;
+			
+			//get the Child if have
+			$queryChild = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = {$data['DataTypeID']} ORDER BY $sort $dir";
+			$resultsChild = $wpdb->get_results($queryChild, ARRAY_A);
+			if(!empty($resultsChild)){
+				foreach ($resultsChild as $dataChild) {
+					$_nestedData[] = $dataChild;
+					
+					//get the DEEP Child if have
+					/* $queryChildDeep = "SELECT * FROM ". table_agency_data_type ." WHERE DataTypeParentID = {$dataChild['DataTypeID']}";
+					$resultsChildDeep = $wpdb->get_results($queryChildDeep, ARRAY_A);
+					if(!empty($resultsChildDeep)){
+						foreach ($resultsChildDeep as $dataChildDeep) {
+							$dataChildDeep_En = $dataChildDeep;
+							$dataChildDeep_En['DataTypeTitle'] = ' - '.$dataChildDeep_En['DataTypeTitle'];
+							$_nestedData[] = $dataChildDeep_En;
+						}
+					} */
+					
+				}
+			}
+		}
+		
+		
+		$db_gender = array();
+		$results_gender = $wpdb->get_results("SELECT * FROM ". table_agency_data_gender, ARRAY_A);
+		foreach ($results_gender as $data_gender) {
+			$db_gender[$data_gender['GenderID']] = $data_gender['GenderTitle'];
+		}
+		$db_gender[0] = 'All';
+		
+		
+		$query_cus = "SELECT main.*,
+					a.ProfileCustomTypes
+					FROM ". table_agency_customfields ." main
+					LEFT JOIN ". table_agency_customfields_types ." a
+					ON a.ProfileCustomID = main.ProfileCustomID
+					ORDER BY ProfileCustomOrder ASC";
+		$db_CustomFields = array();
+		$db_ProfileCustomFields = $wpdb->get_results($query_cus,ARRAY_A);
+		foreach ($db_ProfileCustomFields as $data_CustomFields) {
+			$db_CustomFields[ $data_CustomFields['ProfileCustomID']] = $data_CustomFields['ProfileCustomTitle'];
+		}
+		
+		foreach ($_nestedData as $data) {
+			
+			
 			$DataTypeID	=$data['DataTypeID'];
-		echo "    <tr>\n";
-		echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $DataTypeID ."\" name=\"". $DataTypeID ."\" value=\"". $DataTypeID ."\" /></th>\n";
-		echo "        <td class=\"column\">". stripslashes($data['DataTypeTitle']) ."\n";
-		echo "          <div class=\"row-actions\">\n";
-		echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
-		echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
-		echo "          </div>\n";
-		echo "        </td>\n";
-		echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
-		echo "    </tr>\n";
+			echo "    <tr>\n";
+			echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $DataTypeID ."\" name=\"". $DataTypeID ."\" value=\"". $DataTypeID ."\" /></th>\n";
+			
+			if($data['DataTypeParentID'] > 0){
+				echo "        <td class=\"column\">-". stripslashes($data['DataTypeTitle']) ."\n";
+			}else{
+				echo "        <td class=\"column\">". stripslashes($data['DataTypeTitle']) ."\n";
+			}
+			echo "          <div class=\"row-actions\">\n";
+			echo "            <span class=\"edit\"><a href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=editRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\" title=\"". __("Edit this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>\n";
+			echo "            <span class=\"delete\"><a class=\"submitdelete\" href=\"". admin_url("admin.php?page=". $_GET['page']) ."&amp;action=deleteRecord&amp;DataTypeID=". $DataTypeID ."&amp;ConfigID=". $ConfigID ."\"  onclick=\"if ( confirm('". __("You are about to delete this ". LabelSingular, RBAGENCY_TEXTDOMAIN) . ".\'". __("Cancel", RBAGENCY_TEXTDOMAIN) . "\' ". __("to stop", RBAGENCY_TEXTDOMAIN) . ", \'". __("OK", RBAGENCY_TEXTDOMAIN) . "\' ". __("to delete", RBAGENCY_TEXTDOMAIN) . ".') ) {return true;}return false;\" title=\"". __("Delete this Record", RBAGENCY_TEXTDOMAIN) . "\">". __("Delete", RBAGENCY_TEXTDOMAIN) . "</a> </span>\n";
+			echo "          </div>\n";
+			echo "        </td>\n";
+			echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
+			echo "        <td class=\"column\"><span id='DataGender-{$DataTypeID}'>". $db_gender[$data['DataTypeGenderID']]. "</span>";
+			
+			echo " - 
+				<a href='#' class='data-gender-edit ' genderID='".$data['DataTypeID']."'>Edit</a>
+				<div class='data-gender-edit-div hidden' id='data-gender-edit-div-".$data['DataTypeID']."'>";
+				echo "<select name='DataTypeGenderID' id=\"DataTypeGenderID-".$data['DataTypeID']."\" onchange='saveChangesDataGender(".$data['DataTypeID'].");'>";
+				echo "<option value=\"0\">All</option> ";
+				foreach ($results_gender as $result) {
+					$selected = $data['DataTypeGenderID'] == $result['GenderID'] ? "selected" : "";	
+					echo "<option value=\"".$result['GenderID']."\" $selected>".$result['GenderTitle']. "</option>";
+				}
+				echo "</select>";
+			echo "</div>";
+			
+			
+			echo "</td>\n";
+			echo "        <td class=\"column\">";
+			
+			
+			
+			echo "<a href='#' class='data-customfields-edit' dataTypeID='".$data['DataTypeID']."'>Click here to setup</a>
+				<div class='data-customfields-edit-div hidden' id='data-dataTypeID-edit-div-".$data['DataTypeID']."'>";
+				
+				echo "<i>Note: Changes immediately take effect</i><br/><br/>";
+				
+				
+			$query_cus = "SELECT main.*,
+						a.ProfileCustomTypes
+						FROM ". table_agency_customfields ." main
+						LEFT JOIN ". table_agency_customfields_types ." a
+						ON a.ProfileCustomID = main.ProfileCustomID
+						WHERE FIND_IN_SET('".$data['DataTypeTitle']."',ProfileCustomTypes)
+						";
+						
+			$results_cus = $wpdb->get_results($query_cus,ARRAY_A);
+			$edit_userCustomFields = array();
+			foreach ($results_cus as $dcus) {
+				$edit_userCustomFields[ $dcus['ProfileCustomID']] = $dcus['ProfileCustomTitle'];
+			}
+			//print_r($edit_userCustomFields);
+			foreach ($db_ProfileCustomFields as $data_CustomFields) {
+				
+				$checked = array_key_exists( $data_CustomFields['ProfileCustomID'], $edit_userCustomFields);
+				echo "<label>
+					<input name=\"inner-custom-fields[]\" value=\"".$data_CustomFields['ProfileCustomID']."\" ";
+					checked( $checked);
+					echo "type=\"checkbox\" class=\"inner-custom-fields-check\"  ProfileCustomID=\"".$data_CustomFields['ProfileCustomID']."\" dataTypeID=\"".$data['DataTypeID']."\" />
+					<span>" . $data_CustomFields['ProfileCustomTitle'] . "</span></label><br/>
+					";
+			}
+					
+			echo "<p class='submit'>
+					<input type='button' name='customfield-cancel-btn' value='Done' class='button customfield-cancel-btn' dataTypeID='".$data['DataTypeID']."'>
+				</p>
+				";
+			echo "</div>";
+			
+			echo "</td>\n";
+			echo "    </tr>\n";
+
+			//do_action('profile_type_sub_categories',$data["DataTypeID"],4);
+
 		}
 		if ($count < 1) {
 		echo "    <tr>\n";
@@ -2073,6 +2286,80 @@ elseif ($ConfigID == 3) {
 		}
 		echo "</tbody>\n";
 		echo "</table>\n";
+		
+		
+		echo '
+			<script>
+				jQuery( ".data-customfields-edit" ).on("click",function() {
+					var dataTypeID = jQuery(this).attr("dataTypeID");
+					jQuery("#data-dataTypeID-edit-div-"+dataTypeID).toggle();
+					return false;
+				});
+				
+				jQuery( ".data-gender-edit" ).on("click",function() {
+					var genderID = jQuery(this).attr("genderID");
+					jQuery("#data-gender-edit-div-"+genderID).toggle();
+					return false;
+				});
+				
+				jQuery( ".customfield-cancel-btn" ).on("click",function() {
+					var dataTypeID = jQuery(this).attr("dataTypeID");
+					jQuery("#data-dataTypeID-edit-div-"+dataTypeID).hide();
+					return false;
+				});
+				
+				jQuery( ".inner-custom-fields-check" ).on("click",function() {
+					var customFieldID = jQuery(this).attr("ProfileCustomID");
+					var dataTypeID = jQuery(this).attr("dataTypeID");
+
+					if( jQuery(this).attr("checked") ) {
+						console.log("checked");
+						var inChangeInfo = 1;
+					}else{
+						console.log("not checked");
+						var inChangeInfo = 0;
+					}
+					
+					jQuery.post("'.admin_url("admin-ajax.php").'", 
+						{
+						DataID: dataTypeID, 
+						customFieldID: customFieldID,
+						inChange: inChangeInfo,
+						action:"save_data_custom_field"
+						})
+					.done(function(data) {
+						console.log(data);
+						//jQuery("#DataGender-"+dataTypeID).text(userGenderText);
+						//jQuery("#data-gender-edit-div-"+dataTypeID).toggle();
+					});
+					
+					//return false;
+				});
+				
+				
+				
+				
+				function saveChangesDataGender(dataTypeID){
+				var userGenderID = jQuery( "#DataTypeGenderID-"+dataTypeID).val();
+				var userGenderText = jQuery( "#DataTypeGenderID-"+dataTypeID+" option:selected").text();
+						
+					jQuery.post("'.admin_url("admin-ajax.php").'", 
+						{
+						DataID: dataTypeID, 
+						GenderID: userGenderID,
+						action:"save_data_type_gender"
+						})
+					.done(function(data) {
+						console.log(data);
+						jQuery("#DataGender-"+dataTypeID).text(userGenderText);
+						jQuery("#data-gender-edit-div-"+dataTypeID).toggle();
+					});
+					
+				}
+			</script>
+		';
+		
+		
 		echo "<p class=\"submit\">\n";
 		echo "    <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 		echo "    <input type=\"hidden\" name=\"action\" value=\"deleteRecord\" />\n";
@@ -2520,9 +2807,9 @@ echo "<div id=\"custom-fields\">";
 				if(!empty($_POST["option"]) && $_POST["option"] !=""  && !empty($val)){
 					$pos++;
 					if($pos!= count($_POST["option"])){
-						$ProfileCustomOptions .= stripslashes($val)."|";
+						 $ProfileCustomOptions .= stripslashes($val)."|";
 					} else {
-						$ProfileCustomOptions .= stripslashes($val);
+						 $ProfileCustomOptions .= stripslashes($val);
 					}
 				}
 			}
@@ -2565,7 +2852,7 @@ echo "<div id=\"custom-fields\">";
 		}*/
 		// Error checking
 
-		$have_error = false;
+		//$have_error = false; alw
 		if(trim($ProfileCustomTitle) == ""){
 			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
@@ -2580,22 +2867,62 @@ echo "<div id=\"custom-fields\">";
 			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingRegister","INT(10)");
 			rb_agency_addColumn( table_agency_customfields,"ProfileCustomShowCastingManager","INT(10)");
 			rb_agency_addColumn( table_agency_customfields,"ProfileCustomNotifyAdmin","INT(10)");
-
+				
 
 			echo 'success patch'; */
+			/* alw custom Duplicate option name added */
+			$ProfileCustomOptions2_new = array();
+			foreach($_POST["option"] as $key => $val){
+				if(!empty($_POST["option"]) && $_POST["option"] !=""  && !empty($val)){
+					$pos++;
+					if($pos!= count($_POST["option"])){
+						 array_push($ProfileCustomOptions2_new,stripslashes($val));
+					} else {
+						 array_push($ProfileCustomOptions2_new,stripslashes($val));
+					}
+				}
+			}
+			function has_dupes($array){
+				$dupe_array = array();
+				foreach($array as $val){
+					if(++$dupe_array[$val] > 1){
+					return true;
+					}
+				}
+				return false;
+			}
+			if(!has_dupes($ProfileCustomOptions2_new)){
+				
+			}else{
+				$error .= "<b><i>". __(LabelSingular ." Duplicate option name not allowed", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
+				$have_error = true;
+				$error_msg= 'Duplicate option';
+			}
+			
 		$action = $_POST['action'];
 		switch($action) {
 
 		// Add
 		case 'addRecord':
 			if($have_error){
+				/* alw custom Duplicate option error_msg added */
+				if($error_msg){ 
+					
+					echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
+				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>	";
+				echo " <div class=\"postbox\">";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
+				echo " <div class=\"inside\"> ";
+				
+				}else{
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 				echo "<h3 style=\"width:350px;\">". sprintf(__("Create New %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."&nbsp;&nbsp;&nbsp;&nbsp;<a class='button-secondary' href='?page=rb_agency_settings&ConfigID=5&restore=RestorePreset' onclick=\"if ( confirm('You are the custom fields. \'Cancel\' to stop, \'OK\' to delete.') ) {return true;}return false;\">Restore Preset Custom Fields</a></h3>	";
 				echo " <div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >".sprintf(__("Fill in the form below to add a new record %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN)." *</strong></span></h3>";
 				echo " <div class=\"inside\"> ";
-			} else {
-
+				}
+			}else {
+					
 				// Create Record
 				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager,ProfileCustomDisplayExDetails) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."','". esc_sql($ProfileCustomDisplayExDetails)."')";
 				$results = $wpdb->query($insert);
@@ -2668,12 +2995,22 @@ echo "<div id=\"custom-fields\">";
 
 		// Manage
 		case 'editRecord':
-			if($have_error){
+		
+			if($have_error){ 
+			/* alw custom Duplicate option error_msg added */
+				if($error_msg){ 
+					echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
+					echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>
+						<div class=\"postbox\">";
+				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
+				echo" <div class=\"inside\"> ";
+				}else{
 				echo ("<div id=\"message\" class=\"error\"><p>". sprintf(__("Error creating %s, please ensure you have filled out all required fields", RBAGENCY_TEXTDOMAIN), LabelPlural) .".</p><p>".$error."</p></div>");
 				echo "<h3 style=\"width:350px;\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>
 						<div class=\"postbox\">";
 				echo"<h3 class=\"hndle\" style=\"margin:10px;font-size:11px;\"><span >". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></span></h3>";
 				echo" <div class=\"inside\"> ";
+				}
 			} else {
 
 				$update = "UPDATE " . table_agency_customfields . "
@@ -2988,7 +3325,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							 * profile types here
 							 */
 
-							$get_types = "SELECT * FROM ". table_agency_data_type;
+							$get_types = "SELECT * FROM ". table_agency_data_type." WHERE DataTypeParentID = 0";
 
 							$result = $wpdb->get_results($get_types,ARRAY_A);
 
@@ -3001,6 +3338,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 												trim($typ['DataTypeTitle'])
 												.'&nbsp;<br/>';
 								echo "</label></div>";
+
+								do_action('rb_get_profile_type_childs_checkbox_display',$typ["DataTypeID"],4);
 							}
 						echo		"</div>
 						</div>
@@ -3135,7 +3474,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													$rTypes = $x->ProfileCustomTypes;
 											}
 
-											$get_types = "SELECT * FROM ". table_agency_data_type;
+											$get_types = "SELECT * FROM ". table_agency_data_type." WHERE DataTypeParentID = 0";
 
 											$result = $wpdb->get_results($get_types,ARRAY_A);
 
@@ -3156,6 +3495,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														$checked . '  />&nbsp;'.
 														trim($typ['DataTypeTitle'])
 														.'&nbsp;<br/>';
+
+												do_action('rb_get_profile_type_childs_checkbox_edit_display',$typ["DataTypeID"],4,$t);
 											}
 
 											echo "	</div>
