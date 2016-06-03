@@ -1134,15 +1134,16 @@ class RBAgency_Profile {
 					}
 
 					// Type
-					//if (isset($profiletype) && !empty($profiletype)){
-					if(!empty($_POST['profiletype'])){
-						foreach($_POST['profiletype'] as $k=>$v){
-							$filter .= " AND FIND_IN_SET('".$_POST['profiletype'][$k]."', profile.ProfileType) ";
-						}						
+					if (isset($profiletype) && !empty($profiletype)){
+						if(!empty($_POST['profiletype'])){ //if search form trigger
+							foreach($_POST['profiletype'] as $k=>$v){
+								$filter .= " AND FIND_IN_SET('".$_POST['profiletype'][$k]."', profile.ProfileType) ";
+							}
+						}else{//if shortcode probably..
+							$filter .= " AND FIND_IN_SET('".$profiletype."', profile.ProfileType) ";
+						}
 					}
 						
-						
-					//}
 
 					// Gender
 					if (isset($gender) && !empty($gender)){
