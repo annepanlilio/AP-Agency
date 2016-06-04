@@ -158,6 +158,12 @@ class RBAgency_App {
 				wp_register_script( 'rba-initmagnific-popup-js', RBAGENCY_PLUGIN_URL .'assets/js/initmagnific.js' );
 				wp_enqueue_script( 'rba-initmagnific-popup-js' );				
 			}
+
+			wp_register_script( 'rb-isotope', RBAGENCY_PLUGIN_URL .'assets/js/isotope.pkgd.min.js' );
+			wp_enqueue_script( 'rb-isotope' );
+			wp_register_script( 'rb-isotope-init', RBAGENCY_PLUGIN_URL .'assets/js/jquery.isotope.init.js' );
+			wp_enqueue_script( 'rb-isotope-init' );
+
 		}
 
 
