@@ -2452,7 +2452,7 @@ class RBAgency_Profile {
 								var profID = $(this).attr("profile_id");
 								var panel_target_ID = $(this).attr("href");
 
-								$(".info-panel[id!="+panel_target_ID+"]").slideUp();
+								// $(".info-panel[id!="+panel_target_ID+"]").slideUp();
 
 								$.post( "'.admin_url('admin-ajax.php').'", { id: profID, action: "get_profileInfo" })
 									.done(function( data ) {
