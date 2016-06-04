@@ -2969,17 +2969,19 @@ class RBAgency_Profile {
 					foreach($profiType as $val){
 						$_proftypeClass[] = 'profile_type_'. $val;
 					}
-				}else{
+				} else {
 					$_proftypeClass[] = 'profile_type_'. $profiType;
 				}
+				
+				$profile_gender = RBAgency_Common::profile_meta_gendertitle($dataList["ProfileGender"]); // Get Gender label
+				$_proftypeClass[] = strtolower($profile_gender); // Add gender title to classes
+
 				$profile_list_class .= ' '. implode(' ', array_unique($_proftypeClass));
 
 
-
-
-
-				$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class." ".$PGENDER."\" >\n";
+				
+				// $PGENDER = $dataList["ProfileGender"] == 11 ? "Male" : "Female";
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class."\" >\n";
 				$displayHTML .= "	<div class=\"profile-box\" >\n";
 
 				if(!$plain){
