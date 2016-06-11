@@ -5688,9 +5688,10 @@ function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
 				$dash .= "-";
 				$space .="&nbsp;&nbsp;";
 			}
-			$childTitle = stripslashes($child['DataTypeTitle']);
+			$_childClean = trim(str_replace(' ','_',$child['DataTypeTitle']));
 
-			$sql = "SELECT * FROM ".$wpdb->prefix."agency_customfields_types WHERE FIND_IN_SET('".ucfirst($child["DataTypeTitle"])."',ProfileCustomTypes) > 0";
+			$sql = "SELECT * FROM ".$wpdb->prefix."agency_customfields_types WHERE FIND_IN_SET('". $_childClean."',ProfileCustomTypes) > 0 "
+				. " AND ProfileCustomID = $ConfigID ";
 			
 			$r = $wpdb->get_results($sql);
 			$checked = $wpdb->num_rows > 0 ? 'checked="checked"' : "";

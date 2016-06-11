@@ -3077,6 +3077,17 @@ echo "<div id=\"custom-fields\">";
 
 				if($Types != "" or !empty($Types)){
 
+				
+					$_alteroption = get_option('table_agency_customfields_types' , false);
+					//var_dump($_alteroption);
+					if($_alteroption == false and strlen( $Types) > 250){
+						update_option('table_agency_customfields_types' , true);
+						$alter_column = "ALTER TABLE " . table_agency_customfields_types . " MODIFY ProfileCustomTypes TEXT";
+						$_alter_table = $wpdb->query($alter_column);
+						echo "Table Altered Update: " . $wpdb->last_error;
+					}
+
+					
 							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types .
 							" WHERE ProfileCustomID = " . $ProfileCustomID;
 							$check_results = $wpdb->get_results($check_sql,ARRAY_A);
@@ -3333,7 +3344,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							foreach( $result as $typ){
 								echo "<div><label>";
 											$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));
-											$checked = 'checked="checked"';
+											//$checked = 'checked="checked"'; default is unchecked
 											echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
 												$checked . '  />&nbsp;'.
 												trim($typ['DataTypeTitle'])
@@ -3497,7 +3508,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														trim($typ['DataTypeTitle'])
 														.'&nbsp;<br/>';
 
-												do_action('rb_get_profile_type_childs_checkbox_edit_display',$typ["DataTypeID"],4,$t);
+												do_action('rb_get_profile_type_childs_checkbox_edit_display',$typ["DataTypeID"],$ProfileCustomID,$t);
 											}
 
 											echo "	</div>
