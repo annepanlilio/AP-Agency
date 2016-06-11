@@ -181,9 +181,10 @@ echo "					<div id=\"videos\" class=\"rbcol-12 rbcolumn\">\n";
 							foreach($resultsMedia as $dataMedia ){
 								$media_url = $dataMedia['ProfileMediaURL'];
 								$embed_string = substr($media_url, strpos($media_url, "=") + 1);
-								echo "<div class=\"item video slate\">";
+								echo "<div class=\"item video slate youtube-vid vid_co\" ytid='".trim($embed_string) ."' style=\" background-image: url(http://img.youtube.com/vi/".trim($embed_string) ."/0.jpg);\">";
 								if($dataMedia['ProfileVideoType'] == "youtube" || $dataMedia['ProfileVideoType'] == ""){
-									echo "<iframe style='width:350px; height:200px;'  src='//www.youtube.com/embed/".$embed_string."?showinfo=0' frameborder='0' allowfullscreen></iframe>";
+									//echo "<iframe style='width:350px; height:200px;'  src='//www.youtube.com/embed/".$embed_string."?showinfo=0' frameborder='0' allowfullscreen></iframe>";
+									echo '<div class="btn-play" ><i class="fa fa-youtube-play"></i></div>';
 								} elseif($dataMedia['ProfileVideoType'] == "vimeo") {
 									echo '<iframe style="width:350px; height:200px;" src="//player.vimeo.com/video/'.$embed_string.'?portrait=0&amp;badge=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 								}
@@ -195,4 +196,39 @@ echo "					</div>\n";// #videos
 echo " 		</div>\n";// Close Profile Layout
 echo "	</div>\n";// Close Profile
 echo "	<div class=\"cb\"></div>\n"; // Clear All
+
+
+echo '
+
+<style>
+.btn-play{background-color:#fff;width: 30px;height:25px;display:block;cursor:pointer;margin:80px auto;padding:0;display:block;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+.youtube-vid{cursor:pointer}
+.btn-play .fa{color:#000;font-size:3em;margin: auto auto;display:inline-block; margin-left:-5px; margin-top:-10px;}
+.youtube-vid:hover .fa, .btn-play:hover .fa{color:#d30303;}
+
+.vid_co{padding:0!important;background-image:none;height:200px;width: 250px;background-color:000; background-size:cover;background-repeat:no-repeat;}
+.vid_co:nth-child(2){margin: 0 15px;}
+</style>
+<script>
+	jQuery(document).ready(function(){
+		jQuery(".youtube-vid").on( "click", function () {
+			var ytID = jQuery(this).attr("ytid");
+			//jQuery("#yt_"+ytID).css("display","block");
+			var youtube_watch = \'<iframe style="width:100%; height:200px;" src="//www.youtube.com/embed/\'+ytID+\'?autoplay=1&controls=0&rel=0&showinfo=1" frameborder="0" allowfullscreen></iframe>\';
+			
+			//console.log(youtube_watch);
+			jQuery(this).html(youtube_watch);
+			jQuery(this).removeClass("youtube-vid");
+			return false;
+		});
+	});
+</script>
+
+
+';
+
 ?>
