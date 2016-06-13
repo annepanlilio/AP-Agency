@@ -262,14 +262,23 @@ echo " 							<div class=\"tab-panel\">\n";
 									if ($countMedia > 0) {
 											foreach($resultsMedia as $dataMedia ){
 											$profileVideoEmbed = $dataMedia['ProfileMediaURL'];
-											$profileVideoTitle = explode("<br>",$dataMedia['ProfileMediaTitle']);
+											//$profileVideoTitle = explode("<br>",$dataMedia['ProfileMediaTitle']);
+
 											//echo"<div class=\"video slate rbcol-4 rbcolumn\"><div class=\"video-container\"><object width=\"350\" height=\"220\"><param name=\"movie\" value=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US&rel=0&showsearch=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowscriptaccess\" value=\"always\"></param><embed src=\"". $profileVideoEmbed ."?fs=1&amp;hl=en_US\" type=\"application/x-shockwave-flash\" allowscriptaccess=\"always\" allowfullscreen=\"true\" width=\"350\" height=\"220\"></embed></object></div></div>\n";
 											echo"<div class=\"video monologue rbcol-2 rbcolumn\">\n";
 											echo "<div class=\"video-container\">\n";
 											echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
 											echo rb_agency_get_videothumbnail($profileVideoEmbed );
 											// echo "<span class=\"videotitle\">".ucfirst($dataMedia['ProfileVideoType'])." Video</span>";
-											echo "<br><span class=\"videotitle\">".__($profileVideoTitle[0], RBAGENCY_TEXTDOMAIN)."</span>";
+											
+											if(empty($dataMedia['ProfileMediaTitle']) or $dataMedia['ProfileMediaTitle'] != '<br>'){
+												$_videoTitle = $dataMedia['ProfileMediaTitle'];
+											}else{
+												$_videoTitle = __(ucfirst($dataMedia['ProfileVideoType']) . ' Video', RBAGENCY_TEXTDOMAIN);
+											}
+											echo "<span class=\"videotitle\">". $_videoTitle ."</span>";
+												
+											
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
@@ -290,7 +299,17 @@ echo " 							<div class=\"tab-panel\">\n";
 											echo "<div class=\"video-container\">\n";
 											echo "<a href=\"".$profileVideoEmbed."\"  target=\"_blank\" rel=\"nofollow\">\n";
 											echo rb_agency_get_videothumbnail($profileVideoEmbed );
-											echo "<br><span class=\"videotitle\">".__($profileVideoTitle[0], RBAGENCY_TEXTDOMAIN)."</span>";
+
+											
+											if(empty($dataMedia['ProfileMediaTitle']) or $dataMedia['ProfileMediaTitle'] != '<br>'){
+												$_videoTitle = $dataMedia['ProfileMediaTitle'];
+											}else{
+												$_videoTitle = __(ucfirst($dataMedia['ProfileVideoType']) . ' Video', RBAGENCY_TEXTDOMAIN);
+											}
+											echo "<span class=\"videotitle\">". $_videoTitle ."</span>";
+												
+											
+											
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
@@ -310,7 +329,15 @@ echo " 							<div class=\"tab-panel\">\n";
 											echo "<div class=\"video-container\">\n";
 											echo "<a href=\"".$profileVideoEmbed."\" target=\"_blank\" rel=\"nofollow\">\n";
 											echo rb_agency_get_videothumbnail($profileVideoEmbed );
-											echo "<br><span class=\"videotitle\">".__($profileVideoTitle[0], RBAGENCY_TEXTDOMAIN)."</span>";
+											
+											if(empty($dataMedia['ProfileMediaTitle']) or $dataMedia['ProfileMediaTitle'] != '<br>'){
+												$_videoTitle = $dataMedia['ProfileMediaTitle'];
+											}else{
+												$_videoTitle = __(ucfirst($dataMedia['ProfileVideoType']) . ' Video', RBAGENCY_TEXTDOMAIN);
+											}
+											echo "<span class=\"videotitle\">". $_videoTitle ."</span>";
+												
+											
 											echo "</a>\n";
 											echo "</div>\n";
 											echo "</div>\n";
