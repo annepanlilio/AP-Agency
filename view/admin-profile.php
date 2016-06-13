@@ -2634,11 +2634,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										<th>\n
 										Type:\n
 											<select name=\"profileMediaV". $k ."Type\">\n
-												<option selected>" . __("Video Slate", RBAGENCY_TEXTDOMAIN) . "</option>\n
-												<option>" . __("Video Monologue", RBAGENCY_TEXTDOMAIN) . "</option>\n
-												<option>" . __("Demo Reel", RBAGENCY_TEXTDOMAIN) . "</option>\n
-												<option>" . __("SoundCloud", RBAGENCY_TEXTDOMAIN) . "</option>\n
-												<option>" . __("IMDB", RBAGENCY_TEXTDOMAIN) . "</option>\n
+												<option value='Video Slate' selected>" . __("Video Slate", RBAGENCY_TEXTDOMAIN) . "</option>\n
+												<option value='Video Monologue'>" . __("Video Monologue", RBAGENCY_TEXTDOMAIN) . "</option>\n
+												<option value='Demo Reel'>" . __("Demo Reel", RBAGENCY_TEXTDOMAIN) . "</option>\n
+												<option value='SoundCloud'>" . __("SoundCloud", RBAGENCY_TEXTDOMAIN) . "</option>\n
+												<option value='IMDB'>" . __("IMDB", RBAGENCY_TEXTDOMAIN) . "</option>\n
 											</select>\n
 										</th>\n
 										<td>\n
