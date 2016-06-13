@@ -274,7 +274,7 @@ echo " 							<div class=\"tab-panel\">\n";
 											if(empty($dataMedia['ProfileMediaTitle']) or $dataMedia['ProfileMediaTitle'] != '<br>'){
 												$_videoTitle = $dataMedia['ProfileMediaTitle'];
 											}else{
-												$_videoTitle = __(ucfirst($dataMedia['ProfileVideoType']) . ' Video', RBAGENCY_TEXTDOMAIN);
+												$_videoTitle = __(ucfirst($dataMedia['ProfileMediaType']), RBAGENCY_TEXTDOMAIN);
 											}
 											echo "<span class=\"videotitle\">". $_videoTitle ."</span>";
 												
@@ -304,7 +304,7 @@ echo " 							<div class=\"tab-panel\">\n";
 											if(empty($dataMedia['ProfileMediaTitle']) or $dataMedia['ProfileMediaTitle'] != '<br>'){
 												$_videoTitle = $dataMedia['ProfileMediaTitle'];
 											}else{
-												$_videoTitle = __(ucfirst($dataMedia['ProfileVideoType']) . ' Video', RBAGENCY_TEXTDOMAIN);
+												$_videoTitle = __(ucfirst($dataMedia['ProfileMediaType']), RBAGENCY_TEXTDOMAIN);
 											}
 											echo "<span class=\"videotitle\">". $_videoTitle ."</span>";
 												
@@ -333,7 +333,7 @@ echo " 							<div class=\"tab-panel\">\n";
 											if(empty($dataMedia['ProfileMediaTitle']) or $dataMedia['ProfileMediaTitle'] != '<br>'){
 												$_videoTitle = $dataMedia['ProfileMediaTitle'];
 											}else{
-												$_videoTitle = __(ucfirst($dataMedia['ProfileVideoType']) . ' Video', RBAGENCY_TEXTDOMAIN);
+												$_videoTitle = __(ucfirst($dataMedia['ProfileMediaType']) , RBAGENCY_TEXTDOMAIN);
 											}
 											echo "<span class=\"videotitle\">". $_videoTitle ."</span>";
 												
