@@ -181,12 +181,18 @@ echo "					<div id=\"videos\" class=\"rbcol-12 rbcolumn\">\n";
 							foreach($resultsMedia as $dataMedia ){
 								$media_url = $dataMedia['ProfileMediaURL'];
 								$embed_string = substr($media_url, strpos($media_url, "=") + 1);
-								echo "<div class=\"item video slate youtube-vid vid_co\" ytid='".trim($embed_string) ."' style=\" background-image: url(http://img.youtube.com/vi/".trim($embed_string) ."/0.jpg);\">";
+								echo "<div class=\"item video slate\">";
 								if($dataMedia['ProfileVideoType'] == "youtube" || $dataMedia['ProfileVideoType'] == ""){
-									//echo "<iframe style='width:350px; height:200px;'  src='//www.youtube.com/embed/".$embed_string."?showinfo=0' frameborder='0' allowfullscreen></iframe>";
-									echo '<div class="btn-play" ><i class="fa fa-youtube-play"></i></div>';
+									
+									echo "<iframe style='width:350px; height:200px;'  src='//www.youtube.com/embed/".trim($embed_string)."?&autoplay=0&controls=1&rel=0&modestbranding=1&showinfo=0&autohide=1' frameborder='0' allowfullscreen></iframe>";
+									/* echo "<div class=\"item video slate ".$dataMedia['ProfileVideoType']." youtube-vid vid_co\" ytid='".trim($embed_string) ."' style=\"height:200px;width: 250px;background-color:000; background-image: url(http://img.youtube.com/vi/".trim($embed_string) ."/0.jpg); background-size:cover;background-repeat:no-repeat;\">";
+									
+									echo '<div class="btn-play" ><i class="fa fa-youtube-play"></i></div>'; */
 								} elseif($dataMedia['ProfileVideoType'] == "vimeo") {
-									echo '<iframe style="width:350px; height:200px;" src="//player.vimeo.com/video/'.$embed_string.'?portrait=0&amp;badge=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+									
+									$embed_string = (int) substr(parse_url($media_url, PHP_URL_PATH), 1);
+
+									echo '<iframe style="width:350px; height:200px;" src="//player.vimeo.com/video/'.$embed_string.'?portrait=0&amp;badge=0&amp;showinfo=0&amp;controls=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 								}
 								echo "</div>\n";
 							}
