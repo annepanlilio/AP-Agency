@@ -533,7 +533,7 @@ jQuery(function(){
 						
 						from.datepicker(
 							{
-								numberOfMonths: 2, 
+								numberOfMonths: 1, 
 								dateFormat: "yy-mm-dd",
 								onSelect: function(selected){
 									 to.datepicker("option","minDate", selected);
@@ -541,7 +541,7 @@ jQuery(function(){
 							}).val(from.val());
 						to.datepicker(
 							{
-								numberOfMonths: 2, 
+								numberOfMonths: 1, 
 								dateFormat: "yy-mm-dd",
 								onSelect: function(selected){
 									 from.datepicker("option","maxDate", selected);
