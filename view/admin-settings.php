@@ -2873,6 +2873,7 @@ echo "<div id=\"custom-fields\">";
 			echo 'success patch'; */
 			/* alw custom Duplicate option name added */
 			$ProfileCustomOptions2_new = array();
+			if(isset($_POST["option"])){
 			foreach($_POST["option"] as $key => $val){
 				if(!empty($_POST["option"]) && $_POST["option"] !=""  && !empty($val)){
 					$pos++;
@@ -2882,6 +2883,7 @@ echo "<div id=\"custom-fields\">";
 						 array_push($ProfileCustomOptions2_new,stripslashes($val));
 					}
 				}
+			}
 			}
 			function has_dupes($array){
 				$dupe_array = array();
