@@ -2715,7 +2715,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 																		}
 
-																		if(checkIfDate($key[$key]) == true){
+																		if(isset($key[$key]) and checkIfDate($key[$key]) == true){
 																			$vv[$key] = !empty($vv[$key]) ? date("Y-m-d",strtotime($vv[$key])):date("Y-m-d");
 																		}
 
