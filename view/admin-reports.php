@@ -1398,7 +1398,7 @@ elseif ($ConfigID == 80) {
 		$csv_format = fopen($target_path,'w');
 		fputcsv($csv_format, $fields_array[0]);
 		fclose($csv_format);
-		chmod($target_path, 0777);
+		@chmod($target_path, 0777);
 
 	}
 
