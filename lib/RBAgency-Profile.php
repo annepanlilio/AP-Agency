@@ -1457,7 +1457,20 @@ class RBAgency_Profile {
 										// Date
 										list($from, $to) = explode(",", $val);
 
-										$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
+										//$filter2 .= "$open_st ProfileCustomDateValue BETWEEN '".$from."' AND '".$to."' $close_st";
+										
+										$filter2 .= "$open_st
+											((
+												DATE(STR_TO_DATE(`ProfileCustomValue`, '%Y-%m-%d')) IS NOT NULL
+												AND `ProfileCustomValue` NOT REGEXP '^[0-9\.]+$' AND
+												(DATE(`ProfileCustomValue`) BETWEEN '".$from."' AND '".$to."')
+											)OR(
+												`ProfileCustomDateValue` IS NOT NULL
+												AND (`ProfileCustomDateValue` BETWEEN '".$from."' AND '".$to."')
+											))
+											$close_st";
+										
+										
 										$_SESSION[$key] = $val;
 
 									}
