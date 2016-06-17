@@ -1497,7 +1497,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"";
 									if(is_array($ProfileType)){
 											if (in_array($data3['DataTypeID'], $ProfileType)) {
-												echo " checked=\"checked\"";
+												//echo " checked=\"checked\""; disabled preselect on ADD
 											}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
 									} else {
 											if ($data3['DataTypeID'] == $ProfileType) {
