@@ -22,7 +22,9 @@
 */
 //jenner hook 
 	//	/www/wp-content/plugins/rb-agency/ext
-$_path = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+
+$_realPath = realpath(dirname(__FILE__));
+$_path = dirname(dirname(dirname(dirname($_realPath))));
 define ('XFILE_BASE_DIRECTORY',$_path);
 
 define ('VERSION', '2.8.10');																		// Version of this script 
