@@ -1477,8 +1477,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <fieldset>\n";
 							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
 
+							
+							
+							//repopulate - GENDER Controller
+							$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
+							if ( !$data_gender_exists ) {
+								$wpdb->query("ALTER TABLE ".table_agency_data_type." ADD DataTypeGenderID int(10) DEFAULT 0"); //zero means all gender
+							}
+							
+							
 							$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$ProfileGender} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
 							$results3=  $wpdb->get_results($query3,ARRAY_A);
+
+							
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
 							foreach ($results3 as $data3) {
