@@ -504,6 +504,25 @@ elseif ($ConfigID == 1) {
 		// echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_showprofiletypeslinks]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks'])?$rb_agency_options_arr['rb_agency_option_profilelist_showprofiletypeslinks']:0, 1,false)."/> ". __("Show Profile Types Links", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0, 1,false)."/> ". __("Show Sort Options", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby_label]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby_label'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby_label']:0, 1,false)."/> ". __("Show Sort Options Label", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby_age]\" value=\"1\" "
+						.checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby_age'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby_age']:0, 1,false)."/> "
+						. __("Show Age", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby_name]\" value=\"1\" "
+						.checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby_name'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby_name']:0, 1,false)."/> "
+						. __("Show Name", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby_date_joined]\" value=\"1\" "
+						.checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby_date_joined'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby_date_joined']:0, 1,false)."/> "
+						. __("Show Date Joined", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby_display_name]\" value=\"1\" "
+						.checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby_display_name'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby_display_name']:0, 1,false)."/> "
+						. __("Show Display Name", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_sortby_gender]\" value=\"1\" "
+						.checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby_gender'])?$rb_agency_options_arr['rb_agency_option_profilelist_sortby_gender']:0, 1,false)."/> "
+						. __("Show Gender", RBAGENCY_TEXTDOMAIN) ."<br />\n";
+						
+						
+		
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails']:0, 1,false)."/> ". __("Expanded Model Details", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_year]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year']:0, 1,false)."/> ". __("Show Age (Year)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_profilelist_expanddetails_month]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month'])?$rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_month']:0, 1,false)."/> ". __("Show Age (Month)", RBAGENCY_TEXTDOMAIN) ."<br />\n";
