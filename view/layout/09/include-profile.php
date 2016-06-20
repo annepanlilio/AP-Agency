@@ -114,7 +114,7 @@ echo "				</div> <!-- #info -->\n";//End Info
 
 					// Files
 					$queryResume = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType IN('Resume')";
-					$resultsResume =  $wpdb->get_results($wpdb->prepare($queryResume),ARRAY_A);
+					$resultsResume =  $wpdb->get_results($queryResume,ARRAY_A);
 					$countResume = $wpdb->num_rows;
 
 					if($countResume > 0) {						
@@ -129,10 +129,54 @@ echo "				</div> <!-- #info -->\n";//End Info
 						echo "</div> <!-- #row -->";
 						echo "</div> <!-- #files -->";
 					}
+					
+					
+					
+					
+					// Voice Demo
+					$queryVioce = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType = \"VoiceDemo\"";
+					$resultsVoice = $wpdb->get_results($wpdb->prepare($queryVioce, $ProfileID),ARRAY_A);
+					$countVoice = $wpdb->num_rows;
+					
+					if($countVoice > 0) {						
+						echo "<div id=\"files\">";
+						echo "<div class=\"row\">";
+						echo "<div class=\"col-md-12\">";
+						echo "\n\n";
+						echo "<h3>Voice Demo</h3>";
+						
+						foreach ($resultsVoice as $dataVoice) {
+							
+								$audiofile = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataVoice['ProfileMediaURL'];
+							echo "<div class=\"media-file voicedemo\">";
+								
+								$key_voice = 'voicedemo_' . $dataVoice['ProfileMediaID'];
+								$voiceTitle = get_option($key_voice,'Voice Demo');
+								echo  $voiceTitle;
+								if(defined("SC_AUDIO_PLUGIN_VERSION")){
+									echo do_shortcode('[sc_embed_player_template1 fileurl="'.site_url($audiofile).'"]');
+								}else{
+									echo '<audio><source src="'.site_url($audiofile).'" /></audio><br>';
+								}
+								
+								//echo $audiofile;	
+							
+							echo "\n\n";
+							echo "</div>";
+							
+						}
+						echo "\n\n";
+						echo "</div> <!-- .col-md-12 -->";
+						echo "</div> <!-- #row -->";
+						echo "</div> <!-- #files -->";
+					}
+					
+					
+						
 
 					// Videos
 					$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileVideoType IN('youtube','vimeo')";
-					$resultsMedia =  $wpdb->get_results($wpdb->prepare($queryMedia),ARRAY_A);
+					$resultsMedia =  $wpdb->get_results($queryMedia,ARRAY_A);
 					$countMedia = $wpdb->num_rows;					
 
 					$viditem_class = array("profile-video");
