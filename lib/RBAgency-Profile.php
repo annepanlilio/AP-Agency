@@ -1963,6 +1963,7 @@ class RBAgency_Profile {
 			 */
 				$rb_agency_options_arr = get_option('rb_agency_options');
 				$rb_agency_option_profilelist_sortby = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby']:0;
+				$rb_agency_option_profilelist_sortby_label = isset($rb_agency_options_arr['rb_agency_option_profilelist_sortby_label']) ?$rb_agency_options_arr['rb_agency_option_profilelist_sortby_label']:0;
 				$rb_agency_option_persearch = isset($rb_agency_options_arr["rb_agency_option_persearch"])?$rb_agency_options_arr["rb_agency_option_persearch"]:10;
 				$rb_agency_option_profilelist_perpage = isset($rb_agency_options_arr["rb_agency_option_profilelist_perpage"])?$rb_agency_options_arr["rb_agency_option_profilelist_perpage"]:15;
 				$rb_agency_option_profilelist_printpdf = isset($rb_agency_options_arr["rb_agency_option_profilelist_printpdf"])?$rb_agency_options_arr["rb_agency_option_profilelist_printpdf"]:0;
@@ -2039,8 +2040,15 @@ class RBAgency_Profile {
 					$query_gender = "SELECT * FROM ".table_agency_data_gender;
 					$results_genders = $wpdb->get_results($query_gender,ARRAY_A);
 
+					$all_html.='<div id="sort_option_container">';
+						
+					if($rb_agency_option_profilelist_sortby_label){
+						$all_html.='
+						<span id="sort_option_caption">'.__("Sort By",RBAGENCY_TEXTDOMAIN).':</span>';
+					}
+						
 					$all_html.='
-							<select id="sort_by">
+						<select id="sort_by">
 								<option value="0">'.__("Sort List",RBAGENCY_TEXTDOMAIN).'</option>
 								<option value="1">'.__("Age",RBAGENCY_TEXTDOMAIN).'</option>
 								<option value="2">'.__("Name",RBAGENCY_TEXTDOMAIN).'</option>
@@ -2072,7 +2080,7 @@ class RBAgency_Profile {
 					$all_html.='</select>
 							<select id="sort_option">
 								<option value="">'.__("Sort Options",RBAGENCY_TEXTDOMAIN).'</option>
-							</select>';
+							</select></div>';
 
 
 					//default srt
