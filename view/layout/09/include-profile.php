@@ -148,7 +148,7 @@ echo "				</div> <!-- #info -->\n";//End Info
 						foreach ($resultsVoice as $dataVoice) {
 							
 								$audiofile = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataVoice['ProfileMediaURL'];
-							echo "<div class=\"media-file voicedemo\">";
+							echo "<div class=\"media-file voicedemo\" style=\"width:50%;\">";
 								
 								$key_voice = 'voicedemo_' . $dataVoice['ProfileMediaID'];
 								$voiceTitle = get_option($key_voice,'Voice Demo');
