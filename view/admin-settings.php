@@ -571,6 +571,12 @@ elseif ($ConfigID == 1) {
 		echo "       <option value=\"ProfileDateBirth\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileDateBirth') ."> ". __("Birthdate", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"ProfileDateCreated\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault'],'ProfileDateCreated') ."> ". __("Date Joined", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
+		
+		echo "     Sort By: <select name=\"rb_agency_options[rb_agency_option_layoutprofilelist_sortdefault_way]\">\n";
+		echo "       <option value=\"ASC\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault_way'],'ASC') ."> ". __("Ascending", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"DESC\" ". selected($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault_way'],'DESC') ."> ". __("Descending", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "     </select>\n";
+		
 		echo "   </td>\n";
 		echo " </tr>\n";
 

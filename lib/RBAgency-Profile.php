@@ -1094,6 +1094,7 @@ class RBAgency_Profile {
 						"stars" => NULL,
 						"favorite" => NULL,
 						"override_privacy" => NULL,
+						"sort_by" => NULL,
 						"list_layout" => NULL
 					), $atts));
 
@@ -1551,7 +1552,16 @@ class RBAgency_Profile {
 						$atts['sort'] = $orderType .',profile.'.$_sortBy;
 					}
 
-					if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= ' DESC';
+					//if($_sortBy == 'ProfileDateBirth' ) $atts['sort'] .= ' DESC';
+					
+					if($atts['sort_by'] == NULL){
+						//Get the database settings..
+						$_sort_way = !empty($rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault_way']) ? $rb_agency_options_arr['rb_agency_option_layoutprofilelist_sortdefault_way'] : 'ASC';
+					}else{
+						$_sort_way = $atts['sort_by'];
+					}
+					$atts['sort'] .= ' '.$_sort_way;
+					
 
 					self::search_generate_sqlorder($atts,$filter2);
 
