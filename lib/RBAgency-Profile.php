@@ -2062,7 +2062,7 @@ class RBAgency_Profile {
 					if($rb_agency_options_arr['rb_agency_option_profilelist_sortby_display_name'] == true){
 						$all_html.='<option value="2">'.__("Display Name",RBAGENCY_TEXTDOMAIN).'</option>';
 					}
-					if($rb_agency_options_arr['rb_agency_option_profilelist_sortby_gender'] == true){
+					if(($rb_agency_options_arr['rb_agency_option_profilelist_sortby_gender'] == true) and (!isset($arr_query['gender']))){
 						$all_html.='<option value="50">'.__("Gender",RBAGENCY_TEXTDOMAIN).'</option>';
 					}
 					
