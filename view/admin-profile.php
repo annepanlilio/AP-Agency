@@ -1817,6 +1817,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span>Gallery</span></h3>
 						<div class="inside">
+							<div id='notify-gallery' style="display:none;background-color:#fcf8e3;border: 1px solid #faebcc;padding: 3px 7px;color:#8a6d3b">
+								<p>Please click the <b>Update Record</b> button to save the order</p></div>
 							<div class="main">
 							<?php
 								echo "<script type='text/javascript'>\n";
@@ -1944,6 +1946,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												jQuery("#wrapper-sortable #gallery-sortable .item").each(function(i,d){
 													jQuery(this).find("input[type=hidden]").val(i);
 												});
+												jQuery("#notify-gallery").css('display','block').fadeOut().fadeIn().fadeOut().fadeIn();
 										}
 									});
 									jQuery("#wrapper-sortable #gallery-sortable").disableSelection();
