@@ -1,7 +1,7 @@
 # RB Agency
 Model and Talent Agency CRM management and scheduling tool.
 
-### Current Version 2.4.8
+### Current Version 2.4.9
 
 ## Installation
 
@@ -9,6 +9,26 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 
 ## Change Log
+
+### 2.4.9
+* fixed - the filter used to search for profiles is getting lost once you click to expand the result.
+* fixed - 2 calendars showing when populating the date custom field
+* fixed - searching for date is not working
+* fixed - cannot search for State.
+* fixed - warning errors when importing csv or xls
+* fixed - warning errors when trying to import profile databases.
+* fixed - warning errors when editing custom fields.
+* fixed - search is not working when searching for a keyword in textbox
+* fixed - searching for zipcodes not working when entering 1 number only
+* fixed - error messages appear when using bulk delete on profile type setting
+* new feature - separated the shortcode for casting cart link and thumbnails in email client feature so admin have option to include/exclude thumbnails in casting carts.
+* fixed - email notification for approved profile is messed up and containing html tags
+* fixed - custom fields and profile types not displaying after upgrade
+* new feature - sort list > created a setting (checkbox) to hide/show sort list options. click to enable. e.g. if client do not want to use the "Gender" as one of the profile list
+* new feature - sort list > if the shortcode embeded in the page indicates the gender, the "gender" sort option will not be displayed
+* new feature - profile default sort > added "ascending" & "descending" control via shortcode
+* new feature - added a notification to hit save after reordering images in profile management
+* new feature - added warning pop up when deleting custom fields or when clicking the restore button to prevent accidental deletion of data.
 
 ### 2.4.8
 * new feature - create your own custom media fields and add custom icons
