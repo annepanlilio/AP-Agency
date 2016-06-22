@@ -43,6 +43,7 @@ if (isset($_POST['action'])) {
 	$ProfileContactNameFirst = isset($_POST['ProfileContactNameFirst']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameFirst'])):"";
 	$ProfileContactNameLast = isset($_POST['ProfileContactNameLast']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameLast'])):"";
 	$ProfileContactDisplay = isset($_POST['ProfileContactDisplay']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactDisplay'])):"";
+	$ProfileDescription = isset($_POST['ProfileDescription']) ? trim($_POST['ProfileDescription']):"";
 if (empty($ProfileContactDisplay)) { // Probably a new record...
 		if ($rb_agency_option_profilenaming == 0) {
 			$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
@@ -202,6 +203,15 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
 
+					
+					//check for Profile-Description column 
+					$sql = "SELECT ProfileDescription FROM ". table_agency_profile ." LIMIT 1";
+					$r = $wpdb->get_results($sql);
+					if(count($r) == 0){
+						//create column
+						$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileDescription TEXT NOT NULL AFTER `ProfileContactNameLast`";
+						$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+					}
 					// Create Record
 					$insert = "INSERT INTO " . table_agency_profile .
 						" (
@@ -209,7 +219,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileContactDisplay,
 							ProfileUserLinked,
 							ProfileContactNameFirst,
-							ProfileContactNameLast,
+							ProfileContactNameLast,               
+							ProfileDescription,               
 							ProfileContactEmail,
 							ProfileContactWebsite,
 							ProfileGender,
@@ -242,6 +253,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							'" . esc_attr(isset($new_user)?$new_user:"") . "',
 							'" . esc_attr($ProfileContactNameFirst) . "',
 							'" . esc_attr($ProfileContactNameLast) . "',
+							'" . esc_attr($ProfileDescription) . "',
 							'" . esc_attr($ProfileContactEmail) . "',
 							'" . esc_attr($ProfileContactWebsite) . "',
 							'" . esc_attr($ProfileGender) . "',
@@ -387,6 +399,15 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileIsBooking boolean NOT NULL default 0";
 							$wpdb->query($queryAlter);
 						}
+						
+						//check for Profile-Description column 
+						$sql = "SELECT ProfileDescription FROM ". table_agency_profile ." LIMIT 1";
+						$r = $wpdb->get_results($sql);
+						if(count($r) == 0){
+							//create column
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileDescription TEXT NOT NULL AFTER `ProfileContactNameLast`";
+							$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+						}
 
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET
@@ -394,6 +415,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileContactDisplay='" . esc_attr($ProfileContactDisplay) . "',
 							ProfileContactNameFirst='" . esc_attr($ProfileContactNameFirst) . "',
 							ProfileContactNameLast='" . esc_attr($ProfileContactNameLast) . "',
+							ProfileDescription='" . esc_attr($ProfileDescription) . "',
 							ProfileContactEmail='" . esc_attr($ProfileContactEmail) . "',
 							ProfileContactWebsite='" . esc_attr($ProfileContactWebsite) . "',
 							ProfileContactPhoneHome='" . esc_attr($ProfileContactPhoneHome) . "',
@@ -999,6 +1021,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileContactDisplay = stripslashes($data['ProfileContactDisplay']);
 			$ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
 			$ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
+			$ProfileDescription = stripslashes($data['ProfileDescription']);
 			$ProfileContactEmail = stripslashes($data['ProfileContactEmail']);
 			$ProfileContactWebsite = stripslashes($data['ProfileContactWebsite']);
 			$ProfileContactLinkFacebook = stripslashes($data['ProfileContactLinkFacebook']);
@@ -1051,6 +1074,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileContactNameFirst = trim($_POST['ProfileContactNameFirst']);
 			$ProfileContactNameLast = trim($_POST['ProfileContactNameLast']);
 			$ProfileContactDisplay = trim($_POST['ProfileContactDisplay']);
+			$ProfileDescription = trim($_POST['ProfileDescription']);
 			$ProfileGallery = $_POST['ProfileGallery'];
 			$ProfileGender = $_POST['ProfileGender'];
 			$ProfileDateBirth = $_POST['ProfileDateBirth'];
@@ -1195,6 +1219,21 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										}
 									}
 								}
+								
+								
+								//ProfileDescription
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Profile Description", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>\n";
+								
+								
+								echo "          <textarea type=\"text\" cols=\"220\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\">";
+									
+								echo	esc_attr( $ProfileDescription );
+								echo "</textarea>";			
+								echo "</td>\n";
+								echo "    </tr>\n";
+								
 								echo " </table>\n";
 
 								?>

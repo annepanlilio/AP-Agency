@@ -63,6 +63,22 @@ Large featured image and scrolling thumbnails
 	<div id="rblayout-six" class="rblayout">
 		<div id="layout-header" class="rbcol-12 rbcolumn">
 			<h2 class="name"><?php echo $ProfileContactDisplay; ?></h2>
+			<?php
+			
+			echo '
+<style>
+div.profiledescription{
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	display:block;
+}
+</style>
+';
+echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
+			?>
 			<div class="profile-filter">
 				<div class="filter">
 					<select name="division" id="division">

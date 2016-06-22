@@ -66,7 +66,7 @@ echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 						// Image Slider
 
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
-						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
+						$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
 							if ($countImg > 1) {
@@ -82,6 +82,24 @@ echo "				<div class=\"rbclear\"></div>\n";
 
 echo "				<div id=\"info\">\n";
 echo "					<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
+
+
+echo '
+<style>
+div.profiledescription{
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+display:block;
+}
+</style>
+';
+echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
+
+
+	
 
 							// Social Link
 							rb_agency_getSocialLinks();

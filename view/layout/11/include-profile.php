@@ -37,6 +37,24 @@ echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 echo "				<header class=\"entry-header\">";
 echo "					<h1 class=\"entry-title\">". $ProfileContactDisplay ."</h1>";
 echo "				</header>";
+
+
+echo '
+<style>
+div.profiledescription{
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+display:block;
+}
+</style>
+';
+echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
+
+
+
 echo "			</div>\n"; // .rbcol-12
 echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\"  class=\"lightbox-enabled\">\n";

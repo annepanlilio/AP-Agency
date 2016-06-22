@@ -90,6 +90,25 @@ echo "				<div id=\"info-links\">\n";
 echo "						<div id=\"name\" class=\"rbcol-12 rbcolumn\">";
 echo "							<h2>". $ProfileContactDisplay ."</h2>";
 
+
+
+
+echo '
+<style>
+div.profiledescription{
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+display:block;
+}
+</style>
+';
+echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
+
+
+
 								$query3 = "SELECT * FROM " . table_agency_data_type . " ORDER BY DataTypeTitle";
 								$results3 =  $wpdb->get_results($query3,ARRAY_A);							
 

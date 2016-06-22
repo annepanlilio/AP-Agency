@@ -83,6 +83,26 @@ echo "				<div id=\"info-links\">\n";
 
 echo "						<div class=\"rbcol-6 rbcolumn\">\n";
 echo "						<h2>". $ProfileContactDisplay ."</h2>\n";
+
+
+
+echo '
+<style>
+div.profiledescription{
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+display:block;
+}
+</style>
+';
+echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
+
+
+
+
 echo "							<div id=\"stats\">";
 									if (!empty($ProfileGender) and $display_gender == true) {
 										$fetchGenderData=  $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='%s' ",$ProfileGender),ARRAY_A);

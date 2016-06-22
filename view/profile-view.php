@@ -125,6 +125,9 @@
 			$ProfileContactDisplay		=stripslashes($rbdata['ProfileContactDisplay']);
 			$ProfileContactNameFirst	=stripslashes($rbdata['ProfileContactNameFirst']);
 			$ProfileContactNameLast		=stripslashes($rbdata['ProfileContactNameLast']);
+			$ProfileDescription			= html_entity_decode(stripslashes($rbdata['ProfileDescription']));
+			$ProfileDescription			=force_balance_tags($ProfileDescription);
+			
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {

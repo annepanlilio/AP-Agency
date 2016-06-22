@@ -48,6 +48,25 @@ $order = $rb_agency_options_arr['rb_agency_option_galleryorder'];
 				<?php echo " <h1>". $ProfileContactDisplay ."</h1>\n"; ?>
 				<a href="">Back</a>
 			</div>
+			
+			
+<?php
+echo '
+<style>
+div.profiledescription{
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+display:block;
+}
+</style>
+';
+echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
+
+
+?>
 		</div>
 		<div class="rbclear"></div>
 		<div class="rbcol-12 rbcolumn">
