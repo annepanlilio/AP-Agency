@@ -5176,16 +5176,21 @@ class RBLogin_Widget extends WP_Widget {
 
 			
 			global $current_user;
-			//$all_meta = get_user_meta( $current_user->ID );
 			
-			
-			//var_dump($all_meta);
 			if(is_user_logged_in()){
+				
+				
+				global $wpdb;
+				$_castingID = $wpdb->get_var($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$current_user->ID ));
+				
 				$all_meta_for_user = get_user_meta( $current_user->ID ,'rb_agency_interact_profiletype');
+				
 				if(isset($all_meta_for_user) and !empty($all_meta_for_user)){
 					echo '<li><a href="'. site_url('/profile-member/') .'">';
-				}else{
+				}elseif($_castingID > 0){
 					echo '<li><a href="'. site_url('/casting-dashboard/') .'">';
+				}else{
+					echo '<li><a href="'. site_url('/wp-admin/') .'">';
 				}
 				echo __('My Dashboard', RBAGENCY_TEXTDOMAIN);
 				echo '</a></li>';
