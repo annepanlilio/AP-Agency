@@ -215,7 +215,9 @@ echo "				</div> <!-- #info -->\n";//End Info
 							$vidTitleCaption = explode('<br>',$clean_title);
 							if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 								$embed_string = substr($vid_url, strpos($vid_url, "=")+1);
-								$outVideoMedia .= "<div class=\"".$vidcol_class."\"><div class=\"video-wrapper\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe></div><div>".$vidTitleCaption[0]."</div></div>";
+								$outVideoMedia .= "<div class=\"".$vidcol_class."\" style=\"margin: 10px 0px 60px 0;\">
+								<div style=\"margin: 5px;\">".$vidTitleCaption[0]."</div>
+								<div class=\"video-wrapper\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe></div></div>";
 							}
 						}
 						echo $outVideoMedia;
