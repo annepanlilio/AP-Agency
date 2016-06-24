@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }*/
@@ -9,7 +9,7 @@
 	 */
 
 		// Get User Information
-		global $user_ID; 
+		global $user_ID;
 		global $current_user;
 		get_currentuserinfo();
 		$CurrentUser = $current_user->ID;
@@ -20,13 +20,13 @@
 		$profileURL=$urlexploade[0];
 
 		//echo $profileURL;
-		
-		
+
+
 		global $wpdb;
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
 		$results = $wpdb->get_results($wpdb->prepare($query,$profileURL),ARRAY_A);
 		if(!$results){
-		
+
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			if($rb_agency_options_arr['rb_agency_option_404profile'] == 'home'){
 				wp_redirect(home_url(), 301);
@@ -86,16 +86,16 @@
 					}
 						wp_register_style( 'lightbox2', plugins_url('/ext/lightbox2/css/lightbox.css', dirname(__FILE__)) );
 						wp_enqueue_style( 'lightbox2' );
-						
+
 						wp_register_style( 'fancybox-style', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.css' );
 						wp_enqueue_style( 'fancybox-style' );
-	
+
 						wp_enqueue_script( 'fancybox-jquery', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.pack.js', array( 'jquery-latest' ));
 						wp_enqueue_script( 'fancybox-jquery' );
-						
+
 						wp_enqueue_script( 'fancybox-init', RBAGENCY_PLUGIN_URL .'ext/fancybox/fancybox.init.js', array( 'jquery-latest', 'fancybox-jquery' ));
 						wp_enqueue_script( 'fancybox-init' );
-						
+
 
 
 				} else {
@@ -127,7 +127,7 @@
 			$ProfileContactNameLast		=stripslashes($rbdata['ProfileContactNameLast']);
 			$ProfileDescription			= html_entity_decode(stripslashes($rbdata['ProfileDescription']));
 			$ProfileDescription			=force_balance_tags($ProfileDescription);
-			
+
 				if ($rb_agency_option_profilenaming == 0) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {
@@ -235,7 +235,7 @@
 	/*
 	 * TODO: WHAT IS THIS?
 	 */
-		// GET HEADER  
+		// GET HEADER
 		if(isset($_POST['print_all_images']) && $_POST['print_all_images']!=""){
 			include(RBAGENCY_PLUGIN_DIR . 'theme/printable-profile.php');
 			exit;
@@ -280,7 +280,7 @@
 		if ($count > 0) {
 
 			// P R I V A C Y FILTER ====================================================
-			if ( ( $rb_agency_option_privacy >= 1 && isset($_SESSION['SearchMuxHash']) ) ||
+			if ( ( $rb_agency_option_privacy >= 1 && (isset($_SESSION['SearchMuxHash']) || strpos($_SERVER['HTTP_REFERER'],'client-view') > 0) ) ||
 				// Public
 				($rb_agency_option_privacy == 0) ||
 
@@ -302,8 +302,7 @@
 				) {
 
 				// Ok, but whats the status of the profile?
-				
-		
+
 				//check if the profile is in private
 				if(!empty($isPrivate) and !is_user_logged_in()){
 					echo "	<div class='restricted'>\n";
@@ -318,19 +317,19 @@
 									echo "This layout is under development.";
 							echo " 		</div>\n";
 							echo " 	</div>\n";
-	
+
 						} elseif(in_array($rb_agency_option_layoutprofile, $arr_custom_layout)){
 							echo "	<div id=\"rbprofile\">\n";
 							echo "		<div id=\"rblayout-".$rb_agency_option_layoutprofile."\" class=\"rblayout\">\n";
 										echo "Please contact RB Plugin Support for custom layouts.";
 							echo " 		</div>\n";
 							echo " 	</div>\n";
-	
+
 						} else {
 
 							include (RBAGENCY_PLUGIN_DIR .'view/layout/'. $rb_agency_option_layoutprofile .'/include-profile.php');
 						}
-	
+
 					} elseif(strpos($_SERVER['HTTP_REFERER'],'client-view') > 0){
 						// Show it if it came from an email sent
 						if(in_array($rb_agency_option_layoutprofile, $arr_under_dev)){
@@ -360,22 +359,22 @@
 						echo "  </div><!-- #content -->\n";
 					}
 				} else {
-					// hold last model requested as session so we can return them where we found them 
+					// hold last model requested as session so we can return them where we found them
 					$ProfileLastViewed = get_query_var('profile');
 					$profileviewed = get_query_var('target');
 					$_SESSION['ProfileLastViewed'] = $profileviewed;
-					
+
 					global $_viewcasting_login;
 					if(defined("table_agency_casting")){
 						$_viewcasting_login = true;
 					}
-					
+
 					$registration = get_option( 'rb_agencyinteract_options' );
 	$rb_agencyinteract_option_registerallow = isset($registration["rb_agencyinteract_option_registerallow"]) ?$registration["rb_agencyinteract_option_registerallow"]:"";
 	$rb_agencyinteract_option_registerallowAgentProducer = isset($registration['rb_agencyinteract_option_registerallowAgentProducer'])?$registration['rb_agencyinteract_option_registerallowAgentProducer']:0;
 	$rb_agencyinteract_option_switch_sidebar = isset($registration["rb_agencyinteract_option_switch_sidebar"])?(int)$registration["rb_agencyinteract_option_switch_sidebar"]:"";
 
-	
+
 					include(RBAGENCY_PLUGIN_DIR .'theme/include-login.php');
 				}
 			}
