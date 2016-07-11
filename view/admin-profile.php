@@ -3501,6 +3501,29 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 							echo "<p>";
 							foreach ($queryGenderResult as $fetchGender) {
 								echo "<a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", RBAGENCY_TEXTDOMAIN) . "</a>\n";
+								
+								/* 
+								echo "
+								<select name='create-new_'".$fetchGender["GenderID"]." id='create-new_'".$fetchGender["GenderID"].">
+									<option value=''>". __("Create New " . ucfirst($fetchGender["GenderTitle"])) ."</option>";
+								
+								echo "</select>";
+									$query_cus = "SELECT main.*,
+					a.ProfileCustomTypes
+					FROM ". table_agency_customfields ." main
+					LEFT JOIN ". table_agency_customfields_types ." a
+					ON a.ProfileCustomID = main.ProfileCustomID
+					ORDER BY ProfileCustomOrder ASC";
+					
+						$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
+
+		$db_CustomFields = array();
+		$db_ProfileCustomFields = $wpdb->get_results($query_cus,ARRAY_A);
+		foreach ($db_ProfileCustomFields as $data_CustomFields) {
+			$db_CustomFields[ $data_CustomFields['ProfileCustomID']] = $data_CustomFields['ProfileCustomTitle'];
+		} */
+		
+		
 							}
 							echo "</p>";
 							if ($queryGenderCount < 1) {
