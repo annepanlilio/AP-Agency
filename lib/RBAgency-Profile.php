@@ -854,9 +854,9 @@ class RBAgency_Profile {
 					} else {
 						if(!empty($orderType)){
 							$filterArray['dir'] = '';
-						}else{
+						}/* else{
 							$filterArray['dir'] = "asc";
-						}
+						} */
 
 					}
 
