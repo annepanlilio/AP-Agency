@@ -64,11 +64,15 @@
 
 		if (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles"){
 			echo "<div id=\"profile-search-results\">\n";
-				//$search_array = RBAgency_Profile::search_process();
+				$search_array = RBAgency_Profile::search_process();
 				//$search_array["limit"] = $rb_agency_option_persearch;
 					foreach($_POST as $key=>$value) {
 						if($key !="isactive"){
-							if ( is_array($value) && !empty($value) ){
+							if($key == 'profiletype' and is_array($value)){
+									//$_POST['profiletype'] = implode(',',$value);
+									//$_POST['profiletype'] = $value;
+							}
+							elseif ( is_array($value) && !empty($value) ){
 									unset( $_POST[$key] );
 							} else {
 								if ( !isset($value) || empty ($value) ){
@@ -84,7 +88,10 @@
 
 						// Return SQL string based on fields
 						$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-
+						if(is_array($search_array['profiletype'])){
+							$search_array['profiletype'] = implode(',',$search_array['profiletype']);
+							//$_POST['profiletype'] = $value;
+						}
 						// Conduct Search
 						echo RBAgency_Profile::search_results($search_sql_query, 1, false, $search_array);
 
