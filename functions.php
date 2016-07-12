@@ -2908,9 +2908,6 @@
 			echo "	</div>\n";
 		}
 
-		//get_social_media_links($ProfileID);
-
-
 	}
 
 function get_social_media_links($ProfileID = ""){
