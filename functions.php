@@ -1387,7 +1387,7 @@
 							if(strpos($ptype,$types) > -1) $permit_type=true;
 					}
 				}
-				
+
 				if($permit_type || $all_permit){
 					if($ProfileGenderShow ==true){
 						if($data3["ProfileCustomShowGender"] == $ProfileGender ){ // Depends on Current LoggedIn User's Gender
@@ -2288,7 +2288,7 @@
 					} elseif ($resultCustom->ProfileCustomType == 10){
 							//$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ";
-							
+
 							if(!empty($resultCustom->ProfileCustomDateValue)){
 								$_dataField = date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue));
 							}elseif(!empty($resultCustom->ProfileCustomValue)){
@@ -2319,7 +2319,7 @@
 					} elseif ($resultCustom->ProfileCustomType == 10){
 							//$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ";
-							
+
 							if(!empty($resultCustom->ProfileCustomDateValue)){
 								$_dataField = date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue));
 							}elseif(!empty($resultCustom->ProfileCustomValue)){
@@ -2345,7 +2345,7 @@
 					} elseif ($resultCustom->ProfileCustomType == 10){
 							//$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ";
-							
+
 							if(!empty($resultCustom->ProfileCustomDateValue)){
 								$_dataField = date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue));
 							}elseif(!empty($resultCustom->ProfileCustomValue)){
@@ -2371,7 +2371,7 @@
 					} elseif ($resultCustom->ProfileCustomType == 10){
 							//$html .="<li class=\"options_3 profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ". (!empty($resultCustom->ProfileCustomDateValue)?date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue)):"Not set") ."</li>\n";
 							$html .="<li class=\"profilecustomid_".$resultCustom->ProfileCustomID." ctype_6_".$resultCustom->ProfileCustomType."\" id=\"profilecustomid_".$resultCustom->ProfileCustomID."\"><strong>". $resultCustom->ProfileCustomTitle .":</strong> ";
-							
+
 							if(!empty($resultCustom->ProfileCustomDateValue)){
 								$_dataField = date("F d, Y",strtotime($resultCustom->ProfileCustomDateValue));
 							}elseif(!empty($resultCustom->ProfileCustomValue)){
@@ -2901,18 +2901,12 @@
 
 		if($rb_agency_option_showsocial){
 			echo "	<div class=\"social addthis_toolbox addthis_default_style\">\n";
-			echo "		<a href=\"http://www.addthis.com/bookmark.php?v=250&amp;username=xa-4c4d7ce67dde9ce7\" class=\"addthis_button_compact\">". __("Share", RBAGENCY_TEXTDOMAIN). "</a>\n";
-			echo "		<span class=\"addthis_separator\">|</span>\n";
-			//echo "		<a class=\"addthis_button_facebook\"></a>\n";
-			//echo "		<a class=\"addthis_button_myspace\"></a>\n";
-			//echo "		<a class=\"addthis_button_google\"></a>\n";
-			//echo "		<a class=\"addthis_button_twitter\"></a>\n";
-
-			echo "	</div><script type=\"text/javascript\" src=\"http://s7.addthis.com/js/250/addthis_widget.js#username=xa-4c4d7ce67dde9ce7\"></script>\n";
+			echo "		<span class='st_sharethis_large' st_url='". $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"] ."' displayText='ShareThis'></span>\n";
+			echo "		<script type=\"text/javascript\">var switchTo5x=true;</script>\n";
+			echo "		<script type=\"text/javascript\" src=\"http://w.sharethis.com/button/buttons.js\"></script>\n";
+			echo "		<script type=\"text/javascript\">stLight.options({publisher: \"0d47d27d-4a6e-4c50-822b-9d8d4f120408\", doNotHash: true, doNotCopy: true, hashAddressBar: false});</script>\n";
+			echo "	</div>\n";
 		}
-
-		//get_social_media_links($ProfileID);
-
 
 	}
 
@@ -2939,10 +2933,10 @@ function get_social_media_links($ProfileID = ""){
 		.profile-social-media-links li img{ width:20px;}
 		</style>';
 
-		
+
 			$output .= "<h3>".__("Social Media Links",RBAGENCY_TEXTDOMAIN)."</h3>";
 			$output .= "<ul class='profile-social-media-icons' style='list-style:none;'>";
-			
+
 			$_have_social = false;
 			foreach($custom_social as $social){
 				$socialMediaURL = get_user_meta($ProfileID,'SocialMediaURL_'.$social["SocialMedia_Name"],true);
@@ -2960,18 +2954,18 @@ function get_social_media_links($ProfileID = ""){
 					}else{
 						$output .= "<img src='".$social_icon_path."' style='width:20px;height:20px;'>";
 					}
-					
+
 					$_have_social = true;
 
 
 					$output .= "</a></li>";
 				}
 			}
-			
-			
+
+
 			$output .= "</ul>";
-			
-			
+
+
 			if($_have_social == true){
 				echo $output;
 			}else{
@@ -5174,17 +5168,17 @@ class RBLogin_Widget extends WP_Widget {
 				echo "<li><a href=\"".wp_logout_url()."\" title=\"Log Out\">Log Out</a></li>";
 			}
 
-			
+
 			global $current_user;
-			
+
 			if(is_user_logged_in()){
-				
-				
+
+
 				global $wpdb;
 				$_castingID = $wpdb->get_var($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$current_user->ID ));
-				
+
 				$all_meta_for_user = get_user_meta( $current_user->ID ,'rb_agency_interact_profiletype');
-				
+
 				if(isset($all_meta_for_user) and !empty($all_meta_for_user)){
 					echo '<li><a href="'. site_url('/profile-member/') .'">';
 				}elseif($_castingID > 0){
@@ -5194,7 +5188,7 @@ class RBLogin_Widget extends WP_Widget {
 				}
 				echo __('My Dashboard', RBAGENCY_TEXTDOMAIN);
 				echo '</a></li>';
-	
+
 			}
 			echo "</ul>";
 
@@ -5399,11 +5393,11 @@ function wpse45134_catch_register()
 					$message .= __('Regards,', RBAGENCY_interact_TEXTDOMAIN)."<br>";
 					$message .= get_option('blogname') . __(' Team') ."<br>";
 					$message .= get_option('home') ."<br>";
-					
 
-					
+
+
 					$find = strpos($rb_agency_options_arr['rb_agency_option_agencylogo'],"http");
-					
+
 					if($find !== false){
 						$message .= '<img src="'.$rb_agency_options_arr['rb_agency_option_agencylogo'].'" width="200">';
 					}else{
@@ -5758,7 +5752,7 @@ function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
 
 			$sql = "SELECT * FROM ".$wpdb->prefix."agency_customfields_types WHERE FIND_IN_SET('". $_childClean."',ProfileCustomTypes) > 0 "
 				. " AND ProfileCustomID = $ConfigID ";
-			
+
 			$r = $wpdb->get_results($sql);
 			$checked = $wpdb->num_rows > 0 ? 'checked="checked"' : "";
 			$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
@@ -5850,7 +5844,7 @@ function rb_get_parent_category_level($parentID){
 	}else{
 		return 0;
 	}
-	
+
 }
 
 function rb_get_parent_profile_type_level($profileTypeID){

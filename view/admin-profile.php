@@ -203,8 +203,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
 
-					
-					//check for Profile-Description column 
+
+					//check for Profile-Description column
 					$sql = "SELECT ProfileDescription FROM ". table_agency_profile ." LIMIT 1";
 					$r = $wpdb->get_results($sql);
 					if(count($r) == 0){
@@ -219,8 +219,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileContactDisplay,
 							ProfileUserLinked,
 							ProfileContactNameFirst,
-							ProfileContactNameLast,               
-							ProfileDescription,               
+							ProfileContactNameLast,
+							ProfileDescription,
 							ProfileContactEmail,
 							ProfileContactWebsite,
 							ProfileGender,
@@ -399,8 +399,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileIsBooking boolean NOT NULL default 0";
 							$wpdb->query($queryAlter);
 						}
-						
-						//check for Profile-Description column 
+
+						//check for Profile-Description column
 						$sql = "SELECT ProfileDescription FROM ". table_agency_profile ." LIMIT 1";
 						$r = $wpdb->get_results($sql);
 						if(count($r) == 0){
@@ -597,12 +597,12 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											$MIME = array('audio/mpeg', 'audio/mp3');
 											if (in_array($_FILES['profileMedia' . $i]['type'], $MIME)) {
 												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												
+
 												$_voidemodID = $wpdb->insert_id;
 												if(!empty($_voidemodID)){
 													update_option("voicedemo_".$_voidemodID ,  $path_parts['filename'] );
 												}
-												
+
 												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload a mp3 file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -1225,21 +1225,21 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										}
 									}
 								}
-								
-								
+
+
 								//ProfileDescription
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Profile Description", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								
-								
+
+
 								echo "          <textarea type=\"text\" cols=\"220\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\">";
-									
+
 								echo	esc_attr( $ProfileDescription );
-								echo "</textarea>";			
+								echo "</textarea>";
 								echo "</td>\n";
 								echo "    </tr>\n";
-								
+
 								echo " </table>\n";
 
 								?>
@@ -1522,19 +1522,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <fieldset>\n";
 							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
 
-							
-							
+
+
 							//repopulate - GENDER Controller
 							$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
 							if ( !$data_gender_exists ) {
 								$wpdb->query("ALTER TABLE ".table_agency_data_type." ADD DataTypeGenderID int(10) DEFAULT 0"); //zero means all gender
 							}
-							
-							
+
+
 							$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$ProfileGender} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
 							$results3=  $wpdb->get_results($query3,ARRAY_A);
 
-							
+
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
 							foreach ($results3 as $data3) {
@@ -1612,18 +1612,18 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							jQuery(document).ready(function(){
 									//hover stars
 									//rate profile
-									
-									
+
+
 									jQuery("#ProfileGender").on("change",function(){
 										jQuery(".tbody-table-customfields").empty();
-										
+
 										var checkedVals = $('.userProfileType:checkbox:checked').map(function() {
 											return this.value;
 										}).get();
 										var userProfiles = checkedVals.join(",");
-										
+
 										console.log('update the custom fields - ' + userProfiles);
-										
+
 										jQuery.ajax({
 												type: "POST",
 												url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -1634,19 +1634,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													'gender': jQuery("#ProfileGender").val()
 												},
 												success: function (results) {
-													
+
 													jQuery(".tbody-table-customfields").html(results);
 													//console.log(results);
 												}
 										});
 									});
-									
+
 									// User Profile checkbox selection update the custom fields
 									jQuery(".userProfileType").on("click",function(){
 										jQuery("#ProfileGender").change();
 										console.log('update profile type');
 									});
-									
+
 
 									jQuery(".rate_profile").click(function(){
 										// TODO PATH INVALID
@@ -2207,7 +2207,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								} elseif ($dataMedia['ProfileMediaType'] == "SoundCloud") {
 									$outSoundCloud .= "<div style=\"width:600px;float:left;padding:10px;\">";
 									$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></span> \n";
-									
+
 									$outSoundCloud .= RBAgency_Common::rb_agency_embed_soundcloud($dataMedia['ProfileMediaURL']);
 									/* $outSoundCloud .= "<object height=\"81\" width=\"100%\">";
 									$outSoundCloud .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"></param>";
@@ -3501,12 +3501,12 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 							echo "<p>";
 							foreach ($queryGenderResult as $fetchGender) {
 								echo "<a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", RBAGENCY_TEXTDOMAIN) . "</a>\n";
-								
-								/* 
+
+								/*
 								echo "
 								<select name='create-new_'".$fetchGender["GenderID"]." id='create-new_'".$fetchGender["GenderID"].">
 									<option value=''>". __("Create New " . ucfirst($fetchGender["GenderTitle"])) ."</option>";
-								
+
 								echo "</select>";
 									$query_cus = "SELECT main.*,
 					a.ProfileCustomTypes
@@ -3514,7 +3514,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 					LEFT JOIN ". table_agency_customfields_types ." a
 					ON a.ProfileCustomID = main.ProfileCustomID
 					ORDER BY ProfileCustomOrder ASC";
-					
+
 						$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
 
 		$db_CustomFields = array();
@@ -3522,8 +3522,8 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 		foreach ($db_ProfileCustomFields as $data_CustomFields) {
 			$db_CustomFields[ $data_CustomFields['ProfileCustomID']] = $data_CustomFields['ProfileCustomTitle'];
 		} */
-		
-		
+
+
 							}
 							echo "</p>";
 							if ($queryGenderCount < 1) {
@@ -3641,7 +3641,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "</div>\n";
 
 
-
+	echo "<div id='rbplugin'>\n";
 	echo "<form method=\"post\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
 	echo "<table cellspacing=\"0\" class=\"widefat fixed\">\n";
 	echo " <thead>\n";
@@ -3687,7 +3687,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "    </tr>\n";
 	echo " </tfoot>\n";
 	echo " <tbody>\n";
-
+	echo "</div>\n";
 
 	//xyr code
 	//altering the main profile table for private fields...
