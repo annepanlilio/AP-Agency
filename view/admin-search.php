@@ -71,6 +71,7 @@
 							if($key == 'profiletype' and is_array($value)){
 									//$_POST['profiletype'] = implode(',',$value);
 									//$_POST['profiletype'] = $value;
+									
 							}
 							elseif ( is_array($value) && !empty($value) ){
 									unset( $_POST[$key] );
