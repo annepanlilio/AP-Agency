@@ -8,12 +8,11 @@ $ProfileType = get_user_meta($user_ID,"rb_agency_interact_profiletype",true);
 //profile_dashboard_link($user_ID,$ProfileType);
 
 // Social Link
-echo "<div id=\"profile-social\">";
-	if(function_exists('rb_agency_getSocialLinks')) {
-		rb_agency_getSocialLinks($ProfileID);	
-	}
-	
-echo "</div>";
+if(function_exists('rb_agency_getSocialLinks')) {
+	echo "<div id=\"profile-social\">";
+		rb_agency_getSocialLinks($ProfileID);
+	echo "</div>";
+}
 
 
 echo "<div id=\"profile-casting-link\">";
@@ -76,7 +75,7 @@ echo "<div id=\"profile-links\">\n";
 			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".__("View Comp Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
-	
+
 // Card Photos
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_profilemedia_links = isset($rb_agency_options_arr["rb_agency_option_profilemedia_links"])?$rb_agency_options_arr["rb_agency_option_profilemedia_links"]:2;
@@ -91,10 +90,10 @@ echo "<div id=\"profile-links\">\n";
 		}else{
 			echo "<a ".rb_get_profilemedia_link_opentype(get_bloginfo('url')."/profile/".$ProfileGallery."/cardphotos/",true,true) ."  class=\"cardphotos-link\">".__("Download Model Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
-			
+
 		//}
 	}
-	
+
 // Headshots
 	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
 	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
