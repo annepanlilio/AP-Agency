@@ -1141,7 +1141,12 @@ class RBAgency_Profile {
 								$filter .= " AND FIND_IN_SET('".$_POST['profiletype'][$k]."', profile.ProfileType) ";
 							}
 						}else{//if shortcode probably..
-							$filter .= " AND FIND_IN_SET('".$profiletype."', profile.ProfileType) ";
+							# Fixed for search result and pagination
+							if(is_array($profiletype)){
+								foreach($profiletype as $k=>$v){
+									$filter .= " AND FIND_IN_SET('".$v."', profile.ProfileType) ";
+								}
+							}
 						}
 					}
 						
