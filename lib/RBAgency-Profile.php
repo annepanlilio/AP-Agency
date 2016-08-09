@@ -3323,7 +3323,7 @@ class RBAgency_Profile {
 					$displayHTML .= "<span class=\"details-age\">". $ProfileDateBirth ."</span>";
 					}
 
-					if($dataList["ProfileLocationState"]!=""){
+					//if($dataList["ProfileLocationState"]!=""){ # comment to display even if there is no state
 
 						if(!empty($arr_query['show_state'])){
 							$detailState = $arr_query['show_state'] == "true" ? 1 : 0;
@@ -3355,7 +3355,7 @@ class RBAgency_Profile {
 							}
 						}
 
-					}
+					//}
 
 					$type = get_query_var("type");
 					$displayHTML .= "</span>";
