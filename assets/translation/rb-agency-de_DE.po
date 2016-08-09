@@ -1823,3 +1823,6 @@ msgstr ""
 
 msgid "Go to Basic Search"
 msgstr ""
+
+msgid "Click the following link (or copy and paste it into your browser)"
+msgstr ""

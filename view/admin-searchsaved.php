@@ -159,7 +159,7 @@ $siteurl = get_option('siteurl');
 
 			<div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
 			<div class="rbfield"><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] for casting cart link and [thumbnail-place-holder] for profile thumbnail)</strong></label><br/>
-			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){echo @$dataSearchSavedMux["SearchMuxMessage"];} else {echo @"Click the following link (or copy and paste it into your browser): [link-place-holder]";}?></textarea>
+			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){echo @$dataSearchSavedMux["SearchMuxMessage"];} else {echo __("Click the following link (or copy and paste it into your browser)",RBAGENCY_TEXTDOMAIN).": [link-place-holder]";}?></textarea>
 			</div>
 			<div class="submit rbfield rbsubmit">
 				<input type="hidden" name="SearchID" value="<?php echo $SearchID; ?>" />
