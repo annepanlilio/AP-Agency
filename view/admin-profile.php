@@ -668,6 +668,12 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											} elseif($custom_media_extenstion == "jpg"){
 												array_push($arr_extensions,"image/jpeg");
 												array_push($arr_extensions,"jpeg");
+											}elseif($custom_media_extenstion == "avi"){
+												array_push($arr_extensions,"avi");
+											}
+
+											if(strpos($_FILES['profileMedia' . $i]['type'],"video") !== false){
+												$_FILES['profileMedia' . $i]['type'] = str_replace("video/", "", $_FILES['profileMedia' . $i]['type']);
 											}
 
 											if (in_array($_FILES['profileMedia' . $i]['type'], $arr_extensions)) {
