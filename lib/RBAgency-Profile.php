@@ -1146,6 +1146,8 @@ class RBAgency_Profile {
 								foreach($profiletype as $k=>$v){
 									$filter .= " AND FIND_IN_SET('".$v."', profile.ProfileType) ";
 								}
+							}else{
+								$filter .= " AND FIND_IN_SET('".$profiletype."', profile.ProfileType) ";
 							}
 						}
 					}
