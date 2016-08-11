@@ -9,7 +9,7 @@ $rb_agency_option_agencyname = $rb_agency_options_arr['rb_agency_option_agencyna
 if(strpos(get_site_url(),'localhost') !== false){
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? RBAGENCY_PLUGIN_URL."assets/img/".basename($rb_agency_options_arr['rb_agency_option_agencylogo']): RBAGENCY_PLUGIN_URL ."assets/img/logo_example.jpg";
 } else {
-	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? get_site_url().$rb_agency_options_arr['rb_agency_option_agencylogo'] : "";
+	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? $rb_agency_options_arr['rb_agency_option_agencylogo'] : "";
 }
 
 //check if http include
