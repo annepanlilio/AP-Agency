@@ -5435,14 +5435,18 @@ function editvoicedemo(){
 	$new = isset($_REQUEST['new_value']) ? $_REQUEST['new_value'] : '';
 	$key = isset($_REQUEST['demo_name_key']) ? $_REQUEST['demo_name_key'] : '';
 
+	//caption
+	$old_caption = isset($_REQUEST['old_value_caption']) ? $_REQUEST['old_value_caption'] : '';
+	$new_caption = isset($_REQUEST['new_value_caption']) ? $_REQUEST['new_value_caption'] : '';
+	$key_caption = isset($_REQUEST['demo_caption_key']) ? $_REQUEST['demo_caption_key'] : '';
+	
 	//RENAME VOICE DEMO
+	$name = !empty($new) ? $new : $old;
+	$caption = !empty($new_caption) ? $new_caption : $old_caption;
+	update_option($key,$name);
+	update_option($key_caption,$caption);
 	$voicedemo_option = get_option($key);
-	if(empty($voicedemo_option)){
-		add_option($key,$new);
-	}else{
-		update_option($key,$new);
-	}
-
+	print_r($_REQUEST);
 	die();
 }
 

@@ -2165,14 +2165,22 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								}
 								 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
 									 $voiceDemoProfileMediaID = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
-									 $voicedemo = empty($voiceDemoProfileMediaID) ? "TITLE" : $voiceDemoProfileMediaID;
+								 	$voicedemo = empty($voiceDemoProfileMediaID) ? "TITLE" : $voiceDemoProfileMediaID;
 
+								 	$voiceDemoCaptionProfileMediaID = get_option("voicedemocaption_".$dataMedia['ProfileMediaID']);
+								 	$voicedemocaption = empty($voiceDemoCaptionProfileMediaID) ? "" : $voiceDemoCaptionProfileMediaID;
+									
 									$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 									if($medialink_option == 2){
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" >&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br />
+										<a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>
+										<span class='voicedemocaption_label'> ".$voicedemocaption."</span>
+										 <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a><br><a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\"									voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}elseif($medialink_option == 3){
 										$force_download_url = wpfdl_dl($ProfileGallery . "/" . $dataMedia['ProfileMediaURL'],get_option('wpfdl_token'),'dl');
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br> <a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" >&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a> <span class='voicedemocaption_label'>".$voicedemocaption."</span> <br><a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" 
+											voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" 
+											voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
@@ -2312,30 +2320,63 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									var voice_demo_name_key = jQuery(this).attr('voice_demo_name_key');
 									var voice_demo_name_val = jQuery(this).attr('voice_demo_name_val');
 
+									var voice_demo_caption_key = jQuery(this).attr('voice_demo_caption_key');
+									var voice_demo_caption_val = jQuery(this).attr('voice_demo_caption_val');
+									
 									jQuery('.voicedemoname').val(voice_demo_name_val);
 									jQuery('.old_voicedemoname').val(voice_demo_name_val);
 
 									jQuery('.voicedemoname_key').val(voice_demo_name_key);
 									jQuery('.voicedemoname_val').val(voice_demo_name_val);
 
-									tb_show('Edit Voice Demo','#TB_inline?width=500&height=100&inlineId=edit-voice-demo');
+									jQuery('.voicedemocaption').val(voice_demo_caption_val);
+									jQuery('.old_voicedemocaption').val(voice_demo_caption_val)
+
+									jQuery('.voicedemocaption_key').val(voice_demo_caption_key);
+									jQuery('.voicedemocaption_val').val(voice_demo_caption_val);									
+
+									tb_show('Edit Voice Demo','#TB_inline?width=500&height=110&inlineId=edit-voice-demo');
 									return false;
 								});
 								jQuery('.voicedemoname').keyup(function(){
 									jQuery('.new_voicedemoname').val(jQuery(this).val());
 								});
+								jQuery('.voicedemocaption').keyup(function(){
+									jQuery('.new_voicedemocaption').val(jQuery(this).val());
+								});
 								jQuery('.update_voicedemoname').click(function(){
 									var new_val = jQuery('.new_voicedemoname').val();
 									var old_val = jQuery('.old_voicedemoname').val();
-									var voicedemoname_key = jQuery('.voicedemoname_key').val();
+									var voicedemoname_key = jQuery('.voicedemoname_key').val();	
+
+									var new_val_caption = jQuery('.new_voicedemocaption').val();
+									var old_val_caption = jQuery('.old_voicedemocaption').val();
+									var voicedemocaption_key = jQuery('.voicedemocaption_key').val();
+
+
 									jQuery.post("<?php echo admin_url('admin-ajax.php');?>", {
 										demo_name_key:voicedemoname_key,
 										old_value: old_val,
 										new_value:new_val,
-										action: 'editvoicedemo'
-									}).done(function(data) {
+										action: 'editvoicedemo',
+										new_value_caption : new_val_caption,
+										old_value_caption : old_val_caption,
+										demo_caption_key:voicedemocaption_key
+									}).done(function(data) {	
+									console.log(data);									
 										jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html('');
-										jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html(new_val);
+										if(new_val.length > 0){
+											jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html(new_val);
+										}else{
+											jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html(old_val);
+										}
+										
+										if(new_val_caption.length > 0){
+											jQuery(".voicedemocaption_label",'.media-file[voicedemo_place_id='+voicedemoname_key+']').html(new_val_caption);
+										}else{
+											jQuery(".voicedemocaption_label",'.media-file[voicedemo_place_id='+voicedemoname_key+']').html(old_val_caption);
+										}
+										
 									});
 
 									tb_remove();
@@ -2360,8 +2401,25 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								 <input type="hidden" name="voicedemoname_val" class="voicedemoname_val" >
 								 <input type="hidden" name="new_voicedemoname" class="new_voicedemoname" >
 								 <input type="hidden" name="old_voicedemoname" class="old_voicedemoname" >
-								 <p style="padding:15px;">Title:&nbsp;<input type="text" name="voicedemoname" class="voicedemoname" style="width:300px;">
-								 <input type='button' value="Save Changes" name='update_voicedemoname' id="voicedemoname_id" class='button-primary update_voicedemoname' ></p>
+
+								 <input type="hidden" name="voicedemocaption_key" class="voicedemocaption_key" >
+								 <input type="hidden" name="voicedemocaption_val" class="voicedemocaption_val" >
+								 <input type="hidden" name="new_voicedemocaption" class="new_voicedemocaption" >
+								 <input type="hidden" name="old_voicedemocaption" class="old_voicedemocaption" >
+								 <table>
+								 	<tr>
+								 		<td>Title</td>
+								 		<td><input type="text" name="voicedemoname" class="voicedemoname" style="width:300px;"></td>
+								 	</tr>
+								 	<tr>
+								 		<td>Caption</td>
+								 		<td><input type="text" name="voicedemocaption" class="voicedemocaption" style="width:300px;"></td>
+								 	</tr>
+								 	<tr>
+								 		<td></td>
+								 		<td><input type='button' value="Save Changes" name='update_voicedemoname' id="voicedemoname_id" class='button-primary update_voicedemoname' ></td>
+								 	</tr>
+								 </table>
 							</div>
 
 							<div style="display:none" class="inline-edit-video">
