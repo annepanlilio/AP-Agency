@@ -75,10 +75,13 @@ echo "<style>
 						$countImg = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg){	
 							$audiofile = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+							$key_voice_caption = 'voicedemocaption_' . $dataVoice['ProfileMediaID'];
+							$voiceCaption = get_option($key_voice_caption,'Voice Demo Caption');
 							$profileMediaID = get_option("voicedemo_".$dataImg['ProfileMediaID']);
 							$voicedemo = empty($profileMediaID) ? "" : $profileMediaID;
 							echo "<br>";
 							echo $voicedemo."<br>";
+							echo $voiceCaption;
 							echo "<hr class='demoname-border'>";
 							echo  do_shortcode('[sc_embed_player fileurl="'.$audiofile.'"]');
 							//echo '<audio><source src="'.$audiofile.'" /></audio><br>';

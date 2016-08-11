@@ -169,8 +169,11 @@ echo "				</div> <!-- #info -->\n";//End Info
 							echo "<div class=\"media-file voicedemo\" style=\"text-align: center;margin: 10px auto;width:300px;\">";
 								
 								$key_voice = 'voicedemo_' . $dataVoice['ProfileMediaID'];
+								$key_voice_caption = 'voicedemocaption_' . $dataVoice['ProfileMediaID'];
 								$voiceTitle = get_option($key_voice,'Voice Demo');
+								$voiceCaption = get_option($key_voice_caption,'Voice Demo Caption');
 								echo  $voiceTitle;
+								echo "<p>".$voiceCaption."</p>";
 								if(defined("SC_AUDIO_PLUGIN_VERSION")){
 									echo do_shortcode('[sc_embed_player_template1 fileurl="'.site_url($audiofile).'"]');
 								}else{
