@@ -1539,13 +1539,80 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$ProfileGender} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
 							$results3=  $wpdb->get_results($query3,ARRAY_A);
+							if(isset($_GET['action']) && $_GET['action'] == "add" && empty($_GET["ProfileID"])) { 
+							?>
+							<script type="text/javascript">
+								jQuery(document).ready(function(){
+									var profileTypeIDs = [];
+									jQuery(".userProfileType").click(function(){
+										jQuery(".tbody-table-customfields").empty();
+										//event.preventDefault();
+										var checkedProfileType = jQuery(this).attr('profile-type-title');
+										var checked = jQuery(this).is(':checked');
+										profileTypeIDs.push(checkedProfileType);
+										//remove if unchecked
+										if(checked!==true){
+											profileTypeIDs = jQuery.grep(profileTypeIDs, function(value) {
+												 return value != checkedProfileType;
+											});
+										}else{
+											jQuery(this).attr('checked','checked');
+										}												
 
+										console.log(profileTypeIDs);
+										
+
+										//here , make ajax call to get custom fields
+										jQuery.ajax({
+											type: "POST",
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											data: {
+												action: "rb_get_customfields",
+												'profile_types': profileTypeIDs,
+												'gender': jQuery("#ProfileGender").val()
+											},
+											success: function (results) {
+												jQuery(".tbody-table-customfields").html(results);
+											}
+										});	
+																			
+									});
+
+								    // for gender dropdown
+								    jQuery("#ProfileGender").on("change",function(){
+
+										jQuery(".tbody-table-customfields").empty();
+
+										//here , make ajax call to get custom fields
+										jQuery.ajax({
+											type: "POST",
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											data: {
+												action: "rb_get_customfields",
+												'profile_types': profileTypeIDs,
+												'gender': jQuery("#ProfileGender").val()
+											},
+											success: function (results) {
+												jQuery(".tbody-table-customfields").html(results);
+											}
+										});	
+											
+										
+										
+									});
+
+									
+								});
+							</script>
+
+							<?php
+						}
 
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
 							foreach ($results3 as $data3) {
 								if ($action == "add") {
-									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"";
+									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\"";
 									if(is_array($ProfileType)){
 											if (in_array($data3['DataTypeID'], $ProfileType)) {
 												//echo " checked=\"checked\""; disabled preselect on ADD
@@ -1613,24 +1680,21 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Rate Profile", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
+							if(isset($_GET['action']) && !empty($_GET["ProfileID"])) { 
 							?>
 							<script type="text/javascript">
 							jQuery(document).ready(function(){
-									//hover stars
-									//rate profile
-
-
-									jQuery("#ProfileGender").on("change",function(){
+								jQuery("#ProfileGender").on("change",function(){
 										jQuery(".tbody-table-customfields").empty();
 
-										var checkedVals = $('.userProfileType:checkbox:checked').map(function() {
+										var checkedVals = jQuery('.userProfileType:checkbox:checked').map(function() {
 											return this.value;
 										}).get();
 										var userProfiles = checkedVals.join(",");
 
 										console.log('update the custom fields - ' + userProfiles);
-
-										jQuery.ajax({
+										if(checkedVals.length>0){
+											jQuery.ajax({
 												type: "POST",
 												url: "<?php echo admin_url('admin-ajax.php') ?>",
 												data: {
@@ -1642,9 +1706,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												success: function (results) {
 
 													jQuery(".tbody-table-customfields").html(results);
-													//console.log(results);
+													console.log(results);
 												}
 										});
+										}
+										
 									});
 
 									// User Profile checkbox selection update the custom fields
@@ -1652,8 +1718,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										jQuery("#ProfileGender").change();
 										console.log('update profile type');
 									});
+								});	
+							</script>
+							<?php
+						}
+							?>
+							
+							<script type="text/javascript">
+							jQuery(document).ready(function(){
+									//hover stars
+									//rate profile
 
 
+									
 									jQuery(".rate_profile").click(function(){
 										// TODO PATH INVALID
 										var loader = "<?php echo plugins_url('rb-agency/view/imgs/loader.gif'); ?>";
@@ -1783,54 +1860,80 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<h3 class="hndle"><span><?php echo  __("Public Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
 							<div class="main">
-<?php
-							// Public Information
-							echo "    <table class=\"rbform-table table-customfields\">\n";
-							echo "    <tr valign=\"top\">\n";
-							echo "      <th scope=\"row\">" . __("Gender", RBAGENCY_TEXTDOMAIN) . "</th>\n";
-							echo "      <td>";
-							echo "			<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
+							<!-- This is generated via ajax call -->
+							<?php
+							if(isset($_GET['action']) && $_GET['action'] == "add") { 
+								$getGender = $_GET["ProfileGender"];
+								
+								echo "<table class=\"rbform-table table-customfields\">\n";
+								echo "<tbody>
+										<tr valign=\"top\">
+									      <th scope=\"row\">Gender</th>
+									      <td><select name=\"ProfileGender\" id=\"ProfileGender\">
+									 			<option value=\"0\" selected=\"\">--</option>";
+												$genderArr = array("2"=> "Female","1"=>"Male");
+												foreach($genderArr as $k=>$v){
+													$selectedGender = $k == $getGender ? "selected" : "";
+													echo "<option value=\"".$k."\" $selectedGender>".$v."</option>";
+												}
+								echo "		 </select>
+									      </td>
+									    </tr>
+									  </tbody>";
+								echo "  <tbody class=\"tbody-table-customfields\">\n";
+								
+								echo "  </tbody>\n";
+								echo " </table>\n";
+							}else{
+								// Public Information
+								echo "    <table class=\"rbform-table table-customfields\">\n";
+								echo "    <tr valign=\"top\">\n";
+								echo "      <th scope=\"row\">" . __("Gender", RBAGENCY_TEXTDOMAIN) . "</th>\n";
+								echo "      <td>";
+								echo "			<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
 
-							$ProfileGender1 = get_user_meta(isset($ProfileUserLinked)?$ProfileUserLinked:0, "rb_agency_interact_pgender", true);
+								$ProfileGender1 = get_user_meta(isset($ProfileUserLinked)?$ProfileUserLinked:0, "rb_agency_interact_pgender", true);
 
-							if($ProfileGender==""){
-								$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"";
-							} elseif($ProfileGender1!=""){
-								$ProfileGender =$ProfileGender;
-							}
-
-							$query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
-							$results1=  $wpdb->get_results($query1,ARRAY_A);
-							$count1  = $wpdb->num_rows;
-							if ($count1 > 0) {
-								if (empty($GenderID) || ($GenderID < 1)) {
-									echo " <option value=\"0\" selected>--</option>\n";
+								if($ProfileGender==""){
+									$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"";
+								} elseif($ProfileGender1!=""){
+									$ProfileGender =$ProfileGender;
 								}
-								foreach ($results1 as $data1) {
-									echo " <option value=\"" . $data1["GenderID"] . "\" " . selected($ProfileGender, $data1["GenderID"]) . ">" . $data1["GenderTitle"] . "</option>\n";
+
+								$query1 = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender . "";
+								$results1=  $wpdb->get_results($query1,ARRAY_A);
+								$count1  = $wpdb->num_rows;
+								if ($count1 > 0) {
+									if (empty($GenderID) || ($GenderID < 1)) {
+										echo " <option value=\"0\" selected>--</option>\n";
+									}
+									foreach ($results1 as $data1) {
+										echo " <option value=\"" . $data1["GenderID"] . "\" " . selected($ProfileGender, $data1["GenderID"]) . ">" . $data1["GenderTitle"] . "</option>\n";
+									}
+									echo "</select>\n";
+								} else {
+									echo "" . __("No items to select", rb_restaurant_TEXTDOMAIN) . ".";
 								}
-								echo "</select>\n";
-							} else {
-								echo "" . __("No items to select", rb_restaurant_TEXTDOMAIN) . ".";
+								echo "        </td>\n";
+								echo "    </tr>\n";
+								echo "  <tbody class=\"tbody-table-customfields\">\n";
+								// Load custom fields , Public  = 0, ProfileCustomGender = true
+								// ProfileCustomView = 1 , Private
+								if (isset($_GET["ProfileGender"])) {
+									$ProfileGender = $_GET["ProfileGender"];
+									// -1 make sure that theres no exist profile in DB
+									rb_custom_fields(0, -1, $ProfileGender, true);
+								} else {
+									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+
+								}
+
+								 
+
+								echo "  </tbody>\n";
+								echo " </table>\n";
 							}
-							echo "        </td>\n";
-							echo "    </tr>\n";
-							echo "  <tbody class=\"tbody-table-customfields\">\n";
-							// Load custom fields , Public  = 0, ProfileCustomGender = true
-							// ProfileCustomView = 1 , Private
-							if (isset($_GET["ProfileGender"])) {
-								$ProfileGender = $_GET["ProfileGender"];
-								// -1 make sure that theres no exist profile in DB
-								rb_custom_fields(0, -1, $ProfileGender, true);
-							} else {
-								rb_custom_fields(0, $ProfileID, $ProfileGender, true);
-
-							}
-
-							echo "  </tbody>\n";
-							echo " </table>\n";
-
-?>
+							?>
 							</div>
 						</div>
 					</div>
