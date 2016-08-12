@@ -11,6 +11,15 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 ## Change Log
 
 ### 2.4.9
+* fixed - city is not showing up when state field is not populated.
+* fixed - on search results, pagination is working but only page 1 shows the results, page 2 and succeeding pages are empty.
+* new feature - users have the ability to delete or archive their profiles depending on the settings set by admin.
+* fixed - casting links - Post a New Job, View Your Job Postings, & View Your Applicants - are missing for automatically approved casting agents.
+* fixed -  open to all job types not showing on front-end.
+* fixed - Job Type - showing "There are no job types added. Click here to add" even if there are already entries.
+* fixed - search forms not working, showing No Profiles Found no matter what filter criteria used.
+* fixed - profile type filter in shortcode not working.
+* fixed - address block (logo) in Print Photos > PDF Format is broken.
 * fixed - the filter used to search for profiles is getting lost once you click to expand the result.
 * fixed - 2 calendars showing when populating the date custom field
 * fixed - searching for date is not working
