@@ -3328,7 +3328,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							<label>Custom Views:</label>
 							<div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" checked=\"checked\"/> Show on Registration Form</label></div>
-								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" /> Show on Initial Registration Form</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowInitialRegistration\" value=\"1\" /> Show on Initial Registration Form</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager</label></div>
