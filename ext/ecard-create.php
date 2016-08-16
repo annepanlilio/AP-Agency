@@ -476,9 +476,17 @@ add_action('wp_ajax_nopriv_request_datatype_bygender_memberregister','request_da
 function request_datatype_bygender_memberregister(){
 	
 	global $wpdb, $_POST;
+	$checked = "";
+	if(!empty($_REQUEST['profileType'])){
+		$profileTypeTitle = $_REQUEST['profileType'];
+		$genderID = $_POST['GenderID'];
+		$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) AND DataTypeTag = '".$profileTypeTitle."'  ORDER BY DataTypeTitle";
+		$checked = "checked";
+	}else{
+		$genderID = $_POST['GenderID'];
+		$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
+	}
 	
-	$genderID = $_POST['GenderID'];
-	$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
 	
 		
 				$results3 = $wpdb->get_results($query3,ARRAY_A);
