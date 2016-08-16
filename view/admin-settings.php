@@ -2626,6 +2626,8 @@ echo "<div id=\"custom-fields\">";
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_unittype  = $rb_agency_options_arr['rb_agency_option_unittype'];
 
+	$wpdb->query("ALTER TABLE ".table_agency_customfields." ADD ProfileCustomShowInitialRegistration int(10) DEFAULT 0");
+
 	?>
 
 		<style type="text/css">
@@ -2761,6 +2763,7 @@ echo "<div id=\"custom-fields\">";
 		$ProfileCustomShowSearch  	= isset($_POST['ProfileCustomShowSearch']) ? (int)$_POST['ProfileCustomShowSearch'] : 0;
 		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
 		$ProfileCustomShowRegistration= isset($_POST['ProfileCustomShowRegistration'])?(int)$_POST['ProfileCustomShowRegistration']:0;
+		$ProfileCustomShowInitialRegistration= isset($_POST['ProfileCustomShowInitialRegistration'])?(int)$_POST['ProfileCustomShowInitialRegistration']:0;
 		$ProfileCustomShowSearchSimple= isset($_POST['ProfileCustomShowSearchSimple'])?(int)$_POST['ProfileCustomShowSearchSimple']:0;
 		$ProfileCustomShowAdmin   	= isset($_POST['ProfileCustomShowAdmin'])?(int)$_POST['ProfileCustomShowAdmin']:0;
 		$ProfileCustomPrivacy   	= isset($_POST['ProfileCustomPrivacy'])?(int)$_POST['ProfileCustomPrivacy']:0;
@@ -2953,7 +2956,7 @@ echo "<div id=\"custom-fields\">";
 			}else {
 					
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager,ProfileCustomDisplayExDetails) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."','". esc_sql($ProfileCustomDisplayExDetails)."')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowInitialRegistration,ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager,ProfileCustomDisplayExDetails) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowInitialRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."','". esc_sql($ProfileCustomDisplayExDetails)."')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -3055,6 +3058,7 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomShowFilter=" . esc_sql($ProfileCustomShowFilter) . " ,
 								ProfileCustomShowLogged=" . esc_sql($ProfileCustomShowLogged) . " ,
 								ProfileCustomShowRegistration=" . esc_sql($ProfileCustomShowRegistration) . " ,
+								ProfileCustomShowInitialRegistration=" . esc_sql($ProfileCustomShowInitialRegistration) . " ,
 								ProfileCustomShowSearchSimple=" . esc_sql($ProfileCustomShowSearchSimple) . " ,
 								ProfileCustomShowAdmin=" . esc_sql($ProfileCustomShowAdmin) . " ,
 								ProfileCustomShowCastingJob=" . esc_sql($ProfileCustomShowCastingJob) . " ,
@@ -3324,6 +3328,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 							<label>Custom Views:</label>
 							<div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" checked=\"checked\"/> Show on Registration Form</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" /> Show on Initial Registration Form</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager</label></div>
@@ -3458,6 +3463,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													<label>Custom View*:</label>
 													<div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowRegistration\" value=\"1\" ". ($data1['ProfileCustomShowRegistration'] == 1 ? 'checked=\"checked\"':'')." /> Show on Registration Form</label></div>
+														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowInitialRegistration\" value=\"1\" ". ($data1['ProfileCustomShowInitialRegistration'] == 1 ? 'checked=\"checked\"':'')." /> Show on Initial Registration Form</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowSearchSimple"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile View</label></div>
