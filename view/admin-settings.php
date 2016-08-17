@@ -3895,7 +3895,10 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		if($data["ProfileCustomShowProfile"]==1){
 			$custom_views .="Profile";
 		}
-
+		if($data["ProfileCustomShowInitialRegistration"]==1){
+			$custom_views .="Initial Registration";
+		}
+		
 		echo "        <td class=\"column\">".$custom_views."</td>\n";
 		echo "        <td class=\"column\">".str_replace(",","<br/>",str_replace('_',' ',$data["ProfileCustomTypes"]))."</td>\n";
 
