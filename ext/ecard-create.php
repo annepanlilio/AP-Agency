@@ -414,61 +414,61 @@ function generate_admin_cusfieldscheckbox(){
 
 
 
-add_action('wp_ajax_save_data_custom_field','save_data_custom_field');
-add_action('wp_ajax_nopriv_save_data_custom_field','save_data_custom_field');
-function save_data_custom_field(){
-	
-	global $wpdb, $_POST;
-	
-	/* echo $_POST['DataID'];
-	DataID: dataTypeID, 
-	customFieldID: customFieldID,
-	inChange: inChangeInfo,
-	 */
-	 
-	$CustomTypeTitle = $wpdb->get_var("SELECT DataTypeTitle FROM ".table_agency_data_type ." WHERE DataTypeID = {$_POST['DataID']}");
-	
-	$ProfileCustomTypes = $wpdb->get_var("SELECT ProfileCustomTypes FROM ".table_agency_customfields_types ." WHERE ProfileCustomID = {$_POST['customFieldID']}");
-	
-	$ProfileCustomTypes_exp = explode(',',$ProfileCustomTypes);
-	
-	
-	print_r($ProfileCustomTypes_exp);
-	//delete to custom field
-	if($_POST['inChange'] == 0){
-		$ProfileCustomTypes_exp = array_diff($ProfileCustomTypes_exp, array($CustomTypeTitle));
-	}else{
-		$ProfileCustomTypes_exp[] = $CustomTypeTitle;
-	}
-	echo $ProfileCustomTypes;
-	
-	echo $CustomTypeTitle;
-	print_r($ProfileCustomTypes_exp);
-	
-	$ProfileCustomTypes_imp = implode(',',array_filter($ProfileCustomTypes_exp));
-	
-	$wpdb->update(table_agency_customfields_types, array('ProfileCustomTypes' => $ProfileCustomTypes_imp),array( 'ProfileCustomID' => $_POST['customFieldID']));
-	echo $wpdb->last_error;
-	
-	
-	
-	echo 'success changes on data custom fields.';
-	//echo $to,$subject,$message,$headers;
-	exit;
-}
-
 add_action('wp_ajax_save_data_type_gender','save_data_type_gender');
 add_action('wp_ajax_nopriv_save_data_type_gender','save_data_type_gender');
 function save_data_type_gender(){
 	
 	global $wpdb, $_POST;
 	
-	echo $_POST['DataID'];
-	$wpdb->update(table_agency_data_type, array('DataTypeGenderID' => $_POST['GenderID']),array( 'DataTypeID' => $_POST['DataID']));
+	//echo $_POST['DataID'];
+
+	$GenderID = "";
+	if(is_array($_POST['GenderID'])){
+		$GenderID = implode(",",$_POST["GenderID"]);
+	}else{
+		$GenderID = $_POST['GenderID'];
+	}
+	$wpdb->update(table_agency_data_type, array('DataTypeGenderID' => $GenderID),array( 'DataTypeID' => $_POST['DataID']));
 	echo $wpdb->last_error;
-	echo 'success changes on data type gender.';
+
+	$dataTypeID = "DataTypeID_".$_POST['DataID'];
+	$GenderText = rbGetDataTypeGenderTitleByID($_POST["GenderID"]);
+	update_option( $dataTypeID, $GenderText );
+	echo get_option( $dataTypeID);
+	//echo 'success changes on data type gender. '.rbGetDataTypeGenderTitleByID($_POST["GenderID"]);
 	//echo $to,$subject,$message,$headers;
 	exit;
+}
+
+function rbGetDataTypeGenderTitleByID($ids){
+	global $wpdb;
+	$genderTitles = [];
+	if(is_array($ids)){
+		foreach($ids as $k=>$v){
+			$q = "SELECT GenderTitle FROM ".table_agency_data_gender." WHERE GenderID = ".$v;
+			$results = $wpdb->get_results($q,ARRAY_A);
+			foreach($results as $result){
+				$genderTitles[] = $result["GenderTitle"];
+			}
+		}
+	}else{
+		$q = "SELECT GenderTitle FROM ".table_agency_data_gender." WHERE GenderID = ".$ids;
+		$results = $wpdb->get_results($q,ARRAY_A);
+		foreach($results as $result){
+			$genderTitles[] = $result["GenderTitle"];
+		}
+	}
+	$outputGenders = "";
+	$implodedGenderTitles = implode(",",$genderTitles);	
+	$getallgender = "SELECT * FROM ".table_agency_data_gender;
+	$countAllGender = $wpdb->get_results($getallgender);
+	$genderTitleArr = explode(",",$implodedGenderTitles);
+	if(count($genderTitleArr) == count($countAllGender)){
+		$outputGenders = "All Gender";
+	}else{
+		$outputGenders = $implodedGenderTitles;
+	}
+	return $outputGenders;
 }
 	
 add_action('wp_ajax_request_datatype_bygender_memberregister','request_datatype_bygender_memberregister');
@@ -480,36 +480,60 @@ function request_datatype_bygender_memberregister(){
 	if(!empty($_REQUEST['profileType'])){
 		$profileTypeTitle = str_replace("_"," ",$_REQUEST['profileType']);
 		$genderID = $_POST['GenderID'];
-		$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) AND DataTypeTitle = '".$profileTypeTitle."' ORDER BY DataTypeTitle";
+		$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND DataTypeTitle = '".$profileTypeTitle."' ORDER BY DataTypeTitle";
 		$checked = "checked";
 	}else{
 		$genderID = $_POST['GenderID'];
-		$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
+		$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 ORDER BY DataTypeTitle";
 	}
 	
 	
 		
+
 				$results3 = $wpdb->get_results($query3,ARRAY_A);
 				$count3 =  $wpdb->num_rows;
-	echo "		<div>";
+
+
+	
 				  $ptype_arr = isset($_POST["ProfileType"]) && !empty($_POST["ProfileType"])?$_POST["ProfileType"]: array();
 				foreach($results3 as $data3) {
 
-					$rb_agency_uri_profiletype = ucfirst($rb_agency_uri_profiletype);
-					$profiletypeid = $wpdb->get_var($wpdb->prepare("SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s",$rb_agency_uri_profiletype));
-
-					if(!empty($rb_agency_uri_profiletype) && isset($profiletypeid)){
-						if($profiletypeid ==  $data3["DataTypeID"]){
-								echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" /><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
-						}
-					} else {
-						echo "<div><label><input type=\"checkbox\" ".(in_array($data3["DataTypeID"],$ptype_arr)?"checked='checked'":"")." name=\"ProfileType[]\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" value=\"" . $data3['DataTypeID'] . "\"  /><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+					$dataTypeGenderIDs = get_option("DataTypeID_".$data3['DataTypeID']);
+					//get gender title by id
+					$genders = $wpdb->get_results("SELECT GenderTitle FROM ".table_agency_data_gender." WHERE GenderID = ".$genderID,ARRAY_A);
+					$genTitle = "";
+					foreach($genders as $gen){
+						$genTitle = $gen["GenderTitle"];
 					}
+					$arr = explode(",",$dataTypeGenderIDs);
+					if(in_array($genTitle, $arr)){
+
+						$rb_agency_uri_profiletype = ucfirst($rb_agency_uri_profiletype);
+						$profiletypeid = $wpdb->get_var($wpdb->prepare("SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s",$rb_agency_uri_profiletype));
+
+						if(!empty($rb_agency_uri_profiletype) && isset($profiletypeid)){
+							if($profiletypeid ==  $data3["DataTypeID"]){
+									echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+							}
+							
+						} else {
+							echo "<div><label><input type=\"checkbox\" ".(in_array($data3["DataTypeID"],$ptype_arr)?"checked='checked'":"")." name=\"ProfileType[]\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" value=\"" . $data3['DataTypeID'] . "\"  $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+							
+						}
+					}else{
+						if($profiletypeid ==  $data3["DataTypeID"]){
+									echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+						}
+
+					}
+
+					
 
 					//do_action('rb_get_profile_type_childs_checkbox_ajax_register_display',$data3["DataTypeID"]);
 				}
 	exit;
 }
+
 	
 
 

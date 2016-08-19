@@ -2242,7 +2242,26 @@ elseif ($ConfigID == 3) {
 			echo "          </div>\n";
 			echo "        </td>\n";
 			echo "        <td class=\"column\">". $data['DataTypeTag'] ."</td>\n";
-			echo "        <td class=\"column\"><span id='DataGender-{$DataTypeID}'>". $db_gender[$data['DataTypeGenderID']]. "</span>";
+
+			$dataTypeGenderIDs = get_option("DataTypeID_".$data['DataTypeID']);
+			echo "        <td class=\"column\"><span id='DataGender-{$DataTypeID}'>".$dataTypeGenderIDs. "</span>";
+			echo " - 
+				<a href='#' class='data-gender-edit ' genderID='".$data['DataTypeID']."'>Edit</a>
+				<div class='data-gender-edit-div hidden' id='data-gender-edit-div-".$data['DataTypeID']."'>";
+											
+				$idx = 0;
+				foreach ($results_gender as $result) {
+					$checked = "";
+					if(strpos($dataTypeGenderIDs,$result['GenderTitle']) > -1){
+						$checked = "checked";
+					}elseif($dataTypeGenderIDs == "All Gender"){
+						$checked = "checked";
+					}					
+					echo "<input type=\"checkbox\" class=\"select-gender-checkbox-".$data['DataTypeID']."\" value=\"".$result['GenderID']."\" $checked/>&nbsp;".$result['GenderTitle']."<br/>";
+					$idx++;
+				}
+				echo "<input type=\"button\" onclick='profileTypeGenderDoneBtn(".$data['DataTypeID'].")' class=\"button profiletype-gender-btn\" value=\"Done\"/> ";
+			/**echo "        <td class=\"column\"><span id='DataGender-{$DataTypeID}'>". $db_gender[$data['DataTypeGenderID']]. "</span>";
 			
 			echo " - 
 				<a href='#' class='data-gender-edit ' genderID='".$data['DataTypeID']."'>Edit</a>
@@ -2253,7 +2272,7 @@ elseif ($ConfigID == 3) {
 					$selected = $data['DataTypeGenderID'] == $result['GenderID'] ? "selected" : "";	
 					echo "<option value=\"".$result['GenderID']."\" $selected>".$result['GenderTitle']. "</option>";
 				}
-				echo "</select>";
+				echo "</select>";**/
 			echo "</div>";
 			
 			
@@ -2382,6 +2401,29 @@ elseif ($ConfigID == 3) {
 						jQuery("#data-gender-edit-div-"+dataTypeID).toggle();
 					});
 					
+				}
+
+				//pass selected gender
+				function profileTypeGenderDoneBtn(dataTypeID){
+
+					var selectedGenderIDs = [];
+					jQuery(".select-gender-checkbox-"+dataTypeID+":checked").each(function(){
+						selectedGenderIDs.push(jQuery(this).val());
+						//alert(jQuery(this).val());
+					});
+
+					jQuery.post("'.admin_url("admin-ajax.php").'", 
+						{
+						DataID: dataTypeID, 
+						GenderID: selectedGenderIDs,
+						action:"save_data_type_gender"
+						})
+					.done(function(data) {						
+						console.log(data);
+						//console.log(dataTypeID);
+						jQuery("#DataGender-"+dataTypeID).text(data);
+						jQuery("#data-gender-edit-div-"+dataTypeID).toggle();
+					});
 				}
 			</script>
 		';
@@ -2965,6 +3007,9 @@ echo "<div id=\"custom-fields\">";
 				//add_option("rb_agency_ProfileCustomShowCastingJob_".$lastid, $ProfileCustomShowCastingJob);
 				//add_option("rb_agency_ProfileCustomShowCastingRegister_".$lastid, $ProfileCustomShowCastingJob);
 
+				$implodedProfileCustomShowGender = rbGetDataTypeGenderTitleByID($_POST["ProfileCustomShowGenderArr"]);
+				update_option("ProfileCustomShowGenderArr_".$lastid,$implodedProfileCustomShowGender);
+
 				/*
 				 * Add to Custom Client
 				 * if the Profile Custom Client is
@@ -3073,6 +3118,8 @@ echo "<div id=\"custom-fields\">";
 				$ProfileCustomNotifyAdmin = isset($_POST['ProfileCustomNotifyAdmin']) ? 1 : 0;
 				update_option("ProfileCustomNotifyAdmin_".$ProfileCustomID,$ProfileCustomNotifyAdmin);
 
+				$implodedProfileCustomShowGender = rbGetDataTypeGenderTitleByID($_POST["ProfileCustomShowGenderArr"]);
+				update_option("ProfileCustomShowGenderArr_".$ProfileCustomID,$implodedProfileCustomShowGender);
 				//$upd_casting_job = update_option("rb_agency_ProfileCustomShowCastingJob_".$ProfileCustomID, $ProfileCustomShowCastingJob);
 				//$upd_casting_register = update_option("rb_agency_ProfileCustomShowCastingRegister_".$ProfileCustomID, $ProfileCustomShowCastingRegister);
 
@@ -3348,7 +3395,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 						<div class=\"rbfield rbselect rbsingle\">
 							<label>Gender*:</label>
 							<div>";
-							$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+							/**$query = "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 							echo "<select name=\"ProfileCustomShowGender\">";
 							echo "<option value=\"\">All Gender</option>";
 							$queryShowGender = $wpdb->get_results($query,ARRAY_A);
@@ -3359,7 +3406,18 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 										echo "<option value=\"".$dataShowGender["GenderID"]."\">".$dataShowGender["GenderTitle"]."</option>";
 									}
 								}
-							echo "</select>";
+							echo "</select>";**/
+
+
+							$idx = 0;
+							$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+							$queryShowGender = $wpdb->get_results($query,ARRAY_A);
+							foreach ($queryShowGender as $dataShowGender) {
+																	
+								echo "<input type=\"checkbox\" name=\"ProfileCustomShowGenderArr[]\" class=\"select-gender-checkbox\" value=\"".$dataShowGender['GenderID']."\" />&nbsp;".$dataShowGender['GenderTitle']."<br/>";
+								
+								$idx++;
+							}
 							echo "</div>
 						</div>
 						<div class=\"rbfield rbcheckbox rbmulti\">
@@ -3484,7 +3542,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 													<label>Gender*:</label>
 													<div>";
 
-													$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+													/**$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 													echo "<select name=\"ProfileCustomShowGender\">";
 													echo "<option value=\"\">All Gender</option>";
 													$queryShowGender = $wpdb->get_results($query,ARRAY_A);
@@ -3493,7 +3551,22 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 																echo "<option value=\"".$dataShowGender["GenderID"]."\" ". selected($data1["ProfileCustomShowGender"],$dataShowGender["GenderID"],false).">".$dataShowGender["GenderTitle"]."</option>";
 
 														}
-													echo "</select>";
+													echo "</select>";**/
+													$ProfileCustomShowGenderArrValues = get_option("ProfileCustomShowGenderArr_".$_GET['ProfileCustomID']);
+													
+													$idx = 0;
+													$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
+													$queryShowGender = $wpdb->get_results($query,ARRAY_A);
+													foreach ($queryShowGender as $dataShowGender) {
+														$checked = "";
+														if(strpos($ProfileCustomShowGenderArrValues,$dataShowGender['GenderTitle'])>-1){
+															$checked = "checked";
+														}elseif($ProfileCustomShowGenderArrValues == "All Gender"){
+															$checked = "checked";
+														}				
+														echo "<input type=\"checkbox\" name=\"ProfileCustomShowGenderArr[]\" class=\"select-gender-checkbox\" value=\"".$dataShowGender['GenderID']."\" $checked/>&nbsp;".$dataShowGender['GenderTitle']."<br/>";
+														$idx++;
+													}
 
 												echo "
 													</div>
@@ -3876,11 +3949,33 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$queryGender = $wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=".$data['ProfileCustomShowGender']."",ARRAY_A);
 		$fetchGender = current($queryGender);
 		$countGender = count($queryGender);
-		if($countGender > 0){
+
+		$getallgender = "SELECT * FROM ".table_agency_data_gender;
+		$countAllGender = $wpdb->get_results($getallgender);
+
+		$ProfileCustomShowGenderArrValues = get_option("ProfileCustomShowGenderArr_".$data['ProfileCustomID']);
+		$ProfileCustomShowGenderArrValuesExploded = explode(",",$ProfileCustomShowGenderArrValues);
+
+		if(!empty($ProfileCustomShowGenderArrValues)){
+			if(count($ProfileCustomShowGenderArrValuesExploded) == count($countAllGender)){
+				echo "        <td class=\"column\">All Gender</td>\n";
+			}else{
+				echo "        <td class=\"column\">".implode("<br/>",$ProfileCustomShowGenderArrValuesExploded)."</td>\n";
+			}
+			
+		}else{
+			if($countGender > 0){
+				echo "        <td class=\"column\">".$fetchGender["GenderTitle"]."</td>\n";
+			} else {
+				echo "        <td class=\"column\">All Gender</td>\n";
+			}
+		}
+
+		/**if($countGender > 0){
 			echo "        <td class=\"column\">".$fetchGender["GenderTitle"]."</td>\n";
 		} else {
 			echo "        <td class=\"column\">All Gender</td>\n";
-		}
+		}**/
 
 		$custom_views="";
 		if($data["ProfileCustomShowRegistration"]==1){
