@@ -3089,6 +3089,7 @@ echo "<div id=\"custom-fields\">";
 				}
 			} else {
 
+
 				$update = "UPDATE " . table_agency_customfields . "
 							SET
 								ProfileCustomTitle='" . esc_sql($ProfileCustomTitle) . "',
@@ -3140,7 +3141,8 @@ echo "<div id=\"custom-fields\">";
 				$result = $wpdb->get_results($get_types,ARRAY_A);
 
 				foreach ($result as $typ){
-					$t = 'ProfileType' . trim($typ['DataTypeTitle']);$t = str_replace(' ', '_', $t);
+					$t = 'ProfileType' . trim($typ['DataTypeTitle']);
+					$t = str_replace(' ', '_', $t);
 					$n = trim($typ['DataTypeTitle']);
 					$n = str_replace(' ', '_', $n);
 					if($$t) {
@@ -3152,6 +3154,28 @@ echo "<div id=\"custom-fields\">";
 				}
 
 				$Types = rtrim($Types, ",");
+				
+				//check if has parent, then checked
+				$TypesArr = explode(",",$Types);
+				$ParentIDs = [];
+				foreach($TypesArr as $type){
+					$title = str_replace('_',' ',$type);
+					$sql = "SELECT DataTypeParentID FROM ".table_agency_data_type." WHERE DataTypeTitle = %s";
+					$results = $wpdb->get_results($wpdb->prepare($sql,$title),ARRAY_A);
+					foreach($results as $result){
+						if($result["DataTypeParentID"]>0){
+							if(!in_array($result["DataTypeParentID"], $ParentIDs)){
+								$ParentIDs[] = $result["DataTypeParentID"];
+							}							
+						}
+					}
+				}
+				//include the parent to be check
+				foreach($ParentIDs as $parentID){
+					$sql = "SELECT DataTypeTitle FROM ".table_agency_data_type." WHERE DataTypeID = %d";
+					$result = $wpdb->get_row($wpdb->prepare($sql,$parentID),ARRAY_A);
+					$Types .= ",".$result["DataTypeTitle"];
+				}
 
 				if($Types != "" or !empty($Types)){
 
