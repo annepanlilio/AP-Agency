@@ -2302,7 +2302,6 @@ elseif ($ConfigID == 3) {
 			}
 			//print_r($edit_userCustomFields);
 			foreach ($db_ProfileCustomFields as $data_CustomFields) {
-				
 				$checked = array_key_exists( $data_CustomFields['ProfileCustomID'], $edit_userCustomFields);
 				echo "<label>
 					<input name=\"inner-custom-fields[]\" value=\"".$data_CustomFields['ProfileCustomID']."\" ";
@@ -3951,10 +3950,13 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$countGender = count($queryGender);
 
 		$getallgender = "SELECT * FROM ".table_agency_data_gender;
-		$countAllGender = $wpdb->get_results($getallgender);
-
+		$countAllGender = $wpdb->get_results($getallgender,ARRAY_A);
 		$ProfileCustomShowGenderArrValues = get_option("ProfileCustomShowGenderArr_".$data['ProfileCustomID']);
 		$ProfileCustomShowGenderArrValuesExploded = explode(",",$ProfileCustomShowGenderArrValues);
+
+		if(empty($ProfileCustomShowGenderArrValues)){
+			update_option("ProfileCustomShowGenderArr_".$data["ProfileCustomID"] ,'Male,Female');			
+		}	
 
 		if(!empty($ProfileCustomShowGenderArrValues)){
 			if(count($ProfileCustomShowGenderArrValuesExploded) == count($countAllGender)){
@@ -3964,6 +3966,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			}
 			
 		}else{
+
+			//update_option("ProfileCustomShowGenderArr_".$result["ProfileCustomID"]);
 			if($countGender > 0){
 				echo "        <td class=\"column\">".$fetchGender["GenderTitle"]."</td>\n";
 			} else {
