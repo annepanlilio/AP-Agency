@@ -491,6 +491,22 @@ elseif ($ConfigID == 1) {
 		echo "    <input type=\"hidden\" name=\"rb_agency_options[rb_agency_option_old_unittype]\" value=\"".(isset($rb_agency_options_arr['rb_agency_option_old_unittype']) && $rb_agency_options_arr['rb_agency_option_old_unittype']==$rb_agency_options_arr['rb_agency_option_unittype']?$rb_agency_options_arr['rb_agency_option_old_unittype']:$rb_agency_options_arr['rb_agency_option_unittype'])."\" />";
 		echo "   </td>\n";
 		echo " </tr>\n";
+
+		/*
+		 * Jobs display
+		 */
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Job Display Options', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
+		/** buttons **/
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Display Options', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "   <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_hide_view_this_job_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_hide_view_this_job_button'])?$rb_agency_options_arr['rb_agency_option_hide_view_this_job_button']:0, 1,false)."/>". __("Hide \"View This Job\" button", RBAGENCY_TEXTDOMAIN) ."<br/>";
+		echo "   <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_hide_tweet_job_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_hide_tweet_job_button'])?$rb_agency_options_arr['rb_agency_option_hide_tweet_job_button']:0, 1,false)."/>". __("Hide \"Tweet\" button", RBAGENCY_TEXTDOMAIN) ."<br/>";
+		echo "   <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_hide_share_job_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_hide_share_job_button'])?$rb_agency_options_arr['rb_agency_option_hide_share_job_button']:0, 1,false)."/>". __("Hide \"Share\" button", RBAGENCY_TEXTDOMAIN) ."<br/>";
+		echo "</td></tr>";
+
+		
 		/*
 		 * Profile Display
 		 */
