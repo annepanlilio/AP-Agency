@@ -378,6 +378,7 @@
 					include(RBAGENCY_PLUGIN_DIR .'theme/include-login.php');
 				}
 			}
+			rbGetOtherAccountProfileLinks();
 
 		} else {
 			// There is no record found.

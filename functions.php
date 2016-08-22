@@ -6408,4 +6408,49 @@ function rb_load_customfields_search($visibility = 0,$result){
 		echo "	</div>";
 	}
 }
+
+function rbGetOtherAccountProfileLinks($profileID = ""){
+
+	# Get profile gallery
+	$profileURLString = get_query_var('target'); //$_REQUEST["profile"];
+	$urlexploade = explode("/", $profileURLString);
+	$profileURL=$urlexploade[0];
+
+	global $wpdb;
+	$query = "SELECT ProfileID FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";
+	$result = $wpdb->get_row($wpdb->prepare($query,$profileURL),ARRAY_A);
+
+	if(empty($profileID)){
+		$ProfileID = $result["ProfileID"];
+	}else{
+		$ProfileID = $profileID;
+	}
+	
+
+	$otherAccountURLsArr = [];
+	$userMetaValue = get_user_meta($ProfileID,"otherAccountURLs_".$ProfileID,true);
+	$userMetaValueArr = explode("|",$userMetaValue);
+	foreach($userMetaValueArr as $url){
+		if(!empty($url)){
+			$otherAccountURLsArr[] = $url;
+		}		
+	}
+	if(!empty($otherAccountURLsArr)){
+		echo "<br/>";
+		echo "<h3>".__("You may also want to check out:",RBAGENCY_TEXTDOMAIN)."</h3>";
+		if(!empty($profileID)){
+			echo "<table><thead><th>Account URL</th><th></th></thead><tbody>";
+			foreach($otherAccountURLsArr as $url){ // with delete button
+				echo "<tr><td><a href=\"".$url."\"> ".$url."</a></td><td><a href=\"".site_url()."/profile-member/accounts/?del=".$url."\" class=\"button-primary\">Delete</a></td></tr>";
+			}
+			echo "</tbody></table>";
+		}else{
+			foreach($otherAccountURLsArr as $url){
+				echo "<a href=\"".$url."\"> ".$url."</a>";
+			}
+		}
+		
+	}
+	
+}
 ?>

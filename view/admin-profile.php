@@ -500,6 +500,15 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					update_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',$ShowProfileContactLinkFlickr);
 
 
+					//save other account urls here
+					$otherURLS = [];
+					for($idx=0;$idx<count($_POST["otherAccountURLs"]);$idx++){
+						if(!empty($_POST["otherAccountURLs"][$idx])){
+							$otherURLS[] = $_POST["otherAccountURLs"][$idx];
+						}						
+					}
+					update_user_meta($ProfileID,"otherAccountURLs_".$ProfileID,implode("|",$otherURLS));
+
 						//Personal expanded detail
 						$hide_age_year = isset($_REQUEST['hide_age_year']) ? true : false;
 						$hide_age_month = isset($_REQUEST['hide_age_month']) ? true : false;
@@ -2915,7 +2924,41 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							</div>
 						</div>
 					</div>
+					<script type="text/javascript">
+						jQuery(document).ready(function(){
+							jQuery(".add-account-url-btn").click(function(event){
+								event.preventDefault;
+								jQuery("#other-account-url-wrapper").append("<input type='text' class='add-other-account-url-txt' name='otherAccountURLs[]' placeholder='Add URL Here' /><br/> ");
+							});
+						});
+					</script>
 
+					<div id="dashboard_line_to_links" class="postbox ">
+						<div class="handlediv" title="Click to toggle"><br></div>
+						<h3 class="hndle"><span><?php echo  __("Link to Other Accounts", RBAGENCY_TEXTDOMAIN); ?></span></h3>
+						<div class="inside">
+							<div class="main" >
+							<div id="other-account-url-wrapper">
+								
+								<?php 
+								$OtherProfileAccountUserMeta = get_user_meta($_GET["ProfileID"],"otherAccountURLs_".$_GET["ProfileID"],true);
+
+								if(empty($OtherProfileAccountUserMeta)){
+									echo "<input type=\"text\" class=\"add-other-account-url-txt\" name=\"otherAccountURLs[]\" placeholder=\"Add URL Here\"/><br/>";
+								}else{
+									$OtherProfileAccountUserMeta = explode("|",$OtherProfileAccountUserMeta);
+									foreach($OtherProfileAccountUserMeta as $url){
+										echo "<input type=\"text\" class=\"add-other-account-url-txt\" name=\"otherAccountURLs[]\" placeholder=\"Add URL Here\" value=\"".$url."\"/><br/>";
+									}
+								}
+								
+								?>
+							</div>							
+							<input type="button" class="add-account-url-btn" value="Add URL">
+							
+							</div>
+						</div>
+					</div>
 
 				</div>
 			</div>
