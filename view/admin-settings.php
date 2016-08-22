@@ -504,6 +504,7 @@ elseif ($ConfigID == 1) {
 		echo "   <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_hide_view_this_job_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_hide_view_this_job_button'])?$rb_agency_options_arr['rb_agency_option_hide_view_this_job_button']:0, 1,false)."/>". __("Hide \"View This Job\" button", RBAGENCY_TEXTDOMAIN) ."<br/>";
 		echo "   <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_hide_tweet_job_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_hide_tweet_job_button'])?$rb_agency_options_arr['rb_agency_option_hide_tweet_job_button']:0, 1,false)."/>". __("Hide \"Tweet\" button", RBAGENCY_TEXTDOMAIN) ."<br/>";
 		echo "   <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_hide_share_job_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_hide_share_job_button'])?$rb_agency_options_arr['rb_agency_option_hide_share_job_button']:0, 1,false)."/>". __("Hide \"Share\" button", RBAGENCY_TEXTDOMAIN) ."<br/>";
+		echo "   <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_hide_apply_this_job_button]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_hide_apply_this_job_button'])?$rb_agency_options_arr['rb_agency_option_hide_apply_this_job_button']:0, 1,false)."/>". __("Hide \"Apply To This Job\" button", RBAGENCY_TEXTDOMAIN) ."<br/>";
 		echo "</td></tr>";
 
 		
