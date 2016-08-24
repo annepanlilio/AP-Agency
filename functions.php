@@ -5789,46 +5789,34 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 
 
 		foreach($childs as $child){
+			$DataTypeOptionValue = get_option("DataTypeID_".$child["DataTypeID"]);
+
 			$dash = "";
 			$space ="";
 			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
 				$dash .= "-";
 				$space .="&nbsp;&nbsp;";
 			}
-
-			$DataTypeOptionValue = get_option("DataTypeID_".$child["DataTypeID"]);
-
-			if(!empty($DataTypeOptionValue)){
-				if($DataTypeOptionValue == $DataTypeGenderTitle || $DataTypeOptionValue == 'All Gender'){
-					if ($action == "add") {
-				
-				
-						echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"";
-							if(is_array($ProfileType)){
-								if (in_array($child['DataTypeTitle'], $ProfileTypeArr)) {
-									echo " checked=\"checked\"";
-								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-							} else {
-								if ($child['DataTypeTitle'] == $ProfileTypeArr) {
-									echo " checked=\"checked\"";
-								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-							}
+			if ($action == "add") {
+					if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+						echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"/>&nbsp;".$child['DataTypeTitle']."<br>";
 					}
-					if ($action == "editRecord") {
-						echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" class=\"userProfileType\"";
-						if(is_array($ProfileType)){
-								if (in_array($child['DataTypeTitle'], $ProfileTypeArr)) {
-									echo " checked=\"checked\"";
-								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-						} else {
-								if ($data3['DataTypeTitle'] == $ProfileTypeArr) {
-									echo " checked=\"checked\"";
-								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-						}
-					}
+								}
+								if ($action == "editRecord") {
+									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" class=\"userProfileType\"";
+									if(is_array($ProfileType)){
+											if (in_array($child['DataTypeID'], $ProfileType)) {
+												echo " checked=\"checked\"";
+											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+									} else {
+											if ($data3['DataTypeID'] == $ProfileType) {
+												echo " checked=\"checked\"";
+											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+									}
+								}
 
-					do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType,$ProfileGenderID);
-				}
+			if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+				do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType);
 			}
 
 			
