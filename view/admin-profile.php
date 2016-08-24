@@ -1574,19 +1574,35 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										console.log(profileTypeIDs);
 										
 
-										//here , make ajax call to get custom fields
-										jQuery.ajax({
-											type: "POST",
-											url: "<?php echo admin_url('admin-ajax.php') ?>",
-											data: {
-												action: "rb_get_customfields",
-												'profile_types': profileTypeIDs,
-												'gender': jQuery("#ProfileGender").val()
-											},
-											success: function (results) {
-												jQuery(".tbody-table-customfields").html(results);
-											}
-										});	
+										if(profileTypeIDs.length>0){
+											//here , make ajax call to get custom fields
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields",
+													'profile_types': profileTypeIDs,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+												}
+											});	
+										}else{
+											jQuery.ajax({
+													type: "POST",
+													url: "<?php echo admin_url('admin-ajax.php') ?>",
+													data: {
+														action: "generate_admin_cusfieldscheckbox",
+														'gender': jQuery("#ProfileGender").val()
+													},
+													success: function (results) {
+														jQuery(".tbody-table-customfields").html(results);
+														console.log(results);
+													}
+												});
+										}
+										
 																			
 									});
 
@@ -1595,19 +1611,36 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 										jQuery(".tbody-table-customfields").empty();
 
-										//here , make ajax call to get custom fields
-										jQuery.ajax({
-											type: "POST",
-											url: "<?php echo admin_url('admin-ajax.php') ?>",
-											data: {
-												action: "rb_get_customfields",
-												'profile_types': profileTypeIDs,
-												'gender': jQuery("#ProfileGender").val()
-											},
-											success: function (results) {
-												jQuery(".tbody-table-customfields").html(results);
-											}
-										});	
+
+										if(profileTypeIDs.length > 0){
+											//here , make ajax call to get custom fields
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields",
+													'profile_types': profileTypeIDs,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+												}
+											});	
+										}else{
+											jQuery.ajax({
+													type: "POST",
+													url: "<?php echo admin_url('admin-ajax.php') ?>",
+													data: {
+														action: "generate_admin_cusfieldscheckbox",
+														'gender': jQuery(this).val()
+													},
+													success: function (results) {
+														jQuery(".tbody-table-customfields").html(results);
+														console.log(results);
+													}
+												});
+										}
+										
 											
 										
 										
@@ -1630,7 +1663,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							foreach($ExplodedProfileType as $p){
 								$ProfileTypeArr[] = $p;
 							}
-							
+
 							foreach ($results3 as $data3) {
 								
 								#Get the gender id allowed for each datatype
@@ -1644,7 +1677,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											
 										}
 										if ($action == "editRecord") {
-
+											//print_r($ProfileType);
+											//print_r($ProfileTypeArr);
 											echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"userProfileType\"";
 											if(is_array($ProfileType)){
 													if (in_array($data3['DataTypeID'], $ProfileTypeArr)) {
@@ -1709,10 +1743,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "    <tr valign=\"top\">\n";
 							echo "        <th scope=\"row\">" . __("Rate Profile", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
-							if(isset($_GET['action']) && !empty($_GET["ProfileID"])) { 
+							if(isset($_GET['action']) && !empty($_GET["ProfileID"]) && $_GET["action"] == 'editRecord') { 
 							?>
 							<script type="text/javascript">
 							jQuery(document).ready(function(){
+
+
 								jQuery("#ProfileGender").on("change",function(){
 										jQuery(".tbody-table-customfields").empty();
 
@@ -1753,10 +1789,30 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						}
 							?>
 							
+							<?php if(empty($_GET['ProfileID'])) { ?>
+								<script type="text/javascript">
+									jQuery(document).ready(function(){
+										jQuery.ajax({
+											type: "POST",
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											data: {
+												action: "generate_admin_cusfieldscheckbox",
+												'gender': "<?php echo $_GET["ProfileGender"]; ?>"
+											},
+											success: function (results) {
+												jQuery(".tbody-table-customfields").html(results);
+												console.log(results);
+											}
+										});
+									});
+								</script>
+							<?php } ?>
 							<script type="text/javascript">
 							jQuery(document).ready(function(){
 									//hover stars
 									//rate profile
+
+									
 
 
 									

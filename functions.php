@@ -1387,16 +1387,17 @@
 							if(strpos($ptype,$types) > -1) $permit_type=true;
 					}
 				}
-
+				$ProfileGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGender);
+				$ProfileCustomShowGender = get_option("ProfileCustomShowGenderArr_".$PID,true);
 				if($permit_type || $all_permit){
 					if($ProfileGenderShow ==true){
-						if($data3["ProfileCustomShowGender"] == $ProfileGender ){ // Depends on Current LoggedIn User's Gender
+						if(strpos($ProfileCustomShowGender, $ProfileGenderTitle) >-1 || strpos($ProfileCustomShowGender, 'All Gender') >- 1){ // Depends on Current LoggedIn User's Gender
 							rb_custom_fields_template($visibility, $ProfileID, $data3);
-						} elseif(empty($data3["ProfileCustomShowGender"])) {
+						} 
+					} else {
+						if(strpos($ProfileCustomShowGender, $ProfileGenderTitle) >-1 || strpos($ProfileCustomShowGender, 'All Gender') >-1){ // Depends on Current LoggedIn User's Gender
 							rb_custom_fields_template($visibility, $ProfileID, $data3);
 						}
-					} else {
-							rb_custom_fields_template($visibility, $ProfileID, $data3);
 					}
 					$count3++;
 
@@ -5949,8 +5950,11 @@ function rb_get_customfields(){
 
 		$results = $wpdb->get_results($sql,ARRAY_A);
 		foreach($results as $data){
+			$ProfileGenderTitle = rbGetDataTypeGenderTitleByID($_REQUEST['gender']);
+			$ProfileCustomShowGender = get_option("ProfileCustomShowGenderArr_".$data["ProfileCustomID"],true);
+			//echo $ProfileCustomShowGender.' '.$_REQUEST['gender'];
 			if(!in_array($data["ProfileCustomID"],$arrChecker)){
-				if($data["ProfileCustomShowGender"] == 0 || $data["ProfileCustomShowGender"] == $_REQUEST['gender']){
+				if(strpos($ProfileCustomShowGender, $ProfileGenderTitle)>-1 || strpos($ProfileCustomShowGender, 'All Gender')>-1){
 					rb_custom_fields_template_noprofile(1,$data);
 				}
 			}
