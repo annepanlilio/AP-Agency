@@ -100,11 +100,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	$ProfileDateUpdated = isset($_POST['ProfileDateUpdated'])?$_POST['ProfileDateUpdated']:"";
 	$ProfileDateViewLast = isset($_POST['ProfileDateViewLast'])?$_POST['ProfileDateViewLast']:"";
 	$ProfileType = isset($_POST['ProfileType'])?$_POST['ProfileType']:"";
-
+	
 	if (is_array($ProfileType)) {
-		$ProfileType = implode(",", $ProfileType);
+		$ProfileType = implode("|", $ProfileType);
 	}
-
 	$ProfileIsActive = isset($_POST['ProfileIsActive'])?$_POST['ProfileIsActive']:""; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileIsFeatured = isset($_POST['ProfileIsFeatured'])?$_POST['ProfileIsFeatured']:"";
 	$ProfileIsPromoted = isset($_POST['ProfileIsPromoted'])?$_POST['ProfileIsPromoted']:"";
@@ -281,6 +280,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							'" . esc_attr($ProfileDateViewLast) . "',
 							'" . esc_attr($CustomOrder) . "'
 						)";
+						
 					$results = $wpdb->query($insert);
 					$ProfileID = $wpdb->insert_id;
 					add_user_meta( $new_user, 'rb_agency_interact_profiletype',true);
@@ -441,6 +441,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileIsBooking='" . esc_attr($ProfileIsBooking) . "',
 							CustomOrder='" . esc_attr($CustomOrder) . "'
 							WHERE ProfileID=$ProfileID";
+
 						$results = $wpdb->query($update);
 
 							update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
@@ -1545,9 +1546,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$wpdb->query("ALTER TABLE ".table_agency_data_type." ADD DataTypeGenderID int(10) DEFAULT 0"); //zero means all gender
 							}
 
+							
 
-							$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$ProfileGender} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
+							$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 ORDER BY DataTypeTitle";
 							$results3=  $wpdb->get_results($query3,ARRAY_A);
+							
 							if(isset($_GET['action']) && $_GET['action'] == "add" && empty($_GET["ProfileID"])) { 
 							?>
 							<script type="text/javascript">
@@ -1617,36 +1620,53 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<?php
 						}
 
+							# get gender title
+							$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGender);
+
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
-							foreach ($results3 as $data3) {
-								if ($action == "add") {
-									echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\"";
-									if(is_array($ProfileType)){
-											if (in_array($data3['DataTypeID'], $ProfileType)) {
-												//echo " checked=\"checked\""; disabled preselect on ADD
-											}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									} else {
-											if ($data3['DataTypeID'] == $ProfileType) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									}
-								}
-								if ($action == "editRecord") {
-									echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"userProfileType\"";
-									if(is_array($ProfileType)){
-											if (in_array($data3['DataTypeID'], $ProfileType)) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									} else {
-											if ($data3['DataTypeID'] == $ProfileType) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
-									}
-								}
-
-								do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$data3['DataTypeID'],$action,$ProfileType);
+							$ProfileTypeArr = [];
+							$ExplodedProfileType = explode("|",$ProfileType[0]);
+							foreach($ExplodedProfileType as $p){
+								$ProfileTypeArr[] = $p;
 							}
+							$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGender);
+							foreach ($results3 as $data3) {
+								
+								#Get the gender id allowed for each datatype
+								$DataTypeOptionValue = get_option("DataTypeID_".$data3["DataTypeID"]);
+
+								
+										if ($action == "add") {
+											if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+												echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\" >".$data3['DataTypeTitle']. "<br />\n";
+											}
+											
+										}
+										if ($action == "editRecord") {
+
+											echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"userProfileType\"";
+											if(is_array($ProfileType)){
+													if (in_array($data3['DataTypeTitle'], $ProfileTypeArr)) {
+														echo " checked=\"checked\"";
+													}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+											} else {
+													if ($data3['DataTypeTitle'] == $ProfileTypeArr) {
+														echo " checked=\"checked\"";
+													}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+											}
+										}
+
+										if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+											do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$data3['DataTypeID'],$action,$ProfileType,$DataTypeGenderTitle);
+										}
+									
+								
+								
+								
+							}
+
+
 							echo "      </fieldset>\n";
 							if ($count3 < 1) {
 								echo "" . __("No items to select", RBAGENCY_TEXTDOMAIN) . ". <a href='" . admin_url("admin.php?page=rb_agency_settings&ConfigID=5") . "'>" . __("Setup Options", RBAGENCY_TEXTDOMAIN) . "</a>\n";
@@ -1878,13 +1898,21 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "<tbody>
 										<tr valign=\"top\">
 									      <th scope=\"row\">Gender</th>
-									      <td><select name=\"ProfileGender\" id=\"ProfileGender\">
-									 			<option value=\"0\" selected=\"\">--</option>";
-												$genderArr = array("2"=> "Female","1"=>"Male");
-												foreach($genderArr as $k=>$v){
-													$selectedGender = $k == $getGender ? "selected" : "";
-													echo "<option value=\"".$k."\" $selectedGender>".$v."</option>";
-												}
+									      <td><select name=\"ProfileGender\" id=\"ProfileGender\">";
+									 			
+												$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"";		      	
+							$sql = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender;
+							$results=  $wpdb->get_results($sql,ARRAY_A);
+							$count  = $wpdb->num_rows;
+							if ($count > 0) {
+								
+								foreach ($results as $data) {
+									echo " <option value=\"" . $data["GenderID"] . "\" " . selected($ProfileGender, $data["GenderID"]) . ">" . $data["GenderTitle"] . "</option>\n";
+								}
+								echo "</select>\n";
+							} else {
+								echo "" . __("No items to select", rb_restaurant_TEXTDOMAIN) . ".";
+							}
 								echo "		 </select>
 									      </td>
 									    </tr>

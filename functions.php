@@ -5772,11 +5772,22 @@ function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
 add_action("rb_get_profile_type_childs_checkbox_edit_display","rb_get_profile_type_childs_checkbox_edit",11,3);
 
 //for profile manage
-function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$ProfileType){
+function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$ProfileType,$ProfileGenderID = ""){
 	global $wpdb;
 	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
 	$childs = $wpdb->get_results($sql,ARRAY_A);
+
+	$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGenderID);
+
 	if($wpdb->num_rows > 0){
+
+		$ProfileTypeArr = [];
+		$ExplodedProfileType = explode("|",$ProfileType[0]);
+		foreach($ExplodedProfileType as $p){
+			$ProfileTypeArr[] = $p;
+		}
+
+
 		foreach($childs as $child){
 			$dash = "";
 			$space ="";
@@ -5784,36 +5795,47 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 				$dash .= "-";
 				$space .="&nbsp;&nbsp;";
 			}
-			if ($action == "add") {
-									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"";
-									if(is_array($ProfileType)){
-											if (in_array($child['DataTypeID'], $ProfileType)) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-									} else {
-											if ($child['DataTypeID'] == $ProfileType) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-									}
-								}
-								if ($action == "editRecord") {
-									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" class=\"userProfileType\"";
-									if(is_array($ProfileType)){
-											if (in_array($child['DataTypeID'], $ProfileType)) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-									} else {
-											if ($data3['DataTypeID'] == $ProfileType) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-									}
-								}
 
-			do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType);
+			$DataTypeOptionValue = get_option("DataTypeID_".$child["DataTypeID"]);
+
+			if(!empty($DataTypeOptionValue)){
+				if($DataTypeOptionValue == $DataTypeGenderTitle || $DataTypeOptionValue == 'All Gender'){
+					if ($action == "add") {
+				
+				
+						echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"";
+							if(is_array($ProfileType)){
+								if (in_array($child['DataTypeTitle'], $ProfileTypeArr)) {
+									echo " checked=\"checked\"";
+								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+							} else {
+								if ($child['DataTypeTitle'] == $ProfileTypeArr) {
+									echo " checked=\"checked\"";
+								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+							}
+					}
+					if ($action == "editRecord") {
+						echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" class=\"userProfileType\"";
+						if(is_array($ProfileType)){
+								if (in_array($child['DataTypeTitle'], $ProfileTypeArr)) {
+									echo " checked=\"checked\"";
+								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+						} else {
+								if ($data3['DataTypeTitle'] == $ProfileTypeArr) {
+									echo " checked=\"checked\"";
+								}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+						}
+					}
+
+					do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType,$ProfileGenderID);
+				}
+			}
+
+			
 		}
 	}
 }
-add_action("rb_get_profile_type_childs_checkbox_display_profilemanage_display","rb_get_profile_type_childs_checkbox_profilemanage",11,3);
+add_action("rb_get_profile_type_childs_checkbox_display_profilemanage_display","rb_get_profile_type_childs_checkbox_profilemanage",11,4);
 
 function rb_get_profile_type_childs_checkbox_ajax($parentID,$ConfigID){
 	global $wpdb;
@@ -6453,4 +6475,6 @@ function rbGetOtherAccountProfileLinks($profileID = ""){
 	}
 	
 }
+
+
 ?>
