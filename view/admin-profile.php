@@ -1630,7 +1630,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							foreach($ExplodedProfileType as $p){
 								$ProfileTypeArr[] = $p;
 							}
-							$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGender);
+							
 							foreach ($results3 as $data3) {
 								
 								#Get the gender id allowed for each datatype
@@ -1647,11 +1647,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 											echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"userProfileType\"";
 											if(is_array($ProfileType)){
-													if (in_array($data3['DataTypeTitle'], $ProfileTypeArr)) {
+													if (in_array($data3['DataTypeID'], $ProfileTypeArr)) {
 														echo " checked=\"checked\"";
 													}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
 											} else {
-													if ($data3['DataTypeTitle'] == $ProfileTypeArr) {
+													if ($data3['DataTypeID'] == $ProfileTypeArr) {
 														echo " checked=\"checked\"";
 													}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
 											}
