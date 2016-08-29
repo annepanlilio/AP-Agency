@@ -490,6 +490,7 @@ function request_datatype_bygender_memberregister(){
 	
 		
 
+
 				$results3 = $wpdb->get_results($query3,ARRAY_A);
 				$count3 =  $wpdb->num_rows;
 
@@ -506,26 +507,44 @@ function request_datatype_bygender_memberregister(){
 						$genTitle = $gen["GenderTitle"];
 					}
 					$arr = explode(",",$dataTypeGenderIDs);
-					if(in_array($genTitle, $arr)){
 
-						$rb_agency_uri_profiletype = ucfirst($rb_agency_uri_profiletype);
-						$profiletypeid = $wpdb->get_var($wpdb->prepare("SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s",$rb_agency_uri_profiletype));
+					if(!isset($_POST["location"])){
+						if(in_array($genTitle, $arr)){
 
-						if(!empty($rb_agency_uri_profiletype) && isset($profiletypeid)){
-							if($profiletypeid ==  $data3["DataTypeID"]){
-									echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+							$rb_agency_uri_profiletype = ucfirst($rb_agency_uri_profiletype);
+							$profiletypeid = $wpdb->get_var($wpdb->prepare("SELECT DataTypeID FROM " . table_agency_data_type . " WHERE DataTypeTitle = %s",$rb_agency_uri_profiletype));
+
+							if(!empty($rb_agency_uri_profiletype) && isset($profiletypeid)){
+								if($profiletypeid ==  $data3["DataTypeID"]){
+										echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+								}
+								
+							} else {
+								echo "<div><label><input type=\"checkbox\" ".(in_array($data3["DataTypeID"],$ptype_arr)?"checked='checked'":"")." name=\"ProfileType[]\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" value=\"" . $data3['DataTypeID'] . "\"  $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+								
 							}
-							
-						} else {
-							echo "<div><label><input type=\"checkbox\" ".(in_array($data3["DataTypeID"],$ptype_arr)?"checked='checked'":"")." name=\"ProfileType[]\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" value=\"" . $data3['DataTypeID'] . "\"  $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
-							
+						}else{
+							if($profiletypeid ==  $data3["DataTypeID"]){
+										echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"DataTypeIDClassCheckbox\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\"  $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+							}
+
 						}
 					}else{
-						if($profiletypeid ==  $data3["DataTypeID"]){
-									echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
-						}
+
+						if(!empty($rb_agency_uri_profiletype) && isset($profiletypeid)){
+								if($profiletypeid ==  $data3["DataTypeID"]){
+										echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+								}
+								
+							} else {
+								echo "<div><label><input type=\"checkbox\" ".(in_array($data3["DataTypeID"],$ptype_arr)?"checked='checked'":"")." name=\"ProfileType[]\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" value=\"" . $data3['DataTypeID'] . "\"  $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";
+								
+							}
+
+							do_action('rb_get_profile_type_childs_checkbox_ajax_register_display',$data3["DataTypeID"]);
 
 					}
+					
 
 					
 
