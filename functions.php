@@ -5778,7 +5778,7 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
 	$childs = $wpdb->get_results($sql,ARRAY_A);
 
-	$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGenderID);
+	$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($_GET["ProfileGender"]);
 
 	if($wpdb->num_rows > 0){
 
@@ -5799,18 +5799,19 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 				$space .="&nbsp;&nbsp;";
 			}
 			if ($action == "add") {
-					if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+					if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
 						echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"/>&nbsp;".$child['DataTypeTitle']."<br>";
 					}
 								}
 								if ($action == "editRecord") {
+
 									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" class=\"userProfileType\"";
-									if(is_array($ProfileType)){
-											if (in_array($child['DataTypeID'], $ProfileType)) {
+									if(is_array($ProfileTypeArr)){
+											if (in_array($child['DataTypeID'], $ProfileTypeArr)) {
 												echo " checked=\"checked\"";
 											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
 									} else {
-											if ($data3['DataTypeID'] == $ProfileType) {
+											if ($data3['DataTypeID'] == $ProfileTypeArr ) {
 												echo " checked=\"checked\"";
 											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
 									}

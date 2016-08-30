@@ -1671,16 +1671,16 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 								
 										if ($action == "add") {
+
 											if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
 												echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\" >".$data3['DataTypeTitle']. "<br />\n";
 											}
 											
 										}
 										if ($action == "editRecord") {
-											//print_r($ProfileType);
-											//print_r($ProfileTypeArr);
+											
 											echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"userProfileType\"";
-											if(is_array($ProfileType)){
+											if(is_array($ProfileTypeArr)){
 													if (in_array($data3['DataTypeID'], $ProfileTypeArr)) {
 														echo " checked=\"checked\"";
 													}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
