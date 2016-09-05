@@ -5783,7 +5783,12 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 	if($wpdb->num_rows > 0){
 
 		$ProfileTypeArr = [];
-		$ExplodedProfileType = explode("|",$ProfileType[0]);
+		if(strpos($ProfileType, '|')>-1){
+			$ExplodedProfileType = explode("|",$ProfileType);
+		}else{
+			$ExplodedProfileType = explode(",",$ProfileType);
+		}
+		
 		foreach($ExplodedProfileType as $p){
 			$ProfileTypeArr[] = $p;
 		}

@@ -102,7 +102,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	$ProfileType = isset($_POST['ProfileType'])?$_POST['ProfileType']:"";
 	
 	if (is_array($ProfileType)) {
-		$ProfileType = implode("|", $ProfileType);
+		$ProfileType = implode(",", $ProfileType);
 	}
 	$ProfileIsActive = isset($_POST['ProfileIsActive'])?$_POST['ProfileIsActive']:""; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileIsFeatured = isset($_POST['ProfileIsFeatured'])?$_POST['ProfileIsFeatured']:"";
@@ -1536,9 +1536,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <th scope=\"row\" data=\"this_".$ProfileType."\">" . __("Classification", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 							echo "      <td>\n";
 							echo "      <fieldset>\n";
-							$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
+							//$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
 
-
+							if(strpo)
 
 							//repopulate - GENDER Controller
 							$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
@@ -1624,6 +1624,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												},
 												success: function (results) {
 													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
 												}
 											});	
 										}else{
@@ -1659,9 +1660,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
 							$ProfileTypeArr = [];
-							$ExplodedProfileType = explode("|",$ProfileType[0]);
-							foreach($ExplodedProfileType as $p){
-								$ProfileTypeArr[] = $p;
+							if(strpos($ProfileType[0], '|')>-1){
+								$ExplodedProfileType = explode("|",$ProfileType);
+							}else{
+								$ExplodedProfileType = explode(",",$ProfileType);
 							}
 
 							foreach ($results3 as $data3) {
