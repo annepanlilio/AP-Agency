@@ -3661,6 +3661,15 @@ class RBAgency_Profile {
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
 
+			?>
+			<script type="text/javascript">
+				jQuery(document).ready(function($){
+					$(".rbprofile-list").removeAttr('style');
+				});
+			</script>
+			<?php
+
+			<?php
 			return $displayHTML;
 
 		}
