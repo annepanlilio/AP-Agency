@@ -3669,7 +3669,7 @@ class RBAgency_Profile {
 			</script>
 			<?php
 
-			<?php
+			
 			return $displayHTML;
 
 		}
