@@ -1538,7 +1538,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "      <fieldset>\n";
 							//$ProfileType = (@strpos(",", $ProfileType)!= -1) ? explode(",", $ProfileType) : $ProfileType;
 
-							if(strpo)
+							//if(strpo)
 
 							//repopulate - GENDER Controller
 							$data_gender_exists = $wpdb->get_var( "SELECT DataTypeGenderID FROM " . table_agency_data_type );
@@ -1660,7 +1660,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$count3  = $wpdb->num_rows;
 							$action = @$_GET["action"];
 							$ProfileTypeArr = [];
-							if(strpos($ProfileType[0], '|')>-1){
+							if(strpos($ProfileType, '|')>-1){
 								$ExplodedProfileType = explode("|",$ProfileType);
 							}else{
 								$ExplodedProfileType = explode(",",$ProfileType);
