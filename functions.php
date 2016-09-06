@@ -1387,17 +1387,16 @@
 							if(strpos($ptype,$types) > -1) $permit_type=true;
 					}
 				}
-				$ProfileGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGender);
-				$ProfileCustomShowGender = get_option("ProfileCustomShowGenderArr_".$PID,true);
+
 				if($permit_type || $all_permit){
 					if($ProfileGenderShow ==true){
-						if(strpos($ProfileCustomShowGender, $ProfileGenderTitle) >-1 || strpos($ProfileCustomShowGender, 'All Gender') >- 1){ // Depends on Current LoggedIn User's Gender
+						if($data3["ProfileCustomShowGender"] == $ProfileGender ){ // Depends on Current LoggedIn User's Gender
 							rb_custom_fields_template($visibility, $ProfileID, $data3);
-						} 
-					} else {
-						if(strpos($ProfileCustomShowGender, $ProfileGenderTitle) >-1 || strpos($ProfileCustomShowGender, 'All Gender') >-1){ // Depends on Current LoggedIn User's Gender
+						} elseif(empty($data3["ProfileCustomShowGender"])) {
 							rb_custom_fields_template($visibility, $ProfileID, $data3);
 						}
+					} else {
+							rb_custom_fields_template($visibility, $ProfileID, $data3);
 					}
 					$count3++;
 
@@ -5773,7 +5772,7 @@ function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
 add_action("rb_get_profile_type_childs_checkbox_edit_display","rb_get_profile_type_childs_checkbox_edit",11,3);
 
 //for profile manage
-function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$ProfileType,$ProfileGenderID = ""){
+function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$ProfileType,$GenderTitle = ""){
 	global $wpdb;
 	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
 	$childs = $wpdb->get_results($sql,ARRAY_A);
@@ -5792,9 +5791,9 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 		foreach($ExplodedProfileType as $p){
 			$ProfileTypeArr[] = $p;
 		}
-
-
+		
 		foreach($childs as $child){
+
 			$DataTypeOptionValue = get_option("DataTypeID_".$child["DataTypeID"]);
 
 			$dash = "";
@@ -5804,38 +5803,41 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 				$space .="&nbsp;&nbsp;";
 			}
 			if ($action == "add") {
-					if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
-						echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"/>&nbsp;".$child['DataTypeTitle']."<br>";
-					}
+
+				if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+					echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" id=\"ProfileType[]\" class=\"userProfileType\"/>&nbsp;".$child['DataTypeTitle']."<br>";
+				}
+									
+									
 								}
 								if ($action == "editRecord") {
-
+									
 									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" class=\"userProfileType\"";
 									if(is_array($ProfileTypeArr)){
 											if (in_array($child['DataTypeID'], $ProfileTypeArr)) {
 												echo " checked=\"checked\"";
 											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
 									} else {
-											if ($data3['DataTypeID'] == $ProfileTypeArr ) {
+											if ($data3['DataTypeID'] == $ProfileTypeArr) {
 												echo " checked=\"checked\"";
 											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
 									}
 								}
-
 			if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
 				do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType);
-			}
-
+			}					
 			
 		}
 	}
 }
 add_action("rb_get_profile_type_childs_checkbox_display_profilemanage_display","rb_get_profile_type_childs_checkbox_profilemanage",11,4);
 
-function rb_get_profile_type_childs_checkbox_ajax($parentID,$ConfigID){
+function rb_get_profile_type_childs_checkbox_ajax($parentID,$ConfigID="",$args = array()){
 	global $wpdb;
 	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+
 	$childs = $wpdb->get_results($sql,ARRAY_A);
+
 	if($wpdb->num_rows > 0){
 		foreach($childs as $child){
 			$space = "";
@@ -5843,18 +5845,31 @@ function rb_get_profile_type_childs_checkbox_ajax($parentID,$ConfigID){
 				$space .= "&nbsp;&nbsp;";
 			}
 			$childTitle = stripslashes($child['DataTypeTitle']);
-			echo "<label style=\"display:none;\" class=\"CDataTypeID".$child['DataTypeParentID']."\">";
+			//echo $args['att_mode'];
+			//echo $args['att_type'];
+			if($args['mode'] == 'ajax' && ($args['type'] == 'advanced' || $args['type'] == 'basic') ){ 
+				echo "<div class=\"type-child\"><label class=\"CDataTypeID".$child['DataTypeParentID']."\">";
+			}else{
+				if($_GET['page'] == 'rb_agency_search'){
+
+				}else{
+
+				}
+				echo "<div class=\"type-child\"><label style=\"display:none;\" class=\"CDataTypeID".$child['DataTypeParentID']."\">";
+			}
+
+			
 				$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
-				echo $space.'<input type="checkbox" name="profiletype[]" value="'.$child['DataTypeID'].'" id="'.$child['DataTypeID'].'" myparent="'.$child['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+				echo $space.'<input type="checkbox" name="profiletype[]" value="'.$child['DataTypeID'].'" id="'.$child['DataTypeID'].'" myparent="'.$child['DataTypeParentID'].'" class="DataTypeIDClassCheckbox" profile_title="'.$child['DataTypeTitle'].'"/>&nbsp;'.
 				trim($child['DataTypeTitle'])
 				.'&nbsp;<br/>';
-			echo "</label>";
+			echo "</label></div>";
 
 			do_action('rb_get_profile_type_childs_checkbox_ajax_display',$child["DataTypeID"],$ConfigID);
 		}
 	}
 }
-add_action("rb_get_profile_type_childs_checkbox_ajax_display","rb_get_profile_type_childs_checkbox_ajax",11,2);
+add_action("rb_get_profile_type_childs_checkbox_ajax_display","rb_get_profile_type_childs_checkbox_ajax",11,3);
 
 function rb_get_parent_category_level($parentID){
 	global $wpdb;
@@ -5917,7 +5932,29 @@ function rb_get_child_profiletype_customfields($parentID){
 add_action("after_child_profiletype_customfields","rb_get_child_profiletype_customfields",10,1);
 
 
+function rb_get_profile_type_childs_checkbox_ajax_register($parentID){
+	global $wpdb;
+	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
+	$childs = $wpdb->get_results($sql,ARRAY_A);
+	if($wpdb->num_rows > 0){
+		foreach($childs as $child){
+			$space = "";
+			for($idx=0;$idx<$child["DataTypeLevel"];$idx++){
+				$space .= "&nbsp;&nbsp;";
+			}
+			$childTitle = stripslashes($child['DataTypeTitle']);
+			echo "<label style=\"display:none;\" class=\"CDataTypeID".$child['DataTypeParentID']."\">";
+				$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
+				echo $space.'<input type="checkbox" name="profiletype[]" value="'.$child['DataTypeID'].'" id="'.$child['DataTypeID'].'" myparent="'.$child['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+				trim($child['DataTypeTitle'])
+				.'&nbsp;<br/>';
+			echo "</label>";
 
+			do_action('rb_get_profile_type_childs_checkbox_ajax_register_display',$child["DataTypeID"]);
+		}
+	}
+}
+add_action("rb_get_profile_type_childs_checkbox_ajax_register_display","rb_get_profile_type_childs_checkbox_ajax_register",11,1);
 
 function rb_get_customfields(){
 	global $wpdb;
@@ -5934,11 +5971,8 @@ function rb_get_customfields(){
 
 		$results = $wpdb->get_results($sql,ARRAY_A);
 		foreach($results as $data){
-			$ProfileGenderTitle = rbGetDataTypeGenderTitleByID($_REQUEST['gender']);
-			$ProfileCustomShowGender = get_option("ProfileCustomShowGenderArr_".$data["ProfileCustomID"],true);
-			//echo $ProfileCustomShowGender.' '.$_REQUEST['gender'];
 			if(!in_array($data["ProfileCustomID"],$arrChecker)){
-				if(strpos($ProfileCustomShowGender, $ProfileGenderTitle)>-1 || strpos($ProfileCustomShowGender, 'All Gender')>-1){
+				if($data["ProfileCustomShowGender"] == 0 || $data["ProfileCustomShowGender"] == $_REQUEST['gender']){
 					rb_custom_fields_template_noprofile(1,$data);
 				}
 			}
@@ -6453,4 +6487,67 @@ function rbGetOtherAccountProfileLinks($profileID = ""){
 }
 
 
+add_action('wp_ajax_rb_get_customfields_search_ajax','rb_get_customfields_search_ajax');
+add_action('wp_ajax_nopriv_rb_get_customfields_search_ajax','rb_get_customfields_search_ajax');
+function rb_get_customfields_search_ajax(){
+	
+	global $wpdb;
+	//require_once("theme/view-custom-fields-registration.php");
+	$implodedProfileType = implode(",",$_REQUEST['profile_types']);
+	$arrChecker = [];
+	$find_in_set_arr = [];
+	if(is_array($_REQUEST['profile_types'])){
+		foreach($_REQUEST['profile_types'] as $k=>$v){
+			$find_in_set_arr[] = " FIND_IN_SET('".$v."',b.ProfileCustomTypes)>0 ";
+		}
+		$find_in_set = implode("OR",$find_in_set_arr);
+	}else{
+		$find_in_set = " FIND_IN_SET('".$_REQUEST['profile_types']."',b.ProfileCustomTypes)>0 ";
+	}
+	
+	
+
+	$sql = "SELECT a.*,b.ProfileCustomTypes FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
+	
+		$results = $wpdb->get_results($sql,ARRAY_A);
+
+		$q =  "SELECT a.*,b.ProfileCustomTypes FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID AND a.ProfileCustomShowInitialRegistration = 1";
+		$res = $wpdb->get_results($q,ARRAY_A);
+		
+		foreach($results as $data){
+			if(!in_array($data["ProfileCustomID"],$arrChecker)){
+				//if($data["ProfileCustomShowGender"] == $_REQUEST['gender']){
+				if(!empty($_REQUEST['gender'])){
+					$OptionGenders = get_option('ProfileCustomShowGenderArr_'.$data['ProfileCustomID']);
+					if(strpos($OptionGenders, rbGetDataTypeGenderTitleByID($_REQUEST['gender']))>-1){
+						rb_load_customfields_search(1,$data);
+					}
+				}else{
+					rb_load_customfields_search(1,$data);
+				}
+				
+				//}
+			}
+			array_push($arrChecker,$data["ProfileCustomID"]);			
+		}
+	
+
+	die();
+}
+
+function rb_get_gender_by_preselected_datatype(){
+	global $wpdb;
+	$profile_type = $_REQUEST['profile_type'];
+	$genders = get_option("DataTypeID_".$profile_type);
+	$gendersArr = explode(',',$genders);
+	echo "<option>". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+	foreach($gendersArr as $k=>$v){
+		$sql = "SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle = '".$v."'";
+		$ProfileGenders = $wpdb->get_results($sql,ARRAY_A);
+		echo "<option value=\"".$ProfileGenders[0]['GenderID']."\"> ".$v."</option>\n";
+	}
+	die();
+}
+add_action('wp_ajax_rb_get_gender_by_preselected_datatype','rb_get_gender_by_preselected_datatype');
+add_action('wp_ajax_nopriv_rb_get_gender_by_preselected_datatype');
 ?>

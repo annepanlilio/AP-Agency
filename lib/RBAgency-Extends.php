@@ -322,8 +322,38 @@ class RBAgency_Extends {
 			extract(shortcode_atts(array(
 				"type" => 0,
 				"mode" => 'normal',
-				"profile-type" => ''
+				"profile-type" => '',
+				"show_name"=>"false",
+				"show_surname"=>"false",
+				"show_display_name"=>"false",
+				"show_gender"=>"false",
+				"show_age"=>"false",
+				"show_birthdate"=>"false",
+				"show_country"=>"false",
+				"show_state"=>"false",
+				"show_city"=>"false",
+				"show_zip"=>"false",
+				"show_basic_button"=>"false",
+				"profile_type"=>"",
+				"show_advanced_button"=>"false"
 			), $atts));
+
+			# will be use for advanced ajax search
+			$atts_arr['att_profile_type'] = $profile_type;
+			$atts_arr['att_show_basic_button'] = $show_basic_button;
+			$atts_arr['att_show_zip'] = $show_zip;
+			$atts_arr['att_show_city'] = $show_city;
+			$atts_arr['att_show_state'] = $show_state;
+			$atts_arr['att_show_country'] = $show_country;
+			$atts_arr['att_show_birthdate'] = $show_birthdate;
+			$atts_arr['att_show_age'] = $show_age;
+			$atts_arr['att_show_gender'] = $show_gender;
+			$atts_arr['att_show_display_name'] = $show_display_name;
+			$atts_arr['att_show_surname'] = $show_surname;
+			$atts_arr['att_show_name'] = $show_name;
+			$atts_arr['att_mode'] = $mode;
+			$atts_arr['att_type'] = $type;
+			$atts_arr['att_show_advanced_button'] = $show_advanced_button;
 
 			ob_start();
 
@@ -358,7 +388,7 @@ class RBAgency_Extends {
 				// Select Type
 				$isSearchPage = 1;
 				if(!isset($_POST['form_mode'])){
-					echo RBAgency_Profile::search_form('', '', $type, 0,$mode,$profile_type);
+					echo RBAgency_Profile::search_form('', '', $type, 0,$mode,$profile_type,$atts_arr);
 					
 				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
 					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){

@@ -5,7 +5,7 @@
  *
  * These are profile specific functions
  */
-
+//print (new ReflectionFunction("get_profileInfo"))->getFileName();
 class RBAgency_Profile {
 
 	/*
@@ -32,12 +32,19 @@ class RBAgency_Profile {
 	 * @param array $location	Where is it located? (0: Public, 1: Admin, 2)
 	 * @param string $mode		Form field should be show when select fields
 	 */
-		public static function search_form($atts ='', $args = '', $type = 0, $location = 0, $mode = "normal",$profile_type = ""){
+		public static function search_form($atts ='', $args = '', $type = 0, $location = 0, $mode = "normal",$profile_type = "",$atts_arr = array()){
 
 			/*
 			 * Setup Requirements
 			 */
 				global $wpdb;
+				global $current_user;
+				get_currentuserinfo();
+
+				$ptype = (int)get_user_meta($current_user->ID, "rb_agency_interact_profiletype", true);
+				$user_info = get_userdata($current_user->ID);
+				$user_role = implode(', ', $user_info->roles);
+				
 				$rb_agency_options_arr = get_option('rb_agency_options');
 					$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
 					$rb_agency_option_formshow_location = isset($rb_agency_options_arr['rb_agency_option_formshow_location'])?$rb_agency_options_arr['rb_agency_option_formshow_location']:0;
@@ -74,7 +81,18 @@ class RBAgency_Profile {
 					}
 				}
 
-				wp_enqueue_script( 'search_profile_js', RBAGENCY_PLUGIN_URL .'assets/js/search_profile_js.js', array( 'jquery' ) );
+				if($type == 0){
+					if($atts_arr['att_mode'] == 'ajax' || $atts_arr['att_type'] == 'basic'){
+
+					}else{
+						wp_enqueue_script( 'search_profile_js', RBAGENCY_PLUGIN_URL .'assets/js/search_profile_js.js', array( 'jquery' ) );
+					}
+					
+				}else{
+					//wp_enqueue_script( 'search_profile_js', RBAGENCY_PLUGIN_URL .'assets/js/search_profile_js.js', array( 'jquery' ) );
+				}
+
+				
 				$add_class_for_form = "" ;
 				if($mode == "normal")
 				{
@@ -161,23 +179,67 @@ class RBAgency_Profile {
 				echo "			<input type=\"hidden\" name=\"form_mode\" value=\"". (isset($type)?$type:0) ."\" />\n";
 
 				// Show Profile Name
-				if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\">\n";
-						echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?$_REQUEST["namefirst"]:"")."\" /></div>\n";
-						echo "				</div>\n";
-						echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\">\n";
-						echo "					<label for=\"namelast\">". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?$_REQUEST["namelast"]:"")."\" /></div>\n";
-						echo "				</div>\n";
-				}
+				
+						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							$hide_name = $atts_arr["att_show_name"] == "false" ? "style='display:none;'" : "";
+							echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\" ".$hide_name.">\n";
+							echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+							echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?$_REQUEST["namefirst"]:"")."\" /></div>\n";
+							echo "				</div>\n";
+						
+							if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+								$hide_surname = $atts_arr["att_show_surname"] == "false" ? "style='display:none;'" : "";
+							}else{
+								$hide_surname = "";
+							}
 
-				if ( ($rb_agency_option_formshow_displayname > 0) || (isset($search_layout) && $search_layout == "admin") || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\">\n";
-						echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?$_REQUEST["displayname"]:"")."\" /></div>\n";
-						echo "				</div>\n";
-				}
+							echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\" ".$hide_surname.">\n";
+							echo "					<label for=\"namelast\">". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+							echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?$_REQUEST["namelast"]:"")."\" /></div>\n";
+							echo "				</div>\n";
+
+						}else{
+
+							if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
+
+
+								echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\" >\n";
+								echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?$_REQUEST["namefirst"]:"")."\" /></div>\n";
+								echo "				</div>\n";
+								echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\" >\n";
+								echo "					<label for=\"namelast\">". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?$_REQUEST["namelast"]:"")."\" /></div>\n";
+								echo "				</div>\n";
+
+							}
+							
+						}
+
+						
+
+						
+				
+
+				
+
+						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							$hide_display_name = $atts_arr["att_show_display_name"] == "false" ? "style='display:none;'" : "";
+							echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\" ".$hide_display_name.">\n";
+							echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+							echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?$_REQUEST["displayname"]:"")."\" /></div>\n";
+							echo "				</div>\n";
+						}else{
+							if ( ($rb_agency_option_formshow_displayname > 0) || (isset($search_layout) && $search_layout == "admin") || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
+								echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\" >\n";
+								echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?$_REQUEST["displayname"]:"")."\" /></div>\n";
+								echo "				</div>\n";
+							}
+						}
+
+						
+				
 
 				//check for parentid column and level
 				$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
@@ -197,146 +259,439 @@ class RBAgency_Profile {
 				}
 
 				// Show Classification
-				if ( ($rb_agency_option_formshow_type > 0) || isset($search_layout) && $search_layout == "admin" || ( isset($search_layout) &&  $search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
-						echo "				<div class=\"rbfield rbselect rbsingle rb_profiletype\" id=\"rb_profiletype\">\n";
-						echo "					<label for=\"type\">". __("Type", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "					<div>";
-						/**echo "						<select name=\"profiletype\" id=\"type\">\n";
-						echo "							<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-														$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
-														$results2 = $wpdb->get_results($query,ARRAY_A);
-														foreach ($results2 as $key) {
-															if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
-																	if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) {$selectedvalue = " selected"; } else {$selectedvalue = ""; }
-															} else {$selectedvalue = ""; }
-															echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>\n";
-														}
-						echo "						</select>\n"; **/
+				
 
+						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							$hide_profile_type = $atts_arr["att_profile_type"] == "false" ? "style='display:none;'" : "";
 
+							echo "				<div class=\"rbfield rbradio rbmulti rb_profiletype\" id=\"rb_profiletype\" ".$hide_profile_type.">\n";
+							echo "					<label for=\"type\">". __("Type", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "					<div>";
+							/**echo "						<select name=\"profiletype\" id=\"type\">\n";
+							echo "							<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+															$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
+															$results2 = $wpdb->get_results($query,ARRAY_A);
+															foreach ($results2 as $key) {
+																if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
+																		if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) {$selectedvalue = " selected"; } else {$selectedvalue = ""; }
+																} else {$selectedvalue = ""; }
+																echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>\n";
+															}
+							echo "						</select>\n"; **/
 
-						$sql = "SELECT * FROM ".table_agency_data_type." WHERE DataTypeParentID = 0";
-						$result = $wpdb->get_results($sql,ARRAY_A);
-						foreach($result as $r){
-							echo "<label>";
-											$t = trim(str_replace(' ','_',$r['DataTypeTitle']));
-											echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
-												trim($r['DataTypeTitle'])
-												.'&nbsp;<br/>';
-								echo "</label>"; 
+							if(!empty($profile_type)){
+								$sql = "SELECT * FROM ".table_agency_data_type." WHERE DataTypeParentID = 0";
+								$result = $wpdb->get_results($sql,ARRAY_A);
+								foreach($result as $r){
 
-								do_action('rb_get_profile_type_childs_checkbox_ajax_display',$r["DataTypeID"],4);
+									if($r['DataTypeTag'] == $profile_type){
+										echo "<div><label>";
+													$t = trim(str_replace(' ','_',$r['DataTypeTitle']));													
+														echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.$r['DataTypeTitle'].'"  class="DataTypeIDClassCheckbox" checked/>&nbsp;'.
+														trim($r['DataTypeTitle'])
+														.'&nbsp;';
+													
+													
+										echo "</label></div>"; 
+
+										if($r['DataTypeTag'] == $profile_type){
+											do_action('rb_get_profile_type_childs_checkbox_ajax_display',$r['DataTypeID'],4,$args = array('mode'=>$atts_arr['att_mode'],'type'=>$atts_arr['att_type']) );
+										}
+									}
+									
+										
+										
+								}
+							}else{
+								$sql = "SELECT * FROM ".table_agency_data_type." WHERE DataTypeParentID = 0";
+								$result = $wpdb->get_results($sql,ARRAY_A);
+								foreach($result as $r){
+									echo "<div><label>";
+													$t = trim(str_replace(' ','_',$r['DataTypeTitle']));
+													echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+														trim($r['DataTypeTitle'])
+														.'&nbsp;<br/>';
+										echo "</label></div>"; 
+
+										do_action('rb_get_profile_type_childs_checkbox_ajax_display',$r["DataTypeID"],4);
+								}
+							}
+
+							
+							echo "					</div>\n";
+							echo "				</div>\n";
+						}else{
+							if ( ($rb_agency_option_formshow_type > 0) || isset($search_layout) && $search_layout == "admin" || ( isset($search_layout) &&  $search_layout == "full" && $rb_agency_option_formshow_type > 1) ) {
+								echo "				<div class=\"rbfield rbradio rbmulti rb_profiletype\" id=\"rb_profiletype\" >\n";
+								echo "					<label for=\"type\">". __("Type", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "					<div>";
+								/**echo "						<select name=\"profiletype\" id=\"type\">\n";
+								echo "							<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+																$query = "SELECT DataTypeID, DataTypeTitle FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
+																$results2 = $wpdb->get_results($query,ARRAY_A);
+																foreach ($results2 as $key) {
+																	if (isset($_REQUEST['profiletype']) && $_REQUEST['profiletype']) {
+																			if ($key["DataTypeID"] == @$_REQUEST["profiletype"]) {$selectedvalue = " selected"; } else {$selectedvalue = ""; }
+																	} else {$selectedvalue = ""; }
+																	echo "<option value=\"". $key["DataTypeID"] ."\"".$selectedvalue.">". $key["DataTypeTitle"] ."</option>\n";
+																}
+								echo "						</select>\n"; **/
+
+								$sql = "SELECT * FROM ".table_agency_data_type." WHERE DataTypeParentID = 0";
+									$result = $wpdb->get_results($sql,ARRAY_A);
+									foreach($result as $r){
+										echo "<div><label>";
+														$t = trim(str_replace(' ','_',$r['DataTypeTitle']));
+														echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+															trim($r['DataTypeTitle'])
+															.'&nbsp;<br/>';
+											echo "</label></div>"; 
+
+											do_action('rb_get_profile_type_childs_checkbox_ajax_display',$r["DataTypeID"],4);
+									}
+
+								
+								echo "					</div>\n";
+								echo "				</div>\n";
+							}
 						}
-						echo "					</div>\n";
-						echo "				</div>\n";
-				}
+
+						
+				
 
 				// Show Profile Gender
-				if ( ($rb_agency_option_formshow_gender > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\">\n";
-						echo "					<label for=\"gender\">". __("Gender", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "					<div>";
-						$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
-						$results2 = $wpdb->get_results($query2,ARRAY_A);
-						echo "						<select name=\"gender\" id=\"gender\">\n";
-						echo "							<option value=\"\">". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
-														// Pul Genders from Database
-														foreach ($results2 as $key) {
-																if(isset($key["GenderID"]))
-																echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>\n";
-														}
-						echo "						</select>\n";
-						echo "					</div>\n";
-						echo "				</div>\n";
-				}
+				
+
+						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							//echo get_option('DataTypeID_117');
+
+							?>
+							<script type="text/javascript">
+								jQuery(document).ready(function($){
+									console.log($(".DataTypeIDClassCheckbox:checked").val());
+									$.ajax({
+										type: "POST",
+										url: "<?php echo admin_url('admin-ajax.php') ?>",
+										data: {
+											action: "rb_get_gender_by_preselected_datatype",
+											'profile_type': $(".DataTypeIDClassCheckbox:checked").val()
+										},
+										success: function (results) {
+											console.log(results);
+											$("#gender").empty();
+											$("#gender").html(results);
+										}
+									});
+								});
+							</script>
+							<?php
+							$hide_gender = $atts_arr["att_show_gender"] == "false" ? "style='display:none;'" : "";
+							echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\" ".$hide_gender.">\n";
+							echo "					<label for=\"gender\">". __("Gender", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "					<div>";
+							$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+							$results2 = $wpdb->get_results($query2,ARRAY_A);
+							echo "						<select name=\"gender\" id=\"gender\">\n";
+							echo "							<option value=\"\">". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+															// Pul Genders from Database
+															foreach ($results2 as $key) {
+																	if(isset($key["GenderID"]))
+																	echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>\n";
+															}
+							echo "						</select>\n";
+							echo "					</div>\n";
+							echo "				</div>\n";
+						}else{
+							if ( ($rb_agency_option_formshow_gender > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_gender > 1) ) {
+								echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\">\n";
+								echo "					<label for=\"gender\">". __("Gender", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "					<div>";
+								$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+								$results2 = $wpdb->get_results($query2,ARRAY_A);
+								echo "						<select name=\"gender\" id=\"gender\">\n";
+								echo "							<option value=\"\">". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+																// Pul Genders from Database
+																foreach ($results2 as $key) {
+																		if(isset($key["GenderID"]))
+																		echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>\n";
+																}
+								echo "						</select>\n";
+								echo "					</div>\n";
+								echo "				</div>\n";
+							}
+						}
+
+						
+				
 
 				echo "<div class=".$add_form_class.">" ;
 				// Show Profile Age
-				if ( ($rb_agency_option_formshow_age > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">\n";
-						echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "					<div>\n";
-						echo "						<div>\n";
-						echo "							<label for=\"datebirth_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".(isset($_REQUEST['datebirth_min'])?$_REQUEST['datebirth_min']:"") ."\" />\n";
-						echo "						</div>";
-						echo "						<div>\n";
-						echo "							<label for=\"datebirth_max\">". __("Max", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".(isset($_REQUEST['datebirth_max'])?$_REQUEST['datebirth_max']:"") ."\" />\n";
-						echo "						</div>\n";
-						echo "					</div>\n";
-						echo "				</div>\n";
-				}
+				
+
+						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							$hide_age = $atts_arr["att_show_age"] == "false" ? "style='display:none;'" : "";
+							echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\" ".$hide_age.">\n";
+							echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "					<div>\n";
+							echo "						<div>\n";
+							echo "							<label for=\"datebirth_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".(isset($_REQUEST['datebirth_min'])?$_REQUEST['datebirth_min']:"") ."\" />\n";
+							echo "						</div>";
+							echo "						<div>\n";
+							echo "							<label for=\"datebirth_max\">". __("Max", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".(isset($_REQUEST['datebirth_max'])?$_REQUEST['datebirth_max']:"") ."\" />\n";
+							echo "						</div>\n";
+							echo "					</div>\n";
+							echo "				</div>\n";
+						}else{
+							if ( ($rb_agency_option_formshow_age > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_age > 1) ) {
+								echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\">\n";
+								echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "					<div>\n";
+								echo "						<div>\n";
+								echo "							<label for=\"datebirth_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min\" name=\"datebirth_min\" value=\"".(isset($_REQUEST['datebirth_min'])?$_REQUEST['datebirth_min']:"") ."\" />\n";
+								echo "						</div>";
+								echo "						<div>\n";
+								echo "							<label for=\"datebirth_max\">". __("Max", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max\" name=\"datebirth_max\" value=\"".(isset($_REQUEST['datebirth_max'])?$_REQUEST['datebirth_max']:"") ."\" />\n";
+								echo "						</div>\n";
+								echo "					</div>\n";
+								echo "				</div>\n";
+							}
+						}
+
+						
+				
 
 				// Show Profile birthdate
-				if ( ($rb_agency_option_formshow_birthdate > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_birthdate > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth2\">\n";
-						echo "					<label for=\"datebirth_min2 datebirth_max\">". __("Birthdate", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "					<div>\n";
-						echo "						<div>\n";
-						echo "							<label for=\"datebirth_min2\">". __("From", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "							<input  id=\"rb_datepicker_from_bd\" name=\"rb_datepicker_from_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
-						//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min2\" name=\"datebirth_min2\" value=\"".(isset($_REQUEST['datebirth_min2'])?$_REQUEST['datebirth_min2']:"") ."\" />\n";
-						echo "						</div>";
-						echo "						<div>\n";
-						echo "							<label for=\"datebirth_max2\">". __("To", RBAGENCY_TEXTDOMAIN) . "</label>\n";
-						echo "							<input  id=\"rb_datepicker_to_bd\" name=\"rb_datepicker_to_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
-						//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max2\" name=\"datebirth_max2\" value=\"".(isset($_REQUEST['datebirth_max2'])?$_REQUEST['datebirth_max2']:"") ."\" />\n";
-						echo "						</div>\n";
-						echo "					</div>\n";
-						echo "				</div>\n";
+				
 
-						//JS here..
-						wp_enqueue_script( 'datepicker', RBAGENCY_PLUGIN_URL .'assets/js/datepicker.init.js', array('jquery'));
+						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							$hide_birthdate = $atts_arr["att_show_birthdate"] == "false" ? "style='display:none;'" : "";
+							echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth2\" ".$hide_birthdate.">\n";
+							echo "					<label for=\"datebirth_min2 datebirth_max\">". __("Birthdate", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "					<div>\n";
+							echo "						<div>\n";
+							echo "							<label for=\"datebirth_min2\">". __("From", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "							<input  id=\"rb_datepicker_from_bd\" name=\"rb_datepicker_from_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
+							//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min2\" name=\"datebirth_min2\" value=\"".(isset($_REQUEST['datebirth_min2'])?$_REQUEST['datebirth_min2']:"") ."\" />\n";
+							echo "						</div>";
+							echo "						<div>\n";
+							echo "							<label for=\"datebirth_max2\">". __("To", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+							echo "							<input  id=\"rb_datepicker_to_bd\" name=\"rb_datepicker_to_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
+							//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max2\" name=\"datebirth_max2\" value=\"".(isset($_REQUEST['datebirth_max2'])?$_REQUEST['datebirth_max2']:"") ."\" />\n";
+							echo "						</div>\n";
+							echo "					</div>\n";
+							echo "				</div>\n";
 
-				}
+							//JS here..
+							wp_enqueue_script( 'datepicker', RBAGENCY_PLUGIN_URL .'assets/js/datepicker.init.js', array('jquery'));
+						}else{
+							if ( ($rb_agency_option_formshow_birthdate > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_birthdate > 1) ) {
+								
+								echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth2\" >\n";
+								echo "					<label for=\"datebirth_min2 datebirth_max\">". __("Birthdate", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "					<div>\n";
+								echo "						<div>\n";
+								echo "							<label for=\"datebirth_min2\">". __("From", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "							<input  id=\"rb_datepicker_from_bd\" name=\"rb_datepicker_from_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
+								//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_min2\" name=\"datebirth_min2\" value=\"".(isset($_REQUEST['datebirth_min2'])?$_REQUEST['datebirth_min2']:"") ."\" />\n";
+								echo "						</div>";
+								echo "						<div>\n";
+								echo "							<label for=\"datebirth_max2\">". __("To", RBAGENCY_TEXTDOMAIN) . "</label>\n";
+								echo "							<input  id=\"rb_datepicker_to_bd\" name=\"rb_datepicker_to_bd\" class=\"rb-datepicker stubby\" type=\"text\"  />";
+								//echo "							<input type=\"text\" class=\"stubby\" id=\"datebirth_max2\" name=\"datebirth_max2\" value=\"".(isset($_REQUEST['datebirth_max2'])?$_REQUEST['datebirth_max2']:"") ."\" />\n";
+								echo "						</div>\n";
+								echo "					</div>\n";
+								echo "				</div>\n";
+
+								//JS here..
+								wp_enqueue_script( 'datepicker', RBAGENCY_PLUGIN_URL .'assets/js/datepicker.init.js', array('jquery'));
+							}
+						}
+						
+
+				
 
 				// Show Location Search
-				if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
-						echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\">\n";
-						echo "					<label for=\"city\">". __("City", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".(isset($_REQUEST["city"])?$_REQUEST["city"]:"")."\" /></div>\n";
-						echo "				</div>\n";
+				
 
-						echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\">\n";
-												$location= site_url();
-						echo "					<input type=\"hidden\" id=\"url\" value=\"". $location ."\">\n";
-						echo "					<label for=\"country\">". __("Country", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-						echo "					<div>\n";
-						echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStatesPublic(\"country\",\"state\");'>\n";
-						echo "							<option value=\"\">". __("Any Country", RBAGENCY_TEXTDOMAIN) ."</option>\n";
-														$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
-														$result_query_get = $wpdb->get_results($query_get);
-														foreach($result_query_get as $r){
-																$selected = isset($_REQUEST["country"]) && $_REQUEST["country"] ==$r->CountryID?"selected=selected":"";
-						echo "							<option ". $selected ." value=\"".$r->CountryID."\">". $r->CountryTitle ."</option>\n";
-														}
-						echo "						</select>\n";
-						echo "					</div>\n";
-						echo "				</div>\n";
+						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							$hide_city = $atts_arr["att_show_city"] == "false" ? "style='display:none;'" : "";	
+							echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\" ".$hide_city.">\n";
+							echo "					<label for=\"city\">". __("City", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+							echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".(isset($_REQUEST["city"])?$_REQUEST["city"]:"")."\" /></div>\n";
+							echo "				</div>\n";	
 
-						echo "				<div class=\"rbfield rbselect rbsingle rb_state\" id=\"rb_state\">\n";
-						echo "					<label for=\"state\">". __("State", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-						echo "					<div>";
-						echo '						<select name="state" id="state">';
-						echo '							<option value="">'. __("Any State", RBAGENCY_TEXTDOMAIN) .'</option>';
-														$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID = %d ORDER BY StateTitle ASC" ;
-														$result_query_get = $wpdb->get_results($wpdb->prepare($query_get,(isset($_REQUEST["country"])?$_REQUEST["country"]:0)));
-														foreach($result_query_get as $r){
-															$selected = isset($_REQUEST["state"]) && $_REQUEST["state"] == $r->StateID?"selected=selected":"";
-						echo "								<option ". $selected ." value=\"".$r->StateID."\">". $r->StateTitle ."</option>\n";
-														}
-						echo "						</select>\n";
-						echo "					</div>\n";
-						echo "				</div>\n";
+							if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+								$hide_country = $atts_arr["att_show_country"] == "false" ? "style='display:none;'" : "";				
+							}else{
+								$hide_country = "";
+							}
 
-						echo "				<div class=\"rbfield rbtext rbsingle rb_zip\" id=\"rb_zip\">\n";
-						echo "					<label for=\"zip\">". __("Zip", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-						echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".(isset($_REQUEST["zip"])?$_REQUEST["zip"]:"") ."\" /></div>\n";
-						echo "				</div>\n";
-				}// Show Location Search
+							echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\" ".$hide_country.">\n";
+													$location= site_url();
+							echo "					<input type=\"hidden\" id=\"url\" value=\"". $location ."\">\n";
+							echo "					<label for=\"country\">". __("Country", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+							echo "					<div>\n";
+							echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStatesPublic(\"country\",\"state\");'>\n";
+							echo "							<option value=\"\">". __("Any Country", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+															$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
+															$result_query_get = $wpdb->get_results($query_get);
+															foreach($result_query_get as $r){
+																	$selected = isset($_REQUEST["country"]) && $_REQUEST["country"] ==$r->CountryID?"selected=selected":"";
+							echo "							<option ". $selected ." value=\"".$r->CountryID."\">". $r->CountryTitle ."</option>\n";
+															}
+							echo "						</select>\n";
+							echo "					</div>\n";
+							echo "				</div>\n";
+
+							if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+								$hide_state = $atts_arr["att_show_state"] == "false" ? "style='display:none;'" : "";
+							}else{
+								$hide_state = "";
+							}
+
+							echo "				<div class=\"rbfield rbselect rbsingle rb_state\" id=\"rb_state\" ".$hide_state.">\n";
+							echo "					<label for=\"state\">". __("State", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+							echo "					<div>";
+							echo '						<select name="state" id="state">';
+							echo '							<option value="">'. __("Any State", RBAGENCY_TEXTDOMAIN) .'</option>';
+															$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID = %d ORDER BY StateTitle ASC" ;
+															$result_query_get = $wpdb->get_results($wpdb->prepare($query_get,(isset($_REQUEST["country"])?$_REQUEST["country"]:0)));
+															foreach($result_query_get as $r){
+																$selected = isset($_REQUEST["state"]) && $_REQUEST["state"] == $r->StateID?"selected=selected":"";
+							echo "								<option ". $selected ." value=\"".$r->StateID."\">". $r->StateTitle ."</option>\n";
+															}
+							echo "						</select>\n";
+							echo "					</div>\n";
+							echo "				</div>\n";
+
+							if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+								$hide_zip = $atts_arr["att_show_zip"] == "false" ? "style='display:none;'" : "";
+							}else{
+								$hide_zip = "";
+							}
+
+							echo "				<div class=\"rbfield rbtext rbsingle rb_zip\" id=\"rb_zip\" ".$hide_zip.">\n";
+							echo "					<label for=\"zip\">". __("Zip", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+							echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".(isset($_REQUEST["zip"])?$_REQUEST["zip"]:"") ."\" /></div>\n";
+							echo "				</div>\n";
+
+						}else{
+							
+							if ( ($rb_agency_option_formshow_location > 0) || isset($search_layout) && $search_layout == "admin" || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_location > 1) ) {
+
+								echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\" >\n";
+								echo "					<label for=\"city\">". __("City", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div><input type=\"text\" id=\"city\" name=\"city\" value=\"".(isset($_REQUEST["city"])?$_REQUEST["city"]:"")."\" /></div>\n";
+								echo "				</div>\n";	
+
+								echo "				<div class=\"rbfield rbselect rbsingle rb_country\" id=\"rb_country\" >\n";
+														$location= site_url();
+								echo "					<input type=\"hidden\" id=\"url\" value=\"". $location ."\">\n";
+								echo "					<label for=\"country\">". __("Country", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div>\n";
+								echo "						<select name=\"country\" id=\"country\" onchange='javascript:populateStatesPublic(\"country\",\"state\");'>\n";
+								echo "							<option value=\"\">". __("Any Country", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+																$query_get ="SELECT * FROM `".table_agency_data_country."` ORDER BY CountryTitle ASC" ;
+																$result_query_get = $wpdb->get_results($query_get);
+																foreach($result_query_get as $r){
+																		$selected = isset($_REQUEST["country"]) && $_REQUEST["country"] ==$r->CountryID?"selected=selected":"";
+								echo "							<option ". $selected ." value=\"".$r->CountryID."\">". $r->CountryTitle ."</option>\n";
+																}
+								echo "						</select>\n";
+								echo "					</div>\n";
+								echo "				</div>\n";
+
+								
+								echo "				<div class=\"rbfield rbselect rbsingle rb_state\" id=\"rb_state\" >\n";
+								echo "					<label for=\"state\">". __("State", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div>";
+								echo '						<select name="state" id="state">';
+								echo '							<option value="">'. __("Any State", RBAGENCY_TEXTDOMAIN) .'</option>';
+																$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID = %d ORDER BY StateTitle ASC" ;
+																$result_query_get = $wpdb->get_results($wpdb->prepare($query_get,(isset($_REQUEST["country"])?$_REQUEST["country"]:0)));
+																foreach($result_query_get as $r){
+																	$selected = isset($_REQUEST["state"]) && $_REQUEST["state"] == $r->StateID?"selected=selected":"";
+								echo "								<option ". $selected ." value=\"".$r->StateID."\">". $r->StateTitle ."</option>\n";
+																}
+								echo "						</select>\n";
+								echo "					</div>\n";
+								echo "				</div>\n";
+
+							
+								echo "				<div class=\"rbfield rbtext rbsingle rb_zip\" id=\"rb_zip\" >\n";
+								echo "					<label for=\"zip\">". __("Zip", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div><input type=\"text\" id=\"zip\" name=\"zip\" value=\"".(isset($_REQUEST["zip"])?$_REQUEST["zip"]:"") ."\" /></div>\n";
+								echo "				</div>\n";
+							}// Show Location Search
 
 
+						}
+
+						
+
+						//here, display custom fields for searching
+				echo "<div class=\"customfields_search_form\" ></div>";
+
+				if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+				?>
+				<script type="text/javascript">
+					jQuery(document).ready(function(){
+							
+						 	var ProfileTypeIDArr = []; 
+						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").attr("profile_title"));
+						 	console.log(ProfileTypeIDArr);
+						 	//console.log(Obj.val());
+						 	jQuery.ajax({
+								type: "POST",
+								url: "<?php echo admin_url('admin-ajax.php') ?>",
+								data: {
+									action: "rb_get_customfields_search_ajax",
+									'profile_types': jQuery(".DataTypeIDClassCheckbox:checked").attr("profile_title")
+								},
+								success: function (results) {
+									console.log(results);
+									jQuery(".customfields-onload").html(results);
+								}
+							});
+
+
+							jQuery(".DataTypeIDClassCheckbox").on('click',function(){
+								var profileTypeIDs = [];
+								var checkedProfileType = jQuery(this).attr('profile_title');
+								var checked = jQuery(this).is(':checked');
+								ProfileTypeIDArr.push(checkedProfileType);
+								
+								if(checked!==true){
+									ProfileTypeIDArr = jQuery.grep(ProfileTypeIDArr, function(value) {
+											return value != checkedProfileType;
+									});
+								}else{
+									jQuery(this).attr('checked','checked');
+								}
+
+								jQuery.ajax({
+									type: "POST",
+									url: "<?php echo admin_url('admin-ajax.php') ?>",
+									data: {
+										action: "rb_get_customfields_search_ajax",
+										'profile_types': ProfileTypeIDArr
+									},
+									success: function (results) {
+										console.log(results);
+										jQuery(".customfields-onload").html(results);
+									}
+								});	
+							});
+						
+					}); 
+
+				</script>
+				<?php
+				}
 			/*
 			 * Custom Fields
 			 */
@@ -367,6 +722,7 @@ class RBAgency_Profile {
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
 
+				echo "<div class=\"customfields-onload\" >";
 				foreach($field_results  as $data){
 					// Set Variables
 					$ProfileCustomID = $data['ProfileCustomID'];
@@ -730,34 +1086,59 @@ class RBAgency_Profile {
 					echo "			</div>\n";
 				}
 
+				global $user_ID, $wpdb;
+				$is_model_or_talent = 0;
+
 				echo "				<div class=\"rbfield rbsubmit rbsingle rbsearch-".$rb_agency_option_formhide_advancedsearch_button."\">\n";
 					echo "				<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\"  />\n"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
+					if($ptype == 0 && $user_role != 'administrator') {
+						echo "<a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a>\n";
+					}
 					$is_casting_page = get_query_var("rbgroup");
-					if ($type == 1) {
-						if(is_admin() === false){
-							echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
-						}
-					} elseif($rb_agency_option_formhide_advancedsearch_button != 1 && $is_casting_page != "casting") {
-						if(is_admin() === true){
-							echo "				<input type=\"button\" class=\"button-primary\" onclick=\"window.location.href='".admin_url("admin.php?page=rb_agency_search")."'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
-						} else {
-							echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-advanced/'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
+
+					if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){
+
+						$hide_basic_button = $atts_arr["att_show_basic_button"] == "false" ? "style='display:none;'" : "";
+							if(is_admin() === false){
+								echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" ".$hide_basic_button."/>\n";
+							}
+
+							$hide_advanced_button = $atts_arr["att_show_advanced_button"] == "false" ? "style='display:none;'" : "";
+							if(is_admin() === true){
+								echo "				<input type=\"button\" class=\"button-primary\" onclick=\"window.location.href='".admin_url("admin.php?page=rb_agency_search")."'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" ".$hide_advanced_button."/>\n";
+							} else {
+								echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-advanced/'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" ".$hide_advanced_button."/>\n";
+							}
+
+						
+					}else{
+						if ($type == 1) {
+							if(is_admin() === false){
+								echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
+							}
+						} elseif($rb_agency_option_formhide_advancedsearch_button != 1 && $is_casting_page != "casting") {
+							if(is_admin() === true){
+								echo "				<input type=\"button\" class=\"button-primary\" onclick=\"window.location.href='".admin_url("admin.php?page=rb_agency_search")."'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
+							} else {
+								echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-advanced/'\" value=\"". __("Go to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\"/>\n";
+							}
 						}
 					}
+					
 				echo "				</div>\n";
-				global $user_ID, $wpdb;
+				
 
 				// Check if user is registered as Model/Talent
-				$is_model_or_talent = 0;
+				
 				if(class_exists('RBAgencyCasting')){
 					$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
 					$is_model_or_talent = $wpdb->num_rows;
 				}
-				if($is_model_or_talent > 0){
-					echo "<div class=\"rbclear\"></div>\n";
-					echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a></div>\n";
-				}
+				// if($is_model_or_talent > 0){
+				// 	echo "<div class=\"rbclear\"></div>\n";
+				// 	echo "<div class=\"rb-goback-link\"><a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a></div>\n";
+				// }
 				echo "			</form>\n";
 				echo "	<div class=\"rbclear\" style=\"clear:both;\"></div>\n";
 
@@ -2275,13 +2656,22 @@ class RBAgency_Profile {
 						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
 							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID );
 
-							$profile_list .="	<div class=\"info-panel\" id='slide-panel_". $profilesPerRow ."' > \n";
+							$profile_list .="	<div class=\"info-panel\" id='slide-panel_". $profilesPerRow ."'> \n";
 							$profile_list .="	</div> <!-- .info-panel --> \n";
 							$slidePanelID += $rb_agency_option_layoutprofilelist_perrow;
+							$profilesPerRow++;
+						}elseif($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow > 0){
+							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID );
+
+							$profile_list .="	<div class=\"info-panel\" id='slide-panel_". ($profilesPerRow * 4)."'> \n";
+							$profile_list .="	</div> <!-- .info-panel --> \n";
+							$slidePanelID += $rb_agency_option_layoutprofilelist_perrow;
+							$profilesPerRow++;
 						}else{
 							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID);
+							$profilesPerRow++;
 						}
-						$profilesPerRow++;
+						
 					}else{
 						$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query );
 					}
@@ -2499,23 +2889,27 @@ class RBAgency_Profile {
 						jQuery(document).ready(function($) {
 
 
-							jQuery(".slide-panel-link").on("click", function(){
-
+							
+							jQuery(".slide-panel-link").on("click", function(event){
+								event.preventDefault();
 								var profID = $(this).attr("profile_id");
 								var panel_target_ID = $(this).attr("href");
+								console.log(profID);
+								//$(".info-panel[id!="+panel_target_ID+"]").slideUp();
+								$(".info-panel").slideUp();
 
-								// $(".info-panel[id!="+panel_target_ID+"]").slideUp();
-
-								$.post( "'.admin_url('admin-ajax.php').'", { id: profID, action: "get_profileInfo" })
+								jQuery.post( "'.admin_url('admin-ajax.php').'", { id: profID, action: "get_profileInfo" })
 									.done(function( data ) {
-
-									$(panel_target_ID).html(data);
-									$(panel_target_ID).slideDown();
+									console.log(panel_target_ID);
+									jQuery(panel_target_ID).html(data);
+									jQuery(panel_target_ID).slideDown();
 								});
-
-
+								
 
 							});
+
+
+							
 						});
 
 					</script>
@@ -2581,15 +2975,17 @@ class RBAgency_Profile {
 				/*
 				 * No results Found.
 				 */
-					$no_rec_html = '<div class=\"rbclear\"></div>' . __("No Profiles Found", RBAGENCY_TEXTDOMAIN);
+					$no_rec_html .= "<div id=\"rbcontent\" class=\"nothing-found\">";
+					$no_rec_html .= '<div class=\"rbclear\"></div><br><h3>' . __("No Profiles Found", RBAGENCY_TEXTDOMAIN)."</h3><br>";
 					$no_rec_html .= '<div class=\"rbclear\"></div>';
-					if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
-					$no_rec_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">".__("Go Back to Basic Search",RBAGENCY_TEXTDOMAIN)."</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
-					}
+					// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
+					// $no_rec_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">".__("Go Back to Basic Search",RBAGENCY_TEXTDOMAIN)."</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
+					// }
 					if(self::$error_debug){
 						self::$error_checking[] = array('search_result_public',$no_rec_html);
 						echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 					}
+					$no_rec_html .= '</div><!-- #rbcontent -->';
 
 				// Return
 				return $no_rec_html;
@@ -3034,9 +3430,9 @@ class RBAgency_Profile {
 				$profile_list_class .= ' '. implode(' ', array_unique($_proftypeClass));
 
 
-				
+				//echo $profiType;
 				// $PGENDER = $dataList["ProfileGender"] == 11 ? "Male" : "Female";
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class."\" >\n";
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class."\">\n";
 				$displayHTML .= "	<div class=\"profile-box\" >\n";
 
 				if(!$plain){
@@ -3105,7 +3501,13 @@ class RBAgency_Profile {
 
 
 
-				$profile_name = "<strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
+				//$profile_name = "<strong class=\"name\"><a href=\"". RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"] ."/\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
+
+				#Fixed for movie-circle only
+				$hrefPath = $profile_link_class == 'slide-panel' ? "#slide-panel_".$_panelID : RBAGENCY_PROFILEDIR ."". $dataList["ProfileGallery"];
+				$slide_panel_link = $profile_link_class == 'slide-panel' ? "slide-panel-link" : $profile_link_class;
+				$includeProfileID = $profile_link_class == 'slide-panel' ? "profile_id=".$ProfileID : "";
+				$profile_name = "<strong class=\"name\"><a href=\"".$hrefPath."\" class=\"".$slide_panel_link."\" ".$includeProfileID.">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
 
 				//Profile Rating
 					//if(isset($dataList["ProfileRating"]) && !empty($dataList["ProfileRating"])){
@@ -3668,8 +4070,6 @@ class RBAgency_Profile {
 				});
 			</script>
 			<?php
-
-			
 			return $displayHTML;
 
 		}
@@ -3806,18 +4206,18 @@ class RBAgency_Profile {
 
 								$dataArr = explode(",",implode(",",explode("','",$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])));
 								if(in_array($val,$dataArr,true)){
-									echo "<label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-									echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+									echo "<div><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+									echo "<span>&nbsp;&nbsp;". $val."</span></label></div>";
 								} else {
 									if($val !=""){
-										echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-										echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+										echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+										echo "<span>&nbsp;&nbsp;". $val."</span></label></div>";
 									}
 								}
 							} else {
 								if($val !=""){
-									echo "<label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-									echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+									echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+									echo "<span>&nbsp;&nbsp;". $val."</span></label></div>";
 								}
 							}
 						}
@@ -3835,18 +4235,18 @@ class RBAgency_Profile {
 							$dataArr = explode(",",implode(",",explode("','",$_REQUEST["ProfileCustomID". $data1['ProfileCustomID']])));
 
 							if(in_array($val,$dataArr) && $val !="") {
-								echo "<label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-								echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+								echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+								echo "<span>&nbsp;&nbsp;". $val."</span></label></div>";
 							} else {
 								if($val !="") {
-									echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-									echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+									echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+									echo "<span>&nbsp;&nbsp;". $val."</span></label></div>";
 								}
 							}
 						} else {
 							if($val !="") {
-								echo "<label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
-								echo "<span>&nbsp;&nbsp;". $val."</span></label>";
+								echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $data1['ProfileCustomID'] ."[]\" />";
+								echo "<span>&nbsp;&nbsp;". $val."</span></label></div>";
 							}
 						}
 					}
