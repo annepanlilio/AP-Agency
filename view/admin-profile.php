@@ -1666,6 +1666,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$ExplodedProfileType = explode(",",$ProfileType);
 							}
 
+							foreach($ExplodedProfileType as $p){
+								$ProfileTypeArr[] = $p;
+							}
+
 							foreach ($results3 as $data3) {
 								
 								#Get the gender id allowed for each datatype

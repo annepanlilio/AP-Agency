@@ -6549,5 +6549,5 @@ function rb_get_gender_by_preselected_datatype(){
 	die();
 }
 add_action('wp_ajax_rb_get_gender_by_preselected_datatype','rb_get_gender_by_preselected_datatype');
-add_action('wp_ajax_nopriv_rb_get_gender_by_preselected_datatype');
+add_action('wp_ajax_nopriv_rb_get_gender_by_preselected_datatype','rb_get_gender_by_preselected_datatype');
 ?>
