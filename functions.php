@@ -1657,6 +1657,17 @@
 						echo "});\n\n";
 						echo "</script>\n\n";
 
+						?>
+						<script type="text/javascript">
+						jQuery(document).ready(function(){
+							jQuery(".rb-datepicker").each(function(){
+								jQuery(this).datepicker({dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+							})
+
+						});
+						</script>
+						<?php
+
 				}
 		}// End if Empty ProfileCustomID
 	}
@@ -6217,6 +6228,17 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 						echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". (isset($_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"])?$_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"]:$getDateValue) ."');\n\n";
 						echo "});\n\n";
 						echo "</script>\n\n";
+
+						?>
+						<script type="text/javascript">
+						jQuery(document).ready(function(){
+							jQuery(".rb-datepicker").each(function(){
+								jQuery(this).datepicker({dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+							})
+
+						});
+						</script>
+						<?php
 
 				}
 		}// End if Empty ProfileCustomID
