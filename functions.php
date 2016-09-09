@@ -3801,6 +3801,11 @@ function get_social_media_links($ProfileID = ""){
 	}
 
 	function send_email_lp($login, $password, $email){
+
+		$rb_agency_options_arr = get_option('rb_agency_options');
+		$rb_agency_email = $rb_agency_options_arr["rb_agency_option_agencyemail"];
+		$rb_agency_email_can_received = $rb_agency_options_arr["rb_agency_option_agency_email_receive_notification"] > 0 ? 1 : 0;
+
 		$admin_email = get_bloginfo('admin_email');
 		$site_name = get_bloginfo("name");
 
@@ -3823,6 +3828,9 @@ function get_social_media_links($ProfileID = ""){
 
 		add_filter('wp_mail_content_type', create_function('', 'return "text/html"; '));
 		wp_mail($email, $subject, $message, $headers);
+		if($rb_agency_email_can_received > 0){
+			wp_mail($rb_agency_email, $subject, $message, $headers);
+		}
 		remove_filter( 'wp_mail_content_type', 'set_html_content_type' );
 
 	}
@@ -4961,10 +4969,16 @@ function date_difference($date1,$date2, $differenceFormat = '%a'){
 }
 
 function expired_profile_notification($data){
+	$rb_agency_options_arr = get_option('rb_agency_options');
+	$rb_agency_email = $rb_agency_options_arr["rb_agency_option_agencyemail"];
+	$rb_agency_email_can_received = $rb_agency_options_arr["rb_agency_option_agency_email_receive_notification"] > 0 ? 1 : 0;
 	$to = $data["send_to"];
 	$subject = get_option('blogname')." ". $data["subject"]." Expiry Notification";
 	$message = __($data["profile_name"]." ".$data["subject"]." ".$data["expired_date"]." has expired. Time to update this profile user.");
 	wp_mail( $to, $subject, $message );
+	if($rb_agency_email_can_received > 0){
+		wp_mail($rb_agency_email, $subject, $message);
+	}
 }
 
 
